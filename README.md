@@ -1,6 +1,6 @@
 # WebViewer UI
 
-WebViewer UI sits on top of [WebViewer](https://pdftron.com/webviewer), a powerful JavaScript-based PDF Library that's part of the [PDFTron PDF SDK](https://pdftron.com). Built in React, WebViewer UI provides a slick out-of-the-box responsive UI that interacts with the core library to view, annotate and manipulate PDFs that can be embedded into any web project.
+WebViewer UI sits on top of [WebViewer](https://www.pdftron.com/webviewer), a powerful JavaScript-based PDF Library that's part of the [PDFTron PDF SDK](https://www.pdftron.com). Built in React, WebViewer UI provides a slick out-of-the-box responsive UI that interacts with the core library to view, annotate and manipulate PDFs that can be embedded into any web project.
 
 ![WebViewer UI](./assets/webviewer-ui.png)
 
@@ -10,8 +10,8 @@ This repo is specifically designed for any users interested in advanced customiz
 
 To work with this repo, you must download the latest WebViewer and link it to this repo.
 
-1. Download [WebViewer](https://pdftron.com/documentation/web/guides/run-samples).
-2. Follow steps from [forking WebViewer](https://pdftron.com/documentation/web/guides/advanced-customization/forking-and-setting-up-the-sync).
+1. Download [WebViewer](https://www.pdftron.com/documentation/web/guides/run-samples).
+2. Follow steps from [forking WebViewer](https://www.pdftron.com/documentation/web/guides/ui/advanced-customization#forking-and-linking).
 
 Now you can navigate to `WebViewer/lib/ui` and run the commands to install, run and build.
 
@@ -48,7 +48,7 @@ src/
 
 ## API documentation
 
-See [API documentation](https://pdftron.com/documentation/web/guides/ui/apis).
+See [API documentation](https://www.pdftron.com/documentation/web/guides/ui/apis).
 
 ## Contributing
 
