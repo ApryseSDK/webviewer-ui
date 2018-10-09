@@ -1,0 +1,46 @@
+@import '../../constants/styles';
+
+input[type='checkbox'].Input,
+input[type='radio'].Input {
+  display: none;
+
+  &:checked + label:after {
+    background: $gray20;
+  }
+}
+
+label.Input {
+  position: relative;
+  display: block;
+  flex: 1;
+  padding: 5px;
+  font-size: 0.8em;
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    padding: 2px;
+    box-sizing: border-box;
+    border: 1px solid $gray12;
+    background: white;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 7px;
+    height: 7px;
+    box-sizing: border-box;
+    background: transparent;
+    transition: all 0.2s ease;
+  }
+}

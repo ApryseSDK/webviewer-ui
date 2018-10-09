@@ -1,0 +1,53 @@
+@import '../../constants/styles';
+
+.NotePopup  {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  user-select: none;
+
+  .overflow {
+    .Icon {
+      width: 20px;
+      height: 20px;
+      opacity: 0.5;  
+    }
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+  
+  .modify {
+    flex-direction: column;
+    right: 0;
+    top: 100%;
+    padding: 5px;
+    background: white;
+    background: var(--primary-color);
+    box-shadow: 1px 2px 10px 1px rgba(0,0,0,.14);
+    z-index: 80;
+  
+    &.open {
+      display: flex;
+      position: absolute;
+    }
+  
+    &.closed {
+      display: none;
+    }
+  
+    div {
+      width: 100%;
+      padding: 3px;
+  
+      &:hover {
+        color: $gray87;
+      }
+
+      @include tablet-and-mobile {
+        padding: 7px 5px;
+      }
+    }
+  }
+}

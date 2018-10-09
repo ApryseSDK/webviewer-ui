@@ -1,0 +1,14 @@
+@import '../../constants/styles';
+
+.Icon{
+  width: $icon-width;
+  height: $icon-height;
+  color: #757575;
+  color: var(--icon-color);
+  pointer-events: none;
+
+  @include mobile {
+    width: 18px;
+    height: 18px;
+  }
+}

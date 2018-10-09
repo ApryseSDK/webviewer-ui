@@ -1,0 +1,29 @@
+@import '../../constants/styles';
+@import '../../constants/overlay';
+
+.MenuOverlay {
+  @extend %overlay;
+  
+  top: 46px;
+
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+
+  @include mobile {
+    right: 8px;
+    top: calc(#{$top-bar-height-m} + 3px);
+  }
+
+  .Button {
+    justify-content: left;
+    width: 100%;
+    margin: 0;
+  }
+
+  .PrintButton {
+    @include mobile {
+      display: none !important;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+.SignatureModal {
+  @extend %modal;
+
+  .container {
+    @extend %modal-shared-container-style;
+
+    width: calc(100% - 20px);
+    max-width: 600px;
+    height: calc(100% - 80px);
+    max-height: 396px;
+
+    .header {
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    canvas {
+      margin: 0;
+      padding: 0;
+      cursor: crosshair;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

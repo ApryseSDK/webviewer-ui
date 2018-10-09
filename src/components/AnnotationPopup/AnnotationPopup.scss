@@ -1,0 +1,9 @@
+@import '../../constants/popup';
+
+.AnnotationPopup {
+  @extend %popup;
+
+  &:empty {
+    padding: 0;
+  }
+}

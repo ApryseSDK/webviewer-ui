@@ -1,0 +1,45 @@
+@import '../../constants/panel';
+
+.NotesPanel {
+  @extend %sub-panel;
+  padding: 8px 0px;
+
+  .no-annotations {
+    @extend %center-of-panel;
+  }
+
+  .header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+
+    input {
+      width: 150px;
+      margin-left: 15px;
+      outline: none;
+      border: 1px solid $gray12;
+      border-radius: 4px;
+    }
+  }
+
+  .no-results {
+    @extend %center-of-panel;
+    &.visible {
+      display: block;
+    }
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .notes-wrapper {
+    overflow: auto;
+
+    &.visible {
+      display: block;
+    }
+    &.hidden {
+      display: none;
+    }
+  }
+}

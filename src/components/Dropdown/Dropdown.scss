@@ -1,0 +1,57 @@
+@import '../../constants/styles';
+
+.Dropdown {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 14px;
+  user-select: none;
+  margin-bottom: 5px;
+
+  .items {
+    width: 55px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    
+    .display-item {
+      height: 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    div {
+      &.show {
+        position: absolute;
+        top: 27px;
+        display: flex;
+        align-items: center;
+        height: 24px;
+      }
+
+      &.hide {
+        display: none;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &:after {
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+
+    content: '\25BE';
+    color: #757575;
+    color: var(--icon-color);
+  }
+
+  &:hover:after {
+    cursor: pointer;
+  }
+}

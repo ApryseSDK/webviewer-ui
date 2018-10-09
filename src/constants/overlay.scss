@@ -1,0 +1,15 @@
+@import './styles';
+
+%overlay {
+  @extend %open;
+  @extend %closed;
+  position: absolute;
+  z-index: 85;
+  display: flex;
+  flex-wrap: wrap;
+  background: $white;
+  background: var(--primary-color);
+  padding: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}

@@ -1,0 +1,15 @@
+@import '../../constants/styles';
+
+.ToolTip {
+  padding: 6px 8px;
+  font-size: 12px;
+
+  .shortcut {
+    margin-left: 3px;
+    opacity: 0.5;
+  }
+
+  @include mobile {
+    display: none;
+  }
+}

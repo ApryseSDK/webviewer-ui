@@ -1,0 +1,38 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+.LoadingModal {
+  @extend %modal;
+  
+  .container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .inner-wrapper {
+    margin: 10px;
+    border: 5px solid #eee;
+    border-top: 5px solid #aaa;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1.2s ease infinite;
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  .text {
+    color: #777;
+  }
+}

@@ -1,0 +1,16 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+.ErrorModal {
+  @extend %modal;
+
+  .container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    padding: 20px;
+    word-break: break-word;
+  }
+}

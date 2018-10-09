@@ -1,0 +1,23 @@
+@import '../../constants/styles';
+
+.Header {
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  width: 100%;
+  min-width: 300px;
+  height: $top-bar-height;
+  background: $white;
+  background: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: all .3s ease;
+
+  &.closed {
+    transform: translateY(-100%);
+    margin-bottom: -$top-bar-height;
+  }
+
+  @include mobile {
+    height: $top-bar-height-m;
+  }
+}

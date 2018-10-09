@@ -1,0 +1,152 @@
+{
+  "action": {
+    "cancel": "取消",
+    "clear": "清除",
+    "close": "关闭",
+    "comment": "注释",
+    "copy": "复制",
+    "delete": "删除",
+    "download": "下载",
+    "edit": "编辑",
+    "enterFullscreen": "全屏",
+    "exitFullscreen": "退出全屏",
+    "fit": "文档尺寸",
+    "fitToPage": "页面尺寸",
+    "fitToWidth": "自身尺寸", 
+    "openFile": "打开文件",
+    "print": "打印",
+    "reply": "回复",
+    "rotate": "旋转",
+    "rotateClockwise": "顺时针",
+    "rotateCounterClockwise": "逆时针",
+    "save": "保存",
+    "showMoreResults": "显示更多结果",
+    "sign": "签名",
+    "style": "样式",
+    "submit": "提交",
+    "zoom": "缩放",
+    "zoomIn": "放大",
+    "zoomOut": "缩小"
+  },
+  "annotation": {
+    "arrow": "箭头",
+    "callout": "标注",
+    "ellipse": "椭圆",
+    "freehand": "手绘",
+    "freehand2": "手绘",
+    "freetext": "自由文本",
+    "freetext2": "自由文本",
+    "highlight": "高亮",
+    "highlight2": "高亮",
+    "line": "直线",
+    "polygon": "多边形",
+    "polygonCloud": "云",
+    "polyline": "折线",
+    "rectangle": "矩形",
+    "signature": "签名",
+    "squiggly": "曲线",
+    "stamp": "盖章",
+    "stickyNote": "注释",
+    "strikeout": "删除线",
+    "underline": "下划线"
+  },
+  "component": {
+    "freehandToolsButton": "手绘工具",
+    "leftPanel": "面板",
+    "searchOverlay": "搜索",
+    "menuOverlay": "菜单",
+    "miscToolsButton": "其他工具",
+    "notesPanel": "备注",
+    "outlinesPanel": "大纲",
+    "shapeToolsButton": "形状工具",
+    "textToolsButton": "文本工具",
+    "thumbnailsPanel": "缩略图",
+    "toolsButton": "工具",
+    "viewControlsOverlay": "调整浏览方式"
+  },
+  "message": {
+    "badDocument": "无法加载文档，此文档已损坏或无效。",
+    "customPrintPlaceholder": "例如，3 4-10",
+    "encryptedAttemptsExceeded": "无法加载加密文档，尝试次数过多。",
+    "encryptedUserCancelled": "无法加载加密文档，密码输入已取消。",
+    "enterPassword": "此文档已被加密。请输入密码。",
+    "incorrectPassword": "密码错误，剩余输入机会：{{remainingAttempts}}",
+    "noAnnotations": "此文档没有注释。",
+    "noOutlines": "此文档没有大纲。",
+    "noResults": "未找到结果。",
+    "notSupported": "不支持该文件类型。",
+    "passwordRequired": "需要输入密码",
+    "preparingToPrint": "正在准备打印…",
+    "printTotalPageCount": "{{count}} 页",
+    "printTotalPageCount_plural": "{{count}} 页",
+    "processing": "正在处理…",
+    "searching": "正在搜索…",
+    "searchPlaceholder": "在此处搜索注释…",
+    "signHere": "在此处签名"
+  },
+  "option": {
+    "annotationColor": {
+      "border": "边框颜色",
+      "fill": "填充颜色",
+      "text": "文本颜色"
+    },
+    "displayMode": {
+      "layout": "布局",
+      "pageTransition": "页面转换"
+    },
+    "layout": {
+      "cover": "封面",
+      "double": "双页",
+      "single": "单页"
+    },
+    "notesPanel": {
+      "orderPosition": "位置排序",
+      "orderTime": "时间排序"
+    },
+    "pageTransition": {
+      "continuous": "连续",
+      "default": "逐页"
+    },
+    "print": {
+      "all": "全部",
+      "current": "当前"
+    },
+    "searchPanel": {
+      "caseSensitive": "区分大小写",
+      "wholeWordOnly": "整个词语"
+    },
+    "slider": {
+      "opacity": "不透明度",
+      "thickness": "厚度",
+      "text": "文字大小"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)"
+  },
+  "tool": {
+    "pan": "移动",
+    "select": "选择"
+  }
+}

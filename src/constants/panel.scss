@@ -1,0 +1,66 @@
+@import './styles';
+
+%panel {
+  position: fixed;
+  top: $top-bar-height;
+  z-index: 65;
+  display: flex;
+  flex-direction: column;
+  width: $panel-width;
+  height: calc(100% - #{$top-bar-height});
+  background: $gray4;
+  background: var(--secondary-color);
+  transition: transform .3s ease, visibility 0s .3s ease;
+  
+  @include mobile {
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  &.open {
+    transform: none;
+    visibility: visible;
+    transition: transform .3s ease, visibility 0s ease 0s;
+  }
+}
+
+@mixin closed($translate) {
+  &.closed {
+    visibility: hidden;
+    transition: transform .3s ease, visibility 0s ease .3s;
+    transform: $translate;
+
+    @include mobile {
+      transform: translateY(100%);
+    }
+  }
+}
+
+%right-panel {
+  @extend %panel;
+  @include closed(translateX(100%));
+  right: 0;
+  padding: 10px 5px 10px 5px;
+}
+
+%left-panel {
+  @extend %panel;
+  @include closed(translateX(-100%));
+  @include mobile {
+    z-index: 100; // Need to be above search overlay
+  }
+  left: 0;
+}
+
+%sub-panel {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  flex-direction: column;
+}
+
+%center-of-panel {
+  margin: auto 0;
+  align-self: center;
+}

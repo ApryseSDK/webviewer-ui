@@ -1,0 +1,47 @@
+@import '../../constants/styles';
+@import '../../constants/overlay';
+
+.PageNavOverlay {
+  @extend %overlay;
+  bottom: 10px;
+  left: 10px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+
+  @include mobile {
+    bottom: 8px;
+    left: 8px;
+    padding: 8px;
+    font-size: 14px;
+    z-index: 50;
+  }
+
+  &.open {
+    transition: opacity .3s ease, transform .3s ease, font-size .3s ease, padding .3s ease;
+  }
+
+  &.shifted {
+    transform: translateX($left-panel-width);
+
+    @include mobile {
+      transform: none;
+    }
+  }
+
+  input {
+    width: 1em;
+    padding: 0;
+    border: none;
+    text-align: right;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+
+    @include mobile {
+      font-size: 14px;
+    }
+  }
+}

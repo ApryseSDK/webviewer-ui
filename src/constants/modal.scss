@@ -1,0 +1,23 @@
+@import './styles';
+
+%modal {
+  @extend %open;
+  @extend %closed;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+%modal-shared-container-style {
+  background: $white;
+  background: var(--primary-color);
+  box-shadow: 1px 1px 5px black;
+  border-radius: 5px;
+}

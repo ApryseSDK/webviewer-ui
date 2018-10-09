@@ -1,0 +1,42 @@
+@import '../../constants/styles';
+@import '../../constants/overlay';
+
+.ViewControlsOverlay {
+  @extend %overlay;
+  
+  // For iOS 10
+  &.open {
+    display: block;
+  }
+
+  flex-direction: column;
+  top: 46px;
+
+  @include mobile {
+    left: 8px;
+    top: calc(#{$top-bar-height-m} + 3px);
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    padding: 1px 0;
+
+    .type {
+      width: 130px;
+      padding-left: 10px;
+    }
+    
+    &.hide-in-desktop {
+      @include desktop {
+        display: none;
+      }
+    }
+    
+    &.hide-in-tablet {
+      @include tablet {
+        display: none;
+      }
+    }
+  }
+}

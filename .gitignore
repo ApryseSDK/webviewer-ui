@@ -1,0 +1,13 @@
+.DS_Store
+.vscode
+node_modules
+npm-debug.log
+coverage
+annotations
+webviewer-ui.zip
+notes
+coverage
+build
+tests
+jest.config.js
+package-lock.json

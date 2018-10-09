@@ -1,0 +1,49 @@
+@import '../../constants/styles';
+
+.Thumbnail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 180px;
+  font-size: 12px;
+  text-align: center;
+
+  .container {
+    position: relative;
+    display: flex;
+    width: 150px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    .page-image {
+      width: auto !important;
+      max-width: 148px;
+      height: auto !important;
+      max-height: 148px;
+      border: 1px solid transparent;
+    }
+
+    .annotation-image {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 148px;
+      max-height: 148px;
+    }
+  }
+
+  .page-number {
+    padding: 5px 0;
+  }
+
+  &.active {
+    .page-image {
+      border: 1px solid var(--border-color);
+    } 
+  }
+}

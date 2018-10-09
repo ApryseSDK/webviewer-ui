@@ -1,0 +1,23 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.LeftPanel {
+  @extend %left-panel;
+
+  .left-panel-header {
+    display: flex;
+    align-items: center;
+    margin: 16px;
+
+    .close-btn {
+      margin-right: 17px;
+    }
+
+    @include mobile {
+      margin: 0px;
+      padding: 13px 17px;
+      background-color: $white;
+      background-color: var(--primary-color);
+    }
+  }
+}

@@ -1,0 +1,48 @@
+.PrintHandler {
+  /* don't want to set display:none otherwise embed doesn't print; */
+  height: 0;
+}
+
+/* Needs to be outside of print media query to work in Edge */
+@page {
+  margin: 0mm;
+}
+
+@media print {
+
+  html {
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+    overflow: visible !important;
+  }
+
+  .PrintHandler {
+    display: block;
+    height: 100%;
+
+    img {
+      display: block !important;
+      max-width: 100%;
+      max-height: 100%;
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+      page-break-after: always;
+    }
+
+    #print-handler {
+      height: 100%;
+    }
+  }
+
+  #app {
+    overflow: visible !important;
+  }
+
+  .App {
+    display: none !important;
+  }
+}

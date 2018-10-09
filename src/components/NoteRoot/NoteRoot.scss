@@ -1,0 +1,5 @@
+@import '../../constants/note';
+
+.NoteRoot {
+  @extend %title;
+}

@@ -1,0 +1,25 @@
+@import '../../constants/styles';
+
+.ToolButton {
+  &.hasStyles.active {
+    &:after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      display: block;
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-bottom: 8px solid  #757575;
+      border-bottom: 8px solid var(--icon-color);
+
+      @include mobile {
+        border-left: 8px solid transparent;
+        border-bottom: 8px solid  #757575;
+        border-bottom: 8px solid var(--icon-color);
+      }
+    }
+  }
+}

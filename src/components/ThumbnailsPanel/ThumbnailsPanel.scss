@@ -1,0 +1,15 @@
+@import '../../constants/panel';
+
+.ThumbnailsPanel {
+  @extend %sub-panel;
+  padding: 8px 0px;
+
+  .thumbs {
+    display: flex;
+    justify-content: center;
+  }
+
+  .row {
+    display: flex;
+  }
+}

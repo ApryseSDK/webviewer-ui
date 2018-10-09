@@ -1,0 +1,152 @@
+{
+  "action": {
+    "cancel": "Annuler",
+    "clear": "Effacer",
+    "close": "Fermer",
+    "comment": "Commenter",
+    "copy": "Copier",
+    "delete": "Supprimer",
+    "download": "Télécharger",
+    "edit": "Éditer",
+    "enterFullscreen": "Plein écran",
+    "exitFullscreen": "Quitter le plein écran",
+    "fit": "Fit",
+    "fitToPage": "Fit à la page",
+    "fitToWidth": "Fit à la largeur",
+    "openFile": "Ouvrir un fichier",
+    "print": "Imprimer",
+    "reply": "Répondre",
+    "rotate": "Tourner",
+    "rotateClockwise": "Tourner horaire",
+    "rotateCounterClockwise": "Tourner antihoraire",
+    "save": "Enregistrer", 
+    "showMoreResults": "Montrer plus de résultats",
+    "sign": "Signer", 
+    "style": "Style",
+    "submit": "Soumettre",
+    "zoom": "Zoom",
+    "zoomIn": "Zoomer",
+    "zoomOut": "Dézoomer"
+  },
+  "annotation": {
+    "arrow": "Flèche", 
+    "callout": "Faire appel à",
+    "ellipse": "Ellipse",
+    "freehand": "Stylo",
+    "freehand2": "Stylo",
+    "freetext": "Texte libre", 
+    "freetext2": "Texte libre",
+    "highlight": "Surligne",
+    "highlight2": "Surligne",
+    "line": "Ligne",
+    "polygon": "Polygone",
+    "polygonCloud": "Nuage",
+    "polyline": "Ligne polygonale",
+    "rectangle": "Rectangle",
+    "signature": "Signature",
+    "squiggly": "Ligne ondulée",
+    "stamp": "Timbre",
+    "stickyNote": "Note collante",
+    "strikeout": "Barré",
+    "underline": "Soulignage"
+  },
+  "component": {
+    "freehandToolsButton": "Outils de stylo",
+    "leftPanel": "Panneau de gauche",
+    "searchOverlay": "Recherche", 
+    "menuOverlay": "Menu",
+    "miscToolsButton": "Outils divers",
+    "notesPanel": "Remarques", 
+    "outlinesPanel": "Contour",
+    "shapeToolsButton": "Outils de forme", 
+    "textToolsButton": "Outils de texte",
+    "thumbnailsPanel": "Vignettes",
+    "toolsButton": "Outils",
+    "viewControlsOverlay": "Contrôles de l'affichage"
+  },
+  "message": {
+    "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
+    "customPrintPlaceholder": "par ex. : 3 4-10",
+    "encryptedAttemptsExceeded": "Échec du chargement du document chiffré. Trop de tentatives.",
+    "encryptedUserCancelled": "Échec du chargement du document chiffré. Saisie du mot de passe annulée.",
+    "enterPassword": "Ce document est protégé par un mot de passe. Veuillez saisir ce mot de passe.",
+    "incorrectPassword": "Mot de passe incorrect. Tentatives restantes: {{remainingAttempts}}",
+    "noAnnotations": "Ce document n'a pas d'annotations.",
+    "noOutlines": "Ce document n'a pas de plan.",
+    "noResults": "Aucun résultat trouvé.",
+    "notSupported": "Ce type de fichier n'est pas pris en charge.",
+    "passwordRequired": "Mot de passe requis",
+    "preparingToPrint": "Préparation à l'impression...",
+    "printTotalPageCount": "{{count}} page",
+    "printTotalPageCount_plural": "{{count}} pages",
+    "processing": "Traitement...",
+    "searching": "Recherche...",
+    "searchPlaceholder": "Rechercher des commentaires ici...",
+    "signHere": "Signer ici"
+  },
+  "option": {
+    "annotationColor": {
+      "border": "Couleur de bordure",
+      "fill": "Couleur de remplissage",
+      "text": "Couleur de texte"
+    },
+    "displayMode": {
+      "layout": "Disposition",
+      "pageTransition": "Transition de page"
+    },
+    "layout": {
+      "cover": "Couverture",
+      "double": "Deux",
+      "single": "Une"
+    },
+    "notesPanel": {
+      "orderPosition": "Position",
+      "orderTime": "Heure"
+    },
+    "pageTransition": {
+      "continuous": "Continu",
+      "default": "Page par page"
+    },
+    "print": {
+      "all": "Toutes",
+      "current": "Actuelle"
+    },
+    "searchPanel": {
+      "caseSensitive": "Sensible à la casse",
+      "wholeWordOnly": "Mot complet"
+    },
+    "slider": {
+      "opacity": "Opacité",
+      "thickness": "Épaisseur",
+      "text": "Taille du texte"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)"
+  },
+  "tool": {
+    "pan": "Panoramique",
+    "select": "Sélection"
+  }
+}

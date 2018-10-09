@@ -1,0 +1,95 @@
+// Dimensions
+$top-bar-height: 47px;
+$button-width: 46px;
+$button-height: 46px;
+$icon-width: 24px;
+$icon-height: 24px;
+$panel-width: 300px;
+$right-panel-width: $panel-width;
+$left-panel-width: $panel-width;
+
+// Mobile dimensions
+$top-bar-height-m: 42px;
+$button-width-m: 41px;
+$button-height-m: 41px;
+$search-overlay-height-m: 61px;
+
+// Colors
+$gray87: #212121;
+$gray54: #757575;
+$gray20: #cdcdcd;
+$gray12: #e0e0e0;
+$gray10: #e6e6e6;
+$gray4: #f5f5f5;
+$white: #fff;
+
+// Light theme
+$line-color: $gray10;
+$document-bg-color: $white;
+
+// Shadows
+$md-shadow1: 0 0 2px 0 rgba(0,0,0,0.14), 0 2px 2px 0 rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.12);
+
+// Screens
+$tablet-width: 900px;
+$mobile-width: 640px;
+
+%open {
+  &.open {
+    visibility: visible;
+  }
+}
+
+%closed {
+  &.closed {
+    visibility: hidden;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$tablet-width + 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$mobile-width + 1px}) and (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: #{$mobile-width}) {
+    @content;
+  }
+}
+
+@mixin tablet-and-mobile {
+  @media (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin ie11 {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    @content;
+  }
+}
+
+.hide-in-desktop {
+  @include desktop {
+    display: none;
+  }
+}
+
+.hide-in-tablet {
+  @include tablet {
+    display: none;
+  }
+}
+
+.hide-in-mobile {
+  @include mobile {
+    display: none;
+  }
+}

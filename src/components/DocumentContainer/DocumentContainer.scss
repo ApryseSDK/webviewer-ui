@@ -1,0 +1,85 @@
+@import '../../constants/styles';
+
+.DocumentContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - #{$top-bar-height});
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  transition: all .3s ease;
+  user-select: none;
+
+  @include mobile {
+    width: 100%;
+    height: calc(100% - #{$top-bar-height-m});
+  }
+
+  &.right-panel {
+    width: calc(100% - #{$right-panel-width});
+
+    @include mobile {
+      width: 100%;
+      visibility: hidden;
+    }
+  }
+
+  &.left-panel {
+    width: calc(100% - #{$left-panel-width});
+    margin-left: $left-panel-width;
+
+    @include mobile {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+
+  &.search-overlay {
+    @include mobile {
+      width: 100%;
+      margin-left: 0;
+      margin-top: $search-overlay-height-m;
+      height: calc(100% - #{$top-bar-height-m} - #{$search-overlay-height-m});
+    }
+  }
+
+  &.left-panel.right-panel {
+    width: calc(100% - #{$right-panel-width} - #{$left-panel-width});
+    margin-left: $left-panel-width;
+  }
+
+  &.no-header {
+    height: 100%;
+  }
+
+  .document {
+    margin: auto;
+    -webkit-tap-highlight-color: transparent;
+
+    .pageSection {
+      &[id*=pageSectionb] {
+        box-shadow: none;
+      }
+
+      .pageContainer {
+        background-color: $document-bg-color;
+        position: relative;
+        box-shadow: $md-shadow1;
+
+        span.link {
+          cursor: pointer;
+        }
+      }
+    }
+
+    textarea.freetext {
+      position: absolute;
+      z-index: 20;
+      border: 0;
+      padding: 0;
+      box-sizing: border-box;
+      resize: none;
+      outline: none;
+    }
+  }
+}

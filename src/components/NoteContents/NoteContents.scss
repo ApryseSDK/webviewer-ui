@@ -1,0 +1,59 @@
+@import '../../constants/styles';
+@import '../../constants/note';
+
+.NoteContents {
+  padding-top: 3px;
+  cursor: auto;
+  white-space: pre-wrap;
+
+  .edit-content {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    &.visible {
+      display: flex;
+    }
+
+    &.hidden {
+      display: none;
+    }
+
+    textarea {
+      width: 100%;
+      height: 30px;
+      resize: none;
+      overflow: hidden;
+      box-sizing: border-box;
+      border: 1px solid $gray12;
+      font-size: 12px;
+    }
+
+    .buttons  {
+      @extend %textarea-buttons;
+      margin-top: 5px;
+    }
+  }
+
+  .container {
+    &.visible {
+      display: block;
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .contents {
+    color: var(--text-color);
+    margin-right: 5px;
+    padding: 0;
+    word-wrap: break-word;
+    user-select: text;
+
+    .highlight {
+      background: #fffc95;
+    }
+  }
+}

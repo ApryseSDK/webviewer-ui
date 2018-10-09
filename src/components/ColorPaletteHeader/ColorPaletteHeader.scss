@@ -1,0 +1,65 @@
+@import '../../constants/styles.scss';
+
+.stylePopup-title {
+  margin-top: -4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .palette-title {
+    @include mobile {
+      font-size: 15px;
+    } 
+  }
+
+  .palette {
+    display: flex;
+    justify-content: space-between;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .text, .border, .fill {
+      height: 32px;
+      width: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      overflow: hidden;
+
+      &.selected {
+        font-weight: bold;
+        border-bottom: 2px solid #00a5e4;
+      }
+
+      @include mobile {
+        height: 36px;
+        width: 48px;
+      }
+    }
+
+    .border-icon, .fill-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 100%;
+
+      &.dark {
+        border: 1px solid #bfbfbf;
+      }
+      
+      &.bright {
+        border: none;
+      }
+    }
+
+    .fill-icon {
+      &.transparency {
+        background-color: $white;
+        overflow: hidden;
+      }
+    }
+  }
+}

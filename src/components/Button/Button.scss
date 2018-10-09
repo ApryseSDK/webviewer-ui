@@ -1,0 +1,50 @@
+@import '../../constants/styles';
+
+.Button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: $button-width;
+  height: $button-height;
+  padding: 6px;
+  margin: 0 2px;
+  font-size: 16px;
+  cursor: pointer;
+
+  @include mobile {
+    margin: 0 1px;
+    min-width: $button-width-m;
+    height: $button-height-m;
+  }
+
+  img {
+    width: 24px;
+
+    @include mobile {
+      width: 18px;
+    }
+  }
+
+  &:hover {
+    background: #f6f6f6;
+    background: var(--button-hover-color);
+
+    @media (hover: none) {
+      background: transparent;
+    }
+
+    @include mobile {
+      background: transparent;
+    }
+  }
+
+  &.active {
+    background: #f0f0f0;
+    background: var(--button-active-color);
+
+    .Icon {
+      color: var(--icon-active-color);
+    }
+  }
+}

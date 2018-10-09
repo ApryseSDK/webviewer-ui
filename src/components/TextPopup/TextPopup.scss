@@ -1,0 +1,5 @@
+@import '../../constants/popup';
+
+.TextPopup {
+  @extend %popup;
+}

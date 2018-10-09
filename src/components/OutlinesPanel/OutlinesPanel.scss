@@ -1,0 +1,9 @@
+@import '../../constants/panel';
+
+.OutlinesPanel {
+  @extend %sub-panel;
+
+  .no-outlines {
+    @extend %center-of-panel;
+  }
+}

@@ -1,0 +1,6 @@
+@import '../../constants/note';
+
+.NoteReply {
+  @extend %title;
+  padding: 5px 0;
+}

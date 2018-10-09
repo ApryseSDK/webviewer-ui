@@ -1,0 +1,45 @@
+@import '../../constants/styles';
+
+.sliders {
+  .slider__property {
+    grid-column: 1 / 2;
+    justify-self: start;
+  }
+
+  svg {
+    grid-column: 2 / 3;
+    justify-self: center;
+    cursor: pointer;
+  }
+
+  .slider__value {
+    grid-column: 3 / 4;
+    justify-self: end;
+  }
+
+  @include ie11 {
+    .slider {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .slider__property {
+        width: 120px;
+      }
+
+      svg {
+        flex-grow: 1
+      }
+
+      .slider__value {
+        display:flex;
+        justify-content: flex-end;
+        width: 60px;
+      }
+    }
+
+    .slider:nth-child(n+2) {
+      margin-top: 8px;
+    }
+  }
+}

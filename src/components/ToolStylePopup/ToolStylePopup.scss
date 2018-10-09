@@ -1,0 +1,10 @@
+@import '../../constants/popup';
+
+.ToolStylePopup {
+  @extend %open;
+  @extend %closed;
+  @extend %popup-mobile;
+
+  position: absolute;
+  z-index: 60;
+}

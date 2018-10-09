@@ -1,0 +1,35 @@
+@import '../../constants/styles';
+
+.LeftPanelTabs {
+  flex: 1;
+  display: flex;
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+
+  .Button {
+    background: $white;
+    background: var(--primary-color);
+    flex-grow: 1;
+    height: 100%;
+    margin: 0;
+
+    .Icon {
+      width: 19px;
+      height: 24px;
+    }
+
+    &:nth-child(n+2) {
+      border-left: 1px solid var(--border-color);
+    }
+
+    &.active {
+      background: rgba(0, 0, 0, 0.078);
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

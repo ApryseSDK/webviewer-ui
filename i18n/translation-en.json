@@ -1,0 +1,152 @@
+{
+  "action": {
+    "cancel": "Cancel",
+    "clear": "Clear",
+    "close": "Close",
+    "comment": "Comment",
+    "copy": "Copy",
+    "delete": "Delete",
+    "download": "Download",
+    "edit": "Edit",
+    "enterFullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen",
+    "fit": "Fit",
+    "fitToPage": "Fit to page",
+    "fitToWidth": "Fit to width",
+    "openFile": "Open file",
+    "print": "Print",
+    "reply": "Reply",
+    "rotate": "Rotate",
+    "rotateClockwise": "Clockwise",
+    "rotateCounterClockwise": "Counter-clockwise",
+    "save": "Save",
+    "showMoreResults": "Show more results",
+    "sign": "Sign",
+    "style": "Style",
+    "submit": "Submit",
+    "zoom": "Zoom",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out"
+  },
+  "annotation": {
+    "arrow": "Arrow",
+    "callout": "Callout",
+    "ellipse": "Ellipse",
+    "freehand": "Free hand",
+    "freehand2": "Free hand",
+    "freetext": "Free text",
+    "freetext2": "Free text",
+    "highlight": "Highlight",
+    "highlight2": "Highlight",
+    "line": "Line",
+    "polygon": "Polygon",
+    "polygonCloud": "Cloud",
+    "polyline": "Polyline",
+    "rectangle": "Rectangle",
+    "signature": "Signature",
+    "squiggly": "Squiggly",
+    "stamp": "Stamp",
+    "stickyNote": "Comment",
+    "strikeout": "Strikeout",
+    "underline": "Underline"
+  },
+  "component": {
+    "freehandToolsButton": "Freehand tools",
+    "leftPanel": "Panel",
+    "searchOverlay": "Search",
+    "menuOverlay": "Menu",
+    "miscToolsButton": "Misc tools",
+    "notesPanel": "Notes",
+    "outlinesPanel": "Outlines",
+    "shapeToolsButton": "Shape tools",
+    "textToolsButton": "Text tools",
+    "thumbnailsPanel": "Thumbnails",
+    "toolsButton": "Tools",
+    "viewControlsOverlay": "View controls"
+  },
+  "message": {
+    "badDocument": "Failed to load document. The document is either corrupt or not valid.",
+    "customPrintPlaceholder": "e.g. 3, 4-10",
+    "encryptedAttemptsExceeded": "Failed to load encrypted document. Too many attempts.",
+    "encryptedUserCancelled": "Failed to load encrypted document. Password entry cancelled.",
+    "enterPassword": "This document is password protected. Please enter a password",
+    "incorrectPassword": "Incorrect password, attempts left: {{ remainingAttempts }}",
+    "noAnnotations": "This document has no annotations.",
+    "noOutlines": "This document has no outlines.",
+    "noResults": "No results found.",
+    "notSupported": "That file type is not supported.",
+    "passwordRequired": "Password required",
+    "preparingToPrint": "Preparing to print...",
+    "printTotalPageCount": "{{count}} page",
+    "printTotalPageCount_plural": "{{count}} pages",
+    "processing": "Processing...",
+    "searching": "Searching...",
+    "searchPlaceholder": "Search comments...",
+    "signHere": "Sign Here"
+  },
+  "option": {
+    "annotationColor": {
+      "border": "Border color",
+      "fill": "Fill color",
+      "text": "Text color"
+    },
+    "displayMode": {
+      "layout": "Layout",
+      "pageTransition": "Page transition"
+    },
+    "layout": {
+      "cover": "Cover",
+      "double": "Double",
+      "single": "Single"
+    },
+    "notesPanel": {
+      "orderPosition": "Position",
+      "orderTime": "Time"
+    },
+    "pageTransition": {
+      "continuous": "Continuous",
+      "default": "Page by page"
+    },
+    "print": {
+      "all": "All",
+      "current": "Current"
+    },
+    "searchPanel": {
+      "caseSensitive": "Case sensitive",
+      "wholeWordOnly": "Whole word"
+    },
+    "slider": {
+      "opacity": "Opacity",
+      "thickness": "Thickness",
+      "text": "Text Size"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)"
+  },
+  "tool": {
+    "pan": "Pan",
+    "select": "Select"
+  }
+}

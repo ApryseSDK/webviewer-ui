@@ -1,0 +1,61 @@
+@import '../../constants/styles';
+
+:root {
+  --primary-color: #FFFFFF;
+  --secondary-color: #F5F5F5;
+  --border-color: #E0E0E0;
+  --button-hover-color: #F6F6F6;
+  --button-active-color: #F0F0F0;
+  --text-color: #333333;
+  --icon-color: #757575;
+  --icon-active-color: #757575;
+}
+
+html, body , #app {
+  width: 100%;
+  min-width: 300px;
+  max-width: 100vw;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+  color: #333;
+  color: var(--text-color);
+}
+
+.App {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: $gray4;
+  background: var(--secondary-color);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+
+  @include tablet-and-mobile {
+    position: fixed;
+  }
+
+  div {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  div, canvas {
+    user-select: none;
+  }
+
+  textarea {
+    font-family: 'Roboto', sans-serif;
+    appearance: none;
+    user-select: text !important;
+  }
+
+  input[type=text] {
+    appearance: none;
+    user-select: text !important;
+  }
+}
