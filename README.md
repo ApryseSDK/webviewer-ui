@@ -10,7 +10,7 @@ This repo is specifically designed for any users interested in advanced customiz
 
 To work with this repo, you must download the latest WebViewer and link it to this repo.
 
-1. Download [WebViewer](https://pdftron.com/webviewer).
+1. Download [WebViewer](https://pdftron.com/documentation/web/guides/run-samples).
 2. Follow steps from [forking WebViewer](https://pdftron.com/documentation/web/guides/advanced-customization/forking-and-setting-up-the-sync).
 
 Now you can navigate to `WebViewer/lib/ui` and run the commands to install, run and build.
