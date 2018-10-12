@@ -249,6 +249,9 @@ class SearchOverlay extends React.PureComponent {
     const { isSearchPanelOpen, activeResultIndex, results, setActiveResultIndex } = this.props;
     
     if (isSearchPanelOpen) {
+      if (results.length === 0) {
+        return;
+      }
       const nextResultIndex = activeResultIndex === results.length - 1 ? 0 : activeResultIndex + 1;
       setActiveResultIndex(nextResultIndex);
       core.setActiveSearchResult(results[nextResultIndex]);
@@ -262,6 +265,9 @@ class SearchOverlay extends React.PureComponent {
     const { isSearchPanelOpen, activeResultIndex, results, setActiveResultIndex } = this.props;
 
     if (isSearchPanelOpen) {
+      if (results.length === 0) {
+        return;
+      }
       const prevResultIndex = activeResultIndex === 0 ? results.length - 1  : activeResultIndex - 1; 
       setActiveResultIndex(prevResultIndex);
       core.setActiveSearchResult(results[prevResultIndex]);
