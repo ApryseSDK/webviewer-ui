@@ -47,15 +47,20 @@ class Icon extends React.PureComponent {
 
   render() {
     const { className = '', color } = this.props;
-    const filter = (color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)')) ? 'drop-shadow(0 0 .5px #333)' : undefined;
-    const isInlineSvg = this.isInlineSvg();
-    let viewBox, child;
+    // const filter = (color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)')) ? 'drop-shadow(0 0 .5px #333)' : undefined;
+    // const isInlineSvg = this.isInlineSvg();
+    // let viewBox, child;
 
-    if (!isInlineSvg) {
-      const svg = require(`../../../assets/${this.props.glyph}.svg`).default;
-      viewBox = svg.viewBox;
-      child = (<use xlinkHref={`#${svg.id}`} />);
-    }
+    // if (!isInlineSvg) {
+    //   const svg = require(`../../../assets/${this.props.glyph}.svg`).default;
+    //   viewBox = svg.viewBox;
+    //   child = (<use xlinkHref={`#${svg.id}`} />);
+    // }
+
+    const base64 = require(`../../../assets/${this.props.glyph}.svg`);
+    console.log(base64);
+
+    return <div className='Icon' dangerouslySetInnerHTML={{__html: base64}}></div>;
 
     return (
       <svg ref={this.svg} className={`Icon ${className}`} viewBox={viewBox} style={{ color: (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color, filter }}>
