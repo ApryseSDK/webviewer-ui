@@ -43,6 +43,7 @@
 
   &.active {
     .page-image {
+      border: 1px solid $gray12;
       border: 1px solid var(--border-color);
     } 
   }

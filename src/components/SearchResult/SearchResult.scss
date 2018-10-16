@@ -8,6 +8,7 @@
   cursor: pointer;
   background: white;
   background: var(--primary-color);
+  border: 1px solid $gray12;
   border: 1px solid var(--border-color);
 
   &.selected {
