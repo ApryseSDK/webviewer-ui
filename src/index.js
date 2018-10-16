@@ -176,6 +176,7 @@ if (window.CanvasRenderingContext2D) {
           setHeaderItems: apis.setHeaderItems(store),
           setLanguage: apis.setLanguage,
           setLayoutMode: apis.setLayoutMode,
+          setNotesPanelSort: apis.setNotesPanelSort(store),
           setPrintQuality: apis.setPrintQuality(store),
           setReadOnly: apis.setReadOnly,
           setShowSideWindow: apis.setShowSideWindow(store),

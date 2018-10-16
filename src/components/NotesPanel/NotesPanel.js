@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import { translate } from 'react-i18next';
-import dayjs from 'dayjs';
 
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
-import getLatestActivityDate from 'helpers/getLatestActivityDate';
+import sortMap from 'constants/sortMap';
 import selectors from 'selectors';
 
 import './NotesPanel.scss';
@@ -60,10 +59,6 @@ class NotesPanel extends React.PureComponent {
   }
 
   getRootAnnotations = () => core.getAnnotationsList().filter(annotation => annotation.Listable && !annotation.isReply() && !annotation.Hidden);
-
-  handleInputClick = () => {
-    // core.deselectAllAnnotations();
-  }
 
   handleInputChange = e => {
     const searchInput = e.target.value;
@@ -118,23 +113,6 @@ class NotesPanel extends React.PureComponent {
     });
   }
 
-  sortNotes = notes => {
-    const { sortNotesBy } = this.props;
-
-    if (sortNotesBy === 'position') {
-      notes.sort((a, b) => {
-        if (a.PageNumber === b.PageNumber) {
-          return a.Y - b.Y;
-        }
-        return a.PageNumber - b.PageNumber;
-      });
-    } else if (sortNotesBy === 'time') {
-      notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a));
-    }
-
-    return notes;
-  }
-
   getPrevNote = (sortedNotes, currNote) => {
     const sortedVisibleNotes = sortedNotes.filter(note => this.isVisibleNote(note));
     const sortedVisibleNoteIds = sortedVisibleNotes.map(note => note.Id);
@@ -151,7 +129,7 @@ class NotesPanel extends React.PureComponent {
     return(
       <React.Fragment>
         <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
-          {this.renderNotes(this.sortNotes(this.rootAnnotations))}
+          {this.renderNotes(sortMap[this.props.sortNotesBy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
           {this.props.t('message.noResults')}
@@ -174,46 +152,19 @@ class NotesPanel extends React.PureComponent {
   }
 
   renderListSeparator = (notes, currNote) => {
-    if (!this.isVisibleNote(currNote)) {
-      return null;
-    }
-
-    const { sortNotesBy } = this.props;
+    const { shouldRenderSeparator, getSeparatorContent } = sortMap[this.props.sortNotesBy];
     const prevNote = this.getPrevNote(notes, currNote);
     const isFirstNote = prevNote === currNote;
 
-    if (sortNotesBy === 'position') {
-      const isInDifferentPages = currNote.PageNumber !== prevNote.PageNumber;
-      if (isFirstNote || isInDifferentPages) {
-        return (
-          <ListSeparator 
-            renderContent={() => `Page ${currNote.PageNumber}`}
-          />
-        );
-      }
-    } else if (sortNotesBy === 'time') {
-      const isInDifferentDate = getLatestActivityDate(currNote).getDate() !== getLatestActivityDate(prevNote).getDate();
-      if (isFirstNote || isInDifferentDate) {
-        return (
-          <ListSeparator 
-            renderContent={() => {
-              const today = dayjs(new Date()).format('MMM D, YYYY');
-              const yesterday = dayjs(new Date(new Date() - 86400000)).format('MMM D, YYYY');
-              const latestActivityDate = dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY');
-
-              if (latestActivityDate === today) {
-                return 'Today';
-              }
-              if (latestActivityDate === yesterday) {
-                return 'Yesterday';
-              }
-              return latestActivityDate;
-            }}
-          />
-        );
-      }
+    if (
+      this.isVisibleNote(currNote) &&
+      shouldRenderSeparator && 
+      getSeparatorContent &&
+      (isFirstNote || shouldRenderSeparator(prevNote, currNote))
+    ) {
+      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote)} />;
     }
-  
+
     return null;
   }
 
@@ -233,10 +184,9 @@ class NotesPanel extends React.PureComponent {
               <input 
                 type="text" 
                 placeholder={t('message.searchPlaceholder')}
-                onClick={this.handleInputClick}
                 onChange={this.handleInputChange} 
               />
-              <Dropdown />
+              <Dropdown items={Object.keys(sortMap)} />
             </div>
             {this.renderNotesPanelContent()}
           </React.Fragment>
