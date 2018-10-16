@@ -98,8 +98,8 @@ class SearchOverlay extends React.PureComponent {
 
   executeFullSearch = () => {
     const { searchValue, addResult, setIsSearching, setNoResult, setActiveResultIndex } = this.props;
-    const searchMode = this.getSearchMode(true);
     const isFullSearch = true;
+    const searchMode = this.getSearchMode(isFullSearch);
     let resultIndex = -1;
     let noActiveResultIndex = true;
     let noResult = true;
@@ -169,9 +169,9 @@ class SearchOverlay extends React.PureComponent {
     return inSamePage && hasSameCoordinates;
   }
 
-  executeSingleSearch = () => {
+  executeSingleSearch = (isSearchUp = false) => {
     const { searchValue, setActiveResult, setIsSearching, addResult, resetSearch } = this.props;
-    let searchMode = this.getSearchMode();
+    const searchMode = isSearchUp ? this.getSearchMode() | core.getSearchMode().e_search_up : this.getSearchMode();
     const isFullSearch = false;
     resetSearch();
     const handleSearchResult = result => {
@@ -272,7 +272,8 @@ class SearchOverlay extends React.PureComponent {
       setActiveResultIndex(prevResultIndex);
       core.setActiveSearchResult(results[prevResultIndex]);
     } else {
-      this.executeSingleSearch({ searchUp: true });
+      const isSearchUp = true;
+      this.executeSingleSearch(isSearchUp);
     }
   }
 
