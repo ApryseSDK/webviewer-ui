@@ -21,7 +21,7 @@ class Button extends React.PureComponent {
     ]),
     title: PropTypes.string,
     color: PropTypes.string,
-    dataElement: PropTypes.string.isRequired,
+    dataElement: PropTypes.string,
     className: PropTypes.string,
     t: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
