@@ -9,6 +9,7 @@
   height: $top-bar-height;
   background: $white;
   background: var(--primary-color);
+  border-bottom: 1px solid $gray12;
   border-bottom: 1px solid var(--border-color);
   transition: all .3s ease;
 
