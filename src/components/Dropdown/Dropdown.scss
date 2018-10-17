@@ -2,35 +2,44 @@
 
 .Dropdown {
   flex-shrink: 0;
+  flex-grow: 1;
   display: flex;
-  justify-content: flex-end;
   font-size: 14px;
   user-select: none;
+  justify-content: space-between;
   margin-bottom: 5px;
-
+  z-index: 80;
+  
   .items {
-    width: 55px;
-    display: flex;
-    flex-direction: column;
+    flex-grow: 1;
     position: relative;
     
     .display-item {
       height: 24px;
+      flex-grow: 1;
       display: flex;
+      justify-content: flex-end;
       align-items: center;
     }
 
-    div {
-      &.show {
-        position: absolute;
-        top: 27px;
-        display: flex;
-        align-items: center;
-        height: 24px;
-      }
+    .dropdown-items {
+      position: absolute;
+      top: 27px;
+      width: 100%;
 
+      &.show {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+  
       &.hide {
         display: none;
+      }
+
+      .dropdown-item {
+        margin: 5px 0;
       }
     }
 

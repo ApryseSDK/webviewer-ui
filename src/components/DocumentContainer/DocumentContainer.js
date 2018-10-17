@@ -86,7 +86,9 @@ class DocumentContainer extends React.PureComponent {
     const { currentPage, totalPages } = this.props;
     const { scrollTop, scrollHeight, clientHeight } = this.container.current;
     const reachedTop = scrollTop === 0;
-    const reachedBottom = scrollTop === scrollHeight - clientHeight;
+    // we have 1 instead of just checking scrollTop + clientHeight === scrollHeight is because
+    // for some screens it has ~1 pixels off
+    const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
 
     if (e.deltaY < 0 && reachedTop && currentPage > 1) {
       this.navigatePagesUp();
