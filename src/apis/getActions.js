@@ -1,10 +1,15 @@
 import core from 'core';
+import { HIGH_PRIORITY } from 'constants/actionPriority';
 import * as exposedActions from 'actions/exposedActions';
 import actions from 'actions';
 import selectors from 'selectors';
 
 export default store => ({
   ...mapExposedActions(store),
+  disableElement: dataElement => store.dispatch(actions.disableElement(dataElement, HIGH_PRIORITY)),
+  disableElements: dataElements => store.dispatch(actions.disableElements(dataElements, HIGH_PRIORITY)),
+  enableElement: dataElement => store.dispatch(actions.enableElement(dataElement, HIGH_PRIORITY)),
+  enableElements: dataElements => store.dispatch(actions.enableElements(dataElements, HIGH_PRIORITY)),
   focusNote: id => {
     const state = store.getState();
     const annotation = core.getAnnotationById(id);

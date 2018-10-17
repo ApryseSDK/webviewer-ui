@@ -1,10 +1,17 @@
 import { documentTypes } from 'constants/types';
 
 // viewer
-export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement];
+export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
 export const isToolDisabled = (state, toolName) => state.viewer.disabledTools[toolName];
-export const isElementOpen = (state, dataElement) => state.viewer.openElements[dataElement] && !state.viewer.disabledElements[dataElement];
+export const isElementOpen = (state, dataElement) => {
+  if (state.viewer.disabledElements[dataElement]) {
+    return state.viewer.openElements[dataElement] && !state.viewer.disabledElements[dataElement].disabled;
+  }
+  
+  return state.viewer.openElements[dataElement];
+};
 export const getActiveHeaderItems = state => state.viewer.headers[state.viewer.activeHeaderGroup];
+export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].priority;
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
 export const getToolButtonObject = (state, toolName) => state.viewer.toolButtonObjects[toolName];
 export const getToolNamesByGroup = (state, toolGroup) => Object.keys(state.viewer.toolButtonObjects).filter(name => state.viewer.toolButtonObjects[name].group === toolGroup);
