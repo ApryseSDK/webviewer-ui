@@ -1,2 +1,3 @@
-export const HIGH_PRIORITY = 2;
-export const LOW_PRIORITY = 1;
+export const PRIORITY_THREE = 3;
+export const PRIORITY_TWO = 2;
+export const PRIORITY_ONE = 1;
