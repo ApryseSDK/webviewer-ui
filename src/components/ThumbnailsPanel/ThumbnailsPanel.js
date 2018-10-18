@@ -183,12 +183,7 @@ class ThumbnailsPanel extends React.PureComponent {
       };
 
       const id = core.loadThumbnailAsync(pageIndex, thumb => {
-        // const pageWidth = core.getPageWidth(pageIndex);
-        // const pageHeight = core.getPageHeight(pageIndex);
-        // const { width, height } = this.getThumbnailSize(pageWidth, pageHeight);
         thumb.className = 'page-image';
-        // thumb.width = width;
-        // thumb.height = height;
         if (this.thumbs[pageIndex]) {
           this.thumbs[pageIndex].element.appendChild(thumb);
           this.thumbs[pageIndex].loaded = true;
