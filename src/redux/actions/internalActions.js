@@ -1,4 +1,37 @@
+import getFilteredDataElements from 'helpers/getFilteredDataElements';
+import selectors from 'selectors';
+
 // viewer
+export const disableElement = (dataElement, priority) => (dispatch, getState) => {
+  if (dataElement === 'stylePopup') {
+    dispatch(disableElements(['toolStylePopup', 'annotationStylePopup'], priority));
+  } else {
+    const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
+
+    if (!currentPriority || priority >= currentPriority) {
+      dispatch({ type: 'DISABLE_ELEMENT', payload: { dataElement, priority }});
+    }
+  }
+};
+export const disableElements = (dataElements, priority) => (dispatch, getState) => {
+  const filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
+  dispatch({ type: 'DISABLE_ELEMENTS', payload: { dataElements: filteredDataElements, priority } });
+};
+export const enableElement = (dataElement, priority) => (dispatch, getState) => {
+  if (dataElement === 'stylePopup') {
+    dispatch(enableElements(['toolStylePopup', 'annotationStylePopup'], priority));
+  } else {
+    const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
+
+    if (!currentPriority || priority >= currentPriority) {
+      dispatch({ type: 'ENABLE_ELEMENT', payload: { dataElement, priority }});
+    }
+  } 
+};
+export const enableElements = (dataElements, priority) => (dispatch, getState) => {
+  const filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
+  dispatch({ type: 'ENABLE_ELEMENTS', payload: { dataElements: filteredDataElements, priority } });
+};
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   const name = (toolObject.name === 'TextSelect') ? 'AnnotationEdit' : toolObject.name;

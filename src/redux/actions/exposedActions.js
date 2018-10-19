@@ -1,21 +1,5 @@
 // viewer
-export const disableElement = dataElement => dispatch => {
-  if (dataElement === 'stylePopup') {
-    dispatch(disableElements(['toolStylePopup', 'annotationStylePopup']));
-  } else {
-    dispatch({ type: 'DISABLE_ELEMENT', payload: { dataElement }});
-  }
-};
-export const disableElements = dataElements => ({ type: 'DISABLE_ELEMENTS', payload: { dataElements } });
-export const enableElement = dataElement => dispatch => {
-  if (dataElement === 'stylePopup') {
-    dispatch(enableElements(['toolStylePopup', 'annotationStylePopup']));
-  } else {
-    dispatch({ type: 'ENABLE_ELEMENT', payload: { dataElement }});
-  }
-};
-export const enableElements = dataElements => ({ type: 'ENABLE_ELEMENTS', payload: { dataElements } });
-export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: { } });
+export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
 export const openElement = (dataElement, loadingMessage) => (dispatch, getState) => {
   const state = getState();
 
@@ -30,10 +14,11 @@ export const openElement = (dataElement, loadingMessage) => (dispatch, getState)
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
       dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
       break;
+    case 'loadingModal': 
+      dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
+      dispatch({ type: 'SET_LOADING_MESSAGE', payload: { loadingMessage } });  
+      break;
     default:
-      if (dataElement === 'loadingModal') {
-        dispatch({ type: 'SET_LOADING_MESSAGE', payload: { loadingMessage } });  
-      }
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
       break;
   }
@@ -58,11 +43,14 @@ export const closeElement = dataElement => (dispatch, getState) => {
         dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
       }
       break;
+    case 'loadingModal':
+      if (state.viewer.openElements['loadingModal']) {
+        dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement } });
+        dispatch({ type: 'SET_LOADING_MESSAGE', payload: { loadingMessage: '' } });
+      }
+      break;
     default:
       if (state.viewer.openElements[dataElement]) {
-        if (dataElement === 'loadingModal') {
-          dispatch({ type: 'SET_LOADING_MESSAGE', payload: { loadingMessage: '' } });  
-        }
         dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement } });
       }
       break;
