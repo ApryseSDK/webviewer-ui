@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { hot } from 'react-hot-loader';
 
 import Button from 'components/Button';
 import ActionButton from 'components/ActionButton';
@@ -134,4 +133,4 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(translate()(ViewControlsOverlay)));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(ViewControlsOverlay));

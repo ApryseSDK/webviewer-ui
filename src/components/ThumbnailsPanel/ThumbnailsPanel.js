@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactList from 'react-list';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import Thumbnail from 'components/Thumbnail';
 
@@ -293,4 +292,4 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
 });
 
-export default hot(module)(connect(mapStateToProps)(ThumbnailsPanel));
+export default connect(mapStateToProps)(ThumbnailsPanel);

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import SearchResult from 'components/SearchResult';
 import ListSeparator from 'components/ListSeparator';
@@ -112,4 +111,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement,
 };
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(translate()(SearchPanel)));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(SearchPanel));

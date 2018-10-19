@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 import { translate } from 'react-i18next';
 import Autolinker from 'autolinker';
 
@@ -257,4 +256,4 @@ const matDispatchToProps = {
   setIsNoteEditing: actions.setIsNoteEditing,
 };
 
-export default hot(module)(connect(mapStateToProps, matDispatchToProps)(translate()(Note)));
+export default connect(mapStateToProps, matDispatchToProps)(translate()(Note));

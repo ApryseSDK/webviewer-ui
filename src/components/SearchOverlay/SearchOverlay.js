@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import Icon from 'components/Icon';
 import Input from 'components/Input';
@@ -377,4 +376,4 @@ const mapDispatchToProps = {
   setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull
 };
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(translate()(SearchOverlay)));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(SearchOverlay));

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 import ReactTooltip from 'react-tooltip';
 
 import ToolButton from 'components/ToolButton';
@@ -114,4 +113,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(ToolsOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(ToolsOverlay);
