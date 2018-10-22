@@ -127,17 +127,18 @@ const Header = {
     return this;
   },
   /* rethink update later */
-  // update(arg) {
-  //   if (typeof arg === 'object') {
-  //     this._updateItem(arg);
-  //   } else if (Array.isArray(arg)) {
-  //     this._updateItems(arg);
-  //   } else {
-  //     console.warn('Argument must be either an object or an array');
-  //   }
+  update(arg) {
+    // if (typeof arg === 'object') {
+    //   this._updateItem(arg);
+    // }
+    if (Array.isArray(arg)) {
+      this._updateItems(arg);
+    } else {
+      console.warn('Argument must be an array');
+    }
 
-  //   return this;
-  // },
+    return this;
+  },
   // _updateItem(obj) {
   //   if (this.index === -1) {
   //     console.warn('Please use .get(dataElement) first before using update');
@@ -151,11 +152,11 @@ const Header = {
 
   //   return this;
   // },
-  // _updateItems(items) {
-  //   this.headers[this.headerGroup] = items;
+  _updateItems(items) {
+    this.headers[this.headerGroup] = items;
     
-  //   return this;
-  // },
+    return this;
+  },
   _setIndex(dataElement) {
     this.index = this._getIndexOfElement(dataElement);
   },
