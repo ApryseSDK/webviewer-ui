@@ -12,21 +12,7 @@ class Icon extends React.PureComponent {
 
   constructor() {
     super();
-    this.svg = React.createRef();
-  }
-
-  updateSvg() {
-    if (this.isInlineSvg()) {
-      var domElement = this.svg.current;
-      // remove existing svg
-      while (domElement.firstChild) {
-        domElement.removeChild(domElement.firstChild);
-      }
-
-      // innerHTML also works, but not in IE...
-      const svg = (new DOMParser()).parseFromString(this.props.glyph, 'image/svg+xml').querySelector('svg');
-      domElement.appendChild(svg);
-    }
+    this.icon = React.createRef();
   }
 
   componentDidMount() {
@@ -39,28 +25,33 @@ class Icon extends React.PureComponent {
     }
   }
 
+  updateSvg() {
+    if (this.isInlineSvg()) {
+      var domElement = this.icon.current;
+
+      // remove existing svg
+      while (domElement.firstChild) {
+        domElement.removeChild(domElement.firstChild);
+      }
+
+      // innerHTML also works, but not in IE...
+      const svg = (new DOMParser()).parseFromString(this.props.glyph, 'image/svg+xml').querySelector('svg');
+      domElement.appendChild(svg);
+    }
+  }
+
   isInlineSvg() {
     const { glyph } = this.props;
-
     return glyph && glyph.indexOf('<svg') === 0;
   }
 
   render() {
-    const { className = '', color } = this.props;
+    const { className = '', color, glyph } = this.props;
     const filter = (color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)')) ? 'drop-shadow(0 0 .5px #333)' : undefined;
-    const isInlineSvg = this.isInlineSvg();
-    let viewBox, child;
-
-    if (!isInlineSvg) {
-      const svg = require(`../../../assets/${this.props.glyph}.svg`).default;
-      viewBox = svg.viewBox;
-      child = (<use xlinkHref={`#${svg.id}`} />);
-    }
+    const svgElement = this.isInlineSvg() ? glyph : require(`../../../assets/${this.props.glyph}.svg`);
 
     return (
-      <svg ref={this.svg} className={`Icon ${className}`} viewBox={viewBox} style={{ color: (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color, filter }}>
-        {child}
-      </svg>
+      <div ref={this.icon} className={`Icon ${className}`} style={{ color: (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color, filter }} dangerouslySetInnerHTML={{__html: svgElement}}></div>
     );
   }
 }
