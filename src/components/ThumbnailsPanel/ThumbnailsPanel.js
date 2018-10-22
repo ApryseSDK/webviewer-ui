@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactList from 'react-list';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import Thumbnail from 'components/Thumbnail';
 
@@ -183,12 +182,7 @@ class ThumbnailsPanel extends React.PureComponent {
       };
 
       const id = core.loadThumbnailAsync(pageIndex, thumb => {
-        const pageWidth = core.getPageWidth(pageIndex);
-        const pageHeight = core.getPageHeight(pageIndex);
-        const { width, height } = this.getThumbnailSize(pageWidth, pageHeight);
         thumb.className = 'page-image';
-        thumb.width = width;
-        thumb.height = height;
         if (this.thumbs[pageIndex]) {
           this.thumbs[pageIndex].element.appendChild(thumb);
           this.thumbs[pageIndex].loaded = true;
@@ -293,4 +287,4 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
 });
 
-export default hot(module)(connect(mapStateToProps)(ThumbnailsPanel));
+export default connect(mapStateToProps)(ThumbnailsPanel);

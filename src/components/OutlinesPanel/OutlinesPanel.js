@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { hot } from 'react-hot-loader';
 
 import Outline from 'components/Outline';
 
@@ -49,4 +48,4 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'outlinePanel'),
 });
 
-export default hot(module)(connect(mapStateToProps)(translate()(OutlinesPanel)));
+export default connect(mapStateToProps)(translate()(OutlinesPanel));

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
@@ -91,4 +90,4 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
 });
 
-export default hot(module)(connect(mapStateToProps)(PageNavOverlay));
+export default connect(mapStateToProps)(PageNavOverlay);

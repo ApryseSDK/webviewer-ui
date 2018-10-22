@@ -1,7 +1,7 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 	mode: 'production',
@@ -16,9 +16,9 @@ module.exports = {
 	},
 	plugins: [
     new CopyWebpackPlugin([
-	    {
-	    	from: './src/index.build.html',
-	    	to: '../build/index.html'
+			{
+				from: './src/index.build.html',
+				to: '../build/index.html'
 			},
 			{
 				from: './i18n',
@@ -32,7 +32,7 @@ module.exports = {
 		new MiniCssExtractPlugin({
 			filename: 'style.css',
     }),
-		// new BundleAnalyzerPlugin()
+		new BundleAnalyzerPlugin()
 	],
 	module: {
 		rules: [
@@ -43,8 +43,8 @@ module.exports = {
 					path.resolve(__dirname, 'src'),
 					path.resolve(__dirname, 'webviewer/apis'),
 				]
-		  },
-		  {
+			},
+			{
 				test: /\.scss$/,
 				use: [
 					MiniCssExtractPlugin.loader,

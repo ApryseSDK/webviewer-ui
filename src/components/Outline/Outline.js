@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import Icon from 'components/Icon';
 
@@ -67,4 +66,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement
 };
 
-export default hot(module)(connect(null, mapDispatchToProps)(Outline));
+export default connect(null, mapDispatchToProps)(Outline);

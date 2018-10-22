@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import HeaderItems from 'components/HeaderItems';
 
@@ -39,4 +38,4 @@ const mapStateToProps = state => ({
   activeHeaderItems: selectors.getActiveHeaderItems(state),
 });
 
-export default hot(module)(connect(mapStateToProps)(Header));
+export default connect(mapStateToProps)(Header);

@@ -3,21 +3,25 @@ export default initialState => (state = initialState, action) => {
 
   switch(type) {
     case 'DISABLE_ELEMENT':
-      return { ...state, disabledElements: { ...state.disabledElements, [payload.dataElement]: true } };
+      return { ...state, disabledElements: { ...state.disabledElements, [payload.dataElement]: { disabled: true, priority: payload.priority } } };
     case 'DISABLE_ELEMENTS': {
       const disabledElements = {};
       payload.dataElements.forEach(dataElement => {
-        disabledElements[dataElement] = true;
+        disabledElements[dataElement] = {};
+        disabledElements[dataElement].disabled = true;
+        disabledElements[dataElement].priority = payload.priority;
       });
 
       return { ...state, disabledElements: { ...state.disabledElements, ...disabledElements } };
     }
     case 'ENABLE_ELEMENT':
-      return { ...state, disabledElements: { ...state.disabledElements, [payload.dataElement]: false } };
+      return { ...state, disabledElements: { ...state.disabledElements, [payload.dataElement]: { disabled: false, priority: payload.priority } } };
     case 'ENABLE_ELEMENTS': {
       const disabledElements = {};
       payload.dataElements.forEach(dataElement => {
-        disabledElements[dataElement] = false;
+        disabledElements[dataElement] = {};
+        disabledElements[dataElement].disabled = false;
+        disabledElements[dataElement].priority = payload.priority;
       });
 
       return { ...state, disabledElements: { ...state.disabledElements, ...disabledElements } };

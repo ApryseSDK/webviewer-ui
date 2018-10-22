@@ -1,6 +1,7 @@
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
+import { PRIORITY_THREE, PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
 
 export default store => {
@@ -18,7 +19,7 @@ export default store => {
 const disableElementsPassedByConstructor = (state, dispatch) => {
   if (state.advanced.defaultDisabledElements) {
     const elements = state.advanced.defaultDisabledElements.split(',');
-    dispatch(actions.disableElements(elements));
+    dispatch(actions.disableElements(elements, PRIORITY_THREE));
   }
 };
 
@@ -29,7 +30,7 @@ const disableElementsIfReadOnly = (state, dispatch) => {
       ...getAnnotationRelatedElements(state)
     ];
 
-    dispatch(actions.disableElements(elements));
+    dispatch(actions.disableElements(elements, PRIORITY_ONE));
     core.setToolMode('AnnotationEdit');
   }  
 };
@@ -43,7 +44,7 @@ const disableElementsIfAnnotationDisabled = (state, dispatch) => {
       ...getAnnotationRelatedElements(state),
     ];  
   
-    dispatch(actions.disableElements(elements));
+    dispatch(actions.disableElements(elements, PRIORITY_ONE));
   }
 };
 
@@ -56,7 +57,7 @@ const disableElementsIfFilePickerDisabled = dispatch => {
       'filePickerButton',
     ];  
   
-    dispatch(actions.disableElements(elements));
+    dispatch(actions.disableElements(elements, PRIORITY_ONE));
   }
 };
 
@@ -70,7 +71,7 @@ const disableElementsIfHideAnnotationPanel = dispatch => {
       'annotationCommentButton'
     ];  
   
-    dispatch(actions.disableElements(elements));
+    dispatch(actions.disableElements(elements, PRIORITY_ONE));
   }
 };
 
@@ -78,6 +79,6 @@ const disableElementsIfToolBarDisabled = dispatch => {
   const toolBarDisabled = !getHashParams('toolbar', true);
 
   if (toolBarDisabled) {
-    dispatch(actions.disableElement('header'));
+    dispatch(actions.disableElement('header', PRIORITY_ONE));
   }
 };
