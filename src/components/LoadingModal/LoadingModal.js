@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
@@ -51,4 +50,4 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(LoadingModal));
+export default connect(mapStateToProps, mapDispatchToProps)(LoadingModal);

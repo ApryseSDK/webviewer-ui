@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 import { translate } from 'react-i18next';
 
 import Dropdown from 'components/Dropdown';
@@ -201,4 +200,4 @@ const mapStatesToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
 });
 
-export default hot(module)(connect(mapStatesToProps)(translate()(NotesPanel)));
+export default connect(mapStatesToProps)(translate()(NotesPanel));

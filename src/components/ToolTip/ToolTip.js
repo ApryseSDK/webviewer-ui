@@ -1,5 +1,4 @@
 import React from 'react';
-import { hot } from 'react-hot-loader'; 
 import ReactToolTip from 'react-tooltip';
 
 import './ToolTip.scss';
@@ -40,4 +39,4 @@ class ToolTip extends React.PureComponent {
   }
 }
 
-export default hot(module)(ToolTip);
+export default ToolTip;

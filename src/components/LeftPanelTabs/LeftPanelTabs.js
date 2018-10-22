@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 import { translate } from 'react-i18next';
 
 import Button from 'components/Button';
@@ -87,4 +86,4 @@ const mapDispatchToProps = {
   setActiveLeftPanel: actions.setActiveLeftPanel
 };
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(translate()(LeftPanelTabs)));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(LeftPanelTabs));

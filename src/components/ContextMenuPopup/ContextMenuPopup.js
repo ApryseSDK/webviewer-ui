@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
-
 import ActionButton from 'components/ActionButton';
 
 import getClassName from 'helpers/getClassName';
@@ -129,4 +127,4 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements))
 });
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(ContextMenuPopup));
+export default connect(mapStateToProps, mapDispatchToProps)(ContextMenuPopup);

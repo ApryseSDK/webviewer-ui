@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import ActionButton from 'components/ActionButton';
 
@@ -106,4 +105,4 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(TextPopup));
+export default connect(mapStateToProps, mapDispatchToProps)(TextPopup);

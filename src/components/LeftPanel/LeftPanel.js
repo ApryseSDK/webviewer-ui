@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import NotesPanel from 'components/NotesPanel';
@@ -70,4 +69,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement,
 };
 
-export default hot(module)(connect(mapStatesToProps, mapDispatchToProps)(LeftPanel));
+export default connect(mapStatesToProps, mapDispatchToProps)(LeftPanel);

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 import ReactTooltip from 'react-tooltip';
 
 import ActionButton from 'components/ActionButton';
@@ -184,4 +183,4 @@ const mapDispatchToProps = {
   setActiveLeftPanel: actions.setActiveLeftPanel
 };
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(AnnotationPopup));
+export default connect(mapStateToProps, mapDispatchToProps)(AnnotationPopup);
