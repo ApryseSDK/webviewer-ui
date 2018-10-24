@@ -1,10 +1,10 @@
-import sortMap from 'constants/sortMap';
+import sortStrategy from 'constants/sortStrategy';
 import actions from 'actions';
 
 export default store => newSort => {
   const { name, getSortedNotes, shouldRenderSeparator, getSeparatorContent } = newSort;
 
-  sortMap[name] = {
+  sortStrategy[name] = {
     getSortedNotes,
     shouldRenderSeparator,
     getSeparatorContent

@@ -8,7 +8,7 @@ import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
-import sortMap from 'constants/sortMap';
+import sortStrategy from 'constants/sortStrategy';
 import selectors from 'selectors';
 
 import './NotesPanel.scss';
@@ -128,7 +128,7 @@ class NotesPanel extends React.PureComponent {
     return(
       <React.Fragment>
         <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
-          {this.renderNotes(sortMap[this.props.sortNotesBy].getSortedNotes(this.rootAnnotations))}
+          {this.renderNotes(sortStrategy[this.props.sortNotesBy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
           {this.props.t('message.noResults')}
@@ -151,7 +151,7 @@ class NotesPanel extends React.PureComponent {
   }
 
   renderListSeparator = (notes, currNote) => {
-    const { shouldRenderSeparator, getSeparatorContent } = sortMap[this.props.sortNotesBy];
+    const { shouldRenderSeparator, getSeparatorContent } = sortStrategy[this.props.sortNotesBy];
     const prevNote = this.getPrevNote(notes, currNote);
     const isFirstNote = prevNote === currNote;
 
@@ -185,7 +185,7 @@ class NotesPanel extends React.PureComponent {
                 placeholder={t('message.searchPlaceholder')}
                 onChange={this.handleInputChange} 
               />
-              <Dropdown items={Object.keys(sortMap)} />
+              <Dropdown items={Object.keys(sortStrategy)} />
             </div>
             {this.renderNotesPanelContent()}
           </React.Fragment>
