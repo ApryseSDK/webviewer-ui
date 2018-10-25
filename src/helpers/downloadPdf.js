@@ -4,7 +4,7 @@ import core from 'core';
 import { isIE } from 'helpers/device';
 import actions from 'actions';
 
-export default (dispatch, documentPath = 'myDocument', filename, includeAnnotations = true, xfdfData) => {
+export default (dispatch, documentPath = 'document', filename, includeAnnotations = true, xfdfData) => {
   core.getTool('AnnotationCreateFreeHand').complete();
 
   return new Promise(resolve => {

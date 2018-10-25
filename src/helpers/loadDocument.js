@@ -203,9 +203,13 @@ const getEngineType = state => {
 };
 
 const getDocumentExtension = doc => {
-  // strip out query/hash parameters
-  doc = doc.split('?')[0].split('#')[0];
-  return doc.slice(doc.lastIndexOf('.') + 1).toLowerCase();
+  let extension;
+  if (doc) {
+    // strip out query/hash parameters
+    extension = doc.split('?')[0].split('#')[0];
+    extension = extension.slice(extension.lastIndexOf('.') + 1).toLowerCase();
+  }
+  return extension;
 };
 
 const getDocName = state => {
