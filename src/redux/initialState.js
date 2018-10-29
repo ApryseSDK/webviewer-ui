@@ -210,6 +210,7 @@ export default {
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null,
     decrypt: null,
-    decryptOptions: { }
+    decryptOptions: { },
+    withCredentials: false
   }
 };
