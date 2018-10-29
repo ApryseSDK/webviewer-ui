@@ -26,7 +26,7 @@ export const enableElement = (dataElement, priority) => (dispatch, getState) => 
     if (!currentPriority || priority >= currentPriority) {
       dispatch({ type: 'ENABLE_ELEMENT', payload: { dataElement, priority }});
     }
-  } 
+  }
 };
 export const enableElements = (dataElements, priority) => (dispatch, getState) => {
   const filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
@@ -99,6 +99,7 @@ export const setDecryptFunction = decryptFunction => ({ type: 'SET_DECRYPT_FUNCT
 export const setDecryptOptions = decryptOptions => ({ type: 'SET_DECRYPT_OPTIONS', payload: { decryptOptions } });
 export const setEngineType = type => ({ type: 'SET_ENGINE_TYPE', payload: { type } });
 export const setCustomHeaders = customHeaders => ({ type: 'SET_CUSTOM_HEADERS', payload: { customHeaders } });
+export const setWithCredentials = withCredentials => ({ type: 'SET_WITH_CREDENTIALS', payload: { withCredentials } });
 
 // search
 export const searchText = (searchValue, options) => ({ type: 'SEARCH_TEXT', payload: { searchValue, options } });
