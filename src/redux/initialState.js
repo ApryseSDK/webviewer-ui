@@ -178,7 +178,7 @@ export default {
     pdfDoc: null,
     pdfType: getHashParams('pdf', 'wait'),
     officeType: getHashParams('office', 'wait'),
-    isOffline: getHashParams('startOffline', false), // to viewer (double check with Matt)
+    isOffline: getHashParams('startOffline', false),
     totalPages: 0,
     outlines: [],
     checkPassword: null,
