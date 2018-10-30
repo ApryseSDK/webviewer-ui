@@ -187,7 +187,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  openElement: (dataElement, loadingMessage) => dispatch(actions.openElement(dataElement, loadingMessage)) 
+  openElement: dataElement => dispatch(actions.openElement(dataElement)) 
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
