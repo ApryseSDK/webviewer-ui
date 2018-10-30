@@ -31,7 +31,15 @@ export const isFullScreen = state => state.viewer.isFullScreen;
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
 export const isDocumentLoaded = state => state.viewer.isDocumentLoaded;
 export const isDocumentReadOnly = state => state.viewer.isReadOnly;
-export const getLoadingMessage = state => state.viewer.loadingMessage;
+export const getCustomPanels = state => state.viewer.customPanels;
+export const getDisabledCustomPanelTabs = state => {
+  return state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
+    if (state.viewer.disabledElements[tab.dataElement]) {
+      disabledTabs.push(tab.dataElement);
+    }
+    return disabledTabs;
+  }, []);
+};
 
 // document
 export const getDocument = state => state.document;

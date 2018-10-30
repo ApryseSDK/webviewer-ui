@@ -15,7 +15,6 @@ class OutlinesPanel extends React.PureComponent {
     outlines: PropTypes.arrayOf(PropTypes.object),
     display: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
     t: PropTypes.func.isRequired
   }
 
@@ -44,8 +43,7 @@ class OutlinesPanel extends React.PureComponent {
 
 const mapStateToProps = state => ({
   outlines: selectors.getOutlines(state),
-  isDisabled: selectors.isElementDisabled(state, 'outlinePanel'),
-  isOpen: selectors.isElementOpen(state, 'outlinePanel'),
+  isDisabled: selectors.isElementDisabled(state, 'outlinePanel')
 });
 
 export default connect(mapStateToProps)(translate()(OutlinesPanel));

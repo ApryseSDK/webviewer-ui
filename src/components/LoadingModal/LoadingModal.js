@@ -12,8 +12,7 @@ class LoadingModal extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    closeElements: PropTypes.func.isRequired,
-    loadingMessage: PropTypes.string
+    closeElements: PropTypes.func.isRequired
   }
 
   componentDidUpdate(prevProps) {
@@ -33,7 +32,6 @@ class LoadingModal extends React.PureComponent {
       <div className={className} data-element="loadingModal">
         <div className="container">
           <div className="inner-wrapper"></div>
-          <div className="text">{this.props.loadingMessage}</div>
         </div>
       </div>
     );
@@ -42,8 +40,7 @@ class LoadingModal extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'loadingModal'),
-  isOpen: selectors.isElementOpen(state, 'loadingModal'),
-  loadingMessage: selectors.getLoadingMessage(state),
+  isOpen: selectors.isElementOpen(state, 'loadingModal')
 });
 
 const mapDispatchToProps = {

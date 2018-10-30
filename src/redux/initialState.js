@@ -150,7 +150,7 @@ export default {
     doesAutoLoad: getHashParams('auto_load', true),
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
-    loadingMessage: '',
+    customPanels: [],
   },
   search: {
     listeners: [],
