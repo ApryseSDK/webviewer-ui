@@ -185,6 +185,7 @@ if (window.CanvasRenderingContext2D) {
           setZoomLevel: apis.setZoomLevel,
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
+          updateOutlines: apis.updateOutlines(store),
           loadedFromServer: false,
           serverFailed: false
         };
