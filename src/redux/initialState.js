@@ -182,7 +182,8 @@ export default {
     totalPages: 0,
     outlines: [],
     checkPassword: null,
-    printQuality: 1
+    printQuality: 1,
+    loadingProgress: 0
   },
   user: {
     name: getHashParams('user', 'Guest'),

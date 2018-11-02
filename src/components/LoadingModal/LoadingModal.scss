@@ -12,6 +12,19 @@
     align-items: center;
     padding: 10px;
   }
+
+  .progress-bar-wrapper {
+    width: 300px;
+    height: 10px;
+    background: red;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 10px;
+    background: blue;
+    transition: transform 0.3s ease;
+  }
   
   .inner-wrapper {
     margin: 10px;

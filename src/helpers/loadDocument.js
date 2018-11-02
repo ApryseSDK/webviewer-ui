@@ -158,7 +158,24 @@ const getDocOptions = (state, dispatch, streaming) => {
           }
           console.error(error);
         };
-        const workerHandlers = { workerLoadingProgress: () => {} };
+        const workerHandlers = {
+          workerLoadingProgress: (percent) => {
+            // dispatch(actions.setLoadingProgress(percent));
+          }
+        };
+
+        setTimeout(() => {
+          dispatch(actions.setLoadingProgress(0.3));
+        }, 500);
+        setTimeout(() => {
+          dispatch(actions.setLoadingProgress(0.5));
+        }, 600);
+        setTimeout(() => {
+          dispatch(actions.setLoadingProgress(0.8));
+        }, 700);
+        setTimeout(() => {
+          dispatch(actions.setLoadingProgress(1));
+        }, 800);
 
         const docName = getDocName(state);
         const options = { docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise };

@@ -32,6 +32,9 @@ class LoadingModal extends React.PureComponent {
       <div className={className} data-element="loadingModal">
         <div className="container">
           <div className="inner-wrapper"></div>
+          <div className="progress-bar-wrapper">
+            <div className="progress-bar" style={{ transform: `translateX(${(1 - this.props.loadingProgress) * 100}%`}}></div>
+          </div>
         </div>
       </div>
     );
@@ -40,7 +43,8 @@ class LoadingModal extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'loadingModal'),
-  isOpen: selectors.isElementOpen(state, 'loadingModal')
+  isOpen: selectors.isElementOpen(state, 'loadingModal'),
+  loadingProgress: selectors.getLoadingProgress(state),
 });
 
 const mapDispatchToProps = {
