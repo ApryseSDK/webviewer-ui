@@ -14,16 +14,39 @@
   }
 
   .progress-bar-wrapper {
-    width: 300px;
+    width: 250px;
     height: 10px;
-    background: red;
+    background: #ededed;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    position: relative;
+    height: 10px;
+    background: #00a5e4;
+    transition: transform 0.5s ease;
     overflow: hidden;
   }
 
-  .progress-bar {
+  .animator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
     height: 10px;
-    background: blue;
-    transition: transform 0.3s ease;
+    background: white;
+    opacity: 0.5;
+    animation: slide 1.5s ease infinite;
+    transform-origin: center;
+
+    @keyframes slide {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(calc(100% + 250px));
+      }
+    }
   }
   
   .inner-wrapper {

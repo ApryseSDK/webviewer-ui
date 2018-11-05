@@ -166,16 +166,16 @@ const getDocOptions = (state, dispatch, streaming) => {
 
         setTimeout(() => {
           dispatch(actions.setLoadingProgress(0.3));
-        }, 500);
+        }, 1000);
         setTimeout(() => {
           dispatch(actions.setLoadingProgress(0.5));
-        }, 600);
+        }, 2000);
         setTimeout(() => {
           dispatch(actions.setLoadingProgress(0.8));
-        }, 700);
+        }, 3000);
         setTimeout(() => {
           dispatch(actions.setLoadingProgress(1));
-        }, 800);
+        }, 4000);
 
         const docName = getDocName(state);
         const options = { docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise };
