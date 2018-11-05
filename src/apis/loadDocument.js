@@ -1,5 +1,4 @@
 import loadDocument from 'helpers/loadDocument';
-import { engineTypes } from 'constants/types';
 import actions from 'actions';
 
 export default store => (documentPath, options = {}) => {
