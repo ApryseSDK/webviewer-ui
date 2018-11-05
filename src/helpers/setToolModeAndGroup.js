@@ -3,6 +3,10 @@ import core from 'core';
 import toolStyleExists from 'helpers/toolStyleExists';
 
 export default (dispatch, toolName, toolGroup) =>  {
+  if (core.getIsReadOnly()) {
+    return;
+  }
+
   if (toolGroup) {
     dispatch(actions.openElement('toolsOverlay'));
   } else {
