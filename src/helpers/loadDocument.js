@@ -25,7 +25,6 @@ export default (state, dispatch) => {
         }
         if (partRetriever.on && docOptions.workerHandlers) {
           dispatch(actions.openElement('progressModal'));
-          console.log('progress');
         } else {
           dispatch(actions.openElement('loadingModal'));
         }
