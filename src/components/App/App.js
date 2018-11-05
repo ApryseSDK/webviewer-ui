@@ -23,6 +23,7 @@ import PrintModal from 'components/PrintModal';
 import LoadingModal from 'components/LoadingModal';
 import ErrorModal from 'components/ErrorModal';
 import PasswordModal from 'components/PasswordModal';
+import ProgressModal from 'components/ProgressModal';
 import ToolTip from 'components/ToolTip';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
@@ -109,6 +110,7 @@ class App extends React.PureComponent {
           <LoadingModal />
           <ErrorModal />
           <PasswordModal />
+          <ProgressModal />
 
           <ToolTip />
         </div>

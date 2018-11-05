@@ -1,0 +1,50 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+.ProgressModal {
+  @extend %modal;
+  
+  .container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .progress-bar-wrapper {
+    width: 250px;
+    height: 10px;
+    background: #ededed;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    position: relative;
+    height: 10px;
+    background: #00a5e4;
+    transition: transform 0.5s ease;
+    overflow: hidden;
+  }
+
+  .animator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 50px;
+    background: white;
+    opacity: 0.3;
+    animation: slide 2s ease infinite;
+
+    @keyframes slide {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(calc(100% + 250px));
+      }
+    }
+  }
+}

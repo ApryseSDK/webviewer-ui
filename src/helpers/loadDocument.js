@@ -16,9 +16,18 @@ export default (state, dispatch) => {
         const docOptions = params[1];
 
         if (partRetriever.on) {
+          partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+            dispatch(actions.setLoadingProgress(loaded / total));
+          });
           partRetriever.on('error', function(e, type, message) {
             fireError(message);
           });
+        }
+        if (partRetriever.on && docOptions.workerHandlers) {
+          dispatch(actions.openElement('progressModal'));
+          console.log('progress');
+        } else {
+          dispatch(actions.openElement('loadingModal'));
         }
         if (partRetriever.setErrorCallback) {
           partRetriever.setErrorCallback(fireError);
@@ -119,6 +128,7 @@ const getPartRetriever = (state, streaming) => {
         partRetriever = new window.CoreControls.PartRetrievers.HttpPartRetriever(documentPath, cache, decrypt, decryptOptions);
       }
     }
+
     if (process.env.NODE_ENV !== 'production') {
       console.warn('Loading %c' + documentPath + '%c with %c' + partRetrieverName, 'font-weight: bold; color: blue', '', 'font-weight: bold; color: red');
     }
@@ -160,22 +170,9 @@ const getDocOptions = (state, dispatch, streaming) => {
         };
         const workerHandlers = {
           workerLoadingProgress: (percent) => {
-            // dispatch(actions.setLoadingProgress(percent));
+            dispatch(actions.setLoadingProgress(percent));
           }
         };
-
-        setTimeout(() => {
-          dispatch(actions.setLoadingProgress(0.3));
-        }, 1000);
-        setTimeout(() => {
-          dispatch(actions.setLoadingProgress(0.5));
-        }, 2000);
-        setTimeout(() => {
-          dispatch(actions.setLoadingProgress(0.8));
-        }, 3000);
-        setTimeout(() => {
-          dispatch(actions.setLoadingProgress(1));
-        }, 4000);
 
         const docName = getDocName(state);
         const options = { docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise };

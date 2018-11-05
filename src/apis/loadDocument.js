@@ -1,4 +1,5 @@
 import loadDocument from 'helpers/loadDocument';
+import { engineTypes } from 'constants/types';
 import actions from 'actions';
 
 export default store => (documentPath, options = {}) => {
@@ -27,6 +28,5 @@ export default store => (documentPath, options = {}) => {
   } else {
     store.dispatch(actions.setDocumentPath(documentPath));
   }
-  store.dispatch(actions.openElement('loadingModal'));
   loadDocument(store.getState(), store.dispatch);
 };

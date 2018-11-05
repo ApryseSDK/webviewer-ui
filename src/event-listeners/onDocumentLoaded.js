@@ -7,7 +7,7 @@ export default dispatch => () => {
 
   dispatch(actions.setDocumentLoaded(true));
   dispatch(actions.openElement('pageNavOverlay'));
-  // dispatch(actions.closeElement('loadingModal'));
+  dispatch(actions.closeElements([ 'progressModal', 'loadingModal' ]));
 
   if (window.innerWidth <= 640) {
     core.fitToWidth();
