@@ -135,7 +135,7 @@ const getPartRetriever = (state, streaming) => {
 };
 
 const getDocOptions = (state, dispatch, streaming) => {
-  const { id: docId, officeType, pdfType } = state.document;
+  const { id: docId, officeType, pdfType, password } = state.document;
   const engineType = getEngineType(state);
 
   return new Promise(resolve => {
@@ -146,9 +146,18 @@ const getDocOptions = (state, dispatch, streaming) => {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise } = state.advanced;
 
       Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
+        let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
         const getPassword = checkPassword => {
-          dispatch(actions.openElement('passwordModal'));
-          dispatch(actions.setCheckPasswordFunction(checkPassword));
+          if (password && !passwordChecked) {
+            checkPassword(password);
+            passwordChecked = true;
+          } else {
+            if (passwordChecked) {
+              console.error('Wrong password has been passed as an argument. WebViewer will open password modal.');
+            }
+            dispatch(actions.setCheckPasswordFunction(checkPassword));
+            dispatch(actions.openElement('passwordModal'));
+          }
         };
         const onError = error => {
           if (typeof error === 'string') {
