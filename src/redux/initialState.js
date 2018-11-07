@@ -182,6 +182,7 @@ export default {
     totalPages: 0,
     outlines: [],
     checkPassword: null,
+    password: '',
     printQuality: 1
   },
   user: {
