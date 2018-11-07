@@ -20,4 +20,8 @@
       background-color: var(--primary-color);
     }
   }
+
+  .Panel {
+    @extend %sub-panel;
+  }
 }
