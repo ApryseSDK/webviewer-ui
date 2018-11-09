@@ -24,7 +24,7 @@ export default dispatch => e => {
         if (core.getSelectedText()) {
           copyText();
           dispatch(actions.closeElement('textPopup'));
-        } else if (core.getSelectedAnnotations().length > 0) {
+        } else if (core.getSelectedAnnotations().length > 0 && window.getSelection().toString() === '') {
           core.updateCopiedAnnotations();
         }
       } else if (e.key === 'v' || e.which === 86) {  // (Ctrl/Cmd + V)
