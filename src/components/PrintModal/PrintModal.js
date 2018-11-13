@@ -264,7 +264,7 @@ class PrintModal extends React.PureComponent {
     const isPrinting = count > 0;
 
     return (
-      <div className={className} data-element="printModal" onClick={this.closeModal}>
+      <div className={className} data-element="printModal" onClick={this.closePrintModal}>
           <div className="container" onClick={e => e.stopPropagation()}>
           <div className="settings">
             <div className="col">Pages:</div>
