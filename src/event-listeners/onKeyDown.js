@@ -103,13 +103,13 @@ export default dispatch => e => {
         }
       } 
     } else if (selectedText) {
-      if (e.key === 'g' || e.which === 71) { // (G)
+      if ((e.key === 'g' || e.which === 71) && !core.getTool('AnnotationCreateTextSquiggly').disabled) { // (G)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextSquigglyAnnotation);
-      } else if (e.key === 'h' || e.which === 72) { // (H)
+      } else if ((e.key === 'h' || e.which === 72) && !core.getTool('AnnotationCreateTextHighlight').disabled) { // (H)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextHighlightAnnotation);
-      } else if (e.key === 'k' || e.which === 75) { // (K)
+      } else if ((e.key === 'k' || e.which === 75) && !core.getTool('AnnotationCreateTextStrikeout').disabled) { // (K)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextStrikeoutAnnotation);
-      } else if (e.key === 'u' || e.which === 85) { // (U)
+      } else if ((e.key === 'u' || e.which === 85) && !core.getTool('AnnotationCreateTextUnderline').disabled) { // (U)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextUnderlineAnnotation);
       }
     } 
