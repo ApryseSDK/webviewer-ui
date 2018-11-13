@@ -151,6 +151,7 @@ export default {
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
+    useEmbeddedPrint: true,
   },
   search: {
     listeners: [],

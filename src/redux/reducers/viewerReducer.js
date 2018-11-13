@@ -140,8 +140,10 @@ export default initialState => (state = initialState, action) => {
 
         return { ...state, disabledTools: { ...state.disabledTools, ...disabledTools } };
       }
-      case 'SET_CUSTOM_PANEL': 
-        return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
+    case 'SET_CUSTOM_PANEL':
+      return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
+    case 'USE_EMBEDDED_PRINT':
+      return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
     default:
       return state;
   }

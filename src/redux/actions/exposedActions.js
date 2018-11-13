@@ -72,3 +72,4 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
 export const setSortNotesBy = sortNotesBy => ({ type: 'SET_SORT_NOTES_BY', payload: { sortNotesBy } });
 export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payload: { toolName, properties } });
 export const setCustomPanel = newPanel => ({ type: 'SET_CUSTOM_PANEL', payload: { newPanel } });
+export const useEmbeddedPrint = useEmbeddedPrint => ({ type: 'USE_EMBEDDED_PRINT', payload: { useEmbeddedPrint } });
