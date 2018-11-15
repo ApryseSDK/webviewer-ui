@@ -214,9 +214,13 @@ const getEngineType = state => {
 const getDocumentExtension = doc => {
   let extension;
   if (doc) {
-    // strip out query/hash parameters
-    extension = doc.split('?')[0].split('#')[0];
-    extension = extension.slice(extension.lastIndexOf('.') + 1).toLowerCase();
+    const pdfExtensions = supportedPDFExtensions.join('|');
+    const officeExtensions = supportedOfficeExtensions.join('|');
+    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|xod)(\&|$)`);
+    const result = regex.exec(doc);
+    if (result) {
+      extension = result[1];
+    }
   }
   return extension;
 };
