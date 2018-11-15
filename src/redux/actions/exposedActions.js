@@ -1,5 +1,6 @@
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import { fireEvent } from 'helpers/loadDocument';
+
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
 export const openElement = dataElement => (dispatch, getState) => {
@@ -36,7 +37,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement } });
   }
 
-    fireEvent('visibilityChanged', { element: dataElement, isVisible: false });
+  fireEvent('visibilityChanged', { element: dataElement, isVisible: false });
 };
 export const closeElements = dataElements => dispatch => {
   dataElements.forEach(dataElement => {
