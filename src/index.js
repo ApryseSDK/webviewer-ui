@@ -168,6 +168,7 @@ if (window.CanvasRenderingContext2D) {
           searchTextFull: apis.searchTextFull(store),
           selectors: apis.getSelectors(store),
           setAdminUser: apis.setAdminUser,
+          setNoteDateFormat: apis.setNoteDateFormat(store),
           setAnnotationUser: apis.setAnnotationUser,
           setTheme: apis.setTheme,
           setCurrentPageNumber: apis.setCurrentPageNumber,
