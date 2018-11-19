@@ -18,7 +18,7 @@ export const openElement = dataElement => (dispatch, getState) => {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
       fireEvent('visibilityChanged', { element: 'leftPanel', isVisible: true });
     }
-    dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
+    dispatch(setActiveLeftPanel(dataElement));
   } else {
     dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
     fireEvent('visibilityChanged', { element: dataElement, isVisible: true });
@@ -71,7 +71,12 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
   const state = getState();
 
   if (isDataElementPanel(dataElement, state)) {
-    dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
+    if (state.viewer.activeLeftPanel !== dataElement) {
+      dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: state.viewer.activeLeftPanel } });
+      fireEvent('visibilityChanged', { element: state.viewer.activeLeftPanel, isVisible: false });
+      dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
+      fireEvent('visibilityChanged', { element: dataElement, isVisible: true });
+    }
   } else {
     const panelDataElements = [
       ...state.viewer.customPanels.map(({ panel }) => panel.dataElement),
