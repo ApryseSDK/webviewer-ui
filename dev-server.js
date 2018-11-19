@@ -37,7 +37,7 @@ const handleAnnotation = (req, res, handler) => {
 };
 
 app.get('/annotations', (req, res) => {
-	handleAnnotation(req, res, (dir) => {
+	handleAnnotation(req, res, dir => {
 		const xfdfFile = (req.query.id) ? path.resolve(dir, req.query.id + '.xfdf') : path.resolve(dir, 'default.xfdf');
 		if (fs.existsSync(xfdfFile)) {
 			res.header('Content-Type', 'text/xml');
@@ -49,7 +49,7 @@ app.get('/annotations', (req, res) => {
 });
 
 app.post('/annotations', (req, res) => {
-	handleAnnotation(req, res, (dir) => {
+	handleAnnotation(req, res, dir => {
 		const xfdfFile = (req.body.id) ? path.resolve(dir, req.body.id + '.xfdf') : path.resolve(dir, 'default.xfdf');
 		try {
 			res.send(fs.writeFileSync(xfdfFile, req.body.data));
@@ -68,11 +68,11 @@ app.get('/', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'src/index.html'));
 });
 
-app.listen(3000, '0.0.0.0', (err) => {
+app.listen(3000, '0.0.0.0', err => {
 	if(err) {
 		console.error(err);
 	} else {
-		console.info(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
+		console.log(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
 		opn('http://localhost:3000/#d=/files/webviewer-demo-annotated.xod&a=1');
 	}
 });

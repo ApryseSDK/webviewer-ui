@@ -2,11 +2,12 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+	name: 'ui',
 	mode: 'development',
 	devtool: 'cheap-module-eval-source-map',
 	entry: [
-		'babel-polyfill',
-		'webpack-hot-middleware/client',
+		'@babel/polyfill',
+		'webpack-hot-middleware/client?name=ui&path=/__webpack_hmr',
 		path.resolve(__dirname, 'src')
 	],
 	output: {
@@ -21,13 +22,29 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js$/,
-				use: 'babel-loader',
+				exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							'@babel/preset-react',
+							'@babel/preset-env',
+						],
+						plugins: [
+							'@babel/plugin-proposal-function-sent',
+							'@babel/plugin-proposal-export-namespace-from',
+							'@babel/plugin-proposal-numeric-separator',
+							'@babel/plugin-proposal-throw-expressions',
+							'@babel/plugin-proposal-class-properties'
+						]
+					}
+				},
 				include: [
 					path.resolve(__dirname, 'src'),
 					path.resolve(__dirname, 'webviewer/apis'),
 				]
-		  },
-		  {
+			},
+			{
 				test: /\.scss$/,
 				use: [
 					'style-loader',

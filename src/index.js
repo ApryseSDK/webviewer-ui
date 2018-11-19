@@ -37,7 +37,9 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
     const updatedReducer = require('reducers/rootReducer').default;
     store.replaceReducer(updatedReducer);
-  });
+  }); 
+  
+  module.hot.accept();
 }
 
 if (window.CanvasRenderingContext2D) {
@@ -208,3 +210,4 @@ if (window.CanvasRenderingContext2D) {
 window.addEventListener('hashchange', () => {
   window.location.reload();
 });
+
