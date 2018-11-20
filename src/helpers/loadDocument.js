@@ -8,7 +8,7 @@ import { supportedPDFExtensions, supportedOfficeExtensions } from 'constants/sup
 import actions from 'actions';
 
 export default (state, dispatch) => {
-  core.closeDocument().then(() => {
+  core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
       Promise.all([getPartRetriever(state, streaming), getDocOptions(state, dispatch, streaming)])
       .then(params => {
@@ -147,7 +147,9 @@ const getDocOptions = (state, dispatch, streaming) => {
 
       Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
         let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
+        let attempt = 0;
         const getPassword = checkPassword => {
+          dispatch(actions.setPasswordAttempts(attempt++));
           if (password && !passwordChecked) {
             checkPassword(password);
             passwordChecked = true;

@@ -183,7 +183,8 @@ export default {
     outlines: [],
     checkPassword: null,
     password: '',
-    printQuality: 1
+    printQuality: 1,
+    passwordAttempts: -1,
   },
   user: {
     name: getHashParams('user', 'Guest'),

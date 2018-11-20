@@ -87,6 +87,7 @@ export const setFilename = filename => ({ type: 'SET_FILENAME', payload: { filen
 export const setTotalPages = totalPages => ({ type: 'SET_TOTAL_PAGES', payload: { totalPages } });
 export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outlines } });
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
+export const setPasswordAttempts = attempt => ({ type: 'SET_PASSWORD_ATTEMPTS', payload: { attempt } });
 export const setPrintQuality = quality => ({ type: 'SET_PRINT_QUALITY', payload: { quality } });
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
 
