@@ -1,4 +1,6 @@
 import core from 'core';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 export default (documentId, serverUrl, serverUrlHeaders) =>  {
   if (!serverUrl) {
@@ -23,7 +25,7 @@ export default (documentId, serverUrl, serverUrlHeaders) =>  {
       data: docIdQuery,
       headers: serverUrlHeaders,
       success: data => {
-        if (!_.isNull(data) && !_.isUndefined(data)) {
+        if (!isNull(data) && !isUndefined(data)) {
           window.readerControl.loadedFromServer = true;
           callback(data);
         } else {

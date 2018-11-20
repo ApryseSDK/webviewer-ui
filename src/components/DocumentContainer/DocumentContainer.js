@@ -10,6 +10,7 @@ import TouchEventManager from 'helpers/TouchEventManager';
 import { ZOOM_MIN, ZOOM_MAX } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
+import throttle from 'lodash/throttle';
 
 import './DocumentContainer.scss';
 
@@ -36,8 +37,8 @@ class DocumentContainer extends React.PureComponent {
     this.document = React.createRef();
     this.container = React.createRef();
     this.touchEventManager = Object.create(TouchEventManager);
-    this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
-    this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
+    this.wheelToNavigatePages = throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
+    this.wheelToZoom = throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
   }
 
   componentDidUpdate(prevProps) {

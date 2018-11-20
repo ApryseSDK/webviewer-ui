@@ -10,6 +10,7 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
+import debounce from 'lodash/debounce';
 
 import './SearchOverlay.scss';
 
@@ -55,8 +56,8 @@ class SearchOverlay extends React.PureComponent {
     this.searchTextInput = React.createRef();
     this.wholeWordInput = React.createRef();
     this.caseSensitiveInput = React.createRef();
-    this.executeDebouncedSingleSearch = _.debounce(this.executeSingleSearch, 300);
-    this.executeDebouncedFullSearch = _.debounce(this.executeFullSearch, 300);
+    this.executeDebouncedSingleSearch = debounce(this.executeSingleSearch, 300);
+    this.executeDebouncedFullSearch = debounce(this.executeFullSearch, 300);
   }
 
   componentDidUpdate(prevProps) {

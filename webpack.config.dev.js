@@ -6,8 +6,8 @@ module.exports = {
 	mode: 'development',
 	devtool: 'cheap-module-eval-source-map',
 	entry: [
-		'@babel/polyfill',
 		'webpack-hot-middleware/client?name=ui&path=/__webpack_hmr',
+		'@babel/polyfill',
 		path.resolve(__dirname, 'src')
 	],
 	output: {
@@ -22,7 +22,6 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
 				use: {
 					loader: 'babel-loader',
 					options: {
