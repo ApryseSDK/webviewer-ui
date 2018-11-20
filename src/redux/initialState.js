@@ -202,7 +202,7 @@ export default {
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
     preloadWorker: getHashParams('preloadWorker', false),
-    serverUrl: getHashParams('server_url', process.env.NODE_ENV === 'development' ? '/annotations' : ''),
+    serverUrl: getHashParams('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
     streaming: getHashParams('streaming', false),
     subzero: getHashParams('subzero', false),

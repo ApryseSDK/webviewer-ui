@@ -1,11 +1,17 @@
 import core from 'core';
 
-export default (documentId, serverUrl, serverUrlHeaders) =>  {
+export default (store) =>  {  
+  const state = store.getState();
+  const { serverUrl, serverUrlHeaders } = state.advanced;
+
   if (!serverUrl) {
     return;
   }
 
   const getAnnotsFromServer = (originalData, callback) => {
+    const state = store.getState();
+    const { id: documentId } = state.document;
+
     if (window.readerControl.serverFailed) {
       callback(originalData);
     } else if (window.readerControl.loadedFromServer) {
