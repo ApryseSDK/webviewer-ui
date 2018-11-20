@@ -142,6 +142,8 @@ export default initialState => (state = initialState, action) => {
       }
       case 'SET_CUSTOM_PANEL': 
         return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
+      case 'SET_THUMBNAIL_CUSTOM_CONTENT_RENDERER':
+        return { ...state, thumbnailCustomContentRenderer: payload.thumbnailCustomContentRenderer };
     default:
       return state;
   }

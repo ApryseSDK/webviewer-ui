@@ -181,6 +181,7 @@ if (window.CanvasRenderingContext2D) {
           setReadOnly: apis.setReadOnly,
           setShowSideWindow: apis.setShowSideWindow(store),
           setSideWindowVisibility: apis.setSideWindowVisibility(store),
+          setThumbnailCustomContentRenderer: apis.setThumbnailCustomContentRenderer(store),
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
           toggleFullScreen: apis.toggleFullScreen,

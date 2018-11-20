@@ -40,6 +40,7 @@ export const getDisabledCustomPanelTabs = state => {
     return disabledTabs;
   }, []);
 };
+export const getThumbnailCustomContentRenderer = state => state.viewer.thumbnailCustomContentRenderer;
 
 // document
 export const getDocument = state => state.document;

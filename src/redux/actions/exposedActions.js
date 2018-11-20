@@ -72,3 +72,6 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
 export const setSortNotesBy = sortNotesBy => ({ type: 'SET_SORT_NOTES_BY', payload: { sortNotesBy } });
 export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payload: { toolName, properties } });
 export const setCustomPanel = newPanel => ({ type: 'SET_CUSTOM_PANEL', payload: { newPanel } });
+export const setThumbnailCustomContentRenderer = thumbnailCustomContentRenderer => {
+  return ({type: 'SET_THUMBNAIL_CUSTOM_CONTENT_RENDERER', payload: {thumbnailCustomContentRenderer}});
+};
