@@ -38,7 +38,7 @@ const handleAnnotation = (req, res, handler) => {
 
 app.get('/annotations', (req, res) => {
 	handleAnnotation(req, res, (dir) => {
-		const xfdfFile = (req.query.id) ? path.resolve(dir, req.query.id + '.xfdf') : path.resolve(dir, 'default.xfdf');
+		const xfdfFile = (req.query.did) ? path.resolve(dir, req.query.did + '.xfdf') : path.resolve(dir, 'default.xfdf');
 		if (fs.existsSync(xfdfFile)) {
 			res.header('Content-Type', 'text/xml');
 			res.send(fs.readFileSync(xfdfFile));
@@ -50,7 +50,7 @@ app.get('/annotations', (req, res) => {
 
 app.post('/annotations', (req, res) => {
 	handleAnnotation(req, res, (dir) => {
-		const xfdfFile = (req.body.id) ? path.resolve(dir, req.body.id + '.xfdf') : path.resolve(dir, 'default.xfdf');
+		const xfdfFile = (req.body.did) ? path.resolve(dir, req.body.did + '.xfdf') : path.resolve(dir, 'default.xfdf');
 		try {
 			res.send(fs.writeFileSync(xfdfFile, req.body.data));
 		} catch(e) {
