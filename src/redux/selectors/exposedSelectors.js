@@ -55,6 +55,7 @@ export const isEmbedPrintSupported = state => {
   return  isPDF && isChrome;
 };
 export const getCheckPasswordFunction = state => state.document.checkPassword;
+export const getPasswordAttempts = state => state.document.passwordAttempts;
 export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 export const getOutlines = state => state.document.outlines;

@@ -1,6 +1,6 @@
 {
   "name": "webviewer-ui",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
@@ -64,7 +64,5 @@
     "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.18.0"
   },
-  "dependencies": {},
-  "author": "PDFTron Systems Inc.",
-  "license": ""
+  "author": "PDFTron Systems Inc."
 }

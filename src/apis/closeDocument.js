@@ -1,8 +1,8 @@
 import core from 'core';
 import actions from 'actions';
 
-export default store => () => core.closeDocument().then(() => {
-  store.dispatch(actions.setDocumentLoaded(false));
+export default ({ dispatch }) => () => core.closeDocument(dispatch).then(() => {
+  dispatch(actions.setDocumentLoaded(false));
   store.dispatch(actions.closeElements([ 'pageNavOverlay', 'passwordModal' ]));
-  store.dispatch(actions.setOutlines([]));
+  dispatch(actions.setOutlines([]));
 });

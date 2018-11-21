@@ -5,7 +5,6 @@ import { translate } from 'react-i18next';
 
 import Button from 'components/Button';
 
-import core from 'core';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -15,7 +14,9 @@ import './PasswordModal.scss';
 class PasswordModal extends React.PureComponent {
   static propTypes = {
     isOpen: PropTypes.bool,
+    attempt: PropTypes.number.isRequired,
     checkPassword: PropTypes.func,
+    setPasswordAttempts: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired
   }
@@ -24,34 +25,25 @@ class PasswordModal extends React.PureComponent {
     super();
     this.maxAttempts = 3;
     this.passwordInput = React.createRef();
-    this.state = {
-      attempt: 0,
+    this.initialState = {
       password: '',
       userCanceled: false
     };
-  }
-
-  componentDidMount() {
-    core.addEventListener('beforeDocumentLoaded', this.onBeforeDocumentLoaded);
+    this.state = this.initialState;
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElement('loadingModal');
     }
+    if (prevProps.isOpen && !this.props.isOpen) {
+      // when a user enters the correct password or calls core.closeDocument
+      // reset state in case user loads another password-protected document
+      this.setState(this.initialState);
+    }
     if (this.passwordInput.current) {
       this.passwordInput.current.focus();
     }
-  }
-
-  componentWillUnmount() {
-    core.removeEventListener('beforeDocumentLoaded', this.onBeforeDocumentLoaded);
-  }
-
-  onBeforeDocumentLoaded = () => {
-    this.setState({
-      attempt: 0
-    });
   }
 
   handleInputChange = e => {
@@ -61,14 +53,7 @@ class PasswordModal extends React.PureComponent {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { checkPassword, closeElement } = this.props;
-
-    this.setState(prevState => ({ 
-      attempt: prevState.attempt + 1,
-      password: ''
-    }));
-    checkPassword(this.state.password);
-    closeElement('passwordModal');
+    this.props.checkPassword(this.state.password);
   }
 
   handleCancel = () => {
@@ -76,7 +61,7 @@ class PasswordModal extends React.PureComponent {
   }
 
   renderContent = () => {
-    const userExceedsMaxAttempts = this.state.attempt === this.maxAttempts;
+    const userExceedsMaxAttempts = this.props.attempt === this.maxAttempts;
 
     if (userExceedsMaxAttempts) {
       return this.renderMaxAttemptsContent();
@@ -98,7 +83,7 @@ class PasswordModal extends React.PureComponent {
 
   renderEnterPasswordContent = () => {
     const { t } = this.props;
-    const wrongPassword = this.state.attempt !== 0;
+    const wrongPassword = this.props.attempt !== 0;
 
     return (
       <div className="wrapper">
@@ -117,7 +102,7 @@ class PasswordModal extends React.PureComponent {
           {wrongPassword &&
             <div className="incorrect-password">
               {t('message.incorrectPassword', { 
-                remainingAttempts: this.maxAttempts - this.state.attempt
+                remainingAttempts: this.maxAttempts - this.props.attempt
               })}
             </div>
           }
@@ -153,10 +138,12 @@ class PasswordModal extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'passwordModal'),
-  checkPassword: selectors.getCheckPasswordFunction(state)
+  checkPassword: selectors.getCheckPasswordFunction(state),
+  attempt: selectors.getPasswordAttempts(state)
 });
 
 const mapDispatchToProps = {
+  setPasswordAttempts: actions.setPasswordAttempts,
   closeElement: actions.closeElement
 };
 

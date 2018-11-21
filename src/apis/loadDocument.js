@@ -9,7 +9,8 @@ export default store => (documentPath, options = {}) => {
     decrypt = null,
     decryptOptions = {},
     customHeaders = {},
-    withCredentials = false
+    withCredentials = false,
+    password = ''
   } = options;
 
   store.dispatch(actions.setDocumentId(documentId));
@@ -19,6 +20,7 @@ export default store => (documentPath, options = {}) => {
   store.dispatch(actions.setFilename(filename));
   store.dispatch(actions.setCustomHeaders(customHeaders));
   store.dispatch(actions.setWithCredentials(withCredentials));
+  store.dispatch(actions.setPassword(password));
 
   if (store.getState().advanced.fullAPI && documentPath instanceof window.PDFNet.PDFDoc) {
     store.dispatch(actions.setPDFDoc(documentPath));

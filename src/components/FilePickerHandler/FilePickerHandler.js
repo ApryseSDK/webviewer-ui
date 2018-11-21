@@ -36,7 +36,7 @@ class FilePickerHandler extends React.PureComponent {
       this.props.setDocumentFile(file);
       this.props.openElement('loadingModal');
       this.props.closeElement('menuOverlay');
-      core.closeDocument().then(() => {
+      core.closeDocument(this.props.dispatch).then(() => {
         loadDocument({ document: this.props.document, advanced: this.props.advanced }, this.props.dispatch);
       });
     }

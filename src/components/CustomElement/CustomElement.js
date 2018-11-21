@@ -6,6 +6,7 @@ import selectors from 'selectors';
 
 class CustomElement extends React.PureComponent {
   static propTypes = {
+    className: PropTypes.string,
     isDisabled: PropTypes.bool, 
     dataElement: PropTypes.string,
     display: PropTypes.string,
@@ -37,7 +38,13 @@ class CustomElement extends React.PureComponent {
   isReactElement = element => React.isValidElement(element);
   
   render() {
-    const { isDisabled, dataElement, display } = this.props;
+    const { 
+      className = '', 
+      isDisabled, 
+      dataElement, 
+      display,
+      render
+    } = this.props;
 
     if (isDisabled) {
       return null;
@@ -45,13 +52,13 @@ class CustomElement extends React.PureComponent {
 
     return (
       <div 
-        className={dataElement}
+        className={className}
         ref={this.elementWrapper} 
         style={{ display: display || 'flex' }} 
         data-element={dataElement}
       >
         {this.state.isRenderingReactComponent &&
-          this.props.render()
+          render()
         }
       </div>
     );

@@ -103,10 +103,10 @@ class ContextMenuPopup extends React.PureComponent {
         <ActionButton dataElement="panToolButton" title="tool.pan" img="ic_pan_black_24px" onClick={() => this.handleClick('Pan')} />
         {isAnnotationToolsEnabled &&
           <React.Fragment>
-            <ActionButton dataElement="stickyToolButton" title="tool.sticky" img="ic_annotation_sticky_note_black_24px" onClick={() => this.handleClick('AnnotationCreateSticky')} />
-            <ActionButton dataElement="highlightToolButton" title="tool.highlight" img="ic_annotation_highlight_black_24px" onClick={() => this.handleClick('AnnotationCreateTextHighlight', 'textTools')} />
-            <ActionButton dataElement="freeHandToolButton" title="tool.freehand" img="ic_annotation_freehand_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeHand', 'freeHandTools')} />
-            <ActionButton dataElement="freeTextToolButton" title="tool.freetext" img="ic_annotation_freetext_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeText')} />
+            <ActionButton dataElement="stickyToolButton" title="annotation.stickyNote" img="ic_annotation_sticky_note_black_24px" onClick={() => this.handleClick('AnnotationCreateSticky')} />
+            <ActionButton dataElement="highlightToolButton" title="annotation.highlight" img="ic_annotation_highlight_black_24px" onClick={() => this.handleClick('AnnotationCreateTextHighlight', 'textTools')} />
+            <ActionButton dataElement="freeHandToolButton" title="annotation.freehand" img="ic_annotation_freehand_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeHand', 'freeHandTools')} />
+            <ActionButton dataElement="freeTextToolButton" title="annotation.freetext" img="ic_annotation_freetext_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeText')} />
           </React.Fragment>
         }
       </div>

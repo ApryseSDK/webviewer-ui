@@ -22,6 +22,10 @@ export default initialState => (state = initialState, action) => {
       return { ...state, outlines: payload.outlines };
     case 'SET_CHECKPASSWORD':
       return { ...state, checkPassword: payload.func };
+    case 'SET_PASSWORD_ATTEMPTS':
+      return { ...state, passwordAttempts: payload.attempt };
+    case 'SET_PASSWORD':
+      return { ...state, password: payload.password };
     case 'SET_PRINT_QUALITY':
       return { ...state, printQuality: payload.quality };
     case 'SET_LOADING_PROGRESS':

@@ -108,7 +108,7 @@ if (window.CanvasRenderingContext2D) {
     setUserPermission(state);
     addEventHandlers(),
     setDefaultDisabledElements(store),
-    setupLoadAnnotationsFromServer(state.document.id, state.advanced.serverUrl, state.advanced.serverUrlHeaders);
+    setupLoadAnnotationsFromServer(store);
 
     ReactDOM.render(
       <Provider store={store}>

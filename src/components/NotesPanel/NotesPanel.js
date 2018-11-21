@@ -66,14 +66,11 @@ class NotesPanel extends React.PureComponent {
   }
 
   updatePanelOnInput = searchInput => {
-    let notesToRender;
-
     core.deselectAllAnnotations();
+    const notesToRender = this.filterAnnotations(this.rootAnnotations, searchInput);
+
     if (searchInput.trim()) {
-      notesToRender = this.filterAnnotations(this.rootAnnotations, searchInput);
       core.selectAnnotations(notesToRender); 
-    } else {
-      notesToRender = this.rootAnnotations;
     }
 
     this.setVisibleNoteIds(notesToRender);
@@ -81,6 +78,10 @@ class NotesPanel extends React.PureComponent {
   }
 
   filterAnnotations = (annotations, searchInput) => {
+    if (!searchInput.trim()) {
+      return annotations;
+    }
+
     return annotations.filter(rootAnnotation => {
       const replies = rootAnnotation.getReplies();
       // reply is also a kind of annotation

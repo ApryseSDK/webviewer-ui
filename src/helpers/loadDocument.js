@@ -8,7 +8,7 @@ import { supportedPDFExtensions, supportedOfficeExtensions } from 'constants/sup
 import actions from 'actions';
 
 export default (state, dispatch) => {
-  core.closeDocument().then(() => {
+  core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
       Promise.all([getPartRetriever(state, streaming), getDocOptions(state, dispatch, streaming)])
       .then(params => {
@@ -144,7 +144,7 @@ const getPartRetriever = (state, streaming) => {
 };
 
 const getDocOptions = (state, dispatch, streaming) => {
-  const { id: docId, officeType, pdfType } = state.document;
+  const { id: docId, officeType, pdfType, password } = state.document;
   const engineType = getEngineType(state);
 
   return new Promise(resolve => {
@@ -155,9 +155,20 @@ const getDocOptions = (state, dispatch, streaming) => {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise } = state.advanced;
 
       Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
+        let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
+        let attempt = 0;
         const getPassword = checkPassword => {
-          dispatch(actions.openElement('passwordModal'));
-          dispatch(actions.setCheckPasswordFunction(checkPassword));
+          dispatch(actions.setPasswordAttempts(attempt++));
+          if (password && !passwordChecked) {
+            checkPassword(password);
+            passwordChecked = true;
+          } else {
+            if (passwordChecked) {
+              console.error('Wrong password has been passed as an argument. WebViewer will open password modal.');
+            }
+            dispatch(actions.setCheckPasswordFunction(checkPassword));
+            dispatch(actions.openElement('passwordModal'));
+          }
         };
         const onError = error => {
           if (typeof error === 'string') {
@@ -218,9 +229,13 @@ const getEngineType = state => {
 const getDocumentExtension = doc => {
   let extension;
   if (doc) {
-    // strip out query/hash parameters
-    extension = doc.split('?')[0].split('#')[0];
-    extension = extension.slice(extension.lastIndexOf('.') + 1).toLowerCase();
+    const pdfExtensions = supportedPDFExtensions.join('|');
+    const officeExtensions = supportedOfficeExtensions.join('|');
+    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|xod)(\&|$)`);
+    const result = regex.exec(doc);
+    if (result) {
+      extension = result[1];
+    }
   }
   return extension;
 };

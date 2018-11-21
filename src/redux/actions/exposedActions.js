@@ -5,7 +5,7 @@ export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: 
 export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  if (state.viewer.disabledElements[dataElement]) {
+  if (state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled) {
     return;
   }
 
@@ -24,7 +24,7 @@ export const openElements = dataElements => dispatch => {
 export const closeElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  if (state.viewer.disabledElements[dataElement]) {
+  if (state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled) {
     return;
   }
 
