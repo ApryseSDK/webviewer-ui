@@ -1,8 +1,10 @@
 import core from 'core';
 import actions from 'actions';
 
-export default dispatch => () => {
-  const totalPages = core.getTotalPages();
+export default dispatch => (e, { added, removed }) => {
+  if (added.length || removed.length) {
+    const totalPages = core.getTotalPages();
 
-  dispatch(actions.setTotalPages(totalPages));
+    dispatch(actions.setTotalPages(totalPages));
+  }
 };
