@@ -22,6 +22,10 @@ export const openElement = dataElement => (dispatch, getState) => {
   } else {
     dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
     fireEvent('visibilityChanged', { element: dataElement, isVisible: true });
+
+    if (dataElement === 'leftPanel'  && !state.viewer.openElements['leftPanel']) {
+      fireEvent('visibilityChanged', { element: state.viewer.activeLeftPanel, isVisible: true });
+    }
   }
 };
 export const openElements = dataElements => dispatch => {
@@ -45,6 +49,10 @@ export const closeElement = dataElement => (dispatch, getState) => {
   } else {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement } });
     fireEvent('visibilityChanged', { element: dataElement, isVisible: false });
+
+    if (dataElement === 'leftPanel'  && state.viewer.openElements['leftPanel']) {
+      fireEvent('visibilityChanged', { element: state.viewer.activeLeftPanel, isVisible: false });
+    }
   }
 };
 export const closeElements = dataElements => dispatch => {
