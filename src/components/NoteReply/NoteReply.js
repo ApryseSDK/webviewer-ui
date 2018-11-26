@@ -48,7 +48,7 @@ class NoteReply extends React.PureComponent {
         {renderAuthorName(reply)}
         <span className="spacer"></span>
         <span className="time">
-          {' ' + dayjs(reply.DateCreated).format(noteDateFormat || 'MMM D, h:mma')}
+          {' ' + dayjs(reply.DateCreated).format(noteDateFormat)}
         </span>
         <NotePopup 
           annotation={reply} 

@@ -75,7 +75,7 @@ class NoteRoot extends React.Component {
         }
         <div className="time">
           {(sortNotesBy !== 'time' || isNoteExpanded) &&
-            dayjs(annotation.DateCreated || new Date()).format(noteDateFormat || 'MMM D, h:mma')
+            dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)
           }
           {numberOfReplies > 0 &&
             ` (${numberOfReplies})`
