@@ -36,10 +36,7 @@ class PageNavOverlay extends React.PureComponent {
       this.setState({ isCustomPageLabels: true });
     }
 
-    if (
-      prevProps.currentPage !== this.props.currentPage ||
-      prevProps.pageLabels !== this.props.pageLabels 
-    ) {
+    if (prevProps.currentPage !== this.props.currentPage || prevProps.pageLabels !== this.props.pageLabels) {
       this.setState({ input: pageLabels[currentPage - 1] });
     }
   }

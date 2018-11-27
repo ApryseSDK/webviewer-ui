@@ -75,7 +75,8 @@ export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payl
 export const setCustomPanel = newPanel => ({ type: 'SET_CUSTOM_PANEL', payload: { newPanel } });
 export const setPageLabels = pageLabels => dispatch => {
   if (pageLabels.length !== core.getTotalPages()) {
-    console.warn('Your custom page labels don not have the same length as the number of pages in this document. This may leads to bugs in some components');
+    console.warn('Number of page labels do not match with the total pages.');
+    return;
   }
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels } });
 };
