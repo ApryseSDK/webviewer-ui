@@ -1,4 +1,5 @@
 import isDataElementPanel from 'helpers/isDataElementPanel';
+import core from 'core';
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
@@ -72,3 +73,11 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
 export const setSortNotesBy = sortNotesBy => ({ type: 'SET_SORT_NOTES_BY', payload: { sortNotesBy } });
 export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payload: { toolName, properties } });
 export const setCustomPanel = newPanel => ({ type: 'SET_CUSTOM_PANEL', payload: { newPanel } });
+export const setPageLabels = pageLabels => dispatch => {
+  if (pageLabels.length !== core.getTotalPages()) {
+    console.warn('Your custom page labels don not have the same length as the number of pages in this document. This may leads to bugs in some components');
+  }
+  dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels } });
+};
+
+

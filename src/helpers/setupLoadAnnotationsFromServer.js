@@ -1,6 +1,6 @@
 import core from 'core';
 
-export default (store) =>  {  
+export default store =>  {  
   const state = store.getState();
   const { serverUrl, serverUrlHeaders } = state.advanced;
 

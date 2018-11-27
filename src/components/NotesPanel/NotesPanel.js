@@ -18,6 +18,7 @@ class NotesPanel extends React.PureComponent {
     isDisabled: PropTypes.bool,
     display: PropTypes.string.isRequired,
     sortNotesBy: PropTypes.string.isRequired,
+    pageLabels: PropTypes.array.isRequired,
     t: PropTypes.func.isRequired
   }
   
@@ -152,7 +153,8 @@ class NotesPanel extends React.PureComponent {
   }
 
   renderListSeparator = (notes, currNote) => {
-    const { shouldRenderSeparator, getSeparatorContent } = sortMap[this.props.sortNotesBy];
+    const { sortNotesBy, pageLabels } = this.props;
+    const { shouldRenderSeparator, getSeparatorContent } = sortMap[sortNotesBy];
     const prevNote = this.getPrevNote(notes, currNote);
     const isFirstNote = prevNote === currNote;
 
@@ -162,7 +164,7 @@ class NotesPanel extends React.PureComponent {
       getSeparatorContent &&
       (isFirstNote || shouldRenderSeparator(prevNote, currNote))
     ) {
-      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote)} />;
+      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, pageLabels)} />;
     }
 
     return null;
@@ -199,6 +201,7 @@ class NotesPanel extends React.PureComponent {
 const mapStatesToProps = state => ({
   sortNotesBy: selectors.getSortNotesBy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
+  pageLabels: selectors.getPageLabels(state)
 });
 
 export default connect(mapStatesToProps)(translate()(NotesPanel));
