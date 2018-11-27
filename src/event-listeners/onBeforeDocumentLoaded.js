@@ -7,12 +7,15 @@ export default dispatch => () => {
   dispatch(actions.closeElement('passwordModal'));
 
   const totalPages = core.getTotalPages();
-  const currentPage = core.getCurrentPage();
-  
   if (totalPages > 500) {
     core.setDisplayMode(window.CoreControls.DisplayModes.Single);
   }
 
+  dispatch(actions.setPageLabels(getDefaultPageLabels(totalPages)));
   dispatch(actions.setTotalPages(totalPages));
+  
+  const currentPage = core.getCurrentPage();
   dispatch(actions.setCurrentPage(currentPage));
 };
+
+const getDefaultPageLabels = totalPages => new Array(totalPages).fill().map((_, index) => `${index + 1}`); 

@@ -1,4 +1,5 @@
 import isDataElementPanel from 'helpers/isDataElementPanel';
+import core from 'core';
 import { fireEvent } from 'helpers/loadDocument';
 
 // viewer
@@ -99,3 +100,12 @@ export const setSortNotesBy = sortNotesBy => ({ type: 'SET_SORT_NOTES_BY', paylo
 export const setNoteDateFormat = noteDateFormat => ({ type: 'SET_NOTE_DATE_FORMAT', payload: { noteDateFormat } });
 export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payload: { toolName, properties } });
 export const setCustomPanel = newPanel => ({ type: 'SET_CUSTOM_PANEL', payload: { newPanel } });
+export const setPageLabels = pageLabels => dispatch => {
+  if (pageLabels.length !== core.getTotalPages()) {
+    console.warn('Number of page labels do not match with the total pages.');
+    return;
+  }
+  dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels } });
+};
+
+

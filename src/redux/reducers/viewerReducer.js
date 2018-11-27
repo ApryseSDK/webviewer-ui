@@ -142,8 +142,10 @@ export default initialState => (state = initialState, action) => {
 
         return { ...state, disabledTools: { ...state.disabledTools, ...disabledTools } };
       }
-      case 'SET_CUSTOM_PANEL': 
-        return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
+    case 'SET_CUSTOM_PANEL': 
+      return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
+    case 'SET_PAGE_LABELS': 
+      return { ...state, pageLabels: [ ...payload.pageLabels ] };
     default:
       return state;
   }
