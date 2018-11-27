@@ -72,6 +72,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, currentPage: payload.currentPage };
     case 'SET_SORT_NOTES_BY':
       return { ...state, sortNotesBy: payload.sortNotesBy };
+    case 'SET_NOTE_DATE_FORMAT':
+      return { ...state, noteDateFormat: payload.noteDateFormat };
     case 'SET_FULL_SCREEN':
       return { ...state, isFullScreen: payload.isFullScreen };
     case 'SET_HEADER_ITEMS':
