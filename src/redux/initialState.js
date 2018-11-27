@@ -151,7 +151,8 @@ export default {
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
-    pageLabels: []
+    pageLabels: [],
+    noteDateFormat: 'MMM D, h:mma'
   },
   search: {
     listeners: [],
