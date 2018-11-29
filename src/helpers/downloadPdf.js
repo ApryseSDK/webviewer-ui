@@ -26,8 +26,11 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
 
       dispatch(actions.openElement('loadingModal'));
 
+      const name = filename || documentPath.split('/').slice(-1)[0];
+      const downloadName = getDownloadFilename(name, '.pdf');
+
       const doc = core.getDocument();
-      const bbURLPromise = doc.getDownloadLink();
+      const bbURLPromise = doc.getDownloadLink({ filename: downloadName });
       if (bbURLPromise) {
         const downloadIframe = document.getElementById('download-iframe') || document.createElement('iframe');
         downloadIframe.width = 0;
@@ -42,13 +45,12 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
       } else {
         doc.getFileData(downloadOptions).then(data => {
           const arr = new Uint8Array(data);
-          const name = filename || documentPath.split('/').slice(-1)[0];
           if (isIE) {
             file = new Blob([arr], { type: 'application/pdf' });
           } else {
-            file = new File([arr], getDownloadFilename(name, '.pdf'), { type: 'application/pdf' });
+            file = new File([arr], downloadName, { type: 'application/pdf' });
           }
-          FileSaver.saveAs(file, getDownloadFilename(name, '.pdf'));
+          FileSaver.saveAs(file, downloadName);
           dispatch(actions.closeElement('loadingModal'));
           $(document).trigger('finishedSavingPDF');
           resolve();
