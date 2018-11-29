@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
 	mode: 'production',
 	entry: [
-		'babel-polyfill',
+		'@babel/polyfill',
 		path.resolve(__dirname, 'src')
 	],
 	output: {
@@ -38,7 +38,22 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js$/,
-				use: 'babel-loader',
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							'@babel/preset-react',
+							'@babel/preset-env'
+						],
+						plugins: [
+							'@babel/plugin-proposal-function-sent',
+							'@babel/plugin-proposal-export-namespace-from',
+							'@babel/plugin-proposal-numeric-separator',
+							'@babel/plugin-proposal-throw-expressions',
+							'@babel/plugin-proposal-class-properties'
+						]
+					},
+				},
 				include: [
 					path.resolve(__dirname, 'src'),
 					path.resolve(__dirname, 'webviewer/apis'),
