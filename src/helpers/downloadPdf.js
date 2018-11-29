@@ -5,14 +5,14 @@ import { isIE } from 'helpers/device';
 import actions from 'actions';
 
 export default (dispatch, documentPath = 'document', filename, includeAnnotations = true, xfdfData) => {
-  core.getTool('AnnotationCreateFreeHand').complete();
-
   return new Promise(resolve => {
     const downloadOptions = { downloadType: 'pdf' };
     let file;
 
+    const freeHandCompletePromise = core.getTool('AnnotationCreateFreeHand').complete();
+
     const annotationsPromise = includeAnnotations ? core.getAnnotationsLoadedPromise() : Promise.resolve();
-    annotationsPromise.then(() => {
+    Promise.all([annotationsPromise, freeHandCompletePromise]).then(() => {
       if (includeAnnotations) {
         downloadOptions.xfdfString = xfdfData || core.exportAnnotations();
       }
