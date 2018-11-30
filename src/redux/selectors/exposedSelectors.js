@@ -27,11 +27,13 @@ export const getZoom = state => state.viewer.zoom;
 export const getDisplayMode = state => state.viewer.displayMode;
 export const getCurrentPage = state => state.viewer.currentPage;
 export const getSortNotesBy = state => state.viewer.sortNotesBy;
+export const getNoteDateFormat = state => state.viewer.noteDateFormat;
 export const isFullScreen = state => state.viewer.isFullScreen;
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
 export const isDocumentLoaded = state => state.viewer.isDocumentLoaded;
 export const isDocumentReadOnly = state => state.viewer.isReadOnly;
 export const getCustomPanels = state => state.viewer.customPanels;
+export const getPageLabels = state => state.viewer.pageLabels;
 export const getDisabledCustomPanelTabs = state => {
   return state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
     if (state.viewer.disabledElements[tab.dataElement]) {

@@ -111,13 +111,13 @@ const Header = {
     
     return this;
   },
-  unshift(newItem) {
-    this.headers[this.headerGroup].unshift(newItem);
+  unshift(...newItem) {
+    this.headers[this.headerGroup].unshift(...newItem);
     
     return this;
   },
-  push(newItem) {
-    this.headers[this.headerGroup].push(newItem);
+  push(...newItem) {
+    this.headers[this.headerGroup].push(...newItem);
     
     return this;
   },

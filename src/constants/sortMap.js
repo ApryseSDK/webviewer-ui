@@ -10,7 +10,7 @@ const sortMap = {
       return a.PageNumber - b.PageNumber;
     }),
     shouldRenderSeparator: (prevNote, currNote) => currNote.PageNumber !== prevNote.PageNumber,
-    getSeparatorContent: (prevNote, currNote) => `Page ${currNote.PageNumber}`
+    getSeparatorContent: (prevNote, currNote, pageLabels) => `Page ${pageLabels[currNote.PageNumber - 1]}`
   },
   time: {
     getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),

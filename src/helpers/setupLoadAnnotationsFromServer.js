@@ -2,7 +2,7 @@ import core from 'core';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
-export default (store) =>  {  
+export default store =>  {  
   const state = store.getState();
   const { serverUrl, serverUrlHeaders } = state.advanced;
 

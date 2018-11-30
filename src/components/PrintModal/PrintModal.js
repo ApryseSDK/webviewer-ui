@@ -21,6 +21,7 @@ class PrintModal extends React.PureComponent {
     isOpen: PropTypes.bool,
     currentPage: PropTypes.number,
     printQuality: PropTypes.number.isRequired,
+    pageLabels: PropTypes.array.isRequired,
     closeElement: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
@@ -69,6 +70,7 @@ class PrintModal extends React.PureComponent {
   }
 
   onChange = () => {
+    const { currentPage, pageLabels } = this.props;
     let pagesToPrint = [];
 
     if (this.allPages.current.checked) {
@@ -76,10 +78,10 @@ class PrintModal extends React.PureComponent {
         pagesToPrint.push(i);
       }
     } else if (this.currentPage.current.checked) {
-      pagesToPrint.push(this.props.currentPage);
+      pagesToPrint.push(currentPage);
     } else if (this.customPages.current.checked) {
       const customInput = this.customInput.current.value.replace(/\s+/g, '');
-      pagesToPrint = getPagesToPrint(customInput);
+      pagesToPrint = getPagesToPrint(customInput, pageLabels);
     }
 
     this.setState({ pagesToPrint });
@@ -298,7 +300,8 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'printModal'),
   isOpen: selectors.isElementOpen(state, 'printModal'),
   currentPage: selectors.getCurrentPage(state),
-  printQuality: selectors.getPrintQuality(state)
+  printQuality: selectors.getPrintQuality(state),
+  pageLabels: selectors.getPageLabels(state)
 });
 
 const mapDispatchToProps = dispatch => ({

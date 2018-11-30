@@ -17,6 +17,10 @@ import './TextPopup.scss';
 class TextPopup extends React.PureComponent {
   static propTypes = {
     isAnnotationToolsEnabled: PropTypes.bool,
+    isHighlightDisabled: PropTypes.bool,
+    isUnderlineDisabled: PropTypes.bool,
+    isSquigglyDisabled: PropTypes.bool,
+    isStrikeoutDisabled: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     dispatch: PropTypes.func.isRequired,
