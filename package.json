@@ -7,7 +7,7 @@
     "start": "babel-node ./dev-server.js",
     "lint": "eslint ./src*",
     "lint:fix": "eslint --fix ./src/*",
-    "clean": "rimraf webviewer-ui",
+    "clean": "rimraf build",
     "bundle": "webpack --progress --config ./webpack.config.prod.js",
     "build": "npm run clean && npm run bundle",
     "test": "jest",
