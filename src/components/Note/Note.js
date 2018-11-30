@@ -230,7 +230,7 @@ class Note extends React.PureComponent {
                 onKeyDown={this.onKeyDown} 
                 onBlur={this.onBlur} 
                 onFocus={this.onFocus} 
-                placeholder="Reply..." 
+                placeholder={`${t('action.reply')}...`}
               />
               {isReplyFocused &&
                 <div className="buttons" onMouseDown={e => e.preventDefault()}>
