@@ -13,3 +13,58 @@
     display: none;
   }
 }
+
+.tooltip-wrapper {
+  position: relative;
+}
+
+%tooltip {
+  position: absolute;
+  z-index: 100;
+  background: #222;
+  padding: 6px 8px;
+  border-radius: 3px;
+  transition: opacity 0.3s ease-out;
+  backface-visibility: hidden;
+}
+
+%tooltip__arrow {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.tooltip--bottom {
+  @extend %tooltip;
+  top: 100%;
+  left: 50%;
+  margin-top: 10px;
+  transform: translateX(-50%);
+
+
+  .tooltip__content::before{
+    @extend %tooltip__arrow;
+    top: -6px;
+    left: 50%;
+    margin-left: -8px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 6px solid #222;
+  }
+}
+
+.tooltip-enter {
+  opacity: 0;
+
+  &.tooltip-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+}
+
+.tooltip__content {
+  background: #222;
+  color: #fff;
+  font-size: 12px;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip';
 import { translate } from 'react-i18next';
 
 import getBrightness from 'helpers/getBrightness';
@@ -19,10 +18,6 @@ class ColorPaletteHeader extends React.PureComponent {
     super(props);
   }
 
-  componentDidUpdate() {
-    ReactTooltip.rebuild();
-  }
-
   countColorPalette = () => {
     const { FillColor, StrokeColor, TextColor } = this.props.style;
 
@@ -36,7 +31,7 @@ class ColorPaletteHeader extends React.PureComponent {
 
   renderTextColorIcon = () => {
     const { style: { TextColor }, colorPalette, onHeaderChange, t } = this.props;
-    
+
     if (!TextColor) {
       return null;
     }
@@ -55,7 +50,7 @@ class ColorPaletteHeader extends React.PureComponent {
 
   renderBorderColorIcon = () => {
     const { style: { StrokeColor }, colorPalette, onHeaderChange, t } = this.props;
-    
+
     if (!StrokeColor) {
       return null;
     }
@@ -63,7 +58,7 @@ class ColorPaletteHeader extends React.PureComponent {
     const renderInnerCircle = () => {
       const borderColor = getBrightness(StrokeColor) === 'dark' ? '#bfbfbf' : 'none';
 
-      return(
+      return (
         <svg height="100%" width="100%">
           <circle
             cx="50%"
@@ -102,7 +97,7 @@ class ColorPaletteHeader extends React.PureComponent {
 
     const isTransparency = FillColor.toHexString() === null;
 
-    return(
+    return (
       <div
         className={colorPalette === 'fill' ? 'fill selected' : 'fill'}
         onClick={() => onHeaderChange('fill')}

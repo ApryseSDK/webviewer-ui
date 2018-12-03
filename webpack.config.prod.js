@@ -1,6 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
 		publicPath: '/'
 	},
 	plugins: [
-    new CopyWebpackPlugin([
+		new CopyWebpackPlugin([
 			{
 				from: './src/index.build.html',
 				to: '../build/index.html'
@@ -31,8 +31,8 @@ module.exports = {
 		]),
 		new MiniCssExtractPlugin({
 			filename: 'style.css',
-    }),
-		// new BundleAnalyzerPlugin()
+		}),
+		new BundleAnalyzerPlugin()
 	],
 	module: {
 		rules: [
@@ -48,14 +48,14 @@ module.exports = {
 				test: /\.scss$/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					{ 
-						loader: 'css-loader', 
+					{
+						loader: 'css-loader',
 						options: { minimize: true }
 					},
 					{
 						loader: 'postcss-loader',
 						options: {
-							plugins: () => [ require('autoprefixer')() ]
+							plugins: () => [require('autoprefixer')()]
 						}
 					},
 					'sass-loader'
@@ -71,15 +71,15 @@ module.exports = {
 		]
 	},
 	resolve: {
-    alias: {
+		alias: {
 			src: path.resolve(__dirname, 'src/'),
-      components: path.resolve(__dirname, 'src/components/'),
-      constants: path.resolve(__dirname, 'src/constants/'),
-      helpers: path.resolve(__dirname, 'src/helpers/'),
-      actions: path.resolve(__dirname, 'src/redux/actions/'),
-      reducers: path.resolve(__dirname, 'src/redux/reducers/'),
-      selectors: path.resolve(__dirname, 'src/redux/selectors/'),
-      core: path.resolve(__dirname, 'src/core/'),
-    }
-  }
+			components: path.resolve(__dirname, 'src/components/'),
+			constants: path.resolve(__dirname, 'src/constants/'),
+			helpers: path.resolve(__dirname, 'src/helpers/'),
+			actions: path.resolve(__dirname, 'src/redux/actions/'),
+			reducers: path.resolve(__dirname, 'src/redux/reducers/'),
+			selectors: path.resolve(__dirname, 'src/redux/selectors/'),
+			core: path.resolve(__dirname, 'src/core/'),
+		}
+	}
 };
