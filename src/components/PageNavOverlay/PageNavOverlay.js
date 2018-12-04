@@ -92,13 +92,13 @@ class PageNavOverlay extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-    isLeftPanelDisabled: selectors.isElementDisabled(state, 'leftPanel'),
-    isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
-    isDisabled: selectors.isElementDisabled(state, 'pageNavOverlay'),
-    isOpen: selectors.isElementOpen(state, 'pageNavOverlay'),
-    currentPage: selectors.getCurrentPage(state),
-    totalPages: selectors.getTotalPages(state),
-    pageLabels: selectors.getPageLabels(state)
-  });
+  isLeftPanelDisabled: selectors.isElementDisabled(state, 'leftPanel'),
+  isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
+  isDisabled: selectors.isElementDisabled(state, 'pageNavOverlay'),
+  isOpen: selectors.isElementOpen(state, 'pageNavOverlay'),
+  currentPage: selectors.getCurrentPage(state),
+  totalPages: selectors.getTotalPages(state),
+  pageLabels: selectors.getPageLabels(state)
+});
 
 export default connect(mapStateToProps)(PageNavOverlay);
