@@ -32,9 +32,7 @@ class PageNavOverlay extends React.PureComponent {
     const { currentPage, pageLabels } = this.props;
     
     const isCustomPageLabels = prevProps.pageLabels !== this.props.pageLabels && prevProps.pageLabels.length !== 0;
-    if (isCustomPageLabels) {
-      this.setState({ isCustomPageLabels: true });
-    }
+    this.setState({ isCustomPageLabels });
 
     if (prevProps.currentPage !== this.props.currentPage || prevProps.pageLabels !== this.props.pageLabels) {
       this.setState({ input: pageLabels[currentPage - 1] });
@@ -78,7 +76,7 @@ class PageNavOverlay extends React.PureComponent {
 
     const inputWidth = totalPages.toString().length * 10;
     const className = getClassName(`Overlay PageNavOverlay ${isLeftPanelOpen && !isLeftPanelDisabled ? 'shifted' : ''}`, this.props);
-    
+
     return (
       <div className={className} data-element="pageNavOverlay" onClick={this.onClick}>
         <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
@@ -94,13 +92,13 @@ class PageNavOverlay extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isLeftPanelDisabled: selectors.isElementDisabled(state, 'leftPanel'),
-  isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
-  isDisabled: selectors.isElementDisabled(state, 'pageNavOverlay'),
-  isOpen: selectors.isElementOpen(state, 'pageNavOverlay'),
-  currentPage: selectors.getCurrentPage(state),
-  totalPages: selectors.getTotalPages(state),
-  pageLabels: selectors.getPageLabels(state)
-});
+    isLeftPanelDisabled: selectors.isElementDisabled(state, 'leftPanel'),
+    isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
+    isDisabled: selectors.isElementDisabled(state, 'pageNavOverlay'),
+    isOpen: selectors.isElementOpen(state, 'pageNavOverlay'),
+    currentPage: selectors.getCurrentPage(state),
+    totalPages: selectors.getTotalPages(state),
+    pageLabels: selectors.getPageLabels(state)
+  });
 
 export default connect(mapStateToProps)(PageNavOverlay);
