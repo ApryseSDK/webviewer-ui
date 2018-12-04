@@ -106,7 +106,7 @@ class Note extends React.PureComponent {
     this.props.setIsNoteEditing(false);
   }
 
-  onInput = () => {
+  onChange = () => {
     this.replyTextarea.current.style.height = (this.replyTextarea.current.scrollHeight + 2) + 'px';
   }
 
@@ -226,7 +226,7 @@ class Note extends React.PureComponent {
             <div className="add-reply" onClick={e => e.stopPropagation()}>
               <textarea 
                 ref={this.replyTextarea} 
-                onInput={this.onInput} 
+                onChange={this.onChange} 
                 onKeyDown={this.onKeyDown} 
                 onBlur={this.onBlur} 
                 onFocus={this.onFocus} 
