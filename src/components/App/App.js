@@ -67,7 +67,7 @@ class App extends React.PureComponent {
   }
 
   onMouseDown = () => {
-    const elements = [
+    const elements = [ 
       'annotationPopup',
       'contextMenuPopup',
       'toolStylePopup',

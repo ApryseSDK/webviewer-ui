@@ -45,19 +45,10 @@ const TouchEventManager = {
           type: isDoubleTap ? 'doubleTap' : 'tap'
         };
         clearTimeout(this.doubleTapTimeout);
-        this.holdTimeout = setTimeout(() => {
-          this.touch.type = 'hold';
-          const textSelectTool = core.getTool('TextSelect');
-          textSelectTool.mouseLeftDown(e);
-          textSelectTool.mouseLeftUp(e);
-          textSelectTool.mouseDoubleClick();
-          core.setToolMode('TextSelect');
-        }, 5000);
         break;
       }
       case 2: {
         e.preventDefault();
-        clearTimeout(this.holdTimeout);
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         const clientX = (t1.clientX + t2.clientX) / 2;
@@ -84,7 +75,6 @@ const TouchEventManager = {
     }
   },
   handleTouchMove(e) {
-    clearTimeout(this.holdTimeout);
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
@@ -119,25 +109,16 @@ const TouchEventManager = {
       }
     }
   },
-  handleTouchEnd(e) {
-    clearTimeout(this.holdTimeout);
+  handleTouchEnd() {
     switch (this.touch.type) {
-      case 'hold': {
-        e.preventDefault();
-        if (core.getSelectedText().length < 1) {
-          window.docViewer.setToolMode(window.docViewer.getTool('AnnotationEdit'));
-        }
-        break;
-      }
       case 'tap': {
         this.doubleTapTimeout = setTimeout(() => {
           this.touch.type = '';
         }, 300);
-        core.setToolMode('AnnotationEdit');
         break;
       }
       case 'swipe': {
-        if (core.getSelectedText().length > 0 || core.isContinuousDisplayMode()) {
+        if (core.getSelectedText().length > 0 || core.isContinuousDisplayMode() || core.getToolMode() !== 'AnnotationEdit') {
           return;
         }
 

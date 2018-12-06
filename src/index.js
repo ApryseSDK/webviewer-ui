@@ -19,6 +19,7 @@ import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServ
 import eventHandler from 'helpers/eventHandler';
 import setupPDFTron from 'helpers/setupPDFTron';
 import setupI18n from 'helpers/setupI18n';
+import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolColor from 'helpers/setDefaultToolColor';
@@ -105,11 +106,12 @@ if (window.CanvasRenderingContext2D) {
     setupDocViewer();
     setupI18n(state);
     setDefaultToolColor();
+    setAutoSwitch();
     setUserPermission(state);
     addEventHandlers(),
     setDefaultDisabledElements(store),
     setupLoadAnnotationsFromServer(store);
-
+    
     ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18n}>

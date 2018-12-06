@@ -9,7 +9,7 @@ export const openElement = dataElement => (dispatch, getState) => {
 
   const isElementDisabled = state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
   const isElementOpen = isDataElementPanel(dataElement, state) ? state.viewer.activeLeftPanel === dataElement : state.viewer.openElements[dataElement];
-
+  
   if (isElementDisabled || isElementOpen) {
     return;
   }
