@@ -8,14 +8,15 @@ export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   const isElementDisabled = state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
-  const isElementOpen = isDataElementPanel(dataElement, state) ? state.viewer.activeLeftPanel === dataElement : state.viewer.openElements[dataElement];
+  const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
+  const isElementOpen = isDataElementPanel(dataElement, state) ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement : state.viewer.openElements[dataElement];
 
   if (isElementDisabled || isElementOpen) {
     return;
   }
 
   if (isDataElementPanel(dataElement, state)) {
-    if (!state.viewer.openElements['leftPanel']) {
+    if (!isLeftPanelOpen) {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
       fireEvent('visibilityChanged', { element: 'leftPanel', isVisible: true });
     }
@@ -24,7 +25,7 @@ export const openElement = dataElement => (dispatch, getState) => {
     dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
     fireEvent('visibilityChanged', { element: dataElement, isVisible: true });
 
-    if (dataElement === 'leftPanel'  && !state.viewer.openElements['leftPanel']) {
+    if (dataElement === 'leftPanel'  && !isLeftPanelOpen) {
       fireEvent('visibilityChanged', { element: state.viewer.activeLeftPanel, isVisible: true });
     }
   }
