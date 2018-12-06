@@ -109,7 +109,8 @@
     },
     "print": {
       "all": "All",
-      "current": "Current"
+      "current": "Current",
+      "pages": "Pages"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",
