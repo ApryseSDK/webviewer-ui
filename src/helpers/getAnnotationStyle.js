@@ -10,7 +10,9 @@ const getStyle = annotation => {
   const style = {};
 
   styleProperty.forEach(property => {
-    if (annotation[property]) {
+    const value = annotation[property];
+ 
+    if (value !== null && value !== undefined) {
       style[property] = annotation[property];
     }
   });
