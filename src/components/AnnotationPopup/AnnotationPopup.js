@@ -97,6 +97,7 @@ class AnnotationPopup extends React.PureComponent {
         canModify: core.canModify(annotation)
       });
     } else {
+      //this.props.closeElement('annotationPopup');
       this.setState({ ...this.initialState });
     }
   }
