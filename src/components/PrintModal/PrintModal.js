@@ -269,7 +269,7 @@ class PrintModal extends React.PureComponent {
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
           <div className="container" onClick={e => e.stopPropagation()}>
           <div className="settings">
-            <div className="col">Pages:</div>
+            <div className="col">{`${t('option.print.pages')}:`}</div>
             <form className="col" onChange={this.onChange} onSubmit={this.createAndPrintImages}>
               <Input ref={this.allPages} id="all-pages" name="pages" type="radio" label={t('option.print.all')} defaultChecked />
               <Input ref={this.currentPage} id="current-page" name="pages" type="radio" label={t('option.print.current')} />
