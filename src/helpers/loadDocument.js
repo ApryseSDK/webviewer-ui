@@ -4,7 +4,7 @@ import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { isIE11 } from 'helpers/device';
 import { engineTypes, documentTypes } from 'constants/types';
-import { supportedPDFExtensions, supportedOfficeExtensions } from 'constants/supportedFiles';
+import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
 
 export default (state, dispatch) => {
@@ -218,7 +218,8 @@ const getDocumentExtension = doc => {
   if (doc) {
     const pdfExtensions = supportedPDFExtensions.join('|');
     const officeExtensions = supportedOfficeExtensions.join('|');
-    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|xod)(\&|$)`);
+    const blackboxExtensions = supportedBlackboxExtensions.join('|');
+    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|${blackboxExtensions}|xod)(\&|$)`);
     const result = regex.exec(doc);
     if (result) {
       extension = result[1];
