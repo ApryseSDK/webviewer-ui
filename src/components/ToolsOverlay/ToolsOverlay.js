@@ -90,7 +90,7 @@ class ToolsOverlay extends React.PureComponent {
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="toolsOverlay" onMouseDown={e => e.stopPropagation()}>
         {toolNames.map((toolName, i) => <ToolButton key={`${toolName}-${i}`} toolName={toolName} />)}
         <div className="spacer hide-in-desktop"></div>
-        <Button className="close hide-in-desktop" dataElement="toolsOverlayCloseButton" title="action.close" img="ic_check_black_24px" onClick={this.handleCloseClick} />
+        <Button className="close hide-in-desktop" dataElement="toolsOverlayCloseButton" img="ic_check_black_24px" onClick={this.handleCloseClick} />
       </div>
     );
   }

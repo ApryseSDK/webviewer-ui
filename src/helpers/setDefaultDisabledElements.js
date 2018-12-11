@@ -32,7 +32,7 @@ const disableElementsIfReadOnly = (state, dispatch) => {
 
     dispatch(actions.disableElements(elements, PRIORITY_ONE));
     core.setToolMode('AnnotationEdit');
-  }  
+  }
 };
 
 const disableElementsIfAnnotationDisabled = (state, dispatch) => {
@@ -42,8 +42,8 @@ const disableElementsIfAnnotationDisabled = (state, dispatch) => {
       'notesPanel',
       'notesPanelButton',
       ...getAnnotationRelatedElements(state),
-    ];  
-  
+    ];
+
     dispatch(actions.disableElements(elements, PRIORITY_ONE));
   }
 };
@@ -55,8 +55,8 @@ const disableElementsIfFilePickerDisabled = dispatch => {
     const elements = [
       'filePickerHandler',
       'filePickerButton',
-    ];  
-  
+    ];
+
     dispatch(actions.disableElements(elements, PRIORITY_ONE));
   }
 };
@@ -69,8 +69,8 @@ const disableElementsIfHideAnnotationPanel = dispatch => {
       'notesPanel',
       'notesPanelButton',
       'annotationCommentButton'
-    ];  
-  
+    ];
+
     dispatch(actions.disableElements(elements, PRIORITY_ONE));
   }
 };

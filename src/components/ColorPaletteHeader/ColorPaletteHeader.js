@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
+import ToolTip from 'components/ToolTip';
+
 import getBrightness from 'helpers/getBrightness';
 
 import './ColorPaletteHeader.scss';
@@ -37,14 +39,15 @@ class ColorPaletteHeader extends React.PureComponent {
     }
 
     return (
-      <div
-        className={colorPalette === 'text' ? 'text selected' : 'text'}
-        style={{ color: TextColor.toHexString() }}
-        onClick={() => onHeaderChange('text')}
-        data-tip={t('option.annotationColor.text')}
-      >
-        Aa
-      </div>
+      <ToolTip content="option.annotationColor.text">
+        <div
+          className={colorPalette === 'text' ? 'text selected' : 'text'}
+          style={{ color: TextColor.toHexString() }}
+          onClick={() => onHeaderChange('text')}
+        >
+          Aa
+        </div>
+      </ToolTip>
     );
   }
 
@@ -73,18 +76,19 @@ class ColorPaletteHeader extends React.PureComponent {
     };
 
     return (
-      <div
-        className={colorPalette === 'border' ? 'border selected' : 'border'}
-        onClick={() => onHeaderChange('border')}
-        data-tip={t('option.annotationColor.border')}
-      >
+      <ToolTip content="option.annotationColor.border">
         <div
-          className={`border-icon ${getBrightness(StrokeColor)}}`}
-          style={{ backgroundColor: StrokeColor.toHexString() }}
+          className={colorPalette === 'border' ? 'border selected' : 'border'}
+          onClick={() => onHeaderChange('border')}
         >
-          {renderInnerCircle()}
+          <div
+            className={`border-icon ${getBrightness(StrokeColor)}}`}
+            style={{ backgroundColor: StrokeColor.toHexString() }}
+          >
+            {renderInnerCircle()}
+          </div>
         </div>
-      </div>
+      </ToolTip>
     );
   }
 
@@ -98,22 +102,23 @@ class ColorPaletteHeader extends React.PureComponent {
     const isTransparency = FillColor.toHexString() === null;
 
     return (
-      <div
-        className={colorPalette === 'fill' ? 'fill selected' : 'fill'}
-        onClick={() => onHeaderChange('fill')}
-        data-tip={t('option.annotationColor.fill')}
-      >
+      <ToolTip content="option.annotationColor.fill">
         <div
-          className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
-          style={{ backgroundColor: FillColor.toHexString() }}
+          className={colorPalette === 'fill' ? 'fill selected' : 'fill'}
+          onClick={() => onHeaderChange('fill')}
         >
-          {isTransparency &&
-            <svg width="100%" height="100%">
-              <line x1="0%" y1="100%" x2="100%" y2="0%" strokeWidth="1" stroke="#e44234" strokeLinecap="square" />
-            </svg>
-          }
+          <div
+            className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
+            style={{ backgroundColor: FillColor.toHexString() }}
+          >
+            {isTransparency &&
+              <svg width="100%" height="100%">
+                <line x1="0%" y1="100%" x2="100%" y2="0%" strokeWidth="1" stroke="#e44234" strokeLinecap="square" />
+              </svg>
+            }
+          </div>
         </div>
-      </div>
+      </ToolTip>
     );
   }
 

@@ -8,16 +8,8 @@
   border: 1px solid $gray12;
   border: 1px solid var(--border-color);
 
-  .tooltip-wrapper {
-    flex-grow: 1;
-    
-    &:nth-child(n+2) {
-      border-left: 1px solid $gray12;
-      border-left: 1px solid var(--border-color);
-    }
-  }
-
   .Button {
+    flex-grow: 1;
     background: $white;
     background: var(--primary-color);
     height: 100%;
@@ -28,6 +20,10 @@
       height: 19px;
     }
 
+    &:nth-child(n+2) {
+      border-left: 1px solid $gray12;
+      border-left: 1px solid var(--border-color);
+    }
 
     &.active {
       background: rgba(0, 0, 0, 0.078);

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
@@ -17,40 +18,100 @@ class ToolTip extends React.PureComponent {
     delayShow: PropTypes.number,
     children: PropTypes.element,
     content: PropTypes.string,
+    isDisabled: PropTypes.bool,
     t: PropTypes.func.isRequired
   }
 
   static defaultProps = {
     location: 'bottom',
-    delayShow: 650,
-    content: ''
+    delayShow: 700,
+    content: '',
+    isDisabled: false
   }
 
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
     this.showTimer = null;
+    this.opacityTimeout = 50; // This is used for tooltip fade-in animation
     this.state = {
       show: false,
       style: {
+        top: 0,
+        left: 0,
         opacity: 0
       }
     };
   }
 
-  componentDidUpdate(_, prevState) {
+  componentDidMount() {
+    if (!this.props.isDisabled) {
+      this.addEventListeners(ReactDOM.findDOMNode(this));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     if (!prevState.show && this.state.show) {
+      this.setTopAndLeft(ReactDOM.findDOMNode(this));
       setTimeout(() => {
         this.setOpacity(1);
-      }, 50);
+      }, this.opacityTimeout);
     }
+
     if (prevState.show && !this.state.show) {
       this.setOpacity(0);
+    }
+
+    if (prevProps.isDisabled && !this.props.isDisabled) {
+      this.addEventListeners(ReactDOM.findDOMNode(this));
+    }
+  }
+
+  addEventListeners = DOMElement => {
+    if (!DOMElement) {
+      // we have this check just to make sure UI doesn't blow up when DOMElement is null
+      // although we haven't met this situation
+      console.warn(`${this.props.children} is rendering null`);
+      return;
+    }
+
+    DOMElement.addEventListener('mouseenter', this.show);
+    DOMElement.addEventListener('mouseleave', this.hide);
+    DOMElement.addEventListener('click', this.hide);
+  }
+
+  setTopAndLeft = DOMElement => {
+    const { location } = this.props;
+    const { top, bottom, left, width, height } = DOMElement.getBoundingClientRect();
+
+
+    if (location === 'bottom') {
+      this.setState({
+        style: {
+          ...this.state.style,
+          top: bottom,
+          left: left + width / 2
+        }
+      });
+    }
+    if (location === 'left') {
+      this.setState({
+        style: {
+          ...this.state.style,
+          top: top + height / 2,
+          left
+        }
+      });
     }
   }
 
   setOpacity = opacity => {
-    this.setState({ style: { opacity } });
+    this.setState({
+      style: {
+        ...this.state.style,
+        opacity
+      }
+    });
   }
 
   show = () => {
@@ -64,14 +125,6 @@ class ToolTip extends React.PureComponent {
     this.setState({ show: false });
   }
 
-  getShortcut = () => {
-    const { t, content } = this.props;
-
-    const shortcut = t(`shortcut.${content.split('.')[1]}`);
-
-    return isMac ? shortcut.replace('Ctrl', 'Cmd') : shortcut;
-  }
-
   renderContent = () => {
     const { t } = this.props;
     const content = t(this.props.content);
@@ -83,9 +136,9 @@ class ToolTip extends React.PureComponent {
 
       return (
         <React.Fragment>
-          {content}
+          {`${content} `}
           {hasShortcut &&
-            <span className="shortcut">{this.getShortCut()}</span>
+            <span className="tooltip__shortcut">{this.renderShortcut()}</span>
           }
         </React.Fragment>
       );
@@ -94,25 +147,47 @@ class ToolTip extends React.PureComponent {
     return null;
   }
 
+  renderShortcut = () => {
+    const { t, content } = this.props;
+
+    const shortcut = t(`shortcut.${content.split('.')[1]}`);
+
+    return isMac ? shortcut.replace('Ctrl', 'Cmd') : shortcut;
+  }
+
+  renderChildren = () => {
+    const { children, isDisabled } = this.props;
+    const { type } = children;
+
+    if (type === 'div') {
+      // an example is the advanced button in the search overlay
+      // we don't want to add isDisabled to a DOM element since it's not a valid HTML attribute
+      return React.cloneElement(children);
+    }
+    if (typeof type === 'function') {
+      // children is a React component such as <ActionButton />
+      return React.cloneElement(children, { isDisabled });
+    }
+
+    return null;
+  }
+
   render() {
-    const { location, children } = this.props;
+    const { location, content } = this.props;
 
     return (
-      <div
-        className="tooltip-wrapper"
-        ref={this.wrapperRef}
-        onMouseEnter={this.show}
-        onMouseLeave={this.hide}
-        onClick={this.hide}
-      >
-        {children}
+      <React.Fragment>
+        {this.renderChildren()}
         {
-          this.state.show &&
-          <div className={`tooltip--${location}`} style={this.state.style}>
-            <div className={`tooltip__content`}>{this.renderContent()}</div>
-          </div>
+          this.state.show && content &&
+          ReactDOM.createPortal(
+            <div className={`tooltip--${location}`} style={this.state.style}>
+              <div className={`tooltip__content`}>{this.renderContent()}</div>
+            </div>,
+            document.getElementById('app')
+          )
         }
-      </div>
+      </React.Fragment>
     );
   }
 }

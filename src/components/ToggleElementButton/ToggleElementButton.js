@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import { withToolTip } from 'components/ToolTip';
 
 import selectors from 'selectors';
 import actions from 'actions';
@@ -14,9 +15,9 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: e => {
     e.stopPropagation();
-    
+
     dispatch(actions.toggleElement(ownProps.element));
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Button);
+export default connect(mapStateToProps, mapDispatchToProps)(withToolTip(Button));
