@@ -173,7 +173,8 @@ export default {
   },
   document: {
     id: getHashParams('did', ''),
-    path: getHashParams('initialDoc', getHashParams('d', '')),
+    initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
+    path: null,
     filename: null,
     file: null,
     type: null,
