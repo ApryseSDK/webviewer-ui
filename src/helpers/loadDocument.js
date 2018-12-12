@@ -11,25 +11,28 @@ export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
       Promise.all([getPartRetriever(state, streaming), getDocOptions(state, dispatch, streaming)])
-      .then(params => {
-        const partRetriever = params[0];
-        const docOptions = params[1];
+        .then(params => {
+          const partRetriever = params[0];
+          const docOptions = params[1];
 
-        if (partRetriever.on) {
-          partRetriever.on('error', function(e, type, message) {
-            fireError(message);
-          });
-        }
-        if (partRetriever.setErrorCallback) {
-          partRetriever.setErrorCallback(fireError);
-        }
+          if (partRetriever.on) {
+            partRetriever.on('error', function (e, type, message) {
+              fireError(message);
+            });
+          }
+          if (partRetriever.setErrorCallback) {
+            partRetriever.setErrorCallback(fireError);
+          }
+          if (partRetriever instanceof window.CoreControls.PartRetrievers.BlackBoxPartRetriever && isLocalFile(state)) {
+            console.error(`${state.document.path} is a local file, when using the public demo server in the pdftronServer option to run your WebViewer app, the files used must be publicly accessible and cannot be only locally accessible. To solve this, you can choose either to use your own local server or pass a publicly accessible URL to the initialDoc option.`);
+          }
 
-        core.loadAsync(partRetriever, docOptions);
-      })
-      .catch(error => {
-        fireError(error);
-        console.error(error);
-      });
+          core.loadAsync(partRetriever, docOptions);
+        })
+        .catch(error => {
+          fireError(error);
+          console.error(error);
+        });
     });
   });
 };
@@ -169,7 +172,7 @@ const getDocOptions = (state, dispatch, streaming) => {
           }
           console.error(error);
         };
-        const workerHandlers = { workerLoadingProgress: () => {} };
+        const workerHandlers = { workerLoadingProgress: () => { } };
 
         const docName = getDocName(state);
         const options = { docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise };
@@ -222,8 +225,11 @@ const getDocumentExtension = doc => {
     const result = regex.exec(doc);
     if (result) {
       extension = result[1];
+    } else {
+      console.error(`File extension is either unsupported or cannot be decided from ${doc}. Webviewer supports ${[...supportedPDFExtensions, ...supportedOfficeExtensions, 'xod'].join(', ')}`);
     }
   }
+
   return extension;
 };
 
@@ -280,6 +286,12 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
 
 const fireError = message => {
   fireEvent('loaderror', message);
+};
+
+const isLocalFile = state => {
+  const path = state.advanced.path;
+
+  return !/https?:\/\//.test(path);
 };
 
 export const fireEvent = (eventName, data) => {

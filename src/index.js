@@ -16,6 +16,7 @@ import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript from 'helpers/loadScript';
 import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServer';
+import setupMIMETypeTest from 'helpers/setupMIMETypeTest';
 import eventHandler from 'helpers/eventHandler';
 import setupPDFTron from 'helpers/setupPDFTron';
 import setupI18n from 'helpers/setupI18n';
@@ -104,6 +105,7 @@ if (window.CanvasRenderingContext2D) {
     setupPDFTron();
     setupDocViewer();
     setupI18n(state);
+    setupMIMETypeTest();
     setDefaultToolColor();
     setUserPermission(state);
     addEventHandlers(),
