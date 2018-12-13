@@ -47,7 +47,7 @@ class ErrorModal extends React.PureComponent {
       errorMessage = t('message.notSupported');
     }
     if (documentPath.indexOf('file:///') > -1) {
-      console.error(`WebViewer doesn't have access to local files, check https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading#not-allowed-to-load-local-resource:-file:`);
+      console.error(`WebViewer doesn't have access to file URLs because of browser security restrictions. Please see https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading#not-allowed-to-load-local-resource:-file:`);
     }
 
     this.setState({ errorMessage });

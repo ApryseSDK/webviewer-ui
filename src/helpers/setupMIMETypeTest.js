@@ -25,10 +25,10 @@ export default () => {
 
 const testMIMEType = fileExtensions => {
   fileExtensions.forEach(extension => {
-    fetch(`./mime/dummy.${extension}`)
+    fetch(`${window.CoreControls.getWorkerPath()}/mime-type-test/test.${extension}`)
       .then(({ status }) => {
         if (status === 404) {
-          console.error(`.${extension} mime type is not supported on your server, check https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading/#mime-types`);
+          console.error(`Your server does not have a MIME type set for extension ${extension}. Please see https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading/#mime-types for more information.`);
         }
       });
   });
@@ -36,5 +36,6 @@ const testMIMEType = fileExtensions => {
 
 const missFilesToLoad = ({ detail }) => {
   return detail === `Couldn't fetch resource file.` 
-      || detail === 'The worker has encountered an error';
+      || detail === 'The worker has encountered an error'
+      || (detail.startsWith('Error retrieving file:') && detail.includes('.xod'));
 };
