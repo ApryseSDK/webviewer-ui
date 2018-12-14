@@ -108,7 +108,7 @@ if (window.CanvasRenderingContext2D) {
     setUserPermission(state);
     addEventHandlers(),
     setDefaultDisabledElements(store),
-    setupLoadAnnotationsFromServer(state.document.id, state.advanced.serverUrl, state.advanced.serverUrlHeaders);
+    setupLoadAnnotationsFromServer(store);
 
     ReactDOM.render(
       <Provider store={store}>
@@ -168,6 +168,7 @@ if (window.CanvasRenderingContext2D) {
           searchTextFull: apis.searchTextFull(store),
           selectors: apis.getSelectors(store),
           setAdminUser: apis.setAdminUser,
+          setNoteDateFormat: apis.setNoteDateFormat(store),
           setAnnotationUser: apis.setAnnotationUser,
           setTheme: apis.setTheme,
           setCurrentPageNumber: apis.setCurrentPageNumber,
@@ -185,6 +186,7 @@ if (window.CanvasRenderingContext2D) {
           setZoomLevel: apis.setZoomLevel,
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
+          updateOutlines: apis.updateOutlines(store),
           loadedFromServer: false,
           serverFailed: false
         };

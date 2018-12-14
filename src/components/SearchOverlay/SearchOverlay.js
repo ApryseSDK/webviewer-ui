@@ -184,8 +184,9 @@ class SearchOverlay extends React.PureComponent {
         this.runSearchListeners();
       }
       if (isSearchDone) {
-        setIsSearching(false);
+        readerControl.docViewer.trigger('endOfDocumentResult', true);
       }
+      setIsSearching(false);
     }; 
     
     setIsSearching(true);
@@ -213,7 +214,7 @@ class SearchOverlay extends React.PureComponent {
     }
   }
 
-  onInput = e => {
+  onChange = e => {
     const { isSearchPanelOpen, setSearchValue } = this.props;
     const searchValue = e.target.value;
     
@@ -311,7 +312,7 @@ class SearchOverlay extends React.PureComponent {
         <div className="wrapper">
           <div className="main">
             <div className="input-wrapper">
-              <input ref={this.searchTextInput} type="text" autoComplete="off" onInput={this.onInput} onKeyDown={this.onKeyDown} value={searchValue} />
+              <input ref={this.searchTextInput} type="text" autoComplete="off" onChange={this.onChange} onKeyDown={this.onKeyDown} value={searchValue} />
             </div>
             <div className="number-of-results">
               {isSearchPanelOpen &&

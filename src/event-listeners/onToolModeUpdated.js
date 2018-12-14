@@ -1,6 +1,6 @@
 import actions from 'actions';
 
-export default dispatch => (e, tool) => {
-  dispatch(actions.setActiveToolNameAndStyle(tool));
-  $(document).trigger('toolModeChanged');
+export default dispatch => (e, newTool, oldTool) => {
+  dispatch(actions.setActiveToolNameAndStyle(newTool));
+  $(document).trigger('toolModeChanged', [newTool, oldTool]);
 };

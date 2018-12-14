@@ -72,6 +72,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, currentPage: payload.currentPage };
     case 'SET_SORT_NOTES_BY':
       return { ...state, sortNotesBy: payload.sortNotesBy };
+    case 'SET_NOTE_DATE_FORMAT':
+      return { ...state, noteDateFormat: payload.noteDateFormat };
     case 'SET_FULL_SCREEN':
       return { ...state, isFullScreen: payload.isFullScreen };
     case 'SET_HEADER_ITEMS':
@@ -118,8 +120,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isDocumentLoaded: payload.isDocumentLoaded };
     case 'SET_READ_ONLY':
       return { ...state, isReadOnly: payload.isReadOnly };
-    case 'SET_LOADING_MESSAGE':
-      return { ...state, loadingMessage: payload.loadingMessage };
     case 'ENABLE_TOOL':
       return { ...state, disabledTools: { ...state.disabledTools, [payload.toolName]: false } };
     case 'ENABLE_TOOLS': 
@@ -133,15 +133,19 @@ export default initialState => (state = initialState, action) => {
       }
     case 'DISABLE_TOOL':
       return { ...state, disabledTools: { ...state.disabledTools, [payload.toolName]: true } };
-    case 'DISABLE_TOOLS': 
+    case 'DISABLE_TOOLS':
       {
         const disabledTools = {};
         payload.toolNames.forEach(toolName => {
           disabledTools[toolName] = true;
         });
-  
+
         return { ...state, disabledTools: { ...state.disabledTools, ...disabledTools } };
       }
+    case 'SET_CUSTOM_PANEL': 
+      return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
+    case 'SET_PAGE_LABELS': 
+      return { ...state, pageLabels: [ ...payload.pageLabels ] };
     default:
       return state;
   }

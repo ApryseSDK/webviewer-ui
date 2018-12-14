@@ -3,6 +3,7 @@ import closeDocument from './closeDocument';
 import downloadPdf from './downloadPdf';
 import getAnnotationUser from './getAnnotationUser';
 import setAnnotationUser from './setAnnotationUser';
+import setNoteDateFormat from './setNoteDateFormat';
 import getZoomLevel from './getZoomLevel';
 import setZoomLevel from './setZoomLevel';
 import isReadOnly from './isReadOnly';
@@ -60,12 +61,14 @@ import disableTool from './disableTool';
 import disableTools from './disableTools';
 import isToolDisabled from './isToolDisabled';
 import setSortStrategy from './setSortStrategy';
+import updateOutlines from './updateOutlines';
 
 export default {
   loadDocument,
   closeDocument,
   downloadPdf,
   getAnnotationUser,
+  setNoteDateFormat,
   setAnnotationUser,
   getZoomLevel,
   setZoomLevel,
@@ -123,5 +126,6 @@ export default {
   disableTool,
   disableTools,
   isToolDisabled,
-  setSortStrategy
+  setSortStrategy,
+  updateOutlines
 };

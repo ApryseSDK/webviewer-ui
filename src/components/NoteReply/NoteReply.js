@@ -6,15 +6,18 @@ import NoteContents from 'components/NoteContents';
 import NotePopup from 'components/NotePopup';
 
 import core from 'core';
+import selectors from 'selectors';
 
 import './NoteReply.scss';
+import connect from 'react-redux/es/connect/connect';
 
 class NoteReply extends React.PureComponent {
   static propTypes = {
     reply: PropTypes.object.isRequired,
     searchInput: PropTypes.string,
     renderAuthorName: PropTypes.func.isRequired,
-    renderContents: PropTypes.func.isRequired
+    renderContents: PropTypes.func.isRequired,
+    noteDateFormat: PropTypes.string
   }
 
   constructor(props) {
@@ -38,14 +41,14 @@ class NoteReply extends React.PureComponent {
   }
 
   renderHeader = () => {
-    const { reply, renderAuthorName } = this.props;
+    const { reply, renderAuthorName, noteDateFormat } = this.props;
 
     return (
       <div className="title">
         {renderAuthorName(reply)}
         <span className="spacer"></span>
         <span className="time">
-          {' ' + dayjs(reply.DateCreated).format('MMM D, h:mma')}
+          {' ' + dayjs(reply.DateCreated).format(noteDateFormat)}
         </span>
         <NotePopup 
           annotation={reply} 
@@ -76,4 +79,8 @@ class NoteReply extends React.PureComponent {
   }
 }
 
-export default NoteReply;
+const mapStateToProps = state => ({
+  noteDateFormat: selectors.getNoteDateFormat(state)
+});
+
+export default connect(mapStateToProps)(NoteReply);

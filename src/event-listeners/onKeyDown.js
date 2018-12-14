@@ -8,7 +8,8 @@ import actions from 'actions';
 
 
 export default dispatch => e => {
-  const selectedText = core.getSelectedText();
+  const selectedTextFromCanvas = core.getSelectedText();
+  const selectedTextFromDOM = window.getSelection().toString();
 
   if (e.metaKey || e.ctrlKey) {
     if (e.shiftKey) {
@@ -21,14 +22,16 @@ export default dispatch => e => {
       }
     } else {
       if (e.key === 'c' || e.which === 67) { // (Ctrl/Cmd + C)
-        if (core.getSelectedText()) {
+        if (selectedTextFromCanvas) {
           copyText();
           dispatch(actions.closeElement('textPopup'));
-        } else if (core.getSelectedAnnotations().length > 0) {
+        } else if (core.getSelectedAnnotations().length > 0 && !selectedTextFromDOM) {
           core.updateCopiedAnnotations();
         }
       } else if (e.key === 'v' || e.which === 86) {  // (Ctrl/Cmd + V)
-        core.pasteCopiedAnnotations();
+        if (!selectedTextFromDOM) {
+          core.pasteCopiedAnnotations();
+        }
       } else if (e.key === 'o' || e.which === 79) { // (Ctrl/Cmd + O)
         e.preventDefault();
         openFilePicker();
@@ -65,7 +68,7 @@ export default dispatch => e => {
       e.preventDefault();
       setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
       dispatch(actions.closeElements(['annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay' ]));
-    } else if (!selectedText) {
+    } else if (!selectedTextFromCanvas) {
       if (document.activeElement instanceof window.HTMLInputElement || document.activeElement instanceof window.HTMLTextAreaElement) {
         return;
       }
@@ -102,14 +105,14 @@ export default dispatch => e => {
           setToolModeAndGroup(dispatch, 'AnnotationCreateTextUnderline', 'textTools');
         }
       } 
-    } else if (selectedText) {
-      if (e.key === 'g' || e.which === 71) { // (G)
+    } else if (selectedTextFromCanvas) {
+      if ((e.key === 'g' || e.which === 71) && !core.getTool('AnnotationCreateTextSquiggly').disabled) { // (G)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextSquigglyAnnotation);
-      } else if (e.key === 'h' || e.which === 72) { // (H)
+      } else if ((e.key === 'h' || e.which === 72) && !core.getTool('AnnotationCreateTextHighlight').disabled) { // (H)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextHighlightAnnotation);
-      } else if (e.key === 'k' || e.which === 75) { // (K)
+      } else if ((e.key === 'k' || e.which === 75) && !core.getTool('AnnotationCreateTextStrikeout').disabled) { // (K)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextStrikeoutAnnotation);
-      } else if (e.key === 'u' || e.which === 85) { // (U)
+      } else if ((e.key === 'u' || e.which === 85) && !core.getTool('AnnotationCreateTextUnderline').disabled) { // (U)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextUnderlineAnnotation);
       }
     } 

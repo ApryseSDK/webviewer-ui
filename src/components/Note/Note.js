@@ -43,9 +43,9 @@ class Note extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { annotation } = this.props;
     const commentEditable = core.canModify(annotation) && !annotation.getContents();
-    const noteBeingEdited = !prevProps.isNoteEditing && this.props.isNoteEditing; 
-    const noteCollapsed = prevProps.isNoteExpanded && !this.props.isNoteExpanded; 
-    
+    const noteBeingEdited = !prevProps.isNoteEditing && this.props.isNoteEditing;
+    const noteCollapsed = prevProps.isNoteExpanded && !this.props.isNoteExpanded;
+
     if (noteBeingEdited) {
       if (commentEditable) {
         this.openRootEditing();
@@ -106,7 +106,7 @@ class Note extends React.PureComponent {
     this.props.setIsNoteEditing(false);
   }
 
-  onInput = () => {
+  onChange = () => {
     this.replyTextarea.current.style.height = (this.replyTextarea.current.scrollHeight + 2) + 'px';
   }
 
@@ -164,7 +164,7 @@ class Note extends React.PureComponent {
     let text;
     const isContentsLinkable = Autolinker.link(contents).indexOf('<a') !== -1;
     if (isContentsLinkable) {
-      const linkedContent = Autolinker.link(contents);
+      const linkedContent = Autolinker.link(contents, { stripPrefix: false });
       // if searchInput is 't', replace <a ...>text</a> with
       // <a ...><span class="highlight">t</span>ext</a>
       text = linkedContent.replace(/>(.+)</i, (_, p1) => `>${this.getText(p1)}<`);
@@ -172,7 +172,7 @@ class Note extends React.PureComponent {
       text = this.getText(contents);
     }
 
-    return <span className="contents" dangerouslySetInnerHTML={{__html: text}}></span>; 
+    return <span className="contents" dangerouslySetInnerHTML={{__html: text}}></span>;
   }
 
   getText = text => {
@@ -213,24 +213,24 @@ class Note extends React.PureComponent {
         />
 
         <div className={`replies ${isNoteExpanded ? 'visible' : 'hidden'}`}>
-          {replies.map(reply => 
-            <NoteReply 
-              key={reply.Id} 
-              reply={reply} 
-              searchInput={searchInput} 
-              renderAuthorName={this.renderAuthorName} 
-              renderContents={this.renderContents} 
+          {replies.map(reply =>
+            <NoteReply
+              key={reply.Id}
+              reply={reply}
+              searchInput={searchInput}
+              renderAuthorName={this.renderAuthorName}
+              renderContents={this.renderContents}
             />
           )}
           {!isReadOnly &&
             <div className="add-reply" onClick={e => e.stopPropagation()}>
-              <textarea 
-                ref={this.replyTextarea} 
-                onInput={this.onInput} 
-                onKeyDown={this.onKeyDown} 
-                onBlur={this.onBlur} 
-                onFocus={this.onFocus} 
-                placeholder="Reply..." 
+              <textarea
+                ref={this.replyTextarea}
+                onChange={this.onChange}
+                onKeyDown={this.onKeyDown}
+                onBlur={this.onBlur}
+                onFocus={this.onFocus}
+                placeholder={`${t('action.reply')}...`}
               />
               {isReplyFocused &&
                 <div className="buttons" onMouseDown={e => e.preventDefault()}>

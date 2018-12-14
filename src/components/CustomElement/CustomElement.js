@@ -1,9 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
+import selectors from 'selectors';
 
 class CustomElement extends React.PureComponent {
   static propTypes = {
-    render: PropTypes.func.isRequired
+    className: PropTypes.string,
+    isDisabled: PropTypes.bool, 
+    dataElement: PropTypes.string,
+    display: PropTypes.string,
+    render: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -29,16 +36,37 @@ class CustomElement extends React.PureComponent {
   isDOMElement = element => element instanceof Element;
 
   isReactElement = element => React.isValidElement(element);
-
+  
   render() {
+    const { 
+      className = '', 
+      isDisabled, 
+      dataElement, 
+      display,
+      render
+    } = this.props;
+
+    if (isDisabled) {
+      return null;
+    }
+
     return (
-      <div ref={this.elementWrapper}>
+      <div 
+        className={className}
+        ref={this.elementWrapper} 
+        style={{ display: display || 'flex' }} 
+        data-element={dataElement}
+      >
         {this.state.isRenderingReactComponent &&
-          this.props.render()
+          render()
         }
       </div>
     );
   }
 }
 
-export default CustomElement;
+const mapStateToProps = (state, ownProps) => ({
+  isDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
+});
+
+export default connect(mapStateToProps)(CustomElement);

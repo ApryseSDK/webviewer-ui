@@ -13,6 +13,7 @@ class Thumbnail extends React.PureComponent {
   static propTypes = {
     index: PropTypes.number.isRequired,
     currentPage: PropTypes.number,
+    pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
     onLoad: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
@@ -59,20 +60,22 @@ class Thumbnail extends React.PureComponent {
   }
 
   render() {
-    const { index, currentPage } = this.props;
+    const { index, currentPage, pageLabels } = this.props;
     const isActive = currentPage === index + 1;
+    const pageLabel = pageLabels[index];
 
     return (
       <div className={`Thumbnail ${isActive ? 'active' : ''}`}>
         <div className="container" ref={this.thumbContainer} onClick={this.handleClick}></div>
-        <div className="page-number">{index + 1}</div>
+        <div className="page-label">{pageLabel}</div>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  currentPage: selectors.getCurrentPage(state)
+  currentPage: selectors.getCurrentPage(state),
+  pageLabels: selectors.getPageLabels(state)
 });
 
 const mapDispatchToProps = {

@@ -18,6 +18,7 @@ class NotesPanel extends React.PureComponent {
     isDisabled: PropTypes.bool,
     display: PropTypes.string.isRequired,
     sortNotesBy: PropTypes.string.isRequired,
+    pageLabels: PropTypes.array.isRequired,
     t: PropTypes.func.isRequired
   }
   
@@ -66,14 +67,11 @@ class NotesPanel extends React.PureComponent {
   }
 
   updatePanelOnInput = searchInput => {
-    let notesToRender;
-
     core.deselectAllAnnotations();
+    const notesToRender = this.filterAnnotations(this.rootAnnotations, searchInput);
+
     if (searchInput.trim()) {
-      notesToRender = this.filterAnnotations(this.rootAnnotations, searchInput);
       core.selectAnnotations(notesToRender); 
-    } else {
-      notesToRender = this.rootAnnotations;
     }
 
     this.setVisibleNoteIds(notesToRender);
@@ -81,6 +79,10 @@ class NotesPanel extends React.PureComponent {
   }
 
   filterAnnotations = (annotations, searchInput) => {
+    if (!searchInput.trim()) {
+      return annotations;
+    }
+
     return annotations.filter(rootAnnotation => {
       const replies = rootAnnotation.getReplies();
       // reply is also a kind of annotation
@@ -151,7 +153,8 @@ class NotesPanel extends React.PureComponent {
   }
 
   renderListSeparator = (notes, currNote) => {
-    const { shouldRenderSeparator, getSeparatorContent } = sortStrategy[this.props.sortNotesBy];
+    const { sortNotesBy, pageLabels } = this.props;
+    const { shouldRenderSeparator, getSeparatorContent } = sortStrategy[sortNotesBy];
     const prevNote = this.getPrevNote(notes, currNote);
     const isFirstNote = prevNote === currNote;
 
@@ -161,7 +164,7 @@ class NotesPanel extends React.PureComponent {
       getSeparatorContent &&
       (isFirstNote || shouldRenderSeparator(prevNote, currNote))
     ) {
-      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote)} />;
+      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, pageLabels)} />;
     }
 
     return null;
@@ -198,6 +201,7 @@ class NotesPanel extends React.PureComponent {
 const mapStatesToProps = state => ({
   sortNotesBy: selectors.getSortNotesBy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
+  pageLabels: selectors.getPageLabels(state)
 });
 
 export default connect(mapStatesToProps)(translate()(NotesPanel));

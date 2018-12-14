@@ -23,11 +23,11 @@ class NoteContents extends React.Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.isEditing && this.props.isEditing) {
       this.textInput.current.focus();
-      this.onInput();
+      this.onChange();
     }
   }
   
-  onInput = () => {
+  onChange = () => {
     this.textInput.current.style.height = '30px';
     this.textInput.current.style.height = (this.textInput.current.scrollHeight + 2) + 'px';
   }
@@ -61,7 +61,7 @@ class NoteContents extends React.Component {
         <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
           <textarea 
             ref={this.textInput} 
-            onInput={this.onInput} 
+            onChange={this.onChange} 
             onKeyDown={this.onKeyDown}
             onBlur={closeEditing} 
             defaultValue={contents} 

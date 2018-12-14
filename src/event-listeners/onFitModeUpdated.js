@@ -12,5 +12,5 @@ export default dispatch => (e, fitMode) => {
     dispatch(actions.setFitMode('FitPage'));
   }
 
-  $(document).trigger('fitModeChanged');
+  $(document).trigger('fitModeChanged', [fitMode]);
 };

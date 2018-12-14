@@ -4,11 +4,11 @@ import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { isIE11 } from 'helpers/device';
 import { engineTypes, documentTypes } from 'constants/types';
-import { supportedPDFExtensions, supportedOfficeExtensions } from 'constants/supportedFiles';
+import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
 
 export default (state, dispatch) => {
-  core.closeDocument().then(() => {
+  core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
       Promise.all([getPartRetriever(state, streaming), getDocOptions(state, dispatch, streaming)])
       .then(params => {
@@ -64,8 +64,9 @@ const checkByteRange = state => {
 };
 
 const getPartRetriever = (state, streaming) => {
-  const { path: documentPath, file, isOffline, filename, pdfDoc } = state.document;
+  const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
   const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, useDownloader, withCredentials } = state.advanced;
+  const documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
 
@@ -135,7 +136,7 @@ const getPartRetriever = (state, streaming) => {
 };
 
 const getDocOptions = (state, dispatch, streaming) => {
-  const { id: docId, officeType, pdfType } = state.document;
+  const { id: docId, officeType, pdfType, password } = state.document;
   const engineType = getEngineType(state);
 
   return new Promise(resolve => {
@@ -146,9 +147,20 @@ const getDocOptions = (state, dispatch, streaming) => {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise } = state.advanced;
 
       Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
+        let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
+        let attempt = 0;
         const getPassword = checkPassword => {
-          dispatch(actions.openElement('passwordModal'));
-          dispatch(actions.setCheckPasswordFunction(checkPassword));
+          dispatch(actions.setPasswordAttempts(attempt++));
+          if (password && !passwordChecked) {
+            checkPassword(password);
+            passwordChecked = true;
+          } else {
+            if (passwordChecked) {
+              console.error('Wrong password has been passed as an argument. WebViewer will open password modal.');
+            }
+            dispatch(actions.setCheckPasswordFunction(checkPassword));
+            dispatch(actions.openElement('passwordModal'));
+          }
         };
         const onError = error => {
           if (typeof error === 'string') {
@@ -203,15 +215,24 @@ const getEngineType = state => {
 };
 
 const getDocumentExtension = doc => {
-  // strip out query/hash parameters
-  doc = doc.split('?')[0].split('#')[0];
-  return doc.slice(doc.lastIndexOf('.') + 1).toLowerCase();
+  let extension;
+  if (doc) {
+    const pdfExtensions = supportedPDFExtensions.join('|');
+    const officeExtensions = supportedOfficeExtensions.join('|');
+    const blackboxExtensions = supportedBlackboxExtensions.join('|');
+    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|${blackboxExtensions}|xod)(\&|$)`);
+    const result = regex.exec(doc);
+    if (result) {
+      extension = result[1];
+    }
+  }
+  return extension;
 };
 
 const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
-  const { path, filename } = state.document;
-  return filename || path;
+  const { path, filename, initialDoc } = state.document;
+  return filename || path || initialDoc;
 };
 
 const isPDFNetJSExtension = extension => {

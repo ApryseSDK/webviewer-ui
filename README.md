@@ -8,6 +8,8 @@ This repo is specifically designed for any users interested in advanced customiz
 
 ## Initial setup
 
+Before you begin, make sure your development environment includes [Node.js](https://nodejs.org/en/).
+
 To work with this repo, you must download the latest WebViewer and link it to this repo.
 
 1. Download [WebViewer](https://www.pdftron.com/documentation/web/guides/run-samples).

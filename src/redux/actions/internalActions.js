@@ -26,7 +26,7 @@ export const enableElement = (dataElement, priority) => (dispatch, getState) => 
     if (!currentPriority || priority >= currentPriority) {
       dispatch({ type: 'ENABLE_ELEMENT', payload: { dataElement, priority }});
     }
-  } 
+  }
 };
 export const enableElements = (dataElements, priority) => (dispatch, getState) => {
   const filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
@@ -87,7 +87,9 @@ export const setFilename = filename => ({ type: 'SET_FILENAME', payload: { filen
 export const setTotalPages = totalPages => ({ type: 'SET_TOTAL_PAGES', payload: { totalPages } });
 export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outlines } });
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
+export const setPasswordAttempts = attempt => ({ type: 'SET_PASSWORD_ATTEMPTS', payload: { attempt } });
 export const setPrintQuality = quality => ({ type: 'SET_PRINT_QUALITY', payload: { quality } });
+export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
 
 // user
 export const setUserName = userName => ({ type: 'SET_USER_NAME', payload: { userName } });
@@ -99,6 +101,7 @@ export const setDecryptFunction = decryptFunction => ({ type: 'SET_DECRYPT_FUNCT
 export const setDecryptOptions = decryptOptions => ({ type: 'SET_DECRYPT_OPTIONS', payload: { decryptOptions } });
 export const setEngineType = type => ({ type: 'SET_ENGINE_TYPE', payload: { type } });
 export const setCustomHeaders = customHeaders => ({ type: 'SET_CUSTOM_HEADERS', payload: { customHeaders } });
+export const setWithCredentials = withCredentials => ({ type: 'SET_WITH_CREDENTIALS', payload: { withCredentials } });
 
 // search
 export const searchText = (searchValue, options) => ({ type: 'SEARCH_TEXT', payload: { searchValue, options } });

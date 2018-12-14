@@ -144,13 +144,15 @@ export default {
     fitMode: '',
     zoom: 1,
     displayMode: 'Single',
-    currentPage: undefined,
+    currentPage: 1,
     sortNotesBy: 'position',
     isFullScreen: false,
     doesAutoLoad: getHashParams('auto_load', true),
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
-    loadingMessage: '',
+    customPanels: [],
+    pageLabels: [],
+    noteDateFormat: 'MMM D, h:mma'
   },
   search: {
     listeners: [],
@@ -171,18 +173,21 @@ export default {
   },
   document: {
     id: getHashParams('did', ''),
-    path: getHashParams('initialDoc', getHashParams('d', '')),
+    initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
+    path: null,
     filename: null,
     file: null,
     type: null,
     pdfDoc: null,
     pdfType: getHashParams('pdf', 'wait'),
     officeType: getHashParams('office', 'wait'),
-    isOffline: getHashParams('startOffline', false), // to viewer (double check with Matt)
+    isOffline: getHashParams('startOffline', false),
     totalPages: 0,
     outlines: [],
     checkPassword: null,
-    printQuality: 1
+    password: '',
+    printQuality: 1,
+    passwordAttempts: -1,
   },
   user: {
     name: getHashParams('user', 'Guest'),
@@ -200,7 +205,7 @@ export default {
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
     preloadWorker: getHashParams('preloadWorker', false),
-    serverUrl: getHashParams('server_url', process.env.NODE_ENV === 'development' ? '/annotations' : ''),
+    serverUrl: getHashParams('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
     streaming: getHashParams('streaming', false),
     subzero: getHashParams('subzero', false),
@@ -210,6 +215,7 @@ export default {
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null,
     decrypt: null,
-    decryptOptions: { }
+    decryptOptions: { },
+    withCredentials: false
   }
 };
