@@ -110,7 +110,7 @@ class NoteRoot extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  sortNotesBy: selectors.getSortNotesBy(state),
+  sortNotesBy: selectors.getSortStrategy(state),
   noteDateFormat: selectors.getNoteDateFormat(state)
 });
 

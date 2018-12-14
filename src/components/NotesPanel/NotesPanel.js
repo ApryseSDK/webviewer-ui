@@ -199,7 +199,7 @@ class NotesPanel extends React.PureComponent {
 }
 
 const mapStatesToProps = state => ({
-  sortNotesBy: selectors.getSortNotesBy(state),
+  sortNotesBy: selectors.getSortStrategy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state)
 });

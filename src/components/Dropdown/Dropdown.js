@@ -72,7 +72,7 @@ class Dropdown extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'dropdown'),
-  sortNotesBy: selectors.getSortNotesBy(state)
+  sortNotesBy: selectors.getSortStrategy(state)
 });
 
 const mapDispatchToProps = {

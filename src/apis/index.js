@@ -60,7 +60,8 @@ import enableTools from './enableTools';
 import disableTool from './disableTool';
 import disableTools from './disableTools';
 import isToolDisabled from './isToolDisabled';
-import setSortStrategy from './setSortStrategy';
+import setNotesPanelSort from './setNotesPanelSort';
+import addSortStrategy from './addSortStrategy';
 import updateOutlines from './updateOutlines';
 
 export default {
@@ -126,6 +127,7 @@ export default {
   disableTool,
   disableTools,
   isToolDisabled,
-  setSortStrategy,
+  setNotesPanelSort,
+  addSortStrategy,
   updateOutlines
 };

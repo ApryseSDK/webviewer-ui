@@ -9,5 +9,5 @@ export default store => newSort => {
     shouldRenderSeparator,
     getSeparatorContent
   };
-  store.dispatch(actions.setSortNotesBy(name));
+  store.dispatch(actions.setSortStrategy(name));
 };
