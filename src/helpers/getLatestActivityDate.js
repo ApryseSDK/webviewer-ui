@@ -1,11 +1,19 @@
 export default annotation => {
-  const latestDate = annotation.getReplies().reduce((result, reply) => {
-    if (reply.DateModified === null || new Date(result) > new Date(reply.DateModified)) {
-      return result;
+  const latestReplyActivityDate = annotation.getReplies().reduce((acc, reply) => {
+    const replyDate = reply.DateModified || reply.DateCreated;
+    if (replyDate && new Date(replyDate) > new Date(acc)) {
+      return replyDate;
     } else {
-      return reply.DateModified;
+      return acc;
     }
-  }, annotation.DateModified);
-  
-  return latestDate ? latestDate : new Date();
+  }, 0);
+
+  if (latestReplyActivityDate) {
+    return latestReplyActivityDate;
+  } else if (annotation.DateModified) {
+    return annotation.DateModified;
+  } else if (annotation.DateCreated) {
+    return annotation.DateCreated;
+  }
+  return new Date();
 };

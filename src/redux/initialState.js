@@ -144,13 +144,15 @@ export default {
     fitMode: '',
     zoom: 1,
     displayMode: 'Single',
-    currentPage: undefined,
+    currentPage: 1,
     sortNotesBy: 'position',
     isFullScreen: false,
     doesAutoLoad: getHashParams('auto_load', true),
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
+    pageLabels: [],
+    noteDateFormat: 'MMM D, h:mma'
   },
   search: {
     listeners: [],
@@ -171,7 +173,8 @@ export default {
   },
   document: {
     id: getHashParams('did', ''),
-    path: getHashParams('initialDoc', getHashParams('d', '')),
+    initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
+    path: null,
     filename: null,
     file: null,
     type: null,

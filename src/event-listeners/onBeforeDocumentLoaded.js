@@ -1,5 +1,6 @@
 import core from 'core';
 import actions from 'actions';
+import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
 export default dispatch => () => {
   // if we are opening an password-protected pdf,
@@ -7,12 +8,13 @@ export default dispatch => () => {
   dispatch(actions.closeElement('passwordModal'));
 
   const totalPages = core.getTotalPages();
-  const currentPage = core.getCurrentPage();
-  
   if (totalPages > 500) {
     core.setDisplayMode(window.CoreControls.DisplayModes.Single);
   }
 
+  dispatch(actions.setPageLabels(getDefaultPageLabels(totalPages)));
   dispatch(actions.setTotalPages(totalPages));
+  
+  const currentPage = core.getCurrentPage();
   dispatch(actions.setCurrentPage(currentPage));
 };
