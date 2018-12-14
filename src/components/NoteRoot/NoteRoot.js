@@ -50,9 +50,7 @@ class NoteRoot extends React.Component {
   }
   
   deleteNote = () => {
-    const { annotation } = this.props;
-
-    core.deleteAnnotations([ ...annotation.getReplies(), annotation ]);
+    core.deleteAnnotations([this.props.annotation]);
   }
 
   renderHeader = () => {
