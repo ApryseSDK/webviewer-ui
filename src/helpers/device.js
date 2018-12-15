@@ -5,4 +5,5 @@ export const isIEEdge = navigator.userAgent.indexOf('Edge') > -1;
 export const isIE11 = navigator.userAgent.indexOf('Trident/7.0') > -1;
 export const isIE = navigator.userAgent.indexOf('Edge') > -1 || navigator.userAgent.indexOf('Trident/7.0') > -1;
 export const isIOS = window.navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
+export const isAndroid = window.navigator.userAgent.match(/Android/i);
 export const isMac = navigator.appVersion.indexOf('Mac') > -1;

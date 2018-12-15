@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
-import { isMac } from 'helpers/device';
+import { isMac, isIOS, isAndroid } from 'helpers/device';
 
 import './ToolTip.scss';
 
@@ -68,16 +68,15 @@ class ToolTip extends React.PureComponent {
   }
 
   addEventListeners = DOMElement => {
-    if (!DOMElement) {
-      // we have this check just to make sure UI doesn't blow up when DOMElement is null
-      // although we haven't met this situation
+    try {
+      DOMElement.addEventListener('mouseenter', this.show);
+      DOMElement.addEventListener('mouseleave', this.hide);
+      DOMElement.addEventListener('click', this.hide);
+    } catch (e) {
+      // we have this catch block here just to make sure UI doesn't blow up when DOMElement is null
+      // although we haven't met this situation yet
       console.warn(`${this.props.children} is rendering null`);
-      return;
     }
-
-    DOMElement.addEventListener('mouseenter', this.show);
-    DOMElement.addEventListener('mouseleave', this.hide);
-    DOMElement.addEventListener('click', this.hide);
   }
 
   setTopAndLeft = DOMElement => {
@@ -117,7 +116,7 @@ class ToolTip extends React.PureComponent {
   show = () => {
     this.showTimer = setTimeout(() => {
       this.setState({ show: true });
-    }, this.props.delayShow);
+    }, this.props.delayShow - this.opacityTimeout);
   }
 
   hide = () => {
@@ -174,12 +173,13 @@ class ToolTip extends React.PureComponent {
 
   render() {
     const { location, content } = this.props;
+    const isUsingMobileDevices = isIOS || isAndroid;
 
     return (
       <React.Fragment>
         {this.renderChildren()}
         {
-          this.state.show && content &&
+          this.state.show && content && !isUsingMobileDevices &&
           ReactDOM.createPortal(
             <div className={`tooltip--${location}`} style={this.state.style}>
               <div className={`tooltip__content`}>{this.renderContent()}</div>
