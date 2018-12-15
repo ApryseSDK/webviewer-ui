@@ -24,7 +24,7 @@ export default (state, dispatch) => {
             partRetriever.setErrorCallback(fireError);
           }
           if (partRetriever instanceof window.CoreControls.PartRetrievers.BlackBoxPartRetriever && isLocalFile(state)) {
-            console.error(`${state.document.path} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL to the initialDoc option.`);
+            console.error(`${state.document.path} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL`);
           }
 
           core.loadAsync(partRetriever, docOptions);
