@@ -45,12 +45,18 @@ class ContextMenuPopup extends React.PureComponent {
   }
 
   onContextMenu = e => {
-    e.preventDefault();
-
-    const { left, top } = this.getPopupPosition(e);
-
-    this.setState({ left, top });
-    this.props.openElement('contextMenuPopup');
+    const isClickedOnNotesPanel = document.querySelector('.Panel.NotesPanel').contains(e.target);
+    
+    if (isClickedOnNotesPanel) {
+      this.props.closeElement('contextMenuPopup');
+    } else {
+      e.preventDefault();
+  
+      const { left, top } = this.getPopupPosition(e);
+  
+      this.setState({ left, top });
+      this.props.openElement('contextMenuPopup');
+    }
   }
 
   getPopupPosition = e => {
