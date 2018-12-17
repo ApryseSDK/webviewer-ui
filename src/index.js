@@ -7,11 +7,14 @@ import i18n from 'i18next';
 import thunk from 'redux-thunk';
 
 import apis from 'src/apis';
+import core from 'core';
+
 import App from 'components/App';
 import rootReducer from 'reducers/rootReducer';
 import { engineTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
+import defaultTool from 'constants/defaultTool';
 import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript from 'helpers/loadScript';
@@ -105,12 +108,13 @@ if (window.CanvasRenderingContext2D) {
     setupPDFTron();
     setupDocViewer();
     setupI18n(state);
-    setDefaultToolColor();
+    addEventHandlers();
     setAutoSwitch();
+    setDefaultToolColor();
+    setDefaultDisabledElements(store);
     setUserPermission(state);
-    addEventHandlers(),
-    setDefaultDisabledElements(store),
     setupLoadAnnotationsFromServer(store);
+    core.setToolMode(defaultTool);
     
     ReactDOM.render(
       <Provider store={store}>

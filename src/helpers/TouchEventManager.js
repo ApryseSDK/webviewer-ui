@@ -133,9 +133,9 @@ const TouchEventManager = {
         const currentPage = core.getCurrentPage();
         const displayMode = core.getDisplayMode();
         if (swipingLeft) {
-          core.setCurrentPage(currentPage - getNumberOfPagesToNavigate(displayMode));
+          core.setCurrentPage(Math.max(1, currentPage - getNumberOfPagesToNavigate(displayMode)));
         } else if (swipingRight) {
-          core.setCurrentPage(currentPage + getNumberOfPagesToNavigate(displayMode));
+          core.setCurrentPage(Math.min(core.getTotalPages(), currentPage + getNumberOfPagesToNavigate(displayMode)));
         }
         break;
       }

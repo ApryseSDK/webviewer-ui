@@ -1,6 +1,7 @@
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
 import { zoomIn, zoomOut } from 'helpers/zoom';
+import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import core from 'core';
 
@@ -74,7 +75,7 @@ export default {
           img: 'ic_edit_black_24px',
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('tools'));
-            core.setToolMode('AnnotationEdit');
+            core.setToolMode(defaultTool);
             dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel' ]));
           },
           dataElement: 'toolsButton',
@@ -101,7 +102,7 @@ export default {
           img: 'ic_close_black_24px',
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('default'));
-            core.setToolMode('AnnotationEdit');
+            core.setToolMode(defaultTool);
             dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel' ]));
           },
         },

@@ -33,8 +33,7 @@ const disableElementsIfReadOnly = (state, dispatch) => {
     ];
 
     dispatch(actions.disableElements(elements, PRIORITY_ONE));
-    core.setToolMode('AnnotationEdit');
-  }  
+  }
 };
 
 const disableElementsIfAnnotationDisabled = (state, dispatch) => {
