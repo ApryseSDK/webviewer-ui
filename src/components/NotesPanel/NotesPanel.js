@@ -17,7 +17,11 @@ class NotesPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     display: PropTypes.string.isRequired,
+<<<<<<< HEAD
     sortStrategy: PropTypes.string.isRequired,
+=======
+    sortNotesBy: PropTypes.string.isRequired,
+>>>>>>> master
     pageLabels: PropTypes.array.isRequired,
     t: PropTypes.func.isRequired
   }

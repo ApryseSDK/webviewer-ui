@@ -3,8 +3,6 @@ import getHashParams from 'helpers/getHashParams';
 import actions from 'actions';
 
 export default dispatch => () => {
-  core.setToolMode('AnnotationEdit');
-
   dispatch(actions.setDocumentLoaded(true));
   dispatch(actions.openElement('pageNavOverlay'));
   dispatch(actions.closeElement('loadingModal'));

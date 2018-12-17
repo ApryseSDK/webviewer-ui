@@ -6,6 +6,7 @@ import core from 'core';
 import { isIE } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';
 import loadDocument from 'helpers/loadDocument';
+import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import TouchEventManager from 'helpers/TouchEventManager';
 import { ZOOM_MIN, ZOOM_MAX } from 'constants/zoomFactors';
 import actions from 'actions';
@@ -98,27 +99,19 @@ class DocumentContainer extends React.PureComponent {
   }
 
   navigatePagesUp = () => {
+    const { currentPage, displayMode } = this.props;
     const { scrollHeight, clientHeight } = this.container.current;
-    const newPage = this.props.currentPage - this.getNumberOfPagesToNavigate();
+    const newPage = currentPage - getNumberOfPagesToNavigate(displayMode);
 
     core.setCurrentPage(Math.max(newPage, 1));
     this.container.current.scrollTop = scrollHeight - clientHeight;    
   }
 
   navigatePagesDown = () => {
-    const newPage = this.props.currentPage + this.getNumberOfPagesToNavigate();
+    const { currentPage, displayMode, totalPages } = this.props;
+    const newPage = currentPage + getNumberOfPagesToNavigate(displayMode);
 
-    core.setCurrentPage(Math.min(newPage, this.props.totalPages));
-  }
-
-  getNumberOfPagesToNavigate = () => {
-    const mapDisplayModeToNumberOfPages = {
-      Single: 1,
-      Facing: 2,
-      CoverFacing: 2,
-    };
-
-    return mapDisplayModeToNumberOfPages[this.props.displayMode];
+    core.setCurrentPage(Math.min(newPage, totalPages));
   }
 
   wheelToZoom = e => {

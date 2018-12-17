@@ -113,5 +113,3 @@ export const setPageLabels = pageLabels => dispatch => {
   }
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels } });
 };
-
-
