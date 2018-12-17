@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
-import { withToolTip } from 'components/ToolTip';
+import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
 import toolStyleExists from 'helpers/toolStyleExists';
@@ -93,4 +93,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withToolTip(ToolButton));
+export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(ToolButton));

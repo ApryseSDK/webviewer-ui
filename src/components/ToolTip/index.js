@@ -1,22 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ToolTip from './ToolTip';
+import Tooltip from './Tooltip';
 
-export default ToolTip;
-export const withToolTip = (WrappedComponent, location) => {
-  return class WithToolTip extends React.Component {
+export default Tooltip;
+export const withTooltip = (componentLocations = {}) => WrappedComponent => {
+  return class WithTooltip extends React.Component {
     static propTypes = {
-      title: PropTypes.string
+      title: PropTypes.string,
+      isDisabled: PropTypes.bool
+    }
+
+    getLocation = () => {
+      const { dataElement } = this.props;
+      let location = 'bottom';
+
+      if (componentLocations[dataElement]) {
+        location = componentLocations[dataElement];
+      }
+
+      return location;
     }
 
     render() {
       const { title, isDisabled, ...restProps } = this.props;
 
       return (
-        <ToolTip content={title} isDisabled={isDisabled} location={location}>
+        <Tooltip content={title} isDisabled={isDisabled} location={this.getLocation()}>
           <WrappedComponent {...restProps} />
-        </ToolTip>
+        </Tooltip>
       );
     }
   };

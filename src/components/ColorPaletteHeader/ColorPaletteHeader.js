@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
-import ToolTip from 'components/ToolTip';
+import Tooltip from 'components/Tooltip';
 
 import getBrightness from 'helpers/getBrightness';
 
@@ -39,7 +39,7 @@ class ColorPaletteHeader extends React.PureComponent {
     }
 
     return (
-      <ToolTip content="option.annotationColor.text">
+      <Tooltip content="option.annotationColor.text">
         <div
           className={colorPalette === 'text' ? 'text selected' : 'text'}
           style={{ color: TextColor.toHexString() }}
@@ -47,7 +47,7 @@ class ColorPaletteHeader extends React.PureComponent {
         >
           Aa
         </div>
-      </ToolTip>
+      </Tooltip>
     );
   }
 
@@ -76,7 +76,7 @@ class ColorPaletteHeader extends React.PureComponent {
     };
 
     return (
-      <ToolTip content="option.annotationColor.border">
+      <Tooltip content="option.annotationColor.border">
         <div
           className={colorPalette === 'border' ? 'border selected' : 'border'}
           onClick={() => onHeaderChange('border')}
@@ -88,7 +88,7 @@ class ColorPaletteHeader extends React.PureComponent {
             {renderInnerCircle()}
           </div>
         </div>
-      </ToolTip>
+      </Tooltip>
     );
   }
 
@@ -102,7 +102,7 @@ class ColorPaletteHeader extends React.PureComponent {
     const isTransparency = FillColor.toHexString() === null;
 
     return (
-      <ToolTip content="option.annotationColor.fill">
+      <Tooltip content="option.annotationColor.fill">
         <div
           className={colorPalette === 'fill' ? 'fill selected' : 'fill'}
           onClick={() => onHeaderChange('fill')}
@@ -118,7 +118,7 @@ class ColorPaletteHeader extends React.PureComponent {
             }
           </div>
         </div>
-      </ToolTip>
+      </Tooltip>
     );
   }
 

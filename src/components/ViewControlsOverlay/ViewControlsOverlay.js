@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import Button from 'components/Button';
-import ToolTip from 'components/ToolTip';
+import Tooltip from 'components/Tooltip';
 import ActionButton from 'components/ActionButton';
 import Element from 'components/Element';
 
@@ -85,25 +85,25 @@ class ViewControlsOverlay extends React.PureComponent {
         {totalPages < 1000 &&
           <Element className="row" dataElement="pageTransitionButtons">
             <div className="type">{t('option.displayMode.pageTransition')}</div>
-            <ToolTip content="option.pageTransition.default" isDisabled={this.props.isDefaultPageTransitionButtonDisabled}>
+            <Tooltip content="option.pageTransition.default" isDisabled={this.props.isDefaultPageTransitionButtonDisabled}>
               <Button dataElement="defaultPageTransitionButton" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick('default', layout)} isActive={pageTransition === 'default'} />
-            </ToolTip>
-            <ToolTip content="option.pageTransition.continuous" isDisabled={this.props.isContinuousPageTransitionButtonDisabled}>
+            </Tooltip>
+            <Tooltip content="option.pageTransition.continuous" isDisabled={this.props.isContinuousPageTransitionButtonDisabled}>
               <Button dataElement="continuousPageTransitionButton" img="ic_view_mode_continuous_black_24px" onClick={() => this.handleClick('continuous', layout)} isActive={pageTransition === 'continuous'} />
-            </ToolTip>
+            </Tooltip>
           </Element>
         }
         <Element className="row" dataElement="layoutButtons">
           <div className="type">{t('option.displayMode.layout')}</div>
-          <ToolTip content="option.layout.single" isDisabled={this.props.isSingleLayoutButtonDisabled}>
+          <Tooltip content="option.layout.single" isDisabled={this.props.isSingleLayoutButtonDisabled}>
             <Button dataElement="singleLayoutButton" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick(pageTransition, 'single')} isActive={layout === 'single'} />
-          </ToolTip>
-          <ToolTip content="option.layout.double" isDisabled={this.props.isDoubleLayoutButtonDisabled}>
+          </Tooltip>
+          <Tooltip content="option.layout.double" isDisabled={this.props.isDoubleLayoutButtonDisabled}>
             <Button dataElement="doubleLayoutButton" img="ic_view_mode_facing_black_24px" onClick={() => this.handleClick(pageTransition, 'double')} isActive={layout === 'double'} />
-          </ToolTip>
-          <ToolTip content="option.layout.cover" isDisabled={this.props.isCoverLayoutButtonDisabled}>
+          </Tooltip>
+          <Tooltip content="option.layout.cover" isDisabled={this.props.isCoverLayoutButtonDisabled}>
             <Button dataElement="coverLayoutButton" img="ic_view_mode_cover_black_24px" onClick={() => this.handleClick(pageTransition, 'cover')} isActive={layout === 'cover'} />
-          </ToolTip>
+          </Tooltip>
         </Element>
         <Element className="row" dataElement="rotateButtons">
           <div className="type">{t('action.rotate')}</div>
@@ -112,12 +112,12 @@ class ViewControlsOverlay extends React.PureComponent {
         </Element>
         <Element className="row hide-in-desktop hide-in-tablet" dataElement="fitButtons">
           <div className="type">{t('action.fit')}</div>
-          <ToolTip content="action.fitToWidth" isDisabled={this.props.isFitToWidthButtonDisabled}>
+          <Tooltip content="action.fitToWidth" isDisabled={this.props.isFitToWidthButtonDisabled}>
             <Button dataElement="fitToWidthButton" img="ic_fit_width_black_24px" onClick={core.fitToWidth} isActive={fitMode === 'fitWidth'} />
-          </ToolTip>
-          <ToolTip content="action.fitToPage" isDisabled={this.props.isFitToPageButtonDisabled}>
+          </Tooltip>
+          <Tooltip content="action.fitToPage" isDisabled={this.props.isFitToPageButtonDisabled}>
             <Button dataElement="fitToPageButton" img="ic_fit_page_black_24px" onClick={core.fitToPage} isActive={fitMode === 'fitPage'} />
-          </ToolTip>
+          </Tooltip>
         </Element>
         <Element className="row hide-in-desktop hide-in-tablet" dataElement="zoomButtons">
           <div className="type">{t('action.zoom')}</div>

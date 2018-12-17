@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import Icon from 'components/Icon';
-import ToolTip from 'components/ToolTip';
+import Tooltip from 'components/Tooltip';
 import Input from 'components/Input';
 
 import core from 'core';
@@ -326,11 +326,11 @@ class SearchOverlay extends React.PureComponent {
             <div className="button next" onClick={this.onClickNext}>
               <Icon glyph="ic_chevron_right_black_24px" />
             </div>
-            <ToolTip content="action.showMoreResults" location="left">
+            <Tooltip content="action.showMoreResults" location="left">
               <div className={`advanced ${isSearchPanelOpen || isSearchPanelDisabled ? 'hidden' : ''}`} onClick={this.onClickOverflow}>
                 <Icon glyph="ic_overflow_black_24px" />
               </div>
-            </ToolTip>
+            </Tooltip>
           </div>
           <div className={`options ${isSearchPanelOpen ? 'visible' : ''}`}>
             <Input id="case-sensitive-option" type="checkbox" ref={this.caseSensitiveInput} onChange={this.onChangeCaseSensitive} label={t('option.searchPanel.caseSensitive')} />

@@ -5,9 +5,9 @@ import { translate } from 'react-i18next';
 
 import { isMac, isIOS, isAndroid } from 'helpers/device';
 
-import './ToolTip.scss';
+import './Tooltip.scss';
 
-class ToolTip extends React.PureComponent {
+class Tooltip extends React.PureComponent {
   static propTypes = {
     location: PropTypes.oneOf([
       'top',
@@ -81,27 +81,34 @@ class ToolTip extends React.PureComponent {
 
   setTopAndLeft = DOMElement => {
     const { location } = this.props;
-    const { top, bottom, left, width, height } = DOMElement.getBoundingClientRect();
+    const { top, bottom, left, right, width, height } = DOMElement.getBoundingClientRect();
+    const locationTopLeftMap = {
+      'bottom': {
+        top: bottom,
+        left: left + width / 2
+      },
+      'left': {
+        top: top + height / 2,
+        left
+      },
+      'right': {
+        top: top + height / 2,
+        left: right
+      },
+      'top': {
+        top,
+        left: left + width / 2
+      }
+    };
 
-
-    if (location === 'bottom') {
-      this.setState({
-        style: {
-          ...this.state.style,
-          top: bottom,
-          left: left + width / 2
-        }
-      });
-    }
-    if (location === 'left') {
-      this.setState({
-        style: {
-          ...this.state.style,
-          top: top + height / 2,
-          left
-        }
-      });
-    }
+    const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[location];
+    this.setState({
+      style: {
+        ...this.state.style,
+        top: tooltipTop,
+        left: tooltipLeft
+      }
+    });
   }
 
   setOpacity = opacity => {
@@ -192,4 +199,4 @@ class ToolTip extends React.PureComponent {
   }
 }
 
-export default translate(null, { wait: false })(ToolTip);
+export default translate(null, { wait: false })(Tooltip);
