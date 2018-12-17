@@ -33,13 +33,13 @@ class ContextMenuPopup extends React.PureComponent {
   componentDidMount() {
     document.addEventListener('contextmenu', this.onContextMenu);
   }
-
+  
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([ 'annotationPopup', 'textPopup' ]);
     }
   }
-
+  
   componentWillUnmount() {
     document.removeEventListener('contextmenu', this.onContextMenu);
   }
@@ -48,18 +48,17 @@ class ContextMenuPopup extends React.PureComponent {
     const { tagName } = e.target;
     const clickedOnInput = tagName === 'INPUT';
     const clickedOnTextarea = tagName === 'TEXTAREA';
-    const clickedOnLeftPanel = document.querySelector('.Panel.LeftPanel').contains(e.target);
-    const clickedOnSearchPanel = document.querySelector('.Panel.SearchPanel').contains(e.target);
+    const clickedOnDocumentContainer = document.querySelector('.DocumentContainer').contains(e.target);
 
-    if (clickedOnInput || clickedOnTextarea || clickedOnLeftPanel || clickedOnSearchPanel) {
-      this.props.closeElement('contextMenuPopup');
-    } else {
+    if (clickedOnDocumentContainer && !(clickedOnInput || clickedOnTextarea)) {
       e.preventDefault();
-  
+      
       const { left, top } = this.getPopupPosition(e);
   
       this.setState({ left, top });
       this.props.openElement('contextMenuPopup');
+    } else {
+      this.props.closeElement('contextMenuPopup');
     }
   }
 
