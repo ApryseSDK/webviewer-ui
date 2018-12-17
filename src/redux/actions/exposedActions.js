@@ -97,11 +97,11 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
     console.warn(`${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`);
   }
 };
-export const setSortStrategy = sortStrategy => ({ type: 'SET_SORT_STRATEGY', payload: { sortStrategy: sortStrategy.toLowerCase() } });
+export const setSortStrategy = sortStrategy => ({ type: 'SET_SORT_STRATEGY', payload: { sortStrategy } });
 export const setSortNotesBy = sortStrategy => {
   console.warn('setSortNotesBy is going to be deprecated, please use setSortStrategy instead');
 
-  return { type: 'SET_SORT_STRATEGY', payload: { sortStrategy: sortStrategy.toLowerCase() } };
+  return setSortStrategy(sortStrategy);
 };
 export const setNoteDateFormat = noteDateFormat => ({ type: 'SET_NOTE_DATE_FORMAT', payload: { noteDateFormat } });
 export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payload: { toolName, properties } });
