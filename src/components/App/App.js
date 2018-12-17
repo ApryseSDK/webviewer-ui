@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { hot } from 'react-hot-loader';
-import ReactTooltip from 'react-tooltip';
 
 import Header from 'components/Header';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
@@ -23,7 +22,6 @@ import PrintModal from 'components/PrintModal';
 import LoadingModal from 'components/LoadingModal';
 import ErrorModal from 'components/ErrorModal';
 import PasswordModal from 'components/PasswordModal';
-import ToolTip from 'components/ToolTip';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
@@ -43,13 +41,6 @@ class App extends React.PureComponent {
 
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    // https://github.com/wwayne/react-tooltip/issues/40
-    setTimeout(()=> {
-      ReactTooltip.rebuild();
-    }, 100);
   }
 
   componentWillUnmount() {
@@ -74,7 +65,7 @@ class App extends React.PureComponent {
       'textPopup',
       isDesktop() ? 'toolsOverlay' : ''
     ].filter(element => element);
-    
+
     this.props.closeElements(elements);
   }
 
@@ -87,7 +78,7 @@ class App extends React.PureComponent {
       <React.Fragment>
         <div className="App" onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
           <Header />
-          
+
           <LeftPanel />
           <SearchPanel />
 
@@ -109,8 +100,6 @@ class App extends React.PureComponent {
           <LoadingModal />
           <ErrorModal />
           <PasswordModal />
-
-          <ToolTip />
         </div>
 
         <PrintHandler />
