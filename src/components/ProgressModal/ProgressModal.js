@@ -25,7 +25,6 @@ class ProgressModal extends React.PureComponent {
         <div className="container">
           <div className="progress-bar-wrapper">
             <div className="progress-bar" style={{ transform: `translateX(${-(1 - this.props.loadingProgress) * 100}%`}}>
-              <div className="animator"></div>
             </div>
           </div>
         </div>

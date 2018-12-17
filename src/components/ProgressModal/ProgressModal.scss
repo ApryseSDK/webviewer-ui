@@ -27,24 +27,4 @@
     transition: transform 0.5s ease;
     overflow: hidden;
   }
-
-  .animator {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 150px;
-    height: 50px;
-    background: white;
-    opacity: 0.3;
-    animation: slide 2s ease infinite;
-
-    @keyframes slide {
-      0% {
-        transform: translateX(-100%);
-      }
-      100% {
-        transform: translateX(calc(100% + 250px));
-      }
-    }
-  }
 }
