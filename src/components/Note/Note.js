@@ -107,6 +107,7 @@ class Note extends React.PureComponent {
   }
 
   onChange = () => {
+    this.replyTextarea.current.style.height = '30px';
     this.replyTextarea.current.style.height = (this.replyTextarea.current.scrollHeight + 2) + 'px';
   }
 
