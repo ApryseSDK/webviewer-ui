@@ -15,6 +15,7 @@ class ErrorModal extends React.PureComponent {
     isOpen: PropTypes.bool,
     openElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
+    documentPath: PropTypes.string.isRequired,
     t: PropTypes.func.isRequired
   }
 
@@ -28,7 +29,7 @@ class ErrorModal extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([ 'signatureModal', 'printModal', 'loadingModal' ]);
+      this.props.closeElements(['signatureModal', 'printModal', 'loadingModal']);
     }
   }
 
@@ -37,11 +38,16 @@ class ErrorModal extends React.PureComponent {
   }
 
   onError = error => {
-    this.props.openElement('errorModal');
+    const { openElement, documentPath, t } = this.props;
+
+    openElement('errorModal');
 
     let errorMessage = '' + (error.detail || error.message);
     if (errorMessage.indexOf('File does not exist') > -1) {
-      errorMessage = this.props.t('message.notSupported');
+      errorMessage = t('message.notSupported');
+    }
+    if (documentPath.indexOf('file:///') > -1) {
+      console.error(`WebViewer doesn't have access to file URLs because of browser security restrictions. Please see https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading#not-allowed-to-load-local-resource:-file:`);
     }
 
     this.setState({ errorMessage });
@@ -57,7 +63,7 @@ class ErrorModal extends React.PureComponent {
 
     return (
       <div className={className} data-element="errorModal">
-          <div className="container">{errorMessage}</div>
+        <div className="container">{errorMessage}</div>
       </div>
     );
   }
@@ -66,6 +72,7 @@ class ErrorModal extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'errorModal'),
   isOpen: selectors.isElementOpen(state, 'errorModal'),
+  documentPath: selectors.getDocumentPath(state)
 });
 
 const mapDispatchToProps = {
