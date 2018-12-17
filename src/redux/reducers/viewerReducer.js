@@ -70,8 +70,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, displayMode: payload.displayMode };
     case 'SET_CURRENT_PAGE':
       return { ...state, currentPage: payload.currentPage };
-    case 'SET_SORT_NOTES_BY':
-      return { ...state, sortNotesBy: payload.sortNotesBy };
+    case 'SET_SORT_STRATEGY':
+      return { ...state, sortStrategy: payload.sortStrategy };
     case 'SET_NOTE_DATE_FORMAT':
       return { ...state, noteDateFormat: payload.noteDateFormat };
     case 'SET_FULL_SCREEN':

@@ -24,7 +24,7 @@ class NoteRoot extends React.Component {
     renderContents: PropTypes.func.isRequired,
     isNoteExpanded: PropTypes.bool.isRequired,
     isEditing: PropTypes.bool.isRequired,
-    sortNotesBy: PropTypes.string.isRequired,
+    sortStrategy: PropTypes.string.isRequired,
     openEditing: PropTypes.func.isRequired,
     closeEditing: PropTypes.func.isRequired,
     numberOfReplies: PropTypes.number.isRequired,
@@ -56,7 +56,7 @@ class NoteRoot extends React.Component {
   }
 
   renderHeader = () => {
-    const { annotation, isNoteExpanded, sortNotesBy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat } = this.props;
+    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat } = this.props;
     const type = getAnnotationType(annotation);
     const icon = getAnnotationIcon(type);
     const color = annotationColorToCss(annotation[getAnnotationColor(type)]);
@@ -70,11 +70,11 @@ class NoteRoot extends React.Component {
           }
         </div>
         {renderAuthorName(annotation)}
-        {(sortNotesBy !== 'time' || isNoteExpanded || numberOfReplies > 0) &&
+        {(sortStrategy !== 'time' || isNoteExpanded || numberOfReplies > 0) &&
           <span className="spacer"></span>
         }
         <div className="time">
-          {(sortNotesBy !== 'time' || isNoteExpanded) &&
+          {(sortStrategy !== 'time' || isNoteExpanded) &&
             dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)
           }
           {numberOfReplies > 0 &&
@@ -110,7 +110,7 @@ class NoteRoot extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  sortNotesBy: selectors.getSortNotesBy(state),
+  sortStrategy: selectors.getSortStrategy(state),
   noteDateFormat: selectors.getNoteDateFormat(state)
 });
 

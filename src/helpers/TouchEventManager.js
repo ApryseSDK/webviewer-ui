@@ -1,5 +1,6 @@
 import core from 'core';
 import { isIOS } from 'helpers/device';
+import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import { ZOOM_MIN, ZOOM_MAX } from 'constants/zoomFactors';
 
 const TouchEventManager = {
@@ -45,19 +46,10 @@ const TouchEventManager = {
           type: isDoubleTap ? 'doubleTap' : 'tap'
         };
         clearTimeout(this.doubleTapTimeout);
-        this.holdTimeout = setTimeout(() => {
-          this.touch.type = 'hold';
-          const textSelectTool = core.getTool('TextSelect');
-          textSelectTool.mouseLeftDown(e);
-          textSelectTool.mouseLeftUp(e);
-          textSelectTool.mouseDoubleClick();
-          core.setToolMode('TextSelect');
-        }, 5000);
         break;
       }
       case 2: {
         e.preventDefault();
-        clearTimeout(this.holdTimeout);
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         const clientX = (t1.clientX + t2.clientX) / 2;
@@ -84,7 +76,6 @@ const TouchEventManager = {
     }
   },
   handleTouchMove(e) {
-    clearTimeout(this.holdTimeout);
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
@@ -119,35 +110,32 @@ const TouchEventManager = {
       }
     }
   },
-  handleTouchEnd(e) {
-    clearTimeout(this.holdTimeout);
+  handleTouchEnd() {
     switch (this.touch.type) {
-      case 'hold': {
-        e.preventDefault();
-        if (core.getSelectedText().length < 1) {
-          window.docViewer.setToolMode(window.docViewer.getTool('AnnotationEdit'));
-        }
-        break;
-      }
       case 'tap': {
         this.doubleTapTimeout = setTimeout(() => {
           this.touch.type = '';
         }, 300);
-        core.setToolMode('AnnotationEdit');
         break;
       }
       case 'swipe': {
-        if (core.getSelectedText().length > 0 || core.isContinuousDisplayMode()) {
+        const toolName = core.getToolMode().name;
+        const usingAnnotationTools = toolName !== 'AnnotationEdit' && toolName !== 'Pan'; 
+        if (core.getSelectedText().length > 0 || core.isContinuousDisplayMode() || usingAnnotationTools) {
           return;
         }
 
         const { scrollLeft } = this.container;
-        const scrollWidth = this.container.clientWidth;
+        const swipingLeft = scrollLeft === 0 && this.touch.distance < -100;
         const viewerWidth = this.document.clientWidth;
-        if (scrollLeft === 0 && this.touch.distance < -100) {
-          core.setCurrentPage(core.getCurrentPage() - 1);
-        } else if (scrollWidth + scrollLeft >= viewerWidth && this.touch.distance > 100) {
-          core.setCurrentPage(core.getCurrentPage() + 1);
+        const scrollWidth = this.container.clientWidth;
+        const swipingRight = scrollWidth + scrollLeft >= viewerWidth && this.touch.distance > 100;
+        const currentPage = core.getCurrentPage();
+        const displayMode = core.getDisplayMode();
+        if (swipingLeft) {
+          core.setCurrentPage(Math.max(1, currentPage - getNumberOfPagesToNavigate(displayMode)));
+        } else if (swipingRight) {
+          core.setCurrentPage(Math.min(core.getTotalPages(), currentPage + getNumberOfPagesToNavigate(displayMode)));
         }
         break;
       }

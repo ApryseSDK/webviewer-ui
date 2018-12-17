@@ -4,7 +4,7 @@ import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { isIE11 } from 'helpers/device';
 import { engineTypes, documentTypes } from 'constants/types';
-import { supportedPDFExtensions, supportedOfficeExtensions } from 'constants/supportedFiles';
+import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
 
 export default (state, dispatch) => {
@@ -64,8 +64,9 @@ const checkByteRange = state => {
 };
 
 const getPartRetriever = (state, streaming) => {
-  const { path: documentPath, file, isOffline, filename, pdfDoc } = state.document;
+  const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
   const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, useDownloader, withCredentials } = state.advanced;
+  const documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
 
@@ -218,7 +219,8 @@ const getDocumentExtension = doc => {
   if (doc) {
     const pdfExtensions = supportedPDFExtensions.join('|');
     const officeExtensions = supportedOfficeExtensions.join('|');
-    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|xod)(\&|$)`);
+    const blackboxExtensions = supportedBlackboxExtensions.join('|');
+    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|${blackboxExtensions}|xod)(\&|$)`);
     const result = regex.exec(doc);
     if (result) {
       extension = result[1];
@@ -229,8 +231,8 @@ const getDocumentExtension = doc => {
 
 const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
-  const { path, filename } = state.document;
-  return filename || path;
+  const { path, filename, initialDoc } = state.document;
+  return filename || path || initialDoc;
 };
 
 const isPDFNetJSExtension = extension => {
