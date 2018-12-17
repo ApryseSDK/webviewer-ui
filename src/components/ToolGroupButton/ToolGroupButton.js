@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import core from 'core';
 import getColorFromStyle from 'helpers/getColorFromStyle';
 import getToolStyle from 'helpers/getToolStyle';
+import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -78,7 +79,7 @@ class ToolGroupButton extends React.PureComponent {
 
     // This is based on the current design where click on misc tools shouldn't have any tool selected
     if (toolGroup === 'miscTools') {
-      core.setToolMode('AnnotationEdit');
+      core.setToolMode(defaultTool);
     } else {
       core.setToolMode(toolName);
     }

@@ -1,6 +1,7 @@
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
+import { isIOS, isAndroid } from 'helpers/device';
 import { PRIORITY_THREE, PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
 
@@ -14,6 +15,7 @@ export default store => {
   disableElementsIfFilePickerDisabled(dispatch);
   disableElementsIfHideAnnotationPanel(dispatch);
   disableElementsIfToolBarDisabled(dispatch);
+  disableElementsIfDesktop(dispatch);
 };
 
 const disableElementsPassedByConstructor = (state, dispatch) => {
@@ -31,8 +33,7 @@ const disableElementsIfReadOnly = (state, dispatch) => {
     ];
 
     dispatch(actions.disableElements(elements, PRIORITY_ONE));
-    core.setToolMode('AnnotationEdit');
-  }  
+  }
 };
 
 const disableElementsIfAnnotationDisabled = (state, dispatch) => {
@@ -80,5 +81,14 @@ const disableElementsIfToolBarDisabled = dispatch => {
 
   if (toolBarDisabled) {
     dispatch(actions.disableElement('header', PRIORITY_ONE));
+  }
+};
+
+const disableElementsIfDesktop = dispatch => {
+  // we could have used the 'hidden' property in the initialState.js to hide this button by css,
+  // but that actually checks the window.innerWidth to hide the button, not based on the actual device.
+  // we could potentially improve the 'hidden' property in the future.
+  if (!(isIOS || isAndroid)) {
+    dispatch(actions.disableElement('textSelectButton', PRIORITY_ONE));
   }
 };
