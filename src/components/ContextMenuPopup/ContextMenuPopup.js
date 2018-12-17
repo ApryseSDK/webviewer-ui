@@ -48,9 +48,10 @@ class ContextMenuPopup extends React.PureComponent {
     const { tagName } = e.target;
     const clickedOnInput = tagName === 'INPUT';
     const clickedOnTextarea = tagName === 'TEXTAREA';
-    const clickedOnNotesPanel = document.querySelector('.Panel.NotesPanel').contains(e.target);
+    const clickedOnLeftPanel = document.querySelector('.Panel.LeftPanel').contains(e.target);
+    const clickedOnSearchPanel = document.querySelector('.Panel.SearchPanel').contains(e.target);
 
-    if (clickedOnInput || clickedOnTextarea || clickedOnNotesPanel) {
+    if (clickedOnInput || clickedOnTextarea || clickedOnLeftPanel || clickedOnSearchPanel) {
       this.props.closeElement('contextMenuPopup');
     } else {
       e.preventDefault();
