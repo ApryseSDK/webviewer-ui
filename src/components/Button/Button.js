@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip';
-import { translate } from 'react-i18next';
 
 import Icon from 'components/Icon';
-
-import { isMac } from 'helpers/device';
 
 import './Button.scss';
 
@@ -23,40 +19,11 @@ class Button extends React.PureComponent {
     color: PropTypes.string,
     dataElement: PropTypes.string,
     className: PropTypes.string,
-    t: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
   }
 
   onClick = e => {
-    ReactTooltip.hide();
     this.props.onClick(e);
-  }
-
-  getToolTip = () => {
-    const { t, title } = this.props;
-
-    if (title) {
-      const toolTip = t(title) + ' ' + this.getShortcut();
-
-      return toolTip;
-    }
-
-    return '';
-  }
-
-  getShortcut = () => {
-    const { t, title } = this.props;
-    // If shortcut.xxx exists in translation-en.json file 
-    // method t will return the shortcut, otherwise it will return shortcut.xxx
-    const tooltipHasShortcut = t(`shortcut.${title.split('.')[1]}`).indexOf('.') === -1;
-
-    if (tooltipHasShortcut) {
-      const shortcut = t(`shortcut.${title.split('.')[1]}`);
-
-      return isMac ? shortcut.replace('Ctrl', 'Cmd') : shortcut;
-    }
-
-    return '';
   }
 
   render() {
@@ -78,7 +45,7 @@ class Button extends React.PureComponent {
     const isGlyph = img && (img.indexOf('.') === -1 || img.indexOf('<svg') === 0) && !isBase64;
 
     return (
-       <div className={className} data-element={dataElement} data-tip={this.getToolTip()} onClick={this.onClick}>
+      <div className={className} data-element={dataElement} onClick={this.onClick}>
         {isGlyph &&
           <Icon glyph={img} color={color} />
         }
@@ -93,4 +60,4 @@ class Button extends React.PureComponent {
   }
 }
 
-export default translate(null, { wait: false } )(Button);
+export default Button;

@@ -43,7 +43,7 @@ class MenuOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([ 'toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup' ]);
+      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
       this.setState(getOverlayPositionBasedOn('menuButton', this.overlay));
     }
   }
@@ -63,7 +63,7 @@ class MenuOverlay extends React.PureComponent {
   render() {
     const { left, right } = this.state;
     const { isDisabled, isDownloadable, isFullScreen, t } = this.props;
-    
+
     if (isDisabled) {
       return null;
     }

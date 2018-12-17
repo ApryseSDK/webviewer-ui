@@ -1,6 +1,6 @@
 import core from 'core';
 
-export default store => () =>  {
+export default store => () => new Promise((resolve, reject) => {
   const state = store.getState();
   const { id: docId } = state.document;
   const { serverUrl, serverUrlHeaders } = state.advanced;
@@ -8,6 +8,7 @@ export default store => () =>  {
 
   if (!serverUrl) {
     console.warn('serverUrl option is not defined. Please pass this option in WebViewer constructor to save/load annotations. See https://www.pdftron.com/documentation/web/guides/annotations/saving-loading-annotations for details.');
+    reject();
     return;
   }
 
@@ -20,7 +21,10 @@ export default store => () =>  {
       'data': core.exportAnnotations()
     },
     success: () => {
-      alert(`Annotations saved to ${serverUrl}/${docId ? docId : 'default'}.xfdf`);
+      resolve();
+    },
+    error: e => {
+      reject(e);
     }
   });
-};
+});

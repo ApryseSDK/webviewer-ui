@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip';
 import { translate } from 'react-i18next';
+
+import Tooltip from 'components/Tooltip';
 
 import getBrightness from 'helpers/getBrightness';
 
@@ -19,10 +20,6 @@ class ColorPaletteHeader extends React.PureComponent {
     super(props);
   }
 
-  componentDidUpdate() {
-    ReactTooltip.rebuild();
-  }
-
   countColorPalette = () => {
     const { FillColor, StrokeColor, TextColor } = this.props.style;
 
@@ -36,26 +33,27 @@ class ColorPaletteHeader extends React.PureComponent {
 
   renderTextColorIcon = () => {
     const { style: { TextColor }, colorPalette, onHeaderChange, t } = this.props;
-    
+
     if (!TextColor) {
       return null;
     }
 
     return (
-      <div
-        className={colorPalette === 'text' ? 'text selected' : 'text'}
-        style={{ color: TextColor.toHexString() }}
-        onClick={() => onHeaderChange('text')}
-        data-tip={t('option.annotationColor.text')}
-      >
-        Aa
-      </div>
+      <Tooltip content="option.annotationColor.text">
+        <div
+          className={colorPalette === 'text' ? 'text selected' : 'text'}
+          style={{ color: TextColor.toHexString() }}
+          onClick={() => onHeaderChange('text')}
+        >
+          Aa
+        </div>
+      </Tooltip>
     );
   }
 
   renderBorderColorIcon = () => {
     const { style: { StrokeColor }, colorPalette, onHeaderChange, t } = this.props;
-    
+
     if (!StrokeColor) {
       return null;
     }
@@ -63,7 +61,7 @@ class ColorPaletteHeader extends React.PureComponent {
     const renderInnerCircle = () => {
       const borderColor = getBrightness(StrokeColor) === 'dark' ? '#bfbfbf' : 'none';
 
-      return(
+      return (
         <svg height="100%" width="100%">
           <circle
             cx="50%"
@@ -78,18 +76,19 @@ class ColorPaletteHeader extends React.PureComponent {
     };
 
     return (
-      <div
-        className={colorPalette === 'border' ? 'border selected' : 'border'}
-        onClick={() => onHeaderChange('border')}
-        data-tip={t('option.annotationColor.border')}
-      >
+      <Tooltip content="option.annotationColor.border">
         <div
-          className={`border-icon ${getBrightness(StrokeColor)}}`}
-          style={{ backgroundColor: StrokeColor.toHexString() }}
+          className={colorPalette === 'border' ? 'border selected' : 'border'}
+          onClick={() => onHeaderChange('border')}
         >
-          {renderInnerCircle()}
+          <div
+            className={`border-icon ${getBrightness(StrokeColor)}}`}
+            style={{ backgroundColor: StrokeColor.toHexString() }}
+          >
+            {renderInnerCircle()}
+          </div>
         </div>
-      </div>
+      </Tooltip>
     );
   }
 
@@ -102,23 +101,24 @@ class ColorPaletteHeader extends React.PureComponent {
 
     const isTransparency = FillColor.toHexString() === null;
 
-    return(
-      <div
-        className={colorPalette === 'fill' ? 'fill selected' : 'fill'}
-        onClick={() => onHeaderChange('fill')}
-        data-tip={t('option.annotationColor.fill')}
-      >
+    return (
+      <Tooltip content="option.annotationColor.fill">
         <div
-          className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
-          style={{ backgroundColor: FillColor.toHexString() }}
+          className={colorPalette === 'fill' ? 'fill selected' : 'fill'}
+          onClick={() => onHeaderChange('fill')}
         >
-          {isTransparency &&
-            <svg width="100%" height="100%">
-              <line x1="0%" y1="100%" x2="100%" y2="0%" strokeWidth="1" stroke="#e44234" strokeLinecap="square" />
-            </svg>
-          }
+          <div
+            className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
+            style={{ backgroundColor: FillColor.toHexString() }}
+          >
+            {isTransparency &&
+              <svg width="100%" height="100%">
+                <line x1="0%" y1="100%" x2="100%" y2="0%" strokeWidth="1" stroke="#e44234" strokeLinecap="square" />
+              </svg>
+            }
+          </div>
         </div>
-      </div>
+      </Tooltip>
     );
   }
 
