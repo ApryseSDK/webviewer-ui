@@ -1,6 +1,7 @@
 import core from 'core';
 import actions from 'actions';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
+import defaultTool from 'constants/defaultTool';
 
 export default ({ dispatch, getState }) => () => {
   const isReadOnly = core.getIsReadOnly();
@@ -11,7 +12,7 @@ export default ({ dispatch, getState }) => () => {
 
   if (isReadOnly) {
     dispatch(actions.disableElements(elements));
-    core.setToolMode('AnnotationEdit');
+    core.setToolMode(defaultTool);
   } else {
     dispatch(actions.enableElements(elements));
   }

@@ -9,6 +9,7 @@ import Button from 'components/Button';
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
+import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -74,7 +75,7 @@ class ToolsOverlay extends React.PureComponent {
   handleCloseClick = () => {
     const { setActiveToolGroup, closeElements } = this.props;
 
-    core.setToolMode('AnnotationEdit');
+    core.setToolMode(defaultTool);
     setActiveToolGroup('');
     closeElements(['toolStylePopup', 'toolsOverlay']);
   }

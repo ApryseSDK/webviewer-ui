@@ -36,6 +36,7 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
         downloadIframe.width = 0;
         downloadIframe.height = 0;
         downloadIframe.id = 'download-iframe';
+        downloadIframe.src = null;
         document.body.appendChild(downloadIframe);
         bbURLPromise.then(result => {
           downloadIframe.src = result.url;

@@ -67,8 +67,9 @@ const checkByteRange = state => {
 };
 
 const getPartRetriever = (state, streaming) => {
-  const { path: documentPath, file, isOffline, filename, pdfDoc } = state.document;
+  const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
   const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, useDownloader, withCredentials } = state.advanced;
+  const documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
 
@@ -236,8 +237,8 @@ const getDocumentExtension = doc => {
 
 const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
-  const { path, filename } = state.document;
-  return filename || path;
+  const { path, filename, initialDoc } = state.document;
+  return filename || path || initialDoc;
 };
 
 const isPDFNetJSExtension = extension => {
