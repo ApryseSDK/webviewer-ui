@@ -37,12 +37,15 @@ class AnnotationPopup extends React.PureComponent {
       left: 0,
       top: 0,
       canModify: false,
-      isStylePopupOpen: false
+      isStylePopupOpen: false,
+      isMouseLeftDown: false,
     };
     this.state = this.initialState;
   }
 
   componentDidMount() {
+    core.addEventListener('mouseLeftUp', this.onMouseLeftUp);
+    core.addEventListener('mouseLeftDown', this.onMouseLeftDown);
     core.addEventListener('annotationSelected', this.onAnnotationSelected);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     core.addEventListener('updateAnnotationPermission', this.onUpdateAnnotationPermission);
@@ -50,16 +53,19 @@ class AnnotationPopup extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const selectedAnAnnotation = Object.keys(this.state.annotation).length !== 0 && prevState.annotation.Id !== this.state.annotation.Id;
+    const { isMouseLeftDown } = this.state;
+    
+    const isAnnotationSelected = Object.keys(this.state.annotation).length !== 0;
+    const isClosingAnnotationPopup = this.props.isOpen === false && this.props.isOpen !== prevProps.isOpen;
     const isStylePopupOpen = !prevState.isStylePopupOpen && this.state.isStylePopupOpen;
     const isContainerShifted = prevProps.isLeftPanelOpen !== this.props.isLeftPanelOpen || prevProps.isRightPanelOpen !== this.props.isRightPanelOpen;
 
-    if (selectedAnAnnotation && !this.props.isDisabled || isStylePopupOpen) {
+    if (isAnnotationSelected && !isMouseLeftDown && !isContainerShifted && !isClosingAnnotationPopup && !this.props.isDisabled || isStylePopupOpen) {
       this.positionAnnotationPopup();
       this.props.openElement('annotationPopup');
     }
 
-    if (isContainerShifted) {
+    if (isContainerShifted) { //closing because we can't correctly reposition the popup on panel transition
       this.props.closeElement('annotationPopup');
     }
 
@@ -67,10 +73,20 @@ class AnnotationPopup extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    core.removeEventListener('mouseLeftUp', this.onMouseLeftUp);
+    core.removeEventListener('mouseLeftDown', this.onMouseLeftDown);
     core.removeEventListener('annotationSelected', this.onAnnotationSelected);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
     core.removeEventListener('updateAnnotationPermission', this.onUpdateAnnotationPermission);
     window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  onMouseLeftUp = () => {
+    this.setState({ isMouseLeftDown:false });
+  }
+
+  onMouseLeftDown = () => {
+    this.setState({ isMouseLeftDown:true });
   }
 
   onAnnotationSelected = (e, annotations, action) => {
