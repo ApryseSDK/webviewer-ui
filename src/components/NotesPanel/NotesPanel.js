@@ -8,7 +8,7 @@ import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
-import sortMap from 'constants/sortMap';
+import sortStrategies from 'constants/sortStrategies';
 import selectors from 'selectors';
 
 import './NotesPanel.scss';
@@ -17,7 +17,7 @@ class NotesPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     display: PropTypes.string.isRequired,
-    sortNotesBy: PropTypes.string.isRequired,
+    sortStrategy: PropTypes.string.isRequired,
     pageLabels: PropTypes.array.isRequired,
     t: PropTypes.func.isRequired
   }
@@ -130,7 +130,7 @@ class NotesPanel extends React.PureComponent {
     return(
       <React.Fragment>
         <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
-          {this.renderNotes(sortMap[this.props.sortNotesBy].getSortedNotes(this.rootAnnotations))}
+          {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
           {this.props.t('message.noResults')}
@@ -153,8 +153,8 @@ class NotesPanel extends React.PureComponent {
   }
 
   renderListSeparator = (notes, currNote) => {
-    const { sortNotesBy, pageLabels } = this.props;
-    const { shouldRenderSeparator, getSeparatorContent } = sortMap[sortNotesBy];
+    const { sortStrategy, pageLabels } = this.props;
+    const { shouldRenderSeparator, getSeparatorContent } = sortStrategies[sortStrategy];
     const prevNote = this.getPrevNote(notes, currNote);
     const isFirstNote = prevNote === currNote;
 
@@ -188,7 +188,7 @@ class NotesPanel extends React.PureComponent {
                 placeholder={t('message.searchPlaceholder')}
                 onChange={this.handleInputChange} 
               />
-              <Dropdown items={Object.keys(sortMap)} />
+              <Dropdown items={Object.keys(sortStrategies)} />
             </div>
             {this.renderNotesPanelContent()}
           </React.Fragment>
@@ -199,7 +199,7 @@ class NotesPanel extends React.PureComponent {
 }
 
 const mapStatesToProps = state => ({
-  sortNotesBy: selectors.getSortNotesBy(state),
+  sortStrategy: selectors.getSortStrategy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state)
 });

@@ -97,7 +97,12 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
     console.warn(`${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`);
   }
 };
-export const setSortNotesBy = sortNotesBy => ({ type: 'SET_SORT_NOTES_BY', payload: { sortNotesBy } });
+export const setSortStrategy = sortStrategy => ({ type: 'SET_SORT_STRATEGY', payload: { sortStrategy } });
+export const setSortNotesBy = sortStrategy => {
+  console.warn('setSortNotesBy is going to be deprecated, please use setSortStrategy instead');
+
+  return setSortStrategy(sortStrategy);
+};
 export const setNoteDateFormat = noteDateFormat => ({ type: 'SET_NOTE_DATE_FORMAT', payload: { noteDateFormat } });
 export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payload: { toolName, properties } });
 export const setCustomPanel = newPanel => ({ type: 'SET_CUSTOM_PANEL', payload: { newPanel } });
@@ -108,5 +113,3 @@ export const setPageLabels = pageLabels => dispatch => {
   }
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels } });
 };
-
-

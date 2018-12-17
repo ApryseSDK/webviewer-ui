@@ -129,6 +129,7 @@ if (window.CanvasRenderingContext2D) {
           FitMode,
           LayoutMode,
           addSearchListener: apis.addSearchListener(store),
+          addSortStrategy: apis.addSortStrategy(store),
           closeDocument: apis.closeDocument(store),
           constants: apis.getConstants(),
           disableTool: apis.disableTool(store),

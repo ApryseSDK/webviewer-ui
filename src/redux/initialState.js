@@ -148,7 +148,7 @@ export default {
     zoom: 1,
     displayMode: 'Single',
     currentPage: 1,
-    sortNotesBy: 'position',
+    sortStrategy: 'position',
     isFullScreen: false,
     doesAutoLoad: getHashParams('auto_load', true),
     isDocumentLoaded: false,
