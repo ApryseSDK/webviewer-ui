@@ -1,5 +1,6 @@
 import core from 'core';
 import { isIOS } from 'helpers/device';
+import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import { ZOOM_MIN, ZOOM_MAX } from 'constants/zoomFactors';
 
 const TouchEventManager = {
@@ -118,17 +119,23 @@ const TouchEventManager = {
         break;
       }
       case 'swipe': {
-        if (core.getSelectedText().length > 0 || core.isContinuousDisplayMode() || core.getToolMode() !== 'AnnotationEdit') {
+        const toolName = core.getToolMode().name;
+        const usingAnnotationTools = toolName !== 'AnnotationEdit' && toolName !== 'Pan'; 
+        if (core.getSelectedText().length > 0 || core.isContinuousDisplayMode() || usingAnnotationTools) {
           return;
         }
 
         const { scrollLeft } = this.container;
-        const scrollWidth = this.container.clientWidth;
+        const swipingLeft = scrollLeft === 0 && this.touch.distance < -100;
         const viewerWidth = this.document.clientWidth;
-        if (scrollLeft === 0 && this.touch.distance < -100) {
-          core.setCurrentPage(core.getCurrentPage() - 1);
-        } else if (scrollWidth + scrollLeft >= viewerWidth && this.touch.distance > 100) {
-          core.setCurrentPage(core.getCurrentPage() + 1);
+        const scrollWidth = this.container.clientWidth;
+        const swipingRight = scrollWidth + scrollLeft >= viewerWidth && this.touch.distance > 100;
+        const currentPage = core.getCurrentPage();
+        const displayMode = core.getDisplayMode();
+        if (swipingLeft) {
+          core.setCurrentPage(currentPage - getNumberOfPagesToNavigate(displayMode));
+        } else if (swipingRight) {
+          core.setCurrentPage(currentPage + getNumberOfPagesToNavigate(displayMode));
         }
         break;
       }
