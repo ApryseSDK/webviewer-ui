@@ -1,4 +1,5 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
+import { isIOS, isAndroid } from 'helpers/device';
 import selectors from 'selectors';
 
 // viewer
@@ -34,7 +35,16 @@ export const enableElements = (dataElements, priority) => (dispatch, getState) =
 };
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
-  const name = (toolObject.name === 'TextSelect') ? 'AnnotationEdit' : toolObject.name;
+  let name;
+  
+  if (isIOS || isAndroid) {
+    name = toolObject.name;
+  } else {
+    // on desktop, auto switch between AnnotationEdit and TextSelect is true when you hover on text
+    // we do this to prevent this action from spamming the console
+    name = (toolObject.name === 'TextSelect') ? 'AnnotationEdit' : toolObject.name;
+  }
+
   if (state.viewer.activeToolName === name) {
     return;
   }

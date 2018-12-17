@@ -147,7 +147,7 @@ class AnnotationPopup extends React.PureComponent {
   }
 
   deleteAnnotation = () => {
-    core.deleteAnnotations([ this.state.annotation, ...this.state.annotation.getReplies() ]);
+    core.deleteAnnotations([this.state.annotation]);
     this.props.closeElement('annotationPopup');
   }
 

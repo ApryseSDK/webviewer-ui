@@ -31,6 +31,9 @@ export default (state, dispatch) => {
         if (partRetriever.setErrorCallback) {
           partRetriever.setErrorCallback(fireError);
         }
+        if (partRetriever instanceof window.CoreControls.PartRetrievers.BlackBoxPartRetriever && isLocalFile(state)) {
+          console.error(`${state.document.path} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL`);
+        }
 
         core.loadAsync(partRetriever, docOptions);
       })
@@ -237,8 +240,11 @@ const getDocumentExtension = doc => {
     const result = regex.exec(doc);
     if (result) {
       extension = result[1];
+    } else {
+      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${[...supportedPDFExtensions, ...supportedOfficeExtensions, ...blackboxExtensions, 'xod'].join(', ')}`);
     }
   }
+
   return extension;
 };
 
@@ -295,6 +301,12 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
 
 const fireError = message => {
   fireEvent('loaderror', message);
+};
+
+const isLocalFile = state => {
+  const path = state.advanced.path;
+
+  return !/https?:\/\//.test(path);
 };
 
 export const fireEvent = (eventName, data) => {

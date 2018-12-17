@@ -29,7 +29,7 @@ class NoteReply extends React.PureComponent {
   }
 
   deleteReply = () => {
-    core.deleteAnnotations([ ...this.props.reply.getReplies(), this.props.reply ]);
+    core.deleteAnnotations([this.props.reply]);
   }
 
   openEditing = () => {
