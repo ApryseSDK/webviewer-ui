@@ -8,6 +8,7 @@ export default dispatch => () => {
   dispatch(actions.setLoadingProgress(1));
   setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
+    dispatch(actions.setLoadingProgress(0, true));
   }, 300);
 
   if (window.innerWidth <= 640) {
