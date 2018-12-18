@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 
 import Icon from 'components/Icon';
 
@@ -63,7 +64,7 @@ class NotePopup extends React.Component {
 
   render() {
     const { canModify } = this.state;
-    const { isNoteExpanded, notePopupId, annotation, onDelete } = this.props;
+    const { t, isNoteExpanded, notePopupId, annotation, onDelete } = this.props;
     const isOpen = notePopupId === annotation.Id;
     const className = getClassName('modify', { isOpen });
 
@@ -77,8 +78,8 @@ class NotePopup extends React.Component {
           <Icon glyph="ic_overflow_black_24px" />
         </div>
         <div className={className} onClick={this.closePopup}>
-          <div onClick={this.openEdit}>Edit</div>
-          <div onClick={onDelete}>Delete</div>
+          <div onClick={this.openEdit}>{t('action.edit')}</div>
+          <div onClick={onDelete}>{t('action.delete')}</div>
         </div>
       </div>
     );
@@ -93,4 +94,4 @@ const mapDispatchToProps = {
   setNotePopupId: actions.setNotePopupId
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotePopup);
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(NotePopup));

@@ -10,6 +10,7 @@ import onZoomUpdated from './onZoomUpdated';
 import onPageNumberUpdated from './onPageNumberUpdated';
 import onStampAnnotationAdded from './onStampAnnotationAdded';
 import onAnnotationSelected from './onAnnotationSelected';
+import onAnnotationChanged from './onAnnotationChanged';
 import onStickyAnnotationAdded from './onStickyAnnotationAdded';
 import onKeyDown from './onKeyDown';
 import onFullScreenChange from './onFullScreenChange';
@@ -29,6 +30,7 @@ export {
   onPageNumberUpdated,
   onStampAnnotationAdded,
   onAnnotationSelected,
+  onAnnotationChanged,
   onStickyAnnotationAdded,
   onKeyDown,
   onFullScreenChange,

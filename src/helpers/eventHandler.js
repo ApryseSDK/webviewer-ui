@@ -15,6 +15,7 @@ export default store => {
   const onPageNumberUpdated = eventListeners.onPageNumberUpdated(dispatch);
   const onUpdateAnnotationPermission = eventListeners.onUpdateAnnotationPermission(store);
   const onAnnotationSelected = eventListeners.onAnnotationSelected(dispatch);
+  const onAnnotationChanged = eventListeners.onAnnotationChanged(dispatch);
   const onStampAnnotationAdded = eventListeners.onStampAnnotationAdded(dispatch);
   const onStickyAnnotationAdded = eventListeners.onStickyAnnotationAdded(store);
   const onKeyDown = eventListeners.onKeyDown(dispatch);
@@ -36,6 +37,7 @@ export default store => {
       core.addEventListener('layoutChanged', onLayoutChanged);
       core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.addEventListener('annotationSelected', onAnnotationSelected);
+      core.addEventListener('annotationChanged', onAnnotationChanged);
       core.getTool('AnnotationCreateStamp').on('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
       document.addEventListener('keydown', onKeyDown);
@@ -57,6 +59,7 @@ export default store => {
       core.removeEventListener('layoutChanged', onLayoutChanged);
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.removeEventListener('annotationSelected', onAnnotationSelected);
+      core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.getTool('AnnotationCreateStamp').off('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').off('annotationAdded', onStickyAnnotationAdded);
       document.removeEventListener('keydown', onKeyDown);

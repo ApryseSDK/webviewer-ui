@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
 import toolStyleExists from 'helpers/toolStyleExists';
@@ -15,8 +16,7 @@ import './ToolButton.scss';
 
 class ToolButton extends React.PureComponent {
   static propTypes = {
-    isElementDisabled: PropTypes.bool,
-    isToolDisabled: PropTypes.bool,
+    isDisabled: PropTypes.bool,
     isActive: PropTypes.bool.isRequired,
     activeToolStyles: PropTypes.object.isRequired,
     toolName: PropTypes.string.isRequired,
@@ -55,7 +55,7 @@ class ToolButton extends React.PureComponent {
         const toolStyle = activeToolStyles;
         return isActive ? getColorFromStyle(toolStyle) : '';
       }
-      case 'never': 
+      case 'never':
       default: {
         return '';
       }
@@ -63,14 +63,14 @@ class ToolButton extends React.PureComponent {
   }
 
   render() {
-    const { isElementDisabled, isToolDisabled, toolName } = this.props;
+    const { isDisabled, toolName } = this.props;
     const color = this.getToolButtonColor();
     const className = [
       'ToolButton',
       toolStyleExists(toolName) ? 'hasStyles' : ''
     ].join(' ').trim();
 
-    if (isElementDisabled || isToolDisabled) {
+    if (isDisabled) {
       return null;
     }
 
@@ -81,9 +81,8 @@ class ToolButton extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isElementDisabled: selectors.isElementDisabled(state, selectors.getToolButtonObject(state, ownProps.toolName).dataElement),
+  isDisabled: selectors.isElementDisabled(state, selectors.getToolButtonObject(state, ownProps.toolName).dataElement) || selectors.isToolDisabled(state, ownProps.toolName),
   isActive: selectors.getActiveToolName(state) === ownProps.toolName,
-  isToolDisabled: selectors.isToolDisabled(state, ownProps.toolName),
   activeToolStyles: selectors.getActiveToolStyles(state),
   ...selectors.getToolButtonObject(state, ownProps.toolName)
 });
@@ -94,4 +93,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolButton);
+export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(ToolButton));

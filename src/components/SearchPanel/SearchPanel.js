@@ -74,7 +74,7 @@ class SearchPanel extends React.PureComponent {
 
     return (
       <div className={className} data-element="searchPanel" onClick={e => e.stopPropagation()}>
-        <Button className="close-btn hide-in-desktop hide-in-tablet" dataElement="searchPanelCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.onClickClose} />
+        <Button className="close-btn hide-in-desktop hide-in-tablet" dataElement="searchPanelCloseButton" img="ic_close_black_24px" onClick={this.onClickClose} />
         <div className="results">
           {isSearching &&
             <div className="info">{t('message.searching')}</div>

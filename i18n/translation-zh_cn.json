@@ -109,7 +109,8 @@
     },
     "print": {
       "all": "全部",
-      "current": "当前"
+      "current": "当前",
+      "pages": "页数"
     },
     "searchPanel": {
       "caseSensitive": "区分大小写",
