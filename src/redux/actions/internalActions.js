@@ -1,4 +1,5 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
+import { isIOS, isAndroid } from 'helpers/device';
 import selectors from 'selectors';
 
 // viewer
@@ -34,7 +35,16 @@ export const enableElements = (dataElements, priority) => (dispatch, getState) =
 };
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
-  const name = (toolObject.name === 'TextSelect') ? 'AnnotationEdit' : toolObject.name;
+  let name;
+  
+  if (isIOS || isAndroid) {
+    name = toolObject.name;
+  } else {
+    // on desktop, auto switch between AnnotationEdit and TextSelect is true when you hover on text
+    // we do this to prevent this action from spamming the console
+    name = (toolObject.name === 'TextSelect') ? 'AnnotationEdit' : toolObject.name;
+  }
+
   if (state.viewer.activeToolName === name) {
     return;
   }
@@ -87,7 +97,14 @@ export const setFilename = filename => ({ type: 'SET_FILENAME', payload: { filen
 export const setTotalPages = totalPages => ({ type: 'SET_TOTAL_PAGES', payload: { totalPages } });
 export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outlines } });
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
+export const setPasswordAttempts = attempt => ({ type: 'SET_PASSWORD_ATTEMPTS', payload: { attempt } });
 export const setPrintQuality = quality => ({ type: 'SET_PRINT_QUALITY', payload: { quality } });
+export const setLoadingProgress = loadingProgress => (dispatch, getState) => {
+  const state = getState();
+  if (state.document.loadingProgress < loadingProgress) {
+    dispatch({ type: 'SET_LOADING_PROGRESS', payload: { loadingProgress } });
+  }
+};
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
 
 // user

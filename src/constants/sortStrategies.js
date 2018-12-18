@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
-const sortMap = {
+const sortStrategy = {
   position: {
     getSortedNotes: notes => notes.sort((a, b) => {
       if (a.PageNumber === b.PageNumber) {
@@ -10,7 +10,7 @@ const sortMap = {
       return a.PageNumber - b.PageNumber;
     }),
     shouldRenderSeparator: (prevNote, currNote) => currNote.PageNumber !== prevNote.PageNumber,
-    getSeparatorContent: (prevNote, currNote) => `Page ${currNote.PageNumber}`
+    getSeparatorContent: (prevNote, currNote, pageLabels) => `Page ${pageLabels[currNote.PageNumber - 1]}`
   },
   time: {
     getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
@@ -31,4 +31,4 @@ const sortMap = {
   }
 };
 
-export default sortMap;
+export default sortStrategy;

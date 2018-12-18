@@ -4,11 +4,11 @@ import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { isIE11 } from 'helpers/device';
 import { engineTypes, documentTypes } from 'constants/types';
-import { supportedPDFExtensions, supportedOfficeExtensions } from 'constants/supportedFiles';
+import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
 
 export default (state, dispatch) => {
-  core.closeDocument().then(() => {
+  core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
       Promise.all([getPartRetriever(state, streaming), getDocOptions(state, dispatch, streaming)])
       .then(params => {
@@ -16,6 +16,9 @@ export default (state, dispatch) => {
         const docOptions = params[1];
 
         if (partRetriever.on) {
+          partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+            dispatch(actions.setLoadingProgress(loaded / total));
+          });
           partRetriever.on('error', function(e, type, message) {
             fireError(message);
           });
@@ -23,7 +26,11 @@ export default (state, dispatch) => {
         if (partRetriever.setErrorCallback) {
           partRetriever.setErrorCallback(fireError);
         }
+        if (partRetriever instanceof window.CoreControls.PartRetrievers.BlackBoxPartRetriever && isLocalFile(state)) {
+          console.error(`${state.document.path} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL`);
+        }
 
+        dispatch(actions.openElement('progressModal'));
         core.loadAsync(partRetriever, docOptions);
       })
       .catch(error => {
@@ -64,8 +71,9 @@ const checkByteRange = state => {
 };
 
 const getPartRetriever = (state, streaming) => {
-  const { path: documentPath, file, isOffline, filename, pdfDoc } = state.document;
+  const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
   const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, useDownloader, withCredentials } = state.advanced;
+  const documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
 
@@ -119,6 +127,7 @@ const getPartRetriever = (state, streaming) => {
         partRetriever = new window.CoreControls.PartRetrievers.HttpPartRetriever(documentPath, cache, decrypt, decryptOptions);
       }
     }
+
     if (process.env.NODE_ENV !== 'production') {
       console.warn('Loading %c' + documentPath + '%c with %c' + partRetrieverName, 'font-weight: bold; color: blue', '', 'font-weight: bold; color: red');
     }
@@ -147,7 +156,9 @@ const getDocOptions = (state, dispatch, streaming) => {
 
       Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
         let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
+        let attempt = 0;
         const getPassword = checkPassword => {
+          dispatch(actions.setPasswordAttempts(attempt++));
           if (password && !passwordChecked) {
             checkPassword(password);
             passwordChecked = true;
@@ -167,7 +178,11 @@ const getDocOptions = (state, dispatch, streaming) => {
           }
           console.error(error);
         };
-        const workerHandlers = { workerLoadingProgress: () => {} };
+        const workerHandlers = {
+          workerLoadingProgress: (percent) => {
+            dispatch(actions.setLoadingProgress(percent));
+          }
+        };
 
         const docName = getDocName(state);
         const options = { docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise };
@@ -214,17 +229,25 @@ const getEngineType = state => {
 const getDocumentExtension = doc => {
   let extension;
   if (doc) {
-    // strip out query/hash parameters
-    extension = doc.split('?')[0].split('#')[0];
-    extension = extension.slice(extension.lastIndexOf('.') + 1).toLowerCase();
+    const pdfExtensions = supportedPDFExtensions.join('|');
+    const officeExtensions = supportedOfficeExtensions.join('|');
+    const blackboxExtensions = supportedBlackboxExtensions.join('|');
+    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|${blackboxExtensions}|xod)(\&|$)`);
+    const result = regex.exec(doc);
+    if (result) {
+      extension = result[1];
+    } else {
+      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${[...supportedPDFExtensions, ...supportedOfficeExtensions, ...blackboxExtensions, 'xod'].join(', ')}`);
+    }
   }
+
   return extension;
 };
 
 const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
-  const { path, filename } = state.document;
-  return filename || path;
+  const { path, filename, initialDoc } = state.document;
+  return filename || path || initialDoc;
 };
 
 const isPDFNetJSExtension = extension => {
@@ -274,6 +297,12 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
 
 const fireError = message => {
   fireEvent('loaderror', message);
+};
+
+const isLocalFile = state => {
+  const path = state.advanced.path;
+
+  return !/https?:\/\//.test(path);
 };
 
 export const fireEvent = (eventName, data) => {

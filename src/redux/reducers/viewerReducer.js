@@ -70,8 +70,10 @@ export default initialState => (state = initialState, action) => {
       return { ...state, displayMode: payload.displayMode };
     case 'SET_CURRENT_PAGE':
       return { ...state, currentPage: payload.currentPage };
-    case 'SET_SORT_NOTES_BY':
-      return { ...state, sortNotesBy: payload.sortNotesBy };
+    case 'SET_SORT_STRATEGY':
+      return { ...state, sortStrategy: payload.sortStrategy };
+    case 'SET_NOTE_DATE_FORMAT':
+      return { ...state, noteDateFormat: payload.noteDateFormat };
     case 'SET_FULL_SCREEN':
       return { ...state, isFullScreen: payload.isFullScreen };
     case 'SET_HEADER_ITEMS':
@@ -144,6 +146,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
     case 'USE_EMBEDDED_PRINT':
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
+    case 'SET_PAGE_LABELS': 
+      return { ...state, pageLabels: [ ...payload.pageLabels ] };
     default:
       return state;
   }

@@ -1,21 +1,15 @@
 import core from 'core';
-import selectors from 'selectors';
-import { documentTypes } from 'constants/types';
 
-export default store => () =>  {
+export default store => () => new Promise((resolve, reject) => {
   const state = store.getState();
-  const serverUrl = state.advanced.serverUrl || '/annotations';
-  const serverUrlHeaders = state.advanced.serverUrlHeaders;
-  const docId = state.document.id;
+  const { id: docId } = state.document;
+  const { serverUrl, serverUrlHeaders } = state.advanced;
   const docIdQuery = docId ? { did: docId } : {};
 
-  if (selectors.getDocumentType(state) === documentTypes.BLACKBOX) {
-    console.warn('Cannot save annotations from WebViewer demo server.');
+  if (!serverUrl) {
+    console.warn('serverUrl option is not defined. Please pass this option in WebViewer constructor to save/load annotations. See https://www.pdftron.com/documentation/web/guides/annotations/saving-loading-annotations for details.');
+    reject();
     return;
-  }
-
-  if (serverUrl === '/annotations') {
-    console.warn('serverUrl option is not defined. Falling back to `/annotations`, which handles requests in /samples/server.js');
   }
 
   $.ajax({
@@ -27,7 +21,10 @@ export default store => () =>  {
       'data': core.exportAnnotations()
     },
     success: () => {
-      alert(`Annotations saved to /annotations/${docId ? docId : 'default'}.xfdf`);
+      resolve();
+    },
+    error: e => {
+      reject(e);
     }
   });
-};
+});

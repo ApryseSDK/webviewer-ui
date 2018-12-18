@@ -1,6 +1,7 @@
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
 import { zoomIn, zoomOut } from 'helpers/zoom';
+import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import core from 'core';
 
@@ -16,7 +17,8 @@ export default {
         { type: 'toggleElementButton', img: 'ic_left_sidebar_black_24px', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
         { type: 'divider', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toggleElementButton', img: 'ic_viewer_settings_black_24px', element: 'viewControlsOverlay', dataElement: 'viewControlsButton', title: 'component.viewControlsOverlay' },
-        { type: 'toolButton', toolName: 'Pan', hidden: [ 'tablet', 'mobile' ] },
+        { type: 'toolButton', toolName: 'Pan' },
+        { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: [ 'tablet', 'mobile' ] },
         {
           type: 'statefulButton',
@@ -73,7 +75,7 @@ export default {
           img: 'ic_edit_black_24px',
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('tools'));
-            core.setToolMode('AnnotationEdit');
+            core.setToolMode(defaultTool);
             dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel' ]));
           },
           dataElement: 'toolsButton',
@@ -100,7 +102,7 @@ export default {
           img: 'ic_close_black_24px',
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('default'));
-            core.setToolMode('AnnotationEdit');
+            core.setToolMode(defaultTool);
             dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel' ]));
           },
         },
@@ -132,6 +134,7 @@ export default {
       AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
       AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
+      TextSelect: { dataElement: 'textSelectButton', title: 'tool.select', img: 'textselect_cursor', showColor: 'never' }
     },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
@@ -144,14 +147,16 @@ export default {
     fitMode: '',
     zoom: 1,
     displayMode: 'Single',
-    currentPage: undefined,
-    sortNotesBy: 'position',
+    currentPage: 1,
+    sortStrategy: 'position',
     isFullScreen: false,
     doesAutoLoad: getHashParams('auto_load', true),
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
     useEmbeddedPrint: true,
+    pageLabels: [],
+    noteDateFormat: 'MMM D, h:mma'
   },
   search: {
     listeners: [],
@@ -172,7 +177,8 @@ export default {
   },
   document: {
     id: getHashParams('did', ''),
-    path: getHashParams('initialDoc', getHashParams('d', '')),
+    initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
+    path: null,
     filename: null,
     file: null,
     type: null,
@@ -184,7 +190,9 @@ export default {
     outlines: [],
     checkPassword: null,
     password: '',
-    printQuality: 1
+    printQuality: 1,
+    passwordAttempts: -1,
+    loadingProgress: 0
   },
   user: {
     name: getHashParams('user', 'Guest'),
@@ -202,7 +210,7 @@ export default {
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
     preloadWorker: getHashParams('preloadWorker', false),
-    serverUrl: getHashParams('server_url', process.env.NODE_ENV === 'development' ? '/annotations' : ''),
+    serverUrl: getHashParams('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
     streaming: getHashParams('streaming', false),
     subzero: getHashParams('subzero', false),
