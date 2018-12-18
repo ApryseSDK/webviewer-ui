@@ -23,11 +23,6 @@ export default (state, dispatch) => {
             fireError(message);
           });
         }
-        if (partRetriever.on && docOptions.workerHandlers) {
-          dispatch(actions.openElement('progressModal'));
-        } else {
-          dispatch(actions.openElement('loadingModal'));
-        }
         if (partRetriever.setErrorCallback) {
           partRetriever.setErrorCallback(fireError);
         }
@@ -35,6 +30,7 @@ export default (state, dispatch) => {
           console.error(`${state.document.path} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL`);
         }
 
+        dispatch(actions.openElement('progressModal'));
         core.loadAsync(partRetriever, docOptions);
       })
       .catch(error => {

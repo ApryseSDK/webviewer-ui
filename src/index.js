@@ -110,12 +110,12 @@ if (window.CanvasRenderingContext2D) {
     setupDocViewer();
     setupI18n(state);
     setupMIMETypeTest();
-    addEventHandlers();
+    setUserPermission(state);
     setAutoSwitch();
     setDefaultToolColor();
     setDefaultDisabledElements(store);
-    setUserPermission(state);
     setupLoadAnnotationsFromServer(store);
+    addEventHandlers();
     core.setToolMode(defaultTool);
     
     ReactDOM.render(

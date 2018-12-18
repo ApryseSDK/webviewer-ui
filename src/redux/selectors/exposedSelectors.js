@@ -46,7 +46,7 @@ export const getDisabledCustomPanelTabs = state => {
 // document
 export const getDocument = state => state.document;
 export const getDocumentId = state => state.document.id;
-export const getDocumentPath = state => state.document.path;
+export const getDocumentPath = state => state.document.path || state.document.initialDoc;
 export const getDocumentFile = state => state.document.file;
 export const hasPath = state => !!(state.document.initialDoc || state.advanced.externalPath);
 export const getDocumentType = state => state.document.type;
