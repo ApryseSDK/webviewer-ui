@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import Tooltip from 'components/Tooltip';
 
 import selectors from 'selectors';
 
@@ -65,7 +66,9 @@ class StatefulButton extends React.PureComponent {
     const content = getContent ? getContent(this.props.states[activeState]) : '';
 
     return (
-      <Button {...this.props} title={title} img={img} label={content} onClick={this.onClick} />
+      <Tooltip content={title} isDisabled={this.props.isDisabled}>
+        <Button {...this.props} img={img} label={content} onClick={this.onClick} />
+      </Tooltip>
     );
   }
 }

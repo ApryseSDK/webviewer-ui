@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
 
 import ActionButton from 'components/ActionButton';
 import AnnotationStylePopup from 'components/AnnotationStylePopup';
@@ -68,8 +67,6 @@ class AnnotationPopup extends React.PureComponent {
     if (isContainerShifted) { //closing because we can't correctly reposition the popup on panel transition
       this.props.closeElement('annotationPopup');
     }
-
-    ReactTooltip.rebuild();
   }
 
   componentWillUnmount() {
@@ -127,7 +124,7 @@ class AnnotationPopup extends React.PureComponent {
 
     this.setState({ left, top });
   }
-  
+
   commentOnAnnotation = () => {
     if (!this.props.isLeftPanelOpen) {
       this.props.openElement('notesPanel');
@@ -164,9 +161,9 @@ class AnnotationPopup extends React.PureComponent {
 
     return (
       <div className={className} ref={this.popup} data-element="annotationPopup" style={{ left, top }} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
-        {isStylePopupOpen 
-        ? <AnnotationStylePopup annotation={annotation} style={style} isOpen={isOpen} />
-        : <React.Fragment>
+        {isStylePopupOpen
+          ? <AnnotationStylePopup annotation={annotation} style={style} isOpen={isOpen} />
+          : <React.Fragment>
             {!isNotesPanelDisabled &&
               <ActionButton dataElement="annotationCommentButton" title="action.comment" img="ic_comment_black_24px" onClick={this.commentOnAnnotation} />
             }

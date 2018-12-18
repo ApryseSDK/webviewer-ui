@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
 import getColorFromStyle from 'helpers/getColorFromStyle';
@@ -17,7 +18,7 @@ class ToolGroupButton extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     activeToolName: PropTypes.string.isRequired,
-    toolGroup:PropTypes.string.isRequired,
+    toolGroup: PropTypes.string.isRequired,
     mediaQueryClassName: PropTypes.string.isRequired,
     dataElement: PropTypes.string.isRequired,
     img: PropTypes.string,
@@ -40,14 +41,14 @@ class ToolGroupButton extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const activeToolNameChanged = prevProps.activeToolName !== this.props.activeToolName;
-    const wasAcitveToolNameInGroup = prevProps.toolNames.indexOf(prevProps.activeToolName) > -1; 
-    const isAcitveToolNameInGroup = this.props.toolNames.indexOf(this.props.activeToolName) > -1; 
+    const wasAcitveToolNameInGroup = prevProps.toolNames.indexOf(prevProps.activeToolName) > -1;
+    const isAcitveToolNameInGroup = this.props.toolNames.indexOf(this.props.activeToolName) > -1;
     const toolNamesLengthChanged = prevProps.toolNames.length !== this.props.toolNames.length;
-    
-    if (activeToolNameChanged && isAcitveToolNameInGroup) {      
+
+    if (activeToolNameChanged && isAcitveToolNameInGroup) {
       this.setState({ toolName: this.props.activeToolName });
     }
-    
+
     if (toolNamesLengthChanged && !this.props.toolNames.includes(this.state.toolName)) {
       this.setState({ toolName: this.props.toolNames[0] });
     }
@@ -58,7 +59,7 @@ class ToolGroupButton extends React.PureComponent {
   }
 
   onClick = e => {
-    const { setActiveToolGroup, isActive, closeElement, toggleElement, openElement, toolGroup} = this.props;
+    const { setActiveToolGroup, isActive, closeElement, toggleElement, openElement, toolGroup } = this.props;
     const { toolName } = this.state;
 
     e.stopPropagation();
@@ -86,12 +87,12 @@ class ToolGroupButton extends React.PureComponent {
   }
 
   render() {
-    const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, title, isActive } = this.props;
-    
+    const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive } = this.props;
+
     if (isDisabled) {
       return null;
     }
-    
+
     const { toolName } = this.state;
     const img = this.props.img ? this.props.img : toolButtonObjects[toolName].img;
     const color = isActive && !this.props.img ? getColorFromStyle(getToolStyle(toolName)) : '';
@@ -102,7 +103,7 @@ class ToolGroupButton extends React.PureComponent {
       showDownArrow ? 'down-arrow' : '',
     ].join(' ').trim();
 
-    return <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} title={title} color={color} />;
+    return <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={color} />;
   }
 }
 
@@ -121,4 +122,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
+export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(ToolGroupButton));

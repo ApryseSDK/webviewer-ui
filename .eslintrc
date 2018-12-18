@@ -14,18 +14,52 @@
     "react",
     "import"
   ],
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "rules": {
-    "quotes": [2, "single", {"allowTemplateLiterals": true}],
+    "quotes": [
+      2,
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
     "curly": 2,
-    "strict": [2, "never"],
-    "semi": [2, "always"],
-    "no-redeclare": [2, { "builtinGlobals": true }],
+    "strict": [
+      2,
+      "never"
+    ],
+    "semi": [
+      2,
+      "always"
+    ],
+    "no-redeclare": [
+      2,
+      {
+        "builtinGlobals": true
+      }
+    ],
     "brace-style": 2,
     "no-alert": 0,
-    "no-console": [2, { "allow": ["warn", "error"] }],
-    "object-shorthand": [2, "always"],
-    "arrow-parens": [2, "as-needed"],
+    "no-console": [
+      2,
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "object-shorthand": [
+      2,
+      "always"
+    ],
+    "arrow-parens": [
+      2,
+      "as-needed"
+    ],
     "eqeqeq": 2,
     "jsx-quotes": 2,
     "react/jsx-closing-bracket-location": 2,
@@ -36,6 +70,7 @@
     "import/no-unresolved": 0,
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
-    "import/no-dynamic-require": 0
+    "import/no-dynamic-require": 0,
+    "react/no-find-dom-node": 0
   }
 }

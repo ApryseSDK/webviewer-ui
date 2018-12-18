@@ -5,6 +5,7 @@ import { translate } from 'react-i18next';
 
 import Button from 'components/Button';
 import Element from 'components/Element';
+import Tooltip from 'components/Tooltip';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -29,7 +30,7 @@ class LeftPanelTabs extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       customPanels,
       isLeftPanelTabsDisabled,
       isThumbnailsPanelButtonDisabled,
@@ -43,42 +44,41 @@ class LeftPanelTabs extends React.Component {
       return null;
     }
 
-    return(
+    return (
       <Element className="LeftPanelTabs" dataElement="leftPanelTabs">
-        <Button
-          isActive={this.isActive('thumbnailsPanel')}
-          isDisabled={isThumbnailsPanelButtonDisabled}
-          dataElement="thumbnailsPanelButton"
-          img="ic_thumbnails_black_24px" 
-          title="component.thumbnailsPanel"
-          onClick={() => setActiveLeftPanel('thumbnailsPanel')}
-        />
-        <Button
-          isActive={this.isActive('outlinesPanel')}
-          isDisabled={isOutlinesPanelButtonDisabled}
-          dataElement="outlinesPanelButton"
-          img="ic_outline_black_24px" 
-          title="component.outlinesPanel"
-          onClick={() => setActiveLeftPanel('outlinesPanel')}
-        />
-        <Button
-          isActive={this.isActive('notesPanel')}
-          isDisabled={isNotesPanelButtonDisabled}
-          dataElement="notesPanelButton"
-          img="ic_annotations_black_24px" 
-          title="component.notesPanel"
-          onClick={() => setActiveLeftPanel('notesPanel')}
-        />
-        {customPanels.map(({ panel, tab }, index) => (
+        <Tooltip content="component.thumbnailsPanel" isDisabled={isThumbnailsPanelButtonDisabled}>
           <Button
-            key={tab.dataElement || index}
-            isActive={this.isActive(panel.dataElement)}
-            isDisabled={disabledCustomPanelTabs.includes(tab.dataElement)}
-            dataElement={tab.dataElement}
-            img={tab.img}
-            title={tab.title}
-            onClick={() => setActiveLeftPanel(panel.dataElement)}
+            isActive={this.isActive('thumbnailsPanel')}
+            dataElement="thumbnailsPanelButton"
+            img="ic_thumbnails_black_24px"
+            onClick={() => setActiveLeftPanel('thumbnailsPanel')}
           />
+        </Tooltip>
+        <Tooltip content="component.outlinesPanel" isDisabled={isOutlinesPanelButtonDisabled}>
+          <Button
+            isActive={this.isActive('outlinesPanel')}
+            dataElement="outlinesPanelButton"
+            img="ic_outline_black_24px"
+            onClick={() => setActiveLeftPanel('outlinesPanel')}
+          />
+        </Tooltip>
+        <Tooltip content="component.notesPanel" isDisabled={isNotesPanelButtonDisabled}>
+          <Button
+            isActive={this.isActive('notesPanel')}
+            dataElement="notesPanelButton"
+            img="ic_annotations_black_24px"
+            onClick={() => setActiveLeftPanel('notesPanel')}
+          />
+        </Tooltip>
+        {customPanels.map(({ panel, tab }, index) => (
+          <Tooltip key={tab.dataElement || index} content={tab.title} isDisabled={disabledCustomPanelTabs.includes(tab.dataElement)}>
+            <Button
+              isActive={this.isActive(panel.dataElement)}
+              dataElement={tab.dataElement}
+              img={tab.img}
+              onClick={() => setActiveLeftPanel(panel.dataElement)}
+            />
+          </Tooltip>
         ))}
       </Element>
     );
