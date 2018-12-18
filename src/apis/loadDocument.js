@@ -29,6 +29,5 @@ export default store => (documentPath, options = {}) => {
   } else {
     store.dispatch(actions.setDocumentPath(documentPath));
   }
-  store.dispatch(actions.openElement('loadingModal'));
   loadDocument(store.getState(), store.dispatch);
 };

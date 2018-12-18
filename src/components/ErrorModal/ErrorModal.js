@@ -29,7 +29,7 @@ class ErrorModal extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['signatureModal', 'printModal', 'loadingModal']);
+      this.props.closeElements([ 'signatureModal', 'printModal', 'loadingModal', 'progressModal' ]);
     }
   }
 

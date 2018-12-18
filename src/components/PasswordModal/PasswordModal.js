@@ -34,7 +34,7 @@ class PasswordModal extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElement('loadingModal');
+      this.props.closeElement('progressModal');
     }
     if (prevProps.isOpen && !this.props.isOpen) {
       // when a user enters the correct password or calls core.closeDocument

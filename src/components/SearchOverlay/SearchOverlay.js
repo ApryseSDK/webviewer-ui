@@ -9,6 +9,7 @@ import Input from 'components/Input';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -82,6 +83,7 @@ class SearchOverlay extends React.PureComponent {
     if (searchOverlayOpened) {
       this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'menuOverlay', 'toolStylePopup']);
       this.searchTextInput.current.focus();
+      core.setToolMode(defaultTool);
     }
 
     const searchOverlayClosed = prevProps.isOpen && !this.props.isOpen;

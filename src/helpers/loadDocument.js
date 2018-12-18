@@ -11,28 +11,32 @@ export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
       Promise.all([getPartRetriever(state, streaming), getDocOptions(state, dispatch, streaming)])
-        .then(params => {
-          const partRetriever = params[0];
-          const docOptions = params[1];
+      .then(params => {
+        const partRetriever = params[0];
+        const docOptions = params[1];
 
-          if (partRetriever.on) {
-            partRetriever.on('error', function (e, type, message) {
-              fireError(message);
-            });
-          }
-          if (partRetriever.setErrorCallback) {
-            partRetriever.setErrorCallback(fireError);
-          }
-          if (partRetriever instanceof window.CoreControls.PartRetrievers.BlackBoxPartRetriever && isLocalFile(state)) {
-            console.error(`${state.document.path} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL`);
-          }
+        if (partRetriever.on) {
+          partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+            dispatch(actions.setLoadingProgress(loaded / total));
+          });
+          partRetriever.on('error', function(e, type, message) {
+            fireError(message);
+          });
+        }
+        if (partRetriever.setErrorCallback) {
+          partRetriever.setErrorCallback(fireError);
+        }
+        if (partRetriever instanceof window.CoreControls.PartRetrievers.BlackBoxPartRetriever && isLocalFile(state)) {
+          console.error(`${state.document.path} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL`);
+        }
 
-          core.loadAsync(partRetriever, docOptions);
-        })
-        .catch(error => {
-          fireError(error);
-          console.error(error);
-        });
+        dispatch(actions.openElement('progressModal'));
+        core.loadAsync(partRetriever, docOptions);
+      })
+      .catch(error => {
+        fireError(error);
+        console.error(error);
+      });
     });
   });
 };
@@ -123,6 +127,7 @@ const getPartRetriever = (state, streaming) => {
         partRetriever = new window.CoreControls.PartRetrievers.HttpPartRetriever(documentPath, cache, decrypt, decryptOptions);
       }
     }
+
     if (process.env.NODE_ENV !== 'production') {
       console.warn('Loading %c' + documentPath + '%c with %c' + partRetrieverName, 'font-weight: bold; color: blue', '', 'font-weight: bold; color: red');
     }
@@ -173,7 +178,11 @@ const getDocOptions = (state, dispatch, streaming) => {
           }
           console.error(error);
         };
-        const workerHandlers = { workerLoadingProgress: () => { } };
+        const workerHandlers = {
+          workerLoadingProgress: (percent) => {
+            dispatch(actions.setLoadingProgress(percent));
+          }
+        };
 
         const docName = getDocName(state);
         const options = { docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise };

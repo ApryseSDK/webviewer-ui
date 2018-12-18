@@ -46,7 +46,7 @@ export const getDisabledCustomPanelTabs = state => {
 // document
 export const getDocument = state => state.document;
 export const getDocumentId = state => state.document.id;
-export const getDocumentPath = state => state.document.path;
+export const getDocumentPath = state => state.document.path || state.document.initialDoc;
 export const getDocumentFile = state => state.document.file;
 export const hasPath = state => !!(state.document.initialDoc || state.advanced.externalPath);
 export const getDocumentType = state => state.document.type;
@@ -61,6 +61,7 @@ export const getPasswordAttempts = state => state.document.passwordAttempts;
 export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 export const getOutlines = state => state.document.outlines;
+export const getLoadingProgress = state => state.document.loadingProgress;
 
 // user
 export const getUserName = state => state.user.name;

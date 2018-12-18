@@ -28,6 +28,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, password: payload.password };
     case 'SET_PRINT_QUALITY':
       return { ...state, printQuality: payload.quality };
+    case 'SET_LOADING_PROGRESS':
+      return { ...state, loadingProgress: payload.loadingProgress };
     default:
       return state;
   }

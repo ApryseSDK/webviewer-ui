@@ -22,6 +22,7 @@ import PrintModal from 'components/PrintModal';
 import LoadingModal from 'components/LoadingModal';
 import ErrorModal from 'components/ErrorModal';
 import PasswordModal from 'components/PasswordModal';
+import ProgressModal from 'components/ProgressModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
@@ -100,6 +101,7 @@ class App extends React.PureComponent {
           <LoadingModal />
           <ErrorModal />
           <PasswordModal />
+          <ProgressModal />
         </div>
 
         <PrintHandler />
