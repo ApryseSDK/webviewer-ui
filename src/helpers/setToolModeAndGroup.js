@@ -3,7 +3,7 @@ import core from 'core';
 import toolStyleExists from 'helpers/toolStyleExists';
 
 export default (dispatch, toolName, toolGroup) =>  {
-  if (core.getIsReadOnly()) {
+  if (core.getIsReadOnly() || core.getTool(toolName).disabled) { // TODO: revisit
     return;
   }
 
@@ -19,7 +19,7 @@ export default (dispatch, toolName, toolGroup) =>  {
     return;
   }
   
-  if (window.innerWidth <= 900) {
+  if (window.innerWidth <= 900 && toolName !== 'Pan' && toolName !== 'AnnotationEdit') { // TODO: revisit
     dispatch(actions.setActiveHeaderGroup('tools'));
   }
 
