@@ -10,12 +10,13 @@ var viewer = new PDFTron.WebViewer({
   initialDoc: '/samples/files/webviewer-demo-annotated.pdf',
 }, viewerElement);
 var viewerInstance;
+var Tools
 
 viewerElement.addEventListener('ready', function() {
   viewerInstance = viewer.getInstance();
   var missingApis = [];
   Object.keys(viewerInstance).forEach(function(key) {
-    if (typeof viewerInstance[key] === 'function' && !apis[key]) {
+    if (typeof viewerInstance[key] === 'function' && !apis[key] && constants.whitelist.indexOf(key) < 0) {
       missingApis.push(key);
     }
   });
@@ -42,7 +43,12 @@ var constants = {
     'setSortNotesBy',
     'setEngineType',
     'setPrintQuality',
-    'updateOutlines'
+    'updateOutlines',
+    'getShowSideWindow',
+    'setShowSideWindow',
+    'getSideWindowVisibility',
+    'setSideWindowVisibility',
+    'saveAnnotations'
   ],
   searchListener: function(searchValue, options, results) {
     console.log('Search listener triggered.', results);
@@ -58,7 +64,7 @@ var constants = {
     },
     shouldRenderSeparator: (prevNote, currNote) => prevNote.Subject !== currNote.Subject,
     getSeparatorContent: (prevNote, currNote) => `${currNote.Subject}`
-  }
+  },
 }
 
 var apis = {
@@ -173,6 +179,9 @@ var apis = {
   enablePrint: function() {
     // TODO
   },
+  useEmbeddedPrint: function() {
+    // TODO
+  },
   disableTextSelection: function() {
     // TODO
   },
@@ -192,7 +201,7 @@ var apis = {
   isAdminUser: function() {
     // TODO
   },
-  setReadyOnly: function() {
+  setReadOnly: function() {
     // TODO
   },
   isReadOnly: function() {
@@ -249,30 +258,35 @@ var apis = {
     // TODO
   },
   divider10: true,
-  getShowSideWindow: function() {
-    // TODO
-  },
-  setShowSideWindow: function() {
-    // TODO
-  },
-  getSideWindowVisibility: function() {
-    // TODO
-  },
-  divider11: true,
   getToolMode: function() {
-    // TODO
+    console.log('Current tool mode: ', viewerInstance.getToolMode());
   },
   setToolMode: function() {
-    // TODO
+    viewerInstance.setToolMode('AnnotationCreateRectangle');
   },
   registerTool: function() {
-    // TODO
+    var contentWindow = document.querySelector('iframe').contentWindow;
+    var MyTool = function() {
+      contentWindow.Tools.StickyCreateTool.call(this, viewerInstance.docViewer, contentWindow.Annotations.StickyAnnotation);
+    };
+    MyTool.prototype = new contentWindow.Tools.StickyCreateTool();
+    viewerInstance.registerTool({
+      toolName: 'MyTool',
+      toolObject: new MyTool(),
+      buttonImage: 'ic_annotation_sticky_note_black_24px',
+      buttonName: 'myToolButton',
+      buttonGroup: 'miscTools',
+      tooltip: 'MyTool'
+    });
+    viewerInstance.setToolMode('MyTool');
   },
   unregisterTool: function() {
-    // TODO
+    viewerInstance.unregisterTool('MyTool');
   },
   updateTool: function() {
-    // TODO
+    viewerInstance.updateTool('AnnotationCreateRectangle', {
+      buttonGroup: 'miscTools'
+    });
   },
   divider12: true,  
   setActiveHeaderGroup: function() {
@@ -291,28 +305,26 @@ var apis = {
     // TODO
   },
   setNoteDateFormat: function() {
-    // TODO
+    viewerInstance.setNoteDateFormat('DD.MM.YYYY HH:MM');
   },
   setPageLabels: function() {
-    // TODO
+    viewerInstance.setPageLables([ 'i', 'ii', 'iii' ]);
   },
   setTheme: function() {
-    // TODO
+    viewerInstance.setTheme('dark');
   },
   divider13: true,
   downloadPdf: function() {
-    // TODO
+    viewerInstance.downloadPdf();
   },
   focusNote: function() {
-    // TODO
+    var annotationId = viewerInstance.docViewer.getAnnotationManager().getAnnotationsList()[0].Id;
+    viewerInstance.focusNote(annotationId);
   },
   isMobileDevice: function() {
-    // TODO
-  },
-  saveAnnotations: function() {
-    // TODO
+    console.log('isMobileDevice: ' + !!viewerInstance.isMobileDevice());
   },
   toggleFullScreen: function() {
-    // TODO
+    viewerInstance.toggleFullScreen();
   }
 }
