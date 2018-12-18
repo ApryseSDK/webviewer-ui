@@ -150,112 +150,109 @@ var apis = {
   },
   divider6: true,
   disableAnnotations: function() {
-    // TODO
+    viewerInstance.disableAnnotations();
   },
   enableAnnotations: function() {
-    // TODO
+    viewerInstance.enableAnnotations();
   },
   disableDownload: function() {
-    // TODO
+    viewerInstance.disableDownload();
   },  
   enableDownload: function() {
-    // TODO
+    viewerInstance.enableDownload();
   },  
   enableFilePicker: function() {
-    // TODO
+    viewerInstance.enableFilePicker();
   },
   disableFilePicker: function() {
-    // TODO
+    viewerInstance.disableFilePicker();
   },
   disableNotesPanel: function() {
-    // TODO
+    viewerInstance.disableNotesPanel();
   },
   enableNotesPanel: function() {
-    // TODO
+    viewerInstance.enableNotesPanel();
   },
   disablePrint: function() {
-    // TODO
+    viewerInstance.disablePrint();
   },
   enablePrint: function() {
-    // TODO
+    viewerInstance.enablePrint();
   },
   useEmbeddedPrint: function() {
-    // TODO
+    viewerInstance.useEmbeddedPrint(false);
   },
   disableTextSelection: function() {
-    // TODO
+    viewerInstance.disableTextSelection();
   },
   enableTextSelection: function() {
-    // TODO
+    viewerInstance.enableTextSelection();
   },
   divider7: true,
   setAnnotationUser: function() {
-    // TODO
+    viewerInstance.setAnnotationUser('PDFTron');
   },
   getAnnotationUser: function() {
-    // TODO
+    console.log('Current annotation user: ', viewerInstance.getAnnotationUser());
   },
   setAdminUser: function() {
-    // TODO
+    viewerInstance.setAdminUser(true);
   },
   isAdminUser: function() {
-    // TODO
+    console.log('Is user admin: ', viewerInstance.isAdminUser());
   },
   setReadOnly: function() {
-    // TODO
+    viewerInstance.setReadOnly(true);
   },
   isReadOnly: function() {
-    // TODO
+    console.log('Is read only: ', viewerInstance.isReadOnly());
   },
   divider8: true,
   getCurrentPageNumber: function() {
-    // TODO
+    console.log('Current page number: ', viewerInstance.getCurrentPageNumber());
   },
   setCurrentPageNumber: function() {
-    // TODO
+    viewerInstance.setCurrentPageNumber(2);
   },
   getPageCount: function() {
-    // TODO
-  },
-  goToFirstPage: function() {
-    // TODO
-  },
-  goToLastPage: function() {
-    // TODO
+    console.log('Total pages: ', viewerInstance.getPageCount());
   },
   goToNextPage: function() {
-    // TODO
+    viewerInstance.goToNextPage();
   },
   goToPrevPage: function() {
-    // TODO
+    viewerInstance.goToPrevPage();
   },
-  goToPrevPage: function() {
-    // TODO
+  goToLastPage: function() {
+    viewerInstance.goToLastPage();
+  },
+  goToFirstPage: function() {
+    viewerInstance.goToFirstPage();
   },
   divider9: true,
   getFitMode: function() {
-    // TODO
+    console.log('Current fit mode: ', viewerInstance.getFitMode());
   },
   setFitMode: function() {
-    // TODO
+    viewerInstance.setFitMode(viewerInstance.FitMode.FitWidth);
   },
   getLayoutMode: function() {
-    // TODO
+    console.log('Current layout mode: ', viewerInstance.getLayoutMode());
   },
   setLayoutMode: function() {
-    // TODO
+    viewerInstance.setLayoutMode(viewerInstance.LayoutMode.Single);
   },
   getZoomLevel: function() {
-    // TODO
+    console.log('Current zoom level: ', viewerInstance.getZoomLevel());
   },
   setZoomLevel: function() {
-    // TODO
+    viewerInstance.setZoomLevel('160%');
   },
   rotateClockwise: function() {
-    // TODO
+    viewerInstance.rotateClockwise();
   },
   rotateCounterClockwise: function() {
-    // TODO
+    viewerInstance.rotateCounterClockwise();
   },
   divider10: true,
   getToolMode: function() {
