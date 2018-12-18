@@ -99,12 +99,13 @@ export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outli
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
 export const setPasswordAttempts = attempt => ({ type: 'SET_PASSWORD_ATTEMPTS', payload: { attempt } });
 export const setPrintQuality = quality => ({ type: 'SET_PRINT_QUALITY', payload: { quality } });
-export const setLoadingProgress = (loadingProgress, isReset) => (dispatch, getState) => {
+export const setLoadingProgress = loadingProgress => (dispatch, getState) => {
   const state = getState();
-  if (state.document.loadingProgress < loadingProgress || isReset) {
+  if (state.document.loadingProgress < loadingProgress) {
     dispatch({ type: 'SET_LOADING_PROGRESS', payload: { loadingProgress } });
   }
 };
+export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
 
 // user

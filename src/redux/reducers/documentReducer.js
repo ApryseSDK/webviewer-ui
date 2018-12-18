@@ -30,6 +30,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, printQuality: payload.quality };
     case 'SET_LOADING_PROGRESS':
       return { ...state, loadingProgress: payload.loadingProgress };
+    case 'RESET_LOADING_PROGRESS':
+      return { ...state, loadingProgress: 0 };
     default:
       return state;
   }
