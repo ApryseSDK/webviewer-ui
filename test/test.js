@@ -36,6 +36,14 @@ viewerElement.addEventListener('ready', function() {
 });
 
 var constants = {
+  whitelist: [
+    'getBBAnnotManager',
+    'setNotesPanelSort',
+    'setSortNotesBy',
+    'setEngineType',
+    'setPrintQuality',
+    'updateOutlines'
+  ],
   searchListener: function(searchValue, options, results) {
     console.log('Search listener triggered.', results);
   },
@@ -84,8 +92,14 @@ var apis = {
   openElement: function() {
     viewerInstance.openElement('viewControlsOverlay');
   },
+  isElementOpen: function() {
+    viewerInstance.isElementOpen('viewControlsOverlay');
+  },
   closeElement: function(dataElement) {
     viewerInstance.closeElement('viewControlsOverlay');
+  },
+  toggleElement: function() {
+    viewerInstance.toggleElement('viewControlsOverlay');
   },
   openElements: function() {
     viewerInstance.openElements([ 'outlinesPanel' ]);
@@ -96,6 +110,9 @@ var apis = {
   divider4: true,
   disableTool: function() {
     viewerInstance.disableTool('AnnotationCreateSticky');
+  },
+  isToolDisabled: function() {
+    viewerInstance.isToolDisabled('AnnotationCreateSticky');
   },
   enableTool: function() {
     viewerInstance.enableTool('AnnotationCreateSticky');
@@ -109,6 +126,9 @@ var apis = {
   divider5: true,
   disableElement: function() {
     viewerInstance.disableElement('leftPanelButton');
+  },
+  isElementDisabled: function() {
+    viewerInstance.isElementDisabled('leftPanelButton');
   },
   enableElement: function() {
     viewerInstance.enableElement('leftPanelButton');
@@ -160,47 +180,34 @@ var apis = {
     // TODO
   },
   divider7: true,
-  getAnnotationUser: function() {
-    // TODO
-  },
   setAnnotationUser: function() {
     // TODO
   },
-  getBBAnnotManager: function() {
+  getAnnotationUser: function() {
     // TODO
   },
+  setAdminUser: function() {
+    // TODO
+  },
+  isAdminUser: function() {
+    // TODO
+  },
+  setReadyOnly: function() {
+    // TODO
+  },
+  isReadOnly: function() {
+    // TODO
+  },
+  divider8: true,
   getCurrentPageNumber: function() {
     // TODO
   },
-  getFitMode: function() {
-    // TODO
-  },
-  getLayoutMode: function() {
+  setCurrentPageNumber: function() {
     // TODO
   },
   getPageCount: function() {
     // TODO
   },
-  getShowSideWindow: function() {
-    // TODO
-  },
-  getSideWindowVisibility: function() {
-    // TODO
-  },
-  getToolMode: function() {
-    // TODO
-  },
-  getZoomLevel: function() {
-    // TODO
-  },
-  divider8: true,
-  downloadPdf: function() {
-    // TODO
-  },
-  focusNote: function() {
-    // TODO
-  },
-  
   goToFirstPage: function() {
     // TODO
   },
@@ -216,25 +223,23 @@ var apis = {
   goToPrevPage: function() {
     // TODO
   },
-  isAdminUser: function() {
+  divider9: true,
+  getFitMode: function() {
     // TODO
   },
-  isElementDisabled: function() {
+  setFitMode: function() {
     // TODO
   },
-  isElementOpen: function() {
+  getLayoutMode: function() {
     // TODO
   },
-  isMobileDevice: function() {
+  setLayoutMode: function() {
     // TODO
   },
-  isReadOnly: function() {
+  getZoomLevel: function() {
     // TODO
   },
-  isToolDisabled: function() {
-    // TODO
-  },
-  registerTool: function() {
+  setZoomLevel: function() {
     // TODO
   },
   rotateClockwise: function() {
@@ -243,32 +248,40 @@ var apis = {
   rotateCounterClockwise: function() {
     // TODO
   },
-  
-  saveAnnotations: function() {
+  divider10: true,
+  getShowSideWindow: function() {
     // TODO
   },
+  setShowSideWindow: function() {
+    // TODO
+  },
+  getSideWindowVisibility: function() {
+    // TODO
+  },
+  divider11: true,
+  getToolMode: function() {
+    // TODO
+  },
+  setToolMode: function() {
+    // TODO
+  },
+  registerTool: function() {
+    // TODO
+  },
+  unregisterTool: function() {
+    // TODO
+  },
+  updateTool: function() {
+    // TODO
+  },
+  divider12: true,  
   setActiveHeaderGroup: function() {
     // TODO
   },
   setActiveLeftPanel: function() {
     // TODO
-  },
-  setAdminUser: function() {
-    // TODO
-  },
-  setAnnotationUser: function() {
-    // TODO
-  },
-  setCurrentPageNumber: function() {
-    // TODO
-  },
+  },  
   setCustomPanel: function() {
-    // TODO
-  },
-  setEngineType: function() {
-    // TODO
-  },
-  setFitMode: function() {
     // TODO
   },
   setHeaderItems: function() {
@@ -277,52 +290,29 @@ var apis = {
   setLanguage: function() {
     // TODO
   },
-  setLayoutMode: function() {
-    // TODO
-  },
   setNoteDateFormat: function() {
-    // TODO
-  },
-  setNotesPanelSort: function() {
     // TODO
   },
   setPageLabels: function() {
     // TODO
   },
-  setPrintQuality: function() {
-    // TODO
-  },
-  setReadyOnly: function() {
-    // TODO
-  },
-  setShowSideWindow: function() {
-    // TODO
-  },
-  setSortNotesBy: function() {
-    // TODO
-  },
   setTheme: function() {
     // TODO
   },
-  setToolMode: function() {
+  divider13: true,
+  downloadPdf: function() {
     // TODO
   },
-  setZoomLevel: function() {
+  focusNote: function() {
     // TODO
   },
-  toggleElement: function() {
+  isMobileDevice: function() {
+    // TODO
+  },
+  saveAnnotations: function() {
     // TODO
   },
   toggleFullScreen: function() {
-    // TODO
-  },
-  unregisterTool: function() {
-    // TODO
-  },
-  updateOutlines: function() {
-    // TODO
-  },
-  updateTool: function() {
     // TODO
   }
 }
