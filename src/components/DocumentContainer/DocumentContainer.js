@@ -54,7 +54,6 @@ class DocumentContainer extends React.PureComponent {
 
     const { hasPath, doesDocumentAutoLoad, openElement, document, advanced, dispatch } = this.props;
     if (hasPath && doesDocumentAutoLoad) {
-      openElement('loadingModal');
       loadDocument({ document, advanced }, dispatch);
     }
 

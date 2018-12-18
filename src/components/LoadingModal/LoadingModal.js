@@ -40,7 +40,8 @@ class LoadingModal extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'loadingModal'),
-  isOpen: selectors.isElementOpen(state, 'loadingModal')
+  isOpen: selectors.isElementOpen(state, 'loadingModal'),
+  loadingProgress: selectors.getLoadingProgress(state),
 });
 
 const mapDispatchToProps = {

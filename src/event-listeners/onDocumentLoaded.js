@@ -5,7 +5,10 @@ import actions from 'actions';
 export default dispatch => () => {
   dispatch(actions.setDocumentLoaded(true));
   dispatch(actions.openElement('pageNavOverlay'));
-  dispatch(actions.closeElement('loadingModal'));
+  dispatch(actions.setLoadingProgress(1));
+  setTimeout(() => {
+    dispatch(actions.closeElement('progressModal'));
+  }, 300);
 
   if (window.innerWidth <= 640) {
     core.fitToWidth();

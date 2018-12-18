@@ -48,7 +48,7 @@ class PrintModal extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.onChange();
-      this.props.closeElements([ 'signatureModal', 'loadingModal', 'errorModal' ]);
+      this.props.closeElements([ 'signatureModal', 'loadingModal', 'progressModal', 'errorModal' ]);
     }
   }
 

@@ -1,0 +1,30 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+.ProgressModal {
+  @extend %modal;
+  
+  .container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .progress-bar-wrapper {
+    width: 250px;
+    height: 10px;
+    background: #ededed;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    position: relative;
+    height: 10px;
+    background: #00a5e4;
+    transition: transform 0.5s ease;
+    overflow: hidden;
+  }
+}
