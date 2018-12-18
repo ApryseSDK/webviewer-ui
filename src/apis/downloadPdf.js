@@ -12,5 +12,5 @@ export default store => includeAnnotations => {
     console.warn('Document type is not PDF. Cannot be downloaded.');
     return;
   }
-  downloadPdf(store.dispatch, state.document.path, state.document.filename, includeAnnotations);
+  downloadPdf(store.dispatch, selectors.getDocumentPath(state), state.document.filename, includeAnnotations);
 };
