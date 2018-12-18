@@ -42,6 +42,11 @@ export const getDisabledCustomPanelTabs = state => {
     return disabledTabs;
   }, []);
 };
+export const isEmbedPrintSupported = state => {
+  const isChrome = window.navigator.userAgent.indexOf('Chrome') > -1 && window.navigator.userAgent.indexOf('Edge') === -1;
+  const isPDF = getDocumentType(state) === documentTypes.PDF;
+  return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
+};
 
 // document
 export const getDocument = state => state.document;
@@ -50,12 +55,6 @@ export const getDocumentPath = state => state.document.path || state.document.in
 export const getDocumentFile = state => state.document.file;
 export const hasPath = state => !!(state.document.initialDoc || state.advanced.externalPath);
 export const getDocumentType = state => state.document.type;
-export const isEmbedPrintSupported = state => {
-  const isChrome = window.navigator.userAgent.indexOf('Chrome') > -1 && window.navigator.userAgent.indexOf('Edge') === -1;
-  const isPDF = getDocumentType(state) === documentTypes.PDF;
-
-  return  isPDF && isChrome;
-};
 export const getCheckPasswordFunction = state => state.document.checkPassword;
 export const getPasswordAttempts = state => state.document.passwordAttempts;
 export const getPrintQuality = state => state.document.printQuality;

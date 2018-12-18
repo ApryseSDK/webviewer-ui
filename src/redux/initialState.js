@@ -154,6 +154,7 @@ export default {
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
+    useEmbeddedPrint: true,
     pageLabels: [],
     noteDateFormat: 'MMM D, h:mma'
   },
