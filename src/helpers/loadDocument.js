@@ -301,7 +301,7 @@ const fireError = message => {
 };
 
 const isLocalFile = state => {
-  const path = state.advanced.path;
+  const path = selectors.getDocumentPath(state);
 
   return !/https?:\/\//.test(path);
 };
