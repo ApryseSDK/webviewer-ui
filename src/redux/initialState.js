@@ -113,7 +113,7 @@ export default {
       AnnotationCreateFreeHand2: { dataElement: 'freeHandToolButton2', title: 'annotation.freehand2', img: 'ic_annotation_freehand_black_24px', group:'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand3: { dataElement: 'freeHandToolButton3', title: 'annotation.freehand2', img: 'ic_annotation_freehand_black_24px', group:'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand4: { dataElement: 'freeHandToolButton4', title: 'annotation.freehand2', img: 'ic_annotation_freehand_black_24px', group:'freeHandTools', showColor: 'always' },
-      AnnotationCreateTextHighlight: { dataElement: 'highlightToolButton', title: 'annotation.hightlight', img: 'ic_annotation_highlight_black_24px', group:'textTools', showColor: 'always' },
+      AnnotationCreateTextHighlight: { dataElement: 'highlightToolButton', title: 'annotation.highlight', img: 'ic_annotation_highlight_black_24px', group:'textTools', showColor: 'always' },
       AnnotationCreateTextHighlight2: { dataElement: 'highlightToolButton2', title: 'annotation.highlight2', img: 'ic_annotation_highlight_black_24px', group:'textTools', showColor: 'always' },
       AnnotationCreateTextHighlight3: { dataElement: 'highlightToolButton3', title: 'annotation.highlight2', img: 'ic_annotation_highlight_black_24px', group:'textTools', showColor: 'always' },
       AnnotationCreateTextHighlight4: { dataElement: 'highlightToolButton4', title: 'annotation.highlight2', img: 'ic_annotation_highlight_black_24px', group:'textTools', showColor: 'always' },
