@@ -1,16 +1,13 @@
-import core from 'core';
+import disableTextSelection from './disableTextSelection';
 import { PRIORITY_ONE } from 'constants/actionPriority';
-import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 
 export default store => (enable = true) => {
   if (enable) {
     store.dispatch(actions.enableElement('textPopup', PRIORITY_ONE));
   } else {
-    core.clearSelection();
-    core.setToolMode(defaultTool);
-    store.dispatch(actions.closeElement('textPopup'));
-    store.dispatch(actions.disableElement('textPopup', PRIORITY_ONE));
+    console.warn('enableTextSelection(false) is going to be deprecated, please use disableTextSelection() instead');
+    disableTextSelection(store)();
   }
 
   window.Tools.Tool.ENABLE_TEXT_SELECTION = enable;

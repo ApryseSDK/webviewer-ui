@@ -16,8 +16,11 @@ import saveAnnotations from './saveAnnotations';
 import registerTool from './registerTool';
 import unregisterTool from './unregisterTool';
 import enableTextSelection from './enableTextSelection';
+import disableTextSelection from './disableTextSelection';
 import enableFilePicker from './enableFilePicker';
+import disableFilePicker from './disableFilePicker';
 import enableNotesPanel from './enableNotesPanel';
+import disableNotesPanel from './disableNotesPanel';
 import enableAnnotations from './enableAnnotations';
 import searchTextFull from './searchTextFull';
 import searchText from './searchText';
@@ -54,11 +57,14 @@ import setTheme from './setTheme';
 import isElementOpen from './isElementOpen';
 import isElementDisabled from './isElementDisabled';
 import enablePrint from './enablePrint';
+import disablePrint from './disablePrint';
 import enableDownload from './enableDownload';
+import disableDownload from './disableDownload';
 import enableTool from './enableTool';
 import enableTools from './enableTools';
 import disableTool from './disableTool';
 import disableTools from './disableTools';
+import disableAnnotations from './disableAnnotations';
 import isToolDisabled from './isToolDisabled';
 import setNotesPanelSort from './setNotesPanelSort';
 import addSortStrategy from './addSortStrategy';
@@ -83,8 +89,11 @@ export default {
   registerTool,
   unregisterTool,
   enableTextSelection,
+  disableTextSelection,
   enableFilePicker,
+  disableFilePicker,
   enableNotesPanel,
+  disableNotesPanel,
   enableAnnotations,
   searchTextFull,
   searchText,
@@ -121,11 +130,14 @@ export default {
   isElementOpen,
   isElementDisabled,
   enablePrint,
+  disablePrint,
   enableDownload,
+  disableDownload,
   enableTool,
   enableTools,
   disableTool,
   disableTools,
+  disableAnnotations,
   isToolDisabled,
   setNotesPanelSort,
   addSortStrategy,

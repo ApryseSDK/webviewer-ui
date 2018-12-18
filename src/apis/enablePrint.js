@@ -1,3 +1,4 @@
+import disablePrint from './disablePrint';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
 
@@ -10,6 +11,7 @@ export default store => (enable = true) => {
   if (enable) {
     store.dispatch(actions.enableElements(elements, PRIORITY_ONE));
   } else {
-    store.dispatch(actions.disableElements(elements, PRIORITY_ONE));
+    console.warn('enablePrint(false) is going to be deprecated, please use disablePrint() instead');
+    disablePrint(store)();
   }
 };
