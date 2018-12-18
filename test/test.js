@@ -290,25 +290,47 @@ var apis = {
   },
   divider12: true,  
   setActiveHeaderGroup: function() {
-    // TODO
+    viewerInstance.setActiveHeaderGroup('tools');
   },
   setActiveLeftPanel: function() {
-    // TODO
+    viewerInstance.setActiveLeftPanel('thumbnailsPanel');
   },  
   setCustomPanel: function() {
-    // TODO
+    viewerInstance.setCustomPanel({
+      tab:{
+        dataElement: 'customPanelTab',
+        title: 'customPanelTab',
+        img: 'https://pbs.twimg.com/profile_images/927446347879292930/Fi0D7FGJ_400x400.jpg',
+      },
+      panel: {
+        dataElement: 'customPanel',
+        render: () => {
+          const div = document.createElement('div');
+          div.innerHTML = 'Hello World';
+          return div;
+        }
+      }
+    });
   },
   setHeaderItems: function() {
-    // TODO
+    viewerInstance.setHeaderItems(function(header) {
+      header.push({
+        type: 'actionButton',
+        label: 'HO',
+        onClick: function() {
+          console.log('HO');
+        }
+      })
+    });
   },
   setLanguage: function() {
-    // TODO
+    viewerInstance.setLanguage('fr');
   },
   setNoteDateFormat: function() {
     viewerInstance.setNoteDateFormat('DD.MM.YYYY HH:MM');
   },
   setPageLabels: function() {
-    viewerInstance.setPageLables([ 'i', 'ii', 'iii' ]);
+    viewerInstance.setPageLabels([ 'i', 'ii', 'iii' ]);
   },
   setTheme: function() {
     viewerInstance.setTheme('dark');
