@@ -25,7 +25,7 @@ export default () => {
 
 const testMIMEType = fileExtensions => {
   fileExtensions.forEach(extension => {
-    fetch(`${window.CoreControls.getWorkerPath()}/mime-type-test/test.${extension}`)
+    fetch(`${window.CoreControls.getWorkerPath()}/assets/mime-types/test.${extension}`)
       .then(({ status }) => {
         if (status === 404) {
           console.error(`Your server does not have a MIME type set for extension ${extension}. Please see https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading/#mime-types for more information.`);
