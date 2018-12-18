@@ -5,14 +5,12 @@
   "main": "src/index.js",
   "scripts": {
     "start": "babel-node ./dev-server.js",
+    "test": "babel-node ./test-server.js",
     "lint": "eslint ./src*",
     "lint:fix": "eslint --fix ./src/*",
     "clean": "rimraf build",
     "bundle": "webpack --progress --config ./webpack.config.prod.js",
-    "build": "npm run clean && npm run bundle",
-    "test": "jest",
-    "test:watch": "npm test -- --watch",
-    "coverage": "jest --coverage"
+    "build": "npm run clean && npm run bundle"
   },
   "devDependencies": {
     "autolinker": "^1.7.1",
