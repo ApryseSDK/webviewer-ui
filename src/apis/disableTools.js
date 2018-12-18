@@ -37,7 +37,7 @@ export default store => toolNames => {
       core.getTool(toolName).disabled = true;
     });
     store.dispatch(actions.disableTools(allToolNames));
-
+    
     const allGroupButtons = [
       'freeHandToolGroupButton',
       'textToolGroupButton',
@@ -45,6 +45,6 @@ export default store => toolNames => {
       'miscToolGroupButton',
       'toolsButton'
     ];
-    readerControl.disableElements(allGroupButtons);
+    store.dispatch(actions.disableElements(allGroupButtons));
   }
 };
