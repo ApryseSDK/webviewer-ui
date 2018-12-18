@@ -1,3 +1,3 @@
 import core from 'core';
 
-export default () => () => core.closeDocument();
+export default ({ dispatch }) => () => core.closeDocument(dispatch);
