@@ -6,6 +6,7 @@ import { isIE11 } from 'helpers/device';
 import { engineTypes, documentTypes } from 'constants/types';
 import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
+import selectors from 'selectors';
 
 export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
@@ -27,7 +28,7 @@ export default (state, dispatch) => {
           partRetriever.setErrorCallback(fireError);
         }
         if (partRetriever instanceof window.CoreControls.PartRetrievers.BlackBoxPartRetriever && isLocalFile(state)) {
-          console.error(`${state.document.path} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL`);
+          console.error(`${selectors.getDocumentPath(state)} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL`);
         }
 
         dispatch(actions.openElement('progressModal'));
@@ -179,7 +180,7 @@ const getDocOptions = (state, dispatch, streaming) => {
           console.error(error);
         };
         const workerHandlers = {
-          workerLoadingProgress: (percent) => {
+          workerLoadingProgress: percent => {
             dispatch(actions.setLoadingProgress(percent));
           }
         };
