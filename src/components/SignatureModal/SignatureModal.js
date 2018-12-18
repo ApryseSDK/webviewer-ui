@@ -34,7 +34,7 @@ class SignatureModal extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.updateCanvasSize();
-      this.props.closeElements([ 'printModal', 'loadingModal', 'errorModal' ]);
+      this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]);
     }
   }
 

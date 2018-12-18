@@ -2,7 +2,7 @@ import core from 'core';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
-export default store =>  {  
+export default store =>  {
   const state = store.getState();
   const { serverUrl, serverUrlHeaders } = state.advanced;
 
@@ -17,6 +17,7 @@ export default store =>  {
     if (window.readerControl.serverFailed) {
       callback(originalData);
     } else if (window.readerControl.loadedFromServer) {
+      callback('');
       return;
     }
 

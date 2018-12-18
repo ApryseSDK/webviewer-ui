@@ -23,13 +23,14 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 app.use('/i18n', express.static(path.resolve(__dirname, 'i18n')));
 app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
+app.use('/mime', express.static(path.resolve(__dirname, 'mime')));
 app.use('/core', express.static(path.resolve(__dirname, '../core')));
 app.use('/files', express.static(path.resolve(__dirname, '../../samples/files')));
 
 const handleAnnotation = (req, res, handler) => {
 	const dir = path.resolve(__dirname, 'annotations');
-	if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
+	if (!fs.existsSync(dir)) {
+		fs.mkdirSync(dir);
 	}
 
 	handler(dir);
@@ -53,7 +54,7 @@ app.post('/annotations', (req, res) => {
 		const xfdfFile = (req.body.did) ? path.resolve(dir, req.body.did + '.xfdf') : path.resolve(dir, 'default.xfdf');
 		try {
 			res.send(fs.writeFileSync(xfdfFile, req.body.data));
-		} catch(e) {
+		} catch (e) {
 			res.status(500);
 		}
 	});

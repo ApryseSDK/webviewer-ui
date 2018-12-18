@@ -26,7 +26,7 @@ export const getFitMode = state => state.viewer.fitMode;
 export const getZoom = state => state.viewer.zoom;
 export const getDisplayMode = state => state.viewer.displayMode;
 export const getCurrentPage = state => state.viewer.currentPage;
-export const getSortNotesBy = state => state.viewer.sortNotesBy;
+export const getSortStrategy = state => state.viewer.sortStrategy;
 export const getNoteDateFormat = state => state.viewer.noteDateFormat;
 export const isFullScreen = state => state.viewer.isFullScreen;
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
@@ -42,25 +42,25 @@ export const getDisabledCustomPanelTabs = state => {
     return disabledTabs;
   }, []);
 };
+export const isEmbedPrintSupported = state => {
+  const isChrome = window.navigator.userAgent.indexOf('Chrome') > -1 && window.navigator.userAgent.indexOf('Edge') === -1;
+  const isPDF = getDocumentType(state) === documentTypes.PDF;
+  return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
+};
 
 // document
 export const getDocument = state => state.document;
 export const getDocumentId = state => state.document.id;
-export const getDocumentPath = state => state.document.path;
+export const getDocumentPath = state => state.document.path || state.document.initialDoc;
 export const getDocumentFile = state => state.document.file;
-export const hasPath = state => !!(state.document.path || state.advanced.externalPath);
+export const hasPath = state => !!(state.document.initialDoc || state.advanced.externalPath);
 export const getDocumentType = state => state.document.type;
-export const isEmbedPrintSupported = state => {
-  const isChrome = window.navigator.userAgent.indexOf('Chrome') > -1 && window.navigator.userAgent.indexOf('Edge') === -1;
-  const isPDF = getDocumentType(state) === documentTypes.PDF;
-
-  return  isPDF && isChrome;
-};
 export const getCheckPasswordFunction = state => state.document.checkPassword;
 export const getPasswordAttempts = state => state.document.passwordAttempts;
 export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 export const getOutlines = state => state.document.outlines;
+export const getLoadingProgress = state => state.document.loadingProgress;
 
 // user
 export const getUserName = state => state.user.name;

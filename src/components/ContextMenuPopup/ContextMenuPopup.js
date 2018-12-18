@@ -15,6 +15,10 @@ class ContextMenuPopup extends React.PureComponent {
     isAnnotationToolsEnabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     isDisabled: PropTypes.bool,
+    isStickyToolDisabled: PropTypes.bool,
+    isHighlightDisabled: PropTypes.bool,
+    isFreehandDisabled: PropTypes.bool,
+    isFreeTextDisabled: PropTypes.bool,
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
@@ -33,24 +37,33 @@ class ContextMenuPopup extends React.PureComponent {
   componentDidMount() {
     document.addEventListener('contextmenu', this.onContextMenu);
   }
-
+  
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([ 'annotationPopup', 'textPopup' ]);
     }
   }
-
+  
   componentWillUnmount() {
     document.removeEventListener('contextmenu', this.onContextMenu);
   }
 
   onContextMenu = e => {
-    e.preventDefault();
+    const { tagName } = e.target;
+    const clickedOnInput = tagName === 'INPUT';
+    const clickedOnTextarea = tagName === 'TEXTAREA';
+    const clickedOnDocumentContainer = document.querySelector('.DocumentContainer').contains(e.target);
 
-    const { left, top } = this.getPopupPosition(e);
-
-    this.setState({ left, top });
-    this.props.openElement('contextMenuPopup');
+    if (clickedOnDocumentContainer && !(clickedOnInput || clickedOnTextarea)) {
+      e.preventDefault();
+      
+      const { left, top } = this.getPopupPosition(e);
+  
+      this.setState({ left, top });
+      this.props.openElement('contextMenuPopup');
+    } else {
+      this.props.closeElement('contextMenuPopup');
+    }
   }
 
   getPopupPosition = e => {
@@ -103,10 +116,18 @@ class ContextMenuPopup extends React.PureComponent {
         <ActionButton dataElement="panToolButton" title="tool.pan" img="ic_pan_black_24px" onClick={() => this.handleClick('Pan')} />
         {isAnnotationToolsEnabled &&
           <React.Fragment>
-            <ActionButton dataElement="stickyToolButton" title="annotation.stickyNote" img="ic_annotation_sticky_note_black_24px" onClick={() => this.handleClick('AnnotationCreateSticky')} />
-            <ActionButton dataElement="highlightToolButton" title="annotation.highlight" img="ic_annotation_highlight_black_24px" onClick={() => this.handleClick('AnnotationCreateTextHighlight', 'textTools')} />
-            <ActionButton dataElement="freeHandToolButton" title="annotation.freehand" img="ic_annotation_freehand_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeHand', 'freeHandTools')} />
-            <ActionButton dataElement="freeTextToolButton" title="annotation.freetext" img="ic_annotation_freetext_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeText')} />
+            {!this.props.isStickyToolDisabled &&
+              <ActionButton dataElement="stickyToolButton" title="annotation.stickyNote" img="ic_annotation_sticky_note_black_24px" onClick={() => this.handleClick('AnnotationCreateSticky')} />
+            }
+            {!this.props.isHighlightDisabled &&
+              <ActionButton dataElement="highlightToolButton" title="annotation.highlight" img="ic_annotation_highlight_black_24px" onClick={() => this.handleClick('AnnotationCreateTextHighlight', 'textTools')} />
+            }
+            {!this.props.isFreehandDisabled &&
+              <ActionButton dataElement="freeHandToolButton" title="annotation.freehand" img="ic_annotation_freehand_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeHand', 'freeHandTools')} />
+            }
+            {!this.props.isFreeTextDisabled &&
+              <ActionButton dataElement="freeTextToolButton" title="annotation.freetext" img="ic_annotation_freetext_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeText')} />
+            }
           </React.Fragment>
         }
       </div>
@@ -117,7 +138,11 @@ class ContextMenuPopup extends React.PureComponent {
 const mapStateToProps = state => ({
   isAnnotationToolsEnabled: !selectors.isElementDisabled(state, 'annotations') && !selectors.isDocumentReadOnly(state),
   isOpen: selectors.isElementOpen(state, 'contextMenuPopup'),
-  isDisabled: selectors.isElementDisabled(state, 'contextMenuPopup')
+  isDisabled: selectors.isElementDisabled(state, 'contextMenuPopup'),
+  isStickyToolDisabled: selectors.isToolDisabled(state, 'AnnotationCreateSticky'),
+  isHighlightDisabled: selectors.isToolDisabled(state, 'AnnotationCreateTextHighlight'),
+  isFreehandDisabled: selectors.isToolDisabled(state, 'AnnotationCreateFreeHand'),
+  isFreeTextDisabled: selectors.isToolDisabled(state, 'AnnotationCreateFreeText'),
 });
 
 const mapDispatchToProps = dispatch => ({

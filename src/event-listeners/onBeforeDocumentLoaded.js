@@ -1,5 +1,6 @@
 import core from 'core';
 import actions from 'actions';
+import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
 export default dispatch => () => {
   // if we are opening an password-protected pdf,
@@ -17,5 +18,3 @@ export default dispatch => () => {
   const currentPage = core.getCurrentPage();
   dispatch(actions.setCurrentPage(currentPage));
 };
-
-const getDefaultPageLabels = totalPages => new Array(totalPages).fill().map((_, index) => `${index + 1}`); 
