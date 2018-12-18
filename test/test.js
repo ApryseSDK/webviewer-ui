@@ -101,7 +101,7 @@ var apis = {
   isElementOpen: function() {
     viewerInstance.isElementOpen('viewControlsOverlay');
   },
-  closeElement: function(dataElement) {
+  closeElement: function() {
     viewerInstance.closeElement('viewControlsOverlay');
   },
   toggleElement: function() {
@@ -301,7 +301,7 @@ var apis = {
       },
       panel: {
         dataElement: 'customPanel',
-        render: () => {
+        render: function() {
           const div = document.createElement('div');
           div.innerHTML = 'Hello World';
           return div;
