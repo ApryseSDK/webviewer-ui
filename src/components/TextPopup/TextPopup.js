@@ -17,10 +17,6 @@ import './TextPopup.scss';
 class TextPopup extends React.PureComponent {
   static propTypes = {
     isAnnotationToolsEnabled: PropTypes.bool,
-    isHighlightDisabled: PropTypes.bool,
-    isUnderlineDisabled: PropTypes.bool,
-    isSquigglyDisabled: PropTypes.bool,
-    isStrikeoutDisabled: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     dispatch: PropTypes.func.isRequired,
@@ -85,18 +81,10 @@ class TextPopup extends React.PureComponent {
         <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={this.onClickCopy} />
         {this.props.isAnnotationToolsEnabled &&
           <React.Fragment>
-            {!this.props.isHighlightDisabled &&
-              <ActionButton dataElement="textHighlightToolButton" title="annotation.highlight" img="ic_annotation_highlight_black_24px" onClick={this.highlightText} />
-            }
-            {!this.props.isUnderlineDisabled &&
-              <ActionButton dataElement="textUnderlineToolButton" title="annotation.underline" img="ic_annotation_underline_black_24px" onClick={this.underlineText} />
-            }
-            {!this.props.isSquigglyDisabled &&
-              <ActionButton dataElement="textSquigglyToolButton" title="annotation.squiggly" img="ic_annotation_squiggly_black_24px" onClick={this.squigglyText} />
-            }
-            {!this.props.isStrikeoutDisabled &&
-              <ActionButton dataElement="textStrikeoutToolButton" title="annotation.strikeout" img="ic_annotation_strikeout_black_24px" onClick={this.strikeoutText} />
-            }
+            <ActionButton dataElement="textHighlightToolButton" title="annotation.highlight" img="ic_annotation_highlight_black_24px" onClick={this.highlightText} />
+            <ActionButton dataElement="textUnderlineToolButton" title="annotation.underline" img="ic_annotation_underline_black_24px" onClick={this.underlineText} />
+            <ActionButton dataElement="textSquigglyToolButton" title="annotation.squiggly" img="ic_annotation_squiggly_black_24px" onClick={this.squigglyText} />
+            <ActionButton dataElement="textStrikeoutToolButton" title="annotation.strikeout" img="ic_annotation_strikeout_black_24px" onClick={this.strikeoutText} />
           </React.Fragment>
         }
       </div>
@@ -107,10 +95,6 @@ class TextPopup extends React.PureComponent {
 const mapStateToProps = state => ({
   isAnnotationToolsEnabled: !selectors.isElementDisabled(state, 'annotations') && !selectors.isDocumentReadOnly(state),
   isDisabled: selectors.isElementDisabled(state, 'textPopup'),
-  isHighlightDisabled: selectors.isToolDisabled(state, 'AnnotationCreateTextHighlight'),
-  isUnderlineDisabled: selectors.isToolDisabled(state, 'AnnotationCreateTextUnderline'),
-  isSquigglyDisabled: selectors.isToolDisabled(state, 'AnnotationCreateTextSquiggly'),
-  isStrikeoutDisabled: selectors.isToolDisabled(state, 'AnnotationCreateTextStrikeout'),
   isOpen: selectors.isElementOpen(state, 'textPopup'),
 });
 

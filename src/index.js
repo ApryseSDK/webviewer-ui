@@ -172,7 +172,7 @@ if (window.CanvasRenderingContext2D) {
           isElementDisabled: apis.isElementDisabled(store),
           isMobileDevice: apis.isMobileDevice,
           isReadOnly: apis.isReadOnly,
-          isToolDisabled: apis.isToolDisabled(store),
+          isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),

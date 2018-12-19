@@ -120,28 +120,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isDocumentLoaded: payload.isDocumentLoaded };
     case 'SET_READ_ONLY':
       return { ...state, isReadOnly: payload.isReadOnly };
-    case 'ENABLE_TOOL':
-      return { ...state, disabledTools: { ...state.disabledTools, [payload.toolName]: false } };
-    case 'ENABLE_TOOLS': 
-      {
-        const disabledTools = {};
-        payload.toolNames.forEach(toolName => {
-          disabledTools[toolName] = false;
-        });
-  
-        return { ...state, disabledTools: { ...state.disabledTools, ...disabledTools } };
-      }
-    case 'DISABLE_TOOL':
-      return { ...state, disabledTools: { ...state.disabledTools, [payload.toolName]: true } };
-    case 'DISABLE_TOOLS':
-      {
-        const disabledTools = {};
-        payload.toolNames.forEach(toolName => {
-          disabledTools[toolName] = true;
-        });
-
-        return { ...state, disabledTools: { ...state.disabledTools, ...disabledTools } };
-      }
     case 'SET_CUSTOM_PANEL':
       return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
     case 'USE_EMBEDDED_PRINT':
