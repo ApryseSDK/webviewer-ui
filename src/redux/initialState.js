@@ -8,7 +8,6 @@ import core from 'core';
 export default {
   viewer: {
     disabledElements: {},
-    disabledTools: {},
     openElements: {
       header: true
     },
