@@ -1,4 +1,6 @@
-import constant from './constant';
+import constants from './constants';
+
+import './test.css';
 
 var viewerElement = document.getElementById('viewer');
 var buttonsElement = document.getElementById('buttons');
