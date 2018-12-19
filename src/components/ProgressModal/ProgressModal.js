@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import getClassName from 'helpers/getClassName';
+import actions from 'actions';
 import selectors from 'selectors';
 
 import './ProgressModal.scss';
@@ -10,7 +11,14 @@ import './ProgressModal.scss';
 class ProgressModal extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool
+    isOpen: PropTypes.bool,
+    closeElements: PropTypes.func.isRequired
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.isOpen && this.props.isOpen) {
+      this.props.closeElements([ 'signatureModal', 'printModal', 'errorModal', 'loadingModal' ]);
+    }
   }
 
   render() {
@@ -39,4 +47,8 @@ const mapStateToProps = state => ({
   loadingProgress: selectors.getLoadingProgress(state),
 });
 
-export default connect(mapStateToProps)(ProgressModal);
+const mapDispatchToProps = {
+  closeElements: actions.closeElements
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProgressModal);
