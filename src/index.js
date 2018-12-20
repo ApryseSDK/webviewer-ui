@@ -6,8 +6,10 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import thunk from 'redux-thunk';
 
-import apis from 'src/apis';
 import core from 'core';
+import actions from 'actions';
+
+import apis from 'src/apis';
 
 import App from 'components/App';
 import rootReducer from 'reducers/rootReducer';
@@ -28,6 +30,7 @@ import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolColor from 'helpers/setDefaultToolColor';
 import setUserPermission from 'helpers/setUserPermission';
+import { isIOS } from 'helpers/device';
 
 const middleware = [thunk];
 
@@ -118,6 +121,13 @@ if (window.CanvasRenderingContext2D) {
     addEventHandlers();
     core.setToolMode(defaultTool);
     
+    if (isIOS) {
+      window.CoreControls.SetCachingLevel(0);
+      window.CoreControls.SetPreRenderLevel(2);
+      core.setDisplayMode(window.CoreControls.DisplayModes.Single);
+      store.dispatch(actions.disableElements([ 'pageTransitionButtons' ]));
+    }
+
     ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18n}>
