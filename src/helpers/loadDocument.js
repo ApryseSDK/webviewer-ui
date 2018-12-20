@@ -238,7 +238,7 @@ const getDocumentExtension = doc => {
     if (result) {
       extension = result[1];
     } else {
-      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${[...supportedPDFExtensions, ...supportedOfficeExtensions, ...blackboxExtensions, 'xod'].join(', ')}`);
+      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${[...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].join(', ')}`);
     }
   }
 

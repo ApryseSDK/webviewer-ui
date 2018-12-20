@@ -7,10 +7,6 @@ export default state =>  {
     'textSquigglyToolButton',
     'textStrikeoutToolButton',
     'annotationCommentButton',
-    'freeHandToolGroupButton',
-    'textToolGroupButton',
-    'shapeToolGroupButton',
-    'miscToolGroupButton',
     'toolsButton',
   ];
   const toolModeMap = core.getToolModeMap();

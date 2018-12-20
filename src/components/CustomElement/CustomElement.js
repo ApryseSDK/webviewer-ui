@@ -33,7 +33,8 @@ class CustomElement extends React.PureComponent {
     }
   }
 
-  isDOMElement = element => element instanceof Element;
+  // we have window.parent here since we run UI inside iframe except developing
+  isDOMElement = element => element instanceof window.parent.Element;
 
   isReactElement = element => React.isValidElement(element);
   

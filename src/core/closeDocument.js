@@ -7,7 +7,6 @@ import actions from 'actions';
  */
 export default dispatch => {
   dispatch(actions.closeElement('passwordModal'));
-  
+
   return window.docViewer.closeDocument();
 };
-
