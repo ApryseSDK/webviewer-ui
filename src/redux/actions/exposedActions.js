@@ -1,6 +1,6 @@
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import core from 'core';
-import { fireEvent } from 'helpers/loadDocument';
+import fireEvent from 'helpers/fireEvent';
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
