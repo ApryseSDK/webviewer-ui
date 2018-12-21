@@ -18,7 +18,7 @@ export default store => {
   const onAnnotationChanged = eventListeners.onAnnotationChanged(dispatch);
   const onStampAnnotationAdded = eventListeners.onStampAnnotationAdded(dispatch);
   const onStickyAnnotationAdded = eventListeners.onStickyAnnotationAdded(store);
-  const onKeyDown = eventListeners.onKeyDown(dispatch);
+  const onKeyDown = eventListeners.onKeyDown(store);
   const onFullScreenChange = eventListeners.onFullScreenChange(dispatch);
   const onLayoutChanged = eventListeners.onLayoutChanged(dispatch); 
 

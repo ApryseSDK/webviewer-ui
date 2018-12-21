@@ -184,6 +184,7 @@ if (window.CanvasRenderingContext2D) {
           isReadOnly: apis.isReadOnly,
           isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
+          print: apis.print(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),
           rotateClockwise: apis.rotateClockwise,
