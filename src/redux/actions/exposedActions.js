@@ -31,9 +31,13 @@ export const openElement = dataElement => (dispatch, getState) => {
   }
 };
 export const openElements = dataElements => dispatch => {
-  dataElements.forEach(dataElement => {
-    dispatch(openElement(dataElement));
-  });
+  if (typeof dataElements === 'string') {
+    dispatch(openElement(dataElements));
+  } else {
+    dataElements.forEach(dataElement => {
+      dispatch(openElement(dataElement));
+    });
+  }
 };
 export const closeElement = dataElement => (dispatch, getState) => {
   const state = getState();
@@ -58,9 +62,13 @@ export const closeElement = dataElement => (dispatch, getState) => {
   }
 };
 export const closeElements = dataElements => dispatch => {
-  dataElements.forEach(dataElement => {
-    dispatch(closeElement(dataElement));
-  });
+  if (typeof dataElements === 'string') {
+    dispatch(closeElement(dataElements));
+  } else {
+    dataElements.forEach(dataElement => {
+      dispatch(closeElement(dataElement));
+    });
+  }
 };
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
