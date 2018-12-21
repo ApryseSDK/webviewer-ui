@@ -112,7 +112,7 @@ if (window.CanvasRenderingContext2D) {
     setupPDFTron();
     setupDocViewer();
     setupI18n(state);
-    setupMIMETypeTest();
+    setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
     setDefaultToolColor();

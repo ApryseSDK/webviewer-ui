@@ -227,7 +227,7 @@ const getEngineType = state => {
   }
 };
 
-const getDocumentExtension = doc => {
+export const getDocumentExtension = doc => {
   let extension;
   if (doc) {
     const pdfExtensions = supportedPDFExtensions.join('|');
@@ -245,7 +245,7 @@ const getDocumentExtension = doc => {
   return extension;
 };
 
-const getDocName = state => {
+export const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
   const { path, filename, initialDoc } = state.document;
   return filename || path || initialDoc;
@@ -255,11 +255,11 @@ const isPDFNetJSExtension = extension => {
   return isOfficeExtension(extension) || isPDFExtension(extension);
 };
 
-const isOfficeExtension = extension => {
+export const isOfficeExtension = extension => {
   return supportedOfficeExtensions.indexOf(extension) !== -1;
 };
 
-const isPDFExtension = extension => {
+export const isPDFExtension = extension => {
   return supportedPDFExtensions.indexOf(extension) !== -1;
 };
 
@@ -296,7 +296,7 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
   return { type, extension, workerTransportPromise };
 };
 
-const fireError = message => {
+export const fireError = message => {
   fireEvent('loaderror', message);
 };
 
