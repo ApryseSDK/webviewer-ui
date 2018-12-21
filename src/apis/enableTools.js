@@ -6,15 +6,10 @@ import selectors from 'selectors';
 
 
 export default store => (toolNames = ANNOTATION_CREATE_TOOL_NAMES) => {
-  let dataElements;
+  const toolNameArray = typeof toolNames === 'string' ? [ toolNames ] : toolNames;
+  const dataElements = selectors.getToolButtonDataElements(store.getState(), toolNameArray);
 
-  if (typeof toolNames === 'string') {
-    dataElements = selectors.getToolButtonDataElements(store.getState(), [ toolNames ]);
-  } else {
-    dataElements = selectors.getToolButtonDataElements(store.getState(), toolNames);
-  }
-
-  toolNames.forEach(toolName => {
+  toolNameArray.forEach(toolName => {
     core.getTool(toolName).disabled = false;
   });
   store.dispatch(actions.enableElements(dataElements, PRIORITY_ONE));
