@@ -2,7 +2,7 @@ import i18next from 'i18next';
 
 import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
-import { isIE11 } from 'helpers/device';
+import { fireError } from 'helpers/fireEvent';
 import { engineTypes, documentTypes } from 'constants/types';
 import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
@@ -227,7 +227,7 @@ const getEngineType = state => {
   }
 };
 
-const getDocumentExtension = doc => {
+export const getDocumentExtension = doc => {
   let extension;
   if (doc) {
     const pdfExtensions = supportedPDFExtensions.join('|');
@@ -245,7 +245,7 @@ const getDocumentExtension = doc => {
   return extension;
 };
 
-const getDocName = state => {
+export const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
   const { path, filename, initialDoc } = state.document;
   return filename || path || initialDoc;
@@ -255,11 +255,11 @@ const isPDFNetJSExtension = extension => {
   return isOfficeExtension(extension) || isPDFExtension(extension);
 };
 
-const isOfficeExtension = extension => {
+export const isOfficeExtension = extension => {
   return supportedOfficeExtensions.indexOf(extension) !== -1;
 };
 
-const isPDFExtension = extension => {
+export const isPDFExtension = extension => {
   return supportedPDFExtensions.indexOf(extension) !== -1;
 };
 
@@ -296,25 +296,9 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
   return { type, extension, workerTransportPromise };
 };
 
-const fireError = message => {
-  fireEvent('loaderror', message);
-};
-
 const isLocalFile = state => {
   const path = selectors.getDocumentPath(state);
-
+  
   return !/https?:\/\//.test(path);
-};
-
-export const fireEvent = (eventName, data) => {
-  let event;
-  if (CustomEvent && !isIE11) {
-    event = new CustomEvent(eventName, { detail: data, bubbles: true, cancelable: true });
-  } else {
-    event = document.createEvent('Event');
-    event.initEvent(eventName, true, true);
-    event.detail = data;
-  }
-  window.dispatchEvent(event);
 };
 
