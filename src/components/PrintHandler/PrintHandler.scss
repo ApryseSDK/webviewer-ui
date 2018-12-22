@@ -33,6 +33,56 @@
       page-break-after: always;
     }
 
+    .page__container {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      max-width: 100%;
+      max-height: 100%;
+      height: 100%;
+      width: 100%;
+      font-size: 10px;
+
+      .page__header {
+        align-self: flex-start;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 0.1rem solid black;
+      }
+
+      .note {
+        display: flex;
+        flex-direction: column;
+        padding: 0.6rem;
+        border: 0.1rem lightgray solid;
+        border-radius: 0.4rem;
+        margin-bottom: 0.5rem;
+
+        .note__root {
+          .note__info {
+            display: flex;
+            font-size: 1.3rem;
+          }
+        }
+
+        .note__reply {
+          margin-left: 4rem;
+        }
+
+        .note__info {
+          font-size: 1.3rem;
+          margin-bottom: 0.1rem;
+        }
+
+        .note__content {
+          display: flex;
+          font-size: 1.2rem;
+        }
+      }
+    }
+
     #print-handler {
       height: 100%;
     }
