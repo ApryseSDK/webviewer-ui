@@ -233,12 +233,11 @@ class PrintModal extends React.PureComponent {
       header.innerHTML = `Page ${pageNumber}`;
 
       container.appendChild(header);
-      // annotations.forEach(annotation => {
-      //   console.log(annotation);
-      //   const note = this.getNote(annotation);
+      annotations.forEach(annotation => {
+        const note = this.getNote(annotation);
 
-      //   container.appendChild(note);
-      // });
+        container.appendChild(note);
+      });
 
       resolve(container);
     });
@@ -260,15 +259,14 @@ class PrintModal extends React.PureComponent {
     noteRoot.appendChild(this.getNoteContent(annotation));
 
     note.appendChild(noteRoot);
-    // annotation.getReplies().forEach(reply => {
-    //   // console.log(reply);
-    //   // const noteReply = document.createElement('div');
-    //   // noteReply.className = 'note__reply';
-    //   // noteReply.appendChild(this.getNoteInfo(reply));
-    //   // noteReply.appendChild(this.getNoteContent(annotation));
+    annotation.getReplies().forEach(reply => {
+      const noteReply = document.createElement('div');
+      noteReply.className = 'note__reply';
+      noteReply.appendChild(this.getNoteInfo(reply));
+      noteReply.appendChild(this.getNoteContent(annotation));
 
-    //   // note.appendChild(noteReply);
-    // });
+      note.appendChild(noteReply);
+    });
 
     return note;
   }
