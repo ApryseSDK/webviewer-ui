@@ -1,6 +1,6 @@
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import core from 'core';
-import { fireEvent } from 'helpers/loadDocument';
+import fireEvent from 'helpers/fireEvent';
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
@@ -8,14 +8,15 @@ export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   const isElementDisabled = state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
-  const isElementOpen = isDataElementPanel(dataElement, state) ? state.viewer.activeLeftPanel === dataElement : state.viewer.openElements[dataElement];
+  const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
+  const isElementOpen = isDataElementPanel(dataElement, state) ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement : state.viewer.openElements[dataElement];
 
   if (isElementDisabled || isElementOpen) {
     return;
   }
 
   if (isDataElementPanel(dataElement, state)) {
-    if (!state.viewer.openElements['leftPanel']) {
+    if (!isLeftPanelOpen) {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
       fireEvent('visibilityChanged', { element: 'leftPanel', isVisible: true });
     }
@@ -24,15 +25,19 @@ export const openElement = dataElement => (dispatch, getState) => {
     dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
     fireEvent('visibilityChanged', { element: dataElement, isVisible: true });
 
-    if (dataElement === 'leftPanel'  && !state.viewer.openElements['leftPanel']) {
+    if (dataElement === 'leftPanel'  && !isLeftPanelOpen) {
       fireEvent('visibilityChanged', { element: state.viewer.activeLeftPanel, isVisible: true });
     }
   }
 };
 export const openElements = dataElements => dispatch => {
-  dataElements.forEach(dataElement => {
-    dispatch(openElement(dataElement));
-  });
+  if (typeof dataElements === 'string') {
+    dispatch(openElement(dataElements));
+  } else {
+    dataElements.forEach(dataElement => {
+      dispatch(openElement(dataElement));
+    });
+  }
 };
 export const closeElement = dataElement => (dispatch, getState) => {
   const state = getState();
@@ -57,9 +62,13 @@ export const closeElement = dataElement => (dispatch, getState) => {
   }
 };
 export const closeElements = dataElements => dispatch => {
-  dataElements.forEach(dataElement => {
-    dispatch(closeElement(dataElement));
-  });
+  if (typeof dataElements === 'string') {
+    dispatch(closeElement(dataElements));
+  } else {
+    dataElements.forEach(dataElement => {
+      dispatch(closeElement(dataElement));
+    });
+  }
 };
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
@@ -96,16 +105,20 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
     console.warn(`${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`);
   }
 };
-export const setSortNotesBy = sortNotesBy => ({ type: 'SET_SORT_NOTES_BY', payload: { sortNotesBy } });
+export const setSortStrategy = sortStrategy => ({ type: 'SET_SORT_STRATEGY', payload: { sortStrategy } });
+export const setSortNotesBy = sortStrategy => {
+  console.warn('setSortNotesBy is going to be deprecated, please use setSortStrategy instead');
+
+  return setSortStrategy(sortStrategy);
+};
 export const setNoteDateFormat = noteDateFormat => ({ type: 'SET_NOTE_DATE_FORMAT', payload: { noteDateFormat } });
 export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payload: { toolName, properties } });
 export const setCustomPanel = newPanel => ({ type: 'SET_CUSTOM_PANEL', payload: { newPanel } });
+export const useEmbeddedPrint = (useEmbeddedPrint = true) => ({ type: 'USE_EMBEDDED_PRINT', payload: { useEmbeddedPrint } });
 export const setPageLabels = pageLabels => dispatch => {
   if (pageLabels.length !== core.getTotalPages()) {
     console.warn('Number of page labels do not match with the total pages.');
     return;
   }
-  dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels } });
+  dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };
-
-

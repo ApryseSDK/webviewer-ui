@@ -7,7 +7,6 @@ import Input from 'components/Input';
 
 import core from 'core';
 import getPagesToPrint from 'helpers/getPagesToPrint';
-import print from 'helpers/print';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -41,31 +40,10 @@ class PrintModal extends React.PureComponent {
     };
   }
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.onKeyDown);
-  }
-
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.onChange();
-      this.props.closeElements([ 'signatureModal', 'loadingModal', 'errorModal' ]);
-    }
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDown);
-  }
-
-  onKeyDown = e => {
-    const { dispatch, isEmbedPrintSupported } = this.props;
-
-    if ((e.metaKey || e.ctrlKey) && e.which === 80) { // (Cmd/Ctrl + P)
-      e.preventDefault();
-      if (this.props.isDisabled) {
-        console.warn('Print has been disabled.');
-      } else {
-        print(dispatch, isEmbedPrintSupported);
-      }
+      this.props.closeElements([ 'signatureModal', 'loadingModal', 'progressModal', 'errorModal' ]);
     }
   }
 
@@ -306,7 +284,7 @@ class PrintModal extends React.PureComponent {
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
           <div className="container" onClick={e => e.stopPropagation()}>
           <div className="settings">
-            <div className="col">Pages:</div>
+            <div className="col">{`${t('option.print.pages')}:`}</div>
             <form className="col" onChange={this.onChange} onSubmit={this.createAndPrintImages}>
               <Input ref={this.allPages} id="all-pages" name="pages" type="radio" label={t('option.print.all')} defaultChecked />
               <Input ref={this.currentPage} id="current-page" name="pages" type="radio" label={t('option.print.current')} />

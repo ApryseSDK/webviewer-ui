@@ -11,8 +11,8 @@ import './Dropdown.scss';
 class Dropdown extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
-    sortNotesBy: PropTypes.string.isRequired,
-    setSortNotesBy: PropTypes.func.isRequired,
+    sortStrategy: PropTypes.string.isRequired,
+    setSortStrategy: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
     t: PropTypes.func.isRequired
   }
@@ -20,7 +20,7 @@ class Dropdown extends React.PureComponent {
   constructor() {
     super();
     this.state = { isOpen: false };  
-    this.sortOrderToTranslationMap = {
+    this.sortStrategyToTranslationMap = {
       position: 'option.notesPanel.orderPosition',
       time: 'option.notesPanel.orderTime'
     };
@@ -33,15 +33,15 @@ class Dropdown extends React.PureComponent {
   handleDisplayItemChange = (e, item) => {
     e.stopPropagation();
     
-    this.props.setSortNotesBy(item);
+    this.props.setSortStrategy(item);
     this.setState({ isOpen: false });
   }
   
-  getTranslatedContent = sortNotesBy => this.props.t(this.sortOrderToTranslationMap[sortNotesBy]) || sortNotesBy;
+  getTranslatedContent = sortStrategy => this.props.t(this.sortStrategyToTranslationMap[sortStrategy]) || sortStrategy;
 
   renderDropdownItems = () => {
-    const { sortNotesBy, items } = this.props;
-    const dropdownItems = items.filter(item => item !== sortNotesBy);
+    const { sortStrategy, items } = this.props;
+    const dropdownItems = items.filter(item => item !== sortStrategy);
 
     return dropdownItems.map(item => 
       <div key={item} className="dropdown-item" onClick={e => this.handleDisplayItemChange(e, item)}>
@@ -51,7 +51,7 @@ class Dropdown extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, sortNotesBy } = this.props;
+    const { isDisabled, sortStrategy } = this.props;
 
     if (isDisabled) {
       return null;
@@ -60,7 +60,7 @@ class Dropdown extends React.PureComponent {
     return(
       <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}> 
         <div className="items">
-          <div className="display-item">{this.getTranslatedContent(sortNotesBy)}</div>
+          <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>
           <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
             {this.renderDropdownItems()}
           </div>
@@ -72,11 +72,11 @@ class Dropdown extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'dropdown'),
-  sortNotesBy: selectors.getSortNotesBy(state)
+  sortStrategy: selectors.getSortStrategy(state)
 });
 
 const mapDispatchToProps = {
-  setSortNotesBy: actions.setSortNotesBy
+  setSortStrategy: actions.setSortStrategy
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dropdown));

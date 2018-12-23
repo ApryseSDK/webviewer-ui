@@ -1,13 +1,7 @@
-import sortMap from 'constants/sortMap';
-import actions from 'actions';
+import addSortStrategy from './addSortStrategy';
 
 export default store => newSort => {
-  const { name, getSortedNotes, shouldRenderSeparator, getSeparatorContent } = newSort;
+  addSortStrategy(store)(newSort);
 
-  sortMap[name] = {
-    getSortedNotes,
-    shouldRenderSeparator,
-    getSeparatorContent
-  };
-  store.dispatch(actions.setSortNotesBy(name));
+  console.warn('setNotesPanelSort is going to be deprecated, please use addSortStrategy instead');
 };

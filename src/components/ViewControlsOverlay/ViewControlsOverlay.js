@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import Button from 'components/Button';
+import Tooltip from 'components/Tooltip';
 import ActionButton from 'components/ActionButton';
 import Element from 'components/Element';
 
@@ -50,7 +51,7 @@ class ViewControlsOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([ 'toolsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup' ]);
+      this.props.closeElements(['toolsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup']);
       this.setState(getOverlayPositionBasedOn('viewControlsButton', this.overlay));
     }
   }
@@ -78,21 +79,31 @@ class ViewControlsOverlay extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-    
+
     return (
       <div className={className} data-element="viewControlsOverlay" style={{ left, right }} ref={this.overlay} onClick={e => e.stopPropagation()}>
         {totalPages < 1000 &&
           <Element className="row" dataElement="pageTransitionButtons">
             <div className="type">{t('option.displayMode.pageTransition')}</div>
-            <Button dataElement="defaultPageTransitionButton" title="option.pageTransition.default" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick('default', layout)} isActive={pageTransition === 'default'} isDisabled={this.props.isDefaultPageTransitionButtonDisabled} />
-            <Button dataElement="continuousPageTransitionButton" title="option.pageTransition.continuous" img="ic_view_mode_continuous_black_24px" onClick={() => this.handleClick('continuous', layout)} isActive={pageTransition === 'continuous'} isDisabled={this.props.isContinuousPageTransitionButtonDisabled} />
+            <Tooltip content="option.pageTransition.default" isDisabled={this.props.isDefaultPageTransitionButtonDisabled}>
+              <Button dataElement="defaultPageTransitionButton" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick('default', layout)} isActive={pageTransition === 'default'} />
+            </Tooltip>
+            <Tooltip content="option.pageTransition.continuous" isDisabled={this.props.isContinuousPageTransitionButtonDisabled}>
+              <Button dataElement="continuousPageTransitionButton" img="ic_view_mode_continuous_black_24px" onClick={() => this.handleClick('continuous', layout)} isActive={pageTransition === 'continuous'} />
+            </Tooltip>
           </Element>
         }
         <Element className="row" dataElement="layoutButtons">
           <div className="type">{t('option.displayMode.layout')}</div>
-          <Button dataElement="singleLayoutButton" title="option.layout.single" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick(pageTransition, 'single')} isActive={layout === 'single'} isDisabled={this.props.isSingleLayoutButtonDisabled} />
-          <Button dataElement="doubleLayoutButton" title="option.layout.double" img="ic_view_mode_facing_black_24px" onClick={() => this.handleClick(pageTransition, 'double')} isActive={layout === 'double'} isDisabled={this.props.isDoubleLayoutButtonDisabled} />
-          <Button dataElement="coverLayoutButton" title="option.layout.cover" img="ic_view_mode_cover_black_24px" onClick={() => this.handleClick(pageTransition, 'cover')} isActive={layout === 'cover'} isDisabled={this.props.isCoverLayoutButtonDisabled} />
+          <Tooltip content="option.layout.single" isDisabled={this.props.isSingleLayoutButtonDisabled}>
+            <Button dataElement="singleLayoutButton" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick(pageTransition, 'single')} isActive={layout === 'single'} />
+          </Tooltip>
+          <Tooltip content="option.layout.double" isDisabled={this.props.isDoubleLayoutButtonDisabled}>
+            <Button dataElement="doubleLayoutButton" img="ic_view_mode_facing_black_24px" onClick={() => this.handleClick(pageTransition, 'double')} isActive={layout === 'double'} />
+          </Tooltip>
+          <Tooltip content="option.layout.cover" isDisabled={this.props.isCoverLayoutButtonDisabled}>
+            <Button dataElement="coverLayoutButton" img="ic_view_mode_cover_black_24px" onClick={() => this.handleClick(pageTransition, 'cover')} isActive={layout === 'cover'} />
+          </Tooltip>
         </Element>
         <Element className="row" dataElement="rotateButtons">
           <div className="type">{t('action.rotate')}</div>
@@ -101,8 +112,12 @@ class ViewControlsOverlay extends React.PureComponent {
         </Element>
         <Element className="row hide-in-desktop hide-in-tablet" dataElement="fitButtons">
           <div className="type">{t('action.fit')}</div>
-          <Button dataElement="fitToWidthButton" title="action.fitToWidth" img="ic_fit_width_black_24px" onClick={core.fitToWidth} isActive={fitMode === 'fitWidth'} isDisabled={this.props.isFitToWidthButtonDisabled} />
-          <Button dataElement="fitToPageButton" title="action.fitToPage" img="ic_fit_page_black_24px" onClick={core.fitToPage} isActive={fitMode === 'fitPage'} isDisabled={this.props.isFitToPageButtonDisabled} />
+          <Tooltip content="action.fitToWidth" isDisabled={this.props.isFitToWidthButtonDisabled}>
+            <Button dataElement="fitToWidthButton" img="ic_fit_width_black_24px" onClick={core.fitToWidth} isActive={fitMode === 'fitWidth'} />
+          </Tooltip>
+          <Tooltip content="action.fitToPage" isDisabled={this.props.isFitToPageButtonDisabled}>
+            <Button dataElement="fitToPageButton" img="ic_fit_page_black_24px" onClick={core.fitToPage} isActive={fitMode === 'fitPage'} />
+          </Tooltip>
         </Element>
         <Element className="row hide-in-desktop hide-in-tablet" dataElement="zoomButtons">
           <div className="type">{t('action.zoom')}</div>

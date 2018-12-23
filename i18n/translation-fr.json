@@ -109,7 +109,8 @@
     },
     "print": {
       "all": "Toutes",
-      "current": "Actuelle"
+      "current": "Actuelle",
+      "pages": "Pages"
     },
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",

@@ -8,12 +8,12 @@
   min-width: $button-width;
   height: $button-height;
   padding: 6px;
-  margin: 0 2px;
+  // margin: 0 2px;
   font-size: 16px;
   cursor: pointer;
 
   @include mobile {
-    margin: 0 1px;
+    // margin: 0 1px;
     min-width: $button-width-m;
     height: $button-height-m;
   }

@@ -1,5 +1,7 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
+import { isIOS, isAndroid } from 'helpers/device';
 import selectors from 'selectors';
+
 
 // viewer
 export const disableElement = (dataElement, priority) => (dispatch, getState) => {
@@ -7,7 +9,6 @@ export const disableElement = (dataElement, priority) => (dispatch, getState) =>
     dispatch(disableElements(['toolStylePopup', 'annotationStylePopup'], priority));
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
-
     if (!currentPriority || priority >= currentPriority) {
       dispatch({ type: 'DISABLE_ELEMENT', payload: { dataElement, priority }});
     }
@@ -22,7 +23,6 @@ export const enableElement = (dataElement, priority) => (dispatch, getState) => 
     dispatch(enableElements(['toolStylePopup', 'annotationStylePopup'], priority));
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
-
     if (!currentPriority || priority >= currentPriority) {
       dispatch({ type: 'ENABLE_ELEMENT', payload: { dataElement, priority }});
     }
@@ -34,7 +34,16 @@ export const enableElements = (dataElements, priority) => (dispatch, getState) =
 };
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
-  const name = (toolObject.name === 'TextSelect') ? 'AnnotationEdit' : toolObject.name;
+  let name;
+  
+  if (isIOS || isAndroid) {
+    name = toolObject.name;
+  } else {
+    // on desktop, auto switch between AnnotationEdit and TextSelect is true when you hover on text
+    // we do this to prevent this action from spamming the console
+    name = (toolObject.name === 'TextSelect') ? 'AnnotationEdit' : toolObject.name;
+  }
+
   if (state.viewer.activeToolName === name) {
     return;
   }
@@ -72,10 +81,6 @@ export const collapseAllNotes = () => (dispatch, getState) => {
   }
 };
 export const setHeaderItems = (header, headerItems) => ({ type: 'SET_HEADER_ITEMS', payload: { header, headerItems } });
-export const enableTool = toolName => ({ type: 'ENABLE_TOOL', payload: { toolName } });
-export const enableTools = toolNames => ({ type: 'ENABLE_TOOLS', payload: { toolNames } });
-export const disableTool = toolName => ({ type: 'DISABLE_TOOL', payload: { toolName } });
-export const disableTools = toolNames => ({ type: 'DISABLE_TOOLS', payload: { toolNames } });
 
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });
@@ -89,6 +94,13 @@ export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outli
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
 export const setPasswordAttempts = attempt => ({ type: 'SET_PASSWORD_ATTEMPTS', payload: { attempt } });
 export const setPrintQuality = quality => ({ type: 'SET_PRINT_QUALITY', payload: { quality } });
+export const setLoadingProgress = loadingProgress => (dispatch, getState) => {
+  const state = getState();
+  if (state.document.loadingProgress < loadingProgress) {
+    dispatch({ type: 'SET_LOADING_PROGRESS', payload: { loadingProgress } });
+  }
+};
+export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
 
 // user

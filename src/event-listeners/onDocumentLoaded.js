@@ -3,11 +3,13 @@ import getHashParams from 'helpers/getHashParams';
 import actions from 'actions';
 
 export default dispatch => () => {
-  core.setToolMode('AnnotationEdit');
-
   dispatch(actions.setDocumentLoaded(true));
   dispatch(actions.openElement('pageNavOverlay'));
-  dispatch(actions.closeElement('loadingModal'));
+  dispatch(actions.setLoadingProgress(1));
+  setTimeout(() => {
+    dispatch(actions.closeElement('progressModal'));
+    dispatch(actions.resetLoadingProgress());
+  }, 300);
 
   if (window.innerWidth <= 640) {
     core.fitToWidth();

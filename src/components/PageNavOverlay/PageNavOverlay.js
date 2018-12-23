@@ -31,9 +31,9 @@ class PageNavOverlay extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { currentPage, pageLabels } = this.props;
     
-    const isCustomPageLabels = prevProps.pageLabels !== this.props.pageLabels && prevProps.pageLabels.length !== 0;
-    if (isCustomPageLabels) {
-      this.setState({ isCustomPageLabels: true });
+    if (prevProps.pageLabels !== pageLabels) {
+      const isCustomPageLabels = pageLabels.some((label, index) => label !== `${index + 1}`);
+      this.setState({ isCustomPageLabels });   
     }
 
     if (prevProps.currentPage !== this.props.currentPage || prevProps.pageLabels !== this.props.pageLabels) {
@@ -45,7 +45,7 @@ class PageNavOverlay extends React.PureComponent {
     this.textInput.current.focus();
   }
 
-  onInput = e => {
+  onChange = e => {
     this.setState({ input: e.target.value });
   }
 
@@ -82,7 +82,7 @@ class PageNavOverlay extends React.PureComponent {
     return (
       <div className={className} data-element="pageNavOverlay" onClick={this.onClick}>
         <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
-          <input ref={this.textInput} type="text" value={this.state.input} style={{ width: inputWidth }} onInput={this.onInput} />
+          <input ref={this.textInput} type="text" value={this.state.input} style={{ width: inputWidth }} onChange={this.onChange} />
           {this.state.isCustomPageLabels 
           ? ` (${currentPage}/${totalPages})`
           : ` / ${totalPages}`

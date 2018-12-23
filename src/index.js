@@ -6,23 +6,31 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import thunk from 'redux-thunk';
 
+import core from 'core';
+import actions from 'actions';
+
 import apis from 'src/apis';
+
 import App from 'components/App';
 import rootReducer from 'reducers/rootReducer';
 import { engineTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
+import defaultTool from 'constants/defaultTool';
 import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript from 'helpers/loadScript';
 import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServer';
+import setupMIMETypeTest from 'helpers/setupMIMETypeTest';
 import eventHandler from 'helpers/eventHandler';
 import setupPDFTron from 'helpers/setupPDFTron';
 import setupI18n from 'helpers/setupI18n';
+import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolColor from 'helpers/setDefaultToolColor';
 import setUserPermission from 'helpers/setUserPermission';
+import { isIOS } from 'helpers/device';
 
 const middleware = [thunk];
 
@@ -104,11 +112,21 @@ if (window.CanvasRenderingContext2D) {
     setupPDFTron();
     setupDocViewer();
     setupI18n(state);
-    setDefaultToolColor();
+    setupMIMETypeTest(store);
     setUserPermission(state);
-    addEventHandlers(),
-    setDefaultDisabledElements(store),
+    setAutoSwitch();
+    setDefaultToolColor();
+    setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
+    addEventHandlers();
+    core.setToolMode(defaultTool);
+    
+    if (isIOS) {
+      window.CoreControls.SetCachingLevel(0);
+      window.CoreControls.SetPreRenderLevel(2);
+      core.setDisplayMode(window.CoreControls.DisplayModes.Single);
+      store.dispatch(actions.disableElements([ 'pageTransitionButtons' ]));
+    }
 
     ReactDOM.render(
       <Provider store={store}>
@@ -123,8 +141,15 @@ if (window.CanvasRenderingContext2D) {
           FitMode,
           LayoutMode,
           addSearchListener: apis.addSearchListener(store),
+          addSortStrategy: apis.addSortStrategy(store),
           closeDocument: apis.closeDocument(store),
           constants: apis.getConstants(),
+          disableAnnotations: apis.disableAnnotations(store),
+          disableDownload: apis.disableDownload(store),
+          disableFilePicker: apis.disableFilePicker(store),
+          disableNotesPanel: apis.disableNotesPanel(store),
+          disablePrint: apis.disablePrint(store),
+          disableTextSelection: apis.disableTextSelection(store),
           disableTool: apis.disableTool(store),
           disableTools: apis.disableTools(store),
           docViewer,
@@ -157,8 +182,9 @@ if (window.CanvasRenderingContext2D) {
           isElementDisabled: apis.isElementDisabled(store),
           isMobileDevice: apis.isMobileDevice,
           isReadOnly: apis.isReadOnly,
-          isToolDisabled: apis.isToolDisabled(store),
+          isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
+          print: apis.print(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),
           rotateClockwise: apis.rotateClockwise,
