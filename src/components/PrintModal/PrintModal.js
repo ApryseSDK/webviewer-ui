@@ -228,17 +228,54 @@ class PrintModal extends React.PureComponent {
     return widgetContainer;
   }
 
+  // added to check for cordova printer
+  isCordovaPrinter = () => {
+    return window.parent.cordova && window.parent.cordova.plugins.printer;
+  }
+
   printImages = images => {
-    const printHandler = document.getElementById('print-handler');
-    printHandler.innerHTML = '';
-
-    const fragment = document.createDocumentFragment();
-    images.forEach(image => {
-      fragment.appendChild(image);
+    let printHandler;
+    if (this.isCordovaPrinter()) {
+      printHandler = document.createElement('div');
+      printHandler.style.display = 'block';
+      printHandler.style.height = '100%';
+    } else {
+      printHandler = document.getElementById('print-handler');
+      printHandler.innerHTML = '';
+    }
+  
+    images.forEach((image, index) => {
+      if (this.isCordovaPrinter()) {
+        image.style.display = 'block';
+        image.style.maxWidth = '100%';
+        image.style.maxHeight = '100%';
+        image.style.width = '100%';
+        image.style.height = '100%';
+        image.style.objectFit = 'contain';
+        if (index > 0) {
+          image.style.pageBreakAfter = 'always';
+        }
+      }
+      printHandler.appendChild(image);
     });
-
-    printHandler.appendChild(fragment);
-    window.print();
+  
+    if (this.isCordovaPrinter()) {
+      const html = document.createElement('html');
+      html.style.width = '100%';
+      html.style.height = '100%';
+      html.style.padding = 0;
+      html.style.margin = 0;
+      const body = document.createElement('body');
+      body.style.width = '100%';
+      body.style.height = '100%';
+      body.style.padding = 0;
+      body.style.margin = 0;
+      body.appendChild(printHandler);
+      html.appendChild(body);
+      window.parent.cordova.plugins.printer.print(html, 'Document.html');
+    } else {
+      window.print();
+    }
     this.closePrintModal();
   }
 
