@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
-const sortStrategy = {
+const sortStrategies = {
   position: {
     getSortedNotes: notes => notes.sort((a, b) => {
       if (a.PageNumber === b.PageNumber) {
@@ -31,4 +31,4 @@ const sortStrategy = {
   }
 };
 
-export default sortStrategy;
+export default sortStrategies;
