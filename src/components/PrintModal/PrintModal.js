@@ -298,7 +298,7 @@ class PrintModal extends React.PureComponent {
 
     contentElement.className = 'note__content';
     if (contentText) {
-      contentElement.innerHTML = `>&nbsp;${contentText}`;
+      contentElement.innerHTML = `${contentText}`;
     }
     return contentElement;
   }
