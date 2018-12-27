@@ -11,6 +11,9 @@ import getPagesToPrint from 'helpers/getPagesToPrint';
 import getClassName from 'helpers/getClassName';
 import getAnnotationType from 'helpers/getAnnotationType';
 import getAnnotationIcon from 'helpers/getAnnotationIcon';
+import annotationColorToCss from 'helpers/annotationColorToCss';
+import getAnnotationColor from 'helpers/getAnnotationColor';
+import sortStrategies from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -27,7 +30,8 @@ class PrintModal extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    sortStrategy: PropTypes.string.isRequired
   }
 
   constructor() {
@@ -36,7 +40,7 @@ class PrintModal extends React.PureComponent {
     this.currentPage = React.createRef();
     this.customPages = React.createRef();
     this.customInput = React.createRef();
-    this.includeComments = true;
+    this.includeComments = React.createRef();
     this.pendingCanvases = [];
     this.state = {
       count: -1,
@@ -105,8 +109,8 @@ class PrintModal extends React.PureComponent {
       creatingPages.push(this.creatingImage(pageNumber));
 
       const printableAnnotations = this.getPrintableAnnotations(pageNumber);
-      if (this.includeComments && printableAnnotations.length) {
-        creatingPages.push(this.creatingNotesPage(printableAnnotations, pageNumber));
+      if (this.includeComments.current.checked && printableAnnotations.length) {
+        creatingPages.push(this.creatingNotesPage(sortStrategies[this.props.sortStrategy].getSortedNotes(printableAnnotations), pageNumber));
       }
     });
 
@@ -250,12 +254,17 @@ class PrintModal extends React.PureComponent {
     const noteRoot = document.createElement('div');
     noteRoot.className = 'note__root';
     
-    // const noteIcon = document.createElement('div');
-    // noteIcon.className = 'note__icon';
-    // noteIcon.innerHTML = require(`../../../assets/${getAnnotationIcon(getAnnotationType(annotation))}.svg`);
-    
-    // noteRoot.appendChild(noteIcon);
-    noteRoot.appendChild(this.getNoteInfo(annotation));
+    const noteRootInfo = document.createElement('div');
+    noteRootInfo.className = 'note__info--with-icon';
+
+    const noteIcon = document.createElement('div');
+    noteIcon.className = 'note__icon';
+    noteIcon.innerHTML = require(`../../../assets/${getAnnotationIcon(getAnnotationType(annotation))}.svg`);
+    noteIcon.style.color = annotationColorToCss(annotation[getAnnotationColor(getAnnotationType(annotation))]);
+
+    noteRootInfo.appendChild(noteIcon);
+    noteRootInfo.appendChild(this.getNoteInfo(annotation));
+    noteRoot.appendChild(noteRootInfo);
     noteRoot.appendChild(this.getNoteContent(annotation));
 
     note.appendChild(noteRoot);
@@ -263,7 +272,7 @@ class PrintModal extends React.PureComponent {
       const noteReply = document.createElement('div');
       noteReply.className = 'note__reply';
       noteReply.appendChild(this.getNoteInfo(reply));
-      noteReply.appendChild(this.getNoteContent(annotation));
+      noteReply.appendChild(this.getNoteContent(reply));
 
       note.appendChild(noteReply);
     });
@@ -284,11 +293,14 @@ class PrintModal extends React.PureComponent {
   }
   
   getNoteContent = annotation => {
-    const content = document.createElement('div');
-    
-    content.className = 'note__content';
-    content.innerHTML = `>&nbsp;${annotation.getContents()}`;
-    return content;
+    const contentElement = document.createElement('div');
+    const contentText = annotation.getContents();
+
+    contentElement.className = 'note__content';
+    if (contentText) {
+      contentElement.innerHTML = `>&nbsp;${contentText}`;
+    }
+    return contentElement;
   }
 
   printPages = pages => {
@@ -341,6 +353,7 @@ class PrintModal extends React.PureComponent {
               <Input ref={this.allPages} id="all-pages" name="pages" type="radio" label={t('option.print.all')} defaultChecked />
               <Input ref={this.currentPage} id="current-page" name="pages" type="radio" label={t('option.print.current')} />
               <Input ref={this.customPages} id="custom-pages" name="pages" type="radio" label={customPagesLabelElement} />
+              <Input ref={this.includeComments} id="include-comments" name="comments" type="checkbox" label={t('option.print.includeComments')} />
             </form>
           </div>
           <div className="total">
@@ -368,7 +381,8 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'printModal'),
   currentPage: selectors.getCurrentPage(state),
   printQuality: selectors.getPrintQuality(state),
-  pageLabels: selectors.getPageLabels(state)
+  pageLabels: selectors.getPageLabels(state),
+  sortStrategy: selectors.getSortStrategy(state)
 });
 
 const mapDispatchToProps = dispatch => ({
