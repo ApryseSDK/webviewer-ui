@@ -1,12 +1,9 @@
 /**
  * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#applyRedactions__anchor
- * @fires deleteAnnotations on AnnotationManger if redaction is on top of another annotation
- * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#deleteAnnotations__anchor
- * @fires annotationChanged on AnnotationManager if delete was fired
- * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#event:annotationChanged__anchor
- * @fires notify on DocumentViewer if requires delete notification
+ * If the redaction annotations overlap with other annotations, it calls deleteAnnotations on the other annotations.
+ * See deleteAnnotations.js for any events that are trigger by delete annotations
  */
 export default annotations =>  {
-    window.docViewer.getAnnotationManager().applyRedactions(annotations);
-  };
+  window.docViewer.getAnnotationManager().applyRedactions(annotations);
+};
   
