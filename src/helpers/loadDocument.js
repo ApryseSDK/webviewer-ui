@@ -212,7 +212,7 @@ const getEngineType = state => {
   const { engineType, pdftronServer } = state.advanced;
 
   const docName = getDocName(state);
-  const fileExtension = getDocumentExtension(docName);
+  const fileExtension = getDocumentExtension(docName, engineType);
 
   if (engineType) {
     return engineType;
@@ -227,7 +227,7 @@ const getEngineType = state => {
   }
 };
 
-export const getDocumentExtension = doc => {
+export const getDocumentExtension = (doc, engineType) => {
   let extension;
   if (doc) {
     const pdfExtensions = supportedPDFExtensions.join('|');
@@ -237,7 +237,7 @@ export const getDocumentExtension = doc => {
     const result = regex.exec(doc);
     if (result) {
       extension = result[1];
-    } else {
+    } else if (engineType === engineTypes.AUTO) {
       console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${[...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].join(', ')}`);
     }
   }
@@ -264,7 +264,7 @@ export const isPDFExtension = extension => {
 };
 
 const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise }) => {
-  const originalExtension = getDocumentExtension(docName);
+  const originalExtension = getDocumentExtension(docName, engineType);
 
   let type;
   let extension = originalExtension;
