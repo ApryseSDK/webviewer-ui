@@ -25,7 +25,8 @@ class AnnotationPopup extends React.PureComponent {
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setIsNoteEditing: PropTypes.func.isRequired,
-    setActiveLeftPanel: PropTypes.func.isRequired
+    setActiveLeftPanel: PropTypes.func.isRequired,
+    serverURL: PropTypes.string
   }
 
   constructor() {
@@ -148,12 +149,19 @@ class AnnotationPopup extends React.PureComponent {
     this.props.closeElement('annotationPopup');
   }
 
+  redactAnnotation = () => {
+    core.applyRedactions([this.state.annotation]);
+    this.props.closeElement('annotationPopup');
+  }
+
   render() {
     const { annotation, left, top, canModify, isStylePopupOpen } = this.state;
-    const { isNotesPanelDisabled, isDisabled, isOpen, isAnnotationStylePopupDisabled } = this.props;
+    const { isNotesPanelDisabled, isDisabled, isOpen, isAnnotationStylePopupDisabled, serverURL } = this.props;
     const style = getAnnotationStyle(annotation);
     const hasStyle = Object.keys(style).length > 0;
     const className = getClassName(`Popup AnnotationPopup`, this.props);
+    const redactionEnabled = core.isFullPDFEnabled() && !serverURL.length;
+    const showRedactionButton = annotation instanceof window.Annotations.RedactAnnotation && redactionEnabled;
 
     if (isDisabled) {
       return null;
@@ -173,6 +181,9 @@ class AnnotationPopup extends React.PureComponent {
             {canModify &&
               <ActionButton dataElement="annotationDeleteButton" title="action.delete" img="ic_delete_black_24px" onClick={this.deleteAnnotation} />
             }
+            {canModify && showRedactionButton &&
+              <ActionButton dataElement="annotationRedactButton" title="action.redact" img="ic_annotation_redact_black_24px" onClick={this.redactAnnotation} />
+            }
           </React.Fragment>
         }
       </div>
@@ -187,6 +198,7 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'annotationPopup'),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  serverURL: selectors.getServerUrl(state),
 });
 
 const mapDispatchToProps = {

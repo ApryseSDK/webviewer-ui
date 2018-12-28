@@ -56,6 +56,7 @@ import pasteCopiedAnnotations from './pasteCopiedAnnotations';
 import selectAnnotation from './selectAnnotation';
 import selectAnnotations from './selectAnnotations';
 import addAnnotations from './addAnnotations';
+import applyRedactions from './applyRedactions';
 import drawAnnotationsFromList from './drawAnnotationsFromList';
 import setInternalAnnotationsTransform from './setInternalAnnotationsTransform';
 import setPagesUpdatedInternalAnnotationsTransform from './setPagesUpdatedInternalAnnotationsTransform';
@@ -65,6 +66,7 @@ import getSelectedTextQuads from './getSelectedTextQuads';
 import getDisplayModeObject from './getDisplayModeObject';
 import getScrollViewElement from './getScrollViewElement';
 import getAnnotationById from './getAnnotationById';
+import isFullPDFEnabled from './isFullPDFEnabled';
 import isAnnotationSelected from './isAnnotationSelected';
 import setAnnotationStyles from './setAnnotationStyles';
 import deselectAnnotation from './deselectAnnotation';
@@ -141,6 +143,7 @@ export default {
   selectAnnotation,
   selectAnnotations,
   addAnnotations,
+  applyRedactions,
   drawAnnotationsFromList,
   setInternalAnnotationsTransform,
   setPagesUpdatedInternalAnnotationsTransform,
@@ -150,6 +153,7 @@ export default {
   getDisplayModeObject,
   getScrollViewElement,
   getAnnotationById,
+  isFullPDFEnabled,
   isAnnotationSelected,
   setAnnotationStyles,
   deselectAnnotation,
