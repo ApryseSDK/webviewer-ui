@@ -33,6 +33,68 @@
       page-break-after: always;
     }
 
+    .page__container {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      min-height: 100%;
+      min-width: 100%;
+      font-size: 10px;
+
+      .page__header {
+        align-self: flex-start;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 0.1rem solid black;
+      }
+
+      .note {
+        display: flex;
+        flex-direction: column;
+        padding: 0.6rem;
+        border: 0.1rem lightgray solid;
+        border-radius: 0.4rem;
+        margin-bottom: 0.5rem;
+
+        .note__info {
+          font-size: 1.3rem;
+          margin-bottom: 0.1rem;
+        }
+
+        .note__info--with-icon {
+          display: flex;
+
+          .note__icon {
+            width: 1.65rem;
+            height: 1.65rem;
+            margin-top: -0.1rem;
+            margin-right: 0.2rem;
+
+            path:not([fill=none]) {
+              fill: currentColor;
+            }
+          }
+        }
+
+        .note__root {
+          .note__content {
+            margin-left: 0.3rem;
+          }
+        }
+
+        .note__reply {
+          margin: 0.5rem 0 0 2rem;
+        }
+
+        .note__content {
+          font-size: 1.2rem;
+          margin-top: 0.1rem;
+        }
+      }
+    }
+
     #print-handler {
       height: 100%;
     }

@@ -110,7 +110,8 @@
     "print": {
       "all": "All",
       "current": "Current",
-      "pages": "Pages"
+      "pages": "Pages",
+      "includeComments": "Include comments"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",

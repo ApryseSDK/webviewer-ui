@@ -11,7 +11,7 @@ export default store => {
       return;
     }
 
-    const docExtension =   getDocumentExtension(getDocName(store.getState()));
+    const docExtension = getDocumentExtension(getDocName(store.getState()));
     if (src.endsWith('nmf')) {
       testMIMEType(['nmf'])
         .then(() => {
@@ -37,20 +37,19 @@ export default store => {
   window.addEventListener('loaderror', ({ detail }) => {
     const docExtension = getDocumentExtension(getDocName(store.getState()));
 
-    if (detail.startsWith('Error retrieving file:') && detail.includes('.xod')) {
+    if (detail && detail.startsWith('Error retrieving file:') && detail.includes('.xod')) {
       testMIMEType(['xod'])
-      .then(() => errorMissingWorkerFiles(docExtension))
-      .catch(errorMIMEType);
+        .catch(errorMIMEType);
     }
     if (detail === 'The worker has encountered an error') {
       testMIMEType(['mem', 'wasm'])
-      .then(() => errorMissingWorkerFiles(docExtension))
-      .catch(errorMIMEType);
+        .then(() => errorMissingWorkerFiles(docExtension))
+        .catch(errorMIMEType);
     }
     if (detail === `Couldn't fetch resource file.`) {
       testMIMEType(['res'])
-      .then(() => errorMissingWorkerFiles(docExtension))
-      .catch(errorMIMEType);
+        .then(() => errorMissingWorkerFiles(docExtension))
+        .catch(errorMIMEType);
     }
   });
 };
@@ -58,8 +57,8 @@ export default store => {
 const testMIMEType = fileExtensions => {
   const fetchingTestFiles = fileExtensions.map(extension => {
     return new Promise((resolve, reject) => {
-      const URL = `${window.CoreControls.getWorkerPath()}/assets/mime-types/test.${extension}`; 
-      
+      const URL = `${window.CoreControls.getWorkerPath()}/assets/mime-types/test.${extension}`;
+
       fetch(URL).then(({ status }) => {
         if (status === 404) {
           reject(extension);
@@ -77,8 +76,8 @@ const errorMissingWorkerFiles = docExtension => {
   let errorMessage;
 
   if (isOfficeExtension(docExtension)) {
-    errorMessage = 'Failed to find Office worker files. This project is not set up to work with Office files.';  
-  } 
+    errorMessage = 'Failed to find Office worker files. This project is not set up to work with Office files.';
+  }
   if (isPDFExtension(docExtension)) {
     errorMessage = 'Failed to find PDF worker files. This project is not set up to work with PDF files.';
   }

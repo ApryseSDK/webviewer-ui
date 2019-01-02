@@ -76,7 +76,7 @@ class MenuOverlay extends React.PureComponent {
         {!isIOS &&
           <ActionButton dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
         }
-        {isDownloadable && !isIOS &&
+        {isDownloadable &&
           <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
         }
         <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} />
