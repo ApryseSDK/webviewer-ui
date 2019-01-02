@@ -208,6 +208,7 @@ export default {
     engineType: documentTypeParamToEngineType(getHashParams('documentType')),
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
+    disableWebsockets: getHashParams('disableWebsockets', false),
     preloadWorker: getHashParams('preloadWorker', false),
     serverUrl: getHashParams('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
