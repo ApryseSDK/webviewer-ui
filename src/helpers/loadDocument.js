@@ -230,15 +230,13 @@ const getEngineType = state => {
 export const getDocumentExtension = (doc, engineType) => {
   let extension;
   if (doc) {
-    const pdfExtensions = supportedPDFExtensions.join('|');
-    const officeExtensions = supportedOfficeExtensions.join('|');
-    const blackboxExtensions = supportedBlackboxExtensions.join('|');
-    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|${blackboxExtensions}|xod)(\&|$)`);
+    const supportedExtensions = [...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].filter((extension, index, self) => self.indexOf(extension) === index);
+    const regex = new RegExp(`\\.(${supportedExtensions.join('|')})(&|$|\\?|#)`);
     const result = regex.exec(doc);
     if (result) {
       extension = result[1];
     } else if (engineType === engineTypes.AUTO) {
-      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${[...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].join(', ')}`);
+      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${supportedExtensions.join(', ')}`);
     }
   }
 
