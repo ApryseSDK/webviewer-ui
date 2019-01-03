@@ -73,7 +73,7 @@ const checkByteRange = state => {
 
 const getPartRetriever = (state, streaming) => {
   const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
-  const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, useDownloader, withCredentials } = state.advanced;
+  const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, disableWebsockets, useDownloader, withCredentials } = state.advanced;
   const documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
@@ -95,7 +95,7 @@ const getPartRetriever = (state, streaming) => {
       }
     } else if (engineType === engineTypes.PDFTRON_SERVER) {
       partRetrieverName = 'BlackBoxPartRetriever';
-      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer);
+      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets: disableWebsockets });
     } else if (engineType === engineTypes.UNIVERSAL) {
       const cache = window.CoreControls.PartRetrievers.CacheHinting.CACHE;
 
@@ -230,15 +230,13 @@ const getEngineType = state => {
 export const getDocumentExtension = (doc, engineType) => {
   let extension;
   if (doc) {
-    const pdfExtensions = supportedPDFExtensions.join('|');
-    const officeExtensions = supportedOfficeExtensions.join('|');
-    const blackboxExtensions = supportedBlackboxExtensions.join('|');
-    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|${blackboxExtensions}|xod)(\&|$)`);
+    const supportedExtensions = [...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].filter((extension, index, self) => self.indexOf(extension) === index);
+    const regex = new RegExp(`\\.(${supportedExtensions.join('|')})(&|$|\\?|#)`);
     const result = regex.exec(doc);
     if (result) {
       extension = result[1];
     } else if (engineType === engineTypes.AUTO) {
-      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${[...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].join(', ')}`);
+      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${supportedExtensions.join(', ')}`);
     }
   }
 
