@@ -1,0 +1,17 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+.DS_Store
+.vscode
+node_modules
+npm-debug.log
+coverage
+annotations
+webviewer-ui.zip
+notes
+coverage
+build
+tests
+jest.config.js
+package-lock.json
+.eslintignore
