@@ -175,7 +175,7 @@ export default {
     isProgrammaticSearchFull: false,
   },
   document: {
-    id: getHashParams('did', ''),
+    id: getHashParams('did', null),
     initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
     path: null,
     filename: null,
