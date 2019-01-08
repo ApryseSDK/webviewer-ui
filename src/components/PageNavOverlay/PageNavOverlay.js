@@ -40,7 +40,7 @@ class PageNavOverlay extends React.PureComponent {
       this.setState({ input: pageLabels[currentPage - 1] });
     }
 
-    if (prevProps.totalPages !== this.props.totalPages) {
+    if (prevProps.totalPages !== this.props.totalPages && !this.props.isDisabled) {
       this.textInput.current.style.width = (this.props.totalPages.toString().length * 11.5) + 'px';
     }
   }
@@ -79,7 +79,6 @@ class PageNavOverlay extends React.PureComponent {
 
   render() {
     const { isDisabled, isLeftPanelOpen, isLeftPanelDisabled, currentPage, totalPages } = this.props;
-    
     if (isDisabled) {
       return null;
     }
