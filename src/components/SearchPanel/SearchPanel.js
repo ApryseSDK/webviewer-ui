@@ -55,7 +55,7 @@ class SearchPanel extends React.PureComponent {
     if (isFirstResult || isInDifferentPage) {
       return (
         <ListSeparator
-          renderContent={() => `Page ${currResult.page_num + 1}`}
+          renderContent={() => `${this.props.t('option.shared.page')} ${currResult.page_num + 1}`}
         />
       );
     }

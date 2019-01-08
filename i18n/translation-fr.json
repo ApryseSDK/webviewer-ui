@@ -82,7 +82,8 @@
     "processing": "Traitement...",
     "searching": "Recherche...",
     "searchPlaceholder": "Rechercher des commentaires ici...",
-    "signHere": "Signer ici"
+    "signHere": "Signer ici",
+    "insertTextHere": "Insérer du texte ici"
   },
   "option": {
     "annotationColor": {
@@ -101,7 +102,11 @@
     },
     "notesPanel": {
       "orderPosition": "Position",
-      "orderTime": "Heure"
+      "orderTime": "Heure",
+      "separator": {
+        "today": "Aujourd'hui",
+        "yesterday": "Hier"
+      }
     },
     "pageTransition": {
       "continuous": "Continu",
@@ -120,6 +125,9 @@
       "opacity": "Opacité",
       "thickness": "Épaisseur",
       "text": "Taille du texte"
+    },
+    "shared": {
+      "page": "Page"
     }
   },
   "shortcut": {

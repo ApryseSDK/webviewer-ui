@@ -83,7 +83,8 @@
     "processing": "Bezig...",
     "searching": "Zoeken...",
     "searchPlaceholder": "Zoek opmerkingen...",
-    "signHere": "Teken hier"
+    "signHere": "Teken hier",
+    "insertTextHere": "Vul hier tekst in"
   },
   "option": {
     "annotationColor": {
@@ -102,7 +103,11 @@
     },
     "notesPanel": {
       "orderPosition": "Positie",
-      "orderTime": "Tijd"
+      "orderTime": "Tijd",
+      "separator": {
+        "today": "Vandaag",
+        "yesterday": "Gisteren"
+      }
     },
     "pageTransition": {
       "continuous": "Doorlopend",
@@ -121,6 +126,9 @@
       "opacity": "Dekking",
       "thickness": "Randdikte",
       "text": "Lettergrootte"
+    },
+    "shared": {
+      "page": "Pagina"
     }
   },
   "shortcut": {
