@@ -116,7 +116,8 @@
     "print": {
       "all": "Alles",
       "current": "Huidige",
-      "pages": "Pagina's"
+      "pages": "Pagina's",
+      "includeComments": "Inclusief commentaar"
     },
     "searchPanel": {
       "caseSensitive": "Hoofdletter gev..",
