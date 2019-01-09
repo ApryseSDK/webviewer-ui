@@ -82,7 +82,8 @@
     "processing": "正在处理…",
     "searching": "正在搜索…",
     "searchPlaceholder": "在此处搜索注释…",
-    "signHere": "在此处签名"
+    "signHere": "在此处签名",
+    "insertTextHere": "在这里插入文字"
   },
   "option": {
     "annotationColor": {
@@ -101,7 +102,11 @@
     },
     "notesPanel": {
       "orderPosition": "位置排序",
-      "orderTime": "时间排序"
+      "orderTime": "时间排序",
+      "separator": {
+        "today": "今天",
+        "yesterday": "昨天"
+      }
     },
     "pageTransition": {
       "continuous": "连续",
@@ -121,6 +126,9 @@
       "opacity": "不透明度",
       "thickness": "厚度",
       "text": "文字大小"
+    },
+    "shared": {
+      "page": "页"
     }
   },
   "shortcut": {
