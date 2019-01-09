@@ -115,7 +115,8 @@
     "print": {
       "all": "Toutes",
       "current": "Actuelle",
-      "pages": "Pages"
+      "pages": "Pages",
+      "includeComments": "Inclure les commentaires"
     },
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",
