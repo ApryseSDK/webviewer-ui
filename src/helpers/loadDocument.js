@@ -231,7 +231,7 @@ export const getDocumentExtension = (doc, engineType) => {
   let extension;
   if (doc) {
     const supportedExtensions = [...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].filter((extension, index, self) => self.indexOf(extension) === index);
-    const regex = new RegExp(`\\.(${supportedExtensions.join('|')})(&|$|\\?|#)`);
+    const regex = new RegExp(`\\.(${supportedExtensions.join('|')})(&|$|\\?|#)`, 'i');
     const result = regex.exec(doc);
     if (result) {
       extension = result[1];
@@ -240,7 +240,7 @@ export const getDocumentExtension = (doc, engineType) => {
     }
   }
 
-  return extension;
+  return extension.toLowerCase();
 };
 
 export const getDocName = state => {
