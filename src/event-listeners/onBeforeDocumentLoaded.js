@@ -1,5 +1,6 @@
 import core from 'core';
 import actions from 'actions';
+import { isIOS } from 'helpers/device';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
 export default dispatch => () => {
@@ -8,7 +9,13 @@ export default dispatch => () => {
   dispatch(actions.closeElement('passwordModal'));
 
   const totalPages = core.getTotalPages();
-  if (totalPages > 500) {
+
+  if (isIOS) {
+    window.CoreControls.SetCachingLevel(0);
+    window.CoreControls.SetPreRenderLevel(2);
+    core.setDisplayMode(window.CoreControls.DisplayModes.Single);
+    dispatch(actions.disableElements([ 'pageTransitionButtons' ]));
+  } else if (totalPages > 500) {
     core.setDisplayMode(window.CoreControls.DisplayModes.Single);
   }
 
