@@ -80,7 +80,7 @@ class ToolsOverlay extends React.PureComponent {
     const { left, right } = this.state;
     const { isDisabled, isOpen, toolButtonObjects, activeToolGroup } = this.props;
 
-    if (isDisabled) {
+    if (isDisabled || !activeToolGroup) {
       return null;
     }
 

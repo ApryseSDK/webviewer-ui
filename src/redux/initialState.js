@@ -175,7 +175,7 @@ export default {
     isProgrammaticSearchFull: false,
   },
   document: {
-    id: getHashParams('did', ''),
+    id: getHashParams('did', null),
     initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
     path: null,
     filename: null,
@@ -208,6 +208,7 @@ export default {
     engineType: documentTypeParamToEngineType(getHashParams('documentType')),
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
+    disableWebsockets: getHashParams('disableWebsockets', false),
     preloadWorker: getHashParams('preloadWorker', false),
     serverUrl: getHashParams('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
