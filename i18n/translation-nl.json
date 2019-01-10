@@ -1,0 +1,163 @@
+{
+  "action": {
+    "cancel": "Annuleren",
+    "clear": "Legen",
+    "close": "Sluiten",
+    "comment": "Opmerking",
+    "copy": "Kopieer",
+    "delete": "Verwijder",
+    "download": "Download bestand",
+    "edit": "Titel aanpassen",
+    "enterFullscreen": "Document in volledig scherm",
+    "exitFullscreen": "Document normaal weergeven",
+    "fit": "Zoomen",
+    "fitToPage": "Zoomen naar vensterhoogte",
+    "fitToWidth": "Zoomen naar vensterbreedte",
+    "openFile": "Open bestand",
+    "print": "Printen",
+    "reply": "Antwoorden",
+    "rotate": "Roteren",
+    "rotateClockwise": "Met de klok mee",
+    "rotateCounterClockwise": "Tegen de klok in",
+    "save": "Bewaren",
+    "showMoreResults": "Toon meer resultaten",
+    "sign": "Ondertekenen",
+    "style": "Opmaak",
+    "submit": "Verzenden",
+    "zoom": "Zoom",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom uit"
+  },
+  "annotation": {
+    "arrow": "Pijl",
+    "callout": "Opmerking met pijl",
+    "ellipse": "Ellips",
+    "freehand": "Vrije hand",
+    "freehand2": "Vrije hand",
+    "freetext": "Tekst plaatsen",
+    "freetext2": "Tekst plaatsen",
+    "highlight": "Arceren",
+    "highlight2": "Arceren",
+    "line": "Lijn",
+    "polygon": "Veelhoek",
+    "polygonCloud": "Cloud",
+    "polyline": "Polyline",
+    "rectangle": "Rechthoek",
+    "signature": "Handtekening",
+    "squiggly": "Squiggly",
+    "stamp": "Stempel",
+    "stickyNote": "Commentaar",
+    "strikeout": "Doorstrepen",
+    "underline": "Onderstrepen"
+  },
+  "component": {
+    "freehandToolsButton": "Vrije hand tools",
+    "leftPanel": "Panel",
+    "searchOverlay": "Zoeken",
+    "menuOverlay": "Menu",
+    "miscToolsButton": "Diverse tools",
+    "notesPanel": "Notities",
+    "outlinesPanel": "Hoofdlijnen",
+    "shapeToolsButton": "Vorm tools",
+    "textToolsButton": "Tekst tools",
+    "thumbnailsPanel": "Miniatuurweergave",
+    "toolsButton": "Tools",
+    "viewControlsOverlay": "Scherm opties",
+    "minimizeButton": "Document normaal weergeven"
+  },
+  "message": {
+    "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
+    "customPrintPlaceholder": "bijv. 3, 4-10",
+    "encryptedAttemptsExceeded": "Fout bij het laden van versleuteld document. Te veel pogingen.",
+    "encryptedUserCancelled": "Fout bij het laden van versleuteld document. Wachtwoord invoer geannuleerd.",
+    "enterPassword": "Dit document heeft een wachtwoord beveiliging. Geen een wachtwoord",
+    "incorrectPassword": "Fout wachtwoord, overgebleven pogingen: {{ remainingAttempts }}",
+    "noAnnotations": "Dit document heeft geen annotaties.",
+    "noOutlines": "Dit document heeft geen hoofdlijnen.",
+    "noResults": "Geen resultaten.",
+    "notSupported": "Dit bestandstype wordt niet ondersteund.",
+    "passwordRequired": "Wachtwoord vereist",
+    "preparingToPrint": "Printen voorbereiden...",
+    "printTotalPageCount": "{{count}} pagina",
+    "printTotalPageCount_plural": "{{count}} pagina's",
+    "processing": "Bezig...",
+    "searching": "Zoeken...",
+    "searchPlaceholder": "Zoek opmerkingen...",
+    "signHere": "Teken hier",
+    "insertTextHere": "Vul hier tekst in"
+  },
+  "option": {
+    "annotationColor": {
+      "border": "Rand kleur",
+      "fill": "Vulling kleur",
+      "text": "Tekst kleur"
+    },
+    "displayMode": {
+      "layout": "Layout",
+      "pageTransition": "Pagina overgang"
+    },
+    "layout": {
+      "cover": "Blad",
+      "double": "Dubbel",
+      "single": "Enkel"
+    },
+    "notesPanel": {
+      "orderPosition": "Positie",
+      "orderTime": "Tijd",
+      "separator": {
+        "today": "Vandaag",
+        "yesterday": "Gisteren"
+      }
+    },
+    "pageTransition": {
+      "continuous": "Doorlopend",
+      "default": "Pagina voor pagina"
+    },
+    "print": {
+      "all": "Alles",
+      "current": "Huidige",
+      "pages": "Pagina's",
+      "includeComments": "Inclusief commentaar"
+    },
+    "searchPanel": {
+      "caseSensitive": "Hoofdletter gev..",
+      "wholeWordOnly": "Alleen hele woorden"
+    },
+    "slider": {
+      "opacity": "Dekking",
+      "thickness": "Randdikte",
+      "text": "Lettergrootte"
+    },
+    "shared": {
+      "page": "Pagina"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)"
+  },
+  "tool": {
+    "pan": "Schuiven",
+    "select": "Selecteren"
+  }
+}

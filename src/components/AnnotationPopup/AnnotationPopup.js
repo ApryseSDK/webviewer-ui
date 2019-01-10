@@ -126,7 +126,9 @@ class AnnotationPopup extends React.PureComponent {
   }
 
   commentOnAnnotation = () => {
-    if (!this.props.isLeftPanelOpen) {
+    if (this.state.annotation instanceof Annotations.FreeTextAnnotation) {
+      core.getAnnotationManager().trigger('annotationDoubleClicked', this.state.annotation);
+    } else if (!this.props.isLeftPanelOpen) {
       this.props.openElement('notesPanel');
       setTimeout(() => {
         this.props.setIsNoteEditing(true);

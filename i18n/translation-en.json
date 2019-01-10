@@ -82,7 +82,8 @@
     "processing": "Processing...",
     "searching": "Searching...",
     "searchPlaceholder": "Search comments...",
-    "signHere": "Sign Here"
+    "signHere": "Sign Here",
+    "insertTextHere": "Insert text here"
   },
   "option": {
     "annotationColor": {
@@ -101,7 +102,11 @@
     },
     "notesPanel": {
       "orderPosition": "Position",
-      "orderTime": "Time"
+      "orderTime": "Time",
+      "separator": {
+        "today": "Today",
+        "yesterday": "Yesterday"
+      }
     },
     "pageTransition": {
       "continuous": "Continuous",
@@ -121,6 +126,9 @@
       "opacity": "Opacity",
       "thickness": "Thickness",
       "text": "Text Size"
+    },
+    "shared": {
+      "page": "Page"
     }
   },
   "shortcut": {

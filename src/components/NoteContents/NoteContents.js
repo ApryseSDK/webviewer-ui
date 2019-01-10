@@ -65,7 +65,7 @@ class NoteContents extends React.Component {
             onKeyDown={this.onKeyDown}
             onBlur={closeEditing} 
             defaultValue={contents} 
-            placeholder="Comment..." 
+            placeholder={`${t('action.comment')}...`}
           />
           <span className="buttons">
             <button onMouseDown={this.setContents}>{t('action.save')}</button>

@@ -108,7 +108,7 @@ export default initialState => (state = initialState, action) => {
             ...state.toolButtonObjects[toolName],
             dataElement: buttonName || state.toolButtonObjects[toolName].dataElement,
             title: tooltip || state.toolButtonObjects[toolName].title,
-            group: buttonGroup || state.toolButtonObjects[toolName].group,
+            group: (buttonGroup !== undefined) ? buttonGroup : state.toolButtonObjects[toolName].group,
             img: buttonImage || state.toolButtonObjects[toolName].img,
           }
         }

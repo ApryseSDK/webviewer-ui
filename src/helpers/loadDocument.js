@@ -73,7 +73,7 @@ const checkByteRange = state => {
 
 const getPartRetriever = (state, streaming) => {
   const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
-  const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, useDownloader, withCredentials } = state.advanced;
+  const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, disableWebsockets, useDownloader, withCredentials } = state.advanced;
   const documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
@@ -95,7 +95,7 @@ const getPartRetriever = (state, streaming) => {
       }
     } else if (engineType === engineTypes.PDFTRON_SERVER) {
       partRetrieverName = 'BlackBoxPartRetriever';
-      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer);
+      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets: disableWebsockets });
     } else if (engineType === engineTypes.UNIVERSAL) {
       const cache = window.CoreControls.PartRetrievers.CacheHinting.CACHE;
 
@@ -212,7 +212,7 @@ const getEngineType = state => {
   const { engineType, pdftronServer } = state.advanced;
 
   const docName = getDocName(state);
-  const fileExtension = getDocumentExtension(docName);
+  const fileExtension = getDocumentExtension(docName, engineType);
 
   if (engineType) {
     return engineType;
@@ -227,22 +227,20 @@ const getEngineType = state => {
   }
 };
 
-export const getDocumentExtension = doc => {
+export const getDocumentExtension = (doc, engineType) => {
   let extension;
   if (doc) {
-    const pdfExtensions = supportedPDFExtensions.join('|');
-    const officeExtensions = supportedOfficeExtensions.join('|');
-    const blackboxExtensions = supportedBlackboxExtensions.join('|');
-    const regex = new RegExp(`\.(${pdfExtensions}|${officeExtensions}|${blackboxExtensions}|xod)(\&|$)`);
+    const supportedExtensions = [...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].filter((extension, index, self) => self.indexOf(extension) === index);
+    const regex = new RegExp(`\\.(${supportedExtensions.join('|')})(&|$|\\?|#)`, 'i');
     const result = regex.exec(doc);
     if (result) {
       extension = result[1];
-    } else {
-      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${[...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].join(', ')}`);
+    } else if (engineType === engineTypes.AUTO) {
+      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${supportedExtensions.join(', ')}`);
     }
   }
 
-  return extension;
+  return extension.toLowerCase();
 };
 
 export const getDocName = state => {
@@ -264,7 +262,7 @@ export const isPDFExtension = extension => {
 };
 
 const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise }) => {
-  const originalExtension = getDocumentExtension(docName);
+  const originalExtension = getDocumentExtension(docName, engineType);
 
   let type;
   let extension = originalExtension;
