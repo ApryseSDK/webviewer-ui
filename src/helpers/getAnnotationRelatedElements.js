@@ -16,8 +16,12 @@ export default state =>  {
     const isAnnotationTool = tool instanceof window.Tools.GenericAnnotationCreateTool || tool instanceof window.Tools.TextAnnotationCreateTool || tool.defaults;
 
     if (isAnnotationTool) {
-      const element = state.viewer.toolButtonObjects[tool.name].dataElement;
-      elements.push(element);
+      const element = state.viewer.toolButtonObjects[tool.name];
+      if (element) {
+        const { dataElement } = element;
+        elements.push(dataElement);
+      }
+     
     }
   });
 
