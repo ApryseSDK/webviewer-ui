@@ -67,7 +67,7 @@ class NoteReply extends React.PureComponent {
     return (
       <div className="NoteReply" onClick={e => e.stopPropagation()}>
         {this.renderHeader()}
-        <NoteContents 
+        <NoteContents
           annotation={reply}
           searchInput={searchInput}
           renderContents={renderContents}

@@ -18,6 +18,13 @@ class NoteContents extends React.Component {
   constructor(props) {
     super(props);
     this.textInput = React.createRef();
+    this.state = {
+      isChanged: false,
+    }
+  }
+
+  componentDidMount(){
+    this.setState({ word: this.textInput.current.value });
   }
 
   componentDidUpdate(prevProps) {
@@ -28,6 +35,13 @@ class NoteContents extends React.Component {
   }
   
   onChange = () => {
+    
+    if (this.textInput.current.value === this.state.word){
+      this.setState({ isChanged: false });
+    } else {
+      this.setState({ isChanged: true });
+    }
+    
     this.textInput.current.style.height = '30px';
     this.textInput.current.style.height = (this.textInput.current.scrollHeight + 2) + 'px';
   }
@@ -40,10 +54,12 @@ class NoteContents extends React.Component {
 
   setContents = e => {
     e.preventDefault();
+    
+    this.setState({ word: this.textInput.current.value });
 
-    const content = this.textInput.current.value.trim();
+    // const content = this.textInput.current.value.trim();
 
-    if (content) {
+    if (this.state.isChanged) {
       core.setNoteContents(this.props.annotation, this.textInput.current.value);
       if (this.props.annotation instanceof window.Annotations.FreeTextAnnotation) {
         core.drawAnnotationsFromList([ this.props.annotation ]);
@@ -68,7 +84,7 @@ class NoteContents extends React.Component {
             placeholder={`${t('action.comment')}...`}
           />
           <span className="buttons">
-            <button onMouseDown={this.setContents}>{t('action.save')}</button>
+            <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
             <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
           </span>
         </div>
