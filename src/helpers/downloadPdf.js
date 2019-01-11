@@ -1,5 +1,3 @@
-import FileSaver from 'file-saver';
-
 import core from 'core';
 import { isIE } from 'helpers/device';
 import actions from 'actions';
@@ -51,9 +49,23 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
           } else {
             file = new File([arr], downloadName, { type: 'application/pdf' });
           }
-          FileSaver.saveAs(file, downloadName);
-          dispatch(actions.closeElement('loadingModal'));
-          $(document).trigger('finishedSavingPDF');
+          if (navigator.msSaveBlob) { // IE11 and Edge 17-
+            navigator.msSaveBlob(file, downloadName)
+          } else { // every other browser
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const a = window.parent.document.createElement("a");
+              a.href = reader.result;
+              a.style.display = 'none';
+              a.download = downloadName;
+              window.parent.document.body.appendChild(a);
+              a.click();
+              a.parentNode.removeChild(a);
+              dispatch(actions.closeElement('loadingModal'));
+              $(document).trigger('finishedSavingPDF');
+            }
+            reader.readAsDataURL(file);
+          }
           resolve();
         }, error => {
           dispatch(actions.closeElement('loadingModal'));
