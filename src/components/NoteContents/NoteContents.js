@@ -61,10 +61,10 @@ class NoteContents extends React.Component {
     const contents = annotation.getContents();
 
     return (
-      <div className="NoteContents" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
+      <div className="NoteContents" onClick={isEditing ? e => e.stopPropagation():()=>{}} onMouseDown={isEditing ? e => e.stopPropagation():()=>{}}>
         {isEditing && 
           <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
-          <textarea 
+            <textarea 
               ref={this.textInput} 
               onChange={this.onChange} 
               onKeyDown={this.onKeyDown}
