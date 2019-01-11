@@ -3,7 +3,7 @@ import actions from 'actions';
 
 export default store => (documentPath, options = {}) => {
   const {
-    documentId = '',
+    documentId = null,
     streaming = false,
     filename = null,
     decrypt = null,
