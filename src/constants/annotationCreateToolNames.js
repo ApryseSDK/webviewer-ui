@@ -20,6 +20,7 @@ export default [
   'AnnotationCreatePolyline',
   'AnnotationCreateStamp',
   'AnnotationCreateRectangle',
+  'AnnotationCreateRedaction',
   'AnnotationCreateEllipse',
   'AnnotationCreatePolygon',
   'AnnotationCreatePolygonCloud',

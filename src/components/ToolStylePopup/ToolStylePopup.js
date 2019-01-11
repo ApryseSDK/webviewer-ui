@@ -37,7 +37,8 @@ class ToolStylePopup extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
-      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay' ]);
+      // TODO want to do something like 'closeOtherPopupElements' but it doesn't work. 
+      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'redactionOverlay' ]); 
       this.positionToolStylePopup();       
     }
 
@@ -109,12 +110,15 @@ class ToolStylePopup extends React.PureComponent {
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const className = getClassName(`Popup ToolStylePopup`, this.props);
 
+    const hideSlider = activeToolName === 'AnnotationCreateRedaction';
+    
     return (
       <div className={className} data-element="toolStylePopup" style={{ top, left }} ref={this.popup} onMouseDown={e => e.stopPropagation()} onClick={this.onClick}>
         <StylePopup
           key={activeToolName}
           style={activeToolStyle}
           isFreeText={isFreeText}
+          hideSlider={hideSlider}
           onStyleChange={this.handleStyleChange}
         />
       </div>

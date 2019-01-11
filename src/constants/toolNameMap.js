@@ -16,6 +16,7 @@ export default {
   AnnotationCreatePolyline: 'polylineTool',
   AnnotationCreateStamp: 'stampTool',
   AnnotationCreateRectangle: 'rectangleTool',
+  AnnotationCreateRedaction: 'redactionTool',
   AnnotationCreateEllipse: 'ellipseTool',
   AnnotationCreatePolygon: 'polygonTool',
   AnnotationCreatePolygonCloud: 'polygonCloudTool'

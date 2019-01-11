@@ -1,6 +1,7 @@
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import core from 'core';
 import fireEvent from 'helpers/fireEvent';
+import getPopupElements from 'helpers/getPopupElements';
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
@@ -70,6 +71,15 @@ export const closeElements = dataElements => dispatch => {
     });
   }
 };
+
+export const closeOtherPopupElements = dataElement => dispatch => {  //TODO: IMPORTANT, it looks like dataElement.constructor.name isn't usable after it builds
+  let popupsToClose = getPopupElements(); // TODO rename this to something like Popup/Overlay
+  popupsToClose = popupsToClose.filter(ele => ele.toLowerCase() !== dataElement.constructor.name.toLowerCase());
+  //TODO check if any minifying is happening to constructor.name
+
+  dispatch(closeElements(popupsToClose));
+};
+
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
 

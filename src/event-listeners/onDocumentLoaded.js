@@ -17,6 +17,14 @@ export default dispatch => () => {
     core.fitToPage();
   }
 
+  core.setRedactionEnable( getHashParams('enableRedaction', false));
+
+  if (core.isRedactionEnabled()) { // TODO double check if this is working for "blackBox"
+    dispatch(actions.enableElement('redactionButton'));
+  } else {
+    dispatch(actions.disableElement('redactionButton'));
+  }
+
   core.setOptions({
     enableAnnotations: getHashParams('a', false)
   });

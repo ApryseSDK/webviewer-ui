@@ -28,6 +28,7 @@ class MenuOverlay extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     closeElements: PropTypes.func.isRequired,
+    // closeOtherPopupElements: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired
   }
@@ -43,7 +44,8 @@ class MenuOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
+      // this.props.closeOtherPopupElements(this); // TODO want to do something like 'closeOtherPopupElements' but it doesn't work
+      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup', 'redactionOverlay']);
       this.setState(getOverlayPositionBasedOn('menuButton', this.overlay));
     }
   }
@@ -98,6 +100,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   dispatch,
   closeElements: dataElements => dispatch(actions.closeElements(dataElements))
+  // ,closeOtherPopupElements: dataElements => dispatch(actions.closeOtherPopupElements(dataElements)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(MenuOverlay));

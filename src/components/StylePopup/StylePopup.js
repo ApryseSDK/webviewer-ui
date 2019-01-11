@@ -13,7 +13,8 @@ class StylePopup extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    isFreeText: PropTypes.bool.isRequired
+    isFreeText: PropTypes.bool.isRequired,
+    hideSlider: PropTypes.bool,
   }
 
   constructor(props) {
@@ -121,7 +122,7 @@ class StylePopup extends React.PureComponent {
         </div>
         <div className="sliders-container" onMouseDown={e => e.preventDefault()}>
           <div className="sliders">
-            {this.renderSliders()}
+            {!this.props.hideSlider && this.renderSliders()}
           </div>
         </div>
       </div>

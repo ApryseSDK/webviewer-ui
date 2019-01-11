@@ -8,6 +8,7 @@ import Header from 'components/Header';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
+import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import DocumentContainer from 'components/DocumentContainer';
@@ -64,6 +65,7 @@ class App extends React.PureComponent {
       'contextMenuPopup',
       'toolStylePopup',
       'textPopup',
+      'redactionOverlay', // TODO move element list to helper
       isDesktop() ? 'toolsOverlay' : ''
     ].filter(element => element);
 
@@ -87,6 +89,7 @@ class App extends React.PureComponent {
 
           <SearchOverlay />
           <ViewControlsOverlay />
+          <RedactionOverlay />
           <MenuOverlay />
           <PageNavOverlay />
           <ToolsOverlay />

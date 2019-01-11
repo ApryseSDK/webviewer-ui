@@ -38,6 +38,7 @@ class SearchOverlay extends React.PureComponent {
     openElements: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
+    //closeOtherPopupElements: PropTypes.func.isRequired,
     setSearchValue: PropTypes.func.isRequired,
     setActiveResult: PropTypes.func.isRequired,
     setActiveResultIndex: PropTypes.func.isRequired,
@@ -81,7 +82,8 @@ class SearchOverlay extends React.PureComponent {
 
     const searchOverlayOpened = !prevProps.isOpen && this.props.isOpen;
     if (searchOverlayOpened) {
-      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'menuOverlay', 'toolStylePopup']);
+      //this.props.closeOtherPopupElements(this); // TODO want to do something like 'closeOtherPopupElements' but it doesn't work
+      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'menuOverlay', 'toolStylePopup', 'redactionOverlay']);
       this.searchTextInput.current.focus();
       core.setToolMode(defaultTool);
     }
@@ -369,6 +371,7 @@ const mapDispatchToProps = {
   openElements: actions.openElements,
   closeElement: actions.closeElement,
   closeElements: actions.closeElements,
+  // closeOtherPopupElements: actions.closeOtherPopupElements,
   setSearchValue: actions.setSearchValue,
   setActiveResult: actions.setActiveResult,
   setActiveResultIndex: actions.setActiveResultIndex,

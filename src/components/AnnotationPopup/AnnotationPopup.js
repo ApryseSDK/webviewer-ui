@@ -156,12 +156,11 @@ class AnnotationPopup extends React.PureComponent {
 
   render() {
     const { annotation, left, top, canModify, isStylePopupOpen } = this.state;
-    const { isNotesPanelDisabled, isDisabled, isOpen, isAnnotationStylePopupDisabled, serverURL } = this.props;
+    const { isNotesPanelDisabled, isDisabled, isOpen, isAnnotationStylePopupDisabled } = this.props;
     const style = getAnnotationStyle(annotation);
     const hasStyle = Object.keys(style).length > 0;
     const className = getClassName(`Popup AnnotationPopup`, this.props);
-    const redactionEnabled = core.isFullPDFEnabled() && !serverURL.length;
-    const showRedactionButton = annotation instanceof window.Annotations.RedactAnnotation && redactionEnabled;
+    const redactionEnabled = core.isAnnotationRedactable(annotation); // TODO ask if we should remove isFullPDFEnabled
 
     if (isDisabled) {
       return null;
@@ -181,7 +180,7 @@ class AnnotationPopup extends React.PureComponent {
             {canModify &&
               <ActionButton dataElement="annotationDeleteButton" title="action.delete" img="ic_delete_black_24px" onClick={this.deleteAnnotation} />
             }
-            {canModify && showRedactionButton &&
+            {redactionEnabled &&
               <ActionButton dataElement="annotationRedactButton" title="action.redact" img="ic_annotation_redact_black_24px" onClick={this.redactAnnotation} />
             }
           </React.Fragment>

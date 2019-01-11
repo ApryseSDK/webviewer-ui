@@ -57,6 +57,9 @@ import selectAnnotation from './selectAnnotation';
 import selectAnnotations from './selectAnnotations';
 import addAnnotations from './addAnnotations';
 import applyRedactions from './applyRedactions';
+import isRedactionEnabled from './isRedactionEnabled';
+import isAnnotationRedactable from './isAnnotationRedactable';
+import setRedactionEnable from './setRedactionEnable';
 import drawAnnotationsFromList from './drawAnnotationsFromList';
 import setInternalAnnotationsTransform from './setInternalAnnotationsTransform';
 import setPagesUpdatedInternalAnnotationsTransform from './setPagesUpdatedInternalAnnotationsTransform';
@@ -144,6 +147,9 @@ export default {
   selectAnnotations,
   addAnnotations,
   applyRedactions,
+  isRedactionEnabled,
+  setRedactionEnable,
+  isAnnotationRedactable,
   drawAnnotationsFromList,
   setInternalAnnotationsTransform,
   setPagesUpdatedInternalAnnotationsTransform,

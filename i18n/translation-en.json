@@ -16,7 +16,9 @@
     "openFile": "Open file",
     "print": "Print",
     "reply": "Reply",
-    "redact": "Redact",
+    "redact": "Apply Redaction",
+    "redactCreate": "Mark for Redaction",
+    "redactAll": "Apply All Redaction",
     "rotate": "Rotate",
     "rotateClockwise": "Clockwise",
     "rotateCounterClockwise": "Counter-clockwise",
@@ -43,6 +45,8 @@
     "polygon": "Polygon",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
+    "redact": "Redact",
+    "redactAll": "Apply All",
     "rectangle": "Rectangle",
     "signature": "Signature",
     "squiggly": "Squiggly",
@@ -63,6 +67,8 @@
     "textToolsButton": "Text tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
+    "redactToolsButton": "Redact",
+    "redactOverlay": "Redact",
     "viewControlsOverlay": "View controls"
   },
   "message": {
