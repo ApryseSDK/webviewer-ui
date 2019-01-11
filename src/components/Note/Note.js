@@ -108,11 +108,7 @@ class Note extends React.PureComponent {
   }
 
   onChange = () => {
-    if (this.replyTextarea.current.value.length === 0){
-      this.setState({isEmpty: true})
-    } else {
-      this.setState({isEmpty: false})
-    }
+    this.setState({ isEmpty: this.replyTextarea.current.value.length === 0 });
     this.replyTextarea.current.style.height = '30px';
     this.replyTextarea.current.style.height = (this.replyTextarea.current.scrollHeight + 2) + 'px';
   }
@@ -232,7 +228,7 @@ class Note extends React.PureComponent {
             />
           )}
           {!isReadOnly &&
-            <div className={isRootContentEditing?"replies hidden":"add-reply"} onClick={e => e.stopPropagation()}>
+            <div className={ isRootContentEditing ? "replies hidden" : "add-reply"} onClick={e => e.stopPropagation()}>
               <textarea
                 ref={this.replyTextarea}
                 onChange={this.onChange}
@@ -243,7 +239,7 @@ class Note extends React.PureComponent {
               />
               {isReplyFocused &&
                 <div className="buttons" onMouseDown={e => e.preventDefault()}>
-                  <button className = {this.state.isEmpty ? 'disabled':''} onMouseDown={this.postReply} >{t('action.reply')}</button>
+                  <button className={this.state.isEmpty ? 'disabled' : ''} onMouseDown={this.postReply}>{t('action.reply')}</button>
                   <button onMouseDown={this.onClickCancel}>{t('action.cancel')}</button>
                 </div>
               }

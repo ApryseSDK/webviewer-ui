@@ -20,27 +20,21 @@ class NoteContents extends React.Component {
     this.textInput = React.createRef();
     this.state = {
       isChanged: false,
+      word: ""
     }
   }
 
   componentDidUpdate(prevProps) {
-    
     if (!prevProps.isEditing && this.props.isEditing) {
-      this.setState({ word: this.textInput.current.value }, ()=>{
+      this.setState({ word: this.textInput.current.value }, () => {
         this.textInput.current.focus();
         this.onChange();
-      })
+      });
     }
   }
   
   onChange = () => {
-    
-    if (this.textInput.current.value === this.state.word){
-      this.setState({ isChanged: false });
-    } else {
-      this.setState({ isChanged: true });
-    }
-    
+    this.setState({ isChanged: this.textInput.current.value !== this.state.word });    
     this.textInput.current.style.height = '30px';
     this.textInput.current.style.height = (this.textInput.current.scrollHeight + 2) + 'px';
   }
@@ -53,8 +47,6 @@ class NoteContents extends React.Component {
 
   setContents = e => {
     e.preventDefault();
-    // const content = this.textInput.current.value.trim();
-
     if (this.state.isChanged) {
       core.setNoteContents(this.props.annotation, this.textInput.current.value);
       if (this.props.annotation instanceof window.Annotations.FreeTextAnnotation) {
@@ -67,23 +59,25 @@ class NoteContents extends React.Component {
   render() {
     const { isEditing, closeEditing, annotation, renderContents, t } = this.props;
     const contents = annotation.getContents();
-  
+
     return (
       <div className="NoteContents" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
-        {isEditing && <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
+        {isEditing && 
+          <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
           <textarea 
-            ref={this.textInput} 
-            onChange={this.onChange} 
-            onKeyDown={this.onKeyDown}
-            onBlur={closeEditing}         
-            defaultValue={contents} 
-            placeholder={`${t('action.comment')}...`}
-          />
-          <span className="buttons">
-            <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
-            <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
-          </span>
-        </div>}
+              ref={this.textInput} 
+              onChange={this.onChange} 
+              onKeyDown={this.onKeyDown}
+              onBlur={closeEditing}         
+              defaultValue={contents} 
+              placeholder={`${t('action.comment')}...`}
+            />
+            <span className="buttons">
+              <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
+              <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
+            </span>
+          </div>
+        }
         <div className={`container ${isEditing ? 'hidden' : 'visible'}`}>
           {renderContents(contents)}
         </div>
