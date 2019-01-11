@@ -23,14 +23,13 @@ class NoteContents extends React.Component {
     }
   }
 
-  componentDidMount(){
-    this.setState({ word: this.textInput.current.value });
-  }
-
   componentDidUpdate(prevProps) {
+    
     if (!prevProps.isEditing && this.props.isEditing) {
-      this.textInput.current.focus();
-      this.onChange();
+      this.setState({ word: this.textInput.current.value }, ()=>{
+        this.textInput.current.focus();
+        this.onChange();
+      })
     }
   }
   
@@ -54,9 +53,6 @@ class NoteContents extends React.Component {
 
   setContents = e => {
     e.preventDefault();
-    
-    this.setState({ word: this.textInput.current.value });
-
     // const content = this.textInput.current.value.trim();
 
     if (this.state.isChanged) {
@@ -71,15 +67,15 @@ class NoteContents extends React.Component {
   render() {
     const { isEditing, closeEditing, annotation, renderContents, t } = this.props;
     const contents = annotation.getContents();
-
+  
     return (
       <div className="NoteContents" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
-        <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
+        {isEditing && <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
           <textarea 
             ref={this.textInput} 
             onChange={this.onChange} 
             onKeyDown={this.onKeyDown}
-            onBlur={closeEditing} 
+            onBlur={closeEditing}         
             defaultValue={contents} 
             placeholder={`${t('action.comment')}...`}
           />
@@ -87,7 +83,7 @@ class NoteContents extends React.Component {
             <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
             <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
           </span>
-        </div>
+        </div>}
         <div className={`container ${isEditing ? 'hidden' : 'visible'}`}>
           {renderContents(contents)}
         </div>
