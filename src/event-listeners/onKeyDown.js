@@ -2,12 +2,15 @@ import core from 'core';
 import openFilePicker from 'helpers/openFilePicker';
 import copyText from 'helpers/copyText';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
-import { zoomIn, zoomOut} from 'helpers/zoom';
+import { zoomIn, zoomOut } from 'helpers/zoom';
+import print from 'helpers/print';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import actions from 'actions';
+import selectors from 'selectors'; 
 
-
-export default dispatch => e => {
+export default store => e => {
+  const { dispatch, getState } = store;
+  const state = getState();
   const selectedTextFromCanvas = core.getSelectedText();
   const selectedTextFromDOM = window.getSelection().toString();
 
@@ -50,6 +53,15 @@ export default dispatch => e => {
           core.fitToPage();
         } else {
           core.fitToWidth();
+        }
+      } else if (e.key === 'P' || e.which === 80) { // (Ctrl/Cmd + P)
+        e.preventDefault();
+        
+        const isPrintDisabled = selectors.isElementDisabled(state, 'printModal');
+        if (isPrintDisabled) {
+          console.warn('Print has been disabled.');
+        } else {
+          print(dispatch, selectors.isEmbedPrintSupported(state));
         }
       }
     }

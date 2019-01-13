@@ -1,4 +1,4 @@
 import core from 'core';
 
-export default () => core.getIsAdminUser();
+export default () => !!core.getIsAdminUser();
 

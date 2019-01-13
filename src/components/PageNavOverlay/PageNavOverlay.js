@@ -39,6 +39,10 @@ class PageNavOverlay extends React.PureComponent {
     if (prevProps.currentPage !== this.props.currentPage || prevProps.pageLabels !== this.props.pageLabels) {
       this.setState({ input: pageLabels[currentPage - 1] });
     }
+
+    if (prevProps.totalPages !== this.props.totalPages && !this.props.isDisabled) {
+      this.textInput.current.style.width = (this.props.totalPages.toString().length * 11.5) + 'px';
+    }
   }
 
   onClick = () => {
@@ -46,6 +50,10 @@ class PageNavOverlay extends React.PureComponent {
   }
 
   onChange = e => {
+    if (e.target.value.length > this.props.totalPages.toString().length) {
+      return;
+    }
+
     this.setState({ input: e.target.value });
   }
 
@@ -71,18 +79,16 @@ class PageNavOverlay extends React.PureComponent {
 
   render() {
     const { isDisabled, isLeftPanelOpen, isLeftPanelDisabled, currentPage, totalPages } = this.props;
-    
     if (isDisabled) {
       return null;
     }
 
-    const inputWidth = totalPages.toString().length * 10;
     const className = getClassName(`Overlay PageNavOverlay ${isLeftPanelOpen && !isLeftPanelDisabled ? 'shifted' : ''}`, this.props);
     
     return (
       <div className={className} data-element="pageNavOverlay" onClick={this.onClick}>
         <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
-          <input ref={this.textInput} type="text" value={this.state.input} style={{ width: inputWidth }} onChange={this.onChange} />
+          <input ref={this.textInput} type="text" value={this.state.input} onChange={this.onChange} />
           {this.state.isCustomPageLabels 
           ? ` (${currentPage}/${totalPages})`
           : ` / ${totalPages}`

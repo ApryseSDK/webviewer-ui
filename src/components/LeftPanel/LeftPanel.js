@@ -59,7 +59,7 @@ class LeftPanel extends React.Component {
         {customPanels.map(({ panel }, index) => (
           <CustomElement
             key={panel.dataElement || index}
-            className="Panel"
+            className={`Panel ${panel.dataElement}`}
             display={this.getDisplay(panel.dataElement)}
             dataElement={panel.dataElement}
             render={panel.render}

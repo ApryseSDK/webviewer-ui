@@ -2,13 +2,13 @@ import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { isIOS, isAndroid } from 'helpers/device';
 import selectors from 'selectors';
 
+
 // viewer
 export const disableElement = (dataElement, priority) => (dispatch, getState) => {
   if (dataElement === 'stylePopup') {
     dispatch(disableElements(['toolStylePopup', 'annotationStylePopup'], priority));
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
-
     if (!currentPriority || priority >= currentPriority) {
       dispatch({ type: 'DISABLE_ELEMENT', payload: { dataElement, priority }});
     }
@@ -23,7 +23,6 @@ export const enableElement = (dataElement, priority) => (dispatch, getState) => 
     dispatch(enableElements(['toolStylePopup', 'annotationStylePopup'], priority));
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
-
     if (!currentPriority || priority >= currentPriority) {
       dispatch({ type: 'ENABLE_ELEMENT', payload: { dataElement, priority }});
     }
@@ -82,10 +81,6 @@ export const collapseAllNotes = () => (dispatch, getState) => {
   }
 };
 export const setHeaderItems = (header, headerItems) => ({ type: 'SET_HEADER_ITEMS', payload: { header, headerItems } });
-export const enableTool = toolName => ({ type: 'ENABLE_TOOL', payload: { toolName } });
-export const enableTools = toolNames => ({ type: 'ENABLE_TOOLS', payload: { toolNames } });
-export const disableTool = toolName => ({ type: 'DISABLE_TOOL', payload: { toolName } });
-export const disableTools = toolNames => ({ type: 'DISABLE_TOOLS', payload: { toolNames } });
 
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });

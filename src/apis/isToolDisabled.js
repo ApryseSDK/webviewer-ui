@@ -1,3 +1,3 @@
-import selectors from 'selectors';
+import core from 'core';
 
-export default store => toolName => selectors.isToolDisabled(store.getState(), toolName);
+export default toolName => !!core.getTool(toolName).disabled;

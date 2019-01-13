@@ -4,6 +4,7 @@ import toolStyleExists from 'helpers/toolStyleExists';
 
 export default (dispatch, toolName, toolGroup) =>  {
   if (core.getIsReadOnly() || core.getTool(toolName).disabled) { // TODO: revisit
+    console.warn(`${toolName} has been disabled.`);
     return;
   }
 

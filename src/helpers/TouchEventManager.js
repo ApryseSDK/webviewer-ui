@@ -114,14 +114,19 @@ const TouchEventManager = {
     switch (this.touch.type) {
       case 'tap': {
         this.doubleTapTimeout = setTimeout(() => {
-          this.touch.type = '';
+          this.touch.type = ''; 
         }, 300);
         break;
       }
       case 'swipe': {
         const toolName = core.getToolMode().name;
         const usingAnnotationTools = toolName !== 'AnnotationEdit' && toolName !== 'Pan'; 
-        if (core.getSelectedText().length > 0 || core.isContinuousDisplayMode() || usingAnnotationTools) {
+        if (
+          core.getSelectedText().length || 
+          core.isContinuousDisplayMode() || 
+          usingAnnotationTools || 
+          core.getSelectedAnnotations().length
+        ) {
           return;
         }
 

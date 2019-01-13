@@ -1,8 +1,19 @@
 import { documentTypes } from 'constants/types';
+import core from 'core';
 
 // viewer
 export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
-export const isToolDisabled = (state, toolName) => state.viewer.disabledTools[toolName];
+export const isToolGroupButtonDisabled = (state, dataElement, toolGroup) => {
+  const toolNames = getToolNamesByGroup(state, toolGroup);
+  const isEveryButtonInGroupDisabled = toolNames.every(toolName => isToolButtonDisabled(state, toolName));
+  
+  return isElementDisabled(state, dataElement) || isEveryButtonInGroupDisabled;
+};
+export const isToolButtonDisabled = (state, toolName) => {
+  const dataElement = getToolButtonDataElement(state, toolName);
+  
+  return isElementDisabled(state, dataElement) || core.getTool(toolName).disabled;
+};
 export const isElementOpen = (state, dataElement) => {
   if (state.viewer.disabledElements[dataElement]) {
     return state.viewer.openElements[dataElement] && !state.viewer.disabledElements[dataElement].disabled;
@@ -13,8 +24,11 @@ export const isElementOpen = (state, dataElement) => {
 export const getActiveHeaderItems = state => state.viewer.headers[state.viewer.activeHeaderGroup];
 export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].priority;
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
+export const getToolButtonDataElements = (state, toolNames) => toolNames.map(toolName => state.viewer.toolButtonObjects[toolName].dataElement);
 export const getToolButtonObject = (state, toolName) => state.viewer.toolButtonObjects[toolName];
+export const getToolButtonDataElement = (state, toolName) => state.viewer.toolButtonObjects[toolName].dataElement;
 export const getToolNamesByGroup = (state, toolGroup) => Object.keys(state.viewer.toolButtonObjects).filter(name => state.viewer.toolButtonObjects[name].group === toolGroup);
+export const getToolNameByDataElement = (state, dataElement) => Object.keys(state.viewer.toolButtonObjects).find(name => state.viewer.toolButtonObjects[name].dataElement === dataElement);
 export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
 export const getActiveLeftPanel = state => state.viewer.activeLeftPanel;

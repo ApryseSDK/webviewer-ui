@@ -1,6 +1,6 @@
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import core from 'core';
-import { fireEvent } from 'helpers/loadDocument';
+import fireEvent from 'helpers/fireEvent';
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
@@ -31,9 +31,13 @@ export const openElement = dataElement => (dispatch, getState) => {
   }
 };
 export const openElements = dataElements => dispatch => {
-  dataElements.forEach(dataElement => {
-    dispatch(openElement(dataElement));
-  });
+  if (typeof dataElements === 'string') {
+    dispatch(openElement(dataElements));
+  } else {
+    dataElements.forEach(dataElement => {
+      dispatch(openElement(dataElement));
+    });
+  }
 };
 export const closeElement = dataElement => (dispatch, getState) => {
   const state = getState();
@@ -58,9 +62,13 @@ export const closeElement = dataElement => (dispatch, getState) => {
   }
 };
 export const closeElements = dataElements => dispatch => {
-  dataElements.forEach(dataElement => {
-    dispatch(closeElement(dataElement));
-  });
+  if (typeof dataElements === 'string') {
+    dispatch(closeElement(dataElements));
+  } else {
+    dataElements.forEach(dataElement => {
+      dispatch(closeElement(dataElement));
+    });
+  }
 };
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
@@ -106,11 +114,11 @@ export const setSortNotesBy = sortStrategy => {
 export const setNoteDateFormat = noteDateFormat => ({ type: 'SET_NOTE_DATE_FORMAT', payload: { noteDateFormat } });
 export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payload: { toolName, properties } });
 export const setCustomPanel = newPanel => ({ type: 'SET_CUSTOM_PANEL', payload: { newPanel } });
-export const useEmbeddedPrint = useEmbeddedPrint => ({ type: 'USE_EMBEDDED_PRINT', payload: { useEmbeddedPrint } });
+export const useEmbeddedPrint = (useEmbeddedPrint = true) => ({ type: 'USE_EMBEDDED_PRINT', payload: { useEmbeddedPrint } });
 export const setPageLabels = pageLabels => dispatch => {
   if (pageLabels.length !== core.getTotalPages()) {
     console.warn('Number of page labels do not match with the total pages.');
     return;
   }
-  dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels } });
+  dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };

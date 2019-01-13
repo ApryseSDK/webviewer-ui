@@ -1,3 +1,3 @@
 import core from 'core';
 
-export default () => core.getIsReadOnly();
+export default () => !!core.getIsReadOnly();

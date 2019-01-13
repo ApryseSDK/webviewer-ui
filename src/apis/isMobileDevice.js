@@ -1,9 +1,9 @@
 export default () => {
-  return !isIE() && ((scrollbarWidth() === 0 && navigator.userAgent.match(/Edge/i))
+  return !!(!isIE() && ((scrollbarWidth() === 0 && navigator.userAgent.match(/Edge/i))
                 || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i)
                 || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)
                 || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/Touch/i)
-                || navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/Silk/i));
+                || navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/Silk/i)));
 };
 
 const isIE = () => {

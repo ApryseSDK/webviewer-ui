@@ -6,8 +6,9 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import thunk from 'redux-thunk';
 
-import apis from 'src/apis';
 import core from 'core';
+
+import apis from 'src/apis';
 
 import App from 'components/App';
 import rootReducer from 'reducers/rootReducer';
@@ -109,7 +110,7 @@ if (window.CanvasRenderingContext2D) {
     setupPDFTron();
     setupDocViewer();
     setupI18n(state);
-    setupMIMETypeTest();
+    setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
     setDefaultToolColor();
@@ -117,7 +118,7 @@ if (window.CanvasRenderingContext2D) {
     setupLoadAnnotationsFromServer(store);
     addEventHandlers();
     core.setToolMode(defaultTool);
-    
+
     ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18n}>
@@ -172,8 +173,9 @@ if (window.CanvasRenderingContext2D) {
           isElementDisabled: apis.isElementDisabled(store),
           isMobileDevice: apis.isMobileDevice,
           isReadOnly: apis.isReadOnly,
-          isToolDisabled: apis.isToolDisabled(store),
+          isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
+          print: apis.print(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),
           rotateClockwise: apis.rotateClockwise,

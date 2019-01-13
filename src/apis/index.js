@@ -69,6 +69,7 @@ import isToolDisabled from './isToolDisabled';
 import setNotesPanelSort from './setNotesPanelSort';
 import addSortStrategy from './addSortStrategy';
 import updateOutlines from './updateOutlines';
+import print from './print';
 
 export default {
   loadDocument,
@@ -141,5 +142,6 @@ export default {
   isToolDisabled,
   setNotesPanelSort,
   addSortStrategy,
-  updateOutlines
+  updateOutlines,
+  print
 };

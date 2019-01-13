@@ -16,6 +16,10 @@ export default state => {
     window.Tools.SignatureCreateTool.setTextHandler(() => {
       return t('message.signHere');
     });
+
+    window.Tools.FreeTextCreateTool.setTextHandler(() => {
+      return t('message.insertTextHere');
+    });
   };
 
   if (state.advanced.disableI18n) {

@@ -1,7 +1,8 @@
+import i18next from 'i18next';
 import dayjs from 'dayjs';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
-const sortStrategy = {
+const sortStrategies = {
   position: {
     getSortedNotes: notes => notes.sort((a, b) => {
       if (a.PageNumber === b.PageNumber) {
@@ -10,7 +11,7 @@ const sortStrategy = {
       return a.PageNumber - b.PageNumber;
     }),
     shouldRenderSeparator: (prevNote, currNote) => currNote.PageNumber !== prevNote.PageNumber,
-    getSeparatorContent: (prevNote, currNote, pageLabels) => `Page ${pageLabels[currNote.PageNumber - 1]}`
+    getSeparatorContent: (prevNote, currNote, pageLabels) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`
   },
   time: {
     getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
@@ -21,14 +22,14 @@ const sortStrategy = {
       const latestActivityDate = dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY');
 
       if (latestActivityDate === today) {
-        return 'Today';
+        return i18next.t('option.notesPanel.separator.today');
       }
       if (latestActivityDate === yesterday) {
-        return 'Yesterday';
+        return i18next.t('option.notesPanel.separator.yesterday');
       }
       return latestActivityDate;
     }
   }
 };
 
-export default sortStrategy;
+export default sortStrategies;
