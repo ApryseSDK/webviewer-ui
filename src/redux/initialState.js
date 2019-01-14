@@ -205,7 +205,7 @@ export default {
     configScript: getHashParams('config', ''),
     defaultDisabledElements: getHashParams('disabledElements', ''),
     externalPath: getHashParams('p', ''),
-    engineType: documentTypeParamToEngineType(getHashParams('documentType')),
+    engineType: documentTypeParamToEngineType(getHashParams('documentType'), getHashParams('pdftronServer', '')),
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
     disableWebsockets: getHashParams('disableWebsockets', false),
