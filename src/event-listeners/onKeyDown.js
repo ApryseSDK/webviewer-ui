@@ -41,10 +41,10 @@ export default store => e => {
       } else if (e.key === 'f' || e.which === 70) { // (Ctrl/Cmd + F)
         e.preventDefault();
         dispatch(actions.openElement('searchOverlay'));
-      } else if (e.key === '+' || e.key === '=' || e.which === 187) { // (Ctrl/Cmd + +)
+      } else if (e.key === '+' || e.key === '=' || e.key === 'Add' || e.which === 187) { // (Ctrl/Cmd + +)
         e.preventDefault();
         zoomIn();
-      } else if (e.key === '-' || e.which === 189) { // (Ctrl/Cmd + -)
+      } else if (e.key === '-' || e.key === 'Subtract' || e.which === 189) { // (Ctrl/Cmd + -)
         e.preventDefault();
         zoomOut(); 
       } else if (e.key === '0' || e.which === 48) { // (Ctrl/Cmd + 0)
