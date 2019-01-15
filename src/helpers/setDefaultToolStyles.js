@@ -20,8 +20,6 @@ const setDefaultToolStyles = () => {
         ...toolStyles
       }));
     }
-
-
   });
 };
 
@@ -37,6 +35,6 @@ const getParsedToolStyles = toolStyles => {
   });
 };
 
-const isKeyColorProperty = key => ['TextColor', 'StrokeColor', 'BorderColor'].includes(key);
+const isKeyColorProperty = key => ['TextColor', 'StrokeColor', 'FillColor'].includes(key);
 
 export default setDefaultToolStyles;
