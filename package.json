@@ -6,7 +6,7 @@
   "scripts": {
     "start": "babel-node ./dev-server.js",
     "test": "babel-node ./test-server.js",
-    "cypress:open": "cypress open",
+    "cypress:open": "cypress open --project ./test/cypress",
     "lint": "eslint ./src*",
     "lint:fix": "eslint --fix ./src/*",
     "clean": "rimraf build",
