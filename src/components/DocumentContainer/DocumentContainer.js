@@ -52,7 +52,7 @@ class DocumentContainer extends React.PureComponent {
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
-    const { hasPath, doesDocumentAutoLoad, openElement, document, advanced, dispatch } = this.props;
+    const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
     if (hasPath && doesDocumentAutoLoad) {
       loadDocument({ document, advanced }, dispatch);
     }

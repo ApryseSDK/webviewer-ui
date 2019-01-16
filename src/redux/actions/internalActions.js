@@ -49,7 +49,7 @@ export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   }
   dispatch({ type: 'SET_ACTIVE_TOOL_NAME_AND_STYLES', payload: { toolName: name, toolStyles: toolObject.defaults || {} } });
 };
-export const setActiveToolStyles = toolStyles => ({ type: 'SET_ACTIVE_TOOL_STYLES', payload: { toolStyles } });
+export const setActiveToolStyles = (toolStyles = {}) => ({ type: 'SET_ACTIVE_TOOL_STYLES', payload: { toolStyles } });
 export const setActiveToolGroup = toolGroup => ({ type: 'SET_ACTIVE_TOOL_GROUP', payload: { toolGroup } });
 export const setNotePopupId = id => ({ type: 'SET_NOTE_POPUP_ID', payload: { id } });
 export const setFitMode = fitMode => ({ type: 'SET_FIT_MODE', payload: { fitMode } });

@@ -27,7 +27,7 @@ import setupI18n from 'helpers/setupI18n';
 import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
-import setDefaultToolColor from 'helpers/setDefaultToolColor';
+import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
 
 const middleware = [thunk];
@@ -113,10 +113,10 @@ if (window.CanvasRenderingContext2D) {
     setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
-    setDefaultToolColor();
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
     addEventHandlers();
+    setDefaultToolStyles();
     core.setToolMode(defaultTool);
 
     ReactDOM.render(
