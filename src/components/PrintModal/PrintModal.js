@@ -9,7 +9,7 @@ import Input from 'components/Input';
 import core from 'core';
 import getPagesToPrint from 'helpers/getPagesToPrint';
 import getClassName from 'helpers/getClassName';
-import getAnnotationType from 'helpers/getAnnotationType';
+import getAnnotationName from 'helpers/getAnnotationName';
 import getAnnotationIcon from 'helpers/getAnnotationIcon';
 import annotationColorToCss from 'helpers/annotationColorToCss';
 import getAnnotationColor from 'helpers/getAnnotationColor';
@@ -259,8 +259,8 @@ class PrintModal extends React.PureComponent {
 
     const noteIcon = document.createElement('div');
     noteIcon.className = 'note__icon';
-    noteIcon.innerHTML = require(`../../../assets/${getAnnotationIcon(getAnnotationType(annotation))}.svg`);
-    noteIcon.style.color = annotationColorToCss(annotation[getAnnotationColor(getAnnotationType(annotation))]);
+    noteIcon.innerHTML = require(`../../../assets/${getAnnotationIcon(getAnnotationName(annotation))}.svg`);
+    noteIcon.style.color = annotationColorToCss(annotation[getAnnotationColor(getAnnotationName(annotation))]);
 
     noteRootInfo.appendChild(noteIcon);
     noteRootInfo.appendChild(this.getNoteInfo(annotation));

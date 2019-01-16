@@ -20,7 +20,7 @@ const getStyle = annotation => {
   });
 
   // Special case for the highlight annotation. It shouldn't have opacity
-  if (annotation['_xsi:type'] === 'Highlight') {
+  if (annotation.elementName === 'highlight') {
     style.Opacity = null;
   }
 

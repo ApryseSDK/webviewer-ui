@@ -42,12 +42,12 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
 
 const setAnnotationColor = annotation => {
   const annotationTypeToolNameMap = {
-    Highlight: 'AnnotationCreateTextHighlight',
-    Underline: 'AnnotationCreateTextUnderline',
-    Squiggly: 'AnnotationCreateTextSquiggly',
-    Strikeout: 'AnnotationCreateTextStrikeout'
+    highlight: 'AnnotationCreateTextHighlight',
+    underline: 'AnnotationCreateTextUnderline',
+    squiggly: 'AnnotationCreateTextSquiggly',
+    strikeout: 'AnnotationCreateTextStrikeout'
   };
-  const toolName = annotationTypeToolNameMap[annotation['_xsi:type']];
+  const toolName = annotationTypeToolNameMap[annotation.elementName];
   
   if (toolName) {
     const { StrokeColor } = getToolStyles(toolName);
