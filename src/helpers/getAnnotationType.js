@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+
 export default annotation => {
   let type = annotation['_xsi:type'];
 
@@ -5,7 +7,7 @@ export default annotation => {
     type = 'Arrow';
   } else if (type === 'Polygon' && annotation.Style === 'cloudy') {
     type = 'Cloud';
-  } else if (type === 'Free Hand' && annotation.Subject === 'Signature') {
+  } else if (type === 'Free Hand' && annotation.Subject === i18next.t('annotation.signature')) {
     type = 'Signature';
   } else if (type === 'FreeText' && annotation.intent === 'FreeTextCallout') {
     type = 'Callout';

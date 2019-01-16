@@ -7,7 +7,7 @@ import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
 import getColorFromStyle from 'helpers/getColorFromStyle';
-import getToolStyle from 'helpers/getToolStyle';
+import getToolStyles from 'helpers/getToolStyles';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -96,7 +96,7 @@ class ToolGroupButton extends React.PureComponent {
 
     const { toolName } = this.state;
     const img = this.props.img ? this.props.img : toolButtonObjects[toolName].img;
-    const color = isActive && !this.props.img ? getColorFromStyle(getToolStyle(toolName)) : '';
+    const color = isActive && !this.props.img ? getColorFromStyle(getToolStyles(toolName)) : '';
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
     const className = [

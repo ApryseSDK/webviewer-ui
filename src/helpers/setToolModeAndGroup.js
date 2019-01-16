@@ -1,6 +1,6 @@
 import actions from 'actions';
 import core from 'core';
-import toolStyleExists from 'helpers/toolStyleExists';
+import toolStylesExist from 'helpers/toolStylesExist';
 
 export default (dispatch, toolName, toolGroup) =>  {
   if (core.getIsReadOnly() || core.getTool(toolName).disabled) { // TODO: revisit
@@ -15,7 +15,7 @@ export default (dispatch, toolName, toolGroup) =>  {
   }
   
   const hasToolBeenSelected = core.getToolMode().name === toolName;
-  if (hasToolBeenSelected && toolStyleExists(toolName)) {
+  if (hasToolBeenSelected && toolStylesExist(toolName)) {
     dispatch(actions.toggleElement('toolStylePopup'));
     return;
   }
