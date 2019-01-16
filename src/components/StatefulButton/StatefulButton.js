@@ -32,8 +32,15 @@ class StatefulButton extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      activeState: props.mount(this.update)
+      activeState: this.props.initialState
     };
+  }
+
+  componentDidMount() {
+    const { mount } = this.props;
+    if (mount) {
+      mount(this.update);
+    }
   }
 
   componentWillUnmount() {
