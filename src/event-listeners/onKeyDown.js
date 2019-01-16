@@ -16,10 +16,10 @@ export default store => e => {
 
   if (e.metaKey || e.ctrlKey) {
     if (e.shiftKey) {
-      if (e.key === '+' || e.key === '=' || e.which === 187) { // (Ctrl/Cmd + Shift + +)
+      if (e.key === '+' || e.key === '=' || e.key === 'Add' || e.which === 187) { // (Ctrl/Cmd + Shift + +)
         e.preventDefault();
         core.rotateClockwise();
-      } else if (e.key === '-' || e.which === 189) { // (Ctrl/Cmd + Shift + -)
+      } else if (e.key === '-' || e.key === 'Subtract' || e.which === 189) { // (Ctrl/Cmd + Shift + -)
         e.preventDefault();
         core.rotateCounterClockwise();
       }
