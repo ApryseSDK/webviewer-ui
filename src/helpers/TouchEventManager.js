@@ -131,7 +131,7 @@ const TouchEventManager = {
         }
 
         const { scrollLeft } = this.container;
-        const swipingLeft = scrollLeft === 0 && this.touch.distance < -100;
+        const swipingLeft = scrollLeft <= 0 && this.touch.distance < -100;
         const viewerWidth = this.document.clientWidth;
         const scrollWidth = this.container.clientWidth;
         const swipingRight = scrollWidth + scrollLeft >= viewerWidth && this.touch.distance > 100;
