@@ -33,6 +33,7 @@ export default store => e => {
         }
       } else if (e.key === 'v' || e.which === 86) {  // (Ctrl/Cmd + V)
         if (!selectedTextFromDOM) {
+          e.preventDefault();
           core.pasteCopiedAnnotations();
         }
       } else if (e.key === 'o' || e.which === 79) { // (Ctrl/Cmd + O)
