@@ -39,7 +39,7 @@ class TextPopup extends React.PureComponent {
     this.underlineText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextUnderlineAnnotation);
     this.squigglyText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextSquigglyAnnotation);
     this.strikeoutText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextStrikeoutAnnotation);
-    this.redactText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.RedactAnnotation);
+    this.redactText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.RedactionAnnotation);
     core.getTool('TextSelect').on('selectionComplete', this.onSelectionComplete);
   }
 

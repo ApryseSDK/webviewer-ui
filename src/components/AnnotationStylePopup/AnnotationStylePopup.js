@@ -43,7 +43,7 @@ class AnnotationStylePopup extends React.Component {
     const { isDisabled, annotation, style, closeElement } = this.props;
     const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation && annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText;
     const className = getClassName('Popup AnnotationStylePopup', this.props);
-    const hideSlider = annotation instanceof window.Annotations.RedactAnnotation;
+    const hideSlider = annotation instanceof window.Annotations.RedactionAnnotation;
 
     if (isDisabled) {
       return null;
