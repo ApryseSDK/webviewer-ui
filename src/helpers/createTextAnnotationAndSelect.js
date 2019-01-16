@@ -1,5 +1,3 @@
-import i18next from 'i18next';
-
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
 import actions from 'actions';
@@ -43,13 +41,13 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
 };
 
 const setAnnotationColor = annotation => {
-  const annotationSubjectToolNameMap = {
-    [i18next.t('annotation.highlight')]: 'AnnotationCreateTextHighlight',
-    [i18next.t('annotation.underline')]: 'AnnotationCreateTextUnderline',
-    [i18next.t('annotation.squiggly')]: 'AnnotationCreateTextSquiggly',
-    [i18next.t('annotation.strikeout')]: 'AnnotationCreateTextStrikeout'
+  const annotationTypeToolNameMap = {
+    Highlight: 'AnnotationCreateTextHighlight',
+    Underline: 'AnnotationCreateTextUnderline',
+    Squiggly: 'AnnotationCreateTextSquiggly',
+    Strikeout: 'AnnotationCreateTextStrikeout'
   };
-  const toolName = annotationSubjectToolNameMap[annotation.Subject];
+  const toolName = annotationTypeToolNameMap[annotation['_xsi:type']];
   
   if (toolName) {
     const { StrokeColor } = getToolStyles(toolName);

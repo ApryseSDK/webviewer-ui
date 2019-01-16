@@ -20,7 +20,7 @@ const getStyle = annotation => {
   });
 
   // Special case for the highlight annotation. It shouldn't have opacity
-  if (annotation.Subject === i18next.t('annotation.highlight')) {
+  if (annotation['_xsi:type'] === 'Highlight') {
     style.Opacity = null;
   }
 
