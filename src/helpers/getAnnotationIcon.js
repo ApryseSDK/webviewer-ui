@@ -1,3 +1,3 @@
 import annotationIconMap from 'constants/annotationIconMap';
 
-export default annotationType => annotationIconMap[annotationType];
+export default annotationName => annotationIconMap[annotationName];
