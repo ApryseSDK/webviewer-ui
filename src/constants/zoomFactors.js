@@ -1,16 +1,24 @@
 let minZoom = 0.05;
 let maxZoom = 15;
 
-export const getMinZoom = () => minZoom;
+export const getMinZoomLevel = () => minZoom;
 
-export const setMinZoom = (zoom) => {
-  minZoom = zoom;
+export const setMinZoomLevel = (zoom) => {
+  if (typeof zoom === 'string') {
+    minZoom = Number.parseFloat(zoom) / 100;
+  } else {
+    minZoom = zoom;
+  }
 };
 
-export const getMaxZoom = () => maxZoom;
+export const getMaxZoomLevel = () => maxZoom;
 
-export const setMaxZoom = (zoom) => {
-  maxZoom = zoom;
+export const setMaxZoomLevel = (zoom) => {
+  if (typeof zoom === 'string') {
+    maxZoom = Number.parseFloat(zoom) / 100;
+  } else {
+    maxZoom = zoom;
+  }
 };
 
 export const stepToZoomFactorRangesMap = {

@@ -1,26 +1,26 @@
 import core from 'core';
-import { stepToZoomFactorRangesMap, getMaxZoom, getMinZoom } from 'constants/zoomFactors';
+import { stepToZoomFactorRangesMap, getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
 
 export const zoomIn = () => {
   const currentZoomFactor = core.getZoom();
-  if (currentZoomFactor === getMaxZoom()) {
+  if (currentZoomFactor === getMaxZoomLevel()) {
     return;
   }
 
   const step = getStep(currentZoomFactor);
   const newZoomFactor = currentZoomFactor + step;
-  zoomTo(Math.min(newZoomFactor, getMaxZoom()));
+  zoomTo(Math.min(newZoomFactor, getMaxZoomLevel()));
 };
 
 export const zoomOut = () => {
   const currentZoomFactor = core.getZoom();
-  if (currentZoomFactor === getMinZoom()) {
+  if (currentZoomFactor === getMinZoomLevel()) {
     return;
   }
 
   const step = getStep(currentZoomFactor);
   const newZoomFactor = currentZoomFactor - step;
-  zoomTo(Math.max(newZoomFactor, getMinZoom()));
+  zoomTo(Math.max(newZoomFactor, getMinZoomLevel()));
 };
 
 const getStep = currentZoomFactor => {
