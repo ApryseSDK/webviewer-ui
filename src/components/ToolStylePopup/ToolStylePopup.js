@@ -98,6 +98,42 @@ class ToolStylePopup extends React.PureComponent {
     this.props.closeElement('toolStylePopup');
   }
 
+  toolNameToAnnotationType = toolName => {
+    switch(toolName){
+      case "AnnotationCreateFreeHand":
+        return "annotation.freeHand";
+      case "AnnotationCreateFreeText":
+        return "Free text";
+      case "AnnotationCreateTextHighlight":
+        return "Highlight";
+      case "AnnotationCreateTextUnderline":
+        return "Underline";
+      case "AnnotationCreateTextSquiggly":
+        return "Squiggly";
+      case "AnnotationCreateTextStrikeout":
+        return "Strikeout";
+      case "AnnotationCreateRectangle":
+        return "Rectangle";
+      case "AnnotationCreateEllipse":
+        return "Ellipse";
+      case "AnnotationCreateLine":
+      case "AnnotationCreateArrow":
+        return "Line";
+      case "AnnotationCreatePolyline":
+        return "Polyline";
+      case "AnnotationCreatePolygon":
+      case "AnnotationCreatePolygonCloud":
+        return "Polygon";
+      case "AnnotationCreateSignature":
+        return "Signature";
+      case "AnnotationCreateSticky":
+        return "Comment";
+      case "AnnotationCreateCallout":
+        return "Callout";
+      default:
+        return null;
+    }
+  }
   render() {
     const { left, top } = this.state;
     const { isDisabled, activeToolName, activeToolStyle } = this.props;
@@ -112,6 +148,7 @@ class ToolStylePopup extends React.PureComponent {
     return (
       <div className={className} data-element="toolStylePopup" style={{ top, left }} ref={this.popup} onMouseDown={e => e.stopPropagation()} onClick={this.onClick}>
         <StylePopup
+          annotationType = {this.toolNameToAnnotationType(activeToolName)}
           key={activeToolName}
           style={activeToolStyle}
           isFreeText={isFreeText}

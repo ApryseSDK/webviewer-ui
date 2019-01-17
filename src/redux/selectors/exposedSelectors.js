@@ -48,6 +48,7 @@ export const isDocumentLoaded = state => state.viewer.isDocumentLoaded;
 export const isDocumentReadOnly = state => state.viewer.isReadOnly;
 export const getCustomPanels = state => state.viewer.customPanels;
 export const getPageLabels = state => state.viewer.pageLabels;
+export const getColorPalette = (state, annotationType) => state.viewer.colorPalette[annotationType];
 export const getDisabledCustomPanelTabs = state => {
   return state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
     if (state.viewer.disabledElements[tab.dataElement]) {

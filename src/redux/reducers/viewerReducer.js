@@ -126,7 +126,25 @@ export default initialState => (state = initialState, action) => {
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
     case 'SET_PAGE_LABELS': 
       return { ...state, pageLabels: [ ...payload.pageLabels ] };
+    case 'SET_COLOR_PALETTE':
+      return { ...state, colorPalette: { ...state.colorPalette, [payload.annotationType]: payload.colorPalette } }
     default:
       return state;
   }
 };
+
+/*
+defaultStyle: {
+  TextTool: 'border'
+},
+currentTab: {
+  TextTool: 'fill'
+}
+
+toolStyle: {
+  TextTool: {
+    default: 'border',
+    current: 'fill'
+  }
+}
+*/

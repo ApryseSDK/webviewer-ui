@@ -122,3 +122,49 @@ export const setPageLabels = pageLabels => dispatch => {
   }
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };
+
+export const setColorPalette = (annotationType, colorPalette) => dispatch => {
+  const threeTypes = ["text","border","fill"];
+  const twoTypes = ["border","fill"];
+
+  switch(annotationType) {
+    case "annotation.freeHand":
+    case "Highlight":
+    case "Underline":
+    case "Squiggly":
+    case "Strikeout":
+    case "Line":
+    case "Polyline":
+    case "Signature":
+    case "Comment":
+      if (colorPalette !== "border"){
+        console.warn("The selected color palette does not exist for " + annotationType + ".");
+        return;
+      } else {
+        break;
+      }
+    case "Free text":
+    case "Callout":
+      if (!threeTypes.includes(colorPalette)){
+        console.warn("The selected color palette does not exist for " + annotationType + ".");
+        return;
+      } else {
+        break;
+      }
+    case "Rectangle":
+    case "Ellipse":
+    case "Polygon":
+      if (!twoTypes.includes(colorPalette)){
+        console.warn("The selected color palette does not exist for " + annotationType + ".");
+        return;
+      } else {
+        break;
+      }
+  }
+  dispatch({ type: 'SET_COLOR_PALETTE', payload: { annotationType: annotationType, colorPalette: colorPalette } });
+};
+
+export const setDefaultColorPalette = (annotationType, colorPalette) => dispatch => {
+  setcolorPalette(annotationType, colorPalette);
+  dispatch({ type: 'SET_DEFAULT_COLOR_PALETTE', payload: { annotationType: annotationType, colorPalette: colorPalette } });
+}  

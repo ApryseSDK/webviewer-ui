@@ -155,6 +155,22 @@ export default {
     customPanels: [],
     useEmbeddedPrint: true,
     pageLabels: [],
+    colorPalette: {
+      "annotation.freeHand": 'border',
+      "Free text": 'text',
+      "Highlight": 'border',
+      "Underline": 'border',
+      "Squiggly": 'border',
+      "Strikeout": 'border',
+      "Rectangle": 'border',
+      "Ellipse": 'border',
+      "Line": 'border',
+      "Polyline": 'border',
+      "Polygon": 'border',
+      "Signature": 'border',
+      "Comment": 'border',
+      "Callout": 'text'
+    },
     noteDateFormat: 'MMM D, h:mma'
   },
   search: {

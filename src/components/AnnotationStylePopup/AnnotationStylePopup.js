@@ -51,6 +51,7 @@ class AnnotationStylePopup extends React.Component {
     return(
       <div className={className} data-element="annotationStylePopup" onClick={() => closeElement('annotationPopup')}>
         <StylePopup 
+          annotationType = {annotation.Subject}
           style={style}
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}

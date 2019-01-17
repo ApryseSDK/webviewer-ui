@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
-
+import selectors from 'selectors';
+import actions from 'actions';
 import { circleRadius } from 'constants/slider';
 
 import './StylePopup.scss';
@@ -18,23 +20,14 @@ class StylePopup extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
-  }
-
-  getInitialState = () => {
-    const {  TextColor, StrokeColor, FillColor } = this.props.style;
-
-    return { 
-      colorPalette: TextColor ? 'text' : StrokeColor ? 'border' : FillColor ? 'fill' : ''
-    };
   }
 
   handleHeaderChange = colorPalette => {
-    this.setState({ colorPalette });
+    this.props.setColorPalette(this.props.annotationType,colorPalette);
   }
 
   renderColorPalette = () => {
-    const { colorPalette } = this.state;
+    const { colorPalette } = this.props;
 
     if (!colorPalette) {
       return null;
@@ -115,7 +108,7 @@ class StylePopup extends React.PureComponent {
       <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
         <div className="colors-container">
           <div className="inner-wrapper">
-            <ColorPaletteHeader colorPalette={this.state.colorPalette} style={this.props.style} onHeaderChange={this.handleHeaderChange} />
+            <ColorPaletteHeader colorPalette={this.props.colorPalette} style={this.props.style} onHeaderChange={this.handleHeaderChange} />
             {this.renderColorPalette()}
           </div>
         </div>
@@ -129,4 +122,13 @@ class StylePopup extends React.PureComponent {
   }
 }
 
-export default StylePopup;
+const mapStateToProps = (state,ownProps) => ({
+  colorPalette: selectors.getColorPalette(state, ownProps.annotationType),
+  annotationType: ownProps.annotationType
+});
+
+const mapDispatchToProps = {
+  setColorPalette: actions.setColorPalette,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StylePopup);

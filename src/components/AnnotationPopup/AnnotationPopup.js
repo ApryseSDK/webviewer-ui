@@ -89,6 +89,7 @@ class AnnotationPopup extends React.PureComponent {
   onAnnotationSelected = (e, annotations, action) => {
     if (action === 'selected' && annotations.length === 1) {
       const annotation = annotations[0];
+      console.log(annotation.Subject);
       this.setState({
         annotation,
         canModify: core.canModify(annotation)
@@ -183,6 +184,7 @@ class AnnotationPopup extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  test: selectors.getActiveToolName(state),
   isNotesPanelDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   isDisabled: selectors.isElementDisabled(state, 'annotationPopup'),
   isAnnotationStylePopupDisabled: selectors.isElementDisabled(state, 'annotationStylePopup'),
