@@ -8,7 +8,7 @@ import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'help
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import TouchEventManager from 'helpers/TouchEventManager';
-import { ZOOM_MIN, ZOOM_MAX } from 'constants/zoomFactors';
+import { getMinZoom, getMaxZoom } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -120,10 +120,10 @@ class DocumentContainer extends React.PureComponent {
 
     if (e.deltaY < 0) {
       multiple = 1.25;
-      newZoomFactor = Math.min(currentZoomFactor * multiple, ZOOM_MAX);
+      newZoomFactor = Math.min(currentZoomFactor * multiple, getMaxZoom());
     } else if (e.deltaY > 0) {
       multiple = 0.8;
-      newZoomFactor = Math.max(currentZoomFactor * multiple, ZOOM_MIN);
+      newZoomFactor = Math.max(currentZoomFactor * multiple, getMinZoom());
     }
 
     core.zoomToMouse(newZoomFactor);

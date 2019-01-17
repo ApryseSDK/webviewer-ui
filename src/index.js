@@ -16,6 +16,7 @@ import { engineTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
+import { setMinZoom, setMaxZoom } from 'constants/zoomFactors';
 import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript from 'helpers/loadScript';
@@ -205,7 +206,9 @@ if (window.CanvasRenderingContext2D) {
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store),
           loadedFromServer: false,
-          serverFailed: false
+          serverFailed: false,
+          setMinZoom,
+          setMaxZoom
         };
 
         window.ControlUtils = {
