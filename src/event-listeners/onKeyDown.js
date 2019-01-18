@@ -32,7 +32,7 @@ export default store => e => {
           core.updateCopiedAnnotations();
         }
       } else if (e.key === 'v' || e.which === 86) {  // (Ctrl/Cmd + V)
-        if (!selectedTextFromDOM) {
+        if (!document.activeElement || (document.activeElement.tagName.toLowerCase() !== 'textarea' && document.activeElement.tagName.toLowerCase() !== 'input')) {
           e.preventDefault();
           core.pasteCopiedAnnotations();
         }
