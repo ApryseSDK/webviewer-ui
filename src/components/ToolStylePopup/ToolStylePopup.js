@@ -9,6 +9,7 @@ import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import annotationTypeMap from '../../constants/annotationTypeMap';
 import './ToolStylePopup.scss';
 
 class ToolStylePopup extends React.PureComponent {
@@ -97,44 +98,15 @@ class ToolStylePopup extends React.PureComponent {
 
     this.props.closeElement('toolStylePopup');
   }
-
-  // make it a constant
+  
   toolNameToAnnotationType = toolName => {
-    switch(toolName){
-      case "AnnotationCreateFreeHand":
-        return "annotation.freeHand";
-      case "AnnotationCreateFreeText":
-        return "Free text";
-      case "AnnotationCreateTextHighlight":
-        return "Highlight";
-      case "AnnotationCreateTextUnderline":
-        return "Underline";
-      case "AnnotationCreateTextSquiggly":
-        return "Squiggly";
-      case "AnnotationCreateTextStrikeout":
-        return "Strikeout";
-      case "AnnotationCreateRectangle":
-        return "Rectangle";
-      case "AnnotationCreateEllipse":
-        return "Ellipse";
-      case "AnnotationCreateLine":
-      case "AnnotationCreateArrow":
-        return "Line";
-      case "AnnotationCreatePolyline":
-        return "Polyline";
-      case "AnnotationCreatePolygon":
-      case "AnnotationCreatePolygonCloud":
-        return "Polygon";
-      case "AnnotationCreateSignature":
-        return "Signature";
-      case "AnnotationCreateSticky":
-        return "Comment";
-      case "AnnotationCreateCallout":
-        return "Callout";
-      default:
-        return null;
+    if (annotationTypeMap[toolName] !== undefined){
+      return annotationTypeMap[toolName];
+    } else {
+      return null;
     }
   }
+
   render() {
     const { left, top } = this.state;
     const { isDisabled, activeToolName, activeToolStyle } = this.props;
