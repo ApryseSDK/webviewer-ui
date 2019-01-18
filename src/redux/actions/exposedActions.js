@@ -1,6 +1,7 @@
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import core from 'core';
 import fireEvent from 'helpers/fireEvent';
+import { types } from 'util';
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
@@ -162,7 +163,12 @@ export const setDefaultColorPalette = (annotationType, colorPalette) => dispatch
     "Free text", "Callout"
   ];
 
-  if (typesOnlyWithBorder.includes(annotationType) && colorPalette !== "Border"){
+
+  if (!typesOnlyWithBorder.includes(annotationType) && !typesWithTwoPalettes.includes(annotationType) && !typesWithThreePalettes.includes(annotationType)){
+    console.warn(annotationType + " is not a valid annotation type.");
+    return;
+  }
+  if (typesOnlyWithBorder.includes(annotationType) && colorPalette !== "border"){
     console.warn(colorPalette + " does not exist for " + annotationType + ".");
     return;
   } else if (typesWithTwoPalettes.includes(annotationType) && !twoTypes.includes(colorPalette)){
