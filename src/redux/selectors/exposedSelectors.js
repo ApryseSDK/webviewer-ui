@@ -1,4 +1,5 @@
 import { documentTypes } from 'constants/types';
+import annotationTypeMap from 'constants/annotationTypeMap';
 import core from 'core';
 
 // viewer
@@ -48,9 +49,9 @@ export const isDocumentLoaded = state => state.viewer.isDocumentLoaded;
 export const isDocumentReadOnly = state => state.viewer.isReadOnly;
 export const getCustomPanels = state => state.viewer.customPanels;
 export const getPageLabels = state => state.viewer.pageLabels;
-export const getColorPalette = (state, annotationType) => {
-  if (annotationType !== null){
-    return state.viewer.colorPalette[annotationType].currentPalette;
+export const getColorPalette = (state, colorDataKey) => {
+  if (colorDataKey){
+    return state.viewer.colorData[colorDataKey].currentPalette;
   }
 };
 export const getDefaultColorPalette = (state, annotationType) => {
@@ -71,6 +72,52 @@ export const isEmbedPrintSupported = state => {
   const isPDF = getDocumentType(state) === documentTypes.PDF;
   return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
 };
+export const getColorDataKey = arg => {
+  if (arg instanceof window.Annotations.FreeTextAnnotation) {
+    return 'freeText';
+  }
+  if (arg instanceof window.Annotations.FreeHandAnnotation) {
+    return 'freeHand';
+  }
+  if (arg instanceof window.Annotations.TextHighlightAnnotation) {
+    return 'highlight';
+  }
+  if (arg instanceof window.Annotations.TextUnderlineAnnotation) {
+    return 'underline';
+  }
+  if (arg instanceof window.Annotations.TextSquigglyAnnotation) {
+    return 'squiggly';
+  }
+  if (arg instanceof window.Annotations.TextStrikeoutAnnotation) {
+    return 'strikeout';
+  }
+  if (arg instanceof window.Annotations.RectangleAnnotation) {
+    return 'rectangle';
+  }
+  if (arg instanceof window.Annotations.EllipseAnnotation) {
+    return 'ellipse';
+  }
+  if (arg instanceof window.Annotations.LineAnnotation) {
+    return 'line';
+  }
+  if (arg instanceof window.Annotations.PolylineAnnotation) {
+    return 'polyline';
+  }
+  if (arg instanceof window.Annotations.PolygonAnnotation) {
+    return 'polygon';
+  }
+  if (arg instanceof window.Annotations.StickyAnnotation) {
+    return 'stickyNote';
+  }
+  
+  return annotationTypeMap[arg];
+};
+// if (arg instanceof window.Annotations.FreeHandAnnotation && ) {
+//   return 'signature';
+// }
+// if (arg instanceof window.Annotations.LineAnnotation) {
+//   return 'line';
+// }
 
 // document
 export const getDocument = state => state.document;

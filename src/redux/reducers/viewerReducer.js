@@ -127,9 +127,9 @@ export default initialState => (state = initialState, action) => {
     case 'SET_PAGE_LABELS': 
       return { ...state, pageLabels: [ ...payload.pageLabels ] };
     case 'SET_COLOR_PALETTE':
-      return { ...state, colorPalette: { ...state.colorPalette, [payload.annotationType]: { ...state.colorPalette[payload.annotationType], currentPalette: payload.colorPalette } } };
-    case 'SET_DEFAULT_COLOR_PALETTE':
-      return { ...state, colorPalette: { ...state.colorPalette, [payload.annotationType]: { ...state.colorPalette[payload.annotationType], defaultPalette: payload.colorPalette, currentPalette: payload.colorPalette } } };
+      return { ...state, colorData: { ...state.colorData, [payload.colorDataKey]: { ...state.colorData[payload.colorDataKey], currentPalette: payload.colorPalette } } };
+    case 'SET_ICON_COLOR':
+      return { ...state, colorData: { ...state.colorData, [payload.colorDataKey]: { ...state.colorData[payload.colorDataKey], iconColor: payload.colorPalette } } };
     default:
       return state;
   }

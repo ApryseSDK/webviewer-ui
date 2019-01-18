@@ -15,7 +15,8 @@ class StylePopup extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    isFreeText: PropTypes.bool.isRequired
+    isFreeText: PropTypes.bool.isRequired,
+    colorDataKey: PropTypes.string
   }
 
   constructor(props) {
@@ -23,7 +24,7 @@ class StylePopup extends React.PureComponent {
   }
 
   handleHeaderChange = colorPalette => {
-    this.props.setColorPalette(this.props.annotationType,colorPalette);
+    this.props.setColorPalette(this.props.colorDataKey, colorPalette);
   }
 
   renderColorPalette = () => {
@@ -122,13 +123,12 @@ class StylePopup extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state,ownProps) => ({
-  colorPalette: selectors.getColorPalette(state, ownProps.annotationType),
-  annotationType: ownProps.annotationType
+const mapStateToProps = (state, ownProps) => ({
+  colorPalette: selectors.getColorPalette(state, ownProps.colorDataKey),
 });
 
 const mapDispatchToProps = {
   setColorPalette: actions.setColorPalette,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(StylePopup);

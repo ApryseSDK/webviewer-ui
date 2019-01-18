@@ -89,7 +89,7 @@ class AnnotationPopup extends React.PureComponent {
   onAnnotationSelected = (e, annotations, action) => {
     if (action === 'selected' && annotations.length === 1) {
       const annotation = annotations[0];
-      console.log(annotation.Subject);
+      console.log(annotation);
       this.setState({
         annotation,
         canModify: core.canModify(annotation)

@@ -9,6 +9,7 @@ import core from 'core';
 import toolStyleExists from 'helpers/toolStyleExists';
 import getToolStyle from 'helpers/getToolStyle';
 import getColorFromStyle from 'helpers/getColorFromStyle';
+import annotationTypeMap from 'constants/annotationTypeMap';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -45,6 +46,8 @@ class ToolButton extends React.PureComponent {
 
   getToolButtonColor = () => {
     const { showColor, activeToolStyles, isActive, toolName } = this.props;
+
+    // check what the iconColor is, 
 
     switch (showColor) {
       case 'always': {
@@ -84,6 +87,7 @@ const mapStateToProps = (state, { toolName }) => ({
   isDisabled: selectors.isToolButtonDisabled(state, toolName),
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
+  color: state.viewer.colorData[annotationTypeMap[toolName] || 'freeHand'].iconColor,
   ...selectors.getToolButtonObject(state, toolName)
 });
 

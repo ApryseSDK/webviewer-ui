@@ -109,7 +109,7 @@ class ToolStylePopup extends React.PureComponent {
 
   render() {
     const { left, top } = this.state;
-    const { isDisabled, activeToolName, activeToolStyle } = this.props;
+    const { isDisabled, activeToolName, activeToolStyle, colorDataKey } = this.props;
     
     if (isDisabled) {
       return null;
@@ -121,7 +121,7 @@ class ToolStylePopup extends React.PureComponent {
     return (
       <div className={className} data-element="toolStylePopup" style={{ top, left }} ref={this.popup} onMouseDown={e => e.stopPropagation()} onClick={this.onClick}>
         <StylePopup
-          annotationType = {this.toolNameToAnnotationType(activeToolName)}
+          colorDataKey={colorDataKey}
           key={activeToolName}
           style={activeToolStyle}
           isFreeText={isFreeText}
@@ -137,7 +137,8 @@ const mapStateToProps = state => ({
   activeToolStyle: selectors.getActiveToolStyles(state),
   isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
   isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
-  toolButtonObjects: selectors.getToolButtonObjects(state)
+  toolButtonObjects: selectors.getToolButtonObjects(state),
+  colorDataKey: selectors.getColorDataKey(selectors.getActiveToolName(state)) 
 });
 
 const mapDispatchToProps = {

@@ -16,7 +16,8 @@ class AnnotationStylePopup extends React.Component {
     isDisabled: PropTypes.bool,
     annotation: PropTypes.object.isRequired,
     style: PropTypes.object.isRequired,
-    closeElement: PropTypes.func.isRequired
+    closeElement: PropTypes.func.isRequired,
+    colorDataKey: PropTypes.string // TODO: make sure if it's required or not
   }
 
   constructor(props) {
@@ -40,7 +41,7 @@ class AnnotationStylePopup extends React.Component {
   }
 
   render() {
-    const { isDisabled, annotation, style, closeElement } = this.props;
+    const { isDisabled, annotation, style, closeElement, colorDataKey } = this.props;
     const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation && annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText;
     const className = getClassName('Popup AnnotationStylePopup', this.props);
 
@@ -51,7 +52,7 @@ class AnnotationStylePopup extends React.Component {
     return(
       <div className={className} data-element="annotationStylePopup" onClick={() => closeElement('annotationPopup')}>
         <StylePopup 
-          annotationType = {annotation.Subject}
+          colorDataKey={colorDataKey}
           style={style}
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}
@@ -61,8 +62,9 @@ class AnnotationStylePopup extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'annotationStylePopup')
+const mapStateToProps = (state, ownProps) => ({
+  isDisabled: selectors.isElementDisabled(state, 'annotationStylePopup'),
+  colorDataKey: selectors.getColorDataKey(ownProps.annotation)
 });
 
 const mapDispatchToProps = {

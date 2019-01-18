@@ -155,76 +155,63 @@ export default {
     customPanels: [],
     useEmbeddedPrint: true,
     pageLabels: [],
-    colorPalette: {
-      "annotation.freeHand": {
-        defaultPalette:'border',
-        currentPalette:'border'
+    colorData: {
+      freeHand: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Free text": {
-        defaultPalette:'text',
-        currentPalette:'text'
+      freeText: {
+        iconColor: 'text',
+        currentPalette: 'text'
       },
-      "Highlight": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      highlight: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Underline": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      underline: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Squiggly": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      squiggly: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Strikeout": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      strikeout: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Rectangle": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      rectangle: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Ellipse": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      ellipse: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Line": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      line: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Polyline": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      polyline: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Polygon": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      polygon: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Signature": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      signature: {
+        iconColor: 'border',
+        currentPalette: 'border'
       },
-      "Comment": {
-        defaultPalette:'border',
-        currentPalette:'border'
+      stickyNote: {
+        iconColor:'border',
+        currentPalette: 'border'
       },
-      "Callout": {
-        defaultPalette:'text',
-        currentPalette:'text'
+      callout: {
+        iconColor:'text',
+        currentPalette: 'text'
       }
-      // "Free text": 'text',
-      // "Highlight": 'border',
-      // "Underline": 'border',
-      // "Squiggly": 'border',
-      // "Strikeout": 'border',
-      // "Rectangle": 'border',
-      // "Ellipse": 'border',
-      // "Line": 'border',
-      // "Polyline": 'border',
-      // "Polygon": 'border',
-      // "Signature": 'border',
-      // "Comment": 'border',
-      // "Callout": 'text'
     },
     noteDateFormat: 'MMM D, h:mma'
   },
