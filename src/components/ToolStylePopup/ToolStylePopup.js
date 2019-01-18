@@ -98,6 +98,7 @@ class ToolStylePopup extends React.PureComponent {
     this.props.closeElement('toolStylePopup');
   }
 
+  // make it a constant
   toolNameToAnnotationType = toolName => {
     switch(toolName){
       case "AnnotationCreateFreeHand":

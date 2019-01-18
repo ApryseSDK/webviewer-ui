@@ -138,7 +138,7 @@ export const setColorPalette = (annotationType, colorPalette) => dispatch => {
     case "Signature":
     case "Comment":
       if (colorPalette !== "border"){
-        console.warn("The selected color palette does not exist for " + annotationType + ".");
+        console.warn(colorPalette + " does not exist for " + annotationType + ".");
         return;
       } else {
         break;
@@ -146,7 +146,7 @@ export const setColorPalette = (annotationType, colorPalette) => dispatch => {
     case "Free text":
     case "Callout":
       if (!threeTypes.includes(colorPalette)){
-        console.warn("The selected color palette does not exist for " + annotationType + ".");
+        console.warn(colorPalette + " does not exist for " + annotationType + ".");
         return;
       } else {
         break;
@@ -155,7 +155,7 @@ export const setColorPalette = (annotationType, colorPalette) => dispatch => {
     case "Ellipse":
     case "Polygon":
       if (!twoTypes.includes(colorPalette)){
-        console.warn("The selected color palette does not exist for " + annotationType + ".");
+        console.warn(colorPalette + " does not exist for " + annotationType + ".");
         return;
       } else {
         break;
@@ -165,6 +165,42 @@ export const setColorPalette = (annotationType, colorPalette) => dispatch => {
 };
 
 export const setDefaultColorPalette = (annotationType, colorPalette) => dispatch => {
-  setcolorPalette(annotationType, colorPalette);
+  const threeTypes = ["text","border","fill"];
+  const twoTypes = ["border","fill"];
+
+  switch(annotationType) {
+    case "annotation.freeHand":
+    case "Highlight":
+    case "Underline":
+    case "Squiggly":
+    case "Strikeout":
+    case "Line":
+    case "Polyline":
+    case "Signature":
+    case "Comment":
+      if (colorPalette !== "border"){
+        console.warn(colorPalette + " does not exist for " + annotationType + ".");
+        return;
+      } else {
+        break;
+      }
+    case "Free text":
+    case "Callout":
+      if (!threeTypes.includes(colorPalette)){
+        console.warn(colorPalette + " does not exist for " + annotationType + ".");
+        return;
+      } else {
+        break;
+      }
+    case "Rectangle":
+    case "Ellipse":
+    case "Polygon":
+      if (!twoTypes.includes(colorPalette)){
+        console.warn(colorPalette + " does not exist for " + annotationType + ".");
+        return;
+      } else {
+        break;
+      }
+  }
   dispatch({ type: 'SET_DEFAULT_COLOR_PALETTE', payload: { annotationType: annotationType, colorPalette: colorPalette } });
 }  
