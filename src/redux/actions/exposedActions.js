@@ -125,59 +125,59 @@ export const setPageLabels = pageLabels => dispatch => {
 };
 
 export const setColorPalette = (colorDataKey, colorPalette) => dispatch => {
-  // const threeTypes = ['text','border','fill'];
-  // const twoTypes = ['border','fill'];
-  // const typesOnlyWithBorder = [
-  //   'annotation.freeHand', 'Highlight', 'Underline', 'Squiggly', 'Strikeout', 'Line', 'Polyline', 'Signature', 'Comment'
-  // ];
-  // const typesWithTwoPalettes = [
-  //   'Rectangle', 'Ellipse', 'Polygon'
-  // ];
-  // const typesWithThreePalettes = [
-  //   'Free text', 'Callout'
-  // ];
+  const threeTypes = ['text','border','fill'];
+  const twoTypes = ['border','fill'];
+  const typesOnlyWithBorder = [
+    'freeHand', 'highlight', 'underline', 'squiggly', 'strikeout', 'line', 'polyline', 'signature', 'stickyNote'
+  ];
+  const typesWithTwoPalettes = [
+    'rectangle', 'ellipse', 'polygon'
+  ];
+  const typesWithThreePalettes = [
+    'freeText', 'callout'
+  ];
 
-  // if (typesOnlyWithBorder.includes(annotationType) && colorPalette !== 'Border'){
-  //   console.warn(colorPalette + ' does not exist for ' + annotationType + '.');
-  //   return;
-  // } else if (typesWithTwoPalettes.includes(annotationType) && !twoTypes.includes(colorPalette)){
-  //   console.warn(colorPalette + ' does not exist for ' + annotationType + '.');
-  //   return;
-  // } else if (typesWithThreePalettes.includes(annotationType) && !threeTypes.includes(colorPalette)){
-  //   console.warn(colorPalette + ' does not exist for ' + annotationType + '.');
-  //   return;
-  // }
-  // dispatch({ type: 'SET_COLOR_PALETTE', payload: { annotationType, colorPalette } });
+  if (typesOnlyWithBorder.includes(colorDataKey) && colorPalette !== 'border'){
+    console.warn(colorPalette + ' does not exist for ' + colorDataKey + '.');
+    return;
+  } else if (typesWithTwoPalettes.includes(colorDataKey) && !twoTypes.includes(colorPalette)){
+    console.warn(colorPalette + ' does not exist for ' + colorDataKey + '.');
+    return;
+  } else if (typesWithThreePalettes.includes(colorDataKey) && !threeTypes.includes(colorPalette)){
+    console.warn(colorPalette + ' does not exist for ' + colorDataKey + '.');
+    return;
+  } else if (!typesWithThreePalettes.includes(colorDataKey) && !typesWithTwoPalettes.includes(colorDataKey) && !typesOnlyWithBorder.includes(colorDataKey)){
+    console.warn(colorDataKey + " is not a valid annotation type.");
+    return;
+  }
   dispatch({ type: 'SET_COLOR_PALETTE', payload: { colorDataKey, colorPalette } });
 };
 
 export const setIconColor = (colorDataKey, colorPalette) => dispatch => {
-  // const threeTypes = ['text','border','fill'];
-  // const twoTypes = ['border','fill'];
-  // const typesOnlyWithBorder = [
-  //   'annotation.freeHand', 'Highlight', 'Underline', 'Squiggly', 'Strikeout', 'Line', 'Polyline', 'Signature', 'Comment'
-  // ];
-  // const typesWithTwoPalettes = [
-  //   'Rectangle', 'Ellipse', 'Polygon'
-  // ];
-  // const typesWithThreePalettes = [
-  //   'Free text', 'Callout'
-  // ];
+  const threeTypes = ['text','border','fill'];
+  const twoTypes = ['border','fill'];
+  const typesOnlyWithBorder = [
+    'freeHand', 'highlight', 'underline', 'squiggly', 'strikeout', 'line', 'polyline', 'signature', 'stickyNote'
+  ];
+  const typesWithTwoPalettes = [
+    'rectangle', 'ellipse', 'polygon'
+  ];
+  const typesWithThreePalettes = [
+    'freeText', 'callout'
+  ];
 
-
-  // if (!typesOnlyWithBorder.includes(annotationType) && !typesWithTwoPalettes.includes(annotationType) && !typesWithThreePalettes.includes(annotationType)){
-  //   console.warn(annotationType + ' is not a valid annotation type.');
-  //   return;
-  // }
-  // if (typesOnlyWithBorder.includes(annotationType) && colorPalette !== 'border'){
-  //   console.warn(colorPalette + ' does not exist for ' + annotationType + '.');
-  //   return;
-  // } else if (typesWithTwoPalettes.includes(annotationType) && !twoTypes.includes(colorPalette)){
-  //   console.warn(colorPalette + ' does not exist for ' + annotationType + '.');
-  //   return;
-  // } else if (typesWithThreePalettes.includes(annotationType) && !threeTypes.includes(colorPalette)){
-  //   console.warn(colorPalette + ' does not exist for ' + annotationType + '.');
-  //   return;
-  // }
+  if (typesOnlyWithBorder.includes(colorDataKey) && colorPalette !== 'border'){
+    console.warn(colorPalette + ' does not exist for ' + colorDataKey + '.');
+    return;
+  } else if (typesWithTwoPalettes.includes(colorDataKey) && !twoTypes.includes(colorPalette)){
+    console.warn(colorPalette + ' does not exist for ' + colorDataKey + '.');
+    return;
+  } else if (typesWithThreePalettes.includes(colorDataKey) && !threeTypes.includes(colorPalette)){
+    console.warn(colorPalette + ' does not exist for ' + colorDataKey + '.');
+    return;
+  } else if (!typesWithThreePalettes.includes(colorDataKey) && !typesWithTwoPalettes.includes(colorDataKey) && !typesOnlyWithBorder.includes(colorDataKey)){
+    console.warn(colorDataKey + " is not a valid annotation type.");
+    return;
+  }
   dispatch({ type: 'SET_ICON_COLOR', payload: { colorDataKey, colorPalette } });
 };  

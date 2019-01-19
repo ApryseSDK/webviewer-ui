@@ -45,18 +45,16 @@ class ToolButton extends React.PureComponent {
   }
 
   getToolButtonColor = () => {
-    const { showColor, activeToolStyles, isActive, toolName } = this.props;
-
+    const { showColor, activeToolStyles, isActive, toolName, iconColor } = this.props;
     // check what the iconColor is, 
-
     switch (showColor) {
       case 'always': {
         const toolStyle = getToolStyle(toolName);
-        return getColorFromStyle(toolStyle);
+        return getColorFromStyle(toolStyle, iconColor);
       }
       case 'active': {
         const toolStyle = activeToolStyles;
-        return isActive ? getColorFromStyle(toolStyle) : '';
+        return isActive ? getColorFromStyle(toolStyle, iconColor) : '';
       }
       case 'never':
       default: {
@@ -72,13 +70,12 @@ class ToolButton extends React.PureComponent {
       'ToolButton',
       toolStyleExists(toolName) ? 'hasStyles' : ''
     ].join(' ').trim();
-
     if (isDisabled) {
       return null;
     }
 
     return (
-      <Button {...this.props} className={className} color={color} onClick={this.onClick} />
+        <Button {...this.props} className={className} color={color} onClick={this.onClick} />
     );
   }
 }
@@ -87,7 +84,7 @@ const mapStateToProps = (state, { toolName }) => ({
   isDisabled: selectors.isToolButtonDisabled(state, toolName),
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
-  color: state.viewer.colorData[annotationTypeMap[toolName] || 'freeHand'].iconColor,
+  iconColor: selectors.getDefaultColorPalette(state, annotationTypeMap[toolName] || 'freeText'),
   ...selectors.getToolButtonObject(state, toolName)
 });
 

@@ -54,9 +54,9 @@ export const getColorPalette = (state, colorDataKey) => {
     return state.viewer.colorData[colorDataKey].currentPalette;
   }
 };
-export const getDefaultColorPalette = (state, annotationType) => {
-  if (annotationType !== null){
-    return state.viewer.colorPalette[annotationType].defaultPalette;
+export const getDefaultColorPalette = (state, colorDataKey) => {
+  if (colorDataKey && state.viewer.colorData[colorDataKey]){
+    return state.viewer.colorData[colorDataKey].iconColor;
   }
 };
 export const getDisabledCustomPanelTabs = state => {
