@@ -94,14 +94,20 @@ class SignatureModal extends React.PureComponent {
           <div className="signature">
             <canvas className="signature-canvas" ref={this.canvas}></canvas>
             <div className="signature-background">
-              <div className="signature-text">
+              <div className="signature-sign-here">
                 {t('message.signHere')}
+              </div>
+              <div className="signature-clear">
+                {t('action.clear')}
               </div>
             </div>
           </div>
           <div className="footer">
-            <ActionButton dataElement="signatureModalClearButton" title="action.clear" img="ic_delete_black_24px" onClick={this.clearCanvas} />
-            <ActionButton dataElement="signatureModalSignButton" title="action.sign" img="ic_check_black_24px" onClick={this.addSignature} />
+            <div className="signature-save">
+              <input id="default-signature" type="checkbox" />
+              <label htmlFor="default-signature">{t('action.saveSignature')}</label>
+            </div>
+            <div className="signature-apply">{t('action.apply')}</div>
           </div>
         </div>
       </div>
