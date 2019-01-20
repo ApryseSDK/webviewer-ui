@@ -1,4 +1,5 @@
 import core from 'core';
+import actions from 'actions';
 
 export default {
   fitButton: {
@@ -36,4 +37,30 @@ export default {
       }
     },
   },
+  signatureToolButton: {
+    initialState: 'newSignature',
+    mount: () => {
+
+    },
+    unmount: () => {
+
+    },
+    states: {
+      newSignature: {
+        img: 'ic_annotation_signature_black_24px',
+        onClick: (update, state, dispatch) => {
+          core.setToolMode('AnnotationCreateSignature');
+          dispatch(actions.openElement('signatureModal'));
+        },
+        title: 'annotation.signature'
+      },
+      defaultSignature: {
+        img: 'ic_annotation_signature_black_24px',
+        onClick: () => {
+
+        },
+        title: 'annotation.signature' 
+      }
+    }
+  }
 };

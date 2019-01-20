@@ -20,6 +20,7 @@ export default {
         { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: [ 'tablet', 'mobile' ] },
         { type: 'statefulButton', dataElement: 'fitButton', hidden: ['mobile'] },
+        { type: 'statefulButton', dataElement: 'signatureToolButton', hidden: ['mobile'] },
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
         { type: 'spacer' },

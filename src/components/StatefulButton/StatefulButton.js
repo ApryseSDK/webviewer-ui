@@ -9,6 +9,9 @@ import selectors from 'selectors';
 
 class StatefulButton extends React.PureComponent {
   static propTypes = {
+    isDisabled: PropTypes.bool,
+    dispatch: PropTypes.func,
+    initialState: PropTypes.string.isRequired,
     mount: PropTypes.func.isRequired,
     unmount: PropTypes.func,
     states: PropTypes.shape({
@@ -64,7 +67,9 @@ class StatefulButton extends React.PureComponent {
     e.stopPropagation();
 
     const { activeState } = this.state;
-    this.props.states[activeState].onClick(this.update, this.props.states[activeState]);
+    const { states, dispatch } = this.props;
+
+    this.props.states[activeState].onClick(this.update, states[activeState], dispatch);
   }
 
   render() {
