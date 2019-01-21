@@ -26,6 +26,10 @@ class SignatureModal extends React.PureComponent {
     super();
     this.canvas = React.createRef();
     this.signatureTool = core.getTool('AnnotationCreateSignature');
+    this.state = {
+      saveSignature: false,
+      canClear: false,
+    };
   }
 
   componentDidMount() {
@@ -45,38 +49,60 @@ class SignatureModal extends React.PureComponent {
     this.signatureTool.off('locationSelected', this.onLocationSelected);
   }
 
-  setUpSignatureCanvas = canvas => {
-    const { width, height } = canvas.getBoundingClientRect();
-    const multiplier = window.utils.getCanvasMultiplier();
-
-    canvas.width = width * multiplier;
-    canvas.height = height * multiplier;
-    canvas.getContext('2d').scale(multiplier, multiplier);   
-    this.signatureTool.setSignatureCanvas($(canvas));
-    // draw nothing in the background since we want to convert the signature on the canvas
-    // to an image and we don't want the background to be in the image.
-    this.signatureTool.drawBackground = () => {};
-  }
-
   onLocationSelected = () => {
     this.signatureTool.addSignature();
   }
 
-  closeModal = () => {
-    this.signatureTool.clearSignatureCanvas();
+  setUpSignatureCanvas = canvas => {
+    this.signatureTool.setSignatureCanvas($(canvas));
+    // draw nothing in the background since we want to convert the signature on the canvas
+    // to an image and we don't want the background to be in the image.
+    this.signatureTool.drawBackground = () => {};
+
+    const { width, height } = canvas.getBoundingClientRect();
+    const multiplier = window.utils.getCanvasMultiplier();
+    canvas.width = width * multiplier;
+    canvas.height = height * multiplier;
+    canvas.getContext('2d').scale(multiplier, multiplier);   
+    canvas.addEventListener('mouseup', this.handleFinishDrawing);
+  }
+
+  handleFinishDrawing = () => {
+    if (!this.signatureTool.isEmptySignature()) {
+      this.setState({
+        canClear: true,
+        saveSignature: true
+      });
+    }
+  }
+
+  closeModal = () => { 
+    this.clearCanvas();
     this.props.closeElement('signatureModal');
   }
 
   clearCanvas = () => {
     this.signatureTool.clearSignatureCanvas();
-    this.signatureTool.drawBackground();
+    // TODO: think about if we should trigger an event and set the below state in that event listener
+    // that way the flow is clearer? (And can possibly avoid timing issue)
+    this.setState({ 
+      canClear: false,
+      saveSignature: false 
+    });
   }
 
-  addSignature = () => {
+  handleSaveSignatureChange = () => {
+    this.setState(prevState => ({
+      saveSignature: !prevState.saveSignature
+    }));
+  }
+
+  applySignature = () => {
     this.props.closeElement('signatureModal');
   }
 
   render() {
+    const { canClear } = this.state;
     const { isDisabled, t } = this.props;
 
     if (isDisabled) {
@@ -97,17 +123,17 @@ class SignatureModal extends React.PureComponent {
               <div className="signature-sign-here">
                 {t('message.signHere')}
               </div>
-              <div className="signature-clear">
+              <div className={`signature-clear ${canClear ? 'active': null}`} onClick={this.clearCanvas}>
                 {t('action.clear')}
               </div>
             </div>
           </div>
           <div className="footer">
             <div className="signature-save">
-              <input id="default-signature" type="checkbox" />
+              <input id="default-signature" type="checkbox" checked={this.state.saveSignature} onChange={this.handleSaveSignatureChange} />
               <label htmlFor="default-signature">{t('action.saveSignature')}</label>
             </div>
-            <div className="signature-apply">{t('action.apply')}</div>
+            <div className="signature-apply" onClick={this.applySignature}>{t('action.apply')}</div>
           </div>
         </div>
       </div>

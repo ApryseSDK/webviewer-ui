@@ -69,6 +69,10 @@ $signature-modal-shared-color: #E1E1E3;
         font-size: 16px;
         font-weight: 600;
         cursor: pointer;
+
+        &.active {
+          color: #00A4E4;
+        }
       }
     }
 
@@ -86,11 +90,10 @@ $signature-modal-shared-color: #E1E1E3;
         user-select: none;
 
         input {
-          position: absolute;
-          opacity: 0;
-          cursor: pointer;
+          display: none;
 
           & + label:before {
+            cursor: pointer;
             content: '';
             margin-right: 10px;
             display: inline-block;
@@ -127,10 +130,10 @@ $signature-modal-shared-color: #E1E1E3;
       }
 
       .signature-apply {
-        color: #00A4E4;
+        color: #FFFFFF;
         font-family: SourceSansPro-Semibold;
         padding: 6px 18px;
-        background: #FFFFFF;
+        background: #00A4E4;
         border-radius: 4px 4px 4px 4px;
         border: 1px solid #00A4E4;
         height: 32px;
@@ -139,8 +142,8 @@ $signature-modal-shared-color: #E1E1E3;
         text-align: center;
 
         &:hover {
-          background: #00A4E4;
-          color: #FFFFFF;
+          background: #17324C;
+          border: 1px solid #17324C;
           cursor: pointer;
         }
       }
