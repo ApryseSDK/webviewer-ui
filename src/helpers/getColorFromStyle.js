@@ -1,12 +1,12 @@
-export default (style = {}, iconColor) => {
+export default (style = {}, iconColorPalette) => {
   const { TextColor, StrokeColor, FillColor } = style;
-  if (iconColor === "text" && TextColor){
+  if (iconColorPalette === "text" && TextColor){
     return TextColor.toHexString();
   }
-  if (iconColor === "border" && StrokeColor){
+  if (iconColorPalette === "border" && StrokeColor){
     return StrokeColor.toHexString();
   }
-  if (iconColor === "fill" && FillColor){
+  if (iconColorPalette === "fill" && FillColor){
     return FillColor.toHexString();
   }
   return [TextColor, StrokeColor, FillColor].reduce((result, color) => {

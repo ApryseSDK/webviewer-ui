@@ -1,7 +1,13 @@
 export default {
 	AnnotationCreateFreeHand: 'freeHand',
+	AnnotationCreateFreeHand2: 'freeHand',
+	AnnotationCreateFreeHand3: 'freeHand',
+	AnnotationCreateFreeHand4: 'freeHand',
 	AnnotationCreateFreeText: 'freeText',
 	AnnotationCreateTextHighlight: 'highlight',
+	AnnotationCreateTextHighlight2: 'highlight',
+	AnnotationCreateTextHighlight3: 'highlight',
+	AnnotationCreateTextHighlight4: 'highlight',
 	AnnotationCreateTextUnderline: 'underline',
 	AnnotationCreateTextSquiggly: 'squiggly',
 	AnnotationCreateTextStrikeout: 'strikeout',

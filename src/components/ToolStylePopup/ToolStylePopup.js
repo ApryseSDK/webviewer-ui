@@ -138,7 +138,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
   isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  colorDataKey: selectors.getColorDataKey(selectors.getActiveToolName(state)) 
+  colorDataKey: selectors.getColorDataKey(selectors.getActiveToolName(state)),
 });
 
 const mapDispatchToProps = {

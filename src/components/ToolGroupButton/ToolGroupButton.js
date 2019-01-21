@@ -9,6 +9,7 @@ import core from 'core';
 import getColorFromStyle from 'helpers/getColorFromStyle';
 import getToolStyle from 'helpers/getToolStyle';
 import defaultTool from 'constants/defaultTool';
+import annotationTypeMap from 'constants/annotationTypeMap';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -94,9 +95,10 @@ class ToolGroupButton extends React.PureComponent {
       return null;
     }
 
+    const { iconColorPalette } = this.props;
     const { toolName } = this.state;
     const img = this.props.img ? this.props.img : toolButtonObjects[toolName].img;
-    const color = isActive && !this.props.img ? getColorFromStyle(getToolStyle(toolName)) : '';
+    const color = isActive && !this.props.img ? getColorFromStyle(getToolStyle(toolName), iconColorPalette) : '';
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
     const className = [
@@ -114,6 +116,7 @@ const mapStateToProps = (state, ownProps) => ({
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
+  iconColorPalette: selectors.getDefaultColorPalette(state, annotationTypeMap[selectors.getActiveToolName(state)] || 'freeText')
 });
 
 const mapDispatchToProps = {

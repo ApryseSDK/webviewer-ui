@@ -45,16 +45,15 @@ class ToolButton extends React.PureComponent {
   }
 
   getToolButtonColor = () => {
-    const { showColor, activeToolStyles, isActive, toolName, iconColor } = this.props;
-    // check what the iconColor is, 
+    const { showColor, activeToolStyles, isActive, toolName, iconColorPalette } = this.props;
     switch (showColor) {
       case 'always': {
         const toolStyle = getToolStyle(toolName);
-        return getColorFromStyle(toolStyle, iconColor);
+        return getColorFromStyle(toolStyle, iconColorPalette);
       }
       case 'active': {
         const toolStyle = activeToolStyles;
-        return isActive ? getColorFromStyle(toolStyle, iconColor) : '';
+        return isActive ? getColorFromStyle(toolStyle, iconColorPalette) : '';
       }
       case 'never':
       default: {
@@ -84,7 +83,7 @@ const mapStateToProps = (state, { toolName }) => ({
   isDisabled: selectors.isToolButtonDisabled(state, toolName),
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
-  iconColor: selectors.getDefaultColorPalette(state, annotationTypeMap[toolName] || 'freeText'),
+  iconColorPalette: selectors.getDefaultColorPalette(state, annotationTypeMap[toolName] || 'freeText'),
   ...selectors.getToolButtonObject(state, toolName)
 });
 

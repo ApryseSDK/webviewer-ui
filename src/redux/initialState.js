@@ -157,59 +157,67 @@ export default {
     pageLabels: [],
     colorData: {
       freeHand: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       freeText: {
-        iconColor: 'text',
+        iconColorPalette: 'text',
         currentPalette: 'text'
       },
       highlight: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       underline: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       squiggly: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       strikeout: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       rectangle: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       ellipse: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       line: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
+        currentPalette: 'border'
+      },
+      arrow: {
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       polyline: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       polygon: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
+        currentPalette: 'border'
+      },
+      cloud: {
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       signature: {
-        iconColor: 'border',
+        iconColorPalette: 'border',
         currentPalette: 'border'
       },
       stickyNote: {
-        iconColor:'border',
+        iconColorPalette:'border',
         currentPalette: 'border'
       },
       callout: {
-        iconColor:'text',
+        iconColorPalette:'text',
         currentPalette: 'text'
       }
     },

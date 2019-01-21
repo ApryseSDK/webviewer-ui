@@ -131,7 +131,7 @@ export const setColorPalette = (colorDataKey, colorPalette) => dispatch => {
     'freeHand', 'highlight', 'underline', 'squiggly', 'strikeout', 'line', 'polyline', 'signature', 'stickyNote'
   ];
   const typesWithTwoPalettes = [
-    'rectangle', 'ellipse', 'polygon'
+    'rectangle', 'ellipse', 'polygon', 'cloud'
   ];
   const typesWithThreePalettes = [
     'freeText', 'callout'
@@ -153,14 +153,14 @@ export const setColorPalette = (colorDataKey, colorPalette) => dispatch => {
   dispatch({ type: 'SET_COLOR_PALETTE', payload: { colorDataKey, colorPalette } });
 };
 
-export const setIconColor = (colorDataKey, colorPalette) => dispatch => {
+export const setIconColorPalette = (colorDataKey, colorPalette) => dispatch => {
   const threeTypes = ['text','border','fill'];
   const twoTypes = ['border','fill'];
   const typesOnlyWithBorder = [
     'freeHand', 'highlight', 'underline', 'squiggly', 'strikeout', 'line', 'polyline', 'signature', 'stickyNote'
   ];
   const typesWithTwoPalettes = [
-    'rectangle', 'ellipse', 'polygon'
+    'rectangle', 'ellipse', 'polygon', 'cloud'
   ];
   const typesWithThreePalettes = [
     'freeText', 'callout'
@@ -179,5 +179,5 @@ export const setIconColor = (colorDataKey, colorPalette) => dispatch => {
     console.warn(colorDataKey + " is not a valid annotation type.");
     return;
   }
-  dispatch({ type: 'SET_ICON_COLOR', payload: { colorDataKey, colorPalette } });
+  dispatch({ type: 'SET_ICON_COLOR_PALETTE', payload: { colorDataKey, colorPalette } });
 };  

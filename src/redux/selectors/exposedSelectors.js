@@ -56,7 +56,7 @@ export const getColorPalette = (state, colorDataKey) => {
 };
 export const getDefaultColorPalette = (state, colorDataKey) => {
   if (colorDataKey && state.viewer.colorData[colorDataKey]){
-    return state.viewer.colorData[colorDataKey].iconColor;
+    return state.viewer.colorData[colorDataKey].iconColorPalette;
   }
 };
 export const getDisabledCustomPanelTabs = state => {
@@ -77,6 +77,9 @@ export const getColorDataKey = arg => {
     return 'freeText';
   }
   if (arg instanceof window.Annotations.FreeHandAnnotation) {
+    if (arg.ToolName === "AnnotationCreateSignature"){
+      return "signature";
+    }
     return 'freeHand';
   }
   if (arg instanceof window.Annotations.TextHighlightAnnotation) {
@@ -104,7 +107,11 @@ export const getColorDataKey = arg => {
     return 'polyline';
   }
   if (arg instanceof window.Annotations.PolygonAnnotation) {
-    return 'polygon';
+    if (arg.Style === "solid"){
+      return 'polygon';
+    } else {
+      return 'cloud';
+    }
   }
   if (arg instanceof window.Annotations.StickyAnnotation) {
     return 'stickyNote';
@@ -112,12 +119,6 @@ export const getColorDataKey = arg => {
   
   return annotationTypeMap[arg];
 };
-// if (arg instanceof window.Annotations.FreeHandAnnotation && ) {
-//   return 'signature';
-// }
-// if (arg instanceof window.Annotations.LineAnnotation) {
-//   return 'line';
-// }
 
 // document
 export const getDocument = state => state.document;
