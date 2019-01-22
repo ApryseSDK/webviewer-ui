@@ -16,10 +16,10 @@ export default store => e => {
 
   if (e.metaKey || e.ctrlKey) {
     if (e.shiftKey) {
-      if (e.key === '+' || e.key === '=' || e.which === 187) { // (Ctrl/Cmd + Shift + +)
+      if (e.key === '+' || e.key === '=' || e.key === 'Add' || e.which === 187) { // (Ctrl/Cmd + Shift + +)
         e.preventDefault();
         core.rotateClockwise();
-      } else if (e.key === '-' || e.which === 189) { // (Ctrl/Cmd + Shift + -)
+      } else if (e.key === '-' || e.key === 'Subtract' || e.which === 189) { // (Ctrl/Cmd + Shift + -)
         e.preventDefault();
         core.rotateCounterClockwise();
       }
@@ -32,7 +32,8 @@ export default store => e => {
           core.updateCopiedAnnotations();
         }
       } else if (e.key === 'v' || e.which === 86) {  // (Ctrl/Cmd + V)
-        if (!selectedTextFromDOM) {
+        if (!document.activeElement || (document.activeElement.tagName.toLowerCase() !== 'textarea' && document.activeElement.tagName.toLowerCase() !== 'input')) {
+          e.preventDefault();
           core.pasteCopiedAnnotations();
         }
       } else if (e.key === 'o' || e.which === 79) { // (Ctrl/Cmd + O)

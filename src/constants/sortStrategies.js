@@ -32,4 +32,14 @@ const sortStrategies = {
   }
 };
 
-export default sortStrategies;
+export const getSortStrategies = () => sortStrategies;
+
+export const addSortStrategy = newStrategy => {
+  const { name, getSortedNotes, shouldRenderSeparator, getSeparatorContent } = newStrategy;
+
+  sortStrategies[name] = {
+    getSortedNotes,
+    shouldRenderSeparator,
+    getSeparatorContent
+  };
+};

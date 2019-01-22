@@ -8,7 +8,7 @@ import NotePopup from 'components/NotePopup';
 import Icon from 'components/Icon';
 
 import core from 'core';
-import getAnnotationType from 'helpers/getAnnotationType';
+import getAnnotationName from 'helpers/getAnnotationName';
 import getAnnotationIcon from 'helpers/getAnnotationIcon';
 import annotationColorToCss from 'helpers/annotationColorToCss';
 import getAnnotationColor from 'helpers/getAnnotationColor';
@@ -55,9 +55,9 @@ class NoteRoot extends React.Component {
 
   renderHeader = () => {
     const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat } = this.props;
-    const type = getAnnotationType(annotation);
-    const icon = getAnnotationIcon(type);
-    const color = annotationColorToCss(annotation[getAnnotationColor(type)]);
+    const name = getAnnotationName(annotation);
+    const icon = getAnnotationIcon(name);
+    const color = annotationColorToCss(annotation[getAnnotationColor(name)]);
 
     return (
       <div className="title">

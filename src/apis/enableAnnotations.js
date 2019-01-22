@@ -15,7 +15,7 @@ export default store => (enable = true) =>  {
     store.dispatch(actions.enableElements(elements, PRIORITY_ONE));
     core.showAnnotations(core.getAnnotationsList());
   } else {
-    console.warn('enableAnnotations(false) is going to be deprecated, please use disableAnnotations() instead');
+    console.warn('enableAnnotations(false) is deprecated, please use disableAnnotations() instead');
     disableAnnotations(store)();
   }
 };
