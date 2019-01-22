@@ -13,7 +13,7 @@ import getAnnotationName from 'helpers/getAnnotationName';
 import getAnnotationIcon from 'helpers/getAnnotationIcon';
 import annotationColorToCss from 'helpers/annotationColorToCss';
 import getAnnotationColor from 'helpers/getAnnotationColor';
-import sortStrategies from 'constants/sortStrategies';
+import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -110,7 +110,8 @@ class PrintModal extends React.PureComponent {
 
       const printableAnnotations = this.getPrintableAnnotations(pageNumber);
       if (this.includeComments.current.checked && printableAnnotations.length) {
-        creatingPages.push(this.creatingNotesPage(sortStrategies[this.props.sortStrategy].getSortedNotes(printableAnnotations), pageNumber));
+        const sortedNotes = getSortStrategies()[this.props.sortStrategy].getSortedNotes(printableAnnotations);
+        creatingPages.push(this.creatingNotesPage(sortedNotes, pageNumber));
       }
     });
 

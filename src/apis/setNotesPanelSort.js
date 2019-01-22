@@ -1,7 +1,7 @@
 import addSortStrategy from './addSortStrategy';
 
-export default store => newSort => {
-  addSortStrategy(store)(newSort);
+export default store => newStrategy => {
+  addSortStrategy(store)(newStrategy);
 
-  console.warn('setNotesPanelSort is going to be deprecated, please use addSortStrategy instead');
+  console.warn('setNotesPanelSort is deprecated, please use addSortStrategy instead');
 };

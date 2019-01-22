@@ -1,13 +1,7 @@
-import sortStrategies from 'constants/sortStrategies';
+import { addSortStrategy } from 'constants/sortStrategies';
 import actions from 'actions';
 
-export default store => newSort => {
-  const { name, getSortedNotes, shouldRenderSeparator, getSeparatorContent } = newSort;
-
-  sortStrategies[name] = {
-    getSortedNotes,
-    shouldRenderSeparator,
-    getSeparatorContent
-  };
+export default store => newStrategy => {
+  addSortStrategy(newStrategy);
   store.dispatch(actions.setSortStrategy(name));
 };
