@@ -106,7 +106,6 @@ class ToolStylePopup extends React.PureComponent {
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const className = getClassName(`Popup ToolStylePopup`, this.props);
     const colorMapKey = mapToolNameToKey(activeToolName);
-    console.log(activeToolStyle);
 
     if (isDisabled) {
       return null;
