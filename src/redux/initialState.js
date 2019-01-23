@@ -157,7 +157,7 @@ export default {
     useEmbeddedPrint: true,
     pageLabels: [],
     noteDateFormat: 'MMM D, h:mma',
-    colorMap: copyMapWithDataProperties('iconColorPalette', 'currentPalette')
+    colorMap: copyMapWithDataProperties('currentPalette', 'iconColor')
   },
   search: {
     listeners: [],

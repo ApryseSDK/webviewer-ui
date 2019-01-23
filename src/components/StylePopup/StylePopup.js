@@ -7,7 +7,6 @@ import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
 
 import { circleRadius } from 'constants/slider';
-import actions from 'actions';
 import selectors from 'selectors';
 
 import './StylePopup.scss';
@@ -18,31 +17,13 @@ class StylePopup extends React.PureComponent {
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
     colorMapKey: PropTypes.string.isRequired,
-    currentPalette: PropTypes.string
+    currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
   }
 
   renderColorPalette = () => {
-    const { 
-      style: { FillColor, StrokeColor, TextColor }, 
-      onStyleChange 
-    } = this.props;
-    const map = {
-      text: {
-        color: TextColor,
-        property: 'TextColor'
-      },
-      border: {
-        color: StrokeColor,
-        property: 'StrokeColor'
-      },
-      fill: {
-        color: FillColor,
-        property: 'FillColor'
-      }
-    };
-    const { color, property } = map[this.props.currentPalette];
+    const { style, onStyleChange, currentPalette } = this.props;
 
-    return <ColorPalette color={color} property={property} onStyleChange={onStyleChange} />;
+    return <ColorPalette color={style[currentPalette]} property={currentPalette} onStyleChange={onStyleChange} />;
   }
 
   renderSliders = () => {

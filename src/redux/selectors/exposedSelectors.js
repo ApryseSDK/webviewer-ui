@@ -1,6 +1,5 @@
-import { documentTypes } from 'constants/types';
-import { mapToolNameToKey, mapAnnotationToKey } from 'constants/map';
 import core from 'core';
+import { documentTypes } from 'constants/types';
 
 // viewer
 export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
@@ -25,7 +24,13 @@ export const isElementOpen = (state, dataElement) => {
 export const getActiveHeaderItems = state => state.viewer.headers[state.viewer.activeHeaderGroup];
 export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].priority;
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
-export const getToolButtonDataElements = (state, toolNames) => toolNames.map(toolName => state.viewer.toolButtonObjects[toolName].dataElement);
+export const getToolButtonDataElements = (state, toolNames) => {
+  return toolNames.map(toolName => {
+    console.log(toolName, state.viewer.toolButtonObjects[toolName]);
+
+    return state.viewer.toolButtonObjects[toolName].dataElement;
+  });
+};
 export const getToolButtonObject = (state, toolName) => state.viewer.toolButtonObjects[toolName];
 export const getToolButtonDataElement = (state, toolName) => state.viewer.toolButtonObjects[toolName].dataElement;
 export const getToolNamesByGroup = (state, toolGroup) => Object.keys(state.viewer.toolButtonObjects).filter(name => state.viewer.toolButtonObjects[name].group === toolGroup);
@@ -62,23 +67,9 @@ export const isEmbedPrintSupported = state => {
   const isPDF = getDocumentType(state) === documentTypes.PDF;
   return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
 };
-export const getCurrentPalette = (state, colorMapKey) => {
-  return state.viewer.colorMap[colorMapKey].currentPalette;
-};
-export const getIconColorPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey].iconColorPalette; 
-
-export const getColorMapKey = arg => {
-  let colorMapKey;
-
-  if (typeof arg === 'string') {
-    colorMapKey = mapToolNameToKey(arg);
-  } else if (typeof arg === 'object') {
-    colorMapKey = mapAnnotationToKey(arg);
-  }
-
-  // TODO: warn if colorMapKey is undefined
-  return colorMapKey;
-};
+export const getColorMap = state => state.viewer.colorMap;
+export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey].currentPalette;
+export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey].iconColor; 
 
 // document
 export const getDocument = state => state.document;

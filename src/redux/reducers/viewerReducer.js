@@ -130,9 +130,9 @@ export default initialState => (state = initialState, action) => {
       const { colorMapKey, colorPalette } = payload;
       return { ...state, colorMap: { ...state.colorMap, [colorMapKey]: { ...state.colorMap[colorMapKey], currentPalette: colorPalette } } };
     }
-    case 'SET_ICON_COLOR_PALETTE': {
-      const { colorMapKey, colorPalette } = payload;
-      return { ...state, colorMap: { ...state.colorMap, [colorMapKey]: { ...state.colorMap[colorMapKey], iconColorPalette: colorPalette } } };
+    case 'SET_ICON_COLOR': {
+      const { colorMapKey, color } = payload;
+      return { ...state, colorMap: { ...state.colorMap, [colorMapKey]: { ...state.colorMap[colorMapKey], iconColor: color } } };
     }
     default:
       return state;

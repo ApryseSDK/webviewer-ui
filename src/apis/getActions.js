@@ -23,11 +23,11 @@ export default store => ({
   },
   setColorPalette: (toolName, colorPalette) => {
     // TODO: add warning messages
-    store.dispatch(actions.setColorPalette(mapToolNameToKey(toolName), colorPalette));
+    store.dispatch(actions.setColorPalette(mapToolNameToKey(toolName), mapPaletteToAnnotationColor[colorPalette]));
   },
-  setIconColorPalette: (toolName, colorPalette) => {
+  setIconColor: (toolName, colorPalette) => {
     // TODO: add warning messages
-    store.dispatch(actions.setIconColorPalette(mapToolNameToKey(toolName), colorPalette));
+    store.dispatch(actions.setIconColor(mapToolNameToKey(toolName), mapPaletteToAnnotationColor[colorPalette]));
   },
   focusNote: id => {
     const state = store.getState();
@@ -58,3 +58,9 @@ const mapExposedActions = store => Object.keys(exposedActions).reduce((acc, acti
   };
   return acc;
 }, {});
+
+const mapPaletteToAnnotationColor = {
+  border: 'StrokeColor',
+  fill: 'FillColor',
+  text: 'TextColor'
+};

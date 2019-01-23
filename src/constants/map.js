@@ -9,154 +9,173 @@ import i18next from 'i18next';
  */ 
 const map = {
   signature: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_signature_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateSignature'],
     annotationCheck: annotation => annotation instanceof Annotations.FreeHandAnnotation && annotation.Subject === i18next.t('annotation.signature')
   },
   freeHand: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_freehand_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateFreeHand', 'AnnotationCreateFreeHand2', 'AnnotationCreateFreeHand3', 'AnnotationCreateFreeHand4'],
     annotationCheck: annotation => annotation instanceof Annotations.FreeHandAnnotation
   },
   freeText: {
-    iconColorPalette: 'text',
-    currentPalette: 'text',
-    availablePalettes: ['text', 'border', 'fill'],
+    icon: 'ic_annotation_freetext_black_24px',
+    iconColor: 'TextColor',
+    currentPalette: 'TextColor',
+    availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
     toolNames: ['AnnotationCreateFreeText'],
     annotationCheck: annotation => annotation instanceof Annotations.FreeTextAnnotation && annotation.getIntent() === Annotations.FreeTextAnnotation.Intent.FreeText
   },
   callout: {
-    iconColorPalette:'text',
-    currentPalette: 'text',
-    availablePalettes: ['text', 'border', 'fill'],
-    toolNames: ['CalloutCreateTool'],
+    icon: 'ic_annotation_callout_black_24px',
+    iconColor:'TextColor',
+    currentPalette: 'TextColor',
+    availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
+    toolNames: ['AnnotationCreateCallout'],
     annotationCheck: annotation => annotation instanceof Annotations.FreeTextAnnotation && annotation.getIntent() === Annotations.FreeTextAnnotation.Intent.FreeTextCallout
   },
   line: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_line_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateLine'],
     annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.getStartStyle() === 'None' && annotation.getEndStyle() === 'None'
   },
   arrow: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_arrow_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateArrow'],
     annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.getStartStyle() === 'None' && annotation.getEndStyle() === 'OpenArrow'
   },
   polygon: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border', 'fill'],
+    icon: 'ic_annotation_polygon_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
     toolNames: ['AnnotationCreatePolygon'],
     annotationCheck: annotation => annotation instanceof Annotations.PolygonAnnotation && annotation.Style === 'solid'
   },
   cloud: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border', 'fill'],
+    icon: 'ic_annotation_cloud_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
     toolNames: ['AnnotationCreatePolygonCloud'],
     annotationCheck: annotation => annotation instanceof Annotations.PolygonAnnotation && annotation.Style === 'cloudy'
   },
   highlight: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_highlight_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateTextHighlight', 'AnnotationCreateTextHighlight2', 'AnnotationCreateTextHighlight3', 'AnnotationCreateTextHighlight4'],
     annotationCheck: annotation => annotation instanceof Annotations.TextHighlightAnnotation
   },
   underline: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_underline_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateTextUnderline'],
     annotationCheck: annotation => annotation instanceof Annotations.TextUnderlineAnnotation
   },
   squiggly: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_squiggly_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateTextSquiggly'],
     annotationCheck: annotation => annotation instanceof Annotations.TextSquigglyAnnotation
   },
   strikeout: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_strikeout_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateTextStrikeout'],
     annotationCheck: annotation => annotation instanceof Annotations.TextStrikeoutAnnotation
   },
   rectangle: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border', 'fill'],
+    icon: 'ic_annotation_square_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
     toolNames: ['AnnotationCreateRectangle'],
     annotationCheck: annotation => annotation instanceof Annotations.RectangleAnnotation
   },
   ellipse: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border', 'fill'],
+    icon: 'ic_annotation_circle_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
     toolNames: ['AnnotationCreateEllipse'],
     annotationCheck: annotation => annotation instanceof Annotations.EllipseAnnotation
   },
   polyline: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_polyline_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreatePolyline'],
     annotationCheck: annotation => annotation instanceof Annotations.PolylineAnnotation
   },
   stickyNote: {
-    iconColorPalette: 'border',
-    currentPalette: 'border',
-    availablePalettes: ['border'],
+    icon: 'ic_annotation_sticky_note_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateSticky'],
     annotationCheck: annotation => annotation instanceof Annotations.StickyAnnotation
   },
   stamp: {
-    iconColorPalette: null,
+    icon: 'ic_annotation_stamp_black_24px',
+    iconColor: null,
     currentPalette: null,
     availablePalettes: [],
     toolNames: ['AnnotationCreateStamp'],
     annotationCheck: annotation => annotation instanceof Annotations.StampAnnotation
   },
   edit: {
-    iconColorPalette: null,
+    icon: 'ic_select_black_24px',
+    iconColor: null,
     currentPalette: null,
     availablePalettes: [],
     toolNames: ['AnnotationEdit'],
-    annotationCheck: () => false,
+    annotationCheck: null,
   },
   pan: {
-    iconColorPalette: null,
+    icon: 'ic_pan_black_24px',
+    iconColor: null,
     currentPalette: null,
     availablePalettes: [],
     toolNames: ['Pan'],
-    annotationCheck: () => false,
+    annotationCheck: null,
   },
   textSelect: {
-    iconColorPalette: null,
+    icon: 'textselect_cursor',
+    iconColor: null,
     currentPalette: null,
     availablePalettes: [],
     toolNames: ['TextSelect'],
-    annotationCheck: () => false,
+    annotationCheck: null,
   },
 };
 
 export const mapToolNameToKey = toolName => Object.keys(map).find(key => map[key].toolNames.includes(toolName));
   
-export const mapAnnotationToKey = annotation => Object.keys(map).find(key => map[key].annotationCheck(annotation));
-
-export const getToolButtonObjects = () => {
-  // TODO: discuss with Justin if we should move toolButtonObjects here, since toolButtonObjects is used to map toolName to button information
-};
+export const mapAnnotationToKey = annotation => Object.keys(map).find(key => {
+  const { annotationCheck } = map[key];
+  return annotationCheck && annotationCheck(annotation);
+});
 
 export const copyMapWithDataProperties = (...properties) => {
   return Object.keys(map).reduce((newMap, key) => {
@@ -170,3 +189,14 @@ export const copyMapWithDataProperties = (...properties) => {
 };
 
 export const getDataWithKey = key => map[key];
+
+export const getAnnotationCreateToolNames = () => {
+  return Object.values(map).reduce((annotationCreateToolNames, { toolNames, annotationCheck }) => {
+    return annotationCheck ? [...annotationCreateToolNames, ...toolNames] : annotationCreateToolNames;
+  }, []);
+};
+
+export const getToolButtonObjects = () => {
+  // TODO: discuss with Justin if we should move toolButtonObjects here, since toolButtonObjects is used to map toolName to button information
+};
+

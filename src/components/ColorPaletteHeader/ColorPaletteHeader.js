@@ -14,7 +14,7 @@ import './ColorPaletteHeader.scss';
 class ColorPaletteHeader extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
-    colorPalette: PropTypes.string,
+    colorPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     colorMapKey: PropTypes.string.isRequired,
     setColorPalette: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
@@ -29,16 +29,12 @@ class ColorPaletteHeader extends React.PureComponent {
   renderTextColorIcon = () => {
     const { style: { TextColor }, colorPalette } = this.props;
 
-    if (!TextColor) {
-      return null;
-    }
-
     return (
       <Tooltip content="option.annotationColor.text">
         <div
-          className={colorPalette === 'text' ? 'text selected' : 'text'}
+          className={colorPalette === 'TextColor' ? 'text selected' : 'text'}
           style={{ color: TextColor.toHexString() }}
-          onClick={() => this.setColorPalette('text')}
+          onClick={() => this.setColorPalette('TextColor')}
         >
           Aa
         </div>
@@ -48,10 +44,6 @@ class ColorPaletteHeader extends React.PureComponent {
 
   renderBorderColorIcon = () => {
     const { style: { StrokeColor }, colorPalette } = this.props;
-
-    if (!StrokeColor) {
-      return null;
-    }
 
     const renderInnerCircle = () => {
       const borderColor = getBrightness(StrokeColor) === 'dark' ? '#bfbfbf' : 'none';
@@ -73,8 +65,8 @@ class ColorPaletteHeader extends React.PureComponent {
     return (
       <Tooltip content="option.annotationColor.border">
         <div
-          className={colorPalette === 'border' ? 'border selected' : 'border'}
-          onClick={() => this.setColorPalette('border')}
+          className={colorPalette === 'StrokeColor' ? 'border selected' : 'border'}
+          onClick={() => this.setColorPalette('StrokeColor')}
         >
           <div
             className={`border-icon ${getBrightness(StrokeColor)}}`}
@@ -89,18 +81,13 @@ class ColorPaletteHeader extends React.PureComponent {
 
   renderFillColorIcon = () => {
     const { style: { FillColor }, colorPalette } = this.props;
-
-    if (!FillColor) {
-      return null;
-    }
-
     const isTransparency = FillColor.toHexString() === null;
 
     return (
       <Tooltip content="option.annotationColor.fill">
         <div
-          className={colorPalette === 'fill' ? 'fill selected' : 'fill'}
-          onClick={() => this.setColorPalette('fill')}
+          className={colorPalette === 'FillColor' ? 'fill selected' : 'fill'}
+          onClick={() => this.setColorPalette('FillColor')}
         >
           <div
             className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
@@ -131,9 +118,15 @@ class ColorPaletteHeader extends React.PureComponent {
           {t(`option.annotationColor.${colorPalette}`)}
         </div>
         <div className="palette">
-          {this.renderTextColorIcon()}
-          {this.renderBorderColorIcon()}
-          {this.renderFillColorIcon()}
+          {availablePalettes.includes('TextColor') &&
+            this.renderTextColorIcon()
+          }
+          {availablePalettes.includes('StrokeColor') &&
+            this.renderBorderColorIcon()
+          }
+          {availablePalettes.includes('FillColor') &&
+            this.renderFillColorIcon()
+          }
         </div>
       </div>
     );
