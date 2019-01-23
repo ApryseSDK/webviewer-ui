@@ -1,5 +1,6 @@
 import core from 'core';
 import { PRIORITY_THREE } from 'constants/actionPriority';
+import { mapToolNameToKey } from 'constants/map';
 import * as exposedActions from 'actions/exposedActions';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -19,6 +20,14 @@ export default store => ({
       return store.dispatch(actions.enableElement(dataElements, PRIORITY_THREE));
     }
     return store.dispatch(actions.enableElements(dataElements, PRIORITY_THREE));
+  },
+  setColorPalette: (toolName, colorPalette) => {
+    // TODO: add warning messages
+    store.dispatch(actions.setColorPalette(mapToolNameToKey(toolName), colorPalette));
+  },
+  setIconColorPalette: (toolName, colorPalette) => {
+    // TODO: add warning messages
+    store.dispatch(actions.setIconColorPalette(mapToolNameToKey(toolName), colorPalette));
   },
   focusNote: id => {
     const state = store.getState();

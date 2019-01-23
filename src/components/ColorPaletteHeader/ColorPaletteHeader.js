@@ -1,38 +1,33 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
 import Tooltip from 'components/Tooltip';
 
 import getBrightness from 'helpers/getBrightness';
+import { getDataWithKey } from 'constants/map';
+import actions from 'actions';
 
 import './ColorPaletteHeader.scss';
 
 class ColorPaletteHeader extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
-    colorPalette: PropTypes.string.isRequired,
-    onHeaderChange: PropTypes.func.isRequired,
+    colorPalette: PropTypes.string,
+    colorMapKey: PropTypes.string.isRequired,
+    setColorPalette: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-  }
-
-  countColorPalette = () => {
-    const { FillColor, StrokeColor, TextColor } = this.props.style;
-
-    return [FillColor, StrokeColor, TextColor].reduce((numberOfPalette, colorProperty) => {
-      if (colorProperty) {
-        numberOfPalette += 1;
-      }
-      return numberOfPalette;
-    }, 0);
+  setColorPalette = newPalette => {
+    const { setColorPalette, colorMapKey } = this.props;
+    
+    setColorPalette(colorMapKey, newPalette);
   }
 
   renderTextColorIcon = () => {
-    const { style: { TextColor }, colorPalette, onHeaderChange, t } = this.props;
+    const { style: { TextColor }, colorPalette } = this.props;
 
     if (!TextColor) {
       return null;
@@ -43,7 +38,7 @@ class ColorPaletteHeader extends React.PureComponent {
         <div
           className={colorPalette === 'text' ? 'text selected' : 'text'}
           style={{ color: TextColor.toHexString() }}
-          onClick={() => onHeaderChange('text')}
+          onClick={() => this.setColorPalette('text')}
         >
           Aa
         </div>
@@ -52,7 +47,7 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   renderBorderColorIcon = () => {
-    const { style: { StrokeColor }, colorPalette, onHeaderChange, t } = this.props;
+    const { style: { StrokeColor }, colorPalette } = this.props;
 
     if (!StrokeColor) {
       return null;
@@ -79,7 +74,7 @@ class ColorPaletteHeader extends React.PureComponent {
       <Tooltip content="option.annotationColor.border">
         <div
           className={colorPalette === 'border' ? 'border selected' : 'border'}
-          onClick={() => onHeaderChange('border')}
+          onClick={() => this.setColorPalette('border')}
         >
           <div
             className={`border-icon ${getBrightness(StrokeColor)}}`}
@@ -93,7 +88,7 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   renderFillColorIcon = () => {
-    const { style: { FillColor }, colorPalette, onHeaderChange, t } = this.props;
+    const { style: { FillColor }, colorPalette } = this.props;
 
     if (!FillColor) {
       return null;
@@ -105,7 +100,7 @@ class ColorPaletteHeader extends React.PureComponent {
       <Tooltip content="option.annotationColor.fill">
         <div
           className={colorPalette === 'fill' ? 'fill selected' : 'fill'}
-          onClick={() => onHeaderChange('fill')}
+          onClick={() => this.setColorPalette('fill')}
         >
           <div
             className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
@@ -123,10 +118,10 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   render() {
-    const { t, colorPalette } = this.props;
-    const numberOfPalette = this.countColorPalette();
+    const { t, colorPalette, colorMapKey } = this.props;
+    const { availablePalettes } = getDataWithKey(colorMapKey);
 
-    if (numberOfPalette < 2) {
+    if (availablePalettes.length < 2) {
       return null;
     }
 
@@ -145,4 +140,8 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 }
 
-export default translate(null, { wait: false })(ColorPaletteHeader);
+const mapDispatchToProps = {
+  setColorPalette: actions.setColorPalette
+};
+
+export default connect(null, mapDispatchToProps)(translate(null, { wait: false })(ColorPaletteHeader));

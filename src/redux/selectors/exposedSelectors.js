@@ -1,4 +1,5 @@
 import { documentTypes } from 'constants/types';
+import { mapToolNameToKey, mapAnnotationToKey } from 'constants/map';
 import core from 'core';
 
 // viewer
@@ -60,6 +61,23 @@ export const isEmbedPrintSupported = state => {
   const isChrome = window.navigator.userAgent.indexOf('Chrome') > -1 && window.navigator.userAgent.indexOf('Edge') === -1;
   const isPDF = getDocumentType(state) === documentTypes.PDF;
   return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
+};
+export const getCurrentPalette = (state, colorMapKey) => {
+  return state.viewer.colorMap[colorMapKey].currentPalette;
+};
+export const getIconColorPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey].iconColorPalette; 
+
+export const getColorMapKey = arg => {
+  let colorMapKey;
+
+  if (typeof arg === 'string') {
+    colorMapKey = mapToolNameToKey(arg);
+  } else if (typeof arg === 'object') {
+    colorMapKey = mapAnnotationToKey(arg);
+  }
+
+  // TODO: warn if colorMapKey is undefined
+  return colorMapKey;
 };
 
 // document

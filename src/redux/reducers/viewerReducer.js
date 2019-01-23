@@ -126,6 +126,14 @@ export default initialState => (state = initialState, action) => {
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
     case 'SET_PAGE_LABELS': 
       return { ...state, pageLabels: [ ...payload.pageLabels ] };
+    case 'SET_COLOR_PALETTE': {
+      const { colorMapKey, colorPalette } = payload;
+      return { ...state, colorMap: { ...state.colorMap, [colorMapKey]: { ...state.colorMap[colorMapKey], currentPalette: colorPalette } } };
+    }
+    case 'SET_ICON_COLOR_PALETTE': {
+      const { colorMapKey, colorPalette } = payload;
+      return { ...state, colorMap: { ...state.colorMap, [colorMapKey]: { ...state.colorMap[colorMapKey], iconColorPalette: colorPalette } } };
+    }
     default:
       return state;
   }
