@@ -96,14 +96,14 @@ class PrintModal extends React.PureComponent {
       console.error(e);
     });
   }
-  
+
   setPrintQuality = () => {
     window.utils.setCanvasMultiplier(this.props.printQuality);
   }
 
   creatingPages = () => {
     const creatingPages = [];
-    
+
     this.pendingCanvases = [];
     this.state.pagesToPrint.forEach(pageNumber => {
       creatingPages.push(this.creatingImage(pageNumber));
@@ -232,7 +232,7 @@ class PrintModal extends React.PureComponent {
     return new Promise(resolve => {
       const container = document.createElement('div');
       container.className = 'page__container';
-      
+
       const header =  document.createElement('div');
       header.className = 'page__header';
       header.innerHTML = `Page ${pageNumber}`;
@@ -247,14 +247,14 @@ class PrintModal extends React.PureComponent {
       resolve(container);
     });
   }
-  
+
   getNote = annotation => {
     const note = document.createElement('div');
     note.className = 'note';
 
     const noteRoot = document.createElement('div');
     noteRoot.className = 'note__root';
-    
+
     const noteRootInfo = document.createElement('div');
     noteRootInfo.className = 'note__info--with-icon';
 
@@ -283,7 +283,7 @@ class PrintModal extends React.PureComponent {
 
   getNoteInfo = annotation => {
     const info = document.createElement('div');
-    
+
     info.className = 'note__info';
     info.innerHTML = `
       Author: ${annotation.Author || ''} &nbsp;&nbsp;
@@ -292,7 +292,7 @@ class PrintModal extends React.PureComponent {
     `;
     return info;
   }
-  
+
   getNoteContent = annotation => {
     const contentElement = document.createElement('div');
     const contentText = annotation.getContents();
@@ -343,7 +343,7 @@ class PrintModal extends React.PureComponent {
     const { count, pagesToPrint } = this.state;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = <input ref={this.customInput} type="text" placeholder={t('message.customPrintPlaceholder')} onFocus={this.onFocus}/>;
-    const isPrinting = count > 0;
+    const isPrinting = count >= 0;
 
     return (
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
