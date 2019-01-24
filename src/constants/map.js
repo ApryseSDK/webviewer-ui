@@ -171,11 +171,13 @@ const map = {
 };
 
 export const mapToolNameToKey = toolName => Object.keys(map).find(key => map[key].toolNames.includes(toolName));
-  
+
 export const mapAnnotationToKey = annotation => Object.keys(map).find(key => {
   const { annotationCheck } = map[key];
   return annotationCheck && annotationCheck(annotation);
 });
+
+export const mapAnnotationToToolName = annotation => map[mapAnnotationToKey(annotation)].toolNames[0];
 
 export const copyMapWithDataProperties = (...properties) => {
   return Object.keys(map).reduce((newMap, key) => {
@@ -186,6 +188,21 @@ export const copyMapWithDataProperties = (...properties) => {
 
     return newMap;
   }, {});
+};
+
+export const register = (tool, annotationConstructor) => {
+  const { toolName, buttonImage, toolObject } = tool;
+  const key = toolName;
+  const availablePalettes = ['TextColor', 'StrokeColor', 'FillColor'].filter(property => toolObject.defaults && toolObject.defaults[property]);
+
+  map[key] = {
+    icon: buttonImage,
+    iconColor: availablePalettes[0],
+    currentPalette: availablePalettes[0],
+    availablePalettes,
+    toolNames: [toolName],
+    annotationCheck: annotationConstructor ? annotation => annotation instanceof annotationConstructor : null,
+  };
 };
 
 export const getDataWithKey = key => map[key];

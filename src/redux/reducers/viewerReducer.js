@@ -134,6 +134,8 @@ export default initialState => (state = initialState, action) => {
       const { colorMapKey, color } = payload;
       return { ...state, colorMap: { ...state.colorMap, [colorMapKey]: { ...state.colorMap[colorMapKey], iconColor: color } } };
     }
+    case 'SET_COLOR_MAP': 
+      return { ...state, colorMap: payload.colorMap };
     default:
       return state;
   }
