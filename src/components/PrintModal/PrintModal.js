@@ -343,7 +343,7 @@ class PrintModal extends React.PureComponent {
     const { count, pagesToPrint } = this.state;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = <input ref={this.customInput} type="text" placeholder={t('message.customPrintPlaceholder')} onFocus={this.onFocus}/>;
-    const isPrinting = count >= 0;
+    const isPrinting = count > 0;
 
     return (
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
