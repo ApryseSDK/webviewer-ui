@@ -1,9 +1,12 @@
+import React from 'react';
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
 import { zoomIn, zoomOut } from 'helpers/zoom';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import core from 'core';
+
+import ToggleElementDropdown from 'components/toggleElementDropdown';
 
 export default {
   viewer: {
@@ -19,48 +22,13 @@ export default {
         { type: 'toolButton', toolName: 'Pan' },
         { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: [ 'tablet', 'mobile' ] },
-        {
-          type: 'statefulButton',
-          mount: update => {
-            const fitModeToState = fitMode => {
-              const docViewer = core.getDocumentViewer();
-              // the returned state should be the opposite of the new current state
-              // as the opposite state is what we want to switch to when the button
-              // is pressed next
-              if (fitMode === docViewer.FitMode.FitPage) {
-                return 'FitWidth';
-              } else if (fitMode === docViewer.FitMode.FitWidth) {
-                return 'FitPage';
-              }
-            };
-
-            core.addEventListener('fitModeUpdated.fitbutton', (e, fitMode) => {
-              update(fitModeToState(fitMode));
-            });
-
-            // if initial fit mode is zoom then default to FitPage
-            return fitModeToState(core.getFitMode()) || 'FitPage';
-          },
-          unmount: () => {
-            core.removeEventListener('fitModeUpdated.fitbutton');
-          },
-          states: {
-            FitWidth: {
-              img: 'ic_fit_width_black_24px',
-              onClick: core.fitToWidth,
-              title: 'action.fitToWidth'
-            },
-            FitPage: {
-              img: 'ic_fit_page_black_24px',
-              onClick: core.fitToPage,
-              title: 'action.fitToPage'
-            }
-          },
-          dataElement: 'fitButton',
-          hidden: ['mobile']
-        },
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
+        { type: 'toggleElementButton', img: 'ic_viewer_settings_black_24px', element: 'zoomDropdown', dataElement: 'zoomDropdownButton' },
+        { type: 'customElement',
+          render: () => <ToggleElementDropdown />, 
+          element: 'zoomDropdown'
+        },        
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: [ 'tablet', 'mobile' ] },
@@ -75,7 +43,7 @@ export default {
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('tools'));
             core.setToolMode(defaultTool);
-            dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel' ]));
+            dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'zoomDropdown' ]));
           },
           dataElement: 'toolsButton',
           title: 'component.toolsButton',

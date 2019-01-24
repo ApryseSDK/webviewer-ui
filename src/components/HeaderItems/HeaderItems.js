@@ -35,7 +35,7 @@ class HeaderItems extends React.PureComponent {
             case 'statefulButton':
               return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'customElement':
-              return <CustomElement key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+              return <CustomElement onClick={()=>{console.log("clicked")} }key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'spacer':
             case 'divider':
               return <div key={key} className={`${type} ${mediaQueryClassName}`}></div>;

@@ -1,0 +1,15 @@
+.ZoomDropdown{
+    position: absolute;
+    top: 46px;
+    width: 146px;
+    height: 420px;
+    background-color: white;
+    z-index: 100;
+
+    &.open {
+      display: visible;
+    };
+    &.closed {
+      display: none;
+    }
+}
