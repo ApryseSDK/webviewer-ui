@@ -107,7 +107,7 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
 };
 export const setSortStrategy = sortStrategy => ({ type: 'SET_SORT_STRATEGY', payload: { sortStrategy } });
 export const setSortNotesBy = sortStrategy => {
-  console.warn('setSortNotesBy is going to be deprecated, please use setSortStrategy instead');
+  console.warn('setSortNotesBy is deprecated, please use setSortStrategy instead');
 
   return setSortStrategy(sortStrategy);
 };

@@ -49,5 +49,9 @@
         padding: 7px 5px;
       }
     }
+
+    &:empty {
+      padding: 0px;
+    }
   }
 }

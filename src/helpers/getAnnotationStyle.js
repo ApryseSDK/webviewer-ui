@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+
 /**
  * We can just pass object down as a prop, but many properties of that object won't be used by the child component, 
  * so here we select properties that will be used.
@@ -18,7 +20,7 @@ const getStyle = annotation => {
   });
 
   // Special case for the highlight annotation. It shouldn't have opacity
-  if (annotation.Subject === 'Highlight') {
+  if (annotation.elementName === 'highlight') {
     style.Opacity = null;
   }
 

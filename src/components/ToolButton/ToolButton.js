@@ -6,8 +6,8 @@ import Button from 'components/Button';
 import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
-import toolStyleExists from 'helpers/toolStyleExists';
-import getToolStyle from 'helpers/getToolStyle';
+import toolStylesExist from 'helpers/toolStylesExist';
+import getToolStyles from 'helpers/getToolStyles';
 import getColorFromStyle from 'helpers/getColorFromStyle';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -33,7 +33,7 @@ class ToolButton extends React.PureComponent {
     e.stopPropagation();
 
     if (isActive) {
-      if (toolStyleExists(toolName)) {
+      if (toolStylesExist(toolName)) {
         toggleElement('toolStylePopup');
       }
     } else {
@@ -48,12 +48,12 @@ class ToolButton extends React.PureComponent {
 
     switch (showColor) {
       case 'always': {
-        const toolStyle = getToolStyle(toolName);
-        return getColorFromStyle(toolStyle);
+        const toolStyles = getToolStyles(toolName);
+        return getColorFromStyle(toolStyles);
       }
       case 'active': {
-        const toolStyle = activeToolStyles;
-        return isActive ? getColorFromStyle(toolStyle) : '';
+        const toolStyles = activeToolStyles;
+        return isActive ? getColorFromStyle(toolStyles) : '';
       }
       case 'never':
       default: {
@@ -67,7 +67,7 @@ class ToolButton extends React.PureComponent {
     const color = this.getToolButtonColor();
     const className = [
       'ToolButton',
-      toolStyleExists(toolName) ? 'hasStyles' : ''
+      toolStylesExist(toolName) ? 'hasStyles' : ''
     ].join(' ').trim();
 
     if (isDisabled) {
