@@ -28,7 +28,7 @@ class PageNavOverlay extends React.PureComponent {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { currentPage, pageLabels } = this.props;
     
     if (prevProps.pageLabels !== pageLabels) {

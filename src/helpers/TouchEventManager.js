@@ -1,7 +1,7 @@
 import core from 'core';
 import { isIOS } from 'helpers/device';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
-import { ZOOM_MIN, ZOOM_MAX } from 'constants/zoomFactors';
+import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
 const TouchEventManager = {
   initialize(document, container) {
@@ -91,10 +91,10 @@ const TouchEventManager = {
         const t2 = e.touches[1];
         this.touch.scale = this.getDistance(t1, t2) / this.touch.distance;
 
-        if (this.touch.scale * this.touch.zoom < ZOOM_MIN) {
-          this.touch.scale = ZOOM_MIN / this.touch.zoom;
-        } else if (this.touch.scale * this.touch.zoom > ZOOM_MAX) {
-          this.touch.scale = ZOOM_MAX / this.touch.zoom;
+        if (this.touch.scale * this.touch.zoom < getMinZoomLevel()) {
+          this.touch.scale = getMinZoomLevel() / this.touch.zoom;
+        } else if (this.touch.scale * this.touch.zoom > getMaxZoomLevel()) {
+          this.touch.scale = getMaxZoomLevel() / this.touch.zoom;
         }
 
         if (isIOS) {
@@ -114,19 +114,24 @@ const TouchEventManager = {
     switch (this.touch.type) {
       case 'tap': {
         this.doubleTapTimeout = setTimeout(() => {
-          this.touch.type = '';
+          this.touch.type = ''; 
         }, 300);
         break;
       }
       case 'swipe': {
         const toolName = core.getToolMode().name;
         const usingAnnotationTools = toolName !== 'AnnotationEdit' && toolName !== 'Pan'; 
-        if (core.getSelectedText().length > 0 || core.isContinuousDisplayMode() || usingAnnotationTools) {
+        if (
+          core.getSelectedText().length || 
+          core.isContinuousDisplayMode() || 
+          usingAnnotationTools || 
+          core.getSelectedAnnotations().length
+        ) {
           return;
         }
 
         const { scrollLeft } = this.container;
-        const swipingLeft = scrollLeft === 0 && this.touch.distance < -100;
+        const swipingLeft = scrollLeft <= 0 && this.touch.distance < -100;
         const viewerWidth = this.document.clientWidth;
         const scrollWidth = this.container.clientWidth;
         const swipingRight = scrollWidth + scrollLeft >= viewerWidth && this.touch.distance > 100;
@@ -141,10 +146,10 @@ const TouchEventManager = {
       }
       case 'doubleTap': {
         if (this.oldZoom) {
-          this.touch.scale = Math.max(this.oldZoom / this.touch.zoom, ZOOM_MIN / this.touch.zoom);
+          this.touch.scale = Math.max(this.oldZoom / this.touch.zoom, getMinZoomLevel() / this.touch.zoom);
           this.oldZoom = null;
         } else {
-          this.touch.scale = Math.min(3, ZOOM_MAX / this.touch.zoom);
+          this.touch.scale = Math.min(3, getMaxZoomLevel() / this.touch.zoom);
           this.oldZoom = this.touch.zoom;
         }
         const zoom = core.getZoom() * this.touch.scale;

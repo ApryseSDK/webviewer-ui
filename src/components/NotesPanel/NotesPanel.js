@@ -8,7 +8,7 @@ import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
-import sortStrategies from 'constants/sortStrategies';
+import { getSortStrategies } from 'constants/sortStrategies';
 import selectors from 'selectors';
 
 import './NotesPanel.scss';
@@ -126,6 +126,7 @@ class NotesPanel extends React.PureComponent {
 
   renderNotesPanelContent = () => {
     const {notesToRender} = this.state;
+    const sortStrategies = getSortStrategies();
 
     return(
       <React.Fragment>
@@ -154,7 +155,7 @@ class NotesPanel extends React.PureComponent {
 
   renderListSeparator = (notes, currNote) => {
     const { sortStrategy, pageLabels } = this.props;
-    const { shouldRenderSeparator, getSeparatorContent } = sortStrategies[sortStrategy];
+    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
     const prevNote = this.getPrevNote(notes, currNote);
     const isFirstNote = prevNote === currNote;
 
@@ -188,7 +189,7 @@ class NotesPanel extends React.PureComponent {
                 placeholder={t('message.searchPlaceholder')}
                 onChange={this.handleInputChange} 
               />
-              <Dropdown items={Object.keys(sortStrategies)} />
+              <Dropdown items={Object.keys(getSortStrategies())} />
             </div>
             {this.renderNotesPanelContent()}
           </React.Fragment>
