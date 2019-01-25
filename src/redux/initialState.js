@@ -24,11 +24,11 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: [ 'tablet', 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
-        { type: 'toggleElementButton', img: 'ic_viewer_settings_black_24px', element: 'zoomDropdown', dataElement: 'zoomDropdownButton' },
         { type: 'customElement',
           render: () => <ToggleElementDropdown />, 
-          element: 'zoomDropdown'
-        },        
+          dataElement: 'zoomDropdownButton',
+          hidden: [ 'mobile' ]
+        },
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: [ 'tablet', 'mobile' ] },

@@ -15,7 +15,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: e => {
     e.stopPropagation();
-    console.log(ownProps.element);
     dispatch(actions.toggleElement(ownProps.element));
   }
 });

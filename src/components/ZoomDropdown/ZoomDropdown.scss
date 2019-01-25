@@ -1,10 +1,12 @@
+@import '../../constants/styles';
+
 .ZoomDropdown{
     position: absolute;
     top: 46px;
     width: 146px;
     height: 420px;
-    background-color: white;
     z-index: 100;
+    box-shadow: $md-shadow1;
 
     &.open {
       display: visible;
@@ -12,4 +14,11 @@
     &.closed {
       display: none;
     }
+
+    .spacer{
+      width: 146px;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.12);
+    }
 }
+

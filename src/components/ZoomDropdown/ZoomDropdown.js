@@ -34,10 +34,9 @@ class ZoomDropdown extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([ 'viewControlsOverlay', 'toolsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup' ]);
-      this.setState(getOverlayPositionBasedOn('zoomDropdownButton', this.dropdown),()=>{ 
-        this.setState({ left: this.state.left - 35 }); 
+      this.setState(getOverlayPositionBasedOn('zoomDropdownButton', this.dropdown),()=>{
+        this.setState({ left: this.state.left - 20 });
       });
-      
     }
   }
 
@@ -46,10 +45,9 @@ class ZoomDropdown extends React.PureComponent {
   }
 
   handleWindowResize = () => {
-    this.setState(getOverlayPositionBasedOn('zoomDropdownButton', this.dropdown),()=>{ 
-      this.setState({ left: this.state.left - 35 }); 
-    });
-  }
+    this.setState(getOverlayPositionBasedOn('zoomDropdownButton', this.dropdown),()=>{
+      this.setState({ left: this.state.left - 20 });
+    });  }
 
   render() { 
     const { isOpen } = this.props;
