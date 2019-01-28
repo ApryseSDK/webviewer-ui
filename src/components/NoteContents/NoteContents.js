@@ -57,9 +57,8 @@ class NoteContents extends React.Component {
   }
 
   render() {
-    const { isEditing, closeEditing, annotation, renderContents, t } = this.props;
-    const contents = annotation.getContents();
-
+    const { isEditing, closeEditing, renderContents, t, contents } = this.props;
+    // this contents is the one on the left panel not in the textbox, thus it is not updated regardless of how many times it is rendered. 
     return (
       <div className="NoteContents" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
         {isEditing && 

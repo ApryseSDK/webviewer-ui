@@ -165,7 +165,8 @@ class Note extends React.PureComponent {
     return <span className="author" dangerouslySetInnerHTML={{__html: this.getText(name)}}></span>;
   }
 
-  renderContents = contents => {
+  renderContents = (contents) => {
+
     if (!contents) {
       return null;
     }
@@ -199,7 +200,7 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled }  = this.props;
+    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, contents }  = this.props;
     const { replies, isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
@@ -214,11 +215,13 @@ class Note extends React.PureComponent {
           searchInput={searchInput}
           renderAuthorName={this.renderAuthorName}
           renderContents={this.renderContents}
+          contents={contents}
           isNoteExpanded={isNoteExpanded}
           isEditing={isRootContentEditing}
           openEditing={this.openRootEditing}
           closeEditing={this.closeRootEditing}
           numberOfReplies={replies.length}
+          contents={contents}
         />
 
         <div className={`replies ${isNoteExpanded ? 'visible' : 'hidden'}`}>

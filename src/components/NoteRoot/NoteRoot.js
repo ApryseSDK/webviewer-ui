@@ -90,7 +90,7 @@ class NoteRoot extends React.Component {
   }
 
   render() {
-    const { annotation, renderContents, isEditing, closeEditing, searchInput } = this.props;
+    const { annotation, renderContents, isEditing, closeEditing, searchInput, contents } = this.props;
 
     return(
       <div className="NoteRoot">
@@ -100,7 +100,8 @@ class NoteRoot extends React.Component {
           searchInput={searchInput} 
           renderContents={renderContents} 
           isEditing={isEditing} 
-          closeEditing={closeEditing} 
+          closeEditing={closeEditing}
+          contents={contents}
         />
       </div>
     );
