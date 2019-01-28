@@ -12,7 +12,8 @@ class NoteContents extends React.Component {
     renderContents: PropTypes.func.isRequired,
     annotation: PropTypes.object.isRequired,
     closeEditing: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    contents: PropTypes.string
   }
 
   constructor(props) {
@@ -24,6 +25,10 @@ class NoteContents extends React.Component {
     if (!prevProps.isEditing && this.props.isEditing) {
       this.textInput.current.focus();
       this.onChange();
+    }
+
+    if (prevProps.contents !== this.props.contents) {
+      this.textInput.current.value = this.props.contents;
     }
   }
   
@@ -41,20 +46,20 @@ class NoteContents extends React.Component {
   setContents = e => {
     e.preventDefault();
 
+    const { annotation, closeEditing } = this.props;
     const content = this.textInput.current.value.trim();
 
     if (content) {
-      core.setNoteContents(this.props.annotation, this.textInput.current.value);
-      if (this.props.annotation instanceof window.Annotations.FreeTextAnnotation) {
-        core.drawAnnotationsFromList([ this.props.annotation ]);
+      core.setNoteContents(annotation, this.textInput.current.value);
+      if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+        core.drawAnnotationsFromList([ annotation ]);
       }
-      this.props.closeEditing();
+      closeEditing();
     }
   }
 
   render() {
-    const { isEditing, closeEditing, annotation, renderContents, t } = this.props;
-    const contents = annotation.getContents();
+    const { isEditing, closeEditing, renderContents, t, contents } = this.props;
 
     return (
       <div className="NoteContents" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
