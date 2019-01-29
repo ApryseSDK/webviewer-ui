@@ -9,15 +9,12 @@ import Input from 'components/Input';
 import core from 'core';
 import getPagesToPrint from 'helpers/getPagesToPrint';
 import getClassName from 'helpers/getClassName';
-import getAnnotationName from 'helpers/getAnnotationName';
-import getAnnotationIcon from 'helpers/getAnnotationIcon';
-import annotationColorToCss from 'helpers/annotationColorToCss';
-import getAnnotationColor from 'helpers/getAnnotationColor';
 import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './PrintModal.scss';
+import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -31,7 +28,8 @@ class PrintModal extends React.PureComponent {
     dispatch: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    sortStrategy: PropTypes.string.isRequired
+    sortStrategy: PropTypes.string.isRequired,
+    colorMap: PropTypes.object.isRequired,
   }
 
   constructor() {
@@ -249,6 +247,8 @@ class PrintModal extends React.PureComponent {
   }
 
   getNote = annotation => {
+    const { colorMap } = this.props;
+
     const note = document.createElement('div');
     note.className = 'note';
 
@@ -258,10 +258,14 @@ class PrintModal extends React.PureComponent {
     const noteRootInfo = document.createElement('div');
     noteRootInfo.className = 'note__info--with-icon';
 
+    const key = mapAnnotationToKey(annotation);
+    const iconColor = colorMap[key].iconColor;
+    const icon = getDataWithKey(key).icon;
+    const innerHTML = icon ? require(`../../../assets/${icon}.svg`) : annotation.Subject;
     const noteIcon = document.createElement('div');
     noteIcon.className = 'note__icon';
-    noteIcon.innerHTML = require(`../../../assets/${getAnnotationIcon(getAnnotationName(annotation))}.svg`);
-    noteIcon.style.color = annotationColorToCss(annotation[getAnnotationColor(getAnnotationName(annotation))]);
+    noteIcon.innerHTML = innerHTML;
+    noteIcon.style.color = iconColor && annotation[iconColor].toHexString();
 
     noteRootInfo.appendChild(noteIcon);
     noteRootInfo.appendChild(this.getNoteInfo(annotation));
@@ -383,7 +387,8 @@ const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   printQuality: selectors.getPrintQuality(state),
   pageLabels: selectors.getPageLabels(state),
-  sortStrategy: selectors.getSortStrategy(state)
+  sortStrategy: selectors.getSortStrategy(state),
+  colorMap: selectors.getColorMap(state)
 });
 
 const mapDispatchToProps = dispatch => ({

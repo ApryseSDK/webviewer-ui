@@ -1,9 +1,10 @@
+import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
 import { zoomIn, zoomOut } from 'helpers/zoom';
 import defaultTool from 'constants/defaultTool';
+import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
-import core from 'core';
 
 export default {
   viewer: {
@@ -155,7 +156,8 @@ export default {
     customPanels: [],
     useEmbeddedPrint: true,
     pageLabels: [],
-    noteDateFormat: 'MMM D, h:mma'
+    noteDateFormat: 'MMM D, h:mma',
+    colorMap: copyMapWithDataProperties('currentPalette', 'iconColor')
   },
   search: {
     listeners: [],

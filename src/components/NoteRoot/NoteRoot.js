@@ -8,10 +8,7 @@ import NotePopup from 'components/NotePopup';
 import Icon from 'components/Icon';
 
 import core from 'core';
-import getAnnotationName from 'helpers/getAnnotationName';
-import getAnnotationIcon from 'helpers/getAnnotationIcon';
-import annotationColorToCss from 'helpers/annotationColorToCss';
-import getAnnotationColor from 'helpers/getAnnotationColor';
+import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import selectors from 'selectors';
 
 import './NoteRoot.scss';
@@ -28,8 +25,9 @@ class NoteRoot extends React.Component {
     openEditing: PropTypes.func.isRequired,
     closeEditing: PropTypes.func.isRequired,
     numberOfReplies: PropTypes.number.isRequired,
-    contents: PropTypes.string,
-    noteDateFormat: PropTypes.string
+    noteDateFormat: PropTypes.string,
+    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
+    contents: PropTypes.string
   }
 
   componentDidMount() {
@@ -51,10 +49,9 @@ class NoteRoot extends React.Component {
   }
 
   renderHeader = () => {
-    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat } = this.props;
-    const name = getAnnotationName(annotation);
-    const icon = getAnnotationIcon(name);
-    const color = annotationColorToCss(annotation[getAnnotationColor(name)]);
+    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor } = this.props;
+    const color = iconColor && annotation[iconColor].toHexString();
+    const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
 
     return (
       <div className="title">
@@ -105,9 +102,10 @@ class NoteRoot extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, { annotation }) => ({
   sortStrategy: selectors.getSortStrategy(state),
-  noteDateFormat: selectors.getNoteDateFormat(state)
+  noteDateFormat: selectors.getNoteDateFormat(state),
+  iconColor: selectors.getIconColor(state, mapAnnotationToKey(annotation))
 });
 
 export default connect(mapStateToProps)(NoteRoot);

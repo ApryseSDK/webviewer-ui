@@ -1,49 +1,40 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
 import Tooltip from 'components/Tooltip';
 
 import getBrightness from 'helpers/getBrightness';
+import { getDataWithKey } from 'constants/map';
+import actions from 'actions';
 
 import './ColorPaletteHeader.scss';
 
 class ColorPaletteHeader extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
-    colorPalette: PropTypes.string.isRequired,
-    onHeaderChange: PropTypes.func.isRequired,
+    colorPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
+    colorMapKey: PropTypes.string.isRequired,
+    setColorPalette: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-  }
-
-  countColorPalette = () => {
-    const { FillColor, StrokeColor, TextColor } = this.props.style;
-
-    return [FillColor, StrokeColor, TextColor].reduce((numberOfPalette, colorProperty) => {
-      if (colorProperty) {
-        numberOfPalette += 1;
-      }
-      return numberOfPalette;
-    }, 0);
+  setColorPalette = newPalette => {
+    const { setColorPalette, colorMapKey } = this.props;
+    
+    setColorPalette(colorMapKey, newPalette);
   }
 
   renderTextColorIcon = () => {
-    const { style: { TextColor }, colorPalette, onHeaderChange, t } = this.props;
-
-    if (!TextColor) {
-      return null;
-    }
+    const { style: { TextColor }, colorPalette } = this.props;
 
     return (
       <Tooltip content="option.annotationColor.text">
         <div
-          className={colorPalette === 'text' ? 'text selected' : 'text'}
+          className={colorPalette === 'TextColor' ? 'text selected' : 'text'}
           style={{ color: TextColor.toHexString() }}
-          onClick={() => onHeaderChange('text')}
+          onClick={() => this.setColorPalette('TextColor')}
         >
           Aa
         </div>
@@ -52,11 +43,7 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   renderBorderColorIcon = () => {
-    const { style: { StrokeColor }, colorPalette, onHeaderChange, t } = this.props;
-
-    if (!StrokeColor) {
-      return null;
-    }
+    const { style: { StrokeColor }, colorPalette } = this.props;
 
     const renderInnerCircle = () => {
       const borderColor = getBrightness(StrokeColor) === 'dark' ? '#bfbfbf' : 'none';
@@ -78,8 +65,8 @@ class ColorPaletteHeader extends React.PureComponent {
     return (
       <Tooltip content="option.annotationColor.border">
         <div
-          className={colorPalette === 'border' ? 'border selected' : 'border'}
-          onClick={() => onHeaderChange('border')}
+          className={colorPalette === 'StrokeColor' ? 'border selected' : 'border'}
+          onClick={() => this.setColorPalette('StrokeColor')}
         >
           <div
             className={`border-icon ${getBrightness(StrokeColor)}}`}
@@ -93,19 +80,14 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   renderFillColorIcon = () => {
-    const { style: { FillColor }, colorPalette, onHeaderChange, t } = this.props;
-
-    if (!FillColor) {
-      return null;
-    }
-
+    const { style: { FillColor }, colorPalette } = this.props;
     const isTransparency = FillColor.toHexString() === null;
 
     return (
       <Tooltip content="option.annotationColor.fill">
         <div
-          className={colorPalette === 'fill' ? 'fill selected' : 'fill'}
-          onClick={() => onHeaderChange('fill')}
+          className={colorPalette === 'FillColor' ? 'fill selected' : 'fill'}
+          onClick={() => this.setColorPalette('FillColor')}
         >
           <div
             className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
@@ -123,10 +105,10 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   render() {
-    const { t, colorPalette } = this.props;
-    const numberOfPalette = this.countColorPalette();
+    const { t, colorPalette, colorMapKey } = this.props;
+    const { availablePalettes } = getDataWithKey(colorMapKey);
 
-    if (numberOfPalette < 2) {
+    if (availablePalettes.length < 2) {
       return null;
     }
 
@@ -136,13 +118,23 @@ class ColorPaletteHeader extends React.PureComponent {
           {t(`option.annotationColor.${colorPalette}`)}
         </div>
         <div className="palette">
-          {this.renderTextColorIcon()}
-          {this.renderBorderColorIcon()}
-          {this.renderFillColorIcon()}
+          {availablePalettes.includes('TextColor') &&
+            this.renderTextColorIcon()
+          }
+          {availablePalettes.includes('StrokeColor') &&
+            this.renderBorderColorIcon()
+          }
+          {availablePalettes.includes('FillColor') &&
+            this.renderFillColorIcon()
+          }
         </div>
       </div>
     );
   }
 }
 
-export default translate(null, { wait: false })(ColorPaletteHeader);
+const mapDispatchToProps = {
+  setColorPalette: actions.setColorPalette
+};
+
+export default connect(null, mapDispatchToProps)(translate(null, { wait: false })(ColorPaletteHeader));

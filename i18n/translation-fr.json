@@ -87,9 +87,9 @@
   },
   "option": {
     "annotationColor": {
-      "border": "Couleur de bordure",
-      "fill": "Couleur de remplissage",
-      "text": "Couleur de texte"
+      "StrokeColor": "Couleur de bordure",
+      "FillColor": "Couleur de remplissage",
+      "TextColor": "Couleur de texte"
     },
     "displayMode": {
       "layout": "Disposition",
