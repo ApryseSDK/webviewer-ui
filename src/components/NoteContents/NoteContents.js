@@ -67,7 +67,7 @@ class NoteContents extends React.Component {
     const { isEditing, closeEditing, renderContents, t, contents } = this.props;
 
     return (
-      <div className="NoteContents" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
+      <div className="NoteContents" onClick={isEditing ? e => e.stopPropagation():()=>{}} onMouseDown={isEditing ? e => e.stopPropagation():()=>{}}>
         {isEditing && 
           <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
             <textarea 
