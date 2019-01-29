@@ -50,41 +50,39 @@ class ToggleElementDropdown extends React.PureComponent {
   }
   
   render() { 
+    const { isActive, onClick } = this.props;
     return (
-    <div className="ToggleElementDropdown" onClick = {this.props.onClick}>
-      <div className="DropdownText">
-        <textarea 
-          className="textarea" 
-          maxLength="4" 
-          value={this.state.value}
-          ref={this.textarea} 
-          onChange={this.onChange} 
-          onKeyPress={this.onKeyPress}
-          onBlur={this.onBlur}
-        />
-        {'%'}
-      </div>
-      <div className="DropdownButton">
-        <ToggleElementButton img="ic-triangle" element="zoomDropdown" dataElement="zoomDropdown"/>
+    <div className="ToggleElementDropdown">
+      <div className={[ "DropdownContainer", isActive ? "active" : "" ].join(" ").trim()}> 
+        <div className="DropdownText">
+          <textarea 
+            className="textarea" 
+            maxLength="4" 
+            value={this.state.value}
+            ref={this.textarea} 
+            onChange={this.onChange} 
+            onKeyPress={this.onKeyPress}
+            onClick={onClick}
+            onBlur={this.onBlur}
+          />
+          {'%'}
+        </div>
+          <ToggleElementButton className="DropdownButton" img="ic-triangle" element="zoomDropdown" dataElement="zoomDropdown"/>
       </div>
     </div>
     );
   }
 }
 
-export default ToggleElementDropdown;
+const mapStateToProps = state => ({
+  isActive: selectors.isElementOpen(state, "zoomDropdown"),
+});
 
-// const mapStateToProps = (state, ownProps) => ({
-//   className: 'ToggleElementButton',
-//   isDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
-//   isActive: selectors.isElementOpen(state, ownProps.elemenst),
-// });
+const mapDispatchToProps = dispatch => ({
+  onClick: e => {
+    e.stopPropagation();
+    dispatch(actions.toggleElement("zoomDropdown"));
+  }
+});
 
-// const mapDispatchToProps = dispatch => ({
-//   onClick: e => {
-//     e.stopPropagation();
-//     dispatch(actions.toggleElement('zoomDropdown'));
-//   }
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(ToggleElementDropdown);
+export default connect(mapStateToProps, mapDispatchToProps)(ToggleElementDropdown);

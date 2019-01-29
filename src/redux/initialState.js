@@ -27,7 +27,8 @@ export default {
         { type: 'customElement',
           render: () => <ToggleElementDropdown />, 
           dataElement: 'zoomDropdownButton',
-          hidden: [ 'mobile' ]
+          hidden: [ 'mobile' ],
+          element: "zoomDropdown"
         },
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ] },

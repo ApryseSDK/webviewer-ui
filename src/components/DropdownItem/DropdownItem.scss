@@ -1,13 +1,17 @@
+@import '../../constants/styles';
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .DropdownItem{
   width: 146px;
   height: 35px;
-  background: #FFFFFF;
-  color: #000000;
+  background-color: var(--primary-color);
+  color: var(--text-color);
   font-size: 16px;
   font-weight: normal;
   font-family: 'Roboto', sans-serif;
+  &:hover{
+    background-color: var(--button-hover-color);
+  }
 }
 
 .ButtonText{
