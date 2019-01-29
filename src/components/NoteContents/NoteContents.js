@@ -50,6 +50,14 @@ class NoteContents extends React.Component {
     }
   }
 
+  handleNoteContentsClick = e => {
+    // we stop propagation when we are editing the contents to 
+    // prevent note components from receiving this event and collapsing the note
+    if (this.props.isEditing) {
+      e.stopPropagation();
+    }
+  }
+
   setContents = e => {
     e.preventDefault();
     const { annotation, closeEditing } = this.props;
@@ -67,23 +75,21 @@ class NoteContents extends React.Component {
     const { isEditing, closeEditing, renderContents, t, contents } = this.props;
 
     return (
-      <div className="NoteContents" onClick={isEditing ? e => e.stopPropagation():()=>{}} onMouseDown={isEditing ? e => e.stopPropagation():()=>{}}>
-        {isEditing && 
-          <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
-            <textarea 
-              ref={this.textInput} 
-              onChange={this.onChange} 
-              onKeyDown={this.onKeyDown}
-              onBlur={closeEditing}         
-              defaultValue={contents} 
-              placeholder={`${t('action.comment')}...`}
-            />
-            <span className="buttons">
-              <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
-              <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
-            </span>
-          </div>
-        }
+      <div className="NoteContents" onClick={this.handleNoteContentsClick} onMouseDown={this.handleNoteContentsClick}>
+        <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
+          <textarea 
+            ref={this.textInput} 
+            onChange={this.onChange} 
+            onKeyDown={this.onKeyDown}
+            onBlur={closeEditing}         
+            defaultValue={contents} 
+            placeholder={`${t('action.comment')}...`}
+          />
+          <span className="buttons">
+            <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
+            <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
+          </span>
+        </div>
         <div className={`container ${isEditing ? 'hidden' : 'visible'}`}>
           {renderContents(contents)}
         </div>
