@@ -8,7 +8,7 @@ import { withTooltip } from 'components/Tooltip';
 import core from 'core';
 import toolStylesExist from 'helpers/toolStylesExist';
 import getToolStyles from 'helpers/getToolStyles';
-import getColorFromStyle from 'helpers/getColorFromStyle';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -24,7 +24,8 @@ class ToolButton extends React.PureComponent {
     showColor: PropTypes.string.isRequired,
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
-    setActiveToolGroup: PropTypes.func.isRequired
+    setActiveToolGroup: PropTypes.func.isRequired,
+    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
   }
 
   onClick = e => {
@@ -44,22 +45,21 @@ class ToolButton extends React.PureComponent {
   }
 
   getToolButtonColor = () => {
-    const { showColor, activeToolStyles, isActive, toolName } = this.props;
+    const { showColor, activeToolStyles, isActive, toolName, iconColor } = this.props;
 
-    switch (showColor) {
-      case 'always': {
-        const toolStyles = getToolStyles(toolName);
-        return getColorFromStyle(toolStyles);
-      }
-      case 'active': {
-        const toolStyles = activeToolStyles;
-        return isActive ? getColorFromStyle(toolStyles) : '';
-      }
-      case 'never':
-      default: {
-        return '';
-      }
+    let toolStyles;
+    if (showColor === 'always') {
+      toolStyles = getToolStyles(toolName);
+    } else if (showColor === 'active' && isActive) {
+      toolStyles = activeToolStyles;
     }
+
+    let color = '';
+    if (toolStyles && iconColor) {
+      color = toolStyles[iconColor].toHexString();
+    }
+
+    return color;
   }
 
   render() {
@@ -84,6 +84,7 @@ const mapStateToProps = (state, { toolName }) => ({
   isDisabled: selectors.isToolButtonDisabled(state, toolName),
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
+  iconColor: selectors.getIconColor(state, mapToolNameToKey(toolName)),
   ...selectors.getToolButtonObject(state, toolName)
 });
 

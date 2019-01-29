@@ -1,5 +1,6 @@
-import isDataElementPanel from 'helpers/isDataElementPanel';
 import core from 'core';
+import { mapToolNameToKey } from 'constants/map';
+import isDataElementPanel from 'helpers/isDataElementPanel';
 import fireEvent from 'helpers/fireEvent';
 
 // viewer
@@ -122,3 +123,4 @@ export const setPageLabels = pageLabels => dispatch => {
   }
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };
+

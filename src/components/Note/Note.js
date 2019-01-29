@@ -23,6 +23,7 @@ class Note extends React.PureComponent {
     isReadOnly: PropTypes.bool,
     isReplyDisabled: PropTypes.bool,
     visible: PropTypes.bool.isRequired,
+    rootContents: PropTypes.string,
     t: PropTypes.func.isRequired
   };
 
@@ -199,7 +200,7 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled }  = this.props;
+    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
     const { replies, isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
@@ -211,6 +212,7 @@ class Note extends React.PureComponent {
       <div className={className} onClick={this.onClickNote}>
         <NoteRoot
           annotation={annotation}
+          contents={rootContents}
           searchInput={searchInput}
           renderAuthorName={this.renderAuthorName}
           renderContents={this.renderContents}

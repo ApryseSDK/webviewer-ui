@@ -1,5 +1,6 @@
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
+import { mapAnnotationToToolName } from 'constants/map';
 import actions from 'actions';
 
 export default (dispatch, annotationConstructor) =>  {
@@ -41,13 +42,7 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
 };
 
 const setAnnotationColor = annotation => {
-  const annotationTypeToolNameMap = {
-    highlight: 'AnnotationCreateTextHighlight',
-    underline: 'AnnotationCreateTextUnderline',
-    squiggly: 'AnnotationCreateTextSquiggly',
-    strikeout: 'AnnotationCreateTextStrikeout'
-  };
-  const toolName = annotationTypeToolNameMap[annotation.elementName];
+  const toolName = mapAnnotationToToolName(annotation);
   
   if (toolName) {
     const { StrokeColor } = getToolStyles(toolName);

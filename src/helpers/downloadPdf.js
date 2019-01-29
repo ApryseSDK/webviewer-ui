@@ -50,11 +50,11 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
             file = new File([arr], downloadName, { type: 'application/pdf' });
           }
           if (navigator.msSaveBlob) { // IE11 and Edge 17-
-            navigator.msSaveBlob(file, downloadName)
+            navigator.msSaveBlob(file, downloadName);
           } else { // every other browser
             const reader = new FileReader();
             reader.onloadend = () => {
-              const a = window.parent.document.createElement("a");
+              const a = window.parent.document.createElement('a');
               a.href = reader.result;
               a.style.display = 'none';
               a.download = downloadName;
@@ -63,7 +63,7 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
               a.parentNode.removeChild(a);
               dispatch(actions.closeElement('loadingModal'));
               $(document).trigger('finishedSavingPDF');
-            }
+            };
             reader.readAsDataURL(file);
           }
           resolve();
