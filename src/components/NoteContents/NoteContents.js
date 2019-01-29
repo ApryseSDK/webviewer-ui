@@ -52,7 +52,6 @@ class NoteContents extends React.Component {
 
   setContents = e => {
     e.preventDefault();
-
     const { annotation, closeEditing } = this.props;
 
     if (this.state.isChanged) {
@@ -71,14 +70,14 @@ class NoteContents extends React.Component {
       <div className="NoteContents" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
         {isEditing && 
           <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
-          <textarea 
+            <textarea 
               ref={this.textInput} 
               onChange={this.onChange} 
               onKeyDown={this.onKeyDown}
               onBlur={closeEditing}         
               defaultValue={contents} 
               placeholder={`${t('action.comment')}...`}
-          />
+            />
             <span className="buttons">
               <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
               <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
