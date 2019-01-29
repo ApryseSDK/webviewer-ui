@@ -69,6 +69,10 @@ app.get('/', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'src/index.html'));
 });
 
+app.get('/mobile', (req, res) => {
+	res.redirect(`/#d=/files/webviewer-demo-annotated.xod&a=1`);
+});
+
 app.listen(3000, '0.0.0.0', err => {
 	if (err) {
 		console.error(err);

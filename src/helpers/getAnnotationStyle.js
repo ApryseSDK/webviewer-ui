@@ -18,7 +18,7 @@ const getStyle = annotation => {
   });
 
   // Special case for the highlight annotation. It shouldn't have opacity
-  if (annotation.Subject === 'Highlight') {
+  if (annotation.elementName === 'highlight') {
     style.Opacity = null;
   }
 

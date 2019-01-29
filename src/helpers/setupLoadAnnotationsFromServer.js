@@ -1,4 +1,5 @@
 import core from 'core';
+import { documentTypes } from 'constants/types';
 
 export default store =>  {
   const state = store.getState();
@@ -50,5 +51,12 @@ export default store =>  {
   core.setInternalAnnotationsTransform(getAnnotsFromServer);
   core.setPagesUpdatedInternalAnnotationsTransform((origData, pages, callback) => {
     getAnnotsFromServer(origData, callback);
+  });
+  core.addEventListener('documentLoaded', function() {
+    if (window.docViewer.getDocument().getType() === documentTypes.OFFICE) {
+      getAnnotsFromServer(null, function(data) {
+        window.docViewer.getAnnotationManager().importAnnotationsAsync(data);
+      });
+    }
   });
 };

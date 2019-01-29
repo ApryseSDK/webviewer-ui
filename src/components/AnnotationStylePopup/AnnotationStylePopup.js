@@ -6,6 +6,7 @@ import StylePopup from 'components/StylePopup';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import { mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -17,10 +18,6 @@ class AnnotationStylePopup extends React.Component {
     annotation: PropTypes.object.isRequired,
     style: PropTypes.object.isRequired,
     closeElement: PropTypes.func.isRequired
-  }
-
-  constructor(props) {
-    super(props);
   }
 
   handleStyleChange = (property, value) => {
@@ -43,7 +40,8 @@ class AnnotationStylePopup extends React.Component {
     const { isDisabled, annotation, style, closeElement } = this.props;
     const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation && annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText;
     const className = getClassName('Popup AnnotationStylePopup', this.props);
-
+    const colorMapKey = mapAnnotationToKey(annotation);
+    
     if (isDisabled) {
       return null;
     }
@@ -51,6 +49,7 @@ class AnnotationStylePopup extends React.Component {
     return(
       <div className={className} data-element="annotationStylePopup" onClick={() => closeElement('annotationPopup')}>
         <StylePopup 
+          colorMapKey={colorMapKey}
           style={style}
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}

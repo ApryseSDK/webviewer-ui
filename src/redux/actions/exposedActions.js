@@ -1,5 +1,6 @@
-import isDataElementPanel from 'helpers/isDataElementPanel';
 import core from 'core';
+import { mapToolNameToKey } from 'constants/map';
+import isDataElementPanel from 'helpers/isDataElementPanel';
 import fireEvent from 'helpers/fireEvent';
 
 // viewer
@@ -107,7 +108,7 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
 };
 export const setSortStrategy = sortStrategy => ({ type: 'SET_SORT_STRATEGY', payload: { sortStrategy } });
 export const setSortNotesBy = sortStrategy => {
-  console.warn('setSortNotesBy is going to be deprecated, please use setSortStrategy instead');
+  console.warn('setSortNotesBy is deprecated, please use setSortStrategy instead');
 
   return setSortStrategy(sortStrategy);
 };
@@ -122,3 +123,4 @@ export const setPageLabels = pageLabels => dispatch => {
   }
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };
+

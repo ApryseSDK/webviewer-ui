@@ -240,6 +240,10 @@ export const getDocumentExtension = (doc, engineType) => {
     }
   }
 
+  if (!extension) {
+    return 'xod';
+  }
+
   return extension.toLowerCase();
 };
 
