@@ -9,22 +9,20 @@ import { zoomTo } from 'helpers/zoom';
 
 import ToggleElementButton from '../ToggleElementButton';
 
-import './ToggleElementDropdown.scss';
+import './ToggleElementOverlay.scss';
 
-class ToggleElementDropdown extends React.PureComponent {
+class ToggleElementOverlay extends React.PureComponent {
 
   constructor(props){
     super(props);
-    this.state = { zoom: Math.ceil(core.getZoom() * 100), value: 100 };
-    this.textarea = React.createRef();
+    this.state = { value: 100 };
   }
   componentDidMount(){
     core.addEventListener('zoomUpdated', this.onZoomUpdated);
   }
 
   onZoomUpdated = () => {
-    this.setState({ zoom: Math.ceil(core.getZoom() * 100)},
-    ()=>{this.setState({ value: this.state.zoom })});
+    this.setState({ value: Math.ceil(core.getZoom() * 100) });
   }
 
   onKeyPress = e => {
@@ -41,25 +39,27 @@ class ToggleElementDropdown extends React.PureComponent {
   }
 
   onBlur = e => {
-    if (e.target.value !== ''){
+    const zoom = Math.ceil(core.getZoom() * 100);
+    if (e.target.value == zoom && e.target.value !== ''){
+      return; 
+    } else if (e.target.value !== ''){
       this.setState({ value: e.target.value });
       zoomTo(e.target.value / 100);
     } else {
-      this.setState({ value: this.state.zoom });
+      this.setState({ value: zoom});
     }
   }
   
   render() { 
     const { isActive, onClick } = this.props;
     return (
-    <div className="ToggleElementDropdown">
-      <div className={[ "DropdownContainer", isActive ? "active" : "" ].join(" ").trim()}> 
-        <div className="DropdownText">
+    <div className="ToggleElementOverlay">
+      <div className={[ "OverlayContainer", isActive ? "active" : "" ].join(" ").trim()}> 
+        <div className="OverlayText">
           <textarea 
             className="textarea" 
             maxLength="4" 
             value={this.state.value}
-            ref={this.textarea} 
             onChange={this.onChange} 
             onKeyPress={this.onKeyPress}
             onClick={onClick}
@@ -67,7 +67,7 @@ class ToggleElementDropdown extends React.PureComponent {
           />
           {'%'}
         </div>
-          <ToggleElementButton className="DropdownButton" img="ic-triangle" element="zoomDropdown" dataElement="zoomDropdown"/>
+          <ToggleElementButton className="OverlayButton" img="ic-triangle" element="zoomOverlay" dataElement="zoomOverlay"/>
       </div>
     </div>
     );
@@ -75,14 +75,14 @@ class ToggleElementDropdown extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isActive: selectors.isElementOpen(state, "zoomDropdown"),
+  isActive: selectors.isElementOpen(state, "zoomOverlay"),
 });
 
 const mapDispatchToProps = dispatch => ({
   onClick: e => {
     e.stopPropagation();
-    dispatch(actions.toggleElement("zoomDropdown"));
+    dispatch(actions.toggleElement("zoomOverlay"));
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToggleElementDropdown);
+export default connect(mapStateToProps, mapDispatchToProps)(ToggleElementOverlay);

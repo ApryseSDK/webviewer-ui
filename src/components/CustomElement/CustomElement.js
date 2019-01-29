@@ -58,7 +58,6 @@ class CustomElement extends React.PureComponent {
       <div 
         className={[className, mediaQueryClassName].join(' ').trim()}
         ref={this.elementWrapper} 
-        // style={{ display: display || 'flex' }} 
         data-element={dataElement}
       >
         {this.state.isRenderingReactComponent &&

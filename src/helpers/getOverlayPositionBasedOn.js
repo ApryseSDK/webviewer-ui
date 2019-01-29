@@ -30,7 +30,7 @@ export default (element, overlay, align = 'left') => {
       right = 'auto';
     }
   } else {
-    if (buttonRight + overlayWidth > window.innerWidth) {
+    if (buttonRight - overlayWidth < 0) {
       const leftMargin = 16;
       right = 'auto';
       left = leftMargin;

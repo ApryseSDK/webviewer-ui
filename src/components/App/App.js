@@ -26,7 +26,7 @@ import ProgressModal from 'components/ProgressModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
-import ZoomDropdown from 'components/ZoomDropdown';
+import ZoomOverlay from 'components/zoomOverlay';
 
 import { isDesktop } from 'helpers/device';
 import actions from 'actions';
@@ -53,7 +53,7 @@ class App extends React.PureComponent {
     const elements = [
       'viewControlsOverlay',
       'menuOverlay',
-      'zoomDropdown',
+      'zoomOverlay',
       this.props.isSearchPanelOpen ? '' : 'searchOverlay'
     ].filter(element => element);
 
@@ -92,7 +92,7 @@ class App extends React.PureComponent {
           <MenuOverlay />
           <PageNavOverlay />
           <ToolsOverlay />
-          <ZoomDropdown />
+          <ZoomOverlay />
 
           <AnnotationPopup />
           <TextPopup />

@@ -1,12 +1,12 @@
 @import '../../constants/styles';
 
-.ToggleElementDropdown{
+.ToggleElementOverlay{
   height: $button-height;  
   width: 53px;
   top:0;
 }
 
-.DropdownContainer{
+.OverlayContainer{
   display: flex;
   align-items: center;
   &:hover {
@@ -17,7 +17,7 @@
   }
 }
 
-.DropdownText{
+.OverlayText{
   margin-right:-8px;
   color: #757575;
   font-family: 'Roboto', sans-serif;
@@ -31,7 +31,7 @@
   display: flex;
   z-index: 1;
   background-color: inherit;
-  &:hover + .DropdownButton{
+  &:hover + .OverlayButton{
     background-color:inherit;
   }
 }

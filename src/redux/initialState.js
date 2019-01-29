@@ -6,7 +6,7 @@ import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import core from 'core';
 
-import ToggleElementDropdown from 'components/toggleElementDropdown';
+import ToggleElementOverlay from 'components/toggleElementOverlay';
 
 export default {
   viewer: {
@@ -25,10 +25,10 @@ export default {
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
         { type: 'customElement',
-          render: () => <ToggleElementDropdown />, 
-          dataElement: 'zoomDropdownButton',
+          render: () => <ToggleElementOverlay />, 
+          dataElement: 'zoomOverlayButton',
           hidden: [ 'mobile' ],
-          element: "zoomDropdown"
+          element: "zoomOverlay"
         },
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ] },
@@ -44,7 +44,7 @@ export default {
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('tools'));
             core.setToolMode(defaultTool);
-            dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'zoomDropdown' ]));
+            dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'zoomOverlay' ]));
           },
           dataElement: 'toolsButton',
           title: 'component.toolsButton',
