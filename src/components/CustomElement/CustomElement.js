@@ -33,8 +33,11 @@ class CustomElement extends React.PureComponent {
     }
   }
 
-  // we have window.parent here since we run UI inside iframe except developing
-  isDOMElement = element => element instanceof window.parent.Element;
+  // currently UI is running in an iframe, and there are two ways a user can add a CustomElement component to the header using setHeaderItems. 
+  // one way is in a config file. This way the element created by document.createElement() is an instanceof window.Element but not window.parent.Element since 
+  // code inside the config is running inside the iframe and window.parent is the iframe
+  // the other way is calling setHeaderItems and creating elements outside the iframe. This way the element is an instanceof window.parent.Element, not window.Element
+  isDOMElement = element => element instanceof window.Element || element instanceof window.parent.Element;
 
   isReactElement = element => React.isValidElement(element);
   

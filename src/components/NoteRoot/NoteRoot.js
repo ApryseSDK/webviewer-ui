@@ -8,10 +8,7 @@ import NotePopup from 'components/NotePopup';
 import Icon from 'components/Icon';
 
 import core from 'core';
-import getAnnotationType from 'helpers/getAnnotationType';
-import getAnnotationIcon from 'helpers/getAnnotationIcon';
-import annotationColorToCss from 'helpers/annotationColorToCss';
-import getAnnotationColor from 'helpers/getAnnotationColor';
+import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import selectors from 'selectors';
 
 import './NoteRoot.scss';
@@ -28,11 +25,9 @@ class NoteRoot extends React.Component {
     openEditing: PropTypes.func.isRequired,
     closeEditing: PropTypes.func.isRequired,
     numberOfReplies: PropTypes.number.isRequired,
-    noteDateFormat: PropTypes.string
-  }
-
-  constructor(props) { 
-    super(props);
+    noteDateFormat: PropTypes.string,
+    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
+    contents: PropTypes.string
   }
 
   componentDidMount() {
@@ -54,10 +49,9 @@ class NoteRoot extends React.Component {
   }
 
   renderHeader = () => {
-    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat } = this.props;
-    const type = getAnnotationType(annotation);
-    const icon = getAnnotationIcon(type);
-    const color = annotationColorToCss(annotation[getAnnotationColor(type)]);
+    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor } = this.props;
+    const color = iconColor && annotation[iconColor].toHexString();
+    const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
 
     return (
       <div className="title">
@@ -90,13 +84,14 @@ class NoteRoot extends React.Component {
   }
 
   render() {
-    const { annotation, renderContents, isEditing, closeEditing, searchInput } = this.props;
+    const { annotation, renderContents, isEditing, closeEditing, searchInput, contents } = this.props;
 
     return(
       <div className="NoteRoot">
         {this.renderHeader()}
         <NoteContents 
           annotation={annotation} 
+          contents={contents}
           searchInput={searchInput} 
           renderContents={renderContents} 
           isEditing={isEditing} 
@@ -107,9 +102,10 @@ class NoteRoot extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, { annotation }) => ({
   sortStrategy: selectors.getSortStrategy(state),
-  noteDateFormat: selectors.getNoteDateFormat(state)
+  noteDateFormat: selectors.getNoteDateFormat(state),
+  iconColor: selectors.getIconColor(state, mapAnnotationToKey(annotation))
 });
 
 export default connect(mapStateToProps)(NoteRoot);
