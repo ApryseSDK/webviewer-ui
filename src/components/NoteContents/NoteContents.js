@@ -12,7 +12,8 @@ class NoteContents extends React.Component {
     renderContents: PropTypes.func.isRequired,
     annotation: PropTypes.object.isRequired,
     closeEditing: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    contents: PropTypes.string
   }
 
   constructor(props) {
@@ -20,8 +21,8 @@ class NoteContents extends React.Component {
     this.textInput = React.createRef();
     this.state = {
       isChanged: false,
-      word: ""
-    }
+      word: ''
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -30,6 +31,10 @@ class NoteContents extends React.Component {
         this.textInput.current.focus();
         this.onChange();
       });
+    }
+
+    if (prevProps.contents !== this.props.contents) {
+      this.textInput.current.value = this.props.contents;
     }
   }
   
@@ -45,39 +50,46 @@ class NoteContents extends React.Component {
     }
   }
 
+  handleNoteContentsClick = e => {
+    // we stop propagation when we are editing the contents to 
+    // prevent note components from receiving this event and collapsing the note
+    if (this.props.isEditing) {
+      e.stopPropagation();
+    }
+  }
+
   setContents = e => {
     e.preventDefault();
+    const { annotation, closeEditing } = this.props;
+
     if (this.state.isChanged) {
-      core.setNoteContents(this.props.annotation, this.textInput.current.value);
-      if (this.props.annotation instanceof window.Annotations.FreeTextAnnotation) {
-        core.drawAnnotationsFromList([ this.props.annotation ]);
+      core.setNoteContents(annotation, this.textInput.current.value);
+      if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+        core.drawAnnotationsFromList([ annotation ]);
       }
-      this.props.closeEditing();
+      closeEditing();
     }
   }
 
   render() {
-    const { isEditing, closeEditing, annotation, renderContents, t } = this.props;
-    const contents = annotation.getContents();
+    const { isEditing, closeEditing, renderContents, t, contents } = this.props;
 
     return (
-      <div className="NoteContents" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
-        {isEditing && 
-          <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
+      <div className="NoteContents" onClick={this.handleNoteContentsClick} onMouseDown={this.handleNoteContentsClick}>
+        <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
           <textarea 
-              ref={this.textInput} 
-              onChange={this.onChange} 
-              onKeyDown={this.onKeyDown}
-              onBlur={closeEditing}         
-              defaultValue={contents} 
-              placeholder={`${t('action.comment')}...`}
-            />
-            <span className="buttons">
-              <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
-              <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
-            </span>
-          </div>
-        }
+            ref={this.textInput} 
+            onChange={this.onChange} 
+            onKeyDown={this.onKeyDown}
+            onBlur={closeEditing}         
+            defaultValue={contents} 
+            placeholder={`${t('action.comment')}...`}
+          />
+          <span className="buttons">
+            <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
+            <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
+          </span>
+        </div>
         <div className={`container ${isEditing ? 'hidden' : 'visible'}`}>
           {renderContents(contents)}
         </div>

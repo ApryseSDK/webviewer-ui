@@ -195,6 +195,8 @@ if (window.CanvasRenderingContext2D) {
           setLanguage: apis.setLanguage,
           setLayoutMode: apis.setLayoutMode,
           setNotesPanelSort: apis.setNotesPanelSort(store),
+          setMaxZoomLevel: apis.setMaxZoomLevel,
+          setMinZoomLevel: apis.setMinZoomLevel,
           setPrintQuality: apis.setPrintQuality(store),
           setReadOnly: apis.setReadOnly,
           setShowSideWindow: apis.setShowSideWindow(store),
@@ -205,7 +207,7 @@ if (window.CanvasRenderingContext2D) {
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store),
           loadedFromServer: false,
-          serverFailed: false
+          serverFailed: false,
         };
 
         window.ControlUtils = {

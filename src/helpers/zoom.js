@@ -1,26 +1,26 @@
 import core from 'core';
-import { stepToZoomFactorRangesMap, ZOOM_MAX, ZOOM_MIN } from 'constants/zoomFactors';
+import { stepToZoomFactorRangesMap, getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
 
 export const zoomIn = () => {
   const currentZoomFactor = core.getZoom();
-  if (currentZoomFactor === ZOOM_MAX) {
+  if (currentZoomFactor === getMaxZoomLevel()) {
     return;
   }
 
   const step = getStep(currentZoomFactor);
   const newZoomFactor = currentZoomFactor + step;
-  zoomTo(Math.min(newZoomFactor, ZOOM_MAX));
+  zoomTo(Math.min(newZoomFactor, getMaxZoomLevel()));
 };
 
 export const zoomOut = () => {
   const currentZoomFactor = core.getZoom();
-  if (currentZoomFactor === ZOOM_MIN) {
+  if (currentZoomFactor === getMinZoomLevel()) {
     return;
   }
 
   const step = getStep(currentZoomFactor);
   const newZoomFactor = currentZoomFactor - step;
-  zoomTo(Math.max(newZoomFactor, ZOOM_MIN));
+  zoomTo(Math.max(newZoomFactor, getMinZoomLevel()));
 };
 
 const getStep = currentZoomFactor => {
@@ -34,7 +34,14 @@ const getStep = currentZoomFactor => {
   return parseFloat(step);
 };
 
-const isCurrentZoomFactorInRange = (zoomFactor, ranges) => zoomFactor >= ranges[0] && zoomFactor <= ranges[1];
+const isCurrentZoomFactorInRange = (zoomFactor, ranges) => {
+  if (ranges[0] === null) {
+    return zoomFactor <= ranges[1];
+  } else if (ranges[1] === null) {
+    return zoomFactor >= ranges[0];
+  }
+  return zoomFactor >= ranges[0] && zoomFactor <= ranges[1];
+};
 
 const zoomTo = newZoomFactor => {
   const currentZoomFactor = core.getZoom();
