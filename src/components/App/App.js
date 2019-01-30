@@ -10,6 +10,7 @@ import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
+import SignatureOverlay from 'components/SignatureOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import SearchPanel from 'components/SearchPanel';
@@ -52,6 +53,8 @@ class App extends React.PureComponent {
     const elements = [
       'viewControlsOverlay',
       'menuOverlay',
+      'zoomOverlay',
+      'signatureOverlay',
       this.props.isSearchPanelOpen ? '' : 'searchOverlay'
     ].filter(element => element);
 
@@ -90,6 +93,7 @@ class App extends React.PureComponent {
           <MenuOverlay />
           <PageNavOverlay />
           <ToolsOverlay />
+          <SignatureOverlay />
 
           <AnnotationPopup />
           <TextPopup />

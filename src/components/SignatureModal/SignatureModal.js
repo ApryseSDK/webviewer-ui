@@ -22,14 +22,15 @@ class SignatureModal extends React.PureComponent {
     closeElements: PropTypes.func.isRequired
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.canvas = React.createRef();
     this.signatureTool = core.getTool('AnnotationCreateSignature');
-    this.state = {
+    this.initialState = {
       saveSignature: false,
       canClear: false,
     };
+    this.state = this.initialState;
   }
 
   componentDidMount() {
@@ -39,6 +40,7 @@ class SignatureModal extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
+      this.setState(this.initialState);
       this.signatureTool.clearSignatureCanvas();
       this.signatureTool.openSignature();
       this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]);
@@ -50,7 +52,7 @@ class SignatureModal extends React.PureComponent {
   }
 
   onLocationSelected = () => {
-    this.signatureTool.addSignature();
+    this.signatureTool.addSignature(this.state.saveSignature);
   }
 
   setUpSignatureCanvas = canvas => {
@@ -85,10 +87,7 @@ class SignatureModal extends React.PureComponent {
     this.signatureTool.clearSignatureCanvas();
     // TODO: think about if we should trigger an event and set the below state in that event listener
     // that way the flow is clearer? (And can possibly avoid timing issue)
-    this.setState({ 
-      canClear: false,
-      saveSignature: false 
-    });
+    this.setState(this.initialState);
   }
 
   handleSaveSignatureChange = () => {

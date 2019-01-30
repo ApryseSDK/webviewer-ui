@@ -39,8 +39,10 @@ export default {
   },
   signatureToolButton: {
     initialState: 'newSignature',
-    mount: () => {
-
+    mount: update => {
+      core.getTool('AnnotationCreateSignature').on('saveDefault', () => {
+        update('defaultSignature');
+      });
     },
     unmount: () => {
 
@@ -56,8 +58,9 @@ export default {
       },
       defaultSignature: {
         img: 'ic_annotation_signature_black_24px',
-        onClick: () => {
-
+        onClick: (update, state, dispatch) => {
+          core.setToolMode('AnnotationCreateSignature');
+          dispatch(actions.openElement('signatureOverlay'));
         },
         title: 'annotation.signature' 
       }
