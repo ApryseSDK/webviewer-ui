@@ -7,10 +7,14 @@ const TouchEventManager = {
   initialize(document, container) {
     this.document = document;
     this.container = container;
+    this.horizontalSwipe = true;
+    this.verticalSwipe = false;
     this.touch = {
       clientX: 0,
       clientY: 0,
       distance: 0,
+      horizontalDistance: 0,
+      verticalDistance: 0,
       scale: 1,
       zoom: 1,
       type: ''
@@ -24,6 +28,23 @@ const TouchEventManager = {
     this.container.addEventListener('touchend', this.handleTouchEnd, { passive: false });
     this.container.addEventListener('touchcancel', this.handleTouchCancel, { passive: false });
   },
+
+  updateOrientation(newOrientation) {
+    if (newOrientation === "both"){
+      this.verticalSwipe = true;
+      this.horizontalSwipe = true;
+    } else if (newOrientation === "vertical"){
+      this.verticalSwipe = true;
+      this.horizontalSwipe = false;
+    } else if (newOrientation === "horizontal"){
+      this.verticalSwipe = false;
+      this.horizontalSwipe = true;
+    } else {
+      console.warn (newOrientation + " is not a valid orientation. Try 'vertical,' 'horizontal,' or 'both.'");
+      return;
+    }
+  },
+
   terminate() {
     this.container.removeEventListener('touchstart', this.handleTouchStart);
     this.container.removeEventListener('touchmove', this.handleTouchMove);
@@ -79,7 +100,8 @@ const TouchEventManager = {
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
-        this.touch.distance = this.touch.clientX - t.clientX;
+        this.touch.horizontalDistance = this.touch.clientX - t.clientX;
+        this.touch.verticalDistance = this.touch.clientY - t.clientY;
         if (this.getDistance(this.touch, t) > 10) {
           this.touch.type = 'swipe';
         }
@@ -130,16 +152,23 @@ const TouchEventManager = {
           return;
         }
 
-        const { scrollLeft } = this.container;
-        const swipingLeft = scrollLeft <= 0 && this.touch.distance < -100;
+        const { scrollLeft, scrollTop } = this.container;
+        const swipingRight = scrollLeft <= 0 && this.touch.horizontalDistance < -100;
         const viewerWidth = this.document.clientWidth;
         const scrollWidth = this.container.clientWidth;
-        const swipingRight = scrollWidth + scrollLeft >= viewerWidth && this.touch.distance > 100;
+        const viewerHeight = this.document.clientHeight;
+        const scrollHeight = this.container.clientHeight;
+        const swipingLeft = scrollWidth + scrollLeft >= viewerWidth && this.touch.horizontalDistance > 100;
+        const swipingUp = scrollHeight + scrollTop >= viewerHeight && this.touch.verticalDistance > 100;
+        const swipingDown = scrollTop <= 0 && this.touch.verticalDistance < -100;
         const currentPage = core.getCurrentPage();
         const displayMode = core.getDisplayMode();
-        if (swipingLeft) {
+        const verticalSwipe = this.verticalSwipe;
+        const horizontalSwipe = this.horizontalSwipe;
+        
+        if ((swipingRight && horizontalSwipe) || (swipingDown && verticalSwipe)) {
           core.setCurrentPage(Math.max(1, currentPage - getNumberOfPagesToNavigate(displayMode)));
-        } else if (swipingRight) {
+        } else if ((swipingLeft && horizontalSwipe) || (swipingUp && verticalSwipe)) {
           core.setCurrentPage(Math.min(core.getTotalPages(), currentPage + getNumberOfPagesToNavigate(displayMode)));
         }
         break;
