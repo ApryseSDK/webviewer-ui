@@ -87,9 +87,9 @@
   },
   "option": {
     "annotationColor": {
-      "border": "边框颜色",
-      "fill": "填充颜色",
-      "text": "文本颜色"
+      "StrokeColor": "边框颜色",
+      "FillColor": "填充颜色",
+      "TextColor": "文本颜色"
     },
     "displayMode": {
       "layout": "布局",

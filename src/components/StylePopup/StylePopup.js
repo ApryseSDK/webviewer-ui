@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
@@ -6,6 +7,7 @@ import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
 
 import { circleRadius } from 'constants/slider';
+import selectors from 'selectors';
 
 import './StylePopup.scss';
 
@@ -13,54 +15,15 @@ class StylePopup extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    isFreeText: PropTypes.bool.isRequired
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-  }
-
-  getInitialState = () => {
-    const {  TextColor, StrokeColor, FillColor } = this.props.style;
-
-    return { 
-      colorPalette: TextColor ? 'text' : StrokeColor ? 'border' : FillColor ? 'fill' : ''
-    };
-  }
-
-  handleHeaderChange = colorPalette => {
-    this.setState({ colorPalette });
+    isFreeText: PropTypes.bool.isRequired,
+    colorMapKey: PropTypes.string.isRequired,
+    currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
   }
 
   renderColorPalette = () => {
-    const { colorPalette } = this.state;
+    const { style, onStyleChange, currentPalette } = this.props;
 
-    if (!colorPalette) {
-      return null;
-    }
-
-    const { 
-      style: { FillColor, StrokeColor, TextColor }, 
-      onStyleChange 
-    } = this.props;
-    const map = {
-      text: {
-        color: TextColor,
-        property: 'TextColor'
-      },
-      border: {
-        color: StrokeColor,
-        property: 'StrokeColor'
-      },
-      fill: {
-        color: FillColor,
-        property: 'FillColor'
-      }
-    };
-    const { color, property } = map[colorPalette];
-
-    return <ColorPalette color={color} property={property} onStyleChange={onStyleChange} />;
+    return <ColorPalette color={style[currentPalette]} property={currentPalette} onStyleChange={onStyleChange} />;
   }
 
   renderSliders = () => {
@@ -111,14 +74,18 @@ class StylePopup extends React.PureComponent {
   }
 
   render() {
+    const { currentPalette, style, colorMapKey } = this.props;
+
     return (
       <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
-        <div className="colors-container">
-          <div className="inner-wrapper">
-            <ColorPaletteHeader colorPalette={this.state.colorPalette} style={this.props.style} onHeaderChange={this.handleHeaderChange} />
-            {this.renderColorPalette()}
+        {currentPalette &&
+          <div className="colors-container">
+            <div className="inner-wrapper">
+              <ColorPaletteHeader colorPalette={currentPalette} colorMapKey={colorMapKey} style={style} />
+              {this.renderColorPalette()}
+            </div>
           </div>
-        </div>
+        }
         <div className="sliders-container" onMouseDown={e => e.preventDefault()}>
           <div className="sliders">
             {this.renderSliders()}
@@ -129,4 +96,8 @@ class StylePopup extends React.PureComponent {
   }
 }
 
-export default StylePopup;
+const mapStateToProps = (state, { colorMapKey }) => ({
+  currentPalette: selectors.getCurrentPalette(state, colorMapKey)
+});
+
+export default connect(mapStateToProps)(StylePopup);

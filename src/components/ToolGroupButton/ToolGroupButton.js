@@ -6,9 +6,9 @@ import Button from 'components/Button';
 import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
-import getColorFromStyle from 'helpers/getColorFromStyle';
 import getToolStyles from 'helpers/getToolStyles';
 import defaultTool from 'constants/defaultTool';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -29,7 +29,8 @@ class ToolGroupButton extends React.PureComponent {
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
-    isActive: PropTypes.bool.isRequired
+    isActive: PropTypes.bool.isRequired,
+    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
   }
 
   constructor(props) {
@@ -70,8 +71,8 @@ class ToolGroupButton extends React.PureComponent {
     if (isActive) {
       toggleElement('toolsOverlay');
     } else {
-      openElement('toolsOverlay');
       this.setToolMode(toolName);
+      openElement('toolsOverlay');
     }
   }
 
@@ -87,7 +88,7 @@ class ToolGroupButton extends React.PureComponent {
   }
 
   render() {
-    const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive, toolNames } = this.props;
+    const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive, toolNames, iconColor } = this.props;
     const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName).disabled);
 
     if (isDisabled || allButtonsInGroupDisabled) {
@@ -96,7 +97,7 @@ class ToolGroupButton extends React.PureComponent {
 
     const { toolName } = this.state;
     const img = this.props.img ? this.props.img : toolButtonObjects[toolName].img;
-    const color = isActive && !this.props.img ? getColorFromStyle(getToolStyles(toolName)) : '';
+    const color = isActive && !this.props.img && iconColor ? getToolStyles(toolName)[iconColor].toHexString() : '';
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
     const className = [
@@ -114,6 +115,7 @@ const mapStateToProps = (state, ownProps) => ({
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
+  iconColor: selectors.getIconColor(state, mapToolNameToKey(selectors.getActiveToolName(state)))
 });
 
 const mapDispatchToProps = {

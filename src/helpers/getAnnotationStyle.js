@@ -1,5 +1,3 @@
-import i18next from 'i18next';
-
 /**
  * We can just pass object down as a prop, but many properties of that object won't be used by the child component, 
  * so here we select properties that will be used.
