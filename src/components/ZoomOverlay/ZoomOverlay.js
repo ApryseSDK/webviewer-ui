@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import OverlayItem from '../OverlayItem';
+import ToolButton from '../ToolButton';
 
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
@@ -76,9 +77,10 @@ class ZoomOverlay extends React.PureComponent {
           } 
           buttonName={zoomValue * 100 + '%'}
           /> 
-          }
-        )
-      }
+          })
+        }
+        <div className="spacer" />
+        <ToolButton toolName="MarqueeZoomTool" showColor="never" />
     </div>
     );
   }

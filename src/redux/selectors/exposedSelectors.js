@@ -11,7 +11,7 @@ export const isToolGroupButtonDisabled = (state, dataElement, toolGroup) => {
 };
 export const isToolButtonDisabled = (state, toolName) => {
   const dataElement = getToolButtonDataElement(state, toolName);
-  
+
   return isElementDisabled(state, dataElement) || core.getTool(toolName).disabled;
 };
 export const isElementOpen = (state, dataElement) => {

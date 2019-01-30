@@ -64,7 +64,7 @@ class ToolsOverlay extends React.PureComponent {
     const element = activeHeaderItems.find(item => item.toolGroup === activeToolGroup);
 
     if (element) {
-      this.setState(getOverlayPositionBasedOn(element.dataElement, this.overlay, 'right'));
+      this.setState(getOverlayPositionBasedOn(element.dataElement, this.overlay));
     }
   }
 

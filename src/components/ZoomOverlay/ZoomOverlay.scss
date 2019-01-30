@@ -1,4 +1,5 @@
 @import '../../constants/styles';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .ZoomOverlay{
     position: absolute;
@@ -22,3 +23,9 @@
     }
 }
 
+.ToolButton{
+  background: white;
+  height: 35px;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+}
