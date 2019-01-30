@@ -1,5 +1,5 @@
-import { documentTypes } from 'constants/types';
 import core from 'core';
+import { documentTypes } from 'constants/types';
 
 // viewer
 export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
@@ -61,6 +61,9 @@ export const isEmbedPrintSupported = state => {
   const isPDF = getDocumentType(state) === documentTypes.PDF;
   return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
 };
+export const getColorMap = state => state.viewer.colorMap;
+export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey].currentPalette;
+export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey].iconColor; 
 
 // document
 export const getDocument = state => state.document;
