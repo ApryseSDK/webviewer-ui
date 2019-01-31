@@ -22,9 +22,9 @@ class ToggleElementOverlay extends React.PureComponent {
   }
 
   onZoomUpdated = () => {
-    if (core.getZoom() > 100){
-      zoomTo(99.99);
-    }
+    // if (core.getZoom() > 100){
+    //   zoomTo(99.99);
+    // }
     this.setState({ value: Math.ceil(core.getZoom() * 100) });
   }
 

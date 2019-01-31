@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 
 import OverlayItem from '../OverlayItem';
 import ToolButton from '../ToolButton';
@@ -16,7 +17,8 @@ import './ZoomOverlay.scss';
 class ZoomOverlay extends React.PureComponent {
   static propTypes = {
     isOpen: PropTypes.bool,
-    closeElements: PropTypes.func.isRequired
+    closeElements: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired
   }
 
   constructor() {
@@ -56,7 +58,7 @@ class ZoomOverlay extends React.PureComponent {
   }
 
   render() { 
-    const { isOpen } = this.props;
+    const { isOpen, t } = this.props;
     const className = [
       'ZoomOverlay',
       isOpen ? 'open' : 'closed'
@@ -65,8 +67,8 @@ class ZoomOverlay extends React.PureComponent {
     const zoomList = [0.1, 0.25, 0.5, 1.25, 1.5, 2, 4, 8, 16, 64];
     return (
       <div className = {className} data-element="zoomOverlay" style={{ left, right }} ref={this.dropdown}>
-        <OverlayItem onClick={core.fitToWidth} buttonName="Fit to Width" />
-        <OverlayItem onClick={core.fitToPage} buttonName="Fit to Page" />
+        <OverlayItem onClick={core.fitToWidth} buttonName={t('action.fitToWidth')} />
+        <OverlayItem onClick={core.fitToPage} buttonName={t('action.fitToPage')} />
         <div className="spacer" />
         {zoomList.map((zoomValue, i) => {
           return <OverlayItem key={i} 
@@ -94,5 +96,7 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ZoomOverlay);
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(ZoomOverlay));
+
+
 

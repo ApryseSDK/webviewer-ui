@@ -33,7 +33,7 @@ class NoteContents extends React.Component {
       });
     }
 
-    if (prevProps.contents !== this.props.contents) {
+    if (prevProps.contents !== this.props.contents && this.textInput.current) {
       this.textInput.current.value = this.props.contents;
     }
   }
