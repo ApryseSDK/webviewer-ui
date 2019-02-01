@@ -7,6 +7,7 @@ import ActionButton from 'components/ActionButton';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -52,7 +53,12 @@ class SignatureModal extends React.PureComponent {
   }
 
   onLocationSelected = () => {
-    this.signatureTool.addSignature(this.state.saveSignature);
+    // TODO: BAD. move them into different components
+    if (this.signatureTool.hasDefaultSignature()) {
+      this.signatureTool.addDefaultSignature();
+    } else {
+      this.signatureTool.addSignature(this.state.saveSignature);
+    }
   }
 
   setUpSignatureCanvas = canvas => {
@@ -81,12 +87,11 @@ class SignatureModal extends React.PureComponent {
   closeModal = () => { 
     this.clearCanvas();
     this.props.closeElement('signatureModal');
+    core.setToolMode(defaultTool);
   }
 
   clearCanvas = () => {
     this.signatureTool.clearSignatureCanvas();
-    // TODO: think about if we should trigger an event and set the below state in that event listener
-    // that way the flow is clearer? (And can possibly avoid timing issue)
     this.setState(this.initialState);
   }
 
@@ -112,7 +117,7 @@ class SignatureModal extends React.PureComponent {
 
     return (
       <div className={className} onClick={this.closeModal}>
-        <div className="container" onClick={e => e.stopPropagation()}>
+        <div className="container" onClick={e => e.stopPropagation()} onMouseUp={this.handleFinishDrawing}>
           <div className="header">
             <ActionButton dataElement="signatureModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} />
           </div>

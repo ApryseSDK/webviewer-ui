@@ -40,12 +40,16 @@ export default {
   signatureToolButton: {
     initialState: 'newSignature',
     mount: update => {
-      core.getTool('AnnotationCreateSignature').on('saveDefault', () => {
+      core.getTool('AnnotationCreateSignature').on('saveDefault.sigTool', () => {
         update('defaultSignature');
+      });
+      core.getTool('AnnotationCreateSignature').on('noDefaultSignatures', () => {
+        update('newSignature');
       });
     },
     unmount: () => {
-
+      core.getTool('AnnotationCreateSignature').off('saveDefault.sigTool');
+      core.getTool('AnnotationCreateSignature').off('noDefaultSignatures');
     },
     states: {
       newSignature: {
@@ -60,7 +64,7 @@ export default {
         img: 'ic_annotation_signature_black_24px',
         onClick: (update, state, dispatch) => {
           core.setToolMode('AnnotationCreateSignature');
-          dispatch(actions.openElement('signatureOverlay'));
+          dispatch(actions.toggleElement('signatureOverlay'));
         },
         title: 'annotation.signature' 
       }
