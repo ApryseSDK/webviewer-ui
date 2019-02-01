@@ -59,7 +59,10 @@ class MenuOverlay extends React.PureComponent {
   downloadDocument = () => {
     const { dispatch, documentPath, documentFilename } = this.props;
 
-    downloadPdf(dispatch, documentPath, documentFilename);
+    downloadPdf(dispatch, {
+      documentPath,
+      filename: documentFilename
+    });
   }
 
   render() {

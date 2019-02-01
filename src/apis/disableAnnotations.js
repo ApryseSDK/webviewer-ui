@@ -1,8 +1,8 @@
 import core from 'core';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import { PRIORITY_ONE } from 'constants/actionPriority';
+import { getAnnotationCreateToolNames } from 'constants/map';
 import actions from 'actions';
-import ANNOTATION_CREATE_TOOL_NAMES from 'constants/annotationCreateToolNames';
 
 export default store => () => {
   const elements = [
@@ -11,7 +11,7 @@ export default store => () => {
     ...getAnnotationRelatedElements(store.getState())
   ];
 
-  ANNOTATION_CREATE_TOOL_NAMES.forEach(toolName => {
+  getAnnotationCreateToolNames().forEach(toolName => {
     core.getTool(toolName).disabled = true;
   });
   store.dispatch(actions.disableElements(elements, PRIORITY_ONE));

@@ -88,9 +88,9 @@
   },
   "option": {
     "annotationColor": {
-      "border": "Rand kleur",
-      "fill": "Vulling kleur",
-      "text": "Tekst kleur"
+      "StrokeColor": "Rand kleur",
+      "FillColor": "Vulling kleur",
+      "TextColor": "Tekst kleur"
     },
     "displayMode": {
       "layout": "Layout",

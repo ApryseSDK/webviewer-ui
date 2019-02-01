@@ -8,6 +8,7 @@ import ToolButton from 'components/ToolButton';
 
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getClassName from 'helpers/getClassName';
+import downloadPdf from 'helpers/downloadPdf';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -47,14 +48,22 @@ class RedactionOverlay extends React.PureComponent {
   }
 
   handleApplyButtonClick = () => {
-    const { closeElements, openElements } = this.props;
+    const { dispatch, closeElements, openElements } = this.props;
     closeElements([ 'redactionOverlay' ]);
     
     const result = confirm(`Applying redactions will permanently update the document removing all content marked for redaction. Once applied, it cannot be undone.
     Are you sure you want to continue?`);
 
     if (result) {
-      core.applyRedactions();
+      core.applyRedactions(null).then(function(results) {
+      if(results && results.url) { // when are using Webviewer Server, it'll return an url for the redacted document
+       downloadPdf(dispatch, {
+          filename: 'redacted.pdf',
+          includeAnnotations: true, 
+          externalURL: results.url
+        }); //download file when using WebViewer Server
+        }
+      });
     }
   }
 
@@ -62,7 +71,7 @@ class RedactionOverlay extends React.PureComponent {
     const { left, right } = this.state;
     const { isDisabled, isOpen } = this.props;
 
-    if (isDisabled || !isOpen || !core.isRedactionEnabled()) {
+    if (isDisabled || !isOpen || !core.isCreateRedactionEnabled()) {
       return null;
     }
     

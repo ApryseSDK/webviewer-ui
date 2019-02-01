@@ -57,7 +57,7 @@ import selectAnnotation from './selectAnnotation';
 import selectAnnotations from './selectAnnotations';
 import addAnnotations from './addAnnotations';
 import applyRedactions from './applyRedactions';
-import isRedactionEnabled from './isRedactionEnabled';
+import isCreateRedactionEnabled from './isCreateRedactionEnabled';
 import isAnnotationRedactable from './isAnnotationRedactable';
 import enableRedaction from './enableRedaction';
 import drawAnnotationsFromList from './drawAnnotationsFromList';
@@ -147,7 +147,7 @@ export default {
   selectAnnotations,
   addAnnotations,
   applyRedactions,
-  isRedactionEnabled,
+  isCreateRedactionEnabled,
   enableRedaction,
   isAnnotationRedactable,
   drawAnnotationsFromList,

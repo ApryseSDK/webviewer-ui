@@ -54,8 +54,12 @@ class TextPopup extends React.PureComponent {
   }
 
   onSelectionComplete = (e, startQuad, allQuads) => {
-    this.positionTextPopup(allQuads);
-    this.props.openElement('textPopup');
+    const { isDisabled, openElement } = this.props;
+    
+    if (!isDisabled) {
+      this.positionTextPopup(allQuads);
+      openElement('textPopup');
+    }
   }
 
   positionTextPopup = allQuads => {
@@ -76,7 +80,7 @@ class TextPopup extends React.PureComponent {
 
     const { left, top } = this.state;
     const className = getClassName('Popup TextPopup', this.props);
-    const isRedactionEnabled = core.isRedactionEnabled();
+    const isAnnotationRedactable = core.isAnnotationRedactable();
     
     return (
       <div className={className} data-element={'textPopup'} ref={this.popup} style={{ left, top }} onMouseDown={e => e.stopPropagation()}>
@@ -87,7 +91,7 @@ class TextPopup extends React.PureComponent {
             <ActionButton dataElement="textUnderlineToolButton" title="annotation.underline" img="ic_annotation_underline_black_24px" onClick={this.underlineText} />
             <ActionButton dataElement="textSquigglyToolButton" title="annotation.squiggly" img="ic_annotation_squiggly_black_24px" onClick={this.squigglyText} />
             <ActionButton dataElement="textStrikeoutToolButton" title="annotation.strikeout" img="ic_annotation_strikeout_black_24px" onClick={this.strikeoutText} />
-            { isRedactionEnabled && <ActionButton dataElement="textRedactToolButton" title="annotation.redact" img="ic_annotation_redact_black_24px" onClick={this.redactText} /> }
+            { isAnnotationRedactable && <ActionButton dataElement="textRedactToolButton" title="annotation.redact" img="ic_annotation_redact_black_24px" onClick={this.redactText} /> }
           </React.Fragment>
         }
       </div>

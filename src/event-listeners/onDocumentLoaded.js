@@ -18,7 +18,7 @@ export default dispatch => () => {
   }
 
   core.enableRedaction(getHashParams('enableRedaction', false));
-  if (core.isRedactionEnabled()) { // TODO double check if this is working for "blackBox"
+  if (core.isCreateRedactionEnabled()) {
     dispatch(actions.enableElement('redactionButton'));
   } else {
     dispatch(actions.disableElement('redactionButton'));

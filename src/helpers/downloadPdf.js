@@ -2,7 +2,9 @@ import core from 'core';
 import { isIE } from 'helpers/device';
 import actions from 'actions';
 
-export default (dispatch, documentPath = 'document', filename, includeAnnotations = true, xfdfData) => {
+export default (dispatch, options) => {
+  const { documentPath = 'document', filename, includeAnnotations = true, xfdfData, externalURL } = options;
+
   return new Promise(resolve => {
     const downloadOptions = { downloadType: 'pdf' };
     let file;
@@ -28,18 +30,19 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
       const downloadName = getDownloadFilename(name, '.pdf');
 
       const doc = core.getDocument();
-      const bbURLPromise = doc.getDownloadLink({ filename: downloadName });
+      const bbURLPromise = externalURL ? Promise.resolve({ url: externalURL }) : doc.getDownloadLink({ filename: downloadName });
+      
       if (bbURLPromise) {
-        const downloadIframe = document.getElementById('download-iframe') || document.createElement('iframe');
+      const downloadIframe = document.getElementById('download-iframe') || document.createElement('iframe');
         downloadIframe.width = 0;
         downloadIframe.height = 0;
         downloadIframe.id = 'download-iframe';
         downloadIframe.src = null;
         document.body.appendChild(downloadIframe);
         bbURLPromise.then(result => {
-          downloadIframe.src = result.url;
-          dispatch(actions.closeElement('loadingModal'));
-          $(document).trigger('finishedSavingPDF');
+           downloadIframe.src = result.url;
+           dispatch(actions.closeElement('loadingModal'));
+           $(document).trigger('finishedSavingPDF');
         });
       } else {
         doc.getFileData(downloadOptions).then(data => {
@@ -50,11 +53,11 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
             file = new File([arr], downloadName, { type: 'application/pdf' });
           }
           if (navigator.msSaveBlob) { // IE11 and Edge 17-
-            navigator.msSaveBlob(file, downloadName)
+            navigator.msSaveBlob(file, downloadName);
           } else { // every other browser
             const reader = new FileReader();
             reader.onloadend = () => {
-              const a = window.parent.document.createElement("a");
+              const a = window.parent.document.createElement('a');
               a.href = reader.result;
               a.style.display = 'none';
               a.download = downloadName;
@@ -63,7 +66,7 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
               a.parentNode.removeChild(a);
               dispatch(actions.closeElement('loadingModal'));
               $(document).trigger('finishedSavingPDF');
-            }
+            };
             reader.readAsDataURL(file);
           }
           resolve();
