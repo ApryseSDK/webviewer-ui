@@ -136,6 +136,8 @@ export default initialState => (state = initialState, action) => {
     }
     case 'SET_COLOR_MAP': 
       return { ...state, colorMap: payload.colorMap };
+    case 'SET_SWIPE_ORIENTATION':
+      return { ...state, swipeOrientation: payload.swipeOrientation };
     default:
       return state;
   }

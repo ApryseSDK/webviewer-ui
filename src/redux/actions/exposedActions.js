@@ -123,4 +123,5 @@ export const setPageLabels = pageLabels => dispatch => {
   }
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };
-
+export const setSwipeOrientation = swipeOrientation => ({ type: 'SET_SWIPE_ORIENTATION', payload: { swipeOrientation } });
+  
