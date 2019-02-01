@@ -237,7 +237,7 @@ export const getDocumentExtension = (doc, engineType) => {
 
   if (extension) {
     if (!supportedExtensions.includes(extension)) {
-      console.error(`Field extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWhen using with WebViewer server, it supports ${supportedBlackboxExtensions.join(', ')}`);
+      console.error(`File extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWebViewer server supports ${supportedBlackboxExtensions.join(', ')}`);
     }
   } else if (doc && engineType === engineTypes.AUTO) {
     console.warn(`File extension cannot be determined from ${doc}. Falling back to xod`);
