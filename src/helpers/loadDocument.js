@@ -232,7 +232,7 @@ export const getDocumentExtension = (doc, engineType) => {
 
   if (doc) {
     const result = /\.([a-zA-Z]+)(&|$|\?|#)/.exec(doc);
-    extension = result && result[1].toLocaleLowerCase();
+    extension = result && result[1].toLowerCase();
   }
 
   if (extension) {
@@ -243,7 +243,7 @@ export const getDocumentExtension = (doc, engineType) => {
     console.warn(`File extension cannot be determined from ${doc}. Falling back to xod`);
   }
 
-  return extension ? extension : 'xod';
+  return extension ? extension : '';
 };
 
 export const getDocName = state => {
