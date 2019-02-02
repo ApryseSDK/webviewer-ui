@@ -1,8 +1,0 @@
-{
-  "fixturesFolder": "fixtures",
-  "integrationFolder": "integration",
-  "pluginsFile": "plugins/index.js",
-  "screenshotsFolder": "screenshotsFolder",
-  "supportFile": "support/index.js",
-  "videosFolder": "videos"
-}
