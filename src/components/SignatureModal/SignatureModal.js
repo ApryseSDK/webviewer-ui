@@ -53,11 +53,11 @@ class SignatureModal extends React.PureComponent {
   }
 
   onLocationSelected = () => {
-    // TODO: BAD. move them into different components
     if (this.signatureTool.hasDefaultSignature()) {
       this.signatureTool.addDefaultSignature();
     } else {
       this.signatureTool.addSignature(this.state.saveSignature);
+      core.setToolMode(defaultTool);
     }
   }
 
@@ -102,6 +102,10 @@ class SignatureModal extends React.PureComponent {
   }
 
   applySignature = () => {
+    if (this.signatureTool.hasDefaultSignature()) {
+      // clear the default signature so that the new signature can be added to canvas
+      this.signatureTool.clearDefaultSignature();
+    }
     this.props.closeElement('signatureModal');
   }
 

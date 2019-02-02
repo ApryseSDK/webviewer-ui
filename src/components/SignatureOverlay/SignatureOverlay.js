@@ -49,6 +49,8 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   onSaveDefault = (e, paths) => {
+    this.signatureTool.clearDefaultSignature();
+
     const defaultSignatures = [ ...this.state.defaultSignatures ];
     if (defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES) {
       defaultSignatures.unshift();
@@ -70,14 +72,21 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   deleteDefaultSignature = index => {
+    if (this.isDeletingCurrentSignature(index)) {
+      this.signatureTool.clearDefaultSignature();
+    }
+
     const defaultSignatures = [ ...this.state.defaultSignatures ];
-    
     defaultSignatures.splice(index, 1);
-    if (defaultSignatures.length === 0) {
+    if (!defaultSignatures.length) {
       this.signatureTool.trigger('noDefaultSignatures');
+    } else {
+      this.signatureTool.initDefaultSignature(defaultSignatures[0].paths);
     }
     this.setState({ defaultSignatures });
   }
+
+  isDeletingCurrentSignature = index => this.state.defaultSignatures[index].paths === this.signatureTool.getDefaultSignature()
 
   openSignatureModal = () => {
     const { defaultSignatures } = this.state;
