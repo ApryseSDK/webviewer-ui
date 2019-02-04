@@ -54,7 +54,7 @@ const map = {
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateArrow'],
-    annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.getStartStyle() === 'None' && annotation.getEndStyle() === 'OpenArrow'
+    annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && (annotation.getStartStyle() !== 'None' || annotation.getEndStyle() !== 'None')
   },
   polygon: {
     icon: 'ic_annotation_polygon_black_24px',
