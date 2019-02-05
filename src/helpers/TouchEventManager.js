@@ -30,17 +30,17 @@ const TouchEventManager = {
   },
 
   updateOrientation(newOrientation) {
-    if (newOrientation === "both"){
+    if (newOrientation === 'both'){
       this.verticalSwipe = true;
       this.horizontalSwipe = true;
-    } else if (newOrientation === "vertical"){
+    } else if (newOrientation === 'vertical'){
       this.verticalSwipe = true;
       this.horizontalSwipe = false;
-    } else if (newOrientation === "horizontal"){
+    } else if (newOrientation === 'horizontal'){
       this.verticalSwipe = false;
       this.horizontalSwipe = true;
     } else {
-      console.warn (newOrientation + " is not a valid orientation. Try 'vertical,' 'horizontal,' or 'both.'");
+      console.warn(`${newOrientation} is not a valid orientation. Try 'vertical,' 'horizontal,' or 'both.`);
       return;
     }
   },
@@ -97,6 +97,7 @@ const TouchEventManager = {
     }
   },
   handleTouchMove(e) {
+    e.preventDefault();
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
@@ -108,7 +109,6 @@ const TouchEventManager = {
         break;
       }
       case 2: {
-        e.preventDefault();
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         this.touch.scale = this.getDistance(t1, t2) / this.touch.distance;
@@ -152,24 +152,29 @@ const TouchEventManager = {
           return;
         }
 
-        const { scrollLeft, scrollTop } = this.container;
-        const swipingRight = scrollLeft <= 0 && this.touch.horizontalDistance < -100;
-        const viewerWidth = this.document.clientWidth;
-        const scrollWidth = this.container.clientWidth;
-        const viewerHeight = this.document.clientHeight;
-        const scrollHeight = this.container.clientHeight;
-        const swipingLeft = scrollWidth + scrollLeft >= viewerWidth && this.touch.horizontalDistance > 100;
-        const swipingUp = scrollHeight + scrollTop >= viewerHeight && this.touch.verticalDistance > 100;
-        const swipingDown = scrollTop <= 0 && this.touch.verticalDistance < -100;
+        const { clientHeight: scrollHeight, clientWidth: scrollWidth, scrollLeft, scrollTop } = this.container;
+        const { clientHeight: viewerHeight, clientWidth: viewerWidth } = this.document;
+
+        const threshold = 0.35 * scrollWidth;
+        const swipingUp = scrollHeight + scrollTop >= viewerHeight && this.touch.verticalDistance > threshold;
+        const swipingDown = scrollTop <= 0 && this.touch.verticalDistance < -threshold;
+        const swipingLeft = scrollWidth + scrollLeft >= viewerWidth && this.touch.horizontalDistance > threshold;
+        const swipingRight = scrollLeft <= 0 && this.touch.horizontalDistance < -threshold;
+
         const currentPage = core.getCurrentPage();
+        const totalPages = core.getTotalPages();
         const displayMode = core.getDisplayMode();
-        const verticalSwipe = this.verticalSwipe;
-        const horizontalSwipe = this.horizontalSwipe;
+        const numberOfPagesToNavigate = getNumberOfPagesToNavigate(displayMode);
         
-        if ((swipingRight && horizontalSwipe) || (swipingDown && verticalSwipe)) {
-          core.setCurrentPage(Math.max(1, currentPage - getNumberOfPagesToNavigate(displayMode)));
-        } else if ((swipingLeft && horizontalSwipe) || (swipingUp && verticalSwipe)) {
-          core.setCurrentPage(Math.min(core.getTotalPages(), currentPage + getNumberOfPagesToNavigate(displayMode)));
+        const isFirstPage = currentPage === 1;
+        const isLastPage = currentPage === totalPages;    
+        const shouldGoToPrevPage = (swipingRight && this.horizontalSwipe) || (swipingDown && this.verticalSwipe);
+        const shouldGoToNextPage = (swipingLeft && this.horizontalSwipe) || (swipingUp && this.verticalSwipe);
+
+        if (!isFirstPage && shouldGoToPrevPage) {
+          core.setCurrentPage(Math.max(1, currentPage - numberOfPagesToNavigate));
+        } else if (!isLastPage && shouldGoToNextPage) {
+          core.setCurrentPage(Math.min(totalPages, currentPage + numberOfPagesToNavigate));
         }
         break;
       }
