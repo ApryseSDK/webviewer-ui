@@ -30,13 +30,13 @@
       "^react(.*)$": "<rootDir>/node_modules/react$1",
       "^config$": "<rootDir>/configs/app-config.js",
       "^components(.*)$": "<rootDir>/src/components$1",
-      "^src(.*)$": "<rootDir>/src$3",
-      "^constants(.*)$": "<rootDir>/src/constants$4",
-      "^helpers(.*)$": "<rootDir>/src/helpers$5",
-      "^actions(.*)$": "<rootDir>/src/redux/actions$6",
-      "^reducers(.*)$": "<rootDir>/src/redux/reducers$7",
-      "^selectors(.*)$": "<rootDir>/src/redux/selectors$8",
-      "^core(.*)$": "<rootDir>/src/core$9"
+      "^src(.*)$": "<rootDir>/src$1",
+      "^constants(.*)$": "<rootDir>/src/constants$1",
+      "^helpers(.*)$": "<rootDir>/src/helpers$1",
+      "^actions(.*)$": "<rootDir>/src/redux/actions$1",
+      "^reducers(.*)$": "<rootDir>/src/redux/reducers$1",
+      "^selectors(.*)$": "<rootDir>/src/redux/selectors$1",
+      "^core(.*)$": "<rootDir>/src/core$1"
 
     }
   },
