@@ -9,11 +9,9 @@ import actions from 'actions';
 export default {
   viewer: {
     disabledElements: {
-      /* TODO check if we want disable on start. I notice that enabling doesn't rerender toolbar
-      'redactionButton':{
-        disabled: true,
-        priority: 1
-      }*/
+      'redactionButton': {
+        disabled: true
+      }
     },
     openElements: {
       header: true

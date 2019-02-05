@@ -19,9 +19,9 @@ export default dispatch => () => {
 
   core.enableRedaction(getHashParams('enableRedaction', false));
   if (core.isCreateRedactionEnabled()) {
-    dispatch(actions.enableElement('redactionButton'));
+    dispatch(actions.enableElement('redactionButton', 1));
   } else {
-    dispatch(actions.disableElement('redactionButton'));
+    dispatch(actions.disableElement('redactionButton', 1));
   }
 
   core.setOptions({
