@@ -136,6 +136,8 @@ export default initialState => (state = initialState, action) => {
     }
     case 'SET_COLOR_MAP': 
       return { ...state, colorMap: payload.colorMap };
+    case 'SET_CURSOR_OVERLAY_IMAGE':
+      return { ...state, cursorOverlayImage: payload.cursorOverlayImage };
     default:
       return state;
   }

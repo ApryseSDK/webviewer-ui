@@ -56,9 +56,10 @@
     color: #00A4E4; 
     cursor: pointer;
 
-    &.disabed {
+    &.disabled {
       border: 1px solid #E1E1E3;
       color: #E1E1E3;
+      cursor: default;
     }
   }
 }

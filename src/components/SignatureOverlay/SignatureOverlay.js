@@ -18,7 +18,8 @@ class SignatureOverlay extends React.PureComponent {
     isDisabled: PropTypes.bool,
     closeElements: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
-    openElement: PropTypes.func.isRequired
+    openElement: PropTypes.func.isRequired,
+    setCursorOverlayImage: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -26,6 +27,7 @@ class SignatureOverlay extends React.PureComponent {
     this.signatureTool = core.getTool('AnnotationCreateSignature');
     this.overlay = React.createRef();
     this.MAX_DEFAULT_SIGNATURES = 2;
+    this.currentSignatureIndex = -1;
     this.state = {
       defaultSignatures: [],
       left: 0,
@@ -49,8 +51,6 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   onSaveDefault = (e, paths) => {
-    this.signatureTool.clearDefaultSignature();
-
     const defaultSignatures = [ ...this.state.defaultSignatures ];
     if (defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES) {
       defaultSignatures.unshift();
@@ -66,27 +66,32 @@ class SignatureOverlay extends React.PureComponent {
     this.setState({ defaultSignatures });
   }
 
-  initDefaultSignature = paths => {
-    this.signatureTool.initDefaultSignature(paths);
-    this.props.closeElement('signatureOverlay');
+  setUpSignature = index => {
+    this.currentSignatureIndex = index;
+
+    const { setCursorOverlayImage, closeElement } = this.props;
+    const { imgSrc, paths } = this.state.defaultSignatures[this.currentSignatureIndex];
+    this.signatureTool.setUpSignature(paths);
+    setCursorOverlayImage(imgSrc);
+    closeElement('signatureOverlay');
   }
 
   deleteDefaultSignature = index => {
-    if (this.isDeletingCurrentSignature(index)) {
-      this.signatureTool.clearDefaultSignature();
-    }
-
     const defaultSignatures = [ ...this.state.defaultSignatures ];
+    const isDeletingCurrentSignature = this.currentSignatureIndex === index;
+
     defaultSignatures.splice(index, 1);
+    if (isDeletingCurrentSignature) {
+      this.signatureTool.clearSignature();
+      this.currentSignatureIndex = -1;
+    }
     if (!defaultSignatures.length) {
       this.signatureTool.trigger('noDefaultSignatures');
-    } else {
-      this.signatureTool.initDefaultSignature(defaultSignatures[0].paths);
+      this.currentSignatureIndex = -1;
     }
+
     this.setState({ defaultSignatures });
   }
-
-  isDeletingCurrentSignature = index => this.state.defaultSignatures[index].paths === this.signatureTool.getDefaultSignature()
 
   openSignatureModal = () => {
     const { defaultSignatures } = this.state;
@@ -114,9 +119,9 @@ class SignatureOverlay extends React.PureComponent {
     return(
       <div className={className} ref={this.overlay} style={{ left, right }} onClick={e => e.stopPropagation()}>
         <div className="default-signatures-container">
-          {defaultSignatures.map(({ imgSrc, paths }, index) => ( // TODO: may have a bug when deleting images
+          {defaultSignatures.map(({ imgSrc }, index) => (
             <div className="default-signature" key={index}>
-              <div className="signature-image" onClick={() => this.initDefaultSignature(paths)}>
+              <div className="signature-image" onClick={() => this.setUpSignature(index)}>
                 <img src={imgSrc} />
               </div>
               <ActionButton dataElement="defaultSignatureDeleteButton" img="ic_delete_black_24px" onClick={() => this.deleteDefaultSignature(index)} />
@@ -142,7 +147,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   closeElements: actions.closeElements,
   closeElement: actions.closeElement,
-  openElement: actions.openElement
+  openElement: actions.openElement,
+  setCursorOverlayImage: actions.setCursorOverlayImage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignatureOverlay);

@@ -53,10 +53,8 @@ class SignatureModal extends React.PureComponent {
   }
 
   onLocationSelected = () => {
-    if (this.signatureTool.hasDefaultSignature()) {
-      this.signatureTool.addDefaultSignature();
-    } else {
-      this.signatureTool.addSignature(this.state.saveSignature);
+    if (this.signatureTool.getSignaturePaths().length) {
+      this.signatureTool.addSignature();
       core.setToolMode(defaultTool);
     }
   }
@@ -101,10 +99,9 @@ class SignatureModal extends React.PureComponent {
     }));
   }
 
-  applySignature = () => {
-    if (this.signatureTool.hasDefaultSignature()) {
-      // clear the default signature so that the new signature can be added to canvas
-      this.signatureTool.clearDefaultSignature();
+  createSignature = () => {
+    if (this.state.saveSignature) {
+      this.signatureTool.saveDefaultSignature();
     }
     this.props.closeElement('signatureModal');
   }
@@ -141,7 +138,7 @@ class SignatureModal extends React.PureComponent {
               <input id="default-signature" type="checkbox" checked={this.state.saveSignature} onChange={this.handleSaveSignatureChange} />
               <label htmlFor="default-signature">{t('action.saveSignature')}</label>
             </div>
-            <div className="signature-apply" onClick={this.applySignature}>{t('action.apply')}</div>
+            <div className="signature-apply" onClick={this.createSignature}>{t('action.apply')}</div>
           </div>
         </div>
       </div>
