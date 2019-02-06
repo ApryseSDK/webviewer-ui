@@ -42,7 +42,7 @@ describe('internalActions', () => {
     const actions = store.getActions();
     expect(actions[0]).toEqual({ 
       payload: {
-        dataElements: ['stylePopup'],
+        dataElements: ['toolStylePopup', 'annotationStylePopup'],
         priority: 1
       },
       type: 'DISABLE_ELEMENTS' 
@@ -60,7 +60,6 @@ describe('internalActions', () => {
       type: 'ENABLE_ELEMENTS'
     });
   });
-
   test('enableElement not stylePopup', () => {
     store.dispatch(internalActions.enableElement('stylePopup', 1));
     const actions = store.getActions();
@@ -72,15 +71,59 @@ describe('internalActions', () => {
       type: 'ENABLE_ELEMENTS'
     });
   });
+
+  test('enableElements', () => {
+    store.dispatch(internalActions.enableElements(['notesPanel'],1));
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      payload: {
+        dataElements: ['notesPanel'],
+        priority: 1
+      },
+      type: 'ENABLE_ELEMENTS'
+    });
+  });
+
+  test('setActiveToolNameAndStyle with TextSelect', () => {
+    const mockObject = {
+      name: 'TextSelect',
+      defalt: 'none'
+    };
+    store.dispatch(internalActions.setActiveToolNameAndStyle(mockObject));
+    const actions = store.getActions();
+    // since default activeToolName is AnnotationEdit, no action is fired
+    expect(actions[0]).toBeUndefined;
+  });
+  test('setActiveToolNameAndStyle', () => {
+    const mockObject = {
+      name: 'test',
+      default: 'none'
+    };
+    store.dispatch(internalActions.setActiveToolNameAndStyle(mockObject));
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      payload: {
+        toolName: 'test',
+        toolStyles: {}
+      },
+      type: 'SET_ACTIVE_TOOL_NAME_AND_STYLES'
+    });
+  });
+
+  test('setIsNoteEditing with true', () => {
+    store.dispatch(internalActions.setIsNoteEditing(true));
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      payload: {
+        isNoteEditing: true
+      },
+      type: 'SET_IS_NOTE_EDITING'
+    });
+  });
+
+  test('setIsNoteEditing with false', () => {
+    store.dispatch(internalActions.setIsNoteEditing(false));
+    const actions = store.getActions();
+    expect(actions[0]).toBeUndefined;
+  });
 });
-
-
-
-
-
-// const expectedAction = [{
-//   type: 'DISABLE_ELEMENTS',
-//   payload: {}
-// }];
-// store.dispatch(internalActions.disableElements('sample','sample'));
-// expect(store.getActions()).toEqual(expectedAction); 

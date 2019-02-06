@@ -27,7 +27,7 @@ describe('Button', () => {
 
     // img
     test('img is received, expected to render img', () => {
-      const wrapper = shallow(<Button onClick={jest.fn()} img="sample.jpg" />);
+      const wrapper = shallow(<Button onClick={jest.fn()} img='test.jpg' />);
       const img = wrapper.find('img');
       expect(img.length).toBeGreaterThan(0);
     });
@@ -39,7 +39,7 @@ describe('Button', () => {
 
     // label
     test('label is received, expected to render the label', () => {
-      const wrapper = shallow(<Button onClick={jest.fn()} label="test" />);
+      const wrapper = shallow(<Button onClick={jest.fn()} label='test' />);
       const test = wrapper.find('p').text();
       expect(test).toEqual('test');
     });
@@ -51,22 +51,22 @@ describe('Button', () => {
 
     // color
     test('color is received, display color', () => {
-      const wrapper = shallow(<Button onClick={jest.fn()} img="sample" color="sample" />);
-      const iconColor = wrapper.find('Icon').prop("color");
-      expect(iconColor).toBe("sample");
+      const wrapper = shallow(<Button onClick={jest.fn()} img='test' color='test' />);
+      const iconColor = wrapper.find('Icon').prop('color');
+      expect(iconColor).toBe('test');
     });
 
     // dataElement
     test('dataElement is received, pass it to prop', () => {
-      const wrapper = shallow(<Button onClick={jest.fn()} dataElement="sample" />);
-      const test = wrapper.find('div').prop("data-element");
-      expect(test).toBe("sample");
+      const wrapper = shallow(<Button onClick={jest.fn()} dataElement='test' />);
+      const test = wrapper.find('div').prop('data-element');
+      expect(test).toBe('test');
     });
 
     //className
     test('className is received, pass it to prop', () => {
-      const wrapper = shallow(<Button onClick={jest.fn()} className="sample" />);
-      expect(wrapper.find('div').prop('className').split(' ')[1]).toBe('sample');
+      const wrapper = shallow(<Button onClick={jest.fn()} className='test' />);
+      expect(wrapper.find('div').prop('className').split(' ')[1]).toBe('test');
     });
     test('className is not received, className is blank', () => {
       const wrapper = shallow(<Button onClick={jest.fn()} />);
@@ -75,8 +75,8 @@ describe('Button', () => {
 
     //mediaQueryClassName
     test('mediaQueryClassName is received, pass it to prop', () => {
-      const wrapper = shallow(<Button onClick={jest.fn()} mediaQueryClassName="sample" />);
-      expect(wrapper.find('div').prop('className').split(' ')[4]).toBe('sample');
+      const wrapper = shallow(<Button onClick={jest.fn()} mediaQueryClassName='test' />);
+      expect(wrapper.find('div').prop('className').split(' ')[4]).toBe('test');
     });
     test('mediaQueryClassName is not received, mediaQueryClassName is blank', () => {
       const wrapper = shallow(<Button onClick={jest.fn()} />);

@@ -21,9 +21,15 @@
     "testPathIgnorePatterns": [
       "<rootDir>/src/__tests__/setup/"
     ],
-    "moduleFileExtensions": ["js", "jsx"],
-    "moduleDirectories": ["node_modules", "bower_components", "shared"],
-
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "bower_components",
+      "shared"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/__mocks__/fileMock.js",
       "\\.(css|less|scss)$": "<rootDir>/src/__mocks__/styleMock.js",
@@ -37,12 +43,12 @@
       "^reducers(.*)$": "<rootDir>/src/redux/reducers$1",
       "^selectors(.*)$": "<rootDir>/src/redux/selectors$1",
       "^core(.*)$": "<rootDir>/src/core$1"
-
     }
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
@@ -50,7 +56,7 @@
     "autolinker": "^1.7.1",
     "autoprefixer": "^8.4.1",
     "babel-eslint": "^8.2.3",
-    "babel-loader": "^7.1.4",
+    "babel-loader": "^8.0.5",
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.17.1",
     "clean-webpack-plugin": "^1.0.0",
@@ -99,7 +105,6 @@
   },
   "author": "PDFTron Systems Inc.",
   "dependencies": {
-    "babel": "^6.23.0",
     "babel-jest": "^24.0.0"
   }
 }
