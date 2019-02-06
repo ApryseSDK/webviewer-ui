@@ -205,6 +205,8 @@ export const register = (tool, annotationConstructor) => {
   };
 };
 
+// we return an empty object here to prevent some components from accessing undefined
+// if the map doesn't have a key for some annotations
 export const getDataWithKey = key => map[key] || {};
 
 export const getAnnotationCreateToolNames = () => {
