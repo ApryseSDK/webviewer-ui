@@ -6,7 +6,7 @@ import i18next from 'i18next';
  * ideally, this map file should be the only place which provides information about annotations and tools
  * if you are tempted to create a new map file(which maps a tool/annotation to something else) under this constants folder
  * please make sure that it is not possible to implement that map here
- */ 
+ */
 const map = {
   signature: {
     icon: 'ic_annotation_signature_black_24px',
@@ -205,7 +205,9 @@ export const register = (tool, annotationConstructor) => {
   };
 };
 
-export const getDataWithKey = key => map[key];
+// we return an empty object here to prevent some components from accessing undefined
+// if the map doesn't have a key for some annotations
+export const getDataWithKey = key => map[key] || {};
 
 export const getAnnotationCreateToolNames = () => {
   return Object.values(map).reduce((annotationCreateToolNames, { toolNames, annotationCheck }) => {

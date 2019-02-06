@@ -48,7 +48,8 @@
     "stamp": "盖章",
     "stickyNote": "注释",
     "strikeout": "删除线",
-    "underline": "下划线"
+    "underline": "下划线",
+    "custom": "自定义"
   },
   "component": {
     "freehandToolsButton": "手绘工具",

@@ -48,7 +48,8 @@
     "stamp": "Timbre",
     "stickyNote": "Note collante",
     "strikeout": "Barré",
-    "underline": "Soulignage"
+    "underline": "Soulignage",
+    "custom": "personnalisation"
   },
   "component": {
     "freehandToolsButton": "Outils de stylo",

@@ -30,10 +30,13 @@ class AnnotationStylePopup extends React.Component {
     }));
 
     // Set the corresponding tool style
-    core.getTool(annotation.ToolName).setStyles(oldStyle => ({
-      ...oldStyle,
-      [property]: value
-    }));
+    const tool = core.getTool(annotation.ToolName);
+    if (tool) {
+      tool.setStyles(oldStyle => ({
+        ...oldStyle,
+        [property]: value
+      }));
+    }
   }
 
   render() {
@@ -41,14 +44,14 @@ class AnnotationStylePopup extends React.Component {
     const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation && annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText;
     const className = getClassName('Popup AnnotationStylePopup', this.props);
     const colorMapKey = mapAnnotationToKey(annotation);
-    
+
     if (isDisabled) {
       return null;
     }
 
     return(
       <div className={className} data-element="annotationStylePopup" onClick={() => closeElement('annotationPopup')}>
-        <StylePopup 
+        <StylePopup
           colorMapKey={colorMapKey}
           style={style}
           isFreeText={isFreeText}
