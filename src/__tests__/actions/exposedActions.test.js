@@ -247,6 +247,17 @@ describe('exposedActions', () => {
     });
   });
 
+  test('setSortNotesBy', () => {
+    store.dispatch(exposedActions.setSortNotesBy('test'));
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      payload: {
+        sortStrategy: 'test'
+      },
+      type: 'SET_SORT_STRATEGY'
+    });
+  });
+
   test('setNoteDateFormat', () => {
     store.dispatch(exposedActions.setNoteDateFormat('test'));
     const actions = store.getActions();
@@ -310,6 +321,7 @@ describe('exposedActions', () => {
     core.getTotalPages = jest.fn();
     core.getTotalPages.mockReturnValue(3);
     store.dispatch(exposedActions.setPageLabels(['i','ii','iii']));
+    store.dispatch(exposedActions.setPageLabels(['x','xx']));
     const actions = store.getActions();
     expect(actions[0]).toEqual({
       payload: {
@@ -317,7 +329,9 @@ describe('exposedActions', () => {
       },
       type: 'SET_PAGE_LABELS'
     });
+    expect(actions[1]).toBeUndefined;
   });
+  
   test('setSwipeOrientation', () => {
     store.dispatch(exposedActions.setSwipeOrientation('test'));
     const actions = store.getActions();

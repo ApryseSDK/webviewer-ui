@@ -16,6 +16,11 @@ export const disableElement = (dataElement, priority) => (dispatch, getState) =>
   }
 };
 export const disableElements = (dataElements, priority) => (dispatch, getState) => {
+  if (dataElements.includes('stylePopup')){
+    const index = dataElements.indexOf('stylePopup');
+    dataElements[index] = 'toolStylePopup';
+    dataElements.push('annotationStylePopup');
+  }
   const filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
   dispatch({ type: 'DISABLE_ELEMENTS', payload: { dataElements: filteredDataElements, priority } });
 };
@@ -30,6 +35,11 @@ export const enableElement = (dataElement, priority) => (dispatch, getState) => 
   }
 };
 export const enableElements = (dataElements, priority) => (dispatch, getState) => {
+  if (dataElements.includes('stylePopup')){
+    const index = dataElements.indexOf('stylePopup');
+    dataElements[index] = 'toolStylePopup';
+    dataElements.push('annotationStylePopup');
+  }
   const filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
   dispatch({ type: 'ENABLE_ELEMENTS', payload: { dataElements: filteredDataElements, priority } });
 };
@@ -62,7 +72,7 @@ export const setDocumentLoaded = isDocumentLoaded => ({ type: 'SET_DOCUMENT_LOAD
 export const setReadOnly = isReadOnly => ({ type: 'SET_READ_ONLY', payload: { isReadOnly } });
 export const registerTool = tool => ({ type: 'REGISTER_TOOL', payload: { ...tool } });
 export const unregisterTool = toolName => ({ type: 'UNREGISTER_TOOL', payload: { toolName } });
-export const setToolButtonObjects= toolButtonObjects => ({ type: 'SET_TOOL_BUTTON_OBJECTS', payload: { toolButtonObjects } });
+export const setToolButtonObjects = toolButtonObjects => ({ type: 'SET_TOOL_BUTTON_OBJECTS', payload: { toolButtonObjects } });
 export const setIsNoteEditing = isNoteEditing => (dispatch, getState) => {
   const state = getState();
 
