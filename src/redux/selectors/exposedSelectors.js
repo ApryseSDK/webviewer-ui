@@ -65,6 +65,7 @@ export const getColorMap = state => state.viewer.colorMap;
 export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].currentPalette;
 export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].iconColor; 
 export const getSwipeOrientation = state => state.viewer.swipeOrientation;
+export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 
 // document
 export const getDocument = state => state.document;
