@@ -48,7 +48,8 @@
     "stamp": "Stempel",
     "stickyNote": "Commentaar",
     "strikeout": "Doorstrepen",
-    "underline": "Onderstrepen"
+    "underline": "Onderstrepen",
+    "custom": "maatwerk"
   },
   "component": {
     "freehandToolsButton": "Vrije hand tools",
