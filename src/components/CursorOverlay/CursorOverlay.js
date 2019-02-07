@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import core from 'core';
+import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
 
 import './CursorOverlay.scss';
@@ -15,27 +17,52 @@ class CursorOverlay extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = { x: 0, y: 0 };
+    this.overlay = React.createRef();
+    this.state = { top: 0, left: 0 };
+  }  
+
+  componentDidMount() {
+    document.addEventListener('mousemove', this.handleMouseMove);
   }
 
-  handleMouseMove = e => {
-    this.setState({
-      x: e.clientX,
-      y: e.clientY
-    });
+  handleMouseMove = ({ clientX, clientY }) => {
+    if (this.props.isOpen) {
+      const { 
+        top: viewerTop, 
+        bottom: viewerBottom, 
+        left: viewerLeft, 
+        right: viewerRight 
+      } = core.getViewerElement().getBoundingClientRect();
+      const mouseWithinViewerElement = clientX >= viewerLeft && clientX <= viewerRight && clientY >= viewerTop && clientY <= viewerBottom;
+      let left, top;
+      
+      if (mouseWithinViewerElement) {
+        const OVERLAY_LEFT_GAP = 10;
+        left = clientX + OVERLAY_LEFT_GAP;
+        top = clientY;
+      } else {
+        left = top = -9999;
+      }
+
+      this.setState({ left, top });
+    }
   }
 
   render() {
-    const { left, right } = this.state;
+    const { top, left } = this.state;
     const { isDisabled, imgSrc } = this.props;
     const className = getClassName('Overlay CursorOverlay', this.props);    
 
-    if (isDisabled || !imgSrc) {
+    if (isDisabled) {
       return null;
     }
 
     return(
-
+      <div className={className} style={{ top, left }} ref={this.overlay}>
+        {imgSrc &&
+          <img className="cursor-image" src={imgSrc} />
+        }
+      </div>
     );
   }
 }

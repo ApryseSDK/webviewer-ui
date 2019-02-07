@@ -19,6 +19,7 @@ class SignatureModal extends React.PureComponent {
     isOpen: PropTypes.bool,
     t: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
+    setCursorOverlayImage: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
   }
@@ -56,6 +57,7 @@ class SignatureModal extends React.PureComponent {
     if (this.signatureTool.getSignaturePaths().length) {
       this.signatureTool.addSignature();
       core.setToolMode(defaultTool);
+      this.props.closeElement('cursorOverlay');
     }
   }
 
@@ -67,8 +69,8 @@ class SignatureModal extends React.PureComponent {
 
     const { width, height } = canvas.getBoundingClientRect();
     const multiplier = window.utils.getCanvasMultiplier();
-    canvas.width = width * multiplier;
-    canvas.height = height * multiplier;
+    canvas.width = width;
+    canvas.height = height;
     canvas.getContext('2d').scale(multiplier, multiplier);   
     canvas.addEventListener('mouseup', this.handleFinishDrawing);
   }
@@ -100,21 +102,30 @@ class SignatureModal extends React.PureComponent {
   }
 
   createSignature = () => {
+    const { closeElement, openElement, setCursorOverlayImage } = this.props;
+    
     if (this.state.saveSignature) {
       this.signatureTool.saveDefaultSignature();
     }
-    this.props.closeElement('signatureModal');
+    if (!this.signatureTool.isEmptySignature()) {
+      setCursorOverlayImage(this.canvas.current.toDataURL());
+      openElement('cursorOverlay');
+    }
+    closeElement('signatureModal');
   }
 
   render() {
     const { canClear } = this.state;
     const { isDisabled, t } = this.props;
+    const className = getClassName('Modal SignatureModal', this.props);
 
     if (isDisabled) {
       return null;
     }
 
-    const className = getClassName('Modal SignatureModal', this.props);
+    /**
+     * Change action.apply to action.create
+     */
 
     return (
       <div className={className} onClick={this.closeModal}>
@@ -153,6 +164,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   openElement: actions.openElement,
+  setCursorOverlayImage: actions.setCursorOverlayImage, 
   closeElement: actions.closeElement,
   closeElements: actions.closeElements
 };

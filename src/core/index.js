@@ -80,6 +80,7 @@ import cancelLoadThumbnail from './cancelLoadThumbnail';
 import showAnnotations from './showAnnotations';
 import hideAnnotations from './hideAnnotations';
 import goToOutline from './goToOutline';
+import getViewerElement from './getViewerElement';
 import { addEventListener, removeEventListener } from './eventListener';
 
 export default {
@@ -166,5 +167,6 @@ export default {
   cancelLoadThumbnail,
   showAnnotations,
   hideAnnotations,
-  goToOutline
+  goToOutline,
+  getViewerElement
 };
