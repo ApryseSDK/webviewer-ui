@@ -53,7 +53,8 @@
     "stamp": "Stamp",
     "stickyNote": "Comment",
     "strikeout": "Strikeout",
-    "underline": "Underline"
+    "underline": "Underline",
+    "custom": "Custom"
   },
   "component": {
     "freehandToolsButton": "Freehand tools",
