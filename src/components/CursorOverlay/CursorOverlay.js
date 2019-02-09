@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import actions from 'actions';
 import selectors from 'selectors';
 
 import './CursorOverlay.scss';
@@ -12,7 +13,9 @@ class CursorOverlay extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    imgSrc: PropTypes.string
+    imgSrc: PropTypes.string,
+    activeToolName: PropTypes.string,
+    closeElement: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -25,6 +28,13 @@ class CursorOverlay extends React.PureComponent {
     document.addEventListener('mousemove', this.handleMouseMove);
   }
 
+  componentDidUpdate(prevProps) {
+    const signatureToolName = 'AnnotationCreateSignature';
+    if (prevProps.activeToolName === signatureToolName && this.props.activeToolName !== signatureToolName) {
+      this.props.closeElement('cursorOverlay');
+    }
+  }
+
   handleMouseMove = ({ clientX, clientY }) => {
     if (this.props.isOpen) {
       const { 
@@ -34,9 +44,11 @@ class CursorOverlay extends React.PureComponent {
         right: viewerRight 
       } = core.getViewerElement().getBoundingClientRect();
       const mouseWithinViewerElement = clientX >= viewerLeft && clientX <= viewerRight && clientY >= viewerTop && clientY <= viewerBottom;
+      const HEADER_HEIGHT = 47;
+      const mouseWithinHeader = clientY <= HEADER_HEIGHT;
       let left, top;
       
-      if (mouseWithinViewerElement) {
+      if (mouseWithinViewerElement && !mouseWithinHeader) {
         const OVERLAY_LEFT_GAP = 10;
         left = clientX + OVERLAY_LEFT_GAP;
         top = clientY;
@@ -58,7 +70,7 @@ class CursorOverlay extends React.PureComponent {
     }
 
     return(
-      <div className={className} style={{ top, left }} ref={this.overlay}>
+      <div className={className} data-element="cursorOverlay" style={{ top, left }} ref={this.overlay}>
         {imgSrc &&
           <img className="cursor-image" src={imgSrc} />
         }
@@ -70,7 +82,12 @@ class CursorOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'cursorOverlay'),
   isOpen: selectors.isElementOpen(state, 'cursorOverlay'),
-  imgSrc: selectors.getCursorOverlayImage(state)
+  imgSrc: selectors.getCursorOverlayImage(state),
+  activeToolName: selectors.getActiveToolName(state)
 });
 
-export default connect(mapStateToProps)(CursorOverlay);
+const mapDispatchToProps = {
+  closeElement: actions.closeElement
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CursorOverlay);
