@@ -146,7 +146,7 @@ class NotesPanel extends React.PureComponent {
         return (
           <React.Fragment key={note.Id}>
             {this.renderListSeparator(notes, note)}
-            <Note visible={this.isVisibleNote(note)} annotation={note} searchInput={this.state.searchInput} />
+            <Note visible={this.isVisibleNote(note)} annotation={note} searchInput={this.state.searchInput} rootContents={note.getContents()} />
           </React.Fragment>
         );
       })
@@ -165,7 +165,7 @@ class NotesPanel extends React.PureComponent {
       getSeparatorContent &&
       (isFirstNote || shouldRenderSeparator(prevNote, currNote))
     ) {
-      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, pageLabels)} />;
+      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, {pageLabels})} />;
     }
 
     return null;

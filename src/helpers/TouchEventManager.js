@@ -7,10 +7,14 @@ const TouchEventManager = {
   initialize(document, container) {
     this.document = document;
     this.container = container;
+    this.horizontalSwipe = true;
+    this.verticalSwipe = false;
     this.touch = {
       clientX: 0,
       clientY: 0,
       distance: 0,
+      horizontalDistance: 0,
+      verticalDistance: 0,
       scale: 1,
       zoom: 1,
       type: ''
@@ -24,6 +28,23 @@ const TouchEventManager = {
     this.container.addEventListener('touchend', this.handleTouchEnd, { passive: false });
     this.container.addEventListener('touchcancel', this.handleTouchCancel, { passive: false });
   },
+
+  updateOrientation(newOrientation) {
+    if (newOrientation === 'both'){
+      this.verticalSwipe = true;
+      this.horizontalSwipe = true;
+    } else if (newOrientation === 'vertical'){
+      this.verticalSwipe = true;
+      this.horizontalSwipe = false;
+    } else if (newOrientation === 'horizontal'){
+      this.verticalSwipe = false;
+      this.horizontalSwipe = true;
+    } else {
+      console.warn(`${newOrientation} is not a valid orientation. Try 'vertical,' 'horizontal,' or 'both.`);
+      return;
+    }
+  },
+
   terminate() {
     this.container.removeEventListener('touchstart', this.handleTouchStart);
     this.container.removeEventListener('touchmove', this.handleTouchMove);
@@ -76,17 +97,18 @@ const TouchEventManager = {
     }
   },
   handleTouchMove(e) {
+    e.preventDefault();
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
-        this.touch.distance = this.touch.clientX - t.clientX;
+        this.touch.horizontalDistance = this.touch.clientX - t.clientX;
+        this.touch.verticalDistance = this.touch.clientY - t.clientY;
         if (this.getDistance(this.touch, t) > 10) {
           this.touch.type = 'swipe';
         }
         break;
       }
       case 2: {
-        e.preventDefault();
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         this.touch.scale = this.getDistance(t1, t2) / this.touch.distance;
@@ -130,17 +152,29 @@ const TouchEventManager = {
           return;
         }
 
-        const { scrollLeft } = this.container;
-        const swipingLeft = scrollLeft <= 0 && this.touch.distance < -100;
-        const viewerWidth = this.document.clientWidth;
-        const scrollWidth = this.container.clientWidth;
-        const swipingRight = scrollWidth + scrollLeft >= viewerWidth && this.touch.distance > 100;
+        const { clientHeight: scrollHeight, clientWidth: scrollWidth, scrollLeft, scrollTop } = this.container;
+        const { clientHeight: viewerHeight, clientWidth: viewerWidth } = this.document;
+
+        const threshold = 0.35 * scrollWidth;
+        const swipingUp = scrollHeight + scrollTop >= viewerHeight && this.touch.verticalDistance > threshold;
+        const swipingDown = scrollTop <= 0 && this.touch.verticalDistance < -threshold;
+        const swipingLeft = scrollWidth + scrollLeft >= viewerWidth && this.touch.horizontalDistance > threshold;
+        const swipingRight = scrollLeft <= 0 && this.touch.horizontalDistance < -threshold;
+
         const currentPage = core.getCurrentPage();
+        const totalPages = core.getTotalPages();
         const displayMode = core.getDisplayMode();
-        if (swipingLeft) {
-          core.setCurrentPage(Math.max(1, currentPage - getNumberOfPagesToNavigate(displayMode)));
-        } else if (swipingRight) {
-          core.setCurrentPage(Math.min(core.getTotalPages(), currentPage + getNumberOfPagesToNavigate(displayMode)));
+        const numberOfPagesToNavigate = getNumberOfPagesToNavigate(displayMode);
+        
+        const isFirstPage = currentPage === 1;
+        const isLastPage = currentPage === totalPages;    
+        const shouldGoToPrevPage = (swipingRight && this.horizontalSwipe) || (swipingDown && this.verticalSwipe);
+        const shouldGoToNextPage = (swipingLeft && this.horizontalSwipe) || (swipingUp && this.verticalSwipe);
+
+        if (!isFirstPage && shouldGoToPrevPage) {
+          core.setCurrentPage(Math.max(1, currentPage - numberOfPagesToNavigate));
+        } else if (!isLastPage && shouldGoToNextPage) {
+          core.setCurrentPage(Math.min(totalPages, currentPage + numberOfPagesToNavigate));
         }
         break;
       }

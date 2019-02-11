@@ -23,6 +23,7 @@ class Note extends React.PureComponent {
     isReadOnly: PropTypes.bool,
     isReplyDisabled: PropTypes.bool,
     visible: PropTypes.bool.isRequired,
+    rootContents: PropTypes.string,
     t: PropTypes.func.isRequired
   };
 
@@ -199,7 +200,7 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled }  = this.props;
+    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
     const { replies, isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
@@ -211,6 +212,7 @@ class Note extends React.PureComponent {
       <div className={className} onClick={this.onClickNote}>
         <NoteRoot
           annotation={annotation}
+          contents={rootContents}
           searchInput={searchInput}
           renderAuthorName={this.renderAuthorName}
           renderContents={this.renderContents}
@@ -231,13 +233,8 @@ class Note extends React.PureComponent {
               renderContents={this.renderContents}
             />
           )}
-<<<<<<< HEAD
-          {!isReadOnly &&
-            <div className={ isRootContentEditing ? "replies hidden" : "add-reply"} onClick={e => e.stopPropagation()}>
-=======
           {!isReadOnly && !isReplyDisabled &&
-            <div className="add-reply" data-element="noteReply" onClick={e => e.stopPropagation()}>
->>>>>>> 31afb5b7e5a4cea3adc46c7ab8619ad0bdffe7bf
+            <div className={isRootContentEditing ? 'replies hidden' : 'add-reply'} onClick={e => e.stopPropagation()}>
               <textarea
                 ref={this.replyTextarea}
                 onChange={this.onChange}
