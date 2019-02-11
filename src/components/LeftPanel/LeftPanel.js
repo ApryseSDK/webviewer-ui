@@ -31,6 +31,10 @@ class LeftPanel extends React.Component {
     this.sliderRef = React.createRef();
   }
 
+  componentDidMount(){
+    document.body.style.setProperty('--left-panel-width', '300px');
+
+  }
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
       this.props.closeElement('searchPanel');
@@ -51,8 +55,8 @@ class LeftPanel extends React.Component {
 
   dragMouseMove = e => {
     if (this.state.isSliderActive && e.clientX > 215 && e.clientX < 900){
-      this.sliderRef.current.style.left = (e.clientX) + "px";
-      document.body.style.setProperty("--left-panel-width", (e.clientX)+"px");
+      this.sliderRef.current.style.left = (e.clientX) + 'px';
+      document.body.style.setProperty('--left-panel-width', (e.clientX)+'px');
     }
   }
 
@@ -70,17 +74,17 @@ class LeftPanel extends React.Component {
     const className = getClassName('Panel LeftPanel', this.props);
 
     return(
-      <div className={className} data-element="leftPanel" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
-        <div className="left-panel-header">
-          <div className="close-btn hide-in-desktop hide-in-tablet" onClick={() => closeElement('leftPanel')}>
-            <Icon glyph="ic_close_black_24px" />
+      <div className={className} data-element='leftPanel' onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
+        <div className='left-panel-header'>
+          <div className='close-btn hide-in-desktop hide-in-tablet' onClick={() => closeElement('leftPanel')}>
+            <Icon glyph='ic_close_black_24px' />
           </div>
           <LeftPanelTabs />
         </div>
         
         <div 
           ref={this.sliderRef} 
-          className={ this.state.isSliderActive ? "resize-bar active" : "resize-bar non-active" }
+          className={ this.state.isSliderActive ? 'resize-bar active' : 'resize-bar non-active' }
           onMouseDown={this.dragMouseDown}
           onMouseUp={this.closeDrag}
           onMouseMove={this.dragMouseMove}
