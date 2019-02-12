@@ -16,6 +16,7 @@ import onKeyDown from './onKeyDown';
 import onFullScreenChange from './onFullScreenChange';
 import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
 import onLayoutChanged from './onLayoutChanged';
+import onLocationSelected from './onLocationSelected';
 
 export {
   onBeforeDocumentLoaded,
@@ -35,5 +36,6 @@ export {
   onKeyDown,
   onFullScreenChange,
   onUpdateAnnotationPermission,
-  onLayoutChanged
+  onLayoutChanged,
+  onLocationSelected
 };

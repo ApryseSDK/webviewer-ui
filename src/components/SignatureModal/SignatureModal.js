@@ -36,7 +36,6 @@ class SignatureModal extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.signatureTool.on('locationSelected', this.onLocationSelected);
     this.setUpSignatureCanvas(this.canvas.current);
   }
 
@@ -46,18 +45,6 @@ class SignatureModal extends React.PureComponent {
       this.signatureTool.clearSignatureCanvas();
       this.signatureTool.openSignature();
       this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]);
-    }
-  }
-
-  componentWillUnmount() {
-    this.signatureTool.off('locationSelected', this.onLocationSelected);
-  }
-
-  onLocationSelected = () => {
-    if (this.signatureTool.getSignaturePaths().length) {
-      this.signatureTool.addSignature();
-      core.setToolMode(defaultTool);
-      this.props.closeElement('cursorOverlay');
     }
   }
 
@@ -107,7 +94,10 @@ class SignatureModal extends React.PureComponent {
     if (this.state.saveSignature) {
       this.signatureTool.saveDefaultSignature();
     }
-    if (!this.signatureTool.isEmptySignature()) {
+    if (this.signatureTool.getLocation()) {
+      // TODO: add comment about why to do this
+      this.signatureTool.addSignature();
+    } else if (!this.signatureTool.isEmptySignature()) {
       setCursorOverlayImage(this.canvas.current.toDataURL());
       openElement('cursorOverlay');
     }

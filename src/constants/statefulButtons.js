@@ -46,6 +46,9 @@ export default {
       core.getTool('AnnotationCreateSignature').on('noDefaultSignatures', () => {
         update('newSignature');
       });
+      core.getTool('AnnotationCreateSignature').on('prepareSignature', () => {
+        document.querySelector('[data-element=signatureToolButton]').click();
+      });
     },
     unmount: () => {
       core.getTool('AnnotationCreateSignature').off('saveDefault.sigTool');

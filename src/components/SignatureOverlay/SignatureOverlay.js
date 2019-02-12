@@ -72,9 +72,14 @@ class SignatureOverlay extends React.PureComponent {
     const { setCursorOverlayImage, closeElement, openElement } = this.props;
     const { imgSrc, paths } = this.state.defaultSignatures[this.currentSignatureIndex];
     this.signatureTool.setUpSignature(paths);
+    if (this.signatureTool.getLocation()) {
+      // TODO: add comment about why we do this
+      this.signatureTool.addSignature();
+    } else {
+      openElement('cursorOverlay');
+      setCursorOverlayImage(imgSrc);
+    }
     closeElement('signatureOverlay');
-    setCursorOverlayImage(imgSrc);
-    openElement('cursorOverlay');
   }
 
   deleteDefaultSignature = index => {
