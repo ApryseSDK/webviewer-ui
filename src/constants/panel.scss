@@ -6,7 +6,6 @@
   z-index: 65;
   display: flex;
   flex-direction: column;
-  width: $panel-width;
   height: calc(100% - #{$top-bar-height});
   background: $gray4;
   background: var(--secondary-color);
@@ -40,6 +39,7 @@
 %right-panel {
   @extend %panel;
   @include closed(translateX(100%));
+  width: $right-panel-width;
   right: 0;
   padding: 10px 5px 10px 5px;
   border-left: 1px solid $gray12;
@@ -52,6 +52,7 @@
 %left-panel {
   @extend %panel;
   @include closed(translateX(-100%));
+  width: $left-panel-width;
   left: 0;
   border-right: 1px solid $gray12;
   border-right: 1px solid var(--border-color);
