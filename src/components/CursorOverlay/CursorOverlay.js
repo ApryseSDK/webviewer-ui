@@ -25,7 +25,15 @@ class CursorOverlay extends React.PureComponent {
   }  
 
   componentDidMount() {
-    document.addEventListener('mousemove', this.handleMouseMove);
+    const viewerElement = core.getViewerElement();
+    if (viewerElement) {
+      this.bindEventListener(viewerElement);
+    } else {
+      // although <DocumentContainer /> comes before <CursorOverlay /> in the render function in App.js 
+      // I'm not sure if <DocumentContainer /> is mounted before this component.
+      // so added this case just to make sure the mouse event listeners will be bound to the viewer element anyways
+      core.addEventListener('documentLoaded', () => this.bindEventListener(core.getViewerElement()));
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -34,30 +42,29 @@ class CursorOverlay extends React.PureComponent {
       this.props.closeElement('cursorOverlay');
     }
   }
+  
+  bindEventListener = viewerElement => {
+    viewerElement.addEventListener('mousemove', this.handleMouseMove);
+    viewerElement.addEventListener('mouseleave', this.handleMouseLeave);
+  } 
 
   handleMouseMove = ({ clientX, clientY }) => {
     if (this.props.isOpen) {
-      const { 
-        top: viewerTop, 
-        bottom: viewerBottom, 
-        left: viewerLeft, 
-        right: viewerRight 
-      } = core.getViewerElement().getBoundingClientRect();
-      const mouseWithinViewerElement = clientX >= viewerLeft && clientX <= viewerRight && clientY >= viewerTop && clientY <= viewerBottom;
-      const HEADER_HEIGHT = 47;
-      const mouseWithinHeader = clientY <= HEADER_HEIGHT;
-      let left, top;
-      
-      if (mouseWithinViewerElement && !mouseWithinHeader) {
-        const OVERLAY_LEFT_GAP = 10;
-        left = clientX + OVERLAY_LEFT_GAP;
-        top = clientY;
-      } else {
-        left = top = -9999;
-      }
-
-      this.setState({ left, top });
+      const OVERLAY_LEFT_GAP = 10;
+      this.setState({ 
+        left: clientX + OVERLAY_LEFT_GAP,
+        top: clientY
+      });
     }
+  }
+
+  handleMouseLeave = () => {
+    // we use -9999 to "hide" this overlay here instead of calling this.props.closeElement('cursorOverlay')
+    // is because by doing so we don't need to handle extra logic like when we should call this.props.openElement('cursorOverlay')
+    this.setState({
+      left: -9999,
+      top: -9999
+    });
   }
 
   render() {
