@@ -97,14 +97,14 @@ const TouchEventManager = {
     }
   },
   handleTouchMove(e) {
-    if (isIOS && e.touches.length === 1) {
-      this.preventRubberBandScrolling(e);
-    }
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
         this.touch.horizontalDistance = this.touch.clientX - t.clientX;
         this.touch.verticalDistance = this.touch.clientY - t.clientY;
+        if (isIOS) {
+          this.preventRubberBandScrolling(e);
+        }
         if (this.getDistance(this.touch, t) > 10) {
           this.touch.type = 'swipe';
         }
