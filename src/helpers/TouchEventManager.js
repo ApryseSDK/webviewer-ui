@@ -97,7 +97,9 @@ const TouchEventManager = {
     }
   },
   handleTouchMove(e) {
-    e.preventDefault();
+    if (isIOS && e.touches.length === 1) {
+      this.preventRubberBandScrolling(e);
+    }
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
@@ -109,6 +111,7 @@ const TouchEventManager = {
         break;
       }
       case 2: {
+        e.preventDefault();
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         this.touch.scale = this.getDistance(t1, t2) / this.touch.distance;
@@ -133,6 +136,9 @@ const TouchEventManager = {
     }
   },
   handleTouchEnd() {
+    if (isIOS) {
+      this.preventBouncing();
+    }
     switch (this.touch.type) {
       case 'tap': {
         this.doubleTapTimeout = setTimeout(() => {
@@ -152,14 +158,12 @@ const TouchEventManager = {
           return;
         }
 
-        const { clientHeight: scrollHeight, clientWidth: scrollWidth, scrollLeft, scrollTop } = this.container;
-        const { clientHeight: viewerHeight, clientWidth: viewerWidth } = this.document;
-
-        const threshold = 0.35 * scrollWidth;
-        const swipingUp = scrollHeight + scrollTop >= viewerHeight && this.touch.verticalDistance > threshold;
-        const swipingDown = scrollTop <= 0 && this.touch.verticalDistance < -threshold;
-        const swipingLeft = scrollWidth + scrollLeft >= viewerWidth && this.touch.horizontalDistance > threshold;
-        const swipingRight = scrollLeft <= 0 && this.touch.horizontalDistance < -threshold;
+        const { reachedLeft, reachedTop, reachedRight, reachedBottom } = this.reachedBoundary();
+        const threshold = 0.35 * this.container.clientWidth;
+        const swipedToBottom = reachedBottom && this.touch.verticalDistance > threshold;
+        const swipedToTop = reachedTop && this.touch.verticalDistance < -threshold;
+        const swipedToRight = reachedRight && this.touch.horizontalDistance > threshold;
+        const swipedToLeft = reachedLeft && this.touch.horizontalDistance < -threshold;
 
         const currentPage = core.getCurrentPage();
         const totalPages = core.getTotalPages();
@@ -168,8 +172,8 @@ const TouchEventManager = {
         
         const isFirstPage = currentPage === 1;
         const isLastPage = currentPage === totalPages;    
-        const shouldGoToPrevPage = (swipingRight && this.horizontalSwipe) || (swipingDown && this.verticalSwipe);
-        const shouldGoToNextPage = (swipingLeft && this.horizontalSwipe) || (swipingUp && this.verticalSwipe);
+        const shouldGoToPrevPage = (swipedToLeft && this.horizontalSwipe) || (swipedToTop && this.verticalSwipe);
+        const shouldGoToNextPage = (swipedToRight && this.horizontalSwipe) || (swipedToBottom && this.verticalSwipe);
 
         if (!isFirstPage && shouldGoToPrevPage) {
           core.setCurrentPage(Math.max(1, currentPage - numberOfPagesToNavigate));
@@ -216,6 +220,57 @@ const TouchEventManager = {
     const y = (this.touch.clientY + this.container.scrollTop - this.document.offsetTop) * this.touch.scale - this.touch.clientY + this.container.offsetTop;
 
     return { x, y };
+  },
+  reachedBoundary() {
+    const { clientHeight: scrollHeight, clientWidth: scrollWidth, scrollLeft, scrollTop } = this.container;
+    const { clientHeight: viewerHeight, clientWidth: viewerWidth } = this.document;
+
+    return {
+      reachedLeft: scrollLeft <= 0,
+      reachedTop: scrollTop <= 0,
+      reachedBottom: scrollHeight + scrollTop >= viewerHeight,
+      reachedRight: scrollWidth + scrollLeft >= viewerWidth
+    };
+  },
+  preventRubberBandScrolling(e) {
+    const { reachedTop, reachedRight, reachedBottom, reachedLeft } = this.reachedBoundary();
+    if (
+      reachedTop ||
+      reachedRight ||
+      reachedBottom ||
+      reachedLeft 
+    ) {
+      e.preventDefault();
+    }
+  },
+  preventBouncing() {
+    let counter = 0, bouncingPrevented = false;
+    const MAX_CHECK = 300;
+    const preventBouncing = () => {
+      const { reachedTop, reachedRight, reachedBottom, reachedLeft } = this.reachedBoundary();
+      if (counter < MAX_CHECK && !bouncingPrevented) {
+        if (
+          reachedTop ||
+          reachedRight ||
+          reachedBottom ||
+          reachedLeft
+        ) {
+          this.container.style.webkitOverflowScrolling = 'auto';
+          bouncingPrevented = true;
+        }
+
+        if (bouncingPrevented) {
+          setTimeout(() => {
+            this.container.style.webkitOverflowScrolling = 'touch';
+          }, 0);
+        }
+
+        counter++;
+        window.requestAnimationFrame(preventBouncing);
+      }
+    };
+
+    window.requestAnimationFrame(preventBouncing);
   }
 };
 
