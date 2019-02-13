@@ -101,6 +101,8 @@ const TouchEventManager = {
     }
   },
   handleTouchMove(e) {
+    e.preventDefault();
+    
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
@@ -112,7 +114,6 @@ const TouchEventManager = {
         break;
       }
       case 2: {
-        e.preventDefault();
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         this.touch.scale = this.getDistance(t1, t2) / this.touch.distance;
