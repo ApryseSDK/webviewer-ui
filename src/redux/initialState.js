@@ -10,6 +10,7 @@ export default {
   viewer: {
     disabledElements: {
       'redactionButton': {
+        //redactin button starts hidden and show up when document is loaded
         disabled: true
       }
     },
@@ -70,8 +71,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: [ 'tablet', 'mobile' ] },
-        // { type: 'toolGroupButton', toolGroup: 'redactTools', dataElement: 'redactToolGroupButton', title: 'component.redactToolsButton', hidden: [ 'tablet', 'mobile' ] },
-        { type: 'toggleElementButton', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_redact_black_24px', title: 'component.redactOverlay' },
+        { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redactOverlay',  hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolButton', toolName: 'AnnotationCreateSignature', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolButton', toolName: 'AnnotationCreateSticky', hidden: [ 'tablet', 'mobile' ] },
@@ -96,7 +96,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton' },
-        // { type: 'toolGroupButton', toolGroup: 'redactTools', dataElement: 'redactToolGroupButton', title: 'component.redactToolsButton' },    
+        { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redactOverlay' },
         { type: 'toolButton', toolName: 'AnnotationCreateSignature' },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText' },
         { type: 'toolButton', toolName: 'AnnotationCreateSticky' },
@@ -166,7 +166,8 @@ export default {
     pageLabels: [],
     noteDateFormat: 'MMM D, h:mma',
     colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
-    swipeOrientation: 'horizontal'
+    swipeOrientation: 'horizontal',
+    warning: {}
   },
   search: {
     listeners: [],

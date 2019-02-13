@@ -134,4 +134,8 @@ export const setPageLabels = pageLabels => dispatch => {
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };
 export const setSwipeOrientation = swipeOrientation => ({ type: 'SET_SWIPE_ORIENTATION', payload: { swipeOrientation } });
-  
+
+export const setWarningMessage = (options) => (dispatch) => {
+  dispatch({ type: 'SET_WARNING_MESSAGE', payload: options });
+  dispatch(openElement('warningModal'));
+};

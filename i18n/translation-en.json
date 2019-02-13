@@ -15,7 +15,9 @@
     "fitToWidth": "Fit to width",
     "openFile": "Open file",
     "print": "Print",
+    "confirmWarning": "OK",
     "reply": "Reply",
+    "apply": "Apply",
     "redact": "Apply Redaction",
     "redactCreate": "Mark for Redaction",
     "redactAll": "Apply All Redaction",
@@ -91,7 +93,9 @@
     "searching": "Searching...",
     "searchPlaceholder": "Search comments...",
     "signHere": "Sign Here",
-    "insertTextHere": "Insert text here"
+    "insertTextHere": "Insert text here",
+    "applyRedactionWarningMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
+    "applyRedactionWarningTitle": "Applying redaction?"
   },
   "option": {
     "annotationColor": {

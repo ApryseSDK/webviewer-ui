@@ -138,6 +138,15 @@ export default initialState => (state = initialState, action) => {
       return { ...state, colorMap: payload.colorMap };
     case 'SET_SWIPE_ORIENTATION':
       return { ...state, swipeOrientation: payload.swipeOrientation };
+    case 'SET_WARNING_MESSAGE':
+      return { 
+        ...state, warning: {
+        message: payload.message,
+        title: payload.title,
+        onConfirm: payload.onConfirm,
+        confirmBtnText: payload.confirmBtnText,
+        onCancel: payload.onCancel,
+      }};
     default:
       return state;
   }

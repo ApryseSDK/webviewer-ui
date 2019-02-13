@@ -22,6 +22,7 @@ import SignatureModal from 'components/SignatureModal';
 import PrintModal from 'components/PrintModal';
 import LoadingModal from 'components/LoadingModal';
 import ErrorModal from 'components/ErrorModal';
+import WarningModal from 'components/WarningModal';
 import PasswordModal from 'components/PasswordModal';
 import ProgressModal from 'components/ProgressModal';
 import FilePickerHandler from 'components/FilePickerHandler';
@@ -65,7 +66,7 @@ class App extends React.PureComponent {
       'contextMenuPopup',
       'toolStylePopup',
       'textPopup',
-      'redactionOverlay', // TODO move element list to helper
+      isDesktop() ? 'redactionOverlay' : '',
       isDesktop() ? 'toolsOverlay' : ''
     ].filter(element => element);
 
@@ -103,6 +104,7 @@ class App extends React.PureComponent {
           <PrintModal />
           <LoadingModal />
           <ErrorModal />
+          <WarningModal />
           <PasswordModal />
           <ProgressModal />
         </div>

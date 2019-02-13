@@ -41,4 +41,10 @@
       margin-right: 0;
     }
   }
+
+  .spacer {
+    @include tablet-and-mobile {
+      flex: 1;
+      height: 100%;
+  }}
 }

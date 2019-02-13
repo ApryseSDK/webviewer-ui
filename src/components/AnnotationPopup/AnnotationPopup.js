@@ -9,6 +9,7 @@ import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyle from 'helpers/getAnnotationStyle';
 import getClassName from 'helpers/getClassName';
+import applyRedactions from 'helpers/applyRedactions';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -162,7 +163,7 @@ class AnnotationPopup extends React.PureComponent {
   }
 
   redactAnnotation = () => {
-    core.applyRedactions([this.state.annotation]);
+    this.props.applyRedactions(this.state.annotation);
     this.props.closeElement('annotationPopup');
   }
 
@@ -189,11 +190,11 @@ class AnnotationPopup extends React.PureComponent {
             {canModify && hasStyle && !isAnnotationStylePopupDisabled &&
               <ActionButton dataElement="annotationStyleEditButton" title="action.style" img="ic_palette_black_24px" onClick={this.openStylePopup} />
             }
+            {redactionEnabled &&
+              <ActionButton dataElement="annotationRedactButton" title="action.redact" img="ic_check_black_24px" onClick={this.redactAnnotation} />
+            }
             {canModify &&
               <ActionButton dataElement="annotationDeleteButton" title="action.delete" img="ic_delete_black_24px" onClick={this.deleteAnnotation} />
-            }
-            {redactionEnabled &&
-              <ActionButton dataElement="annotationRedactButton" title="action.redact" img="ic_annotation_redact_black_24px" onClick={this.redactAnnotation} />
             }
           </React.Fragment>
         }
@@ -213,6 +214,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  applyRedactions,
   openElement: actions.openElement,
   closeElement: actions.closeElement,
   setIsNoteEditing: actions.setIsNoteEditing,

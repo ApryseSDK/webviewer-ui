@@ -18,6 +18,7 @@ import getAnnotationManager from './getAnnotationManager';
 import getTotalPages from './getTotalPages';
 import getCurrentPage from './getCurrentPage';
 import setCurrentPage from './setCurrentPage';
+import getType from './getType';
 import getSelectedText from './getSelectedText';
 import clearSelection from './clearSelection';
 import setOptions from './setOptions';
@@ -108,6 +109,7 @@ export default {
   getTotalPages,
   getCurrentPage,
   setCurrentPage,
+  getType,
   getSelectedText,
   clearSelection,
   setOptions,
