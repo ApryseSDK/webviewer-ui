@@ -7,8 +7,8 @@ const TouchEventManager = {
   initialize(document, container) {
     this.document = document;
     this.container = container;
-    this.horizontalSwipe = true;
-    this.verticalSwipe = false;
+    this.allowHorizontalSwipe = true;
+    this.allowVerticalSwipe = false;
     this.touch = {
       clientX: 0,
       clientY: 0,
@@ -31,14 +31,14 @@ const TouchEventManager = {
 
   updateOrientation(newOrientation) {
     if (newOrientation === 'both'){
-      this.verticalSwipe = true;
-      this.horizontalSwipe = true;
+      this.allowVerticalSwipe = true;
+      this.allowHorizontalSwipe = true;
     } else if (newOrientation === 'vertical'){
-      this.verticalSwipe = true;
-      this.horizontalSwipe = false;
+      this.allowVerticalSwipe = true;
+      this.allowHorizontalSwipe = false;
     } else if (newOrientation === 'horizontal'){
-      this.verticalSwipe = false;
-      this.horizontalSwipe = true;
+      this.allowVerticalSwipe = false;
+      this.allowHorizontalSwipe = true;
     } else {
       console.warn(`${newOrientation} is not a valid orientation. Try 'vertical,' 'horizontal,' or 'both.`);
       return;
@@ -64,7 +64,9 @@ const TouchEventManager = {
           distance: 0,
           scale: scrollWidth / viewerWidth,
           zoom: core.getZoom(),
-          type: isDoubleTap ? 'doubleTap' : 'tap'
+          type: isDoubleTap ? 'doubleTap' : 'tap',
+          touchStartTimeStamp: Date.now(),
+          stopMomentumScroll: true
         };
         clearTimeout(this.doubleTapTimeout);
         break;
@@ -87,7 +89,9 @@ const TouchEventManager = {
           distance: this.getDistance(t1, t2),
           scale: 1,
           zoom: core.getZoom(),
-          type: 'pinch'
+          type: 'pinch',
+          touchStartTimeStamp: Date.now(),
+          stopMomentumScroll: true
         };
         if (!isIOS) {
           this.document.style.transformOrigin = `${docX}px ${docY}px`;
@@ -102,9 +106,6 @@ const TouchEventManager = {
         const t = e.touches[0];
         this.touch.horizontalDistance = this.touch.clientX - t.clientX;
         this.touch.verticalDistance = this.touch.clientY - t.clientY;
-        if (isIOS) {
-          this.preventRubberBandScrolling(e);
-        }
         if (this.getDistance(this.touch, t) > 10) {
           this.touch.type = 'swipe';
         }
@@ -136,9 +137,6 @@ const TouchEventManager = {
     }
   },
   handleTouchEnd() {
-    if (isIOS) {
-      this.preventBouncing();
-    }
     switch (this.touch.type) {
       case 'tap': {
         this.doubleTapTimeout = setTimeout(() => {
@@ -151,7 +149,6 @@ const TouchEventManager = {
         const usingAnnotationTools = toolName !== 'AnnotationEdit' && toolName !== 'Pan'; 
         if (
           core.getSelectedText().length || 
-          core.isContinuousDisplayMode() || 
           usingAnnotationTools || 
           core.getSelectedAnnotations().length
         ) {
@@ -172,13 +169,22 @@ const TouchEventManager = {
         
         const isFirstPage = currentPage === 1;
         const isLastPage = currentPage === totalPages;    
-        const shouldGoToPrevPage = (swipedToLeft && this.horizontalSwipe) || (swipedToTop && this.verticalSwipe);
-        const shouldGoToNextPage = (swipedToRight && this.horizontalSwipe) || (swipedToBottom && this.verticalSwipe);
+        const isSingleDisplayMode = !core.isContinuousDisplayMode(); 
+        const shouldGoToPrevPage = isSingleDisplayMode && !isFirstPage && ((swipedToLeft && this.allowHorizontalSwipe) || (swipedToTop && this.allowVerticalSwipe));
+        const shouldGoToNextPage = isSingleDisplayMode && !isLastPage && ((swipedToRight && this.allowHorizontalSwipe) || (swipedToBottom && this.allowVerticalSwipe));
 
-        if (!isFirstPage && shouldGoToPrevPage) {
+        if (shouldGoToPrevPage) {
           core.setCurrentPage(Math.max(1, currentPage - numberOfPagesToNavigate));
-        } else if (!isLastPage && shouldGoToNextPage) {
+        } else if (shouldGoToNextPage) {
           core.setCurrentPage(Math.min(totalPages, currentPage + numberOfPagesToNavigate));
+        } else {
+          const millisecondsToSeconds = 1000;
+          const touchDuration = (Date.now() - this.touch.touchStartTimeStamp) / millisecondsToSeconds;
+          
+          if (touchDuration < 0.2) {
+            this.touch.stopMomentumScroll = false;
+            this.startMomentumScroll(touchDuration);
+          }
         }
         break;
       }
@@ -212,14 +218,30 @@ const TouchEventManager = {
   handleTouchCancel(e) {
     this.handleTouchEnd(e);
   },
-  getDistance(t1, t2) {
-    return Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
-  },
-  getPointAfterScale() {
-    const x = (this.touch.clientX + this.container.scrollLeft - this.document.offsetLeft) * this.touch.scale - this.touch.clientX + this.container.offsetLeft;
-    const y = (this.touch.clientY + this.container.scrollTop - this.document.offsetTop) * this.touch.scale - this.touch.clientY + this.container.offsetTop;
+  startMomentumScroll(touchDuration) {
+    let currentIteration = 0;
+    const iterationsCount = 70;
+    const initScrollLeft = this.container.scrollLeft;
+    const initScrollTop = this.container.scrollTop;
+    const dHorizontal = this.touch.horizontalDistance / touchDuration / 1.85;
+    const dVertical = this.touch.verticalDistance / touchDuration / 1.85;
+    const momentumScroll = () => {
+      this.container.scrollLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
+      this.container.scrollTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
 
-    return { x, y };
+      if (currentIteration < iterationsCount && !this.touch.stopMomentumScroll) {
+        currentIteration++;
+        requestAnimationFrame(momentumScroll);
+      }
+    }; 
+    
+    requestAnimationFrame(momentumScroll);
+  },
+  easeOutQuad(currentTime, startValue, changeInValue, duration) {
+    // http://gizma.com/easing/#quad2
+    currentTime /= duration;
+
+    return -changeInValue * currentTime * (currentTime - 2) + startValue;
   },
   reachedBoundary() {
     const { clientHeight: scrollHeight, clientWidth: scrollWidth, scrollLeft, scrollTop } = this.container;
@@ -232,46 +254,15 @@ const TouchEventManager = {
       reachedRight: scrollWidth + scrollLeft >= viewerWidth
     };
   },
-  preventRubberBandScrolling(e) {
-    const { reachedTop, reachedRight, reachedBottom, reachedLeft } = this.reachedBoundary();
-    if (
-      reachedTop ||
-      reachedRight ||
-      reachedBottom ||
-      reachedLeft 
-    ) {
-      e.preventDefault();
-    }
+  getDistance(t1, t2) {
+    return Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
   },
-  preventBouncing() {
-    let counter = 0, bouncingPrevented = false;
-    const MAX_CHECK = 300;
-    const preventBouncing = () => {
-      const { reachedTop, reachedRight, reachedBottom, reachedLeft } = this.reachedBoundary();
-      if (counter < MAX_CHECK && !bouncingPrevented) {
-        if (
-          reachedTop ||
-          reachedRight ||
-          reachedBottom ||
-          reachedLeft
-        ) {
-          this.container.style.webkitOverflowScrolling = 'auto';
-          bouncingPrevented = true;
-        }
+  getPointAfterScale() {
+    const x = (this.touch.clientX + this.container.scrollLeft - this.document.offsetLeft) * this.touch.scale - this.touch.clientX + this.container.offsetLeft;
+    const y = (this.touch.clientY + this.container.scrollTop - this.document.offsetTop) * this.touch.scale - this.touch.clientY + this.container.offsetTop;
 
-        if (bouncingPrevented) {
-          setTimeout(() => {
-            this.container.style.webkitOverflowScrolling = 'touch';
-          }, 0);
-        }
-
-        counter++;
-        window.requestAnimationFrame(preventBouncing);
-      }
-    };
-
-    window.requestAnimationFrame(preventBouncing);
-  }
+    return { x, y };
+  },
 };
 
 export default TouchEventManager;
