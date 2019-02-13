@@ -43,5 +43,5 @@ const webViewerApply = (annotations, dispatch) => {
         confirmBtnText: confirmBtnText
     };
 
-    return dispatch(actions.setWarningMessage(warning));
+    return dispatch(actions.showWarningMessage(warning));
 };

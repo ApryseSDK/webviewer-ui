@@ -167,7 +167,8 @@ export default {
     noteDateFormat: 'MMM D, h:mma',
     colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
     swipeOrientation: 'horizontal',
-    warning: {}
+    warning: {},
+    customNoteFilter: null
   },
   search: {
     listeners: [],

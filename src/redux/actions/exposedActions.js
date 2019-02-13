@@ -1,5 +1,4 @@
 import core from 'core';
-import { mapToolNameToKey } from 'constants/map';
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import fireEvent from 'helpers/fireEvent';
 import getPopupElements from 'helpers/getPopupElements';
@@ -135,7 +134,9 @@ export const setPageLabels = pageLabels => dispatch => {
 };
 export const setSwipeOrientation = swipeOrientation => ({ type: 'SET_SWIPE_ORIENTATION', payload: { swipeOrientation } });
 
-export const setWarningMessage = (options) => (dispatch) => {
+export const showWarningMessage = (options) => (dispatch) => {
   dispatch({ type: 'SET_WARNING_MESSAGE', payload: options });
   dispatch(openElement('warningModal'));
 };
+export const setCustomNoteFilter = filterFunc => ({ type: 'SET_CUSTOM_NOTE_FILTER', payload: { customNoteFilter: filterFunc } });
+  
