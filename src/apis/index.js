@@ -69,6 +69,7 @@ import setNotesPanelSort from './setNotesPanelSort';
 import addSortStrategy from './addSortStrategy';
 import updateOutlines from './updateOutlines';
 import print from './print';
+import showWarningMessage from './showWarningMessage';
 
 export default {
   loadDocument,
@@ -144,5 +145,6 @@ export default {
   getZoomLevel,
   setZoomLevel,
   setMaxZoomLevel,
-  setMinZoomLevel
+  setMinZoomLevel,
+  showWarningMessage
 };

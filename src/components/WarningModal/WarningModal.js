@@ -63,7 +63,7 @@ class WarningModal extends React.PureComponent {
     }
 
     const className = getClassName('Modal WarningModal', this.props);
-    const label = confirmBtnText || "action.confirmWarning";
+    const label = confirmBtnText || "Ok";
 
     const cancelBtnText = i18next.t('action.cancel');
 
