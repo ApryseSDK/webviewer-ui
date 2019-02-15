@@ -29,8 +29,10 @@
     "zoomOut": "Zoom out"
   },
   "annotation": {
+    "areaMeasurement": "Area measurement",
     "arrow": "Arrow",
     "callout": "Callout",
+    "distanceMeasurement": "Distance measurement",
     "ellipse": "Ellipse",
     "freehand": "Free hand",
     "freehand2": "Free hand",
@@ -39,6 +41,7 @@
     "highlight": "Highlight",
     "highlight2": "Highlight",
     "line": "Line",
+    "perimeterMeasurement": "Perimeter measurement",
     "polygon": "Polygon",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
@@ -63,7 +66,8 @@
     "textToolsButton": "Text tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
-    "viewControlsOverlay": "View controls"
+    "viewControlsOverlay": "View controls",
+    "measurementToolsButton": "Measurement tools"
   },
   "message": {
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",

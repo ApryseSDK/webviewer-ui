@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
+import MeasurementsOverlay from 'components/MeasurementsOverlay';
 
 import { circleRadius } from 'constants/slider';
 import selectors from 'selectors';
@@ -75,7 +76,7 @@ class StylePopup extends React.PureComponent {
 
   render() {
     const { currentPalette, style, colorMapKey } = this.props;
-
+    const isMeasurement = colorMapKey.includes('Measurement');
     return (
       <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
         {currentPalette &&
@@ -91,6 +92,9 @@ class StylePopup extends React.PureComponent {
             {this.renderSliders()}
           </div>
         </div>
+        {isMeasurement && 
+          <MeasurementsOverlay />
+        }
       </div>
     );
   }

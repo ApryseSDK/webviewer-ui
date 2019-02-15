@@ -32,6 +32,27 @@ const map = {
     toolNames: ['AnnotationCreateFreeText'],
     annotationCheck: annotation => annotation instanceof Annotations.FreeTextAnnotation && annotation.getIntent() === Annotations.FreeTextAnnotation.Intent.FreeText
   },
+  distanceMeasurement: {
+    icon: 'ic_annotation_freetext_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: [ 'StrokeColor' ],
+    toolNames: ['AnnotationCreateDistanceMeasurement'],
+  },
+  perimeterMeasurement: {
+    icon: 'ic_annotation_freetext_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: [ 'StrokeColor' ],
+    toolNames: ['AnnotationCreatePerimeterMeasurement']
+  },
+  areaMeasurement: {
+    icon: 'ic_annotation_freetext_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: [ 'StrokeColor', 'FillColor' ],
+    toolNames: ['AnnotationCreateAreaMeasurement'],
+  },
   callout: {
     icon: 'ic_annotation_callout_black_24px',
     iconColor:'TextColor',
@@ -168,6 +189,7 @@ const map = {
     toolNames: ['TextSelect'],
     annotationCheck: null,
   },
+
 };
 
 export const mapToolNameToKey = toolName => Object.keys(map).find(key => map[key].toolNames.includes(toolName));

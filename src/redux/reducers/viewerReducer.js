@@ -37,7 +37,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ACTIVE_TOOL_NAME':
       return { ...state, activeToolName: payload.toolName };
     case 'SET_ACTIVE_TOOL_STYLES':
-      return { ...state, activeToolStyles: payload.toolStyles };
+      return { ...state, activeToolStyles: { ...payload.toolStyles }};
     case 'SET_ACTIVE_TOOL_NAME_AND_STYLES':
       return { ...state, activeToolName: payload.toolName, activeToolStyles: payload.toolStyles };
     case 'SET_ACTIVE_LEFT_PANEL':
