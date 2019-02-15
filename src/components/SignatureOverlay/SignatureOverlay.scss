@@ -61,6 +61,12 @@
       color: #E1E1E3;
       cursor: default;
     }
+
+    &:hover {
+      background: #17324C;
+      border: 1px solid #17324C;
+      color: #FFFFFF;
+    }
   }
 }
 

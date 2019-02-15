@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import ActionButton from 'components/ActionButton';
@@ -19,7 +20,8 @@ class SignatureOverlay extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
-    setCursorOverlayImage: PropTypes.func.isRequired
+    setCursorOverlayImage: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -71,9 +73,9 @@ class SignatureOverlay extends React.PureComponent {
 
     const { setCursorOverlayImage, closeElement, openElement } = this.props;
     const { imgSrc, paths } = this.state.defaultSignatures[this.currentSignatureIndex];
+    
     this.signatureTool.setUpSignature(paths);
-    if (this.signatureTool.getLocation()) {
-      // TODO: add comment about why we do this
+    if (this.signatureTool.hasLocation()) {
       this.signatureTool.addSignature();
     } else {
       openElement('cursorOverlay');
@@ -111,16 +113,12 @@ class SignatureOverlay extends React.PureComponent {
     }
   }
 
-  /**
-   * TODO:
-   * 1. i18n 'Add a Signature'
-   */
-
   render() {
     const { left, right, defaultSignatures } = this.state;
+    const { t, isDisabled } = this.props;
     const className = getClassName('Overlay SignatureOverlay', this.props);
 
-    if (this.props.isDisabled) {
+    if (isDisabled) {
       return null;
     }
 
@@ -139,7 +137,7 @@ class SignatureOverlay extends React.PureComponent {
             className={`add-signature${defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES ? ' disabled' : ''}`} 
             onClick={this.openSignatureModal}
           >
-            Add a Signature
+            {t('option.signatureOverlay.addSignature')}
           </div>
         </div>
       </div>
@@ -159,4 +157,4 @@ const mapDispatchToProps = {
   setCursorOverlayImage: actions.setCursorOverlayImage
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignatureOverlay);
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(SignatureOverlay));

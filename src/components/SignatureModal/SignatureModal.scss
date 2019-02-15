@@ -129,7 +129,7 @@ $signature-modal-shared-color: #E1E1E3;
         }
       }
 
-      .signature-apply {
+      .signature-create {
         color: #FFFFFF;
         font-family: SourceSansPro-Semibold;
         padding: 6px 18px;
@@ -140,11 +140,11 @@ $signature-modal-shared-color: #E1E1E3;
         font-size: 16px;
         font-weight: 600;
         text-align: center;
+        cursor: pointer;
 
         &:hover {
           background: #17324C;
           border: 1px solid #17324C;
-          cursor: pointer;
         }
       }
     }

@@ -40,19 +40,18 @@ export default {
   signatureToolButton: {
     initialState: 'newSignature',
     mount: update => {
-      core.getTool('AnnotationCreateSignature').on('saveDefault.sigTool', () => {
+      const signatureTool = core.getTool('AnnotationCreateSignature');
+      signatureTool.on('saveDefault.sigTool', () => {
         update('defaultSignature');
       });
-      core.getTool('AnnotationCreateSignature').on('noDefaultSignatures', () => {
+      signatureTool.on('noDefaultSignatures', () => {
         update('newSignature');
-      });
-      core.getTool('AnnotationCreateSignature').on('prepareSignature', () => {
-        document.querySelector('[data-element=signatureToolButton]').click();
       });
     },
     unmount: () => {
-      core.getTool('AnnotationCreateSignature').off('saveDefault.sigTool');
-      core.getTool('AnnotationCreateSignature').off('noDefaultSignatures');
+      const signatureTool = core.getTool('AnnotationCreateSignature');
+      signatureTool.off('saveDefault.sigTool');
+      signatureTool.off('noDefaultSignatures');
     },
     states: {
       newSignature: {

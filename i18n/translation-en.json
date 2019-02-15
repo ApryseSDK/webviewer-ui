@@ -20,7 +20,7 @@
     "rotateClockwise": "Clockwise",
     "rotateCounterClockwise": "Counter-clockwise",
     "save": "Save",
-    "apply": "Apply",
+    "create": "Create",
     "showMoreResults": "Show more results",
     "saveSignature": "Save signature",
     "sign": "Sign",
@@ -123,6 +123,9 @@
     "searchPanel": {
       "caseSensitive": "Case sensitive",
       "wholeWordOnly": "Whole word"
+    },
+    "signatureOverlay": {
+      "addSignature": "Add a signature"
     },
     "slider": {
       "opacity": "Opacity",

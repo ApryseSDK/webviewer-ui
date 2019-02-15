@@ -17,11 +17,12 @@ export default store => {
   const onAnnotationSelected = eventListeners.onAnnotationSelected(dispatch);
   const onAnnotationChanged = eventListeners.onAnnotationChanged(dispatch);
   const onStampAnnotationAdded = eventListeners.onStampAnnotationAdded(dispatch);
+  const onSignatureAnnotationAdded = eventListeners.onSignatureAnnotationAdded(dispatch);
   const onStickyAnnotationAdded = eventListeners.onStickyAnnotationAdded(store);
   const onKeyDown = eventListeners.onKeyDown(store);
   const onFullScreenChange = eventListeners.onFullScreenChange(dispatch);
   const onLayoutChanged = eventListeners.onLayoutChanged(dispatch); 
-  const onLocationSelected = eventListeners.onLocationSelected(dispatch);
+  const onLocationSelected = eventListeners.onLocationSelected;
 
   return {
     addEventHandlers: () => {
@@ -42,6 +43,7 @@ export default store => {
       core.getTool('AnnotationCreateStamp').on('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
+      core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
       document.addEventListener('keydown', onKeyDown);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);

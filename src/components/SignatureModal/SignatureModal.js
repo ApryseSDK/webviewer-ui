@@ -94,8 +94,7 @@ class SignatureModal extends React.PureComponent {
     if (this.state.saveSignature) {
       this.signatureTool.saveDefaultSignature();
     }
-    if (this.signatureTool.getLocation()) {
-      // TODO: add comment about why to do this
+    if (this.signatureTool.hasLocation()) {
       this.signatureTool.addSignature();
     } else if (!this.signatureTool.isEmptySignature()) {
       setCursorOverlayImage(this.canvas.current.toDataURL());
@@ -112,10 +111,6 @@ class SignatureModal extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-
-    /**
-     * Change action.apply to action.create
-     */
 
     return (
       <div className={className} onClick={this.closeModal}>
@@ -139,7 +134,7 @@ class SignatureModal extends React.PureComponent {
               <input id="default-signature" type="checkbox" checked={this.state.saveSignature} onChange={this.handleSaveSignatureChange} />
               <label htmlFor="default-signature">{t('action.saveSignature')}</label>
             </div>
-            <div className="signature-apply" onClick={this.createSignature}>{t('action.apply')}</div>
+            <div className="signature-create" onClick={this.createSignature}>{t('action.create')}</div>
           </div>
         </div>
       </div>

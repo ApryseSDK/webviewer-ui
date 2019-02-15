@@ -9,6 +9,7 @@ import onToolModeUpdated from './onToolModeUpdated';
 import onZoomUpdated from './onZoomUpdated';
 import onPageNumberUpdated from './onPageNumberUpdated';
 import onStampAnnotationAdded from './onStampAnnotationAdded';
+import onSignatureAnnotationAdded from './onSignatureAnnotationAdded';
 import onAnnotationSelected from './onAnnotationSelected';
 import onAnnotationChanged from './onAnnotationChanged';
 import onStickyAnnotationAdded from './onStickyAnnotationAdded';
@@ -30,6 +31,7 @@ export {
   onZoomUpdated,
   onPageNumberUpdated,
   onStampAnnotationAdded,
+  onSignatureAnnotationAdded,
   onAnnotationSelected,
   onAnnotationChanged,
   onStickyAnnotationAdded,
