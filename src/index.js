@@ -63,8 +63,8 @@ if (window.CanvasRenderingContext2D) {
 
   window.CoreControls.enableSubzero(state.advanced.subzero);
   if (process.env.NODE_ENV === 'production') {
-    window.CoreControls.setWorkerPath('../../core');
-    window.CoreControls.setResourcesPath('../../core/assets');
+    window.CoreControls.setWorkerPath('../../core/');
+    window.CoreControls.setResourcesPath('../../core/assets/');
   }
 
   try {
