@@ -5,7 +5,7 @@ export default () => {
 
   if (signatureTool.getSignaturePaths().length) {
     signatureTool.addSignature();
-  } else if (!signatureTool.hasLocation()) {
+  } else {
     // this condition is usually met when we click on a signature widget but UI doesn't know which signature to draw
     prepareSignature();
   }
