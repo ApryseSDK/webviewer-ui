@@ -95,7 +95,7 @@
     "signHere": "Sign Here",
     "insertTextHere": "Insert text here",
     "applyRedactionWarningMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
-    "applyRedactionWarningTitle": "Applying redaction?"
+    "applyRedactionWarningTitle": "Apply Redaction?"
   },
   "option": {
     "annotationColor": {
