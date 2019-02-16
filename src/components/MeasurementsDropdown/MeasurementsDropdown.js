@@ -1,33 +1,40 @@
 import React from 'react';
 
+import core from 'core';
 import MeasurementsDropdownItem from '../MeasurementsDropdownItem';
 
 import './MeasurementsDropdown.scss';
 
 class MeasurementsDropdown extends React.PureComponent {
-  state = { isOpen: false };
 
-  onClick = item => {
-    this.setState({ selectedItem: item, isOpen: !this.state.isOpen });
+  onClick = (e,item) => {
+    e.stopPropagation();
+    this.setState({ selectedItem: item });
     this.props.onClick(item);
   }
 
   render() { 
     const { dropdownList, selectedItem } = this.props;
-    const { isOpen } = this.state; 
+    const { isDropdownOpen } = this.props;
     return (
     <div className="MeasurementsDropdown">  
-      <div onClick={()=>{
-          this.setState({
-            isOpen: !isOpen 
-          });
+      {/* <div onClick={()=>{
+          this.props.onDropdownChange();
         }}
-      >
-    <MeasurementsDropdownItem content={selectedItem}/>
-    </div>
-        { isOpen && 
+      > */}
+    <MeasurementsDropdownItem 
+      onClick={
+        e=>{
+          e.stopPropagation();
+          this.props.onDropdownChange();
+        }
+      }
+      content={selectedItem}
+      />
+    {/* </div> */}
+        { isDropdownOpen && 
           dropdownList.map((item, i) => {
-          return <MeasurementsDropdownItem key={i} content={item} onClick={()=>{this.onClick(item)}} isSelected={item === selectedItem}/>;
+          return <MeasurementsDropdownItem key={i} content={item} onClick={(e)=>{this.onClick(e,item)}} isSelected={item === selectedItem}/>;
           })
         }
     </div>
