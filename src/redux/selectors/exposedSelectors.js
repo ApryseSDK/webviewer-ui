@@ -65,6 +65,7 @@ export const getColorMap = state => state.viewer.colorMap;
 export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey].currentPalette;
 export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey].iconColor; 
 export const getCursorOverlayImage = state => state.viewer.cursorOverlayImage;
+export const getOpenElements = state => state.viewer.openElements;
 
 // document
 export const getDocument = state => state.document;

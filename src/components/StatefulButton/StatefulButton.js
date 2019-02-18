@@ -14,6 +14,7 @@ class StatefulButton extends React.PureComponent {
     initialState: PropTypes.string.isRequired,
     mount: PropTypes.func.isRequired,
     unmount: PropTypes.func,
+    didUpdate: PropTypes.func,
     states: PropTypes.shape({
       activeState: PropTypes.shape({
         img: PropTypes.string,
@@ -46,6 +47,13 @@ class StatefulButton extends React.PureComponent {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { didUpdate, states } = this.props;
+    if (didUpdate) {
+      didUpdate(prevProps, this.props, states[prevState.activeState], states[this.state.activeState], this.update);
+    }
+  }
+
   componentWillUnmount() {
     const { unmount } = this.props;
     if (unmount) {
@@ -74,20 +82,26 @@ class StatefulButton extends React.PureComponent {
 
   render() {
     const { activeState } = this.state;
-    const { title, img, getContent } = this.props.states[activeState];
-    const content = getContent ? getContent(this.props.states[activeState]) : '';
+    const { states, isDisabled } = this.props;
+    const { title, img, getContent, isActive } = states[activeState];
+    const content = getContent ? getContent(states[activeState]) : '';
+    const className = [
+      'StatefulButton',
+      states[activeState].className ? states[activeState].className : ''
+    ].join(' ').trim();
 
     return (
-      <Tooltip content={title} isDisabled={this.props.isDisabled}>
-        <Button {...this.props} img={img} label={content} onClick={this.onClick} />
+      <Tooltip content={title} isDisabled={isDisabled}>
+        <Button {...this.props} className={className} isActive={isActive && isActive(this.props)} img={img} label={content} onClick={this.onClick} />
       </Tooltip>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  className: 'StatefulButton',
   isDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
+  isOpen: selectors.isElementOpen(state, ownProps.dataElement),
+  openElements: selectors.getOpenElements(state)
 });
 
 export default connect(mapStateToProps)(StatefulButton);

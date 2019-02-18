@@ -48,6 +48,14 @@ export default {
         update('newSignature');
       });
     },
+    didUpdate: (prevProps, currProps, prevState, currState, update) => {
+      if(!prevProps.isOpen && currProps.isOpen) {
+        currState.onClick(update, currState, currProps.dispatch);
+      }
+      if(prevProps.openElements !== currProps.openElements) {
+        update();
+      }
+    },
     unmount: () => {
       const signatureTool = core.getTool('AnnotationCreateSignature');
       signatureTool.off('saveDefault.sigTool');
@@ -60,15 +68,17 @@ export default {
           core.setToolMode('AnnotationCreateSignature');
           dispatch(actions.openElement('signatureModal'));
         },
-        title: 'annotation.signature'
+        title: 'annotation.signature',
+        isActive: ({ openElements }) => openElements.signatureModal
       },
       defaultSignature: {
         img: 'ic_annotation_signature_black_24px',
         onClick: (update, state, dispatch) => {
-          core.setToolMode('AnnotationCreateSignature');
           dispatch(actions.toggleElement('signatureOverlay'));
         },
-        title: 'annotation.signature' 
+        title: 'annotation.signature' ,
+        isActive: ({ openElements }) => openElements.signatureOverlay,
+        className: 'down-arrow'
       }
     }
   }

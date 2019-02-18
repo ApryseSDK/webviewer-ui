@@ -74,6 +74,7 @@ class SignatureOverlay extends React.PureComponent {
     const { setCursorOverlayImage, closeElement, openElement } = this.props;
     const { imgSrc, paths } = this.state.defaultSignatures[this.currentSignatureIndex];
     
+    core.setToolMode('AnnotationCreateSignature');
     this.signatureTool.setUpSignature(paths);
     if (this.signatureTool.hasLocation()) {
       this.signatureTool.addSignature();
