@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import { isMobileDevice } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -72,7 +73,7 @@ class CursorOverlay extends React.PureComponent {
     const { isDisabled, imgSrc } = this.props;
     const className = getClassName('Overlay CursorOverlay', this.props);    
 
-    if (isDisabled) {
+    if (isDisabled || isMobileDevice) {
       return null;
     }
 
