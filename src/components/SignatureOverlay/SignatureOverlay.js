@@ -8,6 +8,7 @@ import ActionButton from 'components/ActionButton';
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
+import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -52,7 +53,7 @@ class SignatureOverlay extends React.PureComponent {
     this.signatureTool.off('saveDefault', this.onSaveDefault);
   }
 
-  onSaveDefault = (e, paths) => {
+  onSaveDefault = (e, paths, signatureAnnotation) => {
     const defaultSignatures = [ ...this.state.defaultSignatures ];
     if (defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES) {
       defaultSignatures.unshift();
@@ -61,7 +62,8 @@ class SignatureOverlay extends React.PureComponent {
     const signatureCanvas = document.querySelector('.signature-canvas');
     const savedSignature = {
       imgSrc: signatureCanvas.toDataURL(),
-      paths
+      paths,
+      styles: getAnnotationStyles(signatureAnnotation)
     };
     defaultSignatures.push(savedSignature);
 
@@ -72,10 +74,10 @@ class SignatureOverlay extends React.PureComponent {
     this.currentSignatureIndex = index;
 
     const { setCursorOverlayImage, closeElement, openElement } = this.props;
-    const { imgSrc, paths } = this.state.defaultSignatures[this.currentSignatureIndex];
+    const { imgSrc, paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
     
     core.setToolMode('AnnotationCreateSignature');
-    this.signatureTool.setUpSignature(paths);
+    this.signatureTool.setUpSignature(paths, styles);
     if (this.signatureTool.hasLocation()) {
       this.signatureTool.addSignature();
     } else {

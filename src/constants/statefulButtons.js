@@ -65,7 +65,6 @@ export default {
       newSignature: {
         img: 'ic_annotation_signature_black_24px',
         onClick: (update, state, dispatch) => {
-          core.setToolMode('AnnotationCreateSignature');
           dispatch(actions.openElement('signatureModal'));
         },
         title: 'annotation.signature',
