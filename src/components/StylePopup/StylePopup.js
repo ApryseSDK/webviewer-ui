@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import core from 'core';
 
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
@@ -86,7 +87,7 @@ class StylePopup extends React.PureComponent {
   render() {
     const { currentPalette, style, colorMapKey } = this.props;
     const { openMeasurementDropdown } = this.state;
-    const isMeasurement = colorMapKey.includes('Measurement');
+    const isMeasurement =  colorMapKey.includes('Measurement');
     return (
       <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
         {currentPalette &&
@@ -102,7 +103,7 @@ class StylePopup extends React.PureComponent {
             {this.renderSliders()}
           </div>
         </div>
-        {isMeasurement && 
+        {isMeasurement && style.measure &&
           <MeasurementsOverlay onOpenDropdownChange={this.onOpenDropdownChange} openMeasurementDropdown ={openMeasurementDropdown} />
         }
       </div>

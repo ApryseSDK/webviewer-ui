@@ -32,17 +32,11 @@ class MeasurementsOverlay extends React.PureComponent {
   }
 
   onScaleFromChange = e => {
-    const re = /^[0-9]*[.]?[0-9]*$/;
-    if (re.test(e.target.value) || e.target.value === ''){
-      this.setState({ scaleFrom: e.target.value });
-    }
+    this.setState({ scaleFrom: e.target.value });
   };
 
   onScaleToChange = e => {
-    const re = /^[0-9\b]*[.]?[0-9\b]*$/;
-    if (re.test(e.target.value) || e.target.value === ''){
-      this.setState({ scaleTo: e.target.value });
-    }
+    this.setState({ scaleTo: e.target.value });
   };
 
   onPrecisionChange = item => {
@@ -115,13 +109,13 @@ class MeasurementsOverlay extends React.PureComponent {
           Scale
         </div>
         <div className="Layout">
-          <textarea 
+          <input 
             className="textarea"
-            maxLength="5"
+            type="number" 
             value={this.state.scaleFrom}
             onChange={this.onScaleFromChange}
             onBlur={this.onBlur}
-          />
+          /> 
           <div className="ScaleDropdown">
             <MeasurementsDropdown 
               onClick={this.onScaleFromUnitChange} 
@@ -136,13 +130,13 @@ class MeasurementsOverlay extends React.PureComponent {
             />
           </div>
           =
-          <textarea 
+          <input 
             className="textarea"
-            maxLength="5"
+            type="number" 
             value={this.state.scaleTo}
             onChange={this.onScaleToChange}
             onBlur={this.onBlur}
-          />
+          /> 
           <div className="ScaleDropdown">
             <MeasurementsDropdown 
               onClick={this.onScaleToUnitChange} 

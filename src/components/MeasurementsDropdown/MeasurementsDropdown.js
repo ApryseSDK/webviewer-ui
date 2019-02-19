@@ -18,10 +18,6 @@ class MeasurementsDropdown extends React.PureComponent {
     const { isDropdownOpen } = this.props;
     return (
     <div className="MeasurementsDropdown">  
-      {/* <div onClick={()=>{
-          this.props.onDropdownChange();
-        }}
-      > */}
     <MeasurementsDropdownItem 
       onClick={
         e=>{
@@ -31,7 +27,6 @@ class MeasurementsDropdown extends React.PureComponent {
       }
       content={selectedItem}
       />
-    {/* </div> */}
         { isDropdownOpen && 
           dropdownList.map((item, i) => {
           return <MeasurementsDropdownItem key={i} content={item} onClick={(e)=>{this.onClick(e,item)}} isSelected={item === selectedItem}/>;
