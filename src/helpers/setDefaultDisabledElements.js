@@ -1,7 +1,7 @@
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
-import { isIOS, isAndroid } from 'helpers/device';
+import { isMobileDevice } from 'helpers/device';
 import { PRIORITY_THREE, PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
 
@@ -16,6 +16,7 @@ export default store => {
   disableElementsIfHideAnnotationPanel(dispatch);
   disableElementsIfToolBarDisabled(dispatch);
   disableElementsIfDesktop(dispatch);
+  disableElementsIfMobile(dispatch);
 };
 
 const disableElementsPassedByConstructor = (state, dispatch) => {
@@ -90,5 +91,11 @@ const disableElementsIfDesktop = dispatch => {
   // we could potentially improve the 'hidden' property in the future.
   if (!(isIOS || isAndroid)) {
     dispatch(actions.disableElement('textSelectButton', PRIORITY_ONE));
+  }
+};
+
+const disableElementIfMobile = dispatch => {
+  if (isIOS || isAndroid) {
+
   }
 };
