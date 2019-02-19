@@ -15,7 +15,6 @@ export default store => {
   disableElementsIfHideAnnotationPanel(dispatch);
   disableElementsIfToolBarDisabled(dispatch);
   disableElementsIfDesktop(dispatch);
-  disableElementsIfMobile(dispatch);
 };
 
 const disableElementsPassedByConstructor = (state, dispatch) => {
