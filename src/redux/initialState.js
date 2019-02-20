@@ -10,7 +10,7 @@ export default {
   viewer: {
     disabledElements: {
       'redactionButton': {
-        //redactin button starts hidden and show up when document is loaded
+        //redaction button starts hidden and show up when document is loaded
         disabled: true
       }
     },

@@ -42,9 +42,9 @@ export default (dispatch, options) => {
         downloadIframe.src = null;
         document.body.appendChild(downloadIframe);
         bbURLPromise.then(result => {
-           downloadIframe.src = result.url;
-           dispatch(actions.closeElement('loadingModal'));
-           $(document).trigger('finishedSavingPDF');
+          downloadIframe.src = result.url;
+          dispatch(actions.closeElement('loadingModal'));
+          $(document).trigger('finishedSavingPDF');
         });
       } else {
         doc.getFileData(downloadOptions).then(data => {
