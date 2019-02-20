@@ -44,8 +44,16 @@
   background-color: transparent;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
+  margin-top: -2px;
+  margin-right: 2px;
   width: 42px;
   height: $top-bar-height;
   line-height: 42px;
   text-align: right;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }

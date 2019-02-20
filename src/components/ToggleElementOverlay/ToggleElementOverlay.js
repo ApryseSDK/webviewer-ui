@@ -22,9 +22,6 @@ class ToggleElementOverlay extends React.PureComponent {
   }
 
   onZoomUpdated = () => {
-    // if (core.getZoom() > 100){
-    //   zoomTo(99.99);
-    // }
     this.setState({ value: Math.ceil(core.getZoom() * 100) });
   }
 
@@ -35,7 +32,7 @@ class ToggleElementOverlay extends React.PureComponent {
   }
 
   onChange = e => {
-    const re = /^[0-9\b]+$/;
+    const re = /^[0-9\b]{0,4}$/;
     if (re.test(e.target.value) || e.target.value === ''){
       this.setState({ value: e.target.value }); 
     }
@@ -43,7 +40,7 @@ class ToggleElementOverlay extends React.PureComponent {
 
   onBlur = e => {
     const zoom = Math.ceil(core.getZoom() * 100);
-    if (e.target.value == zoom && e.target.value !== ''){
+    if (e.target.value === zoom && e.target.value !== ''){
       return; 
     } else if (e.target.value !== ''){
       this.setState({ value: e.target.value });
@@ -59,9 +56,9 @@ class ToggleElementOverlay extends React.PureComponent {
     <div className="ToggleElementOverlay">
       <div className={[ "OverlayContainer", isActive ? "active" : "" ].join(" ").trim()}> 
         <div className="OverlayText">
-          <textarea 
-            className="textarea" 
-            maxLength="4" 
+          <input
+            type="number"
+            className="textarea"
             value={this.state.value}
             onChange={this.onChange} 
             onKeyPress={this.onKeyPress}
