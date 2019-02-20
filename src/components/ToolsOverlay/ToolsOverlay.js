@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ToolButton from 'components/ToolButton';
-// import ActionButton from 'components/ActionButton';
 import Button from 'components/Button';
 
 import core from 'core';
@@ -86,18 +85,7 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     const toolNames = Object.keys(toolButtonObjects).filter(toolName => toolButtonObjects[toolName].group === activeToolGroup);
-    //const tools = Object.values(toolButtonObjects).filter(tool => tool.group === activeToolGroup);
-
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
-    /*
-      {toolNames.map((toolName, i) => {
-      if (toolButtonObjects[toolName].onClick) {
-        return (<ActionButton key={`${toolName}-${i}`} toolName={toolName} onClick={toolButtonObjects[toolName].onClick} />);
-      } else {
-        return (<ToolButton key={`${toolName}-${i}`} toolName={toolName} />);
-      }
-      {toolNames.map((toolName, i) => <ToolButton key={`${toolName}-${i}`} toolName={toolName} onClick={toolButtonObjects[toolName].onClick} />)}
-    */
 
     return (
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="toolsOverlay" onMouseDown={e => e.stopPropagation()}>
