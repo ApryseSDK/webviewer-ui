@@ -24,7 +24,6 @@ class RedactionOverlay extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     closeElements: PropTypes.func.isRequired,
-    closeOtherPopupElements: PropTypes.func.isRequired,
     
     applyRedactions: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
@@ -41,9 +40,7 @@ class RedactionOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      const {closeOtherPopupElements, closeElements, setActiveToolGroup}  = this.props;
-
-      // closeOtherPopupElements(this); // TODO want to do something like 'closeOtherPopupElements' but it doesn't work
+      const {closeElements, setActiveToolGroup}  = this.props;
       closeElements(['menuOverlay', 'toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
 
       core.setToolMode('AnnotationCreateRedaction');
@@ -95,7 +92,6 @@ const mapDispatchToProps = dispatch => ({
   setActiveToolGroup: toolGroup => dispatch(actions.setActiveToolGroup(toolGroup)),
   applyRedactions: () => dispatch(applyRedactions()),
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
-  closeOtherPopupElements: dataElements => dispatch(actions.closeOtherPopupElements(dataElements)),
   openElements: dataElements => dispatch(actions.openElements(dataElements)),
 });
 

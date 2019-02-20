@@ -43,7 +43,6 @@ class ToolsOverlay extends React.PureComponent {
     const clickedOnAnotherToolGroupButton = prevProps.activeToolGroup !== this.props.activeToolGroup;
 
     if (!prevProps.isOpen && this.props.isOpen) {
-      // TODO want to do something like 'closeOtherPopupElements' but it doesn't work
       this.props.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'redactionOverlay']);
       this.setOverlayPosition();
     }

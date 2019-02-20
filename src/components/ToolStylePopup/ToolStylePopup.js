@@ -39,7 +39,6 @@ class ToolStylePopup extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
-      // TODO want to do something like 'closeOtherPopupElements' but it doesn't work. 
       this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'redactionOverlay' ]); 
       this.positionToolStylePopup();       
     }
