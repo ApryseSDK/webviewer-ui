@@ -4,7 +4,7 @@ import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { fireError } from 'helpers/fireEvent';
 import { engineTypes, documentTypes } from 'constants/types';
-import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions } from 'constants/supportedFiles';
+import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -95,7 +95,7 @@ const getPartRetriever = (state, streaming) => {
       }
     } else if (engineType === engineTypes.PDFTRON_SERVER) {
       partRetrieverName = 'BlackBoxPartRetriever';
-      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets: disableWebsockets });
+      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets });
     } else if (engineType === engineTypes.UNIVERSAL) {
       const cache = window.CoreControls.PartRetrievers.CacheHinting.CACHE;
 
@@ -229,18 +229,21 @@ const getEngineType = state => {
 
 export const getDocumentExtension = (doc, engineType) => {
   let extension;
+
   if (doc) {
-    const supportedExtensions = [...supportedPDFExtensions, ...supportedOfficeExtensions, ...supportedBlackboxExtensions, 'xod'].filter((extension, index, self) => self.indexOf(extension) === index);
-    const regex = new RegExp(`\\.(${supportedExtensions.join('|')})(&|$|\\?|#)`, 'i');
-    const result = regex.exec(doc);
-    if (result) {
-      extension = result[1];
-    } else if (engineType === engineTypes.AUTO) {
-      console.error(`File extension is either unsupported or cannot be determined from ${doc}. Webviewer supports ${supportedExtensions.join(', ')}`);
-    }
+    const result = /\.([a-zA-Z]+)(&|$|\?|#)/.exec(doc);
+    extension = result && result[1].toLowerCase();
   }
 
-  return extension.toLowerCase();
+  if (extension) {
+    if (!supportedExtensions.includes(extension)) {
+      console.error(`File extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWebViewer server supports ${supportedBlackboxExtensions.join(', ')}`);
+    }
+  } else if (doc && engineType === engineTypes.AUTO) {
+    console.warn(`File extension cannot be determined from ${doc}. Falling back to xod`);
+  }
+
+  return extension ? extension : '';
 };
 
 export const getDocName = state => {

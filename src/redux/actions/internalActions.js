@@ -49,7 +49,7 @@ export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   }
   dispatch({ type: 'SET_ACTIVE_TOOL_NAME_AND_STYLES', payload: { toolName: name, toolStyles: toolObject.defaults || {} } });
 };
-export const setActiveToolStyles = toolStyles => ({ type: 'SET_ACTIVE_TOOL_STYLES', payload: { toolStyles } });
+export const setActiveToolStyles = (toolStyles = {}) => ({ type: 'SET_ACTIVE_TOOL_STYLES', payload: { toolStyles } });
 export const setActiveToolGroup = toolGroup => ({ type: 'SET_ACTIVE_TOOL_GROUP', payload: { toolGroup } });
 export const setNotePopupId = id => ({ type: 'SET_NOTE_POPUP_ID', payload: { id } });
 export const setFitMode = fitMode => ({ type: 'SET_FIT_MODE', payload: { fitMode } });
@@ -81,6 +81,9 @@ export const collapseAllNotes = () => (dispatch, getState) => {
   }
 };
 export const setHeaderItems = (header, headerItems) => ({ type: 'SET_HEADER_ITEMS', payload: { header, headerItems } });
+export const setColorPalette = (colorMapKey, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { colorMapKey, colorPalette } });
+export const setIconColor = (colorMapKey, color) => ({ type: 'SET_ICON_COLOR', payload: { colorMapKey, color } });
+export const setColorMap = colorMap => ({ type: 'SET_COLOR_MAP', payload: { colorMap } });
 
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });

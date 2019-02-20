@@ -6,7 +6,7 @@ export default store => (enable = true) =>  {
   if (enable) {
     store.dispatch(actions.enableElements(['filePickerHandler', 'filePickerButton'], PRIORITY_ONE));
   } else {
-    console.warn('enableFilePicker(false) is going to be deprecated, please use disableFilePicker() instead');
+    console.warn('enableFilePicker(false) is deprecated, please use disableFilePicker() instead');
     disableFilePicker(store)();
   }
 };

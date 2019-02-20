@@ -8,7 +8,7 @@ import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'help
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import TouchEventManager from 'helpers/TouchEventManager';
-import { ZOOM_MIN, ZOOM_MAX } from 'constants/zoomFactors';
+import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -29,7 +29,8 @@ class DocumentContainer extends React.PureComponent {
     isHeaderOpen: PropTypes.bool,
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
-    displayMode: PropTypes.string.isRequired
+    displayMode: PropTypes.string.isRequired,
+    swipeOrientation: PropTypes.string
   }
 
   constructor() {
@@ -45,6 +46,9 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
+    if (prevProps.swipeOrientation !== this.props.swipeOrientation){
+      this.touchEventManager.updateOrientation(this.props.swipeOrientation);
+    }
   }
 
   componentDidMount() {
@@ -52,7 +56,7 @@ class DocumentContainer extends React.PureComponent {
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
-    const { hasPath, doesDocumentAutoLoad, openElement, document, advanced, dispatch } = this.props;
+    const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
     if (hasPath && doesDocumentAutoLoad) {
       loadDocument({ document, advanced }, dispatch);
     }
@@ -120,10 +124,10 @@ class DocumentContainer extends React.PureComponent {
 
     if (e.deltaY < 0) {
       multiple = 1.25;
-      newZoomFactor = Math.min(currentZoomFactor * multiple, ZOOM_MAX);
+      newZoomFactor = Math.min(currentZoomFactor * multiple, getMaxZoomLevel());
     } else if (e.deltaY > 0) {
       multiple = 0.8;
-      newZoomFactor = Math.max(currentZoomFactor * multiple, ZOOM_MIN);
+      newZoomFactor = Math.max(currentZoomFactor * multiple, getMinZoomLevel());
     }
 
     core.zoomToMouse(newZoomFactor);
@@ -174,7 +178,8 @@ const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
-  totalPages: selectors.getTotalPages(state)
+  totalPages: selectors.getTotalPages(state),
+  swipeOrientation: selectors.getSwipeOrientation(state)
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -9,15 +9,12 @@ import Input from 'components/Input';
 import core from 'core';
 import getPagesToPrint from 'helpers/getPagesToPrint';
 import getClassName from 'helpers/getClassName';
-import getAnnotationType from 'helpers/getAnnotationType';
-import getAnnotationIcon from 'helpers/getAnnotationIcon';
-import annotationColorToCss from 'helpers/annotationColorToCss';
-import getAnnotationColor from 'helpers/getAnnotationColor';
-import sortStrategies from 'constants/sortStrategies';
+import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './PrintModal.scss';
+import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -31,7 +28,8 @@ class PrintModal extends React.PureComponent {
     dispatch: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    sortStrategy: PropTypes.string.isRequired
+    sortStrategy: PropTypes.string.isRequired,
+    colorMap: PropTypes.object.isRequired,
   }
 
   constructor() {
@@ -96,21 +94,22 @@ class PrintModal extends React.PureComponent {
       console.error(e);
     });
   }
-  
+
   setPrintQuality = () => {
     window.utils.setCanvasMultiplier(this.props.printQuality);
   }
 
   creatingPages = () => {
     const creatingPages = [];
-    
+
     this.pendingCanvases = [];
     this.state.pagesToPrint.forEach(pageNumber => {
       creatingPages.push(this.creatingImage(pageNumber));
 
       const printableAnnotations = this.getPrintableAnnotations(pageNumber);
       if (this.includeComments.current.checked && printableAnnotations.length) {
-        creatingPages.push(this.creatingNotesPage(sortStrategies[this.props.sortStrategy].getSortedNotes(printableAnnotations), pageNumber));
+        const sortedNotes = getSortStrategies()[this.props.sortStrategy].getSortedNotes(printableAnnotations);
+        creatingPages.push(this.creatingNotesPage(sortedNotes, pageNumber));
       }
     });
 
@@ -231,7 +230,7 @@ class PrintModal extends React.PureComponent {
     return new Promise(resolve => {
       const container = document.createElement('div');
       container.className = 'page__container';
-      
+
       const header =  document.createElement('div');
       header.className = 'page__header';
       header.innerHTML = `Page ${pageNumber}`;
@@ -246,21 +245,27 @@ class PrintModal extends React.PureComponent {
       resolve(container);
     });
   }
-  
+
   getNote = annotation => {
+    const { colorMap } = this.props;
+
     const note = document.createElement('div');
     note.className = 'note';
 
     const noteRoot = document.createElement('div');
     noteRoot.className = 'note__root';
-    
+
     const noteRootInfo = document.createElement('div');
     noteRootInfo.className = 'note__info--with-icon';
 
+    const key = mapAnnotationToKey(annotation);
+    const iconColor = colorMap[key] && colorMap[key].iconColor;
+    const icon = getDataWithKey(key).icon;
+    const innerHTML = icon ? require(`../../../assets/${icon}.svg`) : annotation.Subject;
     const noteIcon = document.createElement('div');
     noteIcon.className = 'note__icon';
-    noteIcon.innerHTML = require(`../../../assets/${getAnnotationIcon(getAnnotationType(annotation))}.svg`);
-    noteIcon.style.color = annotationColorToCss(annotation[getAnnotationColor(getAnnotationType(annotation))]);
+    noteIcon.innerHTML = innerHTML;
+    noteIcon.style.color = iconColor && annotation[iconColor].toHexString();
 
     noteRootInfo.appendChild(noteIcon);
     noteRootInfo.appendChild(this.getNoteInfo(annotation));
@@ -282,7 +287,7 @@ class PrintModal extends React.PureComponent {
 
   getNoteInfo = annotation => {
     const info = document.createElement('div');
-    
+
     info.className = 'note__info';
     info.innerHTML = `
       Author: ${annotation.Author || ''} &nbsp;&nbsp;
@@ -291,7 +296,7 @@ class PrintModal extends React.PureComponent {
     `;
     return info;
   }
-  
+
   getNoteContent = annotation => {
     const contentElement = document.createElement('div');
     const contentText = annotation.getContents();
@@ -342,7 +347,7 @@ class PrintModal extends React.PureComponent {
     const { count, pagesToPrint } = this.state;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = <input ref={this.customInput} type="text" placeholder={t('message.customPrintPlaceholder')} onFocus={this.onFocus}/>;
-    const isPrinting = count > 0;
+    const isPrinting = count >= 0;
 
     return (
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
@@ -382,7 +387,8 @@ const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   printQuality: selectors.getPrintQuality(state),
   pageLabels: selectors.getPageLabels(state),
-  sortStrategy: selectors.getSortStrategy(state)
+  sortStrategy: selectors.getSortStrategy(state),
+  colorMap: selectors.getColorMap(state)
 });
 
 const mapDispatchToProps = dispatch => ({

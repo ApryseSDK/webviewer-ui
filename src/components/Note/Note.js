@@ -21,7 +21,9 @@ class Note extends React.PureComponent {
     setIsNoteEditing: PropTypes.func.isRequired,
     searchInput: PropTypes.string,
     isReadOnly: PropTypes.bool,
+    isReplyDisabled: PropTypes.bool,
     visible: PropTypes.bool.isRequired,
+    rootContents: PropTypes.string,
     t: PropTypes.func.isRequired
   };
 
@@ -49,7 +51,7 @@ class Note extends React.PureComponent {
     if (noteBeingEdited) {
       if (commentEditable) {
         this.openRootEditing();
-      } else {
+      } else if (this.replyTextarea.current) {
         this.replyTextarea.current.focus();
       }
     }
@@ -118,7 +120,10 @@ class Note extends React.PureComponent {
   }
 
   onFocus = () => {
-    this.setState({ isReplyFocused: true, isRootContentEditing: false });
+    this.setState({ 
+      isReplyFocused: true, 
+      isRootContentEditing: false 
+    });
   }
 
   onBlur = () => {
@@ -191,7 +196,7 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible }  = this.props;
+    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
     const { replies, isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
@@ -203,6 +208,7 @@ class Note extends React.PureComponent {
       <div className={className} onClick={this.onClickNote}>
         <NoteRoot
           annotation={annotation}
+          contents={rootContents}
           searchInput={searchInput}
           renderAuthorName={this.renderAuthorName}
           renderContents={this.renderContents}
@@ -223,8 +229,8 @@ class Note extends React.PureComponent {
               renderContents={this.renderContents}
             />
           )}
-          {!isReadOnly &&
-            <div className="add-reply" onClick={e => e.stopPropagation()}>
+          {!isReadOnly && !isReplyDisabled &&
+            <div className="add-reply" data-element="noteReply" onClick={e => e.stopPropagation()}>
               <textarea
                 ref={this.replyTextarea}
                 onChange={this.onChange}
@@ -250,7 +256,8 @@ class Note extends React.PureComponent {
 const mapStateToProps = (state, ownProps) => ({
   isNoteExpanded: selectors.isNoteExpanded(state, ownProps.annotation.Id),
   isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
-  isReadOnly: selectors.isDocumentReadOnly(state)
+  isReadOnly: selectors.isDocumentReadOnly(state),
+  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply')
 });
 
 const matDispatchToProps = {

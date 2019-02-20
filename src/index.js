@@ -27,7 +27,7 @@ import setupI18n from 'helpers/setupI18n';
 import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
-import setDefaultToolColor from 'helpers/setDefaultToolColor';
+import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
 
 const middleware = [thunk];
@@ -63,8 +63,8 @@ if (window.CanvasRenderingContext2D) {
 
   window.CoreControls.enableSubzero(state.advanced.subzero);
   if (process.env.NODE_ENV === 'production') {
-    window.CoreControls.setWorkerPath('../../core');
-    window.CoreControls.setResourcesPath('../../core/assets');
+    window.CoreControls.setWorkerPath('../../core/');
+    window.CoreControls.setResourcesPath('../../core/assets/');
   }
 
   try {
@@ -113,10 +113,10 @@ if (window.CanvasRenderingContext2D) {
     setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
-    setDefaultToolColor();
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
     addEventHandlers();
+    setDefaultToolStyles();
     core.setToolMode(defaultTool);
 
     ReactDOM.render(
@@ -195,6 +195,8 @@ if (window.CanvasRenderingContext2D) {
           setLanguage: apis.setLanguage,
           setLayoutMode: apis.setLayoutMode,
           setNotesPanelSort: apis.setNotesPanelSort(store),
+          setMaxZoomLevel: apis.setMaxZoomLevel,
+          setMinZoomLevel: apis.setMinZoomLevel,
           setPrintQuality: apis.setPrintQuality(store),
           setReadOnly: apis.setReadOnly,
           setShowSideWindow: apis.setShowSideWindow(store),
@@ -205,7 +207,7 @@ if (window.CanvasRenderingContext2D) {
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store),
           loadedFromServer: false,
-          serverFailed: false
+          serverFailed: false,
         };
 
         window.ControlUtils = {

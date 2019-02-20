@@ -53,8 +53,12 @@ class TextPopup extends React.PureComponent {
   }
 
   onSelectionComplete = (e, startQuad, allQuads) => {
-    this.positionTextPopup(allQuads);
-    this.props.openElement('textPopup');
+    const { isDisabled, openElement } = this.props;
+    
+    if (!isDisabled) {
+      this.positionTextPopup(allQuads);
+      openElement('textPopup');
+    }
   }
 
   positionTextPopup = allQuads => {

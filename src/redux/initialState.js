@@ -1,9 +1,10 @@
+import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
 import { zoomIn, zoomOut } from 'helpers/zoom';
 import defaultTool from 'constants/defaultTool';
+import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
-import core from 'core';
 
 export default {
   viewer: {
@@ -155,7 +156,10 @@ export default {
     customPanels: [],
     useEmbeddedPrint: true,
     pageLabels: [],
-    noteDateFormat: 'MMM D, h:mma'
+    noteDateFormat: 'MMM D, h:mma',
+    colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
+    swipeOrientation: 'horizontal',
+    customNoteFilter: null
   },
   search: {
     listeners: [],
@@ -205,7 +209,7 @@ export default {
     configScript: getHashParams('config', ''),
     defaultDisabledElements: getHashParams('disabledElements', ''),
     externalPath: getHashParams('p', ''),
-    engineType: documentTypeParamToEngineType(getHashParams('documentType')),
+    engineType: documentTypeParamToEngineType(getHashParams('documentType'), getHashParams('pdftronServer', '')),
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
     disableWebsockets: getHashParams('disableWebsockets', false),

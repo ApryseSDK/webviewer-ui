@@ -8,7 +8,7 @@ import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
-import sortStrategies from 'constants/sortStrategies';
+import { getSortStrategies } from 'constants/sortStrategies';
 import selectors from 'selectors';
 
 import './NotesPanel.scss';
@@ -19,6 +19,7 @@ class NotesPanel extends React.PureComponent {
     display: PropTypes.string.isRequired,
     sortStrategy: PropTypes.string.isRequired,
     pageLabels: PropTypes.array.isRequired,
+    customNoteFilter: PropTypes.func,
     t: PropTypes.func.isRequired
   }
   
@@ -37,6 +38,14 @@ class NotesPanel extends React.PureComponent {
     core.addEventListener('documentUnloaded', this.onDocumentUnloaded);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.customNoteFilter !== this.props.customNoteFilter) {
+      const notesToRender = this.filterAnnotations(this.rootAnnotations, this.state.searchInput);
+      this.setVisibleNoteIds(notesToRender);
+      this.setState({ notesToRender });
+    }
   }
 
   componentWillUnmount() {
@@ -79,22 +88,31 @@ class NotesPanel extends React.PureComponent {
   }
 
   filterAnnotations = (annotations, searchInput) => {
-    if (!searchInput.trim()) {
-      return annotations;
+    const { customNoteFilter } = this.props;
+    let filteredAnnotations = annotations;
+    
+    if (customNoteFilter) {
+      filteredAnnotations = filteredAnnotations.filter(customNoteFilter);
     }
 
-    return annotations.filter(rootAnnotation => {
-      const replies = rootAnnotation.getReplies();
-      // reply is also a kind of annotation
-      // https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#createAnnotationReply__anchor
-      const annotations = [ rootAnnotation, ...replies ];
+    if (searchInput.trim()) {
+      filteredAnnotations = filteredAnnotations.filter(rootAnnotation => this.filterNoteBasedOnInput(rootAnnotation, searchInput));
+    }
 
-      return annotations.some(annotation => {
-        const content = annotation.getContents();
-        const authorName = core.getDisplayAuthor(annotation);
+    return filteredAnnotations;
+  }
 
-        return this.isInputIn(content, searchInput) || this.isInputIn(authorName, searchInput);
-      });
+  filterNoteBasedOnInput = (rootAnnotation, searchInput) => {
+    const replies = rootAnnotation.getReplies();
+    // reply is also a kind of annotation
+    // https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#createAnnotationReply__anchor
+    const annotations = [ rootAnnotation, ...replies ];
+
+    return annotations.some(annotation => {
+      const content = annotation.getContents();
+      const authorName = core.getDisplayAuthor(annotation);
+
+      return this.isInputIn(content, searchInput) || this.isInputIn(authorName, searchInput);
     });
   }
 
@@ -126,6 +144,7 @@ class NotesPanel extends React.PureComponent {
 
   renderNotesPanelContent = () => {
     const {notesToRender} = this.state;
+    const sortStrategies = getSortStrategies();
 
     return(
       <React.Fragment>
@@ -145,7 +164,7 @@ class NotesPanel extends React.PureComponent {
         return (
           <React.Fragment key={note.Id}>
             {this.renderListSeparator(notes, note)}
-            <Note visible={this.isVisibleNote(note)} annotation={note} searchInput={this.state.searchInput} />
+            <Note visible={this.isVisibleNote(note)} annotation={note} searchInput={this.state.searchInput} rootContents={note.getContents()} />
           </React.Fragment>
         );
       })
@@ -154,7 +173,7 @@ class NotesPanel extends React.PureComponent {
 
   renderListSeparator = (notes, currNote) => {
     const { sortStrategy, pageLabels } = this.props;
-    const { shouldRenderSeparator, getSeparatorContent } = sortStrategies[sortStrategy];
+    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
     const prevNote = this.getPrevNote(notes, currNote);
     const isFirstNote = prevNote === currNote;
 
@@ -164,7 +183,7 @@ class NotesPanel extends React.PureComponent {
       getSeparatorContent &&
       (isFirstNote || shouldRenderSeparator(prevNote, currNote))
     ) {
-      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, pageLabels)} />;
+      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, {pageLabels})} />;
     }
 
     return null;
@@ -188,7 +207,7 @@ class NotesPanel extends React.PureComponent {
                 placeholder={t('message.searchPlaceholder')}
                 onChange={this.handleInputChange} 
               />
-              <Dropdown items={Object.keys(sortStrategies)} />
+              <Dropdown items={Object.keys(getSortStrategies())} />
             </div>
             {this.renderNotesPanelContent()}
           </React.Fragment>
@@ -201,7 +220,8 @@ class NotesPanel extends React.PureComponent {
 const mapStatesToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
-  pageLabels: selectors.getPageLabels(state)
+  pageLabels: selectors.getPageLabels(state),
+  customNoteFilter: selectors.getCustomNoteFilter(state)
 });
 
 export default connect(mapStatesToProps)(translate()(NotesPanel));

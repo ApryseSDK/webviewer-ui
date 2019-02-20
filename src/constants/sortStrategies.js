@@ -11,11 +11,11 @@ const sortStrategies = {
       return a.PageNumber - b.PageNumber;
     }),
     shouldRenderSeparator: (prevNote, currNote) => currNote.PageNumber !== prevNote.PageNumber,
-    getSeparatorContent: (prevNote, currNote, pageLabels) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`
+    getSeparatorContent: (prevNote, currNote, { pageLabels }) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`
   },
   time: {
     getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
-    shouldRenderSeparator: (prevNote, currNote) => getLatestActivityDate(prevNote).getDate() !== getLatestActivityDate(currNote).getDate(),
+    shouldRenderSeparator: (prevNote, currNote) => dayjs(getLatestActivityDate(prevNote)).format('MMM D, YYYY') !== dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY'),
     getSeparatorContent: (prevNote, currNote) => {
       const today = dayjs(new Date()).format('MMM D, YYYY');
       const yesterday = dayjs(new Date(new Date() - 86400000)).format('MMM D, YYYY');
@@ -32,4 +32,14 @@ const sortStrategies = {
   }
 };
 
-export default sortStrategies;
+export const getSortStrategies = () => sortStrategies;
+
+export const addSortStrategy = newStrategy => {
+  const { name, getSortedNotes, shouldRenderSeparator, getSeparatorContent } = newStrategy;
+
+  sortStrategies[name] = {
+    getSortedNotes,
+    shouldRenderSeparator,
+    getSeparatorContent
+  };
+};
