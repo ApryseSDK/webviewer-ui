@@ -15,7 +15,12 @@
     "fitToWidth": "Zoomen naar vensterbreedte",
     "openFile": "Open bestand",
     "print": "Printen",
+    "ok": "OK",
     "reply": "Antwoorden",
+    "apply": "Toepassen",
+    "applyRedaction": "Redactie toepassen",
+    "markForRedaction": "Markeren voor redactie",
+    "applyAllRedaction": "Alle redactie toepassen",
     "rotate": "Roteren",
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
@@ -63,6 +68,8 @@
     "textToolsButton": "Tekst tools",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
+    "redactToolsButton": "Redactie",
+    "redactOverlay": "Redactie",
     "viewControlsOverlay": "Scherm opties",
     "minimizeButton": "Document normaal weergeven"
   },
@@ -85,7 +92,9 @@
     "searching": "Zoeken...",
     "searchPlaceholder": "Zoek opmerkingen...",
     "signHere": "Teken hier",
-    "insertTextHere": "Vul hier tekst in"
+    "insertTextHere": "Vul hier tekst in",
+    "applyRedactionWarningMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
+    "applyRedactionWarningTitle": "Redactie toepassen?"
   },
   "option": {
     "annotationColor": {

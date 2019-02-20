@@ -20,6 +20,7 @@ class WarningModal extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
 
+    confirmBtnText: PropTypes.string,
     title: PropTypes.string,
     message: PropTypes.string,
     onConfirm: PropTypes.func,
@@ -64,7 +65,7 @@ class WarningModal extends React.PureComponent {
     }
 
     const className = getClassName('Modal WarningModal', this.props);
-    const label = confirmBtnText || "Ok";
+    const label = confirmBtnText || i18next.t('action.ok');
 
     const cancelBtnText = i18next.t('action.cancel');
 
@@ -84,7 +85,7 @@ class WarningModal extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-    title: selectors.getWarningTitle(state) ||  "",
+    title: selectors.getWarningTitle(state) ||  '',
     message: selectors.getWarningMessage(state),
     onConfirm: selectors.getWarningConfirmEvent(state),
     confirmBtnText: selectors.getWarningConfirmBtnText(state),

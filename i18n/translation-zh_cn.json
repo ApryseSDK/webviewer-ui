@@ -15,7 +15,12 @@
     "fitToWidth": "自身尺寸", 
     "openFile": "打开文件",
     "print": "打印",
+    "ok": "OK",
     "reply": "回复",
+    "apply": "Apply",
+    "applyRedaction": "應用編輯",
+    "markForRedaction": "标记为密文",
+    "applyAllRedaction": "應用所有編輯",
     "rotate": "旋转",
     "rotateClockwise": "顺时针",
     "rotateCounterClockwise": "逆时针",
@@ -63,6 +68,8 @@
     "textToolsButton": "文本工具",
     "thumbnailsPanel": "缩略图",
     "toolsButton": "工具",
+    "redactToolsButton": "标记密文",
+    "redactOverlay": "标记密文",
     "viewControlsOverlay": "调整浏览方式"
   },
   "message": {
@@ -84,7 +91,9 @@
     "searching": "正在搜索…",
     "searchPlaceholder": "在此处搜索注释…",
     "signHere": "在此处签名",
-    "insertTextHere": "在这里插入文字"
+    "insertTextHere": "在这里插入文字",
+    "applyRedactionWarningMessage": "此操作將永久刪除為編校選擇的所有項目。它無法撤消",
+    "applyRedactionWarningTitle": "應用編輯"
   },
   "option": {
     "annotationColor": {

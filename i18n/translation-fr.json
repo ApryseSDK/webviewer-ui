@@ -15,7 +15,12 @@
     "fitToWidth": "Fit à la largeur",
     "openFile": "Ouvrir un fichier",
     "print": "Imprimer",
+    "ok": "OK",
     "reply": "Répondre",
+    "apply": "Appliquer",
+    "applyRedaction": "Appliquer les biffures",
+    "markForRedaction": "Repérer les biffures",
+    "applyAllRedaction": "Appliquer toute les biffures",
     "rotate": "Tourner",
     "rotateClockwise": "Tourner horaire",
     "rotateCounterClockwise": "Tourner antihoraire",
@@ -63,6 +68,8 @@
     "textToolsButton": "Outils de texte",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
+    "redactToolsButton": "Biffure",
+    "redactOverlay": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage"
   },
   "message": {
@@ -84,7 +91,9 @@
     "searching": "Recherche...",
     "searchPlaceholder": "Rechercher des commentaires ici...",
     "signHere": "Signer ici",
-    "insertTextHere": "Insérer du texte ici"
+    "insertTextHere": "Insérer du texte ici",
+    "applyRedactionWarningMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",
+    "applyRedactionWarningTitle": "Appliquer les Biffures?"
   },
   "option": {
     "annotationColor": {
