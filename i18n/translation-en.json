@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "Apply",
+    "applyAll": "Apply all",
     "cancel": "Cancel",
     "clear": "Clear",
     "close": "Close",
@@ -17,10 +19,6 @@
     "print": "Print",
     "ok": "OK",
     "reply": "Reply",
-    "apply": "Apply",
-    "applyRedaction": "Apply Redaction",
-    "markForRedaction": "Mark for Redaction",
-    "applyAllRedaction": "Apply All Redaction",
     "rotate": "Rotate",
     "rotateClockwise": "Clockwise",
     "rotateCounterClockwise": "Counter-clockwise",
@@ -48,6 +46,7 @@
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
     "rectangle": "Rectangle",
+    "redaction": "Redaction",
     "signature": "Signature",
     "squiggly": "Squiggly",
     "stamp": "Stamp",
@@ -68,8 +67,6 @@
     "textToolsButton": "Text tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
-    "redactToolsButton": "Redact",
-    "redactOverlay": "Redact",
     "viewControlsOverlay": "View controls"
   },
   "message": {
@@ -91,9 +88,7 @@
     "searching": "Searching...",
     "searchPlaceholder": "Search comments...",
     "signHere": "Sign Here",
-    "insertTextHere": "Insert text here",
-    "applyRedactionWarningMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
-    "applyRedactionWarningTitle": "Apply Redaction?"
+    "insertTextHere": "Insert text here"
   },
   "option": {
     "annotationColor": {
@@ -127,6 +122,11 @@
       "current": "Current",
       "pages": "Pages",
       "includeComments": "Include comments"
+    },
+    "redaction": {
+      "markForRedaction": "Mark for redaction",
+      "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
+      "warningPopupTitle": "Apply Redaction?"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",

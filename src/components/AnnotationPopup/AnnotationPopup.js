@@ -23,6 +23,7 @@ class AnnotationPopup extends React.PureComponent {
     isLeftPanelOpen: PropTypes.bool,
     isRightPanelOpen: PropTypes.bool,
     isAnnotationStylePopupDisabled: PropTypes.bool,
+    applyRedactions: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setIsNoteEditing: PropTypes.func.isRequired,
@@ -190,7 +191,7 @@ class AnnotationPopup extends React.PureComponent {
               <ActionButton dataElement="annotationStyleEditButton" title="action.style" img="ic_palette_black_24px" onClick={this.openStylePopup} />
             }
             {redactionEnabled &&
-              <ActionButton dataElement="annotationRedactButton" title="action.applyRedaction" img="ic_check_black_24px" onClick={this.redactAnnotation} />
+              <ActionButton dataElement="annotationRedactButton" title="action.apply" img="ic_check_black_24px" onClick={this.redactAnnotation} />
             }
             {canModify &&
               <ActionButton dataElement="annotationDeleteButton" title="action.delete" img="ic_delete_black_24px" onClick={this.deleteAnnotation} />

@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "Appliquer",
+    "applyAll": "Appliquer toute",
     "cancel": "Annuler",
     "clear": "Effacer",
     "close": "Fermer",
@@ -17,10 +19,6 @@
     "print": "Imprimer",
     "ok": "OK",
     "reply": "Répondre",
-    "apply": "Appliquer",
-    "applyRedaction": "Appliquer les biffures",
-    "markForRedaction": "Repérer les biffures",
-    "applyAllRedaction": "Appliquer toute les biffures",
     "rotate": "Tourner",
     "rotateClockwise": "Tourner horaire",
     "rotateCounterClockwise": "Tourner antihoraire",
@@ -48,6 +46,7 @@
     "polygonCloud": "Nuage",
     "polyline": "Ligne polygonale",
     "rectangle": "Rectangle",
+    "redaction": "Biffure",
     "signature": "Signature",
     "squiggly": "Ligne ondulée",
     "stamp": "Timbre",
@@ -68,8 +67,6 @@
     "textToolsButton": "Outils de texte",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
-    "redactToolsButton": "Biffure",
-    "redactOverlay": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage"
   },
   "message": {
@@ -91,9 +88,7 @@
     "searching": "Recherche...",
     "searchPlaceholder": "Rechercher des commentaires ici...",
     "signHere": "Signer ici",
-    "insertTextHere": "Insérer du texte ici",
-    "applyRedactionWarningMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",
-    "applyRedactionWarningTitle": "Appliquer les Biffures?"
+    "insertTextHere": "Insérer du texte ici"
   },
   "option": {
     "annotationColor": {
@@ -127,6 +122,11 @@
       "current": "Actuelle",
       "pages": "Pages",
       "includeComments": "Inclure les commentaires"
+    },
+    "redaction": {
+      "markForRedaction": "Repérer les biffures",
+      "warningPopupMessage":  "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",
+      "warningPopupTitle": "Appliquer les Biffures?"
     },
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",

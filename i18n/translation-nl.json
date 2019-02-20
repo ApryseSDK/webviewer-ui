@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "Toepassen",
+    "applyAll": "Alles toepassen",
     "cancel": "Annuleren",
     "clear": "Legen",
     "close": "Sluiten",
@@ -17,10 +19,6 @@
     "print": "Printen",
     "ok": "OK",
     "reply": "Antwoorden",
-    "apply": "Toepassen",
-    "applyRedaction": "Redactie toepassen",
-    "markForRedaction": "Markeren voor redactie",
-    "applyAllRedaction": "Alle redactie toepassen",
     "rotate": "Roteren",
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
@@ -47,6 +45,7 @@
     "polygon": "Veelhoek",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
+    "redaction": "Redigeren",
     "rectangle": "Rechthoek",
     "signature": "Handtekening",
     "squiggly": "Squiggly",
@@ -68,8 +67,6 @@
     "textToolsButton": "Tekst tools",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
-    "redactToolsButton": "Redactie",
-    "redactOverlay": "Redactie",
     "viewControlsOverlay": "Scherm opties",
     "minimizeButton": "Document normaal weergeven"
   },
@@ -92,9 +89,7 @@
     "searching": "Zoeken...",
     "searchPlaceholder": "Zoek opmerkingen...",
     "signHere": "Teken hier",
-    "insertTextHere": "Vul hier tekst in",
-    "applyRedactionWarningMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
-    "applyRedactionWarningTitle": "Redactie toepassen?"
+    "insertTextHere": "Vul hier tekst in"
   },
   "option": {
     "annotationColor": {
@@ -128,6 +123,11 @@
       "current": "Huidige",
       "pages": "Pagina's",
       "includeComments": "Inclusief commentaar"
+    },
+    "redaction": {
+      "markForRedaction": "Markeren voor redactie",
+      "warningPopupMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
+      "warningPopupTitle": "Redactiewijziging Toepassen?"
     },
     "searchPanel": {
       "caseSensitive": "Hoofdletter gev..",
