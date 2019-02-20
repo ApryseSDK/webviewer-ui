@@ -150,11 +150,10 @@ const calcPopupTop = ({ topLeft, bottomRight } , { height }, topThreshold) => {
   const { scrollTop, clientHeight } = core.getScrollViewElement();
   const topGap = 10;
   const bottomGap = 17;
-  console.log(core.getScrollViewElement().clientHeight);
-  // console.log(window.docViewer.getPageHeight(0));
   let top = topLeft.y - scrollTop - topGap;
   let bottom = bottomRight.y;
-   const annotationHeight = bottomRight.y - top;
+  const annotationHeight = bottomRight.y - top;
+  
   if (top >= topThreshold) {
     top -= height;
   } else if (bottom - scrollTop > clientHeight - topThreshold + 60){
