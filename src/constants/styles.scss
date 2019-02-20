@@ -7,6 +7,8 @@ $icon-height: 24px;
 $panel-width: 300px;
 $right-panel-width: $panel-width;
 $left-panel-width: $panel-width;
+$left-panel-width: var(--left-panel-width);
+
 
 // Mobile dimensions
 $top-bar-height-m: 42px;
