@@ -25,7 +25,6 @@ const deleteReplies = annotations => {
 };
 
 const applyStylesToAllSignatureAnnotations = styles => {
-  // TODO: default signatures are also getting applied somehow which is undesired.
   const signatureAnnotations = core.getAnnotationsList().filter(isSignatureAnnotation);
   
   // we are not using core.setAnnotationStyles to set signature annotation's styles 

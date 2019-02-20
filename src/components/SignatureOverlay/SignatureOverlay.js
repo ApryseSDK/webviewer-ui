@@ -9,6 +9,7 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
+import { mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -31,6 +32,7 @@ class SignatureOverlay extends React.PureComponent {
     this.overlay = React.createRef();
     this.MAX_DEFAULT_SIGNATURES = 2;
     this.currentSignatureIndex = -1;
+    this.imgRefs = [];
     this.state = {
       defaultSignatures: [],
       left: 0,
@@ -40,6 +42,7 @@ class SignatureOverlay extends React.PureComponent {
 
   componentDidMount() {
     this.signatureTool.on('saveDefault', this.onSaveDefault);
+    core.addEventListener('annotationChanged', this.onAnnotationChanged);
   }
 
   componentDidUpdate(prevProps) {
@@ -51,6 +54,7 @@ class SignatureOverlay extends React.PureComponent {
 
   componentWillUnmount() {
     this.signatureTool.off('saveDefault', this.onSaveDefault);
+    core.removeEventListener('annotationChanged', this.onAnnotationChanged);
   }
 
   onSaveDefault = (e, paths, signatureAnnotation) => {
@@ -68,6 +72,30 @@ class SignatureOverlay extends React.PureComponent {
     defaultSignatures.push(savedSignature);
 
     this.setState({ defaultSignatures });
+  }
+
+  onAnnotationChanged = (e, annotations, action) => {
+    if (
+      action === 'modify' &&
+      annotations.length === 1 && 
+      mapAnnotationToKey(annotations[0]) === 'signature'
+    ) {
+      const newStyles = getAnnotationStyles(annotations[0]);
+      const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ paths }) => {
+        
+        // Annotations.MarkupAnnotation.prototype.setStyles()
+        this.signatureTool.setUpSignature(paths, newStyles);
+        this.signatureTool.drawAnnot();
+
+        return {
+          imgSrc: document.querySelector('.signature-canvas').toDataURL(),
+          paths,
+          styles: newStyles
+        };
+      });
+
+      this.setState({ defaultSignatures: defaultSignaturesWithNewStyles });
+    }
   }
 
   setUpSignature = index => {
@@ -131,7 +159,7 @@ class SignatureOverlay extends React.PureComponent {
           {defaultSignatures.map(({ imgSrc }, index) => (
             <div className="default-signature" key={index}>
               <div className="signature-image" onClick={() => this.setUpSignature(index)}>
-                <img src={imgSrc} />
+                <img ref={ref => this.imgRefs.push(ref)} src={imgSrc} />
               </div>
               <ActionButton dataElement="defaultSignatureDeleteButton" img="ic_delete_black_24px" onClick={() => this.deleteDefaultSignature(index)} />
             </div>

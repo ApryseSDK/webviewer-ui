@@ -55,7 +55,7 @@ class App extends React.PureComponent {
       'viewControlsOverlay',
       'menuOverlay',
       'zoomOverlay',
-      'signatureOverlay',
+      // 'signatureOverlay',
       this.props.isSearchPanelOpen ? '' : 'searchOverlay'
     ].filter(element => element);
 
