@@ -1,4 +1,5 @@
 import core from 'core';
+import getPageHeight from 'core/getPageHeight';
 
 export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
   const { left, top } = calcAnnotationPopupPosition(getAnnotationPosition(annotation), getPopupDimensions(popup));
@@ -146,17 +147,18 @@ const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
 };
 
 const calcPopupTop = ({ topLeft, bottomRight } , { height }, topThreshold) => {
-  const { scrollTop } = core.getScrollViewElement();
+  const { scrollTop, clientHeight } = core.getScrollViewElement();
   const topGap = 10;
   const bottomGap = 17;
- 
+  console.log(core.getScrollViewElement().clientHeight);
+  // console.log(window.docViewer.getPageHeight(0));
   let top = topLeft.y - scrollTop - topGap;
   let bottom = bottomRight.y;
    const annotationHeight = bottomRight.y - top;
   if (top >= topThreshold) {
     top -= height;
-  } else if (bottom - scrollTop > 650){
-    top = top + annotationHeight/2 -126;
+  } else if (bottom - scrollTop > clientHeight - topThreshold + 60){
+    top = top + annotationHeight / 2 - 126;
   } else {
     top = bottomRight.y - scrollTop + bottomGap;
   }
