@@ -63,8 +63,11 @@ class SignatureModal extends React.PureComponent {
     canvas.addEventListener('mouseup', this.handleFinishDrawing);
   }
 
-  handleFinishDrawing = () => {
-    if (!this.signatureTool.isEmptySignature()) {
+  handleFinishDrawing = e => {
+    if (
+      e.target === e.currentTarget && 
+      !this.signatureTool.isEmptySignature()
+    ) {
       this.setState({
         canClear: true,
         saveSignature: true
@@ -92,16 +95,18 @@ class SignatureModal extends React.PureComponent {
   createSignature = () => {
     const { closeElement, openElement, setCursorOverlayImage } = this.props;
     
-    if (this.state.saveSignature) {
-      this.signatureTool.saveDefaultSignature();
+    if (!this.signatureTool.isEmptySignature()) {
+      if (this.state.saveSignature) {
+        this.signatureTool.saveDefaultSignature();
+      }
+      if (this.signatureTool.hasLocation()) {
+        this.signatureTool.addSignature();
+      } else {
+        setCursorOverlayImage(this.canvas.current.toDataURL());
+        openElement('cursorOverlay');
+      }
+      closeElement('signatureModal');
     }
-    if (this.signatureTool.hasLocation()) {
-      this.signatureTool.addSignature();
-    } else if (!this.signatureTool.isEmptySignature()) {
-      setCursorOverlayImage(this.canvas.current.toDataURL());
-      openElement('cursorOverlay');
-    }
-    closeElement('signatureModal');
   }
 
   render() {

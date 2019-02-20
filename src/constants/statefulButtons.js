@@ -49,9 +49,6 @@ export default {
       });
     },
     didUpdate: (prevProps, currProps, prevState, currState, update) => {
-      if(!prevProps.isOpen && currProps.isOpen) {
-        currState.onClick(update, currState, currProps.dispatch);
-      }
       if(prevProps.openElements !== currProps.openElements) {
         update();
       }
@@ -68,7 +65,9 @@ export default {
           dispatch(actions.openElement('signatureModal'));
         },
         title: 'annotation.signature',
-        isActive: ({ openElements }) => openElements.signatureModal
+        // we also consider if signatureOverlay is open in this state because there can be a case where all the default signatures are deleted
+        // when signatureOverlay is open and this button's state will become "newSignature" 
+        isActive: ({ openElements }) => openElements.signatureModal || openElements.signatureOverlay
       },
       defaultSignature: {
         img: 'ic_annotation_signature_black_24px',
