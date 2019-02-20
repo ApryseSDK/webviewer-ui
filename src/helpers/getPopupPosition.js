@@ -149,15 +149,17 @@ const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
 const calcPopupTop = ({ topLeft, bottomRight } , { height }, topThreshold) => {
   const { scrollTop, clientHeight } = core.getScrollViewElement();
   const topGap = 10;
+  const stylePopupHeight = 252;
   const bottomGap = 17;
+  const bottomThreshold = topThreshold - 60;
   let top = topLeft.y - scrollTop - topGap;
   let bottom = bottomRight.y;
   const annotationHeight = bottomRight.y - top;
-  
+
   if (top >= topThreshold) {
     top -= height;
-  } else if (bottom - scrollTop > clientHeight - topThreshold + 60){
-    top = top + annotationHeight / 2 - 126;
+  } else if (bottom - scrollTop > clientHeight - bottomThreshold){
+    top = top + (annotationHeight - stylePopupHeight) / 2;
   } else {
     top = bottomRight.y - scrollTop + bottomGap;
   }
