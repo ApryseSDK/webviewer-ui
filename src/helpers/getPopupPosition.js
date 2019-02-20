@@ -155,7 +155,7 @@ const calcPopupTop = ({ topLeft, bottomRight } , { height }, topThreshold) => {
    const annotationHeight = bottomRight.y - top;
   if (top >= topThreshold) {
     top -= height;
-  } else if (bottom > 650){
+  } else if (bottom - scrollTop > 650){
     top = top + annotationHeight/2 -126;
   } else {
     top = bottomRight.y - scrollTop + bottomGap;
