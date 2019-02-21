@@ -9,6 +9,7 @@ import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyle from 'helpers/getAnnotationStyle';
 import getClassName from 'helpers/getClassName';
+import applyRedactions from 'helpers/applyRedactions';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -22,10 +23,12 @@ class AnnotationPopup extends React.PureComponent {
     isLeftPanelOpen: PropTypes.bool,
     isRightPanelOpen: PropTypes.bool,
     isAnnotationStylePopupDisabled: PropTypes.bool,
+    applyRedactions: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setIsNoteEditing: PropTypes.func.isRequired,
-    setActiveLeftPanel: PropTypes.func.isRequired
+    setActiveLeftPanel: PropTypes.func.isRequired,
+    serverURL: PropTypes.string
   }
 
   constructor() {
@@ -160,13 +163,18 @@ class AnnotationPopup extends React.PureComponent {
     this.props.closeElement('annotationPopup');
   }
 
+  redactAnnotation = () => {
+    this.props.applyRedactions(this.state.annotation);
+    this.props.closeElement('annotationPopup');
+  }
+
   render() {
     const { annotation, left, top, canModify, isStylePopupOpen } = this.state;
     const { isNotesPanelDisabled, isDisabled, isOpen, isAnnotationStylePopupDisabled } = this.props;
     const style = getAnnotationStyle(annotation);
     const hasStyle = Object.keys(style).length > 0;
     const className = getClassName(`Popup AnnotationPopup`, this.props);
-
+    const redactionEnabled = core.isAnnotationRedactable(annotation);
     if (isDisabled) {
       return null;
     }
@@ -181,6 +189,9 @@ class AnnotationPopup extends React.PureComponent {
             }
             {canModify && hasStyle && !isAnnotationStylePopupDisabled &&
               <ActionButton dataElement="annotationStyleEditButton" title="action.style" img="ic_palette_black_24px" onClick={this.openStylePopup} />
+            }
+            {redactionEnabled &&
+              <ActionButton dataElement="annotationRedactButton" title="action.apply" img="ic_check_black_24px" onClick={this.redactAnnotation} />
             }
             {canModify &&
               <ActionButton dataElement="annotationDeleteButton" title="action.delete" img="ic_delete_black_24px" onClick={this.deleteAnnotation} />
@@ -199,9 +210,11 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'annotationPopup'),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  serverURL: selectors.getServerUrl(state),
 });
 
 const mapDispatchToProps = {
+  applyRedactions,
   openElement: actions.openElement,
   closeElement: actions.closeElement,
   setIsNoteEditing: actions.setIsNoteEditing,

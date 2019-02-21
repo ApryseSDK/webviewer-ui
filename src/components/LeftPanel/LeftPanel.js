@@ -27,13 +27,17 @@ class LeftPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 'isSliderActive':false };
+    this.state = { 'isSliderActive': false };
     this.sliderRef = React.createRef();
   }
 
+
   componentDidMount(){
     document.body.style.setProperty('--left-panel-width', '300px');
+    his.sliderRef.current.onmousemove = this.dragMouseMove;
+    this.sliderRef.current.onmouseup = this.closeDrag;
   }
+
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
       this.props.closeElement('searchPanel');
@@ -48,8 +52,6 @@ class LeftPanel extends React.Component {
     this.setState({
       isSliderActive: true
     });
-    this.sliderRef.current.onmousemove = this.dragMouseMove;
-    this.sliderRef.current.onmouseup = this.closeDrag;
   }
 
   dragMouseMove = e => {

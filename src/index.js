@@ -203,6 +203,7 @@ if (window.CanvasRenderingContext2D) {
           setSideWindowVisibility: apis.setSideWindowVisibility(store),
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
+          showWarningMessage: apis.showWarningMessage(store),
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store),

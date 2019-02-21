@@ -18,6 +18,7 @@ class StylePopup extends React.PureComponent {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
+    hideSlider: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
   }
@@ -25,11 +26,24 @@ class StylePopup extends React.PureComponent {
   constructor(props){
     super(props);
     this.state = { openMeasurementDropdown: -1 };
+    this.state = this.getInitialState();
   }
 
   onOpenDropdownChange = dropdown => {
     this.setState({ openMeasurementDropdown: dropdown });
   };
+
+  getInitialState = () => {
+    const {  TextColor, StrokeColor, FillColor } = this.props.style;
+
+    return { 
+      colorPalette: TextColor ? 'text' : StrokeColor ? 'border' : FillColor ? 'fill' : ''
+    };
+  }
+
+  handleHeaderChange = colorPalette => {
+    this.setState({ colorPalette });
+  }
 
   renderColorPalette = () => {
     const { style, onStyleChange, currentPalette } = this.props;
@@ -100,7 +114,7 @@ class StylePopup extends React.PureComponent {
         }
         <div className="sliders-container" onMouseDown={e => e.preventDefault()} onClick={()=>{this.onOpenDropdownChange(-1)}}>
           <div className="sliders">
-            {this.renderSliders()}
+            {!this.props.hideSlider && this.renderSliders()}
           </div>
         </div>
         {isMeasurement && style.measure &&
