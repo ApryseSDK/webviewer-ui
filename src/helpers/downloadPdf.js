@@ -4,7 +4,9 @@ import core from 'core';
 import { isIE } from 'helpers/device';
 import actions from 'actions';
 
-export default (dispatch, documentPath = 'document', filename, includeAnnotations = true, xfdfData) => {
+export default (dispatch, options) => {
+  const { documentPath = 'document', filename, includeAnnotations = true, xfdfData, externalURL } = options;
+
   return new Promise(resolve => {
     const downloadOptions = { downloadType: 'pdf' };
     let file;
@@ -30,9 +32,10 @@ export default (dispatch, documentPath = 'document', filename, includeAnnotation
       const downloadName = getDownloadFilename(name, '.pdf');
 
       const doc = core.getDocument();
-      const bbURLPromise = doc.getDownloadLink({ filename: downloadName });
+      const bbURLPromise = externalURL ? Promise.resolve({ url: externalURL }) : doc.getDownloadLink({ filename: downloadName });
+      
       if (bbURLPromise) {
-        const downloadIframe = document.getElementById('download-iframe') || document.createElement('iframe');
+      const downloadIframe = document.getElementById('download-iframe') || document.createElement('iframe');
         downloadIframe.width = 0;
         downloadIframe.height = 0;
         downloadIframe.id = 'download-iframe';

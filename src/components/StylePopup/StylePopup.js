@@ -16,8 +16,26 @@ class StylePopup extends React.PureComponent {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
+    hideSlider: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = this.getInitialState();
+  }
+
+  getInitialState = () => {
+    const {  TextColor, StrokeColor, FillColor } = this.props.style;
+
+    return { 
+      colorPalette: TextColor ? 'text' : StrokeColor ? 'border' : FillColor ? 'fill' : ''
+    };
+  }
+
+  handleHeaderChange = colorPalette => {
+    this.setState({ colorPalette });
   }
 
   renderColorPalette = () => {
@@ -88,7 +106,7 @@ class StylePopup extends React.PureComponent {
         }
         <div className="sliders-container" onMouseDown={e => e.preventDefault()}>
           <div className="sliders">
-            {this.renderSliders()}
+            {!this.props.hideSlider && this.renderSliders()}
           </div>
         </div>
       </div>

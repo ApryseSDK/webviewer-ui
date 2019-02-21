@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "Apply",
+    "applyAll": "Apply all",
     "cancel": "Cancel",
     "clear": "Clear",
     "close": "Close",
@@ -15,6 +17,7 @@
     "fitToWidth": "Fit to width",
     "openFile": "Open file",
     "print": "Print",
+    "ok": "OK",
     "reply": "Reply",
     "rotate": "Rotate",
     "rotateClockwise": "Clockwise",
@@ -43,6 +46,7 @@
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
     "rectangle": "Rectangle",
+    "redaction": "Redaction",
     "signature": "Signature",
     "squiggly": "Squiggly",
     "stamp": "Stamp",
@@ -118,6 +122,11 @@
       "current": "Current",
       "pages": "Pages",
       "includeComments": "Include comments"
+    },
+    "redaction": {
+      "markForRedaction": "Mark for redaction",
+      "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
+      "warningPopupTitle": "Apply Redaction?"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",

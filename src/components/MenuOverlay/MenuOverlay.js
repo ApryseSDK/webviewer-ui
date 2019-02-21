@@ -43,7 +43,7 @@ class MenuOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
+      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup', 'redactionOverlay']);
       this.setState(getOverlayPositionBasedOn('menuButton', this.overlay));
     }
   }
@@ -57,7 +57,10 @@ class MenuOverlay extends React.PureComponent {
   downloadDocument = () => {
     const { dispatch, documentPath, documentFilename } = this.props;
 
-    downloadPdf(dispatch, documentPath, documentFilename);
+    downloadPdf(dispatch, {
+      documentPath,
+      filename: documentFilename
+    });
   }
 
   render() {

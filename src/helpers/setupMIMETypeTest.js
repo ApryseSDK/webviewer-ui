@@ -15,7 +15,7 @@ export default store => {
     if (src.endsWith('nmf')) {
       testMIMEType(['nmf'])
         .then(() => {
-          // when the server has correct setup for MIME type but SimpleWorker.nmf is missing 
+          // when the server has correct setup for MIME type but SimpleWorker.nmf is missing
           // we don't want to fire error since in this case we will fallback to use other worker files and can still load the document successfully
           if (src.indexOf('SimpleWorker.nmf') === -1) {
             errorMissingWorkerFiles(docExtension);
@@ -57,7 +57,7 @@ export default store => {
 const testMIMEType = fileExtensions => {
   const fetchingTestFiles = fileExtensions.map(extension => {
     return new Promise((resolve, reject) => {
-      const URL = `${window.CoreControls.getWorkerPath()}/assets/mime-types/test.${extension}`;
+      const URL = `${window.CoreControls.getWorkerPath()}assets/mime-types/test.${extension}`;
 
       fetch(URL).then(({ status }) => {
         if (status === 404) {
