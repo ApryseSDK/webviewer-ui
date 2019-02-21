@@ -34,7 +34,7 @@ class LeftPanel extends React.Component {
 
   componentDidMount(){
     document.body.style.setProperty('--left-panel-width', '300px');
-    his.sliderRef.current.onmousemove = this.dragMouseMove;
+    this.sliderRef.current.onmousemove = this.dragMouseMove;
     this.sliderRef.current.onmouseup = this.closeDrag;
   }
 
