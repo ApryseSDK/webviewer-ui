@@ -9,6 +9,7 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
+import deepCopyPaths from 'helpers/deepCopyPaths';
 import { mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -32,7 +33,6 @@ class SignatureOverlay extends React.PureComponent {
     this.overlay = React.createRef();
     this.MAX_DEFAULT_SIGNATURES = 2;
     this.currentSignatureIndex = -1;
-    this.imgRefs = [];
     this.state = {
       defaultSignatures: [],
       left: 0,
@@ -66,29 +66,13 @@ class SignatureOverlay extends React.PureComponent {
     const signatureCanvas = document.querySelector('.signature-canvas');
     const savedSignature = {
       imgSrc: signatureCanvas.toDataURL(),
-      // paths: $.extend(true, [], paths),
-      paths: this.deepCopyPaths(paths),
+      paths: deepCopyPaths(paths),
       styles: getAnnotationStyles(signatureAnnotation)
     };
     defaultSignatures.push(savedSignature);
 
     this.setState({ defaultSignatures });
   }
-
-  deepCopyPaths = paths => {
-    const newPaths = [];
-    for (let h = 0; h < paths.length; h++) {
-      newPaths.push([]);
-    }
-
-    for (let h = 0; h < paths.length; h++) {
-      for (let i = 0; i < paths[h].length; i++) {
-        newPaths[h][i] = new Annotations.Point(paths[h][i]['x'], paths[h][i]['y']);
-      }
-    }
-
-    return newPaths;
-  } 
 
   onAnnotationChanged = (e, annotations, action) => {
     if (
@@ -119,14 +103,16 @@ class SignatureOverlay extends React.PureComponent {
     const { imgSrc, paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
     
     core.setToolMode('AnnotationCreateSignature');
+    this.signatureTool.initAnnot();
     this.signatureTool.setUpSignature(paths, styles);
+    closeElement('signatureOverlay');
+
     if (this.signatureTool.hasLocation()) {
       this.signatureTool.addSignature();
     } else {
       openElement('cursorOverlay');
       setCursorOverlayImage(imgSrc);
     }
-    closeElement('signatureOverlay');
   }
 
   deleteDefaultSignature = index => {
@@ -173,13 +159,13 @@ class SignatureOverlay extends React.PureComponent {
           {defaultSignatures.map(({ imgSrc }, index) => (
             <div className="default-signature" key={index}>
               <div className="signature-image" onClick={() => this.setUpSignature(index)}>
-                <img ref={ref => this.imgRefs.push(ref)} src={imgSrc} />
+                <img src={imgSrc} />
               </div>
               <ActionButton dataElement="defaultSignatureDeleteButton" img="ic_delete_black_24px" onClick={() => this.deleteDefaultSignature(index)} />
             </div>
           ))}
           <div 
-            className={`add-signature${defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES ? ' disabled' : ''}`} 
+            className={`add-signature${defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES ? ' disabled' : ' enabled'}`} 
             onClick={this.openSignatureModal}
           >
             {t('option.signatureOverlay.addSignature')}

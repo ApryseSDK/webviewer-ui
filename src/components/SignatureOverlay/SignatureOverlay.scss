@@ -62,7 +62,7 @@
       cursor: default;
     }
 
-    &:hover {
+    &.enabled:hover {
       background: #17324C;
       border: 1px solid #17324C;
       color: #FFFFFF;
