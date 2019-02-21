@@ -70,6 +70,7 @@ export const closeElements = dataElements => dispatch => {
     });
   }
 };
+
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
@@ -123,5 +124,10 @@ export const setPageLabels = pageLabels => dispatch => {
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };
 export const setSwipeOrientation = swipeOrientation => ({ type: 'SET_SWIPE_ORIENTATION', payload: { swipeOrientation } });
+
+export const showWarningMessage = (options) => (dispatch) => {
+  dispatch({ type: 'SET_WARNING_MESSAGE', payload: options });
+  dispatch(openElement('warningModal'));
+};
 export const setCustomNoteFilter = filterFunc => ({ type: 'SET_CUSTOM_NOTE_FILTER', payload: { customNoteFilter: filterFunc } });
   

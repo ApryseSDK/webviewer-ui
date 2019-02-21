@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "申請",
+    "applyAll": "全部申請",
     "cancel": "取消",
     "clear": "清除",
     "close": "关闭",
@@ -12,9 +14,10 @@
     "exitFullscreen": "退出全屏",
     "fit": "文档尺寸",
     "fitToPage": "页面尺寸",
-    "fitToWidth": "自身尺寸", 
+    "fitToWidth": "自身尺寸",
     "openFile": "打开文件",
     "print": "打印",
+    "ok": "OK",
     "reply": "回复",
     "rotate": "旋转",
     "rotateClockwise": "顺时针",
@@ -43,6 +46,7 @@
     "polygonCloud": "云",
     "polyline": "折线",
     "rectangle": "矩形",
+    "redaction": "标记密文",
     "signature": "签名",
     "squiggly": "曲线",
     "stamp": "盖章",
@@ -118,6 +122,11 @@
       "current": "当前",
       "pages": "页数",
       "includeComments": "包括评论"
+    },
+    "redaction": {
+      "markForRedaction":  "标记为密文",
+      "warningPopupMessage": "此操作將永久刪除為編校選擇的所有項目。它無法撤消",
+      "warningPopupTitle":  "應用編輯?"
     },
     "searchPanel": {
       "caseSensitive": "区分大小写",

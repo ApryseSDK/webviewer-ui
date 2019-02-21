@@ -39,6 +39,7 @@ class TextPopup extends React.PureComponent {
     this.underlineText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextUnderlineAnnotation);
     this.squigglyText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextSquigglyAnnotation);
     this.strikeoutText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextStrikeoutAnnotation);
+    this.redactText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.RedactionAnnotation);
     core.getTool('TextSelect').on('selectionComplete', this.onSelectionComplete);
   }
 
@@ -79,7 +80,8 @@ class TextPopup extends React.PureComponent {
 
     const { left, top } = this.state;
     const className = getClassName('Popup TextPopup', this.props);
-
+    const isCreateRedactionEnabled = core.isCreateRedactionEnabled();
+    
     return (
       <div className={className} data-element={'textPopup'} ref={this.popup} style={{ left, top }} onMouseDown={e => e.stopPropagation()}>
         <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={this.onClickCopy} />
@@ -89,6 +91,7 @@ class TextPopup extends React.PureComponent {
             <ActionButton dataElement="textUnderlineToolButton" title="annotation.underline" img="ic_annotation_underline_black_24px" onClick={this.underlineText} />
             <ActionButton dataElement="textSquigglyToolButton" title="annotation.squiggly" img="ic_annotation_squiggly_black_24px" onClick={this.squigglyText} />
             <ActionButton dataElement="textStrikeoutToolButton" title="annotation.strikeout" img="ic_annotation_strikeout_black_24px" onClick={this.strikeoutText} />
+            { isCreateRedactionEnabled && <ActionButton dataElement="textRedactToolButton" title="option.redaction.markForRedaction" img="ic_annotation_add_redact_black_24px" onClick={this.redactText} /> }
           </React.Fragment>
         }
       </div>

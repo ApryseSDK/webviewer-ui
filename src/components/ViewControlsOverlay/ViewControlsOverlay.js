@@ -51,7 +51,7 @@ class ViewControlsOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['toolsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup']);
+      this.props.closeElements(['toolsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup', 'redactionOverlay']);
       this.setState(getOverlayPositionBasedOn('viewControlsButton', this.overlay));
     }
   }

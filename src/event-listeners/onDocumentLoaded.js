@@ -17,6 +17,13 @@ export default dispatch => () => {
     core.fitToPage();
   }
 
+  core.enableRedaction(getHashParams('enableRedaction', false));
+  if (core.isCreateRedactionEnabled()) {
+    dispatch(actions.enableElement('redactionButton', 1));
+  } else {
+    dispatch(actions.disableElement('redactionButton', 1));
+  }
+
   core.setOptions({
     enableAnnotations: getHashParams('a', false)
   });

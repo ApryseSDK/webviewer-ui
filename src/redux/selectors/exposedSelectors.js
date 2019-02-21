@@ -21,6 +21,14 @@ export const isElementOpen = (state, dataElement) => {
   
   return state.viewer.openElements[dataElement];
 };
+
+export const isElementActive = (state, tool) => {
+  const { viewer: { activeToolName, headers: { tools = [] }  }} = state;
+  const { element, dataElement } = tool;
+
+  return isElementOpen(state, element) || tools.some(tool => tool.dataElement === dataElement && tool.toolName === activeToolName);
+}
+
 export const getActiveHeaderItems = state => state.viewer.headers[state.viewer.activeHeaderGroup];
 export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].priority;
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
@@ -66,6 +74,13 @@ export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[c
 export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].iconColor; 
 export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
+
+// warning message
+export const getWarningMessage = state => state.viewer.warning && state.viewer.warning.message || '';
+export const getWarningTitle = state => state.viewer.warning && state.viewer.warning.title || '';
+export const getWarningConfirmEvent = state => state.viewer.warning && state.viewer.warning.onConfirm;
+export const getWarningConfirmBtnText = state =>  state.viewer.warning && state.viewer.warning.confirmBtnText;
+export const getWarningCancelEvent = state =>  state.viewer.warning && state.viewer.warning.onCancel;
 
 // document
 export const getDocument = state => state.document;

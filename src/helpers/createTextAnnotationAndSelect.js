@@ -20,10 +20,15 @@ const createTextAnnotation = annotationConstructor => {
   Object.keys(quads).forEach(pageIndex => {
     const pageNumber = parseInt(pageIndex) + 1;
     const annotation = createAnnotation(annotationConstructor, pageNumber, quads);
-    
-    if (window.Tools.TextAnnotationCreateTool.AUTO_SET_TEXT) {
+
+    if (window.Tools.TextAnnotationCreateTool.AUTO_SET_TEXT && !(annotation instanceof Annotations.RedactionAnnotation)) {
       annotation.setContents(core.getSelectedText(pageNumber));
     }
+
+    if (annotation instanceof Annotations.RedactionAnnotation) {
+      setRedactionStyle(annotation);
+    }
+
     setAnnotationColor(annotation);
     
     annotations.push(annotation);
@@ -49,3 +54,21 @@ const setAnnotationColor = annotation => {
     annotation.StrokeColor = StrokeColor;
   }
 };
+
+const setRedactionStyle = annotation => {
+  const { AnnotationCreateRedaction: { defaults: style = {} } } = readerControl.docViewer.getToolModeMap();
+
+  if (style) {
+    if (style.StrokeColor) {
+      const color = style.StrokeColor;
+      annotation.StrokeColor = new Annotations.Color(color['R'], color['G'], color['B'], color['A']);
+    }
+    if ( style.StrokeThickness) {
+      annotation.StrokeThickness = style['StrokeThickness'];
+    }
+    if (style.FillColor) {
+      const fillColor = style.FillColor;
+      annotation.FillColor = new Annotations.Color(fillColor['R'], fillColor['G'], fillColor['B'], fillColor['A']);
+    }
+  }
+}
