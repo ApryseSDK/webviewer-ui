@@ -66,13 +66,29 @@ class SignatureOverlay extends React.PureComponent {
     const signatureCanvas = document.querySelector('.signature-canvas');
     const savedSignature = {
       imgSrc: signatureCanvas.toDataURL(),
-      paths,
+      // paths: $.extend(true, [], paths),
+      paths: this.deepCopyPaths(paths),
       styles: getAnnotationStyles(signatureAnnotation)
     };
     defaultSignatures.push(savedSignature);
 
     this.setState({ defaultSignatures });
   }
+
+  deepCopyPaths = paths => {
+    const newPaths = [];
+    for (let h = 0; h < paths.length; h++) {
+      newPaths.push([]);
+    }
+
+    for (let h = 0; h < paths.length; h++) {
+      for (let i = 0; i < paths[h].length; i++) {
+        newPaths[h][i] = new Annotations.Point(paths[h][i]['x'], paths[h][i]['y']);
+      }
+    }
+
+    return newPaths;
+  } 
 
   onAnnotationChanged = (e, annotations, action) => {
     if (
@@ -82,8 +98,6 @@ class SignatureOverlay extends React.PureComponent {
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
       const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ paths }) => {
-        
-        // Annotations.MarkupAnnotation.prototype.setStyles()
         this.signatureTool.setUpSignature(paths, newStyles);
         this.signatureTool.drawAnnot();
 

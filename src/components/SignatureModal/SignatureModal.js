@@ -45,7 +45,7 @@ class SignatureModal extends React.PureComponent {
       this.setState(this.initialState);
       this.signatureTool.clearSignatureCanvas();
       this.signatureTool.openSignature();
-      this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]);
+      this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]); 
     }
   }
 
