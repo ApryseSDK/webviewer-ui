@@ -1,3 +1,4 @@
+import React from 'react';
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
@@ -5,6 +6,8 @@ import { zoomIn, zoomOut } from 'helpers/zoom';
 import defaultTool from 'constants/defaultTool';
 import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
+
+import ToggleElementOverlay from 'components/toggleElementOverlay';
 
 export default {
   viewer: {
@@ -25,48 +28,14 @@ export default {
         { type: 'toolButton', toolName: 'Pan' },
         { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: [ 'tablet', 'mobile' ] },
-        {
-          type: 'statefulButton',
-          mount: update => {
-            const fitModeToState = fitMode => {
-              const docViewer = core.getDocumentViewer();
-              // the returned state should be the opposite of the new current state
-              // as the opposite state is what we want to switch to when the button
-              // is pressed next
-              if (fitMode === docViewer.FitMode.FitPage) {
-                return 'FitWidth';
-              } else if (fitMode === docViewer.FitMode.FitWidth) {
-                return 'FitPage';
-              }
-            };
-
-            core.addEventListener('fitModeUpdated.fitbutton', (e, fitMode) => {
-              update(fitModeToState(fitMode));
-            });
-
-            // if initial fit mode is zoom then default to FitPage
-            return fitModeToState(core.getFitMode()) || 'FitPage';
-          },
-          unmount: () => {
-            core.removeEventListener('fitModeUpdated.fitbutton');
-          },
-          states: {
-            FitWidth: {
-              img: 'ic_fit_width_black_24px',
-              onClick: core.fitToWidth,
-              title: 'action.fitToWidth'
-            },
-            FitPage: {
-              img: 'ic_fit_page_black_24px',
-              onClick: core.fitToPage,
-              title: 'action.fitToPage'
-            }
-          },
-          dataElement: 'fitButton',
-          hidden: ['mobile']
-        },
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
+        { type: 'customElement',
+          render: () => <ToggleElementOverlay />, 
+          dataElement: 'zoomOverlayButton',
+          hidden: [ 'mobile' ],
+          element: "zoomOverlay"
+        },
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', hidden: ['tablet', 'mobile' ] },
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ] },
@@ -83,7 +52,7 @@ export default {
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('tools'));
             core.setToolMode(defaultTool);
-            dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'redactionOverlay' ]));
+            dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'zoomOverlay', 'redactionOverlay' ]));
           },
           dataElement: 'toolsButton',
           title: 'component.toolsButton',
@@ -147,7 +116,8 @@ export default {
       AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
       AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
-      TextSelect: { dataElement: 'textSelectButton', title: 'tool.select', img: 'textselect_cursor', showColor: 'never' }
+      TextSelect: { dataElement: 'textSelectButton', title: 'tool.select', img: 'textselect_cursor', showColor: 'never' },
+      MarqueeZoomTool: { dataElement: 'selectToolButton', title: 'tool.select', label: 'Marquee Zoom', showColor: 'never'}
     },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',

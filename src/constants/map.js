@@ -200,7 +200,14 @@ const map = {
     toolNames: ['TextSelect'],
     annotationCheck: null,
   },
-
+  marqueeZoomTool: {
+    icon: null,
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: ['MarqueeZoomTool'],
+    annotationCheck: null,
+  }
 };
 
 export const mapToolNameToKey = toolName => Object.keys(map).find(key => map[key].toolNames.includes(toolName));

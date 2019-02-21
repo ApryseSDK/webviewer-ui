@@ -81,7 +81,7 @@ class SearchOverlay extends React.PureComponent {
 
     const searchOverlayOpened = !prevProps.isOpen && this.props.isOpen;
     if (searchOverlayOpened) {
-      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'menuOverlay', 'toolStylePopup', 'redactionOverlay']);
+      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'menuOverlay', 'toolStylePopup', 'zoomOverlay', 'redactionOverlay']);
       this.searchTextInput.current.focus();
       core.setToolMode(defaultTool);
     }
