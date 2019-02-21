@@ -11,7 +11,7 @@ export default (element, overlay) => {
 
   const { left: buttonLeft } = button.getBoundingClientRect();
   const { width: overlayWidth } = overlay.current.getBoundingClientRect();
-  
+
   if (buttonLeft + overlayWidth > window.innerWidth) {
     const rightMargin = 16;
     left = 'auto';
