@@ -259,7 +259,7 @@ class PrintModal extends React.PureComponent {
     noteRootInfo.className = 'note__info--with-icon';
 
     const key = mapAnnotationToKey(annotation);
-    const iconColor = colorMap[key].iconColor;
+    const iconColor = colorMap[key] && colorMap[key].iconColor;
     const icon = getDataWithKey(key).icon;
     const innerHTML = icon ? require(`../../../assets/${icon}.svg`) : annotation.Subject;
     const noteIcon = document.createElement('div');

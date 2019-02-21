@@ -22,7 +22,7 @@ export default store => (documentPath, options = {}) => {
   store.dispatch(actions.setWithCredentials(withCredentials));
   store.dispatch(actions.setPassword(password));
 
-  if (store.getState().advanced.fullAPI && documentPath instanceof window.PDFNet.PDFDoc) {
+  if (window.CoreControls.isFullPDFEnabled() && documentPath instanceof window.PDFNet.PDFDoc) {
     store.dispatch(actions.setPDFDoc(documentPath));
   } else if (typeof documentPath === 'object') {
     store.dispatch(actions.setDocumentFile(documentPath));

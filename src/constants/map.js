@@ -6,7 +6,7 @@ import i18next from 'i18next';
  * ideally, this map file should be the only place which provides information about annotations and tools
  * if you are tempted to create a new map file(which maps a tool/annotation to something else) under this constants folder
  * please make sure that it is not possible to implement that map here
- */ 
+ */
 const map = {
   signature: {
     icon: 'ic_annotation_signature_black_24px',
@@ -54,7 +54,7 @@ const map = {
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateArrow'],
-    annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.getStartStyle() === 'None' && annotation.getEndStyle() === 'OpenArrow'
+    annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && (annotation.getStartStyle() !== 'None' || annotation.getEndStyle() !== 'None')
   },
   polygon: {
     icon: 'ic_annotation_polygon_black_24px',
@@ -103,6 +103,14 @@ const map = {
     availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateTextStrikeout'],
     annotationCheck: annotation => annotation instanceof Annotations.TextStrikeoutAnnotation
+  },
+  redaction: {
+    icon: 'ic_annotation_redact_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: ['AnnotationCreateRedaction'],
+    annotationCheck: annotation => annotation instanceof Annotations.RedactionAnnotation
   },
   rectangle: {
     icon: 'ic_annotation_square_black_24px',
@@ -213,7 +221,9 @@ export const register = (tool, annotationConstructor) => {
   };
 };
 
-export const getDataWithKey = key => map[key];
+// we return an empty object here to prevent some components from accessing undefined
+// if the map doesn't have a key for some annotations
+export const getDataWithKey = key => map[key] || {};
 
 export const getAnnotationCreateToolNames = () => {
   return Object.values(map).reduce((annotationCreateToolNames, { toolNames, annotationCheck }) => {
