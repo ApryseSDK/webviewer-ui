@@ -123,5 +123,5 @@ export const setPageLabels = pageLabels => dispatch => {
   }
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };
-export const setCursorOverlayImage = imgSrc => ({ type: 'SET_CURSOR_OVERLAY_IMAGE', payload: { cursorOverlayImage: imgSrc } });
+export const setCursorOverlay = (data = {}) => ({ type: 'SET_CURSOR_OVERLAY', payload: { data } });
 

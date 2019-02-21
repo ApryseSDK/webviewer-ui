@@ -118,7 +118,8 @@ export default {
     useEmbeddedPrint: true,
     pageLabels: [],
     noteDateFormat: 'MMM D, h:mma',
-    colorMap: copyMapWithDataProperties('currentPalette', 'iconColor')
+    colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
+    cursorOverlay: {}
   },
   search: {
     listeners: [],

@@ -14,7 +14,11 @@ class CursorOverlay extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    imgSrc: PropTypes.string,
+    data: PropTypes.shape({
+      imgSrc: PropTypes.string,
+      width: PropTypes.number,
+      height: PropTypes.number
+    }),
     activeToolName: PropTypes.string,
     closeElement: PropTypes.func.isRequired
   }
@@ -70,7 +74,7 @@ class CursorOverlay extends React.PureComponent {
 
   render() {
     const { top, left } = this.state;
-    const { isDisabled, imgSrc } = this.props;
+    const { isDisabled, data: { imgSrc, width, height } } = this.props;
     const className = getClassName('Overlay CursorOverlay', this.props);    
 
     if (isDisabled || isMobileDevice) {
@@ -78,7 +82,7 @@ class CursorOverlay extends React.PureComponent {
     }
 
     return(
-      <div className={className} data-element="cursorOverlay" style={{ top, left }} ref={this.overlay}>
+      <div className={className} data-element="cursorOverlay" style={{ top, left, width, height }} ref={this.overlay}>
         {imgSrc &&
           <img className="cursor-image" src={imgSrc} />
         }
@@ -90,7 +94,7 @@ class CursorOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'cursorOverlay'),
   isOpen: selectors.isElementOpen(state, 'cursorOverlay'),
-  imgSrc: selectors.getCursorOverlayImage(state),
+  data: selectors.getCursorOverlayData(state),
   activeToolName: selectors.getActiveToolName(state)
 });
 

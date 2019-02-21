@@ -7,6 +7,7 @@ import ActionButton from 'components/ActionButton';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import getSignatureDimension from 'helpers/getSignatureDimension';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -19,7 +20,7 @@ class SignatureModal extends React.PureComponent {
     isOpen: PropTypes.bool,
     t: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
-    setCursorOverlayImage: PropTypes.func.isRequired,
+    setCursorOverlay: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
   }
@@ -93,7 +94,7 @@ class SignatureModal extends React.PureComponent {
   }
 
   createSignature = () => {
-    const { closeElement, openElement, setCursorOverlayImage } = this.props;
+    const { closeElement, openElement, setCursorOverlay } = this.props;
     
     if (!this.signatureTool.isEmptySignature()) {
       if (this.state.saveSignature) {
@@ -102,7 +103,9 @@ class SignatureModal extends React.PureComponent {
       if (this.signatureTool.hasLocation()) {
         this.signatureTool.addSignature();
       } else {
-        setCursorOverlayImage(this.canvas.current.toDataURL());
+        const { width, height } = getSignatureDimension(this.signatureTool);
+        const imgSrc = this.canvas.current.toDataURL();
+        setCursorOverlay({ imgSrc, width, height});
         openElement('cursorOverlay');
       }
       closeElement('signatureModal');
@@ -155,7 +158,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   openElement: actions.openElement,
-  setCursorOverlayImage: actions.setCursorOverlayImage, 
+  setCursorOverlay: actions.setCursorOverlay, 
   closeElement: actions.closeElement,
   closeElements: actions.closeElements
 };

@@ -10,6 +10,7 @@ import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import deepCopyPaths from 'helpers/deepCopyPaths';
+import getSignatureDimension from 'helpers/getSignatureDimension';
 import { mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -23,7 +24,7 @@ class SignatureOverlay extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
-    setCursorOverlayImage: PropTypes.func.isRequired,
+    setCursorOverlay: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired
   }
 
@@ -99,7 +100,7 @@ class SignatureOverlay extends React.PureComponent {
   setUpSignature = index => {
     this.currentSignatureIndex = index;
 
-    const { setCursorOverlayImage, closeElement, openElement } = this.props;
+    const { setCursorOverlay, closeElement, openElement } = this.props;
     const { imgSrc, paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
     
     core.setToolMode('AnnotationCreateSignature');
@@ -110,20 +111,21 @@ class SignatureOverlay extends React.PureComponent {
     if (this.signatureTool.hasLocation()) {
       this.signatureTool.addSignature();
     } else {
+      const { width, height } = getSignatureDimension(this.signatureTool);
+      setCursorOverlay({ imgSrc, width, height });
       openElement('cursorOverlay');
-      setCursorOverlayImage(imgSrc);
     }
   }
 
   deleteDefaultSignature = index => {
-    const { closeElement, setCursorOverlayImage } = this.props;
+    const { closeElement, setCursorOverlay } = this.props;
     const defaultSignatures = [ ...this.state.defaultSignatures ];
     const isDeletingCurrentSignature = this.currentSignatureIndex === index;
 
     defaultSignatures.splice(index, 1);
     if (isDeletingCurrentSignature) {
       this.signatureTool.clearSignature();
-      setCursorOverlayImage(null);
+      setCursorOverlay(null);
       closeElement('cursorOverlay');
       this.currentSignatureIndex = -1;
     }
@@ -185,7 +187,7 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements,
   closeElement: actions.closeElement,
   openElement: actions.openElement,
-  setCursorOverlayImage: actions.setCursorOverlayImage
+  setCursorOverlay: actions.setCursorOverlay
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(SignatureOverlay));
