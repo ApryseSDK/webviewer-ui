@@ -18,7 +18,7 @@ export default (state, dispatch) => {
 
         if (partRetriever.on) {
           partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
-            dispatch(actions.setLoadingProgress(loaded / total));
+            dispatch(actions.setDocumentLoadingProgress(loaded / total));
           });
           partRetriever.on('error', function(e, type, message) {
             fireError(message);
@@ -181,7 +181,7 @@ const getDocOptions = (state, dispatch, streaming) => {
         };
         const workerHandlers = {
           workerLoadingProgress: percent => {
-            dispatch(actions.setLoadingProgress(percent));
+            dispatch(actions.setWorkerLoadingProgress(percent));
           }
         };
 
