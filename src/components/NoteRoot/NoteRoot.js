@@ -38,10 +38,13 @@ class NoteRoot extends React.Component {
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
   }
 
-  onAnnotationChanged = () => {
+  onAnnotationChanged = (e, annotations, action) => {
     const { isNoteExpanded, annotation } = this.props;
 
-    if (isNoteExpanded || mapAnnotationToKey(annotation) === 'signature') {
+    if (
+      isNoteExpanded || 
+      (mapAnnotationToKey(annotation) === 'signature' && action === 'modify')
+    ) {
       this.forceUpdate();
     }
   }

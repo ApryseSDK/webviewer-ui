@@ -111,8 +111,12 @@ class SignatureOverlay extends React.PureComponent {
     if (this.signatureTool.hasLocation()) {
       this.signatureTool.addSignature();
     } else {
-      const { width, height } = getSignatureDimension(this.signatureTool);
-      setCursorOverlay({ imgSrc, width, height });
+      const { imgSrc, width, height } = this.signatureTool.getSignatureImage(core.getCurrentPage()-1);
+      setCursorOverlay({ 
+        imgSrc, 
+        width,
+        height
+      });
       openElement('cursorOverlay');
     }
   }

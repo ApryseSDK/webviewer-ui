@@ -1,11 +1,11 @@
 import core from 'core';
 
-export default () => {
+export default e => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
   if (signatureTool.hasSignaturePaths()) {
     signatureTool.addSignature();
-  } else {
+  } else if (e.signatureWidget && !e.signatureWidget.hasSigned) {
     // this condition is usually met when we click on a signature widget but UI doesn't know which signature to draw
     // we use setTimeout as a work-around here because otherwise if we have saved default signatures,
     // the signatureOverlay will be closed immediately(due to the click handler in App.js) after it's open.

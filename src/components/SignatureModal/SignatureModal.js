@@ -103,9 +103,12 @@ class SignatureModal extends React.PureComponent {
       if (this.signatureTool.hasLocation()) {
         this.signatureTool.addSignature();
       } else {
-        const { width, height } = getSignatureDimension(this.signatureTool);
-        const imgSrc = this.canvas.current.toDataURL();
-        setCursorOverlay({ imgSrc, width, height});
+        const { imgSrc, width, height } = this.signatureTool.getSignatureImage(core.getCurrentPage() - 1);
+        setCursorOverlay({ 
+          imgSrc, 
+          width,
+          height
+        });
         openElement('cursorOverlay');
       }
       closeElement('signatureModal');

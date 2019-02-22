@@ -5,7 +5,6 @@ import actions from 'actions';
 export default dispatch => (e, signatureAnnotation) => {
   core.setToolMode(defaultTool);
   dispatch(actions.closeElement('cursorOverlay'));
-  core.getTool('AnnotationCreateSignature').clearLocation();
   setTimeout(() => {
     core.selectAnnotation(signatureAnnotation);
   }, 0);
