@@ -131,7 +131,7 @@
     "redaction": {
       "markForRedaction": "Mark for redaction",
       "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
-      "warningPopupTitle": "Apply Redaction?"
+      "warningPopupTitle": "Apply Redaction"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",

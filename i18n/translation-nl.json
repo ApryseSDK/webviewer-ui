@@ -128,7 +128,7 @@
     "redaction": {
       "markForRedaction": "Markeren voor redactie",
       "warningPopupMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
-      "warningPopupTitle": "Redactiewijziging Toepassen?"
+      "warningPopupTitle": "Redactiewijziging Toepassen"
     },
     "searchPanel": {
       "caseSensitive": "Hoofdletter gev..",
