@@ -97,7 +97,7 @@ const getPartRetriever = (state, streaming) => {
       partRetrieverName = 'BlackBoxPartRetriever';
       partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets });
     } else if (engineType === engineTypes.UNIVERSAL) {
-      const cache = window.CoreControls.PartRetrievers.CacheHinting.CACHE;
+      const cache = window.CoreControls.PartRetrievers.CacheHinting.NO_HINT;
 
       if (file) {
         partRetrieverName = 'LocalPartRetriever';
