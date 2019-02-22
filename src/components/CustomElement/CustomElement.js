@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import selectors from 'selectors';
 
+import './CustomElement.scss';
+
 class CustomElement extends React.PureComponent {
   static propTypes = {
     className: PropTypes.string,
@@ -43,11 +45,12 @@ class CustomElement extends React.PureComponent {
   
   render() {
     const { 
-      className = '', 
+      className = 'CustomElement', 
       isDisabled, 
       dataElement, 
       display,
-      render
+      render,
+      mediaQueryClassName
     } = this.props;
 
     if (isDisabled) {
@@ -56,9 +59,8 @@ class CustomElement extends React.PureComponent {
 
     return (
       <div 
-        className={className}
+        className={[className, mediaQueryClassName].join(' ').trim()}
         ref={this.elementWrapper} 
-        style={{ display: display || 'flex' }} 
         data-element={dataElement}
       >
         {this.state.isRenderingReactComponent &&

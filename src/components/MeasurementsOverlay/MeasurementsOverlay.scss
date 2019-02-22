@@ -1,0 +1,56 @@
+@import '../../constants/styles';
+
+.MeasurementsOverlay{
+  width: 100%;
+  height: 50px;
+  background: white;
+}
+
+.Scale{
+  display: flex;
+  margin-top: -6px;
+}
+
+.Precision{
+  display: flex;
+  margin-top: 14px;
+}
+
+.LayoutTitle{
+  margin-left: 16px;
+}
+
+.Layout{
+  position: absolute;
+  display: flex;
+  margin-left: 87px;
+}
+
+.ScaleDropdown{
+  width: 25px;
+  margin-right: 3px;
+  z-index: 2;
+}
+
+.PrecisionDropdown{
+  margin-left: 3px;
+  width: 65px;
+}
+
+.textarea{
+  resize: none;
+  outline: none;
+  border: none;
+  background: $gray4;
+  width: 34px;
+  margin-right: 3px;
+  margin-left: 3px;
+  height: 13px;
+  text-align:right;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

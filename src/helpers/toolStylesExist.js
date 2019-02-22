@@ -2,6 +2,9 @@ import core from 'core';
 
 export default toolName => {
   const tool = core.getTool(toolName);
-
-  return !!tool.defaults;
+  if(tool){
+    return !!tool.defaults;
+  } else {
+    return false;
+  }
 };
