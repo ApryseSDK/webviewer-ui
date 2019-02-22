@@ -45,7 +45,7 @@
     "polygon": "Veelhoek",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
-    "redaction": "Redigeren",
+    "redact": "Redigeren",
     "rectangle": "Rechthoek",
     "signature": "Handtekening",
     "squiggly": "Squiggly",
@@ -67,6 +67,7 @@
     "textToolsButton": "Tekst tools",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
+    "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "minimizeButton": "Document normaal weergeven"
   },

@@ -46,7 +46,7 @@
     "polygonCloud": "Nuage",
     "polyline": "Ligne polygonale",
     "rectangle": "Rectangle",
-    "redaction": "Biffure",
+    "redact": "Biffure",
     "signature": "Signature",
     "squiggly": "Ligne ondulée",
     "stamp": "Timbre",
@@ -67,6 +67,7 @@
     "textToolsButton": "Outils de texte",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
+    "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage"
   },
   "message": {
