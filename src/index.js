@@ -151,6 +151,7 @@ if (window.CanvasRenderingContext2D) {
           enableNotesPanel: apis.enableNotesPanel(store),
           enablePrint: apis.enablePrint(store),
           enableRedaction: apis.enableRedaction(store),
+          disableRedaction: apis.disableRedaction(store),
           enableTextSelection: apis.enableTextSelection(store),
           enableTool: apis.enableTool(store),
           enableTools: apis.enableTools(store),
