@@ -7,7 +7,7 @@ export default store => (enable = true) =>  {
     store.dispatch(actions.enableElement('redactionButton', 1));
     core.enableRedaction(true);
 
-    if (! core.isFullPDFEnabled()) {
+    if (!core.isFullPDFEnabled()) {
       console.warn('Full api is not enabled, applying redactions is disabled');
     }
   } else {
