@@ -70,6 +70,7 @@ import addSortStrategy from './addSortStrategy';
 import updateOutlines from './updateOutlines';
 import print from './print';
 import showWarningMessage from './showWarningMessage';
+import enableRedaction from './enableRedaction';
 
 export default {
   loadDocument,
@@ -146,5 +147,6 @@ export default {
   setZoomLevel,
   setMaxZoomLevel,
   setMinZoomLevel,
-  showWarningMessage
+  showWarningMessage,
+  enableRedaction
 };

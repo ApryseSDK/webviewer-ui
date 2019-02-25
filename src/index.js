@@ -150,6 +150,7 @@ if (window.CanvasRenderingContext2D) {
           enableFilePicker: apis.enableFilePicker(store),
           enableNotesPanel: apis.enableNotesPanel(store),
           enablePrint: apis.enablePrint(store),
+          enableRedaction: apis.enableRedaction(store),
           enableTextSelection: apis.enableTextSelection(store),
           enableTool: apis.enableTool(store),
           enableTools: apis.enableTools(store),
