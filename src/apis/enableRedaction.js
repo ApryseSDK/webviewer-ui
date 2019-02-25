@@ -1,4 +1,3 @@
-
 import actions from 'actions';
 import core from 'core';
 
