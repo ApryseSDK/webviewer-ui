@@ -45,7 +45,7 @@
     "polygon": "Veelhoek",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
-    "redaction": "Redigeren",
+    "redact": "Redigeren",
     "rectangle": "Rechthoek",
     "signature": "Handtekening",
     "squiggly": "Squiggly",
@@ -67,6 +67,7 @@
     "textToolsButton": "Tekst tools",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
+    "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "minimizeButton": "Document normaal weergeven"
   },
@@ -127,7 +128,7 @@
     "redaction": {
       "markForRedaction": "Markeren voor redactie",
       "warningPopupMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
-      "warningPopupTitle": "Redactiewijziging Toepassen?"
+      "warningPopupTitle": "Redactiewijziging Toepassen"
     },
     "searchPanel": {
       "caseSensitive": "Hoofdletter gev..",

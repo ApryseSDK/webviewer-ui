@@ -49,7 +49,7 @@
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
     "rectangle": "Rectangle",
-    "redaction": "Redaction",
+    "redact": "Redact",
     "signature": "Signature",
     "squiggly": "Squiggly",
     "stamp": "Stamp",
@@ -70,6 +70,7 @@
     "textToolsButton": "Text tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
+    "redaction": "Redaction",
     "viewControlsOverlay": "View controls",
     "measurementToolsButton": "Measurement tools"
   },
@@ -130,7 +131,7 @@
     "redaction": {
       "markForRedaction": "Mark for redaction",
       "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
-      "warningPopupTitle": "Apply Redaction?"
+      "warningPopupTitle": "Apply Redaction"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",
