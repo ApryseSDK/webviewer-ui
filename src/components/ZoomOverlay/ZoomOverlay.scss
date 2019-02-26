@@ -21,11 +21,13 @@
       height: 1px;
       background: var(--button-active-color);
     }
+
+    .ToolButton{
+      background: white;
+      height: 35px;
+      justify-content: center;
+      font-family: 'Roboto', sans-serif;
+    }
 }
 
-.ToolButton{
-  background: white;
-  height: 35px;
-  justify-content: center;
-  font-family: 'Roboto', sans-serif;
-}
+
