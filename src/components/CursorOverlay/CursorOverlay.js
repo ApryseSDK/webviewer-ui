@@ -55,20 +55,19 @@ class CursorOverlay extends React.PureComponent {
 
   handleMouseMove = ({ clientX, clientY }) => {
     if (this.props.isOpen) {
-      const OVERLAY_LEFT_GAP = 10;
-      // const { data } = this.props;
+      const { data } = this.props;
+      let top, left;
 
-      // if (data) {
-      //   this.setState({ 
-      //     left: clientX - data.width / 2,
-      //     top: clientY - data.height / 2
-      //   });
-      // } else {
-      // }
-      this.setState({ 
-        left: clientX + OVERLAY_LEFT_GAP,
-        top: clientY
-      });
+      if (data) {
+        left = clientX - data.width / 2;
+        top = clientY - data.height / 2;
+      } else {
+        const OVERLAY_LEFT_GAP = 10;
+        left = clientX + OVERLAY_LEFT_GAP;
+        top = clientY;
+      }
+
+      this.setState({ left, top });
     }
   }
 

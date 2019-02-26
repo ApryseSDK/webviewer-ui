@@ -128,7 +128,7 @@ class SignatureOverlay extends React.PureComponent {
 
     defaultSignatures.splice(index, 1);
     if (isDeletingCurrentSignature) {
-      this.signatureTool.clearSignature();
+      this.signatureTool.freeHandAnnot.emptyPaths();
       setCursorOverlay(null);
       closeElement('cursorOverlay');
       this.currentSignatureIndex = -1;
