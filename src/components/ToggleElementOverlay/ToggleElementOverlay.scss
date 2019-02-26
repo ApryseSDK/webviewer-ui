@@ -4,6 +4,22 @@
   height: $button-height;  
   width: 53px;
   top:0;
+
+  .textarea{
+    resize: none;
+    border: none;
+    outline: none;
+    color: #757575;
+    background-color: transparent;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin-top: -2px;
+    margin-right: 2px;
+    width: 42px;
+    height: $top-bar-height;
+    line-height: 42px;
+    text-align: right;
+  }
 }
 
 .OverlayContainer{
@@ -34,22 +50,6 @@
   &:hover + .OverlayButton{
     background-color:inherit;
   }
-}
-
-.textarea{
-  resize: none;
-  border: none;
-  outline: none;
-  color: #757575;
-  background-color: transparent;
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  margin-top: -2px;
-  margin-right: 2px;
-  width: 42px;
-  height: $top-bar-height;
-  line-height: 42px;
-  text-align: right;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
