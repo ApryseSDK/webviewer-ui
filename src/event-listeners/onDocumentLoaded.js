@@ -2,7 +2,7 @@ import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import actions from 'actions';
 
-let onLoad = true;
+let onFirstLoad = true;
 
 export default dispatch => () => {
   dispatch(actions.setDocumentLoaded(true));
@@ -19,8 +19,8 @@ export default dispatch => () => {
     core.fitToPage();
   }
 
-  if (onLoad) {
-    onLoad = false;
+  if (onFirstLoad) {
+    onFirstLoad = false;
     // redaction button starts hidden. when the user first loads a document, check HashParams the first time
     core.enableRedaction(getHashParams('enableRedaction', false) || core.isCreateRedactionEnabled());
     // if redaction is already enabled for some reason (i.e. calling readerControl.enableRedaction() before loading a doc), keep it enabled
