@@ -60,13 +60,14 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   handleWindowResize = () => {
-    
+    this.setOverlayPosition();
   }
 
   setOverlayPosition = () => {
     const { left, right } = getOverlayPositionBasedOn('signatureToolButton', this.overlay);
     this.setState({ 
-      left,
+      // TODO: remove the hard-coded value. 
+      left: left - 95,
       right 
     });
   }
@@ -138,7 +139,8 @@ class SignatureOverlay extends React.PureComponent {
     defaultSignatures.splice(index, 1);
     if (isDeletingCurrentSignature) {
       this.signatureTool.freeHandAnnot.emptyPaths();
-      setCursorOverlay(null);
+      // TODO: investigate later why passing null to it will cause error sometimes
+      setCursorOverlay({});
       closeElement('cursorOverlay');
       this.currentSignatureIndex = -1;
     }

@@ -62,6 +62,7 @@ class SignatureModal extends React.PureComponent {
     canvas.height = height;
     canvas.getContext('2d').scale(multiplier, multiplier);   
     canvas.addEventListener('mouseup', this.handleFinishDrawing);
+    canvas.addEventListener('touchend', this.handleFinishDrawing);
   }
 
   handleFinishDrawing = e => {
