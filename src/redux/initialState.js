@@ -180,7 +180,8 @@ export default {
     password: '',
     printQuality: 1,
     passwordAttempts: -1,
-    loadingProgress: 0
+    documentLoadingProgress: 0,
+    workerLoadingProgress: 0
   },
   user: {
     name: getHashParams('user', 'Guest'),

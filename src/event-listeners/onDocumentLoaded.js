@@ -7,7 +7,8 @@ let onFirstLoad = true;
 export default dispatch => () => {
   dispatch(actions.setDocumentLoaded(true));
   dispatch(actions.openElement('pageNavOverlay'));
-  dispatch(actions.setLoadingProgress(1));
+  dispatch(actions.setDocumentLoadingProgress(1));
+  dispatch(actions.setWorkerLoadingProgress(1));
   setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
     dispatch(actions.resetLoadingProgress());

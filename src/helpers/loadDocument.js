@@ -18,7 +18,7 @@ export default (state, dispatch) => {
 
         if (partRetriever.on) {
           partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
-            dispatch(actions.setLoadingProgress(loaded / total));
+            dispatch(actions.setDocumentLoadingProgress(loaded / total));
           });
           partRetriever.on('error', function(e, type, message) {
             fireError(message);
@@ -97,7 +97,7 @@ const getPartRetriever = (state, streaming) => {
       partRetrieverName = 'BlackBoxPartRetriever';
       partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets });
     } else if (engineType === engineTypes.UNIVERSAL) {
-      const cache = window.CoreControls.PartRetrievers.CacheHinting.CACHE;
+      const cache = window.CoreControls.PartRetrievers.CacheHinting.NO_HINT;
 
       if (file) {
         partRetrieverName = 'LocalPartRetriever';
@@ -181,7 +181,7 @@ const getDocOptions = (state, dispatch, streaming) => {
         };
         const workerHandlers = {
           workerLoadingProgress: percent => {
-            dispatch(actions.setLoadingProgress(percent));
+            dispatch(actions.setWorkerLoadingProgress(percent));
           }
         };
 
