@@ -67,7 +67,7 @@ class RedactionOverlay extends React.PureComponent {
     if (isDisabled || !isOpen || !core.isCreateRedactionEnabled()) {
       return null;
     }
-    const showApply = core.isFullPDFEnabled();
+    const showApply = core.isApplyRedactionEnabled();
     
     const className = getClassName('Overlay RedactionOverlay', this.props);
 

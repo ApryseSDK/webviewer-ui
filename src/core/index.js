@@ -59,6 +59,7 @@ import selectAnnotations from './selectAnnotations';
 import addAnnotations from './addAnnotations';
 import applyRedactions from './applyRedactions';
 import isCreateRedactionEnabled from './isCreateRedactionEnabled';
+import isApplyRedactionEnabled from './isApplyRedactionEnabled';
 import isAnnotationRedactable from './isAnnotationRedactable';
 import enableRedaction from './enableRedaction';
 import drawAnnotationsFromList from './drawAnnotationsFromList';
@@ -150,8 +151,9 @@ export default {
   addAnnotations,
   applyRedactions,
   isCreateRedactionEnabled,
-  enableRedaction,
+  isApplyRedactionEnabled,
   isAnnotationRedactable,
+  enableRedaction,
   drawAnnotationsFromList,
   setInternalAnnotationsTransform,
   setPagesUpdatedInternalAnnotationsTransform,
