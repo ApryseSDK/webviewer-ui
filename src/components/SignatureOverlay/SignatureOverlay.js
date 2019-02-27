@@ -10,7 +10,6 @@ import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import deepCopyPaths from 'helpers/deepCopyPaths';
-import getSignatureDimension from 'helpers/getSignatureDimension';
 import { mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -44,18 +43,32 @@ class SignatureOverlay extends React.PureComponent {
   componentDidMount() {
     this.signatureTool.on('saveDefault', this.onSaveDefault);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
+    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'toolsOverlay', 'zoomOverlay', 'toolStylePopup']);
-      this.setState(getOverlayPositionBasedOn('signatureToolButton', this.overlay));
+      this.setOverlayPosition();
     }
   }
 
   componentWillUnmount() {
     this.signatureTool.off('saveDefault', this.onSaveDefault);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  handleWindowResize = () => {
+    
+  }
+
+  setOverlayPosition = () => {
+    const { left, right } = getOverlayPositionBasedOn('signatureToolButton', this.overlay);
+    this.setState({ 
+      left,
+      right 
+    });
   }
 
   onSaveDefault = (e, paths, signatureAnnotation) => {
@@ -101,7 +114,7 @@ class SignatureOverlay extends React.PureComponent {
     this.currentSignatureIndex = index;
 
     const { setCursorOverlay, closeElement, openElement } = this.props;
-    const { imgSrc, paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
+    const { paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
     
     core.setToolMode('AnnotationCreateSignature');
     this.signatureTool.initAnnot();
@@ -111,12 +124,8 @@ class SignatureOverlay extends React.PureComponent {
     if (this.signatureTool.hasLocation()) {
       this.signatureTool.addSignature();
     } else {
-      const { imgSrc, width, height } = this.signatureTool.getSignatureImage(core.getCurrentPage()-1);
-      setCursorOverlay({ 
-        imgSrc, 
-        width,
-        height
-      });
+      const { imgSrc, width, height } = this.signatureTool.getSignaturePreview();
+      setCursorOverlay({ imgSrc, width, height });
       openElement('cursorOverlay');
     }
   }
