@@ -4,6 +4,19 @@
   width: 100%;
   height: 50px;
   background: white;
+
+  .textarea{
+    resize: none;
+    outline: none;
+    border: none;
+    background: $gray4;
+    width: 34px;
+    margin-right: 3px;
+    margin-left: 3px;
+    height: 13px;
+    text-align:right;
+  }
+
 }
 
 .Scale{
@@ -35,18 +48,6 @@
 .PrecisionDropdown{
   margin-left: 3px;
   width: 65px;
-}
-
-.textarea{
-  resize: none;
-  outline: none;
-  border: none;
-  background: $gray4;
-  width: 34px;
-  margin-right: 3px;
-  margin-left: 3px;
-  height: 13px;
-  text-align:right;
 }
 
 input[type=number]::-webkit-inner-spin-button, 

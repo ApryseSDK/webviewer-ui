@@ -200,6 +200,7 @@ const map = {
     toolNames: ['TextSelect'],
     annotationCheck: null,
   },
+
   marqueeZoomTool: {
     icon: null,
     iconColor: null,

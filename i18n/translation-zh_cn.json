@@ -46,7 +46,7 @@
     "polygonCloud": "云",
     "polyline": "折线",
     "rectangle": "矩形",
-    "redaction": "新版本",
+    "redact": "新版本",
     "signature": "签名",
     "squiggly": "曲线",
     "stamp": "盖章",
@@ -67,6 +67,7 @@
     "textToolsButton": "文本工具",
     "thumbnailsPanel": "缩略图",
     "toolsButton": "工具",
+    "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式"
   },
   "message": {
@@ -126,7 +127,7 @@
     "redaction": {
       "markForRedaction":  "标记为编辑",
       "warningPopupMessage": "此操作将永久删除为编校选择的所有项目。它无法撤消。",
-      "warningPopupTitle":  "应用编辑？"
+      "warningPopupTitle":  "应用编辑"
     },
     "searchPanel": {
       "caseSensitive": "区分大小写",

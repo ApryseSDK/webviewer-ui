@@ -28,10 +28,12 @@ export default initialState => (state = initialState, action) => {
       return { ...state, password: payload.password };
     case 'SET_PRINT_QUALITY':
       return { ...state, printQuality: payload.quality };
-    case 'SET_LOADING_PROGRESS':
-      return { ...state, loadingProgress: payload.loadingProgress };
+    case 'SET_DOCUMENT_LOADING_PROGRESS':
+      return { ...state, documentLoadingProgress: payload.documentLoadingProgress };
+    case 'SET_WORKER_LOADING_PROGRESS':
+      return { ...state, workerLoadingProgress: payload.workerLoadingProgress };
     case 'RESET_LOADING_PROGRESS':
-      return { ...state, loadingProgress: 0 };
+      return { ...state, documentLoadingProgress: 0, workerLoadingProgress: 0 };
     default:
       return state;
   }

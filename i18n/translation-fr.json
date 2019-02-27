@@ -46,7 +46,7 @@
     "polygonCloud": "Nuage",
     "polyline": "Ligne polygonale",
     "rectangle": "Rectangle",
-    "redaction": "Biffure",
+    "redact": "Biffure",
     "signature": "Signature",
     "squiggly": "Ligne ondulée",
     "stamp": "Timbre",
@@ -67,6 +67,7 @@
     "textToolsButton": "Outils de texte",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
+    "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage"
   },
   "message": {
@@ -126,7 +127,7 @@
     "redaction": {
       "markForRedaction": "Repérer les biffures",
       "warningPopupMessage":  "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",
-      "warningPopupTitle": "Appliquer les Biffures?"
+      "warningPopupTitle": "Appliquer les Biffures"
     },
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",

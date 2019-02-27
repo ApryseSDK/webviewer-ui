@@ -8,6 +8,7 @@ import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
 
 import ToggleElementOverlay from 'components/toggleElementOverlay';
+import Button from 'components/Button';
 
 export default {
   viewer: {
@@ -41,7 +42,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: [ 'tablet', 'mobile' ] },
-        { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'annotation.redaction',  hidden: [ 'tablet', 'mobile' ] },
+        { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction',  hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolButton', toolName: 'AnnotationCreateSignature', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolButton', toolName: 'AnnotationCreateSticky', hidden: [ 'tablet', 'mobile' ] },
@@ -67,7 +68,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton' },
-        { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'annotation.redaction' },
+        { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
         { type: 'toolButton', toolName: 'AnnotationCreateSignature' },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText' },
         { type: 'toolButton', toolName: 'AnnotationCreateSticky' },
@@ -108,7 +109,7 @@ export default {
       AnnotationCreatePolyline: { dataElement: 'polylineToolButton', title: 'annotation.polyline', img: 'ic_annotation_polyline_black_24px', group: 'shapeTools', showColor: 'active' },
       AnnotationCreatePolygon: { dataElement: 'polygonToolButton', title: 'annotation.polygon', img: 'ic_annotation_polygon_black_24px', group: 'shapeTools', showColor: 'active' },
       AnnotationCreatePolygonCloud: { dataElement: 'cloudToolButton', title: 'annotation.polygonCloud', img: 'ic_annotation_cloud_black_24px', group: 'shapeTools', showColor: 'active' },
-      AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'ic_annotation_add_redact_black_24px', group: 'redactTools', showColor: 'never' },
+      AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'ic_annotation_add_redact_black_24px', showColor: 'never' },
       AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.signature', img: 'ic_annotation_signature_black_24px', showColor: 'active' },
       AnnotationCreateFreeText: { dataElement: 'freeTextToolButton', title: 'annotation.freetext', img: 'ic_annotation_freetext_black_24px', showColor: 'active' },
       AnnotationCreateSticky: { dataElement: 'stickyToolButton', title: 'annotation.stickyNote', img: 'ic_annotation_sticky_note_black_24px', showColor: 'active' },
@@ -179,7 +180,8 @@ export default {
     password: '',
     printQuality: 1,
     passwordAttempts: -1,
-    loadingProgress: 0
+    documentLoadingProgress: 0,
+    workerLoadingProgress: 0
   },
   user: {
     name: getHashParams('user', 'Guest'),
