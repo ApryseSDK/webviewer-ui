@@ -18,6 +18,8 @@ import enableTextSelection from './enableTextSelection';
 import disableTextSelection from './disableTextSelection';
 import enableFilePicker from './enableFilePicker';
 import disableFilePicker from './disableFilePicker';
+import enableMeasurement from './enableMeasurement';
+import disableMeasurement from './disableMeasurement';
 import enableNotesPanel from './enableNotesPanel';
 import disableNotesPanel from './disableNotesPanel';
 import enableAnnotations from './enableAnnotations';
@@ -95,6 +97,8 @@ export default {
   disableTextSelection,
   enableFilePicker,
   disableFilePicker,
+  enableMeasurement,
+  disableMeasurement,
   enableNotesPanel,
   disableNotesPanel,
   enableAnnotations,

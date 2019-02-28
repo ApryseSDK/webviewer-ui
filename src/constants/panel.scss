@@ -45,6 +45,7 @@
   border-left: 1px solid $gray12;
   border-left: 1px solid var(--border-color);
   @include mobile {
+    width: 100%;
     border-left: none;
   }
 }
@@ -58,6 +59,7 @@
   border-right: 1px solid var(--border-color);
   @include mobile {
     z-index: 100; // Need to be above search overlay
+    width: 100%;
     border-right: none;
   }
 }

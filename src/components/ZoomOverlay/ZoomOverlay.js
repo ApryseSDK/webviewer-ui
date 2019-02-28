@@ -41,7 +41,7 @@ class ZoomOverlay extends React.PureComponent {
       this.setState({
         left: left - 20,
         right
-      })
+      });
     }
   }
 
@@ -54,7 +54,7 @@ class ZoomOverlay extends React.PureComponent {
     this.setState({
       left: left - 20,
       right
-    })
+    });
   }
 
   render() { 
@@ -78,12 +78,12 @@ class ZoomOverlay extends React.PureComponent {
             } 
           } 
           buttonName={zoomValue * 100 + '%'}
-          /> 
+          />
           })
         }
         <div className="spacer" />
         <ToolButton toolName="MarqueeZoomTool" showColor="never" />
-    </div>
+      </div>
     );
   }
 }
