@@ -74,6 +74,8 @@ import print from './print';
 import showWarningMessage from './showWarningMessage';
 import enableRedaction from './enableRedaction';
 import disableRedaction from './disableRedaction';
+import enableLocalStorage from './enableLocalStorage';
+import disableLocalStorage from './disableLocalStorage';
 
 export default {
   loadDocument,
@@ -154,5 +156,7 @@ export default {
   setMinZoomLevel,
   showWarningMessage,
   enableRedaction,
-  disableRedaction
+  disableRedaction,
+  enableLocalStorage,
+  disableLocalStorage
 };
