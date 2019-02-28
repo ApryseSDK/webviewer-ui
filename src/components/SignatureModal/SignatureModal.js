@@ -79,6 +79,7 @@ class SignatureModal extends React.PureComponent {
 
   closeModal = () => { 
     this.clearCanvas();
+    this.signatureTool.clearLocation();
     this.props.closeElement('signatureModal');
     core.setToolMode(defaultTool);
   }

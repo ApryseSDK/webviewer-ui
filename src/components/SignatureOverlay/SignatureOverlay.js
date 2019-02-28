@@ -51,6 +51,17 @@ class SignatureOverlay extends React.PureComponent {
       this.props.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'toolsOverlay', 'zoomOverlay', 'toolStylePopup']);
       this.setOverlayPosition();
     }
+
+    const { freeHandAnnot } = this.signatureTool;
+    if (
+      prevProps.isOpen && !this.props.isOpen && 
+      freeHandAnnot && !freeHandAnnot.getPaths().length
+    ) {
+      // location of signatureTool will be set when clicking on a signature widget
+      // we want to clear location when the overlay is closed without selecting any default signatures 
+      // to prevent signature from being drawn to the previous location
+      this.signatureTool.clearLocation();
+    }
   }
 
   componentWillUnmount() {
