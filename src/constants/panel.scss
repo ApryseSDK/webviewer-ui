@@ -45,6 +45,7 @@
   border-left: 1px solid $gray12;
   border-left: 1px solid var(--border-color);
   @include mobile {
+    width: 100%;
     border-left: none;
   }
 }
