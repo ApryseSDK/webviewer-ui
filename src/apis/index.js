@@ -69,6 +69,8 @@ import setNotesPanelSort from './setNotesPanelSort';
 import addSortStrategy from './addSortStrategy';
 import updateOutlines from './updateOutlines';
 import print from './print';
+import enableLocalStorage from './enableLocalStorage';
+import disableLocalStorage from './disableLocalStorage';
 
 export default {
   loadDocument,
@@ -144,5 +146,7 @@ export default {
   getZoomLevel,
   setZoomLevel,
   setMaxZoomLevel,
-  setMinZoomLevel
+  setMinZoomLevel,
+  enableLocalStorage,
+  disableLocalStorage
 };
