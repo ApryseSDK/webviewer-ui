@@ -12,12 +12,7 @@ import Button from 'components/Button';
 
 export default {
   viewer: {
-    disabledElements: {
-      'redactionButton': {
-        //redaction button starts hidden and show up when document is loaded
-        disabled: true
-      }
-    },
+    disabledElements: { },
     openElements: {
       header: true
     },

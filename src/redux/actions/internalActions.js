@@ -1,7 +1,7 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { isIOS, isAndroid } from 'helpers/device';
 import selectors from 'selectors';
-
+import core from 'core';
 
 // viewer
 export const disableElement = (dataElement, priority) => (dispatch, getState) => {
@@ -29,7 +29,12 @@ export const enableElement = (dataElement, priority) => (dispatch, getState) => 
   }
 };
 export const enableElements = (dataElements, priority) => (dispatch, getState) => {
-  const filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
+  let filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
+
+  if (!core.isCreateRedactionEnabled()) {
+    filteredDataElements = filteredDataElements.filter(ele => ele !== 'redactionButton');
+  }
+
   dispatch({ type: 'ENABLE_ELEMENTS', payload: { dataElements: filteredDataElements, priority } });
 };
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
