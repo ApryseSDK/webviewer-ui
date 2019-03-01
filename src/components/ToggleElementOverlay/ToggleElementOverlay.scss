@@ -26,9 +26,11 @@
   display: flex;
   align-items: center;
   &:hover {
+    background-color: #F6F6F6;
     background-color: var(--button-hover-color);
   }
   &.active{
+    background-color: #F0F0F0;
     background-color: var(--button-active-color);
   }
 }
