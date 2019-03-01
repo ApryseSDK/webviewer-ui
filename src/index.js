@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import i18n from 'i18next';
+import i18next from 'i18next';
 import thunk from 'redux-thunk';
 
 import core from 'core';
@@ -121,7 +121,7 @@ if (window.CanvasRenderingContext2D) {
 
     ReactDOM.render(
       <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
+        <I18nextProvider i18n={i18next}>
           <App removeEventHandlers={removeEventHandlers} />
         </I18nextProvider>
       </Provider>,
@@ -173,7 +173,7 @@ if (window.CanvasRenderingContext2D) {
           goToLastPage: apis.goToLastPage(store),
           goToNextPage: apis.goToNextPage(store),
           goToPrevPage: apis.goToPrevPage(store),
-          i18n,
+          i18n: i18next,
           isAdminUser: apis.isAdminUser,
           isElementOpen: apis.isElementOpen(store),
           isElementDisabled: apis.isElementDisabled(store),

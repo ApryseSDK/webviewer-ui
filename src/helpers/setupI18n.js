@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import i18next from 'i18next';
 import XHR from 'i18next-xhr-backend';
 
 export default state => {
@@ -23,9 +23,9 @@ export default state => {
   };
 
   if (state.advanced.disableI18n) {
-    i18n.init(options, callback);
+    i18next.init(options, callback);
   } else {
-    i18n
+    i18next
     .use(XHR)
     .init({ 
       ...options,  

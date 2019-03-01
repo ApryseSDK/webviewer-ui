@@ -39,7 +39,9 @@ class NoteRoot extends React.Component {
   }
 
   onAnnotationChanged = () => {
-    if (this.props.isNoteExpanded) {
+    const { isNoteExpanded } = this.props;
+
+    if (isNoteExpanded) {
       this.forceUpdate();
     }
   }

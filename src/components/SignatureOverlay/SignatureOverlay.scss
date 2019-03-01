@@ -1,0 +1,72 @@
+@import '../../constants/styles';
+@import '../../constants/overlay';
+
+.SignatureOverlay {
+  @extend %overlay;
+
+  top: 46px;
+  width: 232px;
+  border-radius: 4px 0 0 4px;
+  box-shadow: 0 2px 16px 0 #E1E1E3;
+  width: 232px;
+  padding: 0px 16px 16px 16px; 
+}
+
+.default-signatures-container {
+  display: flex;
+  flex-direction: column;
+
+  .default-signature {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+
+    &:first-of-type {
+      margin-top: 16px;
+    }
+
+    .signature-image {
+      background: #F8F8F8;
+      border-radius: 4px 4px 4px 4px;
+      height: 48px;
+      width: 160px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+    }
+  
+    .ActionButton:hover {
+      background: $white;
+    }
+  }
+
+  .add-signature {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    width: 200px;
+    margin-top: 16px;
+    border-radius: 4px 4px 4px 4px;
+    border: 1px solid #00A4E4;
+    font-size: 16px;
+    color: #00A4E4; 
+    cursor: pointer;
+
+    &.disabled {
+      border: 1px solid #E1E1E3;
+      color: #E1E1E3;
+      cursor: default;
+    }
+
+    &.enabled:hover {
+      background: #17324C;
+      border: 1px solid #17324C;
+      color: #FFFFFF;
+    }
+  }
+}
+
