@@ -45,7 +45,9 @@ class RedactionOverlay extends React.PureComponent {
 
       core.setToolMode('AnnotationCreateRedaction');
       setActiveToolGroup('redactTools');
-      this.setState(getOverlayPositionBasedOn('redactionButton', this.overlay));
+      if (this.overlay && this.overlay.current) { 
+        this.setState(getOverlayPositionBasedOn('redactionButton', this.overlay));
+      }
     }
   }
 

@@ -16,6 +16,7 @@ export default store => {
   disableElementsIfToolBarDisabled(dispatch);
   disableElementsIfDesktop(dispatch);
   disableElementsIfMeasurementsDisabled(dispatch);
+  disableElementsIfRedactionsDisabled(dispatch);
 };
 
 const disableElementsPassedByConstructor = (state, dispatch) => {
@@ -88,6 +89,13 @@ const disableElementsIfMeasurementsDisabled = dispatch => {
   const measurementsDisabled = !getHashParams('enableMeasurement', false);
   if (measurementsDisabled) {
     dispatch(actions.disableElement('measurementToolGroupButton', PRIORITY_ONE));
+  }
+};
+
+const disableElementsIfRedactionsDisabled = dispatch => {
+  const redactionsDisabled = !(getHashParams('enableRedaction', false) || core.isCreateRedactionEnabled());
+  if (redactionsDisabled) {
+    dispatch(actions.disableElement('redactionButton', PRIORITY_ONE));
   }
 };
 

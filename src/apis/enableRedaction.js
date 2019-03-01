@@ -1,5 +1,6 @@
 import actions from 'actions';
 import core from 'core';
+import disableRedaction from './disableRedaction';
 
 export default store => (enable = true) =>  {
 
@@ -11,7 +12,6 @@ export default store => (enable = true) =>  {
       console.warn('Full api is not enabled, applying redactions is disabled');
     }
   } else {
-    store.dispatch(actions.disableElement('redactionButton', 1));
-    core.enableRedaction(false);
+    disableRedaction(store)();
   }
 };
