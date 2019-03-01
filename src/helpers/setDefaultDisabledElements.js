@@ -15,6 +15,7 @@ export default store => {
   disableElementsIfHideAnnotationPanel(dispatch);
   disableElementsIfToolBarDisabled(dispatch);
   disableElementsIfDesktop(dispatch);
+  disableElementsIfMeasurementsDisabled(dispatch);
 };
 
 const disableElementsPassedByConstructor = (state, dispatch) => {
@@ -80,6 +81,13 @@ const disableElementsIfToolBarDisabled = dispatch => {
 
   if (toolBarDisabled) {
     dispatch(actions.disableElement('header', PRIORITY_ONE));
+  }
+};
+
+const disableElementsIfMeasurementsDisabled = dispatch => {
+  const measurementsDisabled = !getHashParams('enableMeasurement', false);
+  if (measurementsDisabled) {
+    dispatch(actions.disableElement('measurementToolGroupButton', PRIORITY_ONE));
   }
 };
 

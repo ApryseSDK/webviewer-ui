@@ -6,7 +6,7 @@ import i18next from 'i18next';
  * ideally, this map file should be the only place which provides information about annotations and tools
  * if you are tempted to create a new map file(which maps a tool/annotation to something else) under this constants folder
  * please make sure that it is not possible to implement that map here
- */ 
+ */
 const map = {
   signature: {
     icon: 'ic_annotation_signature_black_24px',
@@ -32,6 +32,30 @@ const map = {
     toolNames: ['AnnotationCreateFreeText'],
     annotationCheck: annotation => annotation instanceof Annotations.FreeTextAnnotation && annotation.getIntent() === Annotations.FreeTextAnnotation.Intent.FreeText
   },
+  distanceMeasurement: {
+    icon: 'ic_annotation_distance_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: [ 'StrokeColor' ],
+    toolNames: ['AnnotationCreateDistanceMeasurement'],
+    annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.IT === 'LineDimension' && annotation.Measure
+  },
+  perimeterMeasurement: {
+    icon: 'ic_annotation_perimeter_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: [ 'StrokeColor' ],
+    toolNames: ['AnnotationCreatePerimeterMeasurement'],
+    annotationCheck: annotation => annotation instanceof Annotations.PolylineAnnotation && annotation.IT === 'PolyLineDimension' && annotation.Measure
+  },
+  areaMeasurement: {
+    icon: 'ic_annotation_area_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: [ 'StrokeColor', 'FillColor' ],
+    toolNames: ['AnnotationCreateAreaMeasurement'],
+    annotationCheck: annotation => annotation instanceof Annotations.PolygonAnnotation && annotation.IT === 'PolygonDimension' && annotation.Measure
+  },
   callout: {
     icon: 'ic_annotation_callout_black_24px',
     iconColor:'TextColor',
@@ -54,7 +78,7 @@ const map = {
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateArrow'],
-    annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.getStartStyle() === 'None' && annotation.getEndStyle() === 'OpenArrow'
+    annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && (annotation.getStartStyle() !== 'None' || annotation.getEndStyle() !== 'None')
   },
   polygon: {
     icon: 'ic_annotation_polygon_black_24px',
@@ -103,6 +127,14 @@ const map = {
     availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateTextStrikeout'],
     annotationCheck: annotation => annotation instanceof Annotations.TextStrikeoutAnnotation
+  },
+  redaction: {
+    icon: 'ic_annotation_redact_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: ['AnnotationCreateRedaction'],
+    annotationCheck: annotation => annotation instanceof Annotations.RedactionAnnotation
   },
   rectangle: {
     icon: 'ic_annotation_square_black_24px',
@@ -168,6 +200,15 @@ const map = {
     toolNames: ['TextSelect'],
     annotationCheck: null,
   },
+
+  marqueeZoomTool: {
+    icon: null,
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: ['MarqueeZoomTool'],
+    annotationCheck: null,
+  }
 };
 
 export const mapToolNameToKey = toolName => Object.keys(map).find(key => map[key].toolNames.includes(toolName));
@@ -205,7 +246,9 @@ export const register = (tool, annotationConstructor) => {
   };
 };
 
-export const getDataWithKey = key => map[key];
+// we return an empty object here to prevent some components from accessing undefined
+// if the map doesn't have a key for some annotations
+export const getDataWithKey = key => map[key] || {};
 
 export const getAnnotationCreateToolNames = () => {
   return Object.values(map).reduce((annotationCreateToolNames, { toolNames, annotationCheck }) => {

@@ -37,7 +37,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ACTIVE_TOOL_NAME':
       return { ...state, activeToolName: payload.toolName };
     case 'SET_ACTIVE_TOOL_STYLES':
-      return { ...state, activeToolStyles: payload.toolStyles };
+      return { ...state, activeToolStyles: { ...payload.toolStyles }};
     case 'SET_ACTIVE_TOOL_NAME_AND_STYLES':
       return { ...state, activeToolName: payload.toolName, activeToolStyles: payload.toolStyles };
     case 'SET_ACTIVE_LEFT_PANEL':
@@ -144,6 +144,12 @@ export default initialState => (state = initialState, action) => {
         cursorOverlay: { imgSrc, width, height } 
       };
     }
+    case 'SET_SWIPE_ORIENTATION':
+      return { ...state, swipeOrientation: payload.swipeOrientation };
+    case 'SET_WARNING_MESSAGE':
+      return { ...state, warning: payload};
+    case 'SET_CUSTOM_NOTE_FILTER':
+      return { ...state, customNoteFilter: payload.customNoteFilter };
     default:
       return state;
   }

@@ -18,6 +18,8 @@ import enableTextSelection from './enableTextSelection';
 import disableTextSelection from './disableTextSelection';
 import enableFilePicker from './enableFilePicker';
 import disableFilePicker from './disableFilePicker';
+import enableMeasurement from './enableMeasurement';
+import disableMeasurement from './disableMeasurement';
 import enableNotesPanel from './enableNotesPanel';
 import disableNotesPanel from './disableNotesPanel';
 import enableAnnotations from './enableAnnotations';
@@ -69,6 +71,11 @@ import setNotesPanelSort from './setNotesPanelSort';
 import addSortStrategy from './addSortStrategy';
 import updateOutlines from './updateOutlines';
 import print from './print';
+import showWarningMessage from './showWarningMessage';
+import enableRedaction from './enableRedaction';
+import disableRedaction from './disableRedaction';
+import enableLocalStorage from './enableLocalStorage';
+import disableLocalStorage from './disableLocalStorage';
 
 export default {
   loadDocument,
@@ -90,6 +97,8 @@ export default {
   disableTextSelection,
   enableFilePicker,
   disableFilePicker,
+  enableMeasurement,
+  disableMeasurement,
   enableNotesPanel,
   disableNotesPanel,
   enableAnnotations,
@@ -144,5 +153,10 @@ export default {
   getZoomLevel,
   setZoomLevel,
   setMaxZoomLevel,
-  setMinZoomLevel
+  setMinZoomLevel,
+  showWarningMessage,
+  enableRedaction,
+  disableRedaction,
+  enableLocalStorage,
+  disableLocalStorage
 };

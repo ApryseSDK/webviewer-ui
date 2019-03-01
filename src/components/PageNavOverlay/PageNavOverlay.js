@@ -29,20 +29,26 @@ class PageNavOverlay extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { currentPage, pageLabels } = this.props;
-    
-    if (prevProps.pageLabels !== pageLabels) {
-      const isCustomPageLabels = pageLabels.some((label, index) => label !== `${index + 1}`);
+    if (prevProps.pageLabels !== this.props.pageLabels) {
+      const isCustomPageLabels = this.props.pageLabels.some((label, index) => label !== `${index + 1}`);
       this.setState({ isCustomPageLabels });   
     }
 
     if (prevProps.currentPage !== this.props.currentPage || prevProps.pageLabels !== this.props.pageLabels) {
-      this.setState({ input: pageLabels[currentPage - 1] });
+      this.setState({ input: this.props.pageLabels[this.props.currentPage - 1] });
     }
 
     if (prevProps.totalPages !== this.props.totalPages && !this.props.isDisabled) {
-      this.textInput.current.style.width = (this.props.totalPages.toString().length * 11.5) + 'px';
+      this.setInputWidth();
     }
+
+    if (prevProps.isDisabled && !this.props.isDisabled) {
+      this.setInputWidth();
+    }
+  }
+  
+  setInputWidth = () => {
+    this.textInput.current.style.width = (this.props.totalPages.toString().length * 11.5) + 'px';
   }
 
   onClick = () => {

@@ -8,6 +8,7 @@ import Header from 'components/Header';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
+import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
@@ -23,11 +24,13 @@ import SignatureModal from 'components/SignatureModal';
 import PrintModal from 'components/PrintModal';
 import LoadingModal from 'components/LoadingModal';
 import ErrorModal from 'components/ErrorModal';
+import WarningModal from 'components/WarningModal';
 import PasswordModal from 'components/PasswordModal';
 import ProgressModal from 'components/ProgressModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
+import ZoomOverlay from 'components/zoomOverlay';
 
 import { isDesktop } from 'helpers/device';
 import actions from 'actions';
@@ -68,6 +71,7 @@ class App extends React.PureComponent {
       'contextMenuPopup',
       'toolStylePopup',
       'textPopup',
+      isDesktop() ? 'redactionOverlay' : '',
       isDesktop() ? 'toolsOverlay' : ''
     ].filter(element => element);
 
@@ -91,11 +95,13 @@ class App extends React.PureComponent {
 
           <SearchOverlay />
           <ViewControlsOverlay />
+          <RedactionOverlay />
           <MenuOverlay />
           <PageNavOverlay />
           <ToolsOverlay />
           <SignatureOverlay />
           <CursorOverlay />
+          <ZoomOverlay />
 
           <AnnotationPopup />
           <TextPopup />
@@ -106,6 +112,7 @@ class App extends React.PureComponent {
           <PrintModal />
           <LoadingModal />
           <ErrorModal />
+          <WarningModal />
           <PasswordModal />
           <ProgressModal />
         </div>
