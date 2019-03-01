@@ -87,7 +87,7 @@ class ToolGroupButton extends React.PureComponent {
 
   render() {
     const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive, toolNames, iconColor } = this.props;
-    const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName) && core.getTool(toolName).disabled);
+    const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName).disabled);
 
     if (isDisabled || allButtonsInGroupDisabled) {
       return null;

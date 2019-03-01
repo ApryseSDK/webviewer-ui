@@ -128,14 +128,14 @@ const map = {
     toolNames: ['AnnotationCreateTextStrikeout'],
     annotationCheck: annotation => annotation instanceof Annotations.TextStrikeoutAnnotation
   },
-  // redaction: {
-  //   icon: 'ic_annotation_redact_black_24px',
-  //   iconColor: 'StrokeColor',
-  //   currentPalette: 'StrokeColor',
-  //   availablePalettes: ['StrokeColor', 'FillColor'],
-  //   toolNames: ['AnnotationCreateRedaction'],
-  //   annotationCheck: annotation => annotation instanceof Annotations.RedactionAnnotation
-  // },
+  redaction: {
+    icon: 'ic_annotation_redact_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: ['AnnotationCreateRedaction'],
+    annotationCheck: annotation => annotation instanceof Annotations.RedactionAnnotation
+  },
   rectangle: {
     icon: 'ic_annotation_square_black_24px',
     iconColor: 'StrokeColor',
