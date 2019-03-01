@@ -73,17 +73,17 @@ class LeftPanel extends React.Component {
     const className = getClassName('Panel LeftPanel', this.props);
 
     return(
-      <div className={className} data-element='leftPanel' onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
-        <div className='left-panel-header'>
-          <div className='close-btn hide-in-desktop hide-in-tablet' onClick={() => closeElement('leftPanel')}>
-            <Icon glyph='ic_close_black_24px' />
+      <div className={className} data-element="leftPanel" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
+        <div className="left-panel-header">
+          <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>
+            <Icon glyph="ic_close_black_24px" />
           </div>
           <LeftPanelTabs />
         </div>
         
         <div 
           ref={this.sliderRef} 
-          className={ this.state.isSliderActive ? 'resize-bar active' : 'resize-bar non-active' }
+          className={this.state.isSliderActive ? 'resize-bar active' : 'resize-bar non-active'}
           onMouseDown={this.dragMouseDown}
           onMouseUp={this.closeDrag}
           onMouseMove={this.dragMouseMove}
