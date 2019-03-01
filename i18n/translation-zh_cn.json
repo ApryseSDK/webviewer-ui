@@ -23,6 +23,7 @@
     "rotateClockwise": "顺时针",
     "rotateCounterClockwise": "逆时针",
     "save": "保存",
+    "create": "创建",
     "showMoreResults": "显示更多结果",
     "sign": "签名",
     "style": "样式",
@@ -132,6 +133,9 @@
     "searchPanel": {
       "caseSensitive": "区分大小写",
       "wholeWordOnly": "整个词语"
+    },
+    "signatureOverlay": {
+      "addSignature": "添加签名"
     },
     "slider": {
       "opacity": "不透明度",

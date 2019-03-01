@@ -27,7 +27,7 @@ export const isElementActive = (state, tool) => {
   const { element, dataElement } = tool;
 
   return isElementOpen(state, element) || tools.some(tool => tool.dataElement === dataElement && tool.toolName === activeToolName);
-}
+};
 
 export const getActiveHeaderItems = state => state.viewer.headers[state.viewer.activeHeaderGroup];
 export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].priority;
@@ -70,6 +70,8 @@ export const isEmbedPrintSupported = state => {
   return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
 };
 export const getColorMap = state => state.viewer.colorMap;
+export const getCursorOverlayData = state => state.viewer.cursorOverlay;
+export const getOpenElements = state => state.viewer.openElements;
 export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].currentPalette;
 export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].iconColor; 
 export const getSwipeOrientation = state => state.viewer.swipeOrientation;

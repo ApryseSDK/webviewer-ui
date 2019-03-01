@@ -23,7 +23,9 @@
     "rotateClockwise": "Clockwise",
     "rotateCounterClockwise": "Counter-clockwise",
     "save": "Save",
+    "create": "Create",
     "showMoreResults": "Show more results",
+    "saveSignature": "Save signature",
     "sign": "Sign",
     "style": "Style",
     "submit": "Submit",
@@ -92,7 +94,7 @@
     "processing": "Processing...",
     "searching": "Searching...",
     "searchPlaceholder": "Search comments...",
-    "signHere": "Sign Here",
+    "signHere": "Sign here",
     "insertTextHere": "Insert text here"
   },
   "option": {
@@ -136,6 +138,9 @@
     "searchPanel": {
       "caseSensitive": "Case sensitive",
       "wholeWordOnly": "Whole word"
+    },
+    "signatureOverlay": {
+      "addSignature": "Add a signature"
     },
     "slider": {
       "opacity": "Opacity",

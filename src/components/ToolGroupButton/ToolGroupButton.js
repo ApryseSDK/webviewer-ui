@@ -12,8 +12,6 @@ import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
-import './ToolGroupButton.scss';
-
 class ToolGroupButton extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,

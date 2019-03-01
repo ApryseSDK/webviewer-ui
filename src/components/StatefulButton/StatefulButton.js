@@ -9,8 +9,12 @@ import selectors from 'selectors';
 
 class StatefulButton extends React.PureComponent {
   static propTypes = {
+    isDisabled: PropTypes.bool,
+    dispatch: PropTypes.func,
+    initialState: PropTypes.string.isRequired,
     mount: PropTypes.func.isRequired,
     unmount: PropTypes.func,
+    didUpdate: PropTypes.func,
     states: PropTypes.shape({
       activeState: PropTypes.shape({
         img: PropTypes.string,
@@ -32,8 +36,22 @@ class StatefulButton extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      activeState: props.mount(this.update)
+      activeState: this.props.initialState
     };
+  }
+
+  componentDidMount() {
+    const { mount } = this.props;
+    if (mount) {
+      mount(this.update);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { didUpdate, states } = this.props;
+    if (didUpdate) {
+      didUpdate(prevProps, this.props, states[prevState.activeState], states[this.state.activeState], this.update);
+    }
   }
 
   componentWillUnmount() {
@@ -57,25 +75,33 @@ class StatefulButton extends React.PureComponent {
     e.stopPropagation();
 
     const { activeState } = this.state;
-    this.props.states[activeState].onClick(this.update, this.props.states[activeState]);
+    const { states, dispatch } = this.props;
+
+    this.props.states[activeState].onClick(this.update, states[activeState], dispatch);
   }
 
   render() {
     const { activeState } = this.state;
-    const { title, img, getContent } = this.props.states[activeState];
-    const content = getContent ? getContent(this.props.states[activeState]) : '';
+    const { states, isDisabled } = this.props;
+    const { title, img, getContent, isActive } = states[activeState];
+    const content = getContent ? getContent(states[activeState]) : '';
+    const className = [
+      'StatefulButton',
+      states[activeState].className ? states[activeState].className : ''
+    ].join(' ').trim();
 
     return (
-      <Tooltip content={title} isDisabled={this.props.isDisabled}>
-        <Button {...this.props} img={img} label={content} onClick={this.onClick} />
+      <Tooltip content={title} isDisabled={isDisabled}>
+        <Button {...this.props} className={className} isActive={isActive && isActive(this.props)} img={img} label={content} onClick={this.onClick} />
       </Tooltip>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  className: 'StatefulButton',
   isDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
+  isOpen: selectors.isElementOpen(state, ownProps.dataElement),
+  openElements: selectors.getOpenElements(state)
 });
 
 export default connect(mapStateToProps)(StatefulButton);

@@ -23,6 +23,7 @@
     "rotateClockwise": "Tourner horaire",
     "rotateCounterClockwise": "Tourner antihoraire",
     "save": "Enregistrer", 
+    "create": "Créer",
     "showMoreResults": "Montrer plus de résultats",
     "sign": "Signer", 
     "style": "Style",
@@ -132,6 +133,9 @@
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",
       "wholeWordOnly": "Mot complet"
+    },
+    "signatureOverlay": {
+      "addSignature": "Ajouter une signature"
     },
     "slider": {
       "opacity": "Opacité",
