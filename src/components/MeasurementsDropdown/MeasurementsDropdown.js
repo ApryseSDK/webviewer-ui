@@ -1,6 +1,7 @@
 import React from 'react';
 
 import core from 'core';
+
 import MeasurementsDropdownItem from '../MeasurementsDropdownItem';
 
 import './MeasurementsDropdown.scss';
@@ -16,22 +17,29 @@ class MeasurementsDropdown extends React.PureComponent {
   render() { 
     const { dropdownList, selectedItem } = this.props;
     const { isDropdownOpen } = this.props;
+    let sortedDropdownList;
+    if (window.innerWidth < 640){
+      sortedDropdownList = dropdownList.filter(item => item !== selectedItem).concat([selectedItem]);
+    } else {
+      sortedDropdownList = [selectedItem].concat(dropdownList.filter(item => item !== selectedItem));
+    }
     return (
     <div className="MeasurementsDropdown">  
-    <MeasurementsDropdownItem 
-      onClick={
-        e=>{
-          e.stopPropagation();
-          this.props.onDropdownChange();
+      { !isDropdownOpen && <MeasurementsDropdownItem 
+        onClick={
+          e=>{
+            e.stopPropagation();
+            this.props.onDropdownChange();
+          }
         }
+        content={selectedItem}
+        />
       }
-      content={selectedItem}
-      />
-        { isDropdownOpen && 
-          dropdownList.map((item, i) => {
-          return <MeasurementsDropdownItem key={i} content={item} onClick={(e)=>{this.onClick(e,item)}} isSelected={item === selectedItem}/>;
-          })
-        }
+      { isDropdownOpen &&
+        sortedDropdownList.map((item, i) => {
+          return <MeasurementsDropdownItem key={i} content={item} onClick={(e)=>{this.onClick(e,item)}} />;
+        })
+      }
     </div>
     );
   }

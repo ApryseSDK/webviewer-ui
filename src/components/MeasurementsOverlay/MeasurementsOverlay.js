@@ -116,7 +116,7 @@ class MeasurementsOverlay extends React.PureComponent {
             onChange={this.onScaleFromChange}
             onBlur={this.onBlur}
           /> 
-          <div className="ScaleDropdown">
+          <div className={["ScaleDropdown", openDropdown === 0 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onScaleFromUnitChange} 
               onDropdownChange={
@@ -137,7 +137,7 @@ class MeasurementsOverlay extends React.PureComponent {
             onChange={this.onScaleToChange}
             onBlur={this.onBlur}
           /> 
-          <div className="ScaleDropdown">
+          <div className={["ScaleDropdown", openDropdown === 1 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onScaleToUnitChange} 
               onDropdownChange={
@@ -157,7 +157,7 @@ class MeasurementsOverlay extends React.PureComponent {
           Precision
         </div>
         <div className="Layout">
-          <div className="PrecisionDropdown">
+          <div className={["PrecisionDropdown", openDropdown === 2 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onPrecisionChange} 
               onDropdownChange={

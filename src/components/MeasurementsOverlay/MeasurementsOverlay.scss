@@ -18,41 +18,53 @@
     text-align:right;
   }
 
+  .Scale{
+    display: flex;
+    margin-top: -6px;
+  }
+  
+  .Precision{
+    display: flex;
+    margin-top: 14px;
+  }
+  
+  .LayoutTitle{
+    margin-left: 16px;
+  }
+  
+  .Layout{
+    position: absolute;
+    display: flex;
+    margin-left: 87px;
+  }
+  
+  .ScaleDropdown{
+    @include mobile{
+      &.open{
+        margin-top: -48px;
+      }
+    }
+    width: 25px;
+    margin-right: 3px;
+    z-index: 2;
+  }
+  
+  .PrecisionDropdown{
+    @include mobile{
+      &.open{
+        z-index: 3;
+        margin-top: -48px;
+      }
+    }
+    margin-left: 3px;
+    width: 65px;
+  }
+  
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+  }
+
 }
 
-.Scale{
-  display: flex;
-  margin-top: -6px;
-}
-
-.Precision{
-  display: flex;
-  margin-top: 14px;
-}
-
-.LayoutTitle{
-  margin-left: 16px;
-}
-
-.Layout{
-  position: absolute;
-  display: flex;
-  margin-left: 87px;
-}
-
-.ScaleDropdown{
-  width: 25px;
-  margin-right: 3px;
-  z-index: 2;
-}
-
-.PrecisionDropdown{
-  margin-left: 3px;
-  width: 65px;
-}
-
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-}
