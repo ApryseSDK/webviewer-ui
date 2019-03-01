@@ -174,7 +174,8 @@ class AnnotationPopup extends React.PureComponent {
     const style = getAnnotationStyle(annotation);
     const hasStyle = Object.keys(style).length > 0;
     const className = getClassName(`Popup AnnotationPopup`, this.props);
-    const redactionEnabled = core.isAnnotationRedactable(annotation);
+    // const redactionEnabled = core.isAnnotationRedactable(annotation);
+    const redactionEnabled = false;
     if (isDisabled) {
       return null;
     }
