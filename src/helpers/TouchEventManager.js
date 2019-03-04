@@ -2,6 +2,7 @@ import core from 'core';
 import { isIOS } from 'helpers/device';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 
 const TouchEventManager = {
   initialize(document, container) {
@@ -146,11 +147,9 @@ const TouchEventManager = {
         break;
       }
       case 'swipe': {
-        const toolName = core.getToolMode().name;
-        const usingAnnotationTools = toolName !== 'AnnotationEdit' && toolName !== 'Pan'; 
         if (
+          this.isUsingAnnotationTools() ||
           core.getSelectedText().length || 
-          usingAnnotationTools || 
           core.getSelectedAnnotations().length
         ) {
           return;
@@ -190,16 +189,21 @@ const TouchEventManager = {
         break;
       }
       case 'doubleTap': {
-        if (this.oldZoom) {
-          this.touch.scale = Math.max(this.oldZoom / this.touch.zoom, getMinZoomLevel() / this.touch.zoom);
-          this.oldZoom = null;
+        if (this.isUsingAnnotationTools()) {
+          const tool = core.getToolMode();
+          tool.finish && tool.finish();
         } else {
-          this.touch.scale = Math.min(3, getMaxZoomLevel() / this.touch.zoom);
-          this.oldZoom = this.touch.zoom;
+          if (this.oldZoom) {
+            this.touch.scale = Math.max(this.oldZoom / this.touch.zoom, getMinZoomLevel() / this.touch.zoom);
+            this.oldZoom = null;
+          } else {
+            this.touch.scale = Math.min(3, getMaxZoomLevel() / this.touch.zoom);
+            this.oldZoom = this.touch.zoom;
+          }
+          const zoom = core.getZoom() * this.touch.scale;
+          const { x, y } = this.getPointAfterScale(); 
+          core.zoomTo(zoom, x, y);
         }
-        const zoom = core.getZoom() * this.touch.scale;
-        const { x, y } = this.getPointAfterScale(); 
-        core.zoomTo(zoom, x, y);
         break;
       }
       case 'pinch': {
@@ -264,6 +268,11 @@ const TouchEventManager = {
 
     return { x, y };
   },
+  isUsingAnnotationTools() {
+    const tool = core.getToolMode();
+    
+    return getDataWithKey(mapToolNameToKey(tool.name)).annotationCheck;
+  }
 };
 
 export default TouchEventManager;
