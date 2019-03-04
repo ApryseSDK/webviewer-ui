@@ -15,9 +15,10 @@ export default store => {
   disableElementsIfFilePickerDisabled(dispatch);
   disableElementsIfHideAnnotationPanel(dispatch);
   disableElementsIfToolBarDisabled(dispatch);
-  disableElementsIfDesktop(dispatch);
   disableElementsIfMeasurementsDisabled(dispatch);
   disableElementsIfRedactionsDisabled(dispatch);
+  disableElementsIfDesktop(dispatch);
+  disableElementsIfMobile(dispatch);
 };
 
 const disableElementsPassedByConstructor = (state, dispatch) => {
@@ -106,5 +107,11 @@ const disableElementsIfDesktop = dispatch => {
   // we could potentially improve the 'hidden' property in the future.
   if (!isMobileDevice) {
     dispatch(actions.disableElement('textSelectButton', PRIORITY_THREE));
+  }
+};
+
+const disableElementsIfMobile = dispatch => {
+  if (isMobileDevice) {
+    dispatch(actions.disableElement('marqueeToolButton', PRIORITY_THREE));
   }
 };
