@@ -1,3 +1,4 @@
+import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import { isMobileDevice } from 'helpers/device';

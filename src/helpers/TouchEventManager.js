@@ -275,5 +275,5 @@ const TouchEventManager = {
   }
 };
 
-export default TouchEventManager;
+export default Object.create(TouchEventManager);
 
