@@ -23,6 +23,7 @@
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
     "save": "Bewaren",
+    "create": "creëren",
     "showMoreResults": "Toon meer resultaten",
     "sign": "Ondertekenen",
     "style": "Opmaak",
@@ -133,6 +134,9 @@
     "searchPanel": {
       "caseSensitive": "Hoofdletter gev..",
       "wholeWordOnly": "Alleen hele woorden"
+    },
+    "signatureOverlay": {
+      "addSignature": "Voeg een handtekening toe"
     },
     "slider": {
       "opacity": "Dekking",

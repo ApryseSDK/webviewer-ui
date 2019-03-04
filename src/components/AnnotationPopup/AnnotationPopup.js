@@ -7,7 +7,7 @@ import AnnotationStylePopup from 'components/AnnotationStylePopup';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
-import getAnnotationStyle from 'helpers/getAnnotationStyle';
+import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import getClassName from 'helpers/getClassName';
 import applyRedactions from 'helpers/applyRedactions';
 import actions from 'actions';
@@ -171,7 +171,7 @@ class AnnotationPopup extends React.PureComponent {
   render() {
     const { annotation, left, top, canModify, isStylePopupOpen } = this.state;
     const { isNotesPanelDisabled, isDisabled, isOpen, isAnnotationStylePopupDisabled } = this.props;
-    const style = getAnnotationStyle(annotation);
+    const style = getAnnotationStyles(annotation);
     const hasStyle = Object.keys(style).length > 0;
     const className = getClassName(`Popup AnnotationPopup`, this.props);
     const redactionEnabled = core.isAnnotationRedactable(annotation);

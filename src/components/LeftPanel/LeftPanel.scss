@@ -26,7 +26,7 @@
     @extend %sub-panel;
   }
 
-  .resize-bar{
+  .resize-bar {
     cursor: col-resize;
     height: 100%;
     margin-bottom: 0;
@@ -45,6 +45,4 @@
       width: 20px;
     }
   }
-
-  
 }

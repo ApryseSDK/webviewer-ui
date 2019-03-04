@@ -5,7 +5,7 @@
  * @return current style of that object. 
  */
 
-const getStyle = annotation => {
+export default annotation => {
   const styleProperty = ['FillColor', 'StrokeColor', 'TextColor', 'Opacity', 'StrokeThickness', 'FontSize'];
   const style = {};
 
@@ -24,5 +24,3 @@ const getStyle = annotation => {
 
   return style;
 };
-
-export default getStyle;
