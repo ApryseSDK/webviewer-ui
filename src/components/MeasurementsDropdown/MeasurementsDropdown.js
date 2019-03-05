@@ -4,8 +4,6 @@ import core from 'core';
 
 import MeasurementsDropdownItem from '../MeasurementsDropdownItem';
 
-import './MeasurementsDropdown.scss';
-
 class MeasurementsDropdown extends React.PureComponent {
 
   onClick = (e,item) => {
@@ -33,11 +31,13 @@ class MeasurementsDropdown extends React.PureComponent {
           }
         }
         content={selectedItem}
-        />
+                           />
       }
       { isDropdownOpen &&
         sortedDropdownList.map((item, i) => {
-          return <MeasurementsDropdownItem key={i} content={item} onClick={(e)=>{this.onClick(e,item)}} />;
+          return <MeasurementsDropdownItem key={i} content={item} onClick={e=>{
+this.onClick(e,item);
+}} />;
         })
       }
     </div>
