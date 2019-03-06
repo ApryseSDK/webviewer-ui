@@ -36,8 +36,9 @@ const webViewerApply = (annotations, dispatch) => {
         message,
         title,
         confirmBtnText,
-        onConfirm: () => { 
-            return core.applyRedactions(annotations).catch(err => fireError(err)); 
+        onConfirm: () => {
+            core.applyRedactions(annotations).catch(err => fireError(err)); 
+            return Promise.resolve();
         }
     };
 
