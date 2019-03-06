@@ -39,7 +39,7 @@ class ToolStylePopup extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
-      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'zoomOverlay', 'redactionOverlay' ]);
+      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay' ]);
       this.positionToolStylePopup();       
     }
 
@@ -121,7 +121,7 @@ class ToolStylePopup extends React.PureComponent {
           isFreeText={isFreeText}
           hideSlider={hideSlider}
           onStyleChange={this.handleStyleChange}
-          isTool={true}
+          isTool
         />
       </div>
     );

@@ -111,7 +111,7 @@ class StylePopup extends React.PureComponent {
             </div>
           </div>
         }
-        <div className="sliders-container" onMouseDown={e => e.preventDefault()} onClick={()=>{this.onOpenDropdownChange(-1)}}>
+        <div className="sliders-container" onMouseDown={e => e.preventDefault()} onClick={() => this.onOpenDropdownChange(-1)}>
           <div className="sliders">
             {!this.props.hideSlider && this.renderSliders()}
           </div>

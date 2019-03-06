@@ -9,7 +9,7 @@ import OutlinesPanel from 'components/OutlinesPanel';
 import CustomElement from 'components/CustomElement';
 import Icon from 'components/Icon';
 
-import { isTabletOrMobile } from 'helpers/device';
+import { isTabletOrMobile, isIE11 } from 'helpers/device';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -33,8 +33,12 @@ class LeftPanel extends React.Component {
 
   componentDidMount(){
     document.body.style.setProperty('--left-panel-width', '300px');
-    this.sliderRef.current.onmousemove = this.dragMouseMove;
-    this.sliderRef.current.onmouseup = this.closeDrag;
+
+    // we are using css variables to make the panel resizable but IE11 doesn't support it
+    if (!isIE11) {
+      this.sliderRef.current.onmousemove = this.dragMouseMove;
+      this.sliderRef.current.onmouseup = this.closeDrag;
+    }
   }
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
@@ -73,22 +77,24 @@ class LeftPanel extends React.Component {
     const className = getClassName('Panel LeftPanel', this.props);
 
     return(
-      <div className={className} data-element='leftPanel' onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
-        <div className='left-panel-header'>
-          <div className='close-btn hide-in-desktop hide-in-tablet' onClick={() => closeElement('leftPanel')}>
-            <Icon glyph='ic_close_black_24px' />
+      <div className={className} data-element="leftPanel" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
+        <div className="left-panel-header">
+          <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>
+            <Icon glyph="ic_close_black_24px" />
           </div>
           <LeftPanelTabs />
         </div>
         
-        <div 
-          ref={this.sliderRef} 
-          className={ this.state.isSliderActive ? 'resize-bar active' : 'resize-bar non-active' }
-          onMouseDown={this.dragMouseDown}
-          onMouseUp={this.closeDrag}
-          onMouseMove={this.dragMouseMove}
-          onMouseLeave={this.closeDrag}
-        />
+        {!isIE11 &&
+          <div
+            ref={this.sliderRef}
+            className={this.state.isSliderActive ? 'resize-bar active' : 'resize-bar non-active'}
+            onMouseDown={this.dragMouseDown}
+            onMouseUp={this.closeDrag}
+            onMouseMove={this.dragMouseMove}
+            onMouseLeave={this.closeDrag}
+          />
+        }
         <NotesPanel display={this.getDisplay('notesPanel')} />
         <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
         <OutlinesPanel display={this.getDisplay('outlinesPanel')} /> 

@@ -54,7 +54,7 @@ class ToggleElementOverlay extends React.PureComponent {
     const { isActive, onClick } = this.props;
     return (
     <div className="ToggleElementOverlay">
-      <div className={[ "OverlayContainer", isActive ? "active" : "" ].join(" ").trim()}> 
+      <div className={[ 'OverlayContainer', isActive ? 'active' : '' ].join(' ').trim()}> 
         <div className="OverlayText">
           <input
             type="number"
@@ -65,9 +65,9 @@ class ToggleElementOverlay extends React.PureComponent {
             onClick={onClick}
             onBlur={this.onBlur}
           />
-          {'%'}
+          <span>%</span>
         </div>
-          <ToggleElementButton className="OverlayButton" img="ic-triangle" element="zoomOverlay" dataElement="zoomOverlay"/>
+        <ToggleElementButton className="OverlayButton" img="ic-triangle" element="zoomOverlay" dataElement="zoomOverlay"/>
       </div>
     </div>
     );
@@ -75,13 +75,13 @@ class ToggleElementOverlay extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isActive: selectors.isElementOpen(state, "zoomOverlay"),
+  isActive: selectors.isElementOpen(state, 'zoomOverlay'),
 });
 
 const mapDispatchToProps = dispatch => ({
   onClick: e => {
     e.stopPropagation();
-    dispatch(actions.toggleElement("zoomOverlay"));
+    dispatch(actions.toggleElement('zoomOverlay'));
   }
 });
 
