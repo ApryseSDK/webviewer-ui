@@ -1,7 +1,7 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { isIOS, isAndroid } from 'helpers/device';
 import selectors from 'selectors';
-
+import core from 'core';
 
 // viewer
 export const disableElement = (dataElement, priority) => (dispatch, getState) => {
@@ -29,7 +29,12 @@ export const enableElement = (dataElement, priority) => (dispatch, getState) => 
   }
 };
 export const enableElements = (dataElements, priority) => (dispatch, getState) => {
-  const filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
+  let filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
+
+  if (!core.isCreateRedactionEnabled()) {
+    filteredDataElements = filteredDataElements.filter(ele => ele !== 'redactionButton');
+  }
+
   dispatch({ type: 'ENABLE_ELEMENTS', payload: { dataElements: filteredDataElements, priority } });
 };
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
@@ -97,12 +102,8 @@ export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outli
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
 export const setPasswordAttempts = attempt => ({ type: 'SET_PASSWORD_ATTEMPTS', payload: { attempt } });
 export const setPrintQuality = quality => ({ type: 'SET_PRINT_QUALITY', payload: { quality } });
-export const setLoadingProgress = loadingProgress => (dispatch, getState) => {
-  const state = getState();
-  if (state.document.loadingProgress < loadingProgress) {
-    dispatch({ type: 'SET_LOADING_PROGRESS', payload: { loadingProgress } });
-  }
-};
+export const setDocumentLoadingProgress = documentLoadingProgress => ({ type: 'SET_DOCUMENT_LOADING_PROGRESS', payload: { documentLoadingProgress }});
+export const setWorkerLoadingProgress = workerLoadingProgress => ({ type: 'SET_WORKER_LOADING_PROGRESS', payload: { workerLoadingProgress }});
 export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
 

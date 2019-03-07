@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import getSignatureDimension from 'helpers/getSignatureDimension';
+import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -15,79 +18,133 @@ class SignatureModal extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
+    t: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
+    setCursorOverlay: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.canvas = React.createRef();
     this.signatureTool = core.getTool('AnnotationCreateSignature');
+    this.initialState = {
+      saveSignature: false,
+      canClear: false,
+    };
+    this.state = this.initialState;
   }
 
   componentDidMount() {
-    this.signatureTool.on('locationSelected', this.onLocationSelected);
-    this.signatureTool.setSignatureCanvas($(this.canvas.current));
+    this.setUpSignatureCanvas(this.canvas.current);
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.updateCanvasSize();
-      this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]);
+      core.setToolMode('AnnotationCreateSignature');
+      this.setState(this.initialState);
+      this.signatureTool.clearSignatureCanvas();
+      this.signatureTool.openSignature();
+      this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]); 
     }
   }
 
-  updateCanvasSize = () => {
-    const width = window.innerWidth > 620 ? 600 : window.innerWidth - 20;
-    const height = window.innerHeight > 466 ? 300 : window.innerHeight - 80 - 96;
-    this.canvas.current.style.width = `${width}px`;
-    this.canvas.current.style.height = `${height}px`;
-    this.canvas.current.width = width * window.utils.getCanvasMultiplier();
-    this.canvas.current.height = height * window.utils.getCanvasMultiplier();
+  setUpSignatureCanvas = canvas => {
+    this.signatureTool.setSignatureCanvas($(canvas));
+    // draw nothing in the background since we want to convert the signature on the canvas
+    // to an image and we don't want the background to be in the image.
+    this.signatureTool.drawBackground = () => {};
+
+    const { width, height } = canvas.getBoundingClientRect();
+    const multiplier = window.utils.getCanvasMultiplier();
+    canvas.width = width;
+    canvas.height = height;
+    canvas.getContext('2d').scale(multiplier, multiplier);   
+    canvas.addEventListener('mouseup', this.handleFinishDrawing);
+    canvas.addEventListener('touchend', this.handleFinishDrawing);
   }
 
-  componentWillUnmount() {
-    this.signatureTool.off('locationSelected', this.onLocationSelected);
+  handleFinishDrawing = e => {
+    if (
+      e.target === e.currentTarget && 
+      !this.signatureTool.isEmptySignature()
+    ) {
+      this.setState({
+        canClear: true,
+        saveSignature: true
+      });
+    }
   }
 
-  onLocationSelected = () => {
-    this.props.openElement('signatureModal');
-    this.signatureTool.openSignature();
-  }
-
-  closeModal = () => {
-    this.signatureTool.clearSignatureCanvas();
+  closeModal = () => { 
+    this.clearCanvas();
+    this.signatureTool.clearLocation();
     this.props.closeElement('signatureModal');
+    core.setToolMode(defaultTool);
   }
 
   clearCanvas = () => {
     this.signatureTool.clearSignatureCanvas();
-    this.signatureTool.drawBackground();
+    this.setState(this.initialState);
   }
 
-  addSignature = () => {
-    this.signatureTool.addSignature();
-    this.closeModal();
+  handleSaveSignatureChange = () => {
+    this.setState(prevState => ({
+      saveSignature: !prevState.saveSignature
+    }));
+  }
+
+  createSignature = () => {
+    const { closeElement, openElement, setCursorOverlay } = this.props;
+    
+    if (!this.signatureTool.isEmptySignature()) {
+      if (this.state.saveSignature) {
+        this.signatureTool.saveDefaultSignature();
+      }
+      if (this.signatureTool.hasLocation()) {
+        this.signatureTool.addSignature();
+      } else {
+        const { imgSrc, width, height } = this.signatureTool.getSignaturePreview();
+        setCursorOverlay({ imgSrc, width, height });
+        openElement('cursorOverlay');
+      }
+      closeElement('signatureModal');
+    }
   }
 
   render() {
-    if (this.props.isDisabled) {
+    const { canClear } = this.state;
+    const { isDisabled, t } = this.props;
+    const className = getClassName('Modal SignatureModal', this.props);
+
+    if (isDisabled) {
       return null;
     }
 
-    const className = getClassName('Modal SignatureModal', this.props);
-
     return (
       <div className={className} onClick={this.closeModal}>
-        <div className="container" onClick={e => e.stopPropagation()}>
+        <div className="container" onClick={e => e.stopPropagation()} onMouseUp={this.handleFinishDrawing}>
           <div className="header">
             <ActionButton dataElement="signatureModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} />
           </div>
-          <canvas ref={this.canvas}></canvas>
+          <div className="signature">
+            <canvas className="signature-canvas" ref={this.canvas}></canvas>
+            <div className="signature-background">
+              <div className="signature-sign-here">
+                {t('message.signHere')}
+              </div>
+              <div className={`signature-clear ${canClear ? 'active': null}`} onClick={this.clearCanvas}>
+                {t('action.clear')}
+              </div>
+            </div>
+          </div>
           <div className="footer">
-            <ActionButton dataElement="signatureModalClearButton" title="action.clear" img="ic_delete_black_24px" onClick={this.clearCanvas} />
-            <ActionButton dataElement="signatureModalSignButton" title="action.sign" img="ic_check_black_24px" onClick={this.addSignature} />
+            <div className="signature-save">
+              <input id="default-signature" type="checkbox" checked={this.state.saveSignature} onChange={this.handleSaveSignatureChange} />
+              <label htmlFor="default-signature">{t('action.saveSignature')}</label>
+            </div>
+            <div className="signature-create" onClick={this.createSignature}>{t('action.create')}</div>
           </div>
         </div>
       </div>
@@ -102,8 +159,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   openElement: actions.openElement,
+  setCursorOverlay: actions.setCursorOverlay, 
   closeElement: actions.closeElement,
   closeElements: actions.closeElements
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignatureModal);
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(SignatureModal));

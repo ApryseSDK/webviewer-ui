@@ -1,0 +1,32 @@
+@import '../../constants/styles';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.ZoomOverlay{
+  position: absolute;
+  top: 46px;
+  width: 146px;
+  height: 455px;
+  z-index: 100;
+  box-shadow: $md-shadow1;
+
+  &.open {
+    display: visible;
+  };
+  &.closed {
+    display: none;
+  }
+
+  .spacer{
+    width: 146px;
+    height: 1px;
+    background: #F0F0F0;
+    background: var(--button-active-color);
+  }
+  
+  .ToolButton{
+    background: white;
+    height: 35px;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+  }
+}

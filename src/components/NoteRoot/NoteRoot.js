@@ -39,7 +39,9 @@ class NoteRoot extends React.Component {
   }
 
   onAnnotationChanged = () => {
-    if (this.props.isNoteExpanded) {
+    const { isNoteExpanded } = this.props;
+
+    if (isNoteExpanded) {
       this.forceUpdate();
     }
   }
@@ -52,7 +54,6 @@ class NoteRoot extends React.Component {
     const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor } = this.props;
     const color = iconColor && annotation[iconColor].toHexString();
     const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
-
     return (
       <div className="title">
         <div className="type">

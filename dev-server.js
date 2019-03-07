@@ -14,7 +14,11 @@ const compiler = webpack(config);
 
 app.use(devMiddleware(compiler, {
 	logLevel: 'warn',
-	publicPath: config.output.publicPath
+	publicPath: config.output.publicPath,
+	watchOptions: {
+		aggregateTimeout: 300,
+		poll: true
+	}
 }));
 app.use(hotMiddleware(compiler));
 

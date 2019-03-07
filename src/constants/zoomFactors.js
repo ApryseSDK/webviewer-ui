@@ -1,5 +1,5 @@
 let minZoom = 0.05;
-let maxZoom = 15;
+let maxZoom = 99.99;
 
 export const getMinZoomLevel = () => minZoom;
 

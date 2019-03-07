@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "应用",
+    "applyAll": "全部申请",
     "cancel": "取消",
     "clear": "清除",
     "close": "关闭",
@@ -12,14 +14,16 @@
     "exitFullscreen": "退出全屏",
     "fit": "文档尺寸",
     "fitToPage": "页面尺寸",
-    "fitToWidth": "自身尺寸", 
+    "fitToWidth": "自身尺寸",
     "openFile": "打开文件",
     "print": "打印",
+    "ok": "好的",
     "reply": "回复",
     "rotate": "旋转",
     "rotateClockwise": "顺时针",
     "rotateCounterClockwise": "逆时针",
     "save": "保存",
+    "create": "创建",
     "showMoreResults": "显示更多结果",
     "sign": "签名",
     "style": "样式",
@@ -43,6 +47,7 @@
     "polygonCloud": "云",
     "polyline": "折线",
     "rectangle": "矩形",
+    "redact": "新版本",
     "signature": "签名",
     "squiggly": "曲线",
     "stamp": "盖章",
@@ -63,6 +68,7 @@
     "textToolsButton": "文本工具",
     "thumbnailsPanel": "缩略图",
     "toolsButton": "工具",
+    "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式"
   },
   "message": {
@@ -119,9 +125,17 @@
       "pages": "页数",
       "includeComments": "包括评论"
     },
+    "redaction": {
+      "markForRedaction":  "标记为编辑",
+      "warningPopupMessage": "此操作将永久删除为编校选择的所有项目。它无法撤消。",
+      "warningPopupTitle":  "应用编辑"
+    },
     "searchPanel": {
       "caseSensitive": "区分大小写",
       "wholeWordOnly": "整个词语"
+    },
+    "signatureOverlay": {
+      "addSignature": "添加签名"
     },
     "slider": {
       "opacity": "不透明度",

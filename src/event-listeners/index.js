@@ -9,6 +9,7 @@ import onToolModeUpdated from './onToolModeUpdated';
 import onZoomUpdated from './onZoomUpdated';
 import onPageNumberUpdated from './onPageNumberUpdated';
 import onStampAnnotationAdded from './onStampAnnotationAdded';
+import onSignatureAnnotationAdded from './onSignatureAnnotationAdded';
 import onAnnotationSelected from './onAnnotationSelected';
 import onAnnotationChanged from './onAnnotationChanged';
 import onStickyAnnotationAdded from './onStickyAnnotationAdded';
@@ -16,6 +17,7 @@ import onKeyDown from './onKeyDown';
 import onFullScreenChange from './onFullScreenChange';
 import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
 import onLayoutChanged from './onLayoutChanged';
+import onLocationSelected from './onLocationSelected';
 
 export {
   onBeforeDocumentLoaded,
@@ -29,11 +31,13 @@ export {
   onZoomUpdated,
   onPageNumberUpdated,
   onStampAnnotationAdded,
+  onSignatureAnnotationAdded,
   onAnnotationSelected,
   onAnnotationChanged,
   onStickyAnnotationAdded,
   onKeyDown,
   onFullScreenChange,
   onUpdateAnnotationPermission,
-  onLayoutChanged
+  onLayoutChanged,
+  onLocationSelected
 };
