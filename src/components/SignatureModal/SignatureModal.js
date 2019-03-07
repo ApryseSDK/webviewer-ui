@@ -37,7 +37,9 @@ class SignatureModal extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.setUpSignatureCanvas(this.canvas.current);
+    this.setUpSignatureCanvas();
+    window.addEventListener('resize', this.setSignatureCanvasSize);
+    window.addEventListener('orientationchange', this.setSignatureCanvasSize);
   }
 
   componentDidUpdate(prevProps) {
@@ -50,19 +52,30 @@ class SignatureModal extends React.PureComponent {
     }
   }
 
-  setUpSignatureCanvas = canvas => {
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setSignatureCanvasSize);
+    window.removeEventListener('orientationchange', this.setSignatureCanvasSize);
+  }
+
+  setUpSignatureCanvas = () => {
+    const canvas = this.canvas.current;
     this.signatureTool.setSignatureCanvas($(canvas));
     // draw nothing in the background since we want to convert the signature on the canvas
     // to an image and we don't want the background to be in the image.
     this.signatureTool.drawBackground = () => {};
-
-    const { width, height } = canvas.getBoundingClientRect();
+    
     const multiplier = window.utils.getCanvasMultiplier();
-    canvas.width = width;
-    canvas.height = height;
     canvas.getContext('2d').scale(multiplier, multiplier);   
     canvas.addEventListener('mouseup', this.handleFinishDrawing);
     canvas.addEventListener('touchend', this.handleFinishDrawing);
+    this.setSignatureCanvasSize();
+  }
+
+  setSignatureCanvasSize = () => {
+    const canvas = this.canvas.current;
+    const { width, height } = canvas.getBoundingClientRect();
+    canvas.width = width;
+    canvas.height = height;
   }
 
   handleFinishDrawing = e => {

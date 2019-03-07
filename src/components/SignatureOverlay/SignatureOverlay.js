@@ -78,7 +78,7 @@ class SignatureOverlay extends React.PureComponent {
     const { left, right } = getOverlayPositionBasedOn('signatureToolButton', this.overlay);
     this.setState({ 
       // TODO: remove the hard-coded value. 
-      left: left - 95,
+      left: left === 0 ? window.innerWidth / 2 - 95 : left - 95,
       right 
     });
   }
