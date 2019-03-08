@@ -97,6 +97,7 @@ export const setDocumentFile = documentFile => ({ type: 'SET_DOCUMENT_FILE', pay
 export const setDocumentType = type => ({ type: 'SET_DOCUMENT_TYPE', payload: { type }});
 export const setPDFDoc = pdfDoc => ({ type: 'SET_PDF_DOC', payload: { pdfDoc }});
 export const setFilename = filename => ({ type: 'SET_FILENAME', payload: { filename } });
+export const setExtension = extension => ({ type: 'SET_EXTENSION', payload: { extension } });
 export const setTotalPages = totalPages => ({ type: 'SET_TOTAL_PAGES', payload: { totalPages } });
 export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outlines } });
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });

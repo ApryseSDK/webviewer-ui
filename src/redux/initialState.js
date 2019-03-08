@@ -164,6 +164,7 @@ export default {
     initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
     path: null,
     filename: null,
+    ext: getHashParams('extension', null),
     file: null,
     type: null,
     pdfDoc: null,

@@ -16,6 +16,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, pageNumber: payload.documentPageNumber };
     case 'SET_FILENAME':
       return { ...state, filename: payload.filename };
+    case 'SET_EXTENSION':
+      return { ...state, ext: payload.extension };
     case 'SET_TOTAL_PAGES':
       return { ...state, totalPages: payload.totalPages };
     case 'SET_OUTLINES':
