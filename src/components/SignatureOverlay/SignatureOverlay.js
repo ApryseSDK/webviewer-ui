@@ -20,6 +20,7 @@ class SignatureOverlay extends React.PureComponent {
   static propTypes = {
     isOpen: PropTypes.bool,
     isDisabled: PropTypes.bool,
+    isSignatureModalOpen: PropTypes.bool,
     closeElements: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
@@ -55,6 +56,7 @@ class SignatureOverlay extends React.PureComponent {
     const { freeHandAnnot } = this.signatureTool;
     if (
       prevProps.isOpen && !this.props.isOpen && 
+      !this.props.isSignatureModalOpen &&
       freeHandAnnot && !freeHandAnnot.getPaths().length
     ) {
       // location of signatureTool will be set when clicking on a signature widget
@@ -78,7 +80,7 @@ class SignatureOverlay extends React.PureComponent {
     const { left, right } = getOverlayPositionBasedOn('signatureToolButton', this.overlay);
     this.setState({ 
       // TODO: remove the hard-coded value. 
-      left: left - 95,
+      left: left === 0 ? window.innerWidth / 2 - 95 : left - 95,
       right 
     });
   }
@@ -206,7 +208,8 @@ class SignatureOverlay extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'signatureOverlay'),
-  isOpen: selectors.isElementOpen(state, 'signatureOverlay')
+  isOpen: selectors.isElementOpen(state, 'signatureOverlay'),
+  isSignatureModalOpen: selectors.isElementOpen(state, 'signatureModal')
 });
 
 const mapDispatchToProps = {
