@@ -108,7 +108,7 @@ class PrintModal extends React.PureComponent {
 
       const printableAnnotations = this.getPrintableAnnotations(pageNumber);
       if (this.includeComments.current.checked && printableAnnotations.length) {
-        const sortedNotes = getSortStrategies()[this.props.sortStrategy].getSortedNotes({ notes: printableAnnotations });
+        const sortedNotes = getSortStrategies()[this.props.sortStrategy].getSortedNotes(printableAnnotations);
         creatingPages.push(this.creatingNotesPage(sortedNotes, pageNumber));
       }
     });

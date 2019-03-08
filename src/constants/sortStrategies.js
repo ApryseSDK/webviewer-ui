@@ -1,26 +1,24 @@
 import i18next from 'i18next';
 import dayjs from 'dayjs';
-import core from 'core';
-import getLatestActivityDate from 'helpers/getLatestActivityDate';
+import orientationManager from 'helpers/orientationManager';
 import { rotateRad } from 'helpers/rotate';
+import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
 const sortStrategies = {
   position: {
-    getSortedNotes: ({ notes, rotation = 0 }) => notes.sort((a, b) => {
+    getSortedNotes: notes => notes.sort((a, b) => {
       if (a.PageNumber === b.PageNumber) {
-        const { width, height } = core.getPageInfo(a.PageNumber);
-
-        const originX = width / 2;
-        const originY = height / 2;
+        const rotation = orientationManager.getRotationRad(a.PageNumber);
+        const center = orientationManager.getDocumentCenter(a.PageNumber);
 
         // Simulated with respect to the document origin
         const rotatedA = [
-          rotateRad(originX, originY, a.X, a.Y, rotation),
-          rotateRad(originX, originY, a.X + a.Width, a.Y + a.Height, rotation),
+          rotateRad(center.x, center.y, a.X, a.Y, rotation),
+          rotateRad(center.x, center.y, a.X + a.Width, a.Y + a.Height, rotation),
         ];
         const rotatedB = [
-          rotateRad(originX, originY, b.X, b.Y, rotation),
-          rotateRad(originX, originY, b.X + b.Width, b.Y + b.Height, rotation),
+          rotateRad(center.x, center.y, b.X, b.Y, rotation),
+          rotateRad(center.x, center.y, b.X + b.Width, b.Y + b.Height, rotation),
         ];
 
         const smallestA = rotatedA.reduce((smallest, current) => current.y < smallest ? current.y : smallest, Number.MAX_SAFE_INTEGER);

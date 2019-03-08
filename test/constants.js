@@ -17,7 +17,7 @@ export default {
   },
   sortStrategy: {
     name: 'annotationType',
-    getSortedNotes: ({ notes }) => {
+    getSortedNotes: notes => {
       return notes.sort((a ,b) => {
         if (a.Subject < b.Subject) return -1;
         if (a.Subject > b.Subject) return 1;
