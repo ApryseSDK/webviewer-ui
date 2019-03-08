@@ -36,6 +36,7 @@ export const getActiveToolGroup = state => state.viewer.activeToolGroup;
 export const getNotePopupId = state => state.viewer.notePopupId;
 export const isNoteExpanded = (state, id) => !!state.viewer.expandedNotes[id];
 export const isNoteEditing = (state, id) => state.viewer.isNoteEditing && isNoteExpanded(state, id);
+export const isAnnotationFocused = (state, id) => Object.keys(state.viewer.expandedNotes).length === 1 && isNoteExpanded(state, id); // Considered focused when it is the only annotation selected
 export const getFitMode = state => state.viewer.fitMode;
 export const getZoom = state => state.viewer.zoom;
 export const getDisplayMode = state => state.viewer.displayMode;
