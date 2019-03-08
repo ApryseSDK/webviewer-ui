@@ -149,7 +149,7 @@ class NotesPanel extends React.PureComponent {
     return(
       <React.Fragment>
         <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
-          {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
+          {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes({ notes: this.rootAnnotations, rotation: this.props.pageRotation }))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
           {this.props.t('message.noResults')}
@@ -221,6 +221,7 @@ const mapStatesToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state),
+  pageRotation: selectors.getRotation(state),
   customNoteFilter: selectors.getCustomNoteFilter(state)
 });
 

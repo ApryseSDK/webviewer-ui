@@ -41,6 +41,8 @@ export const getZoom = state => state.viewer.zoom;
 export const getDisplayMode = state => state.viewer.displayMode;
 export const getCurrentPage = state => state.viewer.currentPage;
 export const getSortStrategy = state => state.viewer.sortStrategy;
+export const getRotation = state => state.viewer.rotation;
+export const getRotationDeg = state => getRotation(state) * (180/Math.PI);
 export const getNoteDateFormat = state => state.viewer.noteDateFormat;
 export const isFullScreen = state => state.viewer.isFullScreen;
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
