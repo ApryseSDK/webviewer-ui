@@ -18,6 +18,7 @@ class Note extends React.PureComponent {
     annotation: PropTypes.object.isRequired,
     isNoteEditing: PropTypes.bool.isRequired,
     isNoteExpanded: PropTypes.bool.isRequired,
+    isAnnotationFocused: PropTypes.bool,
     setIsNoteEditing: PropTypes.func.isRequired,
     searchInput: PropTypes.string,
     isReadOnly: PropTypes.bool,
@@ -35,6 +36,7 @@ class Note extends React.PureComponent {
       isRootContentEditing: false,
       isReplyFocused: false
     };
+    this.containerRef = React.createRef();
   }
 
   componentDidMount() {
@@ -47,6 +49,7 @@ class Note extends React.PureComponent {
     const commentEditable = core.canModify(annotation) && !annotation.getContents();
     const noteBeingEdited = !prevProps.isNoteEditing && this.props.isNoteEditing;
     const noteCollapsed = prevProps.isNoteExpanded && !this.props.isNoteExpanded;
+    const annotationWasFocused = !prevProps.isAnnotationFocused && this.props.isAnnotationFocused;
 
     if (noteBeingEdited) {
       if (commentEditable) {
@@ -61,6 +64,10 @@ class Note extends React.PureComponent {
         isRootContentEditing: false,
         isReplyFocused: false
       });
+    }
+
+    if (annotationWasFocused) {
+      this.scrollIntoView();
     }
   }
 
@@ -97,6 +104,10 @@ class Note extends React.PureComponent {
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
     }
+  }
+
+  scrollIntoView = () => {
+    this.containerRef.current.scrollIntoView();
   }
 
   openRootEditing = () => {
@@ -205,7 +216,7 @@ class Note extends React.PureComponent {
     ].join(' ').trim();
 
     return (
-      <div className={className} onClick={this.onClickNote}>
+      <div ref={this.containerRef} className={className} onClick={this.onClickNote}>
         <NoteRoot
           annotation={annotation}
           contents={rootContents}
@@ -256,6 +267,7 @@ class Note extends React.PureComponent {
 const mapStateToProps = (state, ownProps) => ({
   isNoteExpanded: selectors.isNoteExpanded(state, ownProps.annotation.Id),
   isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
+  isAnnotationFocused: selectors.isAnnotationFocused(state, ownProps.annotation.Id),
   isReadOnly: selectors.isDocumentReadOnly(state),
   isReplyDisabled: selectors.isElementDisabled(state, 'noteReply')
 });
