@@ -1,0 +1,23 @@
+@import '../../constants/styles';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.OverlayItem{
+  width: 146px;
+  height: 35px;
+  background-color: #FFFFFF;
+  background-color: var(--primary-color);
+  color: #333333;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: normal;
+  font-family: 'Roboto', sans-serif;
+  &:hover{
+    background-color: #F6F6F6;
+    background-color: var(--button-hover-color);
+  }
+
+  .ButtonText{
+    line-height: 2.4;
+    margin-left: 19px;
+  }
+}

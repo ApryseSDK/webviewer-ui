@@ -34,7 +34,8 @@ class Note extends React.PureComponent {
     this.state = {
       replies: props.annotation.getReplies(),
       isRootContentEditing: false,
-      isReplyFocused: false
+      isReplyFocused: false,
+      isEmpty: true
     };
     this.containerRef = React.createRef();
   }
@@ -120,6 +121,7 @@ class Note extends React.PureComponent {
   }
 
   onChange = () => {
+    this.setState({ isEmpty: this.replyTextarea.current.value.length === 0 });
     this.replyTextarea.current.style.height = '30px';
     this.replyTextarea.current.style.height = (this.replyTextarea.current.scrollHeight + 2) + 'px';
   }
@@ -144,6 +146,8 @@ class Note extends React.PureComponent {
 
   postReply = e => {
     e.preventDefault();
+
+    this.setState({ isEmpty: true });
 
     if (this.replyTextarea.current.value.trim().length > 0) {
       core.createAnnotationReply(this.props.annotation, this.replyTextarea.current.value);
@@ -241,7 +245,7 @@ class Note extends React.PureComponent {
             />
           )}
           {!isReadOnly && !isReplyDisabled &&
-            <div className="add-reply" data-element="noteReply" onClick={e => e.stopPropagation()}>
+            <div className={isRootContentEditing ? 'replies hidden' : 'add-reply'} onClick={e => e.stopPropagation()}>
               <textarea
                 ref={this.replyTextarea}
                 onChange={this.onChange}
@@ -252,7 +256,7 @@ class Note extends React.PureComponent {
               />
               {isReplyFocused &&
                 <div className="buttons" onMouseDown={e => e.preventDefault()}>
-                  <button onMouseDown={this.postReply}>{t('action.reply')}</button>
+                  <button className={this.state.isEmpty ? 'disabled' : ''} onMouseDown={this.postReply}>{t('action.reply')}</button>
                   <button onMouseDown={this.onClickCancel}>{t('action.cancel')}</button>
                 </div>
               }

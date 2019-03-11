@@ -223,7 +223,7 @@ const getEngineType = state => {
   } else if (isPDFNetJSExtension(fileExtension)) {
     return engineTypes.PDFNETJS;
   } else {
-    return engineTypes.UNIVERSAL;
+    return engineTypes.PDFNETJS;
   }
 };
 
@@ -240,7 +240,7 @@ export const getDocumentExtension = (doc, engineType) => {
       console.error(`File extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWebViewer server supports ${supportedBlackboxExtensions.join(', ')}`);
     }
   } else if (doc && engineType === engineTypes.AUTO) {
-    console.warn(`File extension cannot be determined from ${doc}. Falling back to xod`);
+    console.warn(`File extension cannot be determined from ${doc}. Falling back to pdf`);
   }
 
   return extension ? extension : '';
@@ -299,7 +299,7 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
 
 const isLocalFile = state => {
   const path = selectors.getDocumentPath(state);
-  
+
   return !/https?:\/\//.test(path);
 };
 

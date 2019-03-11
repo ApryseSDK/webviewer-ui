@@ -1,0 +1,60 @@
+@import '../../constants/styles';
+
+.ToggleElementOverlay{
+  height: $button-height;  
+  width: auto;
+  top:0;
+
+  .textarea{
+    resize: none;
+    border: none;
+    outline: none;
+    color: #757575;
+    background-color: transparent;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin-top: -2px;
+    margin-right: 2px;
+    width: 42px;
+    height: $top-bar-height;
+    line-height: 42px;
+    text-align: right;
+  }
+}
+
+.OverlayContainer{
+  display: flex;
+  align-items: center;
+  &:hover {
+    background-color: #F6F6F6;
+    background-color: var(--button-hover-color);
+  }
+  &.active{
+    background-color: #F0F0F0;
+    background-color: var(--button-active-color);
+  }
+}
+
+.OverlayText{
+  margin-right:-8px;
+  color: #757575;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  height: $button-height;
+  line-height: $button-height;
+  // height: 19px;
+  text-align: center;
+  display: flex;
+  z-index: 1;
+  background-color: inherit;
+  &:hover + .OverlayButton{
+    background-color:inherit;
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

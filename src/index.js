@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import i18n from 'i18next';
+import i18next from 'i18next';
 import thunk from 'redux-thunk';
 
 import core from 'core';
@@ -63,8 +63,8 @@ if (window.CanvasRenderingContext2D) {
 
   window.CoreControls.enableSubzero(state.advanced.subzero);
   if (process.env.NODE_ENV === 'production') {
-    window.CoreControls.setWorkerPath('../../core/');
-    window.CoreControls.setResourcesPath('../../core/assets/');
+    window.CoreControls.setWorkerPath('../../core');
+    window.CoreControls.setResourcesPath('../../core/assets');
   }
 
   try {
@@ -121,7 +121,7 @@ if (window.CanvasRenderingContext2D) {
 
     ReactDOM.render(
       <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
+        <I18nextProvider i18n={i18next}>
           <App removeEventHandlers={removeEventHandlers} />
         </I18nextProvider>
       </Provider>,
@@ -140,6 +140,7 @@ if (window.CanvasRenderingContext2D) {
           disableFilePicker: apis.disableFilePicker(store),
           disableLocalStorage: apis.disableLocalStorage,
           disableNotesPanel: apis.disableNotesPanel(store),
+          disableMeasurement: apis.disableMeasurement(store),
           disablePrint: apis.disablePrint(store),
           disableTextSelection: apis.disableTextSelection(store),
           disableTool: apis.disableTool(store),
@@ -149,9 +150,12 @@ if (window.CanvasRenderingContext2D) {
           enableAnnotations: apis.enableAnnotations(store),
           enableDownload: apis.enableDownload(store),
           enableFilePicker: apis.enableFilePicker(store),
+          enableMeasurement: apis.enableMeasurement(store),
           enableLocalStorage: apis.enableLocalStorage,
           enableNotesPanel: apis.enableNotesPanel(store),
           enablePrint: apis.enablePrint(store),
+          enableRedaction: apis.enableRedaction(store),
+          disableRedaction: apis.disableRedaction(store),
           enableTextSelection: apis.enableTextSelection(store),
           enableTool: apis.enableTool(store),
           enableTools: apis.enableTools(store),
@@ -169,7 +173,7 @@ if (window.CanvasRenderingContext2D) {
           goToLastPage: apis.goToLastPage(store),
           goToNextPage: apis.goToNextPage(store),
           goToPrevPage: apis.goToPrevPage(store),
-          i18n,
+          i18n: i18next,
           isAdminUser: apis.isAdminUser,
           isElementOpen: apis.isElementOpen(store),
           isElementDisabled: apis.isElementDisabled(store),
@@ -205,6 +209,7 @@ if (window.CanvasRenderingContext2D) {
           setSideWindowVisibility: apis.setSideWindowVisibility(store),
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
+          showWarningMessage: apis.showWarningMessage(store),
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store),

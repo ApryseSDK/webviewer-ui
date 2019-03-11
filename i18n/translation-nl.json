@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "Toepassen",
+    "applyAll": "Alles toepassen",
     "cancel": "Annuleren",
     "clear": "Legen",
     "close": "Sluiten",
@@ -15,11 +17,13 @@
     "fitToWidth": "Zoomen naar vensterbreedte",
     "openFile": "Open bestand",
     "print": "Printen",
+    "ok": "OK",
     "reply": "Antwoorden",
     "rotate": "Roteren",
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
     "save": "Bewaren",
+    "create": "creëren",
     "showMoreResults": "Toon meer resultaten",
     "sign": "Ondertekenen",
     "style": "Opmaak",
@@ -42,6 +46,7 @@
     "polygon": "Veelhoek",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
+    "redact": "Redigeren",
     "rectangle": "Rechthoek",
     "signature": "Handtekening",
     "squiggly": "Squiggly",
@@ -63,6 +68,7 @@
     "textToolsButton": "Tekst tools",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
+    "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "minimizeButton": "Document normaal weergeven"
   },
@@ -120,9 +126,17 @@
       "pages": "Pagina's",
       "includeComments": "Inclusief commentaar"
     },
+    "redaction": {
+      "markForRedaction": "Markeren voor redactie",
+      "warningPopupMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
+      "warningPopupTitle": "Redactiewijziging Toepassen"
+    },
     "searchPanel": {
       "caseSensitive": "Hoofdletter gev..",
       "wholeWordOnly": "Alleen hele woorden"
+    },
+    "signatureOverlay": {
+      "addSignature": "Voeg een handtekening toe"
     },
     "slider": {
       "opacity": "Dekking",

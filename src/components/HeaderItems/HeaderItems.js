@@ -7,6 +7,7 @@ import ToggleElementButton from 'components/ToggleElementButton';
 import ActionButton from 'components/ActionButton';
 import StatefulButton from 'components/StatefulButton';
 import CustomElement from 'components/CustomElement';
+import statefulButtons from 'constants/statefulButtons';
 
 import './HeaderItems.scss';
 
@@ -20,7 +21,7 @@ class HeaderItems extends React.PureComponent {
       <div className="HeaderItems">
         {this.props.items.map((item, i) => {
           const { type, dataElement, hidden } = item;
-          const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
+          const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : `${item.className || ''}`;
           const key = `${type}-${dataElement || i}`;
 
           switch (type) {
@@ -32,9 +33,11 @@ class HeaderItems extends React.PureComponent {
               return <ToggleElementButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'actionButton':
               return <ActionButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-            case 'statefulButton':
-              return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-            case 'customElement':
+            case 'statefulButton': {
+              const props = statefulButtons[dataElement] || {};
+              return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} {...props} />;
+            }
+            case 'customElement': 
               return <CustomElement key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'spacer':
             case 'divider':
