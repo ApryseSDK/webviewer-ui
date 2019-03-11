@@ -12,7 +12,7 @@ import apis from 'src/apis';
 
 import App from 'components/App';
 import rootReducer from 'reducers/rootReducer';
-import { engineTypes } from 'constants/types';
+import { engineTypes, documentTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
@@ -85,16 +85,33 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
-  if (state.advanced.preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
-    if (state.document.pdfType !== 'wait') {
-      getBackendPromise(state.document.pdfType).then(pdfType => {
-        window.CoreControls.preloadPDFWorker(pdfType, {}, {});
+  // if (state.advanced.preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
+  //   if (state.document.pdfType !== 'wait') {
+  //     getBackendPromise(state.document.pdfType).then(pdfType => {
+  //       window.CoreControls.preloadPDFWorker(pdfType, {}, {});
+  //     });
+  //   }
+  //
+  //   if (state.document.officeType !== 'wait') {
+  //     getBackendPromise(state.document.officeType).then(officeType => {
+  //       window.CoreControls.preloadOfficeWorker(officeType, {}, {});
+  //     });
+  //   }
+  // }
+
+  const { preloadWorker } = state.advanced
+  const { PDF, OFFICE, ALL } = documentTypes
+
+  if (preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
+    if (preloadWorker === PDF || preloadWorker === ALL) {
+      getBackendPromise('auto').then(backendType => {
+        window.CoreControls.preloadPDFWorker(backendType, {}, {});
       });
     }
 
-    if (state.document.officeType !== 'wait') {
-      getBackendPromise(state.document.officeType).then(officeType => {
-        window.CoreControls.preloadOfficeWorker(officeType, {}, {});
+    if (preloadWorker === OFFICE || preloadWorker === ALL) {
+      getBackendPromise('auto').then(backendType => {
+        window.CoreControls.preloadOfficeWorker(backendType, {}, {});
       });
     }
   }

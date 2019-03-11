@@ -27,7 +27,7 @@ export default {
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
         { type: 'customElement',
-          render: () => <ToggleElementOverlay />, 
+          render: () => <ToggleElementOverlay />,
           dataElement: 'zoomOverlayButton',
           hidden: [ 'mobile' ],
           element: 'zoomOverlay'
@@ -192,7 +192,7 @@ export default {
     configScript: getHashParams('config', ''),
     defaultDisabledElements: getHashParams('disabledElements', ''),
     externalPath: getHashParams('p', ''),
-    engineType: documentTypeParamToEngineType(getHashParams('documentType'), getHashParams('pdftronServer', '')),
+    engineType: documentTypeParamToEngineType(getHashParams('preloadWorker'), getHashParams('pdftronServer', '')),
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
     disableWebsockets: getHashParams('disableWebsockets', false),
