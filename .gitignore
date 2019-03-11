@@ -12,3 +12,5 @@ tests
 jest.config.js
 package-lock.json
 .eslintignore
+cypress
+src/index.dev.html
