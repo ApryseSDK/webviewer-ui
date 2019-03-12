@@ -66,6 +66,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, fitMode: payload.fitMode };
     case 'SET_ZOOM':
       return { ...state, zoom: payload.zoom };
+    case 'SET_ROTATION':
+      return { ...state, rotation: payload.rotation }
     case 'SET_DISPLAY_MODE':
       return { ...state, displayMode: payload.displayMode };
     case 'SET_CURRENT_PAGE':

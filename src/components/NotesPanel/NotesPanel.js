@@ -201,7 +201,9 @@ class NotesPanel extends React.PureComponent {
 const mapStatesToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
-  pageLabels: selectors.getPageLabels(state)
+  pageLabels: selectors.getPageLabels(state),
+  pageRotation: selectors.getRotation(state),
+  customNoteFilter: selectors.getCustomNoteFilter(state)
 });
 
 export default connect(mapStatesToProps)(translate()(NotesPanel));
