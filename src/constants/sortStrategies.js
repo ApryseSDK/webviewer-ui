@@ -32,7 +32,7 @@ const sortStrategies = {
     getSeparatorContent: (prevNote, currNote, { pageLabels }) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`
   },
   time: {
-    getSortedNotes: ({ notes }) => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
+    getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
     shouldRenderSeparator: (prevNote, currNote) => dayjs(getLatestActivityDate(prevNote)).format('MMM D, YYYY') !== dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY'),
     getSeparatorContent: (prevNote, currNote) => {
       const today = dayjs(new Date()).format('MMM D, YYYY');
