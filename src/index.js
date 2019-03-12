@@ -85,33 +85,20 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
-  // if (state.advanced.preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
-  //   if (state.document.pdfType !== 'wait') {
-  //     getBackendPromise(state.document.pdfType).then(pdfType => {
-  //       window.CoreControls.preloadPDFWorker(pdfType, {}, {});
-  //     });
-  //   }
-  //
-  //   if (state.document.officeType !== 'wait') {
-  //     getBackendPromise(state.document.officeType).then(officeType => {
-  //       window.CoreControls.preloadOfficeWorker(officeType, {}, {});
-  //     });
-  //   }
-  // }
 
   const { preloadWorker } = state.advanced
   const { PDF, OFFICE, ALL } = documentTypes
 
-  if (preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
+  if (preloadWorker) {
     if (preloadWorker === PDF || preloadWorker === ALL) {
-      getBackendPromise('auto').then(backendType => {
-        window.CoreControls.preloadPDFWorker(backendType, {}, {});
+      getBackendPromise(state.document.pdfType).then(backendType => {
+        window.CoreControls.initPDFWorkerTransports(backendType, {}, window.sampleL);
       });
     }
 
     if (preloadWorker === OFFICE || preloadWorker === ALL) {
-      getBackendPromise('auto').then(backendType => {
-        window.CoreControls.preloadOfficeWorker(backendType, {}, {});
+      getBackendPromise(state.document.officeType).then(backendType => {
+        window.CoreControls.initOfficeWorkerTransports(backendType, {}, window.sampleL);
       });
     }
   }
