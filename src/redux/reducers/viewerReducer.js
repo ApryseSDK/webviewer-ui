@@ -67,7 +67,11 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ZOOM':
       return { ...state, zoom: payload.zoom };
     case 'SET_ROTATION':
+<<<<<<< HEAD
       return { ...state, rotation: payload.rotation };
+=======
+      return { ...state, rotation: payload.rotation }
+>>>>>>> 70c479f... [bugfix] resolves #179 (#193)
     case 'SET_DISPLAY_MODE':
       return { ...state, displayMode: payload.displayMode };
     case 'SET_CURRENT_PAGE':
