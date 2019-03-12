@@ -213,6 +213,7 @@ if (window.CanvasRenderingContext2D) {
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store),
+          updateTool: apis.updateTool(store),
           loadedFromServer: false,
           serverFailed: false,
         };
