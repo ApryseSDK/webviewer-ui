@@ -11,12 +11,12 @@ export default store => (toolName, properties) => {
         }
       });
       if (!alreadyExist){
-        header.getHeader('default').push({
+        header.getHeader('default').get('miscToolGroupButton').insertBefore({
           type: 'toolButton',
           toolName: toolName,
           hidden: [ 'tablet', 'mobile' ]
         });
-        header.getHeader('tools').push({
+        header.getHeader('tools').get('miscToolGroupButton').insertBefore({
           type: 'toolButton',
           toolName: toolName,
           hidden: [ 'desktop' ]
