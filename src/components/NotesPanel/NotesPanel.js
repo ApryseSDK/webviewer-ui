@@ -221,6 +221,7 @@ const mapStatesToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state),
+  pageRotation: selectors.getRotation(state),
   customNoteFilter: selectors.getCustomNoteFilter(state)
 });
 
