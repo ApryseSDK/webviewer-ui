@@ -42,7 +42,7 @@ class ToolsOverlay extends React.PureComponent {
     const clickedOnAnotherToolGroupButton = prevProps.activeToolGroup !== this.props.activeToolGroup;
 
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay']);
+      this.props.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
       this.setOverlayPosition();
     }
 
@@ -62,7 +62,7 @@ class ToolsOverlay extends React.PureComponent {
   setOverlayPosition = () => {
     const { activeToolGroup, activeHeaderItems } = this.props;
     const element = activeHeaderItems.find(item => item.toolGroup === activeToolGroup);
-
+    
     if (element) {
       this.setState(getOverlayPositionBasedOn(element.dataElement, this.overlay));
     }

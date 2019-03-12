@@ -43,7 +43,7 @@ const isCurrentZoomFactorInRange = (zoomFactor, ranges) => {
   return zoomFactor >= ranges[0] && zoomFactor <= ranges[1];
 };
 
-const zoomTo = newZoomFactor => {
+export const zoomTo = newZoomFactor => {
   const currentZoomFactor = core.getZoom();
   const scale = newZoomFactor / currentZoomFactor;
   const { x, y } = getViewCenterAfterScale(scale); 

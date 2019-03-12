@@ -39,7 +39,7 @@ class ToolStylePopup extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
-      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay' ]);
+      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay' ]);
       this.positionToolStylePopup();       
     }
 
@@ -110,7 +110,8 @@ class ToolStylePopup extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-
+    const hideSlider = activeToolName === 'AnnotationCreateRedaction';
+    
     return (
       <div className={className} data-element="toolStylePopup" style={{ top, left }} ref={this.popup} onMouseDown={e => e.stopPropagation()} onClick={this.onClick}>
         <StylePopup
@@ -118,7 +119,9 @@ class ToolStylePopup extends React.PureComponent {
           colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}
+          hideSlider={hideSlider}
           onStyleChange={this.handleStyleChange}
+          isTool
         />
       </div>
     );

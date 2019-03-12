@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "Apply",
+    "applyAll": "Apply all",
     "cancel": "Cancel",
     "clear": "Clear",
     "close": "Close",
@@ -15,12 +17,15 @@
     "fitToWidth": "Fit to width",
     "openFile": "Open file",
     "print": "Print",
+    "ok": "OK",
     "reply": "Reply",
     "rotate": "Rotate",
     "rotateClockwise": "Clockwise",
     "rotateCounterClockwise": "Counter-clockwise",
     "save": "Save",
+    "create": "Create",
     "showMoreResults": "Show more results",
+    "saveSignature": "Save signature",
     "sign": "Sign",
     "style": "Style",
     "submit": "Submit",
@@ -29,8 +34,10 @@
     "zoomOut": "Zoom out"
   },
   "annotation": {
+    "areaMeasurement": "Area measurement",
     "arrow": "Arrow",
     "callout": "Callout",
+    "distanceMeasurement": "Distance measurement",
     "ellipse": "Ellipse",
     "freehand": "Free hand",
     "freehand2": "Free hand",
@@ -39,10 +46,12 @@
     "highlight": "Highlight",
     "highlight2": "Highlight",
     "line": "Line",
+    "perimeterMeasurement": "Perimeter measurement",
     "polygon": "Polygon",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
     "rectangle": "Rectangle",
+    "redact": "Redact",
     "signature": "Signature",
     "squiggly": "Squiggly",
     "stamp": "Stamp",
@@ -63,7 +72,9 @@
     "textToolsButton": "Text tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
-    "viewControlsOverlay": "View controls"
+    "redaction": "Redaction",
+    "viewControlsOverlay": "View controls",
+    "measurementToolsButton": "Measurement tools"
   },
   "message": {
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
@@ -72,7 +83,7 @@
     "encryptedUserCancelled": "Failed to load encrypted document. Password entry cancelled.",
     "enterPassword": "This document is password protected. Please enter a password",
     "incorrectPassword": "Incorrect password, attempts left: {{ remainingAttempts }}",
-    "noAnnotations": "This document has no annotation.",
+    "noAnnotations": "This document has no annotations.",
     "noOutlines": "This document has no outline.",
     "noResults": "No results found.",
     "notSupported": "That file type is not supported.",
@@ -83,7 +94,7 @@
     "processing": "Processing...",
     "searching": "Searching...",
     "searchPlaceholder": "Search comments...",
-    "signHere": "Sign Here",
+    "signHere": "Sign here",
     "insertTextHere": "Insert text here"
   },
   "option": {
@@ -119,9 +130,17 @@
       "pages": "Pages",
       "includeComments": "Include comments"
     },
+    "redaction": {
+      "markForRedaction": "Mark for redaction",
+      "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
+      "warningPopupTitle": "Apply Redaction"
+    },
     "searchPanel": {
       "caseSensitive": "Case sensitive",
       "wholeWordOnly": "Whole word"
+    },
+    "signatureOverlay": {
+      "addSignature": "Add a signature"
     },
     "slider": {
       "opacity": "Opacity",

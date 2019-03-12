@@ -1,7 +1,7 @@
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
-import { isIOS, isAndroid } from 'helpers/device';
+import { isMobileDevice } from 'helpers/device';
 import { PRIORITY_THREE, PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
 
@@ -15,7 +15,10 @@ export default store => {
   disableElementsIfFilePickerDisabled(dispatch);
   disableElementsIfHideAnnotationPanel(dispatch);
   disableElementsIfToolBarDisabled(dispatch);
+  disableElementsIfMeasurementsDisabled(dispatch);
+  disableElementsIfRedactionsDisabled(dispatch);
   disableElementsIfDesktop(dispatch);
+  disableElementsIfMobile(dispatch);
 };
 
 const disableElementsPassedByConstructor = (state, dispatch) => {
@@ -84,11 +87,31 @@ const disableElementsIfToolBarDisabled = dispatch => {
   }
 };
 
+const disableElementsIfMeasurementsDisabled = dispatch => {
+  const measurementsDisabled = !getHashParams('enableMeasurement', false);
+  if (measurementsDisabled) {
+    dispatch(actions.disableElement('measurementToolGroupButton', PRIORITY_ONE));
+  }
+};
+
+const disableElementsIfRedactionsDisabled = dispatch => {
+  const redactionsDisabled = !(getHashParams('enableRedaction', false) || core.isCreateRedactionEnabled());
+  if (redactionsDisabled) {
+    dispatch(actions.disableElement('redactionButton', PRIORITY_ONE));
+  }
+};
+
 const disableElementsIfDesktop = dispatch => {
   // we could have used the 'hidden' property in the initialState.js to hide this button by css,
   // but that actually checks the window.innerWidth to hide the button, not based on the actual device.
   // we could potentially improve the 'hidden' property in the future.
-  if (!(isIOS || isAndroid)) {
-    dispatch(actions.disableElement('textSelectButton', PRIORITY_ONE));
+  if (!isMobileDevice) {
+    dispatch(actions.disableElement('textSelectButton', PRIORITY_THREE));
+  }
+};
+
+const disableElementsIfMobile = dispatch => {
+  if (isMobileDevice) {
+    dispatch(actions.disableElement('marqueeToolButton', PRIORITY_THREE));
   }
 };

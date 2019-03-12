@@ -32,6 +32,30 @@ const map = {
     toolNames: ['AnnotationCreateFreeText'],
     annotationCheck: annotation => annotation instanceof Annotations.FreeTextAnnotation && annotation.getIntent() === Annotations.FreeTextAnnotation.Intent.FreeText
   },
+  distanceMeasurement: {
+    icon: 'ic_annotation_distance_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: [ 'StrokeColor' ],
+    toolNames: ['AnnotationCreateDistanceMeasurement'],
+    annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.IT === 'LineDimension' && annotation.Measure
+  },
+  perimeterMeasurement: {
+    icon: 'ic_annotation_perimeter_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: [ 'StrokeColor' ],
+    toolNames: ['AnnotationCreatePerimeterMeasurement'],
+    annotationCheck: annotation => annotation instanceof Annotations.PolylineAnnotation && annotation.IT === 'PolyLineDimension' && annotation.Measure
+  },
+  areaMeasurement: {
+    icon: 'ic_annotation_area_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: [ 'StrokeColor', 'FillColor' ],
+    toolNames: ['AnnotationCreateAreaMeasurement'],
+    annotationCheck: annotation => annotation instanceof Annotations.PolygonAnnotation && annotation.IT === 'PolygonDimension' && annotation.Measure
+  },
   callout: {
     icon: 'ic_annotation_callout_black_24px',
     iconColor:'TextColor',
@@ -104,6 +128,14 @@ const map = {
     toolNames: ['AnnotationCreateTextStrikeout'],
     annotationCheck: annotation => annotation instanceof Annotations.TextStrikeoutAnnotation
   },
+  redaction: {
+    icon: 'ic_annotation_redact_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: ['AnnotationCreateRedaction'],
+    annotationCheck: annotation => annotation instanceof Annotations.RedactionAnnotation
+  },
   rectangle: {
     icon: 'ic_annotation_square_black_24px',
     iconColor: 'StrokeColor',
@@ -168,6 +200,15 @@ const map = {
     toolNames: ['TextSelect'],
     annotationCheck: null,
   },
+
+  marqueeZoomTool: {
+    icon: null,
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: ['MarqueeZoomTool'],
+    annotationCheck: null,
+  }
 };
 
 export const mapToolNameToKey = toolName => Object.keys(map).find(key => map[key].toolNames.includes(toolName));

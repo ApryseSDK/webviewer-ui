@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
+import MeasurementsOverlay from 'components/MeasurementsOverlay';
 
 import { circleRadius } from 'constants/slider';
 import selectors from 'selectors';
@@ -16,8 +17,31 @@ class StylePopup extends React.PureComponent {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
+    hideSlider: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
+  }
+
+  constructor(props){
+    super(props);
+    this.state = { openMeasurementDropdown: -1 };
+    this.state = this.getInitialState();
+  }
+
+  onOpenDropdownChange = dropdown => {
+    this.setState({ openMeasurementDropdown: dropdown });
+  };
+
+  getInitialState = () => {
+    const {  TextColor, StrokeColor, FillColor } = this.props.style;
+
+    return { 
+      colorPalette: TextColor ? 'text' : StrokeColor ? 'border' : FillColor ? 'fill' : ''
+    };
+  }
+
+  handleHeaderChange = colorPalette => {
+    this.setState({ colorPalette });
   }
 
   renderColorPalette = () => {
@@ -74,8 +98,9 @@ class StylePopup extends React.PureComponent {
   }
 
   render() {
-    const { currentPalette, style, colorMapKey } = this.props;
-
+    const { currentPalette, style, colorMapKey, isTool } = this.props;
+    const { openMeasurementDropdown } = this.state;
+    const isMeasurement =  colorMapKey.includes('Measurement');
     return (
       <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
         {currentPalette &&
@@ -86,11 +111,14 @@ class StylePopup extends React.PureComponent {
             </div>
           </div>
         }
-        <div className="sliders-container" onMouseDown={e => e.preventDefault()}>
+        <div className="sliders-container" onMouseDown={e => e.preventDefault()} onClick={() => this.onOpenDropdownChange(-1)}>
           <div className="sliders">
-            {this.renderSliders()}
+            {!this.props.hideSlider && this.renderSliders()}
           </div>
         </div>
+        {isMeasurement && isTool &&
+          <MeasurementsOverlay onOpenDropdownChange={this.onOpenDropdownChange} openMeasurementDropdown ={openMeasurementDropdown} />
+        }
       </div>
     );
   }
