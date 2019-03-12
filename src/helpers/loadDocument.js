@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { fireError } from 'helpers/fireEvent';
-import { engineTypes, documentTypes } from 'constants/types';
+import { engineTypes, workerTypes } from 'constants/types';
 import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -155,7 +155,7 @@ const getDocOptions = (state, dispatch, streaming) => {
 
   return new Promise(resolve => {
     if (engineType === engineTypes.UNIVERSAL) {
-      dispatch(actions.setDocumentType(documentTypes.XOD));
+      dispatch(actions.setDocumentType(workerTypes.XOD));
       resolve(docId);
     } else {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise } = state.advanced;
@@ -285,24 +285,24 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
   let workerTransportPromise;
 
   if (engineType === engineTypes.PDFTRON_SERVER) {
-    type = documentTypes.BLACKBOX;
+    type = workerTypes.BLACKBOX;
   } else {
     const usingOfficeWorker = supportedOfficeExtensions.indexOf(originalExtension) !== -1;
     if (usingOfficeWorker && !officeWorkerTransportPromise) {
-      type = documentTypes.OFFICE;
+      type = workerTypes.OFFICE;
       workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(officeBackendType, workerHandlers, window.sampleL);
     } else if (!usingOfficeWorker && !pdfWorkerTransportPromise) {
-      type = documentTypes.PDF;
+      type = workerTypes.PDF;
       // if the extension isn't pdf or an image then assume it's a pdf
       if (supportedPDFExtensions.indexOf(originalExtension) === -1) {
         extension = 'pdf';
       }
       workerTransportPromise = window.CoreControls.initPDFWorkerTransports(pdfBackendType, workerHandlers, window.sampleL);
     } else if (usingOfficeWorker) {
-      type = documentTypes.OFFICE;
+      type = workerTypes.OFFICE;
       workerTransportPromise = officeWorkerTransportPromise;
     } else {
-      type = documentTypes.PDF;
+      type = workerTypes.PDF;
       workerTransportPromise = pdfWorkerTransportPromise;
     }
   }

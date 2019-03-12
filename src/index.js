@@ -12,7 +12,7 @@ import apis from 'src/apis';
 
 import App from 'components/App';
 import rootReducer from 'reducers/rootReducer';
-import { engineTypes, documentTypes } from 'constants/types';
+import { engineTypes, workerTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
@@ -87,7 +87,7 @@ if (window.CanvasRenderingContext2D) {
 
 
   const { preloadWorker } = state.advanced
-  const { PDF, OFFICE, ALL } = documentTypes
+  const { PDF, OFFICE, ALL } = workerTypes
 
   if (preloadWorker) {
     if (preloadWorker === PDF || preloadWorker === ALL) {
