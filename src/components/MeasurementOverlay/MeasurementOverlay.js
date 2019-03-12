@@ -30,11 +30,8 @@ class MeasurementOverlay extends React.PureComponent {
   }
 
   componentDidMount() {
-    // core.addEventListener('mouseLeftDown', this.onMouseLeftDown);
     core.addEventListener('mouseMove', this.onMouseMove);
-    // core.addEventListener('mouseLeftUp', this.onMouseLeftUp);
     core.addEventListener('annotationSelected', this.onAnnotationSelected);
-    // core.addEventListener('annotationChanged', this.onAnnotationChanged);
   }
   
   componentDidUpdate(prevProps) {
@@ -50,16 +47,9 @@ class MeasurementOverlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    // core.removeEventListener('mouseLeftDown', this.onMouseLeftDown);
     core.removeEventListener('mouseMove', this.onMouseMove);
-    // core.removeEventListener('mouseLeftUp', this.onMouseLeftUp);
     core.removeEventListener('annotationSelected', this.onAnnotationSelected);
-    // core.removeEventListener('annotationChanged', this.onAnnotationChanged);
   }
-
-  // onMouseLeftDown = () => {
-  //   this.isLeftMouseDown = true;
-  // }
 
   onMouseMove = () => {
     const { activeToolName, isOpen } = this.props;
@@ -83,10 +73,6 @@ class MeasurementOverlay extends React.PureComponent {
     }
   }
 
-  // onMouseLeftUp = () => {
-  //   this.isLeftMouseDown = false;
-  // }
-
   onAnnotationSelected = (e, annotations, action) => {
     const { openElement, closeElement } = this.props;
     
@@ -102,15 +88,6 @@ class MeasurementOverlay extends React.PureComponent {
       closeElement('measurementOverlay');
     }
   }
-
-  // onAnnotationChanged = (e, annotations, action) => {
-  //   if (
-  //     action === 'modify' &&
-  //     core.isAnnotationSelected(this.state.annotation)
-  //   ) {
-  //     this.forceUpdate();
-  //   }
-  // }
 
   isMeasurementAnnotation = annotation => ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(mapAnnotationToKey(annotation));
 
