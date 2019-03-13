@@ -56,6 +56,7 @@ class NotesPanel extends React.PureComponent {
 
   onDocumentUnloaded = () => {
     this.visibleNoteIds.clear();
+    this.rootAnnotations = [];
     this.setState({ notesToRender: [] });
   }
 
