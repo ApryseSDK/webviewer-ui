@@ -27,7 +27,7 @@ export default {
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
         { type: 'customElement',
-          render: () => <ToggleElementOverlay />, 
+          render: () => <ToggleElementOverlay />,
           dataElement: 'zoomOverlayButton',
           hidden: [ 'mobile' ],
           element: 'zoomOverlay'
@@ -163,7 +163,8 @@ export default {
     id: getHashParams('did', null),
     initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
     path: null,
-    filename: null,
+    ext: getHashParams('extension', null),
+    filename: getHashParams('filename', null),
     file: null,
     type: null,
     pdfDoc: null,

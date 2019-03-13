@@ -72,11 +72,16 @@ const checkByteRange = state => {
 };
 
 const getPartRetriever = (state, streaming) => {
-  const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
+  const { path, initialDoc, file, isOffline, pdfDoc, ext } = state.document;
+  let { filename } = state.document;
   const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, disableWebsockets, useDownloader, withCredentials } = state.advanced;
   const documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
+
+  if (ext && !filename) {
+    filename = createFakeFilename(initialDoc, ext);
+  }
 
   return new Promise(resolve => {
     let partRetriever;
@@ -248,9 +253,16 @@ export const getDocumentExtension = (doc, engineType) => {
 
 export const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
-  const { path, filename, initialDoc } = state.document;
+  let { path, filename, initialDoc, ext } = state.document;
+  if (ext && !filename) {
+    filename = createFakeFilename(path || initialDoc, ext)
+  }
   return filename || path || initialDoc;
 };
+
+const createFakeFilename = (initialDoc, ext) => {
+  return initialDoc.replace(/^.*[\\\/]/, '') + '.' + ext.replace(/^\./, "");
+}
 
 const isPDFNetJSExtension = extension => {
   return isOfficeExtension(extension) || isPDFExtension(extension);
@@ -302,4 +314,3 @@ const isLocalFile = state => {
 
   return !/https?:\/\//.test(path);
 };
-
