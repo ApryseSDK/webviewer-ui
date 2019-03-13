@@ -62,16 +62,12 @@ class MeasurementOverlay extends React.PureComponent {
     const { activeToolName, openElement } = this.props;
     const tool = core.getTool(activeToolName);
 
-    if (this.state.annotation && core.isAnnotationSelected(this.state.annotation)) {
+    if (this.state.annotation) {
       this.forceUpdate();
     } else if (this.isMeasurementTool(activeToolName) && tool.annotation) {
       openElement('measurementOverlay');
 
-      if (this.state.annotation === tool.annotation) {
-        this.forceUpdate();
-      } else {
-        this.setState({ annotation: tool.annotation });
-      }
+      this.setState({ annotation: tool.annotation });
     }
   }
 
