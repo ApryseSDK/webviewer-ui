@@ -28,7 +28,6 @@ class MeasurementOverlay extends React.PureComponent {
     this.state = {
       annotation: null
     };
-    this.isLeftMouseDown = false;
   }
 
   componentDidMount() {
@@ -64,7 +63,11 @@ class MeasurementOverlay extends React.PureComponent {
 
     if (this.state.annotation) {
       this.forceUpdate();
-    } else if (this.isMeasurementTool(activeToolName) && tool.annotation) {
+    } else if (
+      this.isMeasurementTool(activeToolName) && 
+      tool.annotation &&
+      this.shouldShowInfo(tool.annotation)
+    ) {
       openElement('measurementOverlay');
       this.setState({ annotation: tool.annotation });
     }
@@ -90,7 +93,7 @@ class MeasurementOverlay extends React.PureComponent {
 
   onAnnotationChanged = (e, annotations, action) => {
     // measurement overlay will open and show the annotation information when we are creating an annotation using measurement tools
-    // since we don't auto select an annotation when it's created, here we close the measurement overlay to avoid the confusion 
+    // since by default we don't auto select an annotation after it's created, we close the overlay here to avoid the confusion 
     // where no annotation is selected but measurement overlay shows the information about the annotation we were creating
     if (
       action === 'add' &&
@@ -105,10 +108,41 @@ class MeasurementOverlay extends React.PureComponent {
 
   isMeasurementTool = toolName => ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(mapToolNameToKey(toolName));
 
-  getAngleInRadians = (pt1, pt2) => 
-    pt1 && pt2
-      ? Math.atan2(pt2.y - pt1.y, pt2.x - pt1.x)
-      : undefined
+  shouldShowInfo = annotation => {
+    const key = mapAnnotationToKey(annotation);
+
+    let showInfo;
+    if (key === 'perimeterMeasurement' || key === 'areaMeasurement') {
+      // for polyline and polygon, there's no useful information we can show if it has no vertices or only one vertex.
+      showInfo = annotation.getPath().length > 1;
+    } else if (key === 'distanceMeasurement') {
+      showInfo = true;
+    }
+
+    return showInfo;
+  }
+
+  getAngleInRadians = (pt1, pt2, pt3) => {
+    let angle;
+
+    if (pt1 && pt2) {
+      if (pt3) {
+        // calculate the angle using Law of cosines
+        const AB = Math.sqrt(Math.pow(pt2.x - pt1.x, 2) + Math.pow(pt2.y - pt1.y, 2));    
+        const BC = Math.sqrt(Math.pow(pt2.x - pt3.x, 2) + Math.pow(pt2.y - pt3.y, 2)); 
+        const AC = Math.sqrt(Math.pow(pt3.x - pt1.x, 2) + Math.pow(pt3.y - pt1.y, 2));
+        angle = Math.acos((BC*BC + AB*AB - AC*AC) / (2*BC*AB));
+      } else {
+        // if there are only two points returns the angle in the plane (in radians) between the positive x-axis and the ray from (0,0) to the point (x,y)
+        angle = Math.atan2(pt2.y - pt1.y, pt2.x - pt1.x);
+        // keep the angle range between 0 and Math.PI / 2
+        angle = Math.abs(angle); 
+        angle = angle > Math.PI / 2 ? Math.PI - angle : angle;
+      }
+    }
+
+    return angle;
+  }
 
   getNumberOfDecimalPlaces = annotation => 
     annotation.Precision === 1 
@@ -174,24 +208,22 @@ class MeasurementOverlay extends React.PureComponent {
   renderAngle = () => {
     const { annotation } = this.state;
     const key = mapAnnotationToKey(annotation);
-    const getIPathAnnotationLastTwoPts = annotation => {
+    const getIPathAnnotationPts = annotation => {
       const path = annotation.getPath();
-      return [path[path.length - 2], path[path.length - 1]];
-    } ;
+      const length = path.length;
+      return [path[length - 3], path[length - 2], path[length - 1]];
+    };
     const keyPtMap = {
       distanceMeasurement: ({ Start, End }) => [Start, End],
-      perimeterMeasurement: getIPathAnnotationLastTwoPts,
-      areaMeasurement: getIPathAnnotationLastTwoPts
+      perimeterMeasurement: getIPathAnnotationPts,
+      areaMeasurement: getIPathAnnotationPts
     };
-    const [pt1, pt2] = keyPtMap[key](annotation);
+    const pts = keyPtMap[key](annotation).filter(pt => !!pt);
     
-    let angle = this.getAngleInRadians(pt1, pt2);
+    let angle = this.getAngleInRadians(...pts);
     if (angle) {
-      angle = Math.abs(angle / Math.PI * 180);
-      angle = angle > 90 ? 180 - angle : angle;
-
       const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
-      angle = angle.toFixed(decimalPlaces);
+      angle = (angle / Math.PI * 180).toFixed(decimalPlaces);
     }
 
     return (
