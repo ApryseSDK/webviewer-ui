@@ -28,6 +28,7 @@ class MeasurementOverlay extends React.PureComponent {
     this.state = {
       annotation: null
     };
+    this.isLeftMouseDown = false;
   }
 
   componentDidMount() {
@@ -58,25 +59,19 @@ class MeasurementOverlay extends React.PureComponent {
   }
 
   onMouseMove = () => {
-    const { activeToolName, isOpen } = this.props;
+    const { activeToolName, openElement } = this.props;
     const tool = core.getTool(activeToolName);
-    
-    if (!isOpen) {
-      return;
-    }
 
-    if (this.isMeasurementTool(activeToolName) && tool.annotation) {
+    if (this.state.annotation && core.isAnnotationSelected(this.state.annotation)) {
+      this.forceUpdate();
+    } else if (this.isMeasurementTool(activeToolName) && tool.annotation) {
+      openElement('measurementOverlay');
+
       if (this.state.annotation === tool.annotation) {
         this.forceUpdate();
       } else {
         this.setState({ annotation: tool.annotation });
       }
-    } else if (
-      activeToolName === 'AnnotationEdit' && 
-      this.state.annotation &&
-      core.isAnnotationSelected(this.state.annotation)
-    ) {
-      this.forceUpdate();
     }
   }
 
@@ -203,7 +198,7 @@ class MeasurementOverlay extends React.PureComponent {
       const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
       angle = angle.toFixed(decimalPlaces);
     }
-    
+
     return (
       angle !== undefined && 
       <div className="measurement__angle">
