@@ -142,6 +142,17 @@
     "signatureOverlay": {
       "addSignature": "Add a signature"
     },
+    "measurementOverlay": {
+      "scale": "Scale Ratio",
+      "precision": "Precision",
+      "angle": "Angle",
+      "distance": "Distance",
+      "perimeter": "Perimeter",
+      "area": "Area",
+      "distanceMeasurement": "Distance Measurement",
+      "perimeterMeasurement": "Perimeter Measurement",
+      "areaMeasurement": "Area Measurement"
+    },
     "slider": {
       "opacity": "Opacity",
       "thickness": "Thickness",

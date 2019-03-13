@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import Icon from 'components/Icon';
@@ -18,7 +19,8 @@ class MeasurementOverlay extends React.PureComponent {
     isDisabled: PropTypes.bool,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
-    activeToolName: PropTypes.string.isRequired
+    activeToolName: PropTypes.string.isRequired,
+    t: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -26,38 +28,43 @@ class MeasurementOverlay extends React.PureComponent {
     this.state = {
       annotation: null
     };
-    this.isLeftMouseDown = false;
   }
 
   componentDidMount() {
     core.addEventListener('mouseMove', this.onMouseMove);
     core.addEventListener('annotationSelected', this.onAnnotationSelected);
+    core.addEventListener('annotationChanged', this.onAnnotationChanged);
   }
   
   componentDidUpdate(prevProps) {
-    const { openElement, closeElement } = this.props;
-
     if (prevProps.activeToolName !== this.props.activeToolName) {
+      const { openElement, closeElement } = this.props;
       if (this.isMeasurementTool(this.props.activeToolName)) {
         openElement('measurementOverlay');
       } else {
         closeElement('measurementOverlay');
       }
     }
+
+    if (prevProps.isOpen && !this.props.isOpen) {
+      this.setState({ annotation: null });
+    }
   }
 
   componentWillUnmount() {
     core.removeEventListener('mouseMove', this.onMouseMove);
     core.removeEventListener('annotationSelected', this.onAnnotationSelected);
+    core.removeEventListener('annotationChanged', this.onAnnotationChanged);
   }
 
   onMouseMove = () => {
     const { activeToolName, isOpen } = this.props;
+    const tool = core.getTool(activeToolName);
+    
     if (!isOpen) {
       return;
     }
 
-    const tool = core.getTool(activeToolName);
     if (this.isMeasurementTool(activeToolName) && tool.annotation) {
       if (this.state.annotation === tool.annotation) {
         this.forceUpdate();
@@ -83,9 +90,24 @@ class MeasurementOverlay extends React.PureComponent {
     ) {
       this.setState({ annotation: annotations[0] });
       openElement('measurementOverlay');
-    } else {
-      this.setState({ annotation: null });
+    } else if (
+      action === 'deselected' &&
+      !core.isAnnotationSelected(this.state.annotation)
+    ) {
       closeElement('measurementOverlay');
+    }
+  }
+
+  onAnnotationChanged = (e, annotations, action) => {
+    // measurement overlay will open and show the annotation information when we are creating an annotation using measurement tools
+    // since we don't auto select an annotation when it's created, here we close the measurement overlay to avoid the confusion 
+    // where no annotation is selected but measurement overlay shows the information about the annotation we were creating
+    if (
+      action === 'add' &&
+      annotations.length === 1 &&
+      annotations[0] && this.state.annotation
+    ) {
+      this.props.closeElement('measurementOverlay');
     }
   }
 
@@ -104,14 +126,14 @@ class MeasurementOverlay extends React.PureComponent {
       : annotation.Precision.toString().split('.')[1].length;
 
   renderTitle = () => {
+    const { t } = this.props;
     const key = mapAnnotationToKey(this.state.annotation);
     const { icon } = getDataWithKey(key);
 
-    // TODO: i18n
     const keyTitleMap = {
-      distanceMeasurement: 'Distance Measurement',
-      perimeterMeasurement: 'Perimeter Measurement',
-      areaMeasurement: 'Area Measurement'
+      distanceMeasurement: t('option.measurementOverlay.distanceMeasurement'),
+      perimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
+      areaMeasurement: t('option.measurementOverlay.areaMeasurement')
     };
 
     return (
@@ -126,13 +148,13 @@ class MeasurementOverlay extends React.PureComponent {
 
   renderValue = () => {
     const { annotation } = this.state;
+    const { t } = this.props;
     const key = mapAnnotationToKey(annotation);
 
-    // TODO: i18n
     const keyDisplayNameMap = {
-      distanceMeasurement: 'Distance',
-      perimeterMeasurement: 'Perimeter',
-      areaMeasurement: 'Area'
+      distanceMeasurement: t('option.measurementOverlay.distance'),
+      perimeterMeasurement: t('option.measurementOverlay.perimeter'),
+      areaMeasurement: t('option.measurementOverlay.area')
     };
 
     return (
@@ -142,7 +164,7 @@ class MeasurementOverlay extends React.PureComponent {
     );
   }
 
-  renderDistanceChange = () => {
+  renderDeltas = () => {
     const { annotation } = this.state;
     const angle = this.getAngleInRadians(annotation.Start, annotation.End);
     const unit = annotation.Scale[1][1];
@@ -183,13 +205,16 @@ class MeasurementOverlay extends React.PureComponent {
     }
     
     return (
-      angle !== undefined && <div className="measurement__angle">Angle: {angle}&deg;</div>
+      angle !== undefined && 
+      <div className="measurement__angle">
+        {this.props.t('option.measurementOverlay.angle')}: {angle}&deg;
+      </div>
     );
   }
 
   render() {
     const { annotation } = this.state;
-    const { isDisabled } = this.props;
+    const { isDisabled, t } = this.props;
     const className = getClassName('Overlay MeasurementOverlay', this.props);
     const key = mapAnnotationToKey(annotation);
 
@@ -197,19 +222,18 @@ class MeasurementOverlay extends React.PureComponent {
       return null;
     }
 
-    // todo: i18n scale and precision
     return (
       <div className={className} data-element="measurementOverlay">
         {this.renderTitle()}
         <div className="measurement__scale">
-          scale: {annotation.Measure.scale}
+          {t('option.measurementOverlay.scale')}: {annotation.Measure.scale}
         </div>
         <div className="measurement__precision">
-          precision: {annotation.Precision}
+        {t('option.measurementOverlay.precision')}: {annotation.Precision}
         </div>
         {this.renderValue()}
         {key === 'distanceMeasurement' &&
-          this.renderDistanceChange()
+          this.renderDeltas()
         }
         {this.renderAngle()}
       </div>
@@ -228,4 +252,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MeasurementOverlay);
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(MeasurementOverlay));
