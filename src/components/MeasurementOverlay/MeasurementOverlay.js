@@ -66,7 +66,6 @@ class MeasurementOverlay extends React.PureComponent {
       this.forceUpdate();
     } else if (this.isMeasurementTool(activeToolName) && tool.annotation) {
       openElement('measurementOverlay');
-
       this.setState({ annotation: tool.annotation });
     }
   }
