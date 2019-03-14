@@ -37,7 +37,7 @@ export default store => {
   window.addEventListener('loaderror', ({ detail }) => {
     const docExtension = getDocumentExtension(getDocName(store.getState()));
 
-    if (detail && detail.startsWith('Error retrieving file:') && detail.includes('.xod')) {
+    if (typeof detail === 'string' && detail.startsWith('Error retrieving file:') && detail.includes('.xod')) {
       testMIMEType(['xod'])
         .catch(errorMIMEType);
     }
