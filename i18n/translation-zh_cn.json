@@ -137,6 +137,17 @@
     "signatureOverlay": {
       "addSignature": "添加签名"
     },
+    "measurementOverlay": {
+      "scale": "比例",
+      "precision": "精准度",
+      "angle": "角度",
+      "distance": "距离",
+      "perimeter": "周长",
+      "area": "面积",
+      "distanceMeasurement": "距离测量",
+      "perimeterMeasurement": "周长测量",
+      "areaMeasurement": "面积测量"
+    },
     "slider": {
       "opacity": "不透明度",
       "thickness": "厚度",
