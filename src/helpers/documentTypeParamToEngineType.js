@@ -1,12 +1,12 @@
 import { engineTypes, workerTypes } from 'constants/types';
 
-export default (documentType, pdftronServer) => {
+export default (preloadWorker, pdftronServer) => {
   if (pdftronServer) {
     return engineTypes.PDFTRON_SERVER;
-  } else if (documentType === workerTypes.PDF || documentType === workerTypes.OFFICE || documentType === workerTypes.ALL) {
-    return engineTypes.PDFNETJS;
-  } else if (documentType === workerTypes.XOD) {
-    return engineTypes.UNIVERSAL;
+  // } else if (preloadWorker === workerTypes.PDF || preloadWorker === workerTypes.OFFICE || preloadWorker === workerTypes.ALL) {
+  //   return engineTypes.PDFNETJS;
+  // } else if (preloadWorker === workerTypes.XOD) {
+  //   return engineTypes.UNIVERSAL;
   } else {
     return engineTypes.AUTO;
   }

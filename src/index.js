@@ -12,7 +12,7 @@ import apis from 'src/apis';
 
 import App from 'components/App';
 import rootReducer from 'reducers/rootReducer';
-import { engineTypes } from 'constants/types';
+import { engineTypes, workerTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
@@ -87,16 +87,19 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
-  if (state.advanced.preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
-    if (state.document.pdfType !== 'wait') {
+  const { preloadWorker } = state.advanced;
+  const { PDF, OFFICE, ALL } = workerTypes;
+
+  if (preloadWorker) {
+    if (preloadWorker === PDF || preloadWorker === ALL) {
       getBackendPromise(state.document.pdfType).then(pdfType => {
-        window.CoreControls.preloadPDFWorker(pdfType, {}, {});
+        window.CoreControls.initPDFWorkerTransports(pdfType, {}, window.sampleL);
       });
     }
 
-    if (state.document.officeType !== 'wait') {
+    if (preloadWorker === OFFICE || preloadWorker === ALL) {
       getBackendPromise(state.document.officeType).then(officeType => {
-        window.CoreControls.preloadOfficeWorker(officeType, {}, {});
+        window.CoreControls.initOfficeWorkerTransports(officeType, {}, window.sampleL);
       });
     }
   }
