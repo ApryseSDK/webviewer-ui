@@ -1,12 +1,30 @@
 import i18next from 'i18next';
 import dayjs from 'dayjs';
+import orientationManager from 'helpers/orientationManager';
+import { rotateRad } from 'helpers/rotate';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
 const sortStrategies = {
   position: {
     getSortedNotes: notes => notes.sort((a, b) => {
       if (a.PageNumber === b.PageNumber) {
-        return a.Y - b.Y;
+        const rotation = orientationManager.getRotationRad(a.PageNumber);
+        const center = orientationManager.getDocumentCenter(a.PageNumber);
+
+        // Simulated with respect to the document origin
+        const rotatedA = [
+          rotateRad(center.x, center.y, a.X, a.Y, rotation),
+          rotateRad(center.x, center.y, a.X + a.Width, a.Y + a.Height, rotation),
+        ];
+        const rotatedB = [
+          rotateRad(center.x, center.y, b.X, b.Y, rotation),
+          rotateRad(center.x, center.y, b.X + b.Width, b.Y + b.Height, rotation),
+        ];
+
+        const smallestA = rotatedA.reduce((smallest, current) => current.y < smallest ? current.y : smallest, Number.MAX_SAFE_INTEGER);
+        const smallestB = rotatedB.reduce((smallest, current) => current.y < smallest ? current.y : smallest, Number.MAX_SAFE_INTEGER);
+
+        return smallestA - smallestB;
       }
       return a.PageNumber - b.PageNumber;
     }),

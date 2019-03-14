@@ -22,7 +22,7 @@ export default store => {
   const onKeyDown = eventListeners.onKeyDown(store);
   const onFullScreenChange = eventListeners.onFullScreenChange(dispatch);
   const onLayoutChanged = eventListeners.onLayoutChanged(dispatch); 
-  const onLocationSelected = eventListeners.onLocationSelected;
+  const onLocationSelected = eventListeners.onLocationSelected(store);
 
   return {
     addEventHandlers: () => {
