@@ -59,6 +59,7 @@ export const setActiveToolGroup = toolGroup => ({ type: 'SET_ACTIVE_TOOL_GROUP',
 export const setNotePopupId = id => ({ type: 'SET_NOTE_POPUP_ID', payload: { id } });
 export const setFitMode = fitMode => ({ type: 'SET_FIT_MODE', payload: { fitMode } });
 export const setZoom = zoom => ({ type: 'SET_ZOOM', payload: { zoom } });
+export const setRotation = rotation => ({ type: 'SET_ROTATION', payload: { rotation } });
 export const setDisplayMode = displayMode => ({ type: 'SET_DISPLAY_MODE', payload: { displayMode } });
 export const setCurrentPage = currentPage => ({ type: 'SET_CURRENT_PAGE', payload: { currentPage } });
 export const setFullScreen = isFullScreen => ({ type: 'SET_FULL_SCREEN', payload: { isFullScreen } });
