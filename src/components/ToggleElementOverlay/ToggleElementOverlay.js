@@ -19,7 +19,7 @@ class ToggleElementOverlay extends React.PureComponent {
 
   constructor(props){
     super(props);
-    this.state = { value: 100 };
+    this.state = { value: '100' };
   }
 
   componentDidMount() {
@@ -31,17 +31,25 @@ class ToggleElementOverlay extends React.PureComponent {
   }
 
   onZoomUpdated = () => {
-    this.setState({ value: Math.ceil(core.getZoom() * 100) });
+    this.setState({ value: Math.ceil(core.getZoom() * 100).toString() });
   }
 
-  onKeyPress = () => {
-    if (window.event.keyCode === 13){
-      zoomTo(this.state.value / 100);
+  onKeyPress = e => {
+    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13){
+      const zoom = Math.ceil(core.getZoom() * 100).toString();
+      if (e.target.value === zoom) {
+        return;
+      }
+      if (e.target.value === '') {
+        this.setState({ value: zoom });
+      } else {
+        zoomTo(Number(e.target.value) / 100);
+      }
     }
   }
 
   onChange = e => {
-    const re = /^[0-9\b]{0,4}$/;
+    const re = /^(\d){0,4}$/;
     if (re.test(e.target.value) || e.target.value === ''){
       this.setState({ value: e.target.value }); 
     }
@@ -49,13 +57,14 @@ class ToggleElementOverlay extends React.PureComponent {
 
   onBlur = e => {
     const zoom = Math.ceil(core.getZoom() * 100).toString();
-    if (e.target.value === zoom && e.target.value !== ''){
-      return; 
-    } else if (e.target.value !== ''){
-      this.setState({ value: e.target.value });
-      zoomTo(e.target.value / 100);
-    } else {
+    if (e.target.value === zoom) {
+      return;
+    }
+    if (e.target.value === '' || isNaN(Number(e.target.value))) {
       this.setState({ value: zoom });
+    } else {
+      this.setState({ value: Number(e.target.value).toString() });
+      zoomTo(e.target.value / 100);
     }
   }
   
@@ -66,7 +75,7 @@ class ToggleElementOverlay extends React.PureComponent {
         <div className={[ 'OverlayContainer', isActive ? 'active' : '' ].join(' ').trim()}> 
           <div className="OverlayText" onClick={onClick}>
             <input
-              type="number"
+              type="text"
               className="textarea"
               value={this.state.value}
               onChange={this.onChange} 
