@@ -48,14 +48,14 @@ class ToggleElementOverlay extends React.PureComponent {
   }
 
   onBlur = e => {
-    const zoom = Math.ceil(core.getZoom() * 100);
+    const zoom = Math.ceil(core.getZoom() * 100).toString();
     if (e.target.value === zoom && e.target.value !== ''){
       return; 
     } else if (e.target.value !== ''){
       this.setState({ value: e.target.value });
       zoomTo(e.target.value / 100);
     } else {
-      this.setState({ value: zoom});
+      this.setState({ value: zoom });
     }
   }
   
