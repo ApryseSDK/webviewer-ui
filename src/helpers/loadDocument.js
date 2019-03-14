@@ -242,6 +242,7 @@ export const getDocumentExtension = (doc, engineType) => {
 
   if (extension) {
     if (!supportedExtensions.includes(extension)) {
+      console.error(`File extension is not found or incorrect. Use "extension" option in PDFTron.WebViewer constructor and loadDocument if the extension is not known. See for more details ...`)
       console.error(`File extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWebViewer server supports ${supportedBlackboxExtensions.join(', ')}`);
     }
   } else if (doc && engineType === engineTypes.AUTO) {
