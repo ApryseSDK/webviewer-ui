@@ -12,7 +12,7 @@ import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
-class ToolGroupButton extends React.PureComponent {
+class GroupButton extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     activeToolName: PropTypes.string.isRequired,
@@ -62,15 +62,14 @@ class ToolGroupButton extends React.PureComponent {
     const { toolName } = this.state;
 
     e.stopPropagation();
-
     setActiveToolGroup(toolGroup);
     closeElement('toolStylePopup');
 
     if (isActive) {
-      toggleElement('toolsOverlay');
+      toggleElement('groupOverlay');
     } else {
       this.setToolMode(toolName);
-      openElement('toolsOverlay');
+      openElement('groupOverlay');
     }
   }
 
@@ -123,4 +122,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(ToolGroupButton));
+export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(GroupButton));

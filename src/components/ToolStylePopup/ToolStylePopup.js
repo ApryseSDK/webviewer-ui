@@ -69,7 +69,7 @@ class ToolStylePopup extends React.PureComponent {
   positionToolStylePopup = () => {
     const { toolButtonObjects, activeToolName } = this.props;
     const dataElement = toolButtonObjects[activeToolName].dataElement;
-    const toolButton = document.querySelectorAll(`.Header [data-element=${dataElement}], .ToolsOverlay [data-element=${dataElement}]`)[0];
+    const toolButton = document.querySelectorAll(`.Header [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
 
     if (!toolButton) {
       return;

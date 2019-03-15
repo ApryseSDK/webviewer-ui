@@ -49,7 +49,7 @@ class SignatureOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'toolsOverlay', 'zoomOverlay', 'toolStylePopup']);
+      this.props.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'groupOverlay', 'zoomOverlay', 'toolStylePopup']);
       this.setOverlayPosition();
     }
 
