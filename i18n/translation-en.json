@@ -188,6 +188,7 @@
   },
   "tool": {
     "pan": "Pan",
-    "select": "Select"
+    "select": "Select",
+    "Marquee": "Marquee Zoom"
   }
 }

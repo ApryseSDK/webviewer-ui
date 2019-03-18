@@ -31,12 +31,13 @@ class ZoomOverlay extends React.PureComponent {
   }
 
   componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
     window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([ 'viewControlsOverlay', 'toolsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup' ]);
+      this.props.closeElements(['viewControlsOverlay', 'toolsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup']);
       const { left, right } = getOverlayPositionBasedOn('zoomOverlayButton', this.dropdown);
       this.setState({
         left: left - 20,
@@ -46,6 +47,7 @@ class ZoomOverlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
@@ -57,8 +59,14 @@ class ZoomOverlay extends React.PureComponent {
     });
   }
 
-  render() { 
-    const { isOpen, t } = this.props;
+  handleClickOutside = e => {
+    if (this.dropdown.current && !this.dropdown.current.contains(e.target)) {
+      this.props.closeElements(['zoomOverlay']);
+    }
+  }
+
+  render() {
+    const { isOpen, t, closeElements } = this.props;
     const className = [
       'ZoomOverlay',
       isOpen ? 'open' : 'closed'
@@ -66,23 +74,18 @@ class ZoomOverlay extends React.PureComponent {
     const { left, right } = this.state;
     const zoomList = [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64];
     return (
-      <div className = {className} data-element="zoomOverlay" style={{ left, right }} ref={this.dropdown}>
+      <div className={className} data-element="zoomOverlay" style={{ left, right }} ref={this.dropdown}>
         <OverlayItem onClick={core.fitToWidth} buttonName={t('action.fitToWidth')} />
         <OverlayItem onClick={core.fitToPage} buttonName={t('action.fitToPage')} />
         <div className="spacer" />
-        {zoomList.map((zoomValue, i) => {
-          return <OverlayItem key={i} 
-          onClick={
-            () => { 
-              zoomTo(zoomValue);
-            } 
-          } 
-          buttonName={zoomValue * 100 + '%'}
-                 />;
-          })
-        }
+        {zoomList.map((zoomValue, i) => 
+          <OverlayItem key={i}
+            onClick={() => zoomTo(zoomValue)}
+            buttonName={zoomValue * 100 + '%'}
+          />
+        )}
         <div className="spacer" />
-        <ToolButton toolName="MarqueeZoomTool" showColor="never" />
+        <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} onClick={() => closeElements(['zoomOverlay'])} />
       </div>
     );
   }
