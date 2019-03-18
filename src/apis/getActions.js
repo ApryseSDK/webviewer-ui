@@ -1,6 +1,5 @@
 import core from 'core';
 import { PRIORITY_THREE } from 'constants/actionPriority';
-import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import * as exposedActions from 'actions/exposedActions';
 import actions from 'actions';
 import selectors from 'selectors';

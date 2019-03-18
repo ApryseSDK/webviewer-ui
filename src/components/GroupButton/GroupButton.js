@@ -8,7 +8,6 @@ import { withTooltip } from 'components/Tooltip';
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
 import defaultTool from 'constants/defaultTool';
-import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -112,7 +111,7 @@ const mapStateToProps = (state, ownProps) => ({
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  iconColor: selectors.getIconColor(state, mapToolNameToKey(selectors.getActiveToolName(state)))
+  iconColor: selectors.getIconColor(state, selectors.getActiveToolName(state))
 });
 
 const mapDispatchToProps = {

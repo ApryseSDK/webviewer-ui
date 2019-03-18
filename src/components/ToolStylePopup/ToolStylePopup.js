@@ -6,7 +6,6 @@ import StylePopup from 'components/StylePopup';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
-import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -105,7 +104,6 @@ class ToolStylePopup extends React.PureComponent {
     const { isDisabled, activeToolName, activeToolStyle } = this.props;
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const className = getClassName(`Popup ToolStylePopup`, this.props);
-    const colorMapKey = mapToolNameToKey(activeToolName);
 
     if (isDisabled) {
       return null;
@@ -116,7 +114,6 @@ class ToolStylePopup extends React.PureComponent {
         <StylePopup
           key={activeToolName}
           activeToolName={activeToolName}
-          colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}
           hideSlider={hideSlider}

@@ -247,7 +247,7 @@ class PrintModal extends React.PureComponent {
   }
 
   getNote = annotation => {
-    const { colorMap } = this.props;
+    const { colorMap, toolButtonObjects } = this.props;
 
     const note = document.createElement('div');
     note.className = 'note';
@@ -260,7 +260,10 @@ class PrintModal extends React.PureComponent {
 
     const key = mapAnnotationToKey(annotation);
     const iconColor = colorMap[key] && colorMap[key].iconColor;
-    const icon = getDataWithKey(key).icon;
+    // const icon = getDataWithKey(key).icon;
+    const icon ="";
+    // const iconColor = toolButtonObjects[annotation.ToolName] && toolButtonObjects[annotation.ToolName].iconColor;
+    // const icon = toolButtonObjects[annotation.ToolName] && toolButtonObjects[annotation.ToolName].img;
     const innerHTML = icon ? require(`../../../assets/${icon}.svg`) : annotation.Subject;
     const noteIcon = document.createElement('div');
     noteIcon.className = 'note__icon';
@@ -388,7 +391,8 @@ const mapStateToProps = state => ({
   printQuality: selectors.getPrintQuality(state),
   pageLabels: selectors.getPageLabels(state),
   sortStrategy: selectors.getSortStrategy(state),
-  colorMap: selectors.getColorMap(state)
+  colorMap: selectors.getColorMap(state),
+  toolButtonObjects: selectors.getToolButtonObjects(state)
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -6,7 +6,6 @@ import { translate } from 'react-i18next';
 import Tooltip from 'components/Tooltip';
 
 import getBrightness from 'helpers/getBrightness';
-import { getDataWithKey } from 'constants/map';
 import actions from 'actions';
 
 import selectors from 'selectors';
@@ -17,7 +16,6 @@ class ColorPaletteHeader extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     colorPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
-    colorMapKey: PropTypes.string.isRequired,
     setColorPalette: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   }
@@ -107,7 +105,7 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   render() {
-    const { t, colorPalette, colorMapKey, toolButton } = this.props;
+    const { t, colorPalette, toolButton } = this.props;
     const { availablePalettes } = toolButton;
     if (availablePalettes.length < 2) {
       return null;
