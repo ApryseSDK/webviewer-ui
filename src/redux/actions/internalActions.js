@@ -87,8 +87,8 @@ export const collapseAllNotes = () => (dispatch, getState) => {
   }
 };
 export const setHeaderItems = (header, headerItems) => ({ type: 'SET_HEADER_ITEMS', payload: { header, headerItems } });
-export const setColorPalette = (colorMapKey, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { colorMapKey, colorPalette } });
-export const setIconColor = (colorMapKey, color) => ({ type: 'SET_ICON_COLOR', payload: { colorMapKey, color } });
+export const setColorPalette = (toolName, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { toolName, colorPalette } });
+export const setIconColor = (toolName, color) => ({ type: 'SET_ICON_COLOR', payload: { toolName, color } });
 export const setColorMap = colorMap => ({ type: 'SET_COLOR_MAP', payload: { colorMap } });
 
 // document

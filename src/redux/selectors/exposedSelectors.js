@@ -74,7 +74,7 @@ export const isEmbedPrintSupported = state => {
 export const getColorMap = state => state.viewer.colorMap;
 export const getCursorOverlayData = state => state.viewer.cursorOverlay;
 export const getOpenElements = state => state.viewer.openElements;
-export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].currentPalette;
+export const getCurrentPalette = (state, activeToolName) => state.viewer.toolButtonObjects[activeToolName] && state.viewer.toolButtonObjects[activeToolName].currentPalette;
 export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].iconColor; 
 export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;

@@ -111,11 +111,11 @@ class ToolStylePopup extends React.PureComponent {
       return null;
     }
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
-    
     return (
       <div className={className} data-element="toolStylePopup" style={{ top, left }} ref={this.popup} onMouseDown={e => e.stopPropagation()} onClick={this.onClick}>
         <StylePopup
           key={activeToolName}
+          activeToolName={activeToolName}
           colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}

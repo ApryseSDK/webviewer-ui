@@ -98,7 +98,7 @@ class StylePopup extends React.PureComponent {
   }
 
   render() {
-    const { currentPalette, style, colorMapKey, isTool } = this.props;
+    const { currentPalette, style, colorMapKey, isTool, activeToolName } = this.props;
     const { openMeasurementDropdown } = this.state;
     const isMeasurement =  colorMapKey.includes('Measurement');
     return (
@@ -106,7 +106,7 @@ class StylePopup extends React.PureComponent {
         {currentPalette &&
           <div className="colors-container">
             <div className="inner-wrapper">
-              <ColorPaletteHeader colorPalette={currentPalette} colorMapKey={colorMapKey} style={style} />
+              <ColorPaletteHeader colorPalette={currentPalette} colorMapKey={colorMapKey} activeToolName={activeToolName} style={style} />
               {this.renderColorPalette()}
             </div>
           </div>
@@ -124,8 +124,8 @@ class StylePopup extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, { colorMapKey }) => ({
-  currentPalette: selectors.getCurrentPalette(state, colorMapKey)
+const mapStateToProps = (state, { activeToolName }) => ({
+  currentPalette: selectors.getCurrentPalette(state, activeToolName)
 });
 
 export default connect(mapStateToProps)(StylePopup);

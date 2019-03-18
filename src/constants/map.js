@@ -58,7 +58,7 @@ const map = {
   },
   callout: {
     icon: 'ic_annotation_callout_black_24px',
-    iconColor:'TextColor',
+    iconColor: 'TextColor',
     currentPalette: 'TextColor',
     availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
     toolNames: ['AnnotationCreateCallout'],

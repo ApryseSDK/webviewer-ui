@@ -46,6 +46,7 @@ class AnnotationStylePopup extends React.Component {
     const hideSlider = annotation instanceof window.Annotations.RedactionAnnotation;
 
     const colorMapKey = mapAnnotationToKey(annotation);
+    console.log(annotation);
 
     if (isDisabled) {
       return null;
@@ -55,6 +56,7 @@ class AnnotationStylePopup extends React.Component {
       <div className={className} data-element="annotationStylePopup" onClick={() => closeElement('annotationPopup')}>
         <StylePopup
           colorMapKey={colorMapKey}
+          activeToolName={annotation.ToolName}
           style={style}
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}

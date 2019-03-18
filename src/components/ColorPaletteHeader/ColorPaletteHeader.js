@@ -9,6 +9,8 @@ import getBrightness from 'helpers/getBrightness';
 import { getDataWithKey } from 'constants/map';
 import actions from 'actions';
 
+import selectors from 'selectors';
+
 import './ColorPaletteHeader.scss';
 
 class ColorPaletteHeader extends React.PureComponent {
@@ -21,9 +23,9 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   setColorPalette = newPalette => {
-    const { setColorPalette, colorMapKey } = this.props;
+    const { setColorPalette, activeToolName } = this.props;
     
-    setColorPalette(colorMapKey, newPalette);
+    setColorPalette(activeToolName, newPalette);
   }
 
   renderTextColorIcon = () => {
@@ -105,9 +107,8 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   render() {
-    const { t, colorPalette, colorMapKey } = this.props;
-    const { availablePalettes } = getDataWithKey(colorMapKey);
-
+    const { t, colorPalette, colorMapKey, toolButton } = this.props;
+    const { availablePalettes } = toolButton;
     if (availablePalettes.length < 2) {
       return null;
     }
@@ -133,8 +134,11 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 }
 
+const mapStateToProps = (state, { activeToolName }) => ({
+  toolButton: selectors.getToolButtonObject(state, activeToolName)
+}); 
 const mapDispatchToProps = {
   setColorPalette: actions.setColorPalette
 };
 
-export default connect(null, mapDispatchToProps)(translate(null, { wait: false })(ColorPaletteHeader));
+export default connect(mapStateToProps, mapDispatchToProps)(translate(null, { wait: false })(ColorPaletteHeader));
