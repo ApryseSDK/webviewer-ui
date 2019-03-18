@@ -16,13 +16,15 @@ import './ZoomOverlay.scss';
 
 class ZoomOverlay extends React.PureComponent {
   static propTypes = {
+    isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     closeElements: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    zoomList: PropTypes.arrayOf(PropTypes.number)
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.dropdown = React.createRef();
     this.state = {
       left: 0,
@@ -66,13 +68,17 @@ class ZoomOverlay extends React.PureComponent {
   }
 
   render() {
-    const { isOpen, t, closeElements } = this.props;
+    const { isOpen, isDisabled, t, closeElements, zoomList } = this.props;
     const className = [
       'ZoomOverlay',
       isOpen ? 'open' : 'closed'
     ].join(' ').trim();
     const { left, right } = this.state;
-    const zoomList = [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64];
+
+    if (isDisabled) {
+      return null;
+    }
+
     return (
       <div className={className} data-element="zoomOverlay" style={{ left, right }} ref={this.dropdown}>
         <OverlayItem onClick={core.fitToWidth} buttonName={t('action.fitToWidth')} />
@@ -92,7 +98,9 @@ class ZoomOverlay extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isOpen: selectors.isElementOpen(state, 'zoomOverlay')
+  isDisabled: selectors.isElementDisabled(state, 'zoomOverlay'),
+  isOpen: selectors.isElementOpen(state, 'zoomOverlay'),
+  zoomList: selectors.getZoomList(state)
 });
 
 const mapDispatchToProps = {
