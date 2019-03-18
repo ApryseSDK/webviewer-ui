@@ -1,3 +1,4 @@
+import core from 'core';
 import actions from 'actions';
 import localStorageManager from 'helpers/localStorageManager';
 
@@ -8,7 +9,11 @@ export default dispatch => (e, tool) => {
   if (toolStyles && localStorageManager.isLocalStorageEnabled()) {
     storeStyle(toolName, toolStyles);
   }
-  dispatch(actions.setActiveToolStyles(toolStyles));
+
+  const currentTool = core.getToolMode(); 
+  if (currentTool && currentTool.name === toolName) {
+    dispatch(actions.setActiveToolStyles(toolStyles));
+  }
 };
 
 const storeStyle = (toolName, toolStyles) => {
