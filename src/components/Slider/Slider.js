@@ -70,12 +70,12 @@ class Slider extends React.PureComponent {
   }
 
   onMove = e => {
-    e.preventDefault();
-
     const isUsingMouse = !e.touches;
     if (isUsingMouse && !this.isMouseDown) {
       return;
     }
+
+    e.preventDefault();
 
     const { property, onStyleChange, convertRelativeCirclePositionToValue } = this.props;
     const relativeCirclePosition = this.getRelativeCirclePosition(e);

@@ -137,6 +137,17 @@
     "signatureOverlay": {
       "addSignature": "Ajouter une signature"
     },
+    "measurementOverlay": {
+      "scale": "rapport d'échelle",
+      "precision": "précision",
+      "angle": "angle",
+      "distance": "distance",
+      "perimeter": "périmètre",
+      "area": "surface",
+      "distanceMeasurement": "mesure de distance",
+      "perimeterMeasurement": "mesure du périmètre",
+      "areaMeasurement": "mesure du surface"
+    },
     "slider": {
       "opacity": "Opacité",
       "thickness": "Épaisseur",
