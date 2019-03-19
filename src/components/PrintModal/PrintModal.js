@@ -247,8 +247,6 @@ class PrintModal extends React.PureComponent {
   }
 
   getNote = annotation => {
-    const { colorMap } = this.props;
-
     const note = document.createElement('div');
     note.className = 'note';
 
@@ -258,14 +256,7 @@ class PrintModal extends React.PureComponent {
     const noteRootInfo = document.createElement('div');
     noteRootInfo.className = 'note__info--with-icon';
 
-    const key = mapAnnotationToKey(annotation);
-    const iconColor = colorMap[key] && colorMap[key].iconColor;
-    const icon = getDataWithKey(key).icon;
-    const innerHTML = icon ? require(`../../../assets/${icon}.svg`) : annotation.Subject;
-    const noteIcon = document.createElement('div');
-    noteIcon.className = 'note__icon';
-    noteIcon.innerHTML = innerHTML;
-    noteIcon.style.color = iconColor && annotation[iconColor].toHexString();
+    const noteIcon = this.getNoteIcon(annotation);
 
     noteRootInfo.appendChild(noteIcon);
     noteRootInfo.appendChild(this.getNoteInfo(annotation));
@@ -283,6 +274,35 @@ class PrintModal extends React.PureComponent {
     });
 
     return note;
+  }
+
+  getNoteIcon = annotation => {
+    const { colorMap } = this.props;
+    const key = mapAnnotationToKey(annotation);
+    const iconColor = colorMap[key] && colorMap[key].iconColor;
+    const icon = getDataWithKey(key).icon;
+    const isBase64 = icon && icon.trim().indexOf('data:') === 0;
+    
+    let noteIcon;
+    if (isBase64) {
+      noteIcon = document.createElement('img');
+      noteIcon.src = icon;
+    } else {
+      let innerHTML;
+      if (icon) {
+        const isInlineSvg = icon.indexOf('<svg') === 0;
+        innerHTML = isInlineSvg ? icon : require(`../../../assets/${icon}.svg`);
+      } else {
+        innerHTML = annotation.Subject;
+      }
+    
+      noteIcon = document.createElement('div');
+      noteIcon.innerHTML = innerHTML;
+    }
+
+    noteIcon.className = 'note__icon';
+    noteIcon.style.color = iconColor && annotation[iconColor].toHexString();
+    return noteIcon;
   }
 
   getNoteInfo = annotation => {
