@@ -90,7 +90,7 @@ const disableElementsIfToolBarDisabled = dispatch => {
 const disableElementsIfMeasurementsDisabled = dispatch => {
   const measurementsDisabled = !getHashParams('enableMeasurement', false);
   if (measurementsDisabled) {
-    dispatch(actions.disableElement('measurementToolGroupButton', PRIORITY_ONE));
+    dispatch(actions.disableElements(['measurementToolGroupButton', 'measurementOverlay'], PRIORITY_ONE));
   }
 };
 
