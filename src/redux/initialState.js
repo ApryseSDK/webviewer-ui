@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ToggleElementOverlay from 'components/toggleElementOverlay';
+import ToggleElementOverlay from 'components/ToggleElementOverlay';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';

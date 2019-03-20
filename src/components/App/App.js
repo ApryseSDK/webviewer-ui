@@ -31,7 +31,7 @@ import ProgressModal from 'components/ProgressModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
-import ZoomOverlay from 'components/zoomOverlay';
+import ZoomOverlay from 'components/ZoomOverlay';
 
 import { isDesktop } from 'helpers/device';
 import actions from 'actions';
