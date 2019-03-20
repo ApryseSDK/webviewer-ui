@@ -15,7 +15,8 @@
   "globals": {
     "_": false,
     "$": false,
-    "Annotations": false
+    "Annotations": false,
+    "Tools": false
   },
   "extends": [
     "eslint:recommended",

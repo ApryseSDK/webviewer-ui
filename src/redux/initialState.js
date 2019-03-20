@@ -113,7 +113,7 @@ export default {
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
       AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
       TextSelect: { dataElement: 'textSelectButton', title: 'tool.select', img: 'textselect_cursor', showColor: 'never' },
-      MarqueeZoomTool: { dataElement: 'marqueeToolButton', title: 'tool.select', label: 'Marquee Zoom', showColor: 'never'}
+      MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never'}
     },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
@@ -141,7 +141,8 @@ export default {
     cursorOverlay: {},
     swipeOrientation: 'horizontal',
     warning: {},
-    customNoteFilter: null
+    customNoteFilter: null,
+    zoomList: [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64]
   },
   search: {
     listeners: [],

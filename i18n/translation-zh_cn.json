@@ -183,6 +183,7 @@
   },
   "tool": {
     "pan": "移动",
-    "select": "选择"
+    "select": "选择",
+    "Marquee": "选框缩放"
   }
 }

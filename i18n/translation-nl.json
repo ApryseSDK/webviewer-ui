@@ -184,6 +184,7 @@
   },
   "tool": {
     "pan": "Schuiven",
-    "select": "Selecteren"
+    "select": "Selecteren",
+    "Marquee": "Marquee Zoom"
   }
 }
