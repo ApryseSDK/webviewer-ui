@@ -48,7 +48,9 @@ class ToolButton extends React.PureComponent {
       closeElement('toolStylePopup');
     }
 
-    onClick(isActive);
+    if (onClick) {
+      onClick(isActive);
+    }
   }
 
   getToolButtonColor = () => {
