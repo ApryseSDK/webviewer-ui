@@ -10,11 +10,23 @@ import './MeasurementOption.scss';
 
 class MeasurementOption extends React.PureComponent {
   static propTypes = {
+    /**
+     * The current scale of a measurement tool that is consisted of two arrays
+     * The first array represents the document scale and the second array represents the world scale
+     * For example [[1, 'in'], [4, 'ft']] means 1 inch measured in the document is equal to 4 feet in the real world
+     */
     scale: PropTypes.arrayOf(PropTypes.array).isRequired,
+    /**
+     * The current precision of a measurement tool that is used to determine how many decimal places a calculated value should display
+     * Calculated value depends on what the measurement tool is. For example it is distance for distance measurement tool
+     */
     precision: PropTypes.number.isRequired,
+    /**
+     * A prop that is passed down from translate HOC and is used to internationalize strings 
+     */
+    t: PropTypes.func.isRequired,
     onOpenDropdownChange: PropTypes.func.isRequired,
     openMeasurementDropdown: PropTypes.number,
-    t: PropTypes.func.isRequired
   }
 
   constructor(props){
@@ -23,6 +35,11 @@ class MeasurementOption extends React.PureComponent {
     this.scaleToRef = React.createRef();
   }
 
+  /**
+   * A callback function that is used to change the scale for a measurement tool
+   * The argument has the same format as this.props.scale
+   * If values in the array are falsy then current value will be used instead
+   */
   onScaleChange = ([
     [scaleFrom, unitFrom], 
     [scaleTo, unitTo]
