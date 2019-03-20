@@ -21,6 +21,41 @@ class MeasurementOption extends React.PureComponent {
     this.scaleToRef = React.createRef();
   }
 
+  onScaleChange = ([
+    [scaleFrom, unitFrom], 
+    [scaleTo, unitTo]
+  ]) => {
+    const { scale } = this.props;
+
+    scaleFrom = scaleFrom || scale[0][0];
+    unitFrom = unitFrom || scale[0][1];
+    scaleTo = scaleTo || scale[1][0];
+    unitTo = unitTo || scale[1][1];
+    this.setMeasurementToolStyles({
+      Scale: [[scaleFrom, unitFrom], [scaleTo, unitTo]]
+    });
+  }
+
+  onPrecisionChange = precision => {
+    this.setMeasurementToolStyles({
+      Precision: precision
+    });
+  }
+
+  setMeasurementToolStyles = styles => {
+    const MEASUREMENT_TOOL_NAMES = [
+      'AnnotationCreateDistanceMeasurement', 
+      'AnnotationCreatePerimeterMeasurement', 
+      'AnnotationCreateAreaMeasurement'
+    ];
+
+    MEASUREMENT_TOOL_NAMES.map(core.getTool).forEach(tool => {
+      tool.setStyles(() => styles);
+    });
+
+    this.props.onOpenDropdownChange(-1);
+  }
+
   onBlur = () => {
     const scaleFromRefValue = this.scaleFromRef.current.value;
     const scaleToRefValue = this.scaleToRef.current.value;
@@ -32,20 +67,6 @@ class MeasurementOption extends React.PureComponent {
       this.scaleToRef.current.value = scaleTo;
     } 
   };
-
-  setMeasurementToolStyles = styles => {
-    const MEASUREMENT_TOOL_NAMES = [
-      'AnnotationCreateDistanceMeasurement', 
-      'AnnotationCreatePerimeterMeasurement', 
-      'AnnotationCreateAreaMeasurement'
-    ] ;
-
-    MEASUREMENT_TOOL_NAMES.map(core.getTool).forEach(tool => {
-      tool.setStyles(() => styles);
-    });
-
-    this.props.onOpenDropdownChange(-1);
-  }
 
   render() { 
     const { 
@@ -71,20 +92,12 @@ class MeasurementOption extends React.PureComponent {
             type="number" 
             ref={this.scaleFromRef}
             defaultValue={scaleFrom}
-            onChange={
-              e => e.target.value !== '' && this.setMeasurementToolStyles({ 
-                Scale: [[parseFloat(e.target.value), unitFrom], [scaleTo, unitTo]] 
-              })
-            }
+            onChange={e => this.onScaleChange([[e.target.value],[]])}
             onBlur={this.onBlur}
           /> 
           <div className={['ScaleDropdown', openMeasurementDropdown === 0 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
-              onClick={
-                unit => this.setMeasurementToolStyles({ 
-                  Scale: [[scaleFrom, unit], [scaleTo, unitTo]] 
-                })
-              } 
+              onClick={unit => this.onScaleChange([[undefined, unit], []])} 
               onDropdownChange={() => onOpenDropdownChange(0)}
               dropdownList={unitFromOptions} 
               selectedItem={unitFrom} 
@@ -97,20 +110,12 @@ class MeasurementOption extends React.PureComponent {
             type="number" 
             ref={this.scaleToRef}
             defaultValue={scaleTo}
-            onChange={
-              e => e.target.value !== '' && this.setMeasurementToolStyles({ 
-                Scale: [[scaleFrom, unitFrom], [parseFloat(e.target.value), unitTo]] 
-              })
-            }
+            onChange={e => this.onScaleChange([[], [e.target.value]])}
             onBlur={this.onBlur}
           /> 
           <div className={['ScaleDropdown', openMeasurementDropdown === 1 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
-              onClick={
-                unit => this.setMeasurementToolStyles({ 
-                  Scale: [[scaleFrom, unitFrom], [scaleTo, unit]] 
-                })
-              } 
+              onClick={unit => this.onScaleChange([[], [undefined, unit]])} 
               onDropdownChange={() => onOpenDropdownChange(1)}
               dropdownList={unitToOptions} 
               selectedItem={unitTo} 
@@ -126,11 +131,7 @@ class MeasurementOption extends React.PureComponent {
         <div className="Layout">
           <div className={['PrecisionDropdown', openMeasurementDropdown === 2 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
-              onClick={
-                precision => this.setMeasurementToolStyles({
-                  Precision: precision
-                })
-              } 
+              onClick={this.onPrecisionChange} 
               onDropdownChange={() => onOpenDropdownChange(2)}
               dropdownList={scaleOptions} 
               selectedItem={precision} 
