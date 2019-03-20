@@ -5,9 +5,9 @@ import MeasurementsDropdown from 'components/MeasurementsDropdown';
 
 import core from 'core';
 
-import './MeasurementsOverlay.scss';
+import './MeasurementOption.scss';
 
-class MeasurementsOverlay extends React.PureComponent {
+class MeasurementOption extends React.PureComponent {
   static propTypes = {
     scale: PropTypes.arrayOf(PropTypes.array).isRequired,
     precision: PropTypes.number.isRequired,
@@ -97,7 +97,7 @@ class MeasurementsOverlay extends React.PureComponent {
     const scaleOptions = [ 0.1, 0.01, 0.001, 0.0001 ];
     const openDropdown = this.props.openMeasurementDropdown;
     return (
-    <div className="MeasurementsOverlay" onClick={()=> this.props.onOpenDropdownChange(-1)}>
+    <div className="MeasurementOption" onClick={()=> this.props.onOpenDropdownChange(-1)}>
       <div className="Scale">
         <div className="LayoutTitle">
           Scale
@@ -159,4 +159,4 @@ class MeasurementsOverlay extends React.PureComponent {
   }
 }
  
-export default MeasurementsOverlay;
+export default MeasurementOption;
