@@ -138,15 +138,17 @@
       "addSignature": "Ajouter une signature"
     },
     "measurementOverlay": {
-      "scale": "rapport d'échelle",
-      "precision": "précision",
-      "angle": "angle",
-      "distance": "distance",
-      "perimeter": "périmètre",
-      "area": "surface",
-      "distanceMeasurement": "mesure de distance",
-      "perimeterMeasurement": "mesure du périmètre",
-      "areaMeasurement": "mesure du surface"
+      "scale": "Ratio d'échelle",
+      "angle": "Angle",
+      "distance": "Distance",
+      "perimeter": "Périmètre",
+      "area": "Surface",
+      "distanceMeasurement": "Mesure de distance",
+      "perimeterMeasurement": "Mesure du périmètre",
+      "areaMeasurement": "Mesure du surface"
+    },
+    "measurementOption": {
+      "scale": "Échelle"
     },
     "slider": {
       "opacity": "Opacité",
@@ -154,7 +156,8 @@
       "text": "Taille du texte"
     },
     "shared": {
-      "page": "Page"
+      "page": "Page",
+      "precision": "Précision"
     }
   },
   "shortcut": {

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 
 import MeasurementsDropdown from 'components/MeasurementsDropdown';
 
@@ -12,7 +13,8 @@ class MeasurementOption extends React.PureComponent {
     scale: PropTypes.arrayOf(PropTypes.array).isRequired,
     precision: PropTypes.number.isRequired,
     onOpenDropdownChange: PropTypes.func.isRequired,
-    openMeasurementDropdown: PropTypes.number
+    openMeasurementDropdown: PropTypes.number,
+    t: PropTypes.func.isRequired
   }
 
   constructor(props){
@@ -73,7 +75,8 @@ class MeasurementOption extends React.PureComponent {
       scale, 
       precision, 
       openMeasurementDropdown,
-      onOpenDropdownChange 
+      onOpenDropdownChange,
+      t 
     } = this.props;
     const [[scaleFrom, unitFrom], [scaleTo, unitTo]] = scale;
     const unitFromOptions = ['in', 'mm', 'cm', 'pt'];
@@ -84,7 +87,7 @@ class MeasurementOption extends React.PureComponent {
     <div className="MeasurementOption" onClick={()=> onOpenDropdownChange(-1)}>
       <div className="Scale">
         <div className="LayoutTitle">
-          Scale
+          {t('option.measurementOption.scale')}
         </div>
         <div className="Layout">
           <input 
@@ -126,7 +129,7 @@ class MeasurementOption extends React.PureComponent {
       </div>
       <div className="Precision">
         <div className="LayoutTitle">
-          Precision
+          {t('option.shared.precision')}
         </div>
         <div className="Layout">
           <div className={['PrecisionDropdown', openMeasurementDropdown === 2 ? 'open': ''].join(' ').trim()}>
@@ -145,4 +148,4 @@ class MeasurementOption extends React.PureComponent {
   }
 }
  
-export default MeasurementOption;
+export default translate()(MeasurementOption);
