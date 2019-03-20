@@ -98,9 +98,10 @@ class StylePopup extends React.PureComponent {
   }
 
   render() {
-    const { currentPalette, style, colorMapKey, isTool } = this.props;
+    const { currentPalette, style, colorMapKey } = this.props;
     const { openMeasurementDropdown } = this.state;
-    const isMeasurement =  colorMapKey.includes('Measurement');
+    const { Scale, Precision } = style;
+
     return (
       <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
         {currentPalette &&
@@ -116,8 +117,13 @@ class StylePopup extends React.PureComponent {
             {!this.props.hideSlider && this.renderSliders()}
           </div>
         </div>
-        {isMeasurement && isTool &&
-          <MeasurementsOverlay onOpenDropdownChange={this.onOpenDropdownChange} openMeasurementDropdown ={openMeasurementDropdown} />
+        {Scale && Precision &&
+          <MeasurementsOverlay
+            scale={Scale}
+            precision={Precision} 
+            onOpenDropdownChange={this.onOpenDropdownChange} 
+            openMeasurementDropdown ={openMeasurementDropdown} 
+          />
         }
       </div>
     );

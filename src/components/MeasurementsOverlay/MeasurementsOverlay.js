@@ -1,14 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import core from 'core';
-
 import MeasurementsDropdown from 'components/MeasurementsDropdown';
+
+import core from 'core';
 import selectors from 'selectors';
 
 import './MeasurementsOverlay.scss';
 
 class MeasurementsOverlay extends React.PureComponent {
+  static propTypes = {
+    scale: PropTypes.arrayOf(PropTypes.array).isRequired,
+    precision: PropTypes.number.isRequired,
+    onOpenDropdownChange: PropTypes.func.isRequired,
+    openMeasurementDropdown: PropTypes.func.isRequired
+  }
+
   constructor(props){
     super(props);
     this.state = { scaleFrom: 1, scaleTo: 1, scaleFromUnit: 'in', scaleToUnit: 'in', precision: 0.01 };
@@ -103,7 +111,9 @@ class MeasurementsOverlay extends React.PureComponent {
     const scales = [ 0.1, 0.01, 0.001, 0.0001 ];
     const openDropdown = this.props.openMeasurementDropdown;
     return (
-    <div className="MeasurementsOverlay" onClick={()=>{this.props.onOpenDropdownChange(-1)}}>
+    <div className="MeasurementsOverlay" onClick={()=>{
+this.props.onOpenDropdownChange(-1)
+;}}>
       <div className="Scale">
         <div className="LayoutTitle">
           Scale
@@ -116,7 +126,7 @@ class MeasurementsOverlay extends React.PureComponent {
             onChange={this.onScaleFromChange}
             onBlur={this.onBlur}
           /> 
-          <div className={["ScaleDropdown", openDropdown === 0 ? 'open': ''].join(' ').trim()}>
+          <div className={['ScaleDropdown', openDropdown === 0 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onScaleFromUnitChange} 
               onDropdownChange={
@@ -137,7 +147,7 @@ class MeasurementsOverlay extends React.PureComponent {
             onChange={this.onScaleToChange}
             onBlur={this.onBlur}
           /> 
-          <div className={["ScaleDropdown", openDropdown === 1 ? 'open': ''].join(' ').trim()}>
+          <div className={['ScaleDropdown', openDropdown === 1 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onScaleToUnitChange} 
               onDropdownChange={
@@ -157,7 +167,7 @@ class MeasurementsOverlay extends React.PureComponent {
           Precision
         </div>
         <div className="Layout">
-          <div className={["PrecisionDropdown", openDropdown === 2 ? 'open': ''].join(' ').trim()}>
+          <div className={['PrecisionDropdown', openDropdown === 2 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onPrecisionChange} 
               onDropdownChange={

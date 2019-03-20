@@ -121,7 +121,6 @@ class ToolStylePopup extends React.PureComponent {
           isFreeText={isFreeText}
           hideSlider={hideSlider}
           onStyleChange={this.handleStyleChange}
-          isTool
         />
       </div>
     );
