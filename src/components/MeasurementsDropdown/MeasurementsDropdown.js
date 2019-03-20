@@ -15,6 +15,7 @@ class MeasurementsDropdown extends React.PureComponent {
   render() { 
     const { dropdownList, selectedItem } = this.props;
     const { isDropdownOpen } = this.props;
+    console.log(isDropdownOpen);
     let sortedDropdownList;
     if (window.innerWidth < 640){
       sortedDropdownList = dropdownList.filter(item => item !== selectedItem).concat([selectedItem]);
@@ -37,7 +38,8 @@ class MeasurementsDropdown extends React.PureComponent {
         sortedDropdownList.map((item, i) => {
           return <MeasurementsDropdownItem key={i} content={item} onClick={e=>{
 this.onClick(e,item);
-}} />;
+}}
+                 />;
         })
       }
     </div>

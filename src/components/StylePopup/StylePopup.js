@@ -122,7 +122,7 @@ class StylePopup extends React.PureComponent {
             scale={Scale}
             precision={Precision} 
             onOpenDropdownChange={this.onOpenDropdownChange} 
-            openMeasurementDropdown ={openMeasurementDropdown} 
+            openMeasurementDropdown={openMeasurementDropdown} 
           />
         }
       </div>

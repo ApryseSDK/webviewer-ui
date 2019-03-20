@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import MeasurementsDropdown from 'components/MeasurementsDropdown';
 
 import core from 'core';
-import selectors from 'selectors';
 
 import './MeasurementsOverlay.scss';
 
@@ -14,106 +12,92 @@ class MeasurementsOverlay extends React.PureComponent {
     scale: PropTypes.arrayOf(PropTypes.array).isRequired,
     precision: PropTypes.number.isRequired,
     onOpenDropdownChange: PropTypes.func.isRequired,
-    openMeasurementDropdown: PropTypes.func.isRequired
+    openMeasurementDropdown: PropTypes.number // not very sure why this is a number...
   }
 
   constructor(props){
     super(props);
-    this.state = { scaleFrom: 1, scaleTo: 1, scaleFromUnit: 'in', scaleToUnit: 'in', precision: 0.01 };
-  }
-
-  componentDidMount() {
-    const { activeToolName } = this.props;
-    const activeScale = core.getTool(activeToolName).defaults.Scale;
-    const activePrecision = core.getTool(activeToolName).defaults.Precision;
-    if (!activeScale) {
-      this.setState({ precision: 0.01 });
-      const toolsList = ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'];
-      toolsList.forEach(toolName => {
-        core.getTool(toolName).setStyles(() => ({
-          ...core.getTool(toolName).defaults, Scale: [[1, 'in'], [1, 'in']]
-        }));
-      });
-    } else {
-      this.setState({ scaleFrom: activeScale[0][0], scaleTo: activeScale[1][0], scaleFromUnit: activeScale[0][1], scaleToUnit: activeScale[1][1], precision: activePrecision });
-    }
+    this.MEASUREMENT_TOOL_NAMES = [
+      'AnnotationCreateDistanceMeasurement', 
+      'AnnotationCreatePerimeterMeasurement', 
+      'AnnotationCreateAreaMeasurement'
+    ];
   }
 
   onScaleFromChange = e => {
-    this.setState({ scaleFrom: e.target.value });
+    let [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
+    scaleFrom = parseFloat(e.target.value);
+
+    this.setMeasurementToolStyles({
+      Scale: [[scaleFrom, unitFrom], [scaleTo, unitTo]]
+    });
   };
+
+  onUnitFromChange = unit => {
+    let [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
+    unitFrom = unit;
+
+    this.setMeasurementToolStyles({
+      Scale: [[scaleFrom, unitFrom], [scaleTo, unitTo]]
+    });
+    this.props.onOpenDropdownChange(-1);
+  }
 
   onScaleToChange = e => {
-    this.setState({ scaleTo: e.target.value });
+    let [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
+    scaleTo = parseFloat(e.target.value);
+
+    this.setMeasurementToolStyles({
+      Scale: [[scaleFrom, unitFrom], [scaleTo, unitTo]]
+    });
   };
 
-  onPrecisionChange = item => {
-    const { activeToolName, onOpenDropdownChange } = this.props;
-    const toolsList = ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'];
-    this.setState({ precision: item });
-    onOpenDropdownChange(-1);
-    toolsList.filter(toolName => toolName !== activeToolName).concat([activeToolName]).forEach(toolName => {
-      core.getTool(toolName).setStyles(() => ({
-        ...core.getTool(toolName).defaults, Precision: item,
-      }));
+  onUnitToChange = unit => {
+    let [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
+    unitTo = unit;
+
+    this.setMeasurementToolStyles({
+      Scale: [[scaleFrom, unitFrom], [scaleTo, unitTo]]
     });
+    this.props.onOpenDropdownChange(-1);
   }
 
-  onScaleFromUnitChange = unit => {
-    const { activeToolName, onOpenDropdownChange } = this.props;
-    const { scaleFrom, scaleTo, scaleToUnit } = this.state;
-    const toolsList = ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'];
-    this.setState({ scaleFromUnit: unit });
-    onOpenDropdownChange(-1);
-    // Makes the active tool the last element of the list 
-    // which allows stylePopup to display the correct opacity and thickness.
-    toolsList.filter(toolName => toolName !== activeToolName).concat([activeToolName]).forEach(toolName => {
-      core.getTool(toolName).setStyles(() => ({
-        ...core.getTool(toolName).defaults,
-        Scale: [[scaleFrom, unit], [scaleTo, scaleToUnit]]
-      }));
+  onPrecisionChange = precision => {
+    this.setMeasurementToolStyles({
+      Precision: precision
     });
+    this.props.onOpenDropdownChange(-1);
   }
 
-  onScaleToUnitChange = unit => {
-    const { activeToolName, onOpenDropdownChange } = this.props;
-    const { scaleFrom, scaleTo, scaleFromUnit } = this.state;
-    const toolsList = ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'];
-    this.setState({ scaleToUnit: unit });
-    onOpenDropdownChange(-1);
-    toolsList.filter(toolName => toolName !== activeToolName).concat([activeToolName]).forEach(toolName => {
-      core.getTool(toolName).setStyles(() => ({
-        ...core.getTool(toolName).defaults,
-        Scale: [[scaleFrom, scaleFromUnit], [scaleTo, unit]]
-      }));
+  setMeasurementToolStyles = styles => {
+    this.MEASUREMENT_TOOL_NAMES.map(core.getTool).forEach(tool => {
+      tool.setStyles(() => styles);
     });
   }
-
 
   onBlur = e => {
-    const { activeToolName } = this.props;
-    const { scaleFrom, scaleTo, scaleFromUnit, scaleToUnit } = this.state;
-    const toolsList = ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'];
-    const activeScale = core.getTool(activeToolName).defaults.Scale;
-    if(e.target.value === ''){
-      this.setState({ scaleFrom: activeScale[0][0], scaleTo: activeScale[1][0] });
-    } else {
-      toolsList.filter(toolName => toolName !== activeToolName).concat([activeToolName]).forEach(toolName => {
-        core.getTool(toolName).setStyles(() => ({
-          ...core.getTool(toolName).defaults, Scale: [[scaleFrom, scaleFromUnit], [scaleTo, scaleToUnit]]
-        }));
-      });
-    }
+    // const { activeToolName } = this.props;
+    // const { scaleFrom, scaleTo, scaleFromUnit, scaleToUnit } = this.state;
+    // const toolsList = ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'];
+    // const activeScale = core.getTool(activeToolName).defaults.Scale;
+    // if(e.target.value === ''){
+    //   this.setState({ scaleFrom: activeScale[0][0], scaleTo: activeScale[1][0] });
+    // } else {
+    //   toolsList.filter(toolName => toolName !== activeToolName).concat([activeToolName]).forEach(toolName => {
+    //     core.getTool(toolName).setStyles(() => ({
+    //       ...core.getTool(toolName).defaults, Scale: [[scaleFrom, scaleFromUnit], [scaleTo, scaleToUnit]]
+    //     }));
+    //   });
+    // }
   };
 
   render() { 
-    const units = [ 'in', 'mm', 'cm', 'pt' ];
-    const scales = [ 0.1, 0.01, 0.001, 0.0001 ];
+    const { scale, precision } = this.props;
+    const unitOptions = [ 'in', 'mm', 'cm', 'pt' ];
+    const scaleOptions = [ 0.1, 0.01, 0.001, 0.0001 ];
     const openDropdown = this.props.openMeasurementDropdown;
     return (
-    <div className="MeasurementsOverlay" onClick={()=>{
-this.props.onOpenDropdownChange(-1)
-;}}>
+    <div className="MeasurementsOverlay" onClick={()=> this.props.onOpenDropdownChange(-1)}>
       <div className="Scale">
         <div className="LayoutTitle">
           Scale
@@ -122,20 +106,16 @@ this.props.onOpenDropdownChange(-1)
           <input 
             className="textarea"
             type="number" 
-            value={this.state.scaleFrom}
+            value={scale[0][0]}
             onChange={this.onScaleFromChange}
             onBlur={this.onBlur}
           /> 
           <div className={['ScaleDropdown', openDropdown === 0 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
-              onClick={this.onScaleFromUnitChange} 
-              onDropdownChange={
-                ()=>{
-                  this.props.onOpenDropdownChange(0);
-                }
-              }
-              dropdownList={units} 
-              selectedItem={this.state.scaleFromUnit} 
+              onClick={this.onUnitFromChange} 
+              onDropdownChange={() => this.props.onOpenDropdownChange(0)}
+              dropdownList={unitOptions} 
+              selectedItem={scale[0][1]} 
               isDropdownOpen={openDropdown === 0}
             />
           </div>
@@ -143,20 +123,16 @@ this.props.onOpenDropdownChange(-1)
           <input 
             className="textarea"
             type="number" 
-            value={this.state.scaleTo}
+            value={scale[1][0]}
             onChange={this.onScaleToChange}
             onBlur={this.onBlur}
           /> 
           <div className={['ScaleDropdown', openDropdown === 1 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onScaleToUnitChange} 
-              onDropdownChange={
-                ()=>{
-                  this.props.onOpenDropdownChange(1);
-                }
-              }
-              dropdownList={units} 
-              selectedItem={this.state.scaleToUnit} 
+              onDropdownChange={() => this.props.onOpenDropdownChange(1)}
+              dropdownList={unitOptions} 
+              selectedItem={scale[1][1]} 
               isDropdownOpen={openDropdown === 1} 
             />
           </div>
@@ -170,13 +146,9 @@ this.props.onOpenDropdownChange(-1)
           <div className={['PrecisionDropdown', openDropdown === 2 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onPrecisionChange} 
-              onDropdownChange={
-                ()=>{
-                  this.props.onOpenDropdownChange(2);
-                }
-              }
-              dropdownList={scales} 
-              selectedItem={this.state.precision} 
+              onDropdownChange={this.props.onOpenDropdownChange(2)}
+              dropdownList={scaleOptions} 
+              selectedItem={precision} 
               isDropdownOpen={openDropdown === 2} 
             />
           </div>
@@ -187,7 +159,4 @@ this.props.onOpenDropdownChange(-1)
   }
 }
  
-const mapStateToProps = state => ({
-  activeToolName: selectors.getActiveToolName(state)
-});
-export default connect(mapStateToProps)(MeasurementsOverlay);
+export default MeasurementsOverlay;
