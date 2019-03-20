@@ -12,7 +12,7 @@ class MeasurementOption extends React.PureComponent {
     scale: PropTypes.arrayOf(PropTypes.array).isRequired,
     precision: PropTypes.number.isRequired,
     onOpenDropdownChange: PropTypes.func.isRequired,
-    openMeasurementDropdown: PropTypes.number // not very sure why this is a number, the name sounds like a function...
+    openMeasurementDropdown: PropTypes.number
   }
 
   constructor(props){
@@ -24,20 +24,13 @@ class MeasurementOption extends React.PureComponent {
   onBlur = () => {
     const scaleFromRefValue = this.scaleFromRef.current.value;
     const scaleToRefValue = this.scaleToRef.current.value;
-    const [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
+    const [[scaleFrom], [scaleTo]] = this.props.scale;
 
     if (scaleFromRefValue === '') {
       this.scaleFromRef.current.value = scaleFrom;
     } else if (scaleToRefValue === '') {
       this.scaleToRef.current.value = scaleTo;
-    } else {
-      this.setMeasurementToolStyles({
-        Scale: [
-          [parseFloat(scaleFromRefValue), unitFrom], 
-          [parseFloat(scaleToRefValue), unitTo]
-        ]
-      });
-    }
+    } 
   };
 
   setMeasurementToolStyles = styles => {
@@ -78,6 +71,11 @@ class MeasurementOption extends React.PureComponent {
             type="number" 
             ref={this.scaleFromRef}
             defaultValue={scaleFrom}
+            onChange={
+              e => e.target.value !== '' && this.setMeasurementToolStyles({ 
+                Scale: [[parseFloat(e.target.value), unitFrom], [scaleTo, unitTo]] 
+              })
+            }
             onBlur={this.onBlur}
           /> 
           <div className={['ScaleDropdown', openMeasurementDropdown === 0 ? 'open': ''].join(' ').trim()}>
@@ -99,7 +97,11 @@ class MeasurementOption extends React.PureComponent {
             type="number" 
             ref={this.scaleToRef}
             defaultValue={scaleTo}
-            onChange={this.onScaleToChange}
+            onChange={
+              e => e.target.value !== '' && this.setMeasurementToolStyles({ 
+                Scale: [[scaleFrom, unitFrom], [parseFloat(e.target.value), unitTo]] 
+              })
+            }
             onBlur={this.onBlur}
           /> 
           <div className={['ScaleDropdown', openMeasurementDropdown === 1 ? 'open': ''].join(' ').trim()}>
