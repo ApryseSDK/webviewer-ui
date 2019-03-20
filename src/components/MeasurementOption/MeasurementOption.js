@@ -12,84 +12,47 @@ class MeasurementOption extends React.PureComponent {
     scale: PropTypes.arrayOf(PropTypes.array).isRequired,
     precision: PropTypes.number.isRequired,
     onOpenDropdownChange: PropTypes.func.isRequired,
-    openMeasurementDropdown: PropTypes.number // not very sure why this is a number...
+    openMeasurementDropdown: PropTypes.number // not very sure why this is a number, the name sounds like a function...
   }
 
   constructor(props){
     super(props);
-    this.MEASUREMENT_TOOL_NAMES = [
+    this.scaleFromRef = React.createRef();
+    this.scaleToRef = React.createRef();
+  }
+
+  onBlur = () => {
+    const scaleFromRefValue = this.scaleFromRef.current.value;
+    const scaleToRefValue = this.scaleToRef.current.value;
+    const [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
+
+    if (scaleFromRefValue === '') {
+      this.scaleFromRef.current.value = scaleFrom;
+    } else if (scaleToRefValue === '') {
+      this.scaleToRef.current.value = scaleTo;
+    } else {
+      this.setMeasurementToolStyles({
+        Scale: [
+          [parseFloat(scaleFromRefValue), unitFrom], 
+          [parseFloat(scaleToRefValue), unitTo]
+        ]
+      });
+    }
+  };
+
+  setMeasurementToolStyles = styles => {
+    const MEASUREMENT_TOOL_NAMES = [
       'AnnotationCreateDistanceMeasurement', 
       'AnnotationCreatePerimeterMeasurement', 
       'AnnotationCreateAreaMeasurement'
-    ];
-  }
+    ] ;
 
-  onScaleFromChange = e => {
-    let [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
-    scaleFrom = parseFloat(e.target.value);
-
-    this.setMeasurementToolStyles({
-      Scale: [[scaleFrom, unitFrom], [scaleTo, unitTo]]
-    });
-  };
-
-  onUnitFromChange = unit => {
-    let [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
-    unitFrom = unit;
-
-    this.setMeasurementToolStyles({
-      Scale: [[scaleFrom, unitFrom], [scaleTo, unitTo]]
-    });
-    this.props.onOpenDropdownChange(-1);
-  }
-
-  onScaleToChange = e => {
-    let [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
-    scaleTo = parseFloat(e.target.value);
-
-    this.setMeasurementToolStyles({
-      Scale: [[scaleFrom, unitFrom], [scaleTo, unitTo]]
-    });
-  };
-
-  onUnitToChange = unit => {
-    let [[scaleFrom, unitFrom], [scaleTo, unitTo]] = this.props.scale;
-    unitTo = unit;
-
-    this.setMeasurementToolStyles({
-      Scale: [[scaleFrom, unitFrom], [scaleTo, unitTo]]
-    });
-    this.props.onOpenDropdownChange(-1);
-  }
-
-  onPrecisionChange = precision => {
-    this.setMeasurementToolStyles({
-      Precision: precision
-    });
-    this.props.onOpenDropdownChange(-1);
-  }
-
-  setMeasurementToolStyles = styles => {
-    this.MEASUREMENT_TOOL_NAMES.map(core.getTool).forEach(tool => {
+    MEASUREMENT_TOOL_NAMES.map(core.getTool).forEach(tool => {
       tool.setStyles(() => styles);
     });
-  }
 
-  onBlur = e => {
-    // const { activeToolName } = this.props;
-    // const { scaleFrom, scaleTo, scaleFromUnit, scaleToUnit } = this.state;
-    // const toolsList = ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'];
-    // const activeScale = core.getTool(activeToolName).defaults.Scale;
-    // if(e.target.value === ''){
-    //   this.setState({ scaleFrom: activeScale[0][0], scaleTo: activeScale[1][0] });
-    // } else {
-    //   toolsList.filter(toolName => toolName !== activeToolName).concat([activeToolName]).forEach(toolName => {
-    //     core.getTool(toolName).setStyles(() => ({
-    //       ...core.getTool(toolName).defaults, Scale: [[scaleFrom, scaleFromUnit], [scaleTo, scaleToUnit]]
-    //     }));
-    //   });
-    // }
-  };
+    this.props.onOpenDropdownChange(-1);
+  }
 
   render() { 
     const { 
@@ -98,8 +61,10 @@ class MeasurementOption extends React.PureComponent {
       openMeasurementDropdown,
       onOpenDropdownChange 
     } = this.props;
-    const unitOptions = [ 'in', 'mm', 'cm', 'pt' ];
-    const scaleOptions = [ 0.1, 0.01, 0.001, 0.0001 ];
+    const [[scaleFrom, unitFrom], [scaleTo, unitTo]] = scale;
+    const unitFromOptions = ['in', 'mm', 'cm', 'pt'];
+    const unitToOptions = ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi'];
+    const scaleOptions = [0.1, 0.01, 0.001, 0.0001];
 
     return (
     <div className="MeasurementOption" onClick={()=> onOpenDropdownChange(-1)}>
@@ -111,16 +76,20 @@ class MeasurementOption extends React.PureComponent {
           <input 
             className="textarea"
             type="number" 
-            value={scale[0][0]}
-            onChange={this.onScaleFromChange}
+            ref={this.scaleFromRef}
+            defaultValue={scaleFrom}
             onBlur={this.onBlur}
           /> 
           <div className={['ScaleDropdown', openMeasurementDropdown === 0 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
-              onClick={this.onUnitFromChange} 
+              onClick={
+                unit => this.setMeasurementToolStyles({ 
+                  Scale: [[scaleFrom, unit], [scaleTo, unitTo]] 
+                })
+              } 
               onDropdownChange={() => onOpenDropdownChange(0)}
-              dropdownList={unitOptions} 
-              selectedItem={scale[0][1]} 
+              dropdownList={unitFromOptions} 
+              selectedItem={unitFrom} 
               isDropdownOpen={openMeasurementDropdown === 0}
             />
           </div>
@@ -128,16 +97,21 @@ class MeasurementOption extends React.PureComponent {
           <input 
             className="textarea"
             type="number" 
-            value={scale[1][0]}
+            ref={this.scaleToRef}
+            defaultValue={scaleTo}
             onChange={this.onScaleToChange}
             onBlur={this.onBlur}
           /> 
           <div className={['ScaleDropdown', openMeasurementDropdown === 1 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
-              onClick={this.onScaleToUnitChange} 
+              onClick={
+                unit => this.setMeasurementToolStyles({ 
+                  Scale: [[scaleFrom, unitFrom], [scaleTo, unit]] 
+                })
+              } 
               onDropdownChange={() => onOpenDropdownChange(1)}
-              dropdownList={unitOptions} 
-              selectedItem={scale[1][1]} 
+              dropdownList={unitToOptions} 
+              selectedItem={unitTo} 
               isDropdownOpen={openMeasurementDropdown === 1} 
             />
           </div>
@@ -150,7 +124,11 @@ class MeasurementOption extends React.PureComponent {
         <div className="Layout">
           <div className={['PrecisionDropdown', openMeasurementDropdown === 2 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
-              onClick={this.onPrecisionChange} 
+              onClick={
+                precision => this.setMeasurementToolStyles({
+                  Precision: precision
+                })
+              } 
               onDropdownChange={() => onOpenDropdownChange(2)}
               dropdownList={scaleOptions} 
               selectedItem={precision} 
