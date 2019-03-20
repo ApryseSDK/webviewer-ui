@@ -25,6 +25,7 @@ class ToolButton extends React.PureComponent {
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
     label: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -33,7 +34,7 @@ class ToolButton extends React.PureComponent {
   }
 
   onClick = e => {
-    const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement } = this.props;
+    const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement, onClick } = this.props;
 
     e.stopPropagation();
    
@@ -46,6 +47,8 @@ class ToolButton extends React.PureComponent {
       setActiveToolGroup(group);
       closeElement('toolStylePopup');
     }
+
+    onClick(isActive);
   }
 
   getToolButtonColor = () => {

@@ -183,6 +183,7 @@
   },
   "tool": {
     "pan": "Panoramique",
-    "select": "Sélection"
+    "select": "Sélection",
+    "Marquee": "Marquee Zoom"
   }
 }
