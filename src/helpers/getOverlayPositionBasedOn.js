@@ -3,10 +3,11 @@ export default (element, overlay, align = 'left') => {
   let left = 0;
   let right = 'auto';
 
-  // By default the button will be in the header
-  // but a user can disable it by calling viewerInstance.actions.disableElement(...);
+  // by default the button is visible in the header
+  // but it can be removed from the DOM by calling viewerInstance.disableElement(...);
+  // in this case we are not able to position the overlay correctly so we just "hide" the overlay 
   if (!button) {
-    return { left, right };
+    return { left: -9999, right };
   }
 
   const { left: buttonLeft, right: buttonRight, width: buttonWidth } = button.getBoundingClientRect();

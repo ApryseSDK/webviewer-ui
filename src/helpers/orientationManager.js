@@ -2,7 +2,7 @@ import core from 'core';
 
 class OrientationManager {
     getDocumentCenter = pageNumber => {
-        const { width, height } = core.getPageInfo(pageNumber);
+        const { width, height } = core.getPageInfo(pageNumber - 1);
 
         return { x: width / 2, y: height / 2 };
     }
