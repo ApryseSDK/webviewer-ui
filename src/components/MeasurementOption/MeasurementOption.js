@@ -92,12 +92,17 @@ class MeasurementOption extends React.PureComponent {
   };
 
   render() { 
-    const { scale, precision } = this.props;
+    const { 
+      scale, 
+      precision, 
+      openMeasurementDropdown,
+      onOpenDropdownChange 
+    } = this.props;
     const unitOptions = [ 'in', 'mm', 'cm', 'pt' ];
     const scaleOptions = [ 0.1, 0.01, 0.001, 0.0001 ];
-    const openDropdown = this.props.openMeasurementDropdown;
+
     return (
-    <div className="MeasurementOption" onClick={()=> this.props.onOpenDropdownChange(-1)}>
+    <div className="MeasurementOption" onClick={()=> onOpenDropdownChange(-1)}>
       <div className="Scale">
         <div className="LayoutTitle">
           Scale
@@ -110,13 +115,13 @@ class MeasurementOption extends React.PureComponent {
             onChange={this.onScaleFromChange}
             onBlur={this.onBlur}
           /> 
-          <div className={['ScaleDropdown', openDropdown === 0 ? 'open': ''].join(' ').trim()}>
+          <div className={['ScaleDropdown', openMeasurementDropdown === 0 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onUnitFromChange} 
-              onDropdownChange={() => this.props.onOpenDropdownChange(0)}
+              onDropdownChange={() => onOpenDropdownChange(0)}
               dropdownList={unitOptions} 
               selectedItem={scale[0][1]} 
-              isDropdownOpen={openDropdown === 0}
+              isDropdownOpen={openMeasurementDropdown === 0}
             />
           </div>
           =
@@ -127,13 +132,13 @@ class MeasurementOption extends React.PureComponent {
             onChange={this.onScaleToChange}
             onBlur={this.onBlur}
           /> 
-          <div className={['ScaleDropdown', openDropdown === 1 ? 'open': ''].join(' ').trim()}>
+          <div className={['ScaleDropdown', openMeasurementDropdown === 1 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onScaleToUnitChange} 
-              onDropdownChange={() => this.props.onOpenDropdownChange(1)}
+              onDropdownChange={() => onOpenDropdownChange(1)}
               dropdownList={unitOptions} 
               selectedItem={scale[1][1]} 
-              isDropdownOpen={openDropdown === 1} 
+              isDropdownOpen={openMeasurementDropdown === 1} 
             />
           </div>
         </div>
@@ -143,13 +148,13 @@ class MeasurementOption extends React.PureComponent {
           Precision
         </div>
         <div className="Layout">
-          <div className={['PrecisionDropdown', openDropdown === 2 ? 'open': ''].join(' ').trim()}>
+          <div className={['PrecisionDropdown', openMeasurementDropdown === 2 ? 'open': ''].join(' ').trim()}>
             <MeasurementsDropdown 
               onClick={this.onPrecisionChange} 
-              onDropdownChange={this.props.onOpenDropdownChange(2)}
+              onDropdownChange={() => onOpenDropdownChange(2)}
               dropdownList={scaleOptions} 
               selectedItem={precision} 
-              isDropdownOpen={openDropdown === 2} 
+              isDropdownOpen={openMeasurementDropdown === 2} 
             />
           </div>
         </div>
