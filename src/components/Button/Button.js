@@ -7,6 +7,7 @@ import './Button.scss';
 
 class Button extends React.PureComponent {
   static propTypes = {
+    shouldFocus: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isActive: PropTypes.bool,
     mediaQueryClassName: PropTypes.string,
@@ -22,8 +23,32 @@ class Button extends React.PureComponent {
     onClick: PropTypes.func.isRequired,
   }
 
+  componentDidMount() {
+    this.props.shouldFocus && this.focus();
+  }
+
+  componentDidUpdate() {
+    this.props.shouldFocus && this.focus();
+  }
+
+  focus() {
+    if (this.ref) {
+      this.ref.focus();
+    }
+  }
+
   onClick = e => {
     this.props.onClick(e);
+  }
+
+  onKeyPress = e => {
+    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
+      this.props.onClick(e);
+    }
+  }
+
+  setRef = ref => {
+    this.ref = ref;
   }
 
   render() {
@@ -45,7 +70,15 @@ class Button extends React.PureComponent {
     const isGlyph = img && (img.indexOf('.') === -1 || img.indexOf('<svg') === 0) && !isBase64;
 
     return (
-      <div className={className} data-element={dataElement} onClick={this.onClick}>
+      <div
+        tabIndex={0}
+        role="button"
+        className={className}
+        data-element={dataElement}
+        onClick={this.onClick}
+        onKeyPress={this.onKeyPress}
+        ref={this.setRef}
+      >
         {isGlyph &&
           <Icon glyph={img} color={color} />
         }

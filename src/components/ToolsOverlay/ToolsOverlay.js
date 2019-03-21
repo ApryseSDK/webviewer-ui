@@ -30,13 +30,31 @@ class ToolsOverlay extends React.PureComponent {
     this.overlay = React.createRef();
     this.state = {
       left: 0,
-      right: 'auto'
+      right: 'auto',
+      hasFocusedFirstButton: false,
     };
   }
+
+  isOpening = false;
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
   }
+
+  // This look bad and complicated because it is. componentWillReceiveProps was a lot easier but that was
+  // deprecated. This is the actual recommend way of setting state based on props.
+  // https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md#state-derived-from-propsstate
+  static getDerivedStateFromProps(nextProps, prevState){
+    // isOpen changed or activeToolGroup changed
+    if (!prevState.mirroredIsOpen && nextProps.isOpen || (prevState.mirroredIsOpen  && (prevState.mirroredActiveToolGroup !== nextProps.activeToolGroup))){
+      return { isOpening: true, mirroredIsOpen: nextProps.isOpen, mirroredActiveToolGroup: nextProps.activeToolGroup };
+    }
+    return { isOpening: false, mirroredIsOpen: nextProps.isOpen, mirroredActiveToolGroup: nextProps.activeToolGroup };
+  }
+
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //   this.isOpening = !this.props.isOpen && nextProps.isOpen || (this.props.isOpen && (this.props.activeToolGroup !== nextProps.activeToolGroup));
+  // }
 
   componentDidUpdate(prevProps) {
     const clickedOnAnotherToolGroupButton = prevProps.activeToolGroup !== this.props.activeToolGroup;
@@ -62,7 +80,7 @@ class ToolsOverlay extends React.PureComponent {
   setOverlayPosition = () => {
     const { activeToolGroup, activeHeaderItems } = this.props;
     const element = activeHeaderItems.find(item => item.toolGroup === activeToolGroup);
-    
+
     if (element) {
       this.setState(getOverlayPositionBasedOn(element.dataElement, this.overlay));
     }
@@ -77,7 +95,7 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   render() {
-    const { left, right } = this.state;
+    const { left, right, isOpening } = this.state;
     const { isDisabled, isOpen, toolButtonObjects, activeToolGroup } = this.props;
 
     if (isDisabled || !activeToolGroup) {
@@ -89,7 +107,14 @@ class ToolsOverlay extends React.PureComponent {
 
     return (
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="toolsOverlay" onMouseDown={e => e.stopPropagation()}>
-        {toolNames.map((toolName, i) => <ToolButton key={`${toolName}-${i}`} toolName={toolName} />)}
+        {toolNames.map(
+          (toolName, i) =>
+              <ToolButton
+                key={`${toolName}-${i}`}
+                toolName={toolName}
+                shouldFocus={isOpening && i === 0}
+              />
+        )}
         <div className="spacer hide-in-desktop"></div>
         <Button className="close hide-in-desktop" dataElement="toolsOverlayCloseButton" img="ic_check_black_24px" onClick={this.handleCloseClick} />
       </div>
