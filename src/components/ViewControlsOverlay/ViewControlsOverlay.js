@@ -60,6 +60,15 @@ class ViewControlsOverlay extends React.PureComponent {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
+  // https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md#state-derived-from-propsstate
+  static getDerivedStateFromProps(nextProps, prevState){
+    const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
+    if (hasIsOpenChanged){
+      return { isOpening: true, mirroredIsOpen: nextProps.isOpen };
+    }
+    return { isOpening: false, mirroredIsOpen: nextProps.isOpen };
+  }
+
   handleWindowResize = () => {
     this.setState(getOverlayPositionBasedOn('viewControlsButton', this.overlay));
   }
@@ -72,7 +81,7 @@ class ViewControlsOverlay extends React.PureComponent {
 
   render() {
     const { isDisabled, displayMode, fitMode, totalPages, t } = this.props;
-    const { left, right } = this.state;
+    const { left, right, isOpening } = this.state;
     const { pageTransition, layout } = displayModeObjects.find(obj => obj.displayMode === displayMode);
     const className = getClassName('Overlay ViewControlsOverlay', this.props);
 
@@ -86,7 +95,7 @@ class ViewControlsOverlay extends React.PureComponent {
           <Element className="row" dataElement="pageTransitionButtons">
             <div className="type">{t('option.displayMode.pageTransition')}</div>
             <Tooltip content="option.pageTransition.default" isDisabled={this.props.isDefaultPageTransitionButtonDisabled}>
-              <Button dataElement="defaultPageTransitionButton" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick('default', layout)} isActive={pageTransition === 'default'} />
+              <Button shouldFocus={isOpening} dataElement="defaultPageTransitionButton" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick('default', layout)} isActive={pageTransition === 'default'} />
             </Tooltip>
             <Tooltip content="option.pageTransition.continuous" isDisabled={this.props.isContinuousPageTransitionButtonDisabled}>
               <Button dataElement="continuousPageTransitionButton" img="ic_view_mode_continuous_black_24px" onClick={() => this.handleClick('continuous', layout)} isActive={pageTransition === 'continuous'} />

@@ -24,11 +24,15 @@ class Button extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.shouldFocus && this.focus();
+    if (this.props.shouldFocus) {
+      this.focus();
+    }
   }
 
   componentDidUpdate() {
-    this.props.shouldFocus && this.focus();
+    if (this.props.shouldFocus) {
+      this.focus();
+    }
   }
 
   focus() {

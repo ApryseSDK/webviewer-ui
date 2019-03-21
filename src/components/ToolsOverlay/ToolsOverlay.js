@@ -41,12 +41,12 @@ class ToolsOverlay extends React.PureComponent {
     window.addEventListener('resize', this.handleWindowResize);
   }
 
-  // This look bad and complicated because it is. componentWillReceiveProps was a lot easier but that was
-  // deprecated. This is the actual recommend way of setting state based on props.
+
   // https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md#state-derived-from-propsstate
   static getDerivedStateFromProps(nextProps, prevState){
-    // isOpen changed or activeToolGroup changed
-    if (!prevState.mirroredIsOpen && nextProps.isOpen || (prevState.mirroredIsOpen  && (prevState.mirroredActiveToolGroup !== nextProps.activeToolGroup))){
+    const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
+    const hasActiveToolGroupChanged = prevState.mirroredIsOpen  && (prevState.mirroredActiveToolGroup !== nextProps.activeToolGroup);
+    if (hasIsOpenChanged || hasActiveToolGroupChanged){
       return { isOpening: true, mirroredIsOpen: nextProps.isOpen, mirroredActiveToolGroup: nextProps.activeToolGroup };
     }
     return { isOpening: false, mirroredIsOpen: nextProps.isOpen, mirroredActiveToolGroup: nextProps.activeToolGroup };
