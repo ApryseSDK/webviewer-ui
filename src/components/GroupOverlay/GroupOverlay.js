@@ -88,7 +88,6 @@ class GroupOverlay extends React.PureComponent {
     const className = getClassName('Overlay GroupOverlay', { isOpen });
     let buttonGroup = (Object.keys(activeHeaderItems).find(key => activeHeaderItems[key].toolGroup === activeToolGroup));
     const children = activeHeaderItems[buttonGroup].children;
-    // let groupElementNames = activeHeaderItems[buttonGroup].children.map(element => element.toolName);
     return (
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="groupOverlay" onMouseDown={e => e.stopPropagation()}>
         {children.map((element, i) => {
@@ -99,15 +98,6 @@ class GroupOverlay extends React.PureComponent {
           }
         }
         )}
-        {/* {activeHeaderItems[buttonGroup].children.forEach((element) => {
-          if (element.type === "toolButton"){
-            <ToolButton key={`${element.toolName}`} toolName={element.toolName} />
-          } else {
-            element.type;
-          }
-          // console.log(element.type);
-          // console.log(activeHeaderItems[buttonGroup].children)
-        })} */}
         <div className="spacer hide-in-desktop"></div>
         <Button className="close hide-in-desktop" dataElement="groupOverlayCloseButton" img="ic_check_black_24px" onClick={this.handleCloseClick} />
       </div>

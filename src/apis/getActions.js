@@ -22,8 +22,7 @@ export default store => ({
   },
   setColorPalette: (toolName, colorPalette) => {
     const state = store.getState();
-    const toolButtonObject = selectors.getToolButtonObject(state, toolName);
-    const availablePalettes = toolButtonObject.availablePalettes;
+    const availablePalettes = selectors.getAvailablePalettes(state, toolName);
     const property = mapPaletteToAnnotationColorProperty[colorPalette];
     if (availablePalettes.includes(property)) {
       store.dispatch(actions.setColorPalette(toolName, mapPaletteToAnnotationColorProperty[colorPalette]));
@@ -33,8 +32,7 @@ export default store => ({
   },
   setIconColor: (toolName, colorPalette) => {
     const state = store.getState();
-    const toolButtonObject = selectors.getToolButtonObject(state, toolName);
-    const availablePalettes = toolButtonObject.availablePalettes;
+    const availablePalettes = selectors.getAvailablePalettes(state, toolName);
     const property = mapPaletteToAnnotationColorProperty[colorPalette];
     if (availablePalettes.includes(property)) {
       store.dispatch(actions.setIconColor(toolName, mapPaletteToAnnotationColorProperty[colorPalette]));

@@ -44,8 +44,6 @@ class AnnotationStylePopup extends React.Component {
     const className = getClassName('Popup AnnotationStylePopup', this.props);
     const hideSlider = annotation instanceof window.Annotations.RedactionAnnotation;
 
-    console.log(annotation);
-
     if (isDisabled) {
       return null;
     }

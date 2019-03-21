@@ -33,7 +33,6 @@ class ToolButton extends React.PureComponent {
 
   onClick = e => {
     const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement } = this.props;
-
     e.stopPropagation();
    
     if (isActive) {
@@ -88,6 +87,8 @@ const mapStateToProps = (state, { toolName }) => ({
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
   iconColor: selectors.getIconColor(state, toolName),
+  reduxToolName: selectors.getActiveToolName(state),
+  group: selectors.getGroupName(state, toolName),
   ...selectors.getToolButtonObject(state, toolName)
 });
 

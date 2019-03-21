@@ -2,8 +2,8 @@ import core from 'core';
 import disableAnnotations from './disableAnnotations';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import { PRIORITY_ONE } from 'constants/actionPriority';
-import { getAnnotationCreateToolNames } from 'constants/map';
 import actions from 'actions';
+import selectors from 'selectors';
 
 export default store => (enable = true) =>  {
   let elements = [
@@ -16,7 +16,8 @@ export default store => (enable = true) =>  {
     if (!core.isCreateRedactionEnabled()) {
       elements = elements.filter(ele => ele !== 'redactionButton');
     }
-    getAnnotationCreateToolNames().forEach(toolName => {
+    const annotationToolNames = selectors.getAnnotationToolNames(store.getState());
+    annotationToolNames.forEach(toolName => {
       core.getTool(toolName).disabled = false;
     });
 

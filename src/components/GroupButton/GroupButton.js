@@ -42,7 +42,6 @@ class GroupButton extends React.PureComponent {
     const wasAcitveToolNameInGroup = prevProps.toolNames.indexOf(prevProps.activeToolName) > -1;
     const isAcitveToolNameInGroup = this.props.toolNames.indexOf(this.props.activeToolName) > -1;
     const toolNamesLengthChanged = prevProps.toolNames.length !== this.props.toolNames.length;
-
     if (activeToolNameChanged && isAcitveToolNameInGroup) {
       this.setState({ toolName: this.props.activeToolName });
     }

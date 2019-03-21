@@ -14,7 +14,6 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './PrintModal.scss';
-import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -29,7 +28,6 @@ class PrintModal extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     sortStrategy: PropTypes.string.isRequired,
-    colorMap: PropTypes.object.isRequired,
   }
 
   constructor() {
@@ -247,7 +245,7 @@ class PrintModal extends React.PureComponent {
   }
 
   getNote = annotation => {
-    const { colorMap, toolButtonObjects } = this.props;
+    const { toolButtonObjects } = this.props;
 
     const note = document.createElement('div');
     note.className = 'note';
@@ -258,12 +256,8 @@ class PrintModal extends React.PureComponent {
     const noteRootInfo = document.createElement('div');
     noteRootInfo.className = 'note__info--with-icon';
 
-    const key = mapAnnotationToKey(annotation);
-    const iconColor = colorMap[key] && colorMap[key].iconColor;
-    // const icon = getDataWithKey(key).icon;
-    const icon ="";
-    // const iconColor = toolButtonObjects[annotation.ToolName] && toolButtonObjects[annotation.ToolName].iconColor;
-    // const icon = toolButtonObjects[annotation.ToolName] && toolButtonObjects[annotation.ToolName].img;
+    const iconColor = toolButtonObjects[annotation.ToolName] && toolButtonObjects[annotation.ToolName].iconColor;
+    const icon = toolButtonObjects[annotation.ToolName] && toolButtonObjects[annotation.ToolName].img;
     const innerHTML = icon ? require(`../../../assets/${icon}.svg`) : annotation.Subject;
     const noteIcon = document.createElement('div');
     noteIcon.className = 'note__icon';
@@ -391,7 +385,6 @@ const mapStateToProps = state => ({
   printQuality: selectors.getPrintQuality(state),
   pageLabels: selectors.getPageLabels(state),
   sortStrategy: selectors.getSortStrategy(state),
-  colorMap: selectors.getColorMap(state),
   toolButtonObjects: selectors.getToolButtonObjects(state)
 });
 

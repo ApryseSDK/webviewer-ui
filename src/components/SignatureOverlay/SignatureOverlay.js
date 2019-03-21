@@ -10,7 +10,6 @@ import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import deepCopyPaths from 'helpers/deepCopyPaths';
-import { mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -108,7 +107,7 @@ class SignatureOverlay extends React.PureComponent {
     if (
       action === 'modify' &&
       annotations.length === 1 && 
-      mapAnnotationToKey(annotations[0]) === 'signature'
+      annotations[0].ToolName === 'AnnotationCreateSignature'
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
       const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ paths }) => {

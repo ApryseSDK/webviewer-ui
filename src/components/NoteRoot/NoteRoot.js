@@ -50,9 +50,8 @@ class NoteRoot extends React.Component {
   }
 
   renderHeader = () => {
-    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor, toolButtonObject } = this.props;
+    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor, icon } = this.props;
     const color = iconColor && annotation[iconColor].toHexString();
-    const icon = toolButtonObject.img;
     return (
       <div className="title">
         <div className="type">
@@ -106,7 +105,7 @@ const mapStateToProps = (state, { annotation }) => ({
   sortStrategy: selectors.getSortStrategy(state),
   noteDateFormat: selectors.getNoteDateFormat(state),
   iconColor: selectors.getIconColor(state, annotation.ToolName),
-  toolButtonObject: selectors.getToolButtonObject(state, annotation.ToolName)
+  icon: selectors.getToolButtonIcon(state, annotation.ToolName)
 });
 
 export default connect(mapStateToProps)(NoteRoot);

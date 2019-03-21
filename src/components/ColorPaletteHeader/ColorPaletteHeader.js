@@ -17,6 +17,7 @@ class ColorPaletteHeader extends React.PureComponent {
     style: PropTypes.object.isRequired,
     colorPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     setColorPalette: PropTypes.func.isRequired,
+    availablePalettes: PropTypes.arrayOf(PropTypes.string).isRequired,
     t: PropTypes.func.isRequired,
   }
 
@@ -105,8 +106,7 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   render() {
-    const { t, colorPalette, toolButton } = this.props;
-    const { availablePalettes } = toolButton;
+    const { t, colorPalette, availablePalettes } = this.props;
     if (availablePalettes.length < 2) {
       return null;
     }
@@ -133,7 +133,7 @@ class ColorPaletteHeader extends React.PureComponent {
 }
 
 const mapStateToProps = (state, { activeToolName }) => ({
-  toolButton: selectors.getToolButtonObject(state, activeToolName)
+  availablePalettes: selectors.getAvailablePalettes(state, activeToolName)
 }); 
 const mapDispatchToProps = {
   setColorPalette: actions.setColorPalette
