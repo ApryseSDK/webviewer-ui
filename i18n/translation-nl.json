@@ -138,6 +138,17 @@
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
     },
+    "measurementOverlay": {
+      "scale": "schaalverhouding",
+      "precision": "precisie",
+      "angle": "hoek",
+      "distance": "afstand",
+      "perimeter": "omtrek",
+      "area": "Gebied",
+      "distanceMeasurement": "afstandsmeting",
+      "perimeterMeasurement": "perimeter meting",
+      "areaMeasurement": "gebiedsmeting"
+    },
     "slider": {
       "opacity": "Dekking",
       "thickness": "Randdikte",

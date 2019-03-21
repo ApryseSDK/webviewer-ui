@@ -64,7 +64,7 @@ class ZoomOverlay extends React.PureComponent {
       isOpen ? 'open' : 'closed'
     ].join(' ').trim();
     const { left, right } = this.state;
-    const zoomList = [0.1, 0.25, 0.5, 1.25, 1.5, 2, 4, 8, 16, 64];
+    const zoomList = [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64];
     return (
       <div className = {className} data-element="zoomOverlay" style={{ left, right }} ref={this.dropdown}>
         <OverlayItem onClick={core.fitToWidth} buttonName={t('action.fitToWidth')} />
@@ -78,7 +78,7 @@ class ZoomOverlay extends React.PureComponent {
             } 
           } 
           buttonName={zoomValue * 100 + '%'}
-          />
+                 />;
           })
         }
         <div className="spacer" />
