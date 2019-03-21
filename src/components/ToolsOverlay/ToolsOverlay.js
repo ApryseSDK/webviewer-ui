@@ -105,7 +105,7 @@ class ToolsOverlay extends React.PureComponent {
               <ToolButton
                 key={`${toolName}-${i}`}
                 toolName={toolName}
-                shouldFocus={isOpening && i === 0}
+                willFocus={isOpening && i === 0}
               />
         )}
         <div className="spacer hide-in-desktop"></div>

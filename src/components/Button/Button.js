@@ -7,7 +7,7 @@ import './Button.scss';
 
 class Button extends React.PureComponent {
   static propTypes = {
-    shouldFocus: PropTypes.bool,
+    willFocus: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isActive: PropTypes.bool,
     mediaQueryClassName: PropTypes.string,
@@ -24,13 +24,13 @@ class Button extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.shouldFocus) {
+    if (this.props.willFocus) {
       this.focus();
     }
   }
 
   componentDidUpdate() {
-    if (this.props.shouldFocus) {
+    if (this.props.willFocus) {
       this.focus();
     }
   }

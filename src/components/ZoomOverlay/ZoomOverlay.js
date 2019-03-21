@@ -85,7 +85,7 @@ class ZoomOverlay extends React.PureComponent {
         <OverlayItem
           onClick={core.fitToWidth}
           buttonName={t('action.fitToWidth')}
-          shouldFocus={this.state.isOpening}
+          willFocus={this.state.isOpening}
         />
         <OverlayItem onClick={core.fitToPage} buttonName={t('action.fitToPage')} />
         <div className="spacer" />

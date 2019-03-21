@@ -7,17 +7,17 @@ class OverlayItem extends React.PureComponent {
   static propTypes = {
     onClick: PropTypes.func,
     buttonName: PropTypes.string,
-    shouldFocus: PropTypes.bool
+    willFocus: PropTypes.bool
   }
 
   componentDidMount() {
-    if (this.props.shouldFocus) {
+    if (this.props.willFocus) {
       this.focus();
     }
   }
 
   componentDidUpdate() {
-    if (this.props.shouldFocus) {
+    if (this.props.willFocus) {
       this.focus();
     }
   }
