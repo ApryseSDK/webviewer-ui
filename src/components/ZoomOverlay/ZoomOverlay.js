@@ -60,7 +60,6 @@ class ZoomOverlay extends React.PureComponent {
     return { isOpening: false, mirroredIsOpen: nextProps.isOpen };
   }
 
-
   handleWindowResize = () => {
     const { left, right } = getOverlayPositionBasedOn('zoomOverlayButton', this.dropdown);
     this.setState({

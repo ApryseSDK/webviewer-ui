@@ -30,12 +30,9 @@ class ToolsOverlay extends React.PureComponent {
     this.overlay = React.createRef();
     this.state = {
       left: 0,
-      right: 'auto',
-      hasFocusedFirstButton: false,
+      right: 'auto'
     };
   }
-
-  isOpening = false;
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
@@ -51,10 +48,6 @@ class ToolsOverlay extends React.PureComponent {
     }
     return { isOpening: false, mirroredIsOpen: nextProps.isOpen, mirroredActiveToolGroup: nextProps.activeToolGroup };
   }
-
-  // UNSAFE_componentWillReceiveProps(nextProps) {
-  //   this.isOpening = !this.props.isOpen && nextProps.isOpen || (this.props.isOpen && (this.props.activeToolGroup !== nextProps.activeToolGroup));
-  // }
 
   componentDidUpdate(prevProps) {
     const clickedOnAnotherToolGroupButton = prevProps.activeToolGroup !== this.props.activeToolGroup;
