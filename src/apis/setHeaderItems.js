@@ -22,7 +22,6 @@ const Header = {
   },
   get(dataElement) {
     if (this.index !== -1) {
-      console.log('this')
       // get(dataElement) has been called before so we need to reset this
       const item = this.headers[this.headerGroup][this.index];
       Object.keys(item).forEach(key => {
