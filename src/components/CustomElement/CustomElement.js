@@ -40,7 +40,13 @@ class CustomElement extends React.PureComponent {
   // one way is in a config file. This way the element created by document.createElement() is an instanceof window.Element but not window.parent.Element since 
   // code inside the config is running inside the iframe and window.parent is the iframe
   // the other way is calling setHeaderItems and creating elements outside the iframe. This way the element is an instanceof window.parent.Element, not window.Element
-  isDOMElement = element => element instanceof window.Element || element instanceof window.parent.Element;
+  isDOMElement = element => {
+    try {
+      return element instanceof window.Element || element instanceof window.parent.Element;
+    } catch(e) {
+      return false;
+    }
+  }
 
   isReactElement = element => React.isValidElement(element);
   
