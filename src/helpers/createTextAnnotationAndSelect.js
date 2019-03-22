@@ -45,9 +45,7 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
 };
 
 const setAnnotationColor = annotation => {
-  const toolName = annotation.ToolName;
-  console.log(toolName);
-  
+  const toolName = annotation.ToolName;  
   if (toolName) {
     const { StrokeColor } = getToolStyles(toolName);
     annotation.StrokeColor = StrokeColor;
