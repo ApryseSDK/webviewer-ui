@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { hot } from 'react-hot-loader';
 
+import AccessibilityController from 'components/AccessibilityController';
 import Header from 'components/Header';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
@@ -67,7 +68,7 @@ class App extends React.PureComponent {
   }
 
   onMouseDown = () => {
-    const elements = [ 
+    const elements = [
       'annotationPopup',
       'contextMenuPopup',
       'toolStylePopup',
@@ -87,6 +88,21 @@ class App extends React.PureComponent {
     return (
       <React.Fragment>
         <div className="App" onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
+          <AccessibilityController />
+          <a
+            tabIndex={0}
+            className="skip-main"
+            onClick={() => {
+              $('*[data-element=\'documentContainer\']').focus();
+            }}
+            onKeyPress={e => {
+              if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
+                $('*[data-element=\'documentContainer\']').focus();
+              }
+            }}
+          >
+            Skip to main content
+          </a>
           <Header />
 
           <LeftPanel />
