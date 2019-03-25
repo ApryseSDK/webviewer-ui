@@ -13,8 +13,8 @@
     "enterFullscreen": "Document in volledig scherm",
     "exitFullscreen": "Document normaal weergeven",
     "fit": "Zoomen",
-    "fitToPage": "Zoomen naar vensterhoogte",
-    "fitToWidth": "Zoomen naar vensterbreedte",
+    "fitToPage": "Vensterhoogte",
+    "fitToWidth": "Vensterbreedte",
     "openFile": "Open bestand",
     "print": "Printen",
     "ok": "OK",
@@ -132,8 +132,8 @@
       "warningPopupTitle": "Redactiewijziging Toepassen"
     },
     "searchPanel": {
-      "caseSensitive": "Hoofdletter gev..",
-      "wholeWordOnly": "Alleen hele woorden"
+      "caseSensitive": "Hoofdlettergevoelig",
+      "wholeWordOnly": "Hele woorden"
     },
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
@@ -188,6 +188,6 @@
   "tool": {
     "pan": "Schuiven",
     "select": "Selecteren",
-    "Marquee": "Marquee Zoom"
+    "Marquee": "Selectie zoom"
   }
 }
