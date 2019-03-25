@@ -88,7 +88,6 @@ class App extends React.PureComponent {
     return (
       <React.Fragment>
         <div className="App" onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
-          <AccessibilityController />
           <a
             tabIndex={0}
             className="skip-main"

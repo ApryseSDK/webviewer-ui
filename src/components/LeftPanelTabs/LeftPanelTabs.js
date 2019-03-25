@@ -17,6 +17,7 @@ class LeftPanelTabs extends React.Component {
     activePanel: PropTypes.string.isRequired,
     disabledCustomPanelTabs: PropTypes.array.isRequired,
     customPanels: PropTypes.array.isRequired,
+    isOpening: PropTypes.bool,
     isLeftPanelTabsDisabled: PropTypes.bool,
     isThumbnailsPanelButtonDisabled: PropTypes.bool,
     isOutlinesPanelButtonDisabled: PropTypes.bool,
@@ -31,6 +32,7 @@ class LeftPanelTabs extends React.Component {
 
   render() {
     const {
+      isOpening,
       customPanels,
       isLeftPanelTabsDisabled,
       isThumbnailsPanelButtonDisabled,
@@ -52,6 +54,7 @@ class LeftPanelTabs extends React.Component {
             dataElement="thumbnailsPanelButton"
             img="ic_thumbnails_black_24px"
             onClick={() => setActiveLeftPanel('thumbnailsPanel')}
+            willFocus={isOpening}
           />
         </Tooltip>
         <Tooltip content="component.outlinesPanel" isDisabled={isOutlinesPanelButtonDisabled}>

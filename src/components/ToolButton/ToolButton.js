@@ -37,7 +37,7 @@ class ToolButton extends React.PureComponent {
     const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement, onClick } = this.props;
 
     e.stopPropagation();
-   
+
     if (isActive) {
       if (toolStylesExist(toolName)) {
         toggleElement('toolStylePopup');

@@ -46,6 +46,15 @@ class LeftPanel extends React.Component {
     }
   }
 
+  // https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md#state-derived-from-propsstate
+  static getDerivedStateFromProps(nextProps, prevState){
+    const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
+    if (hasIsOpenChanged){
+      return { isOpening: true, mirroredIsOpen: nextProps.isOpen };
+    }
+    return { isOpening: false, mirroredIsOpen: nextProps.isOpen };
+  }
+
   getDisplay = panel => {
     return panel === this.props.activePanel ? 'flex' : 'none';
   }
@@ -68,12 +77,13 @@ class LeftPanel extends React.Component {
   }
 
   render() {
+    const { isOpening } = this.state;
     const { isDisabled, closeElement, customPanels } = this.props;
-    
+
     if (isDisabled) {
       return null;
     }
-    
+
     const className = getClassName('Panel LeftPanel', this.props);
 
     return(
@@ -82,9 +92,9 @@ class LeftPanel extends React.Component {
           <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>
             <Icon glyph="ic_close_black_24px" />
           </div>
-          <LeftPanelTabs />
+          <LeftPanelTabs isOpening={isOpening} />
         </div>
-        
+
         {!isIE11 &&
           <div
             ref={this.sliderRef}
@@ -97,7 +107,7 @@ class LeftPanel extends React.Component {
         }
         <NotesPanel display={this.getDisplay('notesPanel')} />
         <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
-        <OutlinesPanel display={this.getDisplay('outlinesPanel')} /> 
+        <OutlinesPanel display={this.getDisplay('outlinesPanel')} />
         {customPanels.map(({ panel }, index) => (
           <CustomElement
             key={panel.dataElement || index}

@@ -16,15 +16,9 @@ class OverlayItem extends React.PureComponent {
     }
   }
 
-  componentDidUpdate() {
-    if (this.props.willFocus) {
+  componentDidUpdate(prevProps) {
+    if (this.props.willFocus && (this.props.willFocus !== prevProps.willFocus)) {
       this.focus();
-    }
-  }
-
-  focus() {
-    if (this.ref) {
-      this.ref.focus();
     }
   }
 

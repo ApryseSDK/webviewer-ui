@@ -38,7 +38,6 @@ class ToolsOverlay extends React.PureComponent {
     window.addEventListener('resize', this.handleWindowResize);
   }
 
-
   // https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md#state-derived-from-propsstate
   static getDerivedStateFromProps(nextProps, prevState){
     const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
