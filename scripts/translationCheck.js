@@ -1,10 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-path.resolve(__dirname, );
 const i18nFolder = path.resolve(__dirname, '../i18n');
 const baseFile = `${i18nFolder}/translation-en.json`;
-const baseTranslationData = require(baseFile); 
 const files = [
   `${i18nFolder}/translation-en.json`,
   `${i18nFolder}/translation-fr.json`,
@@ -13,6 +11,7 @@ const files = [
 ];
 
 const translationCheck = () => {
+  const baseTranslationData = require(baseFile); 
   files
     .filter(file => file !== baseFile)
     .forEach(file => {
