@@ -11,6 +11,8 @@
   font-size: 16px;
   font-weight: normal;
   font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+
   &:hover{
     background-color: #F6F6F6;
     background-color: var(--button-hover-color);
