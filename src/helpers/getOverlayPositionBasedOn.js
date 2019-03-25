@@ -1,25 +1,45 @@
-export default (element, overlay) => {
+export default (element, overlay, align = 'left') => {
   const button = document.querySelector(`[data-element=${element}]`);
   let left = 0;
   let right = 'auto';
 
-  // By default the button will be in the header
-  // but a user can disable it by calling viewerInstance.actions.disableElement(...);
+  // by default the button is visible in the header
+  // but it can be removed from the DOM by calling viewerInstance.disableElement(...);
+  // in this case we are not able to position the overlay correctly so we just "hide" the overlay 
   if (!button) {
-    return { left, right };
+    return { left: -9999, right };
   }
 
-  const { left: buttonLeft } = button.getBoundingClientRect();
+  const { left: buttonLeft, right: buttonRight, width: buttonWidth } = button.getBoundingClientRect();
   const { width: overlayWidth } = overlay.current.getBoundingClientRect();
-  
-  if (buttonLeft + overlayWidth > window.innerWidth) {
-    const rightMargin = 16;
-    left = 'auto';
-    right = rightMargin;
-  } else {
-    left = buttonLeft;
-    right = 'auto';
-  }
 
+  if (align === 'left'){
+    if (buttonLeft + overlayWidth > window.innerWidth) {
+      const rightMargin = 16;
+      left = 'auto';
+      right = rightMargin;
+    } else {
+      left = buttonLeft;
+      right = 'auto';
+    }
+  } else if (align === 'center'){
+    if (buttonLeft + (overlayWidth + buttonWidth) / 2 > window.innerWidth) {
+      const rightMargin = 16;
+      left = 'auto';
+      right = rightMargin;
+    } else {
+      left = buttonLeft + buttonWidth/2 - overlayWidth/2; 
+      right = 'auto';
+    }
+  } else {
+    if (buttonRight - overlayWidth < 0) {
+      const leftMargin = 16;
+      right = 'auto';
+      left = leftMargin;
+    } else {
+      right = 'auto';
+      left = buttonLeft - (overlayWidth - buttonWidth);
+    }
+  }  
   return { left, right };
 };

@@ -19,7 +19,11 @@ class NotePopup extends React.Component {
     isNoteExpanded: PropTypes.bool.isRequired,
     setNotePopupId: PropTypes.func.isRequired,
     openEditing: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired
+    onDelete: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired,
+    isDisabled: PropTypes.bool,
+    isEditDisabled: PropTypes.bool,
+    isDeleteDisabled: PropTypes.bool,
   }
 
   constructor(props) {
@@ -48,7 +52,7 @@ class NotePopup extends React.Component {
     const isOpen = notePopupId === annotation.Id;
 
     if (isOpen) {
-      setNotePopupId('');
+      this.closePopup();
     } else {
       setNotePopupId(annotation.Id);
     }
@@ -64,22 +68,26 @@ class NotePopup extends React.Component {
 
   render() {
     const { canModify } = this.state;
-    const { t, isNoteExpanded, notePopupId, annotation, onDelete } = this.props;
+    const { t, isNoteExpanded, notePopupId, annotation, onDelete, isDisabled, isEditDisabled, isDeleteDisabled } = this.props;
     const isOpen = notePopupId === annotation.Id;
     const className = getClassName('modify', { isOpen });
 
-    if (!canModify || !isNoteExpanded) {
+    if (!canModify || !isNoteExpanded || isDisabled) {
       return null;
     }
 
     return(
-      <div className="NotePopup" onClick={e => e.stopPropagation()}>
+      <div className="NotePopup" data-element="notePopup" onClick={e => e.stopPropagation()}>
         <div className="overflow" onClick={this.togglePopup}>
           <Icon glyph="ic_overflow_black_24px" />
         </div>
         <div className={className} onClick={this.closePopup}>
-          <div onClick={this.openEdit}>{t('action.edit')}</div>
-          <div onClick={onDelete}>{t('action.delete')}</div>
+          {!isEditDisabled &&
+            <div data-element="notePopupEdit" onClick={this.openEdit}>{t('action.edit')}</div>
+          }
+          {!isDeleteDisabled &&
+            <div data-element="notePopupDelete" onClick={onDelete}>{t('action.delete')}</div>
+          }
         </div>
       </div>
     );
@@ -87,7 +95,10 @@ class NotePopup extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  notePopupId: selectors.getNotePopupId(state)
+  notePopupId: selectors.getNotePopupId(state),
+  isDisabled: selectors.isElementDisabled(state, 'notePopup'),
+  isEditDisabled: selectors.isElementDisabled(state, 'notePopupEdit'),
+  isDeleteDisabled: selectors.isElementDisabled(state, 'notePopupDelete'),
 });
 
 const mapDispatchToProps = {

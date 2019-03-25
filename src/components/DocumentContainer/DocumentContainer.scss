@@ -6,7 +6,6 @@
   width: 100%;
   height: calc(100% - #{$top-bar-height});
   overflow: auto;
-  -webkit-overflow-scrolling: touch;
   transition: all .3s ease;
   user-select: none;
 

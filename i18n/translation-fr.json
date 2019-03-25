@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "Appliquer",
+    "applyAll": "Appliquer toute",
     "cancel": "Annuler",
     "clear": "Effacer",
     "close": "Fermer",
@@ -15,11 +17,13 @@
     "fitToWidth": "Fit à la largeur",
     "openFile": "Ouvrir un fichier",
     "print": "Imprimer",
+    "ok": "OK",
     "reply": "Répondre",
     "rotate": "Tourner",
     "rotateClockwise": "Tourner horaire",
     "rotateCounterClockwise": "Tourner antihoraire",
     "save": "Enregistrer", 
+    "create": "Créer",
     "showMoreResults": "Montrer plus de résultats",
     "sign": "Signer", 
     "style": "Style",
@@ -43,12 +47,14 @@
     "polygonCloud": "Nuage",
     "polyline": "Ligne polygonale",
     "rectangle": "Rectangle",
+    "redact": "Biffure",
     "signature": "Signature",
     "squiggly": "Ligne ondulée",
     "stamp": "Timbre",
     "stickyNote": "Note collante",
     "strikeout": "Barré",
-    "underline": "Soulignage"
+    "underline": "Soulignage",
+    "custom": "personnalisation"
   },
   "component": {
     "freehandToolsButton": "Outils de stylo",
@@ -62,6 +68,7 @@
     "textToolsButton": "Outils de texte",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
+    "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage"
   },
   "message": {
@@ -87,9 +94,9 @@
   },
   "option": {
     "annotationColor": {
-      "border": "Couleur de bordure",
-      "fill": "Couleur de remplissage",
-      "text": "Couleur de texte"
+      "StrokeColor": "Couleur de bordure",
+      "FillColor": "Couleur de remplissage",
+      "TextColor": "Couleur de texte"
     },
     "displayMode": {
       "layout": "Disposition",
@@ -115,11 +122,31 @@
     "print": {
       "all": "Toutes",
       "current": "Actuelle",
-      "pages": "Pages"
+      "pages": "Pages",
+      "includeComments": "Inclure les commentaires"
+    },
+    "redaction": {
+      "markForRedaction": "Repérer les biffures",
+      "warningPopupMessage":  "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",
+      "warningPopupTitle": "Appliquer les Biffures"
     },
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",
       "wholeWordOnly": "Mot complet"
+    },
+    "signatureOverlay": {
+      "addSignature": "Ajouter une signature"
+    },
+    "measurementOverlay": {
+      "scale": "rapport d'échelle",
+      "precision": "précision",
+      "angle": "angle",
+      "distance": "distance",
+      "perimeter": "périmètre",
+      "area": "surface",
+      "distanceMeasurement": "mesure de distance",
+      "perimeterMeasurement": "mesure du périmètre",
+      "areaMeasurement": "mesure du surface"
     },
     "slider": {
       "opacity": "Opacité",
@@ -156,6 +183,7 @@
   },
   "tool": {
     "pan": "Panoramique",
-    "select": "Sélection"
+    "select": "Sélection",
+    "Marquee": "Marquee Zoom"
   }
 }

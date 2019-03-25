@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import i18n from 'i18next';
+import i18next from 'i18next';
 import thunk from 'redux-thunk';
 
 import core from 'core';
-import actions from 'actions';
 
 import apis from 'src/apis';
 
@@ -28,9 +27,8 @@ import setupI18n from 'helpers/setupI18n';
 import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
-import setDefaultToolColor from 'helpers/setDefaultToolColor';
+import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
-import { isIOS } from 'helpers/device';
 
 const middleware = [thunk];
 
@@ -90,7 +88,7 @@ if (window.CanvasRenderingContext2D) {
   if (state.advanced.preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
     if (state.document.pdfType !== 'wait') {
       getBackendPromise(state.document.pdfType).then(pdfType => {
-        window.CoreControls.preloadPDFWorker(pdfType, {}, {});
+        window.CoreControls.initPDFWorkerTransports(pdfType, {}, null);
       });
     }
 
@@ -115,22 +113,15 @@ if (window.CanvasRenderingContext2D) {
     setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
-    setDefaultToolColor();
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
     addEventHandlers();
+    setDefaultToolStyles();
     core.setToolMode(defaultTool);
-    
-    if (isIOS) {
-      window.CoreControls.SetCachingLevel(0);
-      window.CoreControls.SetPreRenderLevel(2);
-      core.setDisplayMode(window.CoreControls.DisplayModes.Single);
-      store.dispatch(actions.disableElements([ 'pageTransitionButtons' ]));
-    }
 
     ReactDOM.render(
       <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
+        <I18nextProvider i18n={i18next}>
           <App removeEventHandlers={removeEventHandlers} />
         </I18nextProvider>
       </Provider>,
@@ -147,7 +138,9 @@ if (window.CanvasRenderingContext2D) {
           disableAnnotations: apis.disableAnnotations(store),
           disableDownload: apis.disableDownload(store),
           disableFilePicker: apis.disableFilePicker(store),
+          disableLocalStorage: apis.disableLocalStorage,
           disableNotesPanel: apis.disableNotesPanel(store),
+          disableMeasurement: apis.disableMeasurement(store),
           disablePrint: apis.disablePrint(store),
           disableTextSelection: apis.disableTextSelection(store),
           disableTool: apis.disableTool(store),
@@ -157,8 +150,12 @@ if (window.CanvasRenderingContext2D) {
           enableAnnotations: apis.enableAnnotations(store),
           enableDownload: apis.enableDownload(store),
           enableFilePicker: apis.enableFilePicker(store),
+          enableMeasurement: apis.enableMeasurement(store),
+          enableLocalStorage: apis.enableLocalStorage,
           enableNotesPanel: apis.enableNotesPanel(store),
           enablePrint: apis.enablePrint(store),
+          enableRedaction: apis.enableRedaction(store),
+          disableRedaction: apis.disableRedaction(store),
           enableTextSelection: apis.enableTextSelection(store),
           enableTool: apis.enableTool(store),
           enableTools: apis.enableTools(store),
@@ -176,7 +173,7 @@ if (window.CanvasRenderingContext2D) {
           goToLastPage: apis.goToLastPage(store),
           goToNextPage: apis.goToNextPage(store),
           goToPrevPage: apis.goToPrevPage(store),
-          i18n,
+          i18n: i18next,
           isAdminUser: apis.isAdminUser,
           isElementOpen: apis.isElementOpen(store),
           isElementDisabled: apis.isElementDisabled(store),
@@ -204,17 +201,21 @@ if (window.CanvasRenderingContext2D) {
           setLanguage: apis.setLanguage,
           setLayoutMode: apis.setLayoutMode,
           setNotesPanelSort: apis.setNotesPanelSort(store),
+          setMaxZoomLevel: apis.setMaxZoomLevel(store),
+          setMinZoomLevel: apis.setMinZoomLevel(store),
           setPrintQuality: apis.setPrintQuality(store),
           setReadOnly: apis.setReadOnly,
           setShowSideWindow: apis.setShowSideWindow(store),
           setSideWindowVisibility: apis.setSideWindowVisibility(store),
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
+          showWarningMessage: apis.showWarningMessage(store),
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store),
+          updateTool: apis.updateTool(store),
           loadedFromServer: false,
-          serverFailed: false
+          serverFailed: false,
         };
 
         window.ControlUtils = {

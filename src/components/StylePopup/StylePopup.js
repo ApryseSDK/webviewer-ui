@@ -1,11 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
+import MeasurementsOverlay from 'components/MeasurementsOverlay';
 
 import { circleRadius } from 'constants/slider';
+import selectors from 'selectors';
 
 import './StylePopup.scss';
 
@@ -13,54 +16,25 @@ class StylePopup extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    isFreeText: PropTypes.bool.isRequired
+    isFreeText: PropTypes.bool.isRequired,
+    hideSlider: PropTypes.bool,
+    colorMapKey: PropTypes.string.isRequired,
+    currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
   }
 
-  constructor(props) {
+  constructor(props){
     super(props);
-    this.state = this.getInitialState();
+    this.state = { openMeasurementDropdown: -1 };
   }
 
-  getInitialState = () => {
-    const {  TextColor, StrokeColor, FillColor } = this.props.style;
-
-    return { 
-      colorPalette: TextColor ? 'text' : StrokeColor ? 'border' : FillColor ? 'fill' : ''
-    };
-  }
-
-  handleHeaderChange = colorPalette => {
-    this.setState({ colorPalette });
-  }
+  onOpenDropdownChange = dropdown => {
+    this.setState({ openMeasurementDropdown: dropdown });
+  };
 
   renderColorPalette = () => {
-    const { colorPalette } = this.state;
+    const { style, onStyleChange, currentPalette } = this.props;
 
-    if (!colorPalette) {
-      return null;
-    }
-
-    const { 
-      style: { FillColor, StrokeColor, TextColor }, 
-      onStyleChange 
-    } = this.props;
-    const map = {
-      text: {
-        color: TextColor,
-        property: 'TextColor'
-      },
-      border: {
-        color: StrokeColor,
-        property: 'StrokeColor'
-      },
-      fill: {
-        color: FillColor,
-        property: 'FillColor'
-      }
-    };
-    const { color, property } = map[colorPalette];
-
-    return <ColorPalette color={color} property={property} onStyleChange={onStyleChange} />;
+    return <ColorPalette color={style[currentPalette]} property={currentPalette} onStyleChange={onStyleChange} />;
   }
 
   renderSliders = () => {
@@ -111,22 +85,34 @@ class StylePopup extends React.PureComponent {
   }
 
   render() {
+    const { currentPalette, style, colorMapKey, isTool } = this.props;
+    const { openMeasurementDropdown } = this.state;
+    const isMeasurement =  colorMapKey.includes('Measurement');
     return (
       <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
-        <div className="colors-container">
-          <div className="inner-wrapper">
-            <ColorPaletteHeader colorPalette={this.state.colorPalette} style={this.props.style} onHeaderChange={this.handleHeaderChange} />
-            {this.renderColorPalette()}
+        {currentPalette &&
+          <div className="colors-container">
+            <div className="inner-wrapper">
+              <ColorPaletteHeader colorPalette={currentPalette} colorMapKey={colorMapKey} style={style} />
+              {this.renderColorPalette()}
+            </div>
           </div>
-        </div>
-        <div className="sliders-container" onMouseDown={e => e.preventDefault()}>
+        }
+        <div className="sliders-container" onMouseDown={e => e.preventDefault()} onClick={() => this.onOpenDropdownChange(-1)}>
           <div className="sliders">
-            {this.renderSliders()}
+            {!this.props.hideSlider && this.renderSliders()}
           </div>
         </div>
+        {isMeasurement && isTool &&
+          <MeasurementsOverlay onOpenDropdownChange={this.onOpenDropdownChange} openMeasurementDropdown ={openMeasurementDropdown} />
+        }
       </div>
     );
   }
 }
 
-export default StylePopup;
+const mapStateToProps = (state, { colorMapKey }) => ({
+  currentPalette: selectors.getCurrentPalette(state, colorMapKey)
+});
+
+export default connect(mapStateToProps)(StylePopup);

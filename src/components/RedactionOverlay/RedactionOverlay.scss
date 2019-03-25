@@ -1,0 +1,50 @@
+@import '../../constants/styles';
+@import '../../constants/overlay';
+
+.redactHeader:after{
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid  #757575;
+  border-top: 6px solid var(--icon-color);
+  
+  @include mobile {
+    font-size: 10px;
+  }
+}
+
+.RedactionOverlay {
+  @extend %overlay;
+
+  top: 46px;
+  padding: 0;
+  border-radius: 0;
+  flex-wrap: nowrap;
+  overflow: hidden;
+
+  @include tablet-and-mobile {
+    left: 0 !important;
+    right: 0 !important;
+    top: 0;
+    width: 100%;
+    border: none;
+  }
+
+  & > * {
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .spacer {
+    @include tablet-and-mobile {
+      flex: 1;
+      height: 100%;
+  }}
+}

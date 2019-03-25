@@ -4,8 +4,7 @@ import downloadPdf from './downloadPdf';
 import getAnnotationUser from './getAnnotationUser';
 import setAnnotationUser from './setAnnotationUser';
 import setNoteDateFormat from './setNoteDateFormat';
-import getZoomLevel from './getZoomLevel';
-import setZoomLevel from './setZoomLevel';
+import { getZoomLevel, setZoomLevel, setMaxZoomLevel, setMinZoomLevel } from './zoomAPIs';
 import isReadOnly from './isReadOnly';
 import setReadOnly from './setReadOnly';
 import isAdminUser from './isAdminUser';
@@ -19,6 +18,8 @@ import enableTextSelection from './enableTextSelection';
 import disableTextSelection from './disableTextSelection';
 import enableFilePicker from './enableFilePicker';
 import disableFilePicker from './disableFilePicker';
+import enableMeasurement from './enableMeasurement';
+import disableMeasurement from './disableMeasurement';
 import enableNotesPanel from './enableNotesPanel';
 import disableNotesPanel from './disableNotesPanel';
 import enableAnnotations from './enableAnnotations';
@@ -69,7 +70,13 @@ import isToolDisabled from './isToolDisabled';
 import setNotesPanelSort from './setNotesPanelSort';
 import addSortStrategy from './addSortStrategy';
 import updateOutlines from './updateOutlines';
+import updateTool from './updateTool';
 import print from './print';
+import showWarningMessage from './showWarningMessage';
+import enableRedaction from './enableRedaction';
+import disableRedaction from './disableRedaction';
+import enableLocalStorage from './enableLocalStorage';
+import disableLocalStorage from './disableLocalStorage';
 
 export default {
   loadDocument,
@@ -78,8 +85,6 @@ export default {
   getAnnotationUser,
   setNoteDateFormat,
   setAnnotationUser,
-  getZoomLevel,
-  setZoomLevel,
   isReadOnly,
   setReadOnly,
   isAdminUser,
@@ -93,6 +98,8 @@ export default {
   disableTextSelection,
   enableFilePicker,
   disableFilePicker,
+  enableMeasurement,
+  disableMeasurement,
   enableNotesPanel,
   disableNotesPanel,
   enableAnnotations,
@@ -143,5 +150,15 @@ export default {
   setNotesPanelSort,
   addSortStrategy,
   updateOutlines,
-  print
+  updateTool,
+  print, 
+  getZoomLevel,
+  setZoomLevel,
+  setMaxZoomLevel,
+  setMinZoomLevel,
+  showWarningMessage,
+  enableRedaction,
+  disableRedaction,
+  enableLocalStorage,
+  disableLocalStorage
 };

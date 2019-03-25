@@ -6,9 +6,9 @@ import Button from 'components/Button';
 import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
-import toolStyleExists from 'helpers/toolStyleExists';
-import getToolStyle from 'helpers/getToolStyle';
-import getColorFromStyle from 'helpers/getColorFromStyle';
+import toolStylesExist from 'helpers/toolStylesExist';
+import getToolStyles from 'helpers/getToolStyles';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -24,16 +24,22 @@ class ToolButton extends React.PureComponent {
     showColor: PropTypes.string.isRequired,
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
-    setActiveToolGroup: PropTypes.func.isRequired
+    setActiveToolGroup: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
+    label: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
   }
 
   onClick = e => {
-    const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement } = this.props;
+    const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement, onClick } = this.props;
 
     e.stopPropagation();
-
+   
     if (isActive) {
-      if (toolStyleExists(toolName)) {
+      if (toolStylesExist(toolName)) {
         toggleElement('toolStylePopup');
       }
     } else {
@@ -41,25 +47,28 @@ class ToolButton extends React.PureComponent {
       setActiveToolGroup(group);
       closeElement('toolStylePopup');
     }
+
+    if (onClick) {
+      onClick(isActive);
+    }
   }
 
   getToolButtonColor = () => {
-    const { showColor, activeToolStyles, isActive, toolName } = this.props;
+    const { showColor, activeToolStyles, isActive, toolName, iconColor } = this.props;
 
-    switch (showColor) {
-      case 'always': {
-        const toolStyle = getToolStyle(toolName);
-        return getColorFromStyle(toolStyle);
-      }
-      case 'active': {
-        const toolStyle = activeToolStyles;
-        return isActive ? getColorFromStyle(toolStyle) : '';
-      }
-      case 'never':
-      default: {
-        return '';
-      }
+    let toolStyles;
+    if (showColor === 'always') {
+      toolStyles = getToolStyles(toolName);
+    } else if (showColor === 'active' && isActive) {
+      toolStyles = activeToolStyles;
     }
+
+    let color = '';
+    if (toolStyles && iconColor) {
+      color = toolStyles[iconColor].toHexString();
+    }
+
+    return color;
   }
 
   render() {
@@ -67,7 +76,7 @@ class ToolButton extends React.PureComponent {
     const color = this.getToolButtonColor();
     const className = [
       'ToolButton',
-      toolStyleExists(toolName) ? 'hasStyles' : ''
+      toolStylesExist(toolName) ? 'hasStyles' : ''
     ].join(' ').trim();
 
     if (isDisabled) {
@@ -84,6 +93,7 @@ const mapStateToProps = (state, { toolName }) => ({
   isDisabled: selectors.isToolButtonDisabled(state, toolName),
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
+  iconColor: selectors.getIconColor(state, mapToolNameToKey(toolName)),
   ...selectors.getToolButtonObject(state, toolName)
 });
 

@@ -1,5 +1,5 @@
-import { documentTypes } from 'constants/types';
 import core from 'core';
+import { documentTypes } from 'constants/types';
 
 // viewer
 export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
@@ -11,8 +11,8 @@ export const isToolGroupButtonDisabled = (state, dataElement, toolGroup) => {
 };
 export const isToolButtonDisabled = (state, toolName) => {
   const dataElement = getToolButtonDataElement(state, toolName);
-  
-  return isElementDisabled(state, dataElement) || core.getTool(toolName).disabled;
+
+  return isElementDisabled(state, dataElement) || (core.getTool(toolName) && core.getTool(toolName).disabled);
 };
 export const isElementOpen = (state, dataElement) => {
   if (state.viewer.disabledElements[dataElement]) {
@@ -21,6 +21,14 @@ export const isElementOpen = (state, dataElement) => {
   
   return state.viewer.openElements[dataElement];
 };
+
+export const isElementActive = (state, tool) => {
+  const { viewer: { activeToolName, headers: { tools = [] }  }} = state;
+  const { element, dataElement } = tool;
+
+  return isElementOpen(state, element) || tools.some(tool => tool.dataElement === dataElement && tool.toolName === activeToolName);
+};
+
 export const getActiveHeaderItems = state => state.viewer.headers[state.viewer.activeHeaderGroup];
 export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].priority;
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
@@ -36,11 +44,13 @@ export const getActiveToolGroup = state => state.viewer.activeToolGroup;
 export const getNotePopupId = state => state.viewer.notePopupId;
 export const isNoteExpanded = (state, id) => !!state.viewer.expandedNotes[id];
 export const isNoteEditing = (state, id) => state.viewer.isNoteEditing && isNoteExpanded(state, id);
+export const isAnnotationFocused = (state, id) => Object.keys(state.viewer.expandedNotes).length === 1 && isNoteExpanded(state, id); // Considered focused when it is the only annotation selected
 export const getFitMode = state => state.viewer.fitMode;
 export const getZoom = state => state.viewer.zoom;
 export const getDisplayMode = state => state.viewer.displayMode;
 export const getCurrentPage = state => state.viewer.currentPage;
 export const getSortStrategy = state => state.viewer.sortStrategy;
+export const getRotation = state => state.viewer.rotation;
 export const getNoteDateFormat = state => state.viewer.noteDateFormat;
 export const isFullScreen = state => state.viewer.isFullScreen;
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
@@ -61,6 +71,21 @@ export const isEmbedPrintSupported = state => {
   const isPDF = getDocumentType(state) === documentTypes.PDF;
   return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
 };
+export const getColorMap = state => state.viewer.colorMap;
+export const getCursorOverlayData = state => state.viewer.cursorOverlay;
+export const getOpenElements = state => state.viewer.openElements;
+export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].currentPalette;
+export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].iconColor; 
+export const getSwipeOrientation = state => state.viewer.swipeOrientation;
+export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
+export const getZoomList = state => state.viewer.zoomList;
+
+// warning message
+export const getWarningMessage = state => state.viewer.warning && state.viewer.warning.message || '';
+export const getWarningTitle = state => state.viewer.warning && state.viewer.warning.title || '';
+export const getWarningConfirmEvent = state => state.viewer.warning && state.viewer.warning.onConfirm;
+export const getWarningConfirmBtnText = state =>  state.viewer.warning && state.viewer.warning.confirmBtnText;
+export const getWarningCancelEvent = state =>  state.viewer.warning && state.viewer.warning.onCancel;
 
 // document
 export const getDocument = state => state.document;
@@ -74,7 +99,7 @@ export const getPasswordAttempts = state => state.document.passwordAttempts;
 export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 export const getOutlines = state => state.document.outlines;
-export const getLoadingProgress = state => state.document.loadingProgress;
+export const getLoadingProgress = state => Math.min(state.document.documentLoadingProgress, state.document.workerLoadingProgress);
 
 // user
 export const getUserName = state => state.user.name;

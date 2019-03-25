@@ -1,0 +1,47 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+.WarningModal {
+  @extend %modal;
+
+  .container {
+    @extend %modal-shared-container-style;
+    $paddingX: 5%;
+    $paddingY: 4%;
+
+    width: calc(100% - 20px);
+    max-width: 500px;
+
+    .header {
+      padding: $paddingY $paddingX $paddingY;
+      font-weight: bold;
+    }
+
+    .body {
+      padding: 0% $paddingX;
+      line-height: 20px;
+    }
+    
+    .footer {
+      display: flex;
+      justify-content: flex-end;
+      margin: $paddingY $paddingX;
+
+      .Button {
+        margin: 0% 1%;
+        border-radius: 4px;
+        letter-spacing: 1px;
+        padding: 0% 3%;
+      }
+
+      .warningMessageConfirm{
+        background-color: $pdftronBlue;
+        color: white;
+
+        &:hover{
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
