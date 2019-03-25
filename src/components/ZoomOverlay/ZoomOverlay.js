@@ -36,7 +36,7 @@ class ZoomOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([ 'viewControlsOverlay', 'toolsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup' ]);
+      this.props.closeElements([ 'viewControlsOverlay', 'groupOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup' ]);
       const { left, right } = getOverlayPositionBasedOn('zoomOverlayButton', this.dropdown);
       this.setState({
         left: left - 20,

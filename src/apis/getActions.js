@@ -1,6 +1,5 @@
 import core from 'core';
 import { PRIORITY_THREE } from 'constants/actionPriority';
-import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import * as exposedActions from 'actions/exposedActions';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -22,19 +21,21 @@ export default store => ({
     return store.dispatch(actions.enableElements(dataElements, PRIORITY_THREE));
   },
   setColorPalette: (toolName, colorPalette) => {
-    const availablePalettes = getDataWithKey(mapToolNameToKey(toolName)).availablePalettes;
+    const state = store.getState();
+    const availablePalettes = selectors.getAvailablePalettes(state, toolName);
     const property = mapPaletteToAnnotationColorProperty[colorPalette];
     if (availablePalettes.includes(property)) {
-      store.dispatch(actions.setColorPalette(mapToolNameToKey(toolName), mapPaletteToAnnotationColorProperty[colorPalette]));
+      store.dispatch(actions.setColorPalette(toolName, mapPaletteToAnnotationColorProperty[colorPalette]));
     } else {
       console.warn(`${toolName} does not have ${colorPalette} color, available colors are: ${availablePalettes.map(palette => mapAnnotationColorPropertyToPalette[palette]).join(', ')} `);
     }
   },
   setIconColor: (toolName, colorPalette) => {
-    const availablePalettes = getDataWithKey(mapToolNameToKey(toolName)).availablePalettes;
+    const state = store.getState();
+    const availablePalettes = selectors.getAvailablePalettes(state, toolName);
     const property = mapPaletteToAnnotationColorProperty[colorPalette];
     if (availablePalettes.includes(property)) {
-      store.dispatch(actions.setIconColor(mapToolNameToKey(toolName), mapPaletteToAnnotationColorProperty[colorPalette]));
+      store.dispatch(actions.setIconColor(toolName, mapPaletteToAnnotationColorProperty[colorPalette]));
     } else {
       console.warn(`${toolName} does not have ${colorPalette} color, available colors are: ${availablePalettes.map(palette => mapAnnotationColorPropertyToPalette[palette]).join(', ')} `);
     }

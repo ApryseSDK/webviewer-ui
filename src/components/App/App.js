@@ -10,7 +10,7 @@ import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
-import ToolsOverlay from 'components/ToolsOverlay';
+import GroupOverlay from 'components/GroupOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import CursorOverlay from 'components/CursorOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
@@ -73,7 +73,7 @@ class App extends React.PureComponent {
       'toolStylePopup',
       'textPopup',
       isDesktop() ? 'redactionOverlay' : '',
-      isDesktop() ? 'toolsOverlay' : ''
+      isDesktop() ? 'groupOverlay' : ''
     ].filter(element => element);
 
     this.props.closeElements(elements);
@@ -99,7 +99,7 @@ class App extends React.PureComponent {
           <RedactionOverlay />
           <MenuOverlay />
           <PageNavOverlay />
-          <ToolsOverlay />
+          <GroupOverlay />
           <SignatureOverlay />
           <CursorOverlay />
           <ZoomOverlay />

@@ -6,7 +6,7 @@ export default () =>  {
         'searchPanel', 
         'leftPanel', 
         'redactionOverlay',
-        'toolsOverlay',
+        'groupOverlay',
         'toolStylePopup',
     ];
 };

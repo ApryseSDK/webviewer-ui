@@ -14,7 +14,6 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './PrintModal.scss';
-import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -29,7 +28,6 @@ class PrintModal extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     sortStrategy: PropTypes.string.isRequired,
-    colorMap: PropTypes.object.isRequired,
   }
 
   constructor() {
@@ -277,10 +275,9 @@ class PrintModal extends React.PureComponent {
   }
 
   getNoteIcon = annotation => {
-    const { colorMap } = this.props;
-    const key = mapAnnotationToKey(annotation);
-    const iconColor = colorMap[key] && colorMap[key].iconColor;
-    const icon = getDataWithKey(key).icon;
+    const { toolButtonObjects } = this.props;
+    const iconColor = toolButtonObjects[annotation.ToolName].iconColor;
+    const icon = toolButtonObjects[annotation.ToolName].img;
     const isBase64 = icon && icon.trim().indexOf('data:') === 0;
     
     let noteIcon;
@@ -408,7 +405,7 @@ const mapStateToProps = state => ({
   printQuality: selectors.getPrintQuality(state),
   pageLabels: selectors.getPageLabels(state),
   sortStrategy: selectors.getSortStrategy(state),
-  colorMap: selectors.getColorMap(state)
+  toolButtonObjects: selectors.getToolButtonObjects(state)
 });
 
 const mapDispatchToProps = dispatch => ({

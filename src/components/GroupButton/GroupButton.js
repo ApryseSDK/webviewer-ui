@@ -8,11 +8,10 @@ import { withTooltip } from 'components/Tooltip';
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
 import defaultTool from 'constants/defaultTool';
-import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
-class ToolGroupButton extends React.PureComponent {
+class GroupButton extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     activeToolName: PropTypes.string.isRequired,
@@ -43,7 +42,6 @@ class ToolGroupButton extends React.PureComponent {
     const wasAcitveToolNameInGroup = prevProps.toolNames.indexOf(prevProps.activeToolName) > -1;
     const isAcitveToolNameInGroup = this.props.toolNames.indexOf(this.props.activeToolName) > -1;
     const toolNamesLengthChanged = prevProps.toolNames.length !== this.props.toolNames.length;
-
     if (activeToolNameChanged && isAcitveToolNameInGroup) {
       this.setState({ toolName: this.props.activeToolName });
     }
@@ -62,15 +60,14 @@ class ToolGroupButton extends React.PureComponent {
     const { toolName } = this.state;
 
     e.stopPropagation();
-
     setActiveToolGroup(toolGroup);
     closeElement('toolStylePopup');
 
     if (isActive) {
-      toggleElement('toolsOverlay');
+      toggleElement('groupOverlay');
     } else {
       this.setToolMode(toolName);
-      openElement('toolsOverlay');
+      openElement('groupOverlay');
     }
   }
 
@@ -113,7 +110,7 @@ const mapStateToProps = (state, ownProps) => ({
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  iconColor: selectors.getIconColor(state, mapToolNameToKey(selectors.getActiveToolName(state)))
+  iconColor: selectors.getIconColor(state, selectors.getActiveToolName(state))
 });
 
 const mapDispatchToProps = {
@@ -123,4 +120,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(ToolGroupButton));
+export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(GroupButton));
