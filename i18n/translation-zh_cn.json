@@ -148,13 +148,17 @@
       "perimeterMeasurement": "周长测量",
       "areaMeasurement": "面积测量"
     },
+    "measurementOption": {
+      "scale": "比例"
+    },
     "slider": {
       "opacity": "不透明度",
       "thickness": "厚度",
       "text": "文字大小"
     },
     "shared": {
-      "page": "页"
+      "page": "页",
+      "precision": "精准度"
     }
   },
   "shortcut": {
