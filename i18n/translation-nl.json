@@ -25,6 +25,7 @@
     "save": "Bewaren",
     "create": "creëren",
     "showMoreResults": "Toon meer resultaten",
+    "saveSignature": "Sla handtekening op",
     "sign": "Ondertekenen",
     "style": "Opmaak",
     "submit": "Verzenden",
@@ -33,8 +34,10 @@
     "zoomOut": "Zoom uit"
   },
   "annotation": {
+    "areaMeasurement": "Oppervlaktemeting",
     "arrow": "Pijl",
     "callout": "Opmerking met pijl",
+    "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
     "freehand": "Vrije hand",
     "freehand2": "Vrije hand",
@@ -43,11 +46,12 @@
     "highlight": "Arceren",
     "highlight2": "Arceren",
     "line": "Lijn",
+    "perimeterMeasurement": "Perimeter meting",
     "polygon": "Veelhoek",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
-    "redact": "Redigeren",
     "rectangle": "Rechthoek",
+    "redact": "Redigeren",
     "signature": "Handtekening",
     "squiggly": "Squiggly",
     "stamp": "Stempel",
@@ -70,7 +74,8 @@
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
-    "minimizeButton": "Document normaal weergeven"
+    "minimizeButton": "Document normaal weergeven",
+    "measurementToolsButton": "Meetinstrumenten"
   },
   "message": {
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",

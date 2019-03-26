@@ -28,7 +28,9 @@ const addMissingKey = (baseTranslationData, translationData, result) => {
       result[key] = {};
       addMissingKey(baseTranslationData[key], translationData[key], result[key]); 
     } else {
-      result[key] = translationData[key] ? translationData[key] : 'MISSING_TRANSLATION';
+      result[key] = translationData[key] 
+        ? translationData[key] 
+        : `MISSING_TRANSLATION English: ${baseTranslationData[key]}`;
     }
   });
 };
