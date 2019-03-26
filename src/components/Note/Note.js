@@ -107,6 +107,12 @@ class Note extends React.PureComponent {
     }
   }
 
+  onKeyPress = e => {
+    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
+      this.onClickNote(e);
+    }
+  }
+
   scrollIntoView = () => {
     this.containerRef.current.scrollIntoView();
   }
@@ -133,9 +139,9 @@ class Note extends React.PureComponent {
   }
 
   onFocus = () => {
-    this.setState({ 
-      isReplyFocused: true, 
-      isRootContentEditing: false 
+    this.setState({
+      isReplyFocused: true,
+      isRootContentEditing: false
     });
   }
 
@@ -220,7 +226,7 @@ class Note extends React.PureComponent {
     ].join(' ').trim();
 
     return (
-      <div ref={this.containerRef} className={className} onClick={this.onClickNote}>
+      <div tabIndex={0} ref={this.containerRef} className={className} onClick={this.onClickNote} onKeyPress={this.onKeyPress}>
         <NoteRoot
           annotation={annotation}
           contents={rootContents}

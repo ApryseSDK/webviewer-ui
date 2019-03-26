@@ -36,21 +36,27 @@ class Outline extends React.PureComponent {
     }
   }
 
+  onKeyPress = e => {
+    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
+      this.onClickOutline();
+    }
+  }
+
   render() {
     const { outline, isVisible, closeElement } = this.props;
     const { isExpanded } = this.state;
-    
+
     return (
       <div className={`Outline ${isVisible ? 'visible' : 'hidden'}`}>
         <div className="padding">
           {(outline.children.length > 0) &&
             <div className={`arrow ${isExpanded ? 'expanded' : 'collapsed'}`} onClick={this.onClickExpand}>
-              <Icon glyph="ic_chevron_right_black_24px" />
+              <Icon glyph="ic_chevron_right_black_24px" />onKeyPress
             </div>
           }
         </div>
         <div className="content">
-          <div className="title" onClick={this.onClickOutline}>
+          <div tabIndex={0} className="title" onClick={this.onClickOutline} onKeyPress={this.onKeyPress}>
             {outline.name}
           </div>
           {outline.children.map((outline, i) => (

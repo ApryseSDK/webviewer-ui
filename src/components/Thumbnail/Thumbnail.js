@@ -37,7 +37,7 @@ class Thumbnail extends React.PureComponent {
 
     if (!prevProps.canLoad && this.props.canLoad) {
       onLoad(index, this.thumbContainer.current);
-    } 
+    }
     if (prevProps.canLoad && !this.props.canLoad) {
       onCancel(index);
     }
@@ -45,7 +45,7 @@ class Thumbnail extends React.PureComponent {
 
   componentWillUnmount() {
     const { onRemove, index } = this.props;
-    
+
     onRemove(index);
   }
 
@@ -59,6 +59,12 @@ class Thumbnail extends React.PureComponent {
     }
   }
 
+  onKeyPress = e => {
+    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
+      this.handleClick();
+    }
+  }
+
   render() {
     const { index, currentPage, pageLabels } = this.props;
     const isActive = currentPage === index + 1;
@@ -66,7 +72,13 @@ class Thumbnail extends React.PureComponent {
 
     return (
       <div className={`Thumbnail ${isActive ? 'active' : ''}`}>
-        <div className="container" ref={this.thumbContainer} onClick={this.handleClick}></div>
+        <div
+          tabIndex={0}
+          className="container"
+          ref={this.thumbContainer}
+          onClick={this.handleClick}
+          onKeyPress={this.onKeyPress}
+        />
         <div className="page-label">{pageLabel}</div>
       </div>
     );
