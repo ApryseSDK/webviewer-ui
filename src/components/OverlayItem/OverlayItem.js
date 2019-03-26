@@ -22,6 +22,12 @@ class OverlayItem extends React.PureComponent {
     }
   }
 
+  focus() {
+    if (this.ref) {
+      this.ref.focus();
+    }
+  }
+
   setRef = ref => {
     this.ref = ref;
   }
