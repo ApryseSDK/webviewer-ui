@@ -28,7 +28,7 @@ class NotePopup extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       canModify: core.canModify(props.annotation)
     };
   }
@@ -77,16 +77,16 @@ class NotePopup extends React.Component {
     }
 
     return(
-      <div className="NotePopup" data-element="notePopup" onClick={e => e.stopPropagation()}>
+      <div tabIndex={0} className="NotePopup" data-element="notePopup" onClick={e => e.stopPropagation()}>
         <div className="overflow" onClick={this.togglePopup}>
           <Icon glyph="ic_overflow_black_24px" />
         </div>
         <div className={className} onClick={this.closePopup}>
           {!isEditDisabled &&
-            <div data-element="notePopupEdit" onClick={this.openEdit}>{t('action.edit')}</div>
+            <div tabIndex={0} data-element="notePopupEdit" onClick={this.openEdit}>{t('action.edit')}</div>
           }
           {!isDeleteDisabled &&
-            <div data-element="notePopupDelete" onClick={onDelete}>{t('action.delete')}</div>
+            <div tabIndex={0} data-element="notePopupDelete" onClick={onDelete}>{t('action.delete')}</div>
           }
         </div>
       </div>
