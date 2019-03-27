@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
@@ -14,6 +15,10 @@ import selectors from 'selectors';
 
 import './NotesPanel.scss';
 
+const mod = (v, n) => {
+  return ((v % n) + n) % n;
+};
+
 class NotesPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -27,14 +32,16 @@ class NotesPanel extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      selectionIndex: 0,
       notesToRender: [],
       searchInput: ''
     };
     this.visibleNoteIds = new Set();
     this.rootAnnotations = [];
     this.updatePanelOnInput = _.debounce(this.updatePanelOnInput.bind(this), 500);
+    this.noteRefs = [];
   }
+
+  selectionIndex = null;
 
   componentDidMount() {
     keyboardJS.bind('up', this.moveUp);
@@ -60,12 +67,27 @@ class NotesPanel extends React.PureComponent {
     core.removeEventListener('annotationHidden', this.onAnnotationChanged);
   }
 
+  focusNote = selectionIndex => {
+    const noteRef = this.noteRefs[selectionIndex];
+    const domNode = ReactDOM.findDOMNode(noteRef);
+    domNode.focus();
+  }
+
+  move = direction => {
+    if (this.selectionIndex === null) {
+      this.selectionIndex = 0;
+    } else {
+      this.selectionIndex = mod(this.selectionIndex + direction, this.rootAnnotations.length);
+    }
+    this.focusNote(this.selectionIndex);
+  }
+
   moveUp = () => {
-    console.log('up');
+    this.move(-1);
   }
 
   moveDown = () => {
-    console.log('down');
+    this.move(1);
   }
 
   onDocumentUnloaded = () => {
@@ -175,11 +197,17 @@ class NotesPanel extends React.PureComponent {
 
   renderNotes = notes => {
     return(
-      notes.map(note => {
+      notes.map((note, index) => {
         return (
           <React.Fragment key={note.Id}>
             {this.renderListSeparator(notes, note)}
-            <Note visible={this.isVisibleNote(note)} annotation={note} searchInput={this.state.searchInput} rootContents={note.getContents()} />
+            <Note
+              ref={ref => this.noteRefs[index] = ref}
+              visible={this.isVisibleNote(note)}
+              annotation={note}
+              searchInput={this.state.searchInput}
+              rootContents={note.getContents()}
+            />
           </React.Fragment>
         );
       })

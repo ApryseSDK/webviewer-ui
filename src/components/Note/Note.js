@@ -226,7 +226,7 @@ class Note extends React.PureComponent {
     ].join(' ').trim();
 
     return (
-      <div tabIndex={0} ref={this.containerRef} className={className} onClick={this.onClickNote} onKeyPress={this.onKeyPress}>
+      <div tabIndex={-1} ref={this.containerRef} className={className} onClick={this.onClickNote} onKeyPress={this.onKeyPress}>
         <NoteRoot
           annotation={annotation}
           contents={rootContents}
