@@ -99,70 +99,70 @@
   },
   "option": {
     "annotationColor": {
-      "StrokeColor": "Border color",
-      "FillColor": "Fill color",
-      "TextColor": "Text color"
+      "StrokeColor": "Цвет границ",
+      "FillColor": "Цвет заливки",
+      "TextColor": "Цвет текста"
     },
     "displayMode": {
-      "layout": "Layout",
-      "pageTransition": "Page transition"
+      "layout": "Расположение",
+      "pageTransition": "Переход страниц"
     },
     "layout": {
-      "cover": "Cover",
-      "double": "Double",
-      "single": "Single"
+      "cover": "Полный",
+      "double": "Двойной",
+      "single": "Единый"
     },
     "notesPanel": {
-      "orderPosition": "Position",
-      "orderTime": "Time",
+      "orderPosition": "Позиция",
+      "orderTime": "Время",
       "separator": {
-        "today": "Today",
-        "yesterday": "Yesterday"
+        "today": "Сегодня",
+        "yesterday": "Вчера"
       }
     },
     "pageTransition": {
-      "continuous": "Continuous",
-      "default": "Page by page"
+      "continuous": "Непрерывный",
+      "default": "Страница за страницей"
     },
     "print": {
-      "all": "All",
-      "current": "Current",
-      "pages": "Pages",
-      "includeComments": "Include comments"
+      "all": "Все",
+      "current": "Текущий",
+      "pages": "Страницы",
+      "includeComments": "Приложить комментарии"
     },
     "redaction": {
-      "markForRedaction": "Mark for redaction",
-      "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
-      "warningPopupTitle": "Apply Redaction"
+      "markForRedaction": "Пометить для редактирования",
+      "warningPopupMessage": "Редакция удалит все выделенные элементы. Редакция необратима.",
+      "warningPopupTitle": "Применить редакцию"
     },
     "searchPanel": {
-      "caseSensitive": "Case sensitive",
-      "wholeWordOnly": "Whole word"
+      "caseSensitive": "С учетом регистра",
+      "wholeWordOnly": "Всё слово"
     },
     "signatureOverlay": {
-      "addSignature": "Add a signature"
+      "addSignature": "Добавить подпись"
     },
     "measurementOverlay": {
-      "scale": "Scale Ratio",
-      "angle": "Angle",
-      "distance": "Distance",
-      "perimeter": "Perimeter",
-      "area": "Area",
-      "distanceMeasurement": "Distance Measurement",
-      "perimeterMeasurement": "Perimeter Measurement",
-      "areaMeasurement": "Area Measurement"
+      "scale": "Масштаб",
+      "angle": "Угол",
+      "distance": "Дистанция",
+      "perimeter": "Периметер",
+      "area": "Площадь",
+      "distanceMeasurement": "Замерение дистанции",
+      "perimeterMeasurement": "Замерение периметера",
+      "areaMeasurement": "Замерение площади"
     },
     "measurementOption": {
-      "scale": "Scale"
+      "scale": "Масштаб"
     },
     "slider": {
-      "opacity": "Opacity",
-      "thickness": "Thickness",
-      "text": "Text Size"
+      "opacity": "Прозрачность",
+      "thickness": "Тонкость",
+      "text": "Размер текста"
     },
     "shared": {
-      "page": "Page",
-      "precision": "Precision"
+      "page": "Страница",
+      "precision": "Точность"
     }
   },
   "shortcut": {
@@ -190,8 +190,8 @@
     "zoomOut": "(Ctrl -)"
   },
   "tool": {
-    "pan": "Pan",
-    "select": "Select",
-    "Marquee": "Marquee Zoom"
+    "pan": "Панорамирование",
+    "select": "Выделить",
+    "Marquee": "Увеличить выделение"
   }
 }
