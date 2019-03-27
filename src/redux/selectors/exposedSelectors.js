@@ -31,11 +31,19 @@ export const isElementActive = (state, tool) => {
 
 export const getActiveHeaderItems = state => state.viewer.headers[state.viewer.activeHeaderGroup];
 export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].priority;
-export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
+export const getToolButtonObjects = state => state.viewer && state.viewer.toolButtonObjects;
+export const getAnnotationToolNames = state => Object.keys(state.viewer.toolButtonObjects).filter(toolButtonName => state.viewer.toolButtonObjects[toolButtonName].annotationCheck);
+export const getGroupName = (state, toolName) => {
+  const activeToolObject = state.viewer.headers[state.viewer.activeHeaderGroup].filter(toolObject => toolObject.children).find(toolObject => toolObject.children.find(toolButton => toolButton.toolName === toolName))
+  if (activeToolObject){
+    return activeToolObject.toolGroup;
+  }
+}
 export const getToolButtonDataElements = (state, toolNames) => toolNames.map(toolName => state.viewer.toolButtonObjects[toolName].dataElement);
 export const getToolButtonObject = (state, toolName) => state.viewer.toolButtonObjects[toolName];
 export const getToolButtonDataElement = (state, toolName) => state.viewer.toolButtonObjects[toolName].dataElement;
-export const getToolNamesByGroup = (state, toolGroup) => Object.keys(state.viewer.toolButtonObjects).filter(name => state.viewer.toolButtonObjects[name].group === toolGroup);
+export const getToolButtonIcon = (state, toolName) => state.viewer.toolButtonObjects[toolName].img;
+export const getToolNamesByGroup = (state, toolGroup) => state.viewer.headers[state.viewer.activeHeaderGroup].filter(toolButtonObject => toolButtonObject.toolGroup).find(toolButtonObject => toolButtonObject.toolGroup === toolGroup).children.map(buttonObject => buttonObject.toolName);
 export const getToolNameByDataElement = (state, dataElement) => Object.keys(state.viewer.toolButtonObjects).find(name => state.viewer.toolButtonObjects[name].dataElement === dataElement);
 export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
@@ -71,11 +79,11 @@ export const isEmbedPrintSupported = state => {
   const isPDF = getDocumentType(state) === documentTypes.PDF;
   return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
 };
-export const getColorMap = state => state.viewer.colorMap;
 export const getCursorOverlayData = state => state.viewer.cursorOverlay;
 export const getOpenElements = state => state.viewer.openElements;
-export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].currentPalette;
-export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].iconColor; 
+export const getAvailablePalettes = (state, activeToolName) => state.viewer.toolButtonObjects[activeToolName] && state.viewer.toolButtonObjects[activeToolName].availablePalettes;
+export const getCurrentPalette = (state, activeToolName) => state.viewer.toolButtonObjects[activeToolName] && state.viewer.toolButtonObjects[activeToolName].currentPalette;
+export const getIconColor = (state, activeToolName) => state.viewer.toolButtonObjects[activeToolName] && state.viewer.toolButtonObjects[activeToolName].iconColor;
 export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 

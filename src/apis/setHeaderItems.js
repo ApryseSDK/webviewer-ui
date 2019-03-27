@@ -117,8 +117,16 @@ const Header = {
     return this;
   },
   push(...newItem) {
-    this.headers[this.headerGroup].push(...newItem);
-    
+    if (newItem[0].group) {
+      if (this.headers[this.headerGroup].find(buttonObject => buttonObject.toolGroup === newItem[0].group)){
+        const buttonIndex = this.headers[this.headerGroup].findIndex(buttonObject=> buttonObject.toolGroup === newItem[0].group);
+        this.headers[this.headerGroup][buttonIndex].children.push(...newItem);
+      } else {
+        console.warn(`${newItem[0].group} is not a valid group.`)
+      }
+    } else {
+      this.headers[this.headerGroup].push(...newItem);
+    }
     return this;
   },
   pop() {

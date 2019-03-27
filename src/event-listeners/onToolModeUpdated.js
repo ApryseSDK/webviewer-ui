@@ -10,7 +10,7 @@ export default dispatch => (e, newTool, oldTool) => {
 
   if (newTool && newTool.name === defaultTool) {
     dispatch(actions.setActiveToolGroup(''));
-    dispatch(actions.closeElement('toolsOverlay'));
+    dispatch(actions.closeElement('groupOverlay'));
   }
 
   if (newTool && newTool.name === 'MarqueeZoomTool') {

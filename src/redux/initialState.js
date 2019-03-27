@@ -7,7 +7,6 @@ import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
 import { zoomIn, zoomOut } from 'helpers/zoom';
 import defaultTool from 'constants/defaultTool';
-import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
 
 export default {
@@ -33,15 +32,53 @@ export default {
           element: 'zoomOverlay'
         },
         { type: 'spacer' },
-        { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', hidden: ['tablet', 'mobile' ] },
-        { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ] },
-        { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: [ 'tablet', 'mobile' ] },
-        { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: [ 'tablet', 'mobile' ] },
+        { type: 'dropdownButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', hidden: [ 'tablet', 'mobile' ],
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateDistanceMeasurement' },
+            { type: 'toolButton', toolName: 'AnnotationCreatePerimeterMeasurement' },
+            { type: 'toolButton', toolName: 'AnnotationCreateAreaMeasurement' },
+          ]
+        },
+        { type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ],
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand' },
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand2' },
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand3' },
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand4' },
+          ]
+        },
+        { type: 'dropdownButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: [ 'tablet', 'mobile' ],
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight2' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight3' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight4' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextUnderline' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextSquiggly' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextStrikeout' },
+          ]
+        },
+        { type: 'dropdownButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: [ 'tablet', 'mobile' ], 
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateRectangle' },
+            { type: 'toolButton', toolName: 'AnnotationCreateEllipse' },
+            { type: 'toolButton', toolName: 'AnnotationCreateLine' },
+            { type: 'toolButton', toolName: 'AnnotationCreateArrow' },
+            { type: 'toolButton', toolName: 'AnnotationCreatePolyline' },
+            { type: 'toolButton', toolName: 'AnnotationCreatePolygon' },
+            { type: 'toolButton', toolName: 'AnnotationCreatePolygonCloud' },
+          ] 
+        },
         { type: 'statefulButton', dataElement: 'signatureToolButton', hidden: ['tablet', 'mobile'] },
         { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction',  hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toolButton', toolName: 'AnnotationCreateSticky', hidden: [ 'tablet', 'mobile' ] },
-        { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', hidden: [ 'tablet', 'mobile' ] },
+        { type: 'dropdownButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', hidden: [ 'tablet', 'mobile' ],
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateCallout' },
+            { type: 'toolButton', toolName: 'AnnotationCreateStamp' }
+          ]
+        },
         {
           type: 'actionButton',
           img: 'ic_edit_black_24px',
@@ -59,15 +96,53 @@ export default {
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'ic_overflow_black_24px', title: 'component.menuOverlay' }
       ],
       tools: [
-        { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton' },
-        { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton' },
-        { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton' },
+        { type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', 
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand' },
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand2' },
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand3' },
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand4' },
+          ]
+        },
+        { type: 'dropdownButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton',
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight2' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight3' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight4' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextUnderline' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextSquiggly' },
+            { type: 'toolButton', toolName: 'AnnotationCreateTextStrikeout' },
+          ]
+        },
+        { type: 'dropdownButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton',
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateRectangle' },
+            { type: 'toolButton', toolName: 'AnnotationCreateEllipse' },
+            { type: 'toolButton', toolName: 'AnnotationCreateLine' },
+            { type: 'toolButton', toolName: 'AnnotationCreateArrow' },
+            { type: 'toolButton', toolName: 'AnnotationCreatePolyline' },
+            { type: 'toolButton', toolName: 'AnnotationCreatePolygon' },
+            { type: 'toolButton', toolName: 'AnnotationCreatePolygonCloud' },
+          ] 
+        },
         { type: 'statefulButton', dataElement: 'signatureToolButton'},
-        { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton' },
+        { type: 'dropdownButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', 
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateDistanceMeasurement' },
+            { type: 'toolButton', toolName: 'AnnotationCreatePerimeterMeasurement' },
+            { type: 'toolButton', toolName: 'AnnotationCreateAreaMeasurement' },
+          ]
+        },
         { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText' },
         { type: 'toolButton', toolName: 'AnnotationCreateSticky' },
-        { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
+        { type: 'dropdownButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton',
+          children: [
+            { type: 'toolButton', toolName: 'AnnotationCreateCallout' },
+            { type: 'toolButton', toolName: 'AnnotationCreateStamp' }
+          ]
+        },
         { type: 'spacer' },
         {
           type: 'actionButton',
@@ -83,37 +158,37 @@ export default {
       ]
     },
     toolButtonObjects: {
-      AnnotationCreateDistanceMeasurement: { dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'measurementTools', showColor: 'active' },
-      AnnotationCreatePerimeterMeasurement: { dataElement: 'perimeterMeasurementToolButton', title: 'annotation.perimeterMeasurement', img: 'ic_annotation_perimeter_black_24px', group: 'measurementTools', showColor: 'active' },
-      AnnotationCreateAreaMeasurement: { dataElement: 'areaMeasurementToolButton', title: 'annotation.areaMeasurement', img: 'ic_annotation_area_black_24px', group: 'measurementTools', showColor: 'active' },
-      AnnotationCreateFreeHand: { dataElement: 'freeHandToolButton', title: 'annotation.freehand', img: 'ic_annotation_freehand_black_24px', group:'freeHandTools', showColor: 'always' },
-      AnnotationCreateFreeHand2: { dataElement: 'freeHandToolButton2', title: 'annotation.freehand2', img: 'ic_annotation_freehand_black_24px', group:'freeHandTools', showColor: 'always' },
-      AnnotationCreateFreeHand3: { dataElement: 'freeHandToolButton3', title: 'annotation.freehand2', img: 'ic_annotation_freehand_black_24px', group:'freeHandTools', showColor: 'always' },
-      AnnotationCreateFreeHand4: { dataElement: 'freeHandToolButton4', title: 'annotation.freehand2', img: 'ic_annotation_freehand_black_24px', group:'freeHandTools', showColor: 'always' },
-      AnnotationCreateTextHighlight: { dataElement: 'highlightToolButton', title: 'annotation.highlight', img: 'ic_annotation_highlight_black_24px', group:'textTools', showColor: 'always' },
-      AnnotationCreateTextHighlight2: { dataElement: 'highlightToolButton2', title: 'annotation.highlight2', img: 'ic_annotation_highlight_black_24px', group:'textTools', showColor: 'always' },
-      AnnotationCreateTextHighlight3: { dataElement: 'highlightToolButton3', title: 'annotation.highlight2', img: 'ic_annotation_highlight_black_24px', group:'textTools', showColor: 'always' },
-      AnnotationCreateTextHighlight4: { dataElement: 'highlightToolButton4', title: 'annotation.highlight2', img: 'ic_annotation_highlight_black_24px', group:'textTools', showColor: 'always' },
-      AnnotationCreateTextUnderline: { dataElement: 'underlineToolButton', title: 'annotation.underline', img: 'ic_annotation_underline_black_24px', group:'textTools', showColor: 'active' },
-      AnnotationCreateTextSquiggly: { dataElement: 'squigglyToolButton', title: 'annotation.squiggly', img: 'ic_annotation_squiggly_black_24px', group:'textTools', showColor: 'active' },
-      AnnotationCreateTextStrikeout: { dataElement: 'strikeoutToolButton', title: 'annotation.strikeout', img: 'ic_annotation_strikeout_black_24px', group:'textTools', showColor: 'active' },
-      AnnotationCreateRectangle: { dataElement: 'rectangleToolButton', title: 'annotation.rectangle', img: 'ic_annotation_square_black_24px', group: 'shapeTools', showColor: 'active' },
-      AnnotationCreateEllipse: { dataElement: 'ellipseToolButton', title: 'annotation.ellipse', img: 'ic_annotation_circle_black_24px', group: 'shapeTools', showColor: 'active' },
-      AnnotationCreateLine: { dataElement: 'lineToolButton', title: 'annotation.line', img: 'ic_annotation_line_black_24px', group: 'shapeTools', showColor: 'active' },
-      AnnotationCreateArrow: { dataElement: 'arrowToolButton', title: 'annotation.arrow', img: 'ic_annotation_arrow_black_24px', group: 'shapeTools', showColor: 'active' },
-      AnnotationCreatePolyline: { dataElement: 'polylineToolButton', title: 'annotation.polyline', img: 'ic_annotation_polyline_black_24px', group: 'shapeTools', showColor: 'active' },
-      AnnotationCreatePolygon: { dataElement: 'polygonToolButton', title: 'annotation.polygon', img: 'ic_annotation_polygon_black_24px', group: 'shapeTools', showColor: 'active' },
-      AnnotationCreatePolygonCloud: { dataElement: 'cloudToolButton', title: 'annotation.polygonCloud', img: 'ic_annotation_cloud_black_24px', group: 'shapeTools', showColor: 'active' },
-      AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'ic_annotation_add_redact_black_24px', showColor: 'never' },
-      AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.signature', img: 'ic_annotation_signature_black_24px', showColor: 'active' },
-      AnnotationCreateFreeText: { dataElement: 'freeTextToolButton', title: 'annotation.freetext', img: 'ic_annotation_freetext_black_24px', showColor: 'active' },
-      AnnotationCreateSticky: { dataElement: 'stickyToolButton', title: 'annotation.stickyNote', img: 'ic_annotation_sticky_note_black_24px', showColor: 'active' },
-      AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'ic_annotation_callout_black_24px', group: 'miscTools', showColor: 'active' },
-      AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
-      Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
-      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
-      TextSelect: { dataElement: 'textSelectButton', title: 'tool.select', img: 'textselect_cursor', showColor: 'never' },
-      MarqueeZoomTool: { dataElement: 'marqueeToolButton', title: 'tool.select', label: 'Marquee Zoom', showColor: 'never'}
+      AnnotationCreateDistanceMeasurement: { dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: [ 'StrokeColor' ], annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.IT === 'LineDimension' && annotation.Measure },
+      AnnotationCreatePerimeterMeasurement: { dataElement: 'perimeterMeasurementToolButton', title: 'annotation.perimeterMeasurement', img: 'ic_annotation_perimeter_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: [ 'StrokeColor' ], annotationCheck: annotation => annotation instanceof Annotations.PolylineAnnotation && annotation.IT === 'PolyLineDimension' && annotation.Measure },
+      AnnotationCreateAreaMeasurement: { dataElement: 'areaMeasurementToolButton', title: 'annotation.areaMeasurement', img: 'ic_annotation_area_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: [ 'StrokeColor', 'FillColor' ], annotationCheck: annotation => annotation instanceof Annotations.PolygonAnnotation && annotation.IT === 'PolygonDimension' && annotation.Measure },
+      AnnotationCreateFreeHand: { dataElement: 'freeHandToolButton', title: 'annotation.freehand', img: 'ic_annotation_freehand_black_24px', showColor: 'always', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.FreeHandAnnotation },
+      AnnotationCreateFreeHand2: { dataElement: 'freeHandToolButton2', title: 'annotation.freehand2', img: 'ic_annotation_freehand_black_24px', showColor: 'always', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.FreeHandAnnotation },
+      AnnotationCreateFreeHand3: { dataElement: 'freeHandToolButton3', title: 'annotation.freehand3', img: 'ic_annotation_freehand_black_24px', showColor: 'always', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.FreeHandAnnotation },
+      AnnotationCreateFreeHand4: { dataElement: 'freeHandToolButton4', title: 'annotation.freehand4', img: 'ic_annotation_freehand_black_24px', showColor: 'always', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.FreeHandAnnotation },
+      AnnotationCreateTextHighlight: { dataElement: 'highlightToolButton', title: 'annotation.highlight', img: 'ic_annotation_highlight_black_24px', showColor: 'always', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.TextHighlightAnnotation },
+      AnnotationCreateTextHighlight2: { dataElement: 'highlightToolButton2', title: 'annotation.highlight2', img: 'ic_annotation_highlight_black_24px', showColor: 'always', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.TextHighlightAnnotation },
+      AnnotationCreateTextHighlight3: { dataElement: 'highlightToolButton3', title: 'annotation.highlight2', img: 'ic_annotation_highlight_black_24px', showColor: 'always', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.TextHighlightAnnotation },
+      AnnotationCreateTextHighlight4: { dataElement: 'highlightToolButton4', title: 'annotation.highlight2', img: 'ic_annotation_highlight_black_24px', showColor: 'always', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.TextHighlightAnnotation },
+      AnnotationCreateTextUnderline: { dataElement: 'underlineToolButton', title: 'annotation.underline', img: 'ic_annotation_underline_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.TextUnderlineAnnotation },
+      AnnotationCreateTextSquiggly: { dataElement: 'squigglyToolButton', title: 'annotation.squiggly', img: 'ic_annotation_squiggly_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.TextSquigglyAnnotation },
+      AnnotationCreateTextStrikeout: { dataElement: 'strikeoutToolButton', title: 'annotation.strikeout', img: 'ic_annotation_strikeout_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.TextStrikeoutAnnotation },
+      AnnotationCreateRectangle: { dataElement: 'rectangleToolButton', title: 'annotation.rectangle', img: 'ic_annotation_square_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor', 'FillColor'], annotationCheck: annotation => annotation instanceof Annotations.RectangleAnnotation },
+      AnnotationCreateEllipse: { dataElement: 'ellipseToolButton', title: 'annotation.ellipse', img: 'ic_annotation_circle_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor', 'FillColor'], annotationCheck: annotation => annotation instanceof Annotations.EllipseAnnotation },
+      AnnotationCreateLine: { dataElement: 'lineToolButton', title: 'annotation.line', img: 'ic_annotation_line_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.getStartStyle() === 'None' && annotation.getEndStyle() === 'None' },
+      AnnotationCreateArrow: { dataElement: 'arrowToolButton', title: 'annotation.arrow', img: 'ic_annotation_arrow_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && (annotation.getStartStyle() !== 'None' || annotation.getEndStyle() !== 'None') },
+      AnnotationCreatePolyline: { dataElement: 'polylineToolButton', title: 'annotation.polyline', img: 'ic_annotation_polyline_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.PolylineAnnotation },
+      AnnotationCreatePolygon: { dataElement: 'polygonToolButton', title: 'annotation.polygon', img: 'ic_annotation_polygon_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor', 'FillColor'], annotationCheck: annotation => annotation instanceof Annotations.PolygonAnnotation && annotation.Style === 'solid' },
+      AnnotationCreatePolygonCloud: { dataElement: 'cloudToolButton', title: 'annotation.polygonCloud', img: 'ic_annotation_cloud_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor', 'FillColor'], annotationCheck: annotation => annotation instanceof Annotations.PolygonAnnotation && annotation.Style === 'cloudy' },
+      AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'ic_annotation_add_redact_black_24px', showColor: 'never', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor', 'FillColor'], annotationCheck: annotation => annotation instanceof Annotations.RedactionAnnotation },
+      AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.signature', img: 'ic_annotation_signature_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.FreeHandAnnotation && annotation.Subject === i18next.t('annotation.signature') },
+      AnnotationCreateFreeText: { dataElement: 'freeTextToolButton', title: 'annotation.freetext', img: 'ic_annotation_freetext_black_24px', showColor: 'active', iconColor: 'TextColor', currentPalette: 'TextColor', availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'], annotationCheck: annotation => annotation instanceof Annotations.FreeTextAnnotation && annotation.getIntent() === Annotations.FreeTextAnnotation.Intent.FreeText },
+      AnnotationCreateSticky: { dataElement: 'stickyToolButton', title: 'annotation.stickyNote', img: 'ic_annotation_sticky_note_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: ['StrokeColor'], annotationCheck: annotation => annotation instanceof Annotations.StickyAnnotation },
+      AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'ic_annotation_callout_black_24px', showColor: 'active', iconColor: 'TextColor', currentPalette: 'TextColor', availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'], annotationCheck: annotation => annotation instanceof Annotations.FreeTextAnnotation && annotation.getIntent() === Annotations.FreeTextAnnotation.Intent.FreeTextCallout },
+      AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', showColor: 'active', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: annotation => annotation instanceof Annotations.StampAnnotation },
+      Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
+      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
+      TextSelect: { dataElement: 'textSelectButton', title: 'tool.select', img: 'textselect_cursor', showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
+      MarqueeZoomTool: { dataElement: 'marqueeToolButton', title: 'tool.select', label: 'Marquee Zoom', showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null }
     },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
@@ -137,7 +212,6 @@ export default {
     useEmbeddedPrint: true,
     pageLabels: [],
     noteDateFormat: 'MMM D, h:mma',
-    colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
     cursorOverlay: {},
     swipeOrientation: 'horizontal',
     warning: {},

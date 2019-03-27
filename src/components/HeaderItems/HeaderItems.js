@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ToolButton from 'components/ToolButton';
-import ToolGroupButton from 'components/ToolGroupButton';
+import GroupButton from 'components/GroupButton';
 import ToggleElementButton from 'components/ToggleElementButton';
 import ActionButton from 'components/ActionButton';
 import StatefulButton from 'components/StatefulButton';
@@ -28,7 +28,8 @@ class HeaderItems extends React.PureComponent {
             case 'toolButton':
               return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'toolGroupButton':
-              return <ToolGroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+            case 'dropdownButton':
+              return <GroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'toggleElementButton':
               return <ToggleElementButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'actionButton':

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import Icon from 'components/Icon';
 
 import core from 'core';
-import { mapAnnotationToKey, mapToolNameToKey, getDataWithKey } from 'constants/map';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -104,18 +103,17 @@ class MeasurementOverlay extends React.PureComponent {
     }
   }
 
-  isMeasurementAnnotation = annotation => ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(mapAnnotationToKey(annotation));
+  isMeasurementAnnotation = annotation => ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'].includes(annotation.ToolName);
 
-  isMeasurementTool = toolName => ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(mapToolNameToKey(toolName));
+  isMeasurementTool = toolName => ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'].includes(toolName);
 
   shouldShowInfo = annotation => {
-    const key = mapAnnotationToKey(annotation);
-
+    const toolName = annotation.ToolName;
     let showInfo;
-    if (key === 'perimeterMeasurement' || key === 'areaMeasurement') {
+    if (toolName === 'AnnotationCreatePerimeterMeasurement' || toolName === 'AnnotationCreateAreaMeasurement') {
       // for polyline and polygon, there's no useful information we can show if it has no vertices or only one vertex.
       showInfo = annotation.getPath().length > 1;
-    } else if (key === 'distanceMeasurement') {
+    } else if (toolName === 'AnnotationCreateDistanceMeasurement') {
       showInfo = true;
     }
 
@@ -150,14 +148,13 @@ class MeasurementOverlay extends React.PureComponent {
       : annotation.Precision.toString().split('.')[1].length;
 
   renderTitle = () => {
-    const { t } = this.props;
-    const key = mapAnnotationToKey(this.state.annotation);
-    const { icon } = getDataWithKey(key);
+    const { t, activeIcon, activeToolName } = this.props;
+    const icon = activeIcon;
 
-    const keyTitleMap = {
-      distanceMeasurement: t('option.measurementOverlay.distanceMeasurement'),
-      perimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
-      areaMeasurement: t('option.measurementOverlay.areaMeasurement')
+    const toolTitleMap = {
+      AnnotationCreateDistanceMeasurement: t('option.measurementOverlay.distanceMeasurement'),
+      AnnotationCreatePerimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
+      AnnotationCreateAreaMeasurement: t('option.measurementOverlay.areaMeasurement')
     };
 
     return (
@@ -165,7 +162,7 @@ class MeasurementOverlay extends React.PureComponent {
         {icon &&
           <Icon className="measurement__icon" glyph={icon} />
         }
-        {keyTitleMap[key]}
+        {toolTitleMap[activeToolName]}
       </div>
     );
   }
@@ -173,17 +170,15 @@ class MeasurementOverlay extends React.PureComponent {
   renderValue = () => {
     const { annotation } = this.state;
     const { t } = this.props;
-    const key = mapAnnotationToKey(annotation);
-
-    const keyDisplayNameMap = {
-      distanceMeasurement: t('option.measurementOverlay.distance'),
-      perimeterMeasurement: t('option.measurementOverlay.perimeter'),
-      areaMeasurement: t('option.measurementOverlay.area')
+    const toolDisplayNameMap = {
+      AnnotationCreateDistanceMeasurement: t('option.measurementOverlay.distance'),
+      AnnotationCreatePerimeterMeasurement: t('option.measurementOverlay.perimeter'),
+      AnnotationCreateAreaMeasurement: t('option.measurementOverlay.area')
     };
 
     return (
       <div className="measurement__value">
-        {keyDisplayNameMap[key]}: {annotation.getContents()}
+        {toolDisplayNameMap[annotation.ToolName]}: {annotation.getContents()}
       </div>
     );
   }
@@ -207,18 +202,17 @@ class MeasurementOverlay extends React.PureComponent {
 
   renderAngle = () => {
     const { annotation } = this.state;
-    const key = mapAnnotationToKey(annotation);
     const getIPathAnnotationPts = annotation => {
       const path = annotation.getPath();
       const length = path.length;
       return [path[length - 3], path[length - 2], path[length - 1]];
     };
-    const keyPtMap = {
-      distanceMeasurement: ({ Start, End }) => [Start, End],
-      perimeterMeasurement: getIPathAnnotationPts,
-      areaMeasurement: getIPathAnnotationPts
+    const toolPtMap = {
+      AnnotationCreateDistanceMeasurement: ({ Start, End }) => [Start, End],
+      AnnotationCreatePerimeterMeasurement: getIPathAnnotationPts,
+      AnnotationCreateAreaMeasurement: getIPathAnnotationPts
     };
-    const pts = keyPtMap[key](annotation).filter(pt => !!pt);
+    const pts = toolPtMap[annotation.ToolName](annotation).filter(pt => !!pt);
     
     let angle = this.getAngleInRadians(...pts);
     if (angle) {
@@ -238,7 +232,6 @@ class MeasurementOverlay extends React.PureComponent {
     const { annotation } = this.state;
     const { isDisabled, t } = this.props;
     const className = getClassName('Overlay MeasurementOverlay', this.props);
-    const key = mapAnnotationToKey(annotation);
 
     if (isDisabled || !annotation) {
       return null;
@@ -254,7 +247,7 @@ class MeasurementOverlay extends React.PureComponent {
         {t('option.measurementOverlay.precision')}: {annotation.Precision}
         </div>
         {this.renderValue()}
-        {key === 'distanceMeasurement' &&
+        {annotation.ToolName === 'AnnotationCreateDistanceMeasurement' &&
           this.renderDeltas()
         }
         {this.renderAngle()}
@@ -267,6 +260,8 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'measurementOverlay'),
   isDisabled: selectors.isElementDisabled(state, 'measurementOverlay'),
   activeToolName: selectors.getActiveToolName(state),
+  toolButtonObjects: selectors.getToolButtonObjects(state),
+  activeIcon: selectors.getToolButtonIcon(state, selectors.getActiveToolName(state))
 });
 
 const mapDispatchToProps = {
