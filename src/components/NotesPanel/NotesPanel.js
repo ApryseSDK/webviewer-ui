@@ -1,23 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
-import keyboardJS from 'keyboardjs';
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
+import ListWithKeyboard from 'components/ListWithKeyboard';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
 import selectors from 'selectors';
 
 import './NotesPanel.scss';
-
-const mod = (v, n) => {
-  return ((v % n) + n) % n;
-};
 
 class NotesPanel extends React.PureComponent {
   static propTypes = {
@@ -44,8 +39,6 @@ class NotesPanel extends React.PureComponent {
   selectionIndex = null;
 
   componentDidMount() {
-    keyboardJS.bind('up', this.moveUp);
-    keyboardJS.bind('down', this.moveDown);
     core.addEventListener('documentUnloaded', this.onDocumentUnloaded);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
@@ -60,34 +53,9 @@ class NotesPanel extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    keyboardJS.unbind('up', this.moveUp);
-    keyboardJS.unbind('down', this.moveDown);
     core.removeEventListener('documentUnloaded', this.onDocumentUnloaded);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
     core.removeEventListener('annotationHidden', this.onAnnotationChanged);
-  }
-
-  focusNote = selectionIndex => {
-    const noteRef = this.noteRefs[selectionIndex];
-    const domNode = ReactDOM.findDOMNode(noteRef);
-    domNode.focus();
-  }
-
-  move = direction => {
-    if (this.selectionIndex === null) {
-      this.selectionIndex = 0;
-    } else {
-      this.selectionIndex = mod(this.selectionIndex + direction, this.rootAnnotations.length);
-    }
-    this.focusNote(this.selectionIndex);
-  }
-
-  moveUp = () => {
-    this.move(-1);
-  }
-
-  moveDown = () => {
-    this.move(1);
   }
 
   onDocumentUnloaded = () => {
@@ -195,22 +163,25 @@ class NotesPanel extends React.PureComponent {
     );
   }
 
+  renderNote = (note, index, refSetter) => {
+    return (
+      <Note
+        ref={refSetter}
+        visible={this.isVisibleNote(note)}
+        annotation={note}
+        searchInput={this.state.searchInput}
+        rootContents={note.getContents()}
+      />
+    );
+  }
+
   renderNotes = notes => {
     return(
-      notes.map((note, index) => {
-        return (
-          <React.Fragment key={note.Id}>
-            {this.renderListSeparator(notes, note)}
-            <Note
-              ref={ref => this.noteRefs[index] = ref}
-              visible={this.isVisibleNote(note)}
-              annotation={note}
-              searchInput={this.state.searchInput}
-              rootContents={note.getContents()}
-            />
-          </React.Fragment>
-        );
-      })
+      <ListWithKeyboard
+        data={notes}
+        renderItem={this.renderNote}
+        renderItemSeparator={this.renderListSeparator}
+      />
     );
   }
 

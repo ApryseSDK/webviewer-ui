@@ -202,6 +202,10 @@ class Note extends React.PureComponent {
     return <span className="contents" dangerouslySetInnerHTML={{__html: text}}></span>;
   }
 
+  focus = () => {
+    this.containerRef.current.focus();
+  }
+
   getText = text => {
     if (this.props.searchInput.trim()) {
       return this.getHighlightedText(text);
@@ -287,4 +291,4 @@ const matDispatchToProps = {
   setIsNoteEditing: actions.setIsNoteEditing,
 };
 
-export default connect(mapStateToProps, matDispatchToProps)(translate()(Note));
+export default connect(mapStateToProps, matDispatchToProps, null, { withRef: true })(translate(null, { withRef: true })(Note));
