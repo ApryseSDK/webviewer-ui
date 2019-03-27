@@ -9,6 +9,7 @@ class OverlayItem extends React.PureComponent {
     buttonName: PropTypes.string,
     willFocus: PropTypes.bool
   }
+  containerRef = React.createRef();
 
   componentDidMount() {
     if (this.props.willFocus) {
@@ -23,13 +24,9 @@ class OverlayItem extends React.PureComponent {
   }
 
   focus() {
-    if (this.ref) {
-      this.ref.focus();
+    if (this.containerRef) {
+      this.containerRef.current.focus();
     }
-  }
-
-  setRef = ref => {
-    this.ref = ref;
   }
 
   onKeyPress = e => {
@@ -47,7 +44,7 @@ class OverlayItem extends React.PureComponent {
         className="OverlayItem"
         onClick={this.props.onClick}
         onKeyPress={this.onKeyPress}
-        ref={this.setRef}
+        ref={this.containerRef}
       >
         <div className="ButtonText">
           { buttonName }

@@ -66,5 +66,7 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "author": "PDFTron Systems Inc.",
-  "dependencies": {}
+  "dependencies": {
+    "keyboardjs": "^2.5.1"
+  }
 }
