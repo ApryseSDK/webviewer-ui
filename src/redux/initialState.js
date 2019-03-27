@@ -25,72 +25,98 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: [ 'tablet', 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
-        { type: 'customElement',
+        { 
+          type: 'customElement',
           render: () => <ToggleElementOverlay />, 
           dataElement: 'zoomOverlayButton',
           hidden: [ 'mobile' ],
           element: 'zoomOverlay'
         },
         { type: 'spacer' },
-        { type: 'dropdownButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', hidden: [ 'tablet', 'mobile' ],
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateDistanceMeasurement' },
-            { type: 'toolButton', toolName: 'AnnotationCreatePerimeterMeasurement' },
-            { type: 'toolButton', toolName: 'AnnotationCreateAreaMeasurement' },
-          ]
-        },
-        { type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ],
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand' },
-            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand2' },
-            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand3' },
-            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand4' },
-          ]
-        },
-        { type: 'dropdownButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: [ 'tablet', 'mobile' ],
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight2' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight3' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight4' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextUnderline' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextSquiggly' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextStrikeout' },
-          ]
-        },
-        { type: 'dropdownButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: [ 'tablet', 'mobile' ], 
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateRectangle' },
-            { type: 'toolButton', toolName: 'AnnotationCreateEllipse' },
-            { type: 'toolButton', toolName: 'AnnotationCreateLine' },
-            { type: 'toolButton', toolName: 'AnnotationCreateArrow' },
-            { type: 'toolButton', toolName: 'AnnotationCreatePolyline' },
-            { type: 'toolButton', toolName: 'AnnotationCreatePolygon' },
-            { type: 'toolButton', toolName: 'AnnotationCreatePolygonCloud' },
-          ] 
-        },
-        { type: 'statefulButton', dataElement: 'signatureToolButton', hidden: ['tablet', 'mobile'] },
-        { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction',  hidden: [ 'tablet', 'mobile' ] },
-        { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: [ 'tablet', 'mobile' ] },
-        { type: 'toolButton', toolName: 'AnnotationCreateSticky', hidden: [ 'tablet', 'mobile' ] },
-        { type: 'dropdownButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', hidden: [ 'tablet', 'mobile' ],
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateCallout' },
-            { type: 'toolButton', toolName: 'AnnotationCreateStamp' }
-          ]
-        },
-        {
-          type: 'actionButton',
+        // { 
+        //   type: 'dropdownButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', hidden: [ 'tablet', 'mobile' ],
+        //   children: [
+        //     { type: 'toolButton', toolName: 'AnnotationCreateDistanceMeasurement' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreatePerimeterMeasurement' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateAreaMeasurement' },
+        //   ]
+        // },
+        { 
+          type: 'responsiveButton', 
+          maxWidth: 1000, 
           img: 'ic_edit_black_24px',
-          onClick: dispatch => {
-            dispatch(actions.setActiveHeaderGroup('tools'));
-            core.setToolMode(defaultTool);
-            dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'zoomOverlay', 'redactionOverlay' ]));
-          },
-          dataElement: 'toolsButton',
-          title: 'component.toolsButton',
-          hidden: [ 'desktop' ],
+          children: [
+            { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
+            { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
+            { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand' },
+            { 
+              type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ],
+              children: [
+                { type: 'toolButton', toolName: 'AnnotationCreateFreeHand' },
+                { type: 'toolButton', toolName: 'AnnotationCreateFreeHand2' },
+                { type: 'toolButton', toolName: 'AnnotationCreateFreeHand3' },
+                { type: 'toolButton', toolName: 'AnnotationCreateFreeHand4' },
+              ]
+            },
+          ]
         },
+        // { 
+        //   type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ],
+        //   children: [
+        //     { type: 'toolButton', toolName: 'AnnotationCreateFreeHand' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateFreeHand2' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateFreeHand3' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateFreeHand4' },
+        //   ]
+        // },
+        // { 
+        //   type: 'dropdownButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: [ 'tablet', 'mobile' ],
+        //   children: [
+        //     { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight2' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight3' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight4' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateTextUnderline' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateTextSquiggly' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateTextStrikeout' },
+        //   ]
+        // },
+        // { 
+        //   type: 'dropdownButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: [ 'tablet', 'mobile' ], 
+        //   children: [
+        //     { type: 'toolButton', toolName: 'AnnotationCreateRectangle' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateEllipse' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateLine' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateArrow' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreatePolyline' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreatePolygon' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreatePolygonCloud' },
+        //   ] 
+        // },
+        // { type: 'statefulButton', dataElement: 'signatureToolButton', hidden: ['tablet', 'mobile'] },
+        // { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction',  hidden: [ 'tablet', 'mobile' ] },
+        // { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: [ 'tablet', 'mobile' ] },
+        // { type: 'toolButton', toolName: 'AnnotationCreateSticky', hidden: [ 'tablet', 'mobile' ] },
+        // { 
+        //   type: 'dropdownButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', hidden: [ 'tablet', 'mobile' ],
+        //   children: [
+        //     { type: 'toolButton', toolName: 'AnnotationCreateCallout' },
+        //     { type: 'toolButton', toolName: 'AnnotationCreateStamp' }
+        //   ]
+        // },
+        // {
+        //   type: 'actionButton',
+        //   img: 'ic_edit_black_24px',
+        //   onClick: dispatch => {
+        //     dispatch(actions.setActiveHeaderGroup('tools'));
+        //     core.setToolMode(defaultTool);
+        //     dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'zoomOverlay', 'redactionOverlay' ]));
+        //   },
+        //   dataElement: 'toolsButton',
+        //   title: 'component.toolsButton',
+        //   hidden: [ 'desktop' ],
+        // },
         { type: 'divider', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toggleElementButton', dataElement: 'searchButton',  element: 'searchOverlay', img: 'ic_search_black_24px', title: 'component.searchOverlay' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'ic_overflow_black_24px', title: 'component.menuOverlay' }
@@ -147,7 +173,7 @@ export default {
         {
           type: 'actionButton',
           dataElement: 'defaultHeaderButton',
-          titile: 'action.close',
+          title: 'action.close',
           img: 'ic_close_black_24px',
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('default'));

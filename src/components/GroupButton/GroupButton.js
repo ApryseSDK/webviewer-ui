@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import GroupOverlay from 'components/GroupOverlay';
 import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
@@ -10,6 +11,8 @@ import getToolStyles from 'helpers/getToolStyles';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
+
+import Portal from 'src/Portal';
 
 class GroupButton extends React.PureComponent {
   static propTypes = {
@@ -83,9 +86,8 @@ class GroupButton extends React.PureComponent {
   }
 
   render() {
-    const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive, toolNames, iconColor } = this.props;
+    const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive, toolNames, iconColor, children, activeToolGroup, toolGroup} = this.props;
     const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName).disabled);
-
     if (isDisabled || allButtonsInGroupDisabled) {
       return null;
     }
@@ -100,17 +102,27 @@ class GroupButton extends React.PureComponent {
       showDownArrow ? 'down-arrow' : '',
     ].join(' ').trim();
 
-    return <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={color} />;
+    return (
+      <React.Fragment>
+        <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={color} />
+        {toolGroup === activeToolGroup && 
+          <Portal>
+            <GroupOverlay nestedChildren={children} dataElement={dataElement} />
+          </Portal>
+        }
+      </React.Fragment>
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isDisabled: selectors.isToolGroupButtonDisabled(state, ownProps.dataElement, ownProps.toolGroup),
+  isDisabled: false,
+  // isDisabled: selectors.isToolGroupButtonDisabled(state, ownProps.dataElement, ownProps.toolGroup),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
-  toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  iconColor: selectors.getIconColor(state, selectors.getActiveToolName(state))
+  iconColor: selectors.getIconColor(state, selectors.getActiveToolName(state)),
+  activeToolGroup: selectors.getActiveToolGroup(state)
 });
 
 const mapDispatchToProps = {

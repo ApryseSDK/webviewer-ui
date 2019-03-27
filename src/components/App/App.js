@@ -99,7 +99,7 @@ class App extends React.PureComponent {
           <RedactionOverlay />
           <MenuOverlay />
           <PageNavOverlay />
-          <GroupOverlay />
+          {/* <GroupOverlay /> */}
           <SignatureOverlay />
           <CursorOverlay />
           <ZoomOverlay />

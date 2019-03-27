@@ -37,6 +37,7 @@ class GroupOverlay extends React.PureComponent {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
+    this.setOverlayPosition();
   }
 
   componentDidUpdate(prevProps) {
@@ -61,11 +62,9 @@ class GroupOverlay extends React.PureComponent {
   }
 
   setOverlayPosition = () => {
-    const { activeToolGroup, activeHeaderItems } = this.props;
-    const element = activeHeaderItems.find(item => item.toolGroup === activeToolGroup);
-    
-    if (element) {
-      this.setState(getOverlayPositionBasedOn(element.dataElement, this.overlay));
+    const { dataElement } = this.props;
+    if (dataElement) {
+      this.setState(getOverlayPositionBasedOn(dataElement, this.overlay));
     }
   }
 
@@ -79,18 +78,16 @@ class GroupOverlay extends React.PureComponent {
 
   render() {
     const { left, right } = this.state;
-    const { isDisabled, isOpen, activeToolGroup, activeHeaderItems } = this.props;
+    const { isDisabled, isOpen, activeToolGroup, nestedChildren } = this.props;
 
     if (isDisabled || !activeToolGroup) {
       return null;
     }
 
     const className = getClassName('Overlay GroupOverlay', { isOpen });
-    let buttonGroup = (Object.keys(activeHeaderItems).find(key => activeHeaderItems[key].toolGroup === activeToolGroup));
-    const children = activeHeaderItems[buttonGroup].children;
     return (
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="groupOverlay" onMouseDown={e => e.stopPropagation()}>
-        {children.map((element, i) => {
+        {nestedChildren.map((element, i) => {
           if (element.type === 'toolButton'){
             return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} />
           } else {
