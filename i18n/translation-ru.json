@@ -1,0 +1,197 @@
+{
+  "action": {
+    "apply": "Применить",
+    "applyAll": "Применить все",
+    "cancel": "Отменить",
+    "clear": "Очистить",
+    "close": "Закрыть",
+    "comment": "Откомментировать",
+    "copy": "Скопировать",
+    "delete": "Удалить",
+    "download": "Скачать",
+    "edit": "Редактировать",
+    "enterFullscreen": "Полный экран",
+    "exitFullscreen": "Выйте из полного экрана",
+    "fit": "Уместить",
+    "fitToPage": "Уместить страницу",
+    "fitToWidth": "Уместить по ширине",
+    "openFile": "Открыть документ",
+    "print": "Распечатать",
+    "ok": "OK",
+    "reply": "Ответить",
+    "rotate": "Повернуть",
+    "rotateClockwise": "По часовой",
+    "rotateCounterClockwise": "Против часовой",
+    "save": "Сохранить",
+    "create": "Создать",
+    "showMoreResults": "Показать больше",
+    "saveSignature": "Сохранить подпись",
+    "sign": "Добавить подпись",
+    "style": "Стиль",
+    "submit": "Отправить",
+    "zoom": "Увеличить",
+    "zoomIn": "Увеличить",
+    "zoomOut": "Уменьшить"
+  },
+  "annotation": {
+    "areaMeasurement": "Площадь",
+    "arrow": "Стрела",
+    "callout": "Вызыв",
+    "distanceMeasurement": "Дистанция",
+    "ellipse": "Эллипс",
+    "freehand": "От руки",
+    "freehand2": "От руки",
+    "freetext": "Текст",
+    "freetext2": "Текст",
+    "highlight": "Выделить",
+    "highlight2": "Выделить",
+    "line": "Линия",
+    "perimeterMeasurement": "Периметр",
+    "polygon": "Многоугольник",
+    "polygonCloud": "Облако",
+    "polyline": "Ломаная",
+    "rectangle": "Прямоугольник",
+    "redact": "Редактировать",
+    "signature": "Подпись",
+    "squiggly": "Волнистая линия",
+    "stamp": "Штамп",
+    "stickyNote": "Комментировать",
+    "strikeout": "Зачеркнуть",
+    "underline": "Подчеркнуть",
+    "custom": "Свой стиль"
+  },
+  "component": {
+    "freehandToolsButton": "Инструменты",
+    "leftPanel": "Панель",
+    "searchOverlay": "Поиск",
+    "menuOverlay": "Меню",
+    "miscToolsButton": "Другие инструменты",
+    "notesPanel": "Заметки",
+    "outlinesPanel": "Контуры",
+    "shapeToolsButton": "Фигуры",
+    "textToolsButton": "Инструменты для работы с текстом",
+    "thumbnailsPanel": "Эскизы",
+    "toolsButton": "Инструменты",
+    "redaction": "Редактировать",
+    "viewControlsOverlay": "Изменить вид",
+    "measurementToolsButton": "Инструменты для замерения"
+  },
+  "message": {
+    "badDocument": "Произошла ошибка при загрузке документа. Документ содержит ошибки или недостоверный.",
+    "customPrintPlaceholder": "пример 3, 4-10",
+    "encryptedAttemptsExceeded": "Не удалось загрузить зашифрованный документ. Слишком много попыток.",
+    "encryptedUserCancelled": "Не удалось загрузить зашифрованный документ. Ввод пароля прерван.",
+    "enterPassword": "Документ защищен паролем. Пожалуйста введите пароль.",
+    "incorrectPassword": "Пароль неверный, {{ remainingAttempts }} попыток осталось.",
+    "noAnnotations": "Документ не имеет аннотаций.",
+    "noOutlines": "Документ не имеет оглавления.",
+    "noResults": "Поиск не вернул результатов.",
+    "notSupported": "Расширение файла не поддерживается.",
+    "passwordRequired": "Пароль необходим",
+    "preparingToPrint": "Документ печатается...",
+    "printTotalPageCount": "{{count}} страница",
+    "printTotalPageCount_plural": "{{count}} страниц",
+    "processing": "Обработка документа...",
+    "searching": "Поиск...",
+    "searchPlaceholder": "Поиск комментарий...",
+    "signHere": "Распишетесь здесь",
+    "insertTextHere": "Вставьте текст здесь"
+  },
+  "option": {
+    "annotationColor": {
+      "StrokeColor": "Цвет границ",
+      "FillColor": "Цвет заливки",
+      "TextColor": "Цвет текста"
+    },
+    "displayMode": {
+      "layout": "Расположение",
+      "pageTransition": "Переход страниц"
+    },
+    "layout": {
+      "cover": "Полный",
+      "double": "Двойной",
+      "single": "Единый"
+    },
+    "notesPanel": {
+      "orderPosition": "Позиция",
+      "orderTime": "Время",
+      "separator": {
+        "today": "Сегодня",
+        "yesterday": "Вчера"
+      }
+    },
+    "pageTransition": {
+      "continuous": "Непрерывный",
+      "default": "Страница за страницей"
+    },
+    "print": {
+      "all": "Все",
+      "current": "Текущий",
+      "pages": "Страницы",
+      "includeComments": "Приложить комментарии"
+    },
+    "redaction": {
+      "markForRedaction": "Пометить для редактирования",
+      "warningPopupMessage": "Редакция удалит все выделенные элементы. Редакция необратима.",
+      "warningPopupTitle": "Применить редакцию"
+    },
+    "searchPanel": {
+      "caseSensitive": "С учетом регистра",
+      "wholeWordOnly": "Всё слово"
+    },
+    "signatureOverlay": {
+      "addSignature": "Добавить подпись"
+    },
+    "measurementOverlay": {
+      "scale": "Масштаб",
+      "angle": "Угол",
+      "distance": "Дистанция",
+      "perimeter": "Периметер",
+      "area": "Площадь",
+      "distanceMeasurement": "Замерение дистанции",
+      "perimeterMeasurement": "Замерение периметера",
+      "areaMeasurement": "Замерение площади"
+    },
+    "measurementOption": {
+      "scale": "Масштаб"
+    },
+    "slider": {
+      "opacity": "Прозрачность",
+      "thickness": "Тонкость",
+      "text": "Размер текста"
+    },
+    "shared": {
+      "page": "Страница",
+      "precision": "Точность"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)"
+  },
+  "tool": {
+    "pan": "Панорамирование",
+    "select": "Выделить",
+    "Marquee": "Увеличить выделение"
+  }
+}
