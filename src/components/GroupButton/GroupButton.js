@@ -116,8 +116,7 @@ class GroupButton extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isDisabled: false,
-  // isDisabled: selectors.isToolGroupButtonDisabled(state, ownProps.dataElement, ownProps.toolGroup),
+  isDisabled: selectors.isToolGroupButtonDisabled(state, ownProps.dataElement, ownProps.toolNames),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
   toolButtonObjects: selectors.getToolButtonObjects(state),

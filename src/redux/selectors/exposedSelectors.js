@@ -3,8 +3,7 @@ import { documentTypes } from 'constants/types';
 
 // viewer
 export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
-export const isToolGroupButtonDisabled = (state, dataElement, toolGroup) => {
-  const toolNames = getToolNamesByGroup(state, toolGroup);
+export const isToolGroupButtonDisabled = (state, dataElement, toolNames) => {
   const isEveryButtonInGroupDisabled = toolNames.every(toolName => isToolButtonDisabled(state, toolName));
   
   return isElementDisabled(state, dataElement) || isEveryButtonInGroupDisabled;

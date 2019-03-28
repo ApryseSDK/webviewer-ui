@@ -18,4 +18,8 @@
   & > * {
     padding: 0;
   }
+
+  @include mobile {
+    height: $top-bar-height-m;
+  }
 }

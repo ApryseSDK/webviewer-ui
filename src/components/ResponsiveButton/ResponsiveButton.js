@@ -9,7 +9,7 @@ import Portal from 'src/Portal';
 class ResponsiveButton extends React.PureComponent {
 
   componentWillMount() {
-    this.state = { isCollapsed: false, isOverlayOpen: false };
+    this.setState({ isCollapsed: false, isOverlayOpen: false });
   }
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
