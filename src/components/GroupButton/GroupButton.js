@@ -87,14 +87,17 @@ class GroupButton extends React.PureComponent {
 
   render() {
     const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive, toolNames, iconColor, children, activeToolGroup, toolGroup} = this.props;
-    const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName).disabled);
+    const isOnlyTools = children.filter(button => button.type !== 'toolButton').length === 0;
+    const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName) ? core.getTool(toolName).disabled : '');
     if (isDisabled || allButtonsInGroupDisabled) {
-      return null;
+      if (isOnlyTools){
+        return null;
+      }
     }
 
     const { toolName } = this.state;
-    const img = this.props.img ? this.props.img : toolButtonObjects[toolName].img;
-    const color = isActive && !this.props.img && iconColor ? getToolStyles(toolName)[iconColor].toHexString() : '';
+    const img = this.props.img ? this.props.img : isOnlyTools ? toolButtonObjects[toolName] ? toolButtonObjects[toolName].img : '' : '';
+    const color = isActive && !this.props.img && iconColor ? getToolStyles(toolName) ? getToolStyles(toolName)[iconColor].toHexString() : '' : '';
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
     const className = [

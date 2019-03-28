@@ -2,12 +2,9 @@ import React from 'react';
 
 import ToggleElementOverlay from 'components/toggleElementOverlay';
 
-import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
 import { zoomIn, zoomOut } from 'helpers/zoom';
-import defaultTool from 'constants/defaultTool';
-import actions from 'actions';
 
 export default {
   viewer: {
@@ -35,7 +32,7 @@ export default {
         { type: 'spacer' },
         { 
           type: 'responsiveButton', 
-          maxWidth: 1000, 
+          maxWidth: 900, 
           img: 'ic_edit_black_24px',
           children: [
             { 
