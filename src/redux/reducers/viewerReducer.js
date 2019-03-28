@@ -80,14 +80,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_FULL_SCREEN':
       return { ...state, isFullScreen: payload.isFullScreen };
     case 'SET_HEADER_ITEMS':
-<<<<<<< HEAD
       return { ...state, headers: { ...state.headers, [payload.header]: payload.headerItems} };
-=======
-      if ([payload.header] !== 'default') {
-        console.warn(`Multiple headers is deprecated, please use default header`);
-      }
-      return state;
->>>>>>> cb7f2cdb77562cb3478a1a50817b2401d165100a
     case 'REGISTER_TOOL':
       const availablePalettes = ['TextColor', 'StrokeColor', 'FillColor'].filter(property => payload.toolObject.defaults && payload.toolObject.defaults[property]);
       return {
