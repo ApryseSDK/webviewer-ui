@@ -84,7 +84,6 @@ export default initialState => (state = initialState, action) => {
         console.warn(`Multiple headers is deprecated, please use default header`);
       }
       return state;
-      // return { ...state, headers: { ...state.headers, [payload.header]: payload.headerItems} };
     case 'REGISTER_TOOL':
       const availablePalettes = ['TextColor', 'StrokeColor', 'FillColor'].filter(property => payload.toolObject.defaults && payload.toolObject.defaults[property]);
       return {
