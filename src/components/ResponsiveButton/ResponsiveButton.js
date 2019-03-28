@@ -1,10 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Button from 'components/Button';
 import ResponsiveOverlay from 'components/ResponsiveOverlay';
 import HeaderItems from 'components/HeaderItems';
 
+import actions from 'actions';
+
 import Portal from 'src/Portal';
+
+import "./ResponsiveButton.scss";
 
 class ResponsiveButton extends React.PureComponent {
 
@@ -26,10 +31,14 @@ class ResponsiveButton extends React.PureComponent {
   }
 
   toggleOverlay = () => {
+    const { closeElement } = this.props;
+    closeElement('toolStylePopup');
     this.setState({ isOverlayOpen: !this.state.isOverlayOpen });
   }
 
   onClick = () => {
+    const { closeElement } = this.props;
+    closeElement('toolStylePopup');
     this.setState({
       isOverlayOpen: !this.state.isOverlayOpen
     });
@@ -38,13 +47,17 @@ class ResponsiveButton extends React.PureComponent {
   render() { 
     let { children } = this.props;
     const { isCollapsed, isOverlayOpen } = this.state;
-    let headerChildren = children.slice(0)
-    headerChildren.unshift({ type: 'spacer' });
+    if (!children) {
+      return null;
+    }
+
     return (
       <React.Fragment>
         { isCollapsed ? 
           <Button { ...this.props } onClick={this.onClick} /> :
-          <HeaderItems items={headerChildren} { ...this.props } />
+          <div className="innerHeaderItems">
+            <HeaderItems items={children} { ...this.props } />
+          </div>
         }
         { isOverlayOpen && 
           <Portal>
@@ -57,4 +70,11 @@ class ResponsiveButton extends React.PureComponent {
   }
 }
  
-export default ResponsiveButton;
+const mapStateToProps = () => ({
+});
+
+const mapDispatchToProps = {
+  closeElement: actions.closeElement
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveButton);

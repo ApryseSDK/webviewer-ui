@@ -3,7 +3,6 @@ import React from 'react';
 import HeaderItems from 'components/HeaderItems';
 import ActionButton from 'components/ActionButton';
 
-
 import './ResponsiveOverlay.scss';
 
 class ResponsiveOverlay extends React.PureComponent {

@@ -33,7 +33,8 @@ export default initialState => (state = initialState, action) => {
     case 'CLOSE_ELEMENT':
       return { ...state, openElements: { ...state.openElements, [payload.dataElement]: false } };
     case 'SET_ACTIVE_HEADER_GROUP':
-      return { ...state, activeHeaderGroup: payload.headerGroup };
+      console.warn(`setActiveHeaderGroup is now deprecated.`);
+      return state;
     case 'SET_ACTIVE_TOOL_NAME':
       return { ...state, activeToolName: payload.toolName };
     case 'SET_ACTIVE_TOOL_STYLES':
@@ -79,7 +80,11 @@ export default initialState => (state = initialState, action) => {
     case 'SET_FULL_SCREEN':
       return { ...state, isFullScreen: payload.isFullScreen };
     case 'SET_HEADER_ITEMS':
-      return { ...state, headers: { ...state.headers, [payload.header]: payload.headerItems} };
+      if ([payload.header] !== 'default') {
+        console.warn(`Multiple headers is deprecated, please use default header`);
+      }
+      return state;
+      // return { ...state, headers: { ...state.headers, [payload.header]: payload.headerItems} };
     case 'REGISTER_TOOL':
       const availablePalettes = ['TextColor', 'StrokeColor', 'FillColor'].filter(property => payload.toolObject.defaults && payload.toolObject.defaults[property]);
       return {

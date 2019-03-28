@@ -35,7 +35,7 @@ export default {
         { type: 'spacer' },
         { 
           type: 'responsiveButton', 
-          maxWidth: 900, 
+          maxWidth: 1000, 
           img: 'ic_edit_black_24px',
           children: [
             { 
@@ -96,67 +96,6 @@ export default {
         { type: 'toggleElementButton', dataElement: 'searchButton',  element: 'searchOverlay', img: 'ic_search_black_24px', title: 'component.searchOverlay' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'ic_overflow_black_24px', title: 'component.menuOverlay' }
       ],
-      tools: [
-        { type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', 
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand' },
-            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand2' },
-            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand3' },
-            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand4' },
-          ]
-        },
-        { type: 'dropdownButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton',
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight2' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight3' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight4' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextUnderline' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextSquiggly' },
-            { type: 'toolButton', toolName: 'AnnotationCreateTextStrikeout' },
-          ]
-        },
-        { type: 'dropdownButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton',
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateRectangle' },
-            { type: 'toolButton', toolName: 'AnnotationCreateEllipse' },
-            { type: 'toolButton', toolName: 'AnnotationCreateLine' },
-            { type: 'toolButton', toolName: 'AnnotationCreateArrow' },
-            { type: 'toolButton', toolName: 'AnnotationCreatePolyline' },
-            { type: 'toolButton', toolName: 'AnnotationCreatePolygon' },
-            { type: 'toolButton', toolName: 'AnnotationCreatePolygonCloud' },
-          ] 
-        },
-        { type: 'statefulButton', dataElement: 'signatureToolButton'},
-        { type: 'dropdownButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', 
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateDistanceMeasurement' },
-            { type: 'toolButton', toolName: 'AnnotationCreatePerimeterMeasurement' },
-            { type: 'toolButton', toolName: 'AnnotationCreateAreaMeasurement' },
-          ]
-        },
-        { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
-        { type: 'toolButton', toolName: 'AnnotationCreateFreeText' },
-        { type: 'toolButton', toolName: 'AnnotationCreateSticky' },
-        { type: 'dropdownButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton',
-          children: [
-            { type: 'toolButton', toolName: 'AnnotationCreateCallout' },
-            { type: 'toolButton', toolName: 'AnnotationCreateStamp' }
-          ]
-        },
-        { type: 'spacer' },
-        {
-          type: 'actionButton',
-          dataElement: 'defaultHeaderButton',
-          title: 'action.close',
-          img: 'ic_close_black_24px',
-          onClick: dispatch => {
-            dispatch(actions.setActiveHeaderGroup('default'));
-            core.setToolMode(defaultTool);
-            dispatch(actions.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'redactionOverlay' ]));
-          },
-        },
-      ]
     },
     toolButtonObjects: {
       AnnotationCreateDistanceMeasurement: { dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', showColor: 'active', iconColor: 'StrokeColor', currentPalette: 'StrokeColor', availablePalettes: [ 'StrokeColor' ], annotationCheck: annotation => annotation instanceof Annotations.LineAnnotation && annotation.IT === 'LineDimension' && annotation.Measure },
