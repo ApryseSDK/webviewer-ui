@@ -41,22 +41,80 @@ export default {
         //     { type: 'toolButton', toolName: 'AnnotationCreateAreaMeasurement' },
         //   ]
         // },
+        { type: 'responsiveButton',
+          maxWidth: 1000, 
+          children: [
+            { 
+              type: 'customElement',
+              render: () => <ToggleElementOverlay />, 
+              dataElement: 'zoomOverlayButton',
+              hidden: [ 'mobile' ],
+              element: 'zoomOverlay'
+            },
+            { 
+              type: 'customElement',
+              render: () => <ToggleElementOverlay />, 
+              dataElement: 'zoomOverlayButton',
+              hidden: [ 'mobile' ],
+              element: 'zoomOverlay'
+            },
+          ]
+        },
         { 
           type: 'responsiveButton', 
-          maxWidth: 1000, 
+          maxWidth: 900, 
           img: 'ic_edit_black_24px',
           children: [
-            { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
-            { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
-            { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
-            { type: 'toolButton', toolName: 'AnnotationCreateFreeHand' },
             { 
-              type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: [ 'tablet', 'mobile' ],
+              type: 'dropdownButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', 
+              children: [
+                { type: 'toolButton', toolName: 'AnnotationCreateDistanceMeasurement' },
+                { type: 'toolButton', toolName: 'AnnotationCreatePerimeterMeasurement' },
+                { type: 'toolButton', toolName: 'AnnotationCreateAreaMeasurement' },
+              ]
+            },
+            { 
+              type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', 
               children: [
                 { type: 'toolButton', toolName: 'AnnotationCreateFreeHand' },
                 { type: 'toolButton', toolName: 'AnnotationCreateFreeHand2' },
                 { type: 'toolButton', toolName: 'AnnotationCreateFreeHand3' },
                 { type: 'toolButton', toolName: 'AnnotationCreateFreeHand4' },
+              ]
+            },
+            { 
+              type: 'dropdownButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', 
+              children: [
+                { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight' },
+                { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight2' },
+                { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight3' },
+                { type: 'toolButton', toolName: 'AnnotationCreateTextHighlight4' },
+                { type: 'toolButton', toolName: 'AnnotationCreateTextUnderline' },
+                { type: 'toolButton', toolName: 'AnnotationCreateTextSquiggly' },
+                { type: 'toolButton', toolName: 'AnnotationCreateTextStrikeout' },
+              ]
+            },
+            { 
+              type: 'dropdownButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton',  
+              children: [
+                { type: 'toolButton', toolName: 'AnnotationCreateRectangle' },
+                { type: 'toolButton', toolName: 'AnnotationCreateEllipse' },
+                { type: 'toolButton', toolName: 'AnnotationCreateLine' },
+                { type: 'toolButton', toolName: 'AnnotationCreateArrow' },
+                { type: 'toolButton', toolName: 'AnnotationCreatePolyline' },
+                { type: 'toolButton', toolName: 'AnnotationCreatePolygon' },
+                { type: 'toolButton', toolName: 'AnnotationCreatePolygonCloud' },
+              ] 
+            },
+            { type: 'statefulButton', dataElement: 'signatureToolButton', hidden: ['tablet', 'mobile'] },
+            { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction',  hidden: [ 'tablet', 'mobile' ] },
+            { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: [ 'tablet', 'mobile' ] },
+            { type: 'toolButton', toolName: 'AnnotationCreateSticky', hidden: [ 'tablet', 'mobile' ] },
+            { 
+              type: 'dropdownButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', 
+              children: [
+                { type: 'toolButton', toolName: 'AnnotationCreateCallout' },
+                { type: 'toolButton', toolName: 'AnnotationCreateStamp' }
               ]
             },
           ]

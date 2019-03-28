@@ -107,7 +107,7 @@ class GroupButton extends React.PureComponent {
         <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={color} />
         {toolGroup === activeToolGroup && 
           <Portal>
-            <GroupOverlay nestedChildren={children} dataElement={dataElement} />
+            <GroupOverlay nestedChildren={children} dataElement={dataElement} toolGroup={toolGroup}/>
           </Portal>
         }
       </React.Fragment>

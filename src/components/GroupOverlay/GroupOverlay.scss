@@ -14,12 +14,12 @@
     left: 0 !important;
     right: 0 !important;
     top: 0;
+    z-index: 110;
     width: 100%;
     border: none;
   }
 
   & > * {
-
     padding: 0;
     
     &:first-child {

@@ -24,13 +24,12 @@ class HeaderItems extends React.PureComponent {
           const { type, dataElement, hidden } = item;
           const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : `${item.className || ''}`;
           const key = `${type}-${dataElement || i}`;
-
           switch (type) {
             case 'toolButton':
               return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'toolGroupButton':
             case 'dropdownButton':
-              return <GroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} toolNames={item.children.map( tool => tool.toolName)}/>;
+              return <GroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} toolNames={item.children.map(tool => tool.toolName)}/>;
             case 'toggleElementButton':
               return <ToggleElementButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'actionButton':

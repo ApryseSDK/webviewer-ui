@@ -36,17 +36,19 @@ class ResponsiveButton extends React.PureComponent {
   };
 
   render() { 
-    const { children } = this.props;
+    let { children } = this.props;
     const { isCollapsed, isOverlayOpen } = this.state;
+    let headerChildren = children.slice(0)
+    headerChildren.unshift({ type: 'spacer' });
     return (
       <React.Fragment>
         { isCollapsed ? 
-          <Button { ...this.props } onClick = { this.onClick } /> :
-          <HeaderItems items={ children } { ...this.props } />
+          <Button { ...this.props } onClick={this.onClick} /> :
+          <HeaderItems items={headerChildren} { ...this.props } />
         }
         { isOverlayOpen && 
           <Portal>
-            <ResponsiveOverlay children = { children } { ...this.props } toggleOverlay = { this.toggleOverlay } />
+            <ResponsiveOverlay children={children} { ...this.props } toggleOverlay = { this.toggleOverlay } />
           </Portal>
         }
 

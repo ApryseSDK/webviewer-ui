@@ -8,7 +8,7 @@ import './ResponsiveOverlay.scss';
 
 class ResponsiveOverlay extends React.PureComponent {
   render() { 
-    const children = this.props.children;
+    const { children } = this.props;
     return (
       <div className="ResponsiveOverlay">
         <HeaderItems items={children} { ...this.props } />
