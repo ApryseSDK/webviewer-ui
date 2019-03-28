@@ -179,6 +179,7 @@ class NotesPanel extends React.PureComponent {
     return(
       <ListWithKeyboard
         data={notes}
+        keyExtractor={note => note.Id}
         renderItem={this.renderNote}
         renderItemSeparator={this.renderListSeparator}
       />

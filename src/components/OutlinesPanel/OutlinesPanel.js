@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import Outline from 'components/Outline';
+import ListWithKeyboard from 'components/ListWithKeyboard';
 
 import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
@@ -16,6 +17,16 @@ class OutlinesPanel extends React.PureComponent {
     display: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
     t: PropTypes.func.isRequired
+  }
+
+  renderOutline = (outline, index, refSetter) => {
+    return (
+      <Outline
+        ref={refSetter}
+        outline={outline}
+        isVisible
+      />
+    );
   }
 
   render() {
@@ -32,9 +43,10 @@ class OutlinesPanel extends React.PureComponent {
         {outlines.length === 0 &&
           <div className="no-outlines">{t('message.noOutlines')}</div>
         }
-        {outlines.map((outline, i) => (
-          <Outline key={i} outline={outline} isVisible />
-        ))}
+        <ListWithKeyboard
+          data={outlines}
+          renderItem={this.renderOutline}
+        />
       </div>
     );
 

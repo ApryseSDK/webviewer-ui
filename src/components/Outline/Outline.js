@@ -17,6 +17,8 @@ class Outline extends React.PureComponent {
     isVisible: PropTypes.bool.isRequired
   }
 
+  containerRef = React.createRef();
+
   state = {
     isExpanded: false
   }
@@ -42,6 +44,10 @@ class Outline extends React.PureComponent {
     }
   }
 
+  // focus = () => {
+  //   this.containerRef.current.focus();
+  // }
+
   render() {
     const { outline, isVisible, closeElement } = this.props;
     const { isExpanded } = this.state;
@@ -51,12 +57,12 @@ class Outline extends React.PureComponent {
         <div className="padding">
           {(outline.children.length > 0) &&
             <div className={`arrow ${isExpanded ? 'expanded' : 'collapsed'}`} onClick={this.onClickExpand}>
-              <Icon glyph="ic_chevron_right_black_24px" />onKeyPress
+              <Icon glyph="ic_chevron_right_black_24px" />
             </div>
           }
         </div>
         <div className="content">
-          <div tabIndex={0} className="title" onClick={this.onClickOutline} onKeyPress={this.onKeyPress}>
+          <div ref={this.containerRef} tabIndex={0} className="title" onClick={this.onClickOutline} onKeyPress={this.onKeyPress}>
             {outline.name}
           </div>
           {outline.children.map((outline, i) => (
@@ -72,4 +78,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement
 };
 
-export default connect(null, mapDispatchToProps)(Outline);
+export default connect(null, mapDispatchToProps, null, { withRef: true })(Outline);

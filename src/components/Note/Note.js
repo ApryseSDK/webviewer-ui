@@ -229,7 +229,7 @@ class Note extends React.PureComponent {
       visible ? '' : 'hidden'
     ].join(' ').trim();
 
-    // Negative tabIndex so that we can't tab to notes but can focus them.
+    // Negative tabIndex so that we can't tab to notes but can focus them. Focusing is handled manually by arrow keys.
     return (
       <div tabIndex={-1} ref={this.containerRef} className={className} onClick={this.onClickNote} onKeyPress={this.onKeyPress}>
         <NoteRoot
