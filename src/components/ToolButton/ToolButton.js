@@ -78,7 +78,7 @@ class ToolButton extends React.PureComponent {
     }
 
     return (
-        <Button {...this.props} className={className} color={color} onClick={this.onClick} />
+      <Button {...this.props} className={className} color={color} onClick={this.onClick} />
     );
   }
 }

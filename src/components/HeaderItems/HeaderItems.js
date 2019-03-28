@@ -29,7 +29,7 @@ class HeaderItems extends React.PureComponent {
               return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'toolGroupButton':
             case 'dropdownButton':
-              return <GroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} toolNames={item.children.map(tool => tool.toolName)}/>;
+              return <GroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} toolNames={item.children.map(tool => tool.toolName)} />;
             case 'toggleElementButton':
               return <ToggleElementButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'actionButton':
@@ -41,7 +41,7 @@ class HeaderItems extends React.PureComponent {
             case 'customElement': 
               return <CustomElement key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'responsiveButton':
-              return <ResponsiveButton key={key} mediaQueryClassName={mediaQueryClassName} {...item}/>
+              return <ResponsiveButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'spacer':
             case 'divider':
               return <div key={key} className={`${type} ${mediaQueryClassName}`}></div>;

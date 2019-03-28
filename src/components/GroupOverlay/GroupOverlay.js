@@ -89,7 +89,7 @@ class GroupOverlay extends React.PureComponent {
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="groupOverlay" onMouseDown={e => e.stopPropagation()}>
         {nestedChildren.map((element, i) => {
           if (element.type === 'toolButton'){
-            return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} toolGroup={this.props.toolGroup}/>
+            return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} toolGroup={this.props.toolGroup} />
           } else {
             return <ActionButton { ...element }/>
           }

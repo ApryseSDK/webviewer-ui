@@ -33,7 +33,7 @@ export default initialState => (state = initialState, action) => {
     case 'CLOSE_ELEMENT':
       return { ...state, openElements: { ...state.openElements, [payload.dataElement]: false } };
     case 'SET_ACTIVE_HEADER_GROUP':
-      console.warn(`setActiveHeaderGroup is now deprecated.`);
+      console.warn(`setActiveHeaderGroup is deprecated.`);
       return state;
     case 'SET_ACTIVE_TOOL_NAME':
       return { ...state, activeToolName: payload.toolName };

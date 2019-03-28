@@ -53,13 +53,15 @@ class ResponsiveButton extends React.PureComponent {
 
     return (
       <React.Fragment>
-        { isCollapsed ? 
+        { 
+          isCollapsed ? 
           <Button { ...this.props } onClick={this.onClick} /> :
           <div className="innerHeaderItems">
             <HeaderItems items={children} { ...this.props } />
           </div>
         }
-        { isOverlayOpen && 
+        { 
+          isOverlayOpen && 
           <Portal>
             <ResponsiveOverlay children={children} { ...this.props } toggleOverlay = { this.toggleOverlay } />
           </Portal>
