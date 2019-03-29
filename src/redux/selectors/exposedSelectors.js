@@ -47,6 +47,7 @@ export const getVisibleTabableHeaderItems = state => {
   console.log(returnItems);
   return returnItems;
 };
+export const getPrevActiveElementBeforeOpen = state => state.viewer.prevActiveElementBeforeOpen;
 export const getActiveHeaderItems = state => state.viewer.headers[state.viewer.activeHeaderGroup];
 export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].priority;
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;

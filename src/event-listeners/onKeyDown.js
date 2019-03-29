@@ -81,6 +81,16 @@ export default store => e => {
       e.preventDefault();
       setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
       dispatch(actions.closeElements(['viewControlsOverlay', 'zoomOverlay', 'annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay' ]));
+      const prevActiveElementBeforeOpen = selectors.getPrevActiveElementBeforeOpen(state);
+      if (prevActiveElementBeforeOpen) {
+        prevActiveElementBeforeOpen.focus();
+        dispatch({
+          type: 'SET_PREV_ACTIVE_ELEMENT_BEFORE_OPEN',
+          payload: {
+            activeElement: null,
+          }
+        });
+      }
     } else if (!selectedTextFromCanvas) {
       if (document.activeElement instanceof window.HTMLInputElement || document.activeElement instanceof window.HTMLTextAreaElement) {
         return;

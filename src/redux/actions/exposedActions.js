@@ -6,6 +6,12 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
 export const openElement = dataElement => (dispatch, getState) => {
+  dispatch({
+    type: 'SET_PREV_ACTIVE_ELEMENT_BEFORE_OPEN',
+    payload: {
+      activeElement: document.activeElement,
+    }
+  });
   const state = getState();
 
   const isElementDisabled = state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
@@ -139,13 +145,12 @@ export const setZoomList = zoomList => dispatch => {
   if (filteredZoomList.length !== zoomList.length) {
     const outOfRangeZooms = zoomList.filter(zoom => !filteredZoomList.includes(zoom));
     console.warn(`
-      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI. 
+      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI.
       Valid zoom levels should be in the range of ${minZoomLevel}-${maxZoomLevel}.
       You can use setMinZoomLevel or setMaxZoomLevel APIs to change the range.
       See https://www.pdftron.com/documentation/web/guides/ui/apis for more information.
     `);
   }
-  
+
   dispatch({ type: 'SET_ZOOM_LIST', payload: { zoomList: filteredZoomList } });
 };
-  

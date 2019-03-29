@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { hot } from 'react-hot-loader';
 
-import AccessibilityController from 'components/AccessibilityController';
 import Header from 'components/Header';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
@@ -49,6 +48,19 @@ class App extends React.PureComponent {
 
   constructor(props) {
     super(props);
+
+    $(document).on('documentLoaded', () => {
+      window.docViewer.on('pageComplete', (e, pageIndex) => {
+        window.docViewer.getDocument().loadPageText(pageIndex, function(text) {
+          var textContainer = document.createElement('div');
+          // textContainer.tabIndex = 0;
+          textContainer.textContent = text;
+          textContainer.style = 'height: 100%;';
+          textContainer.id = 'pageText' + pageIndex;
+          $('#pageContainer' + pageIndex).append(textContainer);
+        });
+      });
+    });
   }
 
   componentWillUnmount() {
@@ -92,10 +104,12 @@ class App extends React.PureComponent {
             tabIndex={0}
             className="skip-main"
             onClick={() => {
+              {/* $('#pageText0').focus(); */}
               $('*[data-element=\'documentContainer\']').focus();
             }}
             onKeyPress={e => {
               if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
+                {/* $('#pageText0').focus(); */}
                 $('*[data-element=\'documentContainer\']').focus();
               }
             }}
