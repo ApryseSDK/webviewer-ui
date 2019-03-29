@@ -91,7 +91,7 @@ class GroupOverlay extends React.PureComponent {
           if (element.type === 'toolButton'){
             return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} toolGroup={this.props.toolGroup} />
           } else {
-            return <ActionButton { ...element }/>
+            return <ActionButton key={i} { ...element }/>
           }
         }
         )}

@@ -28,7 +28,7 @@ export const isElementActive = (state, tool) => {
   return isElementOpen(state, element) || tools.some(tool => tool.dataElement === dataElement && tool.toolName === activeToolName);
 };
 
-export const getActiveHeaderItems = state => state.viewer.headers[state.viewer.activeHeaderGroup];
+export const getActiveHeaderItems = state => state.viewer.headers['default'];
 export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].priority;
 export const getToolButtonObjects = state => state.viewer && state.viewer.toolButtonObjects;
 export const getAnnotationToolNames = state => Object.keys(state.viewer.toolButtonObjects).filter(toolButtonName => state.viewer.toolButtonObjects[toolButtonName].annotationCheck);

@@ -156,6 +156,38 @@ export default initialState => (state = initialState, action) => {
       return { ...state, warning: payload};
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
+    case 'ADD_HEADER_ITEM':
+      const { newItem, insertAfter } = payload;
+      if (!newItem.group && !insertAfter) {
+        return { ...state, headers: { default: state.headers.default.concat(payload.newItem)} };
+      } else if (newItem.group) {
+        
+        // surface level search
+        const groupButton = state.headers.default.find(item => item.toolGroup === newItem.group);
+        if (groupButton) {
+          const groupIndex = state.headers.default.indexOf(groupButton);
+          // newDefault is for passing in a new reference so it fails shallow comparison
+          const newDefault = [ ...state.headers.default ];
+          newDefault[groupIndex].children = [ ...newDefault[groupIndex].children, newItem];
+          return { ...state, headers: { default: newDefault } };
+        }
+
+        // nested children search 
+        const nestedButton = state.headers.default.filter(buttonObject => buttonObject.type === 'responsiveButton').find(toolButton => toolButton.children.find(childButton => childButton.toolGroup === newItem.group ));
+        if (nestedButton) {
+          const nestedButtonIndex = state.headers.default.indexOf(nestedButton);
+          console.log(nestedButtonIndex);
+          const childButton = nestedButton.children.find( childButton => childButton.toolGroup === newItem.group );
+          const childButtonIndex = nestedButton.children.indexOf(childButton);
+          // newNestedDefault is for passing in a new reference so it fails shallow comparison 
+          const newNestedDefault = [ ...state.headers.default ];
+          newNestedDefault[nestedButtonIndex].children[childButtonIndex].children = [ ...newNestedDefault[nestedButtonIndex].children[childButtonIndex].children, newItem ];
+          return { ...state, headers: { default: newNestedDefault } };
+        }
+
+
+        return state;
+      }
     default:
       return state;
   }
