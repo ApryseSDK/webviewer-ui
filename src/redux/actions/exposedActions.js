@@ -3,15 +3,11 @@ import isDataElementPanel from 'helpers/isDataElementPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
+let prevActiveElementBeforeOpen = null;
+
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
 export const openElement = dataElement => (dispatch, getState) => {
-  dispatch({
-    type: 'SET_PREV_ACTIVE_ELEMENT_BEFORE_OPEN',
-    payload: {
-      activeElement: document.activeElement,
-    }
-  });
   const state = getState();
 
   const isElementDisabled = state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
@@ -21,6 +17,13 @@ export const openElement = dataElement => (dispatch, getState) => {
   if (isElementDisabled || isElementOpen) {
     return;
   }
+  prevActiveElementBeforeOpen = document.activeElement;
+  // dispatch({
+  //   type: 'SET_PREV_ACTIVE_ELEMENT_BEFORE_OPEN',
+  //   payload: {
+  //     activeElement: document.activeElement,
+  //   }
+  // });
 
   if (isDataElementPanel(dataElement, state)) {
     if (!isLeftPanelOpen) {
@@ -55,6 +58,18 @@ export const closeElement = dataElement => (dispatch, getState) => {
   if (isElementDisabled || isElementClosed) {
     return;
   }
+  // const prevActiveElementBeforeOpen = selectors.getPrevActiveElementBeforeOpen(state);
+  // if (prevActiveElementBeforeOpen) {
+  //   prevActiveElementBeforeOpen.focus();
+  //   dispatch({
+  //     type: 'SET_PREV_ACTIVE_ELEMENT_BEFORE_OPEN',
+  //     payload: {
+  //       activeElement: null,
+  //     }
+  //   });
+  // }
+  prevActiveElementBeforeOpen && prevActiveElementBeforeOpen.focus();
+  prevActiveElementBeforeOpen = null;
 
   if (isDataElementPanel(dataElement, state) && state.viewer.openElements['leftPanel']) {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
