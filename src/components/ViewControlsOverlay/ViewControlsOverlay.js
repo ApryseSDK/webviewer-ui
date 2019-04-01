@@ -80,7 +80,7 @@ class ViewControlsOverlay extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, displayMode, fitMode, totalPages, t } = this.props;
+    const { isDisabled, displayMode, fitMode, totalPages, t, closeElements } = this.props;
     const { left, right, isOpening } = this.state;
     const { pageTransition, layout } = displayModeObjects.find(obj => obj.displayMode === displayMode);
     const className = getClassName('Overlay ViewControlsOverlay', this.props);
@@ -117,7 +117,14 @@ class ViewControlsOverlay extends React.PureComponent {
         <Element className="row" dataElement="rotateButtons">
           <div className="type">{t('action.rotate')}</div>
           <ActionButton dataElement="rotateCounterClockwiseButton" title="action.rotateCounterClockwise" img="ic_rotate_left_black_24px" onClick={core.rotateCounterClockwise} />
-          <ActionButton dataElement="rotateClockwiseButton" title="action.rotateClockwise" img="ic_rotate_right_black_24px" onClick={core.rotateClockwise} />
+          <ActionButton
+            isLast
+            dataElement="rotateClockwiseButton"
+            title="action.rotateClockwise"
+            img="ic_rotate_right_black_24px"
+            onClick={core.rotateClockwise}
+            handleCloseClick={() => closeElements(['viewControlsOverlay'])}
+          />
         </Element>
         <Element className="row hide-in-desktop hide-in-tablet" dataElement="fitButtons">
           <div className="type">{t('action.fit')}</div>
@@ -131,7 +138,12 @@ class ViewControlsOverlay extends React.PureComponent {
         <Element className="row hide-in-desktop hide-in-tablet" dataElement="zoomButtons">
           <div className="type">{t('action.zoom')}</div>
           <ActionButton dataElement="zoomInButton" title="action.zoomIn" img="ic_zoom_in_black_24px" onClick={zoomIn} />
-          <ActionButton dataElement="zoomOutButton" title="action.zoomOut" img="ic_zoom_out_black_24px" onClick={zoomOut} />
+          <ActionButton
+            dataElement="zoomOutButton"
+            title="action.zoomOut"
+            img="ic_zoom_out_black_24px"
+            onClick={zoomOut}
+          />
         </Element>
       </div>
     );

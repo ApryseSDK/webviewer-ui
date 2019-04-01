@@ -34,6 +34,10 @@ class Button extends React.PureComponent {
         if (!this.containerRef.current) {
           return;
         }
+        // if ($('*[data-element=\'rotateClockwiseButton\']')[0] === document.activeElement) {
+        //   debugger;
+        //   console.log(this.props, this.props.isLast, this.containerRef.current, document.activeElement);
+        // }
         if (this.props.isLast && document.activeElement === this.containerRef.current) {
           e.preventDefault();
           e.stopPropagation();
@@ -66,7 +70,7 @@ class Button extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, isActive, mediaQueryClassName, img, label, color, dataElement, onBlur } = this.props;
+    const { isDisabled, isActive, mediaQueryClassName, img, label, color, dataElement } = this.props;
 
     if (isDisabled) {
       return null;
