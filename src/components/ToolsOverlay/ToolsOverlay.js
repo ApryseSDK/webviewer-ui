@@ -101,13 +101,13 @@ class ToolsOverlay extends React.PureComponent {
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="toolsOverlay" onMouseDown={e => e.stopPropagation()}>
         {toolNames.map(
           (toolName, i) => {
-              const isLast = i === toolNames.length - 1;
+              const isLastInMenu = i === toolNames.length - 1;
               return (
                 <ToolButton
                   key={`${toolName}-${i}`}
                   toolName={toolName}
                   willFocus={isOpening && i === 0}
-                  isLast={isLast}
+                  isLastInMenu={isLastInMenu}
                   onTabOut={this.handleCloseClick}
                 />
               );

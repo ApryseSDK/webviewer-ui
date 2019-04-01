@@ -93,7 +93,7 @@ class MenuOverlay extends React.PureComponent {
           <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
         }
         <ActionButton
-          isLast
+          isLastInMenu
           dataElement="printButton"
           label={t('action.print')}
           onClick={this.handlePrintButtonClick} hidden={['mobile']}

@@ -7,7 +7,7 @@ import './Button.scss';
 
 class Button extends React.PureComponent {
   static propTypes = {
-    isLast: PropTypes.bool,
+    isLastInMenu: PropTypes.bool,
     willFocus: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isActive: PropTypes.bool,
@@ -30,19 +30,19 @@ class Button extends React.PureComponent {
   componentDidMount() {
     const {
       willFocus,
-      isLast,
+      isLastInMenu,
       onTabOut,
     } = this.props;
     if (willFocus) {
       this.focus();
     }
-    if (isLast) {
+    if (isLastInMenu) {
       document.addEventListener('keydown', e => {
         if (e.key === 'Tab' || e.keyCode === 9) {
           if (!this.containerRef.current) {
             return;
           }
-          if (isLast && document.activeElement === this.containerRef.current) {
+          if (document.activeElement === this.containerRef.current) {
             e.preventDefault();
             e.stopPropagation();
             onTabOut();
