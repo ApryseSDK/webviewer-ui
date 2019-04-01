@@ -33,22 +33,6 @@ class ToolButton extends React.PureComponent {
     iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
   }
 
-  // ref = React.createRef();
-  componentDidMount(){
-    // document.addEventListener('keydown', e => {
-    //   if (e.key === 'Tab' || e.keyCode === 9) {
-    //     if (!this.ref.current) {
-    //       return;
-    //     }
-    //     if (this.props.isLast && document.activeElement === this.ref.current.containerRef.current) {
-    //       e.preventDefault();
-    //       e.stopPropagation();
-    //       this.props.handleCloseClick();
-    //     }
-    //   }
-    // });
-  }
-
   onClick = e => {
     const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement, onClick } = this.props;
 

@@ -7,6 +7,7 @@ import './Button.scss';
 
 class Button extends React.PureComponent {
   static propTypes = {
+    isLast: PropTypes.bool,
     willFocus: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isActive: PropTypes.bool,
@@ -21,30 +22,34 @@ class Button extends React.PureComponent {
     dataElement: PropTypes.string,
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
+    onFocusOut: PropTypes.func,
   }
 
   containerRef = React.createRef();
 
   componentDidMount() {
-    if (this.props.willFocus) {
+    const {
+      isLast,
+      onFocusOut,
+      willFocus,
+    } = this.props;
+    if (willFocus) {
       this.focus();
     }
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Tab' || e.keyCode === 9) {
-        if (!this.containerRef.current) {
-          return;
+    if (isLast) {
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Tab' || e.keyCode === 9) {
+          if (!this.containerRef.current) {
+            return;
+          }
+          if (isLast && document.activeElement === this.containerRef.current) {
+            e.preventDefault();
+            e.stopPropagation();
+            onFocusOut();
+          }
         }
-        // if ($('*[data-element=\'rotateClockwiseButton\']')[0] === document.activeElement) {
-        //   debugger;
-        //   console.log(this.props, this.props.isLast, this.containerRef.current, document.activeElement);
-        // }
-        if (this.props.isLast && document.activeElement === this.containerRef.current) {
-          e.preventDefault();
-          e.stopPropagation();
-          this.props.handleCloseClick();
-        }
-      }
-    });
+      });
+    }
   }
 
   componentDidUpdate(prevProps) {

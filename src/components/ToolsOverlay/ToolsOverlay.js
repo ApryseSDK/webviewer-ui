@@ -108,7 +108,7 @@ class ToolsOverlay extends React.PureComponent {
                   toolName={toolName}
                   willFocus={isOpening && i === 0}
                   isLast={isLast}
-                  handleCloseClick={this.handleCloseClick}
+                  onFocusOut={this.handleCloseClick}
                 />
               );
             })}
