@@ -48,6 +48,15 @@ class MenuOverlay extends React.PureComponent {
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState){
+    const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
+    if (hasIsOpenChanged){
+      return { isOpening: true, mirroredIsOpen: nextProps.isOpen };
+    }
+    return { isOpening: false, mirroredIsOpen: nextProps.isOpen };
+  }
+
+
   handlePrintButtonClick = () => {
     const { dispatch, isEmbedPrintSupported } = this.props;
 
@@ -64,8 +73,8 @@ class MenuOverlay extends React.PureComponent {
   }
 
   render() {
-    const { left, right } = this.state;
-    const { isDisabled, isDownloadable, isFullScreen, t } = this.props;
+    const { left, right, isOpening } = this.state;
+    const { isDisabled, isDownloadable, isFullScreen, t, closeElements } = this.props;
 
     if (isDisabled) {
       return null;
@@ -77,12 +86,18 @@ class MenuOverlay extends React.PureComponent {
       <div className={className} data-element="menuOverlay" style={{ left, right }} ref={this.overlay}>
         <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
         {!isIOS &&
-          <ActionButton dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
+          <ActionButton willFocus={isOpening} dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
         }
         {isDownloadable &&
           <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
         }
-        <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} />
+        <ActionButton
+          isLast
+          dataElement="printButton"
+          label={t('action.print')}
+          onClick={this.handlePrintButtonClick} hidden={['mobile']}
+          handleCloseClick={() => closeElements(['menuOverlay'])}
+        />
       </div>
     );
   }

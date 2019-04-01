@@ -19,7 +19,7 @@ class AccessibilityController extends React.PureComponent {
     // document.addEventListener('keydown', e => {
     //   if (e.key === 'Tab' || e.keyCode === 9) {
     //     e.preventDefault();
-    //     e.stopPropagation();3
+    //     e.stopPropagation();
     //     const { items } = this.props;
     //     let element;
     //     do {

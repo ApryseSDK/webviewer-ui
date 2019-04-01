@@ -18,6 +18,7 @@ export const openElement = dataElement => (dispatch, getState) => {
     return;
   }
   prevActiveElementBeforeOpen = document.activeElement;
+
   // dispatch({
   //   type: 'SET_PREV_ACTIVE_ELEMENT_BEFORE_OPEN',
   //   payload: {

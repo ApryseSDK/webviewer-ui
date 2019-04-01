@@ -29,6 +29,18 @@ class Button extends React.PureComponent {
     if (this.props.willFocus) {
       this.focus();
     }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Tab' || e.keyCode === 9) {
+        if (!this.containerRef.current) {
+          return;
+        }
+        if (this.props.isLast && document.activeElement === this.containerRef.current) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.props.handleCloseClick();
+        }
+      }
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -38,7 +50,7 @@ class Button extends React.PureComponent {
   }
 
   focus() {
-    if (this.containerRef) {
+    if (this.containerRef.current) {
       this.containerRef.current.focus();
     }
   }
@@ -54,7 +66,7 @@ class Button extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, isActive, mediaQueryClassName, img, label, color, dataElement } = this.props;
+    const { isDisabled, isActive, mediaQueryClassName, img, label, color, dataElement, onBlur } = this.props;
 
     if (isDisabled) {
       return null;

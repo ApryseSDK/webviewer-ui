@@ -18,7 +18,7 @@ class HeaderItems extends React.PureComponent {
 
   render() {
     return (
-      <div className="HeaderItems">
+      <div tabIndex={0} id="headerItems" className="HeaderItems">
         {this.props.items.map((item, i) => {
           const { type, dataElement, hidden } = item;
           const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : `${item.className || ''}`;
@@ -37,7 +37,7 @@ class HeaderItems extends React.PureComponent {
               const props = statefulButtons[dataElement] || {};
               return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} {...props} />;
             }
-            case 'customElement': 
+            case 'customElement':
               return <CustomElement key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'spacer':
             case 'divider':

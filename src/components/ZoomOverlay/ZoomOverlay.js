@@ -93,7 +93,13 @@ class ZoomOverlay extends React.PureComponent {
           <OverlayItem key={i} onClick={() => zoomTo(zoomValue)} buttonName={zoomValue * 100 + '%'}/>
         )}
         <div className="spacer" />
-        <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} onClick={() => closeElements(['zoomOverlay'])} />
+        <ToolButton
+          isLast
+          toolName="MarqueeZoomTool"
+          label={t('tool.Marquee')}
+          onClick={() => closeElements(['zoomOverlay'])}
+          handleCloseClick={() => closeElements(['zoomOverlay'])}
+        />
       </div>
     );
   }
