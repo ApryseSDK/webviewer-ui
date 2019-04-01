@@ -29,9 +29,9 @@ class Button extends React.PureComponent {
 
   componentDidMount() {
     const {
-      isLast,
-      onFocusOut,
       willFocus,
+      isLast,
+      onTabOut,
     } = this.props;
     if (willFocus) {
       this.focus();
@@ -45,7 +45,7 @@ class Button extends React.PureComponent {
           if (isLast && document.activeElement === this.containerRef.current) {
             e.preventDefault();
             e.stopPropagation();
-            onFocusOut();
+            onTabOut();
           }
         }
       });

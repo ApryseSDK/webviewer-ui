@@ -108,7 +108,7 @@ class ToolsOverlay extends React.PureComponent {
                   toolName={toolName}
                   willFocus={isOpening && i === 0}
                   isLast={isLast}
-                  onFocusOut={this.handleCloseClick}
+                  onTabOut={this.handleCloseClick}
                 />
               );
             })}

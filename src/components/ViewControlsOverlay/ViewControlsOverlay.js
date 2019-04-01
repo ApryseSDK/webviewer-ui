@@ -123,7 +123,7 @@ class ViewControlsOverlay extends React.PureComponent {
             title="action.rotateClockwise"
             img="ic_rotate_right_black_24px"
             onClick={core.rotateClockwise}
-            onFocusOut={() => closeElements(['viewControlsOverlay'])}
+            onTabOut={() => closeElements(['viewControlsOverlay'])}
           />
         </Element>
         <Element className="row hide-in-desktop hide-in-tablet" dataElement="fitButtons">
