@@ -82,6 +82,7 @@ class MenuOverlay extends React.PureComponent {
 
     const className = getClassName('Overlay MenuOverlay', this.props);
 
+    // TODO: Check if filePicker is the first button. It will need willFocus instead.
     return (
       <div className={className} data-element="menuOverlay" style={{ left, right }} ref={this.overlay}>
         <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
