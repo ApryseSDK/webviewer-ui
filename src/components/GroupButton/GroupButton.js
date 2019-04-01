@@ -94,14 +94,16 @@ class GroupButton extends React.PureComponent {
         return null;
       }
     }
-
+    if (!img && !isOnlyTools) {
+      console.warn('GroupButton contains buttons other than toolButtons and no img is found. Please specify an img');
+    }
     const { toolName } = this.state;
     const img = this.props.img ? this.props.img : isOnlyTools ? toolButtonObjects[toolName] ? toolButtonObjects[toolName].img : '' : '';
     const color = isActive && !this.props.img && iconColor ? getToolStyles(toolName) ? getToolStyles(toolName)[iconColor].toHexString() : '' : '';
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
     const className = [
-      'ToolGroupButton',
+      'GroupButton',
       showDownArrow ? 'down-arrow' : '',
     ].join(' ').trim();
 

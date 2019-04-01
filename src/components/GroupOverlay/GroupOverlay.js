@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ToolButton from 'components/ToolButton';
+import ToggleElementButton from 'components/ToggleElementButton';
 import ActionButton from 'components/ActionButton';
+import StatefulButton from 'components/StatefulButton';
+import CustomElement from 'components/CustomElement';
 import Button from 'components/Button';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
+import statefulButtons from 'constants/statefulButtons';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -19,7 +23,6 @@ class GroupOverlay extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    toolButtonObjects: PropTypes.object,
     activeHeaderItems: PropTypes.arrayOf(PropTypes.object),
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
@@ -83,15 +86,22 @@ class GroupOverlay extends React.PureComponent {
     if (isDisabled || !activeToolGroup) {
       return null;
     }
-
     const className = getClassName('Overlay GroupOverlay', { isOpen });
     return (
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="groupOverlay" onMouseDown={e => e.stopPropagation()}>
         {nestedChildren.map((element, i) => {
-          if (element.type === 'toolButton'){
-            return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} toolGroup={this.props.toolGroup} />
-          } else {
-            return <ActionButton key={i} { ...element }/>
+          switch (element.type){
+            case 'toolButton':
+              return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} toolGroup={this.props.toolGroup} {...element} />;
+            case 'toggleElementButton':
+              return <ToggleElementButton key={i} {...element} />;
+            case 'actionButton':
+              return <ActionButton key={i} {...element} />;
+            case 'statefulButton':
+              const props = statefulButtons[element.dataElement] || {};
+              return <StatefulButton key={i} {...element} {...props} />;
+            case 'customElement':
+              return <CustomElement key={i} {...element} />;
           }
         }
         )}
@@ -105,7 +115,6 @@ class GroupOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'groupOverlay'),
   isOpen: selectors.isElementOpen(state, 'groupOverlay'),
-  toolButtonObjects: selectors.getToolButtonObjects(state),
   activeHeaderItems: selectors.getActiveHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state)
 });

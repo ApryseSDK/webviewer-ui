@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import ToolStylePopup from 'components/ToolStylePopup';
 import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
@@ -10,6 +11,8 @@ import toolStylesExist from 'helpers/toolStylesExist';
 import getToolStyles from 'helpers/getToolStyles';
 import actions from 'actions';
 import selectors from 'selectors';
+
+import Portal from 'src/Portal';
 
 import './ToolButton.scss';
 
@@ -66,7 +69,7 @@ class ToolButton extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, toolName } = this.props;
+    const { isDisabled, toolName, isActive } = this.props;
     const color = this.getToolButtonColor();
     const className = [
       'ToolButton',
@@ -78,7 +81,15 @@ class ToolButton extends React.PureComponent {
     }
 
     return (
-      <Button {...this.props} className={className} color={color} onClick={this.onClick} />
+      <div>
+        <Button {...this.props} className={className} color={color} onClick={this.onClick} />
+        {
+          isActive && 
+          <Portal>
+            <ToolStylePopup dataElement={this.props.dataElement} />
+          </Portal>
+        }
+      </div>
     );
   }
 }

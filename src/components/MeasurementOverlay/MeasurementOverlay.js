@@ -260,7 +260,6 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'measurementOverlay'),
   isDisabled: selectors.isElementDisabled(state, 'measurementOverlay'),
   activeToolName: selectors.getActiveToolName(state),
-  toolButtonObjects: selectors.getToolButtonObjects(state),
   activeIcon: selectors.getToolButtonIcon(state, selectors.getActiveToolName(state))
 });
 

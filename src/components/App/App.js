@@ -107,7 +107,6 @@ class App extends React.PureComponent {
           <AnnotationPopup />
           <TextPopup />
           <ContextMenuPopup />
-          <ToolStylePopup />
 
           <SignatureModal />
           <PrintModal />

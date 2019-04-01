@@ -17,7 +17,6 @@ class ToolStylePopup extends React.PureComponent {
     activeToolStyle: PropTypes.object,
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    toolButtonObjects: PropTypes.object.isRequired,
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
@@ -66,8 +65,9 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   positionToolStylePopup = () => {
-    const { toolButtonObjects, activeToolName } = this.props;
-    const dataElement = toolButtonObjects[activeToolName].dataElement;
+    // const { toolButtonObjects, activeToolName } = this.props;
+    // const dataElement = toolButtonObjects[activeToolName].dataElement;
+    const { dataElement } = this.props;
     let toolButton = document.querySelectorAll(`.Header [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
     if (!toolButton) {
       toolButton = document.querySelectorAll(`.ResponsiveOverlay [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
