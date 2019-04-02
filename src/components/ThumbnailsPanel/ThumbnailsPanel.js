@@ -10,6 +10,10 @@ import selectors from 'selectors';
 
 import './ThumbnailsPanel.scss';
 
+const mod = (v, n) => {
+  return ((v % n) + n) % n;
+};
+
 class ThumbnailsPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -17,10 +21,13 @@ class ThumbnailsPanel extends React.PureComponent {
     display: PropTypes.string.isRequired,
   }
 
+
   constructor() {
     super();
     this.pendingThumbs = [];
     this.thumbs = [];
+    this.thumbnailRefs = [];
+    this.selectionIndex = null;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       canLoad: true
@@ -32,13 +39,32 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('finishedRendering', this.onFinishedRendering);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     window.addEventListener('resize', this.onWindowResize);
+    this.focus();
   }
-  
+
   componentWillUnmount() {
     core.removeEventListener('beginRendering', this.onBeginRendering);
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
     window.removeEventListener('resize', this.onWindowResize);
+  }
+
+  componentDidUpdate() {
+    this.focus();
+  }
+
+  move = direction => {
+    const { totalPages } = this.props;
+    if (this.selectionIndex === null) {
+      this.selectionIndex = 0;
+    } else {
+      this.selectionIndex = mod(this.selectionIndex + direction, totalPages);
+    }
+    this.focus(this.selectionIndex);
+  }
+
+  focus(selectionIndex) {
+    this.thumbnailRefs[selectionIndex] && this.thumbnailRefs[selectionIndex].getWrappedInstance().focus();
   }
 
   onBeginRendering = () => {
@@ -240,10 +266,11 @@ class ThumbnailsPanel extends React.PureComponent {
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
             const index = rowIndex * numberOfColumns + columnIndex;
-            
+
             return (
-              index < this.props.totalPages 
+              index < this.props.totalPages
               ? <Thumbnail
+                  ref={ref => this.thumbnailRefs[index] = ref}
                   key={index}
                   index={index}
                   canLoad={canLoad}
@@ -287,4 +314,4 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
 });
 
-export default connect(mapStateToProps)(ThumbnailsPanel);
+export default connect(mapStateToProps, null, null, { withRef: true })(ThumbnailsPanel);

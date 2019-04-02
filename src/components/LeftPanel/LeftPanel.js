@@ -16,6 +16,10 @@ import selectors from 'selectors';
 
 import './LeftPanel.scss';
 
+const mod = (v, n) => {
+  return ((v % n) + n) % n;
+};
+
 class LeftPanel extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -27,7 +31,10 @@ class LeftPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 'isSliderActive': false };
+    this.state = {
+      isSliderActive: false,
+    };
+    this.panelRefs = {};
     this.sliderRef = React.createRef();
   }
 
@@ -39,6 +46,10 @@ class LeftPanel extends React.Component {
       this.sliderRef.current.onmousemove = this.dragMouseMove;
       this.sliderRef.current.onmouseup = this.closeDrag;
     }
+
+    // this.containerRef.current.addEventListener('keydown', e => {
+    //   console.log('keyPress222', e);
+    // });
   }
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
@@ -76,18 +87,36 @@ class LeftPanel extends React.Component {
     this.setState({ isSliderActive: false });
   }
 
+  move = direction => {
+    this.panelRefs[this.props.activePanel] && this.panelRefs[this.props.activePanel].getWrappedInstance().move(direction);
+  }
+
   render() {
     const { isOpening } = this.state;
-    const { isDisabled, closeElement, customPanels, activePanel } = this.props;
+    const { isDisabled, closeElement, customPanels } = this.props;
 
     if (isDisabled) {
       return null;
     }
 
     const className = getClassName('Panel LeftPanel', this.props);
-    console.log('activePanel', activePanel);
+
     return(
-      <div className={className} data-element="leftPanel" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
+      <div
+        tabIndex={-1}
+        className={className}
+        data-element="leftPanel"
+        onMouseDown={e => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
+        onKeyDown={e => {
+          if (e.key === 'ArrowUp') {
+            this.move(-1);
+          }
+          if (e.key === 'ArrowDown') {
+            this.move(1);
+          }
+        }}
+      >
         <div className="left-panel-header">
           <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>
             <Icon glyph="ic_close_black_24px" />
@@ -105,9 +134,18 @@ class LeftPanel extends React.Component {
             onMouseLeave={this.closeDrag}
           />
         }
-        <NotesPanel display={this.getDisplay('notesPanel')} />
-        <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
-        <OutlinesPanel display={this.getDisplay('outlinesPanel')} />
+        <NotesPanel
+          ref={ref => this.panelRefs['notesPanel'] = ref}
+          display={this.getDisplay('notesPanel')}
+        />
+        <ThumbnailsPanel
+          ref={ref => this.panelRefs['thumbnailsPanel'] = ref}
+          display={this.getDisplay('thumbnailsPanel')}
+        />
+        <OutlinesPanel
+          ref={ref => this.panelRefs['outlinesPanel'] = ref}
+          display={this.getDisplay('outlinesPanel')}
+        />
         {customPanels.map(({ panel }, index) => (
           <CustomElement
             key={panel.dataElement || index}

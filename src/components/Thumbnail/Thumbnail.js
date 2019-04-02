@@ -49,6 +49,10 @@ class Thumbnail extends React.PureComponent {
     onRemove(index);
   }
 
+  focus = () => {
+    this.thumbContainer.current.focus();
+  }
+
   handleClick = () => {
     const { index, closeElement} = this.props;
 
@@ -94,4 +98,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Thumbnail);
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Thumbnail);

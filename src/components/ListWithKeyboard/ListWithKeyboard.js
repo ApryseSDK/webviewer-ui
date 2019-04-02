@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import PropTypes from 'prop-types';
 
-import keyboardJS from 'keyboardjs';
+// import keyboardJS from 'keyboardjs';
 
 const mod = (v, n) => {
   return ((v % n) + n) % n;
@@ -17,13 +17,13 @@ export default class ListWithKeyboard extends React.PureComponent {
   itemRefs = [];
 
   componentDidMount() {
-    keyboardJS.bind('up', this.moveUp);
-    keyboardJS.bind('down', this.moveDown);
+    // keyboardJS.bind('up', this.moveUp);
+    // keyboardJS.bind('down', this.moveDown);
   }
 
   componentWillUnmount() {
-    keyboardJS.unbind('up', this.moveUp);
-    keyboardJS.unbind('down', this.moveDown);
+    // keyboardJS.unbind('up', this.moveUp);
+    // keyboardJS.unbind('down', this.moveDown);
   }
 
   focus = selectionIndex => {
