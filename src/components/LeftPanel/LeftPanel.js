@@ -78,14 +78,14 @@ class LeftPanel extends React.Component {
 
   render() {
     const { isOpening } = this.state;
-    const { isDisabled, closeElement, customPanels } = this.props;
+    const { isDisabled, closeElement, customPanels, activePanel } = this.props;
 
     if (isDisabled) {
       return null;
     }
 
     const className = getClassName('Panel LeftPanel', this.props);
-
+    console.log('activePanel', activePanel);
     return(
       <div className={className} data-element="leftPanel" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
         <div className="left-panel-header">
