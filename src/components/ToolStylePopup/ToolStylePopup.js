@@ -65,14 +65,17 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   positionToolStylePopup = () => {
-    // const { toolButtonObjects, activeToolName } = this.props;
-    // const dataElement = toolButtonObjects[activeToolName].dataElement;
     const { dataElement } = this.props;
-    let toolButton = document.querySelectorAll(`.Header [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
-    if (!toolButton) {
-      toolButton = document.querySelectorAll(`.ResponsiveOverlay [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
-    }
-    if (!toolButton) {
+    let toolButton = undefined;
+    if (dataElement) {
+      toolButton = document.querySelectorAll(`.Header [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
+      if (!toolButton) {
+        toolButton = document.querySelectorAll(`.ResponsiveOverlay [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
+      }
+      if (!toolButton) {
+        return;
+      }
+    } else {
       return;
     }
 
@@ -103,7 +106,7 @@ class ToolStylePopup extends React.PureComponent {
 
   render() {
     const { left, top } = this.state;
-    const { isDisabled, activeToolName, activeToolStyle } = this.props;
+    const { isDisabled, activeToolName, activeToolStyle, dataElement } = this.props;
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const className = getClassName(`Popup ToolStylePopup`, this.props);
 
@@ -113,6 +116,7 @@ class ToolStylePopup extends React.PureComponent {
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
     return (
       <div className={className} data-element="toolStylePopup" style={{ top, left }} ref={this.popup} onMouseDown={e => e.stopPropagation()} onClick={this.onClick}>
+        {/* {`data element is ${ dataElement}.`} */}
         <StylePopup
           key={activeToolName}
           activeToolName={activeToolName}
@@ -127,12 +131,16 @@ class ToolStylePopup extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   activeToolName: selectors.getActiveToolName(state),
   activeToolStyle: selectors.getActiveToolStyles(state),
   isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
   isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
-  toolButtonObjects: selectors.getToolButtonObjects(state)
+  toolButtonObjects: selectors.getToolButtonObjects(state),
+  // dataElement: 'rectangleToolButton'
+  // dataElement: selectors.getDataElementByToolName(state, ownProps.activeToolName)
+  dataElement: selectors.getActiveDataElement(state)
+
 });
 
 const mapDispatchToProps = {

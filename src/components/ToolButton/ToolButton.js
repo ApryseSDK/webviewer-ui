@@ -81,15 +81,7 @@ class ToolButton extends React.PureComponent {
     }
 
     return (
-      <div>
-        <Button {...this.props} className={className} color={color} onClick={this.onClick} />
-        {
-          isActive && 
-          <Portal>
-            <ToolStylePopup dataElement={this.props.dataElement} />
-          </Portal>
-        }
-      </div>
+      <Button {...this.props} className={className} color={color} onClick={this.onClick} />
     );
   }
 }
