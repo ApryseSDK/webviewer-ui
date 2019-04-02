@@ -16,10 +16,6 @@ import selectors from 'selectors';
 
 import './LeftPanel.scss';
 
-const mod = (v, n) => {
-  return ((v % n) + n) % n;
-};
-
 class LeftPanel extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -46,10 +42,6 @@ class LeftPanel extends React.Component {
       this.sliderRef.current.onmousemove = this.dragMouseMove;
       this.sliderRef.current.onmouseup = this.closeDrag;
     }
-
-    // this.containerRef.current.addEventListener('keydown', e => {
-    //   console.log('keyPress222', e);
-    // });
   }
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
