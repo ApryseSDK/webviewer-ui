@@ -118,7 +118,7 @@ class ViewControlsOverlay extends React.PureComponent {
           <div className="type">{t('action.rotate')}</div>
           <ActionButton dataElement="rotateCounterClockwiseButton" title="action.rotateCounterClockwise" img="ic_rotate_left_black_24px" onClick={core.rotateCounterClockwise} />
           <ActionButton
-            isLast
+            isLastInMenu
             dataElement="rotateClockwiseButton"
             title="action.rotateClockwise"
             img="ic_rotate_right_black_24px"
