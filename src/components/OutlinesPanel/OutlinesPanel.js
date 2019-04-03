@@ -4,33 +4,41 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import Outline from 'components/Outline';
-import ListWithKeyboard from 'components/ListWithKeyboard';
 
 import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
+import actions from 'actions';
 
 import './OutlinesPanel.scss';
 
+const mod = (v, n) => {
+  return ((v % n) + n) % n;
+};
+
 class OutlinesPanel extends React.PureComponent {
   static propTypes = {
+    selectionIndex: PropTypes.number,
     outlines: PropTypes.arrayOf(PropTypes.object),
     display: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    setLeftPanelIndex: PropTypes.func.isRequired
   }
 
-  renderOutline = (outline, index, refSetter) => {
-    return (
-      <Outline
-        ref={refSetter}
-        outline={outline}
-        isVisible
-      />
-    );
+  componentDidUpdate(prevProps) {
+    const {
+      display,
+      setLeftPanelIndex,
+    } = this.props;
+    const isHiding = display === 'none' && prevProps.display !== 'none';
+    if (isHiding) {
+      // nuke selection index
+      setLeftPanelIndex('outlinesPanel', null);
+    }
   }
 
   render() {
-    const { isDisabled, outlines, t, display } = this.props;
+    const { isDisabled, outlines, t, display, selectionIndex } = this.props;
 
     if (isDisabled) {
       return null;
@@ -43,19 +51,24 @@ class OutlinesPanel extends React.PureComponent {
         {outlines.length === 0 &&
           <div className="no-outlines">{t('message.noOutlines')}</div>
         }
-        <ListWithKeyboard
-          data={outlines}
-          renderItem={this.renderOutline}
-        />
+        {outlines.map((outline, i) => (
+          <Outline
+            key={i}
+            index={i}
+            outline={outline}
+            isVisible
+            willFocus={selectionIndex !== null && mod(selectionIndex, outlines.length) === i}
+          />
+        ))}
       </div>
     );
-
   }
 }
 
 const mapStateToProps = state => ({
   outlines: selectors.getOutlines(state),
-  isDisabled: selectors.isElementDisabled(state, 'outlinePanel')
+  isDisabled: selectors.isElementDisabled(state, 'outlinesPanel'),
+  selectionIndex: selectors.getLeftPanelIndex(state, 'outlinesPanel'),
 });
 
-export default connect(mapStateToProps)(translate()(OutlinesPanel));
+export default connect(mapStateToProps, { setLeftPanelIndex: actions.setLeftPanelIndex })(translate()(OutlinesPanel));

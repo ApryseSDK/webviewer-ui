@@ -12,6 +12,7 @@ import './Thumbnail.scss';
 class Thumbnail extends React.PureComponent {
   static propTypes = {
     index: PropTypes.number.isRequired,
+    willFocus: PropTypes.bool.isRequired,
     currentPage: PropTypes.number,
     pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
@@ -19,6 +20,7 @@ class Thumbnail extends React.PureComponent {
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
+    setLeftPanelIndex: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -27,19 +29,25 @@ class Thumbnail extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { onLoad, index } = this.props;
+    const { onLoad, index, willFocus } = this.props;
 
     onLoad(index, this.thumbContainer.current);
+    if (willFocus) {
+      this.focus();
+    }
   }
 
   componentDidUpdate(prevProps) {
-    const { onLoad, onCancel, index } = this.props;
+    const { onLoad, onCancel, index, willFocus } = this.props;
 
     if (!prevProps.canLoad && this.props.canLoad) {
       onLoad(index, this.thumbContainer.current);
     }
     if (prevProps.canLoad && !this.props.canLoad) {
       onCancel(index);
+    }
+    if (willFocus && (willFocus !== prevProps.willFocus)) {
+      this.focus();
     }
   }
 
@@ -70,18 +78,21 @@ class Thumbnail extends React.PureComponent {
   }
 
   render() {
-    const { index, currentPage, pageLabels } = this.props;
+    const { index, currentPage, pageLabels, setLeftPanelIndex } = this.props;
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
 
     return (
       <div className={`Thumbnail ${isActive ? 'active' : ''}`}>
         <div
-          tabIndex={0}
+          tabIndex={-1}
           className="container"
           ref={this.thumbContainer}
           onClick={this.handleClick}
           onKeyPress={this.onKeyPress}
+          onFocus={() => {
+            setLeftPanelIndex('thumbnailsPanel', index);
+          }}
         />
         <div className="page-label">{pageLabel}</div>
       </div>
@@ -91,11 +102,12 @@ class Thumbnail extends React.PureComponent {
 
 const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
-  pageLabels: selectors.getPageLabels(state)
+  pageLabels: selectors.getPageLabels(state),
 });
 
 const mapDispatchToProps = {
-  closeElement: actions.closeElement
+  closeElement: actions.closeElement,
+  setLeftPanelIndex: actions.setLeftPanelIndex,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Thumbnail);
+export default connect(mapStateToProps, mapDispatchToProps)(Thumbnail);

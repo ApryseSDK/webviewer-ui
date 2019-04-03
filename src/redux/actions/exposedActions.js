@@ -2,6 +2,7 @@ import core from 'core';
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import selectors from 'selectors';
 
 let prevActiveElementBeforeOpen = null;
 
@@ -109,6 +110,19 @@ export const toggleElement = dataElement => (dispatch, getState) => {
 };
 
 export const setActiveHeaderGroup =  headerGroup => ({ type: 'SET_ACTIVE_HEADER_GROUP', payload: { headerGroup } });
+export const panelMove = (panel, amount) => (dispatch, getState) => {
+  const selectionIndex = selectors.getLeftPanelIndex(getState(), panel);
+
+  let newSelectionIndex;
+  if (selectionIndex=== null) {
+    newSelectionIndex = 0;
+  } else {
+    newSelectionIndex = selectionIndex + amount;
+  }
+  dispatch(setLeftPanelIndex(panel, newSelectionIndex));
+};
+
+export const setLeftPanelIndex =  (panel, index) => ({ type: 'SET_LEFT_PANEL_INDEX', payload: { panel, index } });
 export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
   const state = getState();
 

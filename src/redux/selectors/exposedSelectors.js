@@ -58,6 +58,13 @@ export const getToolNamesByGroup = (state, toolGroup) => Object.keys(state.viewe
 export const getToolNameByDataElement = (state, dataElement) => Object.keys(state.viewer.toolButtonObjects).find(name => state.viewer.toolButtonObjects[name].dataElement === dataElement);
 export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
+export const getLeftPanelIndex = (state, panel) => {
+  if (state.viewer.leftPanelIndex[panel] === undefined) {
+    return null;
+  } else {
+    return state.viewer.leftPanelIndex[panel];
+  }
+}
 export const getActiveLeftPanel = state => state.viewer.activeLeftPanel;
 export const getActiveToolGroup = state => state.viewer.activeToolGroup;
 export const getNotePopupId = state => state.viewer.notePopupId;

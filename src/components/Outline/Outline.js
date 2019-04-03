@@ -12,15 +12,25 @@ import './Outline.scss';
 
 class Outline extends React.PureComponent {
   static propTypes = {
+    index: PropTypes.number.isRequired,
+    willFocus: PropTypes.bool.isRequired,
     outline: PropTypes.object.isRequired,
     closeElement: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool.isRequired
+    isVisible: PropTypes.bool.isRequired,
+    setLeftPanelIndex: PropTypes.func.isRequired,
   }
 
   containerRef = React.createRef();
 
   state = {
     isExpanded: false
+  }
+
+  componentDidUpdate(prevProps) {
+    const { willFocus } = this.props;
+    if (willFocus && (willFocus !== prevProps.willFocus)) {
+      this.focus();
+    }
   }
 
   onClickExpand = () => {
@@ -44,12 +54,12 @@ class Outline extends React.PureComponent {
     }
   }
 
-  // focus = () => {
-  //   this.containerRef.current.focus();
-  // }
+  focus = () => {
+    this.containerRef.current.focus();
+  }
 
   render() {
-    const { outline, isVisible, closeElement } = this.props;
+    const { outline, isVisible, closeElement, index, setLeftPanelIndex } = this.props;
     const { isExpanded } = this.state;
 
     return (
@@ -62,7 +72,15 @@ class Outline extends React.PureComponent {
           }
         </div>
         <div className="content">
-          <div ref={this.containerRef} tabIndex={0} className="title" onClick={this.onClickOutline} onKeyPress={this.onKeyPress}>
+          <div
+            ref={this.containerRef}
+            tabIndex={0} className="title"
+            onClick={this.onClickOutline}
+            onKeyPress={this.onKeyPress}
+            onFocus={() => {
+              setLeftPanelIndex('outlinesPanel', index);
+            }}
+          >
             {outline.name}
           </div>
           {outline.children.map((outline, i) => (
@@ -75,7 +93,11 @@ class Outline extends React.PureComponent {
 }
 
 const mapDispatchToProps = {
-  closeElement: actions.closeElement
+  closeElement: actions.closeElement,
+  setLeftPanelIndex: actions.setLeftPanelIndex,
 };
 
-export default connect(null, mapDispatchToProps, null, { withRef: true })(Outline);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Outline);

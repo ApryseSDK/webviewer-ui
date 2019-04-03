@@ -7,6 +7,7 @@ import Thumbnail from 'components/Thumbnail';
 
 import core from 'core';
 import selectors from 'selectors';
+import actions from 'actions';
 
 import './ThumbnailsPanel.scss';
 
@@ -17,8 +18,10 @@ const mod = (v, n) => {
 class ThumbnailsPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
+    selectionIndex: PropTypes.number,
     totalPages: PropTypes.number,
     display: PropTypes.string.isRequired,
+    setLeftPanelIndex: PropTypes.func.isRequired,
   }
 
 
@@ -26,8 +29,6 @@ class ThumbnailsPanel extends React.PureComponent {
     super();
     this.pendingThumbs = [];
     this.thumbs = [];
-    this.thumbnailRefs = [];
-    this.selectionIndex = null;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       canLoad: true
@@ -39,7 +40,6 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('finishedRendering', this.onFinishedRendering);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     window.addEventListener('resize', this.onWindowResize);
-    this.focus();
   }
 
   componentWillUnmount() {
@@ -49,22 +49,16 @@ class ThumbnailsPanel extends React.PureComponent {
     window.removeEventListener('resize', this.onWindowResize);
   }
 
-  componentDidUpdate() {
-    this.focus();
-  }
-
-  move = direction => {
-    const { totalPages } = this.props;
-    if (this.selectionIndex === null) {
-      this.selectionIndex = 0;
-    } else {
-      this.selectionIndex = mod(this.selectionIndex + direction, totalPages);
+  componentDidUpdate(prevProps) {
+    const {
+      display,
+      setLeftPanelIndex,
+    } = this.props;
+    const isHiding = display === 'none' && prevProps.display !== 'none';
+    if (isHiding) {
+      // nuke selection index
+      setLeftPanelIndex('thumbnailsPanel', null);
     }
-    this.focus(this.selectionIndex);
-  }
-
-  focus(selectionIndex) {
-    this.thumbnailRefs[selectionIndex] && this.thumbnailRefs[selectionIndex].getWrappedInstance().focus();
   }
 
   onBeginRendering = () => {
@@ -259,6 +253,7 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   renderThumbnails = rowIndex => {
+    const { selectionIndex, totalPages } = this.props;
     const { numberOfColumns, canLoad } = this.state;
 
     return (
@@ -270,10 +265,10 @@ class ThumbnailsPanel extends React.PureComponent {
             return (
               index < this.props.totalPages
               ? <Thumbnail
-                  ref={ref => this.thumbnailRefs[index] = ref}
                   key={index}
                   index={index}
                   canLoad={canLoad}
+                  willFocus={selectionIndex !== null && mod(selectionIndex, totalPages) === index}
                   onLoad={this.onLoad}
                   onCancel={this.onCancel}
                   onRemove={this.onRemove}
@@ -294,7 +289,11 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     return (
-      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel">
+      <div
+        className="Panel ThumbnailsPanel"
+        style={{ display }}
+        data-element="thumbnailsPanel"
+      >
         <div className="thumbs">
           <ReactList
             key="panel"
@@ -312,6 +311,7 @@ class ThumbnailsPanel extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'thumbnailsPanel'),
   totalPages: selectors.getTotalPages(state),
+  selectionIndex: selectors.getLeftPanelIndex(state, 'thumbnailsPanel'),
 });
 
-export default connect(mapStateToProps, null, null, { withRef: true })(ThumbnailsPanel);
+export default connect(mapStateToProps, { setLeftPanelIndex: actions.setLeftPanelIndex })(ThumbnailsPanel);

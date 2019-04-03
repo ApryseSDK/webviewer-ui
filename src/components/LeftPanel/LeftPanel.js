@@ -16,6 +16,10 @@ import selectors from 'selectors';
 
 import './LeftPanel.scss';
 
+const mod = (v, n) => {
+  return ((v % n) + n) % n;
+};
+
 class LeftPanel extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -79,13 +83,9 @@ class LeftPanel extends React.Component {
     this.setState({ isSliderActive: false });
   }
 
-  move = direction => {
-    this.panelRefs[this.props.activePanel] && this.panelRefs[this.props.activePanel].getWrappedInstance().move(direction);
-  }
-
   render() {
     const { isOpening } = this.state;
-    const { isDisabled, closeElement, customPanels } = this.props;
+    const { isDisabled, closeElement, customPanels, activePanel, panelMove, setLeftPanelIndex } = this.props;
 
     if (isDisabled) {
       return null;
@@ -102,10 +102,19 @@ class LeftPanel extends React.Component {
         onClick={e => e.stopPropagation()}
         onKeyDown={e => {
           if (e.key === 'ArrowUp') {
-            this.move(-1);
+            panelMove(activePanel, -1);
           }
           if (e.key === 'ArrowDown') {
-            this.move(1);
+            panelMove(activePanel, 1);
+          }
+        }}
+        onBlur={e => {
+          // focus is leaving the container and its children
+          if (!e.currentTarget.contains(e.relatedTarget)) {
+            // nuke all selection index
+            setLeftPanelIndex('notesPanel', null);
+            setLeftPanelIndex('thumbnailsPanel', null);
+            setLeftPanelIndex('outlinesPanel', null);
           }
         }}
       >
@@ -161,6 +170,8 @@ const mapStatesToProps = state => ({
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
+  panelMove: actions.panelMove,
+  setLeftPanelIndex: actions.setLeftPanelIndex,
 };
 
 export default connect(mapStatesToProps, mapDispatchToProps)(LeftPanel);

@@ -40,6 +40,17 @@ export default initialState => (state = initialState, action) => {
       return { ...state, activeToolStyles: { ...payload.toolStyles }};
     case 'SET_ACTIVE_TOOL_NAME_AND_STYLES':
       return { ...state, activeToolName: payload.toolName, activeToolStyles: payload.toolStyles };
+    case 'SET_LEFT_PANEL_INDEX':
+    {
+      const { panel, index } = payload;
+      return {
+        ...state,
+        leftPanelIndex: {
+          ...state.leftPanelIndex,
+          [panel]: index,
+        },
+      };
+    }
     case 'SET_ACTIVE_LEFT_PANEL':
       return { ...state, activeLeftPanel: payload.dataElement };
     case 'SET_ACTIVE_TOOL_GROUP':

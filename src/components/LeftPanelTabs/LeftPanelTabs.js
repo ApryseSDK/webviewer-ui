@@ -32,6 +32,7 @@ class LeftPanelTabs extends React.Component {
 
   render() {
     const {
+      activePanel,
       isOpening,
       customPanels,
       isLeftPanelTabsDisabled,
@@ -54,7 +55,7 @@ class LeftPanelTabs extends React.Component {
             dataElement="thumbnailsPanelButton"
             img="ic_thumbnails_black_24px"
             onClick={() => setActiveLeftPanel('thumbnailsPanel')}
-            willFocus={isOpening}
+            willFocus={activePanel === 'thumbnailsPanel' && isOpening}
           />
         </Tooltip>
         <Tooltip content="component.outlinesPanel" isDisabled={isOutlinesPanelButtonDisabled}>
@@ -63,6 +64,7 @@ class LeftPanelTabs extends React.Component {
             dataElement="outlinesPanelButton"
             img="ic_outline_black_24px"
             onClick={() => setActiveLeftPanel('outlinesPanel')}
+            willFocus={activePanel === 'outlinesPanel' && isOpening}
           />
         </Tooltip>
         <Tooltip content="component.notesPanel" isDisabled={isNotesPanelButtonDisabled}>
@@ -71,6 +73,7 @@ class LeftPanelTabs extends React.Component {
             dataElement="notesPanelButton"
             img="ic_annotations_black_24px"
             onClick={() => setActiveLeftPanel('notesPanel')}
+            willFocus={activePanel === 'notesPanel' && isOpening}
           />
         </Tooltip>
         {customPanels.map(({ panel, tab }, index) => (
