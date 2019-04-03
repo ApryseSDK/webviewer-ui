@@ -169,13 +169,19 @@ if (window.CanvasRenderingContext2D) {
           },
           addItems(newItems, index) {
             store.dispatch(actions.addItems(newItems, index, group));
+          },          
+          removeItems(itemList) {
+            store.dispatch(actions.removeItems(itemList, group));
+          },
+          updateItem(dataElement, newProps) {
+            store.dispatch(actions.updateItem(dataElement, newProps, group));
+          },
+          setItems(items) {
+            store.dispatch(actions.setItems(items, group));
           }
-          
         }
       }
-
     }
-
     ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18next}>

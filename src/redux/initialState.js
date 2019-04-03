@@ -30,7 +30,6 @@ export default {
           element: 'zoomOverlay'
         },
         { type: 'spacer' },
-        // { type: 'toolButton', toolName: 'AnnotationCreateDistanceMeasurement', dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement' },
         { 
           type: 'responsiveButton',
           dataElement: 'responsiveGroupButton',

@@ -156,48 +156,132 @@ export default initialState => (state = initialState, action) => {
       return { ...state, warning: payload};
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
-    case 'ADD_ITEMS':
+    case 'ADD_ITEMS': { 
+      let defaultArr = state.headers.default;
       const { newItems, index, group } = payload;
       if (!group) {
-        let defaultArr = state.headers.default;
         defaultArr.splice(index, 0, ...newItems);
         return { ...state, headers: { default: [ ...defaultArr ] } };
       } else {
-
+        if (defaultArr.includes(group)) {
+          const groupIndex = defaultArr.indexOf(group);
+          group.children.splice(index, 0, ...newItems);
+          group.children = [ ...group.children ];
+          defaultArr.splice(groupIndex, 1, { ...group });
+          return { ...state, headers: { default: [ ...defaultArr ] } };
+        } else {
+          const parentGroup = defaultArr.filter(buttonObject => buttonObject.children).find(buttonObject => buttonObject.children.includes(group));
+          const parentGroupIndex = defaultArr.indexOf(parentGroup);
+          const groupIndex = defaultArr[parentGroupIndex].children.indexOf(group);
+          group.children.splice(index, 0, ...newItems);
+          group.children = [ ...group.children ];
+          defaultArr[parentGroupIndex].children[groupIndex] = { ...group };
+          defaultArr[parentGroupIndex].children = [ ...defaultArr[parentGroupIndex].children ];
+          defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
+          return { ...state, headers: { default: [ ...defaultArr ] } };
+        }
       }
-    case 'REMOVE_ITEMS':
-      const { itemList } = payload;
-      defaultArr = state.headers.default;
+    }
+    case 'REMOVE_ITEMS': {
+      const { itemList, group } = payload;
+      let defaultArr = state.headers.default;
+      let currentArr = [];
+      if (!group) {
+        currentArr = state.headers.default;
+      } else {
+        currentArr = group.children;
+      }
       let sortedList = [];
       if (typeof itemList[0] === 'string') {
-        defaultArr.filter(buttonObject => itemList.includes(buttonObject.dataElement)).forEach(buttonObject => {
-          sortedList.push(defaultArr.indexOf(buttonObject));
+        currentArr.filter(buttonObject => itemList.includes(buttonObject.dataElement)).forEach(buttonObject => {
+          sortedList.push(currentArr.indexOf(buttonObject));
         });
         sortedList = sortedList.sort(); 
       } else {
         sortedList = itemList.sort();
       }
       for (let i = sortedList.length - 1; i >= 0; i--) {
-        defaultArr.splice(sortedList[i], 1);
+        currentArr.splice(sortedList[i], 1);
       }
-      return { ...state, headers: { default: [ ...defaultArr ] } }
-    case 'UPDATE_ITEM':
-      const { dataElement, newProps } = payload;
-      defaultArr = state.headers.default;
-      let updatedObject = defaultArr.find(buttonObject => buttonObject.dataElement === dataElement);
-      if (updatedObject) {
-        const objectIndex = defaultArr.indexOf(updatedObject);
-        updatedObject = { ...updatedObject, ...newProps };
-        defaultArr[objectIndex] = updatedObject;
-        return { ...state, headers: { default: [ ...defaultArr ] } }
+      if (!group){
+        return { ...state, headers: { default: [ ...currentArr ] } }
       } else {
-        return { ...state }
+        if (defaultArr.includes(group)) {
+          const groupIndex = defaultArr.indexOf(group);
+          group.children = [ ...currentArr ];
+          defaultArr.splice(groupIndex, 1, { ...group });
+          return { ...state, headers: { default: [ ...defaultArr ] } };
+        } else {
+          const parentGroup = state.headers.default.filter(buttonObject => buttonObject.children).find(buttonObject => buttonObject.children.includes(group));
+          const parentGroupIndex = state.headers.default.indexOf(parentGroup);
+          const groupIndex = state.headers.default[parentGroupIndex].children.indexOf(group);
+          group.children = [ ...currentArr ];
+          defaultArr[parentGroupIndex].children[groupIndex] = { ...group };
+          defaultArr[parentGroupIndex].children = [ ...defaultArr[parentGroupIndex].children ];
+          defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
+          return { ...state, headers: { default: [ ...defaultArr ] } };
+        }
       }
-    case 'SET_ITEMS':
-      const { items } = payload;
-      return { ...state, headers: { default: [ ...items ] } }
-
+    }
+    case 'UPDATE_ITEM': {
+      const { dataElement, newProps, group } = payload;
+      let defaultArr = state.headers.default;
+      let currentArr = [];
+      if (!group) {
+        currentArr = [ ...state.headers.default ];
+      } else {
+        currentArr = [ ...group.children ];
+      }
+      let updateObject = currentArr.find(buttonObject => buttonObject.dataElement === dataElement);
+      const updateObjectIndex = currentArr.indexOf(updateObject);
+      updateObject = { ...updateObject, ...newProps }
+      if (!group) {
+        currentArr[updateObjectIndex] = updateObject;
+        return { ...state, headers: { default: currentArr } }
+      } else {
+        if (defaultArr.includes(group)) {
+          const groupIndex = defaultArr.indexOf(group);
+          group.children[updateObjectIndex] = updateObject;
+          group.children = [ ...group.children ];
+          defaultArr.splice(groupIndex, 1, { ...group });
+          return { ...state, headers: { default: [ ...defaultArr ] } };
+        } else {
+          const parentGroup = state.headers.default.filter(buttonObject => buttonObject.children).find(buttonObject => buttonObject.children.includes(group));
+          const parentGroupIndex = state.headers.default.indexOf(parentGroup);
+          const groupIndex = state.headers.default[parentGroupIndex].children.indexOf(group);
+          group.children[updateObjectIndex] = updateObject;
+          group.children = [ ...group.children ];
+          defaultArr[parentGroupIndex].children[groupIndex] = { ...group };
+          defaultArr[parentGroupIndex].children = [ ...defaultArr[parentGroupIndex].children ];
+          defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
+          return { ...state, headers: { default: [ ...defaultArr ] } };
+        }
+      }
+    }
+    case 'SET_ITEMS': {
+      const { items, group } = payload;
+      let defaultArr = state.headers.default;
+      if (!group) {
+        return { ...state, headers: { default: [ ...items ] } }
+      } else {
+        if (defaultArr.includes(group)) {
+          const groupIndex = defaultArr.indexOf(group);
+          group.children = [ ...items ];
+          defaultArr.splice(groupIndex, 1, { ...group });
+          return { ...state, headers: { default: [ ...defaultArr ] } }
+        } else {
+          const parentGroup = defaultArr.filter(buttonObject => buttonObject.children).find(buttonObject => buttonObject.children.includes(group));
+          const parentGroupIndex = defaultArr.indexOf(parentGroup);
+          const groupIndex = defaultArr[parentGroupIndex].children.indexOf(group);
+          group.children = [ ...items ];
+          defaultArr[parentGroupIndex].children[groupIndex] = { ...group };
+          defaultArr[parentGroupIndex].children = [ ...defaultArr[parentGroupIndex].children ];
+          defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
+          return { ...state, headers: { default: [ ...defaultArr ] } };
+        }
+      }
+    } 
     default:
       return state;
-  }
-};
+    }
+  };
