@@ -63,7 +63,6 @@ class ToolGroupButton extends React.PureComponent {
 
     e.stopPropagation();
 
-    // prevActiveElementBeforeOpen = this.ref;
     setActiveToolGroup(toolGroup);
     closeElement('toolStylePopup');
 
