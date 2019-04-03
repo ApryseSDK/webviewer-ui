@@ -156,38 +156,47 @@ export default initialState => (state = initialState, action) => {
       return { ...state, warning: payload};
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
-    case 'ADD_HEADER_ITEM':
-      const { newItem, insertAfter } = payload;
-      if (!newItem.group && !insertAfter) {
-        return { ...state, headers: { default: state.headers.default.concat(payload.newItem)} };
-      } else if (newItem.group) {
-        
-        // surface level search
-        const groupButton = state.headers.default.find(item => item.toolGroup === newItem.group);
-        if (groupButton) {
-          const groupIndex = state.headers.default.indexOf(groupButton);
-          // newDefault is for passing in a new reference so it fails shallow comparison
-          const newDefault = [ ...state.headers.default ];
-          newDefault[groupIndex].children = [ ...newDefault[groupIndex].children, newItem];
-          return { ...state, headers: { default: newDefault } };
-        }
+    case 'ADD_ITEMS':
+      const { newItems, index, group } = payload;
+      if (!group) {
+        let defaultArr = state.headers.default;
+        defaultArr.splice(index, 0, ...newItems);
+        return { ...state, headers: { default: [ ...defaultArr ] } };
+      } else {
 
-        // nested children search 
-        const nestedButton = state.headers.default.filter(buttonObject => buttonObject.type === 'responsiveButton').find(toolButton => toolButton.children.find(childButton => childButton.toolGroup === newItem.group ));
-        if (nestedButton) {
-          const nestedButtonIndex = state.headers.default.indexOf(nestedButton);
-          console.log(nestedButtonIndex);
-          const childButton = nestedButton.children.find( childButton => childButton.toolGroup === newItem.group );
-          const childButtonIndex = nestedButton.children.indexOf(childButton);
-          // newNestedDefault is for passing in a new reference so it fails shallow comparison 
-          const newNestedDefault = [ ...state.headers.default ];
-          newNestedDefault[nestedButtonIndex].children[childButtonIndex].children = [ ...newNestedDefault[nestedButtonIndex].children[childButtonIndex].children, newItem ];
-          return { ...state, headers: { default: newNestedDefault } };
-        }
-
-
-        return state;
       }
+    case 'REMOVE_ITEMS':
+      const { itemList } = payload;
+      defaultArr = state.headers.default;
+      let sortedList = [];
+      if (typeof itemList[0] === 'string') {
+        defaultArr.filter(buttonObject => itemList.includes(buttonObject.dataElement)).forEach(buttonObject => {
+          sortedList.push(defaultArr.indexOf(buttonObject));
+        });
+        sortedList = sortedList.sort(); 
+      } else {
+        sortedList = itemList.sort();
+      }
+      for (let i = sortedList.length - 1; i >= 0; i--) {
+        defaultArr.splice(sortedList[i], 1);
+      }
+      return { ...state, headers: { default: [ ...defaultArr ] } }
+    case 'UPDATE_ITEM':
+      const { dataElement, newProps } = payload;
+      defaultArr = state.headers.default;
+      let updatedObject = defaultArr.find(buttonObject => buttonObject.dataElement === dataElement);
+      if (updatedObject) {
+        const objectIndex = defaultArr.indexOf(updatedObject);
+        updatedObject = { ...updatedObject, ...newProps };
+        defaultArr[objectIndex] = updatedObject;
+        return { ...state, headers: { default: [ ...defaultArr ] } }
+      } else {
+        return { ...state }
+      }
+    case 'SET_ITEMS':
+      const { items } = payload;
+      return { ...state, headers: { default: [ ...items ] } }
+
     default:
       return state;
   }

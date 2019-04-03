@@ -131,6 +131,4 @@ export const showWarningMessage = options => dispatch => {
 };
 export const setCustomNoteFilter = filterFunc => ({ type: 'SET_CUSTOM_NOTE_FILTER', payload: { customNoteFilter: filterFunc } });
 
-// Header API
-export const addHeaderItem = (newItem, insertAfter = undefined) => ({ type: 'ADD_HEADER_ITEM', payload: { newItem, insertAfter } });
-  
+

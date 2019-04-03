@@ -128,6 +128,54 @@ if (window.CanvasRenderingContext2D) {
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
 
+    const header = {
+      getItems() {
+        return store.getState().viewer.headers.default;
+      },
+      addItems(newItems, index) {
+        store.dispatch(actions.addItems(newItems, index));
+      },
+      removeItems(itemList) {
+        store.dispatch(actions.removeItems(itemList));
+      },
+      updateItem(dataElement, newProps) {
+        store.dispatch(actions.updateItem(dataElement, newProps))
+      },
+      setItems(items) {
+        store.dispatch(actions.setItems(items));
+      },
+      group(dataElement){
+        const defaultHeader = store.getState().viewer.headers.default;
+        let group;
+        defaultHeader.forEach((buttonObject) => {
+          if (buttonObject.dataElement === dataElement) {
+            group = buttonObject;
+          }
+          if (buttonObject.children) {
+            buttonObject.children.forEach((childObject) => {
+              if (childObject.dataElement === dataElement) {
+                group = childObject;
+              };
+            });
+          }
+        });
+        if (!group) {
+          console.warn(`${dataElement} is not a valid group button`);
+          return;
+        }
+        return {
+          getItems() {
+            return group.children;
+          },
+          addItems(newItems, index) {
+            store.dispatch(actions.addItems(newItems, index, group));
+          }
+          
+        }
+      }
+
+    }
+
     ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18next}>
@@ -182,6 +230,7 @@ if (window.CanvasRenderingContext2D) {
           goToLastPage: apis.goToLastPage(store),
           goToNextPage: apis.goToNextPage(store),
           goToPrevPage: apis.goToPrevPage(store),
+          header,
           i18n: i18next,
           isAdminUser: apis.isAdminUser,
           isElementOpen: apis.isElementOpen(store),

@@ -32,7 +32,8 @@ export default {
         { type: 'spacer' },
         // { type: 'toolButton', toolName: 'AnnotationCreateDistanceMeasurement', dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement' },
         { 
-          type: 'responsiveButton', 
+          type: 'responsiveButton',
+          dataElement: 'responsiveGroupButton',
           maxWidth: 900, 
           img: 'ic_edit_black_24px',
           children: [
