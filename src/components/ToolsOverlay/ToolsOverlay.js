@@ -42,6 +42,7 @@ class ToolsOverlay extends React.PureComponent {
   static getDerivedStateFromProps(nextProps, prevState){
     const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
     const hasActiveToolGroupChanged = prevState.mirroredIsOpen  && (prevState.mirroredActiveToolGroup !== nextProps.activeToolGroup);
+
     if (hasIsOpenChanged || hasActiveToolGroupChanged){
       return { isOpening: true, mirroredIsOpen: nextProps.isOpen, mirroredActiveToolGroup: nextProps.activeToolGroup };
     }
