@@ -25,7 +25,10 @@ class Note extends React.PureComponent {
     isReplyDisabled: PropTypes.bool,
     visible: PropTypes.bool.isRequired,
     rootContents: PropTypes.string,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
+    willFocus: PropTypes.bool.isRequired,
+    setLeftPanelIndex: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -46,7 +49,7 @@ class Note extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { annotation } = this.props;
+    const { annotation, willFocus } = this.props;
     const commentEditable = core.canModify(annotation) && !annotation.getContents();
     const noteBeingEdited = !prevProps.isNoteEditing && this.props.isNoteEditing;
     const noteCollapsed = prevProps.isNoteExpanded && !this.props.isNoteExpanded;
@@ -69,6 +72,9 @@ class Note extends React.PureComponent {
 
     if (annotationWasFocused) {
       this.scrollIntoView();
+    }
+    if (willFocus && (willFocus !== prevProps.willFocus)) {
+      this.focus();
     }
   }
 
@@ -221,7 +227,7 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
+    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents, index, setLeftPanelIndex }  = this.props;
     const { replies, isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
@@ -231,7 +237,16 @@ class Note extends React.PureComponent {
 
     // Negative tabIndex so that we can't tab to notes but can focus them. Focusing is handled manually by arrow keys.
     return (
-      <div tabIndex={-1} ref={this.containerRef} className={className} onClick={this.onClickNote} onKeyPress={this.onKeyPress}>
+      <div
+        tabIndex={-1}
+        ref={this.containerRef}
+        className={className}
+        onClick={this.onClickNote}
+        onKeyPress={this.onKeyPress}
+        onFocus={() => {
+          setLeftPanelIndex('notesPanel', index);
+        }}
+      >
         <NoteRoot
           annotation={annotation}
           contents={rootContents}
@@ -289,6 +304,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const matDispatchToProps = {
   setIsNoteEditing: actions.setIsNoteEditing,
+  setLeftPanelIndex: actions.setLeftPanelIndex,
 };
 
-export default connect(mapStateToProps, matDispatchToProps, null, { withRef: true })(translate(null, { withRef: true })(Note));
+export default connect(mapStateToProps, matDispatchToProps)(translate()(Note));

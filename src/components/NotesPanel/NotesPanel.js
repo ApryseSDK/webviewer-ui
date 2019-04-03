@@ -6,13 +6,17 @@ import { translate } from 'react-i18next';
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
-import ListWithKeyboard from 'components/ListWithKeyboard';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
 import selectors from 'selectors';
+import actions from 'actions';
 
 import './NotesPanel.scss';
+
+const mod = (v, n) => {
+  return ((v % n) + n) % n;
+};
 
 class NotesPanel extends React.PureComponent {
   static propTypes = {
@@ -21,7 +25,9 @@ class NotesPanel extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     pageLabels: PropTypes.array.isRequired,
     customNoteFilter: PropTypes.func,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    setLeftPanelIndex: PropTypes.func.isRequired,
+    selectionIndex: PropTypes.number,
   }
 
   constructor() {
@@ -36,8 +42,6 @@ class NotesPanel extends React.PureComponent {
     this.noteRefs = [];
   }
 
-  selectionIndex = null;
-
   componentDidMount() {
     core.addEventListener('documentUnloaded', this.onDocumentUnloaded);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
@@ -49,6 +53,15 @@ class NotesPanel extends React.PureComponent {
       const notesToRender = this.filterAnnotations(this.rootAnnotations, this.state.searchInput);
       this.setVisibleNoteIds(notesToRender);
       this.setState({ notesToRender });
+    }
+    const {
+      display,
+      setLeftPanelIndex,
+    } = this.props;
+    const isHiding = display === 'none' && prevProps.display !== 'none';
+    if (isHiding) {
+      // nuke selection index
+      setLeftPanelIndex('notesPanel', null);
     }
   }
 
@@ -163,26 +176,27 @@ class NotesPanel extends React.PureComponent {
     );
   }
 
-  renderNote = (note, index, refSetter) => {
-    return (
-      <Note
-        ref={refSetter}
-        visible={this.isVisibleNote(note)}
-        annotation={note}
-        searchInput={this.state.searchInput}
-        rootContents={note.getContents()}
-      />
-    );
-  }
-
   renderNotes = notes => {
+    const {
+      selectionIndex,
+    } = this.props;
+
     return(
-      <ListWithKeyboard
-        data={notes}
-        keyExtractor={note => note.Id}
-        renderItem={this.renderNote}
-        renderItemSeparator={this.renderListSeparator}
-      />
+      notes.map((note, i) => {
+        return (
+          <React.Fragment key={note.Id}>
+            {this.renderListSeparator(notes, note)}
+            <Note
+              index={i}
+              visible={this.isVisibleNote(note)}
+              annotation={note}
+              searchInput={this.state.searchInput}
+              rootContents={note.getContents()}
+              willFocus={selectionIndex !== null && mod(selectionIndex, notes.length) === i}
+            />
+          </React.Fragment>
+        );
+      })
     );
   }
 
@@ -237,7 +251,8 @@ const mapStatesToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state),
   pageRotation: selectors.getRotation(state),
-  customNoteFilter: selectors.getCustomNoteFilter(state)
+  customNoteFilter: selectors.getCustomNoteFilter(state),
+  selectionIndex: selectors.getLeftPanelIndex(state, 'notesPanel'),
 });
 
-export default connect(mapStatesToProps)(translate()(NotesPanel));
+export default connect(mapStatesToProps, { setLeftPanelIndex: actions.setLeftPanelIndex })(translate()(NotesPanel));

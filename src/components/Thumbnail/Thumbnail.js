@@ -11,8 +11,6 @@ import './Thumbnail.scss';
 
 class Thumbnail extends React.PureComponent {
   static propTypes = {
-    index: PropTypes.number.isRequired,
-    willFocus: PropTypes.bool.isRequired,
     currentPage: PropTypes.number,
     pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
@@ -20,6 +18,8 @@ class Thumbnail extends React.PureComponent {
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
+    willFocus: PropTypes.bool.isRequired,
     setLeftPanelIndex: PropTypes.func.isRequired,
   }
 
