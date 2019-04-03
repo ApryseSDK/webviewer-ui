@@ -129,6 +129,7 @@ if (window.CanvasRenderingContext2D) {
     core.setToolMode(defaultTool);
 
     const header = {
+      children: store.getState().viewer.headers.default,
       getItems() {
         return store.getState().viewer.headers.default;
       },

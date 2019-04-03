@@ -76,7 +76,6 @@ class ToolButton extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-
     return (
       <Button {...this.props} className={className} color={color} onClick={this.onClick} />
     );

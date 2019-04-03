@@ -86,7 +86,7 @@ class GroupButton extends React.PureComponent {
   }
 
   render() {
-    const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive, toolNames, iconColor, children, activeToolGroup, toolGroup} = this.props;
+    const { mediaQueryClassName, isDisabled, dataElement, isActive, toolNames, iconColor, children, activeToolGroup, toolGroup, activeToolStyles} = this.props;
     const isOnlyTools = children.filter(button => button.type !== 'toolButton').length === 0;
     const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName) ? core.getTool(toolName).disabled : '');
     if (isDisabled || allButtonsInGroupDisabled) {
@@ -98,8 +98,14 @@ class GroupButton extends React.PureComponent {
       console.warn('GroupButton contains buttons other than toolButtons and no img is found. Please specify an img');
     }
     const { toolName } = this.state;
-    const img = this.props.img ? this.props.img : isOnlyTools ? toolButtonObjects[toolName] ? toolButtonObjects[toolName].img : '' : '';
-    const color = isActive && !this.props.img && iconColor ? getToolStyles(toolName) ? getToolStyles(toolName)[iconColor].toHexString() : '' : '';
+    const activeIcon = children.find(button => button.toolName === toolName) ? children.find(button => button.toolName === toolName).img: '';
+    const img = this.props.img ? this.props.img : isOnlyTools ? activeIcon : ''
+    let color;
+    if (isActive && !this.props.img && iconColor) {
+      let toolStyles = activeToolStyles;
+      color = toolStyles[iconColor].toHexString();
+    } 
+
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
     const className = [
@@ -124,6 +130,7 @@ const mapStateToProps = (state, ownProps) => ({
   isDisabled: selectors.isToolGroupButtonDisabled(state, ownProps.dataElement, ownProps.toolNames),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
+  activeToolStyles: selectors.getActiveToolStyles(state),
   toolButtonObjects: selectors.getToolButtonObjects(state),
   iconColor: selectors.getIconColor(state, selectors.getActiveToolName(state)),
   activeToolGroup: selectors.getActiveToolGroup(state)

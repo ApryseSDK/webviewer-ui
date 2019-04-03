@@ -41,7 +41,31 @@ export const getGroupName = (state, toolName) => {
 export const getToolButtonDataElements = (state, toolNames) => toolNames.map(toolName => state.viewer.toolButtonObjects[toolName].dataElement);
 export const getToolButtonObject = (state, toolName) => state.viewer.toolButtonObjects[toolName];
 export const getToolButtonDataElement = (state, toolName) => state.viewer.toolButtonObjects[toolName] ? state.viewer.toolButtonObjects[toolName].dataElement : '';
-export const getToolButtonIcon = (state, toolName) => state.viewer.toolButtonObjects[toolName].img;
+export const getToolButtonIcon = (state, toolName) => {
+  let buttonIcon;
+  const defaultArr = state.viewer.headers.default;
+  defaultArr.forEach((element) => {
+    if (element.toolName === toolName) {
+      buttonIcon = element.img;
+    } else {
+      if (element.children) {
+        element.children.forEach((childElement) => {
+          if (childElement.toolName && childElement.toolName === toolName) {
+            buttonIcon = childElement.img;
+          }
+          if (childElement.children) {
+            childElement.children.forEach((grandChildElement) => {
+              if (grandChildElement.toolName && grandChildElement.toolName === toolName) {
+                buttonIcon = grandChildElement.img;
+              }
+            });
+          }
+        });
+      }
+    }
+  });
+  return buttonIcon;
+}
 export const getToolNamesByGroup = (state, toolGroup) => state.viewer.headers[state.viewer.activeHeaderGroup].filter(toolButtonObject => toolButtonObject.toolGroup).find(toolButtonObject => toolButtonObject.toolGroup === toolGroup).children.map(buttonObject => buttonObject.toolName);
 export const getToolNameByDataElement = (state, dataElement) => Object.keys(state.viewer.toolButtonObjects).find(name => state.viewer.toolButtonObjects[name].dataElement === dataElement);
 export const getActiveToolName = state => state.viewer.activeToolName;
