@@ -15,17 +15,13 @@ export const openElement = dataElement => (dispatch, getState) => {
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
   const isElementOpen = isDataElementPanel(dataElement, state) ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement : state.viewer.openElements[dataElement];
 
-  if (isElementDisabled || isElementOpen) {
+  if (isElementDisabled) {
     return;
   }
   prevActiveElementBeforeOpen = document.activeElement;
-
-  // dispatch({
-  //   type: 'SET_PREV_ACTIVE_ELEMENT_BEFORE_OPEN',
-  //   payload: {
-  //     activeElement: document.activeElement,
-  //   }
-  // });
+  if (isElementOpen) {
+    return;
+  }
 
   if (isDataElementPanel(dataElement, state)) {
     if (!isLeftPanelOpen) {
@@ -60,16 +56,6 @@ export const closeElement = dataElement => (dispatch, getState) => {
   if (isElementDisabled || isElementClosed) {
     return;
   }
-  // const prevActiveElementBeforeOpen = selectors.getPrevActiveElementBeforeOpen(state);
-  // if (prevActiveElementBeforeOpen) {
-  //   prevActiveElementBeforeOpen.focus();
-  //   dispatch({
-  //     type: 'SET_PREV_ACTIVE_ELEMENT_BEFORE_OPEN',
-  //     payload: {
-  //       activeElement: null,
-  //     }
-  //   });
-  // }
   prevActiveElementBeforeOpen && prevActiveElementBeforeOpen.focus();
   prevActiveElementBeforeOpen = null;
 
