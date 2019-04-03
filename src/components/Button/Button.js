@@ -57,7 +57,14 @@ class Button extends React.PureComponent {
   }
 
   focus() {
+    const { dataElement } = this.props;
+    if (dataElement === 'rectangleToolButton') {
+      console.log('before focusing');
+    }
     if (this.containerRef.current) {
+      if (dataElement === 'rectangleToolButton') {
+        console.log('focusing', this.containerRef.current);
+      }
       this.containerRef.current.focus();
     }
   }
