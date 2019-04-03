@@ -36,6 +36,13 @@ class ToolsOverlay extends React.PureComponent {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
+
+    // this component can be opened before mounting to the DOM if users call the setToolMode API
+    // in this case we need to set its position immediately after it's mounted 
+    // otherwise its left is 0 instead of left-aligned with the tool group button
+    if (this.props.isOpen) {
+      this.setOverlayPosition();
+    }
   }
 
   componentDidUpdate(prevProps) {
