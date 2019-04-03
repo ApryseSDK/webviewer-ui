@@ -7,7 +7,6 @@ import './Button.scss';
 
 class Button extends React.PureComponent {
   static propTypes = {
-    isLastInMenu: PropTypes.bool,
     willFocus: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isActive: PropTypes.bool,
@@ -22,7 +21,7 @@ class Button extends React.PureComponent {
     dataElement: PropTypes.string,
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    onFocusOut: PropTypes.func,
+    onTabOut: PropTypes.func,
   }
 
   containerRef = React.createRef();
@@ -30,13 +29,12 @@ class Button extends React.PureComponent {
   componentDidMount() {
     const {
       willFocus,
-      isLastInMenu,
       onTabOut,
     } = this.props;
     if (willFocus) {
       this.focus();
     }
-    if (isLastInMenu) {
+    if (onTabOut) {
       document.addEventListener('keydown', e => {
         if (e.key === 'Tab' || e.keyCode === 9) {
           if (!this.containerRef.current) {
@@ -52,8 +50,8 @@ class Button extends React.PureComponent {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.willFocus && (this.props.willFocus !== prevProps.willFocus)) {
+  componentDidUpdate() {
+    if (this.props.willFocus) {
       this.focus();
     }
   }

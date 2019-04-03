@@ -11,12 +11,10 @@ import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
 import selectors from 'selectors';
 import actions from 'actions';
+import mod from 'helpers/modulus';
 
 import './NotesPanel.scss';
 
-const mod = (v, n) => {
-  return ((v % n) + n) % n;
-};
 
 class NotesPanel extends React.PureComponent {
   static propTypes = {

@@ -9,11 +9,9 @@ import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 
-import './ThumbnailsPanel.scss';
+import mod from 'helpers/modulus';
 
-const mod = (v, n) => {
-  return ((v % n) + n) % n;
-};
+import './ThumbnailsPanel.scss';
 
 class ThumbnailsPanel extends React.PureComponent {
   static propTypes = {

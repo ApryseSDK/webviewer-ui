@@ -16,10 +16,6 @@ import selectors from 'selectors';
 
 import './LeftPanel.scss';
 
-const mod = (v, n) => {
-  return ((v % n) + n) % n;
-};
-
 class LeftPanel extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,

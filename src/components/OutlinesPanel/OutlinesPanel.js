@@ -9,11 +9,9 @@ import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
 import actions from 'actions';
 
-import './OutlinesPanel.scss';
+import mod from 'helpers/modulus';
 
-const mod = (v, n) => {
-  return ((v % n) + n) % n;
-};
+import './OutlinesPanel.scss';
 
 class OutlinesPanel extends React.PureComponent {
   static propTypes = {

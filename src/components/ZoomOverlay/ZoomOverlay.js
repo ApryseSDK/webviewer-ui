@@ -94,7 +94,6 @@ class ZoomOverlay extends React.PureComponent {
         )}
         <div className="spacer" />
         <ToolButton
-          isLastInMenu
           toolName="MarqueeZoomTool"
           label={t('tool.Marquee')}
           onClick={() => closeElements(['zoomOverlay'])}

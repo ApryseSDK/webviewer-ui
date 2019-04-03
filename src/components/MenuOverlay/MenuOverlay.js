@@ -79,7 +79,6 @@ class MenuOverlay extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-
     const className = getClassName('Overlay MenuOverlay', this.props);
 
     // TODO: Check if filePicker is the first button. It will need willFocus instead.
@@ -93,7 +92,6 @@ class MenuOverlay extends React.PureComponent {
           <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
         }
         <ActionButton
-          isLastInMenu
           dataElement="printButton"
           label={t('action.print')}
           onClick={this.handlePrintButtonClick} hidden={['mobile']}
