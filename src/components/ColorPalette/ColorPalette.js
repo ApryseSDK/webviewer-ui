@@ -47,7 +47,7 @@ class ColorPalette extends React.PureComponent {
     );
 
     return(
-      <div tabIndex={0} className="cell" key={key} onClick={this.setColor}>
+      <div className="cell" key={key} onClick={this.setColor}>
         {this.renderCheckMark(bg)}
         {diagonalLine}
       </div>
@@ -56,7 +56,7 @@ class ColorPalette extends React.PureComponent {
 
   renderColorCell = (bg, key) => {
     return(
-      <div tabIndex={0} className="cell" key={key} style={{ backgroundColor: bg }} onClick={this.setColor}>
+      <div className="cell" key={key} style={{ backgroundColor: bg }} onClick={this.setColor}>
         {this.renderCheckMark(bg)}
       </div>
     );
