@@ -37,6 +37,8 @@ import { isDesktop } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import keyboardJS from 'keyboardjs';
+
 import './App.scss';
 
 class App extends React.PureComponent {
@@ -62,6 +64,10 @@ class App extends React.PureComponent {
   //     });
   //   });
   // }
+
+  componentDidMount() {
+    keyboardJS.bind('alt + m', () => this.props.toggleElement('leftPanel'));
+  }
 
   componentWillUnmount() {
     this.props.removeEventHandlers();
@@ -159,7 +165,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  closeElements: actions.closeElements
+  closeElements: actions.closeElements,
+  toggleElement: actions.toggleElement,
 };
 
 export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(translate()(App)));
