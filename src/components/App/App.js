@@ -46,22 +46,22 @@ class App extends React.PureComponent {
     closeElements: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    $(document).on('documentLoaded', () => {
-      window.docViewer.on('pageComplete', (e, pageIndex) => {
-        window.docViewer.getDocument().loadPageText(pageIndex, function(text) {
-          var textContainer = document.createElement('div');
-          // textContainer.tabIndex = 0;
-          textContainer.textContent = text;
-          textContainer.style = 'height: 100%;';
-          textContainer.id = 'pageText' + pageIndex;
-          $('#pageContainer' + pageIndex).append(textContainer);
-        });
-      });
-    });
-  }
+  //   $(document).on('documentLoaded', () => {
+  //     window.docViewer.on('pageComplete', (e, pageIndex) => {
+  //       window.docViewer.getDocument().loadPageText(pageIndex, function(text) {
+  //         var textContainer = document.createElement('div');
+  //         // textContainer.tabIndex = 0;
+  //         textContainer.textContent = text;
+  //         textContainer.style = 'height: 100%;';
+  //         textContainer.id = 'pageText' + pageIndex;
+  //         $('#pageContainer' + pageIndex).append(textContainer);
+  //       });
+  //     });
+  //   });
+  // }
 
   componentWillUnmount() {
     this.props.removeEventHandlers();
@@ -104,12 +104,10 @@ class App extends React.PureComponent {
             tabIndex={0}
             className="skip-main"
             onClick={() => {
-              {/* $('#pageText0').focus(); */}
               $('*[data-element=\'documentContainer\']').focus();
             }}
             onKeyPress={e => {
-              if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
-                {/* $('#pageText0').focus(); */}
+              if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
                 $('*[data-element=\'documentContainer\']').focus();
               }
             }}

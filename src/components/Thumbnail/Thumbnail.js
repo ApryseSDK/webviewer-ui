@@ -72,7 +72,7 @@ class Thumbnail extends React.PureComponent {
   }
 
   onKeyPress = e => {
-    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
+    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
       this.handleClick();
     }
   }

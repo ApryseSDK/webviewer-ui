@@ -35,7 +35,7 @@ class ToggleElementOverlay extends React.PureComponent {
   }
 
   onKeyPress = e => {
-    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13){
+    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
       const zoom = Math.ceil(core.getZoom() * 100).toString();
       if (e.target.value === zoom) {
         return;

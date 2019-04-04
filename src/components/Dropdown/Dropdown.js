@@ -31,7 +31,7 @@ class Dropdown extends React.PureComponent {
   }
 
   onKeyPress = e => {
-    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
+    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
       this.toggleDropdown();
     }
   }
@@ -58,7 +58,7 @@ class Dropdown extends React.PureComponent {
         className="dropdown-item"
         onClick={e => this.handleDisplayItemChange(e, item)}
         onKeyPress={e => {
-          if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
+          if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
             this.handleDisplayItemChange(e, item);
           }
         }}
