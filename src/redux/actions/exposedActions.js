@@ -5,7 +5,7 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import selectors from 'selectors';
 
 let prevActiveElementBeforeOpen = null;
-let lastOpenDataElement = null
+let lastOpenDataElement = null;
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
@@ -58,7 +58,6 @@ export const closeElement = dataElement => (dispatch, getState) => {
   if (isElementDisabled || isElementClosed) {
     return;
   }
-  // console.log('dataElement', dataElement);
   if (dataElement === lastOpenDataElement) {
     prevActiveElementBeforeOpen && prevActiveElementBeforeOpen.focus();
     prevActiveElementBeforeOpen = null;

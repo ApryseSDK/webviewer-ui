@@ -64,7 +64,6 @@ class ToolGroupButton extends React.PureComponent {
     e.stopPropagation();
 
     setActiveToolGroup(toolGroup);
-    closeElement('toolStylePopup');
 
     if (isActive) {
       toggleElement('toolsOverlay');
@@ -72,6 +71,7 @@ class ToolGroupButton extends React.PureComponent {
       this.setToolMode(toolName);
       openElement('toolsOverlay');
     }
+    closeElement('toolStylePopup');
   }
 
   setToolMode = toolName => {
