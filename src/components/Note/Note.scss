@@ -1,5 +1,10 @@
 @import '../../constants/styles';
 @import '../../constants/note';
+@import '../../../node_modules/tributejs/scss/tribute';
+
+.tribute-container {
+  font-size: 13px;
+}
 
 .Note {
   width: 100%;
@@ -10,6 +15,10 @@
   font-size: 13px;
   background: white;
   background: var(--primary-color);
+
+  .at-mention {
+    color: #00a5e4;
+  }
 
   &.expanded {
     margin: 10px 0;
@@ -31,7 +40,7 @@
       display: none;
     }
   }
-  
+
   &:hover {
     cursor: pointer;
   }
@@ -40,13 +49,14 @@
     display: flex;
     flex-direction: column;
     margin: 15px 0 0;
-    
-    textarea {
+
+    .note-editable-content {
       width: 100%;
       height: 30px;
       resize: none;
       overflow: hidden;
       box-sizing: border-box;
+      border: none;
       border: 1px solid rgba(0, 0, 0, .12);
       border-radius: 4px;
       font-size: 12px;
@@ -62,5 +72,5 @@
         cursor: auto;
       }
     }
-  } 
+  }
 }

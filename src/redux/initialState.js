@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ToggleElementOverlay from 'components/ToggleElementOverlay';
+import ToggleElementOverlay from 'components/toggleElementOverlay';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
@@ -27,7 +27,7 @@ export default {
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
         { type: 'customElement',
-          render: () => <ToggleElementOverlay />, 
+          render: () => <ToggleElementOverlay />,
           dataElement: 'zoomOverlayButton',
           hidden: [ 'mobile' ],
           element: 'zoomOverlay'
@@ -113,7 +113,7 @@ export default {
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
       AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
       TextSelect: { dataElement: 'textSelectButton', title: 'tool.select', img: 'textselect_cursor', showColor: 'never' },
-      MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never'}
+      MarqueeZoomTool: { dataElement: 'marqueeToolButton', title: 'tool.select', label: 'Marquee Zoom', showColor: 'never'}
     },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
@@ -125,7 +125,6 @@ export default {
     isNoteEditing: false,
     fitMode: '',
     zoom: 1,
-    rotation: 0,
     displayMode: 'Single',
     currentPage: 1,
     sortStrategy: 'position',
@@ -141,8 +140,7 @@ export default {
     cursorOverlay: {},
     swipeOrientation: 'horizontal',
     warning: {},
-    customNoteFilter: null,
-    zoomList: [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64]
+    customNoteFilter: null
   },
   search: {
     listeners: [],
@@ -209,6 +207,7 @@ export default {
     officeWorkerTransportPromise: null,
     decrypt: null,
     decryptOptions: { },
-    withCredentials: false
+    withCredentials: false,
+    atMentions: null
   }
 };

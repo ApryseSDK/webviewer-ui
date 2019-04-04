@@ -6,7 +6,7 @@ export const isElementDisabled = (state, dataElement) => state.viewer.disabledEl
 export const isToolGroupButtonDisabled = (state, dataElement, toolGroup) => {
   const toolNames = getToolNamesByGroup(state, toolGroup);
   const isEveryButtonInGroupDisabled = toolNames.every(toolName => isToolButtonDisabled(state, toolName));
-  
+
   return isElementDisabled(state, dataElement) || isEveryButtonInGroupDisabled;
 };
 export const isToolButtonDisabled = (state, toolName) => {
@@ -18,7 +18,7 @@ export const isElementOpen = (state, dataElement) => {
   if (state.viewer.disabledElements[dataElement]) {
     return state.viewer.openElements[dataElement] && !state.viewer.disabledElements[dataElement].disabled;
   }
-  
+
   return state.viewer.openElements[dataElement];
 };
 
@@ -44,13 +44,11 @@ export const getActiveToolGroup = state => state.viewer.activeToolGroup;
 export const getNotePopupId = state => state.viewer.notePopupId;
 export const isNoteExpanded = (state, id) => !!state.viewer.expandedNotes[id];
 export const isNoteEditing = (state, id) => state.viewer.isNoteEditing && isNoteExpanded(state, id);
-export const isAnnotationFocused = (state, id) => Object.keys(state.viewer.expandedNotes).length === 1 && isNoteExpanded(state, id); // Considered focused when it is the only annotation selected
 export const getFitMode = state => state.viewer.fitMode;
 export const getZoom = state => state.viewer.zoom;
 export const getDisplayMode = state => state.viewer.displayMode;
 export const getCurrentPage = state => state.viewer.currentPage;
 export const getSortStrategy = state => state.viewer.sortStrategy;
-export const getRotation = state => state.viewer.rotation;
 export const getNoteDateFormat = state => state.viewer.noteDateFormat;
 export const isFullScreen = state => state.viewer.isFullScreen;
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
@@ -66,6 +64,8 @@ export const getDisabledCustomPanelTabs = state => {
     return disabledTabs;
   }, []);
 };
+export const getAtMentions = state => state.advanced.atMentions;
+export const getAtMentionsCallback = state => state.advanced.atMentionsCallback;
 export const isEmbedPrintSupported = state => {
   const isChrome = window.navigator.userAgent.indexOf('Chrome') > -1 && window.navigator.userAgent.indexOf('Edge') === -1;
   const isPDF = getDocumentType(state) === documentTypes.PDF;
@@ -75,10 +75,9 @@ export const getColorMap = state => state.viewer.colorMap;
 export const getCursorOverlayData = state => state.viewer.cursorOverlay;
 export const getOpenElements = state => state.viewer.openElements;
 export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].currentPalette;
-export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].iconColor; 
+export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].iconColor;
 export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
-export const getZoomList = state => state.viewer.zoomList;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning && state.viewer.warning.message || '';

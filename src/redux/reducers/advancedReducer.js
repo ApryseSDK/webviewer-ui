@@ -14,6 +14,10 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customHeaders: payload.customHeaders };
     case 'SET_WITH_CREDENTIALS':
       return { ...state, withCredentials: payload.withCredentials };
+    case 'SET_AT_MENTIONS':
+      return { ...state, atMentions: payload.atMentions };
+    case 'SET_AT_MENTIONS_CALLBACK':
+      return { ...state, atMentionsCallback: payload.atMentionsCallback };
     default:
       return state;
   }

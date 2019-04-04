@@ -6,6 +6,10 @@
   cursor: auto;
   white-space: pre-wrap;
 
+  .at-mention {
+    color: #00a5e4;
+  }
+
   .edit-content {
     display: flex;
     flex-direction: column;
@@ -19,7 +23,7 @@
       display: none;
     }
 
-    textarea {
+    .note-editable-content {
       width: 100%;
       height: 30px;
       resize: none;

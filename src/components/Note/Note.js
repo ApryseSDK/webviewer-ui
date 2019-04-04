@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import Autolinker from 'autolinker';
-
 import NoteRoot from 'components/NoteRoot';
 import NoteReply from 'components/NoteReply';
+import AtMentionsReplyBox from '../AtMentionsReplyBox/AtMentionsReplyBox';
 
 import core from 'core';
 import actions from 'actions';
@@ -18,26 +18,26 @@ class Note extends React.PureComponent {
     annotation: PropTypes.object.isRequired,
     isNoteEditing: PropTypes.bool.isRequired,
     isNoteExpanded: PropTypes.bool.isRequired,
-    isAnnotationFocused: PropTypes.bool,
     setIsNoteEditing: PropTypes.func.isRequired,
     searchInput: PropTypes.string,
     isReadOnly: PropTypes.bool,
     isReplyDisabled: PropTypes.bool,
     visible: PropTypes.bool.isRequired,
     rootContents: PropTypes.string,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    atMentions: PropTypes.arrayOf(PropTypes.object),
+    atMentionsCallback: PropTypes.func,
   };
 
   constructor(props) {
     super(props);
-    this.replyTextarea = React.createRef();
+    this.replyBox = React.createRef();
     this.state = {
       replies: props.annotation.getReplies(),
       isRootContentEditing: false,
       isReplyFocused: false,
-      isEmpty: true
+      isEmpty: true,
     };
-    this.containerRef = React.createRef();
   }
 
   componentDidMount() {
@@ -50,13 +50,12 @@ class Note extends React.PureComponent {
     const commentEditable = core.canModify(annotation) && !annotation.getContents();
     const noteBeingEdited = !prevProps.isNoteEditing && this.props.isNoteEditing;
     const noteCollapsed = prevProps.isNoteExpanded && !this.props.isNoteExpanded;
-    const annotationWasFocused = !prevProps.isAnnotationFocused && this.props.isAnnotationFocused;
 
     if (noteBeingEdited) {
       if (commentEditable) {
         this.openRootEditing();
-      } else if (this.replyTextarea.current) {
-        this.replyTextarea.current.focus();
+      } else if (this.replyBox.current) {
+        this.replyBox.current.focus();
       }
     }
 
@@ -65,10 +64,6 @@ class Note extends React.PureComponent {
         isRootContentEditing: false,
         isReplyFocused: false
       });
-    }
-
-    if (annotationWasFocused) {
-      this.scrollIntoView();
     }
   }
 
@@ -107,10 +102,6 @@ class Note extends React.PureComponent {
     }
   }
 
-  scrollIntoView = () => {
-    this.containerRef.current.scrollIntoView();
-  }
-
   openRootEditing = () => {
     this.setState({ isRootContentEditing: true });
   }
@@ -121,9 +112,9 @@ class Note extends React.PureComponent {
   }
 
   onChange = () => {
-    this.setState({ isEmpty: this.replyTextarea.current.value.length === 0 });
-    this.replyTextarea.current.style.height = '30px';
-    this.replyTextarea.current.style.height = (this.replyTextarea.current.scrollHeight + 2) + 'px';
+    this.setState({
+      isEmpty: this.replyBox.current.getText().length === 0,
+    });
   }
 
   onKeyDown = e => {
@@ -133,9 +124,9 @@ class Note extends React.PureComponent {
   }
 
   onFocus = () => {
-    this.setState({ 
-      isReplyFocused: true, 
-      isRootContentEditing: false 
+    this.setState({
+      isReplyFocused: true,
+      isRootContentEditing: false
     });
   }
 
@@ -149,8 +140,15 @@ class Note extends React.PureComponent {
 
     this.setState({ isEmpty: true });
 
-    if (this.replyTextarea.current.value.trim().length > 0) {
-      core.createAnnotationReply(this.props.annotation, this.replyTextarea.current.value);
+    const replyText = this.replyBox.current.getText();
+    if (replyText.trim().length > 0) {
+      // trigger at mentions callback if one exists
+      const atMentionedUsers = this.replyBox.current.getAtMentionedItems();
+      if (this.props.atMentionsCallback && atMentionedUsers.length > 0) {
+        this.props.atMentionsCallback(atMentionedUsers);
+      }
+
+      core.createAnnotationReply(this.props.annotation, replyText);
       this.clearReply();
     }
   }
@@ -159,12 +157,11 @@ class Note extends React.PureComponent {
     this.clearReply();
     this.setState({ isReplyFocused: false });
     // This is for IE Edge
-    this.replyTextarea.current.blur();
+    this.replyBox.current.blur();
   }
 
   clearReply = () => {
-    this.replyTextarea.current.value = '';
-    this.replyTextarea.current.style.height = '30px';
+    this.replyBox.current.clear();
   }
 
   renderAuthorName = annotation => {
@@ -211,7 +208,7 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
+    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents, atMentions }  = this.props;
     const { replies, isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
@@ -220,7 +217,7 @@ class Note extends React.PureComponent {
     ].join(' ').trim();
 
     return (
-      <div ref={this.containerRef} className={className} onClick={this.onClickNote}>
+      <div className={className} onClick={this.onClickNote}>
         <NoteRoot
           annotation={annotation}
           contents={rootContents}
@@ -246,13 +243,14 @@ class Note extends React.PureComponent {
           )}
           {!isReadOnly && !isReplyDisabled &&
             <div className={isRootContentEditing ? 'replies hidden' : 'add-reply'} onClick={e => e.stopPropagation()}>
-              <textarea
-                ref={this.replyTextarea}
-                onChange={this.onChange}
+              <AtMentionsReplyBox
+                ref={this.replyBox}
+                onInput={this.onChange}
                 onKeyDown={this.onKeyDown}
                 onBlur={this.onBlur}
                 onFocus={this.onFocus}
                 placeholder={`${t('action.reply')}...`}
+                atMentions={atMentions}
               />
               {isReplyFocused &&
                 <div className="buttons" onMouseDown={e => e.preventDefault()}>
@@ -271,9 +269,10 @@ class Note extends React.PureComponent {
 const mapStateToProps = (state, ownProps) => ({
   isNoteExpanded: selectors.isNoteExpanded(state, ownProps.annotation.Id),
   isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
-  isAnnotationFocused: selectors.isAnnotationFocused(state, ownProps.annotation.Id),
   isReadOnly: selectors.isDocumentReadOnly(state),
-  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply')
+  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply'),
+  atMentions: selectors.getAtMentions(state),
+  atMentionsCallback: selectors.getAtMentionsCallback(state),
 });
 
 const matDispatchToProps = {

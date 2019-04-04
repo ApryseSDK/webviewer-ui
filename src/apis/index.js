@@ -4,6 +4,8 @@ import downloadPdf from './downloadPdf';
 import getAnnotationUser from './getAnnotationUser';
 import setAnnotationUser from './setAnnotationUser';
 import setNoteDateFormat from './setNoteDateFormat';
+import setAtMentions from './setAtMentions';
+import setAtMentionsCallback from './setAtMentionsCallback';
 import { getZoomLevel, setZoomLevel, setMaxZoomLevel, setMinZoomLevel } from './zoomAPIs';
 import isReadOnly from './isReadOnly';
 import setReadOnly from './setReadOnly';
@@ -70,7 +72,6 @@ import isToolDisabled from './isToolDisabled';
 import setNotesPanelSort from './setNotesPanelSort';
 import addSortStrategy from './addSortStrategy';
 import updateOutlines from './updateOutlines';
-import updateTool from './updateTool';
 import print from './print';
 import showWarningMessage from './showWarningMessage';
 import enableRedaction from './enableRedaction';
@@ -84,6 +85,8 @@ export default {
   downloadPdf,
   getAnnotationUser,
   setNoteDateFormat,
+  setAtMentions,
+  setAtMentionsCallback,
   setAnnotationUser,
   isReadOnly,
   setReadOnly,
@@ -150,8 +153,7 @@ export default {
   setNotesPanelSort,
   addSortStrategy,
   updateOutlines,
-  updateTool,
-  print, 
+  print,
   getZoomLevel,
   setZoomLevel,
   setMaxZoomLevel,

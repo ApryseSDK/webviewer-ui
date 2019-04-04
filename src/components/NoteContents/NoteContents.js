@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
-
+import { connect } from 'react-redux';
 import core from 'core';
-
+import selectors from 'selectors';
 import './NoteContents.scss';
+import AtMentionsReplyBox from '../AtMentionsReplyBox/AtMentionsReplyBox';
 
 class NoteContents extends React.Component {
   static propTypes = {
@@ -13,12 +14,14 @@ class NoteContents extends React.Component {
     annotation: PropTypes.object.isRequired,
     closeEditing: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    contents: PropTypes.string
+    contents: PropTypes.string,
+    atMentions: PropTypes.arrayOf(PropTypes.object),
+    atMentionsCallback: PropTypes.func,
   }
 
   constructor(props) {
     super(props);
-    this.textInput = React.createRef();
+    this.replyBox = React.createRef();
     this.state = {
       isChanged: false,
       word: ''
@@ -27,21 +30,20 @@ class NoteContents extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isEditing && this.props.isEditing) {
-      this.setState({ word: this.textInput.current.value }, () => {
-        this.textInput.current.focus();
+      this.replyBox.current.setText(this.props.contents || '');
+      this.setState({ word: this.replyBox.current.getText() }, () => {
+        this.replyBox.current.focus();
         this.onChange();
       });
     }
 
-    if (prevProps.contents !== this.props.contents && this.textInput.current) {
-      this.textInput.current.value = this.props.contents;
+    if (prevProps.contents !== this.props.contents && this.replyBox.current) {
+      this.replyBox.current.setText(this.props.contents);
     }
   }
-  
+
   onChange = () => {
-    this.setState({ isChanged: this.textInput.current.value !== this.state.word });    
-    this.textInput.current.style.height = '30px';
-    this.textInput.current.style.height = (this.textInput.current.scrollHeight + 2) + 'px';
+    this.setState({ isChanged: this.replyBox.current.getText() !== this.state.word });
   }
 
   onKeyDown = e => {
@@ -51,7 +53,7 @@ class NoteContents extends React.Component {
   }
 
   handleNoteContentsClick = e => {
-    // we stop propagation when we are editing the contents to 
+    // we stop propagation when we are editing the contents to
     // prevent note components from receiving this event and collapsing the note
     if (this.props.isEditing) {
       e.stopPropagation();
@@ -60,11 +62,16 @@ class NoteContents extends React.Component {
 
   setContents = e => {
     e.preventDefault();
-
     const { annotation, closeEditing } = this.props;
 
     if (this.state.isChanged) {
-      core.setNoteContents(annotation, this.textInput.current.value);
+
+      const atMentionedUsers = this.replyBox.current.getAtMentionedItems();
+      if (this.props.atMentionsCallback && atMentionedUsers.length > 0) {
+        this.props.atMentionsCallback(atMentionedUsers);
+      }
+
+      core.setNoteContents(annotation, this.replyBox.current.getText());
       if (annotation instanceof window.Annotations.FreeTextAnnotation) {
         core.drawAnnotationsFromList([ annotation ]);
       }
@@ -73,19 +80,19 @@ class NoteContents extends React.Component {
   }
 
   render() {
-    const { isEditing, closeEditing, renderContents, t, contents } = this.props;
+    const { isEditing, closeEditing, renderContents, t, contents, atMentions } = this.props;
 
     return (
-      <div className="NoteContents" onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
-        {isEditing && 
+      <div className="NoteContents" onClick={this.handleNoteContentsClick} onMouseDown={this.handleNoteContentsClick}>
+        {isEditing &&
           <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
-          <textarea 
-              ref={this.textInput} 
-              onChange={this.onChange} 
+            <AtMentionsReplyBox
+              ref={this.replyBox}
+              onInput={this.onChange}
               onKeyDown={this.onKeyDown}
-              onBlur={closeEditing}         
-              defaultValue={contents} 
+              onBlur={closeEditing}
               placeholder={`${t('action.comment')}...`}
+              atMentions={atMentions}
             />
             <span className="buttons">
               <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
@@ -97,8 +104,16 @@ class NoteContents extends React.Component {
           {renderContents(contents)}
         </div>
       </div>
+
     );
   }
 }
 
-export default translate()(NoteContents);
+
+const mapStateToProps = state => ({
+  atMentions: selectors.getAtMentions(state),
+  atMentionsCallback: selectors.getAtMentionsCallback(state),
+});
+
+
+export default connect(mapStateToProps, null)(translate()(NoteContents));

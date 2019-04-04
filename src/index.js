@@ -7,7 +7,6 @@ import i18next from 'i18next';
 import thunk from 'redux-thunk';
 
 import core from 'core';
-import actions from 'actions';
 
 import apis from 'src/apis';
 
@@ -89,21 +88,13 @@ if (window.CanvasRenderingContext2D) {
   if (state.advanced.preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
     if (state.document.pdfType !== 'wait') {
       getBackendPromise(state.document.pdfType).then(pdfType => {
-        window.CoreControls.initPDFWorkerTransports(pdfType, {
-          workerLoadingProgress: percent => {
-            store.dispatch(actions.setWorkerLoadingProgress(percent));
-          }
-        }, null);
+        window.CoreControls.preloadPDFWorker(pdfType, {}, {});
       });
     }
 
     if (state.document.officeType !== 'wait') {
       getBackendPromise(state.document.officeType).then(officeType => {
-        window.CoreControls.preloadOfficeWorker(officeType, {
-          workerLoadingProgress: percent => {
-            store.dispatch(actions.setWorkerLoadingProgress(percent));
-          }
-        }, {});
+        window.CoreControls.preloadOfficeWorker(officeType, {}, {});
       });
     }
   }
@@ -201,6 +192,8 @@ if (window.CanvasRenderingContext2D) {
           selectors: apis.getSelectors(store),
           setAdminUser: apis.setAdminUser,
           setNoteDateFormat: apis.setNoteDateFormat(store),
+          setAtMentions: apis.setAtMentions(store),
+          setAtMentionsCallback: apis.setAtMentionsCallback(store),
           setAnnotationUser: apis.setAnnotationUser,
           setTheme: apis.setTheme,
           setCurrentPageNumber: apis.setCurrentPageNumber,
@@ -210,8 +203,8 @@ if (window.CanvasRenderingContext2D) {
           setLanguage: apis.setLanguage,
           setLayoutMode: apis.setLayoutMode,
           setNotesPanelSort: apis.setNotesPanelSort(store),
-          setMaxZoomLevel: apis.setMaxZoomLevel(store),
-          setMinZoomLevel: apis.setMinZoomLevel(store),
+          setMaxZoomLevel: apis.setMaxZoomLevel,
+          setMinZoomLevel: apis.setMinZoomLevel,
           setPrintQuality: apis.setPrintQuality(store),
           setReadOnly: apis.setReadOnly,
           setShowSideWindow: apis.setShowSideWindow(store),
@@ -222,7 +215,6 @@ if (window.CanvasRenderingContext2D) {
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store),
-          updateTool: apis.updateTool(store),
           loadedFromServer: false,
           serverFailed: false,
         };
