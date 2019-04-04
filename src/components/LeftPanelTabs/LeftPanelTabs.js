@@ -17,13 +17,22 @@ class LeftPanelTabs extends React.Component {
     activePanel: PropTypes.string.isRequired,
     disabledCustomPanelTabs: PropTypes.array.isRequired,
     customPanels: PropTypes.array.isRequired,
-    isOpening: PropTypes.bool,
+    panelIsOpen: PropTypes.bool,
     isLeftPanelTabsDisabled: PropTypes.bool,
     isThumbnailsPanelButtonDisabled: PropTypes.bool,
     isOutlinesPanelButtonDisabled: PropTypes.bool,
     isNotesPanelButtonDisabled: PropTypes.bool,
     setActiveLeftPanel: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired
+  }
+
+  state = {}
+  static getDerivedStateFromProps(nextProps, prevState){
+    const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.panelIsOpen;
+    if (hasIsOpenChanged){
+      return { isOpening: true, mirroredIsOpen: nextProps.panelIsOpen };
+    }
+    return { isOpening: false, mirroredIsOpen: nextProps.panelIsOpen };
   }
 
   isActive = panel => {
@@ -33,7 +42,6 @@ class LeftPanelTabs extends React.Component {
   render() {
     const {
       activePanel,
-      isOpening,
       customPanels,
       isLeftPanelTabsDisabled,
       isThumbnailsPanelButtonDisabled,
@@ -42,11 +50,14 @@ class LeftPanelTabs extends React.Component {
       setActiveLeftPanel,
       disabledCustomPanelTabs
     } = this.props;
+    const {
+      isOpening,
+    } = this.state;
 
     if (isLeftPanelTabsDisabled) {
       return null;
     }
-
+;
     return (
       <Element className="LeftPanelTabs" dataElement="leftPanelTabs">
         <Tooltip content="component.thumbnailsPanel" isDisabled={isThumbnailsPanelButtonDisabled}>
@@ -83,6 +94,7 @@ class LeftPanelTabs extends React.Component {
               dataElement={tab.dataElement}
               img={tab.img}
               onClick={() => setActiveLeftPanel(panel.dataElement)}
+              willFocus={activePanel === panel.dataElement && isOpening}
             />
           </Tooltip>
         ))}

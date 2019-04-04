@@ -1,11 +1,11 @@
 @import '../../constants/styles';
 
-.MeasurementsOverlay{
+.MeasurementOption {
   width: 100%;
   height: 50px;
   background: white;
 
-  .textarea{
+  .textarea {
     resize: none;
     outline: none;
     border: none;
@@ -18,27 +18,27 @@
     text-align:right;
   }
 
-  .Scale{
+  .Scale {
     display: flex;
     margin-top: -6px;
   }
   
-  .Precision{
+  .Precision {
     display: flex;
     margin-top: 14px;
   }
   
-  .LayoutTitle{
+  .LayoutTitle {
     margin-left: 16px;
   }
   
-  .Layout{
+  .Layout {
     position: absolute;
     display: flex;
     margin-left: 87px;
   }
   
-  .ScaleDropdown{
+  .ScaleDropdown {
     @include mobile{
       &.open{
         margin-top: -48px;
@@ -49,7 +49,7 @@
     z-index: 2;
   }
   
-  .PrecisionDropdown{
+  .PrecisionDropdown {
     @include mobile{
       &.open{
         z-index: 3;
@@ -65,6 +65,5 @@
     -webkit-appearance: none; 
     margin: 0; 
   }
-
 }
 

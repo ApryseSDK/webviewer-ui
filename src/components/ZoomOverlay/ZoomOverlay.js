@@ -33,6 +33,7 @@ class ZoomOverlay extends React.PureComponent {
   }
 
   componentDidMount() {
+    document.addEventListener('mousedown', this.handleMouseDown);
     window.addEventListener('resize', this.handleWindowResize);
   }
 
@@ -48,6 +49,7 @@ class ZoomOverlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleMouseDown);
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
@@ -66,6 +68,15 @@ class ZoomOverlay extends React.PureComponent {
       left: left - 20,
       right
     });
+  }
+
+  handleMouseDown = e => {
+    const clickedOutside = this.dropdown.current && !this.dropdown.current.contains(e.target);
+    const toggleElementOverlay = document.querySelector('.ToggleElementOverlay');
+    const clickedOnZoomIndicator = toggleElementOverlay && toggleElementOverlay.contains(e.target);
+    if (clickedOutside && !clickedOnZoomIndicator) {
+      this.props.closeElements(['zoomOverlay']);
+    }
   }
 
   render() {

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
-import MeasurementsOverlay from 'components/MeasurementsOverlay';
+import MeasurementOption from 'components/MeasurementOption';
 
 import { circleRadius } from 'constants/slider';
 import selectors from 'selectors';
@@ -85,9 +85,10 @@ class StylePopup extends React.PureComponent {
   }
 
   render() {
-    const { currentPalette, style, colorMapKey, isTool } = this.props;
+    const { currentPalette, style, colorMapKey } = this.props;
     const { openMeasurementDropdown } = this.state;
-    const isMeasurement =  colorMapKey.includes('Measurement');
+    const { Scale, Precision } = style;
+
     return (
       <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
         {currentPalette &&
@@ -103,8 +104,13 @@ class StylePopup extends React.PureComponent {
             {!this.props.hideSlider && this.renderSliders()}
           </div>
         </div>
-        {isMeasurement && isTool &&
-          <MeasurementsOverlay onOpenDropdownChange={this.onOpenDropdownChange} openMeasurementDropdown ={openMeasurementDropdown} />
+        {Scale && Precision &&
+          <MeasurementOption
+            scale={Scale}
+            precision={Precision} 
+            onOpenDropdownChange={this.onOpenDropdownChange} 
+            openMeasurementDropdown={openMeasurementDropdown} 
+          />
         }
       </div>
     );

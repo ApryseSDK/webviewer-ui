@@ -22,7 +22,9 @@ class LeftPanel extends React.Component {
     isOpen: PropTypes.bool,
     customPanels: PropTypes.array.isRequired,
     activePanel: PropTypes.string.isRequired,
-    closeElement: PropTypes.func.isRequired
+    closeElement: PropTypes.func.isRequired,
+    setLeftPanelIndex: PropTypes.func.isRequired,
+    panelMove: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -80,8 +82,7 @@ class LeftPanel extends React.Component {
   }
 
   render() {
-    const { isOpening } = this.state;
-    const { isDisabled, closeElement, customPanels, activePanel, panelMove, setLeftPanelIndex } = this.props;
+    const { isOpen, isDisabled, closeElement, customPanels, activePanel, panelMove, setLeftPanelIndex } = this.props;
 
     if (isDisabled) {
       return null;
@@ -99,8 +100,7 @@ class LeftPanel extends React.Component {
         onKeyDown={e => {
           if (e.key === 'ArrowUp') {
             panelMove(activePanel, -1);
-          }
-          if (e.key === 'ArrowDown') {
+          } else if (e.key === 'ArrowDown') {
             panelMove(activePanel, 1);
           }
         }}
@@ -118,7 +118,7 @@ class LeftPanel extends React.Component {
           <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>
             <Icon glyph="ic_close_black_24px" />
           </div>
-          <LeftPanelTabs isOpening={isOpening} />
+          <LeftPanelTabs panelIsOpen={isOpen} />
         </div>
 
         {!isIE11 &&
