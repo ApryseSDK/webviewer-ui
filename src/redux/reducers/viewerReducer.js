@@ -1,3 +1,5 @@
+import modifyHeader from 'helpers/modifyHeader';
+
 export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
@@ -156,30 +158,16 @@ export default initialState => (state = initialState, action) => {
       return { ...state, warning: payload};
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
-    case 'ADD_ITEMS': { 
+    case 'ADD_ITEMS': {
       let defaultArr = state.headers.default;
       const { newItems, index, group } = payload;
       if (!group) {
         defaultArr.splice(index, 0, ...newItems);
         return { ...state, headers: { default: [ ...defaultArr ] } };
       } else {
-        if (defaultArr.includes(group)) {
-          const groupIndex = defaultArr.indexOf(group);
           group.children.splice(index, 0, ...newItems);
-          group.children = [ ...group.children ];
-          defaultArr.splice(groupIndex, 1, { ...group });
-          return { ...state, headers: { default: [ ...defaultArr ] } };
-        } else {
-          const parentGroup = defaultArr.filter(buttonObject => buttonObject.children).find(buttonObject => buttonObject.children.includes(group));
-          const parentGroupIndex = defaultArr.indexOf(parentGroup);
-          const groupIndex = defaultArr[parentGroupIndex].children.indexOf(group);
-          group.children.splice(index, 0, ...newItems);
-          group.children = [ ...group.children ];
-          defaultArr[parentGroupIndex].children[groupIndex] = { ...group };
-          defaultArr[parentGroupIndex].children = [ ...defaultArr[parentGroupIndex].children ];
-          defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
-          return { ...state, headers: { default: [ ...defaultArr ] } };
-        }
+          const modification = group.children;
+          return modifyHeader(state, group, modification, defaultArr);
       }
     }
     case 'REMOVE_ITEMS': {
@@ -206,21 +194,8 @@ export default initialState => (state = initialState, action) => {
       if (!group){
         return { ...state, headers: { default: [ ...currentArr ] } }
       } else {
-        if (defaultArr.includes(group)) {
-          const groupIndex = defaultArr.indexOf(group);
-          group.children = [ ...currentArr ];
-          defaultArr.splice(groupIndex, 1, { ...group });
-          return { ...state, headers: { default: [ ...defaultArr ] } };
-        } else {
-          const parentGroup = state.headers.default.filter(buttonObject => buttonObject.children).find(buttonObject => buttonObject.children.includes(group));
-          const parentGroupIndex = state.headers.default.indexOf(parentGroup);
-          const groupIndex = state.headers.default[parentGroupIndex].children.indexOf(group);
-          group.children = [ ...currentArr ];
-          defaultArr[parentGroupIndex].children[groupIndex] = { ...group };
-          defaultArr[parentGroupIndex].children = [ ...defaultArr[parentGroupIndex].children ];
-          defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
-          return { ...state, headers: { default: [ ...defaultArr ] } };
-        }
+        const modification = [ ...currentArr ];
+        return modifyHeader(state, group, modification, defaultArr);
       }
     }
     case 'UPDATE_ITEM': {
@@ -239,23 +214,9 @@ export default initialState => (state = initialState, action) => {
         currentArr[updateObjectIndex] = updateObject;
         return { ...state, headers: { default: currentArr } }
       } else {
-        if (defaultArr.includes(group)) {
-          const groupIndex = defaultArr.indexOf(group);
-          group.children[updateObjectIndex] = updateObject;
-          group.children = [ ...group.children ];
-          defaultArr.splice(groupIndex, 1, { ...group });
-          return { ...state, headers: { default: [ ...defaultArr ] } };
-        } else {
-          const parentGroup = state.headers.default.filter(buttonObject => buttonObject.children).find(buttonObject => buttonObject.children.includes(group));
-          const parentGroupIndex = state.headers.default.indexOf(parentGroup);
-          const groupIndex = state.headers.default[parentGroupIndex].children.indexOf(group);
-          group.children[updateObjectIndex] = updateObject;
-          group.children = [ ...group.children ];
-          defaultArr[parentGroupIndex].children[groupIndex] = { ...group };
-          defaultArr[parentGroupIndex].children = [ ...defaultArr[parentGroupIndex].children ];
-          defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
-          return { ...state, headers: { default: [ ...defaultArr ] } };
-        }
+        group.children[updateObjectIndex] = updateObject;
+        const modification = [ ...group.children ];
+        return modifyHeader(state, group, modification, defaultArr);
       }
     }
     case 'SET_ITEMS': {
@@ -264,21 +225,8 @@ export default initialState => (state = initialState, action) => {
       if (!group) {
         return { ...state, headers: { default: [ ...items ] } }
       } else {
-        if (defaultArr.includes(group)) {
-          const groupIndex = defaultArr.indexOf(group);
-          group.children = [ ...items ];
-          defaultArr.splice(groupIndex, 1, { ...group });
-          return { ...state, headers: { default: [ ...defaultArr ] } }
-        } else {
-          const parentGroup = defaultArr.filter(buttonObject => buttonObject.children).find(buttonObject => buttonObject.children.includes(group));
-          const parentGroupIndex = defaultArr.indexOf(parentGroup);
-          const groupIndex = defaultArr[parentGroupIndex].children.indexOf(group);
-          group.children = [ ...items ];
-          defaultArr[parentGroupIndex].children[groupIndex] = { ...group };
-          defaultArr[parentGroupIndex].children = [ ...defaultArr[parentGroupIndex].children ];
-          defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
-          return { ...state, headers: { default: [ ...defaultArr ] } };
-        }
+        const modification = [ ...items ];
+        return modifyHeader(state, group, modification, defaultArr);
       }
     } 
     default:
