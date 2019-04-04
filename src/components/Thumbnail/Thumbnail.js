@@ -18,18 +18,21 @@ class Thumbnail extends React.PureComponent {
     onLoad: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
+    updateAnnotations: PropTypes.func,
     closeElement: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props);
     this.thumbContainer = React.createRef();
+    this.onLayoutChangedHandler = this.onLayoutChanged.bind(this);
   }
 
   componentDidMount() {
     const { onLoad, index } = this.props;
 
     onLoad(index, this.thumbContainer.current);
+    core.addEventListener('layoutChanged', this.onLayoutChangedHandler);
   }
 
   componentDidUpdate(prevProps) {
@@ -45,8 +48,30 @@ class Thumbnail extends React.PureComponent {
 
   componentWillUnmount() {
     const { onRemove, index } = this.props;
-    
+    core.removeEventListener('layoutChanged', this.onLayoutChangedHandler);
     onRemove(index);
+  }
+
+  onLayoutChanged(e, changes) {
+    const { contentChanged } = changes;
+    const { index } = this.props;
+
+    const currentPage = index + 1;
+    const didLayoutChange = contentChanged.some(changedPage => currentPage + '' === changedPage);
+
+    if(didLayoutChange) {
+      const { thumbContainer } = this;
+      const { current } = thumbContainer;
+
+      core.loadThumbnailAsync(index, thumb => {
+        thumb.className = 'page-image';
+        current.removeChild(current.querySelector('.page-image'));
+        current.appendChild(thumb);
+        if (this.props.updateAnnotations) {
+          this.props.updateAnnotations(index, thumb);
+        }
+      });
+    }
   }
 
   handleClick = () => {
