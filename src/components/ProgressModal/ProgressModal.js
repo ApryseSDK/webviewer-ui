@@ -22,7 +22,9 @@ class ProgressModal extends React.PureComponent {
   }
 
   render() {
-    if (this.props.isDisabled) {
+    const { isDisabled, loadingProgress } = this.props;
+
+    if (isDisabled) {
       return null;
     }
 
@@ -32,7 +34,7 @@ class ProgressModal extends React.PureComponent {
       <div className={className} data-element="progressModal">
         <div className="container">
           <div className="progress-bar-wrapper">
-            <div className="progress-bar" style={{ transform: `translateX(${-(1 - this.props.loadingProgress) * 100}%`}}>
+            <div className="progress-bar" style={{ transform: `translateX(${-(1 - loadingProgress) * 100}%`, transition: loadingProgress ? 'transform 0.5s ease' : 'none' }}>
             </div>
           </div>
         </div>
