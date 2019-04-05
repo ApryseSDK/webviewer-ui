@@ -6,6 +6,7 @@ export default store => (documentPath, options = {}) => {
     documentId = null,
     streaming = false,
     filename = null,
+    extension = null,
     decrypt = null,
     decryptOptions = {},
     customHeaders = {},
@@ -18,6 +19,7 @@ export default store => (documentPath, options = {}) => {
   store.dispatch(actions.setDecryptFunction(decrypt));
   store.dispatch(actions.setDecryptOptions(decryptOptions));
   store.dispatch(actions.setFilename(filename));
+  store.dispatch(actions.setExtension(extension));
   store.dispatch(actions.setCustomHeaders(customHeaders));
   store.dispatch(actions.setWithCredentials(withCredentials));
   store.dispatch(actions.setPassword(password));

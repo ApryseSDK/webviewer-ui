@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { fireError } from 'helpers/fireEvent';
-import { engineTypes, documentTypes } from 'constants/types';
+import { engineTypes, workerTypes } from 'constants/types';
 import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -72,11 +72,16 @@ const checkByteRange = state => {
 };
 
 const getPartRetriever = (state, streaming) => {
-  const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
+  const { path, initialDoc, file, isOffline, pdfDoc, ext } = state.document;
+  let { filename } = state.document;
   const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, disableWebsockets, useDownloader, withCredentials } = state.advanced;
   const documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
+
+  if (ext && !filename) {
+    filename = createFakeFilename(initialDoc, ext);
+  }
 
   return new Promise(resolve => {
     let partRetriever;
@@ -150,7 +155,7 @@ const getDocOptions = (state, dispatch, streaming) => {
 
   return new Promise(resolve => {
     if (engineType === engineTypes.UNIVERSAL) {
-      dispatch(actions.setDocumentType(documentTypes.XOD));
+      dispatch(actions.setDocumentType(workerTypes.XOD));
       resolve(docId);
     } else {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise } = state.advanced;
@@ -237,6 +242,7 @@ export const getDocumentExtension = (doc, engineType) => {
 
   if (extension) {
     if (!supportedExtensions.includes(extension)) {
+      console.error(`File extension is not found or incorrect. Use "extension" option in PDFTron.WebViewer constructor and loadDocument if the extension is not known. See for more details ...`)
       console.error(`File extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWebViewer server supports ${supportedBlackboxExtensions.join(', ')}`);
     }
   } else if (doc && engineType === engineTypes.AUTO) {
@@ -248,9 +254,16 @@ export const getDocumentExtension = (doc, engineType) => {
 
 export const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
-  const { path, filename, initialDoc } = state.document;
+  let { path, filename, initialDoc, ext } = state.document;
+  if (ext && !filename) {
+    filename = createFakeFilename(path || initialDoc, ext)
+  }
   return filename || path || initialDoc;
 };
+
+const createFakeFilename = (initialDoc, ext) => {
+  return initialDoc.replace(/^.*[\\\/]/, '') + '.' + ext.replace(/^\./, "");
+}
 
 const isPDFNetJSExtension = extension => {
   return isOfficeExtension(extension) || isPDFExtension(extension);
@@ -272,24 +285,24 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
   let workerTransportPromise;
 
   if (engineType === engineTypes.PDFTRON_SERVER) {
-    type = documentTypes.BLACKBOX;
+    type = workerTypes.BLACKBOX;
   } else {
     const usingOfficeWorker = supportedOfficeExtensions.indexOf(originalExtension) !== -1;
     if (usingOfficeWorker && !officeWorkerTransportPromise) {
-      type = documentTypes.OFFICE;
+      type = workerTypes.OFFICE;
       workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(officeBackendType, workerHandlers, window.sampleL);
     } else if (!usingOfficeWorker && !pdfWorkerTransportPromise) {
-      type = documentTypes.PDF;
+      type = workerTypes.PDF;
       // if the extension isn't pdf or an image then assume it's a pdf
       if (supportedPDFExtensions.indexOf(originalExtension) === -1) {
         extension = 'pdf';
       }
       workerTransportPromise = window.CoreControls.initPDFWorkerTransports(pdfBackendType, workerHandlers, window.sampleL);
     } else if (usingOfficeWorker) {
-      type = documentTypes.OFFICE;
+      type = workerTypes.OFFICE;
       workerTransportPromise = officeWorkerTransportPromise;
     } else {
-      type = documentTypes.PDF;
+      type = workerTypes.PDF;
       workerTransportPromise = pdfWorkerTransportPromise;
     }
   }
@@ -302,4 +315,3 @@ const isLocalFile = state => {
 
   return !/https?:\/\//.test(path);
 };
-
