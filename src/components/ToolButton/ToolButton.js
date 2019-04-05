@@ -32,7 +32,8 @@ class ToolButton extends React.PureComponent {
   }
 
   onClick = e => {
-    const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement } = this.props;
+    const { isActive, toolName, setActiveToolGroup, closeElement, toggleElement } = this.props;
+    const group = this.props.toolGroup;
     e.stopPropagation();
    
     if (isActive) {
@@ -75,7 +76,6 @@ class ToolButton extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-
     return (
       <Button {...this.props} className={className} color={color} onClick={this.onClick} />
     );

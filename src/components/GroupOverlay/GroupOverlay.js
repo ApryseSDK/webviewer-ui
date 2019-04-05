@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ToolButton from 'components/ToolButton';
+import ToggleElementButton from 'components/ToggleElementButton';
 import ActionButton from 'components/ActionButton';
+import StatefulButton from 'components/StatefulButton';
+import CustomElement from 'components/CustomElement';
 import Button from 'components/Button';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
+import statefulButtons from 'constants/statefulButtons';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -19,7 +23,6 @@ class GroupOverlay extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    toolButtonObjects: PropTypes.object,
     activeHeaderItems: PropTypes.arrayOf(PropTypes.object),
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
@@ -37,6 +40,7 @@ class GroupOverlay extends React.PureComponent {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
+    this.setOverlayPosition();
   }
 
   componentDidUpdate(prevProps) {
@@ -61,11 +65,9 @@ class GroupOverlay extends React.PureComponent {
   }
 
   setOverlayPosition = () => {
-    const { activeToolGroup, activeHeaderItems } = this.props;
-    const element = activeHeaderItems.find(item => item.toolGroup === activeToolGroup);
-    
-    if (element) {
-      this.setState(getOverlayPositionBasedOn(element.dataElement, this.overlay));
+    const { dataElement } = this.props;
+    if (dataElement) {
+      this.setState(getOverlayPositionBasedOn(dataElement, this.overlay));
     }
   }
 
@@ -79,22 +81,27 @@ class GroupOverlay extends React.PureComponent {
 
   render() {
     const { left, right } = this.state;
-    const { isDisabled, isOpen, activeToolGroup, activeHeaderItems } = this.props;
+    const { isDisabled, isOpen, activeToolGroup, nestedChildren } = this.props;
 
     if (isDisabled || !activeToolGroup) {
       return null;
     }
-
     const className = getClassName('Overlay GroupOverlay', { isOpen });
-    let buttonGroup = (Object.keys(activeHeaderItems).find(key => activeHeaderItems[key].toolGroup === activeToolGroup));
-    const children = activeHeaderItems[buttonGroup].children;
     return (
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="groupOverlay" onMouseDown={e => e.stopPropagation()}>
-        {children.map((element, i) => {
-          if (element.type === 'toolButton'){
-            return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} />
-          } else {
-            return <ActionButton { ...element }/>
+        {nestedChildren.map((element, i) => {
+          switch (element.type){
+            case 'toolButton':
+              return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} toolGroup={this.props.toolGroup} {...element} />;
+            case 'toggleElementButton':
+              return <ToggleElementButton key={i} {...element} />;
+            case 'actionButton':
+              return <ActionButton key={i} {...element} />;
+            case 'statefulButton':
+              const props = statefulButtons[element.dataElement] || {};
+              return <StatefulButton key={i} {...element} {...props} />;
+            case 'customElement':
+              return <CustomElement key={i} {...element} />;
           }
         }
         )}
@@ -108,7 +115,6 @@ class GroupOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'groupOverlay'),
   isOpen: selectors.isElementOpen(state, 'groupOverlay'),
-  toolButtonObjects: selectors.getToolButtonObjects(state),
   activeHeaderItems: selectors.getActiveHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state)
 });

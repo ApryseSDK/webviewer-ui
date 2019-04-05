@@ -90,6 +90,12 @@ export const setHeaderItems = (header, headerItems) => ({ type: 'SET_HEADER_ITEM
 export const setColorPalette = (toolName, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { toolName, colorPalette } });
 export const setIconColor = (toolName, color) => ({ type: 'SET_ICON_COLOR', payload: { toolName, color } });
 
+// header API
+export const addItems = (newItems, index, group) => ({ type: 'ADD_ITEMS', payload: { newItems, index, group } });
+export const removeItems = (itemList, group) => ({ type: 'REMOVE_ITEMS', payload: { itemList, group } });
+export const updateItem = (dataElement, newProps, group) => ({ type: 'UPDATE_ITEM', payload: { dataElement, newProps, group } });
+export const setItems = (items, group) => ({ type: 'SET_ITEMS', payload: { items, group } });
+
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });
 export const setDocumentPath = documentPath => ({ type: 'SET_DOCUMENT_PATH', payload: { documentPath } });
