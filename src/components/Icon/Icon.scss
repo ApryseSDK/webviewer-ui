@@ -15,4 +15,7 @@
   path:not([fill=none]) {
     fill: currentColor;
   }
+  polygon:not([fill=none]) {
+    fill: currentColor;
+  }
 }
