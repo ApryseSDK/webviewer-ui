@@ -65,7 +65,7 @@ export const setCurrentPage = currentPage => ({ type: 'SET_CURRENT_PAGE', payloa
 export const setFullScreen = isFullScreen => ({ type: 'SET_FULL_SCREEN', payload: { isFullScreen } });
 export const setDocumentLoaded = isDocumentLoaded => ({ type: 'SET_DOCUMENT_LOADED', payload: { isDocumentLoaded } });
 export const setReadOnly = isReadOnly => ({ type: 'SET_READ_ONLY', payload: { isReadOnly } });
-export const registerTool = tool => ({ type: 'REGISTER_TOOL', payload: { ...tool } });
+export const registerTool = (tool, annotationConstructor) => ({ type: 'REGISTER_TOOL', payload: { ...tool, annotationConstructor } });
 export const unregisterTool = toolName => ({ type: 'UNREGISTER_TOOL', payload: { toolName } });
 export const setToolButtonObjects= toolButtonObjects => ({ type: 'SET_TOOL_BUTTON_OBJECTS', payload: { toolButtonObjects } });
 export const setIsNoteEditing = isNoteEditing => (dispatch, getState) => {
@@ -87,9 +87,14 @@ export const collapseAllNotes = () => (dispatch, getState) => {
   }
 };
 export const setHeaderItems = (header, headerItems) => ({ type: 'SET_HEADER_ITEMS', payload: { header, headerItems } });
-export const setColorPalette = (colorMapKey, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { colorMapKey, colorPalette } });
-export const setIconColor = (colorMapKey, color) => ({ type: 'SET_ICON_COLOR', payload: { colorMapKey, color } });
-export const setColorMap = colorMap => ({ type: 'SET_COLOR_MAP', payload: { colorMap } });
+export const setColorPalette = (toolName, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { toolName, colorPalette } });
+export const setIconColor = (toolName, color) => ({ type: 'SET_ICON_COLOR', payload: { toolName, color } });
+
+// header API
+export const addItems = (newItems, index, group) => ({ type: 'ADD_ITEMS', payload: { newItems, index, group } });
+export const removeItems = (itemList, group) => ({ type: 'REMOVE_ITEMS', payload: { itemList, group } });
+export const updateItem = (dataElement, newProps, group) => ({ type: 'UPDATE_ITEM', payload: { dataElement, newProps, group } });
+export const setItems = (items, group) => ({ type: 'SET_ITEMS', payload: { items, group } });
 
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });

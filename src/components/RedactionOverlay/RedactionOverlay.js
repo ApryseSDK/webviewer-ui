@@ -41,7 +41,7 @@ class RedactionOverlay extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       const {closeElements, setActiveToolGroup}  = this.props;
-      closeElements(['menuOverlay', 'toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
+      closeElements(['menuOverlay', 'groupOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
 
       core.setToolMode('AnnotationCreateRedaction');
       setActiveToolGroup('redactTools');
@@ -79,7 +79,7 @@ class RedactionOverlay extends React.PureComponent {
         { showApply && <Button className="ToolButton" dataElement="applyAllButton" title="action.applyAll" img="ic_check_black_24px" onClick={this.handleApplyButtonClick}/> }
 
         <div className="spacer hide-in-desktop"></div>
-        <Button className="close hide-in-desktop" dataElement="toolsOverlayCloseButton" img="ic_check_black_24px" onClick={this.handleCloseClick} />
+        <Button className="close hide-in-desktop" dataElement="groupOverlayCloseButton" img="ic_check_black_24px" onClick={this.handleCloseClick} />
     </div>
     );
   }

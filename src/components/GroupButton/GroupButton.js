@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import GroupOverlay from 'components/GroupOverlay';
 import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
 import defaultTool from 'constants/defaultTool';
-import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
-class ToolGroupButton extends React.PureComponent {
+import Portal from 'src/Portal';
+
+class GroupButton extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     activeToolName: PropTypes.string.isRequired,
@@ -43,7 +45,6 @@ class ToolGroupButton extends React.PureComponent {
     const wasAcitveToolNameInGroup = prevProps.toolNames.indexOf(prevProps.activeToolName) > -1;
     const isAcitveToolNameInGroup = this.props.toolNames.indexOf(this.props.activeToolName) > -1;
     const toolNamesLengthChanged = prevProps.toolNames.length !== this.props.toolNames.length;
-
     if (activeToolNameChanged && isAcitveToolNameInGroup) {
       this.setState({ toolName: this.props.activeToolName });
     }
@@ -62,15 +63,14 @@ class ToolGroupButton extends React.PureComponent {
     const { toolName } = this.state;
 
     e.stopPropagation();
-
     setActiveToolGroup(toolGroup);
     closeElement('toolStylePopup');
 
     if (isActive) {
-      toggleElement('toolsOverlay');
+      toggleElement('groupOverlay');
     } else {
       this.setToolMode(toolName);
-      openElement('toolsOverlay');
+      openElement('groupOverlay');
     }
   }
 
@@ -86,34 +86,54 @@ class ToolGroupButton extends React.PureComponent {
   }
 
   render() {
-    const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive, toolNames, iconColor } = this.props;
-    const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName).disabled);
-
+    const { mediaQueryClassName, isDisabled, dataElement, isActive, toolNames, iconColor, children, activeToolGroup, toolGroup, activeToolStyles} = this.props;
+    const isOnlyTools = children.filter(button => button.type !== 'toolButton').length === 0;
+    const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName) ? core.getTool(toolName).disabled : '');
     if (isDisabled || allButtonsInGroupDisabled) {
-      return null;
+      if (isOnlyTools){
+        return null;
+      }
     }
-
+    if (!img && !isOnlyTools) {
+      console.warn('GroupButton contains buttons other than toolButtons and no img is found. Please specify an img');
+    }
     const { toolName } = this.state;
-    const img = this.props.img ? this.props.img : toolButtonObjects[toolName].img;
-    const color = isActive && !this.props.img && iconColor ? getToolStyles(toolName)[iconColor].toHexString() : '';
+    const activeIcon = children.find(button => button.toolName === toolName) ? children.find(button => button.toolName === toolName).img: '';
+    const img = this.props.img ? this.props.img : isOnlyTools ? activeIcon : ''
+    let color;
+    if (isActive && !this.props.img && iconColor) {
+      let toolStyles = activeToolStyles;
+      color = toolStyles[iconColor].toHexString();
+    } 
+
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
     const className = [
-      'ToolGroupButton',
+      'GroupButton',
       showDownArrow ? 'down-arrow' : '',
     ].join(' ').trim();
 
-    return <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={color} />;
+    return (
+      <React.Fragment>
+        <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={color} />
+        {toolGroup === activeToolGroup && 
+          <Portal>
+            <GroupOverlay nestedChildren={children} dataElement={dataElement} toolGroup={toolGroup}/>
+          </Portal>
+        }
+      </React.Fragment>
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isDisabled: selectors.isToolGroupButtonDisabled(state, ownProps.dataElement, ownProps.toolGroup),
+  isDisabled: selectors.isToolGroupButtonDisabled(state, ownProps.dataElement, ownProps.toolNames),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
-  toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
+  activeToolStyles: selectors.getActiveToolStyles(state),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  iconColor: selectors.getIconColor(state, mapToolNameToKey(selectors.getActiveToolName(state)))
+  iconColor: selectors.getIconColor(state, selectors.getActiveToolName(state)),
+  activeToolGroup: selectors.getActiveToolGroup(state)
 });
 
 const mapDispatchToProps = {
@@ -123,4 +143,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(ToolGroupButton));
+export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(GroupButton));

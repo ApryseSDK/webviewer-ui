@@ -6,7 +6,6 @@ import StylePopup from 'components/StylePopup';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
-import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -18,7 +17,6 @@ class ToolStylePopup extends React.PureComponent {
     activeToolStyle: PropTypes.object,
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    toolButtonObjects: PropTypes.object.isRequired,
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
@@ -67,11 +65,17 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   positionToolStylePopup = () => {
-    const { toolButtonObjects, activeToolName } = this.props;
-    const dataElement = toolButtonObjects[activeToolName].dataElement;
-    const toolButton = document.querySelectorAll(`.Header [data-element=${dataElement}], .ToolsOverlay [data-element=${dataElement}]`)[0];
-
-    if (!toolButton) {
+    const { dataElement } = this.props;
+    let toolButton = undefined;
+    if (dataElement) {
+      toolButton = document.querySelectorAll(`.Header [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
+      if (!toolButton) {
+        toolButton = document.querySelectorAll(`.ResponsiveOverlay [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
+      }
+      if (!toolButton) {
+        return;
+      }
+    } else {
       return;
     }
 
@@ -102,21 +106,19 @@ class ToolStylePopup extends React.PureComponent {
 
   render() {
     const { left, top } = this.state;
-    const { isDisabled, activeToolName, activeToolStyle } = this.props;
+    const { isDisabled, activeToolName, activeToolStyle, dataElement } = this.props;
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const className = getClassName(`Popup ToolStylePopup`, this.props);
-    const colorMapKey = mapToolNameToKey(activeToolName);
 
     if (isDisabled) {
       return null;
     }
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
-    
     return (
       <div className={className} data-element="toolStylePopup" style={{ top, left }} ref={this.popup} onMouseDown={e => e.stopPropagation()} onClick={this.onClick}>
         <StylePopup
           key={activeToolName}
-          colorMapKey={colorMapKey}
+          activeToolName={activeToolName}
           style={activeToolStyle}
           isFreeText={isFreeText}
           hideSlider={hideSlider}
@@ -133,7 +135,8 @@ const mapStateToProps = state => ({
   activeToolStyle: selectors.getActiveToolStyles(state),
   isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
   isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
-  toolButtonObjects: selectors.getToolButtonObjects(state)
+  toolButtonObjects: selectors.getToolButtonObjects(state),
+  dataElement: selectors.getActiveDataElement(state)
 });
 
 const mapDispatchToProps = {

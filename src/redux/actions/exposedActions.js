@@ -130,4 +130,5 @@ export const showWarningMessage = options => dispatch => {
   dispatch(openElement('warningModal'));
 };
 export const setCustomNoteFilter = filterFunc => ({ type: 'SET_CUSTOM_NOTE_FILTER', payload: { customNoteFilter: filterFunc } });
-  
+
+

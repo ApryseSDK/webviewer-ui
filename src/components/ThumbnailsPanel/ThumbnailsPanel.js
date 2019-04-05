@@ -186,6 +186,7 @@ class ThumbnailsPanel extends React.PureComponent {
         if (this.thumbs[pageIndex]) {
           this.thumbs[pageIndex].element.appendChild(thumb);
           this.thumbs[pageIndex].loaded = true;
+          this.thumbs[pageIndex].updateAnnotationHandler = this.updateAnnotations.bind(this);
           this.removeFromPendingThumbs(pageIndex);
           this.updateAnnotations(pageIndex);
         }
@@ -234,13 +235,15 @@ class ThumbnailsPanel extends React.PureComponent {
 
   renderThumbnails = rowIndex => {
     const { numberOfColumns, canLoad } = this.state;
+    const { thumbs } = this;
 
     return (
       <div className="row" key={rowIndex}>
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
             const index = rowIndex * numberOfColumns + columnIndex;
-            
+            const updateHandler = thumbs && thumbs[index] ? thumbs[index].updateAnnotationHandler : null;
+
             return (
               index < this.props.totalPages 
               ? <Thumbnail
@@ -250,6 +253,7 @@ class ThumbnailsPanel extends React.PureComponent {
                   onLoad={this.onLoad}
                   onCancel={this.onCancel}
                   onRemove={this.onRemove}
+                  updateAnnotations={updateHandler}
                 />
               : null
             );

@@ -1,3 +1,5 @@
+import modifyHeader from 'helpers/modifyHeader';
+
 export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
@@ -33,7 +35,8 @@ export default initialState => (state = initialState, action) => {
     case 'CLOSE_ELEMENT':
       return { ...state, openElements: { ...state.openElements, [payload.dataElement]: false } };
     case 'SET_ACTIVE_HEADER_GROUP':
-      return { ...state, activeHeaderGroup: payload.headerGroup };
+      console.warn(`setActiveHeaderGroup is deprecated.`);
+      return state;
     case 'SET_ACTIVE_TOOL_NAME':
       return { ...state, activeToolName: payload.toolName };
     case 'SET_ACTIVE_TOOL_STYLES':
@@ -81,6 +84,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_HEADER_ITEMS':
       return { ...state, headers: { ...state.headers, [payload.header]: payload.headerItems} };
     case 'REGISTER_TOOL':
+      const availablePalettes = ['TextColor', 'StrokeColor', 'FillColor'].filter(property => payload.toolObject.defaults && payload.toolObject.defaults[property]);
       return {
         ...state,
         toolButtonObjects: {
@@ -90,7 +94,11 @@ export default initialState => (state = initialState, action) => {
             title: payload.tooltip,
             group: payload.buttonGroup,
             img: payload.buttonImage,
-            showColor: 'active'
+            showColor: 'active',
+            iconColor: availablePalettes[0],
+            currentPalette: availablePalettes[0],
+            availablePalettes,
+            annotationCheck: payload.annotationConstructor ? annotation => annotation instanceof payload.annotationConstructor : null
           }
         }
       };
@@ -129,15 +137,13 @@ export default initialState => (state = initialState, action) => {
     case 'SET_PAGE_LABELS': 
       return { ...state, pageLabels: [ ...payload.pageLabels ] };
     case 'SET_COLOR_PALETTE': {
-      const { colorMapKey, colorPalette } = payload;
-      return { ...state, colorMap: { ...state.colorMap, [colorMapKey]: { ...state.colorMap[colorMapKey], currentPalette: colorPalette } } };
+      const { toolName, colorPalette } = payload;
+      return { ...state, toolButtonObjects: { ...state.toolButtonObjects, [toolName]: { ...state.toolButtonObjects[toolName], currentPalette: colorPalette } } };
     }
     case 'SET_ICON_COLOR': {
-      const { colorMapKey, color } = payload;
-      return { ...state, colorMap: { ...state.colorMap, [colorMapKey]: { ...state.colorMap[colorMapKey], iconColor: color } } };
+      const { toolName, color } = payload;
+      return { ...state, toolButtonObjects: { ...state.toolButtonObjects, [toolName]: { ...state.toolButtonObjects[toolName], iconColor: color } } };
     }
-    case 'SET_COLOR_MAP': 
-      return { ...state, colorMap: payload.colorMap };
     case 'SET_CURSOR_OVERLAY': {
       const { imgSrc, width, height } = payload.data;
 
@@ -152,7 +158,78 @@ export default initialState => (state = initialState, action) => {
       return { ...state, warning: payload};
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
+    case 'ADD_ITEMS': {
+      let defaultArr = state.headers.default;
+      const { newItems, index, group } = payload;
+      if (!group) {
+        defaultArr.splice(index, 0, ...newItems);
+        return { ...state, headers: { default: [ ...defaultArr ] } };
+      } else {
+          group.children.splice(index, 0, ...newItems);
+          const modification = group.children;
+          return modifyHeader(state, group, modification, defaultArr);
+      }
+    }
+    case 'REMOVE_ITEMS': {
+      const { itemList, group } = payload;
+      let defaultArr = state.headers.default;
+      let currentArr = [];
+      if (!group) {
+        currentArr = state.headers.default;
+      } else {
+        currentArr = group.children;
+      }
+      let sortedList = [];
+      if (typeof itemList[0] === 'string') {
+        currentArr.filter(buttonObject => itemList.includes(buttonObject.dataElement)).forEach(buttonObject => {
+          sortedList.push(currentArr.indexOf(buttonObject));
+        });
+        sortedList = sortedList.sort(); 
+      } else {
+        sortedList = itemList.sort();
+      }
+      for (let i = sortedList.length - 1; i >= 0; i--) {
+        currentArr.splice(sortedList[i], 1);
+      }
+      if (!group){
+        return { ...state, headers: { default: [ ...currentArr ] } }
+      } else {
+        const modification = [ ...currentArr ];
+        return modifyHeader(state, group, modification, defaultArr);
+      }
+    }
+    case 'UPDATE_ITEM': {
+      const { dataElement, newProps, group } = payload;
+      let defaultArr = state.headers.default;
+      let currentArr = [];
+      if (!group) {
+        currentArr = [ ...state.headers.default ];
+      } else {
+        currentArr = [ ...group.children ];
+      }
+      let updateObject = currentArr.find(buttonObject => buttonObject.dataElement === dataElement);
+      const updateObjectIndex = currentArr.indexOf(updateObject);
+      updateObject = { ...updateObject, ...newProps }
+      if (!group) {
+        currentArr[updateObjectIndex] = updateObject;
+        return { ...state, headers: { default: currentArr } }
+      } else {
+        group.children[updateObjectIndex] = updateObject;
+        const modification = [ ...group.children ];
+        return modifyHeader(state, group, modification, defaultArr);
+      }
+    }
+    case 'SET_ITEMS': {
+      const { items, group } = payload;
+      let defaultArr = state.headers.default;
+      if (!group) {
+        return { ...state, headers: { default: [ ...items ] } }
+      } else {
+        const modification = [ ...items ];
+        return modifyHeader(state, group, modification, defaultArr);
+      }
+    } 
     default:
       return state;
-  }
-};
+    }
+  };

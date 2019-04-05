@@ -51,7 +51,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    TouchEventManager.initialize(this.document.current, this.container.current);
+    TouchEventManager.initialize(this.document.current, this.container.current, this.props.toolButtonObjects);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
@@ -178,7 +178,8 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  swipeOrientation: selectors.getSwipeOrientation(state)
+  swipeOrientation: selectors.getSwipeOrientation(state),
+  toolButtonObjects: selectors.getToolButtonObjects(state)
 });
 
 const mapDispatchToProps = dispatch => ({
