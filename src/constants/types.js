@@ -5,7 +5,7 @@ export const engineTypes = {
   AUTO: null
 };
 
-export const documentTypes = {
+export const workerTypes = {
   PDF: 'pdf',
   OFFICE: 'office',
   BLACKBOX: 'blackbox',

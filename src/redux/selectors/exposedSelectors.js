@@ -1,5 +1,5 @@
 import core from 'core';
-import { documentTypes } from 'constants/types';
+import { workerTypes } from 'constants/types';
 
 // viewer
 export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
@@ -68,7 +68,7 @@ export const getDisabledCustomPanelTabs = state => {
 };
 export const isEmbedPrintSupported = state => {
   const isChrome = window.navigator.userAgent.indexOf('Chrome') > -1 && window.navigator.userAgent.indexOf('Edge') === -1;
-  const isPDF = getDocumentType(state) === documentTypes.PDF;
+  const isPDF = getDocumentType(state) === workerTypes.PDF;
   return  isPDF && isChrome && state.viewer.useEmbeddedPrint;
 };
 export const getColorMap = state => state.viewer.colorMap;
