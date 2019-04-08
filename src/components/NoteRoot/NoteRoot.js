@@ -28,22 +28,6 @@ class NoteRoot extends React.Component {
     iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     contents: PropTypes.string
   }
-
-  componentDidMount() {
-    core.addEventListener('annotationChanged', this.onAnnotationChanged);
-  }
-
-  componentWillUnmount() {
-    core.removeEventListener('annotationChanged', this.onAnnotationChanged);
-  }
-
-  onAnnotationChanged = () => {
-    const { isNoteExpanded } = this.props;
-
-    if (isNoteExpanded) {
-      this.forceUpdate();
-    }
-  }
   
   deleteNote = () => {
     core.deleteAnnotations([this.props.annotation]);
