@@ -9,6 +9,7 @@ import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
+import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import selectors from 'selectors';
 
 import './NotesPanel.scss';
@@ -163,7 +164,7 @@ class NotesPanel extends React.PureComponent {
     return(
       notes.map(note => {
         return (
-          <React.Fragment key={note.Id}>
+          <React.Fragment key={note.Id + getLatestActivityDate(note)}>
             {this.renderListSeparator(notes, note)}
             <Note visible={this.isVisibleNote(note)} annotation={note} searchInput={this.state.searchInput} rootContents={note.getContents()} />
           </React.Fragment>
