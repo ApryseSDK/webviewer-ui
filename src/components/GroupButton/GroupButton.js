@@ -7,7 +7,6 @@ import GroupOverlay from 'components/GroupOverlay';
 import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
-import getToolStyles from 'helpers/getToolStyles';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -101,10 +100,9 @@ class GroupButton extends React.PureComponent {
     const activeIcon = children.find(button => button.toolName === toolName) ? children.find(button => button.toolName === toolName).img: '';
     const img = this.props.img ? this.props.img : isOnlyTools ? activeIcon : '';
     let color;
-    if (isActive && !this.props.img && iconColor && toolStyles[iconColor]) {
-      let toolStyles = activeToolStyles;
-      color = toolStyles[iconColor].toHexString();
-    } 
+    if (isActive && !this.props.img && iconColor && activeToolStyles[iconColor]) {
+      color = activeToolStyles[iconColor].toHexString();
+    }
 
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
