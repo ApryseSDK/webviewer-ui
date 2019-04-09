@@ -12,7 +12,7 @@ import openFilePicker from 'helpers/openFilePicker';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import downloadPdf from 'helpers/downloadPdf';
 import { isIOS } from 'helpers/device';
-import { documentTypes } from 'constants/types';
+import { workerTypes } from 'constants/types';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -43,7 +43,7 @@ class MenuOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
+      this.props.closeElements(['groupOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
       this.setState(getOverlayPositionBasedOn('menuButton', this.overlay));
     }
   }
@@ -91,7 +91,7 @@ class MenuOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   documentPath: selectors.getDocumentPath(state),
   documentFilename: state.document.filename,
-  isDownloadable: selectors.getDocumentType(state) !== documentTypes.XOD,
+  isDownloadable: selectors.getDocumentType(state) !== workerTypes.XOD,
   isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
   isFullScreen: selectors.isFullScreen(state),
   isDisabled: selectors.isElementDisabled(state, 'menuOverlay'),

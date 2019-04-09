@@ -148,4 +148,3 @@ export const setZoomList = zoomList => dispatch => {
   
   dispatch({ type: 'SET_ZOOM_LIST', payload: { zoomList: filteredZoomList } });
 };
-  

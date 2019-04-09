@@ -13,7 +13,7 @@ import apis from 'src/apis';
 
 import App from 'components/App';
 import rootReducer from 'reducers/rootReducer';
-import { engineTypes } from 'constants/types';
+import { engineTypes, workerTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
@@ -39,6 +39,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const store = createStore(rootReducer, applyMiddleware(...middleware));
+
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
@@ -88,24 +89,27 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
-  if (state.advanced.preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
-    if (state.document.pdfType !== 'wait') {
+  const { preloadWorker } = state.advanced;
+  const { PDF, OFFICE, ALL } = workerTypes;
+
+  if (preloadWorker) {
+    if (preloadWorker === PDF || preloadWorker === ALL) {
       getBackendPromise(state.document.pdfType).then(pdfType => {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, null);
+        }, window.sampleL);
       });
     }
 
-    if (state.document.officeType !== 'wait') {
+    if (preloadWorker === OFFICE || preloadWorker === ALL) {
       getBackendPromise(state.document.officeType).then(officeType => {
-        window.CoreControls.preloadOfficeWorker(officeType, {
+        window.CoreControls.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, {});
+        }, window.sampleL);
       });
     }
   }
@@ -130,6 +134,61 @@ if (window.CanvasRenderingContext2D) {
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
 
+    const header = {
+      children: store.getState().viewer.headers.default,
+      getItems() {
+        return store.getState().viewer.headers.default;
+      },
+      addItems(newItems, index) {
+        store.dispatch(actions.addItems(newItems, index));
+      },
+      removeItems(itemList) {
+        store.dispatch(actions.removeItems(itemList));
+      },
+      updateItem(dataElement, newProps) {
+        store.dispatch(actions.updateItem(dataElement, newProps));
+      },
+      setItems(items) {
+        store.dispatch(actions.setItems(items));
+      },
+      group(dataElement){
+        const defaultHeader = store.getState().viewer.headers.default;
+        let group;
+        defaultHeader.forEach(buttonObject => {
+          if (buttonObject.dataElement === dataElement) {
+            group = buttonObject;
+          }
+          if (buttonObject.children) {
+            buttonObject.children.forEach(childObject => {
+              if (childObject.dataElement === dataElement) {
+                group = childObject;
+              }
+            });
+          }
+        });
+        if (!group) {
+          console.warn(`${dataElement} is not a valid group button`);
+          return;
+        }
+        return {
+          getItems() {
+            return group.children;
+          },
+          addItems(newItems, index) {
+            store.dispatch(actions.addItems(newItems, index, group));
+          },          
+          removeItems(itemList) {
+            store.dispatch(actions.removeItems(itemList, group));
+          },
+          updateItem(dataElement, newProps) {
+            store.dispatch(actions.updateItem(dataElement, newProps, group));
+          },
+          setItems(items) {
+            store.dispatch(actions.setItems(items, group));
+          }
+        };
+      }
+    };
     ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18next}>
@@ -184,6 +243,7 @@ if (window.CanvasRenderingContext2D) {
           goToLastPage: apis.goToLastPage(store),
           goToNextPage: apis.goToNextPage(store),
           goToPrevPage: apis.goToPrevPage(store),
+          header,
           i18n: i18next,
           isAdminUser: apis.isAdminUser,
           isElementOpen: apis.isElementOpen(store),
@@ -247,4 +307,3 @@ if (window.CanvasRenderingContext2D) {
 window.addEventListener('hashchange', () => {
   window.location.reload();
 });
-

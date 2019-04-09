@@ -6,15 +6,15 @@ export default store => toolName =>  {
   const group = state.viewer.toolButtonObjects[toolName].group;
 
   core.setToolMode(toolName);
-  setActiveToolGroupAndToolsOverlay(store, group);
+  setActiveToolGroupAndGroupOverlay(store, group);
 };
 
-const setActiveToolGroupAndToolsOverlay = (store, group) => {
+const setActiveToolGroupAndGroupOverlay = (store, group) => {
   if (!group) {
     store.dispatch(actions.setActiveToolGroup(''));
-    store.dispatch(actions.closeElement('toolsOverlay'));
+    store.dispatch(actions.closeElement('groupOverlay'));
   } else {
     store.dispatch(actions.setActiveToolGroup(group));
-    store.dispatch(actions.openElement('toolsOverlay'));
+    store.dispatch(actions.openElement('groupOverlay'));
   }  
 };

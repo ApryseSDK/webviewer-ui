@@ -9,9 +9,9 @@ export default (dispatch, toolName, toolGroup) =>  {
   }
 
   if (toolGroup) {
-    dispatch(actions.openElement('toolsOverlay'));
+    dispatch(actions.openElement('groupOverlay'));
   } else {
-    dispatch(actions.closeElement('toolsOverlay'));
+    dispatch(actions.closeElement('groupOverlay'));
   }
   
   const hasToolBeenSelected = core.getToolMode().name === toolName;

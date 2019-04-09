@@ -20,9 +20,12 @@
     cursor: pointer;
 
     .page-image {
-      width: auto !important;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        /* only for IE*/
+        height: auto !important;
+        width: auto !important;
+      }
       max-width: 148px;
-      height: auto !important;
       max-height: 148px;
       border: 1px solid transparent;
     }

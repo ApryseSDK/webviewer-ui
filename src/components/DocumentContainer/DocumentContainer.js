@@ -51,7 +51,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    TouchEventManager.initialize(this.document.current, this.container.current);
+    TouchEventManager.initialize(this.document.current, this.container.current, this.props.toolButtonObjects);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
@@ -63,7 +63,7 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       window.addEventListener('resize', this.handleWindowResize);
     }
-
+    window.addEventListener('keydown', this.onKeyDown);
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
   }
 
@@ -72,8 +72,21 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
-
+    window.removeEventListener('keydown', this.onKeyDown);
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
+  }
+
+  onKeyDown = e => {
+    const { currentPage, totalPages } = this.props;
+    const { scrollTop, clientHeight, scrollHeight } = this.container.current;
+    const reachedTop = scrollTop === 0;
+    const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
+
+    if ((e.key === 'ArrowUp' || e.which === 38) && reachedTop && currentPage > 1) {
+      this.pageUp();
+    } else if ((e.key === 'ArrowDown' || e.which === 40) && reachedBottom && currentPage < totalPages) {
+      this.pageDown();
+    }
   }
 
   handleWindowResize = () => {
@@ -93,18 +106,16 @@ class DocumentContainer extends React.PureComponent {
     const { currentPage, totalPages } = this.props;
     const { scrollTop, scrollHeight, clientHeight } = this.container.current;
     const reachedTop = scrollTop === 0;
-    // we have 1 instead of just checking scrollTop + clientHeight === scrollHeight is because
-    // for some screens it has ~1 pixels off
     const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
 
     if (e.deltaY < 0 && reachedTop && currentPage > 1) {
-      this.navigatePagesUp();
+      this.pageUp();
     } else if (e.deltaY > 0 && reachedBottom && currentPage < totalPages) {
-      this.navigatePagesDown();
+      this.pageDown();
     }
   }
 
-  navigatePagesUp = () => {
+  pageUp = () => {
     const { currentPage, displayMode } = this.props;
     const { scrollHeight, clientHeight } = this.container.current;
     const newPage = currentPage - getNumberOfPagesToNavigate(displayMode);
@@ -113,7 +124,7 @@ class DocumentContainer extends React.PureComponent {
     this.container.current.scrollTop = scrollHeight - clientHeight;    
   }
 
-  navigatePagesDown = () => {
+  pageDown = () => {
     const { currentPage, displayMode, totalPages } = this.props;
     const newPage = currentPage + getNumberOfPagesToNavigate(displayMode);
 
@@ -182,7 +193,8 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  swipeOrientation: selectors.getSwipeOrientation(state)
+  swipeOrientation: selectors.getSwipeOrientation(state),
+  toolButtonObjects: selectors.getToolButtonObjects(state)
 });
 
 const mapDispatchToProps = dispatch => ({
