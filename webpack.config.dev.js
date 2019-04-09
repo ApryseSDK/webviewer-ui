@@ -48,13 +48,13 @@ module.exports = {
 				use: [
 					'style-loader',
 					'css-loader',
-					'sass-loader',
 					{
 						loader: 'postcss-loader',
 						options: {
 							plugins: () => [ require('autoprefixer')() ]
 						}
-					}
+					},
+					'sass-loader',
 				],
 				include: path.resolve(__dirname, 'src')
 			},
