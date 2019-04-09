@@ -11,6 +11,7 @@ import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import selectors from 'selectors';
+import debounce from 'lodash/debounce';
 
 import './NotesPanel.scss';
 
@@ -32,7 +33,7 @@ class NotesPanel extends React.PureComponent {
     };
     this.visibleNoteIds = new Set();
     this.rootAnnotations = [];
-    this.updatePanelOnInput = _.debounce(this.updatePanelOnInput.bind(this), 500);
+    this.updatePanelOnInput = debounce(this.updatePanelOnInput.bind(this), 500);
   }
 
   componentDidMount() {

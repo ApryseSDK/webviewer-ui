@@ -45,7 +45,9 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
     const updatedReducer = require('reducers/rootReducer').default;
     store.replaceReducer(updatedReducer);
-  });
+  }); 
+  
+  module.hot.accept();
 }
 
 if (window.CanvasRenderingContext2D) {
@@ -57,7 +59,7 @@ if (window.CanvasRenderingContext2D) {
   if (state.advanced.fullAPI) {
     window.CoreControls.enableFullPDF(true);
     if (process.env.NODE_ENV === 'production') {
-      fullAPIReady = loadScript('../../core/pdf/PDFNet.js');
+      fullAPIReady = loadScript('../core/pdf/PDFNet.js');
     } else {
       fullAPIReady = loadScript('../core/pdf/PDFNet.js');
     }
@@ -65,8 +67,8 @@ if (window.CanvasRenderingContext2D) {
 
   window.CoreControls.enableSubzero(state.advanced.subzero);
   if (process.env.NODE_ENV === 'production') {
-    window.CoreControls.setWorkerPath('../../core');
-    window.CoreControls.setResourcesPath('../../core/assets');
+    window.CoreControls.setWorkerPath('../core');
+    window.CoreControls.setResourcesPath('../core/assets');
   }
 
   try {
@@ -144,7 +146,7 @@ if (window.CanvasRenderingContext2D) {
         store.dispatch(actions.removeItems(itemList));
       },
       updateItem(dataElement, newProps) {
-        store.dispatch(actions.updateItem(dataElement, newProps))
+        store.dispatch(actions.updateItem(dataElement, newProps));
       },
       setItems(items) {
         store.dispatch(actions.setItems(items));
@@ -152,15 +154,15 @@ if (window.CanvasRenderingContext2D) {
       group(dataElement){
         const defaultHeader = store.getState().viewer.headers.default;
         let group;
-        defaultHeader.forEach((buttonObject) => {
+        defaultHeader.forEach(buttonObject => {
           if (buttonObject.dataElement === dataElement) {
             group = buttonObject;
           }
           if (buttonObject.children) {
-            buttonObject.children.forEach((childObject) => {
+            buttonObject.children.forEach(childObject => {
               if (childObject.dataElement === dataElement) {
                 group = childObject;
-              };
+              }
             });
           }
         });
@@ -184,9 +186,9 @@ if (window.CanvasRenderingContext2D) {
           setItems(items) {
             store.dispatch(actions.setItems(items, group));
           }
-        }
+        };
       }
-    }
+    };
     ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18next}>

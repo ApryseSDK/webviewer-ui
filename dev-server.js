@@ -78,10 +78,11 @@ app.get('/mobile', (req, res) => {
 });
 
 app.listen(3000, '0.0.0.0', err => {
-	if (err) {
+	if(err) {
 		console.error(err);
 	} else {
-		console.info(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
+		/*eslint-disable */
+		console.log(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
 		opn('http://localhost:3000/#d=/files/webviewer-demo-annotated.xod&a=1');
 	}
 });
