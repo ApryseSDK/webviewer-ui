@@ -1,7 +1,7 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { isIOS, isAndroid } from 'helpers/device';
 import selectors from 'selectors';
-
+import core from 'core';
 
 // viewer
 export const disableElement = (dataElement, priority) => (dispatch, getState) => {
@@ -29,7 +29,12 @@ export const enableElement = (dataElement, priority) => (dispatch, getState) => 
   }
 };
 export const enableElements = (dataElements, priority) => (dispatch, getState) => {
-  const filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
+  let filteredDataElements = getFilteredDataElements(getState(), dataElements, priority);
+
+  if (!core.isCreateRedactionEnabled()) {
+    filteredDataElements = filteredDataElements.filter(ele => ele !== 'redactionButton');
+  }
+
   dispatch({ type: 'ENABLE_ELEMENTS', payload: { dataElements: filteredDataElements, priority } });
 };
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
@@ -49,11 +54,12 @@ export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   }
   dispatch({ type: 'SET_ACTIVE_TOOL_NAME_AND_STYLES', payload: { toolName: name, toolStyles: toolObject.defaults || {} } });
 };
-export const setActiveToolStyles = toolStyles => ({ type: 'SET_ACTIVE_TOOL_STYLES', payload: { toolStyles } });
+export const setActiveToolStyles = (toolStyles = {}) => ({ type: 'SET_ACTIVE_TOOL_STYLES', payload: { toolStyles } });
 export const setActiveToolGroup = toolGroup => ({ type: 'SET_ACTIVE_TOOL_GROUP', payload: { toolGroup } });
 export const setNotePopupId = id => ({ type: 'SET_NOTE_POPUP_ID', payload: { id } });
 export const setFitMode = fitMode => ({ type: 'SET_FIT_MODE', payload: { fitMode } });
 export const setZoom = zoom => ({ type: 'SET_ZOOM', payload: { zoom } });
+export const setRotation = rotation => ({ type: 'SET_ROTATION', payload: { rotation } });
 export const setDisplayMode = displayMode => ({ type: 'SET_DISPLAY_MODE', payload: { displayMode } });
 export const setCurrentPage = currentPage => ({ type: 'SET_CURRENT_PAGE', payload: { currentPage } });
 export const setFullScreen = isFullScreen => ({ type: 'SET_FULL_SCREEN', payload: { isFullScreen } });
@@ -81,6 +87,9 @@ export const collapseAllNotes = () => (dispatch, getState) => {
   }
 };
 export const setHeaderItems = (header, headerItems) => ({ type: 'SET_HEADER_ITEMS', payload: { header, headerItems } });
+export const setColorPalette = (colorMapKey, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { colorMapKey, colorPalette } });
+export const setIconColor = (colorMapKey, color) => ({ type: 'SET_ICON_COLOR', payload: { colorMapKey, color } });
+export const setColorMap = colorMap => ({ type: 'SET_COLOR_MAP', payload: { colorMap } });
 
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });
@@ -94,12 +103,8 @@ export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outli
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
 export const setPasswordAttempts = attempt => ({ type: 'SET_PASSWORD_ATTEMPTS', payload: { attempt } });
 export const setPrintQuality = quality => ({ type: 'SET_PRINT_QUALITY', payload: { quality } });
-export const setLoadingProgress = loadingProgress => (dispatch, getState) => {
-  const state = getState();
-  if (state.document.loadingProgress < loadingProgress) {
-    dispatch({ type: 'SET_LOADING_PROGRESS', payload: { loadingProgress } });
-  }
-};
+export const setDocumentLoadingProgress = documentLoadingProgress => ({ type: 'SET_DOCUMENT_LOADING_PROGRESS', payload: { documentLoadingProgress }});
+export const setWorkerLoadingProgress = workerLoadingProgress => ({ type: 'SET_WORKER_LOADING_PROGRESS', payload: { workerLoadingProgress }});
 export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
 

@@ -1,5 +1,5 @@
-import i18n from 'i18next';
+import i18next from 'i18next';
 
 export default language =>  {
-  i18n.changeLanguage(language);
+  i18next.changeLanguage(language);
 };

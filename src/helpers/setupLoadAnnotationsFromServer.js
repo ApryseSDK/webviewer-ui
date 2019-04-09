@@ -1,6 +1,5 @@
 import core from 'core';
-import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
+import { documentTypes } from 'constants/types';
 
 export default store =>  {
   const state = store.getState();
@@ -32,7 +31,7 @@ export default store =>  {
       data: docIdQuery,
       headers: serverUrlHeaders,
       success: data => {
-        if (!isNull(data) && !isUndefined(data)) {
+        if (!_.isNull(data) && !_.isUndefined(data)) {
           window.readerControl.loadedFromServer = true;
           callback(data);
         } else {
@@ -52,5 +51,12 @@ export default store =>  {
   core.setInternalAnnotationsTransform(getAnnotsFromServer);
   core.setPagesUpdatedInternalAnnotationsTransform((origData, pages, callback) => {
     getAnnotsFromServer(origData, callback);
+  });
+  core.addEventListener('documentLoaded', function() {
+    if (window.docViewer.getDocument().getType() === documentTypes.OFFICE) {
+      getAnnotsFromServer(null, function(data) {
+        window.docViewer.getAnnotationManager().importAnnotationsAsync(data);
+      });
+    }
   });
 };

@@ -1,6 +1,7 @@
-import isDataElementPanel from 'helpers/isDataElementPanel';
 import core from 'core';
+import isDataElementPanel from 'helpers/isDataElementPanel';
 import fireEvent from 'helpers/fireEvent';
+import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
@@ -70,6 +71,7 @@ export const closeElements = dataElements => dispatch => {
     });
   }
 };
+
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
@@ -107,7 +109,7 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
 };
 export const setSortStrategy = sortStrategy => ({ type: 'SET_SORT_STRATEGY', payload: { sortStrategy } });
 export const setSortNotesBy = sortStrategy => {
-  console.warn('setSortNotesBy is going to be deprecated, please use setSortStrategy instead');
+  console.warn('setSortNotesBy is deprecated, please use setSortStrategy instead');
 
   return setSortStrategy(sortStrategy);
 };
@@ -122,3 +124,28 @@ export const setPageLabels = pageLabels => dispatch => {
   }
   dispatch({ type: 'SET_PAGE_LABELS', payload: { pageLabels: pageLabels.map(String) } });
 };
+export const setCursorOverlay = (data = {}) => ({ type: 'SET_CURSOR_OVERLAY', payload: { data } });
+export const setSwipeOrientation = swipeOrientation => ({ type: 'SET_SWIPE_ORIENTATION', payload: { swipeOrientation } });
+export const showWarningMessage = options => dispatch => {
+  dispatch({ type: 'SET_WARNING_MESSAGE', payload: options });
+  dispatch(openElement('warningModal'));
+};
+export const setCustomNoteFilter = filterFunc => ({ type: 'SET_CUSTOM_NOTE_FILTER', payload: { customNoteFilter: filterFunc } });
+export const setZoomList = zoomList => dispatch => {
+  const minZoomLevel = getMinZoomLevel();
+  const maxZoomLevel = getMaxZoomLevel();
+  const filteredZoomList = zoomList.filter(zoom => zoom >= minZoomLevel && zoom <= maxZoomLevel);
+
+  if (filteredZoomList.length !== zoomList.length) {
+    const outOfRangeZooms = zoomList.filter(zoom => !filteredZoomList.includes(zoom));
+    console.warn(`
+      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI. 
+      Valid zoom levels should be in the range of ${minZoomLevel}-${maxZoomLevel}.
+      You can use setMinZoomLevel or setMaxZoomLevel APIs to change the range.
+      See https://www.pdftron.com/documentation/web/guides/ui/apis for more information.
+    `);
+  }
+  
+  dispatch({ type: 'SET_ZOOM_LIST', payload: { zoomList: filteredZoomList } });
+};
+  

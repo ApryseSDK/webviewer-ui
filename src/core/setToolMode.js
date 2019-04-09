@@ -8,7 +8,7 @@ export default toolName => {
   const tool = window.docViewer.getTool(toolName);
 
   // If this tool is disabled by calling readerControl.disableTool(s)
-  if (tool.disabled) {
+  if (tool && tool.disabled) {
     console.warn(`${toolName} has been disabled.`);
     return;
   }

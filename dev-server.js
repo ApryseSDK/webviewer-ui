@@ -14,7 +14,11 @@ const compiler = webpack(config);
 
 app.use(devMiddleware(compiler, {
 	logLevel: 'warn',
-	publicPath: config.output.publicPath
+	publicPath: config.output.publicPath,
+	watchOptions: {
+		aggregateTimeout: 300,
+		poll: true
+	}
 }));
 app.use(hotMiddleware(compiler));
 
@@ -67,6 +71,10 @@ app.get('/license-key.js', (req, res) => {
 
 app.get('/', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'src/index.html'));
+});
+
+app.get('/mobile', (req, res) => {
+	res.redirect(`/#d=/files/webviewer-demo-annotated.xod&a=1`);
 });
 
 app.listen(3000, '0.0.0.0', err => {

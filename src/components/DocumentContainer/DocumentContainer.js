@@ -8,10 +8,9 @@ import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'help
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import TouchEventManager from 'helpers/TouchEventManager';
-import { ZOOM_MIN, ZOOM_MAX } from 'constants/zoomFactors';
+import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
-import throttle from 'lodash/throttle';
 
 import './DocumentContainer.scss';
 
@@ -30,26 +29,29 @@ class DocumentContainer extends React.PureComponent {
     isHeaderOpen: PropTypes.bool,
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
-    displayMode: PropTypes.string.isRequired
+    displayMode: PropTypes.string.isRequired,
+    swipeOrientation: PropTypes.string
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.document = React.createRef();
     this.container = React.createRef();
-    this.touchEventManager = Object.create(TouchEventManager);
-    this.wheelToNavigatePages = throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
-    this.wheelToZoom = throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
+    this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
+    this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
   }
 
   componentDidUpdate(prevProps) {
     if (isIE) {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
+    if (prevProps.swipeOrientation !== this.props.swipeOrientation){
+      TouchEventManager.updateOrientation(this.props.swipeOrientation);
+    }
   }
 
   componentDidMount() {
-    this.touchEventManager.initialize(this.document.current, this.container.current);
+    TouchEventManager.initialize(this.document.current, this.container.current);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
@@ -61,13 +63,17 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       window.addEventListener('resize', this.handleWindowResize);
     }
+
+    this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
   }
 
   componentWillUnmount() {
-    this.touchEventManager.terminate();
+    TouchEventManager.terminate();
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
+
+    this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
   }
 
   handleWindowResize = () => {
@@ -121,10 +127,10 @@ class DocumentContainer extends React.PureComponent {
 
     if (e.deltaY < 0) {
       multiple = 1.25;
-      newZoomFactor = Math.min(currentZoomFactor * multiple, ZOOM_MAX);
+      newZoomFactor = Math.min(currentZoomFactor * multiple, getMaxZoomLevel());
     } else if (e.deltaY > 0) {
       multiple = 0.8;
-      newZoomFactor = Math.max(currentZoomFactor * multiple, ZOOM_MIN);
+      newZoomFactor = Math.max(currentZoomFactor * multiple, getMinZoomLevel());
     }
 
     core.zoomToMouse(newZoomFactor);
@@ -156,7 +162,7 @@ class DocumentContainer extends React.PureComponent {
     }
 
     return(
-      <div className={className} ref={this.container} data-element="documentContainer" onWheel={this.onWheel} onTransitionEnd={this.onTransitionEnd}>
+      <div className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd}>
         <div className="document" ref={this.document}></div>
       </div>
     );
@@ -175,7 +181,8 @@ const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
-  totalPages: selectors.getTotalPages(state)
+  totalPages: selectors.getTotalPages(state),
+  swipeOrientation: selectors.getSwipeOrientation(state)
 });
 
 const mapDispatchToProps = dispatch => ({

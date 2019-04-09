@@ -6,6 +6,7 @@ import StylePopup from 'components/StylePopup';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -18,6 +19,7 @@ class ToolStylePopup extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     toolButtonObjects: PropTypes.object.isRequired,
+    colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
   }
@@ -37,7 +39,7 @@ class ToolStylePopup extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
-      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay' ]);
+      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay' ]);
       this.positionToolStylePopup();       
     }
 
@@ -101,20 +103,23 @@ class ToolStylePopup extends React.PureComponent {
   render() {
     const { left, top } = this.state;
     const { isDisabled, activeToolName, activeToolStyle } = this.props;
-    
+    const isFreeText = activeToolName === 'AnnotationCreateFreeText';
+    const className = getClassName(`Popup ToolStylePopup`, this.props);
+    const colorMapKey = mapToolNameToKey(activeToolName);
+
     if (isDisabled) {
       return null;
     }
-
-    const isFreeText = activeToolName === 'AnnotationCreateFreeText';
-    const className = getClassName(`Popup ToolStylePopup`, this.props);
-
+    const hideSlider = activeToolName === 'AnnotationCreateRedaction';
+    
     return (
       <div className={className} data-element="toolStylePopup" style={{ top, left }} ref={this.popup} onMouseDown={e => e.stopPropagation()} onClick={this.onClick}>
         <StylePopup
           key={activeToolName}
+          colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}
+          hideSlider={hideSlider}
           onStyleChange={this.handleStyleChange}
         />
       </div>

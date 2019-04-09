@@ -9,7 +9,7 @@ import OutlinesPanel from 'components/OutlinesPanel';
 import CustomElement from 'components/CustomElement';
 import Icon from 'components/Icon';
 
-import { isTabletOrMobile } from 'helpers/device';
+import { isTabletOrMobile, isIE11 } from 'helpers/device';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -25,6 +25,21 @@ class LeftPanel extends React.Component {
     closeElement: PropTypes.func.isRequired
   }
 
+  constructor(props) {
+    super(props);
+    this.state = { 'isSliderActive': false };
+    this.sliderRef = React.createRef();
+  }
+
+  componentDidMount(){
+    document.body.style.setProperty('--left-panel-width', '300px');
+
+    // we are using css variables to make the panel resizable but IE11 doesn't support it
+    if (!isIE11) {
+      this.sliderRef.current.onmousemove = this.dragMouseMove;
+      this.sliderRef.current.onmouseup = this.closeDrag;
+    }
+  }
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
       this.props.closeElement('searchPanel');
@@ -33,6 +48,23 @@ class LeftPanel extends React.Component {
 
   getDisplay = panel => {
     return panel === this.props.activePanel ? 'flex' : 'none';
+  }
+
+  dragMouseDown = () => {
+    this.setState({
+      isSliderActive: true
+    });
+  }
+
+  dragMouseMove = e => {
+    if (this.state.isSliderActive && e.clientX > 215 && e.clientX < 900){
+      this.sliderRef.current.style.left = (e.clientX) + 'px';
+      document.body.style.setProperty('--left-panel-width', (e.clientX)+'px');
+    }
+  }
+
+  closeDrag = () => {
+    this.setState({ isSliderActive: false });
   }
 
   render() {
@@ -47,12 +79,22 @@ class LeftPanel extends React.Component {
     return(
       <div className={className} data-element="leftPanel" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
         <div className="left-panel-header">
-          <div className="close-btn hide-in-desktop hide-in-tablet" onClick={() => closeElement('leftPanel')}>
+          <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>
             <Icon glyph="ic_close_black_24px" />
           </div>
           <LeftPanelTabs />
         </div>
         
+        {!isIE11 &&
+          <div
+            ref={this.sliderRef}
+            className={this.state.isSliderActive ? 'resize-bar active' : 'resize-bar non-active'}
+            onMouseDown={this.dragMouseDown}
+            onMouseUp={this.closeDrag}
+            onMouseMove={this.dragMouseMove}
+            onMouseLeave={this.closeDrag}
+          />
+        }
         <NotesPanel display={this.getDisplay('notesPanel')} />
         <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
         <OutlinesPanel display={this.getDisplay('outlinesPanel')} /> 

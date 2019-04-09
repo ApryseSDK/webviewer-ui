@@ -1,5 +1,7 @@
 {
   "action": {
+    "apply": "Appliquer",
+    "applyAll": "Appliquer toute",
     "cancel": "Annuler",
     "clear": "Effacer",
     "close": "Fermer",
@@ -15,13 +17,16 @@
     "fitToWidth": "Fit à la largeur",
     "openFile": "Ouvrir un fichier",
     "print": "Imprimer",
+    "ok": "OK",
     "reply": "Répondre",
     "rotate": "Tourner",
     "rotateClockwise": "Tourner horaire",
     "rotateCounterClockwise": "Tourner antihoraire",
-    "save": "Enregistrer", 
+    "save": "Enregistrer",
+    "create": "Créer",
     "showMoreResults": "Montrer plus de résultats",
-    "sign": "Signer", 
+    "saveSignature": "Enregistrer la signature",
+    "sign": "Signer",
     "style": "Style",
     "submit": "Soumettre",
     "zoom": "Zoom",
@@ -29,40 +34,47 @@
     "zoomOut": "Dézoomer"
   },
   "annotation": {
-    "arrow": "Flèche", 
+    "areaMeasurement": "Surface mesurée",
+    "arrow": "Flèche",
     "callout": "Faire appel à",
+    "distanceMeasurement": "Mesure de distance",
     "ellipse": "Ellipse",
     "freehand": "Stylo",
     "freehand2": "Stylo",
-    "freetext": "Texte libre", 
+    "freetext": "Texte libre",
     "freetext2": "Texte libre",
     "highlight": "Surligne",
     "highlight2": "Surligne",
     "line": "Ligne",
+    "perimeterMeasurement": "Périmètre mesure",
     "polygon": "Polygone",
     "polygonCloud": "Nuage",
     "polyline": "Ligne polygonale",
     "rectangle": "Rectangle",
+    "redact": "Biffure",
     "signature": "Signature",
     "squiggly": "Ligne ondulée",
     "stamp": "Timbre",
     "stickyNote": "Note collante",
     "strikeout": "Barré",
-    "underline": "Soulignage"
+    "underline": "Soulignage",
+    "custom": "personnalisation"
   },
   "component": {
     "freehandToolsButton": "Outils de stylo",
     "leftPanel": "Panneau de gauche",
-    "searchOverlay": "Recherche", 
+    "searchOverlay": "Recherche",
     "menuOverlay": "Menu",
     "miscToolsButton": "Outils divers",
-    "notesPanel": "Remarques", 
+    "notesPanel": "Remarques",
     "outlinesPanel": "Contour",
-    "shapeToolsButton": "Outils de forme", 
+    "shapeToolsButton": "Outils de forme",
     "textToolsButton": "Outils de texte",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
-    "viewControlsOverlay": "Contrôles de l'affichage"
+    "redaction": "Biffure",
+    "viewControlsOverlay": "Contrôles de l'affichage",
+    "measurementToolsButton": "Outils de mesure"
   },
   "message": {
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
@@ -87,9 +99,9 @@
   },
   "option": {
     "annotationColor": {
-      "border": "Couleur de bordure",
-      "fill": "Couleur de remplissage",
-      "text": "Couleur de texte"
+      "StrokeColor": "Couleur de bordure",
+      "FillColor": "Couleur de remplissage",
+      "TextColor": "Couleur de texte"
     },
     "displayMode": {
       "layout": "Disposition",
@@ -118,9 +130,30 @@
       "pages": "Pages",
       "includeComments": "Inclure les commentaires"
     },
+    "redaction": {
+      "markForRedaction": "Repérer les biffures",
+      "warningPopupMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",
+      "warningPopupTitle": "Appliquer les Biffures"
+    },
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",
       "wholeWordOnly": "Mot complet"
+    },
+    "signatureOverlay": {
+      "addSignature": "Ajouter une signature"
+    },
+    "measurementOverlay": {
+      "scale": "Ratio d'échelle",
+      "angle": "Angle",
+      "distance": "Distance",
+      "perimeter": "Périmètre",
+      "area": "Surface",
+      "distanceMeasurement": "Mesure de distance",
+      "perimeterMeasurement": "Mesure du périmètre",
+      "areaMeasurement": "Mesure du surface"
+    },
+    "measurementOption": {
+      "scale": "Échelle"
     },
     "slider": {
       "opacity": "Opacité",
@@ -128,7 +161,8 @@
       "text": "Taille du texte"
     },
     "shared": {
-      "page": "Page"
+      "page": "Page",
+      "precision": "Précision"
     }
   },
   "shortcut": {
@@ -157,6 +191,7 @@
   },
   "tool": {
     "pan": "Panoramique",
-    "select": "Sélection"
+    "select": "Sélection",
+    "Marquee": "Marquee Zoom"
   }
 }

@@ -7,15 +7,14 @@ import selectors from 'selectors';
 import actions from 'actions';
 
 const mapStateToProps = (state, ownProps) => ({
-  className: 'ToggleElementButton',
+  className: ownProps.className || 'ToggleElementButton',
   isDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
-  isActive: selectors.isElementOpen(state, ownProps.element),
+  isActive: selectors.isElementActive(state, ownProps),
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: e => {
     e.stopPropagation();
-
     dispatch(actions.toggleElement(ownProps.element));
   }
 });
