@@ -24,6 +24,7 @@ class ToolButton extends React.PureComponent {
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
     label: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -32,8 +33,9 @@ class ToolButton extends React.PureComponent {
   }
 
   onClick = e => {
-    const { isActive, toolName, setActiveToolGroup, closeElement, toggleElement } = this.props;
+    const { isActive, toolName, setActiveToolGroup, closeElement, toggleElement, onClick } = this.props;
     const group = this.props.toolGroup;
+
     e.stopPropagation();
    
     if (isActive) {
@@ -44,6 +46,10 @@ class ToolButton extends React.PureComponent {
       core.setToolMode(toolName);
       setActiveToolGroup(group);
       closeElement('toolStylePopup');
+    }
+
+    if (onClick) {
+      onClick(isActive);
     }
   }
 

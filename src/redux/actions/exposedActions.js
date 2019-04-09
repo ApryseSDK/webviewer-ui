@@ -1,6 +1,7 @@
 import core from 'core';
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import fireEvent from 'helpers/fireEvent';
+import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
@@ -130,5 +131,20 @@ export const showWarningMessage = options => dispatch => {
   dispatch(openElement('warningModal'));
 };
 export const setCustomNoteFilter = filterFunc => ({ type: 'SET_CUSTOM_NOTE_FILTER', payload: { customNoteFilter: filterFunc } });
+export const setZoomList = zoomList => dispatch => {
+  const minZoomLevel = getMinZoomLevel();
+  const maxZoomLevel = getMaxZoomLevel();
+  const filteredZoomList = zoomList.filter(zoom => zoom >= minZoomLevel && zoom <= maxZoomLevel);
 
-
+  if (filteredZoomList.length !== zoomList.length) {
+    const outOfRangeZooms = zoomList.filter(zoom => !filteredZoomList.includes(zoom));
+    console.warn(`
+      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI. 
+      Valid zoom levels should be in the range of ${minZoomLevel}-${maxZoomLevel}.
+      You can use setMinZoomLevel or setMaxZoomLevel APIs to change the range.
+      See https://www.pdftron.com/documentation/web/guides/ui/apis for more information.
+    `);
+  }
+  
+  dispatch({ type: 'SET_ZOOM_LIST', payload: { zoomList: filteredZoomList } });
+};

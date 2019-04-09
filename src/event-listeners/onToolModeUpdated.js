@@ -13,10 +13,6 @@ export default dispatch => (e, newTool, oldTool) => {
     dispatch(actions.closeElement('groupOverlay'));
   }
 
-  if (newTool && newTool.name === 'MarqueeZoomTool') {
-    dispatch(actions.closeElement('zoomOverlay'));
-  }
-
   dispatch(actions.setActiveToolNameAndStyle(newTool));
   $(document).trigger('toolModeChanged', [newTool, oldTool]);
 };

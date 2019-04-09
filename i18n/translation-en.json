@@ -144,7 +144,6 @@
     },
     "measurementOverlay": {
       "scale": "Scale Ratio",
-      "precision": "Precision",
       "angle": "Angle",
       "distance": "Distance",
       "perimeter": "Perimeter",
@@ -153,13 +152,17 @@
       "perimeterMeasurement": "Perimeter Measurement",
       "areaMeasurement": "Area Measurement"
     },
+    "measurementOption": {
+      "scale": "Scale"
+    },
     "slider": {
       "opacity": "Opacity",
       "thickness": "Thickness",
       "text": "Text Size"
     },
     "shared": {
-      "page": "Page"
+      "page": "Page",
+      "precision": "Precision"
     }
   },
   "shortcut": {
@@ -188,6 +191,7 @@
   },
   "tool": {
     "pan": "Pan",
-    "select": "Select"
+    "select": "Select",
+    "Marquee": "Marquee Zoom"
   }
 }

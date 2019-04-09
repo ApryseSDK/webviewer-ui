@@ -13,8 +13,8 @@
     "enterFullscreen": "Document in volledig scherm",
     "exitFullscreen": "Document normaal weergeven",
     "fit": "Zoomen",
-    "fitToPage": "Zoomen naar vensterhoogte",
-    "fitToWidth": "Zoomen naar vensterbreedte",
+    "fitToPage": "Vensterhoogte",
+    "fitToWidth": "Vensterbreedte",
     "openFile": "Open bestand",
     "print": "Printen",
     "ok": "OK",
@@ -25,6 +25,7 @@
     "save": "Bewaren",
     "create": "creëren",
     "showMoreResults": "Toon meer resultaten",
+    "saveSignature": "Sla handtekening op",
     "sign": "Ondertekenen",
     "style": "Opmaak",
     "submit": "Verzenden",
@@ -33,8 +34,10 @@
     "zoomOut": "Zoom uit"
   },
   "annotation": {
+    "areaMeasurement": "Oppervlaktemeting",
     "arrow": "Pijl",
     "callout": "Opmerking met pijl",
+    "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
     "freehand": "Vrije hand",
     "freehand2": "Vrije hand",
@@ -43,11 +46,12 @@
     "highlight": "Arceren",
     "highlight2": "Arceren",
     "line": "Lijn",
+    "perimeterMeasurement": "Perimeter meting",
     "polygon": "Veelhoek",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
-    "redact": "Redigeren",
     "rectangle": "Rechthoek",
+    "redact": "Redigeren",
     "signature": "Handtekening",
     "squiggly": "Squiggly",
     "stamp": "Stempel",
@@ -70,7 +74,8 @@
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
-    "minimizeButton": "Document normaal weergeven"
+    "minimizeButton": "Document normaal weergeven",
+    "measurementToolsButton": "Meetinstrumenten"
   },
   "message": {
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
@@ -132,22 +137,24 @@
       "warningPopupTitle": "Redactiewijziging Toepassen"
     },
     "searchPanel": {
-      "caseSensitive": "Hoofdletter gev..",
-      "wholeWordOnly": "Alleen hele woorden"
+      "caseSensitive": "Hoofdlettergevoelig",
+      "wholeWordOnly": "Hele woorden"
     },
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
     },
     "measurementOverlay": {
-      "scale": "schaalverhouding",
-      "precision": "precisie",
-      "angle": "hoek",
-      "distance": "afstand",
-      "perimeter": "omtrek",
+      "scale": "Schaalverhouding",
+      "angle": "Hoek",
+      "distance": "Afstand",
+      "perimeter": "Omtrek",
       "area": "Gebied",
-      "distanceMeasurement": "afstandsmeting",
-      "perimeterMeasurement": "perimeter meting",
-      "areaMeasurement": "gebiedsmeting"
+      "distanceMeasurement": "Afstands meting",
+      "perimeterMeasurement": "Perimeter meting",
+      "areaMeasurement": "Gebieds meting"
+    },
+    "measurementOption": {
+      "scale": "Schaal"
     },
     "slider": {
       "opacity": "Dekking",
@@ -155,7 +162,8 @@
       "text": "Lettergrootte"
     },
     "shared": {
-      "page": "Pagina"
+      "page": "Pagina",
+      "precision": "precisie"
     }
   },
   "shortcut": {
@@ -184,6 +192,7 @@
   },
   "tool": {
     "pan": "Schuiven",
-    "select": "Selecteren"
+    "select": "Selecteren",
+    "Marquee": "Selectie zoom"
   }
 }

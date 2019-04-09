@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
+import { isIOS } from 'helpers/device';
 
 import './PageNavOverlay.scss';
 
@@ -52,7 +53,13 @@ class PageNavOverlay extends React.PureComponent {
   }
 
   onClick = () => {
-    this.textInput.current.focus();
+    if (isIOS) {
+      setTimeout(() => {
+        this.textInput.current.setSelectionRange(0, 9999);
+      }, 0);
+    } else {
+      this.textInput.current.select();
+    }
   }
 
   onChange = e => {

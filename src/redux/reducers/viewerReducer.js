@@ -70,7 +70,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ZOOM':
       return { ...state, zoom: payload.zoom };
     case 'SET_ROTATION':
-      return { ...state, rotation: payload.rotation }
+      return { ...state, rotation: payload.rotation };
     case 'SET_DISPLAY_MODE':
       return { ...state, displayMode: payload.displayMode };
     case 'SET_CURRENT_PAGE':
@@ -229,6 +229,8 @@ export default initialState => (state = initialState, action) => {
         return modifyHeader(state, group, modification, defaultArr);
       }
     } 
+    case 'SET_ZOOM_LIST':
+      return { ...state, zoomList: payload.zoomList };
     default:
       return state;
     }

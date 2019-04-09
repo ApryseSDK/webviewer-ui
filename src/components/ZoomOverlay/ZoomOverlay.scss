@@ -1,11 +1,9 @@
 @import '../../constants/styles';
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-.ZoomOverlay{
+.ZoomOverlay {
   position: absolute;
   top: 46px;
-  width: 146px;
-  height: 455px;
   z-index: 100;
   box-shadow: $md-shadow1;
 
@@ -16,17 +14,21 @@
     display: none;
   }
 
-  .spacer{
+  .spacer {
     width: 146px;
     height: 1px;
     background: #F0F0F0;
     background: var(--button-active-color);
   }
   
-  .ToolButton{
+  .ToolButton {
     background: white;
     height: 35px;
-    justify-content: center;
     font-family: 'Roboto', sans-serif;
+
+    &:hover {
+      background-color: #F6F6F6;
+      background-color: var(--button-hover-color);
+    }
   }
 }

@@ -64,6 +64,7 @@ class DocumentContainer extends React.PureComponent {
       window.addEventListener('resize', this.handleWindowResize);
     }
     window.addEventListener('keydown', this.onKeyDown);
+    this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
   }
 
   componentWillUnmount() {
@@ -72,6 +73,7 @@ class DocumentContainer extends React.PureComponent {
       window.removeEventListener('resize', this.handleWindowResize);
     }
     window.removeEventListener('keydown', this.onKeyDown);
+    this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
   }
 
   onKeyDown = e => {
@@ -171,7 +173,7 @@ class DocumentContainer extends React.PureComponent {
     }
 
     return(
-      <div className={className} ref={this.container} data-element="documentContainer" onWheel={this.onWheel} onTransitionEnd={this.onTransitionEnd}>
+      <div className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd}>
         <div className="document" ref={this.document}></div>
       </div>
     );

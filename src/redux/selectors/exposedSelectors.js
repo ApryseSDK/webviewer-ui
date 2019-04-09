@@ -135,6 +135,7 @@ export const getCurrentPalette = (state, activeToolName) => state.viewer.toolBut
 export const getIconColor = (state, activeToolName) => state.viewer.toolButtonObjects[activeToolName] && state.viewer.toolButtonObjects[activeToolName].iconColor;
 export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
+export const getZoomList = state => state.viewer.zoomList;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning && state.viewer.warning.message || '';
