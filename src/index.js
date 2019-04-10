@@ -140,7 +140,6 @@ if (window.CanvasRenderingContext2D) {
       () => {
         window.readerControl = {
           docViewer,
-          header,
           FitMode,
           LayoutMode,
           loadedFromServer: false, // undocumented
