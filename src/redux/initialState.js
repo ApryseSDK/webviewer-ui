@@ -203,7 +203,6 @@ export default {
     customCSS: getHashParams('css', null),
     customData: getHashParams('custom', null),
     customHeaders: { },
-    configScript: getHashParams('config', ''),
     defaultDisabledElements: getHashParams('disabledElements', ''),
     externalPath: getHashParams('p', ''),
     engineType: documentTypeParamToEngineType(getHashParams('preloadWorker'), getHashParams('pdftronServer', '')),
