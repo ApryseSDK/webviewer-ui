@@ -19,7 +19,7 @@ import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
 import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
-import loadScript from 'helpers/loadScript';
+import loadScript, { loadConfig } from 'helpers/loadScript';
 import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServer';
 import setupMIMETypeTest from 'helpers/setupMIMETypeTest';
 import eventHandler from 'helpers/eventHandler';
@@ -115,7 +115,7 @@ if (window.CanvasRenderingContext2D) {
   loadCustomCSS(state.advanced.customCSS);
 
   fullAPIReady.then(() => {
-    return loadScript(state.advanced.configScript, 'Config script could not be loaded. The default configuration will be used.');
+    return loadConfig();
   }).then(() => {
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
