@@ -9,9 +9,12 @@ export default dispatch => () => {
   dispatch(actions.openElement('pageNavOverlay'));
   dispatch(actions.setDocumentLoadingProgress(1));
   dispatch(actions.setWorkerLoadingProgress(1));
+  
   setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
     dispatch(actions.resetLoadingProgress());
+    dispatch(actions.resetUploadProgress());
+    dispatch(actions.setIsUploading(false));
   }, 300);
 
   if (window.innerWidth <= 640) {

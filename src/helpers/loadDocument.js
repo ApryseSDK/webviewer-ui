@@ -17,9 +17,14 @@ export default (state, dispatch) => {
         const docOptions = params[1];
 
         if (partRetriever.on) {
-          partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
-            dispatch(actions.setDocumentLoadingProgress(loaded / total));
-          });
+          // If its a blackbox part retriever but the user uploaded a local file,
+          // we dont set this because we already show an upload modal
+          if (!partRetriever._isBlackboxLocalFile) {
+            partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+              dispatch(actions.setDocumentLoadingProgress(loaded / total));
+            });
+          }
+          
           partRetriever.on('error', function(e, type, message) {
             fireError(message);
           });
@@ -99,16 +104,14 @@ const getPartRetriever = (state, streaming, dispatch) => {
       partRetrieverName = 'BlackBoxPartRetriever';
 
       const blackboxOptions = { disableWebsockets };
+      const needsUpload = file && file.name;
 
       // If PDFTron server is set and they try and upload a local file
-      if (file && file.name) {
+      if (needsUpload) {
         documentPath = null; // (BlackBoxPartRetriever does upload when this is null)
         blackboxOptions.uploadData = {
           fileHandle: file,
-          loadCallback: () => {
-            dispatch(actions.setIsUploading(false));
-            dispatch(actions.resetUploadProgress());
-          }, // todo - add proper callbacks for these
+          loadCallback: () => {},
           onProgress: e => {
             dispatch(actions.setUploadProgress(e.loaded / e.total));
           },
@@ -116,10 +119,13 @@ const getPartRetriever = (state, streaming, dispatch) => {
         };
         blackboxOptions.filename = file.name;
 
-        dispatch(actions.setIsUploading(true));
+        dispatch(actions.setIsUploading(true)); // this is reset in onDocumentLoaded event
       }
 
       partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, blackboxOptions);
+      if (needsUpload) {
+        partRetriever._isBlackboxLocalFile = true;
+      }
     } else if (engineType === engineTypes.UNIVERSAL) {
       const cache = window.CoreControls.PartRetrievers.CacheHinting.NO_HINT;
 
@@ -169,7 +175,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
 };
 
 const getDocOptions = (state, dispatch, streaming) => {
-  const { id: docId, officeType, pdfType, password } = state.document;
+  const { id: docId, officeType, pdfType, password, file } = state.document;
   const engineType = getEngineType(state);
 
   return new Promise(resolve => {
@@ -205,8 +211,9 @@ const getDocOptions = (state, dispatch, streaming) => {
         };
         const workerHandlers = {
           workerLoadingProgress: percent => {
-
-            dispatch(actions.setWorkerLoadingProgress(percent));
+            if (engineType === engineTypes.PDFTRON_SERVER && file && file.name) {
+              dispatch(actions.setWorkerLoadingProgress(percent));
+            }
           }
         };
 
