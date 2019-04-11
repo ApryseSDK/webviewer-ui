@@ -192,7 +192,9 @@ export default {
     printQuality: 1,
     passwordAttempts: -1,
     documentLoadingProgress: 0,
-    workerLoadingProgress: 0
+    workerLoadingProgress: 0,
+    isUploading: false,
+    uploadProgress: 0
   },
   user: {
     name: getHashParams('user', 'Guest'),
@@ -203,7 +205,6 @@ export default {
     customCSS: getHashParams('css', null),
     customData: getHashParams('custom', null),
     customHeaders: { },
-    configScript: getHashParams('config', ''),
     defaultDisabledElements: getHashParams('disabledElements', ''),
     externalPath: getHashParams('p', ''),
     engineType: documentTypeParamToEngineType(getHashParams('preloadWorker'), getHashParams('pdftronServer', '')),
