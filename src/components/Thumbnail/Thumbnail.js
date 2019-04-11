@@ -40,7 +40,7 @@ class Thumbnail extends React.PureComponent {
 
     if (!prevProps.canLoad && this.props.canLoad) {
       onLoad(index, this.thumbContainer.current);
-    } 
+    }
     if (prevProps.canLoad && !this.props.canLoad) {
       onCancel(index);
     }
@@ -60,19 +60,19 @@ class Thumbnail extends React.PureComponent {
     const didLayoutChange = contentChanged.some(changedPage => currentPage + '' === changedPage);
 
     if(didLayoutChange) {
-      const { thumbContainer } = this;
-      const { current } = thumbContainer;
+    const { thumbContainer } = this;
+    const { current } = thumbContainer;
 
-      core.loadThumbnailAsync(index, thumb => {
-        thumb.className = 'page-image';
-        current.removeChild(current.querySelector('.page-image'));
-        current.appendChild(thumb);
-        if (this.props.updateAnnotations) {
-          this.props.updateAnnotations(index, thumb);
-        }
-      });
-    }
+    core.loadThumbnailAsync(index, thumb => {
+      thumb.className = 'page-image';
+      current.removeChild(current.querySelector('.page-image'));
+      current.appendChild(thumb);
+      if (this.props.updateAnnotations) {
+        this.props.updateAnnotations(index);
+      }
+    });
   }
+}
 
   handleClick = () => {
     const { index, closeElement} = this.props;
