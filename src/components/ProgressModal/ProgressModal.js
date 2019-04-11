@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -15,8 +14,7 @@ class ProgressModal extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     loadingProgress: PropTypes.number,
     isUploading: PropTypes.bool,
-    uploadProgress: PropTypes.number,
-    t: PropTypes.func.isRequired
+    uploadProgress: PropTypes.number
   }
 
   componentDidUpdate(prevProps) {
@@ -26,7 +24,7 @@ class ProgressModal extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, loadingProgress, isUploading, uploadProgress, t } = this.props;
+    const { isDisabled, loadingProgress, isUploading, uploadProgress } = this.props;
 
     if (isDisabled) {
       return null;
@@ -38,10 +36,6 @@ class ProgressModal extends React.PureComponent {
     return (
       <div className={className} data-element="progressModal">
         <div className="container">
-            {
-              isUploading &&
-              <p>{t('message.uploading')}</p>
-            }
           <div className="progress-bar-wrapper">
             <div className="progress-bar" style={{ transform: `translateX(${-(1 - progressToUse) * 100}%`, transition: progressToUse ? 'transform 0.5s ease' : 'none' }}>
             </div>
@@ -64,4 +58,4 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(ProgressModal));
+export default connect(mapStateToProps, mapDispatchToProps)(ProgressModal);
