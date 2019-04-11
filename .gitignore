@@ -6,6 +6,7 @@ coverage
 annotations
 webviewer-ui.zip
 notes
+static/lib
 coverage
 build
 tests
