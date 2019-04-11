@@ -73,7 +73,7 @@ const RESET = '\x1b[0m';
   app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
   app.use('/mime', express.static(path.resolve(__dirname, 'mime')));
   app.use('/core', express.static(path.resolve(__dirname, './static/lib/core')));
-  app.use('/files', express.static(path.resolve(__dirname, '../../samples/files')));
+  app.use('/files', express.static(path.resolve(__dirname, './static/files')));
   
   const handleAnnotation = (req, res, handler) => {
     const dir = path.resolve(__dirname, 'annotations');
@@ -110,7 +110,7 @@ const RESET = '\x1b[0m';
   });
   
   app.get('/license-key.js', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../samples/license-key.js'));
+    res.sendFile(path.resolve(__dirname, './license-key.js'));
   });
   
   app.get('/', (req, res) => {
