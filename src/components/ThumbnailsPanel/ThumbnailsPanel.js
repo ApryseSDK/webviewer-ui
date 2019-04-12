@@ -64,7 +64,7 @@ class ThumbnailsPanel extends React.PureComponent {
         return;
       }
       indices.push(pageIndex);
-      
+    
       this.updateAnnotations(pageIndex);
     });
   }
@@ -116,7 +116,7 @@ class ThumbnailsPanel extends React.PureComponent {
       rotation += 4;
     }
     let multiplier = window.utils.getCanvasMultiplier();
- 
+
     if (rotation % 2 === 0) {
       annotCanvas.width = width;
       annotCanvas.height = height;

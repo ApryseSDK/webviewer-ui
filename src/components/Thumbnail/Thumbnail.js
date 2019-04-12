@@ -60,19 +60,19 @@ class Thumbnail extends React.PureComponent {
     const didLayoutChange = contentChanged.some(changedPage => currentPage + '' === changedPage);
 
     if(didLayoutChange) {
-    const { thumbContainer } = this;
-    const { current } = thumbContainer;
+      const { thumbContainer } = this;
+      const { current } = thumbContainer;
 
-    core.loadThumbnailAsync(index, thumb => {
-      thumb.className = 'page-image';
-      current.removeChild(current.querySelector('.page-image'));
-      current.appendChild(thumb);
-      if (this.props.updateAnnotations) {
-        this.props.updateAnnotations(index);
-      }
-    });
+      core.loadThumbnailAsync(index, thumb => {
+        thumb.className = 'page-image';
+        current.removeChild(current.querySelector('.page-image'));
+        current.appendChild(thumb);
+        if (this.props.updateAnnotations) {
+          this.props.updateAnnotations(index);
+        }
+      });
+    }
   }
-}
 
   handleClick = () => {
     const { index, closeElement} = this.props;

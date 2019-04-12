@@ -23,6 +23,6 @@ export default annotation => {
   if (annotation.elementName === 'highlight' && !core.isBlendModeSupported(annotation['BlendMode'])) {
     style.Opacity = null;
   }
-  
+
   return style;
 };
