@@ -1,3 +1,13 @@
+/**
+ * Disables annotations feature, affecting the annotation visibility and elements related to annotations.
+ * @method CoreControls.ReaderControl#disableAnnotations
+ * @example // disable annotations feature
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.disableAnnotations();
+});
+ */
+
 import core from 'core';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import { PRIORITY_ONE } from 'constants/actionPriority';

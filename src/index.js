@@ -8,12 +8,9 @@ import thunk from 'redux-thunk';
 
 import core from 'core';
 import actions from 'actions';
-
 import apis from 'src/apis';
-
 import App from 'components/App';
-import rootReducer from 'reducers/rootReducer';
-import { engineTypes, workerTypes } from 'constants/types';
+import { workerTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
@@ -30,6 +27,7 @@ import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
+import rootReducer from 'reducers/rootReducer';
 
 const middleware = [thunk];
 
@@ -198,37 +196,46 @@ if (window.CanvasRenderingContext2D) {
       document.getElementById('app'),
       () => {
         window.readerControl = {
-          ...apis.getActions(store),
+          docViewer,
+          header,
           FitMode,
           LayoutMode,
+          loadedFromServer: false, // undocumented
+          serverFailed: false, // undocumented
+          i18n: i18next,
+          constants: apis.getConstants(), // undocumented
           addSearchListener: apis.addSearchListener(store),
           addSortStrategy: apis.addSortStrategy(store),
           closeDocument: apis.closeDocument(store),
-          constants: apis.getConstants(),
+          closeElement: apis.closeElement(store),
+          closeElements: apis.closeElements(store),
           disableAnnotations: apis.disableAnnotations(store),
           disableDownload: apis.disableDownload(store),
+          disableElements: apis.disableElements(store),
           disableFilePicker: apis.disableFilePicker(store),
           disableLocalStorage: apis.disableLocalStorage,
-          disableNotesPanel: apis.disableNotesPanel(store),
           disableMeasurement: apis.disableMeasurement(store),
+          disableNotesPanel: apis.disableNotesPanel(store),
           disablePrint: apis.disablePrint(store),
+          disableRedaction: apis.disableRedaction(store),
           disableTextSelection: apis.disableTextSelection(store),
-          disableTool: apis.disableTool(store),
+          disableTool: apis.disableTool(store), // undocumented
           disableTools: apis.disableTools(store),
-          docViewer,
           downloadPdf: apis.downloadPdf(store),
+          enableAllElements: apis.enableAllElements(store), // undocumented
           enableAnnotations: apis.enableAnnotations(store),
           enableDownload: apis.enableDownload(store),
+          enableElements: apis.enableElements(store),
           enableFilePicker: apis.enableFilePicker(store),
-          enableMeasurement: apis.enableMeasurement(store),
           enableLocalStorage: apis.enableLocalStorage,
+          enableMeasurement: apis.enableMeasurement(store),
           enableNotesPanel: apis.enableNotesPanel(store),
           enablePrint: apis.enablePrint(store),
           enableRedaction: apis.enableRedaction(store),
-          disableRedaction: apis.disableRedaction(store),
           enableTextSelection: apis.enableTextSelection(store),
           enableTool: apis.enableTool(store),
           enableTools: apis.enableTools(store),
+          focusNote: apis.focusNote(store),
           getAnnotationUser: apis.getAnnotationUser,
           getBBAnnotManager: apis.getBBAnnotManager(store),
           getCurrentPageNumber: apis.getCurrentPageNumber(store),
@@ -243,15 +250,15 @@ if (window.CanvasRenderingContext2D) {
           goToLastPage: apis.goToLastPage(store),
           goToNextPage: apis.goToNextPage(store),
           goToPrevPage: apis.goToPrevPage(store),
-          header,
-          i18n: i18next,
           isAdminUser: apis.isAdminUser,
-          isElementOpen: apis.isElementOpen(store),
           isElementDisabled: apis.isElementDisabled(store),
+          isElementOpen: apis.isElementOpen(store),
           isMobileDevice: apis.isMobileDevice,
           isReadOnly: apis.isReadOnly,
           isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
+          openElement: apis.openElement(store),
+          openElements: apis.openElements(store),          
           print: apis.print(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),
@@ -260,33 +267,45 @@ if (window.CanvasRenderingContext2D) {
           saveAnnotations: apis.saveAnnotations(store),
           searchText: apis.searchText(store),
           searchTextFull: apis.searchTextFull(store),
-          selectors: apis.getSelectors(store),
+          selectors: apis.getSelectors(store), // undocumented
+          setActiveHeaderGroup: apis.setActiveHeaderGroup(store),
+          setActiveLeftPanel: apis.setActiveLeftPanel(store),
           setAdminUser: apis.setAdminUser,
-          setNoteDateFormat: apis.setNoteDateFormat(store),
           setAnnotationUser: apis.setAnnotationUser,
-          setTheme: apis.setTheme,
+          setColorPalette: apis.setColorPalette(store), // undocumented
           setCurrentPageNumber: apis.setCurrentPageNumber,
-          setEngineType: apis.setEngineType(store),
+          setCursorOverlay: apis.setCursorOverlay(store),
+          setCustomNoteFilter: apis.setCustomNoteFilter(store),
+          setCustomPanel: apis.setCustomPanel(store),
+          setEngineType: apis.setEngineType(store), // undocumented
           setFitMode: apis.setFitMode,
           setHeaderItems: apis.setHeaderItems(store),
+          setIconColor: apis.setIconColor(store),
           setLanguage: apis.setLanguage,
           setLayoutMode: apis.setLayoutMode,
-          setNotesPanelSort: apis.setNotesPanelSort(store),
           setMaxZoomLevel: apis.setMaxZoomLevel(store),
           setMinZoomLevel: apis.setMinZoomLevel(store),
+          setNoteDateFormat: apis.setNoteDateFormat(store),
+          setNotesPanelSort: apis.setNotesPanelSort(store), // undocumented
+          setPageLabels: apis.setPageLabels(store),
           setPrintQuality: apis.setPrintQuality(store),
           setReadOnly: apis.setReadOnly,
-          setShowSideWindow: apis.setShowSideWindow(store),
-          setSideWindowVisibility: apis.setSideWindowVisibility(store),
+          setShowSideWindow: apis.setShowSideWindow(store), // undocumented
+          setSideWindowVisibility: apis.setSideWindowVisibility(store), // undocumented
+          setSortNotesBy: apis.setSortNotesBy(store),
+          setSortStrategy: apis.setSortStrategy(store),
+          setSwipeOrientation: apis.setSwipeOrientation(store),
+          setTheme: apis.setTheme,
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
-          showWarningMessage: apis.showWarningMessage(store),
+          setZoomList: apis.setZoomList(store),
+          showWarningMessage: apis.showWarningMessage(store), // undocumented
+          toggleElement: apis.toggleElement(store),
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
-          updateOutlines: apis.updateOutlines(store),
+          updateOutlines: apis.updateOutlines(store), // undocumented
           updateTool: apis.updateTool(store),
-          loadedFromServer: false,
-          serverFailed: false,
+          useEmbeddedPrint: apis.useEmbeddedPrint(store),
         };
 
         window.ControlUtils = {
@@ -307,3 +326,35 @@ if (window.CanvasRenderingContext2D) {
 window.addEventListener('hashchange', () => {
   window.location.reload();
 });
+
+/**
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access the reader control instance as follows:
+ * @name CoreControls.ReaderControl
+ * @class A utility class that contains viewer APIs.
+ * @hideconstructor
+ * @example var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+
+viewerElement.addEventListener('ready', () => {
+  var instance = viewer.getInstance(); // returns instance of ReaderControl
+  // instance.someMethod();
+});
+ */
+
+/**
+ * Returns document viewer instance, which contains lower level APIs and events.
+ * @name CoreControls.ReaderControl#docViewer
+ * @example viewerElement.addEventListener('ready', () => {
+  var instance = viewer.getInstance();
+  var docViewer = instance.docViewer; // returns instance of DocumentViewer that contains lower level APIs
+
+  docViewer.on('beforeDocumentLoaded', () => {
+    // some functions
+  });
+
+  docViewer.setWatermark({
+    // some options
+  });
+});
+ * @see CoreControls.DocumentViewer
+ */

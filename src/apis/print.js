@@ -1,3 +1,12 @@
+/**
+ * Print the current document.
+ * @method CoreControls.ReaderControl#print
+ * @example viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.print();
+});
+ */
+
 import print from 'helpers/print';
 import selectors from 'selectors';
 

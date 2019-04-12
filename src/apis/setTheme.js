@@ -1,3 +1,36 @@
+/**
+ * Sets the theme of Webviewer UI. Please note that this does not work in IE11.
+ * @method CoreControls.ReaderControl#setTheme
+ * @param {(string|object)} theme Either theme object or predefined string. Predefined strings are 'default' and 'dark'.
+ * @param {string} [theme.primary=#FFFFFF] Background color for the header, modals, overlays, etc.
+ * @param {string} [theme.secondary=#F5F5F5] ackground color for panels and the document container.
+ * @param {string} [theme.border=#CDCDCD] Border color for different components.
+ * @param {string} [theme.buttonHover=#F6F6F6] Background color for hovering on a button.
+ * @param {string} [theme.buttonActive=#F0F0F0] Background color for an active button.
+ * @param {string} [theme.text=#333333] Text color.
+ * @param {string} [theme.icon=#757575] Icon color.
+ * @param {string} [theme.iconActive=#757575] Icon color when button is active.
+ * @example // Using an object
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.setTheme({
+    primary: '#2C2B3A',
+    secondary: '#4D4C5F',
+    border: '#555555',
+    buttonHover: '#686880',
+    buttonActive: '#686880',
+    text: '#FFFFFF',
+    icon: '#FFFFFF',
+    iconActive: '#FFFFFF'
+  });
+});
+ * @example // Using predefined string
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.setTheme('dark');
+});
+ */
+
 export default theme => {
   const isPresetTheme = typeof theme === 'string';
   const isCustomizedTheme = typeof theme === 'object';
