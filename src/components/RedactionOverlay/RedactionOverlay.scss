@@ -16,9 +16,18 @@
 }
 
 .redactHeader{
-  .Icon{
-    fill: #757575;
-    fill: var(--icon-color);
+  &.inactive{
+    .Icon{
+      fill: #757575;
+      fill: var(--icon-color);
+    }
+  }
+
+  &.active{
+    .Icon{
+      fill: #757575;
+      fill: var(--icon-active-color);
+    }
   }
 }
 
@@ -54,4 +63,20 @@
       flex: 1;
       height: 100%;
   }}
+
+  .Button{
+    &.inactive{
+      .Icon{
+        fill: #757575;
+        fill: var(--icon-color);
+      }
+    }
+  
+    &.active{
+      .Icon{
+        fill: #757575;
+        fill: var(--icon-active-color);
+      }
+    }
+  }
 }
