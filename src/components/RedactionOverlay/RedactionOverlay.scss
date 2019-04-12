@@ -1,5 +1,6 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
+@import '../../components/Icon/Icon.scss';
 
 .redactHeader:after{
   content: '';
@@ -16,8 +17,9 @@
 }
 
 .redactHeader{
-  svg{
+  .Icon{
     fill: #757575;
+    fill: var(--icon-color);
   }
 }
 
