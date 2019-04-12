@@ -47,7 +47,7 @@
   display: flex;
   z-index: 1;
   background-color: inherit;
-  &:hover + .OverlayButton{
+  &:hover + .OverlayButton {
     background-color:inherit;
   }
 }
