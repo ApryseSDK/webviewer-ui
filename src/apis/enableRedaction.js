@@ -1,3 +1,13 @@
+/**
+ * Enables redaction feature, affecting any elements related to redaction.
+ * @method CoreControls.ReaderControl#enableRedaction
+ * @example // enable redaction feature
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.enableRedaction();
+});
+ */
+
 import actions from 'actions';
 import core from 'core';
 import disableRedaction from './disableRedaction';

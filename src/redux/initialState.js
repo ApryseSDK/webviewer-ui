@@ -26,14 +26,9 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: [ 'tablet', 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
-<<<<<<< HEAD
-        { type: 'customElement',
-          render: () => <ToggleElementOverlay />, 
-=======
         { 
           type: 'customElement',
           render: () => <ToggleElementOverlay />,
->>>>>>> 217b043... [new] New "extension" and updated "preloadWorker" options for constructor and loadDocument  (#215)
           dataElement: 'zoomOverlayButton',
           hidden: [ 'mobile' ],
           element: 'zoomOverlay'

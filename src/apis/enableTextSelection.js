@@ -1,3 +1,13 @@
+/**
+ * Enables text to be selected in the document.
+ * @method CoreControls.ReaderControl#enableTextSelection
+ * @example // enable text to be selected in the document
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.enableTextSelection();
+});
+ */
+
 import disableTextSelection from './disableTextSelection';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';

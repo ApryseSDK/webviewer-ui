@@ -1,3 +1,13 @@
+/**
+ * Disables text to be selected in the document.
+ * @method CoreControls.ReaderControl#disableTextSelection
+ * @example // disable text to be selected in the document
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.disableTextSelection();
+});
+ */
+
 import core from 'core';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import defaultTool from 'constants/defaultTool';

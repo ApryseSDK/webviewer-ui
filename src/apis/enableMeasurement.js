@@ -1,3 +1,13 @@
+/**
+ * Enables measurement feature, affecting any elements related to measurement tools.
+ * @method CoreControls.ReaderControl#enableMeasurement
+ * @example // enable measurement feature
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.enableMeasurement();
+});
+ */
+
 import core from 'core';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';

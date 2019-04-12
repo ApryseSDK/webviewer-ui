@@ -1,3 +1,14 @@
+/**
+ * Downloads the pdf document with or without annotations added by WebViewer UI.
+ * @method CoreControls.ReaderControl#downloadPdf
+ * @param {boolean} [includeAnnotations=true] Whether or not to include annotations added by WebViewer UI.
+ * @example // download pdf without annotations added by WebViewer UI
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.downloadPdf(false);
+});
+ */
+
 import downloadPdf from 'helpers/downloadPdf';
 import selectors from 'selectors';
 import { workerTypes } from 'constants/types';

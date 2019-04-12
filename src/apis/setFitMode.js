@@ -1,3 +1,13 @@
+/**
+ * Sets the fit mode of the viewer.
+ * @method CoreControls.ReaderControl#setFitMode
+ * @param {CoreControls.ReaderControl#FitMode} fitMode Whether or not to set the current user to be an admin.
+ * @example viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.setFitMode(instance.FitMode.FitWidth);
+});
+ */
+
 import core from 'core';
 import FitMode from 'constants/fitMode';
 

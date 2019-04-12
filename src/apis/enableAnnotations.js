@@ -1,3 +1,13 @@
+/**
+ * Enables annotations feature, affecting the annotation visibility and elements related to annotations.
+ * @method CoreControls.ReaderControl#enableAnnotations
+ * @example // enable annotations feature
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.enableAnnotations();
+});
+ */
+
 import core from 'core';
 import disableAnnotations from './disableAnnotations';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';

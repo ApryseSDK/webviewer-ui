@@ -1,3 +1,13 @@
+/**
+ * Disables measurement feature, affecting any elements related to measurement tools.
+ * @method CoreControls.ReaderControl#disableMeasurement
+ * @example // disable measurement feature
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.disableMeasurement();
+});
+ */
+
 import core from 'core';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';

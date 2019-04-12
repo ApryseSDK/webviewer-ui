@@ -1,3 +1,12 @@
+/**
+ * Go to the next page of the document. Makes the document viewer display the next page of the document.
+ * @method CoreControls.ReaderControl#goToNextPage
+ * @example viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.goToNextPage();
+});
+ */
+
 import core from 'core';
 import selectors from 'selectors';
 

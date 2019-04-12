@@ -63,12 +63,9 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       window.addEventListener('resize', this.handleWindowResize);
     }
-<<<<<<< HEAD
 
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
-=======
     window.addEventListener('keydown', this.onKeyDown);
->>>>>>> 0dd0b13... [update] Added page navigation with arrow keys
   }
 
   componentWillUnmount() {
@@ -76,10 +73,8 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
-<<<<<<< HEAD
 
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
-=======
     window.removeEventListener('keydown', this.onKeyDown);
   }
 
@@ -94,7 +89,6 @@ class DocumentContainer extends React.PureComponent {
     } else if ((e.key === 'ArrowDown' || e.which === 40) && reachedBottom && currentPage < totalPages) {
       this.pageDown();
     }
->>>>>>> 0dd0b13... [update] Added page navigation with arrow keys
   }
 
   handleWindowResize = () => {
