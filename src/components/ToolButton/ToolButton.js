@@ -88,8 +88,8 @@ class ToolButton extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, { toolName }) => ({
-  isDisabled: selectors.isToolButtonDisabled(state, toolName),
+const mapStateToProps = (state, { dataElement, toolName }) => ({
+  isDisabled: selectors.isToolButtonDisabled(state, toolName) || selectors.isElementDisabled(state, dataElement),
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
   iconColor: selectors.getIconColor(state, toolName),
