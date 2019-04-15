@@ -25,6 +25,7 @@ class ErrorModal extends React.PureComponent {
 
   componentDidMount() {
     window.addEventListener('loaderror', this.onError);
+    window.addEventListener('customErrorMessage', this.onError);
   }
 
   componentDidUpdate(prevProps) {
@@ -35,6 +36,7 @@ class ErrorModal extends React.PureComponent {
 
   componentWillUnmount() {
     window.removeEventListener('loaderror', this.onError);
+    window.removeEventListener('customErrorMessage', this.onError);
   }
 
   onError = error => {
