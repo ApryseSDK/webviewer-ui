@@ -64,7 +64,7 @@ class ThumbnailsPanel extends React.PureComponent {
         return;
       }
       indices.push(pageIndex);
-
+    
       this.updateAnnotations(pageIndex);
     });
   }
@@ -111,7 +111,6 @@ class ThumbnailsPanel extends React.PureComponent {
     const ctx = annotCanvas.getContext('2d');
 
     let zoom = 1;
-    let t = null;
     let rotation = core.getCompleteRotation(pageNumber) - core.getRotation(pageNumber);
     if (rotation < 0) {
       rotation += 4;
@@ -123,36 +122,36 @@ class ThumbnailsPanel extends React.PureComponent {
       annotCanvas.height = height;
       zoom = annotCanvas.width / pageWidth;
       zoom /= multiplier;
-      t = window.GetPageMatrix(zoom, rotation, { width: annotCanvas.width, height: annotCanvas.height });
-
-      if (rotation === 0) {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, 0, 0);
-      } else {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, annotCanvas.width, annotCanvas.height);
-      }
     } else {
       annotCanvas.width = height;
       annotCanvas.height = width;
 
       zoom = annotCanvas.height / pageWidth;
       zoom /= multiplier;
-
-      t = window.GetPageMatrix(zoom, rotation, { width: annotCanvas.width, height: annotCanvas.height });
-
-      if (rotation === 1) {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, annotCanvas.width, 0);
-      } else {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, 0, annotCanvas.height);
-      }
     }
 
     thumbContainer.appendChild(annotCanvas);
+    core.setAnnotationCanvasTransform(ctx, zoom, rotation);
 
-    core.drawAnnotations({
+    let options = {
       pageNumber,
       overrideCanvas: annotCanvas,
       namespace: 'thumbnails'
-    });
+    };
+
+    var thumb = thumbContainer.querySelector('.page-image');
+
+    if(thumb) {
+      options = {
+        ...options,
+        overridePageRotation: rotation,
+        overridePageCanvas: thumb,
+      };
+    }  else {
+      return;
+    }
+
+    core.drawAnnotations(options);
   }
 
   getThumbnailSize = (pageWidth, pageHeight) => {
