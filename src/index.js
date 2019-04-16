@@ -220,6 +220,7 @@ if (window.CanvasRenderingContext2D) {
           setZoomLevel: apis.setZoomLevel,
           showWarningMessage: apis.showWarningMessage(store),
           showErrorMessage: apis.showErrorMessage,
+          closeErrorMessage: apis.closeErrorMessage(store),
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store),
