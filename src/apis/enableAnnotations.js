@@ -1,6 +1,6 @@
 /**
  * Enables annotations feature, affecting the annotation visibility and elements related to annotations.
- * @method CoreControls.ReaderControl#enableAnnotations
+ * @method WebViewer#enableAnnotations
  * @example // enable annotations feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

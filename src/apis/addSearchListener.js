@@ -1,7 +1,7 @@
 /**
  * Adds a listener function to be called when search is completed.
- * @method CoreControls.ReaderControl#addSearchListener
- * @param {CoreControls.ReaderControl~searchListener} searchListener Callback function that will be triggered when search completed
+ * @method WebViewer#addSearchListener
+ * @param {WebViewer~searchListener} searchListener Callback function that will be triggered when search completed
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();
   const searchListener = (searchValue, options, results) => {
@@ -12,7 +12,7 @@
  */
 /**
  * Callback that gets passed to {@link CoreControls.ReaderControl#addSearchListener addSearchListener}.
- * @callback CoreControls.ReaderControl~searchListener
+ * @callback WebViewer~searchListener
  * @param {string} searchValue Search value
  * @param {object} options Search options object, which includes 'caseSensitive', 'wholeWord', 'wildcard' and 'regex'
  * @param {Array.<object>} results Search results

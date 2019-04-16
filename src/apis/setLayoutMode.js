@@ -1,6 +1,6 @@
 /**
  * Sets the layout mode of the viewer.
- * @method CoreControls.ReaderControl#setLayoutMode
+ * @method WebViewer#setLayoutMode
  * @param {CoreControls.ReaderControl#LayoutMode} layoutMode Layout mode of WebViewer.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

@@ -1,6 +1,6 @@
 /**
  * Enables notes panel feature, affecting any elements related to notes panel.
- * @method CoreControls.ReaderControl#enableNotesPanel
+ * @method WebViewer#enableNotesPanel
  * @example // enable notes panel feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

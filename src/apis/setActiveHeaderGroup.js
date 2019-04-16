@@ -1,6 +1,6 @@
 /**
  * Sets a header group to be rendered in the Header element. This API comes useful when replacing the entire header items in small screens.
- * @method CoreControls.ReaderControl#setActiveHeaderGroup
+ * @method WebViewer#setActiveHeaderGroup
  * @param {string} headerGroup Name of the header group to be rendered. Default WebViewer UI has two header groups: default and tools.
  * @example // switch to tools header
 viewerElement.addEventListener('ready', () => {

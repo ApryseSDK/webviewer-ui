@@ -1,6 +1,6 @@
 /**
  * Return the current tool object.
- * @method CoreControls.ReaderControl#getToolMode
+ * @method WebViewer#getToolMode
  * @return {Tools} Instance of the current tool
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

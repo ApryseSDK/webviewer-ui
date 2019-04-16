@@ -1,6 +1,6 @@
 /**
  * Disables redaction feature, affecting any elements related to redaction.
- * @method CoreControls.ReaderControl#disableRedaction
+ * @method WebViewer#disableRedaction
  * @example // disable redaction feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

@@ -1,6 +1,6 @@
 /**
  * Return the current zoom level
- * @method CoreControls.ReaderControl#getZoomLevel
+ * @method WebViewer#getZoomLevel
  * @return {number} Zoom level (0 ~ 1)
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

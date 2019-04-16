@@ -1,6 +1,6 @@
 /**
  * Return the current layout mode of the WebViewer.
- * @method CoreControls.ReaderControl#getLayoutMode
+ * @method WebViewer#getLayoutMode
  * @return {CoreControls.ReaderControl#LayoutMode} Current layout mode
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

@@ -1,6 +1,6 @@
 /**
  * Return the current username.
- * @method CoreControls.ReaderControl#getAnnotationUser
+ * @method WebViewer#getAnnotationUser
  * @return {string} Current username
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

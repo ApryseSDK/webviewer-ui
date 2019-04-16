@@ -1,6 +1,6 @@
 /**
  * Returns if the current browser is on a mobile device.
- * @method CoreControls.ReaderControl#isMobileDevice
+ * @method WebViewer#isMobileDevice
  * @returns {boolean} Whether the current browser is on a mobile device.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

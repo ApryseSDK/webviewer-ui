@@ -1,6 +1,6 @@
 /**
  * Go to the previous page of the document. Makes the document viewer display the previous page of the document.
- * @method CoreControls.ReaderControl#goToPrevPage
+ * @method WebViewer#goToPrevPage
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();
   instance.goToPrevPage();

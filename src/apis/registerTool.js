@@ -1,6 +1,6 @@
 /**
  * Registers tool in the document viewer tool mode map, and adds a button object to be used in the header. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-tools' target='_blank'>Customizing tools</a> to learn how to make a tool.
- * @method CoreControls.ReaderControl#registerTool
+ * @method WebViewer#registerTool
  * @param {object} properties Tool properties.
  * @param {string} properties.toolName Name of the tool.
  * @param {Tools} properties.toolObject Instance of the tool.

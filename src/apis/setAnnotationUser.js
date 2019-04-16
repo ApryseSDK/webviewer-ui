@@ -1,6 +1,6 @@
 /**
  * Sets name of the current user
- * @method CoreControls.ReaderControl#setAnnotationUser
+ * @method WebViewer#setAnnotationUser
  * @param {string} username Username to be used for current user.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

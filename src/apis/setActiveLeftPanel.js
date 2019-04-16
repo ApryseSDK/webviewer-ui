@@ -1,6 +1,6 @@
 /**
  * Sets a panel to be active in the leftPanel element. Note that this API does not include opening the leftPanel.
- * @method CoreControls.ReaderControl#setActiveLeftPanel
+ * @method WebViewer#setActiveLeftPanel
  * @param {string} dataElement Name of the panel to be active in leftPanel. Default WebViewer UI has three panel options: thumbnailsPanel, outlinesPanel and notesPanel.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

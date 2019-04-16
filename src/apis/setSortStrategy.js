@@ -1,6 +1,6 @@
 /**
  * Sets a sorting algorithm in NotesPanel.
- * @method CoreControls.ReaderControl#setSortStrategy
+ * @method WebViewer#setSortStrategy
  * @param {string} sortStrategy Name of the algorithm. By default, there are two algorithm options: position and time.
  * @example // sort notes by time
 viewerElement.addEventListener('ready', () => {

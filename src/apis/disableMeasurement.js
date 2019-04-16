@@ -1,6 +1,6 @@
 /**
  * Disables measurement feature, affecting any elements related to measurement tools.
- * @method CoreControls.ReaderControl#disableMeasurement
+ * @method WebViewer#disableMeasurement
  * @example // disable measurement feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

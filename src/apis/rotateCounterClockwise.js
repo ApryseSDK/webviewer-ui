@@ -1,6 +1,6 @@
 /**
  * Rotates the document in the WebViewer counter-clockwise.
- * @method CoreControls.ReaderControl#rotateCounterClockwise
+ * @method WebViewer#rotateCounterClockwise
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();
   instance.rotateCounterClockwise();

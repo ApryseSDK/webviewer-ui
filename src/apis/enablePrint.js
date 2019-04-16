@@ -1,6 +1,6 @@
 /**
  * Enables print feature, affecting the Print button in menu overlay and shortcut to print (ctrl/cmd + p).
- * @method CoreControls.ReaderControl#enablePrint
+ * @method WebViewer#enablePrint
  * @example // enable print feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

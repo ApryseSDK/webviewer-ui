@@ -1,6 +1,6 @@
 /**
  * Disables notes panel feature, affecting any elements related to notes panel.
- * @method CoreControls.ReaderControl#disableNotesPanel
+ * @method WebViewer#disableNotesPanel
  * @example // disable notes panel feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

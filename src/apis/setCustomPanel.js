@@ -1,6 +1,6 @@
 /**
  * Adds a custom panel in left panel
- * @method CoreControls.ReaderControl#setCustomPanel
+ * @method WebViewer#setCustomPanel
  * @param {object} options
  * @param {object} options.tab Tab options.
  * @param {string} options.tab.dataElement data-element for tab.
@@ -8,7 +8,7 @@
  * @param {string} options.tab.img Url for an image.
  * @param {object} options.panel Panel options.
  * @param {string} options.panel.dataElement data-element for panel.
- * @param {CoreControls.ReaderControl~renderCustomPanel} options.panel.render Function that returns panel element.
+ * @param {WebViewer~renderCustomPanel} options.panel.render Function that returns panel element.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();
   instance.setCustomPanel({
@@ -30,7 +30,7 @@
  */
 /**
  * Callback that gets passed to `options.panel.render` in {@link CoreControls.ReaderControl#setCustomPanel setCustomPanel}.
- * @callback CoreControls.ReaderControl~renderCustomPanel
+ * @callback WebViewer~renderCustomPanel
  * @returns {HTMLElement} Panel element.
  */
 

@@ -1,6 +1,6 @@
 /**
  * Enables file picker feature, affecting the Open files button in menu overlay and shortcut to open local files (ctrl/cmd + o).
- * @method CoreControls.ReaderControl#enableFilePicker
+ * @method WebViewer#enableFilePicker
  * @example // enable file picker feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

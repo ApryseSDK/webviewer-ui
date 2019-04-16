@@ -1,6 +1,6 @@
 /**
  * Enables redaction feature, affecting any elements related to redaction.
- * @method CoreControls.ReaderControl#enableRedaction
+ * @method WebViewer#enableRedaction
  * @example // enable redaction feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

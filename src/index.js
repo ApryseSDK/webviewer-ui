@@ -326,35 +326,3 @@ if (window.CanvasRenderingContext2D) {
 window.addEventListener('hashchange', () => {
   window.location.reload();
 });
-
-/**
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access the reader control instance as follows:
- * @name CoreControls.ReaderControl
- * @class A utility class that contains viewer APIs.
- * @hideconstructor
- * @example var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
-
-viewerElement.addEventListener('ready', () => {
-  var instance = viewer.getInstance(); // returns instance of ReaderControl
-  // instance.someMethod();
-});
- */
-
-/**
- * Returns document viewer instance, which contains lower level APIs and events.
- * @name CoreControls.ReaderControl#docViewer
- * @example viewerElement.addEventListener('ready', () => {
-  var instance = viewer.getInstance();
-  var docViewer = instance.docViewer; // returns instance of DocumentViewer that contains lower level APIs
-
-  docViewer.on('beforeDocumentLoaded', () => {
-    // some functions
-  });
-
-  docViewer.setWatermark({
-    // some options
-  });
-});
- * @see CoreControls.DocumentViewer
- */

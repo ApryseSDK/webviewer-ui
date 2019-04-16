@@ -1,6 +1,6 @@
 /**
  * Return the current fit mode of the WebViewer.
- * @method CoreControls.ReaderControl#getFitMode
+ * @method WebViewer#getFitMode
  * @return {CoreControls.ReaderControl#FitMode} Current fit mode
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

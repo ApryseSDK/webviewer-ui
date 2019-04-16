@@ -1,6 +1,6 @@
 /**
  * Disables annotations feature, affecting the annotation visibility and elements related to annotations.
- * @method CoreControls.ReaderControl#disableAnnotations
+ * @method WebViewer#disableAnnotations
  * @example // disable annotations feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();
