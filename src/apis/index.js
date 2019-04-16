@@ -55,7 +55,7 @@ import isToolDisabled from './isToolDisabled';
 import loadDocument from './loadDocument';
 import openElement from './openElement';
 import openElements from './openElements';
-import print from './print';
+import print  from './print';
 import registerTool from './registerTool';
 import removeSearchListener from './removeSearchListener';
 import rotateClockwise from './rotateClockwise';
@@ -94,19 +94,13 @@ import setTheme from './setTheme';
 import setToolMode from './setToolMode';
 import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
+import showErrorMessage from './showErrorMessage';
 import showWarningMessage from './showWarningMessage';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import unregisterTool from './unregisterTool';
 import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
-import print from './print';
-import showWarningMessage from './showWarningMessage';
-import showErrorMessage from './showErrorMessage';
-import enableRedaction from './enableRedaction';
-import disableRedaction from './disableRedaction';
-import enableLocalStorage from './enableLocalStorage';
-import disableLocalStorage from './disableLocalStorage';
 import useEmbeddedPrint from './useEmbeddedPrint';
 
 export default {
@@ -206,12 +200,8 @@ export default {
   setToolMode,
   setZoomLevel,
   setZoomList,
-  showWarningMessage,
   showErrorMessage,
-  enableRedaction,
-  disableRedaction,
-  enableLocalStorage,
-  disableLocalStorage,
+  showWarningMessage,
   toggleElement,
   toggleFullScreen,
   unregisterTool,
