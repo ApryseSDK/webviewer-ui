@@ -148,7 +148,7 @@ class Note extends React.PureComponent {
     e.stopPropagation();
 
     this.setState({ isEmpty: true });
-    
+
     if (this.replyTextarea.current.value.trim().length > 0) {
       core.createAnnotationReply(this.props.annotation, this.replyTextarea.current.value);
       this.clearReply();
