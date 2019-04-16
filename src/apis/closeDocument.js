@@ -1,6 +1,6 @@
 /**
  * Closes the document that's currently opened.
- * @method CoreControls.ReaderControl#closeDocument
+ * @method WebViewer#closeDocument
  * @return {Promise} A promise resolved after document is closed.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

@@ -1,6 +1,6 @@
 /**
  * Sets zoom level.
- * @method CoreControls.ReaderControl#setZoomLevel
+ * @method WebViewer#setZoomLevel
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

@@ -1,6 +1,6 @@
 /**
  * Print the current document.
- * @method CoreControls.ReaderControl#print
+ * @method WebViewer#print
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();
   instance.print();

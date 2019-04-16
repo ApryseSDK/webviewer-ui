@@ -1,6 +1,6 @@
 /**
  * Enables text to be selected in the document.
- * @method CoreControls.ReaderControl#enableTextSelection
+ * @method WebViewer#enableTextSelection
  * @example // enable text to be selected in the document
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

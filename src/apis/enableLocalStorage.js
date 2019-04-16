@@ -1,6 +1,6 @@
 /**
  * Enables localStorage feature, tool styles will be saved to localStorage after changed.
- * @method CoreControls.ReaderControl#enableLocalStorage
+ * @method WebViewer#enableLocalStorage
  * @example // enable localStorage feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

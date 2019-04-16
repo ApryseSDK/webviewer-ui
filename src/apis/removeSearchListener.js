@@ -1,6 +1,6 @@
 /**
  * Removes the search listener function.
- * @method CoreControls.ReaderControl#removeSearchListener
+ * @method WebViewer#removeSearchListener
  * @param {searchListener} listener Search listener function that was added.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

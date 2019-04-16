@@ -1,6 +1,6 @@
 /**
  * Load a document inside WebViewer UI.
- * @method CoreControls.ReaderControl#loadDocument
+ * @method WebViewer#loadDocument
  * @param {(string|File)} documentPath Path to the document OR <a href='https://developer.mozilla.org/en-US/docs/Web/API/File' target='_blank'>File object</a> if opening local file.
  * @param {object} options Additional options
  * @param {string} options.documentId Unique id of the document.

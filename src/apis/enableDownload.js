@@ -1,6 +1,6 @@
 /**
  * Enables download feature, affecting the Download button in menu overlay.
- * @method CoreControls.ReaderControl#enableDownload
+ * @method WebViewer#enableDownload
  * @example // enable download feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

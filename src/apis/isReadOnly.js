@@ -1,6 +1,6 @@
 /**
  * Returns whether the current mode is read only.
- * @method CoreControls.ReaderControl#isReadOnly
+ * @method WebViewer#isReadOnly
  * @returns {boolean} Whether the current mode is read only.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

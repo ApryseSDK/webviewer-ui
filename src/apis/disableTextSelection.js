@@ -1,6 +1,6 @@
 /**
  * Disables text to be selected in the document.
- * @method CoreControls.ReaderControl#disableTextSelection
+ * @method WebViewer#disableTextSelection
  * @example // disable text to be selected in the document
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

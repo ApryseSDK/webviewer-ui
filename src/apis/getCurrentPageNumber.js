@@ -1,6 +1,6 @@
 /**
  * Return the current page number (1-indexed) of the document loaded in the WebViewer.
- * @method CoreControls.ReaderControl#getCurrentPageNumber
+ * @method WebViewer#getCurrentPageNumber
  * @return {number} Current page number (1-indexed)
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

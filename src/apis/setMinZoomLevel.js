@@ -1,6 +1,6 @@
 /**
  * Sets the minimum zoom level allowed by the UI. Default is 5%.
- * @method CoreControls.ReaderControl#setMinZoomLevel
+ * @method WebViewer#setMinZoomLevel
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

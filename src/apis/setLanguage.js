@@ -1,6 +1,6 @@
 /**
  * Set the language of WebViewer UI.
- * @method CoreControls.ReaderControl#setLanguage
+ * @method WebViewer#setLanguage
  * @param {string} language The language WebViewer UI will use. By default, following languages are supported: en, zh_cn, fr.
  * @example // Set the language to French
 viewerElement.addEventListener('ready', () => {

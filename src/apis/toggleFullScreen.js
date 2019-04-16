@@ -1,6 +1,6 @@
 /**
  * Toggles full scree mode of the browser.
- * @method CoreControls.ReaderControl#toggleFullScreen
+ * @method WebViewer#toggleFullScreen
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();
   instance.toggleFullScreen();

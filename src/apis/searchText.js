@@ -1,6 +1,6 @@
 /**
  * Searches the current page for the texts matching searchValue.
- * @method CoreControls.ReaderControl#searchText
+ * @method WebViewer#searchText
  * @param {string} searchValue The text value to look for.
  * @param {object} [options] Search options.
  * @param {boolean} [options.caseSensitive=false] Search with matching cases.

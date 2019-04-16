@@ -1,6 +1,6 @@
 /**
  * Focuses a note input field for the annotation. If the notes panel is closed, it is automatically opened before focusing.
- * @method CoreControls.ReaderControl#focusNote
+ * @method WebViewer#focusNote
  * @param {string} annotationId Id of an annotation.
  * @example // Focus the note when annotation is created
 const annotationManager = instance.docViewer.getAnnotationManager();

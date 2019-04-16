@@ -1,6 +1,6 @@
 /**
  * Return the total number of pages of the document loaded in the WebViewer.
- * @method CoreControls.ReaderControl#getPageCount
+ * @method WebViewer#getPageCount
  * @return {number} Total number of pages
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

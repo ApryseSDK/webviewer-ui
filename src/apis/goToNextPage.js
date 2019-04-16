@@ -1,6 +1,6 @@
 /**
  * Go to the next page of the document. Makes the document viewer display the next page of the document.
- * @method CoreControls.ReaderControl#goToNextPage
+ * @method WebViewer#goToNextPage
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();
   instance.goToNextPage();

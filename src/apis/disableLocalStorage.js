@@ -1,6 +1,6 @@
 /**
  * Disables localStorage feature, preventing tool styles from being saved to localStorage after changed.
- * @method CoreControls.ReaderControl#disableLocalStorage
+ * @method WebViewer#disableLocalStorage
  * @example // disable localStorage feature
 viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();

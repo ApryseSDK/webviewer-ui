@@ -1,6 +1,6 @@
 /**
  * Sets the maximum zoom level allowed by the UI. Default is 9999%.
- * @method CoreControls.ReaderControl#setMaxZoomLevel
+ * @method WebViewer#setMaxZoomLevel
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
  * @example viewerElement.addEventListener('ready', () => {
   const instance = viewer.getInstance();
