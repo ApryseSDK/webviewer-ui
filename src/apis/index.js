@@ -73,6 +73,7 @@ import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import print from './print';
 import showWarningMessage from './showWarningMessage';
+import showErrorMessage from './showErrorMessage';
 import enableRedaction from './enableRedaction';
 import disableRedaction from './disableRedaction';
 import enableLocalStorage from './enableLocalStorage';
@@ -157,6 +158,7 @@ export default {
   setMaxZoomLevel,
   setMinZoomLevel,
   showWarningMessage,
+  showErrorMessage,
   enableRedaction,
   disableRedaction,
   enableLocalStorage,

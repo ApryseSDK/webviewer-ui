@@ -25,6 +25,7 @@ class ErrorModal extends React.PureComponent {
 
   componentDidMount() {
     window.addEventListener('loaderror', this.onError);
+    window.addEventListener('customErrorMessage', this.onError);
   }
 
   componentDidUpdate(prevProps) {
@@ -35,6 +36,7 @@ class ErrorModal extends React.PureComponent {
 
   componentWillUnmount() {
     window.removeEventListener('loaderror', this.onError);
+    window.removeEventListener('customErrorMessage', this.onError);
   }
 
   onError = error => {
@@ -43,12 +45,15 @@ class ErrorModal extends React.PureComponent {
     openElement('errorModal');
 
     let errorMessage = '' + (error.detail || error.message);
-    if (errorMessage.indexOf('File does not exist') > -1) {
-      errorMessage = t('message.notSupported');
-    }
-    if (documentPath.indexOf('file:///') > -1) {
-      console.error(`WebViewer doesn't have access to file URLs because of browser security restrictions. Please see https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading#not-allowed-to-load-local-resource:-file:`);
-    }
+    
+    if (error.type === 'loaderror') {
+      if (errorMessage.indexOf('File does not exist') > -1) {
+        errorMessage = t('message.notSupported');
+      }
+      if (documentPath.indexOf('file:///') > -1) {
+        console.error(`WebViewer doesn't have access to file URLs because of browser security restrictions. Please see https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading#not-allowed-to-load-local-resource:-file:`);
+      }
+    }  
 
     this.setState({ errorMessage });
   }
