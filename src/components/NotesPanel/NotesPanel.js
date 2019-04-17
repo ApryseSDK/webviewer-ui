@@ -200,7 +200,13 @@ class NotesPanel extends React.PureComponent {
     }
 
     return (
-      <div className="Panel NotesPanel" style={{ display }} data-element="notesPanel" onClick={() => core.deselectAllAnnotations()}>
+      <div
+        className="Panel NotesPanel"
+        style={{ display }}
+        data-element="notesPanel"
+        onClick={core.deselectAllAnnotations}
+        onScroll={e => e.stopPropagation()}
+      >
         {this.rootAnnotations.length === 0 
         ? <div className="no-annotations">{t('message.noAnnotations')}</div>
         : <React.Fragment>

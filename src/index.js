@@ -301,6 +301,7 @@ if (window.CanvasRenderingContext2D) {
           setZoomList: apis.setZoomList(store),
           showWarningMessage: apis.showWarningMessage(store), // undocumented
           toggleElement: apis.toggleElement(store),
+          showErrorMessage: apis.showErrorMessage,
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store), // undocumented

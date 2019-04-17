@@ -95,6 +95,7 @@ import setTheme from './setTheme';
 import setToolMode from './setToolMode';
 import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
+import showErrorMessage from './showErrorMessage';
 import showWarningMessage from './showWarningMessage';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
@@ -162,7 +163,7 @@ export default {
   loadDocument,
   openElement,
   openElements,
-  print, 
+  print,
   registerTool,
   removeSearchListener,
   rotateClockwise,
@@ -201,6 +202,7 @@ export default {
   setToolMode,
   setZoomLevel,
   setZoomList,
+  showErrorMessage,
   showWarningMessage,
   toggleElement,
   toggleFullScreen,

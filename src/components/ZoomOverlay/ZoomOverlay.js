@@ -94,9 +94,7 @@ class ZoomOverlay extends React.PureComponent {
           />
         )}
         <div className="spacer" />
-        {
-          this.props.isMarqueeZoomToolDisabled ? false : <OverlayItem  onClick={() => closeElements(['zoomOverlay'])} buttonName={t('tool.Marquee')} />
-        }
+        <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} onClick={() => closeElements(['zoomOverlay'])} />
       </div>
     );
   }

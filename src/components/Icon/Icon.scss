@@ -12,10 +12,8 @@
     height: 18px;
   }
 
-  path:not([fill=none]) {
-    fill: currentColor;
-  }
-  polygon:not([fill=none]) {
+  path:not([fill=none]),
+  polygon#Triangle {
     fill: currentColor;
   }
 }
