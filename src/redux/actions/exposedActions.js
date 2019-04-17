@@ -130,7 +130,7 @@ export const showWarningMessage = options => dispatch => {
   dispatch({ type: 'SET_WARNING_MESSAGE', payload: options });
   dispatch(openElement('warningModal'));
 };
-export const setErrorMessage = message => dispatch => {
+export const showErrorMessage = message => dispatch => {
   dispatch({ type: 'SET_ERROR_MESSAGE', payload: { message } });
   dispatch(openElement('errorModal'));
 };

@@ -78,7 +78,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   openElement: actions.openElement,
   closeElements: actions.closeElements,
-  setErrorMessage: actions.setErrorMessage,
+  setErrorMessage: actions.showErrorMessage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ErrorModal));
