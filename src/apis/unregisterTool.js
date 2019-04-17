@@ -2,10 +2,9 @@
  * Unregisters tool in the document viewer tool mode map, and removes the button object.
  * @method WebViewer#unregisterTool
  * @param {string} toolName Name of the tool, either from <a href='https://www.pdftron.com/documentation/web/guides/annotations-and-tools/#list-of-tool-names' target='_blank'>tool names list</a> or the name you registered your custom tool with.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.unregisterTool('MyTool');
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.unregisterTool('MyTool');
  */
 
 import core from 'core';

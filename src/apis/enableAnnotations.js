@@ -1,11 +1,9 @@
 /**
  * Enables annotations feature, affecting the annotation visibility and elements related to annotations.
  * @method WebViewer#enableAnnotations
- * @example // enable annotations feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.enableAnnotations();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.enableAnnotations();
  */
 
 import core from 'core';
@@ -33,7 +31,7 @@ export default store => (enable = true) =>  {
     store.dispatch(actions.enableElements(elements, PRIORITY_ONE));
     core.showAnnotations(core.getAnnotationsList());
   } else {
-    console.warn('enableAnnotations(false) is deprecated, please use disableAnnotations() instead');
+  console.warn('enableAnnotations(false) is deprecated, please use disableAnnotations() instead');
     disableAnnotations(store)();
   }
 };

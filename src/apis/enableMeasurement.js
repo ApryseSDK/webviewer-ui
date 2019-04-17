@@ -1,11 +1,9 @@
 /**
  * Enables measurement feature, affecting any elements related to measurement tools.
  * @method WebViewer#enableMeasurement
- * @example // enable measurement feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.enableMeasurement();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.enableMeasurement();
  */
 
 import core from 'core';

@@ -2,10 +2,9 @@
  * Sets the maximum zoom level allowed by the UI. Default is 9999%.
  * @method WebViewer#setMaxZoomLevel
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.setMaxZoomLevel('150%'); // or setMaxZoomLevel(1.5)
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.setMaxZoomLevel('150%'); // or setMaxZoomLevel(1.5)
  */
 
 import actions from 'actions';
@@ -23,9 +22,9 @@ export default store => zoomLevel => {
     try {
       Tools.MarqueeZoomTool.setMaxZoomLevel(zoomLevel);
     } catch(e) {
-      console.warn('Tools.MarqueeZoomTool.setMaxZoomLevel is not a function. To fix this issue, download the latest package from http://www.pdftron.com/downloads/WebViewer.zip and replace your CoreControls.js with the one in the package');
+    console.warn('Tools.MarqueeZoomTool.setMaxZoomLevel is not a function. To fix this issue, download the latest package from http://www.pdftron.com/downloads/WebViewer.zip and replace your CoreControls.js with the one in the package');
     }
   } else {
-    console.warn('Type of the argument for setMaxZoomLevel must be either string or number');
+  console.warn('Type of the argument for setMaxZoomLevel must be either string or number');
   }
 };

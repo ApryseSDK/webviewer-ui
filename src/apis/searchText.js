@@ -9,12 +9,11 @@
  * @param {boolean} [options.regex=false] Search for a regex string. For example, www(.*)com.
  * @param {boolean} [options.searchUp=false] Search up the document (backwards).
  * @param {boolean} [options.ambientString=false] Get the ambient string in the result.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.searchText('test', {
-    caseSensitive: true,
-    wholeWord: true
-  });
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.searchText('test', {
+  caseSensitive: true,
+  wholeWord: true
 });
  */
 

@@ -1,11 +1,9 @@
 /**
  * Disables notes panel feature, affecting any elements related to notes panel.
  * @method WebViewer#disableNotesPanel
- * @example // disable notes panel feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.disableNotesPanel();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.disableNotesPanel();
  */
 
 import { PRIORITY_TWO } from 'constants/actionPriority';

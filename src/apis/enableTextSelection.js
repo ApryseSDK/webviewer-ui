@@ -1,11 +1,9 @@
 /**
  * Enables text to be selected in the document.
  * @method WebViewer#enableTextSelection
- * @example // enable text to be selected in the document
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.enableTextSelection();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.enableTextSelection();
  */
 
 import disableTextSelection from './disableTextSelection';
@@ -16,7 +14,7 @@ export default store => (enable = true) => {
   if (enable) {
     store.dispatch(actions.enableElements(['textPopup', 'textSelectButton'], PRIORITY_ONE));
   } else {
-    console.warn('enableTextSelection(false) is deprecated, please use disableTextSelection() instead');
+  console.warn('enableTextSelection(false) is deprecated, please use disableTextSelection() instead');
     disableTextSelection(store)();
   }
 

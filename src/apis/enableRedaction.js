@@ -1,11 +1,9 @@
 /**
  * Enables redaction feature, affecting any elements related to redaction.
  * @method WebViewer#enableRedaction
- * @example // enable redaction feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.enableRedaction();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.enableRedaction();
  */
 
 import actions from 'actions';
@@ -19,7 +17,7 @@ export default store => (enable = true) =>  {
     core.enableRedaction(true);
 
     if (!core.isFullPDFEnabled()) {
-      console.warn('Full api is not enabled, applying redactions is disabled');
+    console.warn('Full api is not enabled, applying redactions is disabled');
     }
   } else {
     disableRedaction(store)();

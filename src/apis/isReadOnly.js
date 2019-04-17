@@ -2,10 +2,9 @@
  * Returns whether the current mode is read only.
  * @method WebViewer#isReadOnly
  * @returns {boolean} Whether the current mode is read only.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  console.log(instance.isReadOnly());
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+console.log(instance.isReadOnly());
  */
 
 import core from 'core';

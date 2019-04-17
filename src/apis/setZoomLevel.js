@@ -2,10 +2,9 @@
  * Sets zoom level.
  * @method WebViewer#setZoomLevel
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.setZoomLevel('150%'); // or setZoomLevel(1.5)
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.setZoomLevel('150%'); // or setZoomLevel(1.5)
  */
 
 import core from 'core';
@@ -17,6 +16,6 @@ export default zoomLevel => {
   if (zoomLevel) {
     core.zoomTo(zoomLevel);
   } else {
-    console.warn('Type of the argument for setZoomLevel must be either string or number');
+  console.warn('Type of the argument for setZoomLevel must be either string or number');
   }
 };

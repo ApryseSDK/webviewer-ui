@@ -11,9 +11,9 @@
  * @param {string} [theme.icon=#757575] Icon color.
  * @param {string} [theme.iconActive=#757575] Icon color when button is active.
  * @example // Using an object
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.setTheme({
+const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.setTheme({
     primary: '#2C2B3A',
     secondary: '#4D4C5F',
     border: '#555555',
@@ -25,10 +25,9 @@ viewerElement.addEventListener('ready', () => {
   });
 });
  * @example // Using predefined string
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.setTheme('dark');
-});
+const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.setTheme('dark');
  */
 
 export default theme => {
@@ -70,7 +69,7 @@ const setPresetTheme = theme => {
   if (presetTheme) {
     setTheme(themeToPresetThemeMap[theme]);
   } else {
-    console.warn(`${theme} is not one of: default, dark`);
+  console.warn(`${theme} is not one of: default, dark`);
   }
 };
 
@@ -92,8 +91,8 @@ const setTheme = theme => {
       const color = theme[key];
       document.body.style.setProperty(cssVar, color);
     } else {
-      console.warn(`${key} is not valid, please make sure properties are a subset of:`);
-      console.warn(`primary, secondary, text, buttonHover, buttonActive and icon`);
+    console.warn(`${key} is not valid, please make sure properties are a subset of:`);
+    console.warn(`primary, secondary, text, buttonHover, buttonActive and icon`);
     }
   });
 };

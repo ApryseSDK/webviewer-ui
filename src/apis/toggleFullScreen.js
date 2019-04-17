@@ -1,10 +1,9 @@
 /**
  * Toggles full scree mode of the browser.
  * @method WebViewer#toggleFullScreen
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.toggleFullScreen();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.toggleFullScreen();
  */
 
 import toggleFullscreen from 'helpers/toggleFullscreen';

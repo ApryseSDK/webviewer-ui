@@ -1,11 +1,9 @@
 /**
  * Disables annotations feature, affecting the annotation visibility and elements related to annotations.
  * @method WebViewer#disableAnnotations
- * @example // disable annotations feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.disableAnnotations();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.disableAnnotations();
  */
 
 import core from 'core';

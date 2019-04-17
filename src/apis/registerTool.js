@@ -9,17 +9,16 @@
  * @param {string} [properties.buttonGroup] Group of the tool button belongs to.
  * @param {string} [properties.tooltip] Tooltip of the tool button.
  * @param {function} [annotationConstructor] The constructor function for the annotation that will be created by the registered tool.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.registerTool({
-    toolName: 'MyTool',
-    toolObject: myCustomTool,
-    buttonImage: 'path/to/image',
-    buttonName: 'myToolButton',
-    buttonGroup: 'miscTools',
-    tooltip: 'MyTooltip'
-  }, myCustomAnnotation);
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.registerTool({
+  toolName: 'MyTool',
+  toolObject: myCustomTool,
+  buttonImage: 'path/to/image',
+  buttonName: 'myToolButton',
+  buttonGroup: 'miscTools',
+  tooltip: 'MyTooltip'
+}, myCustomAnnotation);
  */
 
 import core from 'core';

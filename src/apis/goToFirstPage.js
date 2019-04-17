@@ -1,10 +1,9 @@
 /**
  * Go to the first page of the document. Makes the document viewer display the first page of the document.
  * @method WebViewer#goToFirstPage
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.goToFirstPage();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.goToFirstPage();
  */
 
 import core from 'core';

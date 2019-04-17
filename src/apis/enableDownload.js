@@ -1,11 +1,9 @@
 /**
  * Enables download feature, affecting the Download button in menu overlay.
  * @method WebViewer#enableDownload
- * @example // enable download feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.enableDownload();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.enableDownload();
  */
 
 import disableDownload from './disableDownload';
@@ -16,7 +14,7 @@ export default store => (enable = true) =>  {
   if (enable) {
     store.dispatch(actions.enableElement('downloadButton', PRIORITY_ONE));
   } else {
-    console.warn('enableDownload(false) is deprecated, please use disableDownload() instead');
+  console.warn('enableDownload(false) is deprecated, please use disableDownload() instead');
     disableDownload(store)();
   }
 };

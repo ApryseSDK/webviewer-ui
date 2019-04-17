@@ -1,11 +1,9 @@
 /**
  * Disables text to be selected in the document.
  * @method WebViewer#disableTextSelection
- * @example // disable text to be selected in the document
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.disableTextSelection();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.disableTextSelection();
  */
 
 import core from 'core';

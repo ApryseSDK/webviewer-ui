@@ -9,23 +9,22 @@
  * @param {object} options.panel Panel options.
  * @param {string} options.panel.dataElement data-element for panel.
  * @param {WebViewer~renderCustomPanel} options.panel.render Function that returns panel element.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.setCustomPanel({
-    tab:{
-      dataElement: 'customPanelTab',
-      title: 'customPanelTab',
-      img: 'https://www.pdftron.com/favicon-32x32.png',
-    },
-    panel: {
-      dataElement: 'customPanel',
-      render: () => {
-        const div = document.createElement('div');
-        div.innerHTML = 'Hello World';
-        return div;
-      }
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.setCustomPanel({
+  tab:{
+    dataElement: 'customPanelTab',
+    title: 'customPanelTab',
+    img: 'https://www.pdftron.com/favicon-32x32.png',
+  },
+  panel: {
+    dataElement: 'customPanel',
+    render: () => {
+      const div = document.createElement('div');
+      div.innerHTML = 'Hello World';
+      return div;
     }
-  });
+  }
 });
  */
 /**

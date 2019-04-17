@@ -2,11 +2,10 @@
  * Disable multiple tools.
  * @method WebViewer#disableTools
  * @param {Array.<string>} [toolNames=all tools] Array of name of the tools, either from tool names list or the name you registered your custom tool with. If nothing is passed, all tools will be disabled.
- * @example // disable sticky annotation tool and free text tool
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.disableTools([ 'AnnotationCreateSticky', 'AnnotationCreateFreeText' ]);
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+// disable sticky annotation tool and free text tool
+instance.disableTools([ 'AnnotationCreateSticky', 'AnnotationCreateFreeText' ]);
  */
 
 import core from 'core';

@@ -1,11 +1,9 @@
 /**
  * Enables notes panel feature, affecting any elements related to notes panel.
  * @method WebViewer#enableNotesPanel
- * @example // enable notes panel feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.enableNotesPanel();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.enableNotesPanel();
  */
 
 import disableNotesPanel from './disableNotesPanel';
@@ -17,7 +15,7 @@ export default store => (enable = true) =>  {
     store.dispatch(actions.enableElements(['annotationCommentButton', 'notesPanelButton', 'notesPanel'], PRIORITY_TWO));
     store.dispatch(actions.setActiveLeftPanel('notesPanel'));
   } else {
-    console.warn('enableNotesPanel(false) is deprecated, please use disableNotesPanel() instead');
+  console.warn('enableNotesPanel(false) is deprecated, please use disableNotesPanel() instead');
     disableNotesPanel(store)();
   }
 };

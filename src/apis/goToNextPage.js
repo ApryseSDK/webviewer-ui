@@ -1,10 +1,9 @@
 /**
  * Go to the next page of the document. Makes the document viewer display the next page of the document.
  * @method WebViewer#goToNextPage
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.goToNextPage();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.goToNextPage();
  */
 
 import core from 'core';
@@ -15,7 +14,7 @@ export default store => () => {
   const currentPage = selectors.getCurrentPage(state);
   
   if (currentPage === selectors.getTotalPages(state)) {
-    console.warn('you are at the last page');
+  console.warn('you are at the last page');
   } else {
     const nextPage = currentPage + 1;
     core.setCurrentPage(nextPage);  

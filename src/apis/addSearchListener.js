@@ -2,13 +2,12 @@
  * Adds a listener function to be called when search is completed.
  * @method WebViewer#addSearchListener
  * @param {WebViewer~searchListener} searchListener Callback function that will be triggered when search completed
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  const searchListener = (searchValue, options, results) => {
-    console.log(searchValue, options, results);
-  };
-  instance.addSearchListener(searchListener);
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+const searchListener = (searchValue, options, results) => {
+  console.log(searchValue, options, results);
+};
+instance.addSearchListener(searchListener);
  */
 /**
  * Callback that gets passed to {@link CoreControls.ReaderControl#addSearchListener addSearchListener}.

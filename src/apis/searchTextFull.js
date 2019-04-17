@@ -7,12 +7,11 @@
  * @param {boolean} [options.wholeWord=false] Search whole words only.
  * @param {boolean} [options.wildcard=false] Search a string with a wildcard *. For example, *viewer.
  * @param {boolean} [options.regex=false] Search for a regex string. For example, www(.*)com.
- * @example // search for string 'test', and match whole words only
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.searchTextFull('test', {
-    wholeWord: true
-  });
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+// search for string 'test', and match whole words only
+instance.searchTextFull('test', {
+  wholeWord: true
 });
  */
 

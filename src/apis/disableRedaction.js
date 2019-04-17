@@ -1,11 +1,9 @@
 /**
  * Disables redaction feature, affecting any elements related to redaction.
  * @method WebViewer#disableRedaction
- * @example // disable redaction feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.disableRedaction();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.disableRedaction();
  */
 
 import actions from 'actions';

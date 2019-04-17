@@ -1,10 +1,9 @@
 /**
  * Rotates the document in the WebViewer counter-clockwise.
  * @method WebViewer#rotateCounterClockwise
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.rotateCounterClockwise();
-});
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+instance.rotateCounterClockwise();
  */
 
 import core from 'core';
