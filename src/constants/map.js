@@ -214,8 +214,7 @@ const map = {
 export const mapToolNameToKey = toolName => Object.keys(map).find(key => map[key].toolNames.includes(toolName));
 
 export const mapAnnotationToKey = annotation => Object.keys(map).find(key => {
-  const { annotationCheck } = map[key];
-  return annotationCheck && annotationCheck(annotation);
+  return annotation && map[key].toolNames.includes(annotation.ToolName)
 });
 
 export const mapAnnotationToToolName = annotation => map[mapAnnotationToKey(annotation)].toolNames[0];
