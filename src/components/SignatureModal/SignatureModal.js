@@ -43,7 +43,8 @@ class SignatureModal extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.isDisabled && !this.props.isDisabled) {
+    if (prevProps.isDisabled && !this.props.isDisabled && !this.isCanvasReady) {
+      console.log('triggered')
       this.setUpSignatureCanvas();
     }
 
@@ -76,6 +77,7 @@ class SignatureModal extends React.PureComponent {
     canvas.addEventListener('mouseup', this.handleFinishDrawing);
     canvas.addEventListener('touchend', this.handleFinishDrawing);
     this.setSignatureCanvasSize();
+    this.isCanvasReady = true;
   }
 
   setSignatureCanvasSize = () => {
