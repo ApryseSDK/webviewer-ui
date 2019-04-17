@@ -44,7 +44,6 @@ class SignatureModal extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (prevProps.isDisabled && !this.props.isDisabled && !this.isCanvasReady) {
-      console.log('triggered')
       this.setUpSignatureCanvas();
     }
 
