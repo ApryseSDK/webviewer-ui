@@ -86,7 +86,7 @@ const map = {
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
     toolNames: ['AnnotationCreatePolygon'],
-    annotationCheck: annotation => annotation instanceof Annotations.PolygonAnnotation && annotation.Style === 'solid'
+    annotationCheck: annotation => annotation instanceof Annotations.PolygonAnnotation && annotation.Style !== 'cloudy'
   },
   cloud: {
     icon: 'ic_annotation_cloud_black_24px',
