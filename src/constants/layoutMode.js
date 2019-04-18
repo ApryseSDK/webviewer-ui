@@ -7,13 +7,11 @@
  * @property {string} FacingContinuous All pages visible in two columns.
  * @property {string} FacingCover All pages visible in two columns, with an even numbered page rendered first. (i.e. The first page of the document is rendered by itself on the right side of the viewer to simulate a book cover.)
  * @property {string} FacingCoverContinuous All pages visible, with an even numbered page rendered first. (i.e. The first page of the document is rendered by itself on the right side of the viewer to simulate a book cover.)
- * @example var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+ * @example const viewerElement = document.getElementById('viewer');
+const instance = await WebViewer({ ... }, viewerElement);
+const { LayoutMode } = instance;
 
-viewerElement.addEventListener('ready', () => {
-  const viewerInstance = viewer.getInstance();
-  viewerInstance.setLayoutMode(viewerInstance.LayoutMode.FacingContinuous);
-});
+instance.setLayoutMode(LayoutMode.FacingContinuous);
  */
 
 export default {
