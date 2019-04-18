@@ -4,6 +4,7 @@
  * @param {boolean} isAdmin Whether or not to set the current user to be an admin.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setAdminUser(true); // sets the current user to be an admin
  */
 

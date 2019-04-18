@@ -4,6 +4,8 @@
  * @return {Promise} A promise resolved after document is closed.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
+
 instance.closeDocument().then(() => {
   console.log('Document is closed');
 });

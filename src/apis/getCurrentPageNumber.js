@@ -4,6 +4,7 @@
  * @return {number} Current page number (1-indexed)
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 console.log(instance.getCurrentPageNumber());
  */
 

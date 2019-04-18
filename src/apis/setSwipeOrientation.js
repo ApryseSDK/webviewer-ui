@@ -4,6 +4,7 @@
  * @param {string} swipeOrientation The swipe orientation to navigate between pages. Available orientations are: horizontal, vertical and both.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setSwipeOrientation('vertical'); // set the swipe orientation to vertical.
  */
 

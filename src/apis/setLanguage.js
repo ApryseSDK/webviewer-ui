@@ -4,6 +4,7 @@
  * @param {string} language The language WebViewer UI will use. By default, following languages are supported: en, zh_cn, fr.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setLanguage('fr'); // set the language to French
  */
 

@@ -4,6 +4,7 @@
  * @param {boolean} [use=true] Whether or not to use embedded printing
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.useEmbeddedPrint(false); // disable embedded printing
  */
 

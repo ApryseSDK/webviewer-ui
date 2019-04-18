@@ -4,6 +4,7 @@
  * @param {string} username Username to be used for current user.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setAnnotationUser('Guest-1');
  */
 

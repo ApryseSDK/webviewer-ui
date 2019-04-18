@@ -11,6 +11,7 @@
  * @param {WebViewer~renderCustomPanel} options.panel.render Function that returns panel element.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setCustomPanel({
   tab:{
     dataElement: 'customPanelTab',

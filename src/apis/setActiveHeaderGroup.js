@@ -4,6 +4,7 @@
  * @param {string} headerGroup Name of the header group to be rendered. Default WebViewer UI has two header groups: default and tools.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setActiveHeaderGroup('tools'); // switch to tools header
  */
 

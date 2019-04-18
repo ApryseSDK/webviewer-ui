@@ -4,6 +4,7 @@
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setMaxZoomLevel('150%'); // or setMaxZoomLevel(1.5)
  */
 

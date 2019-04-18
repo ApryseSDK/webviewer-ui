@@ -4,6 +4,7 @@
  * @param {string} dataElement Name of the panel to be active in leftPanel. Default WebViewer UI has three panel options: thumbnailsPanel, outlinesPanel and notesPanel.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 // open left panel
 instance.openElements([ 'leftPanel' ]);
 // view outlines panel

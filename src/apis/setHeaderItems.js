@@ -5,6 +5,7 @@
  * @example // Adding save annotations button
 const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setHeaderItems(header => {
   header.push({
     type: 'actionButton',
@@ -17,6 +18,7 @@ instance.setHeaderItems(header => {
  * @example // Removing existing buttons
 const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setHeaderItems(header => {
   var items = header.getItems().slice(9, -3);
   header.update(items);
@@ -24,6 +26,7 @@ instance.setHeaderItems(header => {
  * @example // Appending logo and shifting existing buttons to the right
 const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setHeaderItems(header => {
   header.delete(9);
   header.unshift({

@@ -4,6 +4,7 @@
  * @param {boolean} isReadOnly Whether or not to set the WebViewer UI to be in in read only mode.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setReadOnly(true); // sets the viewer to read only mode
  */
 

@@ -5,6 +5,7 @@
  * @returns {boolean} Whether the element is open.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 console.log(instance.isElementOpen('leftPanel'));
  */
 

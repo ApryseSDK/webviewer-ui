@@ -13,6 +13,7 @@
  * @example // Using an object
 const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setTheme({
     primary: '#2C2B3A',
     secondary: '#4D4C5F',
@@ -27,6 +28,7 @@ instance.setTheme({
  * @example // Using predefined string
 const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setTheme('dark');
  */
 

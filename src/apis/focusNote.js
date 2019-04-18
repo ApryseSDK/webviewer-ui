@@ -5,6 +5,7 @@
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
 const { annotManager } = instance;
+
 annotManager.on('annotationChanged', (e, annotations, action) => {
   annotations.forEach((annotation) => {
     // Focus the note when annotation is created

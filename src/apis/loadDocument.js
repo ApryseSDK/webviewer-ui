@@ -10,6 +10,7 @@
  * @param {string} options.password A string that will be used to as the password to load a password protected document.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.loadDocument('https://pdftron.s3.amazonaws.com/downloads/pl/webviewer-demo-annotated.pdf', {
   documentId: '1',
   filename: 'sample-1'

@@ -4,6 +4,7 @@
  * @param {number} quality The quality of the document to print
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setPrintQuality(2);
  */
 

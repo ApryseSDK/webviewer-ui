@@ -4,6 +4,7 @@
  * @param {CoreControls.ReaderControl#LayoutMode} layoutMode Layout mode of WebViewer.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setLayoutMode(instance.LayoutMode.FacingContinuous);
  */
 

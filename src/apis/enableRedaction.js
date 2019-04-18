@@ -3,6 +3,7 @@
  * @method WebViewer#enableRedaction
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.enableRedaction();
  */
 

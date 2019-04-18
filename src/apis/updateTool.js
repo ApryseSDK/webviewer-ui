@@ -9,6 +9,7 @@
  * @param {string} [properties.tooltip] Tooltip of the tool button
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.updateTool('AnnotationCreateSticky', {
   buttonImage: 'https://www.pdftron.com/favicon-32x32.png'
 });

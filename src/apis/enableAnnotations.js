@@ -3,6 +3,7 @@
  * @method WebViewer#enableAnnotations
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.enableAnnotations();
  */
 

@@ -4,6 +4,7 @@
  * @param {boolean} [includeAnnotations=true] Whether or not to include annotations added by WebViewer UI.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 // download pdf without annotations added by WebViewer UI
 instance.downloadPdf(false);
  */

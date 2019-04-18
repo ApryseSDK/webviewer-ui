@@ -4,6 +4,7 @@
  * @return {Tools} Instance of the current tool
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 console.log(instance.getToolMode().name, instance.getToolMode());
  */
 

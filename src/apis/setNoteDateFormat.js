@@ -4,6 +4,7 @@
  * @param {string} format The format of date to display
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setNoteDataFormat('DD.MM.YYYY HH:MM');
  */
 

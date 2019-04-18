@@ -3,6 +3,7 @@
  * @method WebViewer#goToPrevPage
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.goToPrevPage();
  */
 

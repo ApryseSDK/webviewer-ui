@@ -8,6 +8,8 @@
  * @param {WebViewer~getSeparatorContent} sortStrategy.getSeparatorContent Function that returns the content of a separator
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
+
 instance.addSortStrategy({
   name: 'annotationType',
   getSortedNotes: notes => {

@@ -3,6 +3,7 @@
  * @method WebViewer#print
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.print();
  */
 

@@ -11,6 +11,7 @@
  * @param {boolean} [options.ambientString=false] Get the ambient string in the result.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.searchText('test', {
   caseSensitive: true,
   wholeWord: true

@@ -9,6 +9,7 @@
  * @param {boolean} [options.regex=false] Search for a regex string. For example, www(.*)com.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 // search for string 'test', and match whole words only
 instance.searchTextFull('test', {
   wholeWord: true

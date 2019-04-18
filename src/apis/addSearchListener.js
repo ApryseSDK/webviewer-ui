@@ -4,9 +4,11 @@
  * @param {WebViewer~searchListener} searchListener Callback function that will be triggered when search completed
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 const searchListener = (searchValue, options, results) => {
   console.log(searchValue, options, results);
 };
+
 instance.addSearchListener(searchListener);
  */
 /**

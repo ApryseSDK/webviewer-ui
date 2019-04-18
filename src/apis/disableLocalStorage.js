@@ -3,6 +3,7 @@
  * @method WebViewer#disableLocalStorage
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.disableLocalStorage();
  */
 

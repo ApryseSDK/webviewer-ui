@@ -4,6 +4,7 @@
  * @param {Array.<string>} pageLabels Page labels that will be displayed in UI.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.setPageLabels(['i', 'ii', 'iii', '4', '5']); // assume a document has 5 pages
  */
 

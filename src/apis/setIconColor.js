@@ -5,6 +5,7 @@
  * @param {string} colorPalette The palette which will be used as a tool button's icon color. One of 'text', 'border' and 'fill'.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 // sets the color in fill palette to be used as freetext tool button's icon color
 // by default freetext tool button will use the color in text palette as its icon color
 instance.setIconColor('AnnotationCreateFreeText', 'fill')

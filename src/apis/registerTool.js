@@ -11,6 +11,7 @@
  * @param {function} [annotationConstructor] The constructor function for the annotation that will be created by the registered tool.
  * @example const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
+
 instance.registerTool({
   toolName: 'MyTool',
   toolObject: myCustomTool,
