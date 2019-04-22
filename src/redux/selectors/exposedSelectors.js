@@ -11,7 +11,7 @@ export const isToolGroupButtonDisabled = (state, dataElement, toolNames) => {
 };
 export const isToolButtonDisabled = (state, toolName) => {
   const dataElement = getToolButtonDataElement(state, toolName);
-  return !!isElementDisabled(state, dataElement) || !!(core.getTool(toolName) && core.getTool(toolName).disabled);
+  return !!isElementDisabled(state, dataElement);
 };
 export const isElementOpen = (state, dataElement) => {
   if (state.viewer.disabledElements[dataElement]) {
