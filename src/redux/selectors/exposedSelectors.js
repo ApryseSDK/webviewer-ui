@@ -11,8 +11,7 @@ export const isToolGroupButtonDisabled = (state, dataElement, toolNames) => {
 };
 export const isToolButtonDisabled = (state, toolName) => {
   const dataElement = getToolButtonDataElement(state, toolName);
-
-  return isElementDisabled(state, dataElement) || (core.getTool(toolName) && core.getTool(toolName).disabled);
+  return !!isElementDisabled(state, dataElement) || !!(core.getTool(toolName) && core.getTool(toolName).disabled);
 };
 export const isElementOpen = (state, dataElement) => {
   if (state.viewer.disabledElements[dataElement]) {
@@ -49,14 +48,13 @@ export const getGroupName = (state, toolName) => {
       }
     }
   }
-
 };
-export const getToolButtonDataElements = (state, toolNames) => toolNames.map(toolName => state.viewer.toolButtonObjects[toolName].dataElement);
-export const getToolButtonObject = (state, toolName) => state.viewer.toolButtonObjects[toolName];
+export const getToolButtonDataElements = (state, toolNames) => toolNames.filter(toolName => getButtonObjectByToolName(state, toolName)).map(toolName => getButtonObjectByToolName(state, toolName).dataElement);
+export const getToolButtonObject = (state, toolName) => getButtonObjectByToolName(state, toolName);
 export const getToolButtonDataElement = (state, toolName) => getButtonObjectByToolName(state, toolName) ? getButtonObjectByToolName(state, toolName).dataElement : '';
 export const getToolButtonIcon = (state, toolName) => getButtonObjectByToolName(state, toolName) ? getButtonObjectByToolName(state, toolName).img : '';
-export const getToolNamesByGroup = (state, toolGroup) => state.viewer.headers[state.viewer.activeHeaderGroup].filter(toolButtonObject => toolButtonObject.toolGroup).find(toolButtonObject => toolButtonObject.toolGroup === toolGroup).children.map(buttonObject => buttonObject.toolName);
-export const getToolNameByDataElement = (state, dataElement) => Object.keys(state.viewer.toolButtonObjects).find(name => state.viewer.toolButtonObjects[name].dataElement === dataElement);
+export const getToolNamesByGroup = (state, toolGroup) => state.viewer.headers.default.filter(toolButtonObject => toolButtonObject.toolGroup).find(toolButtonObject => toolButtonObject.toolGroup === toolGroup).children.map(buttonObject => buttonObject.toolName);
+export const getToolNameByDataElement = (state, dataElement) => Object.keys(state.viewer.toolButtonObjects).find(toolName => getButtonObjectByToolName(state, toolName) && getButtonObjectByToolName(state, toolName).dataElement === dataElement);
 export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
 export const getActiveDataElement = state => getButtonObjectByToolName(state, state.viewer.activeToolName) ? getButtonObjectByToolName(state, state.viewer.activeToolName).dataElement : '';
