@@ -58,6 +58,10 @@ class SignatureModal extends React.PureComponent {
   }
 
   setUpSignatureCanvas = () => {
+    if (!this.canvas.current) {
+      return;
+    }
+
     const canvas = this.canvas.current;
     this.signatureTool.setSignatureCanvas($(canvas));
     // draw nothing in the background since we want to convert the signature on the canvas
@@ -72,6 +76,10 @@ class SignatureModal extends React.PureComponent {
   }
 
   setSignatureCanvasSize = () => {
+    if (!this.canvas.current) {
+      return;
+    }
+
     const canvas = this.canvas.current;
     const { width, height } = canvas.getBoundingClientRect();
     canvas.width = width;
