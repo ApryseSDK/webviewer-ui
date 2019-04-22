@@ -1,5 +1,6 @@
 import core from 'core';
 import { workerTypes } from 'constants/types';
+import getButtonObjectByToolName from 'helpers/getButtonObjectByToolName';
 
 // viewer
 export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
@@ -33,69 +34,32 @@ export const getDisabledElementPriority = (state, dataElement) => state.viewer.d
 export const getToolButtonObjects = state => state.viewer && state.viewer.toolButtonObjects;
 export const getAnnotationToolNames = state => Object.keys(state.viewer.toolButtonObjects).filter(toolButtonName => state.viewer.toolButtonObjects[toolButtonName].annotationCheck);
 export const getGroupName = (state, toolName) => {
-  const activeToolObject = state.viewer.headers[state.viewer.activeHeaderGroup].filter(toolObject => toolObject.children).find(toolObject => toolObject.children.find(toolButton => toolButton.toolName === toolName));
-  if (activeToolObject){
-    return activeToolObject.toolGroup;
+  const defaultHeader = state.viewer.headers.default.filter(toolObject => toolObject.children);
+  for (let i = 0; i < defaultHeader.length; i++) {
+    let childrenToolNames = defaultHeader[i].children.map(object => object.toolName);
+    if (childrenToolNames.includes(toolName)) {
+      return defaultHeader[i].toolGroup;
+    }
+    for (let j = 0; j < defaultHeader[i].children.length; j++) {
+      if (defaultHeader[i].children[j].children) {
+        let grandchildrenToolNames = defaultHeader[i].children[j].children.map(object => object.toolName);
+        if (grandchildrenToolNames.includes(toolName)) {
+          return defaultHeader[i].children[j].toolGroup;
+        }
+      }
+    }
   }
+
 };
 export const getToolButtonDataElements = (state, toolNames) => toolNames.map(toolName => state.viewer.toolButtonObjects[toolName].dataElement);
 export const getToolButtonObject = (state, toolName) => state.viewer.toolButtonObjects[toolName];
-export const getToolButtonDataElement = (state, toolName) => state.viewer.toolButtonObjects[toolName] ? state.viewer.toolButtonObjects[toolName].dataElement : '';
-export const getToolButtonIcon = (state, toolName) => {
-  let buttonIcon;
-  const defaultArr = state.viewer.headers.default;
-  defaultArr.forEach(element => {
-    if (element.toolName === toolName) {
-      buttonIcon = element.img;
-    } else {
-      if (element.children) {
-        element.children.forEach(childElement => {
-          if (childElement.toolName && childElement.toolName === toolName) {
-            buttonIcon = childElement.img;
-          }
-          if (childElement.children) {
-            childElement.children.forEach(grandChildElement => {
-              if (grandChildElement.toolName && grandChildElement.toolName === toolName) {
-                buttonIcon = grandChildElement.img;
-              }
-            });
-          }
-        });
-      }
-    }
-  });
-  return buttonIcon;
-};
+export const getToolButtonDataElement = (state, toolName) => getButtonObjectByToolName(state, toolName) ? getButtonObjectByToolName(state, toolName).dataElement : '';
+export const getToolButtonIcon = (state, toolName) => getButtonObjectByToolName(state, toolName) ? getButtonObjectByToolName(state, toolName).img : '';
 export const getToolNamesByGroup = (state, toolGroup) => state.viewer.headers[state.viewer.activeHeaderGroup].filter(toolButtonObject => toolButtonObject.toolGroup).find(toolButtonObject => toolButtonObject.toolGroup === toolGroup).children.map(buttonObject => buttonObject.toolName);
 export const getToolNameByDataElement = (state, dataElement) => Object.keys(state.viewer.toolButtonObjects).find(name => state.viewer.toolButtonObjects[name].dataElement === dataElement);
 export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
-export const getActiveDataElement = state => {
-  let dataElement;
-  const defaultArr = state.viewer.headers.default;
-  defaultArr.forEach(element => {
-    if (element.toolName === state.viewer.activeToolName) {
-      dataElement = element.dataElement;
-    } 
-    if (element.children) {
-      element.children.forEach(childElement => {
-        if (childElement.toolName && childElement.toolName === state.viewer.activeToolName) {
-          dataElement = childElement.dataElement;
-          return;
-        }
-        if (childElement.children) {
-          childElement.children.forEach(grandChildElement => {
-            if (grandChildElement.toolName && grandChildElement.toolName === state.viewer.activeToolName) {
-              dataElement = grandChildElement.dataElement;
-              return;
-            }
-          });
-        }
-      });
-    }
-  });
-  return dataElement;
-};
+export const getActiveDataElement = state => getButtonObjectByToolName(state, state.viewer.activeToolName) ? getButtonObjectByToolName(state, state.viewer.activeToolName).dataElement : '';
 export const getActiveLeftPanel = state => state.viewer.activeLeftPanel;
 export const getActiveToolGroup = state => state.viewer.activeToolGroup;
 export const getNotePopupId = state => state.viewer.notePopupId;
