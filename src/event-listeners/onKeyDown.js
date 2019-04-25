@@ -78,9 +78,10 @@ export default store => e => {
         core.setCurrentPage(core.getCurrentPage() + 1);
       }
     } else if (e.key === 'Escape' || e.which === 27) { // (Esc)
-      e.preventDefault();
-      setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
-      dispatch(actions.closeElements(['viewControlsOverlay', 'zoomOverlay', 'annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay', 'menuOverlay' ]));
+      // debugger;
+      // e.preventDefault();
+      // setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
+      // dispatch(actions.closeElements(['viewControlsOverlay', 'zoomOverlay', 'annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay', 'menuOverlay' ]));
     } else if (!selectedTextFromCanvas) {
       if (document.activeElement instanceof window.HTMLInputElement || document.activeElement instanceof window.HTMLTextAreaElement) {
         return;

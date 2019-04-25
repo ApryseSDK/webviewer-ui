@@ -178,6 +178,7 @@ class NotesPanel extends React.PureComponent {
     const {
       selectionIndex,
     } = this.props;
+    console.log(mod(selectionIndex, notes.length));
 
     return(
       notes.map((note, i) => {

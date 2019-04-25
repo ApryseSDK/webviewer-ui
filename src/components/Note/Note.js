@@ -74,6 +74,7 @@ class Note extends React.PureComponent {
       this.scrollIntoView();
     }
     if (willFocus && (willFocus !== prevProps.willFocus)) {
+      console.log('focus', this.props.index)
       this.focus();
     }
   }
@@ -113,12 +114,6 @@ class Note extends React.PureComponent {
     }
   }
 
-  onKeyPress = e => {
-    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
-      this.onClickNote(e);
-    }
-  }
-
   scrollIntoView = () => {
     this.containerRef.current.scrollIntoView();
   }
@@ -140,9 +135,19 @@ class Note extends React.PureComponent {
 
   onKeyDown = e => {
     if ((e.metaKey || e.ctrlKey) && e.which === 13) { // (Cmd/Ctrl + Enter)
+      e.preventDefault();
+      e.stopPropagation();
       this.postReply(e);
     }
   }
+  onNoteKeyDown = e => {
+    if (!this.props.isNoteExpande && (e.key === 'Enter' || e.code === 'Space')) {
+      this.onClickNote(e);
+    } else if (this.props.isNoteExpanded && e.key === 'Escape') {
+      this.onClickNote(e);
+    }
+  }
+
 
   onFocus = () => {
     this.setState({
@@ -242,8 +247,12 @@ class Note extends React.PureComponent {
         ref={this.containerRef}
         className={className}
         onClick={this.onClickNote}
-        onKeyPress={this.onKeyPress}
+        onKeyDown={this.onNoteKeyDown}
         onFocus={() => {
+          {/* console.log('onFocus', this.props.index);
+          if (this.props.leftPanelIndex === 1 && this.props.index === 0) {
+            debugger;
+          } */}
           setLeftPanelIndex('notesPanel', index);
         }}
       >
@@ -299,7 +308,8 @@ const mapStateToProps = (state, ownProps) => ({
   isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
   isAnnotationFocused: selectors.isAnnotationFocused(state, ownProps.annotation.Id),
   isReadOnly: selectors.isDocumentReadOnly(state),
-  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply')
+  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply'),
+  leftPanelIndex: selectors.getLeftPanelIndex(state, 'notesPanel'),
 });
 
 const matDispatchToProps = {
