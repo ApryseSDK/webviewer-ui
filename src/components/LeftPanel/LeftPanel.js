@@ -32,7 +32,6 @@ class LeftPanel extends React.Component {
     this.state = {
       isSliderActive: false,
     };
-    this.panelRefs = {};
     this.sliderRef = React.createRef();
   }
 
@@ -132,15 +131,12 @@ class LeftPanel extends React.Component {
           />
         }
         <NotesPanel
-          ref={ref => this.panelRefs['notesPanel'] = ref}
           display={this.getDisplay('notesPanel')}
         />
         <ThumbnailsPanel
-          ref={ref => this.panelRefs['thumbnailsPanel'] = ref}
           display={this.getDisplay('thumbnailsPanel')}
         />
         <OutlinesPanel
-          ref={ref => this.panelRefs['outlinesPanel'] = ref}
           display={this.getDisplay('outlinesPanel')}
         />
         {customPanels.map(({ panel }, index) => (
