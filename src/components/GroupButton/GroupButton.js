@@ -98,7 +98,6 @@ class GroupButton extends React.PureComponent {
     }
     const { toolName } = this.state;
     const activeIcon = children.find(button => button.toolName === toolName) ? children.find(button => button.toolName === toolName).img: '';
-    // const img = this.props.img ? this.props.img : isOnlyTools ? activeIcon : '';
     const img = activeIcon ? activeIcon : '';
     let color;
     if (isActive && !this.props.img && iconColor && activeToolStyles[iconColor]) {
