@@ -45,7 +45,7 @@ class NoteRoot extends React.Component {
       this.forceUpdate();
     }
   }
-  
+
   deleteNote = () => {
     core.deleteAnnotations([this.props.annotation]);
   }
@@ -74,11 +74,11 @@ class NoteRoot extends React.Component {
             ` (${numberOfReplies})`
           }
         </div>
-        <NotePopup 
-          annotation={annotation} 
-          isNoteExpanded={isNoteExpanded} 
-          openEditing={openEditing} 
-          onDelete={this.deleteNote} 
+        <NotePopup
+          annotation={annotation}
+          isNoteExpanded={isNoteExpanded}
+          openEditing={openEditing}
+          onDelete={this.deleteNote}
         />
       </div>
     );
@@ -90,13 +90,13 @@ class NoteRoot extends React.Component {
     return(
       <div className="NoteRoot">
         {this.renderHeader()}
-        <NoteContents 
-          annotation={annotation} 
+        <NoteContents
+          annotation={annotation}
           contents={contents}
-          searchInput={searchInput} 
-          renderContents={renderContents} 
-          isEditing={isEditing} 
-          closeEditing={closeEditing} 
+          searchInput={searchInput}
+          renderContents={renderContents}
+          isEditing={isEditing}
+          closeEditing={closeEditing}
         />
       </div>
     );

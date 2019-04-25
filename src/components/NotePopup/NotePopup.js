@@ -66,6 +66,25 @@ class NotePopup extends React.Component {
     this.props.openEditing();
   }
 
+  onKeyDown = e => {
+    if (e.key === 'Enter' || e.code === 'Space') {
+      this.togglePopup();
+    }
+  }
+
+  foo = e => {
+    if (e.key === 'Enter' || e.code === 'Space') {
+      e.preventDefault();
+      this.openEdit();
+    }
+  }
+  bar = e => {
+    if (e.key === 'Enter' || e.code === 'Space') {
+      e.preventDefault();
+      this.props.onDelete();
+    }
+  }
+
   render() {
     const { canModify } = this.state;
     const { t, isNoteExpanded, notePopupId, annotation, onDelete, isDisabled, isEditDisabled, isDeleteDisabled } = this.props;
@@ -77,16 +96,16 @@ class NotePopup extends React.Component {
     }
 
     return(
-      <div tabIndex={0} className="NotePopup" data-element="notePopup" onClick={e => e.stopPropagation()}>
+      <div tabIndex={0} className="NotePopup" data-element="notePopup" onKeyDown={this.onKeyDown}  onClick={e => e.stopPropagation()}>
         <div className="overflow" onClick={this.togglePopup}>
           <Icon glyph="ic_overflow_black_24px" />
         </div>
         <div className={className} onClick={this.closePopup}>
           {!isEditDisabled &&
-            <div tabIndex={0} data-element="notePopupEdit" onClick={this.openEdit}>{t('action.edit')}</div>
+            <div tabIndex={0} data-element="notePopupEdit" onClick={this.openEdit} onKeyDown={this.foo}>{t('action.edit')}</div>
           }
           {!isDeleteDisabled &&
-            <div tabIndex={0} data-element="notePopupDelete" onClick={onDelete}>{t('action.delete')}</div>
+            <div tabIndex={0} data-element="notePopupDelete" onClick={onDelete} onKeyDown={this.bar}>{t('action.delete')}</div>
           }
         </div>
       </div>

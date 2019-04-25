@@ -74,7 +74,6 @@ class Note extends React.PureComponent {
       this.scrollIntoView();
     }
     if (willFocus && (willFocus !== prevProps.willFocus)) {
-      console.log('focus', this.props.index)
       this.focus();
     }
   }
@@ -136,7 +135,6 @@ class Note extends React.PureComponent {
   onKeyDown = e => {
     if ((e.metaKey || e.ctrlKey) && e.which === 13) { // (Cmd/Ctrl + Enter)
       e.preventDefault();
-      e.stopPropagation();
       this.postReply(e);
     }
   }
