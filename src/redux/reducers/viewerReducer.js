@@ -167,8 +167,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customNoteFilter: payload.customNoteFilter };
     case 'SET_ZOOM_LIST':
       return { ...state, zoomList: payload.zoomList };
-    case 'SET_PREV_ACTIVE_ELEMENT_BEFORE_OPEN':
-      return { ...state, prevActiveElementBeforeOpen: payload.activeElement };
     default:
       return state;
   }
