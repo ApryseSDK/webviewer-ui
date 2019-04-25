@@ -141,7 +141,7 @@ class Note extends React.PureComponent {
     }
   }
   onNoteKeyDown = e => {
-    if (!this.props.isNoteExpande && (e.key === 'Enter' || e.code === 'Space')) {
+    if (!this.props.isNoteExpanded && (e.key === 'Enter' || e.code === 'Space')) {
       this.onClickNote(e);
     } else if (this.props.isNoteExpanded && e.key === 'Escape') {
       this.onClickNote(e);
@@ -249,10 +249,6 @@ class Note extends React.PureComponent {
         onClick={this.onClickNote}
         onKeyDown={this.onNoteKeyDown}
         onFocus={() => {
-          {/* console.log('onFocus', this.props.index);
-          if (this.props.leftPanelIndex === 1 && this.props.index === 0) {
-            debugger;
-          } */}
           setLeftPanelIndex('notesPanel', index);
         }}
       >
