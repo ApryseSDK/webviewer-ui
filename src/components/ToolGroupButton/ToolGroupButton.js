@@ -95,7 +95,7 @@ class ToolGroupButton extends React.PureComponent {
 
     const { toolName } = this.state;
     const img = this.props.img ? this.props.img : toolButtonObjects[toolName].img;
-    const color = isActive && !this.props.img && iconColor ? getToolStyles(toolName)[iconColor].toHexString() : '';
+    const color = isActive && !this.props.img && iconColor ? getToolStyles(toolName)[iconColor] && getToolStyles(toolName)[iconColor].toHexString() : '';
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
     const className = [

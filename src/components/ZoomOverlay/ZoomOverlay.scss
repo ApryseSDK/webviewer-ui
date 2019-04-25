@@ -22,7 +22,8 @@
   }
   
   .ToolButton {
-    background: white;
+    background-color: #FFFFFF;
+    background-color: var(--primary-color);
     height: 35px;
     font-family: 'Roboto', sans-serif;
 

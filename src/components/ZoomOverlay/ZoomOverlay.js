@@ -118,6 +118,7 @@ class ZoomOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'zoomOverlay'),
   isOpen: selectors.isElementOpen(state, 'zoomOverlay'),
+  isMarqueeZoomToolDisabled: selectors.isToolButtonDisabled(state, 'MarqueeZoomTool'),
   zoomList: selectors.getZoomList(state)
 });
 

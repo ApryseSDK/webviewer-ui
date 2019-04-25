@@ -157,7 +157,7 @@ class Note extends React.PureComponent {
   }
 
   postReply = e => {
-    e.preventDefault();
+    e.stopPropagation();
 
     this.setState({ isEmpty: true });
 

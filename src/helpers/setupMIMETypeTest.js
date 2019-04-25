@@ -11,25 +11,12 @@ export default store => {
       return;
     }
 
-    const docExtension = getDocumentExtension(getDocName(store.getState()));
     if (src.endsWith('nmf')) {
       testMIMEType(['nmf'])
-        .then(() => {
-          // when the server has correct setup for MIME type but SimpleWorker.nmf is missing
-          // we don't want to fire error since in this case we will fallback to use other worker files and can still load the document successfully
-          if (src.indexOf('SimpleWorker.nmf') === -1) {
-            errorMissingWorkerFiles(docExtension);
-          }
-        })
         .catch(errorMIMEType);
     }
     if (src.endsWith('pexe')) {
       testMIMEType(['pexe'])
-        .then(() => {
-          if (src.indexOf('SimpleWorker.pexe') === -1) {
-            errorMissingWorkerFiles(docExtension);
-          }
-        })
         .catch(errorMIMEType);
     }
   }, true);
