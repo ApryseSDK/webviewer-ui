@@ -7,7 +7,6 @@ import ActionButton from 'components/ActionButton';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
-import getSignatureDimension from 'helpers/getSignatureDimension';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -163,7 +162,7 @@ class SignatureModal extends React.PureComponent {
               <div className="signature-sign-here">
                 {t('message.signHere')}
               </div>
-              <div className={`signature-clear ${canClear ? 'active': null}`} onClick={this.clearCanvas}>
+              <div className={`signature-clear ${canClear ? 'active' : null}`} onClick={this.clearCanvas}>
                 {t('action.clear')}
               </div>
             </div>
