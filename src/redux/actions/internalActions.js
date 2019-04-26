@@ -91,10 +91,29 @@ export const setColorPalette = (toolName, colorPalette) => ({ type: 'SET_COLOR_P
 export const setIconColor = (toolName, color) => ({ type: 'SET_ICON_COLOR', payload: { toolName, color } });
 
 // header API
-export const addItems = (newItems, index, group) => ({ type: 'ADD_ITEMS', payload: { newItems, index, group } });
-export const removeItems = (itemList, group) => ({ type: 'REMOVE_ITEMS', payload: { itemList, group } });
+export const addItems = (newItems, index, group) => dispatch => {
+  if (Array.isArray(newItems)) {
+    dispatch({ type: 'ADD_ITEMS', payload: { newItems, index, group } });
+  } else {
+    dispatch({ type: 'ADD_ITEMS', payload: { newItems: [newItems], index, group } });
+  }
+}
+export const removeItems = (itemList, group) => dispatch => {
+  if (Array.isArray(itemList)) {
+    dispatch({ type: 'REMOVE_ITEMS', payload: { itemList, group } });
+  } else {
+    dispatch({ type: 'REMOVE_ITEMS', payload: { itemList: [itemList], group } });
+  }
+}
+
 export const updateItem = (dataElement, newProps, group) => ({ type: 'UPDATE_ITEM', payload: { dataElement, newProps, group } });
-export const setItems = (items, group) => ({ type: 'SET_ITEMS', payload: { items, group } });
+export const setItems = (items, group) => dispatch => {
+  if (Array.isArray(items)) {
+    dispatch({ type: 'SET_ITEMS', payload: { items, group } })
+  } else {
+    dispatch({ type: 'SET_ITEMS', payload: { items: [items], group } })
+  }
+}
 
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });
