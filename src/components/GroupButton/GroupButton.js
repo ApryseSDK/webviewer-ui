@@ -93,12 +93,13 @@ class GroupButton extends React.PureComponent {
         return null;
       }
     }
-    if (!img && !isOnlyTools) {
-      console.warn('GroupButton contains buttons other than toolButtons and no img is found. Please specify an img');
+    if (!this.props.img && !isOnlyTools) {
+      console.warn('GroupButton containing buttons other than tool button requires img. Please specify an img for the group button.');
     }
     const { toolName } = this.state;
     const activeIcon = children.find(button => button.toolName === toolName) ? children.find(button => button.toolName === toolName).img: '';
-    const img = this.props.img ? this.props.img : isOnlyTools ? activeIcon : '';
+    const defaultGroupIcon = 'ic_group_button_24px'
+    const img = this.props.img ? this.props.img : isOnlyTools ? activeIcon : defaultGroupIcon;
     let color;
     if (isActive && !this.props.img && iconColor && activeToolStyles[iconColor]) {
       color = activeToolStyles[iconColor].toHexString();
