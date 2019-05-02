@@ -72,8 +72,8 @@ const checkByteRange = state => {
 };
 
 const getPartRetriever = (state, streaming) => {
-  const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
-  const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, disableWebsockets, useDownloader, withCredentials, singleServerMode } = state.advanced;
+  const { path, initialDoc, file, isOffline, filename, pdfDoc, uploadData, uriData } = state.document;
+  const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, disableWebsockets, useDownloader, withCredentials, singleServerMode, uploadData, uriData } = state.advanced;
   const documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
@@ -95,7 +95,7 @@ const getPartRetriever = (state, streaming) => {
       }
     } else if (engineType === engineTypes.PDFTRON_SERVER) {
       partRetrieverName = 'BlackBoxPartRetriever';
-      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets, singleServerMode });
+      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets, singleServerMode, uriData, uploadData });
     } else if (engineType === engineTypes.UNIVERSAL) {
       const cache = window.CoreControls.PartRetrievers.CacheHinting.NO_HINT;
 

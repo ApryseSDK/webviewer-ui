@@ -179,7 +179,9 @@ export default {
     printQuality: 1,
     passwordAttempts: -1,
     documentLoadingProgress: 0,
-    workerLoadingProgress: 0
+    workerLoadingProgress: 0,
+    uploadData: null,
+    uriData: null
   },
   user: {
     name: getHashParams('user', 'Guest'),
