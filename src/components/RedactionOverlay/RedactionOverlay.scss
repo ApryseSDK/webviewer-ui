@@ -15,6 +15,22 @@
   }
 }
 
+.redactHeader{
+  &.inactive{
+    .Icon{
+      fill: #757575;
+      fill: var(--icon-color);
+    }
+  }
+
+  &.active{
+    .Icon{
+      fill: #757575;
+      fill: var(--icon-active-color);
+    }
+  }
+}
+
 .RedactionOverlay {
   @extend %overlay;
 
@@ -47,4 +63,20 @@
       flex: 1;
       height: 100%;
   }}
+
+  .Button{
+    &.inactive{
+      .Icon{
+        fill: #757575;
+        fill: var(--icon-color);
+      }
+    }
+  
+    &.active{
+      .Icon{
+        fill: #757575;
+        fill: var(--icon-active-color);
+      }
+    }
+  }
 }

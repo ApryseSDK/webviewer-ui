@@ -3,7 +3,7 @@ import getPageHeight from 'core/getPageHeight';
 
 export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
   const { left, top } = calcAnnotationPopupPosition(getAnnotationPosition(annotation), getPopupDimensions(popup));
-  
+
   return { left, top };
 };
 
@@ -25,7 +25,7 @@ const getAnnotationPosition = annotation => {
     topLeft = bottomRight;
     bottomRight = tmp;
   }
-  
+
   return { topLeft, bottomRight };
 };
 
@@ -62,7 +62,7 @@ const getSelectedTextPageIndex = allQuads => {
   const pageIndices = Object.keys(allQuads).map(pageIndex => Number(pageIndex));
   // Object.keys returns keys in arbitrary order so use Math.min/max instead of index to access array
   const startPageIndex = Math.min(...pageIndices);
-  const endPageIndex = Math.max(...pageIndices);  
+  const endPageIndex = Math.max(...pageIndices);
 
   return { startPageIndex, endPageIndex };
 };
@@ -85,7 +85,7 @@ const getSelectedTextPageCoordinates = (allQuads, startPageIndex, endPageIndex) 
     Object.keys(allQuads).forEach(pageIndex => {
       allQuads[pageIndex].forEach(quad => {
         const { x1: quadLeft, x2: quadRight } = quad;
-  
+
         if (!left || quadLeft < left) {
           left = quadLeft;
         }
@@ -97,7 +97,7 @@ const getSelectedTextPageCoordinates = (allQuads, startPageIndex, endPageIndex) 
 
     return { left, right };
   };
-  
+
   const { top, bottom } = getTopAndBottom();
   const { left, right } = getLeftAndRight();
 
@@ -106,7 +106,7 @@ const getSelectedTextPageCoordinates = (allQuads, startPageIndex, endPageIndex) 
 
 const convertPageCoordinatesToWindowCoordinates = (x, y, pageIndex) => {
   const displayMode = core.getDisplayModeObject();
-  
+
   return displayMode.pageToWindow({ x, y }, pageIndex);
 };
 
@@ -143,7 +143,7 @@ const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
     left = window.innerWidth - width;
   }
 
-  return left;
+  return Math.round(left);
 };
 
 const calcPopupTop = ({ topLeft, bottomRight } , { height }, topThreshold) => {
@@ -163,6 +163,5 @@ const calcPopupTop = ({ topLeft, bottomRight } , { height }, topThreshold) => {
   } else {
     top = bottomRight.y - scrollTop + bottomGap;
   }
-  return top;
+  return Math.round(top);
  };
- 
