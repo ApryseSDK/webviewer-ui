@@ -41,7 +41,8 @@ const loadConfig = () => {
   return new Promise(resolve => {
     window.addEventListener('message', e => _loadConfig(e, resolve));
 
-    if (process.env.NODE_ENV === 'development') {
+    // Use hash param when running UI by itself
+    if (process.env.NODE_ENV === 'development' && window.parent === window) {
       loadScript(getHashParams('config', '')).then(() => {
         window.removeEventListener('message', _loadConfig);
         resolve();
