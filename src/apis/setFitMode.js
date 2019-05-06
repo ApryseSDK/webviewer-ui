@@ -2,11 +2,28 @@
  * Sets the fit mode of the viewer.
  * @method WebViewer#setFitMode
  * @param {CoreControls.ReaderControl#FitMode} fitMode Whether or not to set the current user to be an admin.
- * @example const viewerElement = document.getElementById('viewer');
+ * @example // 5.1 and after
+const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
-const { FitMode } = instance;
+const { docViewer, FitMode } = instance;
 
-instance.setFitMode(FitMode.FitWidth);
+// you must have a document loaded when calling this api
+docViewer.on('documentLoaded', () => {
+  instance.setFitMode(FitMode.FitWidth);
+});
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  var docViewer = instance.docViewer;
+  var FitMode = instance.FitMode;
+  // you must have a document loaded when calling this api
+  docViewer.on('documentLoaded', () => {
+    instance.setFitMode(FitMode.FitWidth);
+  });
+});
  */
 
 import core from 'core';

@@ -2,10 +2,19 @@
  * Use/not use embedded printing. You may not want to use embedded printing if there are custom annotations in your document.
  * @method WebViewer#useEmbeddedPrint
  * @param {boolean} [use=true] Whether or not to use embedded printing
- * @example const viewerElement = document.getElementById('viewer');
+ * @example // 5.1 and after
+const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
 
 instance.useEmbeddedPrint(false); // disable embedded printing
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.useEmbeddedPrint(false); // disable embedded printing
+});
  */
 
 import actions from 'actions';

@@ -8,12 +8,24 @@
  * @param {object} options.customHeaders An object custom HTTP headers to use when retrieving the document from the specified url.
  * @param {boolean} options.withCredentials Whether or not cross-site requests should be made using credentials.
  * @param {string} options.password A string that will be used to as the password to load a password protected document.
- * @example const viewerElement = document.getElementById('viewer');
+ * @example // 5.1 and after
+const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
 
 instance.loadDocument('https://pdftron.s3.amazonaws.com/downloads/pl/webviewer-demo-annotated.pdf', {
   documentId: '1',
   filename: 'sample-1'
+});
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.loadDocument('https://pdftron.s3.amazonaws.com/downloads/pl/webviewer-demo-annotated.pdf', {
+    documentId: '1',
+    filename: 'sample-1'
+  });
 });
  */
 

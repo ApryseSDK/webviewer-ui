@@ -27,6 +27,28 @@ instance.setCustomPanel({
     }
   }
 });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.setCustomPanel({
+    tab:{
+      dataElement: 'customPanelTab',
+      title: 'customPanelTab',
+      img: 'https://www.pdftron.com/favicon-32x32.png',
+    },
+    panel: {
+      dataElement: 'customPanel',
+      render: function() {
+        const div = document.createElement('div');
+        div.innerHTML = 'Hello World';
+        return div;
+      }
+    }
+  });
+});
  */
 /**
  * Callback that gets passed to `options.panel.render` in {@link CoreControls.ReaderControl#setCustomPanel setCustomPanel}.

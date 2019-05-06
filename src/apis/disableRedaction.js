@@ -1,10 +1,19 @@
 /**
  * Disables redaction feature, affecting any elements related to redaction.
  * @method WebViewer#disableRedaction
- * @example const viewerElement = document.getElementById('viewer');
+ * @example // 5.1 and after
+const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
 
 instance.disableRedaction();
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.disableRedaction();
+});
  */
 
 import actions from 'actions';

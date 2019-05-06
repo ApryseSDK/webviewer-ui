@@ -2,10 +2,19 @@
  * Sets the maximum zoom level allowed by the UI. Default is 9999%.
  * @method WebViewer#setMaxZoomLevel
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
- * @example const viewerElement = document.getElementById('viewer');
+ * @example // 5.1 and after
+const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
 
 instance.setMaxZoomLevel('150%'); // or setMaxZoomLevel(1.5)
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.setMaxZoomLevel('150%'); // or setMaxZoomLevel(1.5)
+});
  */
 
 import actions from 'actions';

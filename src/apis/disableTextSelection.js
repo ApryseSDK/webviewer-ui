@@ -1,10 +1,19 @@
 /**
  * Disables text to be selected in the document.
  * @method WebViewer#disableTextSelection
- * @example const viewerElement = document.getElementById('viewer');
+ * @example // 5.1 and after
+const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
 
 instance.disableTextSelection();
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.disableTextSelection();
+});
  */
 
 import core from 'core';

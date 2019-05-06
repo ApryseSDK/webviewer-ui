@@ -1,10 +1,19 @@
 /**
  * Disables notes panel feature, affecting any elements related to notes panel.
  * @method WebViewer#disableNotesPanel
- * @example const viewerElement = document.getElementById('viewer');
+ * @example // 5.1 and after
+const viewerElement = document.getElementById('viewer');
 const instance = await WebViewer({ ... }, viewerElement);
 
 instance.disableNotesPanel();
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.disableNotesPanel();
+});
  */
 
 import { PRIORITY_TWO } from 'constants/actionPriority';
