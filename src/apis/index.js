@@ -5,6 +5,7 @@ import closeElement from './closeElement';
 import closeElements from './closeElements';
 import disableAnnotations from './disableAnnotations';
 import disableDownload from './disableDownload';
+import disableElement from './disableElement';
 import disableElements from './disableElements';
 import disableFilePicker from './disableFilePicker';
 import disableLocalStorage from './disableLocalStorage';
@@ -111,6 +112,7 @@ export default {
   closeElements,
   disableAnnotations,
   disableDownload,
+  disableElement,
   disableElements,
   disableFilePicker,
   disableLocalStorage,

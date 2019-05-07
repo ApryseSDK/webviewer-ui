@@ -153,6 +153,7 @@ if (window.CanvasRenderingContext2D) {
           closeElements: apis.closeElements(store),
           disableAnnotations: apis.disableAnnotations(store),
           disableDownload: apis.disableDownload(store),
+          disableElement: apis.disableElement(store),
           disableElements: apis.disableElements(store),
           disableFilePicker: apis.disableFilePicker(store),
           disableLocalStorage: apis.disableLocalStorage,
