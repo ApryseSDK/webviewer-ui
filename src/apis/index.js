@@ -20,6 +20,7 @@ import downloadPdf from './downloadPdf';
 import enableAllElements from './enableAllElements';
 import enableAnnotations from './enableAnnotations';
 import enableDownload from './enableDownload';
+import enableElement from './enableElement';
 import enableElements from './enableElements';
 import enableFilePicker from './enableFilePicker';
 import enableLocalStorage from './enableLocalStorage';
@@ -127,6 +128,7 @@ export default {
   enableAllElements,
   enableAnnotations,
   enableDownload,
+  enableElement,
   enableElements,
   enableFilePicker,
   enableLocalStorage,

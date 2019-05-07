@@ -168,6 +168,7 @@ if (window.CanvasRenderingContext2D) {
           enableAllElements: apis.enableAllElements(store), // undocumented
           enableAnnotations: apis.enableAnnotations(store),
           enableDownload: apis.enableDownload(store),
+          enableElement: apis.enableElement(store),
           enableElements: apis.enableElements(store),
           enableFilePicker: apis.enableFilePicker(store),
           enableLocalStorage: apis.enableLocalStorage,
