@@ -40,7 +40,7 @@ class Thumbnail extends React.PureComponent {
 
     if (!prevProps.canLoad && this.props.canLoad) {
       onLoad(index, this.thumbContainer.current);
-    }
+    } 
     if (prevProps.canLoad && !this.props.canLoad) {
       onCancel(index);
     }
@@ -68,7 +68,7 @@ class Thumbnail extends React.PureComponent {
         current.removeChild(current.querySelector('.page-image'));
         current.appendChild(thumb);
         if (this.props.updateAnnotations) {
-          this.props.updateAnnotations(index);
+          this.props.updateAnnotations(index, thumb);
         }
       });
     }

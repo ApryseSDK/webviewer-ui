@@ -19,15 +19,12 @@
     align-items: center;
     cursor: pointer;
 
-    img.page-image {
+    .page-image {
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        /* only for XOD in IE*/
+        /* only for IE*/
         height: auto !important;
         width: auto !important;
       }
-    }
-
-    .page-image {
       max-width: 148px;
       max-height: 148px;
       border: 1px solid transparent;
