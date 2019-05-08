@@ -3,21 +3,22 @@
  * @method WebViewer#focusNote
  * @param {string} annotationId Id of an annotation.
  * @example // 5.1 and after
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-const { annotManager } = instance;
+WebViewer(...)
+.then(instance => {
+  const { annotManager } = instance;
 
-annotManager.on('annotationChanged', (e, annotations, action) => {
-  annotations.forEach((annotation) => {
-    // Focus the note when annotation is created
-    if (action === 'add' && annotation.Listable) {
-      instance.focusNote(annotation.Id); // note it is a capital i
-    }
+  annotManager.on('annotationChanged', (e, annotations, action) => {
+    annotations.forEach((annotation) => {
+      // Focus the note when annotation is created
+      if (action === 'add' && annotation.Listable) {
+        instance.focusNote(annotation.Id); // note it is a capital i
+      }
+    });
   });
 });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();

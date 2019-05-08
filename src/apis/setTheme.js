@@ -12,23 +12,23 @@
  * @param {string} [theme.iconActive=#757575] Icon color when button is active.
  * @example // 5.1 and after
 // Using an object
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-
-instance.setTheme({
-  primary: '#2C2B3A',
-  secondary: '#4D4C5F',
-  border: '#555555',
-  buttonHover: '#686880',
-  buttonActive: '#686880',
-  text: '#FFFFFF',
-  icon: '#FFFFFF',
-  iconActive: '#FFFFFF'
+WebViewer(...)
+.then(instance => {
+  instance.setTheme({
+    primary: '#2C2B3A',
+    secondary: '#4D4C5F',
+    border: '#555555',
+    buttonHover: '#686880',
+    buttonActive: '#686880',
+    text: '#FFFFFF',
+    icon: '#FFFFFF',
+    iconActive: '#FFFFFF'
+  });
 });
  * @example // 4.0 ~ 5.0
 // Using an object
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();
@@ -45,14 +45,14 @@ viewerElement.addEventListener('ready', function() {
 });
  * @example // 5.1 and after
 // Using predefined string
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-
-instance.setTheme('dark');
+WebViewer(...)
+.then(instance => {
+  instance.setTheme('dark');
+});
  * @example // 4.0 ~ 5.0
 // Using predefined string
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();

@@ -3,24 +3,26 @@
  * @method WebViewer#setLayoutMode
  * @param {CoreControls.ReaderControl#LayoutMode} layoutMode Layout mode of WebViewer.
  * @example // 5.1 and after
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-const { docViewer, LayoutMode } = instance;
+WebViewer(...)
+.then(instance => {
+  const { docViewer, LayoutMode } = instance;
 
-// you must have a document loaded when calling this api
-docViewer.on('documentLoaded', () => {
-  instance.setLayoutMode(LayoutMode.FacingContinuous);
+  // you must have a document loaded when calling this api
+  docViewer.on('documentLoaded', () => {
+    instance.setLayoutMode(LayoutMode.FacingContinuous);
+  });
 });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();
   var docViewer = instance.docViewer;
   var LayoutMode = instance.LayoutMode;
+
   // you must have a document loaded when calling this api
-  docViewer.on('documentLoaded', () => {
+  docViewer.on('documentLoaded', function() {
     instance.setLayoutMode(LayoutMode.FacingContinuous);
   });
 });

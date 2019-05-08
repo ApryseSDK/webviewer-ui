@@ -2,13 +2,13 @@
  * Disables redaction feature, affecting any elements related to redaction.
  * @method WebViewer#disableRedaction
  * @example // 5.1 and after
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-
-instance.disableRedaction();
+WebViewer(...)
+.then(instance => {
+  instance.disableRedaction();
+});
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();

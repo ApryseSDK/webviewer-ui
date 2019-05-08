@@ -2,13 +2,13 @@
  * Disables file picker feature, affecting the Open files button in menu overlay and shortcut to open local files (ctrl/cmd + o).
  * @method WebViewer#disableFilePicker
  * @example // 5.1 and after
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-
-instance.disableFilePicker();
+WebViewer(...)
+.then(instance => {
+  instance.disableFilePicker();
+});
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();

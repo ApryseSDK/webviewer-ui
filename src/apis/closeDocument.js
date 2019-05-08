@@ -3,20 +3,34 @@
  * @method WebViewer#closeDocument
  * @return {Promise} A promise resolved after document is closed.
  * @example // 5.1 and after
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
+WebViewer(...)
+.then(instance => {
+  const { docViewer } = instance;
 
-instance.closeDocument().then(() => {
-  console.log('Document is closed');
+  // you must have a document loaded when calling this api
+  docViewer.on('documentLoaded', () => {
+    setTimeout(() => {
+      instance.closeDocument().then(() => {
+        console.log('Document is closed');
+      });
+    }, 3000);
+  });
 });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();
-  instance.closeDocument().then(function() {
-    console.log('Document is closed');
+  var docViewer = instance.docViewer;
+
+  // you must have a document loaded when calling this api
+  docViewer.on('documentLoaded', function() {
+    setTimeout(function() {
+      instance.closeDocument().then(function() {
+        console.log('Document is closed');
+      });
+    }, 3000);
   });
 });
  */

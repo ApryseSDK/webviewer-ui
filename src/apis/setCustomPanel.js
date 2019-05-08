@@ -9,31 +9,34 @@
  * @param {object} options.panel Panel options.
  * @param {string} options.panel.dataElement data-element for panel.
  * @param {WebViewer~renderCustomPanel} options.panel.render Function that returns panel element.
- * @example const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-
-instance.setCustomPanel({
-  tab:{
-    dataElement: 'customPanelTab',
-    title: 'customPanelTab',
-    img: 'https://www.pdftron.com/favicon-32x32.png',
-  },
-  panel: {
-    dataElement: 'customPanel',
-    render: () => {
-      const div = document.createElement('div');
-      div.innerHTML = 'Hello World';
-      return div;
+ * @example // 5.1 and after
+WebViewer(...)
+.then(instance => {
+  const myCustomPanel = {
+    tab:{
+      dataElement: 'customPanelTab',
+      title: 'customPanelTab',
+      img: 'https://www.pdftron.com/favicon-32x32.png',
+    },
+    panel: {
+      dataElement: 'customPanel',
+      render: () => {
+        const div = document.createElement('div');
+        div.innerHTML = 'Hello World';
+        return div;
+      }
     }
-  }
+  };
+
+  instance.setCustomPanel(myCustomPanel);
 });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();
-  instance.setCustomPanel({
+  var myCustomPanel = {
     tab:{
       dataElement: 'customPanelTab',
       title: 'customPanelTab',
@@ -47,7 +50,9 @@ viewerElement.addEventListener('ready', function() {
         return div;
       }
     }
-  });
+  };
+
+  instance.setCustomPanel();
 });
  */
 /**

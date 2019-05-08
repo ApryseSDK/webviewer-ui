@@ -3,13 +3,13 @@
  * @method WebViewer#getAnnotationUser
  * @return {string} Current username
  * @example // 5.1 and after
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-
-console.log(instance.getAnnotationUser());
+WebViewer(...)
+.then(instance => {
+  console.log(instance.getAnnotationUser());
+});
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();

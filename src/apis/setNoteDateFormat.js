@@ -3,13 +3,13 @@
  * @method WebViewer#setNoteDateFormat
  * @param {string} format The format of date to display
  * @example // 5.1 and after
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-
-instance.setNoteDataFormat('DD.MM.YYYY HH:MM');
+WebViewer(...)
+.then(instance => {
+  instance.setNoteDataFormat('DD.MM.YYYY HH:MM');
+});
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();

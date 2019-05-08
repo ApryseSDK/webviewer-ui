@@ -2,13 +2,13 @@
  * Enables annotations feature, affecting the annotation visibility and elements related to annotations.
  * @method WebViewer#enableAnnotations
  * @example // 5.1 and after
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-
-instance.enableAnnotations();
+WebViewer(...)
+.then(instance => {
+  instance.enableAnnotations();
+});
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();

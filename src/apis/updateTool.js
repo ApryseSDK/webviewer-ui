@@ -8,15 +8,15 @@
  * @param {string} [properties.buttonGroup] Group of the tool button belongs to
  * @param {string} [properties.tooltip] Tooltip of the tool button
  * @example // 5.1 and after
-const viewerElement = document.getElementById('viewer');
-const instance = await WebViewer({ ... }, viewerElement);
-
-instance.updateTool('AnnotationCreateSticky', {
-  buttonImage: 'https://www.pdftron.com/favicon-32x32.png'
+WebViewer(...)
+.then(instance => {
+  instance.updateTool('AnnotationCreateSticky', {
+    buttonImage: 'https://www.pdftron.com/favicon-32x32.png'
+  });
 });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+var viewer = new PDFTron.WebViewer(...);
 
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();
