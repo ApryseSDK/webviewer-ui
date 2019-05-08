@@ -29,7 +29,7 @@ class NoteRoot extends React.Component {
     iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     contents: PropTypes.string
   }
-  
+
   deleteNote = () => {
     core.deleteAnnotations([this.props.annotation]);
   }
