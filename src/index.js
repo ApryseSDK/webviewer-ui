@@ -29,6 +29,10 @@ import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
 import rootReducer from 'reducers/rootReducer';
 
+const coreVersion = window.CoreControls.DocumentViewer.prototype.version.slice(0, -6);
+const uiVersion = require('../package.json').version;
+console.log('%c ' + `  WebViewer v${coreVersion} is running.`, `background-image: url('https://www.pdftron.com/favicon-32x32.png'); background-repeat: no-repeat; background-size: 12px 12px`, '');
+
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
