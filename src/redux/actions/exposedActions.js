@@ -4,9 +4,6 @@ import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import selectors from 'selectors';
 
-// let prevActiveElementBeforeOpen = null;
-// let lastOpenDataElement = null;
-
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
 export const openElement = dataElement => (dispatch, getState) => {
@@ -16,12 +13,7 @@ export const openElement = dataElement => (dispatch, getState) => {
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
   const isElementOpen = isDataElementPanel(dataElement, state) ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement : state.viewer.openElements[dataElement];
 
-  if (isElementDisabled) {
-    return;
-  }
-  // lastOpenDataElement = dataElement;
-  // prevActiveElementBeforeOpen = document.activeElement;
-  if (isElementOpen) {
+  if (isElementDisabled || isElementOpen) {
     return;
   }
 
@@ -58,10 +50,6 @@ export const closeElement = dataElement => (dispatch, getState) => {
   if (isElementDisabled || isElementClosed) {
     return;
   }
-  // if (dataElement === lastOpenDataElement) {
-  //   prevActiveElementBeforeOpen && prevActiveElementBeforeOpen.focus();
-  //   prevActiveElementBeforeOpen = null;
-  // }
 
   if (isDataElementPanel(dataElement, state) && state.viewer.openElements['leftPanel']) {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
@@ -98,7 +86,6 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     dispatch(openElement(dataElement));
   }
 };
-
 export const panelMove = (panel, amount) => (dispatch, getState) => {
   const selectionIndex = selectors.getLeftPanelIndex(getState(), panel);
 
@@ -153,10 +140,6 @@ export const setSwipeOrientation = swipeOrientation => ({ type: 'SET_SWIPE_ORIEN
 export const showWarningMessage = options => dispatch => {
   dispatch({ type: 'SET_WARNING_MESSAGE', payload: options });
   dispatch(openElement('warningModal'));
-};
-export const showErrorMessage = message => dispatch => {
-  dispatch({ type: 'SET_ERROR_MESSAGE', payload: { message } });
-  dispatch(openElement('errorModal'));
 };
 export const setCustomNoteFilter = filterFunc => ({ type: 'SET_CUSTOM_NOTE_FILTER', payload: { customNoteFilter: filterFunc } });
 export const setZoomList = zoomList => dispatch => {
