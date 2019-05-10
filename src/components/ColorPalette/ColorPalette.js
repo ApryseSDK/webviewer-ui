@@ -39,7 +39,7 @@ class ColorPalette extends React.PureComponent {
     if (shouldRenderDummyCell) {
       return <div className="dummy-cell" key={key}></div>;
     }
-
+    
     const diagonalLine = (
       <svg width="100%" height="100%" style={{ position: 'absolute', top: '0px', left: '0px' }}>
         <line x1="0%" y1="100%" x2="100%" y2="0%" strokeWidth="1" stroke="#e44234" strokeLinecap="square" />
@@ -50,7 +50,7 @@ class ColorPalette extends React.PureComponent {
       <div className="cell" key={key} onClick={this.setColor}>
         {this.renderCheckMark(bg)}
         {diagonalLine}
-      </div>
+      </div>      
     );
   }
 

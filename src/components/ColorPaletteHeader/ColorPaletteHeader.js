@@ -23,7 +23,7 @@ class ColorPaletteHeader extends React.PureComponent {
 
   setColorPalette = newPalette => {
     const { setColorPalette, activeToolName } = this.props;
-
+    
     setColorPalette(activeToolName, newPalette);
   }
 
@@ -70,8 +70,7 @@ class ColorPaletteHeader extends React.PureComponent {
           onClick={() => this.setColorPalette('StrokeColor')}
         >
           <div
-
-            className={`border-icon ${getBrightness(StrokeColor)}`}
+            className={`border-icon ${getBrightness(StrokeColor)}}`}
             style={{ backgroundColor: StrokeColor.toHexString() }}
           >
             {renderInnerCircle()}
@@ -92,7 +91,6 @@ class ColorPaletteHeader extends React.PureComponent {
           onClick={() => this.setColorPalette('FillColor')}
         >
           <div
-
             className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
             style={{ backgroundColor: FillColor.toHexString() }}
           >
@@ -136,7 +134,7 @@ class ColorPaletteHeader extends React.PureComponent {
 
 const mapStateToProps = (state, { activeToolName }) => ({
   availablePalettes: selectors.getAvailablePalettes(state, activeToolName)
-});
+}); 
 const mapDispatchToProps = {
   setColorPalette: actions.setColorPalette
 };

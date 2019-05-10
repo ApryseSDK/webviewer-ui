@@ -1,5 +1,5 @@
-import actions from 'actions';
+import fireEvent from '../helpers/fireEvent';
 
-export default store => message => {
-  store.dispatch(actions.showErrorMessage(message));
+export default message => {
+  fireEvent('customErrorMessage', message);
 };
