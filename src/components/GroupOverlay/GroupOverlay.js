@@ -42,22 +42,11 @@ class GroupOverlay extends React.PureComponent {
     window.addEventListener('resize', this.handleWindowResize);
 
     // this component can be opened before mounting to the DOM if users call the setToolMode API
-    // in this case we need to set its position immediately after it's mounted
+    // in this case we need to set its position immediately after it's mounted 
     // otherwise its left is 0 instead of left-aligned with the tool group button
     if (this.props.isOpen) {
       this.setOverlayPosition();
     }
-  }
-
-  // https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md#state-derived-from-propsstate
-  static getDerivedStateFromProps(nextProps, prevState){
-    const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
-    const hasActiveToolGroupChanged = prevState.mirroredIsOpen  && (prevState.mirroredActiveToolGroup !== nextProps.activeToolGroup);
-
-    if (hasIsOpenChanged || hasActiveToolGroupChanged){
-      return { isOpening: true, mirroredIsOpen: nextProps.isOpen, mirroredActiveToolGroup: nextProps.activeToolGroup };
-    }
-    return { isOpening: false, mirroredIsOpen: nextProps.isOpen, mirroredActiveToolGroup: nextProps.activeToolGroup };
   }
 
   componentDidUpdate(prevProps) {

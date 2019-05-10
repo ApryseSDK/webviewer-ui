@@ -63,6 +63,7 @@ class GroupButton extends React.PureComponent {
 
     e.stopPropagation();
     setActiveToolGroup(toolGroup);
+    closeElement('toolStylePopup');
 
     if (isActive) {
       toggleElement('groupOverlay');
@@ -70,7 +71,6 @@ class GroupButton extends React.PureComponent {
       this.setToolMode(toolName);
       openElement('groupOverlay');
     }
-    closeElement('toolStylePopup');
   }
 
   setToolMode = toolName => {
@@ -115,7 +115,7 @@ class GroupButton extends React.PureComponent {
     return (
       <React.Fragment>
         <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={color} />
-        {toolGroup === activeToolGroup &&
+        {toolGroup === activeToolGroup && 
           <Portal>
             <GroupOverlay nestedChildren={children} dataElement={dataElement} toolGroup={toolGroup}/>
           </Portal>
