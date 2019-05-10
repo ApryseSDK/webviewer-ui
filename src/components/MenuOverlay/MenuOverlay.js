@@ -95,7 +95,6 @@ class MenuOverlay extends React.PureComponent {
           dataElement="printButton"
           label={t('action.print')}
           onClick={this.handlePrintButtonClick} hidden={['mobile']}
-          onTabOut={() => closeElements(['menuOverlay'])}
         />
       </div>
     );

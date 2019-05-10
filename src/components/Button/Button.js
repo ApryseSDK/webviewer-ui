@@ -10,6 +10,7 @@ class Button extends React.PureComponent {
     willFocus: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isActive: PropTypes.bool,
+    isAccessible: PropTypes.bool,
     mediaQueryClassName: PropTypes.string,
     img: PropTypes.string,
     label: PropTypes.oneOfType([
@@ -21,46 +22,9 @@ class Button extends React.PureComponent {
     dataElement: PropTypes.string,
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    onTabOut: PropTypes.func,
   }
 
   containerRef = React.createRef();
-
-  componentDidMount() {
-    const {
-      willFocus,
-      onTabOut,
-    } = this.props;
-    if (willFocus) {
-      this.focus();
-    }
-    if (onTabOut) {
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Tab' || e.keyCode === 9) {
-          if (!this.containerRef.current) {
-            return;
-          }
-          if (document.activeElement === this.containerRef.current) {
-            e.preventDefault();
-            e.stopPropagation();
-            onTabOut();
-          }
-        }
-      });
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.props.willFocus) {
-      this.focus();
-    }
-  }
-
-  focus() {
-    if (this.containerRef.current) {
-      this.containerRef.current.focus();
-    }
-  }
 
   onClick = e => {
     this.props.onClick(e);
@@ -73,7 +37,7 @@ class Button extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, isActive, mediaQueryClassName, img, label, color, dataElement } = this.props;
+    const { isDisabled, isActive, mediaQueryClassName, img, label, color, dataElement, isAccessible } = this.props;
 
     if (isDisabled) {
       return null;
@@ -92,7 +56,7 @@ class Button extends React.PureComponent {
 
     return (
       <div
-        tabIndex={0}
+        tabIndex={isAccessible ? 0 : -1}
         role="button"
         className={className}
         data-element={dataElement}

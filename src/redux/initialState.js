@@ -14,7 +14,7 @@ export default {
     },
     headers: {
       default: [
-        { type: 'toggleElementButton', img: 'ic_left_sidebar_black_24px', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
+        { type: 'toggleElementButton', img: 'ic_left_sidebar_black_24px', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel', isAccessible: true },
         { type: 'divider', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toggleElementButton', img: 'ic_viewer_settings_black_24px', element: 'viewControlsOverlay', dataElement: 'viewControlsButton', title: 'component.viewControlsOverlay' },
         { type: 'toolButton', img: 'ic_pan_black_24px', toolName: 'Pan', dataElement: 'panToolButton', title: 'tool.pan' },

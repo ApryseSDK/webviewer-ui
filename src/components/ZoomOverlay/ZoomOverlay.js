@@ -108,7 +108,6 @@ class ZoomOverlay extends React.PureComponent {
           toolName="MarqueeZoomTool"
           label={t('tool.Marquee')}
           onClick={() => closeElements(['zoomOverlay'])}
-          onTabOut={() => closeElements(['zoomOverlay'])}
         />
       </div>
     );
