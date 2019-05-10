@@ -29,9 +29,7 @@ class LeftPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      isSliderActive: false,
-    };
+    this.state = { isSliderActive: false, };
     this.sliderRef = React.createRef();
   }
 
@@ -39,7 +37,7 @@ class LeftPanel extends React.Component {
     document.body.style.setProperty('--left-panel-width', '300px');
 
     // we are using css variables to make the panel resizable but IE11 doesn't support it
-    if (!isIE11 && this.sliderRef.current) {
+    if (!isIE11) {
       this.sliderRef.current.onmousemove = this.dragMouseMove;
       this.sliderRef.current.onmouseup = this.closeDrag;
     }
@@ -81,7 +79,7 @@ class LeftPanel extends React.Component {
   }
 
   render() {
-    const { isOpen, isDisabled, closeElement, customPanels, activePanel, panelMove, setLeftPanelIndex } = this.props;
+    const { isOpen, isDisabled, closeElement, customPanels, activePanel, panelMove } = this.props;
 
     if (isDisabled) {
       return null;
@@ -101,13 +99,6 @@ class LeftPanel extends React.Component {
             panelMove(activePanel, -1);
           } else if (e.key === 'ArrowDown') {
             panelMove(activePanel, 1);
-          }
-        }}
-        onBlur={e => {
-          // focus is leaving the container and its children
-          if (!e.currentTarget.contains(e.relatedTarget)) {
-            // nuke all selection index
-            {/* setLeftPanelIndex('notesPanel', null); */}
           }
         }}
       >
@@ -161,7 +152,6 @@ const mapStatesToProps = state => ({
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
   panelMove: actions.panelMove,
-  setLeftPanelIndex: actions.setLeftPanelIndex,
 };
 
 export default connect(mapStatesToProps, mapDispatchToProps)(LeftPanel);
