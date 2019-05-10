@@ -3,7 +3,7 @@ import { isIOS, isAndroid } from 'helpers/device';
 import selectors from 'selectors';
 import core from 'core';
 
-// viewer-
+// viewer
 export const disableElement = (dataElement, priority) => (dispatch, getState) => {
   if (dataElement === 'leftPanel') {
     dispatch(disableElements(['leftPanel', 'leftPanelButton'], priority));
