@@ -75,7 +75,7 @@ export const closeElements = dataElements => dispatch => {
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  if (state.viewer.disabledElements[dataElement]) {
+  if (state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled) {
     return;
   }
 
