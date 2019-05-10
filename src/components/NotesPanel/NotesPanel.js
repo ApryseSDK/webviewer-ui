@@ -53,15 +53,15 @@ class NotesPanel extends React.PureComponent {
       this.setVisibleNoteIds(notesToRender);
       this.setState({ notesToRender });
     }
-    const {
-      display,
-      setLeftPanelIndex,
-    } = this.props;
-    const isHiding = display === 'none' && prevProps.display !== 'none';
-    if (isHiding) {
-      // nuke selection index
-      setLeftPanelIndex('notesPanel', null);
-    }
+    // const {
+    //   display,
+    //   setLeftPanelIndex,
+    // } = this.props;
+    // const isHiding = display === 'none' && prevProps.display !== 'none';
+    // if (isHiding) {
+    //   // nuke selection index
+    //   setLeftPanelIndex('notesPanel', null);
+    // }
   }
 
   componentWillUnmount() {
@@ -160,12 +160,22 @@ class NotesPanel extends React.PureComponent {
   isVisibleNote = note => this.visibleNoteIds.has(note.Id)
 
   renderNotesPanelContent = () => {
+    const { setLeftPanelIndex } = this.props;
     const {notesToRender} = this.state;
     const sortStrategies = getSortStrategies();
 
     return(
       <React.Fragment>
-        <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
+        <div
+          className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}
+          onBlur={e => {
+            // focus is leaving the container and its children
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+              // nuke all selection index
+              setLeftPanelIndex('notesPanel', null);
+            }
+          }}
+        >
           {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>

@@ -107,9 +107,7 @@ class LeftPanel extends React.Component {
           // focus is leaving the container and its children
           if (!e.currentTarget.contains(e.relatedTarget)) {
             // nuke all selection index
-            setLeftPanelIndex('notesPanel', null);
-            {/* setLeftPanelIndex('thumbnailsPanel', null);
-            setLeftPanelIndex('outlinesPanel', null); */}
+            {/* setLeftPanelIndex('notesPanel', null); */}
           }
         }}
       >
