@@ -36,8 +36,6 @@ import { isDesktop } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
 
-// import keyboardJS from 'keyboardjs';
-
 import './App.scss';
 
 class App extends React.PureComponent {
@@ -45,7 +43,6 @@ class App extends React.PureComponent {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
-    toggleElement: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -159,7 +156,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   closeElements: actions.closeElements,
-  toggleElement: actions.toggleElement,
 };
 
 export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(translate()(App)));
