@@ -48,25 +48,19 @@ class App extends React.PureComponent {
     toggleElement: PropTypes.func.isRequired,
   }
 
-  // constructor(props) {
-  //   super(props);
-
-  //   $(document).on('documentLoaded', () => {
-  //     window.docViewer.on('pageComplete', (e, pageIndex) => {
-  //       window.docViewer.getDocument().loadPageText(pageIndex, function(text) {
-  //         var textContainer = document.createElement('div');
-  //         // textContainer.tabIndex = 0;
-  //         textContainer.textContent = text;
-  //         textContainer.style = 'height: 100%;';
-  //         textContainer.id = 'pageText' + pageIndex;
-  //         $('#pageContainer' + pageIndex).append(textContainer);
-  //       });
-  //     });
-  //   });
-  // }
-
   componentDidMount() {
-    // keyboardJS.bind('alt + m', () => this.props.toggleElement('leftPanel'));
+    // Add text content to pages
+    $(document).on('documentLoaded', () => {
+      window.docViewer.on('pageComplete', (e, pageIndex) => {
+        window.docViewer.getDocument().loadPageText(pageIndex, function(text) {
+          var textContainer = document.createElement('div');
+          textContainer.textContent = text;
+          textContainer.style = 'height: 100%;';
+          textContainer.id = 'pageText' + pageIndex;
+          $('#pageContainer' + pageIndex).append(textContainer);
+        });
+      });
+    });
   }
 
   componentWillUnmount() {
