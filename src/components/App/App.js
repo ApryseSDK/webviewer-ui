@@ -51,6 +51,7 @@ class App extends React.PureComponent {
       window.docViewer.on('pageComplete', (e, pageIndex) => {
         window.docViewer.getDocument().loadPageText(pageIndex, function(text) {
           var textContainer = document.createElement('div');
+          textContainer.tabIndex = 0;
           textContainer.textContent = text;
           textContainer.style = 'height: 100%;';
           textContainer.id = 'pageText' + pageIndex;
