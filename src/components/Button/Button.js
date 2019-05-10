@@ -24,6 +24,30 @@ class Button extends React.PureComponent {
     onClick: PropTypes.func.isRequired,
   }
 
+  containerRef = React.createRef();
+
+  componentDidMount() {
+    const {
+      willFocus,
+    } = this.props;
+    if (willFocus) {
+      this.focus();
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.willFocus) {
+      this.focus();
+    }
+  }
+
+  focus() {
+    if (this.containerRef.current) {
+      this.containerRef.current.focus();
+    }
+  }
+
+
   onClick = e => {
     this.props.onClick(e);
   }
@@ -60,6 +84,7 @@ class Button extends React.PureComponent {
         data-element={dataElement}
         onClick={this.onClick}
         onKeyPress={this.onKeyPress}
+        ref={this.containerRef}
       >
         {isGlyph &&
           <Icon glyph={img} color={color} />
