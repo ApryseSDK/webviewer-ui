@@ -33,7 +33,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     window.addEventListener('resize', this.onWindowResize);
   }
-
+  
   componentWillUnmount() {
     core.removeEventListener('beginRendering', this.onBeginRendering);
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
@@ -64,7 +64,7 @@ class ThumbnailsPanel extends React.PureComponent {
         return;
       }
       indices.push(pageIndex);
-
+    
       this.updateAnnotations(pageIndex);
     });
   }
@@ -244,7 +244,7 @@ class ThumbnailsPanel extends React.PureComponent {
             const updateHandler = thumbs && thumbs[index] ? thumbs[index].updateAnnotationHandler : null;
 
             return (
-              index < this.props.totalPages
+              index < this.props.totalPages 
               ? <Thumbnail
                   key={index}
                   index={index}

@@ -53,15 +53,6 @@ class NotesPanel extends React.PureComponent {
       this.setVisibleNoteIds(notesToRender);
       this.setState({ notesToRender });
     }
-    // const {
-    //   display,
-    //   setLeftPanelIndex,
-    // } = this.props;
-    // const isHiding = display === 'none' && prevProps.display !== 'none';
-    // if (isHiding) {
-    //   // nuke selection index
-    //   setLeftPanelIndex('notesPanel', null);
-    // }
   }
 
   componentWillUnmount() {

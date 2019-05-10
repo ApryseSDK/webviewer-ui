@@ -6,7 +6,7 @@ import { zoomIn, zoomOut } from 'helpers/zoom';
 import print from 'helpers/print';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import actions from 'actions';
-import selectors from 'selectors';
+import selectors from 'selectors'; 
 
 export default store => e => {
   const { dispatch, getState } = store;
@@ -53,7 +53,7 @@ export default store => e => {
         zoomIn();
       } else if (e.key === '-' || e.key === 'Subtract' || e.which === 189) { // (Ctrl/Cmd + -)
         e.preventDefault();
-        zoomOut();
+        zoomOut(); 
       } else if (e.key === '0' || e.which === 48) { // (Ctrl/Cmd + 0)
         e.preventDefault();
         if (window.innerWidth > 640) {
@@ -63,7 +63,7 @@ export default store => e => {
         }
       } else if (e.key === 'P' || e.which === 80) { // (Ctrl/Cmd + P)
         e.preventDefault();
-
+        
         const isPrintDisabled = selectors.isElementDisabled(state, 'printModal');
         if (isPrintDisabled) {
           console.warn('Print has been disabled.');
@@ -84,17 +84,16 @@ export default store => e => {
         core.setCurrentPage(core.getCurrentPage() + 1);
       }
     } else if (e.key === 'Escape' || e.which === 27) { // (Esc)
-      // debugger;
-      // e.preventDefault();
-      // setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
-      // dispatch(actions.closeElements(['viewControlsOverlay', 'zoomOverlay', 'annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay', 'menuOverlay' ]));
+      e.preventDefault();
+      setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
+      dispatch(actions.closeElements(['annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay' ]));
     } else if (!selectedTextFromCanvas) {
       if (document.activeElement instanceof window.HTMLInputElement || document.activeElement instanceof window.HTMLTextAreaElement) {
         return;
       }
       if (e.key === 'p' || e.which === 80) { // (P)
         setToolModeAndGroup(dispatch, 'Pan', '');
-      } else if (e.which > 64 && e.which < 91) {
+      } else if (e.which > 64 && e.which < 91) { 
         if (e.key === 'a' || e.which === 65) {  // (A)
           setToolModeAndGroup(dispatch, 'AnnotationCreateArrow', 'shapeTools');
         } else if (e.key === 'c' || e.which === 67) { // (C)
@@ -124,7 +123,7 @@ export default store => e => {
         } else if (e.key === 'u' || e.which === 85) { // (U)
           setToolModeAndGroup(dispatch, 'AnnotationCreateTextUnderline', 'textTools');
         }
-      }
+      } 
     } else if (selectedTextFromCanvas) {
       if ((e.key === 'g' || e.which === 71) && !core.getTool('AnnotationCreateTextSquiggly').disabled) { // (G)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextSquigglyAnnotation);
@@ -135,6 +134,6 @@ export default store => e => {
       } else if ((e.key === 'u' || e.which === 85) && !core.getTool('AnnotationCreateTextUnderline').disabled) { // (U)
         createTextAnnotationAndSelect(dispatch, window.Annotations.TextUnderlineAnnotation);
       }
-    }
+    } 
   }
 };

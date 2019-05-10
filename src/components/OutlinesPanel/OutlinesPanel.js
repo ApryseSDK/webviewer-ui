@@ -20,7 +20,7 @@ class OutlinesPanel extends React.PureComponent {
 
   render() {
     const { isDisabled, outlines, t, display } = this.props;
-
+    
     if (isDisabled) {
       return null;
     }
@@ -37,7 +37,7 @@ class OutlinesPanel extends React.PureComponent {
         ))}
       </div>
     );
-
+    
   }
 }
 

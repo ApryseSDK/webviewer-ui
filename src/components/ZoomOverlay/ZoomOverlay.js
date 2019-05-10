@@ -53,15 +53,6 @@ class ZoomOverlay extends React.PureComponent {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  // https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md#state-derived-from-propsstate
-  static getDerivedStateFromProps(nextProps, prevState){
-    const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
-    if (hasIsOpenChanged){
-      return { isOpening: true, mirroredIsOpen: nextProps.isOpen };
-    }
-    return { isOpening: false, mirroredIsOpen: nextProps.isOpen };
-  }
-
   handleWindowResize = () => {
     const { left, right } = getOverlayPositionBasedOn('zoomOverlayButton', this.dropdown);
     this.setState({
@@ -93,22 +84,17 @@ class ZoomOverlay extends React.PureComponent {
 
     return (
       <div className={className} data-element="zoomOverlay" style={{ left, right }} ref={this.dropdown}>
-        <OverlayItem
-          onClick={core.fitToWidth}
-          buttonName={t('action.fitToWidth')}
-          willFocus={this.state.isOpening}
-        />
+        <OverlayItem onClick={core.fitToWidth} buttonName={t('action.fitToWidth')} />
         <OverlayItem onClick={core.fitToPage} buttonName={t('action.fitToPage')} />
         <div className="spacer" />
-        {zoomList.map((zoomValue, i) =>
-          <OverlayItem key={i} onClick={() => zoomTo(zoomValue)} buttonName={zoomValue * 100 + '%'}/>
+        {zoomList.map((zoomValue, i) => 
+          <OverlayItem key={i}
+            onClick={() => zoomTo(zoomValue)}
+            buttonName={zoomValue * 100 + '%'}
+          />
         )}
         <div className="spacer" />
-        <ToolButton
-          toolName="MarqueeZoomTool"
-          label={t('tool.Marquee')}
-          onClick={() => closeElements(['zoomOverlay'])}
-        />
+        <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} onClick={() => closeElements(['zoomOverlay'])} />
       </div>
     );
   }
@@ -126,3 +112,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ZoomOverlay));
+
+
+
