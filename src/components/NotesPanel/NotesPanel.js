@@ -9,9 +9,11 @@ import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
+import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import selectors from 'selectors';
 import actions from 'actions';
 import mod from 'helpers/modulus';
+import debounce from 'lodash/debounce';
 
 import './NotesPanel.scss';
 
@@ -36,8 +38,7 @@ class NotesPanel extends React.PureComponent {
     };
     this.visibleNoteIds = new Set();
     this.rootAnnotations = [];
-    this.updatePanelOnInput = _.debounce(this.updatePanelOnInput.bind(this), 500);
-    this.noteRefs = [];
+    this.updatePanelOnInput = debounce(this.updatePanelOnInput.bind(this), 500);
   }
 
   componentDidMount() {
@@ -178,12 +179,11 @@ class NotesPanel extends React.PureComponent {
     const {
       selectionIndex,
     } = this.props;
-    console.log(mod(selectionIndex, notes.length));
 
     return(
       notes.map((note, i) => {
         return (
-          <React.Fragment key={note.Id}>
+          <React.Fragment key={note.Id + getLatestActivityDate(note)}>
             {this.renderListSeparator(notes, note)}
             <Note
               index={i}

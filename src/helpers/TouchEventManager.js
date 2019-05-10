@@ -2,12 +2,12 @@ import core from 'core';
 import { isIOS } from 'helpers/device';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
-import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 
 const TouchEventManager = {
-  initialize(document, container) {
+  initialize(document, container, toolButtonObjects) {
     this.document = document;
     this.container = container;
+    this.toolButtonObjects = toolButtonObjects;
     this.allowHorizontalSwipe = true;
     this.allowVerticalSwipe = false;
     this.touch = {
@@ -270,8 +270,7 @@ const TouchEventManager = {
   },
   isUsingAnnotationTools() {
     const tool = core.getToolMode();
-    
-    return getDataWithKey(mapToolNameToKey(tool.name)).annotationCheck;
+    return this.toolButtonObjects[tool.name].annotationCheck;
   }
 };
 

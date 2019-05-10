@@ -7,37 +7,20 @@ import Outline from 'components/Outline';
 
 import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
-import actions from 'actions';
-
-import mod from 'helpers/modulus';
 
 import './OutlinesPanel.scss';
 
 class OutlinesPanel extends React.PureComponent {
   static propTypes = {
-    selectionIndex: PropTypes.number,
     outlines: PropTypes.arrayOf(PropTypes.object),
     display: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
-    t: PropTypes.func.isRequired,
-    setLeftPanelIndex: PropTypes.func.isRequired
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      display,
-      setLeftPanelIndex,
-    } = this.props;
-    const isHiding = display === 'none' && prevProps.display !== 'none';
-    if (isHiding) {
-      // nuke selection index
-      setLeftPanelIndex('outlinesPanel', null);
-    }
+    t: PropTypes.func.isRequired
   }
 
   render() {
-    const { isDisabled, outlines, t, display, selectionIndex } = this.props;
-
+    const { isDisabled, outlines, t, display } = this.props;
+    
     if (isDisabled) {
       return null;
     }
@@ -50,23 +33,17 @@ class OutlinesPanel extends React.PureComponent {
           <div className="no-outlines">{t('message.noOutlines')}</div>
         }
         {outlines.map((outline, i) => (
-          <Outline
-            key={i}
-            index={i}
-            outline={outline}
-            isVisible
-            willFocus={selectionIndex !== null && mod(selectionIndex, outlines.length) === i}
-          />
+          <Outline key={i} outline={outline} isVisible />
         ))}
       </div>
     );
+    
   }
 }
 
 const mapStateToProps = state => ({
   outlines: selectors.getOutlines(state),
-  isDisabled: selectors.isElementDisabled(state, 'outlinesPanel'),
-  selectionIndex: selectors.getLeftPanelIndex(state, 'outlinesPanel'),
+  isDisabled: selectors.isElementDisabled(state, 'outlinePanel')
 });
 
-export default connect(mapStateToProps, { setLeftPanelIndex: actions.setLeftPanelIndex })(translate()(OutlinesPanel));
+export default connect(mapStateToProps)(translate()(OutlinesPanel));

@@ -38,7 +38,6 @@ class AnnotationPopup extends React.PureComponent {
       annotation: {},
       left: 0,
       top: 0,
-      canModify: false,
       isStylePopupOpen: false,
       isMouseLeftDown: false,
     };
@@ -104,8 +103,7 @@ class AnnotationPopup extends React.PureComponent {
     if (action === 'selected' && annotations.length === 1) {
       const annotation = annotations[0];
       this.setState({
-        annotation,
-        canModify: core.canModify(annotation)
+        annotation
       });
     } else {
       this.close();
@@ -123,9 +121,7 @@ class AnnotationPopup extends React.PureComponent {
   }
 
   onUpdateAnnotationPermission = () => {
-    const canModify = this.state.annotation ? core.canModify(this.state.annotation) : false;
-
-    this.setState({ canModify });
+    this.forceUpdate();
   }
 
   handleWindowResize = () => {
@@ -169,12 +165,13 @@ class AnnotationPopup extends React.PureComponent {
   }
 
   render() {
-    const { annotation, left, top, canModify, isStylePopupOpen } = this.state;
+    const { annotation, left, top, isStylePopupOpen } = this.state;
     const { isNotesPanelDisabled, isDisabled, isOpen, isAnnotationStylePopupDisabled } = this.props;
     const style = getAnnotationStyles(annotation);
     const hasStyle = Object.keys(style).length > 0;
     const className = getClassName(`Popup AnnotationPopup`, this.props);
     const redactionEnabled = core.isAnnotationRedactable(annotation);
+    const canModify = core.canModify(annotation);
     if (isDisabled) {
       return null;
     }

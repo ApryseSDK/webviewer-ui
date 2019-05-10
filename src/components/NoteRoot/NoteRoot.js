@@ -8,7 +8,6 @@ import NotePopup from 'components/NotePopup';
 import Icon from 'components/Icon';
 
 import core from 'core';
-import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import selectors from 'selectors';
 
 import './NoteRoot.scss';
@@ -30,30 +29,13 @@ class NoteRoot extends React.Component {
     contents: PropTypes.string
   }
 
-  componentDidMount() {
-    core.addEventListener('annotationChanged', this.onAnnotationChanged);
-  }
-
-  componentWillUnmount() {
-    core.removeEventListener('annotationChanged', this.onAnnotationChanged);
-  }
-
-  onAnnotationChanged = () => {
-    const { isNoteExpanded } = this.props;
-
-    if (isNoteExpanded) {
-      this.forceUpdate();
-    }
-  }
-
   deleteNote = () => {
     core.deleteAnnotations([this.props.annotation]);
   }
 
   renderHeader = () => {
-    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor } = this.props;
+    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor, icon } = this.props;
     const color = iconColor && annotation[iconColor].toHexString();
-    const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
     return (
       <div className="title">
         <div className="type">
@@ -106,7 +88,8 @@ class NoteRoot extends React.Component {
 const mapStateToProps = (state, { annotation }) => ({
   sortStrategy: selectors.getSortStrategy(state),
   noteDateFormat: selectors.getNoteDateFormat(state),
-  iconColor: selectors.getIconColor(state, mapAnnotationToKey(annotation))
+  iconColor: selectors.getIconColor(state, annotation.ToolName),
+  icon: selectors.getToolButtonIcon(state, annotation.ToolName)
 });
 
 export default connect(mapStateToProps)(NoteRoot);

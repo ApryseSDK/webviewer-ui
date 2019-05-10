@@ -1,6 +1,17 @@
+/**
+ * Downloads the pdf document with or without annotations added by WebViewer UI.
+ * @method WebViewer#downloadPdf
+ * @param {boolean} [includeAnnotations=true] Whether or not to include annotations added by WebViewer UI.
+ * @example // download pdf without annotations added by WebViewer UI
+viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.downloadPdf(false);
+});
+ */
+
 import downloadPdf from 'helpers/downloadPdf';
 import selectors from 'selectors';
-import { documentTypes } from 'constants/types';
+import { workerTypes } from 'constants/types';
 
 export default store => includeAnnotations => {
   const state = store.getState();
@@ -10,7 +21,7 @@ export default store => includeAnnotations => {
   }
   
   const documentType = selectors.getDocumentType(state);
-  const { PDF, BLACKBOX, OFFICE } = documentTypes;
+  const { PDF, BLACKBOX, OFFICE } = workerTypes;
   if (documentType !== PDF && documentType !== OFFICE && documentType !== BLACKBOX) {
     console.warn('Document type is not PDF. Cannot be downloaded.');
     return;

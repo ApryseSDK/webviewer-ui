@@ -108,8 +108,8 @@ class LeftPanel extends React.Component {
           if (!e.currentTarget.contains(e.relatedTarget)) {
             // nuke all selection index
             setLeftPanelIndex('notesPanel', null);
-            setLeftPanelIndex('thumbnailsPanel', null);
-            setLeftPanelIndex('outlinesPanel', null);
+            {/* setLeftPanelIndex('thumbnailsPanel', null);
+            setLeftPanelIndex('outlinesPanel', null); */}
           }
         }}
       >

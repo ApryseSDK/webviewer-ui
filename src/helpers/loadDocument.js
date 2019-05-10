@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { fireError } from 'helpers/fireEvent';
-import { engineTypes, documentTypes } from 'constants/types';
+import { engineTypes, workerTypes } from 'constants/types';
 import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -11,24 +11,26 @@ import selectors from 'selectors';
 export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
-      Promise.all([getPartRetriever(state, streaming), getDocOptions(state, dispatch, streaming)])
+      Promise.all([getPartRetriever(state, streaming, dispatch), getDocOptions(state, dispatch, streaming)])
       .then(params => {
         const partRetriever = params[0];
         const docOptions = params[1];
 
         if (partRetriever.on) {
-          partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
-            dispatch(actions.setDocumentLoadingProgress(loaded / total));
-          });
+          // If its a blackbox part retriever but the user uploaded a local file,
+          // we dont set this because we already show an upload modal
+          if (!partRetriever._isBlackboxLocalFile) {
+            partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+              dispatch(actions.setDocumentLoadingProgress(loaded / total));
+            });
+          }
+          
           partRetriever.on('error', function(e, type, message) {
             fireError(message);
           });
         }
         if (partRetriever.setErrorCallback) {
           partRetriever.setErrorCallback(fireError);
-        }
-        if (partRetriever instanceof window.CoreControls.PartRetrievers.BlackBoxPartRetriever && isLocalFile(state)) {
-          console.error(`${selectors.getDocumentPath(state)} is a local file which is not accessible by the PDFTron server. To solve this, you can either use your own local server or pass a publicly accessible URL`);
         }
 
         dispatch(actions.openElement('progressModal'));
@@ -71,16 +73,21 @@ const checkByteRange = state => {
   });
 };
 
-const getPartRetriever = (state, streaming) => {
-  const { path, initialDoc, file, isOffline, filename, pdfDoc } = state.document;
+const getPartRetriever = (state, streaming, dispatch) => {
+  const { path, initialDoc, file, isOffline, pdfDoc, ext } = state.document;
+  let { filename } = state.document;
   const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, disableWebsockets, useDownloader, withCredentials } = state.advanced;
-  const documentPath = path || initialDoc;
+  let documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
 
+  if (ext && !filename) {
+    filename = createFakeFilename(initialDoc, ext);
+  }
+
   return new Promise(resolve => {
     let partRetriever;
-    var partRetrieverName = '';
+    let partRetrieverName = '';
     if (engineType === engineTypes.PDFNETJS) {
       if (pdfDoc) {
         // the PDFDoc object can be used as a part retriever to load into the viewer
@@ -95,7 +102,30 @@ const getPartRetriever = (state, streaming) => {
       }
     } else if (engineType === engineTypes.PDFTRON_SERVER) {
       partRetrieverName = 'BlackBoxPartRetriever';
-      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets });
+
+      const blackboxOptions = { disableWebsockets };
+      const needsUpload = file && file.name;
+
+      // If PDFTron server is set and they try and upload a local file
+      if (needsUpload) {
+        documentPath = null; // (BlackBoxPartRetriever does upload when this is null)
+        blackboxOptions.uploadData = {
+          fileHandle: file,
+          loadCallback: () => {},
+          onProgress: e => {
+            dispatch(actions.setUploadProgress(e.loaded / e.total));
+          },
+          extension: file.name.split('.').pop()
+        };
+        blackboxOptions.filename = file.name;
+
+        dispatch(actions.setIsUploading(true)); // this is reset in onDocumentLoaded event
+      }
+
+      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, blackboxOptions);
+      if (needsUpload) {
+        partRetriever._isBlackboxLocalFile = true;
+      }
     } else if (engineType === engineTypes.UNIVERSAL) {
       const cache = window.CoreControls.PartRetrievers.CacheHinting.NO_HINT;
 
@@ -145,12 +175,12 @@ const getPartRetriever = (state, streaming) => {
 };
 
 const getDocOptions = (state, dispatch, streaming) => {
-  const { id: docId, officeType, pdfType, password } = state.document;
+  const { id: docId, officeType, pdfType, password, file } = state.document;
   const engineType = getEngineType(state);
 
   return new Promise(resolve => {
     if (engineType === engineTypes.UNIVERSAL) {
-      dispatch(actions.setDocumentType(documentTypes.XOD));
+      dispatch(actions.setDocumentType(workerTypes.XOD));
       resolve(docId);
     } else {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise } = state.advanced;
@@ -181,7 +211,9 @@ const getDocOptions = (state, dispatch, streaming) => {
         };
         const workerHandlers = {
           workerLoadingProgress: percent => {
-            dispatch(actions.setWorkerLoadingProgress(percent));
+            if (engineType === engineTypes.PDFTRON_SERVER && file && file.name) {
+              dispatch(actions.setWorkerLoadingProgress(percent));
+            }
           }
         };
 
@@ -237,6 +269,7 @@ export const getDocumentExtension = (doc, engineType) => {
 
   if (extension) {
     if (!supportedExtensions.includes(extension)) {
+      console.error(`File extension is not found or incorrect. Use "extension" option in PDFTron.WebViewer constructor and loadDocument if the extension is not known. See for more details ...`);
       console.error(`File extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWebViewer server supports ${supportedBlackboxExtensions.join(', ')}`);
     }
   } else if (doc && engineType === engineTypes.AUTO) {
@@ -248,8 +281,15 @@ export const getDocumentExtension = (doc, engineType) => {
 
 export const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
-  const { path, filename, initialDoc } = state.document;
+  let { path, filename, initialDoc, ext } = state.document;
+  if (ext && !filename) {
+    filename = createFakeFilename(path || initialDoc, ext);
+  }
   return filename || path || initialDoc;
+};
+
+const createFakeFilename = (initialDoc, ext) => {
+  return initialDoc.replace(/^.*[\\\/]/, '') + '.' + ext.replace(/^\./, '');
 };
 
 const isPDFNetJSExtension = extension => {
@@ -272,24 +312,24 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
   let workerTransportPromise;
 
   if (engineType === engineTypes.PDFTRON_SERVER) {
-    type = documentTypes.BLACKBOX;
+    type = workerTypes.BLACKBOX;
   } else {
     const usingOfficeWorker = supportedOfficeExtensions.indexOf(originalExtension) !== -1;
     if (usingOfficeWorker && !officeWorkerTransportPromise) {
-      type = documentTypes.OFFICE;
+      type = workerTypes.OFFICE;
       workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(officeBackendType, workerHandlers, window.sampleL);
     } else if (!usingOfficeWorker && !pdfWorkerTransportPromise) {
-      type = documentTypes.PDF;
+      type = workerTypes.PDF;
       // if the extension isn't pdf or an image then assume it's a pdf
       if (supportedPDFExtensions.indexOf(originalExtension) === -1) {
         extension = 'pdf';
       }
       workerTransportPromise = window.CoreControls.initPDFWorkerTransports(pdfBackendType, workerHandlers, window.sampleL);
     } else if (usingOfficeWorker) {
-      type = documentTypes.OFFICE;
+      type = workerTypes.OFFICE;
       workerTransportPromise = officeWorkerTransportPromise;
     } else {
-      type = documentTypes.PDF;
+      type = workerTypes.PDF;
       workerTransportPromise = pdfWorkerTransportPromise;
     }
   }
@@ -302,4 +342,3 @@ const isLocalFile = state => {
 
   return !/https?:\/\//.test(path);
 };
-

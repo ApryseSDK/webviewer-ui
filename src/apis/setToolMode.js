@@ -1,3 +1,13 @@
+/**
+ * Sets tool mode.
+ * @method WebViewer#setToolMode
+ * @param {string} toolName Name of the tool, either from <a href='https://www.pdftron.com/documentation/web/guides/annotations-and-tools/#list-of-tool-names' target='_blank'>tool names list</a> or the name you registered your custom tool with.
+ * @example viewerElement.addEventListener('ready', () => {
+  const instance = viewer.getInstance();
+  instance.setToolMode('AnnotationEdit');
+});
+ */
+
 import core from 'core';
 import actions from 'actions';
 
@@ -6,15 +16,15 @@ export default store => toolName =>  {
   const group = state.viewer.toolButtonObjects[toolName].group;
 
   core.setToolMode(toolName);
-  setActiveToolGroupAndToolsOverlay(store, group);
+  setActiveToolGroupAndGroupOverlay(store, group);
 };
 
-const setActiveToolGroupAndToolsOverlay = (store, group) => {
+const setActiveToolGroupAndGroupOverlay = (store, group) => {
   if (!group) {
     store.dispatch(actions.setActiveToolGroup(''));
-    store.dispatch(actions.closeElement('toolsOverlay'));
+    store.dispatch(actions.closeElement('groupOverlay'));
   } else {
     store.dispatch(actions.setActiveToolGroup(group));
-    store.dispatch(actions.openElement('toolsOverlay'));
+    store.dispatch(actions.openElement('groupOverlay'));
   }  
 };

@@ -12,6 +12,7 @@ import getClassName from 'helpers/getClassName';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
+import debounce from 'lodash/debounce';
 
 import './SearchOverlay.scss';
 
@@ -57,8 +58,8 @@ class SearchOverlay extends React.PureComponent {
     this.searchTextInput = React.createRef();
     this.wholeWordInput = React.createRef();
     this.caseSensitiveInput = React.createRef();
-    this.executeDebouncedSingleSearch = _.debounce(this.executeSingleSearch, 300);
-    this.executeDebouncedFullSearch = _.debounce(this.executeFullSearch, 300);
+    this.executeDebouncedSingleSearch = debounce(this.executeSingleSearch, 300);
+    this.executeDebouncedFullSearch = debounce(this.executeFullSearch, 300);
   }
 
   componentDidUpdate(prevProps) {
@@ -81,7 +82,7 @@ class SearchOverlay extends React.PureComponent {
 
     const searchOverlayOpened = !prevProps.isOpen && this.props.isOpen;
     if (searchOverlayOpened) {
-      this.props.closeElements(['toolsOverlay', 'viewControlsOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
+      this.props.closeElements(['groupOverlay', 'viewControlsOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
       this.searchTextInput.current.focus();
       core.setToolMode(defaultTool);
     }

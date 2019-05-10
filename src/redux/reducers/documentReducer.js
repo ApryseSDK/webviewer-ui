@@ -16,6 +16,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, pageNumber: payload.documentPageNumber };
     case 'SET_FILENAME':
       return { ...state, filename: payload.filename };
+    case 'SET_EXTENSION':
+      return { ...state, ext: payload.extension };
     case 'SET_TOTAL_PAGES':
       return { ...state, totalPages: payload.totalPages };
     case 'SET_OUTLINES':
@@ -34,6 +36,11 @@ export default initialState => (state = initialState, action) => {
       return { ...state, workerLoadingProgress: payload.workerLoadingProgress };
     case 'RESET_LOADING_PROGRESS':
       return { ...state, documentLoadingProgress: 0, workerLoadingProgress: 0 };
+    
+    case 'SET_IS_UPLOADING':
+      return { ...state, isUploading: payload.isUploading };
+    case 'SET_UPLOAD_PROGRESS':
+      return { ...state, uploadProgress: payload.progress };
     default:
       return state;
   }

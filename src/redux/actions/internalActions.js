@@ -40,7 +40,7 @@ export const enableElements = (dataElements, priority) => (dispatch, getState) =
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;
-  
+
   if (isIOS || isAndroid) {
     name = toolObject.name;
   } else {
@@ -65,7 +65,7 @@ export const setCurrentPage = currentPage => ({ type: 'SET_CURRENT_PAGE', payloa
 export const setFullScreen = isFullScreen => ({ type: 'SET_FULL_SCREEN', payload: { isFullScreen } });
 export const setDocumentLoaded = isDocumentLoaded => ({ type: 'SET_DOCUMENT_LOADED', payload: { isDocumentLoaded } });
 export const setReadOnly = isReadOnly => ({ type: 'SET_READ_ONLY', payload: { isReadOnly } });
-export const registerTool = tool => ({ type: 'REGISTER_TOOL', payload: { ...tool } });
+export const registerTool = (tool, annotationConstructor) => ({ type: 'REGISTER_TOOL', payload: { ...tool, annotationConstructor } });
 export const unregisterTool = toolName => ({ type: 'UNREGISTER_TOOL', payload: { toolName } });
 export const setToolButtonObjects= toolButtonObjects => ({ type: 'SET_TOOL_BUTTON_OBJECTS', payload: { toolButtonObjects } });
 export const setIsNoteEditing = isNoteEditing => (dispatch, getState) => {
@@ -87,9 +87,33 @@ export const collapseAllNotes = () => (dispatch, getState) => {
   }
 };
 export const setHeaderItems = (header, headerItems) => ({ type: 'SET_HEADER_ITEMS', payload: { header, headerItems } });
-export const setColorPalette = (colorMapKey, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { colorMapKey, colorPalette } });
-export const setIconColor = (colorMapKey, color) => ({ type: 'SET_ICON_COLOR', payload: { colorMapKey, color } });
-export const setColorMap = colorMap => ({ type: 'SET_COLOR_MAP', payload: { colorMap } });
+export const setColorPalette = (toolName, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { toolName, colorPalette } });
+export const setIconColor = (toolName, color) => ({ type: 'SET_ICON_COLOR', payload: { toolName, color } });
+
+// header API
+export const addItems = (newItems, index, group) => dispatch => {
+  if (Array.isArray(newItems)) {
+    dispatch({ type: 'ADD_ITEMS', payload: { newItems, index, group } });
+  } else {
+    dispatch({ type: 'ADD_ITEMS', payload: { newItems: [newItems], index, group } });
+  }
+}
+export const removeItems = (itemList, group) => dispatch => {
+  if (Array.isArray(itemList)) {
+    dispatch({ type: 'REMOVE_ITEMS', payload: { itemList, group } });
+  } else {
+    dispatch({ type: 'REMOVE_ITEMS', payload: { itemList: [itemList], group } });
+  }
+}
+
+export const updateItem = (dataElement, newProps, group) => ({ type: 'UPDATE_ITEM', payload: { dataElement, newProps, group } });
+export const setItems = (items, group) => dispatch => {
+  if (Array.isArray(items)) {
+    dispatch({ type: 'SET_ITEMS', payload: { items, group } })
+  } else {
+    dispatch({ type: 'SET_ITEMS', payload: { items: [items], group } })
+  }
+}
 
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });
@@ -98,6 +122,7 @@ export const setDocumentFile = documentFile => ({ type: 'SET_DOCUMENT_FILE', pay
 export const setDocumentType = type => ({ type: 'SET_DOCUMENT_TYPE', payload: { type }});
 export const setPDFDoc = pdfDoc => ({ type: 'SET_PDF_DOC', payload: { pdfDoc }});
 export const setFilename = filename => ({ type: 'SET_FILENAME', payload: { filename } });
+export const setExtension = extension => ({ type: 'SET_EXTENSION', payload: { extension } });
 export const setTotalPages = totalPages => ({ type: 'SET_TOTAL_PAGES', payload: { totalPages } });
 export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outlines } });
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
@@ -107,6 +132,10 @@ export const setDocumentLoadingProgress = documentLoadingProgress => ({ type: 'S
 export const setWorkerLoadingProgress = workerLoadingProgress => ({ type: 'SET_WORKER_LOADING_PROGRESS', payload: { workerLoadingProgress }});
 export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
+
+export const setIsUploading = isUploading => ({ type: 'SET_IS_UPLOADING', payload: { isUploading } });
+export const setUploadProgress = progress => ({ type: 'SET_UPLOAD_PROGRESS', payload: { progress } });
+export const resetUploadProgress = () => setUploadProgress(0);
 
 // user
 export const setUserName = userName => ({ type: 'SET_USER_NAME', payload: { userName } });

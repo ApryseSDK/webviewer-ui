@@ -8,18 +8,15 @@ import thunk from 'redux-thunk';
 
 import core from 'core';
 import actions from 'actions';
-
 import apis from 'src/apis';
-
 import App from 'components/App';
-import rootReducer from 'reducers/rootReducer';
-import { engineTypes } from 'constants/types';
+import { workerTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
 import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
-import loadScript from 'helpers/loadScript';
+import loadScript, { loadConfig } from 'helpers/loadScript';
 import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServer';
 import setupMIMETypeTest from 'helpers/setupMIMETypeTest';
 import eventHandler from 'helpers/eventHandler';
@@ -30,6 +27,7 @@ import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
+import rootReducer from 'reducers/rootReducer';
 
 const middleware = [thunk];
 
@@ -40,11 +38,14 @@ if (process.env.NODE_ENV === 'development') {
 
 const store = createStore(rootReducer, applyMiddleware(...middleware));
 
+
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
     const updatedReducer = require('reducers/rootReducer').default;
     store.replaceReducer(updatedReducer);
   });
+
+  module.hot.accept();
 }
 
 if (window.CanvasRenderingContext2D) {
@@ -56,7 +57,7 @@ if (window.CanvasRenderingContext2D) {
   if (state.advanced.fullAPI) {
     window.CoreControls.enableFullPDF(true);
     if (process.env.NODE_ENV === 'production') {
-      fullAPIReady = loadScript('../../core/pdf/PDFNet.js');
+      fullAPIReady = loadScript('../core/pdf/PDFNet.js');
     } else {
       fullAPIReady = loadScript('../core/pdf/PDFNet.js');
     }
@@ -64,8 +65,8 @@ if (window.CanvasRenderingContext2D) {
 
   window.CoreControls.enableSubzero(state.advanced.subzero);
   if (process.env.NODE_ENV === 'production') {
-    window.CoreControls.setWorkerPath('../../core');
-    window.CoreControls.setResourcesPath('../../core/assets');
+    window.CoreControls.setWorkerPath('../core');
+    window.CoreControls.setResourcesPath('../core/assets');
   }
 
   try {
@@ -86,24 +87,27 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
-  if (state.advanced.preloadWorker && state.advanced.engineType === engineTypes.PDFNETJS) {
-    if (state.document.pdfType !== 'wait') {
+  const { preloadWorker } = state.advanced;
+  const { PDF, OFFICE, ALL } = workerTypes;
+
+  if (preloadWorker) {
+    if (preloadWorker === PDF || preloadWorker === ALL) {
       getBackendPromise(state.document.pdfType).then(pdfType => {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, null);
+        }, window.sampleL);
       });
     }
 
-    if (state.document.officeType !== 'wait') {
+    if (preloadWorker === OFFICE || preloadWorker === ALL) {
       getBackendPromise(state.document.officeType).then(officeType => {
-        window.CoreControls.preloadOfficeWorker(officeType, {
+        window.CoreControls.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, {});
+        }, window.sampleL);
       });
     }
   }
@@ -111,7 +115,7 @@ if (window.CanvasRenderingContext2D) {
   loadCustomCSS(state.advanced.customCSS);
 
   fullAPIReady.then(() => {
-    return loadScript(state.advanced.configScript, 'Config script could not be loaded. The default configuration will be used.');
+    return loadConfig();
   }).then(() => {
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
@@ -128,6 +132,61 @@ if (window.CanvasRenderingContext2D) {
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
 
+    const header = {
+      children: store.getState().viewer.headers.default,
+      getItems() {
+        return store.getState().viewer.headers.default;
+      },
+      addItems(newItems, index) {
+        store.dispatch(actions.addItems(newItems, index));
+      },
+      removeItems(itemList) {
+        store.dispatch(actions.removeItems(itemList));
+      },
+      updateItem(dataElement, newProps) {
+        store.dispatch(actions.updateItem(dataElement, newProps));
+      },
+      setItems(items) {
+        store.dispatch(actions.setItems(items));
+      },
+      group(dataElement){
+        const defaultHeader = store.getState().viewer.headers.default;
+        let group;
+        defaultHeader.forEach(buttonObject => {
+          if (buttonObject.dataElement === dataElement) {
+            group = buttonObject;
+          }
+          if (buttonObject.children) {
+            buttonObject.children.forEach(childObject => {
+              if (childObject.dataElement === dataElement) {
+                group = childObject;
+              }
+            });
+          }
+        });
+        if (!group) {
+          console.warn(`${dataElement} is not a valid group button`);
+          return;
+        }
+        return {
+          getItems() {
+            return group.children;
+          },
+          addItems(newItems, index) {
+            store.dispatch(actions.addItems(newItems, index, group));
+          },
+          removeItems(itemList) {
+            store.dispatch(actions.removeItems(itemList, group));
+          },
+          updateItem(dataElement, newProps) {
+            store.dispatch(actions.updateItem(dataElement, newProps, group));
+          },
+          setItems(items) {
+            store.dispatch(actions.setItems(items, group));
+          }
+        };
+      }
+    };
     ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18next}>
@@ -137,37 +196,46 @@ if (window.CanvasRenderingContext2D) {
       document.getElementById('app'),
       () => {
         window.readerControl = {
-          ...apis.getActions(store),
+          docViewer,
+          header,
           FitMode,
           LayoutMode,
+          loadedFromServer: false, // undocumented
+          serverFailed: false, // undocumented
+          i18n: i18next,
+          constants: apis.getConstants(), // undocumented
           addSearchListener: apis.addSearchListener(store),
           addSortStrategy: apis.addSortStrategy(store),
           closeDocument: apis.closeDocument(store),
-          constants: apis.getConstants(),
+          closeElement: apis.closeElement(store),
+          closeElements: apis.closeElements(store),
           disableAnnotations: apis.disableAnnotations(store),
           disableDownload: apis.disableDownload(store),
+          disableElements: apis.disableElements(store),
           disableFilePicker: apis.disableFilePicker(store),
           disableLocalStorage: apis.disableLocalStorage,
-          disableNotesPanel: apis.disableNotesPanel(store),
           disableMeasurement: apis.disableMeasurement(store),
+          disableNotesPanel: apis.disableNotesPanel(store),
           disablePrint: apis.disablePrint(store),
+          disableRedaction: apis.disableRedaction(store),
           disableTextSelection: apis.disableTextSelection(store),
-          disableTool: apis.disableTool(store),
+          disableTool: apis.disableTool(store), // undocumented
           disableTools: apis.disableTools(store),
-          docViewer,
           downloadPdf: apis.downloadPdf(store),
+          enableAllElements: apis.enableAllElements(store), // undocumented
           enableAnnotations: apis.enableAnnotations(store),
           enableDownload: apis.enableDownload(store),
+          enableElements: apis.enableElements(store),
           enableFilePicker: apis.enableFilePicker(store),
-          enableMeasurement: apis.enableMeasurement(store),
           enableLocalStorage: apis.enableLocalStorage,
+          enableMeasurement: apis.enableMeasurement(store),
           enableNotesPanel: apis.enableNotesPanel(store),
           enablePrint: apis.enablePrint(store),
           enableRedaction: apis.enableRedaction(store),
-          disableRedaction: apis.disableRedaction(store),
           enableTextSelection: apis.enableTextSelection(store),
           enableTool: apis.enableTool(store),
           enableTools: apis.enableTools(store),
+          focusNote: apis.focusNote(store),
           getAnnotationUser: apis.getAnnotationUser,
           getBBAnnotManager: apis.getBBAnnotManager(store),
           getCurrentPageNumber: apis.getCurrentPageNumber(store),
@@ -182,14 +250,15 @@ if (window.CanvasRenderingContext2D) {
           goToLastPage: apis.goToLastPage(store),
           goToNextPage: apis.goToNextPage(store),
           goToPrevPage: apis.goToPrevPage(store),
-          i18n: i18next,
           isAdminUser: apis.isAdminUser,
-          isElementOpen: apis.isElementOpen(store),
           isElementDisabled: apis.isElementDisabled(store),
+          isElementOpen: apis.isElementOpen(store),
           isMobileDevice: apis.isMobileDevice,
           isReadOnly: apis.isReadOnly,
           isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
+          openElement: apis.openElement(store),
+          openElements: apis.openElements(store),
           print: apis.print(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),
@@ -198,34 +267,46 @@ if (window.CanvasRenderingContext2D) {
           saveAnnotations: apis.saveAnnotations(store),
           searchText: apis.searchText(store),
           searchTextFull: apis.searchTextFull(store),
-          selectors: apis.getSelectors(store),
+          selectors: apis.getSelectors(store), // undocumented
+          setActiveHeaderGroup: apis.setActiveHeaderGroup(store),
+          setActiveLeftPanel: apis.setActiveLeftPanel(store),
           setAdminUser: apis.setAdminUser,
-          setNoteDateFormat: apis.setNoteDateFormat(store),
           setAnnotationUser: apis.setAnnotationUser,
-          setTheme: apis.setTheme,
+          setColorPalette: apis.setColorPalette(store), // undocumented
           setCurrentPageNumber: apis.setCurrentPageNumber,
-          setEngineType: apis.setEngineType(store),
+          setCursorOverlay: apis.setCursorOverlay(store),
+          setCustomNoteFilter: apis.setCustomNoteFilter(store),
+          setCustomPanel: apis.setCustomPanel(store),
+          setEngineType: apis.setEngineType(store), // undocumented
           setFitMode: apis.setFitMode,
           setHeaderItems: apis.setHeaderItems(store),
+          setIconColor: apis.setIconColor(store),
           setLanguage: apis.setLanguage,
           setLayoutMode: apis.setLayoutMode,
-          setNotesPanelSort: apis.setNotesPanelSort(store),
           setMaxZoomLevel: apis.setMaxZoomLevel(store),
           setMinZoomLevel: apis.setMinZoomLevel(store),
+          setNoteDateFormat: apis.setNoteDateFormat(store),
+          setNotesPanelSort: apis.setNotesPanelSort(store), // undocumented
+          setPageLabels: apis.setPageLabels(store),
           setPrintQuality: apis.setPrintQuality(store),
           setReadOnly: apis.setReadOnly,
-          setShowSideWindow: apis.setShowSideWindow(store),
-          setSideWindowVisibility: apis.setSideWindowVisibility(store),
+          setShowSideWindow: apis.setShowSideWindow(store), // undocumented
+          setSideWindowVisibility: apis.setSideWindowVisibility(store), // undocumented
+          setSortNotesBy: apis.setSortNotesBy(store),
+          setSortStrategy: apis.setSortStrategy(store),
+          setSwipeOrientation: apis.setSwipeOrientation(store),
+          setTheme: apis.setTheme,
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
-          showWarningMessage: apis.showWarningMessage(store),
-          showErrorMessage: apis.showErrorMessage(store),
+          setZoomList: apis.setZoomList(store),
+          showWarningMessage: apis.showWarningMessage(store), // undocumented
+          toggleElement: apis.toggleElement(store),
+          showErrorMessage: apis.showErrorMessage,
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
-          updateOutlines: apis.updateOutlines(store),
+          updateOutlines: apis.updateOutlines(store), // undocumented
           updateTool: apis.updateTool(store),
-          loadedFromServer: false,
-          serverFailed: false,
+          useEmbeddedPrint: apis.useEmbeddedPrint(store),
         };
 
         window.ControlUtils = {

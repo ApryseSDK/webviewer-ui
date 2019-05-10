@@ -7,21 +7,15 @@ import Thumbnail from 'components/Thumbnail';
 
 import core from 'core';
 import selectors from 'selectors';
-import actions from 'actions';
-
-import mod from 'helpers/modulus';
 
 import './ThumbnailsPanel.scss';
 
 class ThumbnailsPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
-    selectionIndex: PropTypes.number,
     totalPages: PropTypes.number,
     display: PropTypes.string.isRequired,
-    setLeftPanelIndex: PropTypes.func.isRequired,
   }
-
 
   constructor() {
     super();
@@ -45,18 +39,6 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
     window.removeEventListener('resize', this.onWindowResize);
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      display,
-      setLeftPanelIndex,
-    } = this.props;
-    const isHiding = display === 'none' && prevProps.display !== 'none';
-    if (isHiding) {
-      // nuke selection index
-      setLeftPanelIndex('thumbnailsPanel', null);
-    }
   }
 
   onBeginRendering = () => {
@@ -129,7 +111,6 @@ class ThumbnailsPanel extends React.PureComponent {
     const ctx = annotCanvas.getContext('2d');
 
     let zoom = 1;
-    let t = null;
     let rotation = core.getCompleteRotation(pageNumber) - core.getRotation(pageNumber);
     if (rotation < 0) {
       rotation += 4;
@@ -141,36 +122,36 @@ class ThumbnailsPanel extends React.PureComponent {
       annotCanvas.height = height;
       zoom = annotCanvas.width / pageWidth;
       zoom /= multiplier;
-      t = window.GetPageMatrix(zoom, rotation, { width: annotCanvas.width, height: annotCanvas.height });
-
-      if (rotation === 0) {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, 0, 0);
-      } else {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, annotCanvas.width, annotCanvas.height);
-      }
     } else {
       annotCanvas.width = height;
       annotCanvas.height = width;
 
       zoom = annotCanvas.height / pageWidth;
       zoom /= multiplier;
-
-      t = window.GetPageMatrix(zoom, rotation, { width: annotCanvas.width, height: annotCanvas.height });
-
-      if (rotation === 1) {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, annotCanvas.width, 0);
-      } else {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, 0, annotCanvas.height);
-      }
     }
 
     thumbContainer.appendChild(annotCanvas);
+    core.setAnnotationCanvasTransform(ctx, zoom, rotation);
 
-    core.drawAnnotations({
+    let options = {
       pageNumber,
       overrideCanvas: annotCanvas,
       namespace: 'thumbnails'
-    });
+    };
+
+    var thumb = thumbContainer.querySelector('.page-image');
+
+    if(thumb) {
+      options = {
+        ...options,
+        overridePageRotation: rotation,
+        overridePageCanvas: thumb,
+      };
+    }  else {
+      return;
+    }
+
+    core.drawAnnotations(options);
   }
 
   getThumbnailSize = (pageWidth, pageHeight) => {
@@ -204,6 +185,7 @@ class ThumbnailsPanel extends React.PureComponent {
         if (this.thumbs[pageIndex]) {
           this.thumbs[pageIndex].element.appendChild(thumb);
           this.thumbs[pageIndex].loaded = true;
+          this.thumbs[pageIndex].updateAnnotationHandler = this.updateAnnotations.bind(this);
           this.removeFromPendingThumbs(pageIndex);
           this.updateAnnotations(pageIndex);
         }
@@ -251,14 +233,15 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   renderThumbnails = rowIndex => {
-    const { selectionIndex, totalPages } = this.props;
     const { numberOfColumns, canLoad } = this.state;
+    const { thumbs } = this;
 
     return (
       <div className="row" key={rowIndex}>
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
             const index = rowIndex * numberOfColumns + columnIndex;
+            const updateHandler = thumbs && thumbs[index] ? thumbs[index].updateAnnotationHandler : null;
 
             return (
               index < this.props.totalPages
@@ -266,10 +249,10 @@ class ThumbnailsPanel extends React.PureComponent {
                   key={index}
                   index={index}
                   canLoad={canLoad}
-                  willFocus={selectionIndex !== null && mod(selectionIndex, totalPages) === index}
                   onLoad={this.onLoad}
                   onCancel={this.onCancel}
                   onRemove={this.onRemove}
+                  updateAnnotations={updateHandler}
                 />
               : null
             );
@@ -287,11 +270,7 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     return (
-      <div
-        className="Panel ThumbnailsPanel"
-        style={{ display }}
-        data-element="thumbnailsPanel"
-      >
+      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel">
         <div className="thumbs">
           <ReactList
             key="panel"
@@ -309,7 +288,6 @@ class ThumbnailsPanel extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'thumbnailsPanel'),
   totalPages: selectors.getTotalPages(state),
-  selectionIndex: selectors.getLeftPanelIndex(state, 'thumbnailsPanel'),
 });
 
-export default connect(mapStateToProps, { setLeftPanelIndex: actions.setLeftPanelIndex })(ThumbnailsPanel);
+export default connect(mapStateToProps)(ThumbnailsPanel);

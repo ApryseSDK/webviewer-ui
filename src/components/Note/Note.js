@@ -114,7 +114,10 @@ class Note extends React.PureComponent {
   }
 
   scrollIntoView = () => {
-    this.containerRef.current.scrollIntoView();
+    const target = this.containerRef.current;
+    if (target) {
+      target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop;
+    }
   }
 
   openRootEditing = () => {
