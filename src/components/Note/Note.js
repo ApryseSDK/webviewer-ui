@@ -28,7 +28,7 @@ class Note extends React.PureComponent {
     t: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
     willFocus: PropTypes.bool.isRequired,
-    setLeftPanelIndex: PropTypes.func.isRequired,
+    setListIndex: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -233,7 +233,7 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents, index, setLeftPanelIndex }  = this.props;
+    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents, index, setListIndex }  = this.props;
     const { replies, isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
@@ -250,7 +250,7 @@ class Note extends React.PureComponent {
         onClick={this.onClickNote}
         onKeyDown={this.onNoteKeyDown}
         onFocus={() => {
-          setLeftPanelIndex('notesPanel', index);
+          setListIndex('notesPanel', index);
         }}
       >
         <NoteRoot
@@ -306,12 +306,11 @@ const mapStateToProps = (state, ownProps) => ({
   isAnnotationFocused: selectors.isAnnotationFocused(state, ownProps.annotation.Id),
   isReadOnly: selectors.isDocumentReadOnly(state),
   isReplyDisabled: selectors.isElementDisabled(state, 'noteReply'),
-  leftPanelIndex: selectors.getLeftPanelIndex(state, 'notesPanel'),
 });
 
 const matDispatchToProps = {
   setIsNoteEditing: actions.setIsNoteEditing,
-  setLeftPanelIndex: actions.setLeftPanelIndex,
+  setListIndex: actions.setListIndex,
 };
 
 export default connect(mapStateToProps, matDispatchToProps)(translate()(Note));

@@ -23,8 +23,7 @@ class LeftPanel extends React.Component {
     customPanels: PropTypes.array.isRequired,
     activePanel: PropTypes.string.isRequired,
     closeElement: PropTypes.func.isRequired,
-    setLeftPanelIndex: PropTypes.func.isRequired,
-    panelMove: PropTypes.func.isRequired
+    listMove: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -79,7 +78,7 @@ class LeftPanel extends React.Component {
   }
 
   render() {
-    const { isOpen, isDisabled, closeElement, customPanels, activePanel, panelMove } = this.props;
+    const { isOpen, isDisabled, closeElement, customPanels, activePanel, listMove } = this.props;
 
     if (isDisabled) {
       return null;
@@ -96,9 +95,9 @@ class LeftPanel extends React.Component {
         onClick={e => e.stopPropagation()}
         onKeyDown={e => {
           if (e.key === 'ArrowUp') {
-            panelMove(activePanel, -1);
+            listMove(activePanel, -1);
           } else if (e.key === 'ArrowDown') {
-            panelMove(activePanel, 1);
+            listMove(activePanel, 1);
           }
         }}
       >
@@ -151,7 +150,7 @@ const mapStatesToProps = state => ({
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
-  panelMove: actions.panelMove,
+  listMove: actions.listMove,
 };
 
 export default connect(mapStatesToProps, mapDispatchToProps)(LeftPanel);

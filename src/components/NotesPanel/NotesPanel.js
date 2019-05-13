@@ -26,7 +26,7 @@ class NotesPanel extends React.PureComponent {
     pageLabels: PropTypes.array.isRequired,
     customNoteFilter: PropTypes.func,
     t: PropTypes.func.isRequired,
-    setLeftPanelIndex: PropTypes.func.isRequired,
+    setListIndex: PropTypes.func.isRequired,
     selectionIndex: PropTypes.number,
   }
 
@@ -151,7 +151,7 @@ class NotesPanel extends React.PureComponent {
   isVisibleNote = note => this.visibleNoteIds.has(note.Id)
 
   renderNotesPanelContent = () => {
-    const { setLeftPanelIndex } = this.props;
+    const { setListIndex } = this.props;
     const {notesToRender} = this.state;
     const sortStrategies = getSortStrategies();
 
@@ -163,7 +163,7 @@ class NotesPanel extends React.PureComponent {
             // focus is leaving the container and its children
             if (!e.currentTarget.contains(e.relatedTarget)) {
               // nuke all selection index
-              setLeftPanelIndex('notesPanel', null);
+              setListIndex('notesPanel', null);
             }
           }}
         >
@@ -258,7 +258,7 @@ const mapStatesToProps = state => ({
   pageLabels: selectors.getPageLabels(state),
   pageRotation: selectors.getRotation(state),
   customNoteFilter: selectors.getCustomNoteFilter(state),
-  selectionIndex: selectors.getLeftPanelIndex(state, 'notesPanel'),
+  selectionIndex: selectors.getListIndex(state, 'notesPanel'),
 });
 
-export default connect(mapStatesToProps, { setLeftPanelIndex: actions.setLeftPanelIndex })(translate()(NotesPanel));
+export default connect(mapStatesToProps, { setListIndex: actions.setListIndex })(translate()(NotesPanel));

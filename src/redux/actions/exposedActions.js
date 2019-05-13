@@ -86,8 +86,8 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     dispatch(openElement(dataElement));
   }
 };
-export const panelMove = (panel, amount) => (dispatch, getState) => {
-  const selectionIndex = selectors.getLeftPanelIndex(getState(), panel);
+export const listMove = (listKey, amount) => (dispatch, getState) => {
+  const selectionIndex = selectors.getListIndex(getState(), listKey);
 
   let newSelectionIndex;
   if (selectionIndex=== null) {
@@ -95,10 +95,10 @@ export const panelMove = (panel, amount) => (dispatch, getState) => {
   } else {
     newSelectionIndex = selectionIndex + amount;
   }
-  dispatch(setLeftPanelIndex(panel, newSelectionIndex));
+  dispatch(setListIndex(listKey, newSelectionIndex));
 };
 
-export const setLeftPanelIndex =  (panel, index) => ({ type: 'SET_LEFT_PANEL_INDEX', payload: { panel, index } });
+export const setListIndex =  (listKey, index) => ({ type: 'SET_LIST_INDEX', payload: { listKey, index } });
 export const setActiveHeaderGroup = headerGroup => ({ type: 'SET_ACTIVE_HEADER_GROUP', payload: { headerGroup } });
 export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
   const state = getState();
