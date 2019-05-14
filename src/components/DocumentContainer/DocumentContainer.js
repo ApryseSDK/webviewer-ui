@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import core from 'core';
 import { isIE } from 'helpers/device';
@@ -12,8 +11,6 @@ import TouchEventManager from 'helpers/TouchEventManager';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
-
-import mod from 'helpers/modulus';
 
 import './DocumentContainer.scss';
 
@@ -29,12 +26,9 @@ class DocumentContainer extends React.PureComponent {
     zoom: PropTypes.number.isRequired,
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
-    listIndex: PropTypes.number,
     isHeaderOpen: PropTypes.bool,
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
-    setListIndex: PropTypes.func.isRequired,
-    listMove: PropTypes.func.isRequired,
     displayMode: PropTypes.string.isRequired,
     swipeOrientation: PropTypes.string
   }
@@ -45,8 +39,6 @@ class DocumentContainer extends React.PureComponent {
     this.container = React.createRef();
     this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
     this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
-
-
   }
 
   componentDidUpdate(prevProps) {
@@ -56,10 +48,6 @@ class DocumentContainer extends React.PureComponent {
     if (prevProps.swipeOrientation !== this.props.swipeOrientation){
       TouchEventManager.updateOrientation(this.props.swipeOrientation);
     }
-    // const { setListIndex, currentPage, listIndex } = this.props;
-    // if (currentPage !== listIndex) {
-    //   setListIndex('documentContainer', currentPage);
-    // }
   }
 
   componentDidMount() {
@@ -75,16 +63,8 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       window.addEventListener('resize', this.handleWindowResize);
     }
-    // window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('keydown', this.onKeyDown);
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
-
-    // $(window).on('pageChanged', (event, pageNumber) => {
-    //   const { setListIndex, currentPage } = this.props;
-    //   if (currentPage !== prevProps.currentPage) {
-    //     setListIndex('documentContainer', currentPage);
-    //   }
-    //   debugger;
-    // });
   }
 
   componentWillUnmount() {
@@ -92,43 +72,9 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
-    // window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('keydown', this.onKeyDown);
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
   }
-
-  // onKeyDown = e => {
-  //   // const { currentPage, totalPages } = this.props;
-  //   // const { scrollTop, clientHeight, scrollHeight } = this.container.current;
-  //   // const reachedTop = scrollTop === 0;
-  //   // const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
-
-  //   // if ((e.key === 'ArrowUp' || e.which === 38) && reachedTop && currentPage > 1) {
-  //   //   this.pageUp();
-  //   // } else if ((e.key === 'ArrowDown' || e.which === 40) && reachedBottom && currentPage < totalPages) {
-  //   //   this.pageDown();
-  //   // }
-
-
-  //   e.preventDefault();
-  //   const { listMove, totalPages, listIndex, setListIndex, currentPage } = this.props;
-  //   if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-  //     // if (listIndex === null) {
-  //     //   setListIndex('documentContainer', currentPage-1);
-  //     //   $(`#pageText${currentPage-1}`).focus();
-  //     // } else {
-  //       if (e.key === 'ArrowUp') {
-
-  //         const newSelectionIndex = listMove('documentContainer', -1, totalPages);
-  //         // core.setCurrentPage(newSelectionIndex);
-  //         $(`#pageText${newSelectionIndex}`).focus();
-  //       } else if (e.key === 'ArrowDown') {
-  //         const newSelectionIndex = listMove('documentContainer', 1, totalPages);
-  //         // core.setCurrentPage(newSelectionIndex);
-  //         $(`#pageText${newSelectionIndex}`).focus();
-  //       }
-  //     // }
-  //   }
-  // }
 
   onKeyDown = e => {
     const { currentPage, totalPages } = this.props;
@@ -141,34 +87,6 @@ class DocumentContainer extends React.PureComponent {
     } else if ((e.key === 'ArrowDown' || e.which === 40) && reachedBottom && currentPage < totalPages) {
       this.pageDown();
     }
-
-
-    // e.preventDefault();
-    // const { listMove, totalPages, listIndex, setListIndex, currentPage } = this.props;
-    // if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-    //   // console.log(document.activeElement);
-    //   // debugger;
-    //   // if (!document.activeElement.id.includes('pageText')) {
-    //   //   $(`#pageText${currentPage-1}`).focus();
-    //   // } else {
-    //     const selectionIndex = currentPage - 1;
-    //     if (e.key === 'ArrowUp') {
-    //       // const newSelectionIndex = listMove('documentContainer', -1, totalPages);
-    //       // console.log(newSelectionIndex);
-
-    //       const newPage = mod(selectionIndex - 1, totalPages);
-    //       core.setCurrentPage(newPage);
-    //       $(`#pageText${newPage}`).focus();
-    //     } else if (e.key === 'ArrowDown') {
-    //       // const newSelectionIndex = listMove('documentContainer', 1, totalPages);
-    //       // console.log(newSelectionIndex);
-    //       const newPage = mod(selectionIndex + 1, totalPages);
-    //       console.log(newPage, selectionIndex, totalPages);
-    //       console.log(core.setCurrentPage(2));
-    //       // $(`#pageText${newPage}`).focus();
-    //     }
-    //   // }
-    // }
   }
 
   handleWindowResize = () => {
@@ -255,14 +173,7 @@ class DocumentContainer extends React.PureComponent {
     }
 
     return(
-      <div
-        tabIndex={0}
-        className={className}
-        ref={this.container}
-        data-element="documentContainer"
-        onTransitionEnd={this.onTransitionEnd}
-        onKeyDown={this.onKeyDown}
-      >
+      <div className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd}>
         <div className="document" ref={this.document}></div>
       </div>
     );
@@ -283,17 +194,12 @@ const mapStateToProps = state => ({
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
   swipeOrientation: selectors.getSwipeOrientation(state),
-  toolButtonObjects: selectors.getToolButtonObjects(state),
-  listIndex: selectors.getListIndex(state, 'documentContainer')
+  toolButtonObjects: selectors.getToolButtonObjects(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({
-    openElement: actions.openElement,
-    setListIndex: actions.setListIndex,
-    listMove: actions.listMove,
-  }, dispatch),
   dispatch,
+  openElement: dataElement => dispatch(actions.openElement(dataElement))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
