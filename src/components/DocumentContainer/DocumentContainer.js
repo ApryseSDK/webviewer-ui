@@ -194,7 +194,8 @@ const mapStateToProps = state => ({
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
   swipeOrientation: selectors.getSwipeOrientation(state),
-  toolButtonObjects: selectors.getToolButtonObjects(state)
+  toolButtonObjects: selectors.getToolButtonObjects(state),
+  isInAccessibleMode: true,
 });
 
 const mapDispatchToProps = dispatch => ({
