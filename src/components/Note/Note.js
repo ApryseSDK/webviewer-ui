@@ -82,8 +82,11 @@ class Note extends React.PureComponent {
   }
 
   scrollIntoView = () => {
-    // pass option for ios bug workaround: https://stackoverflow.com/a/52835382
-    this.containerRef.current.scrollIntoView({ block: 'nearest', inline: 'start' });
+    if (this.containerRef.current.scrollIntoViewIfNeeded) {
+      this.containerRef.current.scrollIntoViewIfNeeded();
+    } else {
+      this.containerRef.current.scrollIntoView();
+    }
   }
 
   openRootEditing = () => {
