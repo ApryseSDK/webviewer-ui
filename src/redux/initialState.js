@@ -155,7 +155,7 @@ export default {
     swipeOrientation: 'horizontal',
     warning: {},
     customNoteFilter: null,
-    zoomList: [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64]
+    zoomList: [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64],
   },
   search: {
     listeners: [],
@@ -195,7 +195,8 @@ export default {
     documentLoadingProgress: 0,
     workerLoadingProgress: 0,
     isUploading: false,
-    uploadProgress: 0
+    uploadProgress: 0,
+    accessibleMode: getHashParams('accessibleMode', true),
   },
   user: {
     name: getHashParams('user', 'Guest'),

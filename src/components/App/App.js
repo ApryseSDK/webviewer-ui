@@ -43,22 +43,25 @@ class App extends React.PureComponent {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
+    accessibleMode: PropTypes.bool,
   }
 
   componentDidMount() {
-    // Add text content to pages
-    $(document).on('documentLoaded', () => {
-      window.docViewer.on('pageComplete', (e, pageIndex) => {
-        window.docViewer.getDocument().loadPageText(pageIndex, function(text) {
-          var textContainer = document.createElement('div');
-          textContainer.tabIndex = 0;
-          textContainer.textContent = text;
-          textContainer.style = 'height: 100%;';
-          textContainer.id = 'pageText' + pageIndex;
-          $('#pageContainer' + pageIndex).append(textContainer);
+    if (this.props.accessibleMode) {
+      // Add text content to pages
+      $(document).on('documentLoaded', () => {
+        window.docViewer.on('pageComplete', (e, pageIndex) => {
+          window.docViewer.getDocument().loadPageText(pageIndex, function(text) {
+            var textContainer = document.createElement('div');
+            textContainer.tabIndex = 0;
+            textContainer.textContent = text;
+            textContainer.style = 'height: 100%;';
+            textContainer.id = 'pageText' + pageIndex;
+            $('#pageContainer' + pageIndex).append(textContainer);
+          });
         });
       });
-    });
+    }
   }
 
   componentWillUnmount() {
@@ -153,6 +156,7 @@ class App extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  accessibleMode: selectors.getAccessibleMode(state),
 });
 
 const mapDispatchToProps = {

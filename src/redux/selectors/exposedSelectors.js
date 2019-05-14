@@ -66,6 +66,7 @@ export const getToolButtonIcon = (state, toolName) => {
   });
   return buttonIcon;
 };
+
 export const getToolNamesByGroup = (state, toolGroup) => state.viewer.headers[state.viewer.activeHeaderGroup].filter(toolButtonObject => toolButtonObject.toolGroup).find(toolButtonObject => toolButtonObject.toolGroup === toolGroup).children.map(buttonObject => buttonObject.toolName);
 export const getToolNameByDataElement = (state, dataElement) => Object.keys(state.viewer.toolButtonObjects).find(name => state.viewer.toolButtonObjects[name].dataElement === dataElement);
 export const getActiveToolName = state => state.viewer.activeToolName;
@@ -166,6 +167,7 @@ export const getOutlines = state => state.document.outlines;
 export const getLoadingProgress = state => Math.min(state.document.documentLoadingProgress, state.document.workerLoadingProgress);
 export const getUploadProgress = state => state.document.uploadProgress;
 export const isUploading = state => state.document.isUploading;
+export const getAccessibleMode = state => state.document.accessibleMode;
 
 // user
 export const getUserName = state => state.user.name;
