@@ -184,7 +184,9 @@ class NotesPanel extends React.PureComponent {
     return(
       notes.map((note, i) => {
         return (
-          <React.Fragment key={note.Id + getLatestActivityDate(note)}>
+          <React.Fragment
+            key={note.Id + getLatestActivityDate(note)}
+          >
             {this.renderListSeparator(notes, note)}
             <Note
               index={i}
@@ -219,7 +221,7 @@ class NotesPanel extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, display, t } = this.props;
+    const { isDisabled, display, t, notes, listMove } = this.props;
 
     if (isDisabled) {
       return null;
@@ -232,6 +234,13 @@ class NotesPanel extends React.PureComponent {
         data-element="notesPanel"
         onClick={core.deselectAllAnnotations}
         onScroll={e => e.stopPropagation()}
+        onKeyDown={e => {
+          {/* if (e.key === 'ArrowUp') {
+            listMove('notesPanel', -1, notes.length);
+          } else if (e.key === 'ArrowDown') {
+            listMove('notesPanel', 1, notes.length);
+          } */}
+        }}
       >
         {this.rootAnnotations.length === 0
         ? <div className="no-annotations">{t('message.noAnnotations')}</div>
@@ -261,4 +270,4 @@ const mapStatesToProps = state => ({
   selectionIndex: selectors.getListIndex(state, 'notesPanel'),
 });
 
-export default connect(mapStatesToProps, { setListIndex: actions.setListIndex })(translate()(NotesPanel));
+export default connect(mapStatesToProps, { setListIndex: actions.setListIndex, listMove: actions.listMove })(translate()(NotesPanel));

@@ -4,6 +4,8 @@ import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import selectors from 'selectors';
 
+import mod from 'helpers/modulus';
+
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
 export const openElement = dataElement => (dispatch, getState) => {
@@ -86,16 +88,21 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     dispatch(openElement(dataElement));
   }
 };
-export const listMove = (listKey, amount) => (dispatch, getState) => {
+export const listMove = (listKey, amount, length = null) => (dispatch, getState) => {
   const selectionIndex = selectors.getListIndex(getState(), listKey);
 
   let newSelectionIndex;
-  if (selectionIndex=== null) {
+  if (selectionIndex === null) {
     newSelectionIndex = 0;
   } else {
-    newSelectionIndex = selectionIndex + amount;
+    if (length !== null) {
+      newSelectionIndex = mod(selectionIndex + amount, length);
+    } else {
+      newSelectionIndex = selectionIndex + amount;
+    }
   }
   dispatch(setListIndex(listKey, newSelectionIndex));
+  return newSelectionIndex;
 };
 
 export const setListIndex =  (listKey, index) => ({ type: 'SET_LIST_INDEX', payload: { listKey, index } });
