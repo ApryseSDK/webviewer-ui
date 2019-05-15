@@ -12,6 +12,8 @@ export default dispatch => () => {
   setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
     dispatch(actions.resetLoadingProgress());
+    dispatch(actions.resetUploadProgress());
+    dispatch(actions.setIsUploading(false));
   }, 300);
 
   if (window.innerWidth <= 640) {

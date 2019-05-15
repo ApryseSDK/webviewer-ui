@@ -104,6 +104,8 @@ export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 export const getOutlines = state => state.document.outlines;
 export const getLoadingProgress = state => Math.min(state.document.documentLoadingProgress, state.document.workerLoadingProgress);
+export const getUploadProgress = state => state.document.uploadProgress;
+export const isUploading = state => state.document.isUploading;
 
 // user
 export const getUserName = state => state.user.name;
