@@ -5,7 +5,9 @@ import core from 'core';
 
 // viewer
 export const disableElement = (dataElement, priority) => (dispatch, getState) => {
-  if (dataElement === 'stylePopup') {
+  if (dataElement === 'leftPanel') {
+    dispatch(disableElements(['leftPanel', 'leftPanelButton'], priority));
+  } else if (dataElement === 'stylePopup') {
     dispatch(disableElements(['toolStylePopup', 'annotationStylePopup'], priority));
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
@@ -19,7 +21,9 @@ export const disableElements = (dataElements, priority) => (dispatch, getState) 
   dispatch({ type: 'DISABLE_ELEMENTS', payload: { dataElements: filteredDataElements, priority } });
 };
 export const enableElement = (dataElement, priority) => (dispatch, getState) => {
-  if (dataElement === 'stylePopup') {
+  if (dataElement === 'leftPanel') {
+    dispatch(enableElements(['leftPanel', 'leftPanelButton'], priority));
+  } else if (dataElement === 'stylePopup') {
     dispatch(enableElements(['toolStylePopup', 'annotationStylePopup'], priority));
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
