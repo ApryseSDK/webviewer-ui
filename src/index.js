@@ -237,6 +237,12 @@ if (window.CanvasRenderingContext2D) {
           }
         };
 
+        if (window.innerWidth <= 640) {
+          core.fitToWidth();
+        } else {
+          core.fitToPage();
+        }
+
         $(document).trigger('viewerLoaded');
       }
     );
