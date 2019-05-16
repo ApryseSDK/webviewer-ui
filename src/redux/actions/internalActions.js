@@ -109,6 +109,10 @@ export const setWorkerLoadingProgress = workerLoadingProgress => ({ type: 'SET_W
 export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
 
+export const setIsUploading = isUploading => ({ type: 'SET_IS_UPLOADING', payload: { isUploading } });
+export const setUploadProgress = progress => ({ type: 'SET_UPLOAD_PROGRESS', payload: { progress } });
+export const resetUploadProgress = () => setUploadProgress(0);
+
 // user
 export const setUserName = userName => ({ type: 'SET_USER_NAME', payload: { userName } });
 export const setAdminUser = isAdminUser => ({ type: 'SET_ADMIN_USER', payload: { isAdminUser } });
