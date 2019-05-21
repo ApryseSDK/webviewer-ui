@@ -183,7 +183,7 @@ export default {
     documentLoadingProgress: 0,
     workerLoadingProgress: 0,
     isUploading: false,
-    uploadProgress: 0
+    uploadProgress: 0,
   },
   user: {
     name: getHashParams('user', 'Guest'),
@@ -200,6 +200,7 @@ export default {
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
     singleServerMode: getHashParams('singleServerMode', false),
+    forceClientSideInit: getHashParams('forceClientSideInit', false),
     disableWebsockets: getHashParams('disableWebsockets', false),
     preloadWorker: getHashParams('preloadWorker', false),
     serverUrl: getHashParams('server_url', ''),
