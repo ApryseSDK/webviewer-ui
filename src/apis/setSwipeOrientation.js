@@ -4,9 +4,9 @@
  * @param {string} swipeOrientation The swipe orientation to navigate between pages. Available orientations are: horizontal, vertical and both.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.setSwipeOrientation('vertical'); // set the swipe orientation to vertical.
-});
+  .then(function(instance) {
+    instance.setSwipeOrientation('vertical'); // set the swipe orientation to vertical.
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

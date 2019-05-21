@@ -3,9 +3,9 @@
  * @method WebViewer#disableDownload
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.disableDownload();
-});
+  .then(function(instance) {
+    instance.disableDownload();
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

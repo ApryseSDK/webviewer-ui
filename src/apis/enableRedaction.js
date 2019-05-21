@@ -3,9 +3,9 @@
  * @method WebViewer#enableRedaction
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.enableRedaction();
-});
+  .then(function(instance) {
+    instance.enableRedaction();
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

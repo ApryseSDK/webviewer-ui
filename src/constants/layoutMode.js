@@ -9,10 +9,10 @@
  * @property {string} FacingCoverContinuous All pages visible, with an even numbered page rendered first. (i.e. The first page of the document is rendered by itself on the right side of the viewer to simulate a book cover.)
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  const { LayoutMode } = instance;
-  // LayoutMode.SomeMode
-});
+  .then(instance => {
+    var LayoutMode = instance.LayoutMode;
+    // LayoutMode.SomeMode
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

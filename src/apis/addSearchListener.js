@@ -4,13 +4,13 @@
  * @param {WebViewer~searchListener} searchListener Callback function that will be triggered when search completed
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  const searchListener = (searchValue, options, results) => {
-    console.log(searchValue, options, results);
-  };
+  .then(function(instance) {
+    function searchListener(searchValue, options, results) {
+      console.log(searchValue, options, results);
+    };
 
-  instance.addSearchListener(searchListener);
-});
+    instance.addSearchListener(searchListener);
+  });
    * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

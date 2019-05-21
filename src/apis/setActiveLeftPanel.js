@@ -4,12 +4,12 @@
  * @param {string} dataElement Name of the panel to be active in leftPanel. Default WebViewer UI has three panel options: thumbnailsPanel, outlinesPanel and notesPanel.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  // open left panel
-  instance.openElements([ 'leftPanel' ]);
-  // view outlines panel
-  instance.setActiveLeftPanel('outlinesPanel');
-});
+  .then(function(instance) {
+    // open left panel
+    instance.openElements([ 'leftPanel' ]);
+    // view outlines panel
+    instance.setActiveLeftPanel('outlinesPanel');
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

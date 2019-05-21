@@ -3,9 +3,9 @@
  * @method WebViewer#enableMeasurement
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.enableMeasurement();
-});
+  .then(function(instance) {
+    instance.enableMeasurement();
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

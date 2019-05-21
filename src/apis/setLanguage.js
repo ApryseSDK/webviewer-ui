@@ -4,9 +4,9 @@
  * @param {string} language The language WebViewer UI will use. By default, following languages are supported: en, zh_cn, fr.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.setLanguage('fr'); // set the language to French
-});
+  .then(function(instance) {
+    instance.setLanguage('fr'); // set the language to French
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

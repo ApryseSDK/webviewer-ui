@@ -13,18 +13,18 @@
  * @example // 5.1 and after
 // Using an object
 WebViewer(...)
-.then(instance => {
-  instance.setTheme({
-    primary: '#2C2B3A',
-    secondary: '#4D4C5F',
-    border: '#555555',
-    buttonHover: '#686880',
-    buttonActive: '#686880',
-    text: '#FFFFFF',
-    icon: '#FFFFFF',
-    iconActive: '#FFFFFF'
+  .then(function(instance) {
+    instance.setTheme({
+      primary: '#2C2B3A',
+      secondary: '#4D4C5F',
+      border: '#555555',
+      buttonHover: '#686880',
+      buttonActive: '#686880',
+      text: '#FFFFFF',
+      icon: '#FFFFFF',
+      iconActive: '#FFFFFF'
+    });
   });
-});
  * @example // 4.0 ~ 5.0
 // Using an object
 var viewerElement = document.getElementById('viewer');
@@ -46,9 +46,9 @@ viewerElement.addEventListener('ready', function() {
  * @example // 5.1 and after
 // Using predefined string
 WebViewer(...)
-.then(instance => {
-  instance.setTheme('dark');
-});
+  .then(function(instance) {
+    instance.setTheme('dark');
+  });
  * @example // 4.0 ~ 5.0
 // Using predefined string
 var viewerElement = document.getElementById('viewer');

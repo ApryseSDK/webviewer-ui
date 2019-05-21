@@ -3,9 +3,9 @@
  * @method WebViewer#disableTextSelection
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.disableTextSelection();
-});
+  .then(function(instance) {
+    instance.disableTextSelection();
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

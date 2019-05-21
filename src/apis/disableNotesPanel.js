@@ -3,9 +3,9 @@
  * @method WebViewer#disableNotesPanel
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.disableNotesPanel();
-});
+  .then(function(instance) {
+    instance.disableNotesPanel();
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

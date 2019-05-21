@@ -4,9 +4,9 @@
  * @param {boolean} isReadOnly Whether or not to set the WebViewer UI to be in in read only mode.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.setReadOnly(true); // sets the viewer to read only mode
-});
+  .then(function(instance) {
+    instance.setReadOnly(true); // sets the viewer to read only mode
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

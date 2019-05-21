@@ -4,9 +4,9 @@
  * @param {boolean} isAdmin Whether or not to set the current user to be an admin.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.setAdminUser(true); // sets the current user to be an admin
-});
+  .then(function(instance) {
+    instance.setAdminUser(true); // sets the current user to be an admin
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

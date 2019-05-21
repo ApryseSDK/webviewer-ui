@@ -4,14 +4,14 @@
  * @param {searchListener} listener Search listener function that was added.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  const searchListener = (searchValue, options, results) => {
-    console.log(searchValue, options, results);
-  };
-  
-  instance.addSearchListener(searchListener);
-  instance.removeSearchListener(searchListener);
-});
+  .then(function(instance) {
+    function searchListener(searchValue, options, results) {
+      console.log(searchValue, options, results);
+    };
+    
+    instance.addSearchListener(searchListener);
+    instance.removeSearchListener(searchListener);
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

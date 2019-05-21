@@ -3,9 +3,9 @@
  * @method WebViewer#disablePrint
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.disablePrint();
-});
+  .then(function(instance) {
+    instance.disablePrint();
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

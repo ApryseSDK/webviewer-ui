@@ -4,18 +4,18 @@
  * @param {string} annotationId Id of an annotation.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  const { annotManager } = instance;
+  .then(function(instance) {
+    var annotManager = instance.annotManager;
 
-  annotManager.on('annotationChanged', (e, annotations, action) => {
-    annotations.forEach((annotation) => {
-      // Focus the note when annotation is created
-      if (action === 'add' && annotation.Listable) {
-        instance.focusNote(annotation.Id); // note it is a capital i
-      }
+    annotManager.on('annotationChanged', function(e, annotations, action) {
+      annotations.forEach(function(annotation) {
+        // Focus the note when annotation is created
+        if (action === 'add' && annotation.Listable) {
+          instance.focusNote(annotation.Id); // note it is a capital i
+        }
+      });
     });
   });
-});
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

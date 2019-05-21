@@ -9,11 +9,11 @@
  * @param {string} [properties.tooltip] Tooltip of the tool button
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.updateTool('AnnotationCreateSticky', {
-    buttonImage: 'https://www.pdftron.com/favicon-32x32.png'
+  .then(function(instance) {
+    instance.updateTool('AnnotationCreateSticky', {
+      buttonImage: 'https://www.pdftron.com/favicon-32x32.png'
+    });
   });
-});
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

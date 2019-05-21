@@ -8,22 +8,26 @@
  * @param {WebViewer~getSeparatorContent} sortStrategy.getSeparatorContent Function that returns the content of a separator
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  const mySortStrategy = {
-    name: 'annotationType',
-    getSortedNotes: notes => {
-      return notes.sort((a ,b) => {
-        if (a.Subject < b.Subject) return -1;
-        if (a.Subject > b.Subject) return 1;
-        if (a.Subject === b.Subject) return 0;
-      })
-    },
-    shouldRenderSeparator: (prevNote, currNote) => prevNote.Subject !== currNote.Subject,
-    getSeparatorContent: (prevNote, currNote) => currNote.Subject
-  };
+  .then(function(instance) {
+    var mySortStrategy = {
+      name: 'annotationType',
+      getSortedNotes: function(notes) {
+        return notes.sort(function(a ,b) {
+          if (a.Subject < b.Subject) return -1;
+          if (a.Subject > b.Subject) return 1;
+          if (a.Subject === b.Subject) return 0;
+        });
+      },
+      shouldRenderSeparator: function(prevNote, currNote) {
+        return prevNote.Subject !== currNote.Subject;
+      },
+      getSeparatorContent: function(prevNote, currNote) {
+        return currNote.Subject;
+      }
+    };
 
-  instance.addSortStrategy(mySortStrategy);
-});
+    instance.addSortStrategy(mySortStrategy);
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

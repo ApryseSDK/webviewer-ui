@@ -11,25 +11,25 @@
  * @param {WebViewer~renderCustomPanel} options.panel.render Function that returns panel element.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  const myCustomPanel = {
-    tab:{
-      dataElement: 'customPanelTab',
-      title: 'customPanelTab',
-      img: 'https://www.pdftron.com/favicon-32x32.png',
-    },
-    panel: {
-      dataElement: 'customPanel',
-      render: () => {
-        const div = document.createElement('div');
-        div.innerHTML = 'Hello World';
-        return div;
+  .then(function(instance) {
+    var myCustomPanel = {
+      tab:{
+        dataElement: 'customPanelTab',
+        title: 'customPanelTab',
+        img: 'https://www.pdftron.com/favicon-32x32.png',
+      },
+      panel: {
+        dataElement: 'customPanel',
+        render: function() {
+          var div = document.createElement('div');
+          div.innerHTML = 'Hello World';
+          return div;
+        }
       }
-    }
-  };
+    };
 
-  instance.setCustomPanel(myCustomPanel);
-});
+    instance.setCustomPanel(myCustomPanel);
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

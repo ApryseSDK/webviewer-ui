@@ -3,9 +3,9 @@
  * @method WebViewer#enableFilePicker
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.enableFilePicker();
-});
+  .then(function(instance) {
+    instance.enableFilePicker();
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

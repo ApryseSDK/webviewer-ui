@@ -4,9 +4,9 @@
  * @param {string} format The format of date to display
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.setNoteDataFormat('DD.MM.YYYY HH:MM');
-});
+  .then(function(instance) {
+    instance.setNoteDataFormat('DD.MM.YYYY HH:MM');
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

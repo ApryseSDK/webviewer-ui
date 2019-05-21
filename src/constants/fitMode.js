@@ -6,10 +6,10 @@
  * @property {string} Zoom A fit mode where the zoom level is not fixed.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  const { FitMode } = instance;
-  // FitMode.SomeMode
-});
+  .then(instance => {
+    var FitMode = instance.FitMode;
+    // FitMode.SomeMode
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

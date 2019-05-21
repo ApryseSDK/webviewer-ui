@@ -5,11 +5,11 @@
  * @param {string} colorPalette The palette which will be used as a tool button's icon color. One of 'text', 'border' and 'fill'.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  // sets the color in fill palette to be used as freetext tool button's icon color
-  // by default freetext tool button will use the color in text palette as its icon color
-  instance.setIconColor('AnnotationCreateFreeText', 'fill')
-});
+  .then(function(instance) {
+    // sets the color in fill palette to be used as freetext tool button's icon color
+    // by default freetext tool button will use the color in text palette as its icon color
+    instance.setIconColor('AnnotationCreateFreeText', 'fill')
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

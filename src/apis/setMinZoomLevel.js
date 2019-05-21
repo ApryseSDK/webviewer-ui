@@ -4,9 +4,9 @@
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.setMinZoomLevel('10%'); // or setMinZoomLevel(0.1)
-});
+  .then(function(instance) {
+    instance.setMinZoomLevel('10%'); // or setMinZoomLevel(0.1)
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

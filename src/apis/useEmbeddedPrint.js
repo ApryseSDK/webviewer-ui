@@ -4,9 +4,9 @@
  * @param {boolean} [use=true] Whether or not to use embedded printing
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.useEmbeddedPrint(false); // disable embedded printing
-});
+  .then(function(instance) {
+    instance.useEmbeddedPrint(false); // disable embedded printing
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

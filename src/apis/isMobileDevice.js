@@ -4,9 +4,9 @@
  * @returns {boolean} Whether the current browser is on a mobile device.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  console.log(instance.isMobileDevice());
-});
+  .then(function(instance) {
+    console.log(instance.isMobileDevice());
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

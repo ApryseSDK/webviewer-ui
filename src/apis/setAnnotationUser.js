@@ -4,9 +4,9 @@
  * @param {string} username Username to be used for current user.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.setAnnotationUser('Guest-1');
-});
+  .then(function(instance) {
+    instance.setAnnotationUser('Guest-1');
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

@@ -11,19 +11,19 @@
  * @param {function} [annotationConstructor] The constructor function for the annotation that will be created by the registered tool.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  // assume myCustomTool and myCustomAnnotation are already defined
-  const myTool = {
-    toolName: 'MyTool',
-    toolObject: myCustomTool,
-    buttonImage: 'path/to/image',
-    buttonName: 'myToolButton',
-    buttonGroup: 'miscTools',
-    tooltip: 'MyTooltip'
-  };
+  .then(function(instance) {
+    // assume myCustomTool and myCustomAnnotation are already defined
+    var myTool = {
+      toolName: 'MyTool',
+      toolObject: myCustomTool,
+      buttonImage: 'path/to/image',
+      buttonName: 'myToolButton',
+      buttonGroup: 'miscTools',
+      tooltip: 'MyTooltip'
+    };
 
-  instance.registerTool(myTool, myCustomAnnotation);
-});
+    instance.registerTool(myTool, myCustomAnnotation);
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

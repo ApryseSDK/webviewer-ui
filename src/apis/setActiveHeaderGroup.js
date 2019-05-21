@@ -4,9 +4,9 @@
  * @param {string} headerGroup Name of the header group to be rendered. Default WebViewer UI has two header groups: default and tools.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.setActiveHeaderGroup('tools'); // switch to tools header
-});
+  .then(function(instance) {
+    instance.setActiveHeaderGroup('tools'); // switch to tools header
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

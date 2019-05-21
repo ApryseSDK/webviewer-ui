@@ -9,16 +9,16 @@
  * @param {boolean} [options.regex=false] Search for a regex string. For example, www(.*)com.
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  const { docViewer } = instance;
+  .then(function(instance) {
+    var docViewer = instance.docViewer;
 
-  // you must have a document loaded when calling this api
-  docViewer.on('documentLoaded', () => {
-    instance.searchTextFull('test', {
-      wholeWord: true
+    // you must have a document loaded when calling this api
+    docViewer.on('documentLoaded', function() {
+      instance.searchTextFull('test', {
+        wholeWord: true
+      });
     });
   });
-});
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

@@ -3,9 +3,9 @@
  * @method WebViewer#enableAnnotations
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  instance.enableAnnotations();
-});
+  .then(function(instance) {
+    instance.enableAnnotations();
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);

@@ -4,9 +4,9 @@
  * @return {Tools} Instance of the current tool
  * @example // 5.1 and after
 WebViewer(...)
-.then(instance => {
-  console.log(instance.getToolMode().name, instance.getToolMode());
-});
+  .then(function(instance) {
+    console.log(instance.getToolMode().name, instance.getToolMode());
+  });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);
