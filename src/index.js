@@ -29,6 +29,7 @@ import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
 import rootReducer from 'reducers/rootReducer';
 
+const packageConfig = require('../package.json');
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
@@ -113,6 +114,23 @@ if (window.CanvasRenderingContext2D) {
   }
 
   loadCustomCSS(state.advanced.customCSS);
+
+  const coreVersion = window.CoreControls.DocumentViewer.prototype['version'];
+  const uiVersion = packageConfig.version;
+
+  if (coreVersion && uiVersion) {
+    const coreVersionParts = coreVersion.split('.');
+    const uiVersionParts = uiVersion.split('.');
+
+    if(+coreVersionParts[0] < +uiVersionParts[0]) {
+      console.error(`Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above, version ${coreVersion} found`);
+    } else if(+coreVersionParts[1] < +uiVersionParts[1]) {
+      console.warn(`Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above, version ${coreVersion} found`);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(`WebViewer UI version: ${uiVersion}, WebViewer Core version:${coreVersion}`);
+    }
+  }
 
   fullAPIReady.then(() => {
     return loadConfig();
