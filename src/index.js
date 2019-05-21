@@ -121,14 +121,15 @@ if (window.CanvasRenderingContext2D) {
   if (coreVersion && uiVersion) {
     const coreVersionParts = coreVersion.split('.');
     const uiVersionParts = uiVersion.split('.');
+    const image = `background-image: url('https://www.pdftron.com/favicon-32x32.png'); background-repeat: no-repeat; background-size: 12px 12px`;
 
     if(+coreVersionParts[0] < +uiVersionParts[0]) {
-      console.error(`Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above, version ${coreVersion} found`);
+      console.error('%c ' + `  Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above, version ${coreVersion} found`, image);
     } else if(+coreVersionParts[1] < +uiVersionParts[1]) {
-      console.warn(`Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above, version ${coreVersion} found`);
+      console.warn('%c ' + `  Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above, version ${coreVersion} found`, image);
     } else {
       // eslint-disable-next-line no-console
-      console.log(`WebViewer UI version: ${uiVersion}, WebViewer Core version:${coreVersion}`);
+      console.log('%c ' + `  WebViewer UI version: ${uiVersion}, WebViewer Core version: ${coreVersion}`, image);
     }
   }
 
