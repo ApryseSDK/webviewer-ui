@@ -225,7 +225,7 @@ const getEngineType = state => {
     } else if (pdftronServer) {
       engineType = engineTypes.PDFTRON_SERVER;
     } else {
-      if (!fileExtension) {
+      if (docName && !fileExtension) {
         console.warn(`File extension cannot be determined from ${docName}. Falling back to pdf`);
       }
       engineType = engineTypes.PDFNETJS;
