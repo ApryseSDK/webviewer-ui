@@ -119,13 +119,15 @@ if (window.CanvasRenderingContext2D) {
   const uiVersion = packageConfig.version;
 
   if (coreVersion && uiVersion) {
-    const coreVersionParts = coreVersion.split('.');
-    const uiVersionParts = uiVersion.split('.');
+    // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
+    const [ coreMajorVersion, coreMinorVersion ] = coreVersion.split('.');
+    const [ uiMajorVersion, uiMinorVersion ] = uiVersion.split('.');
+    
     const image = `background-image: url('https://www.pdftron.com/favicon-32x32.png'); background-repeat: no-repeat; background-size: 12px 12px`;
 
-    if(+coreVersionParts[0] < +uiVersionParts[0]) {
+    if(parseInt(coreMajorVersion) < parseInt(uiMajorVersion)) {
       console.error('%c ' + `  Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above, version ${coreVersion} found`, image);
-    } else if(+coreVersionParts[1] < +uiVersionParts[1]) {
+    } else if(parseInt(coreMinorVersion) < parseInt(uiMinorVersion)) {
       console.warn('%c ' + `  Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above, version ${coreVersion} found`, image);
     } else {
       // eslint-disable-next-line no-console
