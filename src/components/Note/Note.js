@@ -40,11 +40,6 @@ class Note extends React.PureComponent {
     this.containerRef = React.createRef();
   }
 
-  componentDidMount() {
-    core.addEventListener('addReply', this.onAddReply);
-    core.addEventListener('deleteReply', this.onDeleteReply);
-  }
-
   componentDidUpdate(prevProps) {
     const { annotation } = this.props;
     const commentEditable = core.canModify(annotation) && !annotation.getContents();
@@ -72,27 +67,6 @@ class Note extends React.PureComponent {
     }
   }
 
-  componentWillUnmount() {
-    core.removeEventListener('addReply', this.onAddReply);
-    core.removeEventListener('deleteReply', this.onDeleteReply);
-  }
-
-  onAddReply = (e, reply, parent) => {
-    if (parent === this.props.annotation) {
-      this.setState({
-        replies: [ ...parent.getReplies() ]
-      });
-    }
-  }
-
-  onDeleteReply = (e, reply, parent) => {
-    if (parent === this.props.annotation) {
-      this.setState({
-        replies: parent.getReplies().filter(a => a !== reply)
-      });
-    }
-  }
-
   onClickNote = e => {
     e.stopPropagation();
 
@@ -108,7 +82,11 @@ class Note extends React.PureComponent {
   }
 
   scrollIntoView = () => {
-    this.containerRef.current.scrollIntoView();
+    if (this.containerRef.current.scrollIntoViewIfNeeded) {
+      this.containerRef.current.scrollIntoViewIfNeeded();
+    } else {
+      this.containerRef.current.scrollIntoView();
+    }
   }
 
   openRootEditing = () => {
@@ -211,8 +189,8 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
-    const { replies, isRootContentEditing, isReplyFocused } = this.state;
+    const { annotation, replies, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
+    const { isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
       isNoteExpanded ? 'expanded' : '',

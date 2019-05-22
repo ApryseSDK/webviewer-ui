@@ -14,12 +14,6 @@ export default dispatch => () => {
     dispatch(actions.resetLoadingProgress());
   }, 300);
 
-  if (window.innerWidth <= 640) {
-    core.fitToWidth();
-  } else {
-    core.fitToPage();
-  }
-
   if (onFirstLoad) {
     onFirstLoad = false;
     // redaction button starts hidden. when the user first loads a document, check HashParams the first time

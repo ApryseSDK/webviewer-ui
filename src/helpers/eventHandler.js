@@ -48,6 +48,7 @@ export default store => {
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
+      document.addEventListener('MSFullscreenChange', onFullScreenChange);
     },
     removeEventHandlers: () => {
       core.removeEventListener('beforeDocumentLoaded', onBeforeDocumentLoaded);
@@ -71,6 +72,7 @@ export default store => {
       document.removeEventListener('fullscreenchange', onFullScreenChange);
       document.removeEventListener('mozfullscreenchange', onFullScreenChange);
       document.removeEventListener('webkitfullscreenchange', onFullScreenChange);
+      document.removeEventListener('MSFullscreenChange', onFullScreenChange);
     }
   };
 };

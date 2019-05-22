@@ -208,42 +208,54 @@ const getDocOptions = (state, dispatch, streaming) => {
   });
 };
 
+let engineType;
 const getEngineType = state => {
-  const { engineType, pdftronServer } = state.advanced;
-
-  const docName = getDocName(state);
-  const fileExtension = getDocumentExtension(docName, engineType);
-
   if (engineType) {
     return engineType;
-  } else if (fileExtension === 'xod') {
-    return engineTypes.UNIVERSAL;
-  } else if (pdftronServer) {
-    return engineTypes.PDFTRON_SERVER;
-  } else if (isPDFNetJSExtension(fileExtension)) {
-    return engineTypes.PDFNETJS;
-  } else {
-    return engineTypes.PDFNETJS;
   }
+
+  const docName = getDocName(state);
+  const fileExtension = getDocumentExtension(docName);
+  const { pdftronServer } = state.advanced;
+
+  engineType = state.advanced.engineType;
+  if (engineType === engineTypes.AUTO) {
+    if (fileExtension === 'xod') {
+      engineType = engineTypes.UNIVERSAL;
+    } else if (pdftronServer) {
+      engineType = engineTypes.PDFTRON_SERVER;
+    } else {
+      if (docName && !fileExtension) {
+        console.warn(`File extension cannot be determined from ${docName}. Falling back to pdf`);
+      }
+      engineType = engineTypes.PDFNETJS;
+    }
+  }
+
+  if (fileExtension) {
+    if (!supportedExtensions.includes(fileExtension)) {
+      console.error(`File extension ${fileExtension} from ${docName} is not supported. Please see https://www.pdftron.com/documentation/web/guides/file-format-support for a full list of file formats supported by WebViewer`);
+    } else if (
+      engineType === engineTypes.PDFNETJS &&
+      !supportedClientOnlyExtensions.includes(fileExtension) &&
+      supportedBlackboxExtensions.includes(fileExtension)
+    ) {
+      console.error(`File extension ${fileExtension} from ${docName} is only supported by using WebViewer with WebViewer Server. See https://www.pdftron.com/documentation/web/guides/file-format-support for a full list of file formats supported by WebViewer. Visit https://www.pdftron.com/documentation/web/guides/wv-server-deployment for more information about WebViewer Server`);
+    }
+  }
+
+  return engineType;
 };
 
-export const getDocumentExtension = (doc, engineType) => {
-  let extension;
+export const getDocumentExtension = docName => {
+  let extension = '';
 
-  if (doc) {
-    const result = /\.([a-zA-Z]+)(&|$|\?|#)/.exec(doc);
+  if (docName) {
+    const result = /\.([a-zA-Z]+)(&|$|\?|#)/.exec(docName);
     extension = result && result[1].toLowerCase();
   }
 
-  if (extension) {
-    if (!supportedExtensions.includes(extension)) {
-      console.error(`File extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWebViewer server supports ${supportedBlackboxExtensions.join(', ')}`);
-    }
-  } else if (doc && engineType === engineTypes.AUTO) {
-    console.warn(`File extension cannot be determined from ${doc}. Falling back to pdf`);
-  }
-
-  return extension ? extension : '';
+  return extension;
 };
 
 export const getDocName = state => {
@@ -252,20 +264,8 @@ export const getDocName = state => {
   return filename || path || initialDoc;
 };
 
-const isPDFNetJSExtension = extension => {
-  return isOfficeExtension(extension) || isPDFExtension(extension);
-};
-
-export const isOfficeExtension = extension => {
-  return supportedOfficeExtensions.indexOf(extension) !== -1;
-};
-
-export const isPDFExtension = extension => {
-  return supportedPDFExtensions.indexOf(extension) !== -1;
-};
-
 const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise }) => {
-  const originalExtension = getDocumentExtension(docName, engineType);
+  const originalExtension = getDocumentExtension(docName);
 
   let type;
   let extension = originalExtension;
