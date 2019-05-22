@@ -29,6 +29,7 @@ import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
 import rootReducer from 'reducers/rootReducer';
 
+const packageConfig = require('../package.json');
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
@@ -113,6 +114,24 @@ if (window.CanvasRenderingContext2D) {
   }
 
   loadCustomCSS(state.advanced.customCSS);
+
+  const coreVersion = window.CoreControls.DocumentViewer.prototype.version;
+  const uiVersion = packageConfig.version;
+
+  if (coreVersion && uiVersion) {
+    // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
+    const [ coreMajorVersion, coreMinorVersion ] = coreVersion.split('.');
+    const [ uiMajorVersion, uiMinorVersion ] = uiVersion.split('.');
+
+    // eslint-disable-next-line no-console
+    console.log(`[WebViewer] WebViewer UI version: ${uiVersion}, WebViewer Core version: ${coreVersion}`);
+
+    if (parseInt(coreMajorVersion) < parseInt(uiMajorVersion)) {
+      console.error(`[WebViewer] Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above.`);
+    } else if(parseInt(coreMinorVersion) < parseInt(uiMinorVersion)) {
+      console.warn(`[WebViewer] Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above.`);
+    }
+  }
 
   fullAPIReady.then(() => {
     return loadConfig();
