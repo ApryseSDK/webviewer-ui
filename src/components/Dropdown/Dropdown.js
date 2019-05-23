@@ -5,7 +5,6 @@ import { translate } from 'react-i18next';
 
 import actions from 'actions';
 import selectors from 'selectors';
-import { isEnterOrSpace } from 'helpers/keyEventHelper';
 
 import './Dropdown.scss';
 
@@ -31,22 +30,10 @@ class Dropdown extends React.PureComponent {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
 
-  onKeyPress = e => {
-    if (isEnterOrSpace(e)) {
-      this.toggleDropdown();
-    }
-  }
-
   onClickDropdown = (e, item) => {
     e.stopPropagation();
     this.props.setSortStrategy(item);
     this.setState({ isOpen: false });
-  }
-
-  onKeyPressDropdown = (e, item) => {
-    if (isEnterOrSpace(e)) {
-      this.onClickDropdown(e, item);
-    }
   }
 
   getTranslatedContent = sortStrategy => this.props.t(this.sortStrategyToTranslationMap[sortStrategy]) || sortStrategy;
@@ -57,7 +44,7 @@ class Dropdown extends React.PureComponent {
     const dropdownItems = items.filter(item => item !== sortStrategy);
 
     return dropdownItems.map(item =>
-      <div tabIndex={0} key={item} className="dropdown-item" onClick={e => this.onClickDropdown(e, item)} onKeyPress={e => this.onKeyPressDropdown(e, item)}>
+      <div key={item} className="dropdown-item" onClick={e => this.onClickDropdown(e, item)}>
         {this.getTranslatedContent(item)}
       </div>
     );
@@ -71,7 +58,7 @@ class Dropdown extends React.PureComponent {
     }
 
     return(
-      <div tabIndex={0} className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown} onKeyPress={this.onKeyPress}>
+      <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
         <div className="items">
           <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>
           <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
