@@ -2,6 +2,9 @@ import core from 'core';
 import isDataElementPanel from 'helpers/isDataElementPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import selectors from 'selectors';
+
+import mod from 'helpers/modulus';
 
 // viewer
 export const enableAllElements = () => ({ type: 'ENABLE_ALL_ELEMENTS', payload: {} });
@@ -85,7 +88,24 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     dispatch(openElement(dataElement));
   }
 };
+export const listMove = (listKey, amount, length = null) => (dispatch, getState) => {
+  const selectionIndex = selectors.getListIndex(getState(), listKey);
 
+  let newSelectionIndex;
+  if (selectionIndex === null) {
+    newSelectionIndex = 0;
+  } else {
+    if (length !== null) {
+      newSelectionIndex = mod(selectionIndex + amount, length);
+    } else {
+      newSelectionIndex = selectionIndex + amount;
+    }
+  }
+  dispatch(setListIndex(listKey, newSelectionIndex));
+  return newSelectionIndex;
+};
+
+export const setListIndex =  (listKey, index) => ({ type: 'SET_LIST_INDEX', payload: { listKey, index } });
 export const setActiveHeaderGroup = headerGroup => ({ type: 'SET_ACTIVE_HEADER_GROUP', payload: { headerGroup } });
 export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
   const state = getState();
@@ -137,13 +157,13 @@ export const setZoomList = zoomList => dispatch => {
   if (filteredZoomList.length !== zoomList.length) {
     const outOfRangeZooms = zoomList.filter(zoom => !filteredZoomList.includes(zoom));
     console.warn(`
-      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI. 
+      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI.
       Valid zoom levels should be in the range of ${minZoomLevel}-${maxZoomLevel}.
       You can use setMinZoomLevel or setMaxZoomLevel APIs to change the range.
       See https://www.pdftron.com/documentation/web/guides/ui/apis for more information.
     `);
   }
-  
+
   dispatch({ type: 'SET_ZOOM_LIST', payload: { zoomList: filteredZoomList } });
 };
 export const updateTool = (toolName, properties) => ({ type: 'UPDATE_TOOL', payload: { toolName, properties } });

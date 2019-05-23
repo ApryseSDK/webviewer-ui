@@ -44,8 +44,8 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
     const updatedReducer = require('reducers/rootReducer').default;
     store.replaceReducer(updatedReducer);
-  }); 
-  
+  });
+
   module.hot.accept();
 }
 
@@ -193,7 +193,7 @@ if (window.CanvasRenderingContext2D) {
           },
           addItems(newItems, index) {
             store.dispatch(actions.addItems(newItems, index, group));
-          },          
+          },
           removeItems(itemList) {
             store.dispatch(actions.removeItems(itemList, group));
           },
@@ -277,7 +277,7 @@ if (window.CanvasRenderingContext2D) {
           isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
           openElement: apis.openElement(store),
-          openElements: apis.openElements(store),          
+          openElements: apis.openElements(store),
           print: apis.print(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),

@@ -10,6 +10,7 @@ import NoteReply from 'components/NoteReply';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
+import { isEnterOrSpace } from 'helpers/keyEventHelper';
 
 import './Note.scss';
 
@@ -25,7 +26,10 @@ class Note extends React.PureComponent {
     isReplyDisabled: PropTypes.bool,
     visible: PropTypes.bool.isRequired,
     rootContents: PropTypes.string,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
+    willFocus: PropTypes.bool.isRequired,
+    setListIndex: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -46,7 +50,7 @@ class Note extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { annotation } = this.props;
+    const { annotation, willFocus } = this.props;
     const commentEditable = core.canModify(annotation) && !annotation.getContents();
     const noteBeingEdited = !prevProps.isNoteEditing && this.props.isNoteEditing;
     const noteCollapsed = prevProps.isNoteExpanded && !this.props.isNoteExpanded;
@@ -69,6 +73,9 @@ class Note extends React.PureComponent {
 
     if (annotationWasFocused) {
       this.scrollIntoView();
+    }
+    if (willFocus && (willFocus !== prevProps.willFocus)) {
+      this.focus();
     }
   }
 
@@ -131,14 +138,23 @@ class Note extends React.PureComponent {
 
   onKeyDown = e => {
     if ((e.metaKey || e.ctrlKey) && e.which === 13) { // (Cmd/Ctrl + Enter)
+      e.preventDefault();
       this.postReply(e);
     }
   }
 
+  onNoteKeyDown = e => {
+    if (!this.props.isNoteExpanded && isEnterOrSpace(e)) {
+      this.onClickNote(e);
+    } else if (this.props.isNoteExpanded && e.key === 'Escape') {
+      this.onClickNote(e);
+    }
+  }
+
   onFocus = () => {
-    this.setState({ 
-      isReplyFocused: true, 
-      isRootContentEditing: false 
+    this.setState({
+      isReplyFocused: true,
+      isRootContentEditing: false
     });
   }
 
@@ -199,6 +215,10 @@ class Note extends React.PureComponent {
     return <span className="contents" dangerouslySetInnerHTML={{__html: text}}></span>;
   }
 
+  focus = () => {
+    this.containerRef.current.focus();
+  }
+
   getText = text => {
     if (this.props.searchInput.trim()) {
       return this.getHighlightedText(text);
@@ -214,16 +234,24 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
+    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents, index, setListIndex }  = this.props;
     const { replies, isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
       isNoteExpanded ? 'expanded' : '',
       visible ? '' : 'hidden'
     ].join(' ').trim();
-    
+
+    // Negative tabIndex so that we can't tab to notes but can focus them. Focusing is handled manually by arrow keys.
     return (
-      <div ref={this.containerRef} className={className} onClick={this.onClickNote}>
+      <div
+        tabIndex={-1}
+        ref={this.containerRef}
+        className={className}
+        onClick={this.onClickNote}
+        onKeyDown={this.onNoteKeyDown}
+        onFocus={() => setListIndex('notesPanel', index)}
+      >
         <NoteRoot
           annotation={annotation}
           contents={rootContents}
@@ -276,11 +304,12 @@ const mapStateToProps = (state, ownProps) => ({
   isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
   isAnnotationFocused: selectors.isAnnotationFocused(state, ownProps.annotation.Id),
   isReadOnly: selectors.isDocumentReadOnly(state),
-  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply')
+  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply'),
 });
 
 const matDispatchToProps = {
   setIsNoteEditing: actions.setIsNoteEditing,
+  setListIndex: actions.setListIndex,
 };
 
 export default connect(mapStateToProps, matDispatchToProps)(translate()(Note));

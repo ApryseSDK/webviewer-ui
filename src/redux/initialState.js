@@ -14,7 +14,7 @@ export default {
     },
     headers: {
       default: [
-        { type: 'toggleElementButton', img: 'ic_left_sidebar_black_24px', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
+        { type: 'toggleElementButton', img: 'ic_left_sidebar_black_24px', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel', isAccessible: true },
         { type: 'divider', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toggleElementButton', img: 'ic_viewer_settings_black_24px', element: 'viewControlsOverlay', dataElement: 'viewControlsButton', title: 'component.viewControlsOverlay' },
         { type: 'toolButton', img: 'ic_pan_black_24px', toolName: 'Pan', dataElement: 'panToolButton', title: 'tool.pan' },
@@ -22,7 +22,7 @@ export default {
         { type: 'toolButton', img: 'ic_select_black_24px', toolName: 'AnnotationEdit', dataElement: 'selectToolButton', title: 'tool.select', hidden: [ 'tablet', 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
-        { 
+        {
           type: 'customElement',
           render: () => <ToggleElementOverlay />,
           dataElement: 'zoomOverlayButton',
@@ -30,22 +30,22 @@ export default {
           element: 'zoomOverlay'
         },
         { type: 'spacer' },
-        { 
+        {
           type: 'responsiveButton',
           dataElement: 'responsiveGroupButton',
-          maxWidth: 900, 
+          maxWidth: 900,
           img: 'ic_edit_black_24px',
           children: [
-            { 
-              type: 'dropdownButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', 
+            {
+              type: 'dropdownButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton',
               children: [
                 { type: 'toolButton', img: 'ic_annotation_distance_black_24px', toolName: 'AnnotationCreateDistanceMeasurement', dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement' },
                 { type: 'toolButton', img: 'ic_annotation_perimeter_black_24px', toolName: 'AnnotationCreatePerimeterMeasurement', dataElement: 'perimeterMeasurementToolButton', title: 'annotation.perimeterMeasurement' },
                 { type: 'toolButton', img: 'ic_annotation_area_black_24px', toolName: 'AnnotationCreateAreaMeasurement', dataElement: 'areaMeasurementToolButton', title: 'annotation.areaMeasurement' },
               ]
             },
-            { 
-              type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', 
+            {
+              type: 'dropdownButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton',
               children: [
                 { type: 'toolButton', img: 'ic_annotation_freehand_black_24px', toolName: 'AnnotationCreateFreeHand', dataElement: 'freeHandToolButton', title: 'annotation.freehand' },
                 { type: 'toolButton', img: 'ic_annotation_freehand_black_24px', toolName: 'AnnotationCreateFreeHand2', dataElement: 'freeHandToolButton2', title: 'annotation.freehand2' },
@@ -53,8 +53,8 @@ export default {
                 { type: 'toolButton', img: 'ic_annotation_freehand_black_24px', toolName: 'AnnotationCreateFreeHand4', dataElement: 'freeHandToolButton4', title: 'annotation.freehand4' },
               ]
             },
-            { 
-              type: 'dropdownButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', 
+            {
+              type: 'dropdownButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton',
               children: [
                 { type: 'toolButton', img: 'ic_annotation_highlight_black_24px', toolName: 'AnnotationCreateTextHighlight', dataElement: 'highlightToolButton', title: 'annotation.highlight' },
                 { type: 'toolButton', img: 'ic_annotation_highlight_black_24px', toolName: 'AnnotationCreateTextHighlight2', dataElement: 'highlightToolButton2', title: 'annotation.highlight2' },
@@ -65,8 +65,8 @@ export default {
                 { type: 'toolButton', img: 'ic_annotation_strikeout_black_24px', toolName: 'AnnotationCreateTextStrikeout', dataElement: 'strikeoutToolButton', title: 'annotation.strikeout' },
               ]
             },
-            { 
-              type: 'dropdownButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton',  
+            {
+              type: 'dropdownButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton',
               children: [
                 { type: 'toolButton', img: 'ic_annotation_square_black_24px', toolName: 'AnnotationCreateRectangle', dataElement: 'rectangleToolButton', title: 'annotation.rectangle' },
                 { type: 'toolButton', img: 'ic_annotation_circle_black_24px', toolName: 'AnnotationCreateEllipse', dataElement: 'ellipseToolButton', title: 'annotation.ellipse' },
@@ -75,14 +75,14 @@ export default {
                 { type: 'toolButton', img: 'ic_annotation_polyline_black_24px', toolName: 'AnnotationCreatePolyline', dataElement: 'polylineToolButton', title: 'annotation.polyline' },
                 { type: 'toolButton', img: 'ic_annotation_polygon_black_24px', toolName: 'AnnotationCreatePolygon', dataElement: 'polygonToolButton', title: 'annotation.polygon' },
                 { type: 'toolButton', img: 'ic_annotation_cloud_black_24px', toolName: 'AnnotationCreatePolygonCloud', dataElement: 'cloudToolButton', title: 'annotation.polygonCloud' },
-              ] 
+              ]
             },
             { type: 'statefulButton', dataElement: 'signatureToolButton' },
             { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
             { type: 'toolButton', img: 'ic_annotation_freetext_black_24px', toolName: 'AnnotationCreateFreeText', dataElement: 'freeTextToolButton', title: 'annotation.freetext' },
             { type: 'toolButton', img: 'ic_annotation_sticky_note_black_24px', toolName: 'AnnotationCreateSticky', dataElement: 'stickyToolButton', title: 'annotation.stickyNote' },
-            { 
-              type: 'dropdownButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', 
+            {
+              type: 'dropdownButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton',
               children: [
                 { type: 'toolButton', img: 'ic_annotation_callout_black_24px', toolName: 'AnnotationCreateCallout', dataElement: 'calloutToolButton', title: 'annotation.callout' },
                 { type: 'toolButton', img: 'ic_annotation_image_black_24px', toolName: 'AnnotationCreateStamp', dataElement: 'stampToolButton', title: 'annotation.stamp'}
@@ -131,6 +131,7 @@ export default {
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
+    listIndex: {},
     activeLeftPanel: getHashParams('hideAnnotationPanel', false) || !getHashParams('a', false) || getHashParams('readonly', false) ? 'thumbnailsPanel' : 'notesPanel',
     activeToolGroup: '',
     expandedNotes: {},
@@ -154,7 +155,7 @@ export default {
     swipeOrientation: 'horizontal',
     warning: {},
     customNoteFilter: null,
-    zoomList: [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64]
+    zoomList: [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64],
   },
   search: {
     listeners: [],
@@ -194,7 +195,8 @@ export default {
     documentLoadingProgress: 0,
     workerLoadingProgress: 0,
     isUploading: false,
-    uploadProgress: 0
+    uploadProgress: 0,
+    accessibleMode: getHashParams('accessibleMode', true),
   },
   user: {
     name: getHashParams('user', 'Guest'),

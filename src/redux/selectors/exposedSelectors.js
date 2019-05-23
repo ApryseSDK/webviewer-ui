@@ -5,7 +5,7 @@ import { workerTypes } from 'constants/types';
 export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
 export const isToolGroupButtonDisabled = (state, dataElement, toolNames) => {
   const isEveryButtonInGroupDisabled = toolNames.every(toolName => isToolButtonDisabled(state, toolName));
-  
+
   return isElementDisabled(state, dataElement) || isEveryButtonInGroupDisabled;
 };
 export const isToolButtonDisabled = (state, toolName) => {
@@ -17,7 +17,7 @@ export const isElementOpen = (state, dataElement) => {
   if (state.viewer.disabledElements[dataElement]) {
     return state.viewer.openElements[dataElement] && !state.viewer.disabledElements[dataElement].disabled;
   }
-  
+
   return state.viewer.openElements[dataElement];
 };
 
@@ -66,17 +66,25 @@ export const getToolButtonIcon = (state, toolName) => {
   });
   return buttonIcon;
 };
+
 export const getToolNamesByGroup = (state, toolGroup) => state.viewer.headers[state.viewer.activeHeaderGroup].filter(toolButtonObject => toolButtonObject.toolGroup).find(toolButtonObject => toolButtonObject.toolGroup === toolGroup).children.map(buttonObject => buttonObject.toolName);
 export const getToolNameByDataElement = (state, dataElement) => Object.keys(state.viewer.toolButtonObjects).find(name => state.viewer.toolButtonObjects[name].dataElement === dataElement);
 export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
+export const getListIndex = (state, panel) => {
+  if (state.viewer.listIndex[panel] === undefined) {
+    return null;
+  } else {
+    return state.viewer.listIndex[panel];
+  }
+}
 export const getActiveDataElement = state => {
   let dataElement;
   const defaultArr = state.viewer.headers.default;
   defaultArr.forEach(element => {
     if (element.toolName === state.viewer.activeToolName) {
       dataElement = element.dataElement;
-    } 
+    }
     if (element.children) {
       element.children.forEach(childElement => {
         if (childElement.toolName && childElement.toolName === state.viewer.activeToolName) {
@@ -159,6 +167,7 @@ export const getOutlines = state => state.document.outlines;
 export const getLoadingProgress = state => Math.min(state.document.documentLoadingProgress, state.document.workerLoadingProgress);
 export const getUploadProgress = state => state.document.uploadProgress;
 export const isUploading = state => state.document.isUploading;
+export const getAccessibleMode = state => state.document.accessibleMode;
 
 // user
 export const getUserName = state => state.user.name;

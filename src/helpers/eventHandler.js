@@ -23,6 +23,7 @@ export default store => {
   const onFullScreenChange = eventListeners.onFullScreenChange(dispatch);
   const onLayoutChanged = eventListeners.onLayoutChanged(dispatch); 
   const onLocationSelected = eventListeners.onLocationSelected(store);
+  const onPageComplete = eventListeners.onPageComplete(store);
 
   return {
     addEventHandlers: () => {
@@ -40,6 +41,7 @@ export default store => {
       core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.addEventListener('annotationSelected', onAnnotationSelected);
       core.addEventListener('annotationChanged', onAnnotationChanged);
+      core.addEventListener('pageComplete', onPageComplete);
       core.getTool('AnnotationCreateStamp').on('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
@@ -64,6 +66,7 @@ export default store => {
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.removeEventListener('annotationSelected', onAnnotationSelected);
       core.removeEventListener('annotationChanged', onAnnotationChanged);
+      core.removeEventListener('pageComplete', onPageComplete);
       core.getTool('AnnotationCreateStamp').off('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').off('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').off('locationSelected', onLocationSelected);

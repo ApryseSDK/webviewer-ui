@@ -51,7 +51,7 @@ class ToggleElementOverlay extends React.PureComponent {
   onChange = e => {
     const re = /^(\d){0,4}$/;
     if (re.test(e.target.value) || e.target.value === ''){
-      this.setState({ value: e.target.value }); 
+      this.setState({ value: e.target.value });
     }
   }
 
@@ -67,18 +67,19 @@ class ToggleElementOverlay extends React.PureComponent {
       zoomTo(e.target.value / 100);
     }
   }
-  
-  render() { 
+
+  render() {
     const { isActive, onClick } = this.props;
     return (
       <div className="ToggleElementOverlay">
-        <div className={[ 'OverlayContainer', isActive ? 'active' : '' ].join(' ').trim()}> 
+        <div className={[ 'OverlayContainer', isActive ? 'active' : '' ].join(' ').trim()}>
           <div className="OverlayText" onClick={onClick}>
             <input
+              tabIndex={-1}
               type="text"
               className="textarea"
               value={this.state.value}
-              onChange={this.onChange} 
+              onChange={this.onChange}
               onKeyPress={this.onKeyPress}
               onBlur={this.onBlur}
             />
