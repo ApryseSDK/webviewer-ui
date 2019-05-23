@@ -26,11 +26,11 @@ class LeftPanel extends React.Component {
     listMove: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props);
-    this.state = { isSliderActive: false, };
-    this.sliderRef = React.createRef();
+  state = {
+    isSliderActive: false
   }
+
+  sliderRef = React.createRef()
 
   componentDidMount(){
     document.body.style.setProperty('--left-panel-width', '300px');
@@ -41,6 +41,7 @@ class LeftPanel extends React.Component {
       this.sliderRef.current.onmouseup = this.closeDrag;
     }
   }
+
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
       this.props.closeElement('searchPanel');
@@ -50,10 +51,7 @@ class LeftPanel extends React.Component {
   // https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md#state-derived-from-propsstate
   static getDerivedStateFromProps(nextProps, prevState){
     const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
-    if (hasIsOpenChanged){
-      return { isOpening: true, mirroredIsOpen: nextProps.isOpen };
-    }
-    return { isOpening: false, mirroredIsOpen: nextProps.isOpen };
+    return { isOpening: hasIsOpenChanged, mirroredIsOpen: nextProps.isOpen };
   }
 
   getDisplay = panel => {
@@ -77,8 +75,17 @@ class LeftPanel extends React.Component {
     this.setState({ isSliderActive: false });
   }
 
+  onKeyDown = e => {
+    const { activePanel, listMove } = this.props;
+    if (e.key === 'ArrowUp' || e.keyCode === 38) {
+      listMove(activePanel, -1);
+    } else if (e.key === 'ArrowDown' || e.keyCode === 40) {
+      listMove(activePanel, 1);
+    }
+  }
+
   render() {
-    const { isOpen, isDisabled, closeElement, customPanels, activePanel, listMove } = this.props;
+    const { isOpen, isDisabled, closeElement, customPanels } = this.props;
 
     if (isDisabled) {
       return null;
@@ -93,13 +100,7 @@ class LeftPanel extends React.Component {
         data-element="leftPanel"
         onMouseDown={e => e.stopPropagation()}
         onClick={e => e.stopPropagation()}
-        onKeyDown={e => {
-          if (e.key === 'ArrowUp') {
-            listMove(activePanel, -1);
-          } else if (e.key === 'ArrowDown') {
-            listMove(activePanel, 1);
-          }
-        }}
+        onKeyDown={this.onKeyDown}
       >
         <div className="left-panel-header">
           <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>
@@ -118,15 +119,9 @@ class LeftPanel extends React.Component {
             onMouseLeave={this.closeDrag}
           />
         }
-        <NotesPanel
-          display={this.getDisplay('notesPanel')}
-        />
-        <ThumbnailsPanel
-          display={this.getDisplay('thumbnailsPanel')}
-        />
-        <OutlinesPanel
-          display={this.getDisplay('outlinesPanel')}
-        />
+        <NotesPanel display={this.getDisplay('notesPanel')} />
+        <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
+        <OutlinesPanel display={this.getDisplay('outlinesPanel')} />
         {customPanels.map(({ panel }, index) => (
           <CustomElement
             key={panel.dataElement || index}

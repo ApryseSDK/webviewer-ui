@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from 'components/Icon';
+import { isEnterOrSpace } from 'helpers/keyEventHelper';
 
 import './Button.scss';
 
@@ -27,10 +28,7 @@ class Button extends React.PureComponent {
   containerRef = React.createRef();
 
   componentDidMount() {
-    const {
-      willFocus,
-    } = this.props;
-    if (willFocus) {
+    if (this.props.willFocus) {
       this.focus();
     }
   }
@@ -47,13 +45,12 @@ class Button extends React.PureComponent {
     }
   }
 
-
   onClick = e => {
     this.props.onClick(e);
   }
 
   onKeyPress = e => {
-    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
+    if (isEnterOrSpace(e)) {
       this.props.onClick(e);
     }
   }

@@ -9,6 +9,7 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
+import { isEnterOrSpace } from 'helpers/keyEventHelper';
 
 import './NotePopup.scss';
 
@@ -58,19 +59,20 @@ class NotePopup extends React.Component {
   }
 
   onKeyDown = e => {
-    if (e.key === 'Enter' || e.code === 'Space') {
+    if (isEnterOrSpace(e)) {
       this.togglePopup();
     }
   }
 
-  foo = e => {
-    if (e.key === 'Enter' || e.code === 'Space') {
+  onKeyDownEdit = e => {
+    if (isEnterOrSpace(e)) {
       e.preventDefault();
       this.openEdit();
     }
   }
-  bar = e => {
-    if (e.key === 'Enter' || e.code === 'Space') {
+
+  onKeyDownDelete = e => {
+    if (isEnterOrSpace(e)) {
       e.preventDefault();
       this.props.onDelete();
     }
@@ -92,10 +94,10 @@ class NotePopup extends React.Component {
         </div>
         <div className={className} onClick={this.closePopup}>
           {!isEditDisabled &&
-            <div tabIndex={0} data-element="notePopupEdit" onClick={this.openEdit} onKeyDown={this.foo}>{t('action.edit')}</div>
+            <div tabIndex={0} data-element="notePopupEdit" onClick={this.openEdit} onKeyDown={this.onKeyDownEdit}>{t('action.edit')}</div>
           }
           {!isDeleteDisabled &&
-            <div tabIndex={0} data-element="notePopupDelete" onClick={onDelete} onKeyDown={this.bar}>{t('action.delete')}</div>
+            <div tabIndex={0} data-element="notePopupDelete" onClick={onDelete} onKeyDown={this.onKeyDownDelete}>{t('action.delete')}</div>
           }
         </div>
       </div>

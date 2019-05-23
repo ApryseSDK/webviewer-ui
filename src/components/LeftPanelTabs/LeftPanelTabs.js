@@ -27,12 +27,10 @@ class LeftPanelTabs extends React.Component {
   }
 
   state = {}
+
   static getDerivedStateFromProps(nextProps, prevState){
     const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.panelIsOpen;
-    if (hasIsOpenChanged){
-      return { isOpening: true, mirroredIsOpen: nextProps.panelIsOpen };
-    }
-    return { isOpening: false, mirroredIsOpen: nextProps.panelIsOpen };
+    return { isOpening: hasIsOpenChanged, mirroredIsOpen: nextProps.panelIsOpen };
   }
 
   isActive = panel => {
@@ -50,14 +48,12 @@ class LeftPanelTabs extends React.Component {
       setActiveLeftPanel,
       disabledCustomPanelTabs
     } = this.props;
-    const {
-      isOpening,
-    } = this.state;
+    const { isOpening } = this.state;
 
     if (isLeftPanelTabsDisabled) {
       return null;
     }
-;
+
     return (
       <Element className="LeftPanelTabs" dataElement="leftPanelTabs">
         <Tooltip content="component.thumbnailsPanel" isDisabled={isThumbnailsPanelButtonDisabled}>

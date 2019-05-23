@@ -10,6 +10,7 @@ import NoteReply from 'components/NoteReply';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
+import { isEnterOrSpace } from 'helpers/keyEventHelper';
 
 import './Note.scss';
 
@@ -141,14 +142,14 @@ class Note extends React.PureComponent {
       this.postReply(e);
     }
   }
+
   onNoteKeyDown = e => {
-    if (!this.props.isNoteExpanded && (e.key === 'Enter' || e.code === 'Space')) {
+    if (!this.props.isNoteExpanded && isEnterOrSpace(e)) {
       this.onClickNote(e);
     } else if (this.props.isNoteExpanded && e.key === 'Escape') {
       this.onClickNote(e);
     }
   }
-
 
   onFocus = () => {
     this.setState({
@@ -249,9 +250,7 @@ class Note extends React.PureComponent {
         className={className}
         onClick={this.onClickNote}
         onKeyDown={this.onNoteKeyDown}
-        onFocus={() => {
-          setListIndex('notesPanel', index);
-        }}
+        onFocus={() => setListIndex('notesPanel', index)}
       >
         <NoteRoot
           annotation={annotation}

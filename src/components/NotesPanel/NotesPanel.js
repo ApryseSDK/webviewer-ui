@@ -148,25 +148,23 @@ class NotesPanel extends React.PureComponent {
     return indexOfCurrNote === 0 ? sortedVisibleNotes[indexOfCurrNote] : sortedVisibleNotes[indexOfCurrNote - 1];
   }
 
+  onBlur = e => {
+    // focus is leaving the container and its children
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      // nuke all selection index
+      this.props.setListIndex('notesPanel', null);
+    }
+  }
+
   isVisibleNote = note => this.visibleNoteIds.has(note.Id)
 
   renderNotesPanelContent = () => {
-    const { setListIndex } = this.props;
-    const {notesToRender} = this.state;
+    const { notesToRender } = this.state;
     const sortStrategies = getSortStrategies();
 
     return(
       <React.Fragment>
-        <div
-          className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}
-          onBlur={e => {
-            // focus is leaving the container and its children
-            if (!e.currentTarget.contains(e.relatedTarget)) {
-              // nuke all selection index
-              setListIndex('notesPanel', null);
-            }
-          }}
-        >
+        <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`} onBlur={this.onBlur}>
           {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
@@ -177,9 +175,7 @@ class NotesPanel extends React.PureComponent {
   }
 
   renderNotes = notes => {
-    const {
-      selectionIndex,
-    } = this.props;
+    const { selectionIndex } = this.props;
 
     return(
       notes.map((note, i) => {
@@ -221,7 +217,7 @@ class NotesPanel extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, display, t, notes, listMove } = this.props;
+    const { isDisabled, display, t } = this.props;
 
     if (isDisabled) {
       return null;
@@ -234,13 +230,6 @@ class NotesPanel extends React.PureComponent {
         data-element="notesPanel"
         onClick={core.deselectAllAnnotations}
         onScroll={e => e.stopPropagation()}
-        onKeyDown={e => {
-          {/* if (e.key === 'ArrowUp') {
-            listMove('notesPanel', -1, notes.length);
-          } else if (e.key === 'ArrowDown') {
-            listMove('notesPanel', 1, notes.length);
-          } */}
-        }}
       >
         {this.rootAnnotations.length === 0
         ? <div className="no-annotations">{t('message.noAnnotations')}</div>
@@ -270,4 +259,9 @@ const mapStatesToProps = state => ({
   selectionIndex: selectors.getListIndex(state, 'notesPanel'),
 });
 
-export default connect(mapStatesToProps, { setListIndex: actions.setListIndex, listMove: actions.listMove })(translate()(NotesPanel));
+const mapDispatchToProps = {
+  setListIndex: actions.setListIndex,
+  listMove: actions.listMove
+}
+
+export default connect(mapStatesToProps, mapDispatchToProps)(translate()(NotesPanel));

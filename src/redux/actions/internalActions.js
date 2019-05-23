@@ -61,9 +61,7 @@ export const setFitMode = fitMode => ({ type: 'SET_FIT_MODE', payload: { fitMode
 export const setZoom = zoom => ({ type: 'SET_ZOOM', payload: { zoom } });
 export const setRotation = rotation => ({ type: 'SET_ROTATION', payload: { rotation } });
 export const setDisplayMode = displayMode => ({ type: 'SET_DISPLAY_MODE', payload: { displayMode } });
-export const setCurrentPage = currentPage => dispatch => {
-  dispatch({ type: 'SET_CURRENT_PAGE', payload: { currentPage } });
-};
+export const setCurrentPage = currentPage => ({ type: 'SET_CURRENT_PAGE', payload: { currentPage } });
 export const setFullScreen = isFullScreen => ({ type: 'SET_FULL_SCREEN', payload: { isFullScreen } });
 export const setDocumentLoaded = isDocumentLoaded => ({ type: 'SET_DOCUMENT_LOADED', payload: { isDocumentLoaded } });
 export const setReadOnly = isReadOnly => ({ type: 'SET_READ_ONLY', payload: { isReadOnly } });

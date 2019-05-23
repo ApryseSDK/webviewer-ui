@@ -5,6 +5,7 @@ import { translate } from 'react-i18next';
 
 import actions from 'actions';
 import selectors from 'selectors';
+import { isEnterOrSpace } from 'helpers/keyEventHelper';
 
 import './Dropdown.scss';
 
@@ -31,17 +32,21 @@ class Dropdown extends React.PureComponent {
   }
 
   onKeyPress = e => {
-    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
+    if (isEnterOrSpace(e)) {
       this.toggleDropdown();
     }
   }
 
-
-  handleDisplayItemChange = (e, item) => {
+  onClickDropdown = (e, item) => {
     e.stopPropagation();
-
     this.props.setSortStrategy(item);
     this.setState({ isOpen: false });
+  }
+
+  onKeyPressDropdown = (e, item) => {
+    if (isEnterOrSpace(e)) {
+      this.onClickDropdown(e, item);
+    }
   }
 
   getTranslatedContent = sortStrategy => this.props.t(this.sortStrategyToTranslationMap[sortStrategy]) || sortStrategy;
@@ -52,17 +57,7 @@ class Dropdown extends React.PureComponent {
     const dropdownItems = items.filter(item => item !== sortStrategy);
 
     return dropdownItems.map(item =>
-      <div
-        tabIndex={0}
-        key={item}
-        className="dropdown-item"
-        onClick={e => this.handleDisplayItemChange(e, item)}
-        onKeyPress={e => {
-          if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
-            this.handleDisplayItemChange(e, item);
-          }
-        }}
-      >
+      <div tabIndex={0} key={item} className="dropdown-item" onClick={e => this.onClickDropdown(e, item)} onKeyPress={e => this.onKeyPressDropdown(e, item)}>
         {this.getTranslatedContent(item)}
       </div>
     );

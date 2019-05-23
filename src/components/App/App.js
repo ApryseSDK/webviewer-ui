@@ -33,6 +33,7 @@ import PrintHandler from 'components/PrintHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
 import { isDesktop } from 'helpers/device';
+import { isEnterOrSpace } from 'helpers/keyEventHelper';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -42,26 +43,7 @@ class App extends React.PureComponent {
   static propTypes = {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
-    accessibleMode: PropTypes.bool,
-  }
-
-  componentDidMount() {
-    if (this.props.accessibleMode) {
-      // Add text content to pages
-      $(document).on('documentLoaded', () => {
-        window.docViewer.on('pageComplete', (e, pageIndex) => {
-          window.docViewer.getDocument().loadPageText(pageIndex, function(text) {
-            var textContainer = document.createElement('div');
-            textContainer.tabIndex = 0;
-            textContainer.textContent = text;
-            textContainer.style = 'height: 100%;';
-            textContainer.id = 'pageText' + pageIndex;
-            $('#pageContainer' + pageIndex).append(textContainer);
-          });
-        });
-      });
-    }
+    closeElements: PropTypes.func.isRequired
   }
 
   componentWillUnmount() {
@@ -97,24 +79,17 @@ class App extends React.PureComponent {
     this.onMouseDown();
   }
 
+  focusDocumentContainer = e => {
+    if (isEnterOrSpace(e)) {
+      document.querySelector('[data-element=documentContainer]').focus();
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
         <div className="App" onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
-          <a
-            tabIndex={0}
-            className="skip-main"
-            onClick={() => {
-              $('*[data-element=\'documentContainer\']').focus();
-            }}
-            onKeyPress={e => {
-              if (e.nativeEvent.key === 'Enter' || e.nativeEvent.code === 'Space') {
-                $('*[data-element=\'documentContainer\']').focus();
-              }
-            }}
-          >
-            Skip to main content
-          </a>
+          <a tabIndex={0} className="skip-main" onKeyPress={this.focusDocumentContainer}>Skip to main content</a>
           <Header />
 
           <LeftPanel />
@@ -155,8 +130,7 @@ class App extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
-  accessibleMode: selectors.getAccessibleMode(state),
+  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel')
 });
 
 const mapDispatchToProps = {
