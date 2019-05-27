@@ -21,6 +21,7 @@ class ThumbnailsPanel extends React.PureComponent {
     super();
     this.pendingThumbs = [];
     this.thumbs = [];
+    this.thumbnailsPanel = React.createRef();
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       canLoad: true
@@ -31,6 +32,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('beginRendering', this.onBeginRendering);
     core.addEventListener('finishedRendering', this.onFinishedRendering);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
+    core.addEventListener('pageNumberUpdated', this.onPageChange);
     window.addEventListener('resize', this.onWindowResize);
   }
   
@@ -38,6 +40,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('beginRendering', this.onBeginRendering);
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
+    core.removeEventListener('pageNumberUpdated', this.onPageChange);
     window.removeEventListener('resize', this.onWindowResize);
   }
 
@@ -67,6 +70,15 @@ class ThumbnailsPanel extends React.PureComponent {
     
       this.updateAnnotations(pageIndex);
     });
+  }
+
+  onPageChange = (e, visiblePages) => {  
+    if( this.thumbnailsPanel && this.thumbnailsPanel.current ) {
+      var thumbnailHeight = this.thumbnailsPanel.current.querySelector('.Thumbnail').scrollHeight;
+      var pageIndex = visiblePages - 1;
+      var scrollLocation = pageIndex * thumbnailHeight;
+      this.thumbnailsPanel.current.scrollTop = scrollLocation;
+    }
   }
 
   onWindowResize = () => {
@@ -270,7 +282,7 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     return (
-      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel">
+      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel" ref={this.thumbnailsPanel}>
         <div className="thumbs">
           <ReactList
             key="panel"
