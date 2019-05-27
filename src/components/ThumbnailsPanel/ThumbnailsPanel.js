@@ -72,12 +72,14 @@ class ThumbnailsPanel extends React.PureComponent {
     });
   }
 
-  onPageChange = (e, visiblePages) => {  
-    if( this.thumbnailsPanel && this.thumbnailsPanel.current ) {
-      var thumbnailHeight = this.thumbnailsPanel.current.querySelector('.Thumbnail').scrollHeight;
-      var pageIndex = visiblePages - 1;
-      var scrollLocation = pageIndex * thumbnailHeight;
-      this.thumbnailsPanel.current.scrollTop = scrollLocation;
+  onPageChange = (e, visiblePages) => {
+    const { thumbnailsPanel } = this;
+
+    if( thumbnailsPanel && thumbnailsPanel.current ) {
+      const thumbnailHeight = thumbnailsPanel.current.querySelector('.Thumbnail').scrollHeight;
+      const pageIndex = visiblePages - 1;
+      const scrollLocation = pageIndex * thumbnailHeight;
+      thumbnailsPanel.current.scrollTop = scrollLocation;
     }
   }
 
