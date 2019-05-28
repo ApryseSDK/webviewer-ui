@@ -5,7 +5,7 @@ import { translate } from 'react-i18next';
 
 import Layer from 'components/Layer';
 
-import getClassName from 'helpers/getClassName';
+// import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
 
 import './LayersPanel.scss';
@@ -15,7 +15,6 @@ class LayersPanel extends React.PureComponent {
     layers: PropTypes.arrayOf(PropTypes.object),
     display: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
-    t: PropTypes.func.isRequired
   }
 
   render() {
@@ -25,13 +24,10 @@ class LayersPanel extends React.PureComponent {
       return null;
     }
 
-    // TODO???
-    const className = getClassName('Panel LayersPanel', this.props);
-
     return (
-      <div className={className} style={{ display }} data-element="layersPanel">
+      <div className="Panel LayersPanel" style={{ display }} data-element="layersPanel">
         {layers.map((layer, i) => (
-          <Layer key={i} layer={layer} />
+          <Layer key={i} layer={layer} layers={layers} index={i} />
         ))}
       </div>
     );
