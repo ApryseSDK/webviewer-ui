@@ -30,7 +30,7 @@ class ColorPaletteHeader extends React.PureComponent {
     const { style: { TextColor }, colorPalette } = this.props;
 
     return (
-      <Tooltip content="option.annotationColor.text">
+      <Tooltip content="option.annotationColor.TextColor">
         <div
           className={colorPalette === 'TextColor' ? 'text selected' : 'text'}
           style={{ color: TextColor.toHexString() }}
@@ -63,7 +63,7 @@ class ColorPaletteHeader extends React.PureComponent {
     };
 
     return (
-      <Tooltip content="option.annotationColor.border">
+      <Tooltip content="option.annotationColor.StrokeColor">
         <div
           className={colorPalette === 'StrokeColor' ? 'border selected' : 'border'}
           onClick={() => this.setColorPalette('StrokeColor')}
@@ -84,7 +84,7 @@ class ColorPaletteHeader extends React.PureComponent {
     const isTransparency = FillColor.toHexString() === null;
 
     return (
-      <Tooltip content="option.annotationColor.fill">
+      <Tooltip content="option.annotationColor.FillColor">
         <div
           className={colorPalette === 'FillColor' ? 'fill selected' : 'fill'}
           onClick={() => this.setColorPalette('FillColor')}
