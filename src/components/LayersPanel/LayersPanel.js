@@ -31,7 +31,7 @@ class LayersPanel extends React.PureComponent {
     return (
       <div className={className} style={{ display }} data-element="layersPanel">
         {layers.map((layer, i) => (
-          <Layer key={i} layer={layer} isVisible />
+          <Layer key={i} layer={layer} />
         ))}
       </div>
     );

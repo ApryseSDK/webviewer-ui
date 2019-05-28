@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Icon from 'components/Icon';
-
-import core from 'core';
-import { isMobile } from 'helpers/device';
-import actions from 'actions';
+import Input from 'components/Input';
 
 import './Layer.scss';
 
@@ -15,12 +11,19 @@ class Layer extends React.PureComponent {
     layer: PropTypes.object.isRequired,
   }
 
+
+  constructor() {
+    super();
+    this.wholeWordInput = React.createRef();
+  }
+
+
   render() {
-    const { isVisible, layer } = this.props;
+    const { layer } = this.props;
 
     return (
-      <div>
-        {layer.name}
+      <div className="Layer">
+        <Input id={layer.name} type="checkbox" label={layer.name} />
       </div>
     );
   }
