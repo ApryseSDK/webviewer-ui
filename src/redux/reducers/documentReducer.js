@@ -22,6 +22,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, totalPages: payload.totalPages };
     case 'SET_OUTLINES':
       return { ...state, outlines: payload.outlines };
+    case 'SET_LAYERS':
+      return { ...state, layers: payload.layers };
     case 'SET_CHECKPASSWORD':
       return { ...state, checkPassword: payload.func };
     case 'SET_PASSWORD_ATTEMPTS':
@@ -36,7 +38,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, workerLoadingProgress: payload.workerLoadingProgress };
     case 'RESET_LOADING_PROGRESS':
       return { ...state, documentLoadingProgress: 0, workerLoadingProgress: 0 };
-    
+
     case 'SET_IS_UPLOADING':
       return { ...state, isUploading: payload.isUploading };
     case 'SET_UPLOAD_PROGRESS':

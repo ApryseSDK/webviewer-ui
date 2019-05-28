@@ -122,7 +122,8 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       ...state.viewer.customPanels.map(({ panel }) => panel.dataElement),
       'thumbnailsPanel',
       'outlinesPanel',
-      'notesPanel'
+      'notesPanel',
+      'layersPanel',
     ].join(', ');
     console.warn(`${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`);
   }

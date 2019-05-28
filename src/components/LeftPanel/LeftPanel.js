@@ -6,6 +6,7 @@ import LeftPanelTabs from 'components/LeftPanelTabs';
 import NotesPanel from 'components/NotesPanel';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
 import OutlinesPanel from 'components/OutlinesPanel';
+import LayersPanel from 'components/LayersPanel';
 import CustomElement from 'components/CustomElement';
 import Icon from 'components/Icon';
 
@@ -122,6 +123,7 @@ class LeftPanel extends React.Component {
         <NotesPanel display={this.getDisplay('notesPanel')} />
         <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
         <OutlinesPanel display={this.getDisplay('outlinesPanel')} />
+        <LayersPanel display={this.getDisplay('layersPanel')} />
         {customPanels.map(({ panel }, index) => (
           <CustomElement
             key={panel.dataElement || index}

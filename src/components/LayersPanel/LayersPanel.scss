@@ -1,0 +1,8 @@
+@import '../../constants/panel';
+
+.LayersPanel {
+  .no-layers {
+    @extend %center-of-panel;
+  }
+
+}

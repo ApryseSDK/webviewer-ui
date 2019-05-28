@@ -9,7 +9,7 @@ export default dispatch => () => {
   dispatch(actions.openElement('pageNavOverlay'));
   dispatch(actions.setDocumentLoadingProgress(1));
   dispatch(actions.setWorkerLoadingProgress(1));
-  
+
   setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
     dispatch(actions.resetLoadingProgress());
@@ -42,6 +42,17 @@ export default dispatch => () => {
 
   core.getOutlines(outlines => {
     dispatch(actions.setOutlines(outlines));
+  });
+
+  // TODO: Is it okay that it is async?
+  const doc = core.getDocument();
+  doc.getLayersArray().then(layers => {
+    if (layers.length === 0) {
+      dispatch(actions.disableElement('layersPanel', 1));
+      dispatch(actions.disableElement('layersPanelButton', 1));
+    } else {
+      dispatch(actions.setLayers(layers));
+    }
   });
 
   window.readerControl.loadedFromServer = false;
