@@ -87,7 +87,7 @@ class LeftPanelTabs extends React.Component {
           <Button
             isActive={this.isActive('layersPanel')}
             dataElement="layersPanelButton"
-            img="ic_copy_black_24px"
+            img="ic_layers_24px"
             onClick={() => setActiveLeftPanel('layersPanel')}
           />
         </Tooltip>
