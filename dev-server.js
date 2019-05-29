@@ -29,7 +29,6 @@ app.use('/i18n', express.static(path.resolve(__dirname, 'i18n')));
 app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
 app.use('/mime', express.static(path.resolve(__dirname, 'mime')));
 app.use('/core', express.static(path.resolve(__dirname, '../core')));
-app.use('/files', express.static(path.resolve(__dirname, '../../samples/files')));
 
 const handleAnnotation = (req, res, handler) => {
 	const dir = path.resolve(__dirname, 'annotations');
@@ -74,7 +73,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/mobile', (req, res) => {
-	res.redirect(`/#d=/files/webviewer-demo-annotated.xod&a=1`);
+	res.redirect(`/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1`);
 });
 
 app.listen(3000, '0.0.0.0', err => {
@@ -82,6 +81,6 @@ app.listen(3000, '0.0.0.0', err => {
 		console.error(err);
 	} else {
 		console.info(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
-		opn('http://localhost:3000/#d=/files/webviewer-demo-annotated.xod&a=1');
+		opn('http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1');
 	}
 });
