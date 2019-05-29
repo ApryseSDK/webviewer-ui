@@ -76,7 +76,7 @@ class ThumbnailsPanel extends React.PureComponent {
     const { thumbnailsPanel } = this;
 
     if( thumbnailsPanel && thumbnailsPanel.current ) {
-      const thumbnailHeight = thumbnailsPanel.current.querySelector('.Thumbnail').scrollHeight;
+      const thumbnailHeight = thumbnailsPanel.current.querySelector('.Thumbnail').offsetHeight;
       const pageIndex = visiblePages - 1;
       const scrollLocation = pageIndex * thumbnailHeight;
       thumbnailsPanel.current.scrollTop = scrollLocation;
