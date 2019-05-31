@@ -43,7 +43,8 @@ class App extends React.PureComponent {
   static propTypes = {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired
+    closeElements: PropTypes.func.isRequired,
+    accessibleMode: PropTypes.bool,
   }
 
   componentWillUnmount() {
@@ -88,7 +89,7 @@ class App extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
-        <div className="App" onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
+        <div className={`App ${this.props.accessibleMode? 'accessibleMode' : ''}`} onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
           <a tabIndex={0} className="skip-main" onKeyPress={this.focusDocumentContainer}>Skip to main content</a>
           <Header />
 
@@ -130,7 +131,8 @@ class App extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel')
+  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  accessibleMode: selectors.getAccessibleMode(state)
 });
 
 const mapDispatchToProps = {
