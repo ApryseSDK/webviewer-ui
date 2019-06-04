@@ -64,15 +64,11 @@ app.post('/annotations', (req, res) => {
 	res.end();
 });
 
-app.get('/license-key.js', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../../samples/license-key.js'));
-});
-
 app.get('/', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'src/index.html'));
 });
 
-app.get('/mobile', (req, res) => {
+app.get('/sample-url', (req, res) => {
 	res.redirect(`/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1`);
 });
 
