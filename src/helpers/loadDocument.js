@@ -285,30 +285,21 @@ export const getDocumentExtension = docName => {
     extension = result && result[1].toLowerCase();
   }
 
-  if (extension) {
-    if (!supportedExtensions.includes(extension)) {
-      console.error(`File extension is not found or incorrect. Use "extension" option in PDFTron.WebViewer constructor and loadDocument if the extension is not known. See for more details ...`)
-      console.error(`File extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWebViewer server supports ${supportedBlackboxExtensions.join(', ')}`);
-    }
-  } else if (doc && engineType === engineTypes.AUTO) {
-    console.warn(`File extension cannot be determined from ${doc}. Falling back to pdf`);
-  }
-
-  return extension ? extension : '';
+  return extension;
 };
 
 export const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
   let { path, filename, initialDoc, ext } = state.document;
   if (ext && !filename) {
-    filename = createFakeFilename(path || initialDoc, ext)
+    filename = createFakeFilename(path || initialDoc, ext);
   }
   return filename || path || initialDoc;
 };
 
 const createFakeFilename = (initialDoc, ext) => {
-  return initialDoc.replace(/^.*[\\\/]/, '') + '.' + ext.replace(/^\./, "");
-}
+  return initialDoc.replace(/^.*[\\\/]/, '') + '.' + ext.replace(/^\./, '');
+};
 
 const isPDFNetJSExtension = extension => {
   return isOfficeExtension(extension) || isPDFExtension(extension);
