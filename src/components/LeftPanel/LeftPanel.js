@@ -36,7 +36,7 @@ class LeftPanel extends React.Component {
     document.body.style.setProperty('--left-panel-width', '300px');
 
     // we are using css variables to make the panel resizable but IE11 doesn't support it
-    if (!isIE11) {
+    if (!isIE11 && this.sliderRef.current) {
       this.sliderRef.current.onmousemove = this.dragMouseMove;
       this.sliderRef.current.onmouseup = this.closeDrag;
     }

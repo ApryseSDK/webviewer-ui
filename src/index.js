@@ -320,7 +320,7 @@ if (window.CanvasRenderingContext2D) {
           setZoomList: apis.setZoomList(store),
           showWarningMessage: apis.showWarningMessage(store), // undocumented
           toggleElement: apis.toggleElement(store),
-          showErrorMessage: apis.showErrorMessage,
+          showErrorMessage: apis.showErrorMessage(store),
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store), // undocumented
@@ -336,6 +336,12 @@ if (window.CanvasRenderingContext2D) {
             return state.advanced.customData;
           }
         };
+
+        if (window.innerWidth <= 640) {
+          core.fitToWidth();
+        } else {
+          core.fitToPage();
+        }
 
         $(document).trigger('viewerLoaded');
       }

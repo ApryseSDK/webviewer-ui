@@ -180,14 +180,13 @@ class NotesPanel extends React.PureComponent {
     return(
       notes.map((note, i) => {
         return (
-          <React.Fragment
-            key={note.Id + getLatestActivityDate(note)}
-          >
+          <React.Fragment key={note.Id + getLatestActivityDate(note)}>
             {this.renderListSeparator(notes, note)}
             <Note
               index={i}
               visible={this.isVisibleNote(note)}
               annotation={note}
+              replies={note.getReplies()}
               searchInput={this.state.searchInput}
               rootContents={note.getContents()}
               willFocus={selectionIndex !== null && mod(selectionIndex, notes.length) === i}
