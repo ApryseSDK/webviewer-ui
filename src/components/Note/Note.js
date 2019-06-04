@@ -82,7 +82,11 @@ class Note extends React.PureComponent {
   }
 
   scrollIntoView = () => {
-    this.containerRef.current.scrollIntoView();
+    if (this.containerRef.current.scrollIntoViewIfNeeded) {
+      this.containerRef.current.scrollIntoViewIfNeeded();
+    } else {
+      this.containerRef.current.scrollIntoView();
+    }
   }
 
   openRootEditing = () => {
