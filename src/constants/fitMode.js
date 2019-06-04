@@ -6,7 +6,7 @@
  * @property {string} Zoom A fit mode where the zoom level is not fixed.
  * @example // 5.1 and after
 WebViewer(...)
-  .then(instance => {
+  .then(function(instance) {
     var FitMode = instance.FitMode;
     // FitMode.SomeMode
   });
