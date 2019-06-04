@@ -208,17 +208,12 @@ const getDocOptions = (state, dispatch, streaming) => {
   });
 };
 
-let engineType;
 const getEngineType = state => {
-  if (engineType) {
-    return engineType;
-  }
-
   const docName = getDocName(state);
   const fileExtension = getDocumentExtension(docName);
   const { pdftronServer } = state.advanced;
 
-  engineType = state.advanced.engineType;
+  let engineType = state.advanced.engineType;
   if (engineType === engineTypes.AUTO) {
     if (fileExtension === 'xod') {
       engineType = engineTypes.UNIVERSAL;
