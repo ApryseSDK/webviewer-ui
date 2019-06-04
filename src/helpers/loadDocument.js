@@ -31,7 +31,7 @@ export default (state, dispatch) => {
         if (partRetriever.setErrorCallback) {
           partRetriever.setErrorCallback(fireError);
         }
-        
+
         dispatch(actions.openElement('progressModal'));
         core.loadAsync(partRetriever, docOptions);
       })
@@ -120,10 +120,10 @@ const getPartRetriever = (state, streaming, dispatch) => {
         dispatch(actions.setIsUploading(true)); // this is reset in onDocumentLoaded event
       }
 
-      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets, singleServerMode });
+      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, blackboxOptions);
       if (needsUpload) {
         partRetriever._isBlackboxLocalFile = true;
-      }      
+      }
     } else if (engineType === engineTypes.UNIVERSAL) {
       const cache = window.CoreControls.PartRetrievers.CacheHinting.NO_HINT;
 
