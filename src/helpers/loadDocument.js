@@ -9,12 +9,12 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 export default (state, dispatch) => {
-  const { path, knownType } = state.document;
-  if (knownType) {
+  const { path, customDocType } = state.document;
+  if (customDocType) {
     // setTimeout is for a timing issue. DocumentContainer is not mounted if we call loadAsync too early.
     // PageLayout will error if this happens.
     setTimeout(() => {
-      core.loadAsync({ url: path }, { type: knownType });
+      core.loadAsync({ url: path }, { type: customDocType });
     }, 0);
   } else {
     core.closeDocument(dispatch).then(() => {

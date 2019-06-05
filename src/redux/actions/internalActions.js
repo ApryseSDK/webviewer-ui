@@ -124,7 +124,7 @@ export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: 
 export const setDocumentPath = documentPath => ({ type: 'SET_DOCUMENT_PATH', payload: { documentPath } });
 export const setDocumentFile = documentFile => ({ type: 'SET_DOCUMENT_FILE', payload: { documentFile } });
 export const setDocumentType = type => ({ type: 'SET_DOCUMENT_TYPE', payload: { type }});
-export const setKnownDocumentType = knownType => ({ type: 'SET_KNOWN_DOCUMENT_TYPE', payload: { knownType } });
+export const setCustomDocumentType = customDocType => ({ type: 'SET_CUSTOM_DOCUMENT_TYPE', payload: { customDocType } });
 export const setPDFDoc = pdfDoc => ({ type: 'SET_PDF_DOC', payload: { pdfDoc }});
 export const setFilename = filename => ({ type: 'SET_FILENAME', payload: { filename } });
 export const setExtension = extension => ({ type: 'SET_EXTENSION', payload: { extension } });

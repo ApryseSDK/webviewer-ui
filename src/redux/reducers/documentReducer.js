@@ -10,8 +10,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, file: payload.documentFile, path: payload.documentFile.name, pdfDoc: null };
     case 'SET_DOCUMENT_TYPE':
       return { ...state, type: payload.type };
-    case 'SET_KNOWN_DOCUMENT_TYPE':
-      return { ...state, knownType: payload.knownType };
+    case 'SET_CUSTOM_DOCUMENT_TYPE':
+      return { ...state, customDocType: payload.customDocType };
     case 'SET_PDF_DOC':
       return { ...state, pdfDoc: payload.pdfDoc, file: null };
     case 'SET_PAGE_NUMBER':

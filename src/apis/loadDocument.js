@@ -31,10 +31,10 @@ export default store => (documentPath, options = {}) => {
     customHeaders = {},
     withCredentials = false,
     password = '',
-    knownType,
+    customDocType,
   } = options;
 
-  store.dispatch(actions.setKnownDocumentType(knownType));
+  store.dispatch(actions.setCustomDocumentType(customDocType));
   store.dispatch(actions.setDocumentId(documentId));
   store.dispatch(actions.setStreaming(streaming));
   store.dispatch(actions.setDecryptFunction(decrypt));
