@@ -103,7 +103,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
     } else if (engineType === engineTypes.PDFTRON_SERVER) {
       partRetrieverName = 'BlackBoxPartRetriever';
 
-      const blackboxOptions = { disableWebsockets };
+      const blackboxOptions = { disableWebsockets, singleServerMode };
       const needsUpload = file && file.name;
 
       // If PDFTron server is set and they try and upload a local file
@@ -122,7 +122,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
         dispatch(actions.setIsUploading(true)); // this is reset in onDocumentLoaded event
       }
 
-      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, { disableWebsockets, singleServerMode });
+      partRetriever = new window.CoreControls.PartRetrievers.BlackBoxPartRetriever(documentPath, pdftronServer, blackboxOptions);
       if (needsUpload) {
         partRetriever._isBlackboxLocalFile = true;
       }
@@ -240,17 +240,12 @@ const getDocOptions = (state, dispatch, streaming) => {
   });
 };
 
-let engineType;
 const getEngineType = state => {
-  if (engineType) {
-    return engineType;
-  }
-
   const docName = getDocName(state);
   const fileExtension = getDocumentExtension(docName);
   const { pdftronServer } = state.advanced;
 
-  engineType = state.advanced.engineType;
+  let engineType = state.advanced.engineType;
   if (engineType === engineTypes.AUTO) {
     if (fileExtension === 'xod') {
       engineType = engineTypes.UNIVERSAL;
@@ -287,16 +282,7 @@ export const getDocumentExtension = docName => {
     extension = result && result[1].toLowerCase();
   }
 
-  if (extension) {
-    if (!supportedExtensions.includes(extension)) {
-      console.error(`File extension is not found or incorrect. Use "extension" option in PDFTron.WebViewer constructor and loadDocument if the extension is not known. See for more details ...`);
-      console.error(`File extension ${extension} from ${doc} is not supported.\nWebViewer client only mode supports ${supportedClientOnlyExtensions.join(', ')}.\nWebViewer server supports ${supportedBlackboxExtensions.join(', ')}`);
-    }
-  } else if (doc && engineType === engineTypes.AUTO) {
-    console.warn(`File extension cannot be determined from ${doc}. Falling back to pdf`);
-  }
-
-  return extension ? extension : '';
+  return extension;
 };
 
 export const getDocName = state => {
