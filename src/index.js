@@ -276,6 +276,7 @@ if (window.CanvasRenderingContext2D) {
           isReadOnly: apis.isReadOnly,
           isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
+          loadHtml: apis.loadHtml(store),
           openElement: apis.openElement(store),
           openElements: apis.openElements(store),
           print: apis.print(store),

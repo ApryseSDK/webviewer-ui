@@ -10,6 +10,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, file: payload.documentFile, path: payload.documentFile.name, pdfDoc: null };
     case 'SET_DOCUMENT_TYPE':
       return { ...state, type: payload.type };
+    case 'SET_KNOWN_DOCUMENT_TYPE':
+      return { ...state, knownType: payload.knownType };
     case 'SET_PDF_DOC':
       return { ...state, pdfDoc: payload.pdfDoc, file: null };
     case 'SET_PAGE_NUMBER':
@@ -36,7 +38,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, workerLoadingProgress: payload.workerLoadingProgress };
     case 'RESET_LOADING_PROGRESS':
       return { ...state, documentLoadingProgress: 0, workerLoadingProgress: 0 };
-    
+
     case 'SET_IS_UPLOADING':
       return { ...state, isUploading: payload.isUploading };
     case 'SET_UPLOAD_PROGRESS':

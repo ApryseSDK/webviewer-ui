@@ -30,9 +30,11 @@ export default store => (documentPath, options = {}) => {
     decryptOptions = {},
     customHeaders = {},
     withCredentials = false,
-    password = ''
+    password = '',
+    knownType,
   } = options;
 
+  store.dispatch(actions.setKnownDocumentType(knownType));
   store.dispatch(actions.setDocumentId(documentId));
   store.dispatch(actions.setStreaming(streaming));
   store.dispatch(actions.setDecryptFunction(decrypt));
@@ -50,5 +52,6 @@ export default store => (documentPath, options = {}) => {
   } else {
     store.dispatch(actions.setDocumentPath(documentPath));
   }
+
   loadDocument(store.getState(), store.dispatch);
 };
