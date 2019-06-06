@@ -11,7 +11,7 @@
 WebViewer(...)
   .then(function(instance) {
     var LayoutMode = instance.LayoutMode;
-    // LayoutMode.SomeMode
+    instance.setLayoutMode(LayoutMode.Single);
   });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
@@ -20,7 +20,7 @@ var viewer = new PDFTron.WebViewer(...);
 viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();
   var LayoutMode = instance.LayoutMode;
-  // LayoutMode.SomeMode
+  instance.setLayoutMode(LayoutMode.Single);
 });
  */
 
