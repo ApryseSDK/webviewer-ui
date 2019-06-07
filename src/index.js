@@ -98,7 +98,7 @@ if (window.CanvasRenderingContext2D) {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, window.sampleL);
+        });
       });
     }
 
@@ -108,7 +108,7 @@ if (window.CanvasRenderingContext2D) {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, window.sampleL);
+        });
       });
     }
   }

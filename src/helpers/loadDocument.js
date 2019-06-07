@@ -323,14 +323,14 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
     const usingOfficeWorker = supportedOfficeExtensions.indexOf(originalExtension) !== -1;
     if (usingOfficeWorker && !officeWorkerTransportPromise) {
       type = workerTypes.OFFICE;
-      workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(officeBackendType, workerHandlers, window.sampleL);
+      workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(officeBackendType, workerHandlers);
     } else if (!usingOfficeWorker && !pdfWorkerTransportPromise) {
       type = workerTypes.PDF;
       // if the extension isn't pdf or an image then assume it's a pdf
       if (supportedPDFExtensions.indexOf(originalExtension) === -1) {
         extension = 'pdf';
       }
-      workerTransportPromise = window.CoreControls.initPDFWorkerTransports(pdfBackendType, workerHandlers, window.sampleL);
+      workerTransportPromise = window.CoreControls.initPDFWorkerTransports(pdfBackendType, workerHandlers);
     } else if (usingOfficeWorker) {
       type = workerTypes.OFFICE;
       workerTransportPromise = officeWorkerTransportPromise;
