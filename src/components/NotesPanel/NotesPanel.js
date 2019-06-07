@@ -62,14 +62,15 @@ class NotesPanel extends React.PureComponent {
   }
 
   onAnnotationChanged = () => {
-    this.rootAnnotations = this.getRootAnnotations();  
+    this.rootAnnotations = this.getRootAnnotations();
     const notesToRender = this.filterAnnotations(this.rootAnnotations, this.state.searchInput);
-    
-    this.setVisibleNoteIds(notesToRender);
+    const visibleNotes = notesToRender.filter(a => !a.Hidden);
+
+    this.setVisibleNoteIds(visibleNotes);
     this.setState({ notesToRender });
   }
 
-  getRootAnnotations = () => core.getAnnotationsList().filter(annotation => annotation.Listable && !annotation.isReply() && !annotation.Hidden);
+  getRootAnnotations = () => core.getAnnotationsList().filter(annotation => annotation.Listable && !annotation.isReply());
 
   handleInputChange = e => {
     const searchInput = e.target.value;
