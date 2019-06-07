@@ -19,6 +19,7 @@ import getTotalPages from './getTotalPages';
 import getCurrentPage from './getCurrentPage';
 import setCurrentPage from './setCurrentPage';
 import getType from './getType';
+import isWebViewerServerDocument from './isWebViewerServerDocument';
 import getSelectedText from './getSelectedText';
 import clearSelection from './clearSelection';
 import setOptions from './setOptions';
@@ -114,6 +115,7 @@ export default {
   getCurrentPage,
   setCurrentPage,
   getType,
+  isWebViewerServerDocument,
   getSelectedText,
   clearSelection,
   setOptions,

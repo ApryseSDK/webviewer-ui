@@ -9,16 +9,38 @@
  * @param {string} [properties.buttonGroup] Group of the tool button belongs to.
  * @param {string} [properties.tooltip] Tooltip of the tool button.
  * @param {function} [annotationConstructor] The constructor function for the annotation that will be created by the registered tool.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.registerTool({
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    // assume myCustomTool and myCustomAnnotation are already defined
+    var myTool = {
+      toolName: 'MyTool',
+      toolObject: myCustomTool,
+      buttonImage: 'path/to/image',
+      buttonName: 'myToolButton',
+      buttonGroup: 'miscTools',
+      tooltip: 'MyTooltip'
+    };
+
+    instance.registerTool(myTool, myCustomAnnotation);
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  // assume myCustomTool and myCustomAnnotation are already defined
+  var myTool = {
     toolName: 'MyTool',
     toolObject: myCustomTool,
     buttonImage: 'path/to/image',
     buttonName: 'myToolButton',
     buttonGroup: 'miscTools',
     tooltip: 'MyTooltip'
-  }, myCustomAnnotation);
+  };
+
+  instance.registerTool(myTool, myCustomAnnotation);
 });
  */
 

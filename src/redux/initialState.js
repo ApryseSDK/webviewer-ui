@@ -213,6 +213,7 @@ export default {
     fullAPI: getHashParams('pdfnet', false),
     pdftronServer: getHashParams('pdftronServer', ''),
     singleServerMode: getHashParams('singleServerMode', false),
+    forceClientSideInit: getHashParams('forceClientSideInit', false),
     disableWebsockets: getHashParams('disableWebsockets', false),
     preloadWorker: getHashParams('preloadWorker', false),
     serverUrl: getHashParams('server_url', ''),

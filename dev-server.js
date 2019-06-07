@@ -29,7 +29,6 @@ app.use('/i18n', express.static(path.resolve(__dirname, 'i18n')));
 app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
 app.use('/mime', express.static(path.resolve(__dirname, 'mime')));
 app.use('/core', express.static(path.resolve(__dirname, '../core')));
-app.use('/files', express.static(path.resolve(__dirname, '../../samples/files')));
 
 const handleAnnotation = (req, res, handler) => {
 	const dir = path.resolve(__dirname, 'annotations');

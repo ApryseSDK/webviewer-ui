@@ -230,6 +230,7 @@ if (window.CanvasRenderingContext2D) {
           closeElements: apis.closeElements(store),
           disableAnnotations: apis.disableAnnotations(store),
           disableDownload: apis.disableDownload(store),
+          disableElement: apis.disableElement(store),
           disableElements: apis.disableElements(store),
           disableFilePicker: apis.disableFilePicker(store),
           disableLocalStorage: apis.disableLocalStorage,
@@ -244,6 +245,7 @@ if (window.CanvasRenderingContext2D) {
           enableAllElements: apis.enableAllElements(store), // undocumented
           enableAnnotations: apis.enableAnnotations(store),
           enableDownload: apis.enableDownload(store),
+          enableElement: apis.enableElement(store),
           enableElements: apis.enableElements(store),
           enableFilePicker: apis.enableFilePicker(store),
           enableLocalStorage: apis.enableLocalStorage,
@@ -318,9 +320,9 @@ if (window.CanvasRenderingContext2D) {
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
           setZoomList: apis.setZoomList(store),
+          showErrorMessage: apis.showErrorMessage(store),
           showWarningMessage: apis.showWarningMessage(store), // undocumented
           toggleElement: apis.toggleElement(store),
-          showErrorMessage: apis.showErrorMessage(store),
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store), // undocumented
@@ -336,12 +338,6 @@ if (window.CanvasRenderingContext2D) {
             return state.advanced.customData;
           }
         };
-
-        if (window.innerWidth <= 640) {
-          core.fitToWidth();
-        } else {
-          core.fitToPage();
-        }
 
         $(document).trigger('viewerLoaded');
       }
