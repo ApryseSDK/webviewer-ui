@@ -32,7 +32,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('beginRendering', this.onBeginRendering);
     core.addEventListener('finishedRendering', this.onFinishedRendering);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
-    core.addEventListener('pageNumberUpdated', this.onPageChange);
+    core.addEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     window.addEventListener('resize', this.onWindowResize);
   }
   
@@ -40,7 +40,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('beginRendering', this.onBeginRendering);
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
-    core.removeEventListener('pageNumberUpdated', this.onPageChange);
+    core.removeEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     window.removeEventListener('resize', this.onWindowResize);
   }
 
@@ -72,12 +72,12 @@ class ThumbnailsPanel extends React.PureComponent {
     });
   }
 
-  onPageChange = (e, visiblePages) => {
+  onPageNumberUpdated = (e, pageNumber) => {
     const { thumbnailsPanel } = this;
 
-    if( thumbnailsPanel && thumbnailsPanel.current ) {
-      const thumbnailHeight = thumbnailsPanel.current.querySelector('.Thumbnail').offsetHeight;
-      const pageIndex = visiblePages - 1;
+    if (thumbnailsPanel && thumbnailsPanel.current) {
+      const thumbnailHeight = this.thumbs[0].element.offsetHeight;
+      const pageIndex = pageNumber - 1;
       const scrollLocation = pageIndex * thumbnailHeight;
       thumbnailsPanel.current.scrollTop = scrollLocation;
     }
