@@ -166,7 +166,9 @@ export default initialState => (state = initialState, action) => {
     case 'SET_SWIPE_ORIENTATION':
       return { ...state, swipeOrientation: payload.swipeOrientation };
     case 'SET_WARNING_MESSAGE':
-      return { ...state, warning: payload};
+      return { ...state, warning: payload };
+    case 'SET_ERROR_MESSAGE':
+      return { ...state, errorMessage: payload.message };
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
     case 'ADD_ITEMS': {

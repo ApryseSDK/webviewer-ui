@@ -70,12 +70,13 @@ class NotesPanel extends React.PureComponent {
   onAnnotationChanged = () => {
     this.rootAnnotations = this.getRootAnnotations();
     const notesToRender = this.filterAnnotations(this.rootAnnotations, this.state.searchInput);
+    const visibleNotes = notesToRender.filter(a => !a.Hidden);
 
-    this.setVisibleNoteIds(notesToRender);
+    this.setVisibleNoteIds(visibleNotes);
     this.setState({ notesToRender });
   }
 
-  getRootAnnotations = () => core.getAnnotationsList().filter(annotation => annotation.Listable && !annotation.isReply() && !annotation.Hidden);
+  getRootAnnotations = () => core.getAnnotationsList().filter(annotation => annotation.Listable && !annotation.isReply());
 
   handleInputChange = e => {
     const searchInput = e.target.value;
@@ -180,14 +181,13 @@ class NotesPanel extends React.PureComponent {
     return(
       notes.map((note, i) => {
         return (
-          <React.Fragment
-            key={note.Id + getLatestActivityDate(note)}
-          >
+          <React.Fragment key={note.Id + getLatestActivityDate(note)}>
             {this.renderListSeparator(notes, note)}
             <Note
               index={i}
               visible={this.isVisibleNote(note)}
               annotation={note}
+              replies={note.getReplies()}
               searchInput={this.state.searchInput}
               rootContents={note.getContents()}
               willFocus={selectionIndex !== null && mod(selectionIndex, notes.length) === i}

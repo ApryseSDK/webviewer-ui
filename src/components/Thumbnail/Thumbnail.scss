@@ -28,6 +28,11 @@
     }
 
     .page-image {
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        /* only for IE*/
+        height: auto !important;
+        width: auto !important;
+      }
       max-width: 148px;
       max-height: 148px;
       border: 1px solid transparent;

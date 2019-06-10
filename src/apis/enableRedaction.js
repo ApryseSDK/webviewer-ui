@@ -1,9 +1,17 @@
 /**
  * Enables redaction feature, affecting any elements related to redaction.
  * @method WebViewer#enableRedaction
- * @example // enable redaction feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    instance.enableRedaction();
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
   instance.enableRedaction();
 });
  */
@@ -19,7 +27,7 @@ export default store => (enable = true) =>  {
     core.enableRedaction(true);
 
     if (!core.isFullPDFEnabled()) {
-      console.warn('Full api is not enabled, applying redactions is disabled');
+    console.warn('Full api is not enabled, applying redactions is disabled');
     }
   } else {
     disableRedaction(store)();
