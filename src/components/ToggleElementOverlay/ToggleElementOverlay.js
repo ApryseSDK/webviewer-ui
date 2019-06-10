@@ -23,11 +23,17 @@ class ToggleElementOverlay extends React.PureComponent {
   }
 
   componentDidMount() {
+    core.addEventListener('documentLoaded', this.onDocumentLoaded);
     core.addEventListener('zoomUpdated', this.onZoomUpdated);
   }
-
+  
   componentWillUnmount() {
+    core.removeEventListener('documentLoaded', this.onDocumentLoaded);
     core.removeEventListener('zoomUpdated', this.onZoomUpdated);
+  }
+
+  onDocumentLoaded = () => {
+    this.setState({ value: Math.ceil(core.getZoom() * 100).toString() });
   }
 
   onZoomUpdated = () => {

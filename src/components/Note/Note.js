@@ -44,11 +44,6 @@ class Note extends React.PureComponent {
     this.containerRef = React.createRef();
   }
 
-  componentDidMount() {
-    core.addEventListener('addReply', this.onAddReply);
-    core.addEventListener('deleteReply', this.onDeleteReply);
-  }
-
   componentDidUpdate(prevProps) {
     const { annotation, willFocus } = this.props;
     const commentEditable = core.canModify(annotation) && !annotation.getContents();
@@ -79,27 +74,6 @@ class Note extends React.PureComponent {
     }
   }
 
-  componentWillUnmount() {
-    core.removeEventListener('addReply', this.onAddReply);
-    core.removeEventListener('deleteReply', this.onDeleteReply);
-  }
-
-  onAddReply = (e, reply, parent) => {
-    if (parent === this.props.annotation) {
-      this.setState({
-        replies: [ ...parent.getReplies() ]
-      });
-    }
-  }
-
-  onDeleteReply = (e, reply, parent) => {
-    if (parent === this.props.annotation) {
-      this.setState({
-        replies: parent.getReplies().filter(a => a !== reply)
-      });
-    }
-  }
-
   onClickNote = e => {
     e.stopPropagation();
 
@@ -115,9 +89,10 @@ class Note extends React.PureComponent {
   }
 
   scrollIntoView = () => {
-    const target = this.containerRef.current;
-    if (target) {
-      target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop;
+    if (this.containerRef.current.scrollIntoViewIfNeeded) {
+      this.containerRef.current.scrollIntoViewIfNeeded();
+    } else {
+      this.containerRef.current.scrollIntoView();
     }
   }
 
@@ -234,8 +209,8 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents, index, setListIndex }  = this.props;
-    const { replies, isRootContentEditing, isReplyFocused } = this.state;
+    const { annotation, replies, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents, index, setListIndex }  = this.props;
+    const { isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
       isNoteExpanded ? 'expanded' : '',

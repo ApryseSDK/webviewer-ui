@@ -15,6 +15,7 @@ export default store =>  {
 
     if (window.readerControl.serverFailed) {
       callback(originalData);
+      return;
     } else if (window.readerControl.loadedFromServer) {
       callback('');
       return;

@@ -2,8 +2,17 @@
  * Returns if the current browser is on a mobile device.
  * @method WebViewer#isMobileDevice
  * @returns {boolean} Whether the current browser is on a mobile device.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    console.log(instance.isMobileDevice());
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
   console.log(instance.isMobileDevice());
 });
  */

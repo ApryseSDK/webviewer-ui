@@ -1,9 +1,17 @@
 /**
  * Enables annotations feature, affecting the annotation visibility and elements related to annotations.
  * @method WebViewer#enableAnnotations
- * @example // enable annotations feature
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    instance.enableAnnotations();
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
   instance.enableAnnotations();
 });
  */
@@ -34,7 +42,7 @@ export default store => (enable = true) =>  {
     store.dispatch(actions.enableElements(elements, PRIORITY_ONE));
     core.showAnnotations(core.getAnnotationsList());
   } else {
-    console.warn('enableAnnotations(false) is deprecated, please use disableAnnotations() instead');
+  console.warn('enableAnnotations(false) is deprecated, please use disableAnnotations() instead');
     disableAnnotations(store)();
   }
 };

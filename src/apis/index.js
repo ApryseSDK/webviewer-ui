@@ -5,6 +5,7 @@ import closeElement from './closeElement';
 import closeElements from './closeElements';
 import disableAnnotations from './disableAnnotations';
 import disableDownload from './disableDownload';
+import disableElement from './disableElement';
 import disableElements from './disableElements';
 import disableFilePicker from './disableFilePicker';
 import disableLocalStorage from './disableLocalStorage';
@@ -19,6 +20,7 @@ import downloadPdf from './downloadPdf';
 import enableAllElements from './enableAllElements';
 import enableAnnotations from './enableAnnotations';
 import enableDownload from './enableDownload';
+import enableElement from './enableElement';
 import enableElements from './enableElements';
 import enableFilePicker from './enableFilePicker';
 import enableLocalStorage from './enableLocalStorage';
@@ -30,7 +32,6 @@ import enableTextSelection from './enableTextSelection';
 import enableTool from './enableTool';
 import enableTools from './enableTools';
 import focusNote from './focusNote';
-import getActions from './setColorPalette';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
 import getConstants from './getConstants';
@@ -112,6 +113,7 @@ export default {
   closeElements,
   disableAnnotations,
   disableDownload,
+  disableElement,
   disableElements,
   disableFilePicker,
   disableLocalStorage,
@@ -126,6 +128,7 @@ export default {
   enableAllElements,
   enableAnnotations,
   enableDownload,
+  enableElement,
   enableElements,
   enableFilePicker,
   enableLocalStorage,
@@ -137,7 +140,6 @@ export default {
   enableTool,
   enableTools,
   focusNote,
-  getActions,
   getAnnotationUser,
   getBBAnnotManager,
   getConstants,

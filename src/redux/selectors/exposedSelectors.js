@@ -152,6 +152,10 @@ export const getWarningConfirmEvent = state => state.viewer.warning && state.vie
 export const getWarningConfirmBtnText = state =>  state.viewer.warning && state.viewer.warning.confirmBtnText;
 export const getWarningCancelEvent = state =>  state.viewer.warning && state.viewer.warning.onCancel;
 
+
+// error message
+export const getErrorMessage = state => state.viewer.errorMessage || '';
+
 // document
 export const getDocument = state => state.document;
 export const getDocumentId = state => state.document.id;
