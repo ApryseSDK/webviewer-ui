@@ -26,7 +26,7 @@ export default store => (enable = true) =>  {
     store.dispatch(actions.enableElements(['annotationCommentButton', 'notesPanelButton', 'notesPanel'], PRIORITY_TWO));
     store.dispatch(actions.setActiveLeftPanel('notesPanel'));
   } else {
-  console.warn('enableNotesPanel(false) is deprecated, please use disableNotesPanel() instead');
+    console.warn('enableNotesPanel(false) is deprecated, please use disableNotesPanel() instead');
     disableNotesPanel(store)();
   }
 };

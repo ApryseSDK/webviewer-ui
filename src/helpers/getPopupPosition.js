@@ -163,4 +163,4 @@ const calcPopupTop = ({ topLeft, bottomRight } , { height }, topThreshold) => {
     top = bottomRight.y - scrollTop + bottomGap;
   }
   return Math.round(top);
- };
+};

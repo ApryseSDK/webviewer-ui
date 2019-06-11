@@ -35,6 +35,6 @@ export default store => (toolName, colorPalette) => {
   if (availablePalettes.includes(property)) {
     store.dispatch(actions.setIconColor(toolName, mapPaletteToAnnotationColorProperty[colorPalette]));
   } else {
-  console.warn(`${toolName} does not have ${colorPalette} color, available colors are: ${availablePalettes.map(palette => mapAnnotationColorPropertyToPalette[palette]).join(', ')} `);
+    console.warn(`${toolName} does not have ${colorPalette} color, available colors are: ${availablePalettes.map(palette => mapAnnotationColorPropertyToPalette[palette]).join(', ')} `);
   }
 };

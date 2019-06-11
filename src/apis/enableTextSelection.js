@@ -25,7 +25,7 @@ export default store => (enable = true) => {
   if (enable) {
     store.dispatch(actions.enableElements(['textPopup', 'textSelectButton'], PRIORITY_ONE));
   } else {
-  console.warn('enableTextSelection(false) is deprecated, please use disableTextSelection() instead');
+    console.warn('enableTextSelection(false) is deprecated, please use disableTextSelection() instead');
     disableTextSelection(store)();
   }
 

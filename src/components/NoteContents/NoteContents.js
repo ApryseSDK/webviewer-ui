@@ -79,14 +79,14 @@ class NoteContents extends React.Component {
       <div className="NoteContents" onClick={this.handleNoteContentsClick}>
         {isEditing && 
           <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
-          <textarea 
-            ref={this.textInput} 
-            onChange={this.onChange} 
-            onKeyDown={this.onKeyDown}
-            onBlur={closeEditing}         
-            defaultValue={contents} 
-            placeholder={`${t('action.comment')}...`}
-          />
+            <textarea 
+              ref={this.textInput} 
+              onChange={this.onChange} 
+              onKeyDown={this.onKeyDown}
+              onBlur={closeEditing}         
+              defaultValue={contents} 
+              placeholder={`${t('action.comment')}...`}
+            />
             <span className="buttons">
               <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
               <button onMouseDown={closeEditing}>{t('action.cancel')}</button>

@@ -242,7 +242,7 @@ class Note extends React.PureComponent {
             </div>
           }
         </div>
-    </div>
+      </div>
     );
   }
 }

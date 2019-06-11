@@ -11,33 +11,33 @@ export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
       Promise.all([getPartRetriever(state, streaming, dispatch), getDocOptions(state, dispatch, streaming)])
-      .then(params => {
-        const partRetriever = params[0];
-        const docOptions = params[1];
+        .then(params => {
+          const partRetriever = params[0];
+          const docOptions = params[1];
 
-        if (partRetriever.on) {
-      // If its a blackbox part retriever but the user uploaded a local file,
+          if (partRetriever.on) {
+            // If its a blackbox part retriever but the user uploaded a local file,
           // we dont set this because we already show an upload modal
-          if (!partRetriever._isBlackboxLocalFile) {
-            partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
-              dispatch(actions.setDocumentLoadingProgress(loaded / total));
+            if (!partRetriever._isBlackboxLocalFile) {
+              partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+                dispatch(actions.setDocumentLoadingProgress(loaded / total));
+              });
+            }
+            partRetriever.on('error', function(e, type, message) {
+              fireError(message);
             });
           }
-          partRetriever.on('error', function(e, type, message) {
-            fireError(message);
-          });
-        }
-        if (partRetriever.setErrorCallback) {
-          partRetriever.setErrorCallback(fireError);
-        }
+          if (partRetriever.setErrorCallback) {
+            partRetriever.setErrorCallback(fireError);
+          }
 
-        dispatch(actions.openElement('progressModal'));
-        core.loadAsync(partRetriever, docOptions);
-      })
-      .catch(error => {
-        fireError(error);
-        console.error(error);
-      });
+          dispatch(actions.openElement('progressModal'));
+          core.loadAsync(partRetriever, docOptions);
+        })
+        .catch(error => {
+          fireError(error);
+          console.error(error);
+        });
     });
   });
 };

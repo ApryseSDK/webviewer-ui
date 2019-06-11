@@ -30,7 +30,7 @@ export default store => (enable = true) => {
   if (enable) {
     store.dispatch(actions.enableElements(elements, PRIORITY_ONE));
   } else {
-  console.warn('enablePrint(false) is deprecated, please use disablePrint() instead');
+    console.warn('enablePrint(false) is deprecated, please use disablePrint() instead');
     disablePrint(store)();
   }
 };

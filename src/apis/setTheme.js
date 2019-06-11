@@ -99,7 +99,7 @@ const setPresetTheme = theme => {
   if (presetTheme) {
     setTheme(themeToPresetThemeMap[theme]);
   } else {
-  console.warn(`${theme} is not one of: default, dark`);
+    console.warn(`${theme} is not one of: default, dark`);
   }
 };
 
@@ -121,8 +121,8 @@ const setTheme = theme => {
       const color = theme[key];
       document.body.style.setProperty(cssVar, color);
     } else {
-    console.warn(`${key} is not valid, please make sure properties are a subset of:`);
-    console.warn(`primary, secondary, text, buttonHover, buttonActive and icon`);
+      console.warn(`${key} is not valid, please make sure properties are a subset of:`);
+      console.warn(`primary, secondary, text, buttonHover, buttonActive and icon`);
     }
   });
 };

@@ -41,7 +41,7 @@ export default mode =>  {
   const fitFunction = fitModeToFunctionMap[mode];
 
   if (!fitFunction) {
-  console.warn('Unsupported fit mode: ' + mode);
+    console.warn('Unsupported fit mode: ' + mode);
     return;
   }
 
