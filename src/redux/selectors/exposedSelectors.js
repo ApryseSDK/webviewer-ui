@@ -77,7 +77,7 @@ export const getListIndex = (state, panel) => {
   } else {
     return state.viewer.listIndex[panel];
   }
-}
+};
 export const getActiveDataElement = state => {
   let dataElement;
   const defaultArr = state.viewer.headers.default;
@@ -171,7 +171,7 @@ export const getOutlines = state => state.document.outlines;
 export const getLoadingProgress = state => Math.min(state.document.documentLoadingProgress, state.document.workerLoadingProgress);
 export const getUploadProgress = state => state.document.uploadProgress;
 export const isUploading = state => state.document.isUploading;
-export const getAccessibleMode = state => state.document.accessibleMode;
+export const getAccessibleMode = state => !!state.document.accessibleMode;
 
 // user
 export const getUserName = state => state.user.name;

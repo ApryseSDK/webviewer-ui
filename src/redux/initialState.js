@@ -196,7 +196,7 @@ export default {
     workerLoadingProgress: 0,
     isUploading: false,
     uploadProgress: 0,
-    accessibleMode: getHashParams('accessibleMode', true),
+    accessibleMode: getHashParams('accessibleMode', 0),
   },
   user: {
     name: getHashParams('user', 'Guest'),
