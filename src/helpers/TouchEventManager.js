@@ -31,13 +31,13 @@ const TouchEventManager = {
   },
 
   updateOrientation(newOrientation) {
-    if (newOrientation === 'both'){
+    if (newOrientation === 'both') {
       this.allowVerticalSwipe = true;
       this.allowHorizontalSwipe = true;
-    } else if (newOrientation === 'vertical'){
+    } else if (newOrientation === 'vertical') {
       this.allowVerticalSwipe = true;
       this.allowHorizontalSwipe = false;
-    } else if (newOrientation === 'horizontal'){
+    } else if (newOrientation === 'horizontal') {
       this.allowVerticalSwipe = false;
       this.allowHorizontalSwipe = true;
     } else {

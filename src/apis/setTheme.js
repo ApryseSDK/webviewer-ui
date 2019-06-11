@@ -66,7 +66,7 @@ export default theme => {
 
   if (isPresetTheme) {
     setPresetTheme(theme);
-  } else if (isCustomizedTheme){
+  } else if (isCustomizedTheme) {
     setTheme(theme);
   }
 };
