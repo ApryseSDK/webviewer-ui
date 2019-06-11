@@ -32,13 +32,18 @@ module.exports = {
 				use: [
 					'style-loader',
 					'css-loader',
-					'sass-loader',
 					{
 						loader: 'postcss-loader',
 						options: {
-							plugins: () => [ require('autoprefixer')() ]
+							ident: 'postcss',
+							plugins: loader => [
+								require('postcss-import')({ root: loader.resourcePath }),
+								require('postcss-preset-env')(),
+								require('cssnano')()
+							]
 						}
-					}
+					},
+					'sass-loader'
 				],
 				include: path.resolve(__dirname, 'src')
 			},
