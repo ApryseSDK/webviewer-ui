@@ -6,7 +6,6 @@ import { fireError } from 'helpers/fireEvent';
 import { engineTypes, workerTypes } from 'constants/types';
 import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
-import selectors from 'selectors';
 
 export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
@@ -296,10 +295,6 @@ const createFakeFilename = (initialDoc, ext) => {
   return initialDoc.replace(/^.*[\\\/]/, '') + '.' + ext.replace(/^\./, '');
 };
 
-const isPDFNetJSExtension = extension => {
-  return isOfficeExtension(extension) || isPDFExtension(extension);
-};
-
 export const isOfficeExtension = extension => {
   return supportedOfficeExtensions.indexOf(extension) !== -1;
 };
@@ -339,10 +334,4 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
   }
 
   return { type, extension, workerTransportPromise };
-};
-
-const isLocalFile = state => {
-  const path = selectors.getDocumentPath(state);
-
-  return !/https?:\/\//.test(path);
 };

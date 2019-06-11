@@ -16,9 +16,10 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import disableFilePicker from './disableFilePicker';
-import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
+import { PRIORITY_ONE } from 'constants/actionPriority';
+
+import disableFilePicker from './disableFilePicker';
 
 export default store => (enable = true) =>  {
   if (enable) {

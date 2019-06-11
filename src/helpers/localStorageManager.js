@@ -12,7 +12,7 @@ class LocalStorageManager {
   }
 
   isLocalStorageEnabled() {
-    return this.localStorageEnabled
+    return this.localStorageEnabled;
   }
 }
 

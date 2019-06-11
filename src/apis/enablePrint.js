@@ -16,9 +16,10 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import disablePrint from './disablePrint';
-import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
+import { PRIORITY_ONE } from 'constants/actionPriority';
+
+import disablePrint from './disablePrint';
 
 export default store => (enable = true) => {
   const elements = [

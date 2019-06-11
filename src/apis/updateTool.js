@@ -27,7 +27,8 @@ viewerElement.addEventListener('ready', function() {
  */
 
 import actions from 'actions';
-import setHeaderItems from '../apis/setHeaderItems';
+
+import setHeaderItems from './setHeaderItems';
 
 export default store => (toolName, properties) => {
   if (properties.buttonGroup === null){
@@ -41,12 +42,12 @@ export default store => (toolName, properties) => {
       if (!alreadyExist){
         header.getHeader('default').get('miscToolGroupButton').insertBefore({
           type: 'toolButton',
-          toolName: toolName,
+          toolName,
           hidden: [ 'tablet', 'mobile' ]
         });
         header.getHeader('tools').get('miscToolGroupButton').insertBefore({
           type: 'toolButton',
-          toolName: toolName,
+          toolName,
           hidden: [ 'desktop' ]
         });
       }

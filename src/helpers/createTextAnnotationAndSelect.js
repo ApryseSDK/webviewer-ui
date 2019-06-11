@@ -56,7 +56,7 @@ const setAnnotationColor = annotation => {
 };
 
 const setRedactionStyle = annotation => {
-  const { AnnotationCreateRedaction: { defaults: style = {} } } = readerControl.docViewer.getToolModeMap();
+  const { AnnotationCreateRedaction: { defaults: style = {} } } = core.getToolModeMap();
 
   if (style) {
     if (style.StrokeColor) {
@@ -71,4 +71,4 @@ const setRedactionStyle = annotation => {
       annotation.FillColor = new Annotations.Color(fillColor['R'], fillColor['G'], fillColor['B'], fillColor['A']);
     }
   }
-}
+};

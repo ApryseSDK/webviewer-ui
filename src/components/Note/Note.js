@@ -25,6 +25,7 @@ class Note extends React.PureComponent {
     isReplyDisabled: PropTypes.bool,
     visible: PropTypes.bool.isRequired,
     rootContents: PropTypes.string,
+    replies: PropTypes.array,
     t: PropTypes.func.isRequired
   };
 

@@ -65,6 +65,7 @@
       2,
       "as-needed"
     ],
+    "no-useless-escape": 0,
     "eqeqeq": 2,
     "jsx-quotes": 2,
     "react/jsx-closing-bracket-location": 2,
@@ -76,6 +77,12 @@
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
     "import/no-dynamic-require": 0,
-    "react/no-find-dom-node": 0
+    "react/no-find-dom-node": 0,
+    "react/display-name": 0
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

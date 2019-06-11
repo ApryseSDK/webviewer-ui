@@ -16,9 +16,10 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import disableTextSelection from './disableTextSelection';
-import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
+import { PRIORITY_ONE } from 'constants/actionPriority';
+
+import disableTextSelection from './disableTextSelection';
 
 export default store => (enable = true) => {
   if (enable) {

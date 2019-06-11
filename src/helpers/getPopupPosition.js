@@ -1,5 +1,4 @@
 import core from 'core';
-import getPageHeight from 'core/getPageHeight';
 
 export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
   const { left, top } = calcAnnotationPopupPosition(getAnnotationPosition(annotation), getPopupDimensions(popup));
