@@ -17,10 +17,11 @@ viewerElement.addEventListener('ready', function() {
  */
 
 import core from 'core';
-import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
-import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
 import selectors from 'selectors';
+import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
+import { PRIORITY_ONE } from 'constants/actionPriority';
+
 import disableAnnotations from './disableAnnotations';
 
 export default store => (enable = true) =>  {

@@ -30,6 +30,7 @@ import setUserPermission from 'helpers/setUserPermission';
 import rootReducer from 'reducers/rootReducer';
 
 const packageConfig = require('../package.json');
+
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {

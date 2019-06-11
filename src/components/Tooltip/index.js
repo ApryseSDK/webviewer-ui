@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import Tooltip from './Tooltip';
 
 export default Tooltip;
+
 export const withTooltip = (componentLocations = {}) => WrappedComponent => {
   return class WithTooltip extends React.Component {
     static propTypes = {
       title: PropTypes.string,
+      dataElement: PropTypes.string,
       isDisabled: PropTypes.bool
     }
 

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
-import ActionButton from 'components/ActionButton';
 import ToolButton from 'components/ToolButton';
 import Button from 'components/Button';
 

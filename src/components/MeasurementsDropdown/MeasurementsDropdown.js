@@ -1,8 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import MeasurementsDropdownItem from '../MeasurementsDropdownItem';
 
 class MeasurementsDropdown extends React.PureComponent {
+  static propTypes = {
+    onClick: PropTypes.func,
+    dropdownList: PropTypes.array,
+    selectedItem: PropTypes.string,
+    isDropdownOpen: PropTypes.bool,
+    onDropdownChange: PropTypes.func,
+  }
+
   onClick = (e,item) => {
     e.stopPropagation();
     this.setState({ selectedItem: item });

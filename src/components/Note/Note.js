@@ -30,13 +30,13 @@ class Note extends React.PureComponent {
     index: PropTypes.number.isRequired,
     willFocus: PropTypes.bool.isRequired,
     setListIndex: PropTypes.func.isRequired,
+    replies: PropTypes.array
   };
 
   constructor(props) {
     super(props);
     this.replyTextarea = React.createRef();
     this.state = {
-      replies: props.annotation.getReplies(),
       isRootContentEditing: false,
       isReplyFocused: false,
       isEmpty: true
