@@ -10,5 +10,4 @@ coverage
 build
 tests
 jest.config.js
-package-lock.json
 .eslintignore
