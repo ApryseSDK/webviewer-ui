@@ -59,7 +59,7 @@ class Thumbnail extends React.PureComponent {
     const currentPage = index + 1;
     const didLayoutChange = contentChanged.some(changedPage => currentPage + '' === changedPage);
 
-    if(didLayoutChange) {
+    if (didLayoutChange) {
       const { thumbContainer } = this;
       const { current } = thumbContainer;
 

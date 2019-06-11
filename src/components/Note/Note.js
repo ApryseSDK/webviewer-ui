@@ -56,7 +56,7 @@ class Note extends React.PureComponent {
       }
     }
 
-    if(noteCollapsed) {
+    if (noteCollapsed) {
       this.setState({
         isRootContentEditing: false,
         isReplyFocused: false

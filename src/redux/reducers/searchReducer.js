@@ -1,7 +1,7 @@
 export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
-  switch(type) {
+  switch (type) {
     case 'SEARCH_TEXT': {
       const { searchValue, options = {} } = payload;
       const { caseSensitive, wholeWord, wildcard, regex, searchUp, ambientString } = options;

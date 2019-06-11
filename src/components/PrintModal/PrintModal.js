@@ -161,7 +161,7 @@ class PrintModal extends React.PureComponent {
     const documentRotation = this.getDocumentRotation(pageIndex);
     const ctx = canvas.getContext('2d');
 
-    switch(documentRotation) {
+    switch (documentRotation) {
       case 1:
         ctx.translate(width, 0);
         break;

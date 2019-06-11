@@ -66,7 +66,7 @@ class NotePopup extends React.Component {
       return null;
     }
 
-    return(
+    return (
       <div className="NotePopup" data-element="notePopup" onClick={e => e.stopPropagation()}>
         <div className="overflow" onClick={this.togglePopup}>
           <Icon glyph="ic_overflow_black_24px" />

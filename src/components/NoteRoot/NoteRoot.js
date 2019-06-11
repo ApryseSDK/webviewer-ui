@@ -71,7 +71,7 @@ class NoteRoot extends React.Component {
   render() {
     const { annotation, renderContents, isEditing, closeEditing, searchInput, contents } = this.props;
 
-    return(
+    return (
       <div className="NoteRoot">
         {this.renderHeader()}
         <NoteContents 

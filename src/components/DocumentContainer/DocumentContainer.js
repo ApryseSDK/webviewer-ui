@@ -174,7 +174,7 @@ class DocumentContainer extends React.PureComponent {
       className = this.getClassName(this.props);
     }
 
-    return(
+    return (
       <div className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd}>
         <div className="document" ref={this.document}></div>
       </div>

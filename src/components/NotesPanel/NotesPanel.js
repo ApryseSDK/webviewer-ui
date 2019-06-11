@@ -149,7 +149,7 @@ class NotesPanel extends React.PureComponent {
     const {notesToRender} = this.state;
     const sortStrategies = getSortStrategies();
 
-    return(
+    return (
       <React.Fragment>
         <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
           {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
@@ -162,7 +162,7 @@ class NotesPanel extends React.PureComponent {
   }
 
   renderNotes = notes => {
-    return(
+    return (
       notes.map(note => {
         return (
           <React.Fragment key={note.Id + getLatestActivityDate(note)}>
