@@ -13,10 +13,7 @@
     "cypress/globals": true
   },
   "globals": {
-    "_": false,
-    "$": false,
-    "Annotations": false,
-    "Tools": false
+    "$": false
   },
   "extends": [
     "eslint:recommended",
