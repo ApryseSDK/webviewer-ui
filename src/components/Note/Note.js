@@ -197,6 +197,9 @@ class Note extends React.PureComponent {
       visible ? '' : 'hidden'
     ].join(' ').trim();
 
+    // Sort replies by date created, 
+    replies.sort((a, b) => a['DateCreated'] - b['DateCreated']);
+
     return (
       <div ref={this.containerRef} className={className} onClick={this.onClickNote}>
         <NoteRoot
