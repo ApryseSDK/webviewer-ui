@@ -19,13 +19,8 @@ class ErrorModal extends React.PureComponent {
     t: PropTypes.func.isRequired
   }
 
-  state = {
-    errorMessage: ''
-  }
-
   componentDidMount() {
     window.addEventListener('loaderror', this.onError);
-    window.addEventListener('customErrorMessage', this.onError);
   }
 
   componentDidUpdate(prevProps) {
@@ -36,7 +31,6 @@ class ErrorModal extends React.PureComponent {
 
   componentWillUnmount() {
     window.removeEventListener('loaderror', this.onError);
-    window.removeEventListener('customErrorMessage', this.onError);
   }
 
   onError = error => {
@@ -53,9 +47,9 @@ class ErrorModal extends React.PureComponent {
       if (documentPath.indexOf('file:///') > -1) {
         console.error(`WebViewer doesn't have access to file URLs because of browser security restrictions. Please see https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading#not-allowed-to-load-local-resource:-file:`);
       }
-    }  
+    }
 
-    this.setState({ errorMessage });
+    this.props.setErrorMessage(errorMessage);
   }
 
   render() {
@@ -63,26 +57,28 @@ class ErrorModal extends React.PureComponent {
       return null;
     }
 
-    const { errorMessage } = this.state;
+    const { message } = this.props;
     const className = getClassName('Modal ErrorModal', this.props);
 
     return (
       <div className={className} data-element="errorModal">
-        <div className="container">{errorMessage}</div>
+        <div className="container">{message}</div>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  message: selectors.getErrorMessage(state),
   isDisabled: selectors.isElementDisabled(state, 'errorModal'),
   isOpen: selectors.isElementOpen(state, 'errorModal'),
-  documentPath: selectors.getDocumentPath(state)
+  documentPath: selectors.getDocumentPath(state),
 });
 
 const mapDispatchToProps = {
   openElement: actions.openElement,
   closeElements: actions.closeElements,
+  setErrorMessage: actions.showErrorMessage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ErrorModal));

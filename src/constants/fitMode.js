@@ -4,12 +4,20 @@
  * @property {string} FitPage A fit mode where the zoom level is fixed to the width or height of the page, whichever is smaller.
  * @property {string} FitWidth A fit mode where the zoom level is fixed to the width of the page.
  * @property {string} Zoom A fit mode where the zoom level is not fixed.
- * @example var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    var FitMode = instance.FitMode;
+    instance.setFitMode(FitMode.FitWidth);
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
 
-viewerElement.addEventListener('ready', () => {
-  var instance = viewer.getInstance(); // returns instance of ReaderControl
-  instance.setFitMode(instance.FitMode.FitWidth);
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  var FitMode = instance.FitMode;
+  instance.setFitMode(FitMode.FitWidth);
 });
  */
 

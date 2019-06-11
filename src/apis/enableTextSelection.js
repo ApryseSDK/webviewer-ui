@@ -1,9 +1,17 @@
 /**
  * Enables text to be selected in the document.
  * @method WebViewer#enableTextSelection
- * @example // enable text to be selected in the document
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    instance.enableTextSelection();
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
   instance.enableTextSelection();
 });
  */
@@ -16,7 +24,7 @@ export default store => (enable = true) => {
   if (enable) {
     store.dispatch(actions.enableElements(['textPopup', 'textSelectButton'], PRIORITY_ONE));
   } else {
-    console.warn('enableTextSelection(false) is deprecated, please use disableTextSelection() instead');
+  console.warn('enableTextSelection(false) is deprecated, please use disableTextSelection() instead');
     disableTextSelection(store)();
   }
 

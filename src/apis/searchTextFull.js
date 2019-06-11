@@ -7,11 +7,31 @@
  * @param {boolean} [options.wholeWord=false] Search whole words only.
  * @param {boolean} [options.wildcard=false] Search a string with a wildcard *. For example, *viewer.
  * @param {boolean} [options.regex=false] Search for a regex string. For example, www(.*)com.
- * @example // search for string 'test', and match whole words only
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.searchTextFull('test', {
-    wholeWord: true
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    var docViewer = instance.docViewer;
+
+    // you must have a document loaded when calling this api
+    docViewer.on('documentLoaded', function() {
+      instance.searchTextFull('test', {
+        wholeWord: true
+      });
+    });
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  var docViewer = instance.docViewer;
+
+  // you must have a document loaded when calling this api  
+  docViewer.on('documentLoaded', function() {
+    instance.searchTextFull('test', {
+      wholeWord: true
+    });
   });
 });
  */

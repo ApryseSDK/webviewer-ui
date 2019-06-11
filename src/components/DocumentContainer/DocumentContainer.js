@@ -65,6 +65,7 @@ class DocumentContainer extends React.PureComponent {
     }
     window.addEventListener('keydown', this.onKeyDown);
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
+    window.addEventListener('keydown', this.onKeyDown);
   }
 
   componentWillUnmount() {
@@ -74,6 +75,20 @@ class DocumentContainer extends React.PureComponent {
     }
     window.removeEventListener('keydown', this.onKeyDown);
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
+    window.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  onKeyDown = e => {
+    const { currentPage, totalPages } = this.props;
+    const { scrollTop, clientHeight, scrollHeight } = this.container.current;
+    const reachedTop = scrollTop === 0;
+    const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
+
+    if ((e.key === 'ArrowUp' || e.which === 38) && reachedTop && currentPage > 1) {
+      this.pageUp();
+    } else if ((e.key === 'ArrowDown' || e.which === 40) && reachedBottom && currentPage < totalPages) {
+      this.pageDown();
+    }
   }
 
   onKeyDown = e => {

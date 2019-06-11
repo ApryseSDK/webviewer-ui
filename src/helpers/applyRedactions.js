@@ -6,7 +6,7 @@ import { fireError } from 'helpers/fireEvent';
 import downloadPdf from 'helpers/downloadPdf';
 
 export default annotations => dispatch => {
-    if (core.getType() === 'blackbox') {
+    if (core.isWebViewerServerDocument()) {
         // when are using Webviewer Server, it'll download the redacted document
         return webViewerServerApply(annotations, dispatch);
     } else {
@@ -16,10 +16,10 @@ export default annotations => dispatch => {
 
 const webViewerServerApply = (annotations, dispatch) => {
     return core.applyRedactions(annotations).then(results => {
-        if (results && results.url) { 
+        if (results && results.url) {
             return downloadPdf(dispatch, {
                 filename: 'redacted.pdf',
-                includeAnnotations: true, 
+                includeAnnotations: true,
                 externalURL: results.url
             });
         }
@@ -37,7 +37,7 @@ const webViewerApply = (annotations, dispatch) => {
         title,
         confirmBtnText,
         onConfirm: () => {
-            core.applyRedactions(annotations).catch(err => fireError(err)); 
+            core.applyRedactions(annotations).catch(err => fireError(err));
             return Promise.resolve();
         }
     };

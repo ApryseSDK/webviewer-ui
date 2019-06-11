@@ -148,6 +148,10 @@ export const showWarningMessage = options => dispatch => {
   dispatch({ type: 'SET_WARNING_MESSAGE', payload: options });
   dispatch(openElement('warningModal'));
 };
+export const showErrorMessage = message => dispatch => {
+  dispatch({ type: 'SET_ERROR_MESSAGE', payload: { message } });
+  dispatch(openElement('errorModal'));
+};
 export const setCustomNoteFilter = filterFunc => ({ type: 'SET_CUSTOM_NOTE_FILTER', payload: { customNoteFilter: filterFunc } });
 export const setZoomList = zoomList => dispatch => {
   const minZoomLevel = getMinZoomLevel();

@@ -38,7 +38,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, workerLoadingProgress: payload.workerLoadingProgress };
     case 'RESET_LOADING_PROGRESS':
       return { ...state, documentLoadingProgress: 0, workerLoadingProgress: 0 };
-
     case 'SET_IS_UPLOADING':
       return { ...state, isUploading: payload.isUploading };
     case 'SET_UPLOAD_PROGRESS':

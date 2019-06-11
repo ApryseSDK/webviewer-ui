@@ -10,9 +10,28 @@
  * @param {string} [theme.text=#333333] Text color.
  * @param {string} [theme.icon=#757575] Icon color.
  * @param {string} [theme.iconActive=#757575] Icon color when button is active.
- * @example // Using an object
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
+ * @example // 5.1 and after
+// Using an object
+WebViewer(...)
+  .then(function(instance) {
+    instance.setTheme({
+      primary: '#2C2B3A',
+      secondary: '#4D4C5F',
+      border: '#555555',
+      buttonHover: '#686880',
+      buttonActive: '#686880',
+      text: '#FFFFFF',
+      icon: '#FFFFFF',
+      iconActive: '#FFFFFF'
+    });
+  });
+ * @example // 4.0 ~ 5.0
+// Using an object
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
   instance.setTheme({
     primary: '#2C2B3A',
     secondary: '#4D4C5F',
@@ -24,9 +43,19 @@ viewerElement.addEventListener('ready', () => {
     iconActive: '#FFFFFF'
   });
 });
- * @example // Using predefined string
-viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
+ * @example // 5.1 and after
+// Using predefined string
+WebViewer(...)
+  .then(function(instance) {
+    instance.setTheme('dark');
+  });
+ * @example // 4.0 ~ 5.0
+// Using predefined string
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
   instance.setTheme('dark');
 });
  */
@@ -70,7 +99,7 @@ const setPresetTheme = theme => {
   if (presetTheme) {
     setTheme(themeToPresetThemeMap[theme]);
   } else {
-    console.warn(`${theme} is not one of: default, dark`);
+  console.warn(`${theme} is not one of: default, dark`);
   }
 };
 
@@ -92,8 +121,8 @@ const setTheme = theme => {
       const color = theme[key];
       document.body.style.setProperty(cssVar, color);
     } else {
-      console.warn(`${key} is not valid, please make sure properties are a subset of:`);
-      console.warn(`primary, secondary, text, buttonHover, buttonActive and icon`);
+    console.warn(`${key} is not valid, please make sure properties are a subset of:`);
+    console.warn(`primary, secondary, text, buttonHover, buttonActive and icon`);
     }
   });
 };
