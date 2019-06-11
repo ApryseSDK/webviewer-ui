@@ -1,6 +1,6 @@
 {
   "name": "webviewer-ui",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
