@@ -4,5 +4,5 @@
  * @see https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#event:textSelected__anchor
  */
 export default () => {
-	window.docViewer.clearSelection();
+  window.docViewer.clearSelection();
 };

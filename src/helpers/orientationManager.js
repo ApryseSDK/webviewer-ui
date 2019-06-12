@@ -2,23 +2,23 @@ import core from 'core';
 
 class OrientationManager {
     getDocumentCenter = pageNumber => {
-        const { width, height } = core.getPageInfo(pageNumber - 1);
+      const { width, height } = core.getPageInfo(pageNumber - 1);
 
-        return { x: width / 2, y: height / 2 };
+      return { x: width / 2, y: height / 2 };
     }
     getRotationRad = pageNumber => {
-        const orientation = core.getRotation(pageNumber);
+      const orientation = core.getRotation(pageNumber);
 
-        const radians = (4 - orientation) * (Math.PI / 2);
+      const radians = (4 - orientation) * (Math.PI / 2);
 
-        return radians;
+      return radians;
     }
     getRotationDeg = pageNumber => {
-        const orientation = core.getRotation(pageNumber);
+      const orientation = core.getRotation(pageNumber);
 
-        const degrees = (4 - orientation) * 90;
+      const degrees = (4 - orientation) * 90;
 
-        return degrees;
+      return degrees;
     }
 }
 

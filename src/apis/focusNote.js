@@ -37,11 +37,12 @@ viewerElement.addEventListener('ready', function() {
 
 import core from 'core';
 import actions from 'actions';
+import selectors from 'selectors';
 
 export default store => id => {
   const state = store.getState();
   const annotation = core.getAnnotationById(id);
-   if (selectors.isElementOpen(state, 'leftPanel')) {
+  if (selectors.isElementOpen(state, 'leftPanel')) {
     if (!core.isAnnotationSelected(annotation)) {
       core.selectAnnotation(annotation);
     }

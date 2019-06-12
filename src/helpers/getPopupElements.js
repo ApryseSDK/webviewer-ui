@@ -1,13 +1,13 @@
 export default () =>  {
-    return [
-        'viewControlsOverlay', 
-        'searchOverlay', 
-        'menuOverlay', 
-        'searchPanel', 
-        'leftPanel', 
-        'redactionOverlay',
-        'groupOverlay',
-        'toolStylePopup',
-    ];
+  return [
+    'viewControlsOverlay', 
+    'searchOverlay', 
+    'menuOverlay', 
+    'searchPanel', 
+    'leftPanel', 
+    'redactionOverlay',
+    'groupOverlay',
+    'toolStylePopup',
+  ];
 };
   

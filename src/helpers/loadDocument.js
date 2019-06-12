@@ -1,45 +1,44 @@
 import i18next from 'i18next';
 
 import core from 'core';
+import actions from 'actions';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { fireError } from 'helpers/fireEvent';
 import { engineTypes, workerTypes } from 'constants/types';
 import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
-import actions from 'actions';
-import selectors from 'selectors';
 
 export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
-      Promise.all([getPartRetriever(state, streaming, dispatch), getDocOptions(state, dispatch, streaming)])
-      .then(params => {
-        const partRetriever = params[0];
-        const docOptions = params[1];
+      Promise.all([ getPartRetriever(state, streaming, dispatch), getDocOptions(state, dispatch, streaming) ])
+        .then(params => {
+          const partRetriever = params[0];
+          const docOptions = params[1];
 
-        if (partRetriever.on) {
+          if (partRetriever.on) {
           // If its a blackbox part retriever but the user uploaded a local file,
           // we dont set this because we already show an upload modal
-          if (!partRetriever._isBlackboxLocalFile) {
-            partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
-              dispatch(actions.setDocumentLoadingProgress(loaded / total));
+            if (!partRetriever._isBlackboxLocalFile) {
+              partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+                dispatch(actions.setDocumentLoadingProgress(loaded / total));
+              });
+            }
+          
+            partRetriever.on('error', function(e, type, message) {
+              fireError(message);
             });
           }
-          
-          partRetriever.on('error', function(e, type, message) {
-            fireError(message);
-          });
-        }
-        if (partRetriever.setErrorCallback) {
-          partRetriever.setErrorCallback(fireError);
-        }
+          if (partRetriever.setErrorCallback) {
+            partRetriever.setErrorCallback(fireError);
+          }
 
-        dispatch(actions.openElement('progressModal'));
-        core.loadAsync(partRetriever, docOptions);
-      })
-      .catch(error => {
-        fireError(error);
-        console.error(error);
-      });
+          dispatch(actions.openElement('progressModal'));
+          core.loadAsync(partRetriever, docOptions);
+        })
+        .catch(error => {
+          fireError(error);
+          console.error(error);
+        });
     });
   });
 };
@@ -185,7 +184,7 @@ const getDocOptions = (state, dispatch, streaming) => {
     } else {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit } = state.advanced;
 
-      Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
+      Promise.all([ getBackendPromise(pdfType), getBackendPromise(officeType) ]).then(([ pdfBackendType, officeBackendType ]) => {
         let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
         let attempt = 0;
         const getPassword = checkPassword => {
@@ -298,10 +297,6 @@ const createFakeFilename = (initialDoc, ext) => {
   return initialDoc.replace(/^.*[\\\/]/, '') + '.' + ext.replace(/^\./, '');
 };
 
-const isPDFNetJSExtension = extension => {
-  return isOfficeExtension(extension) || isPDFExtension(extension);
-};
-
 export const isOfficeExtension = extension => {
   return supportedOfficeExtensions.indexOf(extension) !== -1;
 };
@@ -341,10 +336,4 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
   }
 
   return { type, extension, workerTransportPromise };
-};
-
-const isLocalFile = state => {
-  const path = selectors.getDocumentPath(state);
-
-  return !/https?:\/\//.test(path);
 };

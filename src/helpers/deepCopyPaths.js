@@ -7,7 +7,7 @@ export default paths => {
 
   for (let i = 0; i < paths.length; i++) {
     for (let j = 0; j < paths[i].length; j++) {
-      newPaths[i][j] = new Annotations.Point(paths[i][j]['x'], paths[i][j]['y']);
+      newPaths[i][j] = new window.Annotations.Point(paths[i][j]['x'], paths[i][j]['y']);
     }
   }
 
