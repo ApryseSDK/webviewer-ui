@@ -6,7 +6,7 @@
  */
 
 export default annotation => {
-  const styleProperty = ['FillColor', 'StrokeColor', 'TextColor', 'Opacity', 'StrokeThickness', 'FontSize'];
+  const styleProperty = [ 'FillColor', 'StrokeColor', 'TextColor', 'Opacity', 'StrokeThickness', 'FontSize' ];
   const style = {};
 
   styleProperty.forEach(property => {

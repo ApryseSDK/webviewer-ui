@@ -10,7 +10,7 @@ import actions from 'actions';
 export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
-      Promise.all([getPartRetriever(state, streaming, dispatch), getDocOptions(state, dispatch, streaming)])
+      Promise.all([ getPartRetriever(state, streaming, dispatch), getDocOptions(state, dispatch, streaming) ])
         .then(params => {
           const partRetriever = params[0];
           const docOptions = params[1];
@@ -182,7 +182,7 @@ const getDocOptions = (state, dispatch, streaming) => {
     } else {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit } = state.advanced;
 
-      Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
+      Promise.all([ getBackendPromise(pdfType), getBackendPromise(officeType) ]).then(([ pdfBackendType, officeBackendType ]) => {
         let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
         let attempt = 0;
         const getPassword = checkPassword => {
