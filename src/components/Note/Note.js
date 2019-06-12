@@ -25,6 +25,7 @@ class Note extends React.PureComponent {
     isReplyDisabled: PropTypes.bool,
     visible: PropTypes.bool.isRequired,
     rootContents: PropTypes.string,
+    replies: PropTypes.array,
     t: PropTypes.func.isRequired
   };
 
@@ -55,7 +56,7 @@ class Note extends React.PureComponent {
       }
     }
 
-    if(noteCollapsed) {
+    if (noteCollapsed) {
       this.setState({
         isRootContentEditing: false,
         isReplyFocused: false
@@ -244,7 +245,7 @@ class Note extends React.PureComponent {
             </div>
           }
         </div>
-    </div>
+      </div>
     );
   }
 }

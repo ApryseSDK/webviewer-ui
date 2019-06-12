@@ -42,8 +42,8 @@ class NoteRoot extends React.Component {
       <div className="title">
         <div className="type">
           {icon
-          ? <Icon className="icon" glyph={icon} color={color} />
-          : annotation.Subject
+            ? <Icon className="icon" glyph={icon} color={color} />
+            : annotation.Subject
           }
         </div>
         {renderAuthorName(annotation)}
@@ -71,7 +71,7 @@ class NoteRoot extends React.Component {
   render() {
     const { annotation, renderContents, isEditing, closeEditing, searchInput, contents } = this.props;
 
-    return(
+    return (
       <div className="NoteRoot">
         {this.renderHeader()}
         <NoteContents 

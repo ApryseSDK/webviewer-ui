@@ -26,8 +26,8 @@ class Slider extends React.PureComponent {
   }
 
   constructor(props) {
-		super(props);
-		this.isMouseDown = false;
+    super(props);
+    this.isMouseDown = false;
     this.sliderSvg = React.createRef();
     this.lineLength = 0;  
   }

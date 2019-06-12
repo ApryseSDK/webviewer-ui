@@ -76,7 +76,7 @@ class LeftPanel extends React.Component {
     
     const className = getClassName('Panel LeftPanel', this.props);
 
-    return(
+    return (
       <div className={className} data-element="leftPanel" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
         <div className="left-panel-header">
           <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>

@@ -1,7 +1,7 @@
 export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
-  switch(type) {
+  switch (type) {
     case 'DISABLE_ELEMENT':
       return { ...state, disabledElements: { ...state.disabledElements, [payload.dataElement]: { disabled: true, priority: payload.priority } } };
     case 'DISABLE_ELEMENTS': {

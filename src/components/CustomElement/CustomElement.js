@@ -43,7 +43,7 @@ class CustomElement extends React.PureComponent {
   isDOMElement = element => {
     try {
       return element instanceof window.Element || element instanceof window.parent.Element;
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   }

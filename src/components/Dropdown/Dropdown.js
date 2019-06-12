@@ -57,7 +57,7 @@ class Dropdown extends React.PureComponent {
       return null;
     }
 
-    return(
+    return (
       <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}> 
         <div className="items">
           <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>

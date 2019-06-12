@@ -35,6 +35,6 @@ export default zoomLevel => {
   if (zoomLevel) {
     core.zoomTo(zoomLevel);
   } else {
-  console.warn('Type of the argument for setZoomLevel must be either string or number');
+    console.warn('Type of the argument for setZoomLevel must be either string or number');
   }
 };

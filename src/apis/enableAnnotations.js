@@ -17,11 +17,13 @@ viewerElement.addEventListener('ready', function() {
  */
 
 import core from 'core';
-import disableAnnotations from './disableAnnotations';
+
+import actions from 'actions';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import { getAnnotationCreateToolNames } from 'constants/map';
-import actions from 'actions';
+
+import disableAnnotations from './disableAnnotations';
 
 export default store => (enable = true) =>  {
   let elements = [
@@ -41,7 +43,7 @@ export default store => (enable = true) =>  {
     store.dispatch(actions.enableElements(elements, PRIORITY_ONE));
     core.showAnnotations(core.getAnnotationsList());
   } else {
-  console.warn('enableAnnotations(false) is deprecated, please use disableAnnotations() instead');
+    console.warn('enableAnnotations(false) is deprecated, please use disableAnnotations() instead');
     disableAnnotations(store)();
   }
 };

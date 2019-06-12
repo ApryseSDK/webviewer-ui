@@ -41,8 +41,8 @@ class ProgressModal extends React.PureComponent {
       <div className={className} data-element="progressModal">
         <div className="container">
           <div className="progress-bar-wrapper">
-          <div className="progress-bar" style={{ transform: `translateX(${-(1 - progressToUse) * 100}%`, transition: progressToUse ? 'transform 0.5s ease' : 'none' }}>
-          </div>
+            <div className="progress-bar" style={{ transform: `translateX(${-(1 - progressToUse) * 100}%`, transition: progressToUse ? 'transform 0.5s ease' : 'none' }}>
+            </div>
           </div>
         </div>
       </div>
