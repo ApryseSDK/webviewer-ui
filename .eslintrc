@@ -85,6 +85,10 @@
       2,
       "always"
     ],
+    "object-curly-spacing": [
+      2,
+      "always"
+    ],
     "react/jsx-closing-bracket-location": 2,
     "react/jsx-curly-spacing": 2,
     "react/jsx-boolean-value": 2,

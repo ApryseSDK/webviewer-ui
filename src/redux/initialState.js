@@ -63,7 +63,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton' },
-        { type: 'statefulButton', dataElement: 'signatureToolButton'},
+        { type: 'statefulButton', dataElement: 'signatureToolButton' },
         { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton' },
         { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText' },
@@ -114,7 +114,7 @@ export default {
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
       AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
       TextSelect: { dataElement: 'textSelectButton', title: 'tool.select', img: 'textselect_cursor', showColor: 'never' },
-      MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never'}
+      MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' }
     },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
