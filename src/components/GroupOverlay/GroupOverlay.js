@@ -10,6 +10,7 @@ import CustomElement from 'components/CustomElement';
 import Button from 'components/Button';
 
 import core from 'core';
+import { isTabletOrMobile } from 'helpers/device';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
@@ -46,6 +47,9 @@ class GroupOverlay extends React.PureComponent {
     // otherwise its left is 0 instead of left-aligned with the tool group button
     if (this.props.isOpen) {
       this.setOverlayPosition();
+      if (isTabletOrMobile()) {
+        this.props.closeElements(['leftPanel']);
+      }
     }
   }
 
