@@ -53,7 +53,7 @@ class Thumbnail extends React.PureComponent {
   }
 
   onLayoutChanged(e, changes) {
-    const { contentChanged, moved, added } = changes;
+    const { contentChanged, moved, added, removed } = changes;
     const { index } = this.props;
 
     const currentPage = index + 1;
@@ -62,8 +62,9 @@ class Thumbnail extends React.PureComponent {
     const isPageAdded = added.indexOf(currentPage) > -1;
     const didPageChange = contentChanged.some(changedPage => currentPageStr === changedPage);
     const didPageMove = Object.keys(moved).some(movedPage => currentPageStr === movedPage);
+    const isPageRemoved = removed.indexOf(currentPage) > -1;
 
-    if (isPageAdded || didPageChange || didPageMove) {
+    if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
       const { thumbContainer } = this;
       const { current } = thumbContainer;
 
