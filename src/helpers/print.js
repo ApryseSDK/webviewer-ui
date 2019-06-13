@@ -23,14 +23,12 @@ export default (dispatch, isEmbedPrintSupported) =>  {
 };
 
 const printPdf = () => {
-  const xfdfString = core.exportAnnotations();
-  const printDocument = true;
-  return new Promise(resolve => {
-    core.getDocument().getFileData({ xfdfString, printDocument }).then(data => {
+  return core.exportAnnotations().then(xfdfString => {
+    const printDocument = true;
+    return core.getDocument().getFileData({ xfdfString, printDocument }).then(data => {
       const arr = new Uint8Array(data);
       const blob = new Blob([ arr ], { type: 'application/pdf' });
       document.getElementById('print-handler').src = URL.createObjectURL(blob);
-      resolve();
     });
   });
 };

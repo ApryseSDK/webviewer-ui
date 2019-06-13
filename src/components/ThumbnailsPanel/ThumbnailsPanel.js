@@ -78,7 +78,7 @@ class ThumbnailsPanel extends React.PureComponent {
     const { thumbnailsPanel } = this;
 
     if (thumbnailsPanel && thumbnailsPanel.current) {
-      const thumbnailHeight = this.thumbs[0].element.offsetHeight;
+      const thumbnailHeight = 180; // refer to Thumbnail.scss
       const pageIndex = pageNumber - 1;
       const scrollLocation = pageIndex * thumbnailHeight;
       thumbnailsPanel.current.scrollTop = scrollLocation;
@@ -261,16 +261,8 @@ class ThumbnailsPanel extends React.PureComponent {
 
             return (
               index < this.props.totalPages 
-              ? <Thumbnail
-                  key={index}
-                  index={index}
-                  canLoad={canLoad}
-                  onLoad={this.onLoad}
-                  onCancel={this.onCancel}
-                  onRemove={this.onRemove}
-                  updateAnnotations={updateHandler}
-                />
-              : null
+                ? <Thumbnail key={index} index={index} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
+                : null
             );
           })
         }

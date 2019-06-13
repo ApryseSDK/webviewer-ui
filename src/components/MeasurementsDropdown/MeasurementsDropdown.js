@@ -1,8 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import MeasurementsDropdownItem from '../MeasurementsDropdownItem';
 
 class MeasurementsDropdown extends React.PureComponent {
+  static propTypes = {
+    onClick: PropTypes.func,
+    dropdownList: PropTypes.array,
+    selectedItem: PropTypes.string,
+    isDropdownOpen: PropTypes.bool,
+    onDropdownChange: PropTypes.func,
+  }
+
   onClick = (e,item) => {
     e.stopPropagation();
     this.setState({ selectedItem: item });
@@ -20,8 +29,8 @@ class MeasurementsDropdown extends React.PureComponent {
       sortedDropdownList = [selectedItem].concat(dropdownList.filter(item => item !== selectedItem));
     }
     return (
-    <div className="MeasurementsDropdown">  
-      {!isDropdownOpen && 
+      <div className="MeasurementsDropdown">  
+        {!isDropdownOpen && 
         <MeasurementsDropdownItem 
           onClick={e => {
             e.stopPropagation();
@@ -29,13 +38,13 @@ class MeasurementsDropdown extends React.PureComponent {
           }}
           content={selectedItem}
         />
-      }
-      {isDropdownOpen &&
+        }
+        {isDropdownOpen &&
         sortedDropdownList.map((item, i) => {
           return <MeasurementsDropdownItem key={i} content={item} onClick={e=> this.onClick(e,item)} />;
         })
-      }
-    </div>
+        }
+      </div>
     );
   }
 }

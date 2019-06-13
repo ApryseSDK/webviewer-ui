@@ -1,7 +1,7 @@
 export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
-  switch(type) {
+  switch (type) {
     case 'SET_DOCUMENT_ID':
       return { ...state, id: payload.documentId };
     case 'SET_DOCUMENT_PATH':
@@ -22,6 +22,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, totalPages: payload.totalPages };
     case 'SET_OUTLINES':
       return { ...state, outlines: payload.outlines };
+    case 'SET_LAYERS':
+      return { ...state, layers: payload.layers };
     case 'SET_CHECKPASSWORD':
       return { ...state, checkPassword: payload.func };
     case 'SET_PASSWORD_ATTEMPTS':

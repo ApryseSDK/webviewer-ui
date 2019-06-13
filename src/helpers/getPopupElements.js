@@ -7,7 +7,7 @@ export default () =>  {
     'leftPanel', 
     'redactionOverlay',
     'groupOverlay',
+    'toolsOverlay',
     'toolStylePopup',
   ];
 };
-  

@@ -46,7 +46,7 @@ class ColorPalette extends React.PureComponent {
       </svg>
     );
 
-    return(
+    return (
       <div className="cell" key={key} onClick={this.setColor}>
         {this.renderCheckMark(bg)}
         {diagonalLine}
@@ -55,7 +55,7 @@ class ColorPalette extends React.PureComponent {
   }
 
   renderColorCell = (bg, key) => {
-    return(
+    return (
       <div className="cell" key={key} style={{ backgroundColor: bg }} onClick={this.setColor}>
         {this.renderCheckMark(bg)}
       </div>
