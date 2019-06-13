@@ -27,12 +27,12 @@ export default (customInput, pageLabels) => {
   });
 
   return pagesToPrint
-          .filter((pageNumber, index, pagesToPrint) => {
-            const isUnique = pagesToPrint.indexOf(pageNumber) === index;
-            const isValidPageNumber = pageNumber > 0 && pageNumber <= totalPages; 
-            return isUnique && isValidPageNumber;
-          })
-          .sort((a, b) => a - b);
+    .filter((pageNumber, index, pagesToPrint) => {
+      const isUnique = pagesToPrint.indexOf(pageNumber) === index;
+      const isValidPageNumber = pageNumber > 0 && pageNumber <= totalPages; 
+      return isUnique && isValidPageNumber;
+    })
+    .sort((a, b) => a - b);
 };
 
 const addRangeOfPagesTo = (pagesToPrint, range, pageLabels) => {

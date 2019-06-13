@@ -9,19 +9,13 @@ export default dispatch => () => {
   dispatch(actions.openElement('pageNavOverlay'));
   dispatch(actions.setDocumentLoadingProgress(1));
   dispatch(actions.setWorkerLoadingProgress(1));
-  
+
   setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
     dispatch(actions.resetLoadingProgress());
     dispatch(actions.resetUploadProgress());
     dispatch(actions.setIsUploading(false));
   }, 300);
-
-  if (window.innerWidth <= 640) {
-    core.fitToWidth();
-  } else {
-    core.fitToPage();
-  }
 
   if (onFirstLoad) {
     onFirstLoad = false;
@@ -42,6 +36,18 @@ export default dispatch => () => {
 
   core.getOutlines(outlines => {
     dispatch(actions.setOutlines(outlines));
+  });
+
+  const doc = core.getDocument();
+  doc.getLayersArray().then(layers => {
+    if (layers.length === 0) {
+      dispatch(actions.disableElement('layersPanel', 1));
+      dispatch(actions.disableElement('layersPanelButton', 1));
+    } else {
+      dispatch(actions.enableElement('layersPanel', 1));
+      dispatch(actions.enableElement('layersPanelButton', 1));
+      dispatch(actions.setLayers(layers));
+    }
   });
 
   window.readerControl.loadedFromServer = false;

@@ -184,7 +184,7 @@ class SignatureOverlay extends React.PureComponent {
       return null;
     }
 
-    return(
+    return (
       <div className={className} ref={this.overlay} style={{ left, right }} onClick={e => e.stopPropagation()}>
         <div className="default-signatures-container">
           {defaultSignatures.map(({ imgSrc }, index) => (

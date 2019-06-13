@@ -111,7 +111,7 @@ class AnnotationPopup extends React.PureComponent {
   }
 
   onAnnotationChanged = (e, annotations, action) => {
-    if (action === 'modify' && core.isAnnotationSelected(this.state.annotation)) {
+    if (action === 'modify' && core.isAnnotationSelected(this.state.annotation) && !this.props.isDisabled) {
       // Position change
       this.positionAnnotationPopup();
       this.props.openElement('annotationPopup');

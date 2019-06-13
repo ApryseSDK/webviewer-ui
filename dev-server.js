@@ -27,54 +27,14 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 app.use('/i18n', express.static(path.resolve(__dirname, 'i18n')));
 app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
-app.use('/mime', express.static(path.resolve(__dirname, 'mime')));
-app.use('/core', express.static(path.resolve(__dirname, '../core')));
-app.use('/files', express.static(path.resolve(__dirname, '../../samples/files')));
-
-const handleAnnotation = (req, res, handler) => {
-	const dir = path.resolve(__dirname, 'annotations');
-	if (!fs.existsSync(dir)) {
-		fs.mkdirSync(dir);
-	}
-
-	handler(dir);
-	res.end();
-};
-
-app.get('/annotations', (req, res) => {
-	handleAnnotation(req, res, dir => {
-		const xfdfFile = (req.query.did) ? path.resolve(dir, req.query.did + '.xfdf') : path.resolve(dir, 'default.xfdf');
-		if (fs.existsSync(xfdfFile)) {
-			res.header('Content-Type', 'text/xml');
-			res.send(fs.readFileSync(xfdfFile));
-		} else {
-			res.status(204);
-		}
-	});
-});
-
-app.post('/annotations', (req, res) => {
-	handleAnnotation(req, res, dir => {
-		const xfdfFile = (req.body.did) ? path.resolve(dir, req.body.did + '.xfdf') : path.resolve(dir, 'default.xfdf');
-		try {
-			res.send(fs.writeFileSync(xfdfFile, req.body.data));
-		} catch (e) {
-			res.status(500);
-		}
-	});
-	res.end();
-});
-
-app.get('/license-key.js', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../../samples/license-key.js'));
-});
+app.use('/core', express.static(path.resolve(__dirname, 'lib/core')));
 
 app.get('/', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'src/index.html'));
 });
 
-app.get('/mobile', (req, res) => {
-	res.redirect(`/#d=/files/webviewer-demo-annotated.xod&a=1`);
+app.get('/sample-url', (req, res) => {
+	res.redirect(`/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1`);
 });
 
 app.listen(3000, '0.0.0.0', err => {
@@ -83,6 +43,6 @@ app.listen(3000, '0.0.0.0', err => {
 	} else {
 		/*eslint-disable */
 		console.log(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
-		opn('http://localhost:3000/#d=/files/webviewer-demo-annotated.xod&a=1');
+		opn('http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1');
 	}
 });

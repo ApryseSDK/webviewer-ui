@@ -103,8 +103,8 @@ class PageNavOverlay extends React.PureComponent {
         <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
           <input ref={this.textInput} type="text" value={this.state.input} onChange={this.onChange} />
           {this.state.isCustomPageLabels 
-          ? ` (${currentPage}/${totalPages})`
-          : ` / ${totalPages}`
+            ? ` (${currentPage}/${totalPages})`
+            : ` / ${totalPages}`
           }
         </form>
       </div>

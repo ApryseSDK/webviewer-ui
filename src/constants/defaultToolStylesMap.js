@@ -9,7 +9,7 @@ export default {
     StrokeColor: { R: 0, G: 204, B: 99, A: 1 },
   },
   AnnotationCreateFreeHand3: {
-    StrokeColor: { R: 78, G: 125, B: 233, A: 1},
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateFreeHand4: {
     StrokeColor: { R: 0, G: 0, B: 0, A: 1 },

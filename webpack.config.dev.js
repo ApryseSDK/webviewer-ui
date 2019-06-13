@@ -51,7 +51,12 @@ module.exports = {
 					{
 						loader: 'postcss-loader',
 						options: {
-							plugins: () => [ require('autoprefixer')() ]
+							ident: 'postcss',
+							plugins: loader => [
+								require('postcss-import')({ root: loader.resourcePath }),
+								require('postcss-preset-env')(),
+								require('cssnano')()
+							]
 						}
 					},
 					'sass-loader',

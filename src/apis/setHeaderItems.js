@@ -2,39 +2,111 @@
  * Customize header. Refer to <a href='https://www.pdftron.com/documentation/web/guides/customizing-header' target='_blank'>Customizing header</a> for details.
  * @method WebViewer#setHeaderItems
  * @param {WebViewer~headerCallback} headerCallback Callback function to perform different operations on the header.
- * @example // Adding save annotations button
-instance.setHeaderItems(function(header) {
-  header.push({
-    type: 'actionButton',
-    img: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>',
-    onClick: function() {
-      instance.saveAnnotations();
-    }
+ * @example // 5.1 and after
+// Adding save annotations button
+WebViewer(...)
+  .then(function(instance) {
+    instance.setHeaderItems(function(header) {
+      var myCustomButton = {
+        type: 'actionButton',
+        img: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>',
+        onClick: function() {
+          instance.saveAnnotations();
+        }
+      }
+
+      header.push(myCustomButton);
+    });
+  });
+ * @example // 4.0 ~ 5.0
+// Adding save annotations button
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.setHeaderItems(function(header) {
+    var myCustomButton = {
+      type: 'actionButton',
+      img: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>',
+      onClick: function() {
+        instance.saveAnnotations();
+      }
+    };
+
+    header.push(myCustomButton);
   });
 });
- * @example // Removing existing buttons
-instance.setHeaderItems(function(header) {
-  var items = header.getItems().slice(9, -3);
-  header.update(items);
+ * @example // 5.1 and after
+// Removing existing buttons
+WebViewer(...)
+  .then(function(instance) {
+    instance.setHeaderItems(function(header) {
+      var items = header.getItems().slice(9, -3);
+      header.update(items);
+    });
+  });
+ * @example // 4.0 ~ 5.0
+// Removing existing buttons
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.setHeaderItems(function(header) {
+    var items = header.getItems().slice(9, -3);
+    header.update(items);
+  });
 });
- * @example // Appending logo and shifting existing buttons to the right
-instance.setHeaderItems(function(header) {
-  header.delete(9);
-  header.unshift({
-    type: 'customElement',
-    render: function() {
-      var logo = document.createElement('img');
-      logo.src = 'https://www.pdftron.com/downloads/logo.svg';
-      logo.style.width = '200px';
-      logo.style.marginLeft = '10px';
-      logo.style.cursor = 'pointer';
-      logo.onclick = function() {
-        window.open('https://www.pdftron.com', '_blank');
+ * @example // 5.1 and after
+// Appending logo and shifting existing buttons to the right
+WebViewer(...)
+  .then(function(instance) {
+    instance.setHeaderItems(function(header) {
+      header.delete(9);
+      header.unshift({
+        type: 'customElement',
+        render: function() {
+          var logo = document.createElement('img');
+          logo.src = 'https://www.pdftron.com/downloads/logo.svg';
+          logo.style.width = '200px';
+          logo.style.marginLeft = '10px';
+          logo.style.cursor = 'pointer';
+          logo.onclick = function() {
+            window.open('https://www.pdftron.com', '_blank');
+          }
+          return logo;
+        }
+      }, {
+        type: 'spacer'
+      });
+    });
+  });
+ * @example // 4.0 ~ 5.0
+// Removing existing buttons
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  instance.setHeaderItems(function(header) {
+    header.delete(9);
+    header.unshift({
+      type: 'customElement',
+      render: function() {
+        var logo = document.createElement('img');
+        logo.src = 'https://www.pdftron.com/downloads/logo.svg';
+        logo.style.width = '200px';
+        logo.style.marginLeft = '10px';
+        logo.style.cursor = 'pointer';
+        logo.onclick = function() {
+          window.open('https://www.pdftron.com', '_blank');
+        }
+        return logo;
       }
-      return logo;
-    }
-  }, {
-    type: 'spacer'
+    }, {
+      type: 'spacer'
+    });
   });
 });
  */
@@ -62,14 +134,21 @@ export default store => callback => {
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access the header instance in {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems} as follows:
  * @name WebViewer.Header
  * @class
- * @example var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer({ ... }, viewerElement);
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    instance.setHeaderItems(function(header) {
+      // instance of Header is passed to the callback
+    });
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
 
-viewerElement.addEventListener('ready', () => {
+viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();
-  instance.setHeaderItems(header => {
+  instance.setHeaderItems(function(header) {
     // instance of Header is passed to the callback
-    // header.someMethod();
   });
 });
  */
@@ -230,11 +309,11 @@ const Header = {
    */
   push(...newItem) {
     if (newItem[0].group) {
-      if (this.headers[this.headerGroup].find(buttonObject => buttonObject.toolGroup === newItem[0].group)){
-        const buttonIndex = this.headers[this.headerGroup].findIndex(buttonObject=> buttonObject.toolGroup === newItem[0].group);
+      if (this.headers[this.headerGroup].find(buttonObject => buttonObject.toolGroup === newItem[0].group)) {
+        const buttonIndex = this.headers[this.headerGroup].findIndex(buttonObject => buttonObject.toolGroup === newItem[0].group);
         this.headers[this.headerGroup][buttonIndex].children.push(...newItem);
       } else {
-        console.warn(`${newItem[0].group} is not a valid group.`)
+        console.warn(`${newItem[0].group} is not a valid group.`);
       }
     } else {
       this.headers[this.headerGroup].push(...newItem);

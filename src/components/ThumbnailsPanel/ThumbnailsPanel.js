@@ -21,6 +21,7 @@ class ThumbnailsPanel extends React.PureComponent {
     super();
     this.pendingThumbs = [];
     this.thumbs = [];
+    this.thumbnailsPanel = React.createRef();
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       canLoad: true
@@ -31,6 +32,8 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('beginRendering', this.onBeginRendering);
     core.addEventListener('finishedRendering', this.onFinishedRendering);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
+    core.addEventListener('pageNumberUpdated', this.onPageNumberUpdated);
+    core.addEventListener('annotationHidden', this.onAnnotationChanged);
     window.addEventListener('resize', this.onWindowResize);
   }
   
@@ -38,6 +41,8 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('beginRendering', this.onBeginRendering);
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
+    core.removeEventListener('pageNumberUpdated', this.onPageNumberUpdated);
+    core.removeEventListener('annotationHidden', this.onAnnotationChanged);
     window.removeEventListener('resize', this.onWindowResize);
   }
 
@@ -67,6 +72,17 @@ class ThumbnailsPanel extends React.PureComponent {
     
       this.updateAnnotations(pageIndex);
     });
+  }
+
+  onPageNumberUpdated = (e, pageNumber) => {
+    const { thumbnailsPanel } = this;
+
+    if (thumbnailsPanel && thumbnailsPanel.current) {
+      const thumbnailHeight = 180; // refer to Thumbnail.scss
+      const pageIndex = pageNumber - 1;
+      const scrollLocation = pageIndex * thumbnailHeight;
+      thumbnailsPanel.current.scrollTop = scrollLocation;
+    }
   }
 
   onWindowResize = () => {
@@ -245,16 +261,8 @@ class ThumbnailsPanel extends React.PureComponent {
 
             return (
               index < this.props.totalPages 
-              ? <Thumbnail
-                  key={index}
-                  index={index}
-                  canLoad={canLoad}
-                  onLoad={this.onLoad}
-                  onCancel={this.onCancel}
-                  onRemove={this.onRemove}
-                  updateAnnotations={updateHandler}
-                />
-              : null
+                ? <Thumbnail key={index} index={index} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
+                : null
             );
           })
         }
@@ -270,7 +278,7 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     return (
-      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel">
+      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel" ref={this.thumbnailsPanel}>
         <div className="thumbs">
           <ReactList
             key="panel"

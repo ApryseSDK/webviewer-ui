@@ -5,7 +5,9 @@ import core from 'core';
 
 // viewer
 export const disableElement = (dataElement, priority) => (dispatch, getState) => {
-  if (dataElement === 'stylePopup') {
+  if (dataElement === 'leftPanel') {
+    dispatch(disableElements(['leftPanel', 'leftPanelButton'], priority));
+  } else if (dataElement === 'stylePopup') {
     dispatch(disableElements(['toolStylePopup', 'annotationStylePopup'], priority));
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
@@ -19,7 +21,9 @@ export const disableElements = (dataElements, priority) => (dispatch, getState) 
   dispatch({ type: 'DISABLE_ELEMENTS', payload: { dataElements: filteredDataElements, priority } });
 };
 export const enableElement = (dataElement, priority) => (dispatch, getState) => {
-  if (dataElement === 'stylePopup') {
+  if (dataElement === 'leftPanel') {
+    dispatch(enableElements(['leftPanel', 'leftPanelButton'], priority));
+  } else if (dataElement === 'stylePopup') {
     dispatch(enableElements(['toolStylePopup', 'annotationStylePopup'], priority));
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
@@ -91,10 +95,29 @@ export const setColorPalette = (toolName, colorPalette) => ({ type: 'SET_COLOR_P
 export const setIconColor = (toolName, color) => ({ type: 'SET_ICON_COLOR', payload: { toolName, color } });
 
 // header API
-export const addItems = (newItems, index, group) => ({ type: 'ADD_ITEMS', payload: { newItems, index, group } });
-export const removeItems = (itemList, group) => ({ type: 'REMOVE_ITEMS', payload: { itemList, group } });
+export const addItems = (newItems, index, group) => dispatch => {
+  if (Array.isArray(newItems)) {
+    dispatch({ type: 'ADD_ITEMS', payload: { newItems, index, group } });
+  } else {
+    dispatch({ type: 'ADD_ITEMS', payload: { newItems: [newItems], index, group } });
+  }
+}
+export const removeItems = (itemList, group) => dispatch => {
+  if (Array.isArray(itemList)) {
+    dispatch({ type: 'REMOVE_ITEMS', payload: { itemList, group } });
+  } else {
+    dispatch({ type: 'REMOVE_ITEMS', payload: { itemList: [itemList], group } });
+  }
+}
+
 export const updateItem = (dataElement, newProps, group) => ({ type: 'UPDATE_ITEM', payload: { dataElement, newProps, group } });
-export const setItems = (items, group) => ({ type: 'SET_ITEMS', payload: { items, group } });
+export const setItems = (items, group) => dispatch => {
+  if (Array.isArray(items)) {
+    dispatch({ type: 'SET_ITEMS', payload: { items, group } })
+  } else {
+    dispatch({ type: 'SET_ITEMS', payload: { items: [items], group } })
+  }
+}
 
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });
@@ -106,6 +129,7 @@ export const setFilename = filename => ({ type: 'SET_FILENAME', payload: { filen
 export const setExtension = extension => ({ type: 'SET_EXTENSION', payload: { extension } });
 export const setTotalPages = totalPages => ({ type: 'SET_TOTAL_PAGES', payload: { totalPages } });
 export const setOutlines = outlines => ({ type: 'SET_OUTLINES', payload: { outlines } });
+export const setLayers = layers => ({ type: 'SET_LAYERS', payload: { layers } });
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
 export const setPasswordAttempts = attempt => ({ type: 'SET_PASSWORD_ATTEMPTS', payload: { attempt } });
 export const setPrintQuality = quality => ({ type: 'SET_PRINT_QUALITY', payload: { quality } });

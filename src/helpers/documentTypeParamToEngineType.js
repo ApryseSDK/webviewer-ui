@@ -1,4 +1,4 @@
-import { engineTypes, workerTypes } from 'constants/types';
+import { engineTypes } from 'constants/types';
 
 export default (preloadWorker, pdftronServer) => {
   if (pdftronServer) {

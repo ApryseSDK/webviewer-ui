@@ -1,5 +1,5 @@
 export default (state, group, modification, defaultArr) => {
-  if (defaultArr.includes(group)){
+  if (defaultArr.includes(group)) {
     const groupIndex = defaultArr.indexOf(group);
     group.children = [ ...modification ];
     defaultArr.splice(groupIndex, 1, { ...group });
@@ -14,4 +14,4 @@ export default (state, group, modification, defaultArr) => {
     defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
     return { ...state, headers: { default: [ ...defaultArr ] } };
   }
-}
+};

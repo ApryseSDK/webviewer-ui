@@ -6,7 +6,7 @@ import getButtonObjectByToolName from 'helpers/getButtonObjectByToolName';
 export const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement] && state.viewer.disabledElements[dataElement].disabled;
 export const isToolGroupButtonDisabled = (state, dataElement, toolNames) => {
   const isEveryButtonInGroupDisabled = toolNames.every(toolName => isToolButtonDisabled(state, toolName));
-  
+
   return isElementDisabled(state, dataElement) || isEveryButtonInGroupDisabled;
 };
 export const isToolButtonDisabled = (state, toolName) => {
@@ -17,7 +17,7 @@ export const isElementOpen = (state, dataElement) => {
   if (state.viewer.disabledElements[dataElement]) {
     return state.viewer.openElements[dataElement] && !state.viewer.disabledElements[dataElement].disabled;
   }
-  
+
   return state.viewer.openElements[dataElement];
 };
 
@@ -58,6 +58,13 @@ export const getToolNameByDataElement = (state, dataElement) => Object.keys(stat
 export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
 export const getActiveDataElement = state => getButtonObjectByToolName(state, state.viewer.activeToolName) ? getButtonObjectByToolName(state, state.viewer.activeToolName).dataElement : '';
+export const getListIndex = (state, panel) => {
+  if (state.viewer.listIndex[panel] === undefined) {
+    return null;
+  } else {
+    return state.viewer.listIndex[panel];
+  }
+};
 export const getActiveLeftPanel = state => state.viewer.activeLeftPanel;
 export const getActiveToolGroup = state => state.viewer.activeToolGroup;
 export const getNotePopupId = state => state.viewer.notePopupId;
@@ -106,6 +113,10 @@ export const getWarningConfirmEvent = state => state.viewer.warning && state.vie
 export const getWarningConfirmBtnText = state =>  state.viewer.warning && state.viewer.warning.confirmBtnText;
 export const getWarningCancelEvent = state =>  state.viewer.warning && state.viewer.warning.onCancel;
 
+
+// error message
+export const getErrorMessage = state => state.viewer.errorMessage || '';
+
 // document
 export const getDocument = state => state.document;
 export const getDocumentId = state => state.document.id;
@@ -118,9 +129,11 @@ export const getPasswordAttempts = state => state.document.passwordAttempts;
 export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 export const getOutlines = state => state.document.outlines;
+export const getLayers = state => state.document.layers;
 export const getLoadingProgress = state => Math.min(state.document.documentLoadingProgress, state.document.workerLoadingProgress);
 export const getUploadProgress = state => state.document.uploadProgress;
 export const isUploading = state => state.document.isUploading;
+export const getAccessibleMode = state => !!state.document.accessibleMode;
 
 // user
 export const getUserName = state => state.user.name;
