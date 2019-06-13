@@ -4,6 +4,8 @@
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
+    "postinstall": "npm run download-webviewer",
+    "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
     "start": "babel-node ./dev-server.js",
     "test": "babel-node ./test-server.js",
     "cypress:open": "cypress open --project ./test/cypress",
@@ -15,6 +17,7 @@
     "translation": "node ./scripts/translationCheck.js"
   },
   "devDependencies": {
+    "@pdftron/webviewer-downloader": "^1.1.0",
     "autolinker": "^1.7.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",

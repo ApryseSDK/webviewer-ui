@@ -27,42 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 app.use('/i18n', express.static(path.resolve(__dirname, 'i18n')));
 app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
-app.use('/mime', express.static(path.resolve(__dirname, 'mime')));
-app.use('/core', express.static(path.resolve(__dirname, '../core')));
-
-const handleAnnotation = (req, res, handler) => {
-	const dir = path.resolve(__dirname, 'annotations');
-	if (!fs.existsSync(dir)) {
-		fs.mkdirSync(dir);
-	}
-
-	handler(dir);
-	res.end();
-};
-
-app.get('/annotations', (req, res) => {
-	handleAnnotation(req, res, dir => {
-		const xfdfFile = (req.query.did) ? path.resolve(dir, req.query.did + '.xfdf') : path.resolve(dir, 'default.xfdf');
-		if (fs.existsSync(xfdfFile)) {
-			res.header('Content-Type', 'text/xml');
-			res.send(fs.readFileSync(xfdfFile));
-		} else {
-			res.status(204);
-		}
-	});
-});
-
-app.post('/annotations', (req, res) => {
-	handleAnnotation(req, res, dir => {
-		const xfdfFile = (req.body.did) ? path.resolve(dir, req.body.did + '.xfdf') : path.resolve(dir, 'default.xfdf');
-		try {
-			res.send(fs.writeFileSync(xfdfFile, req.body.data));
-		} catch (e) {
-			res.status(500);
-		}
-	});
-	res.end();
-});
+app.use('/core', express.static(path.resolve(__dirname, 'lib/core')));
 
 app.get('/', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'src/index.html'));
