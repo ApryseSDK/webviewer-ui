@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
-import OverlayItem from '../OverlayItem';
-import ToolButton from '../ToolButton';
-
 import core from 'core';
-import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import { zoomTo } from 'helpers/zoom';
 import actions from 'actions';
 import selectors from 'selectors';
+import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
+import { zoomTo } from 'helpers/zoom';
+
+import OverlayItem from '../OverlayItem';
+import ToolButton from '../ToolButton';
 
 import './ZoomOverlay.scss';
 

@@ -11,7 +11,7 @@ export default () => {
     try {
       document.execCommand('copy');
       textarea.blur();
-    } catch(e) {
+    } catch (e) {
       console.error('Copy is not supported by browser. ' + e);
     }
   }

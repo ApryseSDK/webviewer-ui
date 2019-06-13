@@ -15,6 +15,7 @@ export default store =>  {
 
     if (window.readerControl.serverFailed) {
       callback(originalData);
+      return;
     } else if (window.readerControl.loadedFromServer) {
       callback('');
       return;
@@ -31,7 +32,7 @@ export default store =>  {
       data: docIdQuery,
       headers: serverUrlHeaders,
       success: data => {
-        if (!_.isNull(data) && !_.isUndefined(data)) {
+        if (data !== null && data !== undefined) {
           window.readerControl.loadedFromServer = true;
           callback(data);
         } else {

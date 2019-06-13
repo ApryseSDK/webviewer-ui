@@ -14,7 +14,7 @@ export default (dispatch, options) => {
     const freeHandCompletePromise = core.getTool('AnnotationCreateFreeHand').complete();
 
     const annotationsPromise = includeAnnotations ? core.getAnnotationsLoadedPromise() : Promise.resolve();
-    Promise.all([annotationsPromise, freeHandCompletePromise]).then(() => {
+    Promise.all([ annotationsPromise, freeHandCompletePromise ]).then(() => {
       if (includeAnnotations) {
         downloadOptions.xfdfString = xfdfData || core.exportAnnotations();
       }
@@ -35,7 +35,7 @@ export default (dispatch, options) => {
       const bbURLPromise = externalURL ? Promise.resolve({ url: externalURL }) : doc.getDownloadLink({ filename: downloadName });
       
       if (bbURLPromise) {
-      const downloadIframe = document.getElementById('download-iframe') || document.createElement('iframe');
+        const downloadIframe = document.getElementById('download-iframe') || document.createElement('iframe');
         downloadIframe.width = 0;
         downloadIframe.height = 0;
         downloadIframe.id = 'download-iframe';
@@ -50,9 +50,9 @@ export default (dispatch, options) => {
         doc.getFileData(downloadOptions).then(data => {
           const arr = new Uint8Array(data);
           if (isIE) {
-            file = new Blob([arr], { type: 'application/pdf' });
+            file = new Blob([ arr ], { type: 'application/pdf' });
           } else {
-            file = new File([arr], downloadName, { type: 'application/pdf' });
+            file = new File([ arr ], downloadName, { type: 'application/pdf' });
           }
 
           saveAs(file, downloadName);

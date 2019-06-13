@@ -26,12 +26,12 @@ export default state => {
     i18next.init(options, callback);
   } else {
     i18next
-    .use(XHR)
-    .init({ 
-      ...options,  
-      backend: {
-        loadPath: './i18n/{{ns}}-{{lng}}.json'
-      }
-    }, callback);
+      .use(XHR)
+      .init({ 
+        ...options,  
+        backend: {
+          loadPath: './i18n/{{ns}}-{{lng}}.json'
+        }
+      }, callback);
   }
 };

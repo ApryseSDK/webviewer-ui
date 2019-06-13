@@ -30,6 +30,7 @@ import setUserPermission from 'helpers/setUserPermission';
 import rootReducer from 'reducers/rootReducer';
 
 const packageConfig = require('../package.json');
+
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
@@ -44,8 +45,8 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
     const updatedReducer = require('reducers/rootReducer').default;
     store.replaceReducer(updatedReducer);
-  }); 
-  
+  });
+
   module.hot.accept();
 }
 
@@ -98,7 +99,7 @@ if (window.CanvasRenderingContext2D) {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, window.sampleL);
+        });
       });
     }
 
@@ -108,7 +109,7 @@ if (window.CanvasRenderingContext2D) {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, window.sampleL);
+        });
       });
     }
   }
@@ -128,7 +129,7 @@ if (window.CanvasRenderingContext2D) {
 
     if (parseInt(coreMajorVersion) < parseInt(uiMajorVersion)) {
       console.error(`[WebViewer] Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above.`);
-    } else if(parseInt(coreMinorVersion) < parseInt(uiMinorVersion)) {
+    } else if (parseInt(coreMinorVersion) < parseInt(uiMinorVersion)) {
       console.warn(`[WebViewer] Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above.`);
     }
   }
@@ -193,7 +194,7 @@ if (window.CanvasRenderingContext2D) {
           },
           addItems(newItems, index) {
             store.dispatch(actions.addItems(newItems, index, group));
-          },          
+          },
           removeItems(itemList) {
             store.dispatch(actions.removeItems(itemList, group));
           },
@@ -230,6 +231,7 @@ if (window.CanvasRenderingContext2D) {
           closeElements: apis.closeElements(store),
           disableAnnotations: apis.disableAnnotations(store),
           disableDownload: apis.disableDownload(store),
+          disableElement: apis.disableElement(store),
           disableElements: apis.disableElements(store),
           disableFilePicker: apis.disableFilePicker(store),
           disableLocalStorage: apis.disableLocalStorage,
@@ -244,6 +246,7 @@ if (window.CanvasRenderingContext2D) {
           enableAllElements: apis.enableAllElements(store), // undocumented
           enableAnnotations: apis.enableAnnotations(store),
           enableDownload: apis.enableDownload(store),
+          enableElement: apis.enableElement(store),
           enableElements: apis.enableElements(store),
           enableFilePicker: apis.enableFilePicker(store),
           enableLocalStorage: apis.enableLocalStorage,
@@ -277,7 +280,7 @@ if (window.CanvasRenderingContext2D) {
           isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
           openElement: apis.openElement(store),
-          openElements: apis.openElements(store),          
+          openElements: apis.openElements(store),
           print: apis.print(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),
@@ -318,9 +321,9 @@ if (window.CanvasRenderingContext2D) {
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
           setZoomList: apis.setZoomList(store),
+          showErrorMessage: apis.showErrorMessage(store),
           showWarningMessage: apis.showWarningMessage(store), // undocumented
           toggleElement: apis.toggleElement(store),
-          showErrorMessage: apis.showErrorMessage,
           toggleFullScreen: apis.toggleFullScreen,
           unregisterTool: apis.unregisterTool(store),
           updateOutlines: apis.updateOutlines(store), // undocumented

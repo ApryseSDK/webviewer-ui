@@ -12,11 +12,11 @@ export default store => {
     }
 
     if (src.endsWith('nmf')) {
-      testMIMEType(['nmf'])
+      testMIMEType([ 'nmf' ])
         .catch(errorMIMEType);
     }
     if (src.endsWith('pexe')) {
-      testMIMEType(['pexe'])
+      testMIMEType([ 'pexe' ])
         .catch(errorMIMEType);
     }
   }, true);
@@ -25,16 +25,16 @@ export default store => {
     const docExtension = getDocumentExtension(getDocName(store.getState()));
 
     if (typeof detail === 'string' && detail.startsWith('Error retrieving file:') && detail.includes('.xod')) {
-      testMIMEType(['xod'])
+      testMIMEType([ 'xod' ])
         .catch(errorMIMEType);
     }
     if (detail === 'The worker has encountered an error') {
-      testMIMEType(['mem', 'wasm'])
+      testMIMEType([ 'mem', 'wasm' ])
         .then(() => errorMissingWorkerFiles(docExtension))
         .catch(errorMIMEType);
     }
     if (detail === `Couldn't fetch resource file.`) {
-      testMIMEType(['res'])
+      testMIMEType([ 'res' ])
         .then(() => errorMissingWorkerFiles(docExtension))
         .catch(errorMIMEType);
     }

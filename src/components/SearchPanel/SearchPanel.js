@@ -85,7 +85,7 @@ class SearchPanel extends React.PureComponent {
           {results.map((result, i) => {
             const prevResult = i === 0 ? results[0] : results[i - 1];
 
-            return(
+            return (
               <React.Fragment key={i}>
                 {this.renderListSeparator(prevResult, result)}
                 <SearchResult result={result} index={i} onClickResult={this.onClickResult} />

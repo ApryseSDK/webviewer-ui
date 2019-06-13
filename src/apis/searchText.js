@@ -9,11 +9,33 @@
  * @param {boolean} [options.regex=false] Search for a regex string. For example, www(.*)com.
  * @param {boolean} [options.searchUp=false] Search up the document (backwards).
  * @param {boolean} [options.ambientString=false] Get the ambient string in the result.
- * @example viewerElement.addEventListener('ready', () => {
-  const instance = viewer.getInstance();
-  instance.searchText('test', {
-    caseSensitive: true,
-    wholeWord: true
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    var docViewer = instance.docViewer;
+
+    // you must have a document loaded when calling this api
+    docViewer.on('documentLoaded', function() {
+      instance.searchText('test', {
+        caseSensitive: true,
+        wholeWord: true
+      });
+    });
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
+var viewer = new PDFTron.WebViewer(...);
+
+viewerElement.addEventListener('ready', function() {
+  var instance = viewer.getInstance();
+  var docViewer = instance.docViewer;
+
+  // you must have a document loaded when calling this api
+  docViewer.on('documentLoaded', function() {
+    instance.searchText('test', {
+      caseSensitive: true,
+      wholeWord: true
+    });
   });
 });
  */

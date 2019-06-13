@@ -7,7 +7,6 @@ import ActionButton from 'components/ActionButton';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
-import getSignatureDimension from 'helpers/getSignatureDimension';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -43,6 +42,10 @@ class SignatureModal extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
+    if (prevProps.isDisabled && !this.props.isDisabled && !this.isCanvasReady) {
+      this.setUpSignatureCanvas();
+    }
+
     if (!prevProps.isOpen && this.props.isOpen) {
       core.setToolMode('AnnotationCreateSignature');
       this.setState(this.initialState);
@@ -58,7 +61,14 @@ class SignatureModal extends React.PureComponent {
   }
 
   setUpSignatureCanvas = () => {
+    if (!this.canvas.current) {
+      return;
+    }
+
     const canvas = this.canvas.current;
+    if (!this.canvas.current) {
+      return;
+    }
     this.signatureTool.setSignatureCanvas($(canvas));
     // draw nothing in the background since we want to convert the signature on the canvas
     // to an image and we don't want the background to be in the image.
@@ -69,9 +79,14 @@ class SignatureModal extends React.PureComponent {
     canvas.addEventListener('mouseup', this.handleFinishDrawing);
     canvas.addEventListener('touchend', this.handleFinishDrawing);
     this.setSignatureCanvasSize();
+    this.isCanvasReady = true;
   }
 
   setSignatureCanvasSize = () => {
+    if (!this.canvas.current) {
+      return;
+    }
+
     const canvas = this.canvas.current;
     const { width, height } = canvas.getBoundingClientRect();
     canvas.width = width;
@@ -147,7 +162,7 @@ class SignatureModal extends React.PureComponent {
               <div className="signature-sign-here">
                 {t('message.signHere')}
               </div>
-              <div className={`signature-clear ${canClear ? 'active': null}`} onClick={this.clearCanvas}>
+              <div className={`signature-clear ${canClear ? 'active' : null}`} onClick={this.clearCanvas}>
                 {t('action.clear')}
               </div>
             </div>

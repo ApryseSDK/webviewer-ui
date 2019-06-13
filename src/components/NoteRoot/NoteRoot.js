@@ -28,7 +28,7 @@ class NoteRoot extends React.Component {
     iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     contents: PropTypes.string
   }
-  
+
   deleteNote = () => {
     core.deleteAnnotations([this.props.annotation]);
   }
@@ -40,8 +40,8 @@ class NoteRoot extends React.Component {
       <div className="title">
         <div className="type">
           {icon
-          ? <Icon className="icon" glyph={icon} color={color} />
-          : annotation.Subject
+            ? <Icon className="icon" glyph={icon} color={color} />
+            : annotation.Subject
           }
         </div>
         {renderAuthorName(annotation)}
@@ -56,11 +56,11 @@ class NoteRoot extends React.Component {
             ` (${numberOfReplies})`
           }
         </div>
-        <NotePopup 
-          annotation={annotation} 
-          isNoteExpanded={isNoteExpanded} 
-          openEditing={openEditing} 
-          onDelete={this.deleteNote} 
+        <NotePopup
+          annotation={annotation}
+          isNoteExpanded={isNoteExpanded}
+          openEditing={openEditing}
+          onDelete={this.deleteNote}
         />
       </div>
     );
@@ -69,16 +69,16 @@ class NoteRoot extends React.Component {
   render() {
     const { annotation, renderContents, isEditing, closeEditing, searchInput, contents } = this.props;
 
-    return(
+    return (
       <div className="NoteRoot">
         {this.renderHeader()}
-        <NoteContents 
-          annotation={annotation} 
+        <NoteContents
+          annotation={annotation}
           contents={contents}
-          searchInput={searchInput} 
-          renderContents={renderContents} 
-          isEditing={isEditing} 
-          closeEditing={closeEditing} 
+          searchInput={searchInput}
+          renderContents={renderContents}
+          isEditing={isEditing}
+          closeEditing={closeEditing}
         />
       </div>
     );

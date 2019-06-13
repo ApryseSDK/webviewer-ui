@@ -63,7 +63,7 @@ class Thumbnail extends React.PureComponent {
     const didPageChange = contentChanged.some(changedPage => currentPageStr === changedPage);
     const didPageMove = Object.keys(moved).some(movedPage => currentPageStr === movedPage);
 
-    if(isPageAdded || didPageChange || didPageMove) {
+    if (isPageAdded || didPageChange || didPageMove) {
       const { thumbContainer } = this;
       const { current } = thumbContainer;
 
