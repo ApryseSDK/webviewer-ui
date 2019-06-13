@@ -189,6 +189,7 @@ export default {
     isOffline: getHashParams('startOffline', false),
     totalPages: 0,
     outlines: [],
+    layers: [],
     checkPassword: null,
     password: '',
     printQuality: 1,
