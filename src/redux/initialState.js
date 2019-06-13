@@ -78,7 +78,7 @@ export default {
                 { type: 'toolButton', img: 'ic_annotation_cloud_black_24px', toolName: 'AnnotationCreatePolygonCloud', dataElement: 'cloudToolButton', title: 'annotation.polygonCloud' },
               ]
             },
-            { type: 'statefulButton', dataElement: 'signatureToolButton', toolName: 'AnnotationCreateSignature'},
+            { type: 'statefulButton', dataElement: 'signatureToolButton', toolName: 'AnnotationCreateSignature' },
             { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
             { type: 'toolButton', img: 'ic_annotation_freetext_black_24px', toolName: 'AnnotationCreateFreeText', dataElement: 'freeTextToolButton', title: 'annotation.freetext' },
             { type: 'toolButton', img: 'ic_annotation_sticky_note_black_24px', toolName: 'AnnotationCreateSticky', dataElement: 'stickyToolButton', title: 'annotation.stickyNote' },
