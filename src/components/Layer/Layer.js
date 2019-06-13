@@ -38,4 +38,4 @@ class Layer extends React.PureComponent {
   }
 }
 
-export default connect(null, null)(Layer);
+export default Layer;

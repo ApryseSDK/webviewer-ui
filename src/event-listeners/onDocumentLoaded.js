@@ -44,6 +44,8 @@ export default dispatch => () => {
       dispatch(actions.disableElement('layersPanel', 1));
       dispatch(actions.disableElement('layersPanelButton', 1));
     } else {
+      dispatch(actions.enableElement('layersPanel', 1));
+      dispatch(actions.enableElement('layersPanelButton', 1));
       dispatch(actions.setLayers(layers));
     }
   });
