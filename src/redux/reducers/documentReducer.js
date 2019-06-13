@@ -1,7 +1,7 @@
 export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
-  switch(type) {
+  switch (type) {
     case 'SET_DOCUMENT_ID':
       return { ...state, id: payload.documentId };
     case 'SET_DOCUMENT_PATH':

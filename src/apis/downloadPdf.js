@@ -36,14 +36,14 @@ import { workerTypes } from 'constants/types';
 export default store => includeAnnotations => {
   const state = store.getState();
   if (selectors.isElementDisabled(state, 'downloadButton')) {
-  console.warn('Download has been disabled.');
+    console.warn('Download has been disabled.');
     return;
   }
   
   const documentType = selectors.getDocumentType(state);
   const { PDF, BLACKBOX, OFFICE } = workerTypes;
   if (documentType !== PDF && documentType !== OFFICE && documentType !== BLACKBOX) {
-  console.warn('Document type is not PDF. Cannot be downloaded.');
+    console.warn('Document type is not PDF. Cannot be downloaded.');
     return;
   }
   downloadPdf(store.dispatch, {

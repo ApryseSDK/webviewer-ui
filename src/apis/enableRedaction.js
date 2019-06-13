@@ -27,7 +27,7 @@ export default store => (enable = true) =>  {
     core.enableRedaction(true);
 
     if (!core.isFullPDFEnabled()) {
-    console.warn('Full api is not enabled, applying redactions is disabled');
+      console.warn('Full api is not enabled, applying redactions is disabled');
     }
   } else {
     disableRedaction(store)();

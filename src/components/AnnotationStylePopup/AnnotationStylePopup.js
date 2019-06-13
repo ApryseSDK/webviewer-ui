@@ -48,7 +48,7 @@ class AnnotationStylePopup extends React.Component {
       return null;
     }
 
-    return(
+    return (
       <div className={className} data-element="annotationStylePopup" onClick={() => closeElement('annotationPopup')}>
         <StylePopup
           activeToolName={annotation.ToolName}

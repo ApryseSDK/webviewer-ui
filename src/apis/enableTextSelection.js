@@ -16,15 +16,16 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import disableTextSelection from './disableTextSelection';
-import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
+import { PRIORITY_ONE } from 'constants/actionPriority';
+
+import disableTextSelection from './disableTextSelection';
 
 export default store => (enable = true) => {
   if (enable) {
-    store.dispatch(actions.enableElements(['textPopup', 'textSelectButton'], PRIORITY_ONE));
+    store.dispatch(actions.enableElements([ 'textPopup', 'textSelectButton' ], PRIORITY_ONE));
   } else {
-  console.warn('enableTextSelection(false) is deprecated, please use disableTextSelection() instead');
+    console.warn('enableTextSelection(false) is deprecated, please use disableTextSelection() instead');
     disableTextSelection(store)();
   }
 

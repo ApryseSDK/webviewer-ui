@@ -14,7 +14,7 @@ export default {
       });
     },
     didUpdate: (prevProps, currProps, prevState, currState, update) => {
-      if(prevProps.openElements !== currProps.openElements) {
+      if (prevProps.openElements !== currProps.openElements) {
         update();
       }
     },

@@ -16,9 +16,10 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import disablePrint from './disablePrint';
-import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
+import { PRIORITY_ONE } from 'constants/actionPriority';
+
+import disablePrint from './disablePrint';
 
 export default store => (enable = true) => {
   const elements = [
@@ -29,7 +30,7 @@ export default store => (enable = true) => {
   if (enable) {
     store.dispatch(actions.enableElements(elements, PRIORITY_ONE));
   } else {
-  console.warn('enablePrint(false) is deprecated, please use disablePrint() instead');
+    console.warn('enablePrint(false) is deprecated, please use disablePrint() instead');
     disablePrint(store)();
   }
 };

@@ -16,7 +16,9 @@ class ErrorModal extends React.PureComponent {
     openElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
     documentPath: PropTypes.string.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    setErrorMessage: PropTypes.func.isRequired,
+    message: PropTypes.string
   }
 
   componentDidMount() {

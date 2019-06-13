@@ -1,5 +1,4 @@
 import core from 'core';
-import getPageHeight from 'core/getPageHeight';
 
 export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
   const { left, top } = calcAnnotationPopupPosition(getAnnotationPosition(annotation), getPopupDimensions(popup));
@@ -158,10 +157,10 @@ const calcPopupTop = ({ topLeft, bottomRight } , { height }, topThreshold) => {
 
   if (top >= topThreshold) {
     top -= height;
-  } else if (bottom - scrollTop > clientHeight - bottomThreshold){
+  } else if (bottom - scrollTop > clientHeight - bottomThreshold) {
     top = top + (annotationHeight - stylePopupHeight) / 2;
   } else {
     top = bottomRight.y - scrollTop + bottomGap;
   }
   return Math.round(top);
- };
+};

@@ -163,7 +163,7 @@ class NotesPanel extends React.PureComponent {
     const { notesToRender } = this.state;
     const sortStrategies = getSortStrategies();
 
-    return(
+    return (
       <React.Fragment>
         <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`} onBlur={this.onBlur}>
           {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
@@ -231,9 +231,9 @@ class NotesPanel extends React.PureComponent {
         onClick={core.deselectAllAnnotations}
         onScroll={e => e.stopPropagation()}
       >
-        {this.rootAnnotations.length === 0
-        ? <div className="no-annotations">{t('message.noAnnotations')}</div>
-        : <React.Fragment>
+        {this.rootAnnotations.length === 0 
+          ? <div className="no-annotations">{t('message.noAnnotations')}</div>
+          : <React.Fragment>
             <div className="header">
               <input
                 type="text"

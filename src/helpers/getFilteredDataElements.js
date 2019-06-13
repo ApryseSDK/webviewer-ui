@@ -5,7 +5,7 @@ export default (state, dataElements, priority) => {
     const currentPriority = selectors.getDisabledElementPriority(state, dataElement);
     
     if (!currentPriority || priority >= currentPriority) {
-      return [ ...filteredDataElements, dataElement]; 
+      return [ ...filteredDataElements, dataElement ]; 
     }
 
     return filteredDataElements;

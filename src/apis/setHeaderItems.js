@@ -179,7 +179,7 @@ const Header = {
     this._setIndex(dataElement);
 
     if (this.index === -1) {
-    console.warn(`${dataElement} does not exist in ${this.headerGroup} header`);
+      console.warn(`${dataElement} does not exist in ${this.headerGroup} header`);
     } else {
       const item = this.headers[this.headerGroup][this.index];
       Object.keys(item).forEach(key => this[key] = item[key]);
@@ -208,7 +208,7 @@ const Header = {
       this.headerGroup = headerGroup;
       this._resetIndex();
     } else {
-    console.warn(`Header must be one of: ${headerGroups.join(' or ')}.`);
+      console.warn(`Header must be one of: ${headerGroups.join(' or ')}.`);
     }
     
     return this;
@@ -220,7 +220,7 @@ const Header = {
    */
   insertBefore(newItem) {
     if (this.index === -1) {
-    console.warn('Please use .get(dataElement) first before using insertBefore');
+      console.warn('Please use .get(dataElement) first before using insertBefore');
     } else {
       this.headers[this.headerGroup].splice(this.index, 0, newItem);
     }
@@ -234,7 +234,7 @@ const Header = {
    */
   insertAfter(newItem) {
     if (this.index === -1) {
-    console.warn('Please use .get(dataElement) first before using insertAfter');
+      console.warn('Please use .get(dataElement) first before using insertAfter');
     } else {
       this.index++;
       this.headers[this.headerGroup].splice(this.index, 0, newItem);
@@ -255,13 +255,13 @@ const Header = {
       index = arg;
     } else if (typeof arg === 'string') {
       if (this._getIndexOfElement(arg) === -1) {
-      console.warn(`${arg} does not exist in ${this.headerGroup} header`);
+        console.warn(`${arg} does not exist in ${this.headerGroup} header`);
       } else {
         index = this._getIndexOfElement(arg);
       }
     } else if (typeof arg === 'undefined') {
       if (this.index === -1) {
-      console.warn('Please use .get(dataElement) first before using delete()');
+        console.warn('Please use .get(dataElement) first before using delete()');
       } else {
         index = this.index;
       }
@@ -272,7 +272,7 @@ const Header = {
         }
       });
     } else {
-    console.warn('Argument must be empty, a number, a string or an array');
+      console.warn('Argument must be empty, a number, a string or an array');
     }
 
     if (index) {
@@ -309,11 +309,11 @@ const Header = {
    */
   push(...newItem) {
     if (newItem[0].group) {
-      if (this.headers[this.headerGroup].find(buttonObject => buttonObject.toolGroup === newItem[0].group)){
-        const buttonIndex = this.headers[this.headerGroup].findIndex(buttonObject=> buttonObject.toolGroup === newItem[0].group);
+      if (this.headers[this.headerGroup].find(buttonObject => buttonObject.toolGroup === newItem[0].group)) {
+        const buttonIndex = this.headers[this.headerGroup].findIndex(buttonObject => buttonObject.toolGroup === newItem[0].group);
         this.headers[this.headerGroup][buttonIndex].children.push(...newItem);
       } else {
-        console.warn(`${newItem[0].group} is not a valid group.`)
+        console.warn(`${newItem[0].group} is not a valid group.`);
       }
     } else {
       this.headers[this.headerGroup].push(...newItem);
@@ -340,7 +340,7 @@ const Header = {
     if (Array.isArray(arg)) {
       this._updateItems(arg);
     } else {
-    console.warn('Argument must be an array');
+      console.warn('Argument must be an array');
     }
 
     return this;
