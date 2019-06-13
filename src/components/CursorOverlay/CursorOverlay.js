@@ -89,7 +89,7 @@ class CursorOverlay extends React.PureComponent {
       return null;
     }
 
-    return(
+    return (
       <div className={className} data-element="cursorOverlay" style={{ touchAction: 'none', top, left, width, height }} ref={this.overlay}>
         {imgSrc &&
           <img className="cursor-image" src={imgSrc} />

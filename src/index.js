@@ -129,7 +129,7 @@ if (window.CanvasRenderingContext2D) {
 
     if (parseInt(coreMajorVersion) < parseInt(uiMajorVersion)) {
       console.error(`[WebViewer] Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above.`);
-    } else if(parseInt(coreMinorVersion) < parseInt(uiMinorVersion)) {
+    } else if (parseInt(coreMinorVersion) < parseInt(uiMinorVersion)) {
       console.warn(`[WebViewer] Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above.`);
     }
   }

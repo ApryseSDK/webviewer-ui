@@ -101,66 +101,66 @@ class MeasurementOption extends React.PureComponent {
     const scaleOptions = [0.1, 0.01, 0.001, 0.0001];
 
     return (
-    <div className="MeasurementOption" onClick={()=> onOpenDropdownChange(-1)}>
-      <div className="Scale">
-        <div className="LayoutTitle">
-          {t('option.measurementOption.scale')}
-        </div>
-        <div className="Layout">
-          <input 
-            className="textarea"
-            type="number" 
-            ref={this.scaleFromRef}
-            defaultValue={scaleFrom}
-            onChange={e => this.onScaleChange([[e.target.value],[]])}
-            onBlur={this.onBlur}
-          /> 
-          <div className={['ScaleDropdown', openMeasurementDropdown === 0 ? 'open': ''].join(' ').trim()}>
-            <MeasurementsDropdown 
-              onClick={unit => this.onScaleChange([[undefined, unit], []])} 
-              onDropdownChange={() => onOpenDropdownChange(0)}
-              dropdownList={unitFromOptions} 
-              selectedItem={unitFrom} 
-              isDropdownOpen={openMeasurementDropdown === 0}
-            />
+      <div className="MeasurementOption" onClick={()=> onOpenDropdownChange(-1)}>
+        <div className="Scale">
+          <div className="LayoutTitle">
+            {t('option.measurementOption.scale')}
           </div>
+          <div className="Layout">
+            <input 
+              className="textarea"
+              type="number" 
+              ref={this.scaleFromRef}
+              defaultValue={scaleFrom}
+              onChange={e => this.onScaleChange([[e.target.value],[]])}
+              onBlur={this.onBlur}
+            /> 
+            <div className={['ScaleDropdown', openMeasurementDropdown === 0 ? 'open': ''].join(' ').trim()}>
+              <MeasurementsDropdown 
+                onClick={unit => this.onScaleChange([[undefined, unit], []])} 
+                onDropdownChange={() => onOpenDropdownChange(0)}
+                dropdownList={unitFromOptions} 
+                selectedItem={unitFrom} 
+                isDropdownOpen={openMeasurementDropdown === 0}
+              />
+            </div>
           =
-          <input 
-            className="textarea"
-            type="number" 
-            ref={this.scaleToRef}
-            defaultValue={scaleTo}
-            onChange={e => this.onScaleChange([[], [e.target.value]])}
-            onBlur={this.onBlur}
-          /> 
-          <div className={['ScaleDropdown', openMeasurementDropdown === 1 ? 'open': ''].join(' ').trim()}>
-            <MeasurementsDropdown 
-              onClick={unit => this.onScaleChange([[], [undefined, unit]])} 
-              onDropdownChange={() => onOpenDropdownChange(1)}
-              dropdownList={unitToOptions} 
-              selectedItem={unitTo} 
-              isDropdownOpen={openMeasurementDropdown === 1} 
-            />
+            <input 
+              className="textarea"
+              type="number" 
+              ref={this.scaleToRef}
+              defaultValue={scaleTo}
+              onChange={e => this.onScaleChange([[], [e.target.value]])}
+              onBlur={this.onBlur}
+            /> 
+            <div className={['ScaleDropdown', openMeasurementDropdown === 1 ? 'open': ''].join(' ').trim()}>
+              <MeasurementsDropdown 
+                onClick={unit => this.onScaleChange([[], [undefined, unit]])} 
+                onDropdownChange={() => onOpenDropdownChange(1)}
+                dropdownList={unitToOptions} 
+                selectedItem={unitTo} 
+                isDropdownOpen={openMeasurementDropdown === 1} 
+              />
+            </div>
+          </div>
+        </div>
+        <div className="Precision">
+          <div className="LayoutTitle">
+            {t('option.shared.precision')}
+          </div>
+          <div className="Layout">
+            <div className={['PrecisionDropdown', openMeasurementDropdown === 2 ? 'open': ''].join(' ').trim()}>
+              <MeasurementsDropdown 
+                onClick={this.onPrecisionChange} 
+                onDropdownChange={() => onOpenDropdownChange(2)}
+                dropdownList={scaleOptions} 
+                selectedItem={precision} 
+                isDropdownOpen={openMeasurementDropdown === 2} 
+              />
+            </div>
           </div>
         </div>
       </div>
-      <div className="Precision">
-        <div className="LayoutTitle">
-          {t('option.shared.precision')}
-        </div>
-        <div className="Layout">
-          <div className={['PrecisionDropdown', openMeasurementDropdown === 2 ? 'open': ''].join(' ').trim()}>
-            <MeasurementsDropdown 
-              onClick={this.onPrecisionChange} 
-              onDropdownChange={() => onOpenDropdownChange(2)}
-              dropdownList={scaleOptions} 
-              selectedItem={precision} 
-              isDropdownOpen={openMeasurementDropdown === 2} 
-            />
-          </div>
-        </div>
-      </div>
-    </div>
     );
   }
 }

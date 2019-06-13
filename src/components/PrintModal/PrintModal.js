@@ -159,7 +159,7 @@ class PrintModal extends React.PureComponent {
     const documentRotation = this.getDocumentRotation(pageIndex);
     const ctx = canvas.getContext('2d');
 
-    switch(documentRotation) {
+    switch (documentRotation) {
       case 1:
         ctx.translate(width, 0);
         break;
@@ -368,7 +368,7 @@ class PrintModal extends React.PureComponent {
 
     return (
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
-          <div className="container" onClick={e => e.stopPropagation()}>
+        <div className="container" onClick={e => e.stopPropagation()}>
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
             <form className="col" onChange={this.onChange} onSubmit={this.createPagesAndPrint}>

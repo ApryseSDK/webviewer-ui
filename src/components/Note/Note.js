@@ -59,7 +59,7 @@ class Note extends React.PureComponent {
       }
     }
 
-    if(noteCollapsed) {
+    if (noteCollapsed) {
       this.setState({
         isRootContentEditing: false,
         isReplyFocused: false
@@ -217,6 +217,9 @@ class Note extends React.PureComponent {
       visible ? '' : 'hidden'
     ].join(' ').trim();
 
+    // Sort replies by date created, 
+    replies.sort((a, b) => a['DateCreated'] - b['DateCreated']);
+    
     // Negative tabIndex so that we can't tab to notes but can focus them. Focusing is handled manually by arrow keys.
     return (
       <div
@@ -269,7 +272,7 @@ class Note extends React.PureComponent {
             </div>
           }
         </div>
-    </div>
+      </div>
     );
   }
 }

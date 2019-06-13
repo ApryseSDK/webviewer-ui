@@ -244,7 +244,7 @@ class MeasurementOverlay extends React.PureComponent {
           {t('option.measurementOverlay.scale')}: {annotation.Measure.scale}
         </div>
         <div className="measurement__precision">
-        {t('option.shared.precision')}: {annotation.Precision}
+          {t('option.shared.precision')}: {annotation.Precision}
         </div>
         {this.renderValue()}
         {annotation.ToolName === 'AnnotationCreateDistanceMeasurement' &&
