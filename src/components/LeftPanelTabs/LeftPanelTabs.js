@@ -22,6 +22,7 @@ class LeftPanelTabs extends React.Component {
     isThumbnailsPanelButtonDisabled: PropTypes.bool,
     isOutlinesPanelButtonDisabled: PropTypes.bool,
     isNotesPanelButtonDisabled: PropTypes.bool,
+    isLayersPanelButtonDisabled: PropTypes.bool,
     setActiveLeftPanel: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired
   }
@@ -46,7 +47,8 @@ class LeftPanelTabs extends React.Component {
       isOutlinesPanelButtonDisabled,
       isNotesPanelButtonDisabled,
       setActiveLeftPanel,
-      disabledCustomPanelTabs
+      disabledCustomPanelTabs,
+      isLayersPanelButtonDisabled,
     } = this.props;
     const { isOpening } = this.state;
 
@@ -81,6 +83,14 @@ class LeftPanelTabs extends React.Component {
             willFocus={activePanel === 'notesPanel' && isOpening}
           />
         </Tooltip>
+        <Tooltip content="component.layersPanel" isDisabled={isLayersPanelButtonDisabled}>
+          <Button
+            isActive={this.isActive('layersPanel')}
+            dataElement="layersPanelButton"
+            img="ic_layers_24px"
+            onClick={() => setActiveLeftPanel('layersPanel')}
+          />
+        </Tooltip>
         {customPanels.map(({ panel, tab }, index) => (
           <Tooltip key={tab.dataElement || index} content={tab.title} isDisabled={disabledCustomPanelTabs.includes(tab.dataElement)}>
             <Button
@@ -103,7 +113,8 @@ const mapStateToProps = state => ({
   isLeftPanelTabsDisabled: selectors.isElementDisabled(state, 'leftPanelTabs'),
   isThumbnailsPanelButtonDisabled: selectors.isElementDisabled(state, 'thumbnailsPanelButton'),
   isOutlinesPanelButtonDisabled: selectors.isElementDisabled(state, 'outlinesPanelButton'),
-  isNotesPanelButtonDisabled: selectors.isElementDisabled(state, 'notesPanelButton')
+  isNotesPanelButtonDisabled: selectors.isElementDisabled(state, 'notesPanelButton'),
+  isLayersPanelButtonDisabled: selectors.isElementDisabled(state, 'layersPanelButton'),
 });
 
 const mapDispatchToProps = {

@@ -79,7 +79,7 @@ class NoteContents extends React.Component {
       <div className="NoteContents" onClick={this.handleNoteContentsClick}>
         {isEditing && 
           <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
-          <textarea 
+            <textarea 
               ref={this.textInput} 
               onChange={this.onChange} 
               onKeyDown={this.onKeyDown}

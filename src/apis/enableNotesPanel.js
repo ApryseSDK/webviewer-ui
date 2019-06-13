@@ -16,8 +16,9 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import { PRIORITY_TWO } from 'constants/actionPriority';
 import actions from 'actions';
+import { PRIORITY_TWO } from 'constants/actionPriority';
+
 import disableNotesPanel from './disableNotesPanel';
 
 export default store => (enable = true) =>  {

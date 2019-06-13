@@ -63,14 +63,16 @@ module.exports = {
 				test: /\.scss$/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					{
-						loader: 'css-loader',
-						options: { minimize: true }
-					},
+					'css-loader',
 					{
 						loader: 'postcss-loader',
 						options: {
-							plugins: () => [require('autoprefixer')()]
+							ident: 'postcss',
+							plugins: loader => [
+								require('postcss-import')({ root: loader.resourcePath }),
+								require('postcss-preset-env')(),
+								require('cssnano')()
+							]
 						}
 					},
 					'sass-loader'

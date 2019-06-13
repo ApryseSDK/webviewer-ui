@@ -261,16 +261,8 @@ class ThumbnailsPanel extends React.PureComponent {
 
             return (
               index < this.props.totalPages 
-              ? <Thumbnail
-                  key={index}
-                  index={index}
-                  canLoad={canLoad}
-                  onLoad={this.onLoad}
-                  onCancel={this.onCancel}
-                  onRemove={this.onRemove}
-                  updateAnnotations={updateHandler}
-                />
-              : null
+                ? <Thumbnail key={index} index={index} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
+                : null
             );
           })
         }
