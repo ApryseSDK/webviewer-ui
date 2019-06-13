@@ -56,7 +56,7 @@ export default store =>  {
   core.addEventListener('documentLoaded', function() {
     if (window.docViewer.getDocument().getType() === workerTypes.OFFICE) {
       getAnnotsFromServer(null, function(data) {
-        window.docViewer.getAnnotationManager().importAnnotationsAsync(data);
+        window.docViewer.getAnnotationManager().importAnnotations(data);
       });
     }
   });
