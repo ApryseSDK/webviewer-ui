@@ -24,4 +24,4 @@ import actions from 'actions';
 
 export default store => dataElements => {
   store.dispatch(actions.closeElements(dataElements));
-}
+};

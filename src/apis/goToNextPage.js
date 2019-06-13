@@ -34,7 +34,7 @@ export default store => () => {
   const currentPage = selectors.getCurrentPage(state);
   
   if (currentPage === selectors.getTotalPages(state)) {
-  console.warn('you are at the last page');
+    console.warn('you are at the last page');
   } else {
     const nextPage = currentPage + 1;
     core.setCurrentPage(nextPage);  

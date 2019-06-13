@@ -16,15 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import disableFilePicker from './disableFilePicker';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
+import disableFilePicker from './disableFilePicker';
 
 export default store => (enable = true) =>  {
   if (enable) {
-    store.dispatch(actions.enableElements(['filePickerHandler', 'filePickerButton'], PRIORITY_ONE));
+    store.dispatch(actions.enableElements([ 'filePickerHandler', 'filePickerButton' ], PRIORITY_ONE));
   } else {
-  console.warn('enableFilePicker(false) is deprecated, please use disableFilePicker() instead');
+    console.warn('enableFilePicker(false) is deprecated, please use disableFilePicker() instead');
     disableFilePicker(store)();
   }
 };

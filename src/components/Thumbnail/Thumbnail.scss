@@ -53,6 +53,8 @@
   }
 
   &.active {
+    background-color: lightgray;
+
     .page-image {
       border: 1px solid $gray12;
       border: 1px solid var(--border-color);

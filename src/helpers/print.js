@@ -27,7 +27,7 @@ const printPdf = () => {
     const printDocument = true;
     return core.getDocument().getFileData({ xfdfString, printDocument }).then(data => {
       const arr = new Uint8Array(data);
-      const blob = new Blob([arr], { type: 'application/pdf' });
+      const blob = new Blob([ arr ], { type: 'application/pdf' });
       document.getElementById('print-handler').src = URL.createObjectURL(blob);
     });
   });
