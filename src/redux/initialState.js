@@ -19,7 +19,7 @@ export default {
         { type: 'divider', hidden: [ 'tablet', 'mobile' ] },
         { type: 'toggleElementButton', img: 'ic_viewer_settings_black_24px', element: 'viewControlsOverlay', dataElement: 'viewControlsButton', title: 'component.viewControlsOverlay' },
         { type: 'toolButton', img: 'ic_pan_black_24px', toolName: 'Pan', dataElement: 'panToolButton', title: 'tool.pan' },
-        // { type: 'toolButton', img: 'textselect_cursor', toolName: 'TextSelect', dataElement: 'textSelectButton', title: 'tool.select' },
+        { type: 'toolButton', img: 'textselect_cursor', toolName: 'TextSelect', dataElement: 'textSelectButton', title: 'tool.select' },
         { type: 'toolButton', img: 'ic_select_black_24px', toolName: 'AnnotationEdit', dataElement: 'selectToolButton', title: 'tool.select', hidden: [ 'tablet', 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: [ 'mobile' ] },
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: [ 'mobile' ] },
