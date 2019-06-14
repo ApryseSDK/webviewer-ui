@@ -1,4 +1,4 @@
-import modifyHeader from 'helpers/modifyHeader';
+import replaceChildren from 'helpers/replaceChildren';
 
 export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
@@ -180,7 +180,7 @@ export default initialState => (state = initialState, action) => {
       } else {
           group.children.splice(index, 0, ...newItems);
           const modification = group.children;
-          return modifyHeader(state, group, modification, defaultArr);
+          return replaceChildren(state, group, modification, defaultArr);
       }
     }
     case 'REMOVE_ITEMS': {
@@ -194,9 +194,16 @@ export default initialState => (state = initialState, action) => {
       }
       let sortedList = [];
       if (typeof itemList[0] === 'string') {
-        currentArr.filter(buttonObject => itemList.includes(buttonObject.dataElement)).forEach(buttonObject => {
-          sortedList.push(currentArr.indexOf(buttonObject));
-        });
+        let dataElementList = currentArr.map(buttonObject => buttonObject.dataElement);
+        for (let i = 0; i < itemList.length; i++) {
+          if (dataElementList.includes(itemList[i])) {
+            let listIndex = dataElementList.indexOf(itemList[i]);
+            sortedList.push(listIndex);
+            console.log(currentArr[listIndex]);
+          } else {
+            console.warn(`${itemList[i]} does not exist. Make sure you are removing from the correct group.`);
+          }
+        }
         sortedList = sortedList.sort();
       } else {
         sortedList = itemList.sort();
@@ -208,7 +215,7 @@ export default initialState => (state = initialState, action) => {
         return { ...state, headers: { default: [ ...currentArr ] } }
       } else {
         const modification = [ ...currentArr ];
-        return modifyHeader(state, group, modification, defaultArr);
+        return replaceChildren(state, group, modification, defaultArr);
       }
     }
     case 'UPDATE_ITEM': {
@@ -229,7 +236,7 @@ export default initialState => (state = initialState, action) => {
       } else {
         group.children[updateObjectIndex] = updateObject;
         const modification = [ ...group.children ];
-        return modifyHeader(state, group, modification, defaultArr);
+        return replaceChildren(state, group, modification, defaultArr);
       }
     }
     case 'SET_ITEMS': {
@@ -239,7 +246,7 @@ export default initialState => (state = initialState, action) => {
         return { ...state, headers: { default: [ ...items ] } }
       } else {
         const modification = [ ...items ];
-        return modifyHeader(state, group, modification, defaultArr);
+        return replaceChildren(state, group, modification, defaultArr);
       }
     }
     case 'SET_ZOOM_LIST':
