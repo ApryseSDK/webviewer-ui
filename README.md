@@ -10,6 +10,7 @@ This repo is specifically designed for any users interested in advanced customiz
 
 ```
 npm install
+npm run download-webviewer
 ```
 
 ## Run
