@@ -7,7 +7,6 @@
     "start": "npx babel-node ./dev-server.js",
     "start-experimental": "npx babel-node ./new-dev-server.js",
     "test": "npx babel-node ./test-server.js",
-    "postinstall": "npm run download-webviewer",
     "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
     "cypress:open": "cypress open --project ./test/cypress",
     "lint": "eslint ./src/**/*.js",
