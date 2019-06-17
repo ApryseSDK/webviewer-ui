@@ -15,5 +15,5 @@ export default (state, group, modification, defaultArr) => {
     defaultArr[parentGroupIndex].children = [ ...defaultArr[parentGroupIndex].children ];
     defaultArr.splice(parentGroupIndex, 1, { ...defaultArr[parentGroupIndex] });
   }
-  return { ...state, headers: { default: [ ...defaultArr ] } };
+  return { ...state, header: [ ...defaultArr ] };
 };

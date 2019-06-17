@@ -93,7 +93,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_FULL_SCREEN':
       return { ...state, isFullScreen: payload.isFullScreen };
     case 'SET_HEADER_ITEMS':
-      return { ...state, headers: { ...state.headers, [payload.header]: payload.headerItems} };
+      return { ...state, header: payload.headerItems };
     case 'REGISTER_TOOL':
       const availablePalettes = ['TextColor', 'StrokeColor', 'FillColor'].filter(property => payload.toolObject.defaults && payload.toolObject.defaults[property]);
       return {
@@ -172,23 +172,23 @@ export default initialState => (state = initialState, action) => {
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
     case 'ADD_ITEMS': {
-      let defaultArr = state.headers.default;
+      let headerArr = state.header;
       const { newItems, index, group } = payload;
       if (!group) {
-        defaultArr.splice(index, 0, ...newItems);
-        return { ...state, headers: { default: [ ...defaultArr ] } };
+        headerArr.splice(index, 0, ...newItems);
+        return { ...state, header: [ ...headerArr ] };
       } else {
           group.children.splice(index, 0, ...newItems);
           const modification = group.children;
-          return replaceChildren(state, group, modification, defaultArr);
+          return replaceChildren(state, group, modification, headerArr);
       }
     }
     case 'REMOVE_ITEMS': {
       const { itemList, group } = payload;
-      let defaultArr = state.headers.default;
+      let headerArr = state.header;
       let currentArr = [];
       if (!group) {
-        currentArr = state.headers.default;
+        currentArr = state.header;
       } else {
         currentArr = group.children;
       }
@@ -212,18 +212,18 @@ export default initialState => (state = initialState, action) => {
         currentArr.splice(sortedList[i], 1);
       }
       if (!group){
-        return { ...state, headers: { default: [ ...currentArr ] } }
+        return { ...state, header: [ ...currentArr ] }
       } else {
         const modification = [ ...currentArr ];
-        return replaceChildren(state, group, modification, defaultArr);
+        return replaceChildren(state, group, modification, headerArr);
       }
     }
     case 'UPDATE_ITEM': {
       const { dataElement, newProps, group } = payload;
-      let defaultArr = state.headers.default;
+      let headerArr = state.header;
       let currentArr = [];
       if (!group) {
-        currentArr = [ ...state.headers.default ];
+        currentArr = [ ...state.header ];
       } else {
         currentArr = [ ...group.children ];
       }
@@ -232,21 +232,21 @@ export default initialState => (state = initialState, action) => {
       updateObject = { ...updateObject, ...newProps }
       if (!group) {
         currentArr[updateObjectIndex] = updateObject;
-        return { ...state, headers: { default: currentArr } }
+        return { ...state, header: currentArr }
       } else {
         group.children[updateObjectIndex] = updateObject;
         const modification = [ ...group.children ];
-        return replaceChildren(state, group, modification, defaultArr);
+        return replaceChildren(state, group, modification, headerArr);
       }
     }
     case 'SET_ITEMS': {
       const { items, group } = payload;
-      let defaultArr = state.headers.default;
+      let headerArr = state.header;
       if (!group) {
-        return { ...state, headers: { default: [ ...items ] } }
+        return { ...state, header: [ ...items ] }
       } else {
         const modification = [ ...items ];
-        return replaceChildren(state, group, modification, defaultArr);
+        return replaceChildren(state, group, modification, headerArr);
       }
     }
     case 'SET_ZOOM_LIST':

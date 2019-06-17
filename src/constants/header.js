@@ -5,7 +5,7 @@ class header {
     this.store = store;
   }
   getItems() {
-    return this.store.getState().viewer.headers.default;
+    return this.store.getState().viewer.header;
   }
   addItems(newItems, index) {
     this.store.dispatch(actions.addItems(newItems, index));
@@ -20,7 +20,7 @@ class header {
     this.store.dispatch(actions.setItems(items));
   }
   group(dataElement){
-    const defaultHeader = this.store.getState().viewer.headers.default;
+    const defaultHeader = this.store.getState().viewer.header;
     let group;
     defaultHeader.forEach(buttonObject => {
       if (buttonObject.dataElement === dataElement) {

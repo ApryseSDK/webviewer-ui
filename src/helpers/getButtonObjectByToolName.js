@@ -1,7 +1,7 @@
 const getButtonObjectByToolName = (state, toolName) => {
-  const defaultHeader = state.viewer.headers.default;
+  const header = state.viewer.header;
   let buttonObject;
-  defaultHeader.forEach(element => {
+  header.forEach(element => {
     if (element.toolName === toolName) {
       buttonObject = element;
     }
