@@ -64,7 +64,7 @@ class header {
    * Applies header APIs on a nested group
    * @param {string} dataElement dataElement of group 
    */
-  group(dataElement){
+  group(dataElement) {
     const defaultHeader = this.store.getState().viewer.header;
     let group;
     defaultHeader.forEach(buttonObject => {
@@ -102,6 +102,6 @@ class header {
       }
     };
   }
-};
+}
 
 export default header;
