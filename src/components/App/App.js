@@ -43,8 +43,7 @@ class App extends React.PureComponent {
   static propTypes = {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
-    accessibleMode: PropTypes.bool,
+    closeElements: PropTypes.func.isRequired
   }
 
   constructor(props) {

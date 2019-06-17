@@ -201,7 +201,7 @@ class Note extends React.PureComponent {
     replies.sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
     return (
-      <div ref={this.containerRef} className={className} onClick={this.onClickNote}>
+      <div ref={this.containerRef} className={className} onClick={this.onClickNote} tabIndex={0}>
         <NoteRoot
           annotation={annotation}
           contents={rootContents}

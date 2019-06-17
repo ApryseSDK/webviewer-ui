@@ -73,6 +73,11 @@ export default store => e => {
       }
     }
   } else {
+    if (e.key === 'Enter' || e.keyCode === 13) { // (Enter)
+      if (document.activeElement.className.includes('Note')) {
+        document.activeElement.click();
+      }
+    }
     if (e.key === 'PageUp' || e.which === 33) { // (PageUp)
       e.preventDefault();
       if (core.getCurrentPage() > 1) {

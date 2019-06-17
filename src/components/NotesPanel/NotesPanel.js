@@ -215,7 +215,8 @@ class NotesPanel extends React.PureComponent {
                 <input 
                   type="text" 
                   placeholder={t('message.searchPlaceholder')}
-                  onChange={this.handleInputChange} 
+                  onChange={this.handleInputChange}
+                  tabIndex={-1}
                 />
                 <Dropdown items={Object.keys(getSortStrategies())} />
               </div>
