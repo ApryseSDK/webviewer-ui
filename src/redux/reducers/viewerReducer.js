@@ -192,24 +192,30 @@ export default initialState => (state = initialState, action) => {
       } else {
         currentArr = group.children;
       }
-      let sortedList = [];
-      if (typeof itemList[0] === 'string') {
-        let dataElementList = currentArr.map(buttonObject => buttonObject.dataElement);
-        for (let i = 0; i < itemList.length; i++) {
-          if (dataElementList.includes(itemList[i])) {
-            let listIndex = dataElementList.indexOf(itemList[i]);
-            sortedList.push(listIndex);
-            console.log(currentArr[listIndex]);
+      let dataElementArr = currentArr.map(buttonObject => buttonObject.dataElement);
+      let removeIndices = [];
+      itemList.forEach(item => {
+        if (typeof item === 'string') {
+          if (dataElementArr.includes(item)) {
+            removeIndices.push(dataElementArr.indexOf(item));
+            console.log(currentArr[dataElementArr.indexOf(item)]);
           } else {
-            console.warn(`${itemList[i]} does not exist. Make sure you are removing from the correct group.`);
+            console.warn(`${item} does not exist. Make sure you are removing from the correct group.`);
           }
+        } else if (typeof item === 'number'){
+          if (item < 0 || item >= currentArr.length) {
+            console.warn(`${item} is an invalid index. Please make sure to remove index between 0 and ${currentArr.length - 1}`);
+            return;
+          }
+          removeIndices.push(item);
+          console.log(currentArr[item]);
+        } else {
+          console.warn(`type ${typeof item} is not a valid parameter. Pass string or number`);
+          return;
         }
-        sortedList = sortedList.sort();
-      } else {
-        sortedList = itemList.sort();
-      }
-      for (let i = sortedList.length - 1; i >= 0; i--) {
-        currentArr.splice(sortedList[i], 1);
+      })
+      for (let i = removeIndices.length - 1; i >= 0; i--) {
+        currentArr.splice(removeIndices[i], 1);
       }
       if (!group){
         return { ...state, header: [ ...currentArr ] }
