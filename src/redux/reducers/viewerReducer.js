@@ -43,17 +43,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, activeToolStyles: { ...payload.toolStyles }};
     case 'SET_ACTIVE_TOOL_NAME_AND_STYLES':
       return { ...state, activeToolName: payload.toolName, activeToolStyles: payload.toolStyles };
-    case 'SET_LIST_INDEX':
-    {
-      const { listKey, index } = payload;
-      return {
-        ...state,
-        listIndex: {
-          ...state.listIndex,
-          [listKey]: index,
-        },
-      };
-    }
     case 'SET_ACTIVE_LEFT_PANEL':
       return { ...state, activeLeftPanel: payload.dataElement };
     case 'SET_ACTIVE_TOOL_GROUP':
@@ -135,7 +124,7 @@ export default initialState => (state = initialState, action) => {
         }
       };
     }
-    case 'SET_TOOL_BUTTON_OBJECTS':
+    case 'SET_TOOL_BUTTON_OBJECTS': 
       return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
     case 'SET_DOCUMENT_LOADED':
       return { ...state, isDocumentLoaded: payload.isDocumentLoaded };
@@ -145,7 +134,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
     case 'USE_EMBEDDED_PRINT':
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
-    case 'SET_PAGE_LABELS':
+    case 'SET_PAGE_LABELS': 
       return { ...state, pageLabels: [ ...payload.pageLabels ] };
     case 'SET_COLOR_PALETTE': {
       const { toolName, colorPalette } = payload;
@@ -158,9 +147,9 @@ export default initialState => (state = initialState, action) => {
     case 'SET_CURSOR_OVERLAY': {
       const { imgSrc, width, height } = payload.data;
 
-      return {
-        ...state,
-        cursorOverlay: { imgSrc, width, height }
+      return { 
+        ...state, 
+        cursorOverlay: { imgSrc, width, height } 
       };
     }
     case 'SET_SWIPE_ORIENTATION':
@@ -197,7 +186,7 @@ export default initialState => (state = initialState, action) => {
         currentArr.filter(buttonObject => itemList.includes(buttonObject.dataElement)).forEach(buttonObject => {
           sortedList.push(currentArr.indexOf(buttonObject));
         });
-        sortedList = sortedList.sort();
+        sortedList = sortedList.sort(); 
       } else {
         sortedList = itemList.sort();
       }
@@ -241,7 +230,7 @@ export default initialState => (state = initialState, action) => {
         const modification = [ ...items ];
         return modifyHeader(state, group, modification, defaultArr);
       }
-    }
+    } 
     case 'SET_ZOOM_LIST':
       return { ...state, zoomList: payload.zoomList };
     default:

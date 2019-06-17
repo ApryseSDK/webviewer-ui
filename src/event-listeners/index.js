@@ -18,7 +18,6 @@ import onFullScreenChange from './onFullScreenChange';
 import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
 import onLayoutChanged from './onLayoutChanged';
 import onLocationSelected from './onLocationSelected';
-import onPageComplete from './onPageComplete';
 
 export {
   onBeforeDocumentLoaded,
@@ -40,6 +39,5 @@ export {
   onFullScreenChange,
   onUpdateAnnotationPermission,
   onLayoutChanged,
-  onLocationSelected,
-  onPageComplete
+  onLocationSelected
 };
