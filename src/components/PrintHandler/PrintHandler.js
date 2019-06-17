@@ -20,7 +20,7 @@ class PrintHandler extends React.PureComponent {
     return (
       <div className="PrintHandler">
         {this.props.isEmbedPrintSupported
-          ? <embed id="print-handler" type="application/pdf"></embed>
+          ? <embed id="print-handler" type="application/pdf" tabIndex={-1}></embed>
           : <div id="print-handler"></div>
         }
       </div>

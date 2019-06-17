@@ -87,6 +87,7 @@ class ToggleElementOverlay extends React.PureComponent {
               onChange={this.onChange} 
               onKeyPress={this.onKeyPress}
               onBlur={this.onBlur}
+              tabIndex={-1}
             />
             <span>%</span>
           </div>
