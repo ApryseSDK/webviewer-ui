@@ -54,6 +54,7 @@ class DocumentContainer extends React.PureComponent {
     TouchEventManager.initialize(this.document.current, this.container.current, this.props.toolButtonObjects);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
+    window.document.dispatchEvent(new Event('viewerLoaded'));
 
     const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
     if (hasPath && doesDocumentAutoLoad) {
