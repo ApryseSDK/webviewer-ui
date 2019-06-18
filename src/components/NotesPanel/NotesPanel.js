@@ -28,7 +28,7 @@ class NotesPanel extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      notesToRender: [], 
+      notesToRender: [],
       searchInput: ''
     };
     this.visibleNoteIds = new Set();
@@ -63,7 +63,7 @@ class NotesPanel extends React.PureComponent {
   }
 
   onAnnotationChanged = () => {
-    this.rootAnnotations = this.getRootAnnotations();  
+    this.rootAnnotations = this.getRootAnnotations();
     const notesToRender = this.filterAnnotations(this.rootAnnotations, this.state.searchInput);
     const visibleNotes = notesToRender.filter(a => !a.Hidden);
 
@@ -84,7 +84,7 @@ class NotesPanel extends React.PureComponent {
     const notesToRender = this.filterAnnotations(this.rootAnnotations, searchInput);
 
     if (searchInput.trim()) {
-      core.selectAnnotations(notesToRender); 
+      core.selectAnnotations(notesToRender);
     }
 
     this.setVisibleNoteIds(notesToRender);
@@ -94,7 +94,7 @@ class NotesPanel extends React.PureComponent {
   filterAnnotations = (annotations, searchInput) => {
     const { customNoteFilter } = this.props;
     let filteredAnnotations = annotations;
-    
+
     if (customNoteFilter) {
       filteredAnnotations = filteredAnnotations.filter(customNoteFilter);
     }
@@ -143,7 +143,7 @@ class NotesPanel extends React.PureComponent {
 
     return indexOfCurrNote === 0 ? sortedVisibleNotes[indexOfCurrNote] : sortedVisibleNotes[indexOfCurrNote - 1]; 
   }
-  
+
   isVisibleNote = note => this.visibleNoteIds.has(note.Id)
 
   renderNotesPanelContent = () => {
@@ -183,7 +183,7 @@ class NotesPanel extends React.PureComponent {
 
     if (
       this.isVisibleNote(currNote) &&
-      shouldRenderSeparator && 
+      shouldRenderSeparator &&
       getSeparatorContent &&
       (isFirstNote || shouldRenderSeparator(prevNote, currNote))
     ) {

@@ -108,7 +108,7 @@ class DocumentContainer extends React.PureComponent {
     handleWindowResize(this.props, this.container.current);
   }
 
-  onWheel = e => {    
+  onWheel = e => {
     if (e.metaKey || e.ctrlKey) {
       e.preventDefault();
       this.wheelToZoom(e);
@@ -136,7 +136,7 @@ class DocumentContainer extends React.PureComponent {
     const newPage = currentPage - getNumberOfPagesToNavigate(displayMode);
 
     core.setCurrentPage(Math.max(newPage, 1));
-    this.container.current.scrollTop = scrollHeight - clientHeight;    
+    this.container.current.scrollTop = scrollHeight - clientHeight;
   }
 
   pageDown = () => {
@@ -168,7 +168,7 @@ class DocumentContainer extends React.PureComponent {
 
   getClassName = props => {
     const { isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen } = props;
-    
+
     return [
       'DocumentContainer',
       isLeftPanelOpen ? 'left-panel' : '',
@@ -182,7 +182,7 @@ class DocumentContainer extends React.PureComponent {
     let className;
 
     if (isIE) {
-      className = getClassNameInIE(this.props);  
+      className = getClassNameInIE(this.props);
     } else {
       className = this.getClassName(this.props);
     }
@@ -214,7 +214,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  openElement: dataElement => dispatch(actions.openElement(dataElement)) 
+  openElement: dataElement => dispatch(actions.openElement(dataElement))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);

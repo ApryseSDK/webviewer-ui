@@ -8,4 +8,4 @@ export default type => {
   } else {
     return false;
   }
-}
+};

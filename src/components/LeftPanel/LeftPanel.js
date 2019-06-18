@@ -70,11 +70,11 @@ class LeftPanel extends React.Component {
 
   render() {
     const { isDisabled, closeElement, customPanels } = this.props;
-    
+
     if (isDisabled) {
       return null;
     }
-    
+
     const className = getClassName('Panel LeftPanel', this.props);
 
     return(
@@ -85,7 +85,7 @@ class LeftPanel extends React.Component {
           </div>
           <LeftPanelTabs />
         </div>
-        
+
         {!isIE11 &&
           <div
             ref={this.sliderRef}

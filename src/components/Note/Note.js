@@ -111,9 +111,9 @@ class Note extends React.PureComponent {
   }
 
   onFocus = () => {
-    this.setState({ 
-      isReplyFocused: true, 
-      isRootContentEditing: false 
+    this.setState({
+      isReplyFocused: true,
+      isRootContentEditing: false
     });
   }
 

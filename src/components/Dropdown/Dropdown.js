@@ -19,7 +19,7 @@ class Dropdown extends React.PureComponent {
 
   constructor() {
     super();
-    this.state = { isOpen: false };  
+    this.state = { isOpen: false };
     this.sortStrategyToTranslationMap = {
       position: 'option.notesPanel.orderPosition',
       time: 'option.notesPanel.orderTime'
@@ -30,7 +30,7 @@ class Dropdown extends React.PureComponent {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
   
-  handleDisplayItemChange = (e, item) => {
+  onClickDropdown = (e, item) => {
     e.stopPropagation();
     
     this.props.setSortStrategy(item);
@@ -44,7 +44,7 @@ class Dropdown extends React.PureComponent {
     const dropdownItems = items.filter(item => item !== sortStrategy);
 
     return dropdownItems.map(item => 
-      <div key={item} className="dropdown-item" onClick={e => this.handleDisplayItemChange(e, item)}>
+      <div key={item} className="dropdown-item" onClick={e => this.onClickDropdown(e, item)}>
         {this.getTranslatedContent(item)}
       </div>
     );
@@ -58,7 +58,7 @@ class Dropdown extends React.PureComponent {
     }
 
     return(
-      <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}> 
+      <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
         <div className="items">
           <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>
           <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
