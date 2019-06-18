@@ -3,20 +3,22 @@
  * @name WebViewer#header
  * @class
  * @example // applying changes on the root of header
- WebViewer(...)
- .then(function(instance) {
-   instance.header.someAPI();
- });
+WebViewer(...)
+  .then(function(instance) {
+    instance.header.someAPI();
+  });
 
  // applying changes on a group
- WebViewer(...)
- .then(function(instance) {
-   instance.header.group(<dataElement>).someAPI();
- })
+WebViewer(...)
+  .then(function(instance) {
+    instance.header.group(<dataElement>).someAPI();
+  })
  * 
  */
 
 import actions from 'actions';
+
+export default store => new header(store);
  
 class header {
   constructor(store) {
@@ -103,5 +105,3 @@ class header {
     };
   }
 }
-
-export default header;

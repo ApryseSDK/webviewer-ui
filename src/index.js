@@ -14,7 +14,6 @@ import { workerTypes } from 'constants/types';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
-import header from 'constants/header';
 import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript, { loadConfig } from 'helpers/loadScript';
@@ -163,7 +162,6 @@ if (window.CanvasRenderingContext2D) {
       () => {
         window.readerControl = {
           docViewer,
-          header: new header(store),
           FitMode,
           LayoutMode,
           loadedFromServer: false, // undocumented
@@ -218,6 +216,7 @@ if (window.CanvasRenderingContext2D) {
           goToLastPage: apis.goToLastPage(store),
           goToNextPage: apis.goToNextPage(store),
           goToPrevPage: apis.goToPrevPage(store),
+          header: apis.header(store),
           isAdminUser: apis.isAdminUser,
           isElementDisabled: apis.isElementDisabled(store),
           isElementOpen: apis.isElementOpen(store),

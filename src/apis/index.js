@@ -48,6 +48,7 @@ import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
 import goToPrevPage from './goToPrevPage';
+import header from './header';
 import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
@@ -156,6 +157,7 @@ export default {
   goToLastPage,
   goToNextPage,
   goToPrevPage,
+  header,
   isAdminUser,
   isElementDisabled,
   isElementOpen,
