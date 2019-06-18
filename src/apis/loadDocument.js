@@ -12,7 +12,7 @@
  * @example // 5.1 and after
 WebViewer(...)
   .then(function(instance) {
-     instance.loadDocument('https://www.pdftron.com/downloads/pl/test.pdf', {
+    instance.loadDocument('https://www.pdftron.com/downloads/pl/test.pdf', {
       documentId: '1',
       filename: 'sample-1.pdf'
     });
