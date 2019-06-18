@@ -40,7 +40,7 @@ class RedactionOverlay extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       const {closeElements, setActiveToolGroup}  = this.props;
-      closeElements(['menuOverlay', 'toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
+      closeElements(['menuOverlay', 'groupOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
 
       core.setToolMode('AnnotationCreateRedaction');
       setActiveToolGroup('redactTools');

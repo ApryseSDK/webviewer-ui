@@ -73,6 +73,7 @@ import getDisplayModeObject from './getDisplayModeObject';
 import getScrollViewElement from './getScrollViewElement';
 import getAnnotationById from './getAnnotationById';
 import isFullPDFEnabled from './isFullPDFEnabled';
+import isBlendModeSupported from './isBlendModeSupported';
 import isAnnotationSelected from './isAnnotationSelected';
 import setAnnotationStyles from './setAnnotationStyles';
 import deselectAnnotation from './deselectAnnotation';
@@ -90,6 +91,7 @@ import hideAnnotations from './hideAnnotations';
 import goToOutline from './goToOutline';
 import getViewerElement from './getViewerElement';
 import { addEventListener, removeEventListener } from './eventListener';
+import setAnnotationCanvasTransform  from './setAnnotationCanvasTransform';
 
 export default {
   setToolMode,
@@ -167,6 +169,7 @@ export default {
   getScrollViewElement,
   getAnnotationById,
   isFullPDFEnabled,
+  isBlendModeSupported,
   isAnnotationSelected,
   setAnnotationStyles,
   deselectAnnotation,
@@ -184,5 +187,6 @@ export default {
   showAnnotations,
   hideAnnotations,
   goToOutline,
-  getViewerElement
+  getViewerElement, 
+  setAnnotationCanvasTransform
 };

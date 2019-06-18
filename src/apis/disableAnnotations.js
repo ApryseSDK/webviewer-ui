@@ -19,8 +19,8 @@ viewerElement.addEventListener('ready', function() {
 import core from 'core';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import { PRIORITY_ONE } from 'constants/actionPriority';
-import { getAnnotationCreateToolNames } from 'constants/map';
 import actions from 'actions';
+import selectors from 'selectors';
 
 export default store => () => {
   const elements = [
@@ -29,7 +29,8 @@ export default store => () => {
     ...getAnnotationRelatedElements(store.getState())
   ];
 
-  getAnnotationCreateToolNames().forEach(toolName => {
+  const annotationToolNames = selectors.getAnnotationToolNames(store.getState());
+  annotationToolNames.forEach(toolName => {
     core.getTool(toolName).disabled = true;
   });
   store.dispatch(actions.disableElements(elements, PRIORITY_ONE));

@@ -21,6 +21,7 @@ class ThumbnailsPanel extends React.PureComponent {
     super();
     this.pendingThumbs = [];
     this.thumbs = [];
+    this.thumbnailsPanel = React.createRef();
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       canLoad: true
@@ -31,6 +32,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('beginRendering', this.onBeginRendering);
     core.addEventListener('finishedRendering', this.onFinishedRendering);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
+    core.addEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
     window.addEventListener('resize', this.onWindowResize);
   }
@@ -39,6 +41,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('beginRendering', this.onBeginRendering);
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
+    core.removeEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.removeEventListener('annotationHidden', this.onAnnotationChanged);
     window.removeEventListener('resize', this.onWindowResize);
   }
@@ -66,9 +69,20 @@ class ThumbnailsPanel extends React.PureComponent {
         return;
       }
       indices.push(pageIndex);
-
+    
       this.updateAnnotations(pageIndex);
     });
+  }
+
+  onPageNumberUpdated = (e, pageNumber) => {
+    const { thumbnailsPanel } = this;
+
+    if (thumbnailsPanel && thumbnailsPanel.current) {
+      const thumbnailHeight = 180; // refer to Thumbnail.scss
+      const pageIndex = pageNumber - 1;
+      const scrollLocation = pageIndex * thumbnailHeight;
+      thumbnailsPanel.current.scrollTop = scrollLocation;
+    }
   }
 
   onWindowResize = () => {
@@ -113,7 +127,6 @@ class ThumbnailsPanel extends React.PureComponent {
     const ctx = annotCanvas.getContext('2d');
 
     let zoom = 1;
-    let t = null;
     let rotation = core.getCompleteRotation(pageNumber) - core.getRotation(pageNumber);
     if (rotation < 0) {
       rotation += 4;
@@ -125,36 +138,36 @@ class ThumbnailsPanel extends React.PureComponent {
       annotCanvas.height = height;
       zoom = annotCanvas.width / pageWidth;
       zoom /= multiplier;
-      t = window.GetPageMatrix(zoom, rotation, { width: annotCanvas.width, height: annotCanvas.height });
-
-      if (rotation === 0) {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, 0, 0);
-      } else {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, annotCanvas.width, annotCanvas.height);
-      }
     } else {
       annotCanvas.width = height;
       annotCanvas.height = width;
 
       zoom = annotCanvas.height / pageWidth;
       zoom /= multiplier;
-
-      t = window.GetPageMatrix(zoom, rotation, { width: annotCanvas.width, height: annotCanvas.height });
-
-      if (rotation === 1) {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, annotCanvas.width, 0);
-      } else {
-        ctx.setTransform(t.m_a, t.m_b, t.m_c, t.m_d, 0, annotCanvas.height);
-      }
     }
 
     thumbContainer.appendChild(annotCanvas);
+    core.setAnnotationCanvasTransform(ctx, zoom, rotation);
 
-    core.drawAnnotations({
+    let options = {
       pageNumber,
       overrideCanvas: annotCanvas,
       namespace: 'thumbnails'
-    });
+    };
+
+    var thumb = thumbContainer.querySelector('.page-image');
+
+    if(thumb) {
+      options = {
+        ...options,
+        overridePageRotation: rotation,
+        overridePageCanvas: thumb,
+      };
+    }  else {
+      return;
+    }
+
+    core.drawAnnotations(options);
   }
 
   getThumbnailSize = (pageWidth, pageHeight) => {
@@ -265,7 +278,7 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     return (
-      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel">
+      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel" ref={this.thumbnailsPanel}>
         <div className="thumbs">
           <ReactList
             key="panel"

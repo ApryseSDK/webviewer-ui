@@ -52,7 +52,7 @@ viewerElement.addEventListener('ready', function() {
     }
   };
 
-  instance.setCustomPanel();
+  instance.setCustomPanel(myCustomPanel);
 });
  */
 /**

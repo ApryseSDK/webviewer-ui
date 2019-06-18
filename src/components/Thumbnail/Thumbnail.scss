@@ -19,6 +19,14 @@
     align-items: center;
     cursor: pointer;
 
+    img.page-image {
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        /* only for XOD in IE*/
+        height: auto !important;
+        width: auto !important;
+      }
+    }
+
     .page-image {
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
         /* only for IE*/
@@ -45,6 +53,8 @@
   }
 
   &.active {
+    background-color: lightgray;
+
     .page-image {
       border: 1px solid $gray12;
       border: 1px solid var(--border-color);

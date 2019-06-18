@@ -6,8 +6,8 @@ export default () =>  {
     'searchPanel', 
     'leftPanel', 
     'redactionOverlay',
+    'groupOverlay',
     'toolsOverlay',
     'toolStylePopup',
   ];
 };
-  

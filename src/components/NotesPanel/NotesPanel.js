@@ -8,11 +8,15 @@ import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
-import selectors from 'selectors';
 import { getSortStrategies } from 'constants/sortStrategies';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
+import selectors from 'selectors';
+import actions from 'actions';
+import mod from 'helpers/modulus';
+import debounce from 'lodash/debounce';
 
 import './NotesPanel.scss';
+
 
 class NotesPanel extends React.PureComponent {
   static propTypes = {
@@ -21,18 +25,20 @@ class NotesPanel extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     pageLabels: PropTypes.array.isRequired,
     customNoteFilter: PropTypes.func,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    setListIndex: PropTypes.func.isRequired,
+    selectionIndex: PropTypes.number,
   }
-  
+
   constructor() {
     super();
     this.state = {
-      notesToRender: [], 
+      notesToRender: [],
       searchInput: ''
     };
     this.visibleNoteIds = new Set();
     this.rootAnnotations = [];
-    this.updatePanelOnInput = _.debounce(this.updatePanelOnInput.bind(this), 500);
+    this.updatePanelOnInput = debounce(this.updatePanelOnInput.bind(this), 500);
   }
 
   componentDidMount() {
@@ -83,7 +89,7 @@ class NotesPanel extends React.PureComponent {
     const notesToRender = this.filterAnnotations(this.rootAnnotations, searchInput);
 
     if (searchInput.trim()) {
-      core.selectAnnotations(notesToRender); 
+      core.selectAnnotations(notesToRender);
     }
 
     this.setVisibleNoteIds(notesToRender);
@@ -93,7 +99,7 @@ class NotesPanel extends React.PureComponent {
   filterAnnotations = (annotations, searchInput) => {
     const { customNoteFilter } = this.props;
     let filteredAnnotations = annotations;
-    
+
     if (customNoteFilter) {
       filteredAnnotations = filteredAnnotations.filter(customNoteFilter);
     }
@@ -140,18 +146,26 @@ class NotesPanel extends React.PureComponent {
     const sortedVisibleNoteIds = sortedVisibleNotes.map(note => note.Id);
     const indexOfCurrNote = sortedVisibleNoteIds.indexOf(currNote.Id);
 
-    return indexOfCurrNote === 0 ? sortedVisibleNotes[indexOfCurrNote] : sortedVisibleNotes[indexOfCurrNote - 1]; 
+    return indexOfCurrNote === 0 ? sortedVisibleNotes[indexOfCurrNote] : sortedVisibleNotes[indexOfCurrNote - 1];
   }
-  
+
+  onBlur = e => {
+    // focus is leaving the container and its children
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      // nuke all selection index
+      this.props.setListIndex('notesPanel', null);
+    }
+  }
+
   isVisibleNote = note => this.visibleNoteIds.has(note.Id)
 
   renderNotesPanelContent = () => {
-    const {notesToRender} = this.state;
+    const { notesToRender } = this.state;
     const sortStrategies = getSortStrategies();
 
     return (
       <React.Fragment>
-        <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
+        <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`} onBlur={this.onBlur}>
           {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
@@ -162,12 +176,22 @@ class NotesPanel extends React.PureComponent {
   }
 
   renderNotes = notes => {
-    return (
-      notes.map(note => {
+    const { selectionIndex } = this.props;
+
+    return(
+      notes.map((note, i) => {
         return (
           <React.Fragment key={note.Id + getLatestActivityDate(note)}>
             {this.renderListSeparator(notes, note)}
-            <Note visible={this.isVisibleNote(note)} annotation={note} replies={note.getReplies()} searchInput={this.state.searchInput} rootContents={note.getContents()} />
+            <Note
+              index={i}
+              visible={this.isVisibleNote(note)}
+              annotation={note}
+              replies={note.getReplies()}
+              searchInput={this.state.searchInput}
+              rootContents={note.getContents()}
+              willFocus={selectionIndex !== null && mod(selectionIndex, notes.length) === i}
+            />
           </React.Fragment>
         );
       })
@@ -182,7 +206,7 @@ class NotesPanel extends React.PureComponent {
 
     if (
       this.isVisibleNote(currNote) &&
-      shouldRenderSeparator && 
+      shouldRenderSeparator &&
       getSeparatorContent &&
       (isFirstNote || shouldRenderSeparator(prevNote, currNote))
     ) {
@@ -211,10 +235,10 @@ class NotesPanel extends React.PureComponent {
           ? <div className="no-annotations">{t('message.noAnnotations')}</div>
           : <React.Fragment>
             <div className="header">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder={t('message.searchPlaceholder')}
-                onChange={this.handleInputChange} 
+                onChange={this.handleInputChange}
               />
               <Dropdown items={Object.keys(getSortStrategies())} />
             </div>
@@ -231,7 +255,13 @@ const mapStatesToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state),
   pageRotation: selectors.getRotation(state),
-  customNoteFilter: selectors.getCustomNoteFilter(state)
+  customNoteFilter: selectors.getCustomNoteFilter(state),
+  selectionIndex: selectors.getListIndex(state, 'notesPanel'),
 });
 
-export default connect(mapStatesToProps)(translate()(NotesPanel));
+const mapDispatchToProps = {
+  setListIndex: actions.setListIndex,
+  listMove: actions.listMove
+}
+
+export default connect(mapStatesToProps, mapDispatchToProps)(translate()(NotesPanel));

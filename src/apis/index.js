@@ -57,7 +57,7 @@ import isToolDisabled from './isToolDisabled';
 import loadDocument from './loadDocument';
 import openElement from './openElement';
 import openElements from './openElements';
-import print  from './print';
+import print from './print';
 import registerTool from './registerTool';
 import removeSearchListener from './removeSearchListener';
 import rotateClockwise from './rotateClockwise';
@@ -165,7 +165,7 @@ export default {
   loadDocument,
   openElement,
   openElements,
-  print, 
+  print,
   registerTool,
   removeSearchListener,
   rotateClockwise,

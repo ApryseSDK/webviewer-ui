@@ -46,6 +46,8 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
     const updatedReducer = require('reducers/rootReducer').default;
     store.replaceReducer(updatedReducer);
   });
+
+  module.hot.accept();
 }
 
 if (window.CanvasRenderingContext2D) {
@@ -57,7 +59,7 @@ if (window.CanvasRenderingContext2D) {
   if (state.advanced.fullAPI) {
     window.CoreControls.enableFullPDF(true);
     if (process.env.NODE_ENV === 'production') {
-      fullAPIReady = loadScript('../../core/pdf/PDFNet.js');
+      fullAPIReady = loadScript('../core/pdf/PDFNet.js');
     } else {
       fullAPIReady = loadScript('../core/pdf/PDFNet.js');
     }
@@ -65,8 +67,8 @@ if (window.CanvasRenderingContext2D) {
 
   window.CoreControls.enableSubzero(state.advanced.subzero);
   if (process.env.NODE_ENV === 'production') {
-    window.CoreControls.setWorkerPath('../../core');
-    window.CoreControls.setResourcesPath('../../core/assets');
+    window.CoreControls.setWorkerPath('../core');
+    window.CoreControls.setResourcesPath('../core/assets');
   }
 
   try {
@@ -97,7 +99,7 @@ if (window.CanvasRenderingContext2D) {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, window.sampleL);
+        });
       });
     }
 
@@ -107,7 +109,7 @@ if (window.CanvasRenderingContext2D) {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
           }
-        }, window.sampleL);
+        });
       });
     }
   }
@@ -116,7 +118,7 @@ if (window.CanvasRenderingContext2D) {
 
   const coreVersion = window.CoreControls.DocumentViewer.prototype.version;
   const uiVersion = packageConfig.version;
-  
+
   if (coreVersion && uiVersion) {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
     const [ coreMajorVersion, coreMinorVersion ] = coreVersion.split('.');
@@ -150,6 +152,61 @@ if (window.CanvasRenderingContext2D) {
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
 
+    const header = {
+      children: store.getState().viewer.headers.default,
+      getItems() {
+        return store.getState().viewer.headers.default;
+      },
+      addItems(newItems, index) {
+        store.dispatch(actions.addItems(newItems, index));
+      },
+      removeItems(itemList) {
+        store.dispatch(actions.removeItems(itemList));
+      },
+      updateItem(dataElement, newProps) {
+        store.dispatch(actions.updateItem(dataElement, newProps));
+      },
+      setItems(items) {
+        store.dispatch(actions.setItems(items));
+      },
+      group(dataElement){
+        const defaultHeader = store.getState().viewer.headers.default;
+        let group;
+        defaultHeader.forEach(buttonObject => {
+          if (buttonObject.dataElement === dataElement) {
+            group = buttonObject;
+          }
+          if (buttonObject.children) {
+            buttonObject.children.forEach(childObject => {
+              if (childObject.dataElement === dataElement) {
+                group = childObject;
+              }
+            });
+          }
+        });
+        if (!group) {
+          console.warn(`${dataElement} is not a valid group button`);
+          return;
+        }
+        return {
+          getItems() {
+            return group.children;
+          },
+          addItems(newItems, index) {
+            store.dispatch(actions.addItems(newItems, index, group));
+          },
+          removeItems(itemList) {
+            store.dispatch(actions.removeItems(itemList, group));
+          },
+          updateItem(dataElement, newProps) {
+            store.dispatch(actions.updateItem(dataElement, newProps, group));
+          },
+          setItems(items) {
+            store.dispatch(actions.setItems(items, group));
+          }
+        };
+      }
+    };
     ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18next}>
@@ -160,6 +217,7 @@ if (window.CanvasRenderingContext2D) {
       () => {
         window.readerControl = {
           docViewer,
+          header,
           FitMode,
           LayoutMode,
           loadedFromServer: false, // undocumented
@@ -222,7 +280,7 @@ if (window.CanvasRenderingContext2D) {
           isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
           openElement: apis.openElement(store),
-          openElements: apis.openElements(store),          
+          openElements: apis.openElements(store),
           print: apis.print(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),
@@ -281,8 +339,6 @@ if (window.CanvasRenderingContext2D) {
             return state.advanced.customData;
           }
         };
-
-        $(document).trigger('viewerLoaded');
       }
     );
   });

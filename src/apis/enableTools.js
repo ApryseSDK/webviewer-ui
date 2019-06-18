@@ -22,12 +22,10 @@ viewerElement.addEventListener('ready', function() {
 
 import core from 'core';
 import { PRIORITY_ONE } from 'constants/actionPriority';
-import { getAnnotationCreateToolNames } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
-
-export default store => (toolNames = getAnnotationCreateToolNames()) => {
+export default store => (toolNames = selectors.getAnnotationToolNames(store.getState())) => {
   const toolNameArray = typeof toolNames === 'string' ? [ toolNames ] : toolNames;
   const dataElements = selectors.getToolButtonDataElements(store.getState(), toolNameArray);
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -26,9 +25,6 @@ class ProgressModal extends React.PureComponent {
 
   render() {
     const { isDisabled, loadingProgress, isUploading, uploadProgress } = this.props;
-    if (this.props.isDisabled) {
-      return null;
-    }
 
     if (isDisabled) {
       return null;

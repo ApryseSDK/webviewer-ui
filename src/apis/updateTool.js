@@ -27,7 +27,6 @@ viewerElement.addEventListener('ready', function() {
  */
 
 import actions from 'actions';
-
 import setHeaderItems from './setHeaderItems';
 
 export default store => (toolName, properties) => {

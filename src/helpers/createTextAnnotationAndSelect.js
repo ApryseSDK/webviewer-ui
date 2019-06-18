@@ -1,6 +1,5 @@
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
-import { mapAnnotationToToolName } from 'constants/map';
 import actions from 'actions';
 
 export default (dispatch, annotationConstructor) =>  {
@@ -9,6 +8,7 @@ export default (dispatch, annotationConstructor) =>  {
   core.clearSelection();    
   core.addAnnotations(annotations);
   core.selectAnnotations(annotations);
+  setAnnotationColor(annotations[0]);
   dispatch(actions.closeElement('textPopup'));
 };
 
@@ -28,8 +28,6 @@ const createTextAnnotation = annotationConstructor => {
     if (annotation instanceof window.Annotations.RedactionAnnotation) {
       setRedactionStyle(annotation);
     }
-
-    setAnnotationColor(annotation);
     
     annotations.push(annotation);
   });
@@ -39,7 +37,7 @@ const createTextAnnotation = annotationConstructor => {
 
 const createAnnotation = (annotationConstructor, pageNumber, quads) => {
   const annotation = new annotationConstructor();
-  
+
   annotation.PageNumber = pageNumber;
   annotation.Quads = quads[pageNumber - 1];
   annotation.Author = core.getCurrentUser();
@@ -47,8 +45,7 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
 };
 
 const setAnnotationColor = annotation => {
-  const toolName = mapAnnotationToToolName(annotation);
-  
+  const toolName = annotation.ToolName;  
   if (toolName) {
     const { StrokeColor } = getToolStyles(toolName);
     annotation.StrokeColor = StrokeColor;

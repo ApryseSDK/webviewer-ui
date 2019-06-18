@@ -1,8 +1,12 @@
 {
-  "presets": [ "react", "env", "stage-2" ],
-  "env": {
-    "test": {
-      "plugins": [ "react-hot-loader/babel" ]
-    }
-  }
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-function-sent",
+    "@babel/plugin-proposal-export-namespace-from",
+    "@babel/plugin-proposal-numeric-separator",
+    "@babel/plugin-proposal-throw-expressions",
+    "@babel/plugin-proposal-class-properties"
+  ]
 }

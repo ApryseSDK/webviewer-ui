@@ -12,19 +12,22 @@ export default store => () => new Promise((resolve, reject) => {
     return;
   }
 
-  $.ajax({
-    type: 'POST',
-    url: serverUrl,
-    headers: serverUrlHeaders,
-    data: {
-      ...docIdQuery,
-      'data': core.exportAnnotations()
-    },
-    success: () => {
-      resolve();
-    },
-    error: e => {
-      reject(e);
-    }
+  core.exportAnnotations(xfdfString => {
+    $.ajax({
+      type: 'POST',
+      url: serverUrl,
+      headers: serverUrlHeaders,
+      data: {
+        ...docIdQuery,
+        'data': xfdfString
+      },
+      success: () => {
+        resolve();
+      },
+      error: e => {
+        reject(e);
+      }
+    });
   });
+
 });

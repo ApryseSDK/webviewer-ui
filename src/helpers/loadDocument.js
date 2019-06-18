@@ -1,11 +1,11 @@
 import i18next from 'i18next';
 
 import core from 'core';
+import actions from 'actions';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { fireError } from 'helpers/fireEvent';
 import { engineTypes, workerTypes } from 'constants/types';
 import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
-import actions from 'actions';
 
 export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
@@ -17,7 +17,7 @@ export default (state, dispatch) => {
 
           if (partRetriever.on) {
             // If its a blackbox part retriever but the user uploaded a local file,
-          // we dont set this because we already show an upload modal
+            // we dont set this because we already show an upload modal
             if (!partRetriever._isBlackboxLocalFile) {
               partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
                 dispatch(actions.setDocumentLoadingProgress(loaded / total));
@@ -316,14 +316,14 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
     const usingOfficeWorker = supportedOfficeExtensions.indexOf(originalExtension) !== -1;
     if (usingOfficeWorker && !officeWorkerTransportPromise) {
       type = workerTypes.OFFICE;
-      workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(officeBackendType, workerHandlers, window.sampleL);
+      workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(officeBackendType, workerHandlers);
     } else if (!usingOfficeWorker && !pdfWorkerTransportPromise) {
       type = workerTypes.PDF;
       // if the extension isn't pdf or an image then assume it's a pdf
       if (supportedPDFExtensions.indexOf(originalExtension) === -1) {
         extension = 'pdf';
       }
-      workerTransportPromise = window.CoreControls.initPDFWorkerTransports(pdfBackendType, workerHandlers, window.sampleL);
+      workerTransportPromise = window.CoreControls.initPDFWorkerTransports(pdfBackendType, workerHandlers);
     } else if (usingOfficeWorker) {
       type = workerTypes.OFFICE;
       workerTransportPromise = officeWorkerTransportPromise;

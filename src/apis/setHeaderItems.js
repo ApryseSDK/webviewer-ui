@@ -134,15 +134,23 @@ export default store => callback => {
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access the header instance in {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems} as follows:
  * @name WebViewer.Header
  * @class
- * @example var viewerElement = document.getElementById('viewer');
+ * @example // 5.1 and after
+WebViewer(...)
+  .then(function(instance) {
+    instance.setHeaderItems(function(header) {
+      // instance of Header is passed to the callback
+    });
+  });
+ * @example // 4.0 ~ 5.0
+var viewerElement = document.getElementById('viewer');
 var viewer = new PDFTron.WebViewer(...);
 
-const viewerElement = document.getElementById('viewer');
+viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();
-instance.setHeaderItems(header => {
+  instance.setHeaderItems(function(header) {
     // instance of Header is passed to the callback
-    // header.someMethod();
   });
+});
  */
 const Header = {
   initialize(viewerState) {
@@ -300,8 +308,16 @@ const Header = {
    * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
    */
   push(...newItem) {
-    this.headers[this.headerGroup].push(...newItem);
-    
+    if (newItem[0].group) {
+      if (this.headers[this.headerGroup].find(buttonObject => buttonObject.toolGroup === newItem[0].group)) {
+        const buttonIndex = this.headers[this.headerGroup].findIndex(buttonObject => buttonObject.toolGroup === newItem[0].group);
+        this.headers[this.headerGroup][buttonIndex].children.push(...newItem);
+      } else {
+        console.warn(`${newItem[0].group} is not a valid group.`);
+      }
+    } else {
+      this.headers[this.headerGroup].push(...newItem);
+    }
     return this;
   },
   /**
