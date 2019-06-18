@@ -7,6 +7,7 @@
  * @param {string} options.filename Filename of the document, which is used when downloading the PDF.
  * @param {object} options.customHeaders An object custom HTTP headers to use when retrieving the document from the specified url.
  * @param {boolean} options.withCredentials Whether or not cross-site requests should be made using credentials.
+ * @param {string} options.cacheKey A key that will be used for caching the document on WebViewer Server.
  * @param {string} options.password A string that will be used to as the password to load a password protected document.
  * @example // 5.1 and after
 WebViewer(...)
@@ -42,6 +43,7 @@ export default store => (documentPath, options = {}) => {
     decryptOptions = {},
     customHeaders = {},
     withCredentials = false,
+    cacheKey = null,
     password = ''
   } = options;
 
@@ -54,6 +56,7 @@ export default store => (documentPath, options = {}) => {
   store.dispatch(actions.setCustomHeaders(customHeaders));
   store.dispatch(actions.setWithCredentials(withCredentials));
   store.dispatch(actions.setPassword(password));
+  store.dispatch(actions.setCacheKey(cacheKey));
 
   if (window.CoreControls.isFullPDFEnabled() && documentPath instanceof window.PDFNet.PDFDoc) {
     store.dispatch(actions.setPDFDoc(documentPath));

@@ -74,7 +74,7 @@ const checkByteRange = state => {
 const getPartRetriever = (state, streaming, dispatch) => {
   const { path, initialDoc, file, isOffline, pdfDoc, ext } = state.document;
   let { filename } = state.document;
-  const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, disableWebsockets, useDownloader, withCredentials, singleServerMode } = state.advanced;
+  const { azureWorkaround, customHeaders, decrypt, decryptOptions, externalPath, pdftronServer, disableWebsockets, useDownloader, withCredentials, singleServerMode, cacheKey } = state.advanced;
   let documentPath = path || initialDoc;
 
   const engineType = getEngineType(state);
@@ -100,8 +100,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
       }
     } else if (engineType === engineTypes.PDFTRON_SERVER) {
       partRetrieverName = 'BlackBoxPartRetriever';
-
-      const blackboxOptions = { disableWebsockets, singleServerMode };
+      const blackboxOptions = { disableWebsockets, singleServerMode, cacheKey };
       const needsUpload = file && file.name;
 
       // If PDFTron server is set and they try and upload a local file
