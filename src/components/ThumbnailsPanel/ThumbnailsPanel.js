@@ -147,7 +147,9 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     thumbContainer.appendChild(annotCanvas);
-    core.setAnnotationCanvasTransform(ctx, zoom, rotation);
+    if (core.setAnnotationCanvasTransform) {
+      core.setAnnotationCanvasTransform(ctx, zoom, rotation);
+    }
 
     let options = {
       pageNumber,

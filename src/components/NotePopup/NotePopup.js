@@ -9,7 +9,6 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
-import { isEnterOrSpace } from 'helpers/keyEventHelper';
 
 import './NotePopup.scss';
 
@@ -58,26 +57,6 @@ class NotePopup extends React.Component {
     this.props.openEditing();
   }
 
-  onKeyDown = e => {
-    if (isEnterOrSpace(e)) {
-      this.togglePopup();
-    }
-  }
-
-  onKeyDownEdit = e => {
-    if (isEnterOrSpace(e)) {
-      e.preventDefault();
-      this.openEdit();
-    }
-  }
-
-  onKeyDownDelete = e => {
-    if (isEnterOrSpace(e)) {
-      e.preventDefault();
-      this.props.onDelete();
-    }
-  }
-
   render() {
     const { t, isNoteExpanded, notePopupId, annotation, onDelete, isDisabled, isEditDisabled, isDeleteDisabled } = this.props;
     const isOpen = notePopupId === annotation.Id;
@@ -88,16 +67,16 @@ class NotePopup extends React.Component {
     }
 
     return(
-      <div tabIndex={0} className="NotePopup" data-element="notePopup" onKeyDown={this.onKeyDown}  onClick={e => e.stopPropagation()}>
+      <div className="NotePopup" data-element="notePopup" onClick={e => e.stopPropagation()}>
         <div className="overflow" onClick={this.togglePopup}>
           <Icon glyph="ic_overflow_black_24px" />
         </div>
         <div className={className} onClick={this.closePopup}>
           {!isEditDisabled &&
-            <div tabIndex={0} data-element="notePopupEdit" onClick={this.openEdit} onKeyDown={this.onKeyDownEdit}>{t('action.edit')}</div>
+            <div data-element="notePopupEdit" onClick={this.openEdit}>{t('action.edit')}</div>
           }
           {!isDeleteDisabled &&
-            <div tabIndex={0} data-element="notePopupDelete" onClick={onDelete} onKeyDown={this.onKeyDownDelete}>{t('action.delete')}</div>
+            <div data-element="notePopupDelete" onClick={onDelete}>{t('action.delete')}</div>
           }
         </div>
       </div>

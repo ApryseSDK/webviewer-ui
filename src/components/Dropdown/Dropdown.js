@@ -29,21 +29,21 @@ class Dropdown extends React.PureComponent {
   toggleDropdown = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
-
+  
   onClickDropdown = (e, item) => {
     e.stopPropagation();
+    
     this.props.setSortStrategy(item);
     this.setState({ isOpen: false });
   }
-
+  
   getTranslatedContent = sortStrategy => this.props.t(this.sortStrategyToTranslationMap[sortStrategy]) || sortStrategy;
-
 
   renderDropdownItems = () => {
     const { sortStrategy, items } = this.props;
     const dropdownItems = items.filter(item => item !== sortStrategy);
 
-    return dropdownItems.map(item =>
+    return dropdownItems.map(item => 
       <div key={item} className="dropdown-item" onClick={e => this.onClickDropdown(e, item)}>
         {this.getTranslatedContent(item)}
       </div>

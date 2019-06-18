@@ -25,16 +25,6 @@ html, body , #app {
   color: var(--text-color);
 }
 
-*:focus {
-  outline: 0;
-}
-
-.App.accessibleMode {
-  *:focus {
-    box-shadow: inset 0 0 0 3px rgb(0,165,228);
-  }
-}
-
 .App {
   position: relative;
   width: 100%;
@@ -69,31 +59,4 @@ html, body , #app {
     appearance: none;
     user-select: text !important;
   }
-}
-
-a.skip-main {
-  left:-999px;
-  position:absolute;
-  top:auto;
-  width:1px;
-  height:1px;
-  overflow:hidden;
-  z-index:-999;
-}
-
-a.skip-main:focus, a.skip-main:active {
-  color: #fff;
-  background-color:#000;
-  left: auto;
-  top: auto;
-  width: 30%;
-  height: auto;
-  overflow:auto;
-  margin: 10px 35%;
-  padding:5px;
-  border-radius: 15px;
-  border:4px solid yellow;
-  text-align:center;
-  font-size:1.2em;
-  z-index:999;
 }

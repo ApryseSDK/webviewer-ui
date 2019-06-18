@@ -189,7 +189,7 @@ class DocumentContainer extends React.PureComponent {
     }
 
     return(
-      <div tabIndex={0} className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd}>
+      <div className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd}>
         <div className="document" ref={this.document}></div>
       </div>
     );

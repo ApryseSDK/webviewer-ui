@@ -6,7 +6,7 @@ export default class CopyTextHandler extends React.PureComponent {
   render() {
     return (
       <div className="CopyTextHandler">
-        <textarea tabIndex={-1} id="copy-textarea" />
+        <textarea id="copy-textarea" tabIndex={-1} />
       </div>
     );
   }

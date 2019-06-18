@@ -130,7 +130,6 @@ export default {
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
-    listIndex: {},
     activeLeftPanel: getHashParams('hideAnnotationPanel', false) || !getHashParams('a', false) || getHashParams('readonly', false) ? 'thumbnailsPanel' : 'notesPanel',
     activeToolGroup: '',
     expandedNotes: {},
@@ -155,6 +154,7 @@ export default {
     warning: {},
     customNoteFilter: null,
     zoomList: [ 0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64 ],
+    isAccessibleMode: getHashParams('accessibleMode', false),
   },
   search: {
     listeners: [],
@@ -195,8 +195,7 @@ export default {
     documentLoadingProgress: 0,
     workerLoadingProgress: 0,
     isUploading: false,
-    uploadProgress: 0,
-    accessibleMode: getHashParams('accessibleMode', 0),
+    uploadProgress: 0
   },
   user: {
     name: getHashParams('user', 'Guest'),

@@ -73,7 +73,19 @@ export default store => e => {
       }
     }
   } else {
-    if (e.key === 'PageUp' || e.which === 33) { // (PageUp)
+    if (e.key === 'Enter' || e.keyCode === 13) { // (Enter)
+      if (document.activeElement.className.includes('Note')) {
+        document.activeElement.click();
+      } else if (document.activeElement.className === 'skip-to-document') {
+        document.getElementById('pageText0').focus();
+      } else if (document.activeElement.className === 'skip-to-notes') {
+        dispatch(actions.openElement('notesPanel'));
+        const noteEl = document.querySelector('.Note');
+        if (noteEl) {
+          noteEl.focus();
+        }
+      }
+    } else if (e.key === 'PageUp' || e.which === 33) { // (PageUp)
       e.preventDefault();
       if (core.getCurrentPage() > 1) {
         core.setCurrentPage(core.getCurrentPage() - 1);
@@ -87,6 +99,13 @@ export default store => e => {
       e.preventDefault();
       setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
       dispatch(actions.closeElements([ 'annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay' ]));
+
+      const el = document.activeElement;
+      if (el && el.tabIndex === 0) {
+        const hackEl = document.querySelector('.skip-to-hack');
+        hackEl.focus();
+        hackEl.blur();
+      }
     } else if (!selectedTextFromCanvas) {
       if (document.activeElement instanceof window.HTMLInputElement || document.activeElement instanceof window.HTMLTextAreaElement) {
         return;

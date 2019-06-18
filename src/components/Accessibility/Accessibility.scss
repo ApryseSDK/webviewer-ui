@@ -1,0 +1,39 @@
+@import '../../constants/styles';
+
+.Accessibility {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 30;
+
+  display: flex;
+  overflow: hidden;
+
+  background: white;
+  color: $pdftronBlue;
+  font-style: italic;
+  font-size: 1.2em;
+  border-bottom: 1px solid $gray12;
+  border-bottom: 1px solid var(--border-color);
+
+  &.visible {
+    height: $top-bar-height;
+    padding: 10px;
+  }
+
+  &.hidden {
+    height: 0;
+    padding: 0;
+  }
+
+  div {
+    margin: 2px 7px;
+    padding: 1px;
+  }
+
+  .skip-to-hack {
+    width: 0;
+    height: 0;
+    border: none;
+  }
+}

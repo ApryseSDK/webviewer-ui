@@ -11,12 +11,9 @@ import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import selectors from 'selectors';
-import actions from 'actions';
-import mod from 'helpers/modulus';
 import debounce from 'lodash/debounce';
 
 import './NotesPanel.scss';
-
 
 class NotesPanel extends React.PureComponent {
   static propTypes = {
@@ -25,11 +22,9 @@ class NotesPanel extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     pageLabels: PropTypes.array.isRequired,
     customNoteFilter: PropTypes.func,
-    t: PropTypes.func.isRequired,
-    setListIndex: PropTypes.func.isRequired,
-    selectionIndex: PropTypes.number,
+    t: PropTypes.func.isRequired
   }
-
+  
   constructor() {
     super();
     this.state = {
@@ -146,26 +141,18 @@ class NotesPanel extends React.PureComponent {
     const sortedVisibleNoteIds = sortedVisibleNotes.map(note => note.Id);
     const indexOfCurrNote = sortedVisibleNoteIds.indexOf(currNote.Id);
 
-    return indexOfCurrNote === 0 ? sortedVisibleNotes[indexOfCurrNote] : sortedVisibleNotes[indexOfCurrNote - 1];
-  }
-
-  onBlur = e => {
-    // focus is leaving the container and its children
-    if (!e.currentTarget.contains(e.relatedTarget)) {
-      // nuke all selection index
-      this.props.setListIndex('notesPanel', null);
-    }
+    return indexOfCurrNote === 0 ? sortedVisibleNotes[indexOfCurrNote] : sortedVisibleNotes[indexOfCurrNote - 1]; 
   }
 
   isVisibleNote = note => this.visibleNoteIds.has(note.Id)
 
   renderNotesPanelContent = () => {
-    const { notesToRender } = this.state;
+    const {notesToRender} = this.state;
     const sortStrategies = getSortStrategies();
 
     return (
       <React.Fragment>
-        <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`} onBlur={this.onBlur}>
+        <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
           {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
@@ -176,22 +163,12 @@ class NotesPanel extends React.PureComponent {
   }
 
   renderNotes = notes => {
-    const { selectionIndex } = this.props;
-
     return(
-      notes.map((note, i) => {
+      notes.map(note => {
         return (
           <React.Fragment key={note.Id + getLatestActivityDate(note)}>
             {this.renderListSeparator(notes, note)}
-            <Note
-              index={i}
-              visible={this.isVisibleNote(note)}
-              annotation={note}
-              replies={note.getReplies()}
-              searchInput={this.state.searchInput}
-              rootContents={note.getContents()}
-              willFocus={selectionIndex !== null && mod(selectionIndex, notes.length) === i}
-            />
+            <Note visible={this.isVisibleNote(note)} annotation={note} searchInput={this.state.searchInput} rootContents={note.getContents()} replies={note.getReplies()} />
           </React.Fragment>
         );
       })
@@ -234,16 +211,17 @@ class NotesPanel extends React.PureComponent {
         {this.rootAnnotations.length === 0 
           ? <div className="no-annotations">{t('message.noAnnotations')}</div>
           : <React.Fragment>
-            <div className="header">
-              <input
-                type="text"
-                placeholder={t('message.searchPlaceholder')}
-                onChange={this.handleInputChange}
-              />
-              <Dropdown items={Object.keys(getSortStrategies())} />
-            </div>
-            {this.renderNotesPanelContent()}
-          </React.Fragment>
+              <div className="header">
+                <input 
+                  type="text" 
+                  placeholder={t('message.searchPlaceholder')}
+                  onChange={this.handleInputChange}
+                  tabIndex={-1}
+                />
+                <Dropdown items={Object.keys(getSortStrategies())} />
+              </div>
+              {this.renderNotesPanelContent()}
+            </React.Fragment>
         }
       </div>
     );
@@ -255,13 +233,7 @@ const mapStatesToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state),
   pageRotation: selectors.getRotation(state),
-  customNoteFilter: selectors.getCustomNoteFilter(state),
-  selectionIndex: selectors.getListIndex(state, 'notesPanel'),
+  customNoteFilter: selectors.getCustomNoteFilter(state)
 });
 
-const mapDispatchToProps = {
-  setListIndex: actions.setListIndex,
-  listMove: actions.listMove
-}
-
-export default connect(mapStatesToProps, mapDispatchToProps)(translate()(NotesPanel));
+export default connect(mapStatesToProps)(translate()(NotesPanel));

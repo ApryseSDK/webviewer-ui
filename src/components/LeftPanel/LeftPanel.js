@@ -23,15 +23,14 @@ class LeftPanel extends React.Component {
     isOpen: PropTypes.bool,
     customPanels: PropTypes.array.isRequired,
     activePanel: PropTypes.string.isRequired,
-    closeElement: PropTypes.func.isRequired,
-    listMove: PropTypes.func.isRequired
+    closeElement: PropTypes.func.isRequired
   }
 
-  state = {
-    isSliderActive: false
+  constructor(props) {
+    super(props);
+    this.state = { 'isSliderActive': false };
+    this.sliderRef = React.createRef();
   }
-
-  sliderRef = React.createRef()
 
   componentDidMount(){
     document.body.style.setProperty('--left-panel-width', '300px');
@@ -42,17 +41,10 @@ class LeftPanel extends React.Component {
       this.sliderRef.current.onmouseup = this.closeDrag;
     }
   }
-
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
       this.props.closeElement('searchPanel');
     }
-  }
-
-  // https://github.com/reactjs/rfcs/blob/master/text/0006-static-lifecycle-methods.md#state-derived-from-propsstate
-  static getDerivedStateFromProps(nextProps, prevState){
-    const hasIsOpenChanged = !prevState.mirroredIsOpen && nextProps.isOpen;
-    return { isOpening: hasIsOpenChanged, mirroredIsOpen: nextProps.isOpen };
   }
 
   getDisplay = panel => {
@@ -76,17 +68,8 @@ class LeftPanel extends React.Component {
     this.setState({ isSliderActive: false });
   }
 
-  onKeyDown = e => {
-    const { activePanel, listMove } = this.props;
-    if (e.key === 'ArrowUp' || e.keyCode === 38) {
-      listMove(activePanel, -1);
-    } else if (e.key === 'ArrowDown' || e.keyCode === 40) {
-      listMove(activePanel, 1);
-    }
-  }
-
   render() {
-    const { isOpen, isDisabled, closeElement, customPanels } = this.props;
+    const { isDisabled, closeElement, customPanels } = this.props;
 
     if (isDisabled) {
       return null;
@@ -95,19 +78,12 @@ class LeftPanel extends React.Component {
     const className = getClassName('Panel LeftPanel', this.props);
 
     return(
-      <div
-        tabIndex={-1}
-        className={className}
-        data-element="leftPanel"
-        onMouseDown={e => e.stopPropagation()}
-        onClick={e => e.stopPropagation()}
-        onKeyDown={this.onKeyDown}
-      >
+      <div className={className} data-element="leftPanel" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
         <div className="left-panel-header">
           <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>
             <Icon glyph="ic_close_black_24px" />
           </div>
-          <LeftPanelTabs panelIsOpen={isOpen} />
+          <LeftPanelTabs />
         </div>
 
         {!isIE11 &&
@@ -147,7 +123,6 @@ const mapStatesToProps = state => ({
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
-  listMove: actions.listMove,
 };
 
 export default connect(mapStatesToProps, mapDispatchToProps)(LeftPanel);

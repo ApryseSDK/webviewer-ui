@@ -78,16 +78,16 @@ class ToggleElementOverlay extends React.PureComponent {
     const { isActive, onClick } = this.props;
     return (
       <div className="ToggleElementOverlay">
-        <div className={[ 'OverlayContainer', isActive ? 'active' : '' ].join(' ').trim()}>
+        <div className={[ 'OverlayContainer', isActive ? 'active' : '' ].join(' ').trim()}> 
           <div className="OverlayText" onClick={onClick}>
             <input
-              tabIndex={-1}
               type="text"
               className="textarea"
               value={this.state.value}
               onChange={this.onChange}
               onKeyPress={this.onKeyPress}
               onBlur={this.onBlur}
+              tabIndex={-1}
             />
             <span>%</span>
           </div>

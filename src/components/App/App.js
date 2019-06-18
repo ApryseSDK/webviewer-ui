@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { hot } from 'react-hot-loader';
 
+import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
+import GroupOverlay from 'components/GroupOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import CursorOverlay from 'components/CursorOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
@@ -33,7 +35,6 @@ import PrintHandler from 'components/PrintHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
 import { isDesktop } from 'helpers/device';
-import { isEnterOrSpace } from 'helpers/keyEventHelper';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -43,8 +44,11 @@ class App extends React.PureComponent {
   static propTypes = {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
-    accessibleMode: PropTypes.bool,
+    closeElements: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props);
   }
 
   componentWillUnmount() {
@@ -80,17 +84,12 @@ class App extends React.PureComponent {
     this.onMouseDown();
   }
 
-  focusDocumentContainer = e => {
-    if (isEnterOrSpace(e)) {
-      document.querySelector('[data-element=documentContainer]').focus();
-    }
-  }
-
   render() {
     return (
       <React.Fragment>
-        <div className={`App ${this.props.accessibleMode? 'accessibleMode' : ''}`} onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
-          <a tabIndex={0} className="skip-main" onKeyPress={this.focusDocumentContainer}>Skip to main content</a>
+        <div className="App" onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
+          <Accessibility />
+
           <Header />
 
           <LeftPanel />
@@ -132,11 +131,10 @@ class App extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
-  accessibleMode: selectors.getAccessibleMode(state)
 });
 
 const mapDispatchToProps = {
-  closeElements: actions.closeElements,
+  closeElements: actions.closeElements
 };
 
 export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(translate()(App)));
