@@ -53,7 +53,7 @@ export default store => (toolName, properties) => {
     });
   } else {
     setHeaderItems(store)(function(header) {
-      const returnDefaultHeader = header.headers.default.filter(function(element) {
+      const returnDefaultHeader = header.header.filter(function(element) {
         return element.toolName !== toolName;
       });
       header.getHeader('default').update(returnDefaultHeader);

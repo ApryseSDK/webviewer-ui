@@ -9,4 +9,3 @@ export default store => toolName => {
   store.dispatch(actions.disableElement(dataElement, PRIORITY_ONE));
   core.getTool(toolName).disabled = true;
 };
-

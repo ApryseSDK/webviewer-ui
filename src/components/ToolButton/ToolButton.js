@@ -20,7 +20,7 @@ class ToolButton extends React.PureComponent {
     activeToolStyles: PropTypes.object.isRequired,
     toolName: PropTypes.string.isRequired,
     group: PropTypes.string,
-    showColor: PropTypes.string.isRequired,
+    showColor: PropTypes.string,
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
@@ -88,8 +88,8 @@ class ToolButton extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, { dataElement, toolName }) => ({
-  isDisabled: selectors.isToolButtonDisabled(state, toolName) || selectors.isElementDisabled(state, dataElement),
+const mapStateToProps = (state, { toolName }) => ({
+  isDisabled: selectors.isToolButtonDisabled(state, toolName),
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
   iconColor: selectors.getIconColor(state, toolName),
