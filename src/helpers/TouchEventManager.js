@@ -10,6 +10,10 @@ const TouchEventManager = {
     this.container = container;
     this.allowHorizontalSwipe = true;
     this.allowVerticalSwipe = false;
+    this.verticalMomentum = 0;
+    this.horziontalMomentum = 0;
+    this.startingScrollLeft = null;
+    this.dragCount = 0;
     this.touch = {
       clientX: 0,
       clientY: 0,
@@ -59,6 +63,8 @@ const TouchEventManager = {
         const scrollWidth = this.container.clientWidth;
         const viewerWidth = this.document.clientWidth;
         const isDoubleTap = this.touch.type === 'tap' && this.getDistance(this.touch, touch) <= 10;
+        this.startingScrollLeft = this.container.scrollLeft;
+        this.dragCount = 0;
         this.touch = {
           clientX: touch.clientX,
           clientY: touch.clientY,
@@ -107,10 +113,19 @@ const TouchEventManager = {
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
-        this.touch.horizontalDistance = this.touch.clientX - t.clientX;
+        // disable horizonal scrolling if swipping between pages or if pages fit within screen
+        // horizonal scroll is still allowed when draggin
+        let disableHorizontalScroll = e.target.clientWidth < e.target.closest('body').clientWidth && ++this.dragCount < 10;
+        disableHorizontalScroll = disableHorizontalScroll || (this.verticalMomentum && !this.horziontalMomentum);
+
+        this.touch.horizontalDistance = disableHorizontalScroll ? 0 : this.touch.clientX - t.clientX;
         this.touch.verticalDistance = this.touch.clientY - t.clientY;
         if (this.getDistance(this.touch, t) > 10) {
           this.touch.type = 'swipe';
+          
+          if (disableHorizontalScroll) {
+            this.container.scrollTo(this.startingScrollLeft, this.container.scrollTop);
+          }
         }
         break;
       }
@@ -218,7 +233,9 @@ const TouchEventManager = {
         core.zoomTo(zoom, x, y);
         break;
       }
-    }
+    }    
+    this.verticalMomentum = 0;
+    this.horziontalMomentum = 0;
   },
   handleTouchCancel(e) {
     this.handleTouchEnd(e);
@@ -233,6 +250,8 @@ const TouchEventManager = {
     const momentumScroll = () => {
       this.container.scrollLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
       this.container.scrollTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
+      this.verticalMomentum = dVertical;
+      this.horziontalMomentum = dHorizontal;
 
       if (currentIteration < iterationsCount && !this.touch.stopMomentumScroll) {
         currentIteration++;
