@@ -21,6 +21,6 @@ const findHeaderItem = (item, toolName) => {
       }
     }
   }
-}
+};
 
 export default getHeaderItemByToolName;
