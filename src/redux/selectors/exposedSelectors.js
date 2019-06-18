@@ -141,9 +141,9 @@ export const getZoomList = state => state.viewer.zoomList;
 export const getWarningMessage = state => state.viewer.warning && state.viewer.warning.message || '';
 export const getWarningTitle = state => state.viewer.warning && state.viewer.warning.title || '';
 export const getWarningConfirmEvent = state => state.viewer.warning && state.viewer.warning.onConfirm;
-export const getWarningConfirmBtnText = state =>  state.viewer.warning && state.viewer.warning.confirmBtnText;
-export const getWarningCancelEvent = state =>  state.viewer.warning && state.viewer.warning.onCancel;
-
+export const getWarningConfirmBtnText = state => state.viewer.warning && state.viewer.warning.confirmBtnText;
+export const getWarningCancelEvent = state => state.viewer.warning && state.viewer.warning.onCancel;
+export const isAccessibleMode = state => state.viewer.isAccessibleMode;
 
 // error message
 export const getErrorMessage = state => state.viewer.errorMessage || '';

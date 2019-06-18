@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { hot } from 'react-hot-loader';
 
+import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
@@ -87,6 +88,8 @@ class App extends React.PureComponent {
     return (
       <React.Fragment>
         <div className="App" onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
+          <Accessibility />
+
           <Header />
 
           <LeftPanel />
