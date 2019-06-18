@@ -26,7 +26,8 @@ class Note extends React.PureComponent {
     visible: PropTypes.bool.isRequired,
     rootContents: PropTypes.string,
     t: PropTypes.func.isRequired,
-    replies: PropTypes.array
+    replies: PropTypes.array,
+    isAccessibleMode: PropTypes.bool
   };
 
   constructor(props) {
@@ -189,7 +190,7 @@ class Note extends React.PureComponent {
   }
 
   render() {
-    const { annotation, replies, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
+    const { annotation, replies, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents, isAccessibleMode }  = this.props;
     const { isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
@@ -201,7 +202,7 @@ class Note extends React.PureComponent {
     replies.sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
     return (
-      <div ref={this.containerRef} className={className} onClick={this.onClickNote} tabIndex={0}>
+      <div ref={this.containerRef} className={className} onClick={this.onClickNote} tabIndex={isAccessibleMode ? 0 : -1}>
         <NoteRoot
           annotation={annotation}
           contents={rootContents}
@@ -254,7 +255,8 @@ const mapStateToProps = (state, ownProps) => ({
   isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
   isAnnotationFocused: selectors.isAnnotationFocused(state, ownProps.annotation.Id),
   isReadOnly: selectors.isDocumentReadOnly(state),
-  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply')
+  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply'),
+  isAccessibleMode: selectors.isAccessibleMode(state)
 });
 
 const matDispatchToProps = {
