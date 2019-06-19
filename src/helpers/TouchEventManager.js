@@ -111,7 +111,7 @@ const TouchEventManager = {
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
-        // disable horizonal scrolling if swipping between pages or if pages fit within screen
+        // disable horizonal scrolling if mostly vertical scrolling between pages or if pages fit within screen
         const doesPagesNotFitOnScreen = document.querySelector('.document').clientWidth > document.querySelector('.DocumentContainer').clientWidth;
         const isScrollingVertically =  Math.abs(this.verticalMomentum) > 2 * Math.abs(this.horziontalMomentum);
         const disableHorizontalScroll = doesPagesNotFitOnScreen && isScrollingVertically;
