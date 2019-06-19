@@ -152,6 +152,9 @@ const TouchEventManager = {
         break;
       }
     }
+    // 'handleTouchStart' disable momentum scroll but want to keep their value till 'handleTouchMove'
+    this.verticalMomentum = 0;
+    this.horziontalMomentum = 0;
   },
   handleTouchEnd() {
     switch (this.touch.type) {
@@ -234,8 +237,6 @@ const TouchEventManager = {
         break;
       }
     }    
-    this.verticalMomentum = 0;
-    this.horziontalMomentum = 0;
   },
   handleTouchCancel(e) {
     this.handleTouchEnd(e);
