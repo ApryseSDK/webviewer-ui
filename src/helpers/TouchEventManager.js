@@ -13,7 +13,6 @@ const TouchEventManager = {
     this.verticalMomentum = 0;
     this.horziontalMomentum = 0;
     this.startingScrollLeft = null;
-    this.dragCount = 0;
     this.touch = {
       clientX: 0,
       clientY: 0,
@@ -64,7 +63,6 @@ const TouchEventManager = {
         const viewerWidth = this.document.clientWidth;
         const isDoubleTap = this.touch.type === 'tap' && this.getDistance(this.touch, touch) <= 10;
         this.startingScrollLeft = this.container.scrollLeft;
-        this.dragCount = 0;
         this.touch = {
           clientX: touch.clientX,
           clientY: touch.clientY,
@@ -114,17 +112,19 @@ const TouchEventManager = {
       case 1: {
         const t = e.touches[0];
         // disable horizonal scrolling if swipping between pages or if pages fit within screen
-        // horizonal scroll is still allowed when draggin
-        let disableHorizontalScroll = e.target.clientWidth < e.target.closest('body').clientWidth && ++this.dragCount < 10;
-        disableHorizontalScroll = disableHorizontalScroll || (this.verticalMomentum && !this.horziontalMomentum);
+        const isPagesWiderThenScreen = document.querySelector('.document').clientWidth > document.querySelector('.DocumentContainer').clientWidth;
+        const isScrollingVertically =  Math.abs(this.verticalMomentum) > 2 * Math.abs(this.horziontalMomentum);
+        const disableHorizontalScroll = isPagesWiderThenScreen && isScrollingVertically;
 
-        this.touch.horizontalDistance = disableHorizontalScroll ? 0 : this.touch.clientX - t.clientX;
+        this.touch.horizontalDistance = this.touch.clientX - t.clientX;
         this.touch.verticalDistance = this.touch.clientY - t.clientY;
         if (this.getDistance(this.touch, t) > 10) {
           this.touch.type = 'swipe';
           
           if (disableHorizontalScroll) {
             this.container.scrollTo(this.startingScrollLeft, this.container.scrollTop);
+            // set 'horizontalDistance' to '0' to get rid of horiztonal momentum in 'handleTouchEnd'
+            this.touch.horizontalDistance = 0; 
           }
         }
         break;
