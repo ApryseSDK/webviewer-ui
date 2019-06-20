@@ -22,8 +22,15 @@ export default store =>  {
     }
     
     // make sure we are not getting cached responses
-    serverUrl.indexOf('?') === -1 ? serverUrl += `?_=${Date.now()}` : serverUrl += `&_=${Date.now()}`;
-    serverUrl = documentId ? `${serverUrl}&did=${documentId}` : serverUrl;
+    if (serverUrl.indexOf('?') === -1) {
+      serverUrl += `?_=${Date.now()}`;
+    } else {
+      serverUrl += `&_=${Date.now()}`;
+    }
+
+    if (documentId) {
+      serverUrl += `&did=${documentId}`;
+    }
 
     fetch(serverUrl, {
       headers: serverUrlHeaders,
