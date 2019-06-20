@@ -20,16 +20,12 @@ export default store =>  {
       callback('');
       return;
     }
-
-    const docIdQuery = {};
-    if (documentId) {
-      docIdQuery.did = documentId;
-    }
-
-    serverUrl = documentId ? `${serverUrl}?did=${documentId}` : serverUrl;
+    
+    // make sure we are not getting cached responses
+    serverUrl.indexOf('?') === -1 ? serverUrl += `?_=${Date.now()}` : serverUrl += `&_=${Date.now()}`;
+    serverUrl = documentId ? `${serverUrl}&did=${documentId}` : serverUrl;
 
     fetch(serverUrl, {
-      cache: 'no-store',
       headers: serverUrlHeaders,
     }).then(response => {
       if (response.ok) {

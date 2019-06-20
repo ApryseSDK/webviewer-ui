@@ -51,8 +51,9 @@ const checkByteRange = state => {
     if (engineType !== engineTypes.UNIVERSAL || state.document.isOffline || state.document.file || streaming) {
       resolve(streaming);
     } else {
-      fetch(window.location.href, {
-        cache: 'no-store',
+      // make sure we are not getting cached responses
+      const url =`${window.location.href.split('#')[0]}?_=${Date.now()}`;
+      fetch(url, {
         headers: {
           'Range': 'bytes=0-0'
         }
