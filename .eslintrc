@@ -12,9 +12,6 @@
     "es6": true,
     "cypress/globals": true
   },
-  "globals": {
-    "$": false
-  },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",

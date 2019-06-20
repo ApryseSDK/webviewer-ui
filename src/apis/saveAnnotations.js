@@ -13,21 +13,19 @@ export default store => () => new Promise((resolve, reject) => {
   }
 
   core.exportAnnotations(xfdfString => {
-    $.ajax({
-      type: 'POST',
-      url: serverUrl,
+    fetch(serverUrl, {
+      method: 'POST',
       headers: serverUrlHeaders,
-      data: {
+      body: {
         ...docIdQuery,
-        'data': xfdfString
-      },
-      success: () => {
-        resolve();
-      },
-      error: e => {
-        reject(e);
+        data: xfdfString
       }
-    });
+    }).then(response => {
+      if (response.ok) {
+        resolve();
+      } else {
+        reject(response);
+      }
+    }).catch(reject);
   });
-
 });

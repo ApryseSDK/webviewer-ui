@@ -51,21 +51,21 @@ const checkByteRange = state => {
     if (engineType !== engineTypes.UNIVERSAL || state.document.isOffline || state.document.file || streaming) {
       resolve(streaming);
     } else {
-      $.ajax({
-        url: window.location.href,
-        cache: false,
-        headers: { 'Range': 'bytes=0-0' },
-        success: (data, textStatus, jqXHR) => {
-          if (jqXHR.status !== 206) {
-            streaming = true;
-            console.warn('HTTP range requests not supported. Switching to streaming mode.');
-          }
-          resolve(streaming);
-        },
-        error: () => {
-          streaming = true;
-          resolve(streaming);
+      fetch(window.location.href, {
+        cache: 'no-store',
+        headers: {
+          'Range': 'bytes=0-0'
         }
+      }).then(response => {
+        if (!response.ok || response.status !== 206) {
+          console.warn('HTTP range requests not supported. Switching to streaming mode.');
+          streaming = true;
+        }
+
+        resolve(streaming);
+      }).catch(() => {
+        streaming = true;
+        resolve(streaming);
       });
     }
   });

@@ -3,7 +3,7 @@ import { workerTypes } from 'constants/types';
 
 export default store =>  {
   const state = store.getState();
-  const { serverUrl, serverUrlHeaders } = state.advanced;
+  let { serverUrl, serverUrlHeaders } = state.advanced;
 
   if (!serverUrl) {
     return;
@@ -26,26 +26,29 @@ export default store =>  {
       docIdQuery.did = documentId;
     }
 
-    $.ajax({
-      url: serverUrl,
-      cache: false,
-      data: docIdQuery,
+    serverUrl = documentId ? `${serverUrl}?did=${documentId}` : serverUrl;
+
+    fetch(serverUrl, {
+      cache: 'no-store',
       headers: serverUrlHeaders,
-      success: data => {
-        if (data !== null && data !== undefined) {
-          window.readerControl.loadedFromServer = true;
-          callback(data);
-        } else {
-          window.readerControl.serverFailed = true;
-          callback(originalData);
-        }
-      },
-      error: (jqXHR, textStatus, errorThrown) => {
+    }).then(response => {
+      if (response.ok) {
+        return response.text();
+      } 
+
+      return Promise.reject(response);
+    }).then(data => {
+      if (data !== null && data !== undefined) {
+        window.readerControl.loadedFromServer = true;
+        callback(data);
+      } else {
         window.readerControl.serverFailed = true;
-        console.warn('Error ' + jqXHR.status + ' ' + errorThrown + ': Annotations could not be loaded from the server.');
         callback(originalData);
-      },
-      dataType: 'xml'
+      }
+    }).catch(e => {
+      window.readerControl.serverFailed = true;
+      console.warn(`Error ${e.status}: Annotations could not be loaded from the server.`);
+      callback(originalData);
     });
   };
 
