@@ -1,5 +1,6 @@
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
+import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 
 let onFirstLoad = true;
@@ -53,5 +54,5 @@ export default dispatch => () => {
   window.readerControl.loadedFromServer = false;
   window.readerControl.serverFailed = false;
 
-  $(document).trigger('documentLoaded');
+  fireEvent('documentLoaded');
 };

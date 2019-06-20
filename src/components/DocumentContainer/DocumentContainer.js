@@ -8,6 +8,7 @@ import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'help
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import TouchEventManager from 'helpers/TouchEventManager';
+import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -45,7 +46,7 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
-    if (prevProps.swipeOrientation !== this.props.swipeOrientation){
+    if (prevProps.swipeOrientation !== this.props.swipeOrientation) {
       TouchEventManager.updateOrientation(this.props.swipeOrientation);
     }
   }
@@ -54,7 +55,7 @@ class DocumentContainer extends React.PureComponent {
     TouchEventManager.initialize(this.document.current, this.container.current, this.props.toolButtonObjects);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
-    window.document.dispatchEvent(new Event('viewerLoaded'));
+    fireEvent('viewerLoaded');
 
     const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
     if (hasPath && doesDocumentAutoLoad) {
@@ -113,7 +114,7 @@ class DocumentContainer extends React.PureComponent {
     if (e.metaKey || e.ctrlKey) {
       e.preventDefault();
       this.wheelToZoom(e);
-    } else if (!core.isContinuousDisplayMode()){
+    } else if (!core.isContinuousDisplayMode()) {
       this.wheelToNavigatePages(e);
     }
   }
@@ -188,7 +189,7 @@ class DocumentContainer extends React.PureComponent {
       className = this.getClassName(this.props);
     }
 
-    return(
+    return (
       <div className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd}>
         <div className="document" ref={this.document}></div>
       </div>

@@ -54,8 +54,6 @@ if (window.CanvasRenderingContext2D) {
   let fullAPIReady = Promise.resolve();
   const state = store.getState();
 
-  $.ajaxSetup({ cache: true });
-
   if (state.advanced.fullAPI) {
     window.CoreControls.enableFullPDF(true);
     if (process.env.NODE_ENV === 'production') {

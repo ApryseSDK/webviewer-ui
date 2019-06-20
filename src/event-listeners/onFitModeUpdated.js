@@ -1,6 +1,7 @@
 import core from 'core';
 import actions from 'actions';
 import { isAndroid } from 'helpers/device';
+import fireEvent from 'helpers/fireEvent';
 
 export default dispatch => (e, fitMode) => {
   const docViewer = core.getDocumentViewer();
@@ -19,5 +20,5 @@ export default dispatch => (e, fitMode) => {
     dispatch(actions.setFitMode('FitPage'));
   }
 
-  $(document).trigger('fitModeChanged', [ fitMode ]);
+  fireEvent('fitModeChanged', [ fitMode ]);
 };
