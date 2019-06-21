@@ -69,6 +69,12 @@ module.exports = {
 				use: [
 					'svg-inline-loader',
 				]
+			},
+			{
+				test: /\.ttf$/,
+				use: [
+					'url-loader'
+				]
 			}
 		]
 	},
