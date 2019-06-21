@@ -1,5 +1,6 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600');
 
 $signature-modal-shared-color: #E1E1E3;
 
@@ -64,6 +65,7 @@ $signature-modal-shared-color: #E1E1E3;
       &-clear {
         z-index: 2;
         position: absolute;
+        font-weight: 600;
         top: 16px;
         right: 16px;
         color: #757575;
