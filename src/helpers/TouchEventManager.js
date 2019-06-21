@@ -239,7 +239,7 @@ const TouchEventManager = {
         break;
       }
     }
-    // Need to preserve their last momentum values during 'TouchMove' event. So clear their values in 'touchEnd'
+    // Need to preserve the previous momentum values during 'TouchMove' event. So clear their values in 'touchEnd'
     this.verticalMomentum = 0;
     this.horziontalMomentum = 0;
   },
