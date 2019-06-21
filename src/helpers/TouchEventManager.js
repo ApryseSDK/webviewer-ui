@@ -13,6 +13,8 @@ const TouchEventManager = {
     this.verticalMomentum = 0;
     this.horziontalMomentum = 0;
     this.startingScrollLeft = null;
+    this.containerWidth = 0;
+    this.documentWidth = 0;
     this.touch = {
       clientX: 0,
       clientY: 0,
@@ -63,6 +65,8 @@ const TouchEventManager = {
         const viewerWidth = this.document.clientWidth;
         const isDoubleTap = this.touch.type === 'tap' && this.getDistance(this.touch, touch) <= 10;
         this.startingScrollLeft = this.container.scrollLeft;
+        this.containerWidth = document.querySelector('.DocumentContainer').clientWidth;
+        this.documentWidth = document.querySelector('.document').clientWidth;
         this.touch = {
           clientX: touch.clientX,
           clientY: touch.clientY,
@@ -112,9 +116,9 @@ const TouchEventManager = {
       case 1: {
         const t = e.touches[0];
         // disable horizonal scrolling if mostly vertical scrolling between pages or if pages fit within screen
-        const doesPagesNotFitOnScreen = document.querySelector('.document').clientWidth > document.querySelector('.DocumentContainer').clientWidth;
+        const doesPagesNotFitOnScreen = this.documentWidth > this.containerWidth;
         const isScrollingVertically =  Math.abs(this.verticalMomentum) > 2 * Math.abs(this.horziontalMomentum);
-        const disableHorizontalScroll = doesPagesNotFitOnScreen && isScrollingVertically;
+        const disableHorizontalScroll = !doesPagesNotFitOnScreen || isScrollingVertically;
 
         this.touch.horizontalDistance = this.touch.clientX - t.clientX;
         this.touch.verticalDistance = this.touch.clientY - t.clientY;
@@ -122,6 +126,7 @@ const TouchEventManager = {
           this.touch.type = 'swipe';
           
           if (disableHorizontalScroll) {
+            // undo horizontal scrolling caused by native touch when scrolling is disabled
             this.container.scrollTo(this.startingScrollLeft, this.container.scrollTop);
             // set 'horizontalDistance' to '0' to get rid of horiztonal momentum in 'handleTouchEnd'
             this.touch.horizontalDistance = 0; 
@@ -152,9 +157,6 @@ const TouchEventManager = {
         break;
       }
     }
-    // 'handleTouchStart' disable momentum scroll but want to keep their value till 'handleTouchMove'
-    this.verticalMomentum = 0;
-    this.horziontalMomentum = 0;
   },
   handleTouchEnd() {
     switch (this.touch.type) {
@@ -236,7 +238,10 @@ const TouchEventManager = {
         core.zoomTo(zoom, x, y);
         break;
       }
-    }    
+    }
+    // Need to preserve their last momentum values during 'TouchMove' event. So clear their values in 'touchEnd'
+    this.verticalMomentum = 0;
+    this.horziontalMomentum = 0;
   },
   handleTouchCancel(e) {
     this.handleTouchEnd(e);
