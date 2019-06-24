@@ -69,7 +69,7 @@ class SignatureModal extends React.PureComponent {
     if (!this.canvas.current) {
       return;
     }
-    this.signatureTool.setSignatureCanvas($(canvas));
+    this.signatureTool.setSignatureCanvas(canvas);
     // draw nothing in the background since we want to convert the signature on the canvas
     // to an image and we don't want the background to be in the image.
     this.signatureTool.drawBackground = () => {};
