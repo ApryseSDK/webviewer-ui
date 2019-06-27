@@ -58,7 +58,7 @@ class DocumentContainer extends React.PureComponent {
     fireEvent('viewerLoaded');
 
     const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
-    if (hasPath && doesDocumentAutoLoad) {
+    if ((hasPath && doesDocumentAutoLoad) || document.isOffline) {
       loadDocument({ document, advanced }, dispatch);
     }
 
