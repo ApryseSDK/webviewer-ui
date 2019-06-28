@@ -2,6 +2,7 @@ import { saveAs } from 'file-saver';
 
 import core from 'core';
 import { isIE } from 'helpers/device';
+import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 
 export default (dispatch, options) => {
@@ -39,7 +40,7 @@ export default (dispatch, options) => {
       return bbURLPromise.then(result => {
         downloadIframe.src = result.url;
         dispatch(actions.closeElement('loadingModal'));
-        $(document).trigger('finishedSavingPDF');
+        fireEvent('finishedSavingPDF');
       });
     } else {
       return doc.getFileData(downloadOptions).then(data => {
@@ -52,7 +53,7 @@ export default (dispatch, options) => {
 
         saveAs(file, downloadName);
         dispatch(actions.closeElement('loadingModal'));
-        $(document).trigger('finishedSavingPDF');
+        fireEvent('finishedSavingPDF');
       }, error => {
         dispatch(actions.closeElement('loadingModal'));
         throw new Error(error.message);

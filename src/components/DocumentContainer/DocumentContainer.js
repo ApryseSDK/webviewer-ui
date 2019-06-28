@@ -8,6 +8,7 @@ import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'help
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import TouchEventManager from 'helpers/TouchEventManager';
+import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -54,10 +55,10 @@ class DocumentContainer extends React.PureComponent {
     TouchEventManager.initialize(this.document.current, this.container.current, this.props.toolButtonObjects);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
-    window.document.dispatchEvent(new Event('viewerLoaded'));
+    fireEvent('viewerLoaded');
 
     const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
-    if (hasPath && doesDocumentAutoLoad) {
+    if ((hasPath && doesDocumentAutoLoad) || document.isOffline) {
       loadDocument({ document, advanced }, dispatch);
     }
 
