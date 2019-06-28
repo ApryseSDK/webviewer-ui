@@ -118,5 +118,5 @@ const disableElementsIfMobile = dispatch => {
 };
 
 const disableLayersTabByDefault = dispatch => {
-  dispatch(actions.disableElements(['layersPanel', 'layersPanelButton'], PRIORITY_ONE));
+  dispatch(actions.disableElements([ 'layersPanel', 'layersPanelButton' ], PRIORITY_ONE));
 };
