@@ -19,6 +19,7 @@ export default store => {
   disableElementsIfRedactionsDisabled(dispatch);
   disableElementsIfDesktop(dispatch);
   disableElementsIfMobile(dispatch);
+  disableLayersTabByDefault(dispatch);
 };
 
 const disableElementsPassedByConstructor = (state, dispatch) => {
@@ -114,4 +115,8 @@ const disableElementsIfMobile = dispatch => {
   if (isMobileDevice) {
     dispatch(actions.disableElement('marqueeToolButton', PRIORITY_THREE));
   }
+};
+
+const disableLayersTabByDefault = dispatch => {
+  dispatch(actions.disableElements([ 'layersPanel', 'layersPanelButton' ], PRIORITY_ONE));
 };
