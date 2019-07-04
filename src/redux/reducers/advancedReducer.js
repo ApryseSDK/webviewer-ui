@@ -12,6 +12,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, engineType: payload.type };
     case 'SET_CUSTOM_HEADERS':
       return { ...state, customHeaders: payload.customHeaders };
+    case 'SET_CACHE_KEY':
+      return { ...state, cacheKey: payload.cacheKey };
     case 'SET_WITH_CREDENTIALS':
       return { ...state, withCredentials: payload.withCredentials };
     default:

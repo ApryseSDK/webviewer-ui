@@ -112,6 +112,7 @@ export const setDocumentLoadingProgress = documentLoadingProgress => ({ type: 'S
 export const setWorkerLoadingProgress = workerLoadingProgress => ({ type: 'SET_WORKER_LOADING_PROGRESS', payload: { workerLoadingProgress }});
 export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
+export const setCacheKey = cacheKey => ({ type: 'SET_CACHE_KEY', payload: { cacheKey } });
 
 export const setIsUploading = isUploading => ({ type: 'SET_IS_UPLOADING', payload: { isUploading } });
 export const setUploadProgress = progress => ({ type: 'SET_UPLOAD_PROGRESS', payload: { progress } });
