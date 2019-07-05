@@ -2,6 +2,7 @@ import React from 'react';
 import i18next from 'i18next';
 
 import ToggleElementOverlay from 'components/ToggleElementOverlay';
+import SignatureToolButton from 'components/SignatureToolButton';
 
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
@@ -27,7 +28,6 @@ export default {
         render: () => <ToggleElementOverlay />,
         dataElement: 'zoomOverlayButton',
         hidden: [ 'mobile' ],
-        element: 'zoomOverlay'
       },
       { type: 'spacer' },
       {
@@ -77,7 +77,11 @@ export default {
               { type: 'toolButton', img: 'ic_annotation_cloud_black_24px', toolName: 'AnnotationCreatePolygonCloud', dataElement: 'cloudToolButton', title: 'annotation.polygonCloud' },
             ]
           },
-          { type: 'statefulButton', dataElement: 'signatureToolButton', toolName: 'AnnotationCreateSignature' },
+          { 
+            type: 'customElement', 
+            render: () => <SignatureToolButton />,
+            dataElement: 'signatureToolButton',
+          },
           { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
           { type: 'toolButton', img: 'ic_annotation_freetext_black_24px', toolName: 'AnnotationCreateFreeText', dataElement: 'freeTextToolButton', title: 'annotation.freetext' },
           { type: 'toolButton', img: 'ic_annotation_sticky_note_black_24px', toolName: 'AnnotationCreateSticky', dataElement: 'stickyToolButton', title: 'annotation.stickyNote' },

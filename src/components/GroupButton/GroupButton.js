@@ -29,7 +29,7 @@ class GroupButton extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
     isActive: PropTypes.bool.isRequired,
-    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
+    iconColor: PropTypes.oneOf([ 'TextColor', 'StrokeColor', 'FillColor' ])
   }
 
   constructor(props) {
@@ -85,11 +85,11 @@ class GroupButton extends React.PureComponent {
   }
 
   render() {
-    const { mediaQueryClassName, isDisabled, dataElement, isActive, toolNames, iconColor, children, activeToolGroup, toolGroup, activeToolStyles} = this.props;
+    const { mediaQueryClassName, isDisabled, dataElement, isActive, toolNames, iconColor, children, activeToolGroup, toolGroup, activeToolStyles } = this.props;
     const isOnlyTools = children.filter(button => button.type !== 'toolButton').length === 0;
     const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName) ? core.getTool(toolName).disabled : '');
     if (isDisabled || allButtonsInGroupDisabled) {
-      if (isOnlyTools){
+      if (isOnlyTools) {
         return null;
       }
     }
@@ -98,7 +98,7 @@ class GroupButton extends React.PureComponent {
     }
     const { toolName } = this.state;
     const activeIcon = children.find(button => button.toolName === toolName) ? children.find(button => button.toolName === toolName).img: '';
-    const defaultGroupIcon = 'ic_group_button_24px'
+    const defaultGroupIcon = 'ic_group_button_24px';
     const img = this.props.img ? this.props.img : isOnlyTools ? activeIcon : defaultGroupIcon;
     let color;
     if (isActive && !this.props.img && iconColor && activeToolStyles[iconColor]) {
