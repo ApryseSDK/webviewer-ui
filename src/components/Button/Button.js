@@ -45,20 +45,11 @@ const Button = props => {
     content = <p>{label}</p>;
   }
   
-  // let Children = React.forwardRef((props, ref) => (
-  //   <div className={buttonClass} ref={ref} data-element={dataElement} onClick={handleClick}>
-  //     {content}
-  //   </div>
-  // ));
   let children = (
     <div className={buttonClass} data-element={dataElement} onClick={handleClick}>
       {content}
     </div>
   );
-
-  // if (title) {
-  //   children = <Tooltip>{children}</Tooltip>;
-  // }
 
   return title ? (
     <Tooltip content={title}>

@@ -47,10 +47,6 @@ class App extends React.PureComponent {
     closeElements: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillUnmount() {
     this.props.removeEventHandlers();
   }

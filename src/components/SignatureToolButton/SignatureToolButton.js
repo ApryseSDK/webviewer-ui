@@ -51,14 +51,13 @@ const SignatureToolButton = props => {
   });
 
   return (
-    <Tooltip content="annotation.signature" isDisabled={isDisabled}>
-      <Button
-        className={buttonClass}
-        isActive={isSignatureModalOpen || isSignatureOverlayOpen}
-        img="ic_annotation_signature_black_24px"
-        onClick={handleClick}
-      />
-    </Tooltip>
+    <Button
+      className={buttonClass}
+      isActive={isSignatureModalOpen || isSignatureOverlayOpen}
+      img="ic_annotation_signature_black_24px"
+      onClick={handleClick}
+      title="annotation.signature"
+    />
   );
 };
 
