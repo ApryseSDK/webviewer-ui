@@ -20,7 +20,7 @@ export default store => () => {
     // but that would make the click handler lengthy since we don't have a very good way to check if we're clicking on a signature widget.
     if (signatureToolButton) {
       setTimeout(() => {
-        document.querySelector('[data-element="signatureToolButton"]').click();
+        document.querySelector('[data-element="signatureToolButton"] .Button').click();
       }, 0);
     } else {
       const defaultSignatures = document.querySelector('.default-signature');

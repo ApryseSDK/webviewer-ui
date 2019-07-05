@@ -13,7 +13,6 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
-import statefulButtons from 'constants/statefulButtons';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -53,7 +52,7 @@ class GroupOverlay extends React.PureComponent {
     const clickedOnAnotherToolGroupButton = prevProps.activeToolGroup !== this.props.activeToolGroup;
 
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
+      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay' ]);
       this.setOverlayPosition();
     }
 
@@ -82,7 +81,7 @@ class GroupOverlay extends React.PureComponent {
 
     core.setToolMode(defaultTool);
     setActiveToolGroup('');
-    closeElements(['toolStylePopup', 'groupOverlay']);
+    closeElements([ 'toolStylePopup', 'groupOverlay' ]);
   }
 
   render() {
@@ -96,7 +95,7 @@ class GroupOverlay extends React.PureComponent {
     return (
       <div className={className} ref={this.overlay} style={{ left, right }} data-element="groupOverlay" onMouseDown={e => e.stopPropagation()}>
         {nestedChildren.map((element, i) => {
-          switch (element.type){
+          switch (element.type) {
             case 'toolButton':
               return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} toolGroup={this.props.toolGroup} {...element} />;
             case 'toggleElementButton':
@@ -104,8 +103,7 @@ class GroupOverlay extends React.PureComponent {
             case 'actionButton':
               return <ActionButton key={i} {...element} />;
             case 'statefulButton':
-              const props = statefulButtons[element.dataElement] || {};
-              return <StatefulButton key={i} {...element} {...props} />;
+              return <StatefulButton key={i} {...element} />;
             case 'customElement':
               return <CustomElement key={i} {...element} />;
           }
