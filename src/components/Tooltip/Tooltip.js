@@ -18,7 +18,6 @@ class Tooltip extends React.PureComponent {
     delayShow: PropTypes.number,
     children: PropTypes.element,
     content: PropTypes.string,
-    isDisabled: PropTypes.bool,
     t: PropTypes.func.isRequired
   }
 
@@ -26,14 +25,14 @@ class Tooltip extends React.PureComponent {
     location: 'bottom',
     delayShow: 700,
     content: '',
-    isDisabled: false
   }
 
   constructor(props) {
     super(props);
-    this.wrapperRef = React.createRef();
     this.showTimer = null;
-    this.opacityTimeout = 50; // This is used for tooltip fade-in animation
+    // used for tooltip fade-in animation
+    this.opacityTimeout = 50;
+    this.childRef = React.createRef();
     this.state = {
       show: false,
       style: {
@@ -45,14 +44,16 @@ class Tooltip extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (!this.props.isDisabled) {
-      this.addEventListeners(ReactDOM.findDOMNode(this));
+    if (this.childRef.current) {
+      this.childRef.current.addEventListener('mouseenter', this.show);
+      this.childRef.current.addEventListener('mouseleave', this.hide);
+      this.childRef.current.addEventListener('click', this.hide);
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.show && this.state.show) {
-      this.setTopAndLeft(ReactDOM.findDOMNode(this));
+      this.setTopAndLeft(this.childRef.current);
       setTimeout(() => {
         this.setOpacity(1);
       }, this.opacityTimeout);
@@ -61,27 +62,11 @@ class Tooltip extends React.PureComponent {
     if (prevState.show && !this.state.show) {
       this.setOpacity(0);
     }
-
-    if (prevProps.isDisabled && !this.props.isDisabled) {
-      this.addEventListeners(ReactDOM.findDOMNode(this));
-    }
   }
 
-  addEventListeners = DOMElement => {
-    try {
-      DOMElement.addEventListener('mouseenter', this.show);
-      DOMElement.addEventListener('mouseleave', this.hide);
-      DOMElement.addEventListener('click', this.hide);
-    } catch (e) {
-      // we have this catch block here just to make sure UI doesn't blow up when DOMElement is null
-      // although we haven't met this situation yet
-      console.warn(`${this.props.children} is rendering null`);
-    }
-  }
-
-  setTopAndLeft = DOMElement => {
+  setTopAndLeft = element => {
     const { location } = this.props;
-    const { top, bottom, left, right, width, height } = DOMElement.getBoundingClientRect();
+    const { top, bottom, left, right, width, height } = element.getBoundingClientRect();
     const locationTopLeftMap = {
       'bottom': {
         top: bottom,
@@ -161,30 +146,25 @@ class Tooltip extends React.PureComponent {
     return isMac ? shortcut.replace('Ctrl', 'Cmd') : shortcut;
   }
 
-  renderChildren = () => {
-    const { children, isDisabled } = this.props;
-    const { type } = children;
-
-    if (type === 'div') {
-      // an example is the advanced button in the search overlay
-      // we don't want to add isDisabled to a DOM element since it's not a valid HTML attribute
-      return React.cloneElement(children);
-    }
-    if (typeof type === 'function') {
-      // children is a React component such as <ActionButton />
-      return React.cloneElement(children, { isDisabled });
-    }
-
-    return null;
-  }
-
   render() {
-    const { location, content } = this.props;
     const isUsingMobileDevices = isIOS || isAndroid;
+    const { location, content } = this.props;
+
+    const childrenCount = React.Children.count(this.props.children);
+    if (childrenCount !== 1) {
+      console.warn(`<Tooltip> only accept one child, ${childrenCount} children are passed to it`);
+    }
+
+    const child = React.cloneElement(
+      this.props.children, 
+      {
+        ref: this.childRef
+      }
+    );
 
     return (
       <React.Fragment>
-        {this.renderChildren()}
+        {child}
         {
           this.state.show && content && !isUsingMobileDevices &&
           ReactDOM.createPortal(

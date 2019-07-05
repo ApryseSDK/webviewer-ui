@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
 
 import './Button.scss';
@@ -16,10 +17,10 @@ const Button = props => {
     color, 
     dataElement,
     onClick,
-    className
+    className,  
+    title
   } = props;
 
-  
   if (isDisabled) {
     return null;
   }
@@ -28,29 +29,42 @@ const Button = props => {
   const buttonClass = classNames({
     Button: true,
     active: isActive,
-    inactive: !isActive,
-    label,
-    icon: !label,
     [mediaQueryClassName]: mediaQueryClassName,
     [className]: className
   });
   const isBase64 = img && img.trim().indexOf('data:') === 0;
   // if there is no file extension then assume that this is a glyph
-  const isGlyph = img && (img.indexOf('.') === -1 || img.indexOf('<svg') === 0) && !isBase64;
-
-  return (
+  const isGlyph = img && !isBase64 && (img.indexOf('.') === -1 || img.indexOf('<svg') === 0);
+ 
+  let content; 
+  if (isGlyph) {
+    content = <Icon glyph={img} color={color} />;
+  } else if (img) {
+    content = <img src={img} />;
+  } else if (label) {
+    content = <p>{label}</p>;
+  }
+  
+  // let Children = React.forwardRef((props, ref) => (
+  //   <div className={buttonClass} ref={ref} data-element={dataElement} onClick={handleClick}>
+  //     {content}
+  //   </div>
+  // ));
+  let children = (
     <div className={buttonClass} data-element={dataElement} onClick={handleClick}>
-      {isGlyph &&
-        <Icon glyph={img} color={color} />
-      }
-      {img && !isGlyph &&
-        <img src={img} />
-      }
-      {label &&
-        <p>{label}</p>
-      }
+      {content}
     </div>
   );
+
+  // if (title) {
+  //   children = <Tooltip>{children}</Tooltip>;
+  // }
+
+  return title ? (
+    <Tooltip content={title}>
+      {children}
+    </Tooltip>
+  ) : children;
 };
 
 Button.propTypes = {
@@ -69,4 +83,5 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+// TODO: add React.memo here
 export default Button;

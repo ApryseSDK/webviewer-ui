@@ -51,7 +51,7 @@ class ViewControlsOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['groupOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
+      this.props.closeElements([ 'groupOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay' ]);
       this.setState(getOverlayPositionBasedOn('viewControlsButton', this.overlay));
     }
   }
@@ -85,9 +85,7 @@ class ViewControlsOverlay extends React.PureComponent {
         {totalPages < 1000 &&
           <Element className="row" dataElement="pageTransitionButtons">
             <div className="type">{t('option.displayMode.pageTransition')}</div>
-            <Tooltip content="option.pageTransition.default" isDisabled={this.props.isDefaultPageTransitionButtonDisabled}>
-              <Button dataElement="defaultPageTransitionButton" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick('default', layout)} isActive={pageTransition === 'default'} />
-            </Tooltip>
+            {/* <Button title="option.pageTransition.default" dataElement="defaultPageTransitionButton" img="ic_view_mode_single_black_24px" onClick={() => this.handleClick('default', layout)} isActive={pageTransition === 'default'} /> */}
             <Tooltip content="option.pageTransition.continuous" isDisabled={this.props.isContinuousPageTransitionButtonDisabled}>
               <Button dataElement="continuousPageTransitionButton" img="ic_view_mode_continuous_black_24px" onClick={() => this.handleClick('continuous', layout)} isActive={pageTransition === 'continuous'} />
             </Tooltip>
