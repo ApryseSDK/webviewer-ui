@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import Button from 'components/Button';
 import GroupOverlay from 'components/GroupOverlay';
-import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
@@ -85,7 +84,7 @@ class GroupButton extends React.PureComponent {
   }
 
   render() {
-    const { mediaQueryClassName, isDisabled, dataElement, isActive, toolNames, iconColor, children, activeToolGroup, toolGroup, activeToolStyles } = this.props;
+    const { mediaQueryClassName, isDisabled, dataElement, isActive, toolNames, iconColor, title, children, activeToolGroup, toolGroup, activeToolStyles } = this.props;
     const isOnlyTools = children.filter(button => button.type !== 'toolButton').length === 0;
     const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName) ? core.getTool(toolName).disabled : '');
     if (isDisabled || allButtonsInGroupDisabled) {
@@ -114,7 +113,7 @@ class GroupButton extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={isOnlyTools ? color : ''} />
+        <Button title={title} className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={isOnlyTools ? color : ''} />
         {toolGroup === activeToolGroup && 
           <Portal>
             <GroupOverlay nestedChildren={children} dataElement={dataElement} toolGroup={toolGroup}/>
@@ -142,4 +141,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(GroupButton));
+export default connect(mapStateToProps, mapDispatchToProps)(GroupButton);

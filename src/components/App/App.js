@@ -11,7 +11,6 @@ import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
-import GroupOverlay from 'components/GroupOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import CursorOverlay from 'components/CursorOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';

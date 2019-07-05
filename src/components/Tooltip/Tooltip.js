@@ -33,6 +33,7 @@ class Tooltip extends React.PureComponent {
     // used for tooltip fade-in animation
     this.opacityTimeout = 50;
     this.childRef = React.createRef();
+    this.tooltipRef = React.createRef();
     this.state = {
       show: false,
       style: {
@@ -168,7 +169,7 @@ class Tooltip extends React.PureComponent {
         {
           this.state.show && content && !isUsingMobileDevices &&
           ReactDOM.createPortal(
-            <div className={`tooltip--${location}`} style={this.state.style}>
+            <div className={`tooltip--${location}`} style={this.state.style} ref={this.tooltipRef}>
               <div className={`tooltip__content`}>{this.renderContent()}</div>
             </div>,
             document.getElementById('app')
