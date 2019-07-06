@@ -9,12 +9,6 @@ import './Tooltip.scss';
 
 class Tooltip extends React.PureComponent {
   static propTypes = {
-    location: PropTypes.oneOf([
-      'top',
-      'right',
-      'bottom',
-      'left'
-    ]),
     delayShow: PropTypes.number,
     children: PropTypes.element,
     content: PropTypes.string,
@@ -22,7 +16,6 @@ class Tooltip extends React.PureComponent {
   }
 
   static defaultProps = {
-    location: 'bottom',
     delayShow: 700,
     content: '',
   }
@@ -40,7 +33,8 @@ class Tooltip extends React.PureComponent {
         top: 0,
         left: 0,
         opacity: 0
-      }
+      },
+      location: 'bottom'
     };
   }
 
@@ -53,8 +47,8 @@ class Tooltip extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevState.show && this.state.show) {
-      this.setTopAndLeft(this.childRef.current);
+    if (!prevState.show && this.state.show && this.childRef.current) {
+      this.setTopAndLeft(this.childRef.current, this.tooltipRef.current);
       setTimeout(() => {
         this.setOpacity(1);
       }, this.opacityTimeout);
@@ -65,35 +59,44 @@ class Tooltip extends React.PureComponent {
     }
   }
 
-  setTopAndLeft = element => {
-    const { location } = this.props;
-    const { top, bottom, left, right, width, height } = element.getBoundingClientRect();
+  setTopAndLeft = (childEle, tooltipEle) => {
+    const childRect = childEle.getBoundingClientRect();
+    const tooltipRect = tooltipEle.getBoundingClientRect();
+
     const locationTopLeftMap = {
       'bottom': {
-        top: bottom,
-        left: left + width / 2
+        top: childRect.bottom,
+        left: childRect.left + childRect.width / 2 - tooltipRect.width / 2
       },
       'left': {
-        top: top + height / 2,
-        left
+        top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
+        left: childRect.left - tooltipRect.width
       },
       'right': {
-        top: top + height / 2,
-        left: right
+        top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
+        left: childRect.right
       },
       'top': {
-        top,
-        left: left + width / 2
+        top: childRect.top - tooltipRect.height,
+        left: childRect.left + childRect.width / 2 - tooltipRect.width / 2
       }
     };
 
-    const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[location];
+    const bestLocation = Object.keys(locationTopLeftMap).find(location => {
+      const { top: newTop, left: newLeft } = locationTopLeftMap[location];
+
+      return newTop > 0 && newTop + tooltipRect.height < window.innerHeight && newLeft > 0 && newLeft + tooltipRect.width < window.innerWidth;
+    });
+
+    const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[bestLocation];
+
     this.setState({
       style: {
         ...this.state.style,
         top: tooltipTop,
         left: tooltipLeft
-      }
+      },
+      location: bestLocation
     });
   }
 
@@ -149,7 +152,7 @@ class Tooltip extends React.PureComponent {
 
   render() {
     const isUsingMobileDevices = isIOS || isAndroid;
-    const { location, content } = this.props;
+    const { content } = this.props;
 
     const childrenCount = React.Children.count(this.props.children);
     if (childrenCount !== 1) {
@@ -169,7 +172,7 @@ class Tooltip extends React.PureComponent {
         {
           this.state.show && content && !isUsingMobileDevices &&
           ReactDOM.createPortal(
-            <div className={`tooltip--${location}`} style={this.state.style} ref={this.tooltipRef}>
+            <div className={`tooltip--${this.state.location}`} style={this.state.style} ref={this.tooltipRef}>
               <div className={`tooltip__content`}>{this.renderContent()}</div>
             </div>,
             document.getElementById('app')

@@ -21,7 +21,7 @@
 .tooltip--top {
   @extend %tooltip;
   margin-top: -10px;
-  transform: translate(-50%, -100%);
+  // transform: translate(-50%, -100%);
   
   .tooltip__content::before {
     @extend %tooltip__arrow;
@@ -37,7 +37,7 @@
 .tooltip--bottom {
   @extend %tooltip;
   margin-top: 10px;
-  transform: translateX(-50%);
+  // transform: translateX(-50%);
 
   .tooltip__content::before {
     @extend %tooltip__arrow;
@@ -53,7 +53,7 @@
 .tooltip--left {
   @extend %tooltip;
   margin-left: -10px;
-  transform: translate(-100%, -50%);
+  // transform: translate(-100%, -50%);
   white-space: nowrap;
 
   .tooltip__content::before {
@@ -70,7 +70,7 @@
 .tooltip--right {
   @extend %tooltip;
   margin-left: 10px;
-  transform: translate(0, -50%);
+  // transform: translate(0, -50%);
   white-space: nowrap;
 
   .tooltip__content::before {
