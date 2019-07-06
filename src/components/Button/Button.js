@@ -74,5 +74,4 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-// TODO: add React.memo here
-export default Button;
+export default React.memo(Button);
