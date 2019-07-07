@@ -61,18 +61,12 @@ class SignatureModal extends React.PureComponent {
   }
 
   setUpSignatureCanvas = () => {
-    if (!this.canvas.current) {
+    const canvas = this.canvas.current;
+    if (!canvas) {
       return;
     }
 
-    const canvas = this.canvas.current;
-    if (!this.canvas.current) {
-      return;
-    }
     this.signatureTool.setSignatureCanvas(canvas);
-    // draw nothing in the background since we want to convert the signature on the canvas
-    // to an image and we don't want the background to be in the image.
-    this.signatureTool.drawBackground = () => {};
     
     const multiplier = window.utils.getCanvasMultiplier();
     canvas.getContext('2d').scale(multiplier, multiplier);   
@@ -128,7 +122,6 @@ class SignatureModal extends React.PureComponent {
     
     if (!this.signatureTool.isEmptySignature()) {
       if (this.state.saveSignature) {
-        // TODO: change name
         this.signatureTool.saveSignatures(this.signatureTool.annot);
       }
       if (this.signatureTool.hasLocation()) {
