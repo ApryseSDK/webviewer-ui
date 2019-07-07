@@ -41,7 +41,8 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.signatureTool.on('saveDefault', this.onSaveDefault);
+    this.signatureTool.on('signatureSaved', this.onSignatureSaved);
+    // this.signatureTool.on('signatureDeleted', this.onSignatureDeleted);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     window.addEventListener('resize', this.handleWindowResize);
   }
@@ -68,7 +69,8 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    this.signatureTool.off('saveDefault', this.onSaveDefault);
+    this.signatureTool.off('signatureSaved', this.onSignatureSaved);
+    // this.signatureTool.off('signatureDeleted', this.onSignatureDeleted);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
     window.removeEventListener('resize', this.handleWindowResize);
   }
@@ -86,7 +88,8 @@ class SignatureOverlay extends React.PureComponent {
     });
   }
 
-  onSaveDefault = (e, paths, signatureAnnotation) => {
+  onSignatureSaved = (e, annots) => {
+    // TODO: change based on length of annots
     const defaultSignatures = [ ...this.state.defaultSignatures ];
     if (defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES) {
       defaultSignatures.unshift();
@@ -95,8 +98,8 @@ class SignatureOverlay extends React.PureComponent {
     const signatureCanvas = document.querySelector('.signature-canvas');
     const savedSignature = {
       imgSrc: signatureCanvas.toDataURL(),
-      paths: deepCopyPaths(paths),
-      styles: getAnnotationStyles(signatureAnnotation)
+      paths: deepCopyPaths(annots[0].getPaths()),
+      styles: getAnnotationStyles(annots[0])
     };
     defaultSignatures.push(savedSignature);
 
@@ -151,6 +154,8 @@ class SignatureOverlay extends React.PureComponent {
     const isDeletingCurrentSignature = this.currentSignatureIndex === index;
 
     defaultSignatures.splice(index, 1);
+    // TODO: possible improvements if listen to signatureDeleted event.
+    this.signatureTool.deleteSavedSignature(index);
     if (isDeletingCurrentSignature) {
       this.signatureTool.freeHandAnnot.emptyPaths();
       // TODO: investigate later why passing null to it will cause error sometimes
