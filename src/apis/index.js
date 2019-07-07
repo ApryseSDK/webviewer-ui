@@ -72,7 +72,6 @@ import setAdminUser from './setAdminUser';
 import setAnnotationUser from './setAnnotationUser';
 import setColorPalette from './setColorPalette';
 import setCurrentPageNumber from './setCurrentPageNumber';
-import setCursorOverlay from './setCursorOverlay';
 import setCustomNoteFilter from './setCustomNoteFilter';
 import setCustomPanel from './setCustomPanel';
 import setEngineType from './setEngineType';
@@ -181,7 +180,6 @@ export default {
   setAnnotationUser,
   setColorPalette,
   setCurrentPageNumber,
-  setCursorOverlay,
   setCustomNoteFilter,
   setCustomPanel,
   setEngineType,

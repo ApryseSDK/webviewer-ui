@@ -13,10 +13,6 @@ export default state => {
       return t('annotation.' + type);
     });
 
-    window.Tools.SignatureCreateTool.setTextHandler(() => {
-      return t('message.signHere');
-    });
-
     window.Tools.FreeTextCreateTool.setTextHandler(() => {
       return t('message.insertTextHere');
     });

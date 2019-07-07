@@ -18,8 +18,6 @@ class SignatureModal extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     t: PropTypes.func.isRequired,
-    openElement: PropTypes.func.isRequired,
-    setCursorOverlay: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
   }
@@ -117,7 +115,7 @@ class SignatureModal extends React.PureComponent {
   }
 
   createSignature = () => {
-    const { closeElement, openElement, setCursorOverlay } = this.props;
+    const { closeElement } = this.props;
     
     if (!this.signatureTool.isEmptySignature()) {
       if (this.state.saveSignature) {
@@ -126,9 +124,7 @@ class SignatureModal extends React.PureComponent {
       if (this.signatureTool.hasLocation()) {
         this.signatureTool.addSignature();
       } else {
-        const { imgSrc, width, height } = this.signatureTool.getSignaturePreview();
-        setCursorOverlay({ imgSrc, width, height });
-        openElement('cursorOverlay');
+        this.signatureTool.showPreview();
       }
       closeElement('signatureModal');
     }
@@ -179,8 +175,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  openElement: actions.openElement,
-  setCursorOverlay: actions.setCursorOverlay, 
   closeElement: actions.closeElement,
   closeElements: actions.closeElements
 };

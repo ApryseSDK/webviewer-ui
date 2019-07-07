@@ -23,7 +23,6 @@ class SignatureOverlay extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
-    setCursorOverlay: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired
   }
 
@@ -114,6 +113,7 @@ class SignatureOverlay extends React.PureComponent {
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
       const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ paths }) => {
+        // TODO: hack, remove
         this.signatureTool.setSignature(paths, newStyles);
         this.signatureTool.drawAnnot();
 
@@ -131,24 +131,20 @@ class SignatureOverlay extends React.PureComponent {
   setSignature = index => {
     this.currentSignatureIndex = index;
 
-    const { setCursorOverlay, closeElement, openElement } = this.props;
     const { paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
     
     core.setToolMode('AnnotationCreateSignature');
     this.signatureTool.setSignature(paths, styles);
-    closeElement('signatureOverlay');
+    this.props.closeElement('signatureOverlay');
 
     if (this.signatureTool.hasLocation()) {
       this.signatureTool.addSignature();
     } else {
-      const { imgSrc, width, height } = this.signatureTool.getSignaturePreview();
-      setCursorOverlay({ imgSrc, width, height });
-      openElement('cursorOverlay');
+      this.signatureTool.showPreview();
     }
   }
 
   deleteDefaultSignature = index => {
-    const { closeElement, setCursorOverlay } = this.props;
     const defaultSignatures = [ ...this.state.defaultSignatures ];
     const isDeletingCurrentSignature = this.currentSignatureIndex === index;
 
@@ -157,9 +153,7 @@ class SignatureOverlay extends React.PureComponent {
     this.signatureTool.deleteSavedSignature(index);
     if (isDeletingCurrentSignature) {
       this.signatureTool.annot = null;
-      // TODO: investigate later why passing null to it will cause error sometimes
-      setCursorOverlay({});
-      closeElement('cursorOverlay');
+      this.signatureTool.hidePreview();
       this.currentSignatureIndex = -1;
     }
     if (!defaultSignatures.length) {
@@ -221,7 +215,6 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements,
   closeElement: actions.closeElement,
   openElement: actions.openElement,
-  setCursorOverlay: actions.setCursorOverlay
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(SignatureOverlay));
