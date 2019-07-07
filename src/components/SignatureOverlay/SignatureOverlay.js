@@ -87,18 +87,17 @@ class SignatureOverlay extends React.PureComponent {
     });
   }
 
-  onSignatureSaved = (e, annots) => {
-    // TODO: change based on length of annots
+  onSignatureSaved = (e, annotations) => {
+    // TODO: change based on length of annotations
     const defaultSignatures = [ ...this.state.defaultSignatures ];
     if (defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES) {
       defaultSignatures.unshift();
     } 
 
-    const signatureCanvas = document.querySelector('.signature-canvas');
     const savedSignature = {
-      imgSrc: signatureCanvas.toDataURL(),
-      paths: deepCopyPaths(annots[0].getPaths()),
-      styles: getAnnotationStyles(annots[0])
+      imgSrc: this.signatureTool.getPreview(annotations[0]),
+      paths: annotations[0].getPaths(),
+      styles: getAnnotationStyles(annotations[0])
     };
     defaultSignatures.push(savedSignature);
 
@@ -113,12 +112,10 @@ class SignatureOverlay extends React.PureComponent {
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
       const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ paths }) => {
-        // TODO: hack, remove
         this.signatureTool.setSignature(paths, newStyles);
-        this.signatureTool.drawAnnot();
 
         return {
-          imgSrc: document.querySelector('.signature-canvas').toDataURL(),
+          imgSrc: this.signatureTool.getPreview(this.signatureTool.annot),
           paths,
           styles: newStyles
         };
