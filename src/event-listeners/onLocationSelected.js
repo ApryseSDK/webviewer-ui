@@ -4,7 +4,7 @@ import selectors from 'selectors';
 
 export default store => () => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
-  const hasSignature = signatureTool.freeHandAnnot && signatureTool.freeHandAnnot.getPaths().length;
+  const hasSignature = signatureTool.annot && signatureTool.annot.getPaths().length;
 
   if (hasSignature) {
     signatureTool.addSignature();

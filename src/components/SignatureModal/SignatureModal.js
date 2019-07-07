@@ -129,7 +129,7 @@ class SignatureModal extends React.PureComponent {
     if (!this.signatureTool.isEmptySignature()) {
       if (this.state.saveSignature) {
         // TODO: change name
-        this.signatureTool.saveSignatures(this.signatureTool.freeHandAnnot);
+        this.signatureTool.saveSignatures(this.signatureTool.annot);
       }
       if (this.signatureTool.hasLocation()) {
         this.signatureTool.addSignature();

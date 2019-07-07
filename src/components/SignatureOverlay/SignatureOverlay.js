@@ -157,7 +157,7 @@ class SignatureOverlay extends React.PureComponent {
     // TODO: possible improvements if listen to signatureDeleted event.
     this.signatureTool.deleteSavedSignature(index);
     if (isDeletingCurrentSignature) {
-      this.signatureTool.freeHandAnnot.emptyPaths();
+      this.signatureTool.annot.emptyPaths();
       // TODO: investigate later why passing null to it will cause error sometimes
       setCursorOverlay({});
       closeElement('cursorOverlay');
