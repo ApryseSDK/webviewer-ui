@@ -9,7 +9,6 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
-import deepCopyPaths from 'helpers/deepCopyPaths';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -152,9 +151,6 @@ class SignatureOverlay extends React.PureComponent {
       this.signatureTool.annot = null;
       this.signatureTool.hidePreview();
       this.currentSignatureIndex = -1;
-    }
-    if (!defaultSignatures.length) {
-      this.signatureTool.trigger('noDefaultSignatures');
     }
 
     this.setState({ defaultSignatures });
