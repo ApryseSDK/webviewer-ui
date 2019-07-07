@@ -114,7 +114,7 @@ class SignatureOverlay extends React.PureComponent {
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
       const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ paths }) => {
-        this.signatureTool.setUpSignature(paths, newStyles);
+        this.signatureTool.setSignature(paths, newStyles);
         this.signatureTool.drawAnnot();
 
         return {
@@ -128,14 +128,14 @@ class SignatureOverlay extends React.PureComponent {
     }
   }
 
-  setUpSignature = index => {
+  setSignature = index => {
     this.currentSignatureIndex = index;
 
     const { setCursorOverlay, closeElement, openElement } = this.props;
     const { paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
     
     core.setToolMode('AnnotationCreateSignature');
-    this.signatureTool.setUpSignature(paths, styles);
+    this.signatureTool.setSignature(paths, styles);
     closeElement('signatureOverlay');
 
     if (this.signatureTool.hasLocation()) {
@@ -156,7 +156,7 @@ class SignatureOverlay extends React.PureComponent {
     // TODO: possible improvements if listen to signatureDeleted event.
     this.signatureTool.deleteSavedSignature(index);
     if (isDeletingCurrentSignature) {
-      this.signatureTool.annot.emptyPaths();
+      this.signatureTool.annot = null;
       // TODO: investigate later why passing null to it will cause error sometimes
       setCursorOverlay({});
       closeElement('cursorOverlay');
@@ -193,7 +193,7 @@ class SignatureOverlay extends React.PureComponent {
         <div className="default-signatures-container">
           {defaultSignatures.map(({ imgSrc }, index) => (
             <div className="default-signature" key={index}>
-              <div className="signature-image" onClick={() => this.setUpSignature(index)}>
+              <div className="signature-image" onClick={() => this.setSignature(index)}>
                 <img src={imgSrc} />
               </div>
               <ActionButton dataElement="defaultSignatureDeleteButton" img="ic_delete_black_24px" onClick={() => this.deleteDefaultSignature(index)} />
