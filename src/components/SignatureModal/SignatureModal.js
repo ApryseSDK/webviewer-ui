@@ -50,7 +50,6 @@ class SignatureModal extends React.PureComponent {
       core.setToolMode('AnnotationCreateSignature');
       this.setState(this.initialState);
       this.signatureTool.clearSignatureCanvas();
-      this.signatureTool.openSignature();
       this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]); 
     }
   }

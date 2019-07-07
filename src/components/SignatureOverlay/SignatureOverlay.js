@@ -135,7 +135,6 @@ class SignatureOverlay extends React.PureComponent {
     const { paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
     
     core.setToolMode('AnnotationCreateSignature');
-    this.signatureTool.initAnnot();
     this.signatureTool.setUpSignature(paths, styles);
     closeElement('signatureOverlay');
 
