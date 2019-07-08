@@ -93,10 +93,10 @@ class SignatureOverlay extends React.PureComponent {
       defaultSignatures.unshift();
     } 
 
+    const annotation = core.getAnnotationCopy(annotations[0]);
     const savedSignature = {
-      imgSrc: this.signatureTool.getPreview(annotations[0]),
-      paths: annotations[0].getPaths(),
-      styles: getAnnotationStyles(annotations[0])
+      imgSrc: this.signatureTool.getPreview(annotation),
+      annotation
     };
     defaultSignatures.push(savedSignature);
 
@@ -110,13 +110,12 @@ class SignatureOverlay extends React.PureComponent {
       annotations[0].ToolName === 'AnnotationCreateSignature'
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
-      const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ paths }) => {
-        this.signatureTool.setSignature(paths, newStyles);
+      const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ annotation }) => {
+        Object.assign(annotation, newStyles);
 
         return {
-          imgSrc: this.signatureTool.getPreview(this.signatureTool.annot),
-          paths,
-          styles: newStyles
+          imgSrc: this.signatureTool.getPreview(annotation),
+          annotation
         };
       });
 
@@ -127,10 +126,10 @@ class SignatureOverlay extends React.PureComponent {
   setSignature = index => {
     this.currentSignatureIndex = index;
 
-    const { paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
+    const { annotation } = this.state.defaultSignatures[this.currentSignatureIndex];
     
     core.setToolMode('AnnotationCreateSignature');
-    this.signatureTool.setSignature(paths, styles);
+    this.signatureTool.setSignature(annotation);
     this.props.closeElement('signatureOverlay');
 
     if (this.signatureTool.hasLocation()) {
