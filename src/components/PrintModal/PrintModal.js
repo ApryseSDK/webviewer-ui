@@ -298,7 +298,7 @@ class PrintModal extends React.PureComponent {
     }
 
     noteIcon.className = 'note__icon';
-    noteIcon.style.color = iconColor && annotation[iconColor].toHexString();
+    noteIcon.style.color = iconColor && annotation[iconColor] && annotation[iconColor].toHexString();
     return noteIcon;
   }
 
