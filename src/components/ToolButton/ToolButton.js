@@ -29,7 +29,7 @@ class ToolButton extends React.PureComponent {
       PropTypes.string,
       PropTypes.number
     ]),
-    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
+    iconColor: PropTypes.oneOf([ 'TextColor', 'StrokeColor', 'FillColor' ])
   }
 
   onClick = e => {

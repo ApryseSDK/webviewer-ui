@@ -18,10 +18,10 @@ class StylePopup extends React.PureComponent {
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
     hideSlider: PropTypes.bool,
-    currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
+    currentPalette: PropTypes.oneOf([ 'TextColor', 'StrokeColor', 'FillColor' ])
   }
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = { openMeasurementDropdown: -1 };
   }
@@ -71,7 +71,7 @@ class StylePopup extends React.PureComponent {
       }
     ];
 
-    return [Opacity, StrokeThickness, FontSize].map((value, index) => {
+    return [ Opacity, StrokeThickness, FontSize ].map((value, index) => {
       if (value === null || value === undefined) { // we still want to render a slider if the value is 0
         return null;
       }
@@ -90,7 +90,7 @@ class StylePopup extends React.PureComponent {
 
     return (
       <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
-        {currentPalette &&
+        {currentPalette && style[currentPalette] &&
           <div className="colors-container">
             <div className="inner-wrapper">
               <ColorPaletteHeader colorPalette={currentPalette} activeToolName={activeToolName} style={style} />
