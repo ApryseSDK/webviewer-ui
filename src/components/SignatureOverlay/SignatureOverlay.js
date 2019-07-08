@@ -98,56 +98,49 @@ class SignatureOverlay extends React.PureComponent {
       defaultSignatures.splice(0, numberOfSignaturesToRemove);
     }
 
-    // copy the annotation because we need to mutate the annotation object later if there're any styles changes 
-    // and we don't want the original annotation to be mutated as well
-    // since it's been added to the canvas
-    const savedSignatures = annotations.map(core.getAnnotationCopy);
-    const allResourcesLoaded = savedSignatures.map(annotation => annotation.resourcesLoaded());
-
-    await Promise.all(allResourcesLoaded);
-
-    defaultSignatures = defaultSignatures.concat(savedSignatures.map(annotation => ({
-      imgSrc: this.signatureTool.getPreview(annotation),
-      annotation
-    })));
-
-    this.setState({ defaultSignatures });
+    const saveSignatures = await this.getSignatureDataToStore(annotations);
+    this.setState({ 
+      defaultSignatures: defaultSignatures.concat(saveSignatures) 
+    });
   }
 
   onSignatureDeleted = async () => {
-    const savedSignatures = this.signatureTool.getSavedSignatures().map(core.getAnnotationCopy);
-    const allResourcesLoaded = savedSignatures.map(annotation => annotation.resourcesLoaded());
-
-    await Promise.all(allResourcesLoaded);
-
-    const defaultSignatures = savedSignatures.map(annotation => {
-      return {
-        imgSrc: this.signatureTool.getPreview(annotation),
-        annotation
-      };
+    const saveSignatures = await this.getSignatureDataToStore(this.signatureTool.getSavedSignatures());
+    this.setState({ 
+      defaultSignatures: saveSignatures
     });
-
-    this.setState({ defaultSignatures });
   }
 
-  onAnnotationChanged = (e, annotations, action) => {
+  onAnnotationChanged = async (e, annotations, action) => {
     if (
       action === 'modify' &&
       annotations.length === 1 && 
       annotations[0].ToolName === 'AnnotationCreateSignature'
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
-      const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ annotation }) => {
-        Object.assign(annotation, newStyles);
-
-        return {
-          imgSrc: this.signatureTool.getPreview(annotation),
-          annotation
-        };
+      let annotationsWithNewStyles = this.state.defaultSignatures.map(({ annotation }) => Object.assign(annotation, newStyles));
+      annotationsWithNewStyles = await this.getSignatureDataToStore(annotationsWithNewStyles);
+      
+      this.setState({ 
+        defaultSignatures: annotationsWithNewStyles
       });
-
-      this.setState({ defaultSignatures: defaultSignaturesWithNewStyles });
     }
+  }
+
+  // returns an array of objects in the shape of: { annotation, preview }
+  // annotation: a copy of the annotation passed in
+  // imgSrc: preview of the annotation, a base64 string 
+  getSignatureDataToStore = async annotations => {
+    // copy the annotation because we need to mutate the annotation object later if there're any styles changes 
+    // and we don't want the original annotation to be mutated as well
+    // since it's been added to the canvas
+    annotations = annotations.map(core.getAnnotationCopy);
+    const previews = await Promise.all(annotations.map(annotation => this.signatureTool.getPreview(annotation)));
+
+    return annotations.map((annotation, i) => ({
+      annotation,
+      imgSrc: previews[i]
+    }));
   }
 
   setSignature = index => {
