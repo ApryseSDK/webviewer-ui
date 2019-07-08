@@ -86,23 +86,30 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   onSignatureSaved = async (e, annotations) => {
-    // TODO: change based on length of annotations
-    const defaultSignatures = [ ...this.state.defaultSignatures ];
-    if (defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES) {
-      defaultSignatures.unshift();
-    } 
+    const numberOfSignaturesToRemove = this.state.defaultSignatures.length + annotations.length - this.MAX_DEFAULT_SIGNATURES;
+    let defaultSignatures = [ ...this.state.defaultSignatures ];
+
+    if (numberOfSignaturesToRemove > 0) {
+      // to keep the UI sync with the signatures saved in the tool
+      for (let i = 0; i < numberOfSignaturesToRemove; i++) {
+        this.signatureTool.deleteSavedSignature(0);
+      }
+
+      defaultSignatures.splice(0, numberOfSignaturesToRemove);
+    }
 
     // copy the annotation because we need to mutate the annotation object later if there're any styles changes 
     // and we don't want the original annotation to be mutated as well
     // since it's been added to the canvas
-    const annotation = core.getAnnotationCopy(annotations[0]);
-    await annotation.resourcesLoaded();
+    const savedSignatures = annotations.map(core.getAnnotationCopy);
+    const allResourcesLoaded = savedSignatures.map(annotation => annotation.resourcesLoaded());
 
-    const savedSignature = {
+    await Promise.all(allResourcesLoaded);
+
+    defaultSignatures = defaultSignatures.concat(savedSignatures.map(annotation => ({
       imgSrc: this.signatureTool.getPreview(annotation),
       annotation
-    };
-    defaultSignatures.push(savedSignature);
+    })));
 
     this.setState({ defaultSignatures });
   }
