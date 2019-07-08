@@ -85,17 +85,19 @@ class SignatureOverlay extends React.PureComponent {
     });
   }
 
-  onSignatureSaved = (e, annotations) => {
+  onSignatureSaved = async (e, annotations) => {
     // TODO: change based on length of annotations
     const defaultSignatures = [ ...this.state.defaultSignatures ];
     if (defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES) {
       defaultSignatures.unshift();
     } 
 
-    // copy the annotation because we need to mutate the annotation object later
-    // if there're any styles changes and we don't want the original annotation to be mutated as well
+    // copy the annotation because we need to mutate the annotation object later if there're any styles changes 
+    // and we don't want the original annotation to be mutated as well
     // since it's been added to the canvas
     const annotation = core.getAnnotationCopy(annotations[0]);
+    await annotation.resourcesLoaded();
+
     const savedSignature = {
       imgSrc: this.signatureTool.getPreview(annotation),
       annotation
@@ -105,9 +107,13 @@ class SignatureOverlay extends React.PureComponent {
     this.setState({ defaultSignatures });
   }
 
-  onSignatureDeleted = () => {
-    const defaultSignatures = this.signatureTool.getSavedSignatures().map(annotation => {
-      annotation = core.getAnnotationCopy(annotation);
+  onSignatureDeleted = async () => {
+    const savedSignatures = this.signatureTool.getSavedSignatures().map(core.getAnnotationCopy);
+    const allResourcesLoaded = savedSignatures.map(annotation => annotation.resourcesLoaded());
+
+    await Promise.all(allResourcesLoaded);
+
+    const defaultSignatures = savedSignatures.map(annotation => {
       return {
         imgSrc: this.signatureTool.getPreview(annotation),
         annotation
