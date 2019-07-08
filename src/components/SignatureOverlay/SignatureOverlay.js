@@ -40,7 +40,7 @@ class SignatureOverlay extends React.PureComponent {
 
   componentDidMount() {
     this.signatureTool.on('signatureSaved', this.onSignatureSaved);
-    // this.signatureTool.on('signatureDeleted', this.onSignatureDeleted);
+    this.signatureTool.on('signatureDeleted', this.onSignatureDeleted);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     window.addEventListener('resize', this.handleWindowResize);
   }
@@ -51,11 +51,10 @@ class SignatureOverlay extends React.PureComponent {
       this.setOverlayPosition();
     }
 
-    const { freeHandAnnot } = this.signatureTool;
     if (
       prevProps.isOpen && !this.props.isOpen && 
       !this.props.isSignatureModalOpen &&
-      freeHandAnnot && !freeHandAnnot.getPaths().length
+      this.signatureTool.isEmptySignature()
     ) {
       // location of signatureTool will be set when clicking on a signature widget
       // we want to clear location when the overlay is closed without any default signatures selected
@@ -68,7 +67,7 @@ class SignatureOverlay extends React.PureComponent {
 
   componentWillUnmount() {
     this.signatureTool.off('signatureSaved', this.onSignatureSaved);
-    // this.signatureTool.off('signatureDeleted', this.onSignatureDeleted);
+    this.signatureTool.off('signatureDeleted', this.onSignatureDeleted);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
     window.removeEventListener('resize', this.handleWindowResize);
   }
@@ -93,12 +92,27 @@ class SignatureOverlay extends React.PureComponent {
       defaultSignatures.unshift();
     } 
 
+    // copy the annotation because we need to mutate the annotation object later
+    // if there're any styles changes and we don't want the original annotation to be mutated as well
+    // since it's been added to the canvas
     const annotation = core.getAnnotationCopy(annotations[0]);
     const savedSignature = {
       imgSrc: this.signatureTool.getPreview(annotation),
       annotation
     };
     defaultSignatures.push(savedSignature);
+
+    this.setState({ defaultSignatures });
+  }
+
+  onSignatureDeleted = () => {
+    const defaultSignatures = this.signatureTool.getSavedSignatures().map(annotation => {
+      annotation = core.getAnnotationCopy(annotation);
+      return {
+        imgSrc: this.signatureTool.getPreview(annotation),
+        annotation
+      };
+    });
 
     this.setState({ defaultSignatures });
   }
@@ -140,19 +154,14 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   deleteDefaultSignature = index => {
-    const defaultSignatures = [ ...this.state.defaultSignatures ];
-    const isDeletingCurrentSignature = this.currentSignatureIndex === index;
-
-    defaultSignatures.splice(index, 1);
-    // TODO: possible improvements if listen to signatureDeleted event.
     this.signatureTool.deleteSavedSignature(index);
+    
+    const isDeletingCurrentSignature = this.currentSignatureIndex === index;
     if (isDeletingCurrentSignature) {
       this.signatureTool.annot = null;
       this.signatureTool.hidePreview();
       this.currentSignatureIndex = -1;
     }
-
-    this.setState({ defaultSignatures });
   }
 
   openSignatureModal = () => {
