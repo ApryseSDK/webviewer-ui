@@ -45,7 +45,7 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
-    if (prevProps.swipeOrientation !== this.props.swipeOrientation){
+    if (prevProps.swipeOrientation !== this.props.swipeOrientation) {
       TouchEventManager.updateOrientation(this.props.swipeOrientation);
     }
   }
@@ -99,7 +99,7 @@ class DocumentContainer extends React.PureComponent {
     if (e.metaKey || e.ctrlKey) {
       e.preventDefault();
       this.wheelToZoom(e);
-    } else if (!core.isContinuousDisplayMode()){
+    } else if (!core.isContinuousDisplayMode()) {
       this.wheelToNavigatePages(e);
     }
   }
