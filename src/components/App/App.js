@@ -11,7 +11,6 @@ import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
-import GroupOverlay from 'components/GroupOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import CursorOverlay from 'components/CursorOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
@@ -45,10 +44,6 @@ class App extends React.PureComponent {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
-  }
-
-  constructor(props) {
-    super(props);
   }
 
   componentWillUnmount() {

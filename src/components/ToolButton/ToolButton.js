@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
-import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
 import toolStylesExist from 'helpers/toolStylesExist';
@@ -29,7 +28,7 @@ class ToolButton extends React.PureComponent {
       PropTypes.string,
       PropTypes.number
     ]),
-    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
+    iconColor: PropTypes.oneOf([ 'TextColor', 'StrokeColor', 'FillColor' ])
   }
 
   onClick = e => {
@@ -104,4 +103,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(ToolButton));
+export default connect(mapStateToProps, mapDispatchToProps)(ToolButton);

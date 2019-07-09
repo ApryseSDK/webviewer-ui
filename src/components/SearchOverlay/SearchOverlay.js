@@ -72,7 +72,7 @@ class SearchOverlay extends React.PureComponent {
       this.executeSingleSearch();
       this.props.setIsProgrammaticSearch(false);
     } else if (this.props.isProgrammaticSearchFull) {
-      this.props.openElements(['searchOverlay', 'searchPanel']);
+      this.props.openElements([ 'searchOverlay', 'searchPanel' ]);
       this.caseSensitiveInput.current.checked = this.props.isCaseSensitive;
       this.wholeWordInput.current.checked = this.props.isWholeWord;
       this.clearSearchResults();
@@ -82,7 +82,7 @@ class SearchOverlay extends React.PureComponent {
 
     const searchOverlayOpened = !prevProps.isOpen && this.props.isOpen;
     if (searchOverlayOpened) {
-      this.props.closeElements(['groupOverlay', 'viewControlsOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
+      this.props.closeElements([ 'groupOverlay', 'viewControlsOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay' ]);
       this.searchTextInput.current.focus();
       core.setToolMode(defaultTool);
     }
@@ -329,7 +329,7 @@ class SearchOverlay extends React.PureComponent {
             <div className="button next" onClick={this.onClickNext}>
               <Icon glyph="ic_chevron_right_black_24px" />
             </div>
-            <Tooltip content="action.showMoreResults" location="left">
+            <Tooltip content="action.showMoreResults">
               <div className={`advanced ${isSearchPanelOpen || isSearchPanelDisabled ? 'hidden' : ''}`} onClick={this.onClickOverflow}>
                 <Icon glyph="ic_overflow_black_24px" />
               </div>

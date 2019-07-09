@@ -136,7 +136,7 @@ export default store => e => {
         } else if (e.key === 'r' || e.which === 82) { // (R)
           setToolModeAndGroup(dispatch, 'AnnotationCreateRectangle', 'shapeTools');
         } else if (e.key === 's' || e.which === 83) { // (S)
-          document.querySelector('[data-element="signatureToolButton"]').click();
+          document.querySelector('[data-element="signatureToolButton"] .Button').click();
         } else if (e.key === 't' || e.which === 84) { // (T)
           setToolModeAndGroup(dispatch, 'AnnotationCreateFreeText', '');
         } else if (e.key === 'u' || e.which === 85) { // (U)
