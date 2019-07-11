@@ -251,6 +251,7 @@ if (window.CanvasRenderingContext2D) {
           setMinZoomLevel: apis.setMinZoomLevel(store),
           setNoteDateFormat: apis.setNoteDateFormat(store),
           setNotesPanelSort: apis.setNotesPanelSort(store), // undocumented
+          setMeasurementUnits: apis.setMeasurementUnits(store),
           setPageLabels: apis.setPageLabels(store),
           setPrintQuality: apis.setPrintQuality(store),
           setReadOnly: apis.setReadOnly,

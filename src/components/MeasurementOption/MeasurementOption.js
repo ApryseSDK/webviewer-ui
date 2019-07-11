@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
 import MeasurementsDropdown from 'components/MeasurementsDropdown';
+
+import selectors from 'selectors';
 
 import './MeasurementOption.scss';
 
@@ -23,6 +26,10 @@ class MeasurementOption extends React.PureComponent {
      * A prop that is passed down from translate HOC and is used to internationalize strings
      */
     t: PropTypes.func.isRequired,
+    measurementUnits: PropTypes.shape({
+      from: PropTypes.array,
+      to: PropTypes.array,
+    }).isRequired,
     onStyleChange: PropTypes.func.isRequired,
     onOpenDropdownChange: PropTypes.func.isRequired,
     openMeasurementDropdown: PropTypes.number,
@@ -72,13 +79,13 @@ class MeasurementOption extends React.PureComponent {
     const {
       scale,
       precision,
+      measurementUnits,
       openMeasurementDropdown,
       onOpenDropdownChange,
       t,
     } = this.props;
     const [[scaleFrom, unitFrom], [scaleTo, unitTo]] = scale;
-    const unitFromOptions = ['in', 'mm', 'cm', 'pt'];
-    const unitToOptions = ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi'];
+    const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
     const scaleOptions = [0.1, 0.01, 0.001, 0.0001];
 
     return (
@@ -96,7 +103,10 @@ class MeasurementOption extends React.PureComponent {
               type="text"
               ref={this.scaleFromRef}
               defaultValue={scaleFrom}
-              onChange={e => e.target.value && this.onScaleChange([[Number(e.target.value)], []])}
+              onChange={e =>
+                e.target.value &&
+                this.onScaleChange([[Number(e.target.value)], []])
+              }
               onBlur={this.onBlur}
             />
             <div
@@ -121,7 +131,10 @@ class MeasurementOption extends React.PureComponent {
               type="text"
               ref={this.scaleToRef}
               defaultValue={scaleTo}
-              onChange={e => e.target.value && this.onScaleChange([[], [Number(e.target.value)]])}
+              onChange={e =>
+                e.target.value &&
+                this.onScaleChange([[], [Number(e.target.value)]])
+              }
               onBlur={this.onBlur}
             />
             <div
@@ -168,4 +181,8 @@ class MeasurementOption extends React.PureComponent {
   }
 }
 
-export default translate()(MeasurementOption);
+const mapStateToProps = state => ({
+  measurementUnits: selectors.getMeasurementUnits(state),
+});
+
+export default connect(mapStateToProps)(translate()(MeasurementOption));
