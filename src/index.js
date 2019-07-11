@@ -282,8 +282,6 @@ if (window.CanvasRenderingContext2D) {
             return state.advanced.customData;
           }
         };
-
-        $(document).trigger('viewerLoaded');
       }
     );
   });
