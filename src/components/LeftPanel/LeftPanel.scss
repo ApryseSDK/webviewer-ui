@@ -25,24 +25,17 @@
   .Panel {
     @extend %sub-panel;
   }
+}
 
-  .resize-bar {
-    cursor: col-resize;
-    height: 100%;
-    margin-bottom: 0;
-    background-color: none;
-    position: absolute;
-    z-index: 100;
-
-    &.active {
-      margin-left:-400px;
-      width: 800px;
-    }
-
-    &.non-active {
-      margin-left:-10px;
-      left:300px;
-      width: 20px;
-    }
-  }
+.resize-bar {
+  cursor: col-resize;
+  left: $left-panel-width;
+  // to make the resize-bar center at the right edge of the left panel
+  margin-left: -10px;
+  width: 20px;
+  height: 100%;
+  margin-bottom: 0;
+  background-color: none;
+  position: absolute;
+  z-index: 100;
 }
