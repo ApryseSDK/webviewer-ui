@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use('/i18n', express.static(path.resolve(__dirname, 'i18n')));
 app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
 app.use('/core', express.static(path.resolve(__dirname, 'lib/core')));
+app.use('/files', express.static(path.resolve(__dirname, 'test/files')));
 
 app.get('/', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'src/index.html'));

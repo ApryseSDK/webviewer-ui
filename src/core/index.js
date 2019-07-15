@@ -53,6 +53,7 @@ import getPageHeight from './getPageHeight';
 import drawAnnotations from './drawAnnotations';
 import getOutlines from './getOutlines';
 import getSelectedAnnotations from './getSelectedAnnotations';
+import getNumberOfGroupsInSelection from './getNumberOfGroupsInSelection';
 import updateCopiedAnnotations from './updateCopiedAnnotations';
 import pasteCopiedAnnotations from './pasteCopiedAnnotations';
 import selectAnnotation from './selectAnnotation';
@@ -147,6 +148,7 @@ export default {
   drawAnnotations,
   getOutlines,
   getSelectedAnnotations,
+  getNumberOfGroupsInSelection,
   updateCopiedAnnotations,
   pasteCopiedAnnotations,
   selectAnnotation,
