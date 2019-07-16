@@ -66,6 +66,10 @@ class AnnotationPopup extends React.PureComponent {
       this.positionAnnotationPopup();
       this.props.openElement('annotationPopup');
     }
+
+    if (isContainerShifted) { //closing because we can't correctly reposition the popup on panel transition
+      this.props.closeElement('annotationPopup');
+    }
   }
 
   componentWillUnmount() {
