@@ -169,8 +169,6 @@ class AnnotationPopup extends React.PureComponent {
       selectedAnnotation => !selectedAnnotation.InReplyTo
     );
     annotManager.groupAnnotations(primaryAnnotation, selectedAnnotations);
-    this.forceUpdate();
-
   }
 
   ungroupAnnotations = () => {
@@ -192,32 +190,34 @@ class AnnotationPopup extends React.PureComponent {
       return null;
     }
 
+    const numberOfSelectedAnnotations = core.getSelectedAnnotations().length;
     const numberOfGroups = core.getNumberOfGroupsInSelection();
     const canGroup = numberOfGroups > 1;
-    const canUngroup = numberOfGroups === 1 && core.getSelectedAnnotations().length > 1;
+    const canUngroup = numberOfGroups === 1 && numberOfSelectedAnnotations > 1;
+    const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
     return (
       <div className={className} ref={this.popup} data-element="annotationPopup" style={{ left, top }} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
         {isStylePopupOpen
           ? <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
           : <React.Fragment>
-            {!isNotesPanelDisabled &&
+            {!isNotesPanelDisabled && !multipleAnnotationsSelected &&
               <ActionButton dataElement="annotationCommentButton" title="action.comment" img="ic_comment_black_24px" onClick={this.commentOnAnnotation} />
             }
-            {canModify && hasStyle && !isAnnotationStylePopupDisabled &&
+            {canModify && hasStyle && !isAnnotationStylePopupDisabled && !multipleAnnotationsSelected &&
               <ActionButton dataElement="annotationStyleEditButton" title="action.style" img="ic_palette_black_24px" onClick={this.openStylePopup} />
             }
-            {redactionEnabled &&
+            {redactionEnabled && !multipleAnnotationsSelected &&
               <ActionButton dataElement="annotationRedactButton" title="action.apply" img="ic_check_black_24px" onClick={this.redactAnnotation} />
             }
             {canModify &&
               <ActionButton dataElement="annotationDeleteButton" title="action.delete" img="ic_delete_black_24px" onClick={this.deleteAnnotations} />
             }
             {canGroup &&
-              <ActionButton dataElement="annotationDeleteButton" title="action.group" img="ic_group_24px" onClick={this.groupAnnotations} />
+              <ActionButton dataElement="annotationGroupButton" title="action.group" img="ic_group_24px" onClick={this.groupAnnotations} />
             }
             {canUngroup &&
-              <ActionButton dataElement="annotationDeleteButton" title="action.ungroup" img="ic_ungroup_24px" onClick={this.ungroupAnnotations} />
+              <ActionButton dataElement="annotationUngroupButton" title="action.ungroup" img="ic_ungroup_24px" onClick={this.ungroupAnnotations} />
             }
           </React.Fragment>
         }
