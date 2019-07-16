@@ -70,7 +70,7 @@ class NotesPanel extends React.PureComponent {
     this.setState({ notesToRender });
   }
 
-  getRootAnnotations = () => core.getAnnotationsList().filter(annotation => annotation.Listable && !annotation.isReply() && !annotation.isGroupReply());
+  getRootAnnotations = () => core.getAnnotationsList().filter(annotation => annotation.Listable && !annotation.isReply() && !annotation.isGrouped());
 
   handleInputChange = e => {
     const searchInput = e.target.value;
