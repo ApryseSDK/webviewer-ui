@@ -194,8 +194,10 @@ class AnnotationPopup extends React.PureComponent {
       return null;
     }
 
-    const numberOfSelectedAnnotations = core.getSelectedAnnotations().length;
-    const numberOfGroups = core.getNumberOfGroupsInSelection();
+    const selectedAnnotations = core.getSelectedAnnotations();
+    const numberOfSelectedAnnotations = selectedAnnotations.length;
+    const annotManager = core.getAnnotationManager();
+    const numberOfGroups = annotManager.getNumberOfGroups(selectedAnnotations);
     const canGroup = numberOfGroups > 1;
     const canUngroup = numberOfGroups === 1 && numberOfSelectedAnnotations > 1;
     const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
