@@ -111,6 +111,7 @@ class SignatureOverlay extends React.PureComponent {
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
       const defaultSignaturesWithNewStyles = this.state.defaultSignatures.map(({ paths }) => {
+        this.signatureTool.initAnnot();
         this.signatureTool.setUpSignature(paths, newStyles);
         this.signatureTool.drawAnnot();
 
