@@ -79,6 +79,7 @@ export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorM
 export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 export const getZoomList = state => state.viewer.zoomList;
+export const getMeasurementUnits = state => state.viewer.measurementUnits;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning && state.viewer.warning.message || '';

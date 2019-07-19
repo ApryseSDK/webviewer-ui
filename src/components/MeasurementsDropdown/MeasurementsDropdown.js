@@ -7,46 +7,55 @@ class MeasurementsDropdown extends React.PureComponent {
   static propTypes = {
     onClick: PropTypes.func,
     dropdownList: PropTypes.array,
-    selectedItem: PropTypes.string,
+    selectedItem: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     isDropdownOpen: PropTypes.bool,
     onDropdownChange: PropTypes.func,
-  }
+  };
 
-  onClick = (e,item) => {
+  onClick = (e, item) => {
     e.stopPropagation();
     this.setState({ selectedItem: item });
     this.props.onClick(item);
-  }
+  };
 
-  render() { 
+  render() {
     const { dropdownList, selectedItem } = this.props;
     const { isDropdownOpen } = this.props;
 
     let sortedDropdownList;
-    if (window.innerWidth < 640){
-      sortedDropdownList = dropdownList.filter(item => item !== selectedItem).concat([selectedItem]);
+    if (window.innerWidth < 640) {
+      sortedDropdownList = dropdownList
+        .filter(item => item !== selectedItem)
+        .concat([selectedItem]);
     } else {
-      sortedDropdownList = [selectedItem].concat(dropdownList.filter(item => item !== selectedItem));
+      sortedDropdownList = [selectedItem].concat(
+        dropdownList.filter(item => item !== selectedItem)
+      );
     }
     return (
-      <div className="MeasurementsDropdown">  
-        {!isDropdownOpen && 
-        <MeasurementsDropdownItem 
-          onClick={e => {
-            e.stopPropagation();
-            this.props.onDropdownChange();
-          }}
-          content={selectedItem}
-        />
-        }
+      <div className="MeasurementsDropdown">
+        {!isDropdownOpen && (
+          <MeasurementsDropdownItem
+            onClick={e => {
+              e.stopPropagation();
+              this.props.onDropdownChange();
+            }}
+            content={selectedItem}
+          />
+        )}
         {isDropdownOpen &&
-        sortedDropdownList.map((item, i) => {
-          return <MeasurementsDropdownItem key={i} content={item} onClick={e=> this.onClick(e,item)} />;
-        })
-        }
+          sortedDropdownList.map((item, i) => {
+            return (
+              <MeasurementsDropdownItem
+                key={i}
+                content={item}
+                onClick={e => this.onClick(e, item)}
+              />
+            );
+          })}
       </div>
     );
   }
 }
- 
+
 export default MeasurementsDropdown;
