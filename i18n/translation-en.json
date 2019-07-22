@@ -8,6 +8,8 @@
     "comment": "Comment",
     "copy": "Copy",
     "delete": "Delete",
+    "group": "Group",
+    "ungroup": "Ungroup",
     "download": "Download",
     "edit": "Edit",
     "enterFullscreen": "Full screen",
