@@ -31,7 +31,7 @@ import rootReducer from 'reducers/rootReducer';
 
 const packageConfig = require('../package.json');
 
-const middleware = [thunk];
+const middleware = [ thunk ];
 
 if (process.env.NODE_ENV === 'development') {
   const { createLogger } = require('redux-logger');
@@ -239,7 +239,6 @@ if (window.CanvasRenderingContext2D) {
           setAnnotationUser: apis.setAnnotationUser,
           setColorPalette: apis.setColorPalette(store), // undocumented
           setCurrentPageNumber: apis.setCurrentPageNumber,
-          setCursorOverlay: apis.setCursorOverlay(store),
           setCustomNoteFilter: apis.setCustomNoteFilter(store),
           setCustomPanel: apis.setCustomPanel(store),
           setEngineType: apis.setEngineType(store), // undocumented

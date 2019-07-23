@@ -4,9 +4,8 @@ import selectors from 'selectors';
 
 export default store => () => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
-  const hasSignature = signatureTool.freeHandAnnot && signatureTool.freeHandAnnot.getPaths().length;
 
-  if (hasSignature) {
+  if (!signatureTool.isEmptySignature()) {
     signatureTool.addSignature();
   } else {
     // this condition is usually met when we click on a signature widget but UI doesn't know which signature to draw

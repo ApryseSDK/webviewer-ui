@@ -25,17 +25,17 @@ class NoteRoot extends React.Component {
     closeEditing: PropTypes.func.isRequired,
     numberOfReplies: PropTypes.number.isRequired,
     noteDateFormat: PropTypes.string,
-    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
+    iconColor: PropTypes.oneOf([ 'TextColor', 'StrokeColor', 'FillColor' ]),
     contents: PropTypes.string
   }
 
   deleteNote = () => {
-    core.deleteAnnotations([this.props.annotation]);
+    core.deleteAnnotations([ this.props.annotation ]);
   }
 
   renderHeader = () => {
     const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor, icon } = this.props;
-    const color = iconColor && annotation[iconColor].toHexString();
+    const color = iconColor && annotation[iconColor] && annotation[iconColor].toHexString();
     return (
       <div className="title">
         <div className="type">

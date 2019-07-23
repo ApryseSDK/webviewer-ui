@@ -22,17 +22,17 @@ const SignatureToolButton = props => {
   const [ hasSavedSignature, setHasSavedSignature ] = useState(false);
 
   useEffect(() => {
-    signatureTool.on('saveDefault.sigTool', () => {
+    signatureTool.on('signatureSaved', () => {
       setHasSavedSignature(true);
     });
 
-    signatureTool.on('noDefaultSignatures', () => {
-      setHasSavedSignature(false);
+    signatureTool.on('signatureDeleted', () => {
+      setHasSavedSignature(!!signatureTool.getSavedSignatures().length);
     });
 
     return () => {
-      signatureTool.off('saveDefault.sigTool');
-      signatureTool.off('noDefaultSignatures');
+      signatureTool.off('signatureSaved');
+      signatureTool.off('signatureDeleted');
     };
   }, []);
 
