@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
-import Tooltip from 'components/Tooltip';
 
 import selectors from 'selectors';
 
 class StatefulButton extends React.PureComponent {
   static propTypes = {
-    isDisabled: PropTypes.bool,
     dispatch: PropTypes.func,
     initialState: PropTypes.string.isRequired,
     mount: PropTypes.func.isRequired,
@@ -82,7 +80,7 @@ class StatefulButton extends React.PureComponent {
 
   render() {
     const { activeState } = this.state;
-    const { states, isDisabled } = this.props;
+    const { states } = this.props;
     const { title, img, getContent, isActive } = states[activeState];
     const content = getContent ? getContent(states[activeState]) : '';
     const className = [
@@ -91,15 +89,20 @@ class StatefulButton extends React.PureComponent {
     ].join(' ').trim();
 
     return (
-      <Tooltip content={title} isDisabled={isDisabled}>
-        <Button {...this.props} className={className} isActive={isActive && isActive(this.props)} img={img} label={content} onClick={this.onClick} />
-      </Tooltip>
+      <Button 
+        {...this.props} 
+        className={className} 
+        isActive={isActive && isActive(this.props)} 
+        img={img} 
+        label={content} 
+        onClick={this.onClick} 
+        title={title}
+      />
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
   isOpen: selectors.isElementOpen(state, ownProps.dataElement),
   openElements: selectors.getOpenElements(state)
 });

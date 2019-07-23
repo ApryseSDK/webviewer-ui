@@ -111,10 +111,10 @@ class SignatureModal extends React.PureComponent {
 
   handleInputChange = e => {
     const text = e.target.value;
+    const canvas = this.canvas.current;
     this.signatureTool.clearSignatureCanvas();
 
-    const canvas = this.canvas.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = this.signatureTool.ctx;
     ctx.save();
     ctx.font = '50px sans-serif';
     ctx.textAlign = 'center';

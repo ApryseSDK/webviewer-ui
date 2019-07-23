@@ -98,16 +98,16 @@ class SignatureOverlay extends React.PureComponent {
       defaultSignatures.splice(0, numberOfSignaturesToRemove);
     }
 
-    const saveSignatures = await this.getSignatureDataToStore(annotations);
+    const savedSignatures = await this.getSignatureDataToStore(annotations);
     this.setState({ 
-      defaultSignatures: defaultSignatures.concat(saveSignatures) 
+      defaultSignatures: defaultSignatures.concat(savedSignatures) 
     });
   }
 
   onSignatureDeleted = async () => {
-    const saveSignatures = await this.getSignatureDataToStore(this.signatureTool.getSavedSignatures());
+    const savedSignatures = await this.getSignatureDataToStore(this.signatureTool.getSavedSignatures());
     this.setState({ 
-      defaultSignatures: saveSignatures
+      defaultSignatures: savedSignatures
     });
   }
 

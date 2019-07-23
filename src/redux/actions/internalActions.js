@@ -12,7 +12,7 @@ export const disableElement = (dataElement, priority) => (dispatch, getState) =>
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
     if (!currentPriority || priority >= currentPriority) {
-      dispatch({ type: 'DISABLE_ELEMENT', payload: { dataElement, priority }});
+      dispatch({ type: 'DISABLE_ELEMENT', payload: { dataElement, priority } });
     }
   }
 };
@@ -28,7 +28,7 @@ export const enableElement = (dataElement, priority) => (dispatch, getState) => 
   } else {
     const currentPriority = selectors.getDisabledElementPriority(getState(), dataElement);
     if (!currentPriority || priority >= currentPriority) {
-      dispatch({ type: 'ENABLE_ELEMENT', payload: { dataElement, priority }});
+      dispatch({ type: 'ENABLE_ELEMENT', payload: { dataElement, priority } });
     }
   }
 };
@@ -101,30 +101,30 @@ export const addItems = (newItems, index, group) => dispatch => {
   } else {
     dispatch({ type: 'ADD_ITEMS', payload: { newItems: [newItems], index, group } });
   }
-}
+};
 export const removeItems = (itemList, group) => dispatch => {
   if (Array.isArray(itemList)) {
     dispatch({ type: 'REMOVE_ITEMS', payload: { itemList, group } });
   } else {
     dispatch({ type: 'REMOVE_ITEMS', payload: { itemList: [itemList], group } });
   }
-}
+};
 
 export const updateItem = (dataElement, newProps, group) => ({ type: 'UPDATE_ITEM', payload: { dataElement, newProps, group } });
 export const setItems = (items, group) => dispatch => {
   if (Array.isArray(items)) {
-    dispatch({ type: 'SET_ITEMS', payload: { items, group } })
+    dispatch({ type: 'SET_ITEMS', payload: { items, group } });
   } else {
-    dispatch({ type: 'SET_ITEMS', payload: { items: [items], group } })
+    dispatch({ type: 'SET_ITEMS', payload: { items: [items], group } });
   }
-}
+};
 
 // document
 export const setDocumentId = documentId => ({ type: 'SET_DOCUMENT_ID', payload: { documentId } });
 export const setDocumentPath = documentPath => ({ type: 'SET_DOCUMENT_PATH', payload: { documentPath } });
 export const setDocumentFile = documentFile => ({ type: 'SET_DOCUMENT_FILE', payload: { documentFile } });
-export const setDocumentType = type => ({ type: 'SET_DOCUMENT_TYPE', payload: { type }});
-export const setPDFDoc = pdfDoc => ({ type: 'SET_PDF_DOC', payload: { pdfDoc }});
+export const setDocumentType = type => ({ type: 'SET_DOCUMENT_TYPE', payload: { type } });
+export const setPDFDoc = pdfDoc => ({ type: 'SET_PDF_DOC', payload: { pdfDoc } });
 export const setFilename = filename => ({ type: 'SET_FILENAME', payload: { filename } });
 export const setExtension = extension => ({ type: 'SET_EXTENSION', payload: { extension } });
 export const setTotalPages = totalPages => ({ type: 'SET_TOTAL_PAGES', payload: { totalPages } });
@@ -133,8 +133,8 @@ export const setLayers = layers => ({ type: 'SET_LAYERS', payload: { layers } })
 export const setCheckPasswordFunction = func => ({ type: 'SET_CHECKPASSWORD', payload: { func } });
 export const setPasswordAttempts = attempt => ({ type: 'SET_PASSWORD_ATTEMPTS', payload: { attempt } });
 export const setPrintQuality = quality => ({ type: 'SET_PRINT_QUALITY', payload: { quality } });
-export const setDocumentLoadingProgress = documentLoadingProgress => ({ type: 'SET_DOCUMENT_LOADING_PROGRESS', payload: { documentLoadingProgress }});
-export const setWorkerLoadingProgress = workerLoadingProgress => ({ type: 'SET_WORKER_LOADING_PROGRESS', payload: { workerLoadingProgress }});
+export const setDocumentLoadingProgress = documentLoadingProgress => ({ type: 'SET_DOCUMENT_LOADING_PROGRESS', payload: { documentLoadingProgress } });
+export const setWorkerLoadingProgress = workerLoadingProgress => ({ type: 'SET_WORKER_LOADING_PROGRESS', payload: { workerLoadingProgress } });
 export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
 export const setPassword = password => ({ type: 'SET_PASSWORD', payload: { password } });
 export const setCacheKey = cacheKey => ({ type: 'SET_CACHE_KEY', payload: { cacheKey } });

@@ -1,63 +1,77 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
 
 import './Button.scss';
 
-class Button extends React.PureComponent {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    isActive: PropTypes.bool,
-    mediaQueryClassName: PropTypes.string,
-    img: PropTypes.string,
-    label: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
-    title: PropTypes.string,
-    color: PropTypes.string,
-    dataElement: PropTypes.string,
-    className: PropTypes.string,
-    onClick: PropTypes.func.isRequired,
+const Button = props => {
+  const {
+    isDisabled, 
+    isActive, 
+    mediaQueryClassName, 
+    img, 
+    label, 
+    color, 
+    dataElement,
+    onClick,
+    className,  
+    title
+  } = props;
+
+  if (isDisabled) {
+    return null;
   }
-
-  onClick = e => {
-    this.props.onClick(e);
+  
+  const handleClick = e => onClick(e);
+  const buttonClass = classNames({
+    Button: true,
+    active: isActive,
+    [mediaQueryClassName]: mediaQueryClassName,
+    [className]: className
+  });
+  const isBase64 = img && img.trim().indexOf('data:') === 0;
+  // if there is no file extension then assume that this is a glyph
+  const isGlyph = img && !isBase64 && (img.indexOf('.') === -1 || img.indexOf('<svg') === 0);
+ 
+  let content; 
+  if (isGlyph) {
+    content = <Icon glyph={img} color={color} />;
+  } else if (img) {
+    content = <img src={img} />;
+  } else if (label) {
+    content = <p>{label}</p>;
   }
+  
+  let children = (
+    <div className={buttonClass} data-element={dataElement} onClick={handleClick}>
+      {content}
+    </div>
+  );
 
-  render() {
-    const { isDisabled, isActive, mediaQueryClassName, img, label, color, dataElement } = this.props;
+  return title ? (
+    <Tooltip content={title}>
+      {children}
+    </Tooltip>
+  ) : children;
+};
 
-    if (isDisabled) {
-      return null;
-    }
+Button.propTypes = {
+  isDisabled: PropTypes.bool,
+  isActive: PropTypes.bool,
+  mediaQueryClassName: PropTypes.string,
+  img: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  title: PropTypes.string,
+  color: PropTypes.string,
+  dataElement: PropTypes.string,
+  className: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+};
 
-    const className = [
-      'Button',
-      this.props.className ? this.props.className : '',
-      isActive ? 'active' : 'inactive',
-      label ? 'label' : 'icon',
-      mediaQueryClassName ? mediaQueryClassName : '',
-    ].join(' ').trim();
-    const isBase64 = img && img.trim().indexOf('data:') === 0;
-    // if there is no file extension then assume that this is a glyph
-    const isGlyph = img && (img.indexOf('.') === -1 || img.indexOf('<svg') === 0) && !isBase64;
-
-    return (
-      <div className={className} data-element={dataElement} onClick={this.onClick}>
-        {isGlyph &&
-          <Icon glyph={img} color={color} />
-        }
-        {img && !isGlyph &&
-          <img src={img} />
-        }
-        {label &&
-          <p>{label}</p>
-        }
-      </div>
-    );
-  }
-}
-
-export default Button;
+export default React.memo(Button);
