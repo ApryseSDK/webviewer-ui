@@ -14,6 +14,7 @@ const TouchEventManager = {
     this.horziontalMomentum = 0;
     this.verticalLock = false;
     this.horziontalLock = false;
+    this.enableTouchScrollLock = true;
     this.startingScrollLeft = null;
     this.startingScrollTop = null;
     this.containerWidth = 0;
@@ -150,16 +151,18 @@ const TouchEventManager = {
           this.touch.type = 'swipe';
         }
 
-        if (this.verticalLock) {
-          // undo horizontal scrolling caused by native touch when scrolling is disabled
-          this.container.scrollTo(this.startingScrollLeft, this.container.scrollTop);
-          // set 'horizontalDistance' to '0' to get rid of horiztonal momentum in 'handleTouchEnd'
-          this.touch.horizontalDistance = 0; 
-        }
-
-        if (this.horziontalLock) {
-          this.container.scrollTo(this.container.scrollLeft, this.startingScrollTop);
-          this.touch.verticalDistance = 0; 
+        if (this.enableTouchScrollLock) {
+          if (this.verticalLock) {
+            // undo horizontal scrolling caused by native touch when scrolling is disabled
+            this.container.scrollTo(this.startingScrollLeft, this.container.scrollTop);
+            // set 'horizontalDistance' to '0' to get rid of horiztonal momentum in 'handleTouchEnd'
+            this.touch.horizontalDistance = 0; 
+          }
+  
+          if (this.horziontalLock) {
+            this.container.scrollTo(this.container.scrollLeft, this.startingScrollTop);
+            this.touch.verticalDistance = 0; 
+          }
         }
 
         this.touch.touchCount++;
