@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -23,23 +23,8 @@ class LeftPanel extends React.Component {
     customPanels: PropTypes.array.isRequired,
     activePanel: PropTypes.string.isRequired,
     closeElement: PropTypes.func.isRequired
-  }
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = { 'isSliderActive': false };
-    this.sliderRef = React.createRef();
-  }
-
-  componentDidMount(){
-    document.body.style.setProperty('--left-panel-width', '300px');
-
-    // we are using css variables to make the panel resizable but IE11 doesn't support it
-    if (!isIE11 && this.sliderRef.current) {
-      this.sliderRef.current.onmousemove = this.dragMouseMove;
-      this.sliderRef.current.onmouseup = this.closeDrag;
-    }
-  }
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
       this.props.closeElement('searchPanel');
@@ -48,24 +33,7 @@ class LeftPanel extends React.Component {
 
   getDisplay = panel => {
     return panel === this.props.activePanel ? 'flex' : 'none';
-  }
-
-  dragMouseDown = () => {
-    this.setState({
-      isSliderActive: true
-    });
-  }
-
-  dragMouseMove = e => {
-    if (this.state.isSliderActive && e.clientX > 215 && e.clientX < 900){
-      this.sliderRef.current.style.left = (e.clientX) + 'px';
-      document.body.style.setProperty('--left-panel-width', (e.clientX)+'px');
-    }
-  }
-
-  closeDrag = () => {
-    this.setState({ isSliderActive: false });
-  }
+  };
 
   render() {
     const { isDisabled, closeElement, customPanels } = this.props;
@@ -77,24 +45,24 @@ class LeftPanel extends React.Component {
     const className = getClassName('Panel LeftPanel', this.props);
 
     return (
-      <div className={className} data-element="leftPanel" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
+      <div
+        className={className}
+        data-element="leftPanel"
+        onMouseDown={e => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
+      >
         <div className="left-panel-header">
-          <div className="close-btn hide-in-desktop" onClick={() => closeElement('leftPanel')}>
+          <div
+            className="close-btn hide-in-desktop"
+            onClick={() => closeElement('leftPanel')}
+          >
             <Icon glyph="ic_close_black_24px" />
           </div>
           <LeftPanelTabs />
         </div>
-        
-        {!isIE11 &&
-          <div
-            ref={this.sliderRef}
-            className={this.state.isSliderActive ? 'resize-bar active' : 'resize-bar non-active'}
-            onMouseDown={this.dragMouseDown}
-            onMouseUp={this.closeDrag}
-            onMouseMove={this.dragMouseMove}
-            onMouseLeave={this.closeDrag}
-          />
-        }
+
+        <ResizeBar />
+
         <NotesPanel display={this.getDisplay('notesPanel')} />
         <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
         <OutlinesPanel display={this.getDisplay('outlinesPanel')} /> 
@@ -112,6 +80,40 @@ class LeftPanel extends React.Component {
   }
 }
 
+const ResizeBar = () => {
+  const isMouseDownRef = useRef(false);
+
+  useEffect(() => {
+    const dragMouseMove = ({ clientX }) => {
+      if (isMouseDownRef.current && clientX > 215 && clientX < 900) {
+        document.body.style.setProperty('--left-panel-width', `${clientX}px`);
+      }
+    };
+
+    document.addEventListener('mousemove', dragMouseMove);
+    return () => document.removeEventListener('mousemove', dragMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const finishDrag = () => {
+      isMouseDownRef.current = false;
+    };
+
+    document.addEventListener('mouseup', finishDrag);
+    return () => document.removeEventListener('mouseup', finishDrag);
+  }, []);
+
+  // we are using css variables to make the panel resizable but IE11 doesn't support it
+  return (
+    !isIE11 && (
+      <div
+        className="resize-bar"
+        onMouseDown={() => isMouseDownRef.current = true}
+      />
+    )
+  );
+};
+
 const mapStatesToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'leftPanel'),
   isDisabled: selectors.isElementDisabled(state, 'leftPanel'),
@@ -120,7 +122,10 @@ const mapStatesToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  closeElement: actions.closeElement,
+  closeElement: actions.closeElement
 };
 
-export default connect(mapStatesToProps, mapDispatchToProps)(LeftPanel);
+export default connect(
+  mapStatesToProps,
+  mapDispatchToProps
+)(LeftPanel);

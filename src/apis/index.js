@@ -104,6 +104,7 @@ import unregisterTool from './unregisterTool';
 import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
+import setMeasurementUnits from './setMeasurementUnits';
 
 export default {
   addSearchListener,
@@ -212,4 +213,5 @@ export default {
   updateOutlines,
   updateTool,
   useEmbeddedPrint,
+  setMeasurementUnits
 };

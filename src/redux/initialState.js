@@ -143,7 +143,11 @@ export default {
     swipeOrientation: 'horizontal',
     warning: {},
     customNoteFilter: null,
-    zoomList: [ 0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64 ]
+    zoomList: [ 0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64 ],
+    measurementUnits: {
+      from: ['in', 'mm', 'cm', 'pt'],
+      to: ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi']
+    }
   },
   search: {
     listeners: [],
@@ -205,6 +209,7 @@ export default {
     preloadWorker: getHashParams('preloadWorker', false),
     serverUrl: getHashParams('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
+    cacheKey: JSON.parse(getHashParams('cacheKey', null)),
     streaming: getHashParams('streaming', false),
     subzero: getHashParams('subzero', false),
     useDownloader: getHashParams('useDownloader', true),

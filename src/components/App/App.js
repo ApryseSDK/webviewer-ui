@@ -44,10 +44,10 @@ class App extends React.PureComponent {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
-  }
+  };
 
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    $(document).trigger('viewerLoaded');
   }
 
   componentWillUnmount() {
@@ -64,10 +64,10 @@ class App extends React.PureComponent {
     ].filter(element => element);
 
     this.props.closeElements(elements);
-  }
+  };
 
   onMouseDown = () => {
-    const elements = [ 
+    const elements = [
       'annotationPopup',
       'contextMenuPopup',
       'toolStylePopup',
@@ -77,16 +77,21 @@ class App extends React.PureComponent {
     ].filter(element => element);
 
     this.props.closeElements(elements);
-  }
+  };
 
   onScroll = () => {
     this.onMouseDown();
-  }
+  };
 
   render() {
     return (
       <React.Fragment>
-        <div className="App" onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
+        <div
+          className="App"
+          onMouseDown={this.onMouseDown}
+          onClick={this.onClick}
+          onScroll={this.onScroll}
+        >
           <Header />
 
           <LeftPanel />
@@ -128,11 +133,16 @@ class App extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel')
 });
 
 const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(translate()(App)));
+export default hot(module)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(translate()(App))
+);

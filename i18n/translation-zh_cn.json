@@ -145,7 +145,6 @@
     },
     "measurementOverlay": {
       "scale": "比例",
-      "precision": "精准度",
       "angle": "角度",
       "distance": "距离",
       "perimeter": "周长",
