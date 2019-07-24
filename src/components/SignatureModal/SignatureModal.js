@@ -18,8 +18,6 @@ class SignatureModal extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     t: PropTypes.func.isRequired,
-    openElement: PropTypes.func.isRequired,
-    setCursorOverlay: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
   }
@@ -50,7 +48,6 @@ class SignatureModal extends React.PureComponent {
       core.setToolMode('AnnotationCreateSignature');
       this.setState(this.initialState);
       this.signatureTool.clearSignatureCanvas();
-      this.signatureTool.openSignature();
       this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]); 
     }
   }
@@ -61,18 +58,12 @@ class SignatureModal extends React.PureComponent {
   }
 
   setUpSignatureCanvas = () => {
-    if (!this.canvas.current) {
+    const canvas = this.canvas.current;
+    if (!canvas) {
       return;
     }
 
-    const canvas = this.canvas.current;
-    if (!this.canvas.current) {
-      return;
-    }
-    this.signatureTool.setSignatureCanvas($(canvas));
-    // draw nothing in the background since we want to convert the signature on the canvas
-    // to an image and we don't want the background to be in the image.
-    this.signatureTool.drawBackground = () => {};
+    this.signatureTool.setSignatureCanvas(canvas);
     
     const multiplier = window.utils.getCanvasMultiplier();
     canvas.getContext('2d').scale(multiplier, multiplier);   
@@ -124,18 +115,16 @@ class SignatureModal extends React.PureComponent {
   }
 
   createSignature = () => {
-    const { closeElement, openElement, setCursorOverlay } = this.props;
+    const { closeElement } = this.props;
     
     if (!this.signatureTool.isEmptySignature()) {
       if (this.state.saveSignature) {
-        this.signatureTool.saveDefaultSignature();
+        this.signatureTool.saveSignatures(this.signatureTool.annot);
       }
       if (this.signatureTool.hasLocation()) {
         this.signatureTool.addSignature();
       } else {
-        const { imgSrc, width, height } = this.signatureTool.getSignaturePreview();
-        setCursorOverlay({ imgSrc, width, height });
-        openElement('cursorOverlay');
+        this.signatureTool.showPreview();
       }
       closeElement('signatureModal');
     }
@@ -186,8 +175,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  openElement: actions.openElement,
-  setCursorOverlay: actions.setCursorOverlay, 
   closeElement: actions.closeElement,
   closeElements: actions.closeElements
 };

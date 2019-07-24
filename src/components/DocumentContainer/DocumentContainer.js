@@ -8,6 +8,7 @@ import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'help
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import TouchEventManager from 'helpers/TouchEventManager';
+import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -45,7 +46,7 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
-    if (prevProps.swipeOrientation !== this.props.swipeOrientation){
+    if (prevProps.swipeOrientation !== this.props.swipeOrientation) {
       TouchEventManager.updateOrientation(this.props.swipeOrientation);
     }
   }
@@ -54,41 +55,49 @@ class DocumentContainer extends React.PureComponent {
     TouchEventManager.initialize(this.document.current, this.container.current, this.props.toolButtonObjects);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
-    window.document.dispatchEvent(new Event('viewerLoaded'));
+    fireEvent('viewerLoaded');
 
     const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
-    if (hasPath && doesDocumentAutoLoad) {
+    if ((hasPath && doesDocumentAutoLoad) || document.isOffline) {
       loadDocument({ document, advanced }, dispatch);
     }
 
     if (isIE) {
       window.addEventListener('resize', this.handleWindowResize);
     }
-    window.addEventListener('keydown', this.onKeyDown);
+
+    if (process.env.NODE_ENV === 'development') {
+      this.container.current.addEventListener('dragover', this.preventDefault);
+      this.container.current.addEventListener('drop', this.onDrop);
+    }
+    
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
     window.addEventListener('keydown', this.onKeyDown);
   }
-
+  
   componentWillUnmount() {
     TouchEventManager.terminate();
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
-    window.removeEventListener('keydown', this.onKeyDown);
+    
+    if (process.env.NODE_ENV === 'development') {
+      this.container.current.addEventListener('dragover', this.preventDefault);
+      this.container.current.removeEventListener('drop', this.onDrop);
+    }
+
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
     window.removeEventListener('keydown', this.onKeyDown);
   }
 
-  onKeyDown = e => {
-    const { currentPage, totalPages } = this.props;
-    const { scrollTop, clientHeight, scrollHeight } = this.container.current;
-    const reachedTop = scrollTop === 0;
-    const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
+  preventDefault = e => e.preventDefault();
 
-    if ((e.key === 'ArrowUp' || e.which === 38) && reachedTop && currentPage > 1) {
-      this.pageUp();
-    } else if ((e.key === 'ArrowDown' || e.which === 40) && reachedBottom && currentPage < totalPages) {
-      this.pageDown();
+  onDrop = e => {
+    e.preventDefault();
+
+    const { files } = e.dataTransfer;
+    if (files.length) {
+      window.readerControl.loadDocument(files[0]);
     }
   }
 
@@ -113,7 +122,7 @@ class DocumentContainer extends React.PureComponent {
     if (e.metaKey || e.ctrlKey) {
       e.preventDefault();
       this.wheelToZoom(e);
-    } else if (!core.isContinuousDisplayMode()){
+    } else if (!core.isContinuousDisplayMode()) {
       this.wheelToNavigatePages(e);
     }
   }
@@ -188,7 +197,7 @@ class DocumentContainer extends React.PureComponent {
       className = this.getClassName(this.props);
     }
 
-    return(
+    return (
       <div className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd}>
         <div className="document" ref={this.document}></div>
       </div>

@@ -5,7 +5,6 @@ import { translate } from 'react-i18next';
 
 import Button from 'components/Button';
 import Element from 'components/Element';
-import Tooltip from 'components/Tooltip';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -18,10 +17,6 @@ class LeftPanelTabs extends React.Component {
     disabledCustomPanelTabs: PropTypes.array.isRequired,
     customPanels: PropTypes.array.isRequired,
     isLeftPanelTabsDisabled: PropTypes.bool,
-    isThumbnailsPanelButtonDisabled: PropTypes.bool,
-    isOutlinesPanelButtonDisabled: PropTypes.bool,
-    isNotesPanelButtonDisabled: PropTypes.bool,
-    isLayersPanelButtonDisabled: PropTypes.bool,
     setActiveLeftPanel: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired
   }
@@ -34,12 +29,7 @@ class LeftPanelTabs extends React.Component {
     const {
       customPanels,
       isLeftPanelTabsDisabled,
-      isThumbnailsPanelButtonDisabled,
-      isOutlinesPanelButtonDisabled,
-      isNotesPanelButtonDisabled,
       setActiveLeftPanel,
-      disabledCustomPanelTabs,
-      isLayersPanelButtonDisabled,
     } = this.props;
 
     if (isLeftPanelTabsDisabled) {
@@ -48,47 +38,44 @@ class LeftPanelTabs extends React.Component {
 
     return (
       <Element className="LeftPanelTabs" dataElement="leftPanelTabs">
-        <Tooltip content="component.thumbnailsPanel" isDisabled={isThumbnailsPanelButtonDisabled}>
-          <Button
-            isActive={this.isActive('thumbnailsPanel')}
-            dataElement="thumbnailsPanelButton"
-            img="ic_thumbnails_black_24px"
-            onClick={() => setActiveLeftPanel('thumbnailsPanel')}
-          />
-        </Tooltip>
-        <Tooltip content="component.outlinesPanel" isDisabled={isOutlinesPanelButtonDisabled}>
-          <Button
-            isActive={this.isActive('outlinesPanel')}
-            dataElement="outlinesPanelButton"
-            img="ic_outline_black_24px"
-            onClick={() => setActiveLeftPanel('outlinesPanel')}
-          />
-        </Tooltip>
-        <Tooltip content="component.notesPanel" isDisabled={isNotesPanelButtonDisabled}>
-          <Button
-            isActive={this.isActive('notesPanel')}
-            dataElement="notesPanelButton"
-            img="ic_annotations_black_24px"
-            onClick={() => setActiveLeftPanel('notesPanel')}
-          />
-        </Tooltip>
-        <Tooltip content="component.layersPanel" isDisabled={isLayersPanelButtonDisabled}>
-          <Button
-            isActive={this.isActive('layersPanel')}
-            dataElement="layersPanelButton"
-            img="ic_layers_24px"
-            onClick={() => setActiveLeftPanel('layersPanel')}
-          />
-        </Tooltip>
+        <Button
+          isActive={this.isActive('thumbnailsPanel')}
+          dataElement="thumbnailsPanelButton"
+          img="ic_thumbnails_black_24px"
+          onClick={() => setActiveLeftPanel('thumbnailsPanel')}
+          title="component.thumbnailsPanel"
+        />
+        <Button
+          isActive={this.isActive('outlinesPanel')}
+          dataElement="outlinesPanelButton"
+          img="ic_outline_black_24px"
+          onClick={() => setActiveLeftPanel('outlinesPanel')}
+          title="component.outlinesPanel"
+        />
+        <Button
+          isActive={this.isActive('notesPanel')}
+          dataElement="notesPanelButton"
+          img="ic_annotations_black_24px"
+          onClick={() => setActiveLeftPanel('notesPanel')}
+          title="component.notesPanel"
+        />
+        <Button
+          isActive={this.isActive('layersPanel')}
+          dataElement="layersPanelButton"
+          img="ic_layers_24px"
+          onClick={() => setActiveLeftPanel('layersPanel')}
+          title="component.layersPanel"
+        />
+
         {customPanels.map(({ panel, tab }, index) => (
-          <Tooltip key={tab.dataElement || index} content={tab.title} isDisabled={disabledCustomPanelTabs.includes(tab.dataElement)}>
-            <Button
-              isActive={this.isActive(panel.dataElement)}
-              dataElement={tab.dataElement}
-              img={tab.img}
-              onClick={() => setActiveLeftPanel(panel.dataElement)}
-            />
-          </Tooltip>
+          <Button
+            key={tab.dataElement || index}
+            isActive={this.isActive(panel.dataElement)}
+            dataElement={tab.dataElement}
+            img={tab.img}
+            onClick={() => setActiveLeftPanel(panel.dataElement)}
+            title={tab.title}
+          />
         ))}
       </Element>
     );
@@ -100,10 +87,6 @@ const mapStateToProps = state => ({
   customPanels: selectors.getCustomPanels(state),
   disabledCustomPanelTabs: selectors.getDisabledCustomPanelTabs(state),
   isLeftPanelTabsDisabled: selectors.isElementDisabled(state, 'leftPanelTabs'),
-  isThumbnailsPanelButtonDisabled: selectors.isElementDisabled(state, 'thumbnailsPanelButton'),
-  isOutlinesPanelButtonDisabled: selectors.isElementDisabled(state, 'outlinesPanelButton'),
-  isNotesPanelButtonDisabled: selectors.isElementDisabled(state, 'notesPanelButton'),
-  isLayersPanelButtonDisabled: selectors.isElementDisabled(state, 'layersPanelButton'),
 });
 
 const mapDispatchToProps = {

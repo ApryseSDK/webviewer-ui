@@ -4,9 +4,8 @@ import selectors from 'selectors';
 
 export default store => () => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
-  const hasSignature = signatureTool.freeHandAnnot && signatureTool.freeHandAnnot.getPaths().length;
 
-  if (hasSignature) {
+  if (!signatureTool.isEmptySignature()) {
     signatureTool.addSignature();
   } else {
     // this condition is usually met when we click on a signature widget but UI doesn't know which signature to draw
@@ -20,7 +19,7 @@ export default store => () => {
     // but that would make the click handler lengthy since we don't have a very good way to check if we're clicking on a signature widget.
     if (signatureToolButton) {
       setTimeout(() => {
-        document.querySelector('[data-element="signatureToolButton"]').click();
+        document.querySelector('[data-element="signatureToolButton"] .Button').click();
       }, 0);
     } else {
       const defaultSignatures = document.querySelector('.default-signature');

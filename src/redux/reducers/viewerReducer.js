@@ -40,7 +40,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ACTIVE_TOOL_NAME':
       return { ...state, activeToolName: payload.toolName };
     case 'SET_ACTIVE_TOOL_STYLES':
-      return { ...state, activeToolStyles: { ...payload.toolStyles }};
+      return { ...state, activeToolStyles: { ...payload.toolStyles } };
     case 'SET_ACTIVE_TOOL_NAME_AND_STYLES':
       return { ...state, activeToolName: payload.toolName, activeToolStyles: payload.toolStyles };
     case 'SET_ACTIVE_LEFT_PANEL':
@@ -84,7 +84,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_HEADER_ITEMS':
       return { ...state, header: payload.headerItems };
     case 'REGISTER_TOOL':
-      const availablePalettes = ['TextColor', 'StrokeColor', 'FillColor'].filter(property => payload.toolObject.defaults && payload.toolObject.defaults[property]);
+      const availablePalettes = [ 'TextColor', 'StrokeColor', 'FillColor' ].filter(property => payload.toolObject.defaults && payload.toolObject.defaults[property]);
       return {
         ...state,
         toolButtonObjects: {
@@ -144,14 +144,6 @@ export default initialState => (state = initialState, action) => {
       const { toolName, color } = payload;
       return { ...state, toolButtonObjects: { ...state.toolButtonObjects, [toolName]: { ...state.toolButtonObjects[toolName], iconColor: color } } };
     }
-    case 'SET_CURSOR_OVERLAY': {
-      const { imgSrc, width, height } = payload.data;
-
-      return { 
-        ...state, 
-        cursorOverlay: { imgSrc, width, height } 
-      };
-    }
     case 'SET_SWIPE_ORIENTATION':
       return { ...state, swipeOrientation: payload.swipeOrientation };
     case 'SET_WARNING_MESSAGE':
@@ -167,9 +159,9 @@ export default initialState => (state = initialState, action) => {
         headerArr.splice(index, 0, ...newItems);
         return { ...state, header: [ ...headerArr ] };
       } else {
-          group.children.splice(index, 0, ...newItems);
-          const modification = group.children;
-          return replaceChildren(state, group, modification, headerArr);
+        group.children.splice(index, 0, ...newItems);
+        const modification = group.children;
+        return replaceChildren(state, group, modification, headerArr);
       }
     }
     case 'REMOVE_ITEMS': {
@@ -191,7 +183,7 @@ export default initialState => (state = initialState, action) => {
           } else {
             console.warn(`${item} does not exist. Make sure you are removing from the correct group.`);
           }
-        } else if (typeof item === 'number'){
+        } else if (typeof item === 'number') {
           if (item < 0 || item >= currentArr.length) {
             console.warn(`${item} is an invalid index. Please make sure to remove index between 0 and ${currentArr.length - 1}`);
             return;
@@ -202,12 +194,12 @@ export default initialState => (state = initialState, action) => {
           console.warn(`type ${typeof item} is not a valid parameter. Pass string or number`);
           return;
         }
-      })
+      });
       for (let i = removeIndices.length - 1; i >= 0; i--) {
         currentArr.splice(removeIndices[i], 1);
       }
-      if (!group){
-        return { ...state, header: [ ...currentArr ] }
+      if (!group) {
+        return { ...state, header: [ ...currentArr ] };
       } else {
         const modification = [ ...currentArr ];
         return replaceChildren(state, group, modification, headerArr);
@@ -224,10 +216,10 @@ export default initialState => (state = initialState, action) => {
       }
       let updateObject = currentArr.find(buttonObject => buttonObject.dataElement === dataElement);
       const updateObjectIndex = currentArr.indexOf(updateObject);
-      updateObject = { ...updateObject, ...newProps }
+      updateObject = { ...updateObject, ...newProps };
       if (!group) {
         currentArr[updateObjectIndex] = updateObject;
-        return { ...state, header: currentArr }
+        return { ...state, header: currentArr };
       } else {
         group.children[updateObjectIndex] = updateObject;
         const modification = [ ...group.children ];
@@ -238,7 +230,7 @@ export default initialState => (state = initialState, action) => {
       const { items, group } = payload;
       let headerArr = state.header;
       if (!group) {
-        return { ...state, header: [ ...items ] }
+        return { ...state, header: [ ...items ] };
       } else {
         const modification = [ ...items ];
         return replaceChildren(state, group, modification, headerArr);
@@ -248,5 +240,5 @@ export default initialState => (state = initialState, action) => {
       return { ...state, zoomList: payload.zoomList };
     default:
       return state;
-    }
-  };
+  }
+};

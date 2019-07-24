@@ -8,7 +8,6 @@ import ActionButton from 'components/ActionButton';
 import StatefulButton from 'components/StatefulButton';
 import CustomElement from 'components/CustomElement';
 import ResponsiveButton from 'components/ResponsiveButton';
-import statefulButtons from 'constants/statefulButtons';
 
 import './HeaderItems.scss';
 
@@ -36,8 +35,7 @@ class HeaderItems extends React.PureComponent {
             case 'actionButton':
               return <ActionButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'statefulButton': {
-              const props = statefulButtons[dataElement] || {};
-              return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} {...props} />;
+              return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             }
             case 'customElement': 
               return <CustomElement key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;

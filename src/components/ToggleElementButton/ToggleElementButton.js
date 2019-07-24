@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
-import { withTooltip } from 'components/Tooltip';
 
 import selectors from 'selectors';
 import actions from 'actions';
@@ -19,7 +18,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTooltip({
-  leftPanelButton: 'right',
-  menuButton: 'left'
-})(Button));
+export default connect(mapStateToProps, mapDispatchToProps)(Button);

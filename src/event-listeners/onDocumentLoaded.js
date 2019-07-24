@@ -2,6 +2,7 @@ import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
+import { PRIORITY_ONE } from 'constants/actionPriority';
 
 let onFirstLoad = true;
 
@@ -25,9 +26,9 @@ export default dispatch => () => {
     // if redaction is already enabled for some reason (i.e. calling readerControl.enableRedaction() before loading a doc), keep it enabled
 
     if (core.isCreateRedactionEnabled()) {
-      dispatch(actions.enableElement('redactionButton', 1));
+      dispatch(actions.enableElement('redactionButton', PRIORITY_ONE));
     } else {
-      dispatch(actions.disableElement('redactionButton', 1));
+      dispatch(actions.disableElement('redactionButton', PRIORITY_ONE));
     }
   }
 
@@ -40,16 +41,18 @@ export default dispatch => () => {
   });
 
   const doc = core.getDocument();
-  doc.getLayersArray().then(layers => {
-    if (layers.length === 0) {
-      dispatch(actions.disableElement('layersPanel', 1));
-      dispatch(actions.disableElement('layersPanelButton', 1));
-    } else {
-      dispatch(actions.enableElement('layersPanel', 1));
-      dispatch(actions.enableElement('layersPanelButton', 1));
-      dispatch(actions.setLayers(layers));
-    }
-  });
+  if (!doc.isWebViewerServerDocument()) {
+    doc.getLayersArray().then(layers => {
+      if (layers.length === 0) {
+        dispatch(actions.disableElement('layersPanel', PRIORITY_ONE));
+        dispatch(actions.disableElement('layersPanelButton', PRIORITY_ONE));
+      } else {
+        dispatch(actions.enableElement('layersPanel', PRIORITY_ONE));
+        dispatch(actions.enableElement('layersPanelButton', PRIORITY_ONE));
+        dispatch(actions.setLayers(layers));
+      }
+    });
+  }
 
   window.readerControl.loadedFromServer = false;
   window.readerControl.serverFailed = false;

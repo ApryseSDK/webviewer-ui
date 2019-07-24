@@ -92,6 +92,7 @@ import goToOutline from './goToOutline';
 import getViewerElement from './getViewerElement';
 import { addEventListener, removeEventListener } from './eventListener';
 import setAnnotationCanvasTransform  from './setAnnotationCanvasTransform';
+import getAnnotationCopy from './getAnnotationCopy';
 
 export default {
   setToolMode,
@@ -188,5 +189,6 @@ export default {
   hideAnnotations,
   goToOutline,
   getViewerElement, 
-  setAnnotationCanvasTransform
+  setAnnotationCanvasTransform,
+  getAnnotationCopy
 };
