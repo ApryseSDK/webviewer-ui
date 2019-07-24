@@ -116,11 +116,13 @@ const TouchEventManager = {
       }
     }
   },
-  isScrollingVertically(lockRatio = 3) {
-    return (Math.abs(this.verticalMomentum) > 1 && this.horziontalMomentum === 0) || (Math.abs(this.touch.verticalDistance) > lockRatio * Math.abs(this.touch.horizontalDistance));
+  momentumLockMin: 1,
+  axisLockThreshold: 8,
+  isScrollingVertically() {
+    return (Math.abs(this.verticalMomentum) > this.momentumLockMin && this.horziontalMomentum === 0) || (Math.abs(this.touch.verticalDistance) > this.axisLockThreshold * Math.abs(this.touch.horizontalDistance));
   },
-  isScrollingHorziontally(lockRatio = 3) {
-    return (Math.abs(this.horziontalMomentum) > 1 && this.verticalMomentum === 0) || (Math.abs(this.touch.horizontalDistance) > lockRatio * Math.abs(this.touch.verticalDistance));
+  isScrollingHorziontally() {
+    return (Math.abs(this.horziontalMomentum) > this.momentumLockMin && this.verticalMomentum === 0) || (Math.abs(this.touch.horizontalDistance) > this.axisLockThreshold * Math.abs(this.touch.verticalDistance));
   },
   isScrollLockingDisabled() {
     // using 'touchCount' to disable scroll locking when user is dragging
@@ -193,8 +195,9 @@ const TouchEventManager = {
         this.doubleTapTimeout = setTimeout(() => {
           this.horziontalLock = false;
           this.verticalLock = false;
+          window.console.log('tap unlock');
           this.touch.type = ''; 
-        }, 300);
+        }, 0);
         break;
       }
       case 'swipe': {
@@ -240,7 +243,7 @@ const TouchEventManager = {
               // use timeout for unlocking lock to keep it locked if user is rapidly swipping in one direction
               this.horziontalLock = false;
               this.verticalLock = false;
-            }, 300);
+            }, 0);
           }
         }
         break;
@@ -300,7 +303,7 @@ const TouchEventManager = {
       this.horziontalMomentum = dHorizontal;   
       
       let isNotTouchEvent =  !this.touch.touchCount;
-      let isScrollingAlmostFinish = (Math.abs(this.container.scrollLeft - nextLeft) < 1 || Math.abs(this.container.scrollTop - nextTop) < 1);
+      let isScrollingAlmostFinish = (Math.abs(this.container.scrollLeft - nextLeft) < this.momentumLockMin || Math.abs(this.container.scrollTop - nextTop) < this.momentumLockMin);
 
       if (isNotTouchEvent && isScrollingAlmostFinish) {
         // disable lock when scrolling is mostly done and not in the middle of another touch event
