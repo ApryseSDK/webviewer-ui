@@ -37,6 +37,9 @@ export default {
         img: 'ic_edit_black_24px',
         children: [
           {
+            type: 'toolButton', img: 'ic_annotation_eraser_black_24px', toolName: 'AnnotationCreateEraser', dataElement: 'eraserToolButton', title: 'annotation.eraser' ,
+          },
+          {
             type: 'dropdownButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton',
             children: [
               { type: 'toolButton', img: 'ic_annotation_distance_black_24px', toolName: 'AnnotationCreateDistanceMeasurement', dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement' },

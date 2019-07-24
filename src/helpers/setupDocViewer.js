@@ -17,6 +17,7 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateFreeHand2 = new window.Tools.FreeHandCreateTool(docViewer, 'AnnotationCreateFreeHand2');
   toolModeMap.AnnotationCreateFreeHand3 = new window.Tools.FreeHandCreateTool(docViewer, 'AnnotationCreateFreeHand3');
   toolModeMap.AnnotationCreateFreeHand4 = new window.Tools.FreeHandCreateTool(docViewer, 'AnnotationCreateFreeHand4');
+  toolModeMap.AnnotationCreateEraser = new window.Tools.EraserTool(docViewer, 'AnnotationCreateEraser');
 };
 
 export default setupDocViewer;
