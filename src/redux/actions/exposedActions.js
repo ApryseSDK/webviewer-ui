@@ -211,10 +211,6 @@ export const setZoomList = zoomList => dispatch => {
 
   dispatch({ type: 'SET_ZOOM_LIST', payload: { zoomList: filteredZoomList } });
 };
-export const updateTool = (toolName, properties) => ({
-  type: 'UPDATE_TOOL',
-  payload: { toolName, properties },
-});
 export const useEmbeddedPrint = (useEmbeddedPrint = true) => ({
   type: 'USE_EMBEDDED_PRINT',
   payload: { useEmbeddedPrint },
