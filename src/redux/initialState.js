@@ -132,7 +132,8 @@ export default {
       Pan: { showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
       AnnotationEdit: { showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
       TextSelect: { showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
-      MarqueeZoomTool: { dataElement: 'marqueeToolButton', title: 'tool.select', label: 'Marquee Zoom', showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null }
+      MarqueeZoomTool: { dataElement: 'marqueeToolButton', title: 'tool.select', label: 'Marquee Zoom', showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
+      AnnotationCreateEraser: { showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: annotation => annotation instanceof window.Annotations.FreeHandAnnotation }
     },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
