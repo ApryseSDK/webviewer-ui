@@ -76,7 +76,7 @@ const TouchEventManager = {
         this.containerWidth = document.querySelector('.DocumentContainer').clientWidth;
         this.containerHeight = document.querySelector('.DocumentContainer').clientHeight;
         this.documentWidth = document.querySelector('.document').clientWidth;
-        this.documentHeight = document.querySelector('.DocumentContainer').clientHeight;
+        this.documentHeight = document.querySelector('.document').clientHeight;
         this.touch = {
           clientX: touch.clientX,
           clientY: touch.clientY,
@@ -302,17 +302,15 @@ const TouchEventManager = {
     const dHorizontal = this.touch.horizontalDistance / touchDuration / 1.85;
     const dVertical = this.touch.verticalDistance / touchDuration / 1.85;
     const momentumScroll = () => {
-      let nextLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
-      let nextTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
-      this.container.scrollLeft = nextLeft;
-      this.container.scrollTop = nextTop;
+      this.container.scrollLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
+      this.container.scrollTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
       this.verticalMomentum = dVertical;
       this.horziontalMomentum = dHorizontal;   
       
       let isNotTouchEvent =  !this.touch.touchCount;
-      let isScrollingAlmostFinish = (Math.abs(this.container.scrollLeft - nextLeft) < this.momentumLockMin || Math.abs(this.container.scrollTop - nextTop) < this.momentumLockMin);
+      let isMomentumScrollAlmostFinish = (Math.abs(this.verticalMomentum) < this.momentumLockMin || Math.abs(this.horziontalMomentum) < this.momentumLockMin);
 
-      if (isNotTouchEvent && isScrollingAlmostFinish) {
+      if (isNotTouchEvent && isMomentumScrollAlmostFinish) {
         // disable lock when momentum scrolling is mostly done and not in the middle of another touch event
         this.horziontalLock = false;
         this.verticalLock = false;
