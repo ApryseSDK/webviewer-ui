@@ -18,7 +18,9 @@ const TouchEventManager = {
     this.startingScrollLeft = null;
     this.startingScrollTop = null;
     this.containerWidth = 0;
+    this.containerHeight = 0;
     this.documentWidth = 0;
+    this.documentHeight = 0;
     this.lockTimeout = null;
     this.touch = {
       clientX: 0,
@@ -72,7 +74,9 @@ const TouchEventManager = {
         this.startingScrollLeft = this.container.scrollLeft;
         this.startingScrollTop = this.container.scrollTop;
         this.containerWidth = document.querySelector('.DocumentContainer').clientWidth;
+        this.containerHeight = document.querySelector('.DocumentContainer').clientHeight;
         this.documentWidth = document.querySelector('.document').clientWidth;
+        this.documentHeight = document.querySelector('.DocumentContainer').clientHeight;
         this.touch = {
           clientX: touch.clientX,
           clientY: touch.clientY,
@@ -125,9 +129,12 @@ const TouchEventManager = {
   isScrollingHorziontally() {
     return (Math.abs(this.horziontalMomentum) > this.momentumLockMin && this.verticalMomentum === 0) || (Math.abs(this.touch.horizontalDistance) > this.axisLockThreshold * Math.abs(this.touch.verticalDistance));
   },
-  isScrollLockingDisabled() {
+  canLockScrolling() {
+    const doesPagesFitOnScreen = this.documentWidth < this.containerWidth && this.documentHeight < this.containerHeight;
+    const alreadyLocked = this.verticalLock || this.horziontalLock;
+
     // using 'touchCount' to disable scroll locking when user is dragging
-    return this.touch.touchCount > 6 || this.verticalLock || this.horziontalLock;
+    return !doesPagesFitOnScreen && this.enableTouchScrollLock && this.touch.touchCount < 6 && !alreadyLocked;
   },
   handleTouchMove(e) {
     e.preventDefault();
@@ -135,14 +142,12 @@ const TouchEventManager = {
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
-        const doesPagesFitOnScreen = this.documentWidth < this.containerWidth;  
         this.touch.horizontalDistance = this.touch.clientX - t.clientX;
         this.touch.verticalDistance = this.touch.clientY - t.clientY;
-
-        if (!doesPagesFitOnScreen && !this.isScrollLockingDisabled()) {  
-          if (!this.horziontalLock && this.isScrollingVertically() ) {
+        if (this.canLockScrolling()) {
+          if (this.isScrollingVertically() ) {
             this.verticalLock = true;
-          } else if (!this.verticalLock && this.isScrollingHorziontally()) {
+          } else if (this.isScrollingHorziontally()) {
             this.horziontalLock = true;
           } 
         }
@@ -196,10 +201,12 @@ const TouchEventManager = {
     switch (this.touch.type) {
       case 'tap': {
         this.doubleTapTimeout = setTimeout(() => {
+          this.touch.type = ''; 
+        }, 300);
+
+        this.lockTimeout = setTimeout(() => {
           this.horziontalLock = false;
           this.verticalLock = false;
-          window.console.log('tap unlock');
-          this.touch.type = ''; 
         }, 0);
         break;
       }
@@ -242,11 +249,8 @@ const TouchEventManager = {
             this.touch.stopMomentumScroll = false;
             this.startMomentumScroll(touchDuration);
           } else {
-            this.lockTimeout = setTimeout(() => {
-              // use timeout for unlocking lock to keep it locked if user is rapidly swipping in one direction
-              this.horziontalLock = false;
-              this.verticalLock = false;
-            }, 0);
+            this.horziontalLock = false;
+            this.verticalLock = false;
           }
         }
         break;
@@ -283,7 +287,7 @@ const TouchEventManager = {
       }
     }
     this.touch.touchCount = 0;
-    // Need to preserve the previous momentum values during 'TouchMove' event. So clear their values in 'touchEnd'
+    // Need to preserve the previous momentum values during 'TouchMove' event. So clear their values in 'touchEnd' instead of 'touchStart'
     this.verticalMomentum = 0;
     this.horziontalMomentum = 0;
   },
@@ -309,7 +313,7 @@ const TouchEventManager = {
       let isScrollingAlmostFinish = (Math.abs(this.container.scrollLeft - nextLeft) < this.momentumLockMin || Math.abs(this.container.scrollTop - nextTop) < this.momentumLockMin);
 
       if (isNotTouchEvent && isScrollingAlmostFinish) {
-        // disable lock when scrolling is mostly done and not in the middle of another touch event
+        // disable lock when momentum scrolling is mostly done and not in the middle of another touch event
         this.horziontalLock = false;
         this.verticalLock = false;
       }
