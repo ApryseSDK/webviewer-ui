@@ -208,6 +208,15 @@ const map = {
     availablePalettes: [],
     toolNames: [ 'MarqueeZoomTool' ],
     annotationCheck: null,
+  },
+
+  eraser: {
+    icon: 'ic_annotation_eraser_black_24px',
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: [ 'AnnotationEraserTool' ],
+    annotationCheck: null,
   }
 };
 
