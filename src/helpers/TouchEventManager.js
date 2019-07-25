@@ -17,10 +17,6 @@ const TouchEventManager = {
     this.enableTouchScrollLock = true;
     this.startingScrollLeft = null;
     this.startingScrollTop = null;
-    this.containerWidth = 0;
-    this.containerHeight = 0;
-    this.documentWidth = 0;
-    this.documentHeight = 0;
     this.touch = {
       clientX: 0,
       clientY: 0,
@@ -70,12 +66,6 @@ const TouchEventManager = {
         const scrollWidth = this.container.clientWidth;
         const viewerWidth = this.document.clientWidth;
         const isDoubleTap = this.touch.type === 'tap' && this.getDistance(this.touch, touch) <= 10;
-        this.startingScrollLeft = this.container.scrollLeft;
-        this.startingScrollTop = this.container.scrollTop;
-        this.containerWidth = document.querySelector('.DocumentContainer').clientWidth;
-        this.containerHeight = document.querySelector('.DocumentContainer').clientHeight;
-        this.documentWidth = document.querySelector('.document').clientWidth;
-        this.documentHeight = document.querySelector('.document').clientHeight;
         this.touch = {
           clientX: touch.clientX,
           clientY: touch.clientY,
@@ -87,6 +77,8 @@ const TouchEventManager = {
           stopMomentumScroll: true,
           touchCount: 0,
         };
+        this.startingScrollLeft = this.container.scrollLeft;
+        this.startingScrollTop = this.container.scrollTop;
         clearTimeout(this.doubleTapTimeout);
         break;
       }
@@ -119,16 +111,17 @@ const TouchEventManager = {
       }
     }
   },
-  momentumLockMin: 1,
   axisLockThreshold: 8,
   isScrollingVertically() {
-    return (Math.abs(this.verticalMomentum) > this.momentumLockMin && this.horziontalMomentum === 0) || (Math.abs(this.touch.verticalDistance) > this.axisLockThreshold * Math.abs(this.touch.horizontalDistance));
+    return (Math.abs(this.verticalMomentum) > 0 && this.horziontalMomentum === 0) || (Math.abs(this.touch.verticalDistance) > this.axisLockThreshold * Math.abs(this.touch.horizontalDistance));
   },
   isScrollingHorziontally() {
-    return (Math.abs(this.horziontalMomentum) > this.momentumLockMin && this.verticalMomentum === 0) || (Math.abs(this.touch.horizontalDistance) > this.axisLockThreshold * Math.abs(this.touch.verticalDistance));
+    return (Math.abs(this.horziontalMomentum) > 0 && this.verticalMomentum === 0) || (Math.abs(this.touch.horizontalDistance) > this.axisLockThreshold * Math.abs(this.touch.verticalDistance));
   },
   canLockScrolling() {
-    const doesPagesFitOnScreen = this.documentWidth < this.containerWidth && this.documentHeight < this.containerHeight;
+    const { container, document: doc } = this;
+
+    const doesPagesFitOnScreen = doc.clientWidth < container.clientWidth && doc.clientHeight < container.clientHeight;
     const alreadyLocked = this.verticalLock || this.horziontalLock;
 
     // using 'touchCount' to disable scroll locking when user is dragging
@@ -202,10 +195,8 @@ const TouchEventManager = {
           this.touch.type = ''; 
         }, 300);
 
-        setTimeout(() => {
-          this.horziontalLock = false;
-          this.verticalLock = false;
-        }, 0);
+        this.horziontalLock = false;
+        this.verticalLock = false;
         break;
       }
       case 'swipe': {
@@ -285,7 +276,7 @@ const TouchEventManager = {
       }
     }
     this.touch.touchCount = 0;
-    // Need to preserve the previous momentum values during 'TouchMove' event. So clear their values in 'touchEnd' instead of 'touchStart'
+    // Want to use momentum values during 'TouchMove' event, so clear values in 'touchEnd' instead of 'touchStart'
     this.verticalMomentum = 0;
     this.horziontalMomentum = 0;
   },
@@ -293,22 +284,29 @@ const TouchEventManager = {
     this.handleTouchEnd(e);
   },
   startMomentumScroll(touchDuration) {
-    let currentIteration = 0;
+    let currentIteration = 1;
     const iterationsCount = 70;
+    const momentumUnlockThreshold = 1;
     const initScrollLeft = this.container.scrollLeft;
     const initScrollTop = this.container.scrollTop;
     const dHorizontal = this.touch.horizontalDistance / touchDuration / 1.85;
     const dVertical = this.touch.verticalDistance / touchDuration / 1.85;
     const momentumScroll = () => {
-      this.container.scrollLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
-      this.container.scrollTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
+      const nextLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
+      const nextTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
       this.verticalMomentum = dVertical;
       this.horziontalMomentum = dHorizontal;   
-      
-      let isNotTouchEvent =  !this.touch.touchCount;
-      let isMomentumScrollAlmostFinish = (Math.abs(this.verticalMomentum) < this.momentumLockMin || Math.abs(this.horziontalMomentum) < this.momentumLockMin);
 
-      if (isNotTouchEvent && isMomentumScrollAlmostFinish) {
+      // 'handleTouchEnd' should set 'touchCount' to 0, using that to determine if a new touch event happened
+      const isNotNewTouchEvent = !this.touch.touchCount;
+      const horzDiff = this.container.scrollLeft - nextLeft;
+      const vertDiff = this.container.scrollTop - nextTop;
+      const isMomentumScrollAlmostFinish = (Math.abs(horzDiff) < momentumUnlockThreshold) && (Math.abs(vertDiff) < momentumUnlockThreshold);
+
+      this.container.scrollLeft = nextLeft;
+      this.container.scrollTop = nextTop;
+
+      if (isNotNewTouchEvent && isMomentumScrollAlmostFinish) {
         // disable lock when momentum scrolling is mostly done and not in the middle of another touch event
         this.horziontalLock = false;
         this.verticalLock = false;
@@ -317,6 +315,11 @@ const TouchEventManager = {
       if (currentIteration < iterationsCount && !this.touch.stopMomentumScroll) {
         currentIteration++;
         requestAnimationFrame(momentumScroll);
+      } else if (isNotNewTouchEvent) {
+        this.horziontalLock = false;
+        this.verticalLock = false;
+        this.verticalMomentum = 0;
+        this.horziontalMomentum = 0;
       }
     }; 
     
