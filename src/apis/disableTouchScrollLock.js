@@ -1,5 +1,3 @@
-import TouchEventManager from 'helpers/TouchEventManager';
-
 /**
  * Disable locking when scrolling on touch screen
  * @method WebViewer#disableTouchScrollLock
@@ -17,6 +15,9 @@ viewerElement.addEventListener('ready', function() {
   instance.disableTouchScrollLock();
 });
 */
+
+import TouchEventManager from 'helpers/TouchEventManager';
+
 export default () => {
   TouchEventManager.enableTouchScrollLock = false;
 };

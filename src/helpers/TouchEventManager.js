@@ -21,7 +21,6 @@ const TouchEventManager = {
     this.containerHeight = 0;
     this.documentWidth = 0;
     this.documentHeight = 0;
-    this.lockTimeout = null;
     this.touch = {
       clientX: 0,
       clientY: 0,
@@ -88,7 +87,6 @@ const TouchEventManager = {
           stopMomentumScroll: true,
           touchCount: 0,
         };
-        clearTimeout(this.lockTimeout);
         clearTimeout(this.doubleTapTimeout);
         break;
       }
@@ -204,7 +202,7 @@ const TouchEventManager = {
           this.touch.type = ''; 
         }, 300);
 
-        this.lockTimeout = setTimeout(() => {
+        setTimeout(() => {
           this.horziontalLock = false;
           this.verticalLock = false;
         }, 0);
