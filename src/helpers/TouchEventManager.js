@@ -75,7 +75,7 @@ const TouchEventManager = {
           type: isDoubleTap ? 'doubleTap' : 'tap',
           touchStartTimeStamp: Date.now(),
           stopMomentumScroll: true,
-          touchCount: 0,
+          touchMoveCount: 0,
         };
         this.startingScrollLeft = this.container.scrollLeft;
         this.startingScrollTop = this.container.scrollTop;
@@ -123,8 +123,8 @@ const TouchEventManager = {
     const doesPagesFitOnScreen = doc.clientWidth < container.clientWidth || doc.clientHeight < container.clientHeight;
     const alreadyLocked = this.verticalLock || this.horziontalLock;
 
-    // using 'touchCount' to disable scroll locking when user is dragging
-    return !doesPagesFitOnScreen && this.enableTouchScrollLock && this.touch.touchCount < 6 && !alreadyLocked;
+    // using 'touchMoveCount' to disable scroll locking when user is dragging
+    return !doesPagesFitOnScreen && this.enableTouchScrollLock && this.touch.touchMoveCount < 6 && !alreadyLocked;
   },
   handleTouchMove(e) {
     e.preventDefault();
@@ -157,7 +157,7 @@ const TouchEventManager = {
           }
         }
 
-        this.touch.touchCount++;
+        this.touch.touchMoveCount++;
         break;
       }
       case 2: {
@@ -271,7 +271,7 @@ const TouchEventManager = {
         break;
       }
     }
-    this.touch.touchCount = 0;
+    this.touch.touchMoveCount = 0;
     // Want to use momentum values during 'TouchMove' event, so clear values in 'touchEnd' instead of 'touchStart'
     this.verticalMomentum = 0;
     this.horziontalMomentum = 0;
@@ -293,8 +293,8 @@ const TouchEventManager = {
       this.verticalMomentum = dVertical;
       this.horziontalMomentum = dHorizontal;   
 
-      // 'handleTouchEnd' should set 'touchCount' to 0, using that to determine if a new touch event happened
-      const isNotNewTouchEvent = !this.touch.touchCount;
+      // 'handleTouchEnd' should set 'touchMoveCount' to 0, using that to determine if a new touch event happened
+      const isNotNewTouchEvent = !this.touch.touchMoveCount;
       const horzDiff = this.container.scrollLeft - nextLeft;
       const vertDiff = this.container.scrollTop - nextTop;
       const isMomentumScrollAlmostFinish = (Math.abs(horzDiff) < momentumUnlockThreshold) && (Math.abs(vertDiff) < momentumUnlockThreshold);
