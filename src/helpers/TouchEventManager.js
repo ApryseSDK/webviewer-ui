@@ -120,8 +120,7 @@ const TouchEventManager = {
   },
   canLockScrolling() {
     const { container, document: doc } = this;
-
-    const doesPagesFitOnScreen = doc.clientWidth < container.clientWidth && doc.clientHeight < container.clientHeight;
+    const doesPagesFitOnScreen = doc.clientWidth < container.clientWidth || doc.clientHeight < container.clientHeight;
     const alreadyLocked = this.verticalLock || this.horziontalLock;
 
     // using 'touchCount' to disable scroll locking when user is dragging
@@ -136,11 +135,8 @@ const TouchEventManager = {
         this.touch.horizontalDistance = this.touch.clientX - t.clientX;
         this.touch.verticalDistance = this.touch.clientY - t.clientY;
         if (this.canLockScrolling()) {
-          if (this.isScrollingVertically() ) {
-            this.verticalLock = true;
-          } else if (this.isScrollingHorziontally()) {
-            this.horziontalLock = true;
-          } 
+          this.verticalLock = this.isScrollingVertically();
+          this.horziontalLock = this.isScrollingHorziontally();
         }
 
         if (this.getDistance(this.touch, t) > 10) {
