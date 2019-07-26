@@ -297,6 +297,7 @@ const TouchEventManager = {
       const isNotNewTouchEvent = !this.touch.touchMoveCount;
       const horzDiff = this.container.scrollLeft - nextLeft;
       const vertDiff = this.container.scrollTop - nextTop;
+      // if momentum is small enought that it doesn't look like it's moving, disable scroll locking
       const isMomentumScrollAlmostFinish = (Math.abs(horzDiff) < momentumUnlockThreshold) && (Math.abs(vertDiff) < momentumUnlockThreshold);
 
       this.container.scrollLeft = nextLeft;
@@ -313,6 +314,7 @@ const TouchEventManager = {
         requestAnimationFrame(momentumScroll);
       }
       if (isNotNewTouchEvent && currentIteration === iterationsCount) {
+        // if the page is against the sides and the users swipe quickly, it tries to set Scroll to a value that is outside the range and 'isMomentumScrollAlmostFinish' is never true
         this.horziontalLock = false;
         this.verticalLock = false;
         this.verticalMomentum = 0;
