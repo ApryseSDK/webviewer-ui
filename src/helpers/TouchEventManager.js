@@ -315,7 +315,8 @@ const TouchEventManager = {
       if (currentIteration < iterationsCount && !this.touch.stopMomentumScroll) {
         currentIteration++;
         requestAnimationFrame(momentumScroll);
-      } else if (isNotNewTouchEvent) {
+      }
+      if (isNotNewTouchEvent && currentIteration === iterationsCount) {
         this.horziontalLock = false;
         this.verticalLock = false;
         this.verticalMomentum = 0;
