@@ -208,9 +208,7 @@ const getDocOptions = (state, dispatch, streaming) => {
         };
         const workerHandlers = {
           workerLoadingProgress: percent => {
-            if (engineType === engineTypes.PDFTRON_SERVER && file && file.name) {
               dispatch(actions.setWorkerLoadingProgress(percent));
-            }
           }
         };
 
