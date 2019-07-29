@@ -24,6 +24,7 @@ class NotePopup extends React.Component {
     isDisabled: PropTypes.bool,
     isEditDisabled: PropTypes.bool,
     isDeleteDisabled: PropTypes.bool,
+    isStateDisabled: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -57,16 +58,37 @@ class NotePopup extends React.Component {
     this.props.openEditing();
   }
 
+  onAccept = () => {
+    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'Accepted');
+  }
+
+  onReject = () => {
+    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'Rejected');
+  }
+
+  onCancel = () => {
+    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'Cancelled');
+  }
+
+  onComplete = () => {
+    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'Completed');
+  }
+
+  onNone = () => {
+    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'None');
+  }
+
   render() {
-    const { t, isNoteExpanded, notePopupId, annotation, onDelete, isDisabled, isEditDisabled, isDeleteDisabled } = this.props;
+    const { t, isNoteExpanded, notePopupId, annotation, onDelete, isDisabled, isEditDisabled, isDeleteDisabled, isStateDisabled } = this.props;
     const isOpen = notePopupId === annotation.Id;
     const className = getClassName('modify', { isOpen });
+    const isReply = annotation.isReply();
 
     if (!core.canModify(annotation) || !isNoteExpanded || isDisabled) {
       return null;
     }
 
-    return(
+    return (
       <div className="NotePopup" data-element="notePopup" onClick={e => e.stopPropagation()}>
         <div className="overflow" onClick={this.togglePopup}>
           <Icon glyph="ic_overflow_black_24px" />
@@ -77,6 +99,15 @@ class NotePopup extends React.Component {
           }
           {!isDeleteDisabled &&
             <div data-element="notePopupDelete" onClick={onDelete}>{t('action.delete')}</div>
+          }
+          {!isStateDisabled && !isReply &&
+            <div data-element="notePopupState"><p data-element="notePopupSetStatus">{t('state.set')}</p>
+              <div data-element="notePopupStateAccepted" onClick={this.onAccept}>{t('state.accepted')}</div>
+              <div data-element="notePopupStateRejected" onClick={this.onReject}>{t('state.rejected')}</div>
+              <div data-element="notePopupStateCancelled" onClick={this.onCancel}>{t('state.cancelled')}</div>
+              <div data-element="notePopupStateCompleted" onClick={this.onComplete}>{t('state.completed')}</div>
+              <div data-element="notePopupStateNone" onClick={this.onNone}>{t('state.none')}</div>
+            </div>
           }
         </div>
       </div>
@@ -89,6 +120,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'notePopup'),
   isEditDisabled: selectors.isElementDisabled(state, 'notePopupEdit'),
   isDeleteDisabled: selectors.isElementDisabled(state, 'notePopupDelete'),
+  isStateDisabled: selectors.isElementDisabled(state, 'notePopopState'),
 });
 
 const mapDispatchToProps = {

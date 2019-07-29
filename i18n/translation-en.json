@@ -167,6 +167,14 @@
       "precision": "Precision"
     }
   },
+  "state": {
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "set": "Set status:",
+    "none": "None"
+  },
   "shortcut": {
     "arrow": "(A)",
     "callout": "(C)",
