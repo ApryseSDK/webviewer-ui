@@ -79,6 +79,7 @@ export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorM
 export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 export const getZoomList = state => state.viewer.zoomList;
+export const getMeasurementUnits = state => state.viewer.measurementUnits;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning && state.viewer.warning.message || '';
@@ -103,7 +104,7 @@ export const getPasswordAttempts = state => state.document.passwordAttempts;
 export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 export const getOutlines = state => state.document.outlines;
-export const getLoadingProgress = state => Math.min(state.document.documentLoadingProgress, state.document.workerLoadingProgress);
+export const getLoadingProgress = state => (state.document.documentLoadingProgress + state.document.workerLoadingProgress) / 2;
 export const getUploadProgress = state => state.document.uploadProgress;
 export const isUploading = state => state.document.isUploading;
 
