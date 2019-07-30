@@ -36,6 +36,7 @@ class NoteRoot extends React.Component {
   renderHeader = () => {
     const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor, icon } = this.props;
     const color = iconColor && annotation[iconColor] && annotation[iconColor].toHexString();
+
     return (
       <div className="title">
         <div className="type">
@@ -68,10 +69,14 @@ class NoteRoot extends React.Component {
 
   render() {
     const { annotation, renderContents, isEditing, closeEditing, searchInput, contents } = this.props;
+    const annotationState = annotation.getStatus();
 
     return (
       <div className="NoteRoot">
         {this.renderHeader()}
+        {annotationState && annotationState !== '' && annotationState !== 'None' &&
+          <div className="status">Status: {annotationState}</div>
+        }
         <NoteContents
           annotation={annotation}
           contents={contents}

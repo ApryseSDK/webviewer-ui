@@ -1,5 +1,12 @@
 @import '../../constants/note';
+@import '../../constants/styles';
 
 .NoteRoot {
   @extend %title;
+
+  .status {
+    margin-left: 30px;
+    color: $gray54;
+    margin-bottom: 5px;
+  }
 }
