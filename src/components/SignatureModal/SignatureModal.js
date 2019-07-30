@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
@@ -35,17 +36,7 @@ class SignatureModal extends React.PureComponent {
     this.state = this.initialState;
   }
 
-  componentDidMount() {
-    this.setUpSignatureCanvas();
-    window.addEventListener('resize', this.setSignatureCanvasSize);
-    window.addEventListener('orientationchange', this.setSignatureCanvasSize);
-  }
-
   componentDidUpdate(prevProps) {
-    if (prevProps.isDisabled && !this.props.isDisabled && !this.isCanvasReady) {
-      this.setUpSignatureCanvas();
-    }
-
     if (!prevProps.isOpen && this.props.isOpen) {
       core.setToolMode('AnnotationCreateSignature');
       this.setState(this.initialState);
@@ -59,63 +50,11 @@ class SignatureModal extends React.PureComponent {
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.setSignatureCanvasSize);
-    window.removeEventListener(
-      'orientationchange',
-      this.setSignatureCanvasSize
-    );
-  }
-
-  setUpSignatureCanvas = () => {
-    const canvas = this.canvas.current;
-    if (!canvas) {
-      return;
-    }
-
-    this.signatureTool.setSignatureCanvas(canvas);
-
-    const multiplier = window.utils.getCanvasMultiplier();
-    canvas.getContext('2d').scale(multiplier, multiplier);
-    canvas.addEventListener('mouseup', this.handleFinishDrawing);
-    canvas.addEventListener('touchend', this.handleFinishDrawing);
-    this.setSignatureCanvasSize();
-    this.isCanvasReady = true;
-  };
-
-  setSignatureCanvasSize = () => {
-    if (!this.canvas.current) {
-      return;
-    }
-
-    const canvas = this.canvas.current;
-    const { width, height } = canvas.getBoundingClientRect();
-    canvas.width = width;
-    canvas.height = height;
-  };
-
-  handleFinishDrawing = e => {
-    if (
-      e.target === e.currentTarget &&
-      !this.signatureTool.isEmptySignature()
-    ) {
-      this.setState({
-        canClear: true,
-        saveSignature: true
-      });
-    }
-  };
-
   closeModal = () => {
     this.clearCanvas();
     this.signatureTool.clearLocation();
     this.props.closeElement('signatureModal');
     core.setToolMode(defaultTool);
-  };
-
-  clearCanvas = () => {
-    this.signatureTool.clearSignatureCanvas();
-    this.setState(this.initialState);
   };
 
   handleInputChange = e => {
@@ -229,23 +168,7 @@ class SignatureModal extends React.PureComponent {
 
             <TabPanels>
               <TabPanel>
-                {/* <InkCanvas /> */}
-                <div className="signature">
-                  <canvas className="signature-canvas" ref={this.canvas} />
-                  <div className="signature-background">
-                    <div className="signature-sign-here">
-                      {t('message.signHere')}
-                    </div>
-                    <div
-                      className={`signature-clear ${
-                        canClear ? 'active' : null
-                      }`}
-                      onClick={this.clearCanvas}
-                    >
-                      {t('action.clear')}
-                    </div>
-                  </div>
-                </div>
+                <InkCanvas />
               </TabPanel>
               <TabPanel>
                 <div>Type</div>
@@ -293,6 +216,78 @@ export default connect(
   mapDispatchToProps
 )(translate()(SignatureModal));
 
-const InkCanvas = () => {
+let InkCanvas = ({ t }) => {
+  const canvasRef = useRef();
+  const [canClear, setCanClear] = useState(false);
+  const signatureTool = core.getTool('AnnotationCreateSignature');
 
+  const setSignatureCanvasSize = () => {
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const { width, height } = canvas.getBoundingClientRect();
+      canvas.width = width;
+      canvas.height = height;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', setSignatureCanvasSize);
+    window.addEventListener('orientationchange', setSignatureCanvasSize);
+
+    return () => {
+      window.removeEventListener('resize', setSignatureCanvasSize);
+      window.removeEventListener('orientationchange', setSignatureCanvasSize);
+    };
+  });
+
+  useEffect(() => {
+    const handleFinishDrawing = () => {
+      console.log('here');
+      if (!signatureTool.isEmptySignature()) {
+        setCanClear(true);
+      }
+    };
+
+    const canvas = canvasRef.current;
+    if (canvas) {
+      signatureTool.setSignatureCanvas(canvas);
+
+      const multiplier = window.utils.getCanvasMultiplier();
+      canvas.getContext('2d').scale(multiplier, multiplier);
+      canvas.addEventListener('mouseup', handleFinishDrawing);
+      canvas.addEventListener('touchend', handleFinishDrawing);
+
+      setSignatureCanvasSize();
+
+      return () => {
+        canvas.removeEventListener('mouseup', handleFinishDrawing);
+        canvas.removeEventListener('touchend', handleFinishDrawing);
+      };
+    }
+  }, []);
+
+  const clearCanvas = () => {
+    signatureTool.clearSignatureCanvas();
+    setCanClear(false);
+  };
+
+  const clearBtnClass = classNames({
+    'signature-clear': true,
+    active: canClear
+  });
+
+  return (
+    <div className="signature">
+      <canvas className="signature-canvas" ref={canvasRef} />
+      <div className="signature-background">
+        <div className="signature-sign-here">{t('message.signHere')}</div>
+        <div className={clearBtnClass} onClick={clearCanvas}>
+          {t('action.clear')}
+        </div>
+      </div>
+    </div>
+  );
 };
+
+InkCanvas = translate()(InkCanvas);
