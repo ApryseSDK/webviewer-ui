@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'components/Tabs';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
@@ -20,7 +21,7 @@ class SignatureModal extends React.PureComponent {
     t: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -28,7 +29,7 @@ class SignatureModal extends React.PureComponent {
     this.signatureTool = core.getTool('AnnotationCreateSignature');
     this.initialState = {
       saveSignature: false,
-      canClear: false, 
+      canClear: false,
       inputValue: ''
     };
     this.state = this.initialState;
@@ -49,13 +50,21 @@ class SignatureModal extends React.PureComponent {
       core.setToolMode('AnnotationCreateSignature');
       this.setState(this.initialState);
       this.signatureTool.clearSignatureCanvas();
-      this.props.closeElements([ 'printModal', 'loadingModal', 'progressModal', 'errorModal' ]); 
+      this.props.closeElements([
+        'printModal',
+        'loadingModal',
+        'progressModal',
+        'errorModal'
+      ]);
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.setSignatureCanvasSize);
-    window.removeEventListener('orientationchange', this.setSignatureCanvasSize);
+    window.removeEventListener(
+      'orientationchange',
+      this.setSignatureCanvasSize
+    );
   }
 
   setUpSignatureCanvas = () => {
@@ -65,14 +74,14 @@ class SignatureModal extends React.PureComponent {
     }
 
     this.signatureTool.setSignatureCanvas(canvas);
-    
+
     const multiplier = window.utils.getCanvasMultiplier();
-    canvas.getContext('2d').scale(multiplier, multiplier);   
+    canvas.getContext('2d').scale(multiplier, multiplier);
     canvas.addEventListener('mouseup', this.handleFinishDrawing);
     canvas.addEventListener('touchend', this.handleFinishDrawing);
     this.setSignatureCanvasSize();
     this.isCanvasReady = true;
-  }
+  };
 
   setSignatureCanvasSize = () => {
     if (!this.canvas.current) {
@@ -83,11 +92,11 @@ class SignatureModal extends React.PureComponent {
     const { width, height } = canvas.getBoundingClientRect();
     canvas.width = width;
     canvas.height = height;
-  }
+  };
 
   handleFinishDrawing = e => {
     if (
-      e.target === e.currentTarget && 
+      e.target === e.currentTarget &&
       !this.signatureTool.isEmptySignature()
     ) {
       this.setState({
@@ -95,19 +104,19 @@ class SignatureModal extends React.PureComponent {
         saveSignature: true
       });
     }
-  }
+  };
 
-  closeModal = () => { 
+  closeModal = () => {
     this.clearCanvas();
     this.signatureTool.clearLocation();
     this.props.closeElement('signatureModal');
     core.setToolMode(defaultTool);
-  }
+  };
 
   clearCanvas = () => {
     this.signatureTool.clearSignatureCanvas();
     this.setState(this.initialState);
-  }
+  };
 
   handleInputChange = e => {
     const text = e.target.value;
@@ -129,9 +138,9 @@ class SignatureModal extends React.PureComponent {
         inputValue: text
       });
     } else {
-      this.setState(this.initialState);      
+      this.setState(this.initialState);
     }
-  }
+  };
 
   handleFileChange = e => {
     this.signatureTool.clearSignatureCanvas();
@@ -145,11 +154,11 @@ class SignatureModal extends React.PureComponent {
       image.onload = () => {
         const canvas = this.canvas.current;
         const ctx = this.canvas.current.getContext('2d');
-  
+
         ctx.drawImage(
-          image, 
-          canvas.width / 2 - image.width / 2, 
-          canvas.height / 2 - image.height / 2,
+          image,
+          canvas.width / 2 - image.width / 2,
+          canvas.height / 2 - image.height / 2
         );
 
         this.signatureTool.setSignature(imageData);
@@ -157,17 +166,17 @@ class SignatureModal extends React.PureComponent {
       };
     };
     fileReader.readAsDataURL(e.target.files[0]);
-  }
+  };
 
   handleSaveSignatureChange = () => {
     this.setState(prevState => ({
       saveSignature: !prevState.saveSignature
     }));
-  }
+  };
 
   createSignature = () => {
     const { closeElement } = this.props;
-    
+
     if (!this.signatureTool.isEmptySignature()) {
       if (this.state.saveSignature) {
         this.signatureTool.saveSignatures(this.signatureTool.annot);
@@ -179,7 +188,7 @@ class SignatureModal extends React.PureComponent {
       }
       closeElement('signatureModal');
     }
-  }
+  };
 
   render() {
     const { canClear } = this.state;
@@ -192,29 +201,76 @@ class SignatureModal extends React.PureComponent {
 
     return (
       <div className={className} onClick={this.closeModal}>
-        <div className="container" onClick={e => e.stopPropagation()} onMouseUp={this.handleFinishDrawing}>
-          <div className="header">
-            <input type="file" accept="image/png, image/jpeg" onChange={this.handleFileChange} />
-            <input value={this.state.inputValue} type="text" onChange={this.handleInputChange} />
-            <ActionButton dataElement="signatureModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} />
-          </div>
-          <div className="signature">
-            <canvas className="signature-canvas" ref={this.canvas}></canvas>
-            <div className="signature-background">
-              <div className="signature-sign-here">
-                {t('message.signHere')}
-              </div>
-              <div className={`signature-clear ${canClear ? 'active' : null}`} onClick={this.clearCanvas}>
-                {t('action.clear')}
-              </div>
+        <div
+          className="container"
+          onClick={e => e.stopPropagation()}
+          onMouseUp={this.handleFinishDrawing}
+        >
+          <Tabs>
+            <div className="header">
+              <TabList>
+                <Tab>
+                  <p>Draw</p>
+                </Tab>
+                <Tab>
+                  <p>Type</p>
+                </Tab>
+                <Tab>
+                  <p>Upload</p>
+                </Tab>
+              </TabList>
+              <ActionButton
+                dataElement="signatureModalCloseButton"
+                title="action.close"
+                img="ic_close_black_24px"
+                onClick={this.closeModal}
+              />
             </div>
-          </div>
+
+            <TabPanels>
+              <TabPanel>
+                {/* <InkCanvas /> */}
+                <div className="signature">
+                  <canvas className="signature-canvas" ref={this.canvas} />
+                  <div className="signature-background">
+                    <div className="signature-sign-here">
+                      {t('message.signHere')}
+                    </div>
+                    <div
+                      className={`signature-clear ${
+                        canClear ? 'active' : null
+                      }`}
+                      onClick={this.clearCanvas}
+                    >
+                      {t('action.clear')}
+                    </div>
+                  </div>
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div>Type</div>
+              </TabPanel>
+              <TabPanel>
+                <div>Upload</div>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+
           <div className="footer">
             <div className="signature-save">
-              <input id="default-signature" type="checkbox" checked={this.state.saveSignature} onChange={this.handleSaveSignatureChange} />
-              <label htmlFor="default-signature">{t('action.saveSignature')}</label>
+              <input
+                id="default-signature"
+                type="checkbox"
+                checked={this.state.saveSignature}
+                onChange={this.handleSaveSignatureChange}
+              />
+              <label htmlFor="default-signature">
+                {t('action.saveSignature')}
+              </label>
             </div>
-            <div className="signature-create" onClick={this.createSignature}>{t('action.create')}</div>
+            <div className="signature-create" onClick={this.createSignature}>
+              {t('action.create')}
+            </div>
           </div>
         </div>
       </div>
@@ -224,7 +280,7 @@ class SignatureModal extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'signatureModal'),
-  isOpen: selectors.isElementOpen(state, 'signatureModal'),
+  isOpen: selectors.isElementOpen(state, 'signatureModal')
 });
 
 const mapDispatchToProps = {
@@ -232,4 +288,11 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(SignatureModal));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(SignatureModal));
+
+const InkCanvas = () => {
+
+};
