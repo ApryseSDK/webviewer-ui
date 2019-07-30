@@ -24,16 +24,21 @@ const loadScript = (scriptSrc, warning) => {
 // ignore subsequent messages after successfully loads a config file
 const loadConfig = () => {  
   return new Promise(resolve => {
-    window.addEventListener('message', function loadConfig(e) {
-      if (e.data.type === 'responseConfig') {
-        loadScript(e.data.value, 'Config script could not be loaded').then(() => {
-          window.removeEventListener('message', loadConfig);
-          resolve();
-        });
-      }
-    });
-
-    window.parent.postMessage('requestConfig', '*');
+    if (window.parent === window) {
+      // resolve immediately if we are developing the UI on its own
+      resolve();
+    } else {
+      window.addEventListener('message', function loadConfig(e) {
+        if (e.data.type === 'responseConfig') {
+          loadScript(e.data.value, 'Config script could not be loaded').then(() => {
+            window.removeEventListener('message', loadConfig);
+            resolve();
+          });
+        }
+      });
+  
+      window.parent.postMessage('requestConfig', '*');
+    }
   });
 };
 
