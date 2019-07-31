@@ -8,6 +8,8 @@
     "comment": "Kommentar",
     "copy": "Kopieren",
     "delete": "Löschen",
+    "group": "Gruppe",
+    "ungroup": "Gruppierung aufheben",
     "download": "Download",
     "edit": "Bearbeiten",
     "enterFullscreen": "Vollbildansicht",
@@ -31,9 +33,7 @@
     "submit": "Abgeben",
     "zoom": "Zoom",
     "zoomIn": "Heranzoomen",
-    "zoomOut": "Rauszoomen",
-    "group": "Gruppe",
-    "ungroup": "Gruppierung aufheben"
+    "zoomOut": "Rauszoomen"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -61,7 +61,8 @@
     "stickyNote": "Kommentar",
     "strikeout": "Durchstreichen",
     "underline": "Unterstreichen",
-    "custom": "Angepasst"
+    "custom": "Angepasst",
+    "eraser": "Radiergummi"
   },
   "component": {
     "freehandToolsButton": "Freihand-Werkzeuge",
@@ -190,7 +191,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "Hand",
