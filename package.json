@@ -14,7 +14,7 @@
     "clean": "rimraf build",
     "bundle": "webpack --progress --config ./webpack.config.prod.js",
     "build": "npm run clean && npm run bundle",
-    "translation": "node ./scripts/translationCheck.js"
+    "translation": "node ./scripts/translate-i18n-files.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
@@ -29,6 +29,7 @@
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-stage-2": "^7.0.0",
+    "@google-cloud/translate": "^4.1.2",
     "@pdftron/webviewer-downloader": "^1.1.0",
     "adm-zip": "^0.4.13",
     "autolinker": "^1.7.1",
