@@ -23,22 +23,19 @@
 
   .no-results {
     @extend %center-of-panel;
+    display: none;
+
     &.visible {
       display: block;
-    }
-    &.hidden {
-      display: none;
     }
   }
 
   .notes-wrapper {
     overflow: auto;
+    display: none;
 
     &.visible {
       display: block;
-    }
-    &.hidden {
-      display: none;
     }
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import classNames from 'classnames';
 
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
@@ -21,31 +22,69 @@ class NotesPanel extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     pageLabels: PropTypes.array.isRequired,
     customNoteFilter: PropTypes.func,
-    t: PropTypes.func.isRequired
-  }
-  
-  constructor() {
-    super();
+    t: PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
     this.state = {
-      notesToRender: [], 
-      searchInput: ''
+      notes: [],
+      searchInput: '',
     };
-    this.visibleNoteIds = new Set();
     this.rootAnnotations = [];
-    this.updatePanelOnInput = _.debounce(this.updatePanelOnInput.bind(this), 500);
+    this.updatePanelOnInput = _.debounce(
+      this.updatePanelOnInput.bind(this),
+      500
+    );
+    // this.onAnnotationChanged = _.debounce(
+    //   this.onAnnotationChanged.bind(this),
+    //   500
+    // );
   }
 
   componentDidMount() {
     core.addEventListener('documentUnloaded', this.onDocumentUnloaded);
-    core.addEventListener('annotationChanged', this.onAnnotationChanged);
-    core.addEventListener('annotationHidden', this.onAnnotationChanged);
+    core.addEventListener('documentLoaded', this.renderNotes123);
+  }
+
+  renderNotes123 = () => {
+    console.log('here1');
+    window.docViewer.getAnnotationsLoadedPromise().then(() => {
+      console.log('here2');
+      const sortedAnnotationsList = getSortStrategies()[
+        this.props.sortStrategy
+      ].getSortedNotes(core.getAnnotationsList());
+  
+      const notes = [];
+  
+      for (let i = 0; i < sortedAnnotationsList.length; i++) {
+        const annot = sortedAnnotationsList[i];
+  
+        // if (!annot.Hidden && annot.Listable) {
+        //   annot._ui_isVisible = true;
+        // }
+  
+        if (!annot.isReply()) {
+          notes.push(annot);
+        }
+      }
+  
+      this.setState({
+        notes,
+      });
+
+      core.addEventListener('annotationChanged', this.onAnnotationChanged);
+      core.addEventListener('annotationHidden', this.onAnnotationChanged);
+    });
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.customNoteFilter !== this.props.customNoteFilter) {
-      const notesToRender = this.filterAnnotations(this.rootAnnotations, this.state.searchInput);
-      this.setVisibleNoteIds(notesToRender);
-      this.setState({ notesToRender });
+      const visibleNotes = this.filterAnnotations(
+        this.rootAnnotations,
+        this.state.searchInput
+      );
+      this.setState({ visibleNotes });
     }
   }
 
@@ -58,66 +97,87 @@ class NotesPanel extends React.PureComponent {
   onDocumentUnloaded = () => {
     this.visibleNoteIds.clear();
     this.rootAnnotations = [];
-    this.setState({ notesToRender: [] });
-  }
+    this.setState({ visibleNotes: [] });
+  };
 
   onAnnotationChanged = () => {
-    this.rootAnnotations = this.getRootAnnotations();
-    const notesToRender = this.filterAnnotations(this.rootAnnotations, this.state.searchInput);
-    const visibleNotes = notesToRender.filter(a => !a.Hidden);
+    const sortedAnnotationsList = getSortStrategies()[
+      this.props.sortStrategy
+    ].getSortedNotes(core.getAnnotationsList());
 
-    this.setVisibleNoteIds(visibleNotes);
-    this.setState({ notesToRender });
-  }
+    const notes = [];
 
-  getRootAnnotations = () => core.getAnnotationsList().filter(annotation => annotation.Listable && !annotation.isReply());
+    for (let i = 0; i < sortedAnnotationsList.length; i++) {
+      const annot = sortedAnnotationsList[i];
+
+      // if (!annot.Hidden && annot.Listable) {
+      //   annot._ui_isVisible = true;
+      // }
+
+      if (!annot.isReply()) {
+        notes.push(annot);
+      }
+    }
+
+    this.setState({
+      notes,
+    });
+  };
 
   handleInputChange = e => {
     const searchInput = e.target.value;
 
     this.updatePanelOnInput(searchInput);
-  }
+  };
 
   updatePanelOnInput = searchInput => {
     core.deselectAllAnnotations();
-    const notesToRender = this.filterAnnotations(this.rootAnnotations, searchInput);
+    const notesToRender = this.filterAnnotations(
+      this.rootAnnotations,
+      searchInput
+    );
 
     if (searchInput.trim()) {
-      core.selectAnnotations(notesToRender); 
+      core.selectAnnotations(notesToRender);
     }
 
     this.setVisibleNoteIds(notesToRender);
     this.setState({ notesToRender, searchInput });
-  }
+  };
 
   filterAnnotations = (annotations, searchInput) => {
     const { customNoteFilter } = this.props;
     let filteredAnnotations = annotations;
-    
+
     if (customNoteFilter) {
       filteredAnnotations = filteredAnnotations.filter(customNoteFilter);
     }
 
     if (searchInput.trim()) {
-      filteredAnnotations = filteredAnnotations.filter(rootAnnotation => this.filterNoteBasedOnInput(rootAnnotation, searchInput));
+      filteredAnnotations = filteredAnnotations.filter(rootAnnotation =>
+        this.filterNoteBasedOnInput(rootAnnotation, searchInput)
+      );
     }
 
     return filteredAnnotations;
-  }
+  };
 
   filterNoteBasedOnInput = (rootAnnotation, searchInput) => {
     const replies = rootAnnotation.getReplies();
     // reply is also a kind of annotation
     // https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#createAnnotationReply__anchor
-    const annotations = [ rootAnnotation, ...replies ];
+    const annotations = [rootAnnotation, ...replies];
 
     return annotations.some(annotation => {
       const content = annotation.getContents();
       const authorName = core.getDisplayAuthor(annotation);
 
-      return this.isInputIn(content, searchInput) || this.isInputIn(authorName, searchInput);
+      return (
+        this.isInputIn(content, searchInput) ||
+        this.isInputIn(authorName, searchInput)
+      );
     });
-  }
+  };
 
   isInputIn = (string, searchInput) => {
     if (!string) {
@@ -125,75 +185,90 @@ class NotesPanel extends React.PureComponent {
     }
 
     return string.search(new RegExp(searchInput, 'i')) !== -1;
-  }
+  };
 
-  setVisibleNoteIds = visibleNotes => {
-    this.visibleNoteIds.clear();
+  isNoteVisible = note => note.Listable && !note.Hidden;
 
-    visibleNotes.forEach(note => {
-      this.visibleNoteIds.add(note.Id);
-    });
-  }
-
-  getPrevNote = (sortedNotes, currNote) => {
-    const sortedVisibleNotes = sortedNotes.filter(note => this.isVisibleNote(note));
-    const sortedVisibleNoteIds = sortedVisibleNotes.map(note => note.Id);
-    const indexOfCurrNote = sortedVisibleNoteIds.indexOf(currNote.Id);
-
-    return indexOfCurrNote === 0 ? sortedVisibleNotes[indexOfCurrNote] : sortedVisibleNotes[indexOfCurrNote - 1]; 
-  }
-  
-  isVisibleNote = note => this.visibleNoteIds.has(note.Id)
-
-  renderNotesPanelContent = () => {
-    const {notesToRender} = this.state;
-    const sortStrategies = getSortStrategies();
+  renderNotesPanelContent = notes => {
+    const hasVisibleNotes = notes.some(this.isNoteVisible);
 
     return (
       <React.Fragment>
-        <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
-          {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
+        <div
+          className={classNames({
+            'notes-wrapper': true,
+            visible: hasVisibleNotes,
+          })}
+        >
+          {this.renderNotes(notes)}
         </div>
-        <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
+        <div
+          className={classNames({
+            'no-results': true,
+            visible: !hasVisibleNotes,
+          })}
+        >
           {this.props.t('message.noResults')}
         </div>
       </React.Fragment>
     );
-  }
+  };
 
   renderNotes = notes => {
-    return (
-      notes.map(note => {
-        return (
-          <React.Fragment key={note.Id + getLatestActivityDate(note)}>
-            {this.renderListSeparator(notes, note)}
-            <Note visible={this.isVisibleNote(note)} annotation={note} replies={note.getReplies()} searchInput={this.state.searchInput} rootContents={note.getContents()} />
-          </React.Fragment>
-        );
-      })
-    );
-  }
+    return notes.map((note, index) => {
+      const isVisible = this.isNoteVisible(note);
 
-  renderListSeparator = (notes, currNote) => {
+      return (
+        <div key={note.Id}>
+          {isVisible && this.renderListSeparator(notes, note, index)}
+          <Note
+            visible={isVisible}
+            annotation={note}
+            replies={note.getReplies()}
+            searchInput={this.state.searchInput}
+            rootContents={note.getContents()}
+          />
+        </div>
+        // <React.Fragment key={note.Id + getLatestActivityDate(note)}>
+        // </React.Fragment>
+      );
+    });
+  };
+
+  renderListSeparator = (notes, currNote, index) => {
     const { sortStrategy, pageLabels } = this.props;
-    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
-    const prevNote = this.getPrevNote(notes, currNote);
-    const isFirstNote = prevNote === currNote;
+    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
+      sortStrategy
+    ];
+    const prevNote =
+      this.prevVisibleNoteIndex === -1
+        ? null
+        : notes[this.prevVisibleNoteIndex];
+
+    this.prevVisibleNoteIndex = index;
 
     if (
-      this.isVisibleNote(currNote) &&
-      shouldRenderSeparator && 
+      shouldRenderSeparator &&
       getSeparatorContent &&
-      (isFirstNote || shouldRenderSeparator(prevNote, currNote))
+      (!prevNote || shouldRenderSeparator(prevNote, currNote))
     ) {
-      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, {pageLabels})} />;
+      return (
+        <ListSeparator
+          renderContent={() =>
+            getSeparatorContent(prevNote, currNote, { pageLabels })
+          }
+        />
+      );
     }
 
     return null;
-  }
+  };
 
   render() {
+    this.prevVisibleNoteIndex = -1;
+
     const { isDisabled, display, t } = this.props;
+    const { notes } = this.state;
 
     if (isDisabled) {
       return null;
@@ -207,20 +282,21 @@ class NotesPanel extends React.PureComponent {
         onClick={core.deselectAllAnnotations}
         onScroll={e => e.stopPropagation()}
       >
-        {this.rootAnnotations.length === 0 
-          ? <div className="no-annotations">{t('message.noAnnotations')}</div>
-          : <React.Fragment>
+        {notes.length === 0 ? (
+          <div className="no-annotations">{t('message.noAnnotations')}</div>
+        ) : (
+          <React.Fragment>
             <div className="header">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder={t('message.searchPlaceholder')}
-                onChange={this.handleInputChange} 
+                onChange={this.handleInputChange}
               />
               <Dropdown items={Object.keys(getSortStrategies())} />
             </div>
-            {this.renderNotesPanelContent()}
+            {this.renderNotesPanelContent(notes)}
           </React.Fragment>
-        }
+        )}
       </div>
     );
   }
@@ -231,7 +307,7 @@ const mapStatesToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state),
   pageRotation: selectors.getRotation(state),
-  customNoteFilter: selectors.getCustomNoteFilter(state)
+  customNoteFilter: selectors.getCustomNoteFilter(state),
 });
 
 export default connect(mapStatesToProps)(translate()(NotesPanel));
