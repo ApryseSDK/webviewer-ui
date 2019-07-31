@@ -13,9 +13,10 @@
     "clean": "rimraf build",
     "bundle": "webpack --progress --config ./webpack.config.prod.js",
     "build": "npm run clean && npm run bundle",
-    "translation": "node ./scripts/translationCheck.js"
+    "translation": "node ./scripts/translate-i18n-files.js"
   },
   "devDependencies": {
+    "@google-cloud/translate": "^4.1.2",
     "@pdftron/webviewer-downloader": "^1.1.0",
     "autolinker": "^1.7.1",
     "babel-cli": "^6.24.1",
@@ -31,7 +32,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^3.0.0",
     "cssnano": "^4.1.10",
-    "cypress": "^3.1.4",
+    "cypress": "^3.4.1",
     "dayjs": "^1.7.5",
     "eslint": "^5.12.0",
     "eslint-plugin-babel": "^5.1.0",
@@ -71,5 +72,7 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "author": "PDFTron Systems Inc.",
-  "dependencies": {}
+  "dependencies": {
+    "classnames": "^2.2.6"
+  }
 }

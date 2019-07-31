@@ -172,7 +172,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
 };
 
 const getDocOptions = (state, dispatch, streaming) => {
-  const { id: docId, officeType, pdfType, password, file } = state.document;
+  const { id: docId, officeType, pdfType, password } = state.document;
   const engineType = getEngineType(state);
 
   return new Promise(resolve => {
@@ -208,7 +208,7 @@ const getDocOptions = (state, dispatch, streaming) => {
         };
         const workerHandlers = {
           workerLoadingProgress: percent => {
-              dispatch(actions.setWorkerLoadingProgress(percent));
+            dispatch(actions.setWorkerLoadingProgress(percent));
           }
         };
 
