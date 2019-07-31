@@ -58,24 +58,8 @@ class NotePopup extends React.Component {
     this.props.openEditing();
   }
 
-  onAccept = () => {
-    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'Accepted');
-  }
-
-  onReject = () => {
-    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'Rejected');
-  }
-
-  onCancel = () => {
-    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'Cancelled');
-  }
-
-  onComplete = () => {
-    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'Completed');
-  }
-
-  onNone = () => {
-    core.getAnnotationManager().updateAnnotationState(this.props.annotation, 'None');
+  onStateUpdate = state => {
+    core.getAnnotationManager().updateAnnotationState(this.props.annotation, state);
   }
 
   render() {
@@ -101,12 +85,12 @@ class NotePopup extends React.Component {
             <div data-element="notePopupDelete" onClick={onDelete}>{t('action.delete')}</div>
           }
           {!isStateDisabled && !isReply &&
-            <div data-element="notePopupState"><p data-element="notePopupSetStatus">{t('state.set')}</p>
-              <div data-element="notePopupStateAccepted" onClick={this.onAccept}>{t('state.accepted')}</div>
-              <div data-element="notePopupStateRejected" onClick={this.onReject}>{t('state.rejected')}</div>
-              <div data-element="notePopupStateCancelled" onClick={this.onCancel}>{t('state.cancelled')}</div>
-              <div data-element="notePopupStateCompleted" onClick={this.onComplete}>{t('state.completed')}</div>
-              <div data-element="notePopupStateNone" onClick={this.onNone}>{t('state.none')}</div>
+            <div data-element="notePopupState"><p data-element="notePopupSetStatus">{t('option.state.set')}</p>
+              <div data-element="notePopupStateAccepted" onClick={() => this.onStateUpdate('Accepted')}>{t('option.state.accepted')}</div>
+              <div data-element="notePopupStateRejected" onClick={() => this.onStateUpdate('Rejected')}>{t('option.state.rejected')}</div>
+              <div data-element="notePopupStateCancelled" onClick={() => this.onStateUpdate('Cancelled')}>{t('option.state.cancelled')}</div>
+              <div data-element="notePopupStateCompleted" onClick={() => this.onStateUpdate('Completed')}>{t('option.state.completed')}</div>
+              <div data-element="notePopupStateNone" onClick={() => this.onStateUpdate('None')}>{t('option.state.none')}</div>
             </div>
           }
         </div>
@@ -120,7 +104,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'notePopup'),
   isEditDisabled: selectors.isElementDisabled(state, 'notePopupEdit'),
   isDeleteDisabled: selectors.isElementDisabled(state, 'notePopupDelete'),
-  isStateDisabled: selectors.isElementDisabled(state, 'notePopopState'),
+  isStateDisabled: selectors.isElementDisabled(state, 'notePopupState'),
 });
 
 const mapDispatchToProps = {
