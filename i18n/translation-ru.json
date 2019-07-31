@@ -31,7 +31,9 @@
     "submit": "Отправить",
     "zoom": "Увеличить",
     "zoomIn": "Увеличить",
-    "zoomOut": "Уменьшить"
+    "zoomOut": "Уменьшить",
+    "group": "группа",
+    "ungroup": "Ungroup"
   },
   "annotation": {
     "areaMeasurement": "Площадь",

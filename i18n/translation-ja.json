@@ -31,7 +31,9 @@
     "submit": "送信",
     "zoom": "ズーム",
     "zoomIn": "ズームイン",
-    "zoomOut": "ズームアウト"
+    "zoomOut": "ズームアウト",
+    "group": "グループ",
+    "ungroup": "グループ解除"
   },
   "annotation": {
     "areaMeasurement": "面積測定",

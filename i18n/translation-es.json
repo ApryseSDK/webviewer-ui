@@ -31,7 +31,9 @@
     "submit": "Enviar",
     "zoom": "Zoom",
     "zoomIn": "Acercar zoom",
-    "zoomOut": "Alejar zoom"
+    "zoomOut": "Alejar zoom",
+    "ungroup": "Desagrupar",
+    "group": "Grupo"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",

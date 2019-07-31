@@ -31,7 +31,9 @@
     "submit": "提交",
     "zoom": "缩放",
     "zoomIn": "放大",
-    "zoomOut": "缩小"
+    "zoomOut": "缩小",
+    "ungroup": "取消组合",
+    "group": "组"
   },
   "annotation": {
     "areaMeasurement": "面积测量",

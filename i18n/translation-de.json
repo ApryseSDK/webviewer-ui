@@ -31,7 +31,9 @@
     "submit": "Abgeben",
     "zoom": "Zoom",
     "zoomIn": "Heranzoomen",
-    "zoomOut": "Rauszoomen"
+    "zoomOut": "Rauszoomen",
+    "group": "Gruppe",
+    "ungroup": "Gruppierung aufheben"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",

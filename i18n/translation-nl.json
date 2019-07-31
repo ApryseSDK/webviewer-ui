@@ -31,7 +31,9 @@
     "submit": "Verzenden",
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom uit"
+    "zoomOut": "Zoom uit",
+    "group": "Groep",
+    "ungroup": "Ungroup"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -75,7 +77,6 @@
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
-    "minimizeButton": "Document normaal weergeven",
     "measurementToolsButton": "Meetinstrumenten"
   },
   "message": {

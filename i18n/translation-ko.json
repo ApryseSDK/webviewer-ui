@@ -31,7 +31,9 @@
     "submit": "제출",
     "zoom": "확대/축소",
     "zoomIn": "확대",
-    "zoomOut": "축소"
+    "zoomOut": "축소",
+    "group": "그룹",
+    "ungroup": "그룹 해제"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",

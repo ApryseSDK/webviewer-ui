@@ -200,7 +200,6 @@ const map = {
     toolNames: [ 'TextSelect' ],
     annotationCheck: null,
   },
-
   marqueeZoomTool: {
     icon: null,
     iconColor: null,
@@ -208,6 +207,14 @@ const map = {
     availablePalettes: [],
     toolNames: [ 'MarqueeZoomTool' ],
     annotationCheck: null,
+  },
+  eraser: {	
+    icon: 'ic_annotation_eraser_black_24px',	
+    iconColor: null,	
+    currentPalette: null,	
+    availablePalettes: [],	
+    toolNames: [ 'AnnotationEraserTool' ],	
+    annotationCheck: null,	
   }
 };
 
@@ -254,9 +261,5 @@ export const getAnnotationCreateToolNames = () => {
   return Object.values(map).reduce((annotationCreateToolNames, { toolNames, annotationCheck }) => {
     return annotationCheck ? [ ...annotationCreateToolNames, ...toolNames ] : annotationCreateToolNames;
   }, []);
-};
-
-export const getToolButtonObjects = () => {
-  // TODO: discuss with Justin if we should move toolButtonObjects here, since toolButtonObjects is used to map toolName to button information
 };
 
