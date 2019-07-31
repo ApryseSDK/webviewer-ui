@@ -13,9 +13,10 @@
     "clean": "rimraf build",
     "bundle": "webpack --progress --config ./webpack.config.prod.js",
     "build": "npm run clean && npm run bundle",
-    "translation": "node ./scripts/translationCheck.js"
+    "translation": "node ./scripts/translate-i18n-files.js"
   },
   "devDependencies": {
+    "@google-cloud/translate": "^4.1.2",
     "@pdftron/webviewer-downloader": "^1.1.0",
     "autolinker": "^1.7.1",
     "babel-cli": "^6.24.1",
