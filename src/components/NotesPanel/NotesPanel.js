@@ -150,14 +150,14 @@ class NotesPanel extends React.PureComponent {
     const sortStrategies = getSortStrategies();
 
     return (
-      <React.Fragment>
+      <>
         <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
           {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
           {this.props.t('message.noResults')}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 

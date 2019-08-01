@@ -206,7 +206,7 @@ class AnnotationPopup extends React.PureComponent {
       <div className={className} ref={this.popup} data-element="annotationPopup" style={{ left, top }} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
         {isStylePopupOpen
           ? <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
-          : <React.Fragment>
+          : <>
             {!isNotesPanelDisabled && !multipleAnnotationsSelected &&
               <ActionButton dataElement="annotationCommentButton" title="action.comment" img="ic_comment_black_24px" onClick={this.commentOnAnnotation} />
             }
@@ -225,7 +225,7 @@ class AnnotationPopup extends React.PureComponent {
             {canUngroup &&
               <ActionButton dataElement="annotationUngroupButton" title="action.ungroup" img="ic_ungroup_24px" onClick={this.ungroupAnnotations} />
             }
-          </React.Fragment>
+          </>
         }
       </div>
     );

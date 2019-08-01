@@ -43,7 +43,7 @@ class App extends React.PureComponent {
   static propTypes = {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired
+    closeElements: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -60,7 +60,7 @@ class App extends React.PureComponent {
       'menuOverlay',
       'zoomOverlay',
       'signatureOverlay',
-      this.props.isSearchPanelOpen ? '' : 'searchOverlay'
+      this.props.isSearchPanelOpen ? '' : 'searchOverlay',
     ].filter(element => element);
 
     this.props.closeElements(elements);
@@ -73,7 +73,7 @@ class App extends React.PureComponent {
       'toolStylePopup',
       'textPopup',
       isDesktop() ? 'redactionOverlay' : '',
-      isDesktop() ? 'toolsOverlay' : ''
+      isDesktop() ? 'toolsOverlay' : '',
     ].filter(element => element);
 
     this.props.closeElements(elements);
@@ -85,7 +85,7 @@ class App extends React.PureComponent {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <div
           className="App"
           onMouseDown={this.onMouseDown}
@@ -127,17 +127,17 @@ class App extends React.PureComponent {
         <PrintHandler />
         <FilePickerHandler />
         <CopyTextHandler />
-      </React.Fragment>
+      </>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel')
+  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
 });
 
 const mapDispatchToProps = {
-  closeElements: actions.closeElements
+  closeElements: actions.closeElements,
 };
 
 export default hot(module)(
