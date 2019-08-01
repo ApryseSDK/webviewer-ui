@@ -13,7 +13,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'src'),
     filename: 'webviewer-ui.min.js',
-    publicPath: '/',
+    // publicPath: '/',
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],
   module: {
