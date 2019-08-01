@@ -6,7 +6,6 @@
   "scripts": {
     "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
     "start": "babel-node ./dev-server.js",
-    "test": "babel-node ./test-server.js",
     "cypress:open": "cypress open --project ./test/cypress",
     "lint": "eslint ./src/**/*.js",
     "lint:fix": "eslint --fix ./src/**/*.js",
