@@ -36,12 +36,12 @@ class LeftPanel extends React.Component {
   };
 
   render() {
-    const { isDisabled, closeElement, customPanels } = this.props;
-    
+    const { isDisabled, closeElement, customPanels, isOpen } = this.props;
+
     if (isDisabled) {
       return null;
     }
-    
+
     const className = getClassName('Panel LeftPanel', this.props);
 
     return (
@@ -63,9 +63,12 @@ class LeftPanel extends React.Component {
 
         <ResizeBar />
 
-        <NotesPanel display={this.getDisplay('notesPanel')} />
+        <NotesPanel
+          isLeftPanelOpen={isOpen}
+          display={this.getDisplay('notesPanel')}
+        />
         <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
-        <OutlinesPanel display={this.getDisplay('outlinesPanel')} /> 
+        <OutlinesPanel display={this.getDisplay('outlinesPanel')} />
         {customPanels.map(({ panel }, index) => (
           <CustomElement
             key={panel.dataElement || index}
@@ -108,7 +111,7 @@ const ResizeBar = () => {
     !isIE11 && (
       <div
         className="resize-bar"
-        onMouseDown={() => isMouseDownRef.current = true}
+        onMouseDown={() => (isMouseDownRef.current = true)}
       />
     )
   );

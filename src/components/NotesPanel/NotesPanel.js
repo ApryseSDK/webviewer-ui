@@ -17,6 +17,7 @@ import './NotesPanel.scss';
 class NotesPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
+    isLeftPanelOpen: PropTypes.bool,
     display: PropTypes.string.isRequired,
     sortStrategy: PropTypes.string.isRequired,
     pageLabels: PropTypes.array.isRequired,
@@ -28,52 +29,50 @@ class NotesPanel extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = {
+    this.initialState = {
       notes: [],
       searchInput: ''
     };
-    this.rootAnnotations = [];
+    this.state = this.initialState;
     this._handleInputChange = _.debounce(
       this._handleInputChange.bind(this),
       500
     );
-    this.onAnnotationChanged = _.debounce(
-      this.onAnnotationChanged.bind(this),
-      500
-    );
+    this.isFirstTimeOpen = false;
   }
 
   componentDidMount() {
-    core.addEventListener('annotationChanged', this.onAnnotationChanged);
-    core.addEventListener('annotationHidden', this.onAnnotationChanged);
     core.addEventListener('documentUnloaded', this.onDocumentUnloaded);
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.customNoteFilter !== this.props.customNoteFilter) {
-      this.forceUpdate();
+    if (
+      !prevProps.isLeftPanelOpen &&
+      this.props.isLeftPanelOpen &&
+      !this.isFirstTimeOpen
+    ) {
+      this.isFirstTimeOpen = true;
+      this.setNotes();
+
+      core.addEventListener('annotationChanged', this.setNotes);
+      core.addEventListener('annotationHidden', this.setNotes);
     }
   }
 
   componentWillUnmount() {
     core.removeEventListener('documentUnloaded', this.onDocumentUnloaded);
-    core.removeEventListener('annotationChanged', this.onAnnotationChanged);
-    core.removeEventListener('annotationHidden', this.onAnnotationChanged);
+    core.removeEventListener('annotationChanged', this.setNotes);
+    core.removeEventListener('annotationHidden', this.setNotes);
   }
 
   onDocumentUnloaded = () => {
-    this.visibleNoteIds.clear();
-    this.rootAnnotations = [];
-    this.setState({ visibleNotes: [] });
+    this.setState(this.initialState);
   };
 
-  onAnnotationChanged = () => {
-    const sortedAnnotationsList = getSortStrategies()[
-      this.props.sortStrategy
-    ].getSortedNotes(core.getAnnotationsList());
-    const notes = sortedAnnotationsList.filter(annot => !annot.isReply());
-
-    this.setState({ notes });
+  setNotes = () => {
+    this.setState({
+      notes: core.getAnnotationsList().filter(annot => !annot.isReply())
+    });
   };
 
   handleInputChange = e => {
@@ -129,84 +128,94 @@ class NotesPanel extends React.PureComponent {
     return string.search(new RegExp(searchInput, 'i')) !== -1;
   };
 
-  renderNotesPanelContent = notes => {
-    const hasVisibleNotes = notes.some(this.isNoteVisible);
+  render() {
+    const { isDisabled, display, t, sortStrategy, pageLabels } = this.props;
+    const { notes } = this.state;
 
-    return (
-      <>
-        <div
-          className={classNames({
-            'notes-wrapper': true,
-            visible: hasVisibleNotes
-          })}
-        >
-          {this.renderNotes(notes)}
-        </div>
-        <div
-          className={classNames({
-            'no-results': true,
-            visible: !hasVisibleNotes
-          })}
-        >
-          {this.props.t('message.noResults')}
-        </div>
-      </>
-    );
-  };
-
-  renderNotes = notes => {
-    return notes.map((note, index) => {
-      const isVisible = this.isNoteVisible(note);
-
-      return (
-        <React.Fragment key={note.Id}>
-          {isVisible && this.renderListSeparator(notes, note, index)}
-          <Note
-            visible={isVisible}
-            annotation={note}
-            replies={note.getReplies()}
-            searchInput={this.state.searchInput}
-            rootContents={note.getContents()}
-          />
-        </React.Fragment>
+    let child;
+    if (notes.length === 0) {
+      child = (
+        <div className="no-annotations">{t('message.noAnnotations')}</div>
       );
-    });
-  };
+    } else {
+      const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(
+        notes
+      );
+      const hasVisibleNotes = sortedNotes.some(this.isNoteVisible);
+      let prevVisibleNoteIndex = -1;
 
-  renderListSeparator = (notes, currNote, index) => {
-    const { sortStrategy, pageLabels } = this.props;
-    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
-      sortStrategy
-    ];
-    const prevNote =
-      this.prevVisibleNoteIndex === -1
-        ? null
-        : notes[this.prevVisibleNoteIndex];
+      child = (
+        <>
+          <div className="header">
+            <input
+              type="text"
+              placeholder={t('message.searchPlaceholder')}
+              onChange={this.handleInputChange}
+            />
+            <Dropdown items={Object.keys(getSortStrategies())} />
+          </div>
+          <div
+            className={classNames({
+              'notes-wrapper': true,
+              visible: hasVisibleNotes
+            })}
+          >
+            {sortedNotes.map((note, index) => {
+              const isVisible = this.isNoteVisible(note);
 
-    this.prevVisibleNoteIndex = index;
+              let listSeparator = null;
+              if (isVisible) {
+                const {
+                  shouldRenderSeparator,
+                  getSeparatorContent
+                } = getSortStrategies()[sortStrategy];
+                const prevNote =
+                  prevVisibleNoteIndex === -1
+                    ? null
+                    : sortedNotes[prevVisibleNoteIndex];
 
-    if (
-      shouldRenderSeparator &&
-      getSeparatorContent &&
-      (!prevNote || shouldRenderSeparator(prevNote, currNote))
-    ) {
-      return (
-        <ListSeparator
-          renderContent={() =>
-            getSeparatorContent(prevNote, currNote, { pageLabels })
-          }
-        />
+                prevVisibleNoteIndex = index;
+
+                if (
+                  shouldRenderSeparator &&
+                  getSeparatorContent &&
+                  (!prevNote || shouldRenderSeparator(prevNote, note))
+                ) {
+                  listSeparator = (
+                    <ListSeparator
+                      renderContent={() =>
+                        getSeparatorContent(prevNote, note, { pageLabels })
+                      }
+                    />
+                  );
+                }
+              }
+
+              return (
+                <React.Fragment key={note.Id}>
+                  {listSeparator}
+                  <Note
+                    visible={isVisible}
+                    annotation={note}
+                    replies={note.getReplies()}
+                    searchInput={this.state.searchInput}
+                    rootContents={note.getContents()}
+                  />
+                </React.Fragment>
+              );
+            })}
+          </div>
+          <div
+            className={classNames({
+              'no-results': true,
+              visible: !hasVisibleNotes
+            })}
+          >
+            {this.props.t('message.noResults')}
+          </div>
+        </>
       );
     }
-
-    return null;
-  };
-
-  render() {
-    this.prevVisibleNoteIndex = -1;
-
-    const { isDisabled, display, t } = this.props;
-    const { notes } = this.state;
 
     return isDisabled ? null : (
       <div
@@ -216,21 +225,7 @@ class NotesPanel extends React.PureComponent {
         onClick={core.deselectAllAnnotations}
         onScroll={e => e.stopPropagation()}
       >
-        {notes.length === 0 ? (
-          <div className="no-annotations">{t('message.noAnnotations')}</div>
-        ) : (
-          <>
-            <div className="header">
-              <input
-                type="text"
-                placeholder={t('message.searchPlaceholder')}
-                onChange={this.handleInputChange}
-              />
-              <Dropdown items={Object.keys(getSortStrategies())} />
-            </div>
-            {this.renderNotesPanelContent(notes)}
-          </>
-        )}
+        {child}
       </div>
     );
   }
@@ -240,7 +235,6 @@ const mapStatesToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state),
-  pageRotation: selectors.getRotation(state),
   customNoteFilter: selectors.getCustomNoteFilter(state)
 });
 
