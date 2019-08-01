@@ -33,10 +33,10 @@ class Input extends React.PureComponent {
     const { id, type, name, defaultChecked, onChange, label } = this.props;
 
     return (
-      <React.Fragment>
+      <>
         <input className="Input" id={id} ref={this.inputRef} type={type} name={name} onChange={onChange} defaultChecked={defaultChecked} />
         <label className="Input" htmlFor={id}>{label}</label>
-      </React.Fragment>
+      </>
     );
   }
 }

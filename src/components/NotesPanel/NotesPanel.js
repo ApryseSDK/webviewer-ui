@@ -33,8 +33,14 @@ class NotesPanel extends React.PureComponent {
       searchInput: ''
     };
     this.rootAnnotations = [];
-    this._handleInputChange = _.debounce(this._handleInputChange.bind(this), 500);
-    this.onAnnotationChanged = _.debounce(this.onAnnotationChanged.bind(this), 500);
+    this._handleInputChange = _.debounce(
+      this._handleInputChange.bind(this),
+      500
+    );
+    this.onAnnotationChanged = _.debounce(
+      this.onAnnotationChanged.bind(this),
+      500
+    );
   }
 
   componentDidMount() {
@@ -62,7 +68,9 @@ class NotesPanel extends React.PureComponent {
   };
 
   onAnnotationChanged = () => {
-    const sortedAnnotationsList = getSortStrategies()[this.props.sortStrategy].getSortedNotes(core.getAnnotationsList());
+    const sortedAnnotationsList = getSortStrategies()[
+      this.props.sortStrategy
+    ].getSortedNotes(core.getAnnotationsList());
     const notes = sortedAnnotationsList.filter(annot => !annot.isReply());
 
     this.setState({ notes });
@@ -73,7 +81,7 @@ class NotesPanel extends React.PureComponent {
   };
 
   _handleInputChange = value => {
-    // this function is used to solve the issue with using synthetic event asynchronously. 
+    // this function is used to solve the issue with using synthetic event asynchronously.
     // https://reactjs.org/docs/events.html#event-pooling
     core.deselectAllAnnotations();
 
@@ -103,7 +111,10 @@ class NotesPanel extends React.PureComponent {
           const content = note.getContents();
           const authorName = core.getDisplayAuthor(note);
 
-          return this.isInputIn(content, searchInput) || this.isInputIn(authorName, searchInput);
+          return (
+            this.isInputIn(content, searchInput) ||
+            this.isInputIn(authorName, searchInput)
+          );
         });
     }
 
@@ -122,7 +133,7 @@ class NotesPanel extends React.PureComponent {
     const hasVisibleNotes = notes.some(this.isNoteVisible);
 
     return (
-      <React.Fragment>
+      <>
         <div
           className={classNames({
             'notes-wrapper': true,
@@ -139,7 +150,7 @@ class NotesPanel extends React.PureComponent {
         >
           {this.props.t('message.noResults')}
         </div>
-      </React.Fragment>
+      </>
     );
   };
 
@@ -150,7 +161,13 @@ class NotesPanel extends React.PureComponent {
       return (
         <React.Fragment key={note.Id}>
           {isVisible && this.renderListSeparator(notes, note, index)}
-          <Note visible={isVisible} annotation={note} replies={note.getReplies()} searchInput={this.state.searchInput} rootContents={note.getContents()} />
+          <Note
+            visible={isVisible}
+            annotation={note}
+            replies={note.getReplies()}
+            searchInput={this.state.searchInput}
+            rootContents={note.getContents()}
+          />
         </React.Fragment>
       );
     });
@@ -158,13 +175,28 @@ class NotesPanel extends React.PureComponent {
 
   renderListSeparator = (notes, currNote, index) => {
     const { sortStrategy, pageLabels } = this.props;
-    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
-    const prevNote = this.prevVisibleNoteIndex === -1 ? null : notes[this.prevVisibleNoteIndex];
+    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
+      sortStrategy
+    ];
+    const prevNote =
+      this.prevVisibleNoteIndex === -1
+        ? null
+        : notes[this.prevVisibleNoteIndex];
 
     this.prevVisibleNoteIndex = index;
 
-    if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote))) {
-      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, { pageLabels })} />;
+    if (
+      shouldRenderSeparator &&
+      getSeparatorContent &&
+      (!prevNote || shouldRenderSeparator(prevNote, currNote))
+    ) {
+      return (
+        <ListSeparator
+          renderContent={() =>
+            getSeparatorContent(prevNote, currNote, { pageLabels })
+          }
+        />
+      );
     }
 
     return null;
@@ -177,17 +209,27 @@ class NotesPanel extends React.PureComponent {
     const { notes } = this.state;
 
     return isDisabled ? null : (
-      <div className="Panel NotesPanel" style={{ display }} data-element="notesPanel" onClick={core.deselectAllAnnotations} onScroll={e => e.stopPropagation()}>
+      <div
+        className="Panel NotesPanel"
+        style={{ display }}
+        data-element="notesPanel"
+        onClick={core.deselectAllAnnotations}
+        onScroll={e => e.stopPropagation()}
+      >
         {notes.length === 0 ? (
           <div className="no-annotations">{t('message.noAnnotations')}</div>
         ) : (
-          <React.Fragment>
+          <>
             <div className="header">
-              <input type="text" placeholder={t('message.searchPlaceholder')} onChange={this.handleInputChange} />
+              <input
+                type="text"
+                placeholder={t('message.searchPlaceholder')}
+                onChange={this.handleInputChange}
+              />
               <Dropdown items={Object.keys(getSortStrategies())} />
             </div>
             {this.renderNotesPanelContent(notes)}
-          </React.Fragment>
+          </>
         )}
       </div>
     );
