@@ -167,7 +167,7 @@ class NotesPanel extends React.PureComponent {
         return (
           <React.Fragment key={note.Id + getLatestActivityDate(note)}>
             {this.renderListSeparator(notes, note)}
-            <Note visible={this.isVisibleNote(note)} annotation={note} replies={note.getReplies()} searchInput={this.state.searchInput} rootContents={note.getContents()} />
+            <Note visible={this.isVisibleNote(note)} annotation={note} replies={[...note.getReplies()]} searchInput={this.state.searchInput} rootContents={note.getContents()} />
           </React.Fragment>
         );
       })
