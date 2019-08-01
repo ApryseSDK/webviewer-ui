@@ -146,18 +146,18 @@ class NotesPanel extends React.PureComponent {
   isVisibleNote = note => this.visibleNoteIds.has(note.Id)
 
   renderNotesPanelContent = () => {
-    const {notesToRender} = this.state;
+    const { notesToRender } = this.state;
     const sortStrategies = getSortStrategies();
 
     return (
-      <React.Fragment>
+      <>
         <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
           {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
           {this.props.t('message.noResults')}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 
@@ -186,7 +186,7 @@ class NotesPanel extends React.PureComponent {
       getSeparatorContent &&
       (isFirstNote || shouldRenderSeparator(prevNote, currNote))
     ) {
-      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, {pageLabels})} />;
+      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, { pageLabels })} />;
     }
 
     return null;

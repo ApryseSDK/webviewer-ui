@@ -180,7 +180,7 @@ class AnnotationPopup extends React.PureComponent {
       <div className={className} ref={this.popup} data-element="annotationPopup" style={{ left, top }} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
         {isStylePopupOpen
           ? <AnnotationStylePopup annotation={annotation} style={style} isOpen={isOpen} />
-          : <React.Fragment>
+          : <>
             {!isNotesPanelDisabled &&
               <ActionButton dataElement="annotationCommentButton" title="action.comment" img="ic_comment_black_24px" onClick={this.commentOnAnnotation} />
             }
@@ -193,7 +193,7 @@ class AnnotationPopup extends React.PureComponent {
             {canModify &&
               <ActionButton dataElement="annotationDeleteButton" title="action.delete" img="ic_delete_black_24px" onClick={this.deleteAnnotation} />
             }
-          </React.Fragment>
+          </>
         }
       </div>
     );
