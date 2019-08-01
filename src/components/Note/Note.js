@@ -153,7 +153,7 @@ class Note extends React.PureComponent {
       return '(no name)';
     }
 
-    return <span className="author" dangerouslySetInnerHTML={{__html: this.getText(name)}}></span>;
+    return <span className="author" dangerouslySetInnerHTML={{ __html: this.getText(name) }}></span>;
   }
 
   renderContents = contents => {
@@ -172,7 +172,7 @@ class Note extends React.PureComponent {
       text = this.getText(contents);
     }
 
-    return <span className="contents" dangerouslySetInnerHTML={{__html: text}}></span>;
+    return <span className="contents" dangerouslySetInnerHTML={{ __html: text }}></span>;
   }
 
   getText = text => {
