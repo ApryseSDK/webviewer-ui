@@ -16,14 +16,15 @@ import selectors from 'selectors';
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
-  const {
-    isDisabled, isOpen, activePanel, customPanels,
-  } = useSelector(state => ({
-    isDisabled: selectors.isElementDisabled(state, 'leftPanel'),
-    isOpen: selectors.isElementOpen(state, 'leftPanel'),
-    activePanel: selectors.getActiveLeftPanel(state),
-    customPanels: selectors.getCustomPanels(state),
-  }), shallowEqual);
+  const [isDisabled, isOpen, activePanel, customPanels] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, 'leftPanel'),
+      selectors.isElementOpen(state, 'leftPanel'),
+      selectors.getActiveLeftPanel(state),
+      selectors.getCustomPanels(state),
+    ],
+    shallowEqual,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -104,7 +105,9 @@ const ResizeBar = () => {
     !isIE11 && (
       <div
         className="resize-bar"
-        onMouseDown={() => { isMouseDownRef.current = true; }}
+        onMouseDown={() => {
+          isMouseDownRef.current = true;
+        }}
       />
     )
   );

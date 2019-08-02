@@ -13,7 +13,7 @@ class NoteContents extends React.Component {
     annotation: PropTypes.object.isRequired,
     closeEditing: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    contents: PropTypes.string
+    contents: PropTypes.string,
   }
 
   constructor(props) {
@@ -21,7 +21,7 @@ class NoteContents extends React.Component {
     this.textInput = React.createRef();
     this.state = {
       isChanged: false,
-      word: ''
+      word: '',
     };
   }
 
@@ -37,11 +37,11 @@ class NoteContents extends React.Component {
       this.textInput.current.value = this.props.contents;
     }
   }
-  
+
   onChange = () => {
-    this.setState({ isChanged: this.textInput.current.value !== this.state.word });    
+    this.setState({ isChanged: this.textInput.current.value !== this.state.word });
     this.textInput.current.style.height = '30px';
-    this.textInput.current.style.height = (this.textInput.current.scrollHeight + 2) + 'px';
+    this.textInput.current.style.height = `${this.textInput.current.scrollHeight + 2}px`;
   }
 
   onKeyDown = e => {
@@ -51,7 +51,7 @@ class NoteContents extends React.Component {
   }
 
   handleNoteContentsClick = e => {
-    // we stop propagation when we are editing the contents to 
+    // we stop propagation when we are editing the contents to
     // prevent note components from receiving this event and collapsing the note
     if (this.props.isEditing) {
       e.stopPropagation();
@@ -66,29 +66,31 @@ class NoteContents extends React.Component {
     if (this.state.isChanged) {
       core.setNoteContents(annotation, this.textInput.current.value);
       if (annotation instanceof window.Annotations.FreeTextAnnotation) {
-        core.drawAnnotationsFromList([ annotation ]);
+        core.drawAnnotationsFromList([annotation]);
       }
       closeEditing();
     }
   }
 
   render() {
-    const { isEditing, closeEditing, renderContents, t, contents } = this.props;
+    const {
+      isEditing, closeEditing, renderContents, t, contents,
+    } = this.props;
 
     return (
       <div className="NoteContents" onClick={this.handleNoteContentsClick}>
-        {isEditing && 
+        {isEditing &&
           <div className={`edit-content ${isEditing ? 'visible' : 'hidden'}`}>
-            <textarea 
-              ref={this.textInput} 
-              onChange={this.onChange} 
+            <textarea
+              ref={this.textInput}
+              onChange={this.onChange}
               onKeyDown={this.onKeyDown}
-              onBlur={closeEditing}         
-              defaultValue={contents} 
+              onBlur={closeEditing}
+              defaultValue={contents}
               placeholder={`${t('action.comment')}...`}
             />
             <span className="buttons">
-              <button className = {this.state.isChanged ? '':'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
+              <button className = {this.state.isChanged ? '' : 'disabled'} onMouseDown={this.setContents}>{t('action.save')}</button>
               <button onMouseDown={closeEditing}>{t('action.cancel')}</button>
             </span>
           </div>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 
 import NoteRoot from 'components/NoteRoot';
@@ -14,69 +15,53 @@ import selectors from 'selectors';
 
 import './Note.scss';
 
-class Note extends React.PureComponent {
-  static propTypes = {
-    annotation: PropTypes.object.isRequired,
-    isNoteEditing: PropTypes.bool.isRequired,
-    isNoteExpanded: PropTypes.bool.isRequired,
-    isAnnotationFocused: PropTypes.bool,
-    setIsNoteEditing: PropTypes.func.isRequired,
-    searchInput: PropTypes.string,
-    isReadOnly: PropTypes.bool,
-    isReplyDisabled: PropTypes.bool,
-    visible: PropTypes.bool.isRequired,
-    rootContents: PropTypes.string,
-    replies: PropTypes.array,
-    t: PropTypes.func.isRequired,
-  };
+const propTypes = {
+  annotation: PropTypes.object.isRequired,
+  searchInput: PropTypes.string,
+  visible: PropTypes.bool.isRequired,
+};
 
-  constructor(props) {
-    super(props);
-    this.replyTextarea = React.createRef();
-    this.state = {
-      // replies: props.annotation.getReplies(),
-      isRootContentEditing: false,
-      isReplyFocused: false,
-      isEmpty: true,
-    };
-    this.containerRef = React.createRef();
-  }
+const Note = ({ annotation, searchInput, visible }) => {
+  const [isNoteExpanded, isNoteEditing, isAnnotationFocused] = useSelector(
+    state => [
+      selectors.isNoteExpanded(state, annotation.Id),
+      selectors.isNoteEditing(state, annotation.Id),
+      selectors.isAnnotationFocused(state, annotation.Id),
+      selectors.isDocumentReadOnly(state),
+      selectors.isElementDisabled(state, 'noteReply'),
+    ],
+    shallowEqual,
+  );
+  const dispatch = useDispatch();
+  const [isRootContentEditing, setIsRootContentEditing] = useState(false);
+  const containerRef = useRef();
 
-  componentDidUpdate(prevProps) {
-    const { annotation } = this.props;
-    const commentEditable =
-      core.canModify(annotation) && !annotation.getContents();
-    const noteBeingEdited =
-      !prevProps.isNoteEditing && this.props.isNoteEditing;
-    const noteCollapsed =
-      prevProps.isNoteExpanded && !this.props.isNoteExpanded;
-    const annotationWasFocused =
-      !prevProps.isAnnotationFocused && this.props.isAnnotationFocused;
+  useEffect(() => {
+    if (isNoteEditing) {
+      if (core.canModify(annotation) && !annotation.getContents()) {
+        openRootEditing();
+      }
+    } else {
+      setIsRootContentEditing(false);
+    }
+  }, [isNoteEditing]);
 
-    if (noteBeingEdited) {
-      if (commentEditable) {
-        this.openRootEditing();
-      } else if (this.replyTextarea.current) {
-        this.replyTextarea.current.focus();
+  useEffect(() => {
+    if (isAnnotationFocused) {
+      if (containerRef.current.scrollIntoViewIfNeeded) {
+        containerRef.current.scrollIntoViewIfNeeded();
+      } else {
+        containerRef.current.scrollIntoView();
       }
     }
+  }, [isAnnotationFocused]);
 
-    if (noteCollapsed) {
-      this.setState({
-        isRootContentEditing: false,
-        isReplyFocused: false,
-      });
-    }
+  const openRootEditing = () => {
+    setIsRootContentEditing(true);
+  };
 
-    if (annotationWasFocused) {
-      this.scrollIntoView();
-    }
-  }
-
-  onClickNote = e => {
+  const handleNoteClick = e => {
     e.stopPropagation();
-
-    const { isNoteExpanded, annotation } = this.props;
 
     if (isNoteExpanded) {
       core.deselectAnnotation(annotation);
@@ -87,91 +72,22 @@ class Note extends React.PureComponent {
     }
   };
 
-  scrollIntoView = () => {
-    if (this.containerRef.current.scrollIntoViewIfNeeded) {
-      this.containerRef.current.scrollIntoViewIfNeeded();
-    } else {
-      this.containerRef.current.scrollIntoView();
-    }
+  const closeRootEditing = () => {
+    setIsRootContentEditing(false);
+    dispatch(actions.setIsNoteEditing(false));
   };
 
-  openRootEditing = () => {
-    this.setState({ isRootContentEditing: true });
-  };
-
-  closeRootEditing = () => {
-    this.setState({ isRootContentEditing: false });
-    this.props.setIsNoteEditing(false);
-  };
-
-  onChange = () => {
-    this.setState({ isEmpty: this.replyTextarea.current.value.length === 0 });
-    this.replyTextarea.current.style.height = '30px';
-    this.replyTextarea.current.style.height = `${this.replyTextarea.current
-      .scrollHeight + 2}px`;
-  };
-
-  onKeyDown = e => {
-    if ((e.metaKey || e.ctrlKey) && e.which === 13) {
-      // (Cmd/Ctrl + Enter)
-      this.postReply(e);
-    }
-  };
-
-  onFocus = () => {
-    this.setState({
-      isReplyFocused: true,
-      isRootContentEditing: false,
-    });
-  };
-
-  onBlur = () => {
-    this.setState({ isReplyFocused: false });
-    this.props.setIsNoteEditing(false);
-  };
-
-  postReply = e => {
-    e.stopPropagation();
-
-    this.setState({ isEmpty: true });
-
-    if (this.replyTextarea.current.value.trim().length > 0) {
-      core.createAnnotationReply(
-        this.props.annotation,
-        this.replyTextarea.current.value,
-      );
-      this.clearReply();
-    }
-  };
-
-  onClickCancel = () => {
-    this.clearReply();
-    this.setState({ isReplyFocused: false });
-    // This is for IE Edge
-    this.replyTextarea.current.blur();
-  };
-
-  clearReply = () => {
-    this.replyTextarea.current.value = '';
-    this.replyTextarea.current.style.height = '30px';
-  };
-
-  renderAuthorName = annotation => {
+  const renderAuthorName = annotation => {
     const name = core.getDisplayAuthor(annotation);
 
     if (!name) {
       return '(no name)';
     }
 
-    return (
-      <span
-        className="author"
-        dangerouslySetInnerHTML={{ __html: this.getText(name) }}
-      />
-    );
+    return <span dangerouslySetInnerHTML={{ __html: getText(name) }} />;
   };
 
-  renderContents = contents => {
+  const renderContents = contents => {
     if (!contents) {
       return null;
     }
@@ -182,12 +98,9 @@ class Note extends React.PureComponent {
       const linkedContent = Autolinker.link(contents, { stripPrefix: false });
       // if searchInput is 't', replace <a ...>text</a> with
       // <a ...><span class="highlight">t</span>ext</a>
-      text = linkedContent.replace(
-        />(.+)</i,
-        (_, p1) => `>${this.getText(p1)}<`,
-      );
+      text = linkedContent.replace(/>(.+)</i, (_, p1) => `>${getText(p1)}<`);
     } else {
-      text = this.getText(contents);
+      text = getText(contents);
     }
 
     return (
@@ -195,123 +108,154 @@ class Note extends React.PureComponent {
     );
   };
 
-  getText = text => {
-    if (this.props.searchInput.trim()) {
-      return this.getHighlightedText(text);
+  const getText = text => {
+    if (searchInput.trim()) {
+      return text.replace(
+        new RegExp(`(${searchInput})`, 'gi'),
+        '<span class="highlight">$1</span>',
+      );
     }
 
     return text;
   };
 
-  getHighlightedText = text => {
-    const regex = new RegExp(`(${this.props.searchInput})`, 'gi');
+  const noteClass = classNames({
+    Note: true,
+    expanded: isNoteExpanded,
+    hidden: !visible,
+  });
 
-    return text.replace(regex, '<span class="highlight">$1</span>');
-  };
+  const replies = annotation
+    .getReplies()
+    .sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
-  render() {
-    const {
-      annotation,
-      replies,
-      t,
-      isReadOnly,
-      isNoteExpanded,
-      searchInput,
-      visible,
-      isReplyDisabled,
-      rootContents,
-    } = this.props;
-    const { isRootContentEditing, isReplyFocused } = this.state;
-    const className = [
-      'Note',
-      isNoteExpanded ? 'expanded' : '',
-      visible ? '' : 'hidden',
-    ]
-      .join(' ')
-      .trim();
+  return (
+    <div ref={containerRef} className={noteClass} onClick={handleNoteClick}>
+      <NoteRoot
+        annotation={annotation}
+        contents={annotation.getContents()}
+        searchInput={searchInput}
+        renderAuthorName={renderAuthorName}
+        renderContents={renderContents}
+        isNoteExpanded={isNoteExpanded}
+        isEditing={isRootContentEditing}
+        openEditing={openRootEditing}
+        closeEditing={closeRootEditing}
+        numberOfReplies={replies.length}
+      />
 
-    // Sort replies by date created,
-    // replies.sort((a, b) => a['DateCreated'] - b['DateCreated']);
-
-    return (
-      <div
-        ref={this.containerRef}
-        className={className}
-        onClick={this.onClickNote}
-      >
-        <NoteRoot
+      <div className={`replies ${isNoteExpanded ? 'visible' : 'hidden'}`}>
+        {replies.map(reply => (
+          <NoteReply
+            key={reply.Id}
+            reply={reply}
+            searchInput={searchInput}
+            renderAuthorName={renderAuthorName}
+            renderContents={renderContents}
+          />
+        ))}
+        <ReplyArea
           annotation={annotation}
-          contents={rootContents}
-          searchInput={searchInput}
-          renderAuthorName={this.renderAuthorName}
-          renderContents={this.renderContents}
-          isNoteExpanded={isNoteExpanded}
-          isEditing={isRootContentEditing}
-          openEditing={this.openRootEditing}
-          closeEditing={this.closeRootEditing}
-          numberOfReplies={replies.length}
+          isNoteEditing={isNoteEditing}
+          isRootContentEditing={isRootContentEditing}
+          dispatch={dispatch}
         />
-
-        <div className={`replies ${isNoteExpanded ? 'visible' : 'hidden'}`}>
-          {replies.map(reply => (
-            <NoteReply
-              key={reply.Id}
-              reply={reply}
-              searchInput={searchInput}
-              renderAuthorName={this.renderAuthorName}
-              renderContents={this.renderContents}
-            />
-          ))}
-          {!isReadOnly && !isReplyDisabled && (
-            <div
-              className={isRootContentEditing ? 'replies hidden' : 'add-reply'}
-              onClick={e => e.stopPropagation()}
-            >
-              <textarea
-                ref={this.replyTextarea}
-                onChange={this.onChange}
-                onKeyDown={this.onKeyDown}
-                onBlur={this.onBlur}
-                onFocus={this.onFocus}
-                placeholder={`${t('action.reply')}...`}
-              />
-              {isReplyFocused && (
-                <div className="buttons" onMouseDown={e => e.preventDefault()}>
-                  <button
-                    className={this.state.isEmpty ? 'disabled' : ''}
-                    onMouseDown={this.postReply}
-                  >
-                    {t('action.reply')}
-                  </button>
-                  <button onMouseDown={this.onClickCancel}>
-                    {t('action.cancel')}
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
       </div>
-    );
-  }
-}
-
-const mapStateToProps = (state, ownProps) => ({
-  isNoteExpanded: selectors.isNoteExpanded(state, ownProps.annotation.Id),
-  isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
-  isAnnotationFocused: selectors.isAnnotationFocused(
-    state,
-    ownProps.annotation.Id,
-  ),
-  isReadOnly: selectors.isDocumentReadOnly(state),
-  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply'),
-});
-
-const matDispatchToProps = {
-  setIsNoteEditing: actions.setIsNoteEditing,
+    </div>
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  matDispatchToProps,
-)(withTranslation()(Note));
+Note.propTypes = propTypes;
+
+export default Note;
+
+// a component that contains the reply textarea, the reply button and the cancel button
+const ReplyArea = ({ annotation }) => {
+  const [isReadOnly, isReplyDisabled] = useSelector(
+    state => [
+      selectors.isDocumentReadOnly(state),
+      selectors.isElementDisabled(state, 'noteReply'),
+    ],
+    shallowEqual,
+  );
+  const [isFocused, setIsFocused] = useState(false);
+  const [value, setValue] = useState('');
+  const [t] = useTranslation();
+  const replyTextareaRef = useRef();
+  const TEXTAREA_HEIGHT = '30px';
+
+  const handleInputChange = e => {
+    setValue(e.target.value);
+
+    // for auto-resize the height of the textarea
+    // https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize
+    // 1. make the height small enough so that we know the scroll bar height
+    // 2. make the height a bit bigger than the scroll bar height to finish resizing
+    e.target.style.height = TEXTAREA_HEIGHT;
+    e.target.style.height = `${e.target.scrollHeight + 2}px`;
+  };
+
+  const handleKeyDown = e => {
+    // (Cmd/Ctrl + Enter)
+    if ((e.metaKey || e.ctrlKey) && e.which === 13) {
+      postReply(e);
+    }
+  };
+
+  const postReply = e => {
+    e.stopPropagation();
+
+    if (value) {
+      core.createAnnotationReply(annotation, replyTextareaRef.current.value);
+      clearReply();
+    }
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
+  const handleCancelClick = () => {
+    clearReply();
+    replyTextareaRef.current.blur();
+  };
+
+  const clearReply = () => {
+    setValue('');
+    replyTextareaRef.current.style.height = TEXTAREA_HEIGHT;
+  };
+
+  const replyBtnClass = classNames({
+    disabled: !value,
+  });
+
+  return isReadOnly || isReplyDisabled ? null : (
+    <div className="reply-container" onClick={e => e.stopPropagation()}>
+      <textarea
+        ref={replyTextareaRef}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        value={value}
+        placeholder={`${t('action.reply')}...`}
+      />
+      {isFocused && (
+        <div className="buttons" onMouseDown={e => e.preventDefault()}>
+          <button className={replyBtnClass} onMouseDown={postReply}>
+            {t('action.reply')}
+          </button>
+          <button onMouseDown={handleCancelClick}>{t('action.cancel')}</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+ReplyArea.propTypes = {
+  annotation: PropTypes.object.isRequired,
+};

@@ -27,60 +27,74 @@ class NoteRoot extends React.Component {
     numberOfReplies: PropTypes.number.isRequired,
     noteDateFormat: PropTypes.string,
     iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
-    contents: PropTypes.string
-  }
+    contents: PropTypes.string,
+  };
 
   deleteNote = () => {
     core.deleteAnnotations([this.props.annotation]);
-  }
+  };
 
   renderHeader = () => {
-    const { annotation, isNoteExpanded, sortStrategy, openEditing, renderAuthorName, numberOfReplies, noteDateFormat, iconColor } = this.props;
+    const {
+      annotation,
+      isNoteExpanded,
+      sortStrategy,
+      openEditing,
+      renderAuthorName,
+      numberOfReplies,
+      noteDateFormat,
+      iconColor,
+    } = this.props;
     const color = iconColor && annotation[iconColor].toHexString();
     const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
     return (
       <div className="title">
         <div className="type">
-          {icon
-            ? <Icon className="icon" glyph={icon} color={color} />
-            : annotation.Subject
-          }
+          {icon ? (
+            <Icon className="icon" glyph={icon} color={color} />
+          ) : (
+            annotation.Subject
+          )}
         </div>
         {renderAuthorName(annotation)}
-        {(sortStrategy !== 'time' || isNoteExpanded || numberOfReplies > 0) &&
-          <span className="spacer"></span>
-        }
+        {(sortStrategy !== 'time' || isNoteExpanded || numberOfReplies > 0) && (
+          <span className="spacer" />
+        )}
         <div className="time">
           {(sortStrategy !== 'time' || isNoteExpanded) &&
-            dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)
-          }
-          {numberOfReplies > 0 &&
-            ` (${numberOfReplies})`
-          }
+            dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
+          {numberOfReplies > 0 && ` (${numberOfReplies})`}
         </div>
-        <NotePopup 
-          annotation={annotation} 
-          isNoteExpanded={isNoteExpanded} 
-          openEditing={openEditing} 
-          onDelete={this.deleteNote} 
+        <NotePopup
+          annotation={annotation}
+          isNoteExpanded={isNoteExpanded}
+          openEditing={openEditing}
+          onDelete={this.deleteNote}
         />
       </div>
     );
-  }
+  };
 
   render() {
-    const { annotation, renderContents, isEditing, closeEditing, searchInput, contents } = this.props;
+    const {
+      annotation,
+      renderContents,
+      isEditing,
+      closeEditing,
+      searchInput,
+      contents,
+    } = this.props;
 
     return (
       <div className="NoteRoot">
         {this.renderHeader()}
-        <NoteContents 
-          annotation={annotation} 
+        <NoteContents
+          annotation={annotation}
           contents={contents}
-          searchInput={searchInput} 
-          renderContents={renderContents} 
-          isEditing={isEditing} 
-          closeEditing={closeEditing} 
+          searchInput={searchInput}
+          renderContents={renderContents}
+          isEditing={isEditing}
+          closeEditing={closeEditing}
         />
       </div>
     );
@@ -90,7 +104,7 @@ class NoteRoot extends React.Component {
 const mapStateToProps = (state, { annotation }) => ({
   sortStrategy: selectors.getSortStrategy(state),
   noteDateFormat: selectors.getNoteDateFormat(state),
-  iconColor: selectors.getIconColor(state, mapAnnotationToKey(annotation))
+  iconColor: selectors.getIconColor(state, mapAnnotationToKey(annotation)),
 });
 
 export default connect(mapStateToProps)(NoteRoot);
