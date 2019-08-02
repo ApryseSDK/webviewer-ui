@@ -153,6 +153,7 @@
       "completed": "Completed",
       "cancelled": "Cancelled",
       "set": "Set status:",
+      "setBy": "set by",
       "none": "None"
     },
     "measurementOverlay": {

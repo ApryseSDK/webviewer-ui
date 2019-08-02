@@ -58,8 +58,11 @@ class NotePopup extends React.Component {
     this.props.openEditing();
   }
 
-  onStateUpdate = state => {
-    core.getAnnotationManager().updateAnnotationState(this.props.annotation, state);
+  onStateUpdate = (state, t) => {
+    const author = core.getAnnotationManager().getCurrentUser();
+    const message = `${state} ${t('option.state.setBy')} ${author}`;
+    const stateModel = 'Review';
+    core.getAnnotationManager().updateAnnotationState(this.props.annotation, state, stateModel, message);
   }
 
   render() {
@@ -86,11 +89,11 @@ class NotePopup extends React.Component {
           }
           {!isStateDisabled && !isReply &&
             <div data-element="notePopupState"><p data-element="notePopupSetStatus">{t('option.state.set')}</p>
-              <div data-element="notePopupStateAccepted" onClick={() => this.onStateUpdate('Accepted')}>{t('option.state.accepted')}</div>
-              <div data-element="notePopupStateRejected" onClick={() => this.onStateUpdate('Rejected')}>{t('option.state.rejected')}</div>
-              <div data-element="notePopupStateCancelled" onClick={() => this.onStateUpdate('Cancelled')}>{t('option.state.cancelled')}</div>
-              <div data-element="notePopupStateCompleted" onClick={() => this.onStateUpdate('Completed')}>{t('option.state.completed')}</div>
-              <div data-element="notePopupStateNone" onClick={() => this.onStateUpdate('None')}>{t('option.state.none')}</div>
+              <div data-element="notePopupStateAccepted" onClick={() => this.onStateUpdate('Accepted', t)}>{t('option.state.accepted')}</div>
+              <div data-element="notePopupStateRejected" onClick={() => this.onStateUpdate('Rejected', t)}>{t('option.state.rejected')}</div>
+              <div data-element="notePopupStateCancelled" onClick={() => this.onStateUpdate('Cancelled', t)}>{t('option.state.cancelled')}</div>
+              <div data-element="notePopupStateCompleted" onClick={() => this.onStateUpdate('Completed', t)}>{t('option.state.completed')}</div>
+              <div data-element="notePopupStateNone" onClick={() => this.onStateUpdate('None', t)}>{t('option.state.none')}</div>
             </div>
           }
         </div>
