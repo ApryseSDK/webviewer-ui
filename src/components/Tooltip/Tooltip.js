@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { isMac, isIOS, isAndroid } from 'helpers/device';
 
@@ -199,4 +199,4 @@ class Tooltip extends React.PureComponent {
   }
 }
 
-export default translate(null, { wait: false })(Tooltip);
+export default withTranslation(null, { wait: false })(Tooltip);

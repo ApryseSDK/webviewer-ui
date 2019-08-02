@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -79,4 +79,4 @@ const mapDispatchToProps = {
   setSortStrategy: actions.setSortStrategy
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dropdown));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dropdown));

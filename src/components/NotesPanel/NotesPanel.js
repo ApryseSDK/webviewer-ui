@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
 import classNames from 'classnames';
+import { withTranslation } from 'react-i18next';
 
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
@@ -221,4 +221,4 @@ const mapStatesToProps = state => ({
   customNoteFilter: selectors.getCustomNoteFilter(state)
 });
 
-export default connect(mapStatesToProps)(translate()(NotesPanel));
+export default connect(mapStatesToProps)(withTranslation()(NotesPanel));
