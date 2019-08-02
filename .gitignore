@@ -13,3 +13,4 @@ tests
 lib
 jest.config.js
 .eslintignore
+keys

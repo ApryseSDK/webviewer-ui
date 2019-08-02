@@ -125,8 +125,8 @@ if (window.CanvasRenderingContext2D) {
     // eslint-disable-next-line no-console
     console.log(`[WebViewer] WebViewer UI version: ${uiVersion}, WebViewer Core version: ${coreVersion}`);
 
-    if (parseInt(coreMajorVersion) < parseInt(uiMajorVersion)) {
-      console.error(`[WebViewer] Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above.`);
+    if (parseInt(coreMajorVersion) !== parseInt(uiMajorVersion)) {
+      console.error(`[WebViewer] Version Mismatch: the major versions of WebViewer UI and Core should be the same.`);
     } else if (parseInt(coreMinorVersion) < parseInt(uiMinorVersion)) {
       console.warn(`[WebViewer] Version Mismatch: WebViewer UI requires Core version ${uiVersion} and above.`);
     }
