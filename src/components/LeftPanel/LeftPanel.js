@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import NotesPanel from 'components/NotesPanel';
@@ -16,14 +16,14 @@ import selectors from 'selectors';
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
-  const isDisabled = useSelector(state =>
-    selectors.isElementDisabled(state, 'leftPanel')
-  );
-  const isOpen = useSelector(state =>
-    selectors.isElementOpen(state, 'leftPanel')
-  );
-  const activePanel = useSelector(state => selectors.getActiveLeftPanel(state));
-  const customPanels = useSelector(state => selectors.getCustomPanels(state));
+  const {
+    isDisabled, isOpen, activePanel, customPanels,
+  } = useSelector(state => ({
+    isDisabled: selectors.isElementDisabled(state, 'leftPanel'),
+    isOpen: selectors.isElementOpen(state, 'leftPanel'),
+    activePanel: selectors.getActiveLeftPanel(state),
+    customPanels: selectors.getCustomPanels(state),
+  }), shallowEqual);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,9 +32,7 @@ const LeftPanel = () => {
     }
   }, [isOpen]);
 
-  const getDisplay = panel => {
-    return panel === activePanel ? 'flex' : 'none';
-  };
+  const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
   return isDisabled ? null : (
     <div
@@ -42,7 +40,7 @@ const LeftPanel = () => {
         Panel: true,
         LeftPanel: true,
         open: isOpen,
-        closed: !isOpen
+        closed: !isOpen,
       })}
       data-element="leftPanel"
       onMouseDown={e => e.stopPropagation()}
@@ -60,7 +58,7 @@ const LeftPanel = () => {
 
       <ResizeBar />
 
-      <NotesPanel display={getDisplay('notesPanel')} />
+      <NotesPanel isLeftPanelOpen={isOpen} display={getDisplay('notesPanel')} />
       <ThumbnailsPanel display={getDisplay('thumbnailsPanel')} />
       <OutlinesPanel display={getDisplay('outlinesPanel')} />
       {customPanels.map(({ panel }, index) => (
@@ -106,7 +104,7 @@ const ResizeBar = () => {
     !isIE11 && (
       <div
         className="resize-bar"
-        onMouseDown={() => (isMouseDownRef.current = true)}
+        onMouseDown={() => { isMouseDownRef.current = true; }}
       />
     )
   );
