@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
@@ -14,84 +14,60 @@ import { getSortStrategies } from 'constants/sortStrategies';
 
 import './NotesPanel.scss';
 
-class NotesPanel extends React.PureComponent {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    isLeftPanelOpen: PropTypes.bool,
-    display: PropTypes.string.isRequired,
-    sortStrategy: PropTypes.string.isRequired,
-    pageLabels: PropTypes.array.isRequired,
-    customNoteFilter: PropTypes.func,
-    t: PropTypes.func.isRequired
-  };
+const propTypes = {
+  isDisabled: PropTypes.bool,
+  isLeftPanelOpen: PropTypes.bool,
+  display: PropTypes.string.isRequired,
+  sortStrategy: PropTypes.string.isRequired,
+  pageLabels: PropTypes.array.isRequired,
+  customNoteFilter: PropTypes.func,
+  t: PropTypes.func.isRequired
+};
 
-  // http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/test/PlansEJ.pdf&a=1
+const NotesPanel = ({
+  isDisabled,
+  isLeftPanelOpen,
+  display,
+  sortStrategy,
+  pageLabels,
+  customNoteFilter,
+  t
+}) => {
+  const [notes, setNotes] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+  const isFirstTimeOpenRef = useRef(true);
 
-  constructor(props) {
-    super(props);
-    this.initialState = {
-      notes: [],
-      searchInput: ''
+  useEffect(() => {
+    const onDocumentUnloaded = () => {
+      setNotes([]);
+      setSearchInput('');
     };
-    this.state = this.initialState;
-    this._handleInputChange = _.debounce(
-      this._handleInputChange.bind(this),
-      500
-    );
-    this.isFirstTimeOpen = false;
-  }
 
-  componentDidMount() {
-    core.addEventListener('documentUnloaded', this.onDocumentUnloaded);
-  }
+    core.addEventListener('documentUnloaded', onDocumentUnloaded);
+    return () =>
+      core.removeEventListener('documentUnloaded', onDocumentUnloaded);
+  }, []);
 
-  componentDidUpdate(prevProps) {
-    if (
-      !prevProps.isLeftPanelOpen &&
-      this.props.isLeftPanelOpen &&
-      !this.isFirstTimeOpen
-    ) {
-      this.isFirstTimeOpen = true;
-      this.setNotes();
+  useEffect(() => {
+    if (isLeftPanelOpen && isFirstTimeOpenRef.current) {
+      isFirstTimeOpenRef.current = false;
+      
+      const _setNotes = () => {
+        setNotes(core.getAnnotationsList().filter(annot => !annot.isReply()));
+      };
 
-      core.addEventListener('annotationChanged', this.setNotes);
-      core.addEventListener('annotationHidden', this.setNotes);
+      core.addEventListener('annotationChanged', _setNotes);
+      core.addEventListener('annotationHidden', _setNotes);
+      _setNotes();
+
+      return () => {
+        core.removeEventListener('annotationChanged', _setNotes);
+        core.removeEventListener('annotationHidden', _setNotes);
+      };
     }
-  }
+  }, [isLeftPanelOpen]);
 
-  componentWillUnmount() {
-    core.removeEventListener('documentUnloaded', this.onDocumentUnloaded);
-    core.removeEventListener('annotationChanged', this.setNotes);
-    core.removeEventListener('annotationHidden', this.setNotes);
-  }
-
-  onDocumentUnloaded = () => {
-    this.setState(this.initialState);
-  };
-
-  setNotes = () => {
-    this.setState({
-      notes: core.getAnnotationsList().filter(annot => !annot.isReply())
-    });
-  };
-
-  handleInputChange = e => {
-    this._handleInputChange(e.target.value);
-  };
-
-  _handleInputChange = value => {
-    // this function is used to solve the issue with using synthetic event asynchronously.
-    // https://reactjs.org/docs/events.html#event-pooling
-    core.deselectAllAnnotations();
-
-    this.setState({
-      searchInput: value
-    });
-  };
-
-  isNoteVisible = note => {
-    const { searchInput } = this.state;
-    const { customNoteFilter } = this.props;
+  const isNoteVisible = note => {
     let isVisible = note.Listable && !note.Hidden;
 
     if (customNoteFilter) {
@@ -111,8 +87,8 @@ class NotesPanel extends React.PureComponent {
           const authorName = core.getDisplayAuthor(note);
 
           return (
-            this.isInputIn(content, searchInput) ||
-            this.isInputIn(authorName, searchInput)
+            isInputIn(content, searchInput) ||
+            isInputIn(authorName, searchInput)
           );
         });
     }
@@ -120,7 +96,7 @@ class NotesPanel extends React.PureComponent {
     return isVisible;
   };
 
-  isInputIn = (string, searchInput) => {
+  const isInputIn = (string, searchInput) => {
     if (!string) {
       return false;
     }
@@ -128,108 +104,113 @@ class NotesPanel extends React.PureComponent {
     return string.search(new RegExp(searchInput, 'i')) !== -1;
   };
 
-  render() {
-    const { isDisabled, display, t, sortStrategy, pageLabels } = this.props;
-    const { notes } = this.state;
+  const handleInputChange = e => {
+    _handleInputChange(e.target.value);
+  };
 
-    let child;
-    if (notes.length === 0) {
-      child = (
-        <div className="no-annotations">{t('message.noAnnotations')}</div>
-      );
-    } else {
-      const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(
-        notes
-      );
-      const hasVisibleNotes = sortedNotes.some(this.isNoteVisible);
-      let prevVisibleNoteIndex = -1;
+  const _handleInputChange = _.debounce(value => {
+    // this function is used to solve the issue with using synthetic event asynchronously.
+    // https://reactjs.org/docs/events.html#event-pooling
+    core.deselectAllAnnotations();
 
-      child = (
-        <>
-          <div className="header">
-            <input
-              type="text"
-              placeholder={t('message.searchPlaceholder')}
-              onChange={this.handleInputChange}
-            />
-            <Dropdown items={Object.keys(getSortStrategies())} />
-          </div>
-          <div
-            className={classNames({
-              'notes-wrapper': true,
-              visible: hasVisibleNotes
-            })}
-          >
-            {sortedNotes.map((note, index) => {
-              const isVisible = this.isNoteVisible(note);
+    setSearchInput(value);
+  }, 500);
 
-              let listSeparator = null;
-              if (isVisible) {
-                const {
-                  shouldRenderSeparator,
-                  getSeparatorContent
-                } = getSortStrategies()[sortStrategy];
-                const prevNote =
-                  prevVisibleNoteIndex === -1
-                    ? null
-                    : sortedNotes[prevVisibleNoteIndex];
+  let child;
+  if (notes.length === 0) {
+    child = <div className="no-annotations">{t('message.noAnnotations')}</div>;
+  } else {
+    const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(notes);
+    const hasVisibleNotes = sortedNotes.some(isNoteVisible);
+    let prevVisibleNoteIndex = -1;
 
-                prevVisibleNoteIndex = index;
+    child = (
+      <>
+        <div className="header">
+          <input
+            type="text"
+            placeholder={t('message.searchPlaceholder')}
+            onChange={handleInputChange}
+          />
+          <Dropdown items={Object.keys(getSortStrategies())} />
+        </div>
+        <div
+          className={classNames({
+            'notes-wrapper': true,
+            visible: hasVisibleNotes
+          })}
+        >
+          {sortedNotes.map((note, index) => {
+            const isVisible = isNoteVisible(note);
 
-                if (
-                  shouldRenderSeparator &&
-                  getSeparatorContent &&
-                  (!prevNote || shouldRenderSeparator(prevNote, note))
-                ) {
-                  listSeparator = (
-                    <ListSeparator
-                      renderContent={() =>
-                        getSeparatorContent(prevNote, note, { pageLabels })
-                      }
-                    />
-                  );
-                }
-              }
+            let listSeparator = null;
+            if (isVisible) {
+              const {
+                shouldRenderSeparator,
+                getSeparatorContent
+              } = getSortStrategies()[sortStrategy];
+              const prevNote =
+                prevVisibleNoteIndex === -1
+                  ? null
+                  : sortedNotes[prevVisibleNoteIndex];
 
-              return (
-                <React.Fragment key={note.Id}>
-                  {listSeparator}
-                  <Note
-                    visible={isVisible}
-                    annotation={note}
-                    replies={note.getReplies()}
-                    searchInput={this.state.searchInput}
-                    rootContents={note.getContents()}
+              prevVisibleNoteIndex = index;
+
+              if (
+                shouldRenderSeparator &&
+                getSeparatorContent &&
+                (!prevNote || shouldRenderSeparator(prevNote, note))
+              ) {
+                listSeparator = (
+                  <ListSeparator
+                    renderContent={() =>
+                      getSeparatorContent(prevNote, note, { pageLabels })
+                    }
                   />
-                </React.Fragment>
-              );
-            })}
-          </div>
-          <div
-            className={classNames({
-              'no-results': true,
-              visible: !hasVisibleNotes
-            })}
-          >
-            {this.props.t('message.noResults')}
-          </div>
-        </>
-      );
-    }
+                );
+              }
+            }
 
-    return isDisabled ? null : (
-      <div
-        className="Panel NotesPanel"
-        style={{ display }}
-        data-element="notesPanel"
-        onClick={core.deselectAllAnnotations}
-        onScroll={e => e.stopPropagation()}
-      >
-        {child}
-      </div>
+            return (
+              <React.Fragment key={note.Id}>
+                {listSeparator}
+                <Note
+                  visible={isVisible}
+                  annotation={note}
+                  replies={note.getReplies()}
+                  searchInput={searchInput}
+                  rootContents={note.getContents()}
+                />
+              </React.Fragment>
+            );
+          })}
+        </div>
+        <div
+          className={classNames({
+            'no-results': true,
+            visible: !hasVisibleNotes
+          })}
+        >
+          {t('message.noResults')}
+        </div>
+      </>
     );
   }
-}
+
+  return isDisabled ? null : (
+    <div
+      className="Panel NotesPanel"
+      style={{ display }}
+      data-element="notesPanel"
+      onClick={core.deselectAllAnnotations}
+      onScroll={e => e.stopPropagation()}
+    >
+      {child}
+    </div>
+  );
+};
+
+NotesPanel.propTypes = propTypes;
 
 const mapStatesToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
