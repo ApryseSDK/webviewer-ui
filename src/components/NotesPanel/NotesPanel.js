@@ -175,7 +175,7 @@ const NotesPanel = ({
               <React.Fragment key={note.Id}>
                 {listSeparator}
                 <Note
-                  note={note}
+                  annotation={note}
                   searchInput={searchInput}
                   visible={isVisible}
                 />

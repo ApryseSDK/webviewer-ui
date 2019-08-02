@@ -8,7 +8,7 @@ export const isElementDisabled = (state, dataElement) =>
 export const isToolGroupButtonDisabled = (state, dataElement, toolGroup) => {
   const toolNames = getToolNamesByGroup(state, toolGroup);
   const isEveryButtonInGroupDisabled = toolNames.every(toolName =>
-    isToolButtonDisabled(state, toolName)
+    isToolButtonDisabled(state, toolName),
   );
 
   return isElementDisabled(state, dataElement) || isEveryButtonInGroupDisabled;
@@ -45,7 +45,7 @@ export const isElementActive = (state, tool) => {
     isElementOpen(state, element) ||
     tools.some(
       tool =>
-        tool.dataElement === dataElement && tool.toolName === activeToolName
+        tool.dataElement === dataElement && tool.toolName === activeToolName,
     )
   );
 };
@@ -58,7 +58,7 @@ export const getDisabledElementPriority = (state, dataElement) =>
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
 export const getToolButtonDataElements = (state, toolNames) =>
   toolNames.map(
-    toolName => state.viewer.toolButtonObjects[toolName].dataElement
+    toolName => state.viewer.toolButtonObjects[toolName].dataElement,
   );
 export const getToolButtonObject = (state, toolName) =>
   state.viewer.toolButtonObjects[toolName];
@@ -66,11 +66,11 @@ export const getToolButtonDataElement = (state, toolName) =>
   state.viewer.toolButtonObjects[toolName].dataElement;
 export const getToolNamesByGroup = (state, toolGroup) =>
   Object.keys(state.viewer.toolButtonObjects).filter(
-    name => state.viewer.toolButtonObjects[name].group === toolGroup
+    name => state.viewer.toolButtonObjects[name].group === toolGroup,
   );
 export const getToolNameByDataElement = (state, dataElement) =>
   Object.keys(state.viewer.toolButtonObjects).find(
-    name => state.viewer.toolButtonObjects[name].dataElement === dataElement
+    name => state.viewer.toolButtonObjects[name].dataElement === dataElement,
   );
 export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
@@ -96,8 +96,8 @@ export const isDocumentLoaded = state => state.viewer.isDocumentLoaded;
 export const isDocumentReadOnly = state => state.viewer.isReadOnly;
 export const getCustomPanels = state => state.viewer.customPanels;
 export const getPageLabels = state => state.viewer.pageLabels;
-export const getDisabledCustomPanelTabs = state => {
-  return state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
+export const getDisabledCustomPanelTabs = state =>
+  state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
     if (
       state.viewer.disabledElements[tab.dataElement] &&
       state.viewer.disabledElements[tab.dataElement].disabled
@@ -106,7 +106,6 @@ export const getDisabledCustomPanelTabs = state => {
     }
     return disabledTabs;
   }, []);
-};
 export const isEmbedPrintSupported = state => {
   const isChrome =
     window.navigator.userAgent.indexOf('Chrome') > -1 &&
