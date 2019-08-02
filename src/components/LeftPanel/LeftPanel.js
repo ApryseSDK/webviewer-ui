@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import NotesPanel from 'components/NotesPanel';
@@ -10,75 +11,73 @@ import CustomElement from 'components/CustomElement';
 import Icon from 'components/Icon';
 
 import { isTabletOrMobile, isIE11 } from 'helpers/device';
-import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './LeftPanel.scss';
 
-class LeftPanel extends React.Component {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    customPanels: PropTypes.array.isRequired,
-    activePanel: PropTypes.string.isRequired,
-    closeElement: PropTypes.func.isRequired
+const LeftPanel = () => {
+  const isDisabled = useSelector(state =>
+    selectors.isElementDisabled(state, 'leftPanel')
+  );
+  const isOpen = useSelector(state =>
+    selectors.isElementOpen(state, 'leftPanel')
+  );
+  const activePanel = useSelector(state => selectors.getActiveLeftPanel(state));
+  const customPanels = useSelector(state => selectors.getCustomPanels(state));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isOpen && isTabletOrMobile()) {
+      dispatch(actions.closeElement('searchPanel'));
+    }
+  }, [isOpen]);
+
+  const getDisplay = panel => {
+    return panel === activePanel ? 'flex' : 'none';
   };
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
-      this.props.closeElement('searchPanel');
-    }
-  }
-
-  getDisplay = panel => {
-    return panel === this.props.activePanel ? 'flex' : 'none';
-  };
-
-  render() {
-    const { isDisabled, closeElement, customPanels } = this.props;
-    
-    if (isDisabled) {
-      return null;
-    }
-    
-    const className = getClassName('Panel LeftPanel', this.props);
-
-    return (
-      <div
-        className={className}
-        data-element="leftPanel"
-        onMouseDown={e => e.stopPropagation()}
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="left-panel-header">
-          <div
-            className="close-btn hide-in-desktop"
-            onClick={() => closeElement('leftPanel')}
-          >
-            <Icon glyph="ic_close_black_24px" />
-          </div>
-          <LeftPanelTabs />
+  return isDisabled ? null : (
+    <div
+      className={classNames({
+        Panel: true,
+        LeftPanel: true,
+        open: isOpen,
+        closed: !isOpen
+      })}
+      data-element="leftPanel"
+      onMouseDown={e => e.stopPropagation()}
+      onClick={e => e.stopPropagation()}
+    >
+      <div className="left-panel-header">
+        <div
+          className="close-btn hide-in-desktop"
+          onClick={() => dispatch(actions.closeElement('leftPanel'))}
+        >
+          <Icon glyph="ic_close_black_24px" />
         </div>
-
-        <ResizeBar />
-
-        <NotesPanel display={this.getDisplay('notesPanel')} />
-        <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
-        <OutlinesPanel display={this.getDisplay('outlinesPanel')} /> 
-        {customPanels.map(({ panel }, index) => (
-          <CustomElement
-            key={panel.dataElement || index}
-            className={`Panel ${panel.dataElement}`}
-            display={this.getDisplay(panel.dataElement)}
-            dataElement={panel.dataElement}
-            render={panel.render}
-          />
-        ))}
+        <LeftPanelTabs />
       </div>
-    );
-  }
-}
+
+      <ResizeBar />
+
+      <NotesPanel display={getDisplay('notesPanel')} />
+      <ThumbnailsPanel display={getDisplay('thumbnailsPanel')} />
+      <OutlinesPanel display={getDisplay('outlinesPanel')} />
+      {customPanels.map(({ panel }, index) => (
+        <CustomElement
+          key={panel.dataElement || index}
+          className={`Panel ${panel.dataElement}`}
+          display={getDisplay(panel.dataElement)}
+          dataElement={panel.dataElement}
+          render={panel.render}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default LeftPanel;
 
 const ResizeBar = () => {
   const isMouseDownRef = useRef(false);
@@ -108,24 +107,8 @@ const ResizeBar = () => {
     !isIE11 && (
       <div
         className="resize-bar"
-        onMouseDown={() => isMouseDownRef.current = true}
+        onMouseDown={() => (isMouseDownRef.current = true)}
       />
     )
   );
 };
-
-const mapStatesToProps = state => ({
-  isOpen: selectors.isElementOpen(state, 'leftPanel'),
-  isDisabled: selectors.isElementDisabled(state, 'leftPanel'),
-  activePanel: selectors.getActiveLeftPanel(state),
-  customPanels: selectors.getCustomPanels(state)
-});
-
-const mapDispatchToProps = {
-  closeElement: actions.closeElement
-};
-
-export default connect(
-  mapStatesToProps,
-  mapDispatchToProps
-)(LeftPanel);

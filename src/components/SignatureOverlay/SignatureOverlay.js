@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import ActionButton from 'components/ActionButton';
@@ -222,4 +222,4 @@ const mapDispatchToProps = {
   setCursorOverlay: actions.setCursorOverlay
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(SignatureOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SignatureOverlay));
