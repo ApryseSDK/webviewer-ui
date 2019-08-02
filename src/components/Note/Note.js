@@ -6,6 +6,7 @@ import Autolinker from 'autolinker';
 
 import NoteRoot from 'components/NoteRoot';
 import NoteReply from 'components/NoteReply';
+import NoteContext from 'components/Note/Context';
 
 import core from 'core';
 import actions from 'actions';
@@ -33,7 +34,7 @@ class Note extends React.PureComponent {
     super(props);
     this.replyTextarea = React.createRef();
     this.state = {
-      replies: props.annotation.getReplies(),
+      // replies: props.annotation.getReplies(),
       isRootContentEditing: false,
       isReplyFocused: false,
       isEmpty: true
@@ -199,61 +200,72 @@ class Note extends React.PureComponent {
     ].join(' ').trim();
 
     // Sort replies by date created, 
-    replies.sort((a, b) => a['DateCreated'] - b['DateCreated']);
+    // replies.sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
     return (
-      <div ref={this.containerRef} className={className} onClick={this.onClickNote}>
-        <NoteRoot
-          annotation={annotation}
-          contents={rootContents}
-          searchInput={searchInput}
-          renderAuthorName={this.renderAuthorName}
-          renderContents={this.renderContents}
-          isNoteExpanded={isNoteExpanded}
-          isEditing={isRootContentEditing}
-          openEditing={this.openRootEditing}
-          closeEditing={this.closeRootEditing}
-          numberOfReplies={replies.length}
-        />
+      <NoteContext.Consumer>
+        {({ note }) => {
+          console.log(note);
 
-        <div className={`replies ${isNoteExpanded ? 'visible' : 'hidden'}`}>
-          {replies.map(reply =>
-            <NoteReply
-              key={reply.Id}
-              reply={reply}
+          return (
+            <div ref={this.containerRef} className={className} onClick={this.onClickNote}>
+            Hello
+              {/* <NoteRoot
+              annotation={annotation}
+              contents={rootContents}
               searchInput={searchInput}
               renderAuthorName={this.renderAuthorName}
               renderContents={this.renderContents}
+              isNoteExpanded={isNoteExpanded}
+              isEditing={isRootContentEditing}
+              openEditing={this.openRootEditing}
+              closeEditing={this.closeRootEditing}
+              numberOfReplies={replies.length}
             />
-          )}
-          {!isReadOnly && !isReplyDisabled &&
-            <div className={isRootContentEditing ? 'replies hidden' : 'add-reply'} onClick={e => e.stopPropagation()}>
-              <textarea
-                ref={this.replyTextarea}
-                onChange={this.onChange}
-                onKeyDown={this.onKeyDown}
-                onBlur={this.onBlur}
-                onFocus={this.onFocus}
-                placeholder={`${t('action.reply')}...`}
-              />
-              {isReplyFocused &&
-                <div className="buttons" onMouseDown={e => e.preventDefault()}>
-                  <button className={this.state.isEmpty ? 'disabled' : ''} onMouseDown={this.postReply}>{t('action.reply')}</button>
-                  <button onMouseDown={this.onClickCancel}>{t('action.cancel')}</button>
+
+            <div className={`replies ${isNoteExpanded ? 'visible' : 'hidden'}`}>
+              {replies.map(reply =>
+                <NoteReply
+                  key={reply.Id}
+                  reply={reply}
+                  searchInput={searchInput}
+                  renderAuthorName={this.renderAuthorName}
+                  renderContents={this.renderContents}
+                />
+              )}
+              {!isReadOnly && !isReplyDisabled &&
+                <div className={isRootContentEditing ? 'replies hidden' : 'add-reply'} onClick={e => e.stopPropagation()}>
+                  <textarea
+                    ref={this.replyTextarea}
+                    onChange={this.onChange}
+                    onKeyDown={this.onKeyDown}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
+                    placeholder={`${t('action.reply')}...`}
+                  />
+                  {isReplyFocused &&
+                    <div className="buttons" onMouseDown={e => e.preventDefault()}>
+                      <button className={this.state.isEmpty ? 'disabled' : ''} onMouseDown={this.postReply}>{t('action.reply')}</button>
+                      <button onMouseDown={this.onClickCancel}>{t('action.cancel')}</button>
+                    </div>
+                  }
                 </div>
               }
+            </div> */}
             </div>
-          }
-        </div>
-      </div>
+          );
+        }
+
+        }
+      </NoteContext.Consumer>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isNoteExpanded: selectors.isNoteExpanded(state, ownProps.annotation.Id),
-  isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
-  isAnnotationFocused: selectors.isAnnotationFocused(state, ownProps.annotation.Id),
+  // isNoteExpanded: selectors.isNoteExpanded(state, ownProps.annotation.Id),
+  // isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
+  // isAnnotationFocused: selectors.isAnnotationFocused(state, ownProps.annotation.Id),
   isReadOnly: selectors.isDocumentReadOnly(state),
   isReplyDisabled: selectors.isElementDisabled(state, 'noteReply')
 });

@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
+import NoteContext from 'components/Note/Context';
 
 import core from 'core';
 import selectors from 'selectors';
@@ -51,7 +52,7 @@ const NotesPanel = ({
   useEffect(() => {
     if (isLeftPanelOpen && isFirstTimeOpenRef.current) {
       isFirstTimeOpenRef.current = false;
-      
+
       const _setNotes = () => {
         setNotes(core.getAnnotationsList().filter(annot => !annot.isReply()));
       };
@@ -174,13 +175,14 @@ const NotesPanel = ({
             return (
               <React.Fragment key={note.Id}>
                 {listSeparator}
-                <Note
-                  visible={isVisible}
-                  annotation={note}
-                  replies={note.getReplies()}
-                  searchInput={searchInput}
-                  rootContents={note.getContents()}
-                />
+                <NoteContext.Provider
+                  value={{
+                    note,
+                    searchInput
+                  }}
+                >
+                  <Note visible={isVisible} />
+                </NoteContext.Provider>
               </React.Fragment>
             );
           })}
