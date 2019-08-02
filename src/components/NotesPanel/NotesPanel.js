@@ -7,7 +7,6 @@ import { withTranslation } from 'react-i18next';
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
 import ListSeparator from 'components/ListSeparator';
-import NoteContext from 'components/Note/Context';
 
 import core from 'core';
 import selectors from 'selectors';
@@ -22,7 +21,7 @@ const propTypes = {
   sortStrategy: PropTypes.string.isRequired,
   pageLabels: PropTypes.array.isRequired,
   customNoteFilter: PropTypes.func,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
 };
 
 const NotesPanel = ({
@@ -32,7 +31,7 @@ const NotesPanel = ({
   sortStrategy,
   pageLabels,
   customNoteFilter,
-  t
+  t,
 }) => {
   const [notes, setNotes] = useState([]);
   const [searchInput, setSearchInput] = useState('');
@@ -138,7 +137,7 @@ const NotesPanel = ({
         <div
           className={classNames({
             'notes-wrapper': true,
-            visible: hasVisibleNotes
+            visible: hasVisibleNotes,
           })}
         >
           {sortedNotes.map((note, index) => {
@@ -148,7 +147,7 @@ const NotesPanel = ({
             if (isVisible) {
               const {
                 shouldRenderSeparator,
-                getSeparatorContent
+                getSeparatorContent,
               } = getSortStrategies()[sortStrategy];
               const prevNote =
                 prevVisibleNoteIndex === -1
@@ -175,14 +174,11 @@ const NotesPanel = ({
             return (
               <React.Fragment key={note.Id}>
                 {listSeparator}
-                <NoteContext.Provider
-                  value={{
-                    note,
-                    searchInput
-                  }}
-                >
-                  <Note visible={isVisible} />
-                </NoteContext.Provider>
+                <Note
+                  note={note}
+                  searchInput={searchInput}
+                  visible={isVisible}
+                />
               </React.Fragment>
             );
           })}
@@ -190,7 +186,7 @@ const NotesPanel = ({
         <div
           className={classNames({
             'no-results': true,
-            visible: !hasVisibleNotes
+            visible: !hasVisibleNotes,
           })}
         >
           {t('message.noResults')}
@@ -218,7 +214,7 @@ const mapStatesToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
   pageLabels: selectors.getPageLabels(state),
-  customNoteFilter: selectors.getCustomNoteFilter(state)
+  customNoteFilter: selectors.getCustomNoteFilter(state),
 });
 
 export default connect(mapStatesToProps)(withTranslation()(NotesPanel));

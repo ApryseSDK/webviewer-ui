@@ -27,7 +27,7 @@ class Note extends React.PureComponent {
     visible: PropTypes.bool.isRequired,
     rootContents: PropTypes.string,
     replies: PropTypes.array,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -37,17 +37,21 @@ class Note extends React.PureComponent {
       // replies: props.annotation.getReplies(),
       isRootContentEditing: false,
       isReplyFocused: false,
-      isEmpty: true
+      isEmpty: true,
     };
     this.containerRef = React.createRef();
   }
 
   componentDidUpdate(prevProps) {
     const { annotation } = this.props;
-    const commentEditable = core.canModify(annotation) && !annotation.getContents();
-    const noteBeingEdited = !prevProps.isNoteEditing && this.props.isNoteEditing;
-    const noteCollapsed = prevProps.isNoteExpanded && !this.props.isNoteExpanded;
-    const annotationWasFocused = !prevProps.isAnnotationFocused && this.props.isAnnotationFocused;
+    const commentEditable =
+      core.canModify(annotation) && !annotation.getContents();
+    const noteBeingEdited =
+      !prevProps.isNoteEditing && this.props.isNoteEditing;
+    const noteCollapsed =
+      prevProps.isNoteExpanded && !this.props.isNoteExpanded;
+    const annotationWasFocused =
+      !prevProps.isAnnotationFocused && this.props.isAnnotationFocused;
 
     if (noteBeingEdited) {
       if (commentEditable) {
@@ -60,7 +64,7 @@ class Note extends React.PureComponent {
     if (noteCollapsed) {
       this.setState({
         isRootContentEditing: false,
-        isReplyFocused: false
+        isReplyFocused: false,
       });
     }
 
@@ -81,7 +85,7 @@ class Note extends React.PureComponent {
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
     }
-  }
+  };
 
   scrollIntoView = () => {
     if (this.containerRef.current.scrollIntoViewIfNeeded) {
@@ -89,40 +93,42 @@ class Note extends React.PureComponent {
     } else {
       this.containerRef.current.scrollIntoView();
     }
-  }
+  };
 
   openRootEditing = () => {
     this.setState({ isRootContentEditing: true });
-  }
+  };
 
   closeRootEditing = () => {
     this.setState({ isRootContentEditing: false });
     this.props.setIsNoteEditing(false);
-  }
+  };
 
   onChange = () => {
     this.setState({ isEmpty: this.replyTextarea.current.value.length === 0 });
     this.replyTextarea.current.style.height = '30px';
-    this.replyTextarea.current.style.height = (this.replyTextarea.current.scrollHeight + 2) + 'px';
-  }
+    this.replyTextarea.current.style.height = `${this.replyTextarea.current
+      .scrollHeight + 2}px`;
+  };
 
   onKeyDown = e => {
-    if ((e.metaKey || e.ctrlKey) && e.which === 13) { // (Cmd/Ctrl + Enter)
+    if ((e.metaKey || e.ctrlKey) && e.which === 13) {
+      // (Cmd/Ctrl + Enter)
       this.postReply(e);
     }
-  }
+  };
 
   onFocus = () => {
-    this.setState({ 
-      isReplyFocused: true, 
-      isRootContentEditing: false 
+    this.setState({
+      isReplyFocused: true,
+      isRootContentEditing: false,
     });
-  }
+  };
 
   onBlur = () => {
     this.setState({ isReplyFocused: false });
     this.props.setIsNoteEditing(false);
-  }
+  };
 
   postReply = e => {
     e.stopPropagation();
@@ -130,22 +136,25 @@ class Note extends React.PureComponent {
     this.setState({ isEmpty: true });
 
     if (this.replyTextarea.current.value.trim().length > 0) {
-      core.createAnnotationReply(this.props.annotation, this.replyTextarea.current.value);
+      core.createAnnotationReply(
+        this.props.annotation,
+        this.replyTextarea.current.value,
+      );
       this.clearReply();
     }
-  }
+  };
 
   onClickCancel = () => {
     this.clearReply();
     this.setState({ isReplyFocused: false });
     // This is for IE Edge
     this.replyTextarea.current.blur();
-  }
+  };
 
   clearReply = () => {
     this.replyTextarea.current.value = '';
     this.replyTextarea.current.style.height = '30px';
-  }
+  };
 
   renderAuthorName = annotation => {
     const name = core.getDisplayAuthor(annotation);
@@ -154,8 +163,13 @@ class Note extends React.PureComponent {
       return '(no name)';
     }
 
-    return <span className="author" dangerouslySetInnerHTML={{ __html: this.getText(name) }}></span>;
-  }
+    return (
+      <span
+        className="author"
+        dangerouslySetInnerHTML={{ __html: this.getText(name) }}
+      />
+    );
+  };
 
   renderContents = contents => {
     if (!contents) {
@@ -168,13 +182,18 @@ class Note extends React.PureComponent {
       const linkedContent = Autolinker.link(contents, { stripPrefix: false });
       // if searchInput is 't', replace <a ...>text</a> with
       // <a ...><span class="highlight">t</span>ext</a>
-      text = linkedContent.replace(/>(.+)</i, (_, p1) => `>${this.getText(p1)}<`);
+      text = linkedContent.replace(
+        />(.+)</i,
+        (_, p1) => `>${this.getText(p1)}<`,
+      );
     } else {
       text = this.getText(contents);
     }
 
-    return <span className="contents" dangerouslySetInnerHTML={{ __html: text }}></span>;
-  }
+    return (
+      <span className="contents" dangerouslySetInnerHTML={{ __html: text }} />
+    );
+  };
 
   getText = text => {
     if (this.props.searchInput.trim()) {
@@ -182,96 +201,117 @@ class Note extends React.PureComponent {
     }
 
     return text;
-  }
+  };
 
   getHighlightedText = text => {
     const regex = new RegExp(`(${this.props.searchInput})`, 'gi');
 
     return text.replace(regex, '<span class="highlight">$1</span>');
-  }
+  };
 
   render() {
-    const { annotation, replies, t, isReadOnly, isNoteExpanded, searchInput, visible, isReplyDisabled, rootContents }  = this.props;
+    const {
+      annotation,
+      replies,
+      t,
+      isReadOnly,
+      isNoteExpanded,
+      searchInput,
+      visible,
+      isReplyDisabled,
+      rootContents,
+    } = this.props;
     const { isRootContentEditing, isReplyFocused } = this.state;
     const className = [
       'Note',
       isNoteExpanded ? 'expanded' : '',
-      visible ? '' : 'hidden'
-    ].join(' ').trim();
+      visible ? '' : 'hidden',
+    ]
+      .join(' ')
+      .trim();
 
-    // Sort replies by date created, 
+    // Sort replies by date created,
     // replies.sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
     return (
-      <NoteContext.Consumer>
-        {({ note }) => {
-          console.log(note);
+      <div
+        ref={this.containerRef}
+        className={className}
+        onClick={this.onClickNote}
+      >
+        <NoteRoot
+          annotation={annotation}
+          contents={rootContents}
+          searchInput={searchInput}
+          renderAuthorName={this.renderAuthorName}
+          renderContents={this.renderContents}
+          isNoteExpanded={isNoteExpanded}
+          isEditing={isRootContentEditing}
+          openEditing={this.openRootEditing}
+          closeEditing={this.closeRootEditing}
+          numberOfReplies={replies.length}
+        />
 
-          return (
-            <div ref={this.containerRef} className={className} onClick={this.onClickNote}>
-            Hello
-              {/* <NoteRoot
-              annotation={annotation}
-              contents={rootContents}
+        <div className={`replies ${isNoteExpanded ? 'visible' : 'hidden'}`}>
+          {replies.map(reply => (
+            <NoteReply
+              key={reply.Id}
+              reply={reply}
               searchInput={searchInput}
               renderAuthorName={this.renderAuthorName}
               renderContents={this.renderContents}
-              isNoteExpanded={isNoteExpanded}
-              isEditing={isRootContentEditing}
-              openEditing={this.openRootEditing}
-              closeEditing={this.closeRootEditing}
-              numberOfReplies={replies.length}
             />
-
-            <div className={`replies ${isNoteExpanded ? 'visible' : 'hidden'}`}>
-              {replies.map(reply =>
-                <NoteReply
-                  key={reply.Id}
-                  reply={reply}
-                  searchInput={searchInput}
-                  renderAuthorName={this.renderAuthorName}
-                  renderContents={this.renderContents}
-                />
-              )}
-              {!isReadOnly && !isReplyDisabled &&
-                <div className={isRootContentEditing ? 'replies hidden' : 'add-reply'} onClick={e => e.stopPropagation()}>
-                  <textarea
-                    ref={this.replyTextarea}
-                    onChange={this.onChange}
-                    onKeyDown={this.onKeyDown}
-                    onBlur={this.onBlur}
-                    onFocus={this.onFocus}
-                    placeholder={`${t('action.reply')}...`}
-                  />
-                  {isReplyFocused &&
-                    <div className="buttons" onMouseDown={e => e.preventDefault()}>
-                      <button className={this.state.isEmpty ? 'disabled' : ''} onMouseDown={this.postReply}>{t('action.reply')}</button>
-                      <button onMouseDown={this.onClickCancel}>{t('action.cancel')}</button>
-                    </div>
-                  }
+          ))}
+          {!isReadOnly && !isReplyDisabled && (
+            <div
+              className={isRootContentEditing ? 'replies hidden' : 'add-reply'}
+              onClick={e => e.stopPropagation()}
+            >
+              <textarea
+                ref={this.replyTextarea}
+                onChange={this.onChange}
+                onKeyDown={this.onKeyDown}
+                onBlur={this.onBlur}
+                onFocus={this.onFocus}
+                placeholder={`${t('action.reply')}...`}
+              />
+              {isReplyFocused && (
+                <div className="buttons" onMouseDown={e => e.preventDefault()}>
+                  <button
+                    className={this.state.isEmpty ? 'disabled' : ''}
+                    onMouseDown={this.postReply}
+                  >
+                    {t('action.reply')}
+                  </button>
+                  <button onMouseDown={this.onClickCancel}>
+                    {t('action.cancel')}
+                  </button>
                 </div>
-              }
-            </div> */}
+              )}
             </div>
-          );
-        }
-
-        }
-      </NoteContext.Consumer>
+          )}
+        </div>
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  // isNoteExpanded: selectors.isNoteExpanded(state, ownProps.annotation.Id),
-  // isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
-  // isAnnotationFocused: selectors.isAnnotationFocused(state, ownProps.annotation.Id),
+  isNoteExpanded: selectors.isNoteExpanded(state, ownProps.annotation.Id),
+  isNoteEditing: selectors.isNoteEditing(state, ownProps.annotation.Id),
+  isAnnotationFocused: selectors.isAnnotationFocused(
+    state,
+    ownProps.annotation.Id,
+  ),
   isReadOnly: selectors.isDocumentReadOnly(state),
-  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply')
+  isReplyDisabled: selectors.isElementDisabled(state, 'noteReply'),
 });
 
 const matDispatchToProps = {
   setIsNoteEditing: actions.setIsNoteEditing,
 };
 
-export default connect(mapStateToProps, matDispatchToProps)(withTranslation()(Note));
+export default connect(
+  mapStateToProps,
+  matDispatchToProps,
+)(withTranslation()(Note));
