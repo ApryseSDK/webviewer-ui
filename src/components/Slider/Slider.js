@@ -111,7 +111,7 @@ class Slider extends React.PureComponent {
     const circleCenter = getCirclePosition(this.lineLength);
 
     return (
-      <React.Fragment>
+      <>
         <div className="slider__property">
           {t(`option.slider.${displayProperty}`)}
         </div>
@@ -123,7 +123,7 @@ class Slider extends React.PureComponent {
         <div className="slider__value">
           {displayValue}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 

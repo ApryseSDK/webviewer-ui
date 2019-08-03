@@ -1,5 +1,4 @@
 @import '../../constants/styles';
-@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .OverlayItem {
   min-width: 146px;
@@ -10,7 +9,6 @@
   color: var(--text-color);
   font-size: 16px;
   font-weight: normal;
-  font-family: 'Roboto', sans-serif;
   cursor: pointer;
 
   &:hover {

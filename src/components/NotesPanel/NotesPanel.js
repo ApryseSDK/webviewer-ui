@@ -147,28 +147,28 @@ class NotesPanel extends React.PureComponent {
   isVisibleNote = note => this.visibleNoteIds.has(note.Id)
 
   renderNotesPanelContent = () => {
-    const {notesToRender} = this.state;
+    const { notesToRender } = this.state;
     const sortStrategies = getSortStrategies();
 
     return (
-      <React.Fragment>
+      <>
         <div className={`notes-wrapper ${notesToRender.length ? 'visible' : 'hidden'}`}>
           {this.renderNotes(sortStrategies[this.props.sortStrategy].getSortedNotes(this.rootAnnotations))}
         </div>
         <div className={`no-results ${notesToRender.length ? 'hidden' : 'visible'}`}>
           {this.props.t('message.noResults')}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 
   renderNotes = notes => {
-    return(
+    return (
       notes.map(note => {
         return (
           <React.Fragment key={note.Id + getLatestActivityDate(note)}>
             {this.renderListSeparator(notes, note)}
-            <Note visible={this.isVisibleNote(note)} annotation={note} searchInput={this.state.searchInput} rootContents={note.getContents()} replies={note.getReplies()} />
+            <Note visible={this.isVisibleNote(note)} annotation={note} replies={[...note.getReplies()]} searchInput={this.state.searchInput} rootContents={note.getContents()} />
           </React.Fragment>
         );
       })
@@ -187,7 +187,7 @@ class NotesPanel extends React.PureComponent {
       getSeparatorContent &&
       (isFirstNote || shouldRenderSeparator(prevNote, currNote))
     ) {
-      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, {pageLabels})} />;
+      return <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, { pageLabels })} />;
     }
 
     return null;
@@ -211,17 +211,17 @@ class NotesPanel extends React.PureComponent {
         {this.rootAnnotations.length === 0 
           ? <div className="no-annotations">{t('message.noAnnotations')}</div>
           : <React.Fragment>
-              <div className="header">
-                <input 
-                  type="text" 
-                  placeholder={t('message.searchPlaceholder')}
-                  onChange={this.handleInputChange}
-                  tabIndex={-1}
-                />
-                <Dropdown items={Object.keys(getSortStrategies())} />
-              </div>
-              {this.renderNotesPanelContent()}
-            </React.Fragment>
+            <div className="header">
+              <input 
+                type="text" 
+                placeholder={t('message.searchPlaceholder')}
+                onChange={this.handleInputChange}
+                tabIndex={-1}
+              />
+              <Dropdown items={Object.keys(getSortStrategies())} />
+            </div>
+            {this.renderNotesPanelContent()}
+          </React.Fragment>
         }
       </div>
     );

@@ -5,7 +5,13 @@ export default initialState => (state = initialState, action) => {
 
   switch (type) {
     case 'DISABLE_ELEMENT':
-      return { ...state, disabledElements: { ...state.disabledElements, [payload.dataElement]: { disabled: true, priority: payload.priority } } };
+      return {
+        ...state,
+        disabledElements: {
+          ...state.disabledElements,
+          [payload.dataElement]: { disabled: true, priority: payload.priority }
+        }
+      };
     case 'DISABLE_ELEMENTS': {
       const disabledElements = {};
       payload.dataElements.forEach(dataElement => {
@@ -14,10 +20,22 @@ export default initialState => (state = initialState, action) => {
         disabledElements[dataElement].priority = payload.priority;
       });
 
-      return { ...state, disabledElements: { ...state.disabledElements, ...disabledElements } };
+      return {
+        ...state,
+        disabledElements: { ...state.disabledElements, ...disabledElements }
+      };
     }
     case 'ENABLE_ELEMENT':
-      return { ...state, disabledElements: { ...state.disabledElements, [payload.dataElement]: { disabled: false, priority: payload.priority } } };
+      return {
+        ...state,
+        disabledElements: {
+          ...state.disabledElements,
+          [payload.dataElement]: {
+            disabled: false,
+            priority: payload.priority
+          }
+        }
+      };
     case 'ENABLE_ELEMENTS': {
       const disabledElements = {};
       payload.dataElements.forEach(dataElement => {
@@ -26,14 +44,26 @@ export default initialState => (state = initialState, action) => {
         disabledElements[dataElement].priority = payload.priority;
       });
 
-      return { ...state, disabledElements: { ...state.disabledElements, ...disabledElements } };
+      return {
+        ...state,
+        disabledElements: { ...state.disabledElements, ...disabledElements }
+      };
     }
     case 'ENABLE_ALL_ELEMENTS':
-      return { ...state, disabledElements: { ...initialState.disabledElements } };
+      return {
+        ...state,
+        disabledElements: { ...initialState.disabledElements }
+      };
     case 'OPEN_ELEMENT':
-      return { ...state, openElements: { ...state.openElements, [payload.dataElement]: true } };
+      return {
+        ...state,
+        openElements: { ...state.openElements, [payload.dataElement]: true }
+      };
     case 'CLOSE_ELEMENT':
-      return { ...state, openElements: { ...state.openElements, [payload.dataElement]: false } };
+      return {
+        ...state,
+        openElements: { ...state.openElements, [payload.dataElement]: false }
+      };
     case 'SET_ACTIVE_HEADER_GROUP':
       console.warn(`setActiveHeaderGroup is deprecated.`);
       return state;
@@ -42,7 +72,11 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ACTIVE_TOOL_STYLES':
       return { ...state, activeToolStyles: { ...payload.toolStyles } };
     case 'SET_ACTIVE_TOOL_NAME_AND_STYLES':
-      return { ...state, activeToolName: payload.toolName, activeToolStyles: payload.toolStyles };
+      return {
+        ...state,
+        activeToolName: payload.toolName,
+        activeToolStyles: payload.toolStyles
+      };
     case 'SET_ACTIVE_LEFT_PANEL':
       return { ...state, activeLeftPanel: payload.dataElement };
     case 'SET_ACTIVE_TOOL_GROUP':
@@ -50,17 +84,26 @@ export default initialState => (state = initialState, action) => {
     case 'SET_NOTE_POPUP_ID':
       return { ...state, notePopupId: payload.id };
     case 'EXPAND_NOTE':
-      return { ...state, expandedNotes: { ...state.expandedNotes, [payload.id]: true } };
+      return {
+        ...state,
+        expandedNotes: { ...state.expandedNotes, [payload.id]: true }
+      };
     case 'EXPAND_NOTES': {
       const expandedNotes = {};
       payload.ids.forEach(id => {
         expandedNotes[id] = true;
       });
 
-      return { ...state, expandedNotes: { ...state.expandedNotes, ...expandedNotes } };
+      return {
+        ...state,
+        expandedNotes: { ...state.expandedNotes, ...expandedNotes }
+      };
     }
     case 'COLLAPSE_NOTE':
-      return { ...state, expandedNotes: { ...state.expandedNotes, [payload.id]: false } };
+      return {
+        ...state,
+        expandedNotes: { ...state.expandedNotes, [payload.id]: false }
+      };
     case 'COLLAPSE_ALL_NOTES':
       return { ...state, expandedNotes: { ...initialState.expandedNotes } };
     case 'SET_IS_NOTE_EDITING':
@@ -84,7 +127,14 @@ export default initialState => (state = initialState, action) => {
     case 'SET_HEADER_ITEMS':
       return { ...state, header: payload.headerItems };
     case 'REGISTER_TOOL':
-      const availablePalettes = [ 'TextColor', 'StrokeColor', 'FillColor' ].filter(property => payload.toolObject.defaults && payload.toolObject.defaults[property]);
+      const availablePalettes = [
+        'TextColor',
+        'StrokeColor',
+        'FillColor'
+      ].filter(
+        property =>
+          payload.toolObject.defaults && payload.toolObject.defaults[property]
+      );
       return {
         ...state,
         toolButtonObjects: {
@@ -98,7 +148,10 @@ export default initialState => (state = initialState, action) => {
             iconColor: availablePalettes[0],
             currentPalette: availablePalettes[0],
             availablePalettes,
-            annotationCheck: payload.annotationConstructor ? annotation => annotation instanceof payload.annotationConstructor : null
+            annotationCheck: payload.annotationConstructor
+              ? annotation =>
+                annotation instanceof payload.annotationConstructor
+              : null
           }
         }
       };
@@ -116,33 +169,55 @@ export default initialState => (state = initialState, action) => {
           ...state.toolButtonObjects,
           [toolName]: {
             ...state.toolButtonObjects[toolName],
-            dataElement: buttonName || state.toolButtonObjects[toolName].dataElement,
+            dataElement:
+              buttonName || state.toolButtonObjects[toolName].dataElement,
             title: tooltip || state.toolButtonObjects[toolName].title,
-            group: (buttonGroup !== undefined) ? buttonGroup : state.toolButtonObjects[toolName].group,
-            img: buttonImage || state.toolButtonObjects[toolName].img,
+            group:
+              buttonGroup !== undefined
+                ? buttonGroup
+                : state.toolButtonObjects[toolName].group,
+            img: buttonImage || state.toolButtonObjects[toolName].img
           }
         }
       };
     }
-    case 'SET_TOOL_BUTTON_OBJECTS': 
+    case 'SET_TOOL_BUTTON_OBJECTS':
       return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
     case 'SET_DOCUMENT_LOADED':
       return { ...state, isDocumentLoaded: payload.isDocumentLoaded };
     case 'SET_READ_ONLY':
       return { ...state, isReadOnly: payload.isReadOnly };
     case 'SET_CUSTOM_PANEL':
-      return { ...state, customPanels: [ ...state.customPanels, payload.newPanel ] };
+      return {
+        ...state,
+        customPanels: [...state.customPanels, payload.newPanel]
+      };
     case 'USE_EMBEDDED_PRINT':
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
-    case 'SET_PAGE_LABELS': 
-      return { ...state, pageLabels: [ ...payload.pageLabels ] };
+    case 'SET_PAGE_LABELS':
+      return { ...state, pageLabels: [...payload.pageLabels] };
     case 'SET_COLOR_PALETTE': {
       const { toolName, colorPalette } = payload;
-      return { ...state, toolButtonObjects: { ...state.toolButtonObjects, [toolName]: { ...state.toolButtonObjects[toolName], currentPalette: colorPalette } } };
+      return {
+        ...state,
+        toolButtonObjects: {
+          ...state.toolButtonObjects,
+          [toolName]: {
+            ...state.toolButtonObjects[toolName],
+            currentPalette: colorPalette
+          }
+        }
+      };
     }
     case 'SET_ICON_COLOR': {
       const { toolName, color } = payload;
-      return { ...state, toolButtonObjects: { ...state.toolButtonObjects, [toolName]: { ...state.toolButtonObjects[toolName], iconColor: color } } };
+      return {
+        ...state,
+        toolButtonObjects: {
+          ...state.toolButtonObjects,
+          [toolName]: { ...state.toolButtonObjects[toolName], iconColor: color }
+        }
+      };
     }
     case 'SET_SWIPE_ORIENTATION':
       return { ...state, swipeOrientation: payload.swipeOrientation };
@@ -157,7 +232,7 @@ export default initialState => (state = initialState, action) => {
       const { newItems, index, group } = payload;
       if (!group) {
         headerArr.splice(index, 0, ...newItems);
-        return { ...state, header: [ ...headerArr ] };
+        return { ...state, header: [...headerArr] };
       } else {
         group.children.splice(index, 0, ...newItems);
         const modification = group.children;
@@ -173,7 +248,9 @@ export default initialState => (state = initialState, action) => {
       } else {
         currentArr = group.children;
       }
-      let dataElementArr = currentArr.map(buttonObject => buttonObject.dataElement);
+      let dataElementArr = currentArr.map(
+        buttonObject => buttonObject.dataElement
+      );
       let removeIndices = [];
       itemList.forEach(item => {
         if (typeof item === 'string') {
@@ -181,17 +258,24 @@ export default initialState => (state = initialState, action) => {
             removeIndices.push(dataElementArr.indexOf(item));
             console.log(currentArr[dataElementArr.indexOf(item)]);
           } else {
-            console.warn(`${item} does not exist. Make sure you are removing from the correct group.`);
+            console.warn(
+              `${item} does not exist. Make sure you are removing from the correct group.`
+            );
           }
         } else if (typeof item === 'number') {
           if (item < 0 || item >= currentArr.length) {
-            console.warn(`${item} is an invalid index. Please make sure to remove index between 0 and ${currentArr.length - 1}`);
+            console.warn(
+              `${item} is an invalid index. Please make sure to remove index between 0 and ${currentArr.length -
+                1}`
+            );
             return;
           }
           removeIndices.push(item);
           console.log(currentArr[item]);
         } else {
-          console.warn(`type ${typeof item} is not a valid parameter. Pass string or number`);
+          console.warn(
+            `type ${typeof item} is not a valid parameter. Pass string or number`
+          );
           return;
         }
       });
@@ -199,9 +283,9 @@ export default initialState => (state = initialState, action) => {
         currentArr.splice(removeIndices[i], 1);
       }
       if (!group) {
-        return { ...state, header: [ ...currentArr ] };
+        return { ...state, header: [...currentArr] };
       } else {
-        const modification = [ ...currentArr ];
+        const modification = [...currentArr];
         return replaceChildren(state, group, modification, headerArr);
       }
     }
@@ -210,11 +294,13 @@ export default initialState => (state = initialState, action) => {
       let headerArr = state.header;
       let currentArr = [];
       if (!group) {
-        currentArr = [ ...state.header ];
+        currentArr = [...state.header];
       } else {
-        currentArr = [ ...group.children ];
+        currentArr = [...group.children];
       }
-      let updateObject = currentArr.find(buttonObject => buttonObject.dataElement === dataElement);
+      let updateObject = currentArr.find(
+        buttonObject => buttonObject.dataElement === dataElement
+      );
       const updateObjectIndex = currentArr.indexOf(updateObject);
       updateObject = { ...updateObject, ...newProps };
       if (!group) {
@@ -222,7 +308,7 @@ export default initialState => (state = initialState, action) => {
         return { ...state, header: currentArr };
       } else {
         group.children[updateObjectIndex] = updateObject;
-        const modification = [ ...group.children ];
+        const modification = [...group.children];
         return replaceChildren(state, group, modification, headerArr);
       }
     }
@@ -230,14 +316,17 @@ export default initialState => (state = initialState, action) => {
       const { items, group } = payload;
       let headerArr = state.header;
       if (!group) {
-        return { ...state, header: [ ...items ] };
+        return { ...state, header: [...items] };
       } else {
-        const modification = [ ...items ];
+        const modification = [...items];
         return replaceChildren(state, group, modification, headerArr);
       }
-    } 
+    }
     case 'SET_ZOOM_LIST':
       return { ...state, zoomList: payload.zoomList };
+    case 'SET_MEASUREMENT_UNITS': {
+      return { ...state, measurementUnits: payload };
+    }
     default:
       return state;
   }

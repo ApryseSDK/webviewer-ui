@@ -27,13 +27,13 @@ class SearchResult extends React.PureComponent {
     const textAfterSearchValue = ambient_str.slice(result_str_end); 
 
     return (
-      <React.Fragment>
+      <>
         {textBeforeSearchValue}
         <span className="search-value">
           {searchValue}
         </span>
         {textAfterSearchValue}
-      </React.Fragment>
+      </>
     );
   }
 

@@ -33,6 +33,7 @@ import PrintHandler from 'components/PrintHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
 import { isDesktop } from 'helpers/device';
+import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -43,6 +44,10 @@ class App extends React.PureComponent {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired
+  };
+
+  componentDidMount() {
+    fireEvent('viewerLoaded');
   }
 
   componentWillUnmount() {
@@ -59,7 +64,7 @@ class App extends React.PureComponent {
     ].filter(element => element);
 
     this.props.closeElements(elements);
-  }
+  };
 
   onMouseDown = () => {
     const elements = [
@@ -72,16 +77,21 @@ class App extends React.PureComponent {
     ].filter(element => element);
 
     this.props.closeElements(elements);
-  }
+  };
 
   onScroll = () => {
     this.onMouseDown();
-  }
+  };
 
   render() {
     return (
-      <React.Fragment>
-        <div className="App" onMouseDown={this.onMouseDown} onClick={this.onClick} onScroll={this.onScroll}>
+      <>
+        <div
+          className="App"
+          onMouseDown={this.onMouseDown}
+          onClick={this.onClick}
+          onScroll={this.onScroll}
+        >
           <Accessibility />
 
           <Header />
@@ -117,17 +127,22 @@ class App extends React.PureComponent {
         <PrintHandler />
         <FilePickerHandler />
         <CopyTextHandler />
-      </React.Fragment>
+      </>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel')
 });
 
 const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(translate()(App)));
+export default hot(module)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(translate()(App))
+);

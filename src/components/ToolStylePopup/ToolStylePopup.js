@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import StylePopup from 'components/StylePopup';
 
-import core from 'core';
 import getClassName from 'helpers/getClassName';
+import setToolStyles from 'helpers/setToolStyles';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -19,15 +19,15 @@ class ToolStylePopup extends React.PureComponent {
     isOpen: PropTypes.bool,
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired
-  }
+    closeElements: PropTypes.func.isRequired,
+  };
 
   constructor(props) {
     super(props);
     this.popup = React.createRef();
     this.state = {
       left: 0,
-      top: 0
+      top: 0,
     };
   }
 
@@ -37,13 +37,21 @@ class ToolStylePopup extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
-      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay' ]);
-      this.positionToolStylePopup();       
+      this.props.closeElements([
+        'viewControlsOverlay',
+        'searchOverlay',
+        'menuOverlay',
+        'signatureOverlay',
+        'zoomOverlay',
+        'redactionOverlay',
+      ]);
+      this.positionToolStylePopup();
     }
 
-    const selectedAnotherTool = prevProps.activeToolName !== this.props.activeToolName; 
+    const selectedAnotherTool =
+      prevProps.activeToolName !== this.props.activeToolName;
     if (selectedAnotherTool && !this.props.isDisabled) {
-      this.positionToolStylePopup(); 
+      this.positionToolStylePopup();
     }
   }
 
@@ -53,16 +61,11 @@ class ToolStylePopup extends React.PureComponent {
 
   handleWindowResize = () => {
     this.props.closeElement('toolStylePopup');
-  }
+  };
 
   handleStyleChange = (property, value) => {
-    const toolName = this.props.activeToolName;
-
-    core.getTool(toolName).setStyles(oldStyle => ({
-      ...oldStyle,
-      [property]: value
-    }));
-  }
+    setToolStyles(this.props.activeToolName, property, value);
+  };
 
   positionToolStylePopup = () => {
     const { dataElement } = this.props;
@@ -79,10 +82,13 @@ class ToolStylePopup extends React.PureComponent {
       return;
     }
 
-    const { left, top } = this.getToolStylePopupPositionBasedOn(toolButton, this.popup);
+    const { left, top } = this.getToolStylePopupPositionBasedOn(
+      toolButton,
+      this.popup
+    );
 
     this.setState({ left, top });
-  }
+  };
 
   getToolStylePopupPositionBasedOn = (toolButton, popup) => {
     const buttonRect = toolButton.getBoundingClientRect();
@@ -92,17 +98,20 @@ class ToolStylePopup extends React.PureComponent {
     let popupLeft = buttonCenter - popupRect.width / 2;
     const popupRight = buttonCenter + popupRect.width / 2;
 
-    popupLeft = popupRight > window.innerWidth ? window.innerWidth - popupRect.width - 12 : popupLeft;
+    popupLeft =
+      popupRight > window.innerWidth
+        ? window.innerWidth - popupRect.width - 12
+        : popupLeft;
     popupLeft = popupLeft < 0 ? 0 : popupLeft;
 
     return { left: popupLeft, top: popupTop };
-  }
+  };
 
   onClick = e => {
     e.stopPropagation();
 
     this.props.closeElement('toolStylePopup');
-  }
+  };
 
   render() {
     const { left, top } = this.state;
@@ -114,8 +123,16 @@ class ToolStylePopup extends React.PureComponent {
       return null;
     }
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
+    
     return (
-      <div className={className} data-element="toolStylePopup" style={{ top, left }} ref={this.popup} onMouseDown={e => e.stopPropagation()} onClick={this.onClick}>
+      <div
+        className={className}
+        data-element="toolStylePopup"
+        style={{ top, left }}
+        ref={this.popup}
+        onMouseDown={e => e.stopPropagation()}
+        onClick={this.onClick}
+      >
         <StylePopup
           key={activeToolName}
           activeToolName={activeToolName}
@@ -140,8 +157,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
-  closeElements: actions.closeElements
+  closeElements: actions.closeElements,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolStylePopup);
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToolStylePopup);
