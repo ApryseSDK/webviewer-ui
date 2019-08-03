@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'components/Tabs';
@@ -153,10 +153,11 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
+<<<<<<< HEAD
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(SignatureModal));
+)(withTranslation()(SignatureModal));
 
 // handleInputChange = e => {
 //   const text = e.target.value;

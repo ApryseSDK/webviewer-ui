@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
 
@@ -103,4 +103,4 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(MenuOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(MenuOverlay));

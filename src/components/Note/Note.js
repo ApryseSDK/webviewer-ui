@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 
 import NoteRoot from 'components/NoteRoot';
@@ -153,7 +153,7 @@ class Note extends React.PureComponent {
       return '(no name)';
     }
 
-    return <span className="author" dangerouslySetInnerHTML={{__html: this.getText(name)}}></span>;
+    return <span className="author" dangerouslySetInnerHTML={{ __html: this.getText(name) }}></span>;
   }
 
   renderContents = contents => {
@@ -172,7 +172,7 @@ class Note extends React.PureComponent {
       text = this.getText(contents);
     }
 
-    return <span className="contents" dangerouslySetInnerHTML={{__html: text}}></span>;
+    return <span className="contents" dangerouslySetInnerHTML={{ __html: text }}></span>;
   }
 
   getText = text => {
@@ -263,4 +263,4 @@ const matDispatchToProps = {
   setIsNoteEditing: actions.setIsNoteEditing,
 };
 
-export default connect(mapStateToProps, matDispatchToProps)(translate()(Note));
+export default connect(mapStateToProps, matDispatchToProps)(withTranslation()(Note));

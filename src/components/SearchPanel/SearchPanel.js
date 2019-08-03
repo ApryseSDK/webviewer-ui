@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import SearchResult from 'components/SearchResult';
@@ -111,4 +111,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(SearchPanel));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SearchPanel));

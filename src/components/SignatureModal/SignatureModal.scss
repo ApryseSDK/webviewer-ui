@@ -1,12 +1,11 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600');
 
 $signature-modal-shared-color: #E1E1E3;
 
 .SignatureModal {
   @extend %modal;
-  font-family: 'Source Sans Pro';
+  font-size: 0.9em;
 
   .container {
     @extend %modal-shared-container-style;
@@ -59,17 +58,15 @@ $signature-modal-shared-color: #E1E1E3;
 
       &-sign-here {
         color: $signature-modal-shared-color;
-        font-size: 18px;
+        font-size: 16px;
       }
 
       &-clear {
         z-index: 2;
         position: absolute;
-        font-weight: 600;
         top: 16px;
         right: 16px;
         color: #757575;
-        font-size: 16px;
         font-weight: 600;
         cursor: pointer;
 
@@ -139,11 +136,11 @@ $signature-modal-shared-color: #E1E1E3;
         color: #FFFFFF;
         font-weight: 600;
         padding: 6px 18px;
+        margin-right: 8px;
         background: #00A4E4;
         border-radius: 4px 4px 4px 4px;
         border: 1px solid #00A4E4;
         height: 32px;
-        font-size: 16px;
         cursor: pointer;
 
         &:hover {

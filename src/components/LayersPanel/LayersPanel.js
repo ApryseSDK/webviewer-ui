@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Layer from 'components/Layer';
 
@@ -31,13 +31,12 @@ class LayersPanel extends React.PureComponent {
         ))}
       </div>
     );
-
   }
 }
 
 const mapStateToProps = state => ({
   layers: selectors.getLayers(state),
-  isDisabled: selectors.isElementDisabled(state, 'layersPanel')
+  isDisabled: selectors.isElementDisabled(state, 'layersPanel'),
 });
 
-export default connect(mapStateToProps)(translate()(LayersPanel));
+export default connect(mapStateToProps)(withTranslation()(LayersPanel));
