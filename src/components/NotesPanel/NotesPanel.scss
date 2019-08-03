@@ -23,20 +23,16 @@
 
   .no-results {
     @extend %center-of-panel;
+    display: none;
+
     &.visible {
       display: block;
-    }
-    &.hidden {
-      display: none;
     }
   }
 
   .notes-wrapper {
     &.visible {
       display: block;
-    }
-    &.hidden {
-      display: none;
     }
   }
 }

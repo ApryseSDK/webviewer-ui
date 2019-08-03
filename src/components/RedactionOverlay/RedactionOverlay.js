@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
 import ToolButton from 'components/ToolButton';
@@ -98,4 +98,4 @@ const mapDispatchToProps = dispatch => ({
   openElements: dataElements => dispatch(actions.openElements(dataElements)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(RedactionOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(RedactionOverlay));

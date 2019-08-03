@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import selectors from 'selectors';
@@ -9,7 +9,6 @@ import './CustomElement.scss';
 
 const propTypes = {
   className: PropTypes.string,
-  isDisabled: PropTypes.bool,
   dataElement: PropTypes.string,
   display: PropTypes.string,
   render: PropTypes.func.isRequired,
@@ -18,7 +17,6 @@ const propTypes = {
 
 const CustomElement = ({
   className = 'CustomElement',
-  isDisabled,
   dataElement,
   display,
   render,
@@ -26,6 +24,7 @@ const CustomElement = ({
 }) => {
   const [reactComponent, setReactComponent] = useState(null);
   const wrapperRef = useRef();
+  const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
 
   useEffect(() => {
     // currently UI is running in an iframe, and there are two ways a user can add a CustomElement component to the header using setHeaderItems.
@@ -79,8 +78,4 @@ const CustomElement = ({
 
 CustomElement.propTypes = propTypes;
 
-const mapStateToProps = (state, ownProps) => ({
-  isDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
-});
-
-export default connect(mapStateToProps)(CustomElement);
+export default CustomElement;

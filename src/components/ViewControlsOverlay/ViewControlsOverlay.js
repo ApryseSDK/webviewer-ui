@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Button from 'components/Button';
 import Tooltip from 'components/Tooltip';
@@ -118,4 +118,4 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(ViewControlsOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(ViewControlsOverlay));

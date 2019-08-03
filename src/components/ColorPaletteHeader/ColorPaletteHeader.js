@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Tooltip from 'components/Tooltip';
 
@@ -139,4 +139,4 @@ const mapDispatchToProps = {
   setColorPalette: actions.setColorPalette
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate(null, { wait: false })(ColorPaletteHeader));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));
