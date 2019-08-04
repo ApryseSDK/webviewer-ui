@@ -7,8 +7,8 @@ import ActionButton from 'components/ActionButton';
 import {
   Tabs, TabList, Tab, TabPanels, TabPanel,
 } from 'components/Tabs';
-import DrawCanvas from 'components/SignatureModal/DrawCanvas';
-import TypeCanvas from 'components/SignatureModal/TypeCanvas';
+import InkSignature from 'components/SignatureModal/InkSignature';
+import TextSignature from 'components/SignatureModal/TextSignature';
 
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
@@ -78,7 +78,6 @@ const SignatureModal = () => {
       <div
         className="container"
         onClick={e => e.stopPropagation()}
-        // onMouseUp={handleFinishDrawing}
       >
         <Tabs>
           <div className="header">
@@ -103,13 +102,13 @@ const SignatureModal = () => {
 
           <TabPanels>
             <TabPanel>
-              <DrawCanvas
+              <InkSignature
                 isModalOpen={isOpen}
                 setSaveSignature={setSaveSignature}
               />
             </TabPanel>
             <TabPanel>
-              <TypeCanvas setSaveSignature={setSaveSignature} />
+              <TextSignature setSaveSignature={setSaveSignature} />
             </TabPanel>
             <TabPanel>
               <div>Upload</div>

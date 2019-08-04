@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 
 import core from 'core';
 
-import './TypeCanvas.scss';
+import './TextSignature.scss';
 
 const propTypes = {
   setSaveSignature: PropTypes.func.isRequired,
 };
 
-const TypeCanvas = ({ setSaveSignature }) => {
+const TextSignature = ({ setSaveSignature }) => {
   const [value, setValue] = useState(core.getCurrentUser());
   const [activeIndex, setActiveIndex] = useState(-1);
 
@@ -50,9 +50,9 @@ const TypeCanvas = ({ setSaveSignature }) => {
   );
 };
 
-TypeCanvas.propTypes = propTypes;
+TextSignature.propTypes = propTypes;
 
-export default TypeCanvas;
+export default TextSignature;
 
 const Canvas = ({
   text, font, isActive, onSelect,

@@ -7,14 +7,14 @@ import { useTranslation } from 'react-i18next';
 
 import core from 'core';
 
-import './DrawCanvas.scss';
+import './InkSignature.scss';
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
   setSaveSignature: PropTypes.func,
 };
 
-const InkCanvas = ({ isModalOpen, setSaveSignature }) => {
+const InkSignature = ({ isModalOpen, setSaveSignature }) => {
   const canvasRef = useRef();
   const [canClear, setCanClear] = useState(false);
   const [t] = useTranslation();
@@ -98,6 +98,6 @@ const InkCanvas = ({ isModalOpen, setSaveSignature }) => {
   );
 };
 
-InkCanvas.propTypes = propTypes;
+InkSignature.propTypes = propTypes;
 
-export default InkCanvas;
+export default InkSignature;
