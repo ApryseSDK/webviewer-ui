@@ -30,7 +30,7 @@ class DocumentContainer extends React.PureComponent {
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     displayMode: PropTypes.string.isRequired,
-    swipeOrientation: PropTypes.string
+    swipeOrientation: PropTypes.string,
   }
 
   constructor(props) {
@@ -55,7 +55,9 @@ class DocumentContainer extends React.PureComponent {
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
-    const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
+    const {
+      hasPath, doesDocumentAutoLoad, document, advanced, dispatch,
+    } = this.props;
     if ((hasPath && doesDocumentAutoLoad) || document.isOffline) {
       loadDocument({ document, advanced }, dispatch);
     }
@@ -68,17 +70,17 @@ class DocumentContainer extends React.PureComponent {
       this.container.current.addEventListener('dragover', this.preventDefault);
       this.container.current.addEventListener('drop', this.onDrop);
     }
-    
+
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
     window.addEventListener('keydown', this.onKeyDown);
   }
-  
+
   componentWillUnmount() {
     TouchEventManager.terminate();
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
-    
+
     if (process.env.NODE_ENV === 'development') {
       this.container.current.addEventListener('dragover', this.preventDefault);
       this.container.current.removeEventListener('drop', this.onDrop);
@@ -175,14 +177,16 @@ class DocumentContainer extends React.PureComponent {
   }
 
   getClassName = props => {
-    const { isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen } = props;
+    const {
+      isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen,
+    } = props;
 
     return [
       'DocumentContainer',
       isLeftPanelOpen ? 'left-panel' : '',
       isRightPanelOpen ? 'right-panel' : '',
       isHeaderOpen ? '' : 'no-header',
-      isSearchOverlayOpen ? 'search-overlay' : ''
+      isSearchOverlayOpen ? 'search-overlay' : '',
     ].join(' ').trim();
   }
 
@@ -217,12 +221,12 @@ const mapStateToProps = state => ({
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
   swipeOrientation: selectors.getSwipeOrientation(state),
-  toolButtonObjects: selectors.getToolButtonObjects(state)
+  toolButtonObjects: selectors.getToolButtonObjects(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  openElement: dataElement => dispatch(actions.openElement(dataElement))
+  openElement: dataElement => dispatch(actions.openElement(dataElement)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);

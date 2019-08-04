@@ -1,0 +1,56 @@
+@import '../../../constants/styles';
+
+.image-signature {
+  margin: 18px 24px 0px 24px;
+  width: 552px;
+  height: 200px;
+  border: 1px solid $signature-modal-shared-color;
+  position: relative;
+
+  &-upload-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;  
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+
+  &-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background .3s;
+    background: rgb(97, 145, 179);
+    padding: 10px;
+    border-radius: 2px;
+    color: white;
+
+    &:hover {
+      background: rgb(21, 135, 216);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    label {
+      cursor: pointer;
+    }
+  }
+
+  &-separator {
+    margin: 10px;
+  }
+
+  &-background {
+    position: relative;
+    background: red;
+    width: 100%;
+    height: 100%;
+  }
+}
+

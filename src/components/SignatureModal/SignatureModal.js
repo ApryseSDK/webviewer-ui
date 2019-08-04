@@ -9,6 +9,7 @@ import {
 } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
 import TextSignature from 'components/SignatureModal/TextSignature';
+import ImageSignature from 'components/SignatureModal/ImageSignature';
 
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
@@ -111,7 +112,7 @@ const SignatureModal = () => {
               <TextSignature setSaveSignature={setSaveSignature} />
             </TabPanel>
             <TabPanel>
-              <div>Upload</div>
+              <ImageSignature setSaveSignature={setSaveSignature} />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -138,29 +139,3 @@ const SignatureModal = () => {
 };
 
 export default SignatureModal;
-
-// handleFileChange = e => {
-//   this.signatureTool.clearSignatureCanvas();
-//   const fileReader = new FileReader();
-
-//   fileReader.onload = e => {
-//     const image = document.createElement('img');
-//     const imageData = e.target.result;
-//     image.src = imageData;
-
-//     image.onload = () => {
-//       const canvas = this.canvas.current;
-//       const ctx = this.canvas.current.getContext('2d');
-
-//       ctx.drawImage(
-//         image,
-//         canvas.width / 2 - image.width / 2,
-//         canvas.height / 2 - image.height / 2
-//       );
-
-//       this.signatureTool.setSignature(imageData);
-//       this.handleFinishDrawing(e);
-//     };
-//   };
-//   fileReader.readAsDataURL(e.target.files[0]);
-// };
