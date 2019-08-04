@@ -25,6 +25,7 @@ const InkSignature = ({ isModalOpen, setSaveSignature }) => {
 
     if (canvas) {
       const { width, height } = canvas.getBoundingClientRect();
+      // TODO: get canvas multiplier?
       canvas.width = width;
       canvas.height = height;
     }
@@ -81,15 +82,15 @@ const InkSignature = ({ isModalOpen, setSaveSignature }) => {
   };
 
   const clearBtnClass = classNames({
-    'draw-signature-clear': true,
+    'ink-signature-clear': true,
     active: canClear,
   });
 
   return (
-    <div className="draw-signature">
-      <canvas width="100%" height="100%" className="draw-signature-canvas" ref={canvasRef} />
-      <div className="draw-signature-background">
-        <div className="draw-signature-sign-here">{t('message.signHere')}</div>
+    <div className="ink-signature">
+      <canvas width="100%" height="100%" className="ink-signature-canvas" ref={canvasRef} />
+      <div className="ink-signature-background">
+        <div className="ink-signature-sign-here">{t('message.signHere')}</div>
         <div className={clearBtnClass} onClick={clearCanvas}>
           {t('action.clear')}
         </div>

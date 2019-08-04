@@ -28,22 +28,28 @@ const TextSignature = ({ setSaveSignature }) => {
   const fonts = ['Comic Sans MS', 'Garamond', 'Palatino', 'Courier'];
 
   return (
-    <div className="type-signature">
+    <div className="text-signature">
       <input
-        className="type-signature-input"
+        className="text-signature-input"
         type="text"
         value={value}
         onChange={handleInputChange}
       />
-      <div className="type-signature-container">
+      <div className="text-signature-container">
+
         {fonts.map((font, index) => (
-          <Canvas
-            key={font}
-            text={value}
-            font={font}
-            isActive={index === activeIndex}
-            onSelect={() => setActiveIndex(index)}
-          />
+          <div key={font} className={classNames({
+            'text-signature-canvas-container': true,
+            active: index === activeIndex,
+          })}
+          >
+            <div className="text-signature-background" />
+            <Canvas
+              text={value}
+              font={font}
+              onSelect={() => setActiveIndex(index)}
+            />
+          </div>
         ))}
       </div>
     </div>
@@ -55,7 +61,7 @@ TextSignature.propTypes = propTypes;
 export default TextSignature;
 
 const Canvas = ({
-  text, font, isActive, onSelect,
+  text, font, onSelect,
 }) => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
   const canvasRef = useRef();
@@ -63,6 +69,11 @@ const Canvas = ({
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const { width, height } = canvas.getBoundingClientRect();
+    // TODO: get canvas multiplier?
+    canvas.width = width;
+    canvas.height = height;
+
     const ctx = canvas.getContext('2d');
 
     ctx.font = `${fontSize} ${font}`;
@@ -75,12 +86,8 @@ const Canvas = ({
     const ctx = canvas.getContext('2d');
     const { width, height } = canvas;
 
-    ctx.clearRect(0, 0, width, height);
-
-    ctx.fillStyle = '#f8f8f8';
-    ctx.fillRect(0, 0, width, height);
-
     ctx.fillStyle = '#000';
+    ctx.clearRect(0, 0, width, height);
     ctx.fillText(text, width / 2, height / 2);
   }, [text]);
 
@@ -91,9 +98,6 @@ const Canvas = ({
 
   return (
     <canvas
-      className={classNames({
-        active: isActive,
-      })}
       ref={canvasRef}
       onClick={handleClick}
     />
