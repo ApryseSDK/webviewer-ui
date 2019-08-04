@@ -1,0 +1,41 @@
+@import '../../../constants/styles';
+
+.type-signature {
+  margin: 18px 24px 0px 24px;
+  width: 552px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+
+  &-input {
+    outline: none;
+    height: 17px;
+    border-radius: 4px;
+    border: 1px solid $signature-modal-shared-color;
+    box-shadow: none;
+    padding: 5px;
+  }
+
+  &-container {
+    margin-top: 10px;
+    flex: 1;
+    border: 1px solid $signature-modal-shared-color;
+    display: flex;
+    flex-wrap: wrap;
+
+    canvas {
+      width: calc(50% - 3px);
+      height: calc(50% - 3px);
+      border-radius: 4px;
+      border: 1.5px solid transparent;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &.active {
+        border: 1.5px solid #0088E7;
+      }
+    }
+  }
+}

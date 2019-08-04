@@ -12,7 +12,7 @@ export const Tabs = props => {
     <TabsContext.Provider
       value={{
         activeIndex,
-        setActiveIndex
+        setActiveIndex,
       }}
     >
       {props.children}
@@ -21,7 +21,7 @@ export const Tabs = props => {
 };
 
 Tabs.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export const TabList = props => {
@@ -29,12 +29,10 @@ export const TabList = props => {
 
   return (
     <div className="tab-list">
-      {React.Children.map(props.children, (child, index) =>
-        React.cloneElement(child, {
-          index,
-          isActive: activeIndex === index
-        })
-      )}
+      {React.Children.map(props.children, (child, index) => React.cloneElement(child, {
+        index,
+        isActive: activeIndex === index,
+      }))}
     </div>
   );
 };
@@ -42,7 +40,6 @@ export const TabList = props => {
 export const Tab = ({ children, index }) => {
   const { setActiveIndex } = useContext(TabsContext);
 
-  console.log(children);
   // TODO: check if children.type is a function
   // TODO: check if it's just a string
 
@@ -53,7 +50,7 @@ export const Tab = ({ children, index }) => {
       }
 
       setActiveIndex(index);
-    }
+    },
   });
 };
 
@@ -62,15 +59,11 @@ export const TabPanels = props => {
 
   return (
     <div className="tab-panels">
-      {React.Children.map(props.children, (child, index) =>
-        React.cloneElement(child, {
-          isActive: activeIndex === index
-        })
-      )}
+      {React.Children.map(props.children, (child, index) => React.cloneElement(child, {
+        isActive: activeIndex === index,
+      }))}
     </div>
   );
 };
 
-export const TabPanel = ({ isActive, children }) => {
-  return isActive ? children : null;
-};
+export const TabPanel = ({ isActive, children }) => (isActive ? children : null);

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'components/Tabs';
-import InkCanvas from 'components/SignatureModal/InkCanvas';
+import {
+  Tabs, TabList, Tab, TabPanels, TabPanel,
+} from 'components/Tabs';
+import DrawCanvas from 'components/SignatureModal/DrawCanvas';
+import TypeCanvas from 'components/SignatureModal/TypeCanvas';
 
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
@@ -15,42 +17,34 @@ import selectors from 'selectors';
 
 import './SignatureModal.scss';
 
-const propTypes = {
-  isDisabled: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  t: PropTypes.func.isRequired,
-  closeElement: PropTypes.func.isRequired,
-  closeElements: PropTypes.func.isRequired
-};
-
-const SignatureModal = ({
-  isDisabled,
-  isOpen,
-  t,
-  closeElement,
-  closeElements
-}) => {
+const SignatureModal = () => {
+  const [isDisabled, isOpen] = useSelector(state => [
+    selectors.isElementDisabled(state, 'signatureModal'),
+    selectors.isElementOpen(state, 'signatureModal'),
+  ]);
+  const dispatch = useDispatch();
   const [saveSignature, setSaveSignature] = useState(false);
+  const [t] = useTranslation();
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
   useEffect(() => {
     if (isOpen) {
       core.setToolMode('AnnotationCreateSignature');
       setSaveSignature(false);
-      signatureTool.clearSignatureCanvas();
-      closeElements([
-        'printModal',
-        'loadingModal',
-        'progressModal',
-        'errorModal'
-      ]);
+      dispatch(
+        actions.closeElements([
+          'printModal',
+          'loadingModal',
+          'progressModal',
+          'errorModal',
+        ]),
+      );
     }
   }, [isOpen]);
 
   const closeModal = () => {
-    // this.clearCanvas();
     signatureTool.clearLocation();
-    closeElement('signatureModal');
+    dispatch(actions.closeElement('signatureModal'));
     core.setToolMode(defaultTool);
   };
 
@@ -68,7 +62,7 @@ const SignatureModal = ({
       } else {
         signatureTool.showPreview();
       }
-      closeElement('signatureModal');
+      dispatch(actions.closeElement('signatureModal'));
     }
   };
 
@@ -76,7 +70,7 @@ const SignatureModal = ({
     Modal: true,
     SignatureModal: true,
     open: isOpen,
-    closed: !isOpen
+    closed: !isOpen,
   });
 
   return isDisabled ? null : (
@@ -109,10 +103,13 @@ const SignatureModal = ({
 
           <TabPanels>
             <TabPanel>
-              <InkCanvas />
+              <DrawCanvas
+                isModalOpen={isOpen}
+                setSaveSignature={setSaveSignature}
+              />
             </TabPanel>
             <TabPanel>
-              <div>Type</div>
+              <TypeCanvas setSaveSignature={setSaveSignature} />
             </TabPanel>
             <TabPanel>
               <div>Upload</div>
@@ -141,47 +138,7 @@ const SignatureModal = ({
   );
 };
 
-SignatureModal.propTypes = propTypes;
-
-const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'signatureModal'),
-  isOpen: selectors.isElementOpen(state, 'signatureModal')
-});
-
-const mapDispatchToProps = {
-  closeElement: actions.closeElement,
-  closeElements: actions.closeElements
-};
-
-<<<<<<< HEAD
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withTranslation()(SignatureModal));
-
-// handleInputChange = e => {
-//   const text = e.target.value;
-//   const canvas = this.canvas.current;
-//   this.signatureTool.clearSignatureCanvas();
-
-//   const ctx = this.signatureTool.ctx;
-//   ctx.save();
-//   ctx.font = '50px sans-serif';
-//   ctx.textAlign = 'center';
-//   ctx.textBaseline = 'middle';
-//   ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-//   ctx.restore();
-
-//   if (e.target.value) {
-//     this.signatureTool.setSignature(canvas.toDataURL());
-//     this.handleFinishDrawing(e);
-//     this.setState({
-//       inputValue: text
-//     });
-//   } else {
-//     this.setState(this.initialState);
-//   }
-// };
+export default SignatureModal;
 
 // handleFileChange = e => {
 //   this.signatureTool.clearSignatureCanvas();

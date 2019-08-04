@@ -37,6 +37,8 @@ $md-shadow1: 0 0 2px 0 rgba(0,0,0,0.14), 0 2px 2px 0 rgba(0,0,0,0.12), 0 1px 3px
 $tablet-width: 900px;
 $mobile-width: 640px;
 
+$signature-modal-shared-color: #E1E1E3;
+
 %open {
   &.open {
     visibility: visible;
