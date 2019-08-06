@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Autolinker from 'autolinker';
 
-import NoteRoot from 'components/NoteRoot';
-import NoteReply from 'components/NoteReply';
-import NoteContext from 'components/Note/Context';
+import NoteContent from 'components/NoteContent';
 
 import core from 'core';
 import actions from 'actions';
@@ -33,18 +30,17 @@ const Note = ({ annotation, searchInput, visible }) => {
     shallowEqual,
   );
   const dispatch = useDispatch();
-  const [isRootContentEditing, setIsRootContentEditing] = useState(false);
   const containerRef = useRef();
 
-  useEffect(() => {
-    if (isNoteEditing) {
-      if (core.canModify(annotation) && !annotation.getContents()) {
-        openRootEditing();
-      }
-    } else {
-      setIsRootContentEditing(false);
-    }
-  }, [isNoteEditing]);
+  // useEffect(() => {
+  //   if (isNoteEditing) {
+  //     if (core.canModify(annotation) && !annotation.getContents()) {
+  //       openRootEditing();
+  //     }
+  //   } else {
+  //     setIsRootContentEditing(false);
+  //   }
+  // }, [isNoteEditing]);
 
   useEffect(() => {
     if (isAnnotationFocused) {
@@ -55,10 +51,6 @@ const Note = ({ annotation, searchInput, visible }) => {
       }
     }
   }, [isAnnotationFocused]);
-
-  const openRootEditing = () => {
-    setIsRootContentEditing(true);
-  };
 
   const handleNoteClick = e => {
     e.stopPropagation();
@@ -72,57 +64,15 @@ const Note = ({ annotation, searchInput, visible }) => {
     }
   };
 
-  const closeRootEditing = () => {
-    setIsRootContentEditing(false);
-    dispatch(actions.setIsNoteEditing(false));
-  };
-
-  const renderAuthorName = annotation => {
-    const name = core.getDisplayAuthor(annotation);
-
-    if (!name) {
-      return '(no name)';
-    }
-
-    return <span dangerouslySetInnerHTML={{ __html: getText(name) }} />;
-  };
-
-  const renderContents = contents => {
-    if (!contents) {
-      return null;
-    }
-
-    let text;
-    const isContentsLinkable = Autolinker.link(contents).indexOf('<a') !== -1;
-    if (isContentsLinkable) {
-      const linkedContent = Autolinker.link(contents, { stripPrefix: false });
-      // if searchInput is 't', replace <a ...>text</a> with
-      // <a ...><span class="highlight">t</span>ext</a>
-      text = linkedContent.replace(/>(.+)</i, (_, p1) => `>${getText(p1)}<`);
-    } else {
-      text = getText(contents);
-    }
-
-    return (
-      <span className="contents" dangerouslySetInnerHTML={{ __html: text }} />
-    );
-  };
-
-  const getText = text => {
-    if (searchInput.trim()) {
-      return text.replace(
-        new RegExp(`(${searchInput})`, 'gi'),
-        '<span class="highlight">$1</span>',
-      );
-    }
-
-    return text;
-  };
-
   const noteClass = classNames({
     Note: true,
     expanded: isNoteExpanded,
     hidden: !visible,
+  });
+
+  const repliesClass = classNames({
+    replies: true,
+    hidden: !isNoteExpanded,
   });
 
   const replies = annotation
@@ -131,35 +81,22 @@ const Note = ({ annotation, searchInput, visible }) => {
 
   return (
     <div ref={containerRef} className={noteClass} onClick={handleNoteClick}>
-      <NoteRoot
+      <NoteContent
         annotation={annotation}
-        contents={annotation.getContents()}
         searchInput={searchInput}
-        renderAuthorName={renderAuthorName}
-        renderContents={renderContents}
         isNoteExpanded={isNoteExpanded}
-        isEditing={isRootContentEditing}
-        openEditing={openRootEditing}
-        closeEditing={closeRootEditing}
-        numberOfReplies={replies.length}
       />
 
-      <div className={`replies ${isNoteExpanded ? 'visible' : 'hidden'}`}>
+      <div className={repliesClass}>
         {replies.map(reply => (
-          <NoteReply
+          <NoteContent
             key={reply.Id}
-            reply={reply}
+            annotation={reply}
             searchInput={searchInput}
-            renderAuthorName={renderAuthorName}
-            renderContents={renderContents}
+            isNoteExpanded={isNoteExpanded}
           />
         ))}
-        <ReplyArea
-          annotation={annotation}
-          isNoteEditing={isNoteEditing}
-          isRootContentEditing={isRootContentEditing}
-          dispatch={dispatch}
-        />
+        <ReplyArea annotation={annotation} />
       </div>
     </div>
   );
@@ -181,7 +118,7 @@ const ReplyArea = ({ annotation }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [value, setValue] = useState('');
   const [t] = useTranslation();
-  const replyTextareaRef = useRef();
+  const textareaRef = useRef();
   const TEXTAREA_HEIGHT = '30px';
 
   const handleInputChange = e => {
@@ -206,7 +143,7 @@ const ReplyArea = ({ annotation }) => {
     e.stopPropagation();
 
     if (value) {
-      core.createAnnotationReply(annotation, replyTextareaRef.current.value);
+      core.createAnnotationReply(annotation, textareaRef.current.value);
       clearReply();
     }
   };
@@ -221,12 +158,12 @@ const ReplyArea = ({ annotation }) => {
 
   const handleCancelClick = () => {
     clearReply();
-    replyTextareaRef.current.blur();
+    textareaRef.current.blur();
   };
 
   const clearReply = () => {
     setValue('');
-    replyTextareaRef.current.style.height = TEXTAREA_HEIGHT;
+    textareaRef.current.style.height = TEXTAREA_HEIGHT;
   };
 
   const replyBtnClass = classNames({
@@ -236,7 +173,7 @@ const ReplyArea = ({ annotation }) => {
   return isReadOnly || isReplyDisabled ? null : (
     <div className="reply-container" onClick={e => e.stopPropagation()}>
       <textarea
-        ref={replyTextareaRef}
+        ref={textareaRef}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}

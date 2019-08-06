@@ -38,22 +38,18 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              '@babel/preset-react',
-              '@babel/preset-env'
-            ],
+            presets: ['@babel/preset-react', '@babel/preset-env'],
             plugins: [
               '@babel/plugin-proposal-function-sent',
               '@babel/plugin-proposal-export-namespace-from',
               '@babel/plugin-proposal-numeric-separator',
               '@babel/plugin-proposal-throw-expressions',
-              '@babel/plugin-proposal-class-properties'
-            ]
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-proposal-optional-chaining',
+            ],
           },
         },
-        include: [
-          path.resolve(__dirname, 'src')
-        ]
+        include: [path.resolve(__dirname, 'src')],
       },
       {
         test: /\.scss$/,

@@ -12,7 +12,7 @@ export default dispatch => (e, annotationList, action) => {
     dispatch(actions.setIsNoteEditing(false));
   } else if (action === 'selected') {
     const ids = [];
-    
+
     annotationList.forEach(annotation => {
       ids.push(annotation.Id);
     });
