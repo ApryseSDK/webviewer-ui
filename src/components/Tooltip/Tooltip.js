@@ -10,11 +10,10 @@ import './Tooltip.scss';
 const propTypes = {
   children: PropTypes.element.isRequired,
   content: PropTypes.string,
-  t: PropTypes.func.isRequired
 };
 
 const defaultProps = {
-  content: ''
+  content: '',
 };
 
 const Tooltip = ({ content, children }) => {
@@ -25,7 +24,7 @@ const Tooltip = ({ content, children }) => {
   const [opacity, setOpacity] = useState(0);
   const [position, setPosition] = useState({
     top: 0,
-    left: 0
+    left: 0,
   });
   const [location, setLocation] = useState('bottom');
   const [t] = useTranslation();
@@ -59,30 +58,30 @@ const Tooltip = ({ content, children }) => {
       const locationTopLeftMap = {
         bottom: {
           top: childRect.bottom,
-          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2
+          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2,
         },
         left: {
           top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
-          left: childRect.left - tooltipRect.width
+          left: childRect.left - tooltipRect.width,
         },
         right: {
           top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
-          left: childRect.right
+          left: childRect.right,
         },
         top: {
           top: childRect.top - tooltipRect.height,
-          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2
-        }
+          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2,
+        },
       };
 
       const bestLocation = Object.keys(locationTopLeftMap).find(location => {
         const { top: newTop, left: newLeft } = locationTopLeftMap[location];
 
         return (
-          newTop > 0 &&
-          newTop + tooltipRect.height < window.innerHeight &&
-          newLeft > 0 &&
-          newLeft + tooltipRect.width < window.innerWidth
+          newTop > 0
+          && newTop + tooltipRect.height < window.innerHeight
+          && newLeft > 0
+          && newLeft + tooltipRect.width < window.innerWidth
         );
       });
 
@@ -92,7 +91,7 @@ const Tooltip = ({ content, children }) => {
 
       setPosition({
         top: tooltipTop,
-        left: tooltipLeft
+        left: tooltipLeft,
       });
       setLocation(bestLocation);
     };
@@ -109,13 +108,12 @@ const Tooltip = ({ content, children }) => {
 
   const isUsingMobileDevices = isIOS || isAndroid;
   const child = React.cloneElement(children, {
-    ref: childRef
+    ref: childRef,
   });
   const translatedContent = t(content);
   // If shortcut.xxx exists in translation-en.json file
   // method t will return the shortcut, otherwise it will return shortcut.xxx
-  const hasShortcut =
-    t(`shortcut.${content.split('.')[1]}`).indexOf('.') === -1;
+  const hasShortcut = t(`shortcut.${content.split('.')[1]}`).indexOf('.') === -1;
   let shortcut = t(`shortcut.${content.split('.')[1]}`);
   if (isMac) {
     shortcut = shortcut.replace('Ctrl', 'Cmd');
@@ -124,10 +122,10 @@ const Tooltip = ({ content, children }) => {
   return (
     <React.Fragment>
       {child}
-      {show &&
-        translatedContent &&
-        !isUsingMobileDevices &&
-        ReactDOM.createPortal(
+      {show
+        && translatedContent
+        && !isUsingMobileDevices
+        && ReactDOM.createPortal(
           <div
             className={`tooltip--${location}`}
             style={{ opacity, ...position }}
@@ -140,7 +138,7 @@ const Tooltip = ({ content, children }) => {
               )}
             </div>
           </div>,
-          document.getElementById('app')
+          document.getElementById('app'),
         )}
     </React.Fragment>
   );
