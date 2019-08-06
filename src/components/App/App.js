@@ -33,7 +33,6 @@ import PrintHandler from 'components/PrintHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
 import { isDesktop } from 'helpers/device';
-import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -43,12 +42,8 @@ class App extends React.PureComponent {
   static propTypes = {
     isSearchPanelOpen: PropTypes.bool,
     removeEventHandlers: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired
+    closeElements: PropTypes.func.isRequired,
   };
-
-  componentDidMount() {
-    fireEvent('viewerLoaded');
-  }
 
   componentWillUnmount() {
     this.props.removeEventHandlers();
@@ -60,7 +55,7 @@ class App extends React.PureComponent {
       'menuOverlay',
       'zoomOverlay',
       'signatureOverlay',
-      this.props.isSearchPanelOpen ? '' : 'searchOverlay'
+      this.props.isSearchPanelOpen ? '' : 'searchOverlay',
     ].filter(element => element);
 
     this.props.closeElements(elements);
@@ -73,7 +68,7 @@ class App extends React.PureComponent {
       'toolStylePopup',
       'textPopup',
       isDesktop() ? 'redactionOverlay' : '',
-      isDesktop() ? 'groupOverlay' : ''
+      isDesktop() ? 'groupOverlay' : '',
     ].filter(element => element);
 
     this.props.closeElements(elements);
@@ -133,16 +128,16 @@ class App extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel')
+  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
 });
 
 const mapDispatchToProps = {
-  closeElements: actions.closeElements
+  closeElements: actions.closeElements,
 };
 
 export default hot(module)(
   connect(
     mapStateToProps,
-    mapDispatchToProps
-  )(withTranslation()(App))
+    mapDispatchToProps,
+  )(withTranslation()(App)),
 );

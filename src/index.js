@@ -27,11 +27,12 @@ import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
+import fireEvent from 'helpers/fireEvent';
 import rootReducer from 'reducers/rootReducer';
 
 const packageConfig = require('../package.json');
 
-const middleware = [ thunk ];
+const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
   const { createLogger } = require('redux-logger');
@@ -96,7 +97,7 @@ if (window.CanvasRenderingContext2D) {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
-          }
+          },
         });
       });
     }
@@ -106,7 +107,7 @@ if (window.CanvasRenderingContext2D) {
         window.CoreControls.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
-          }
+          },
         });
       });
     }
@@ -119,8 +120,8 @@ if (window.CanvasRenderingContext2D) {
 
   if (coreVersion && uiVersion) {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
-    const [ coreMajorVersion, coreMinorVersion ] = coreVersion.split('.');
-    const [ uiMajorVersion, uiMinorVersion ] = uiVersion.split('.');
+    const [coreMajorVersion, coreMinorVersion] = coreVersion.split('.');
+    const [uiMajorVersion, uiMinorVersion] = uiVersion.split('.');
 
     // eslint-disable-next-line no-console
     console.log(`[WebViewer] WebViewer UI version: ${uiVersion}, WebViewer Core version: ${coreVersion}`);
@@ -132,9 +133,7 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
-  fullAPIReady.then(() => {
-    return loadConfig();
-  }).then(() => {
+  fullAPIReady.then(() => loadConfig()).then(() => {
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
     window.docViewer = docViewer;
@@ -278,11 +277,12 @@ if (window.CanvasRenderingContext2D) {
           byteRangeCheck: onComplete => {
             onComplete(206);
           },
-          getCustomData: () => {
-            return state.advanced.customData;
-          }
+          getCustomData: () => state.advanced.customData,
         };
-      }
+
+        // TODO: move this to App.js
+        fireEvent('viewerLoaded');
+      },
     );
   });
 }
