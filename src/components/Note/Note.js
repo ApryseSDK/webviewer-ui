@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import AutoResizeTextarea from 'components/AutoResizeTextarea';
 import NoteContent from 'components/NoteContent';
 
 import core from 'core';
@@ -119,51 +120,19 @@ const ReplyArea = ({ annotation }) => {
   const [value, setValue] = useState('');
   const [t] = useTranslation();
   const textareaRef = useRef();
-  const TEXTAREA_HEIGHT = '30px';
-
-  const handleInputChange = e => {
-    setValue(e.target.value);
-
-    // for auto-resize the height of the textarea
-    // https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize
-    // 1. make the height small enough so that we know the scroll bar height
-    // 2. make the height a bit bigger than the scroll bar height to finish resizing
-    e.target.style.height = TEXTAREA_HEIGHT;
-    e.target.style.height = `${e.target.scrollHeight + 2}px`;
-  };
-
-  const handleKeyDown = e => {
-    // (Cmd/Ctrl + Enter)
-    if ((e.metaKey || e.ctrlKey) && e.which === 13) {
-      postReply(e);
-    }
-  };
 
   const postReply = e => {
     e.stopPropagation();
 
     if (value) {
-      core.createAnnotationReply(annotation, textareaRef.current.value);
-      clearReply();
+      core.createAnnotationReply(annotation, value);
+      setValue('');
     }
   };
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
-
   const handleCancelClick = () => {
-    clearReply();
-    textareaRef.current.blur();
-  };
-
-  const clearReply = () => {
     setValue('');
-    textareaRef.current.style.height = TEXTAREA_HEIGHT;
+    textareaRef.current.blur();
   };
 
   const replyBtnClass = classNames({
@@ -172,15 +141,16 @@ const ReplyArea = ({ annotation }) => {
 
   return isReadOnly || isReplyDisabled ? null : (
     <div className="reply-container" onClick={e => e.stopPropagation()}>
-      <textarea
+      <AutoResizeTextarea
         ref={textareaRef}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
         value={value}
+        onChange={value => setValue(value)}
+        onSubmit={e => postReply(e)}
+        onBlur={() => setIsFocused(false)}
+        onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}
       />
+
       {isFocused && (
         <div className="buttons" onMouseDown={e => e.preventDefault()}>
           <button className={replyBtnClass} onMouseDown={postReply}>

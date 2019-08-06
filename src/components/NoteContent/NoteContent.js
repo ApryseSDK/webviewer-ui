@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
 
+import AutoResizeTextarea from 'components/AutoResizeTextarea';
 import NotePopup from 'components/NotePopup';
 import Icon from 'components/Icon';
 
@@ -147,46 +148,18 @@ NoteContent.propTypes = propTypes;
 
 export default NoteContent;
 
+// a component that contains the content textarea, the save button and the cancel button
 const ContentArea = ({ annotation, setIsEditing }) => {
   const contents = annotation.getContents();
   const [value, setValue] = useState(contents);
   const [t] = useTranslation();
   const textareaRef = useRef();
-  const TEXTAREA_HEIGHT = '30px';
 
   useEffect(() => {
     if (textareaRef.current) {
-      // TODO: duplicate
-      textareaRef.current.style.height = TEXTAREA_HEIGHT;
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight +
-        2}px`;
       textareaRef.current.focus();
     }
   }, []);
-
-  // TODO: duplicate
-  const handleInputChange = e => {
-    setValue(e.target.value);
-
-    // for auto-resize the height of the textarea
-    // https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize
-    // 1. make the height small enough so that we know the scroll bar height
-    // 2. make the height a bit bigger than the scroll bar height to finish resizing
-    e.target.style.height = TEXTAREA_HEIGHT;
-    e.target.style.height = `${e.target.scrollHeight + 2}px`;
-  };
-
-  // TODO: duplicate
-  const handleKeyDown = e => {
-    // (Cmd/Ctrl + Enter)
-    if ((e.metaKey || e.ctrlKey) && e.which === 13) {
-      setContents(e);
-    }
-  };
-
-  const handleBlur = () => {
-    setIsEditing(false);
-  };
 
   const setContents = e => {
     e.preventDefault();
@@ -202,17 +175,17 @@ const ContentArea = ({ annotation, setIsEditing }) => {
   };
 
   const saveBtnClass = classNames({
-    disabled: !value,
+    disabled: value === contents,
   });
 
   return (
     <div className="edit-content">
-      <textarea
+      <AutoResizeTextarea
         ref={textareaRef}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        onBlur={handleBlur}
         value={value}
+        onChange={value => setValue(value)}
+        onBlur={() => setIsEditing(false)}
+        onSubmit={e => setContents(e)}
         placeholder={`${t('action.comment')}...`}
       />
       <span className="buttons">
@@ -225,4 +198,9 @@ const ContentArea = ({ annotation, setIsEditing }) => {
       </span>
     </div>
   );
+};
+
+ContentArea.propTypes = {
+  annotation: PropTypes.object.isRequired,
+  setIsEditing: PropTypes.func.isRequired,
 };
