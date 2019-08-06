@@ -98,6 +98,8 @@ export default store => e => {
           setToolModeAndGroup(dispatch, 'AnnotationCreateArrow', 'shapeTools');
         } else if (e.key === 'c' || e.which === 67) { // (C)
           setToolModeAndGroup(dispatch, 'AnnotationCreateCallout', 'miscTools');
+        } else if (e.key === 'e' || e.which === 69) { // (E)	
+          setToolModeAndGroup(dispatch, 'AnnotationCreateEraser', '');
         } else if (e.key === 'f' || e.which === 70) { // (F)
           setToolModeAndGroup(dispatch, 'AnnotationCreateFreeHand', 'freeHandTools');
         } else if (e.key === 'g' || e.which === 71) { // (G)

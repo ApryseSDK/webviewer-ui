@@ -8,6 +8,8 @@
     "comment": "Откомментировать",
     "copy": "Скопировать",
     "delete": "Удалить",
+    "group": "группа",
+    "ungroup": "Ungroup",
     "download": "Скачать",
     "edit": "Редактировать",
     "enterFullscreen": "Полный экран",
@@ -59,7 +61,8 @@
     "stickyNote": "Комментировать",
     "strikeout": "Зачеркнуть",
     "underline": "Подчеркнуть",
-    "custom": "Свой стиль"
+    "custom": "Свой стиль",
+    "eraser": "ластик"
   },
   "component": {
     "freehandToolsButton": "Инструменты",
@@ -188,7 +191,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "Панорамирование",

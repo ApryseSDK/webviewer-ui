@@ -8,6 +8,8 @@
     "comment": "評論",
     "copy": "複製",
     "delete": "刪除",
+    "group": "組",
+    "ungroup": "取消組合",
     "download": "下載",
     "edit": "編輯",
     "enterFullscreen": "全螢幕",
@@ -59,7 +61,8 @@
     "stickyNote": "評論",
     "strikeout": "刪除線",
     "underline": "底線",
-    "custom": "自訂"
+    "custom": "自訂",
+    "eraser": "橡皮"
   },
   "component": {
     "freehandToolsButton": "手繪工具",
@@ -188,7 +191,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "移動瀏覽",

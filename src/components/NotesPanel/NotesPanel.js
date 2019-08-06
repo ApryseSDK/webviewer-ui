@@ -61,14 +61,13 @@ const NotesPanel = ({
       _setNotes();
 
       return () => {
-        core.removeEventListener('annotationChanged', _setNotes);
         core.removeEventListener('annotationHidden', _setNotes);
       };
     }
   }, [isLeftPanelOpen]);
 
   const isNoteVisible = note => {
-    let isVisible = note.Listable && !note.Hidden;
+    let isVisible = note.Listable && !note.Hidden && !note.isGrouped();
 
     if (customNoteFilter) {
       isVisible = isVisible && customNoteFilter(note);

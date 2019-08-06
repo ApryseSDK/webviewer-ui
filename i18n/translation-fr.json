@@ -31,7 +31,9 @@
     "submit": "Soumettre",
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
-    "zoomOut": "Dézoomer"
+    "zoomOut": "Dézoomer",
+    "group": "Groupe",
+    "ungroup": "Dissocier"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -59,7 +61,8 @@
     "stickyNote": "Note collante",
     "strikeout": "Barré",
     "underline": "Soulignage",
-    "custom": "personnalisation"
+    "custom": "personnalisation",
+    "eraser": "La gomme"
   },
   "component": {
     "freehandToolsButton": "Outils de stylo",
@@ -188,7 +191,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "Panoramique",

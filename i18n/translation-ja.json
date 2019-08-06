@@ -8,6 +8,8 @@
     "comment": "コメント",
     "copy": "コピー",
     "delete": "削除",
+    "group": "グループ",
+    "ungroup": "グループ解除",
     "download": "ダウンロード",
     "edit": "編集",
     "enterFullscreen": "全画面表示",
@@ -59,7 +61,8 @@
     "stickyNote": "コメント",
     "strikeout": "抹消線",
     "underline": "下線",
-    "custom": "カスタム"
+    "custom": "カスタム",
+    "eraser": "消しゴム"
   },
   "component": {
     "freehandToolsButton": "フリーハンド ツール",
@@ -188,7 +191,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "パン",

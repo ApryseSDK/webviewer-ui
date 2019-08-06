@@ -8,6 +8,8 @@
     "comment": "코멘트",
     "copy": "복사",
     "delete": "삭제",
+    "group": "그룹",
+    "ungroup": "그룹 해제",
     "download": "다운로드",
     "edit": "편집",
     "enterFullscreen": "전체 화면",
@@ -59,7 +61,8 @@
     "stickyNote": "코멘트",
     "strikeout": "취소선",
     "underline": "밑줄",
-    "custom": "사용자 지정"
+    "custom": "사용자 지정",
+    "eraser": "지우개"
   },
   "component": {
     "freehandToolsButton": "자유형 도구",
@@ -188,7 +191,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "이동",
