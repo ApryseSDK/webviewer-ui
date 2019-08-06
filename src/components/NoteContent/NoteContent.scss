@@ -29,10 +29,6 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      
-      .highlight {
-        background: #fffc95;
-      }
     }
     
     .time {
@@ -97,5 +93,9 @@
         background: #fffc95;
       }
     }
+  }
+
+  .highlight {
+    background: #fffc95;
   }
 }
