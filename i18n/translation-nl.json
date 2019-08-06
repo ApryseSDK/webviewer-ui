@@ -8,6 +8,8 @@
     "comment": "Opmerking",
     "copy": "Kopieer",
     "delete": "Verwijder",
+    "group": "Groep",
+    "ungroup": "Ungroup",
     "download": "Download bestand",
     "edit": "Titel aanpassen",
     "enterFullscreen": "Document in volledig scherm",
@@ -59,7 +61,8 @@
     "stickyNote": "Commentaar",
     "strikeout": "Doorstrepen",
     "underline": "Onderstrepen",
-    "custom": "maatwerk"
+    "custom": "maatwerk",
+    "eraser": "Gom"
   },
   "component": {
     "freehandToolsButton": "Vrije hand tools",
@@ -75,7 +78,6 @@
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
-    "minimizeButton": "Document normaal weergeven",
     "measurementToolsButton": "Meetinstrumenten"
   },
   "message": {
@@ -189,7 +191,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "Schuiven",

@@ -8,6 +8,8 @@
     "comment": "Comentario",
     "copy": "Copiar",
     "delete": "Eliminar",
+    "group": "Grupo",
+    "ungroup": "Desagrupar",
     "download": "Descargar",
     "edit": "Editar",
     "enterFullscreen": "Pantalla completa",
@@ -59,7 +61,8 @@
     "stickyNote": "Comentario",
     "strikeout": "Tachado",
     "underline": "Subrayado",
-    "custom": "Personalizado"
+    "custom": "Personalizado",
+    "eraser": "Borrador"
   },
   "component": {
     "freehandToolsButton": "Herramientas a mano alzada",
@@ -188,7 +191,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "Panorámica",
