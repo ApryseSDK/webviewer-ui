@@ -1,13 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
-import classNames from 'classnames';
-import {
-  CellMeasurer,
-  CellMeasurerCache,
-  List,
-  AutoSizer,
-} from 'react-virtualized';
+import Measure from 'react-measure';
+import { CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
 import { useTranslation } from 'react-i18next';
 
 import Dropdown from 'components/Dropdown';
@@ -42,11 +37,10 @@ const NotesPanel = ({ display }) => {
   // use a map here instead of an array to achieve an O(1) time complexity for looking up
   // if a note is selected
   const [selectedNoteIds, setSelectedNoteIds] = useState({});
-  const [t] = useTranslation();
+  const [dimension, setDimension] = useState({ width: 0, height: 0 });
   const [searchInput, setSearchInput] = useState('');
-  const [width, setWidth] = useState(0);
+  const [t] = useTranslation();
   const listRef = useRef();
-  const panelRef = useRef();
 
   useEffect(() => {
     const onDocumentUnloaded = () => {
@@ -98,55 +92,6 @@ const NotesPanel = ({ display }) => {
     core.addEventListener('annotationSelected', onAnnotationSelected);
     return () =>
       core.removeEventListener('annotationSelected', onAnnotationSelected);
-  }, []);
-
-  useEffect(() => {
-    const _setWidth = () => {
-      setWidth(Math.max(
-        parseInt(
-          window
-            .getComputedStyle(document.body)
-            .getPropertyValue('--left-panel-width'),
-          10,
-        ),
-        parseInt(window.getComputedStyle(panelRef.current).width, 10),
-      ));
-    };
-
-    // triggered when the left panel resize bar is being dragged
-    const observer = new MutationObserver(([mutation]) => {
-      if (mutation.attributeName === 'style') {
-        _setWidth();
-      }
-    });
-
-    observer.observe(document.body, { attributes: true });
-
-    // the media-query should match the value of $mobile-width in styles.scss
-    // in the current design, left panel's width will be 100% instead of being
-    // the value of --left-panel-width in mobile view. So we need to set up media listener
-    // to set the width
-    const media = window.matchMedia('(max-width: 640px)');
-    if (media.matches) {
-      window.addEventListener('resize', _setWidth);
-      window.addEventListener('orientationchange', _setWidth);
-    }
-
-    media.addListener(e => {
-      if (e.matches) {
-        window.addEventListener('resize', _setWidth);
-        window.addEventListener('orientationchange', _setWidth);
-      } else {
-        window.removeEventListener('resize', _setWidth);
-        window.removeEventListener('orientationchange', _setWidth);
-      }
-
-      _setWidth();
-    });
-
-    _setWidth();
-
-    return observer.disconnect;
   }, []);
 
   let singleSelectedNoteIndex = -1;
@@ -234,7 +179,7 @@ const NotesPanel = ({ display }) => {
         key={key}
         parent={parent}
         rowIndex={index}
-        width={width}
+        width={dimension.width}
       >
         <div style={style}>
           {listSeparator}
@@ -286,37 +231,37 @@ const NotesPanel = ({ display }) => {
         {notesToRender.length === 0 ? (
           <div className="no-results">{t('message.noResults')}</div>
         ) : (
-          <AutoSizer disableWidth>
-            {({ height }) => (
-              <List
-                deferredMeasurementCache={cache}
-                height={height}
-                width={width}
-                overscanRowCount={1}
-                ref={listRef}
-                rowCount={notesToRender.length}
-                rowHeight={cache.rowHeight}
-                rowRenderer={arg => rowRenderer(notesToRender, arg)}
-                style={{ outline: 'none' }}
-              />
-            )}
-          </AutoSizer>
+          <List
+            deferredMeasurementCache={cache}
+            height={dimension.height}
+            width={dimension.width}
+            overscanRowCount={1}
+            ref={listRef}
+            rowCount={notesToRender.length}
+            rowHeight={cache.rowHeight}
+            rowRenderer={arg => rowRenderer(notesToRender, arg)}
+            style={{ outline: 'none' }}
+          />
         )}
       </>
     );
   }
 
   return isDisabled ? null : (
-    <div
-      ref={panelRef}
-      className="Panel NotesPanel"
-      style={{ display }}
-      data-element="notesPanel"
-      onClick={core.deselectAllAnnotations}
-      onScroll={e => e.stopPropagation()}
-    >
-      {child}
-    </div>
+    <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
+      {({ measureRef }) => (
+        <div
+          ref={measureRef}
+          className="Panel NotesPanel"
+          style={{ display }}
+          data-element="notesPanel"
+          onClick={core.deselectAllAnnotations}
+          onScroll={e => e.stopPropagation()}
+        >
+          {child}
+        </div>
+      )}
+    </Measure>
   );
 };
 

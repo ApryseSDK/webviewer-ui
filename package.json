@@ -78,6 +78,7 @@
   "author": "PDFTron Systems Inc.",
   "dependencies": {
     "classnames": "^2.2.6",
+    "react-measure": "^2.3.0",
     "react-virtualized": "^9.21.1"
   }
 }
