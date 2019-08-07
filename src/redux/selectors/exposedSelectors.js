@@ -120,6 +120,7 @@ export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 export const getZoomList = state => state.viewer.zoomList;
 export const getMeasurementUnits = state => state.viewer.measurementUnits;
+export const getEditingNoteSetByStylePopup = state => state.viewer.editingNote[0];
 
 // warning message
 export const getWarningMessage = state =>

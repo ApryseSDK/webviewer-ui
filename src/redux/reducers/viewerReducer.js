@@ -80,8 +80,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, activeToolGroup: payload.toolGroup };
     case 'SET_NOTE_POPUP_ID':
       return { ...state, notePopupId: payload.id };
-    case 'SET_IS_NOTE_EDITING':
-      return { ...state, isNoteEditing: payload.isNoteEditing };
+    case 'SET_EDITING_NOTE':
+      return { ...state, editingNote: payload };
     case 'SET_FIT_MODE':
       return { ...state, fitMode: payload.fitMode };
     case 'SET_ZOOM':

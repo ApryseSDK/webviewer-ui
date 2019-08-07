@@ -26,7 +26,7 @@ class AnnotationPopup extends React.PureComponent {
     applyRedactions: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
-    setIsNoteEditing: PropTypes.func.isRequired,
+    setEditingNote: PropTypes.func.isRequired,
     setActiveLeftPanel: PropTypes.func.isRequired,
     serverURL: PropTypes.string,
   }
@@ -137,16 +137,18 @@ class AnnotationPopup extends React.PureComponent {
   }
 
   commentOnAnnotation = () => {
-    if (this.state.firstAnnotation instanceof Annotations.FreeTextAnnotation) {
-      core.getAnnotationManager().trigger('annotationDoubleClicked', this.state.firstAnnotation);
+    const { firstAnnotation } = this.state;
+
+    if (firstAnnotation instanceof Annotations.FreeTextAnnotation) {
+      core.getAnnotationManager().trigger('annotationDoubleClicked', firstAnnotation);
     } else if (!this.props.isLeftPanelOpen) {
       this.props.openElement('notesPanel');
       setTimeout(() => {
-        this.props.setIsNoteEditing(true);
+        this.props.setEditingNote(firstAnnotation);
       }, 400);
     } else {
       this.props.setActiveLeftPanel('notesPanel');
-      this.props.setIsNoteEditing(true);
+      this.props.setEditingNote(firstAnnotation);
     }
 
     this.props.closeElement('annotationPopup');
@@ -246,7 +248,7 @@ const mapDispatchToProps = {
   applyRedactions,
   openElement: actions.openElement,
   closeElement: actions.closeElement,
-  setIsNoteEditing: actions.setIsNoteEditing,
+  setEditingNote: actions.setEditingNote,
   setActiveLeftPanel: actions.setActiveLeftPanel,
 };
 

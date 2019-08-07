@@ -106,10 +106,11 @@ export default Note;
 
 // a component that contains the reply textarea, the reply button and the cancel button
 const ReplyArea = ({ annotation }) => {
-  const [isReadOnly, isReplyDisabled] = useSelector(
+  const [isReadOnly, isReplyDisabled, editingNoteSetByStylePopup] = useSelector(
     state => [
       selectors.isDocumentReadOnly(state),
       selectors.isElementDisabled(state, 'noteReply'),
+      selectors.getEditingNoteSetByStylePopup(state),
     ],
     shallowEqual,
   );
@@ -117,6 +118,15 @@ const ReplyArea = ({ annotation }) => {
   const [value, setValue] = useState('');
   const [t] = useTranslation();
   const textareaRef = useRef();
+
+  useEffect(() => {
+    if (
+      editingNoteSetByStylePopup === annotation &&
+      (annotation.getContents() || !core.canModify(annotation))
+    ) {
+      textareaRef.current.focus();
+    }
+  }, [editingNoteSetByStylePopup]);
 
   const postReply = e => {
     e.stopPropagation();
