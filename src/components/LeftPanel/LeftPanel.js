@@ -81,11 +81,14 @@ const ResizeBar = () => {
   const isMouseDownRef = useRef(false);
 
   useEffect(() => {
-    const dragMouseMove = ({ clientX }) => {
+    // this listener is throttled because the notes panel listens to the panel width
+    // change in order to rerender to have the correct width and we don't want
+    // it to rerender too often
+    const dragMouseMove = _.throttle(({ clientX }) => {
       if (isMouseDownRef.current && clientX > 215 && clientX < 900) {
         document.body.style.setProperty('--left-panel-width', `${clientX}px`);
       }
-    };
+    }, 50);
 
     document.addEventListener('mousemove', dragMouseMove);
     return () => document.removeEventListener('mousemove', dragMouseMove);

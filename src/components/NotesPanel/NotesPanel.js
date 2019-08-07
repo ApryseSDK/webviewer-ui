@@ -44,6 +44,7 @@ const NotesPanel = ({ display }) => {
   const [selectedNoteIds, setSelectedNoteIds] = useState({});
   const [t] = useTranslation();
   const [searchInput, setSearchInput] = useState('');
+  const [width, setWidth] = useState(0);
   const listRef = useRef();
 
   useEffect(() => {
@@ -99,27 +100,26 @@ const NotesPanel = ({ display }) => {
   }, []);
 
   useEffect(() => {
-    // Select the node that will be observed for mutations
-    const targetNode = document.body;
+    const getLeftPanelWidth = () =>
+      parseInt(
+        window
+          .getComputedStyle(document.body)
+          .getPropertyValue('--left-panel-width'),
+        10,
+      );
 
-    // Options for the observer (which mutations to observe)
-    const config = { attributes: true };
-
-    // Callback function to execute when mutations are observed
-    const callback = function(mutationsList, observer) {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'attributes') {
-          console.log(`The ${mutation.attributeName} attribute was modified.`);
-          console.log(mutation);
-        }
+    // triggered when the left panel resize bar is being dragged
+    const observer = new MutationObserver(([mutation]) => {
+      if (mutation.attributeName === 'style') {
+        setWidth(getLeftPanelWidth());
       }
-    };
+    });
 
-    // Create an observer instance linked to the callback function
-    const observer = new MutationObserver(callback);
+    observer.observe(document.body, { attributes: true });
 
-    // Start observing the target node for configured mutations
-    observer.observe(targetNode, config);
+    setWidth(getLeftPanelWidth());
+
+    return observer.disconnect;
   }, []);
 
   let singleSelectedNoteIndex = -1;
@@ -178,14 +178,7 @@ const NotesPanel = ({ display }) => {
     setSearchInput(value);
   }, 500);
 
-  const resize = index => {
-    if (listRef.current) {
-      cache.clear(index);
-      listRef.current.recomputeRowHeights(index);
-    }
-  };
-
-  const rowRenderer = (notes, width, { index, key, parent, style }) => {
+  const rowRenderer = (notes, { index, key, parent, style }) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
       sortStrategy
@@ -222,7 +215,12 @@ const NotesPanel = ({ display }) => {
             value={{
               searchInput,
               isSelected: selectedNoteIds[currNote.Id],
-              resize: () => resize(index),
+              resize: () => {
+                if (listRef.current) {
+                  cache.clear(index);
+                  listRef.current.recomputeRowHeights(index);
+                }
+              },
             }}
           >
             <Note annotation={currNote} />
@@ -261,8 +259,8 @@ const NotesPanel = ({ display }) => {
         {notesToRender.length === 0 ? (
           <div className="no-results">{t('message.noResults')}</div>
         ) : (
-          <AutoSizer>
-            {({ height, width }) => (
+          <AutoSizer disableWidth>
+            {({ height }) => (
               <List
                 deferredMeasurementCache={cache}
                 height={height}
@@ -271,7 +269,7 @@ const NotesPanel = ({ display }) => {
                 ref={listRef}
                 rowCount={notesToRender.length}
                 rowHeight={cache.rowHeight}
-                rowRenderer={arg => rowRenderer(notesToRender, width, arg)}
+                rowRenderer={arg => rowRenderer(notesToRender, arg)}
               />
             )}
           </AutoSizer>
