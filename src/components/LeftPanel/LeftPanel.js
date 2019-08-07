@@ -59,7 +59,7 @@ const LeftPanel = () => {
 
       <ResizeBar />
 
-      <NotesPanel isLeftPanelOpen={isOpen} display={getDisplay('notesPanel')} />
+      <NotesPanel display={getDisplay('notesPanel')} />
       <ThumbnailsPanel display={getDisplay('thumbnailsPanel')} />
       <OutlinesPanel display={getDisplay('outlinesPanel')} />
       {customPanels.map(({ panel }, index) => (

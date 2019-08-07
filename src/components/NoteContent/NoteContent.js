@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector, shallowEqual } from 'react-redux';
@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 
 import AutoResizeTextarea from 'components/AutoResizeTextarea';
 import NotePopup from 'components/NotePopup';
+import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
 
 import core from 'core';
@@ -18,11 +19,9 @@ import './NoteContent.scss';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
-  isSelected: PropTypes.bool.isRequired,
-  searchInput: PropTypes.string,
 };
 
-const NoteContent = ({ isSelected, annotation, searchInput }) => {
+const NoteContent = ({ annotation }) => {
   const [sortStrategy, noteDateFormat, iconColor] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -31,8 +30,13 @@ const NoteContent = ({ isSelected, annotation, searchInput }) => {
     ],
     shallowEqual,
   );
+  const { isSelected, searchInput, resize } = useContext(NoteContext);
   const [isEditing, setIsEditing] = useState(false);
   const isReply = annotation.isReply();
+
+  useEffect(() => {
+    resize();
+  }, [isEditing]);
 
   const renderAuthorName = annotation => {
     const name = core.getDisplayAuthor(annotation);

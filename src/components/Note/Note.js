@@ -5,6 +5,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import AutoResizeTextarea from 'components/AutoResizeTextarea';
+import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 
 import core from 'core';
@@ -15,21 +16,20 @@ import './Note.scss';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
-  searchInput: PropTypes.string,
-  visible: PropTypes.bool.isRequired,
-  isSelected: PropTypes.bool.isRequired,
 };
 
-const Note = ({ annotation, searchInput, visible, isSelected }) => {
+const Note = ({ annotation }) => {
+  const { isSelected, resize, scrollToView } = useContext(NoteContext);
+  const dispatch = useDispatch();
+  const containerRef = useRef();
+  const containerHeightRef = useRef();
+
   // const [isNoteEditing] = useSelector(
   //   state => [
   //     selectors.isNoteEditing(state, annotation.Id),
   //   ],
   //   shallowEqual,
   // );
-  const dispatch = useDispatch();
-  const containerRef = useRef();
-
   // useEffect(() => {
   //   if (isNoteEditing) {
   //     if (core.canModify(annotation) && !annotation.getContents()) {
@@ -39,16 +39,15 @@ const Note = ({ annotation, searchInput, visible, isSelected }) => {
   //     setIsRootContentEditing(false);
   //   }
   // }, [isNoteEditing]);
-
   useEffect(() => {
-    if (isSelected) {
-      if (containerRef.current.scrollIntoViewIfNeeded) {
-        containerRef.current.scrollIntoViewIfNeeded();
-      } else {
-        containerRef.current.scrollIntoView();
-      }
+    const prevHeight = containerHeightRef.current;
+    const currHeight = window.getComputedStyle(containerRef.current).height;
+
+    if (!prevHeight || prevHeight !== currHeight) {
+      containerHeightRef.current = currHeight;
+      resize();
     }
-  }, [isSelected]);
+  });
 
   const handleNoteClick = e => {
     e.stopPropagation();
@@ -65,7 +64,6 @@ const Note = ({ annotation, searchInput, visible, isSelected }) => {
   const noteClass = classNames({
     Note: true,
     expanded: isSelected,
-    hidden: !visible,
   });
 
   const repliesClass = classNames({
@@ -79,20 +77,11 @@ const Note = ({ annotation, searchInput, visible, isSelected }) => {
 
   return (
     <div ref={containerRef} className={noteClass} onClick={handleNoteClick}>
-      <NoteContent
-        annotation={annotation}
-        searchInput={searchInput}
-        isSelected={isSelected}
-      />
+      <NoteContent annotation={annotation} />
 
       <div className={repliesClass}>
         {replies.map(reply => (
-          <NoteContent
-            key={reply.Id}
-            annotation={reply}
-            searchInput={searchInput}
-            isSelected={isSelected}
-          />
+          <NoteContent key={reply.Id} annotation={reply} />
         ))}
         <ReplyArea annotation={annotation} />
       </div>
@@ -114,10 +103,15 @@ const ReplyArea = ({ annotation }) => {
     ],
     shallowEqual,
   );
+  const { resize } = useContext(NoteContext);
   const [isFocused, setIsFocused] = useState(false);
   const [value, setValue] = useState('');
   const [t] = useTranslation();
   const textareaRef = useRef();
+
+  useEffect(() => {
+    resize();
+  }, [isFocused]);
 
   useEffect(() => {
     if (

@@ -2,10 +2,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
+import {
+  CellMeasurer,
+  CellMeasurerCache,
+  List,
+  AutoSizer,
+} from 'react-virtualized';
 import { useTranslation } from 'react-i18next';
 
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
+import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
@@ -15,11 +22,12 @@ import { getSortStrategies } from 'constants/sortStrategies';
 import './NotesPanel.scss';
 
 const propTypes = {
-  isLeftPanelOpen: PropTypes.bool,
   display: PropTypes.string.isRequired,
 };
 
-const NotesPanel = ({ isLeftPanelOpen, display }) => {
+const cache = new CellMeasurerCache({ defaultHeight: 80, fixedWidth: true });
+
+const NotesPanel = ({ display }) => {
   const [sortStrategy, isDisabled, pageLabels, customNoteFilter] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -33,7 +41,7 @@ const NotesPanel = ({ isLeftPanelOpen, display }) => {
   const [selectedNoteIds, setSelectedNoteIds] = useState([]);
   const [t] = useTranslation();
   const [searchInput, setSearchInput] = useState('');
-  const isFirstTimeOpenRef = useRef(true);
+  const listRef = useRef();
 
   useEffect(() => {
     const onDocumentUnloaded = () => {
@@ -47,37 +55,47 @@ const NotesPanel = ({ isLeftPanelOpen, display }) => {
   }, []);
 
   useEffect(() => {
-    if (isLeftPanelOpen && isFirstTimeOpenRef.current) {
-      isFirstTimeOpenRef.current = false;
+    const _setNotes = () => {
+      setNotes(
+        core
+          .getAnnotationsList()
+          .filter(
+            annot =>
+              !annot.isReply() &&
+              annot.Listable &&
+              !annot.Hidden &&
+              !annot.isGrouped(),
+          ),
+      );
+    };
 
-      const _setNotes = () => {
-        setNotes(core.getAnnotationsList().filter(annot => !annot.isReply()));
-      };
+    core.addEventListener('annotationChanged', _setNotes);
+    core.addEventListener('annotationHidden', _setNotes);
+    _setNotes();
 
+    return () => {
       core.addEventListener('annotationChanged', _setNotes);
-      core.addEventListener('annotationHidden', _setNotes);
-      _setNotes();
-
-      return () => {
-        core.removeEventListener('annotationHidden', _setNotes);
-      };
-    }
-  }, [isLeftPanelOpen]);
+      core.removeEventListener('annotationHidden', _setNotes);
+    };
+  }, []);
 
   useEffect(() => {
     const onAnnotationSelected = () => {
-      setSelectedNoteIds(core.getSelectedAnnotations().map(annotation => annotation.Id));
+      setSelectedNoteIds(
+        core.getSelectedAnnotations().map(annotation => annotation.Id),
+      );
     };
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
-    return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
+    return () =>
+      core.removeEventListener('annotationSelected', onAnnotationSelected);
   });
 
-  const isNoteVisible = note => {
-    let isVisible = note.Listable && !note.Hidden && !note.isGrouped();
+  const filterNote = note => {
+    let shouldRender = true;
 
     if (customNoteFilter) {
-      isVisible = isVisible && customNoteFilter(note);
+      shouldRender = shouldRender && customNoteFilter(note);
     }
 
     if (searchInput) {
@@ -86,8 +104,8 @@ const NotesPanel = ({ isLeftPanelOpen, display }) => {
       // https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#createAnnotationReply__anchor
       const noteAndReplies = [note, ...replies];
 
-      isVisible =
-        isVisible &&
+      shouldRender =
+        shouldRender &&
         noteAndReplies.some(note => {
           const content = note.getContents();
           const authorName = core.getDisplayAuthor(note);
@@ -99,7 +117,7 @@ const NotesPanel = ({ isLeftPanelOpen, display }) => {
         });
     }
 
-    return isVisible;
+    return shouldRender;
   };
 
   const isInputIn = (string, searchInput) => {
@@ -122,13 +140,74 @@ const NotesPanel = ({ isLeftPanelOpen, display }) => {
     setSearchInput(value);
   }, 500);
 
+  const resize = index => {
+    if (listRef.current) {
+      cache.clear(index);
+      listRef.current.recomputeRowHeights(index);
+    }
+  };
+
+  const scrollToView = index => {
+    if (listRef.current) {
+      listRef.current.scrollToRow(index);
+      console.log('here');
+    }
+  };
+
+  const rowRenderer = (notes, width, { index, key, parent, style }) => {
+    let listSeparator = null;
+    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
+      sortStrategy
+    ];
+    const prevNote = index === 0 ? null : notes[index - 1];
+    const currNote = notes[index];
+
+    if (
+      shouldRenderSeparator &&
+      getSeparatorContent &&
+      (!prevNote || shouldRenderSeparator(prevNote, currNote))
+    ) {
+      listSeparator = (
+        <ListSeparator
+          renderContent={() =>
+            getSeparatorContent(prevNote, currNote, { pageLabels })
+          }
+        />
+      );
+    }
+
+    return (
+      <CellMeasurer
+        cache={cache}
+        columnIndex={0}
+        key={key}
+        parent={parent}
+        rowIndex={index}
+        width={width}
+      >
+        <div style={style}>
+          {listSeparator}
+          <NoteContext.Provider
+            value={{
+              searchInput,
+              isSelected: selectedNoteIds.includes(currNote.Id),
+              resize: () => resize(index),
+              scrollToView: () => scrollToView(index),
+            }}
+          >
+            <Note annotation={currNote} />
+          </NoteContext.Provider>
+        </div>
+      </CellMeasurer>
+    );
+  };
+
   let child;
   if (notes.length === 0) {
     child = <div className="no-annotations">{t('message.noAnnotations')}</div>;
   } else {
-    const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(notes);
-    const hasVisibleNotes = sortedNotes.some(isNoteVisible);
-    let prevVisibleNoteIndex = -1;
+    let notesToRender = getSortStrategies()[sortStrategy].getSortedNotes(notes);
+    notesToRender = notesToRender.filter(filterNote);
 
     child = (
       <>
@@ -140,64 +219,24 @@ const NotesPanel = ({ isLeftPanelOpen, display }) => {
           />
           <Dropdown items={Object.keys(getSortStrategies())} />
         </div>
-        <div
-          className={classNames({
-            'notes-wrapper': true,
-            visible: hasVisibleNotes,
-          })}
-        >
-          {sortedNotes.map((note, index) => {
-            const isVisible = isNoteVisible(note);
-
-            let listSeparator = null;
-            if (isVisible) {
-              const {
-                shouldRenderSeparator,
-                getSeparatorContent,
-              } = getSortStrategies()[sortStrategy];
-              const prevNote =
-                prevVisibleNoteIndex === -1
-                  ? null
-                  : sortedNotes[prevVisibleNoteIndex];
-
-              prevVisibleNoteIndex = index;
-
-              if (
-                shouldRenderSeparator &&
-                getSeparatorContent &&
-                (!prevNote || shouldRenderSeparator(prevNote, note))
-              ) {
-                listSeparator = (
-                  <ListSeparator
-                    renderContent={() =>
-                      getSeparatorContent(prevNote, note, { pageLabels })
-                    }
-                  />
-                );
-              }
-            }
-
-            return (
-              <React.Fragment key={note.Id}>
-                {listSeparator}
-                <Note
-                  annotation={note}
-                  searchInput={searchInput}
-                  isSelected={selectedNoteIds.includes(note.Id)}
-                  visible={isVisible}
-                />
-              </React.Fragment>
-            );
-          })}
-        </div>
-        <div
-          className={classNames({
-            'no-results': true,
-            visible: !hasVisibleNotes,
-          })}
-        >
-          {t('message.noResults')}
-        </div>
+        {notesToRender.length === 0 ? (
+          <div className="no-results">{t('message.noResults')}</div>
+        ) : (
+          <AutoSizer>
+            {({ height, width }) => (
+              <List
+                deferredMeasurementCache={cache}
+                height={height}
+                width={width}
+                overscanRowCount={1}
+                ref={listRef}
+                rowCount={notesToRender.length}
+                rowHeight={cache.rowHeight}
+                rowRenderer={arg => rowRenderer(notesToRender, width, arg)}
+              />
+            )}
+          </AutoSizer>
+        )}
       </>
     );
   }
