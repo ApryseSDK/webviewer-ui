@@ -79,17 +79,6 @@ export const setIsNoteEditing = isNoteEditing => (dispatch, getState) => {
     dispatch({ type: 'SET_IS_NOTE_EDITING', payload: { isNoteEditing } });
   }
 };
-export const expandNote = id => ({ type: 'EXPAND_NOTE', payload: { id } });
-export const expandNotes = ids => ({ type: 'EXPAND_NOTES', payload: { ids } });
-export const collapseNote = id => ({ type: 'COLLAPSE_NOTE', payload: { id } });
-export const collapseAllNotes = () => (dispatch, getState) => {
-  const state = getState();
-  const isAnyNoteExpanded = Object.keys(state.viewer.expandedNotes).length > 0;
-
-  if (isAnyNoteExpanded) {
-    dispatch({ type: 'COLLAPSE_ALL_NOTES' });
-  }
-};
 export const setHeaderItems = (header, headerItems) => ({ type: 'SET_HEADER_ITEMS', payload: { header, headerItems } });
 export const setColorPalette = (colorMapKey, colorPalette) => ({ type: 'SET_COLOR_PALETTE', payload: { colorMapKey, colorPalette } });
 export const setIconColor = (colorMapKey, color) => ({ type: 'SET_ICON_COLOR', payload: { colorMapKey, color } });

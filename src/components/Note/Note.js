@@ -17,19 +17,16 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
   searchInput: PropTypes.string,
   visible: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool.isRequired,
 };
 
-const Note = ({ annotation, searchInput, visible }) => {
-  const [isNoteExpanded, isNoteEditing, isAnnotationFocused] = useSelector(
-    state => [
-      selectors.isNoteExpanded(state, annotation.Id),
-      selectors.isNoteEditing(state, annotation.Id),
-      selectors.isAnnotationFocused(state, annotation.Id),
-      selectors.isDocumentReadOnly(state),
-      selectors.isElementDisabled(state, 'noteReply'),
-    ],
-    shallowEqual,
-  );
+const Note = ({ annotation, searchInput, visible, isSelected }) => {
+  // const [isNoteEditing] = useSelector(
+  //   state => [
+  //     selectors.isNoteEditing(state, annotation.Id),
+  //   ],
+  //   shallowEqual,
+  // );
   const dispatch = useDispatch();
   const containerRef = useRef();
 
@@ -44,19 +41,19 @@ const Note = ({ annotation, searchInput, visible }) => {
   // }, [isNoteEditing]);
 
   useEffect(() => {
-    if (isAnnotationFocused) {
+    if (isSelected) {
       if (containerRef.current.scrollIntoViewIfNeeded) {
         containerRef.current.scrollIntoViewIfNeeded();
       } else {
         containerRef.current.scrollIntoView();
       }
     }
-  }, [isAnnotationFocused]);
+  }, [isSelected]);
 
   const handleNoteClick = e => {
     e.stopPropagation();
 
-    if (isNoteExpanded) {
+    if (isSelected) {
       core.deselectAnnotation(annotation);
     } else {
       core.deselectAllAnnotations();
@@ -67,13 +64,13 @@ const Note = ({ annotation, searchInput, visible }) => {
 
   const noteClass = classNames({
     Note: true,
-    expanded: isNoteExpanded,
+    expanded: isSelected,
     hidden: !visible,
   });
 
   const repliesClass = classNames({
     replies: true,
-    hidden: !isNoteExpanded,
+    hidden: !isSelected,
   });
 
   const replies = annotation
@@ -85,7 +82,7 @@ const Note = ({ annotation, searchInput, visible }) => {
       <NoteContent
         annotation={annotation}
         searchInput={searchInput}
-        isNoteExpanded={isNoteExpanded}
+        isSelected={isSelected}
       />
 
       <div className={repliesClass}>
@@ -94,7 +91,7 @@ const Note = ({ annotation, searchInput, visible }) => {
             key={reply.Id}
             annotation={reply}
             searchInput={searchInput}
-            isNoteExpanded={isNoteExpanded}
+            isSelected={isSelected}
           />
         ))}
         <ReplyArea annotation={annotation} />

@@ -30,6 +30,7 @@ const NotesPanel = ({ isLeftPanelOpen, display }) => {
     shallowEqual,
   );
   const [notes, setNotes] = useState([]);
+  const [selectedNoteIds, setSelectedNoteIds] = useState([]);
   const [t] = useTranslation();
   const [searchInput, setSearchInput] = useState('');
   const isFirstTimeOpenRef = useRef(true);
@@ -62,6 +63,15 @@ const NotesPanel = ({ isLeftPanelOpen, display }) => {
       };
     }
   }, [isLeftPanelOpen]);
+
+  useEffect(() => {
+    const onAnnotationSelected = () => {
+      setSelectedNoteIds(core.getSelectedAnnotations().map(annotation => annotation.Id));
+    };
+
+    core.addEventListener('annotationSelected', onAnnotationSelected);
+    return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
+  });
 
   const isNoteVisible = note => {
     let isVisible = note.Listable && !note.Hidden && !note.isGrouped();
@@ -173,6 +183,7 @@ const NotesPanel = ({ isLeftPanelOpen, display }) => {
                 <Note
                   annotation={note}
                   searchInput={searchInput}
+                  isSelected={selectedNoteIds.includes(note.Id)}
                   visible={isVisible}
                 />
               </React.Fragment>

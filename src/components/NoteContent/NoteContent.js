@@ -18,11 +18,11 @@ import './NoteContent.scss';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
-  isNoteExpanded: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool.isRequired,
   searchInput: PropTypes.string,
 };
 
-const NoteContent = ({ isNoteExpanded, annotation, searchInput }) => {
+const NoteContent = ({ isSelected, annotation, searchInput }) => {
   const [sortStrategy, noteDateFormat, iconColor] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -95,7 +95,7 @@ const NoteContent = ({ isNoteExpanded, annotation, searchInput }) => {
         <span className="time">
           {` ${dayjs(annotation.DateCreated).format(noteDateFormat)}`}
         </span>
-        {isNoteExpanded && (
+        {isSelected && (
           <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
         )}
       </div>
@@ -115,15 +115,15 @@ const NoteContent = ({ isNoteExpanded, annotation, searchInput }) => {
           )}
         </div>
         {renderAuthorName(annotation)}
-        {(sortStrategy !== 'time' || isNoteExpanded || numberOfReplies > 0) && (
+        {(sortStrategy !== 'time' || isSelected || numberOfReplies > 0) && (
           <span className="spacer" />
         )}
         <div className="time">
-          {(sortStrategy !== 'time' || isNoteExpanded) &&
+          {(sortStrategy !== 'time' || isSelected) &&
             dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
           {numberOfReplies > 0 && ` (${numberOfReplies})`}
         </div>
-        {isNoteExpanded && (
+        {isSelected && (
           <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
         )}
       </div>
