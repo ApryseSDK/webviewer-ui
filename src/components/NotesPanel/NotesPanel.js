@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
@@ -15,25 +15,22 @@ import { getSortStrategies } from 'constants/sortStrategies';
 import './NotesPanel.scss';
 
 const propTypes = {
-  isDisabled: PropTypes.bool,
   isLeftPanelOpen: PropTypes.bool,
   display: PropTypes.string.isRequired,
-  sortStrategy: PropTypes.string.isRequired,
-  pageLabels: PropTypes.array.isRequired,
-  customNoteFilter: PropTypes.func,
-  t: PropTypes.func.isRequired,
 };
 
-const NotesPanel = ({
-  isDisabled,
-  isLeftPanelOpen,
-  display,
-  sortStrategy,
-  pageLabels,
-  customNoteFilter,
-  t,
-}) => {
+const NotesPanel = ({ isLeftPanelOpen, display }) => {
+  const [sortStrategy, isDisabled, pageLabels, customNoteFilter] = useSelector(
+    state => [
+      selectors.getSortStrategy(state),
+      selectors.isElementDisabled(state, 'notesPanel'),
+      selectors.getPageLabels(state),
+      selectors.getCustomNoteFilter(state),
+    ],
+    shallowEqual,
+  );
   const [notes, setNotes] = useState([]);
+  const [t] = useTranslation();
   const [searchInput, setSearchInput] = useState('');
   const isFirstTimeOpenRef = useRef(true);
 
@@ -209,11 +206,4 @@ const NotesPanel = ({
 
 NotesPanel.propTypes = propTypes;
 
-const mapStatesToProps = state => ({
-  sortStrategy: selectors.getSortStrategy(state),
-  isDisabled: selectors.isElementDisabled(state, 'notesPanel'),
-  pageLabels: selectors.getPageLabels(state),
-  customNoteFilter: selectors.getCustomNoteFilter(state),
-});
-
-export default connect(mapStatesToProps)(withTranslation()(NotesPanel));
+export default NotesPanel;
