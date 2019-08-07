@@ -46,6 +46,7 @@ const NotesPanel = ({ display }) => {
   const [searchInput, setSearchInput] = useState('');
   const [width, setWidth] = useState(0);
   const listRef = useRef();
+  const panelRef = useRef();
 
   useEffect(() => {
     const onDocumentUnloaded = () => {
@@ -100,24 +101,50 @@ const NotesPanel = ({ display }) => {
   }, []);
 
   useEffect(() => {
-    const getLeftPanelWidth = () =>
-      parseInt(
-        window
-          .getComputedStyle(document.body)
-          .getPropertyValue('--left-panel-width'),
-        10,
-      );
+    const _setWidth = () => {
+      setWidth(Math.max(
+        parseInt(
+          window
+            .getComputedStyle(document.body)
+            .getPropertyValue('--left-panel-width'),
+          10,
+        ),
+        parseInt(window.getComputedStyle(panelRef.current).width, 10),
+      ));
+    };
 
     // triggered when the left panel resize bar is being dragged
     const observer = new MutationObserver(([mutation]) => {
       if (mutation.attributeName === 'style') {
-        setWidth(getLeftPanelWidth());
+        _setWidth();
       }
     });
 
     observer.observe(document.body, { attributes: true });
 
-    setWidth(getLeftPanelWidth());
+    // the media-query should match the value of $mobile-width in styles.scss
+    // in the current design, left panel's width will be 100% instead of being
+    // the value of --left-panel-width in mobile view. So we need to set up media listener
+    // to set the width
+    const media = window.matchMedia('(max-width: 640px)');
+    if (media.matches) {
+      window.addEventListener('resize', _setWidth);
+      window.addEventListener('orientationchange', _setWidth);
+    }
+
+    media.addListener(e => {
+      if (e.matches) {
+        window.addEventListener('resize', _setWidth);
+        window.addEventListener('orientationchange', _setWidth);
+      } else {
+        window.removeEventListener('resize', _setWidth);
+        window.removeEventListener('orientationchange', _setWidth);
+      }
+
+      _setWidth();
+    });
+
+    _setWidth();
 
     return observer.disconnect;
   }, []);
@@ -270,6 +297,7 @@ const NotesPanel = ({ display }) => {
                 rowCount={notesToRender.length}
                 rowHeight={cache.rowHeight}
                 rowRenderer={arg => rowRenderer(notesToRender, arg)}
+                style={{ outline: 'none' }}
               />
             )}
           </AutoSizer>
@@ -280,6 +308,7 @@ const NotesPanel = ({ display }) => {
 
   return isDisabled ? null : (
     <div
+      ref={panelRef}
       className="Panel NotesPanel"
       style={{ display }}
       data-element="notesPanel"
