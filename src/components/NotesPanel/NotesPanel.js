@@ -38,7 +38,10 @@ const NotesPanel = ({ display }) => {
     shallowEqual,
   );
   const [notes, setNotes] = useState([]);
-  const [selectedNoteIds, setSelectedNoteIds] = useState([]);
+  // the object will be in a shape of { [note.Id]: true }
+  // use a map here instead of an array to achieve an O(1) time complexity for looking up
+  // if a note is selected
+  const [selectedNoteIds, setSelectedNoteIds] = useState({});
   const [t] = useTranslation();
   const [searchInput, setSearchInput] = useState('');
   const listRef = useRef();
@@ -46,6 +49,7 @@ const NotesPanel = ({ display }) => {
   useEffect(() => {
     const onDocumentUnloaded = () => {
       setNotes([]);
+      setSelectedNoteIds({});
       setSearchInput('');
     };
 
@@ -61,8 +65,8 @@ const NotesPanel = ({ display }) => {
           .getAnnotationsList()
           .filter(
             annot =>
-              !annot.isReply() &&
               annot.Listable &&
+              !annot.isReply() &&
               !annot.Hidden &&
               !annot.isGrouped(),
           ),
@@ -81,15 +85,25 @@ const NotesPanel = ({ display }) => {
 
   useEffect(() => {
     const onAnnotationSelected = () => {
-      setSelectedNoteIds(
-        core.getSelectedAnnotations().map(annotation => annotation.Id),
-      );
+      const ids = {};
+
+      core.getSelectedAnnotations().forEach(annot => {
+        ids[annot.Id] = true;
+      });
+      setSelectedNoteIds(ids);
     };
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
     return () =>
       core.removeEventListener('annotationSelected', onAnnotationSelected);
   });
+
+  let singleSelectedNoteIndex = -1;
+  useEffect(() => {
+    if (singleSelectedNoteIndex !== -1 && listRef.current) {
+      listRef.current.scrollToRow(singleSelectedNoteIndex);
+    }
+  }, [selectedNoteIds]);
 
   const filterNote = note => {
     let shouldRender = true;
@@ -147,13 +161,6 @@ const NotesPanel = ({ display }) => {
     }
   };
 
-  const scrollToView = index => {
-    if (listRef.current) {
-      listRef.current.scrollToRow(index);
-      console.log('here');
-    }
-  };
-
   const rowRenderer = (notes, width, { index, key, parent, style }) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
@@ -190,9 +197,8 @@ const NotesPanel = ({ display }) => {
           <NoteContext.Provider
             value={{
               searchInput,
-              isSelected: selectedNoteIds.includes(currNote.Id),
+              isSelected: selectedNoteIds[currNote.Id],
               resize: () => resize(index),
-              scrollToView: () => scrollToView(index),
             }}
           >
             <Note annotation={currNote} />
@@ -208,6 +214,15 @@ const NotesPanel = ({ display }) => {
   } else {
     let notesToRender = getSortStrategies()[sortStrategy].getSortedNotes(notes);
     notesToRender = notesToRender.filter(filterNote);
+
+    // keep track of the index of the single selected note in the sorted and filtered list
+    // in order to scroll it into view in this render effect
+    const ids = Object.keys(selectedNoteIds);
+    if (ids.length === 1) {
+      singleSelectedNoteIndex = notesToRender.findIndex(
+        note => note.Id === ids[0],
+      );
+    }
 
     child = (
       <>

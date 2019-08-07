@@ -19,7 +19,7 @@ const propTypes = {
 };
 
 const Note = ({ annotation }) => {
-  const { isSelected, resize, scrollToView } = useContext(NoteContext);
+  const { isSelected, resize } = useContext(NoteContext);
   const dispatch = useDispatch();
   const containerRef = useRef();
   const containerHeightRef = useRef();
@@ -39,6 +39,8 @@ const Note = ({ annotation }) => {
   //     setIsRootContentEditing(false);
   //   }
   // }, [isNoteEditing]);
+  console.log('render');
+
   useEffect(() => {
     const prevHeight = containerHeightRef.current;
     const currHeight = window.getComputedStyle(containerRef.current).height;
