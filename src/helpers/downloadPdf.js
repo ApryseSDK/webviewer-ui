@@ -28,7 +28,7 @@ export default (dispatch, options) => {
     const downloadName = getDownloadFilename(name, '.pdf');
 
     const doc = core.getDocument();
-    const bbURLPromise = externalURL ? Promise.resolve({ url: externalURL }) : doc.getDownloadLink({ filename: downloadName });
+    const bbURLPromise = externalURL ? Promise.resolve({ url: externalURL }) : doc.getFileData({ filename: downloadName });
     
     if (bbURLPromise) {
       const downloadIframe = document.getElementById('download-iframe') || document.createElement('iframe');
