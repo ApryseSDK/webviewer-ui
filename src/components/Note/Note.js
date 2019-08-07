@@ -39,8 +39,6 @@ const Note = ({ annotation }) => {
   //     setIsRootContentEditing(false);
   //   }
   // }, [isNoteEditing]);
-  console.log('render');
-
   useEffect(() => {
     const prevHeight = containerHeightRef.current;
     const currHeight = window.getComputedStyle(containerRef.current).height;
