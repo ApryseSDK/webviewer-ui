@@ -26,7 +26,7 @@ class AnnotationPopup extends React.PureComponent {
     applyRedactions: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
-    setEditingNote: PropTypes.func.isRequired,
+    triggerNoteEditing: PropTypes.func.isRequired,
     setActiveLeftPanel: PropTypes.func.isRequired,
     serverURL: PropTypes.string,
   }
@@ -144,11 +144,11 @@ class AnnotationPopup extends React.PureComponent {
     } else if (!this.props.isLeftPanelOpen) {
       this.props.openElement('notesPanel');
       setTimeout(() => {
-        this.props.setEditingNote(firstAnnotation);
+        this.props.triggerNoteEditing();
       }, 400);
     } else {
       this.props.setActiveLeftPanel('notesPanel');
-      this.props.setEditingNote(firstAnnotation);
+      this.props.triggerNoteEditing();
     }
 
     this.props.closeElement('annotationPopup');
@@ -248,7 +248,7 @@ const mapDispatchToProps = {
   applyRedactions,
   openElement: actions.openElement,
   closeElement: actions.closeElement,
-  setEditingNote: actions.setEditingNote,
+  triggerNoteEditing: actions.triggerNoteEditing,
   setActiveLeftPanel: actions.setActiveLeftPanel,
 };
 

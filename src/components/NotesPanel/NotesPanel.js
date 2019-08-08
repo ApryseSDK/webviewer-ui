@@ -193,6 +193,8 @@ const NotesPanel = ({ display }) => {
                   listRef.current.recomputeRowHeights(index);
                 }
               },
+              isContentEditable:
+                core.canModify(currNote) && !currNote.getContents(),
             }}
           >
             <Note annotation={currNote} />

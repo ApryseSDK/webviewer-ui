@@ -124,7 +124,7 @@ export default {
     activeLeftPanel: getHashParams('hideAnnotationPanel', false) || !getHashParams('a', false) || getHashParams('readonly', false) ? 'thumbnailsPanel' : 'notesPanel',
     activeToolGroup: '',
     notePopupId: '',
-    editingNote: [],
+    isNoteEditing: false,
     fitMode: '',
     zoom: 1,
     rotation: 0,

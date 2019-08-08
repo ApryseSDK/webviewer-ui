@@ -112,11 +112,13 @@ export const setNotePopupId = id => ({
   type: 'SET_NOTE_POPUP_ID',
   payload: { id },
 });
-// it's a bit hacky to put the annotation in an array to make sure a new reference is made every time this action is called
-// in order to trigger a effect in the note component to focus the textarea
-export const setEditingNote = annotation => ({
-  type: 'SET_EDITING_NOTE',
-  payload: [annotation],
+export const triggerNoteEditing = () => ({
+  type: 'SET_NOTE_EDITING',
+  payload: { isNoteEditing: true },
+});
+export const finishNoteEditing = () => ({
+  type: 'SET_NOTE_EDITING',
+  payload: { isNoteEditing: false },
 });
 export const setFitMode = fitMode => ({
   type: 'SET_FIT_MODE',

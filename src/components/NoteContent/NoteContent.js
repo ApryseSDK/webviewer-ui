@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
@@ -13,6 +13,7 @@ import Icon from 'components/Icon';
 
 import core from 'core';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
+import actions from 'actions';
 import selectors from 'selectors';
 
 import './NoteContent.scss';
@@ -22,21 +23,47 @@ const propTypes = {
 };
 
 const NoteContent = ({ annotation }) => {
-  const [sortStrategy, noteDateFormat, iconColor] = useSelector(
+  const [
+    sortStrategy,
+    noteDateFormat,
+    iconColor,
+    isNoteEditingTriggeredByAnnotationPopup,
+  ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
+      selectors.getIsNoteEditing(state),
     ],
     shallowEqual,
   );
-  const { isSelected, searchInput, resize } = useContext(NoteContext);
+  const { isSelected, searchInput, resize, isContentEditable } = useContext(
+    NoteContext,
+  );
   const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useDispatch();
   const isReply = annotation.isReply();
 
   useEffect(() => {
+    if (!isEditing) {
+      dispatch(actions.finishNoteEditing());
+    }
+
     resize();
   }, [isEditing]);
+
+  useEffect(() => {
+    // when the comment button in the annotation popup is clicked,
+    // this effect will run and we set isEditing to true so that
+    // the textarea will be rendered and focused after it is mounted
+    if (
+      isNoteEditingTriggeredByAnnotationPopup &&
+      isSelected &&
+      isContentEditable
+    ) {
+      setIsEditing(true);
+    }
+  }, [isNoteEditingTriggeredByAnnotationPopup]);
 
   const renderAuthorName = annotation => {
     const name = core.getDisplayAuthor(annotation);
