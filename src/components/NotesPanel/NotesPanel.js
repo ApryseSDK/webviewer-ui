@@ -34,8 +34,7 @@ const NotesPanel = ({ display }) => {
   );
   const [notes, setNotes] = useState([]);
   // the object will be in a shape of { [note.Id]: true }
-  // use a map here instead of an array to achieve an O(1) time complexity for looking up
-  // if a note is selected
+  // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
   const [selectedNoteIds, setSelectedNoteIds] = useState({});
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
   const [searchInput, setSearchInput] = useState('');
@@ -71,7 +70,6 @@ const NotesPanel = ({ display }) => {
 
     core.addEventListener('annotationChanged', _setNotes);
     core.addEventListener('annotationHidden', _setNotes);
-    _setNotes();
 
     return () => {
       core.addEventListener('annotationChanged', _setNotes);

@@ -8,7 +8,9 @@ import AutoResizeTextarea from 'components/AutoResizeTextarea';
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 
+
 import core from 'core';
+import isFocusingElement from 'helpers/isFocusingElement';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -20,25 +22,9 @@ const propTypes = {
 
 const Note = ({ annotation }) => {
   const { isSelected, resize } = useContext(NoteContext);
-  const dispatch = useDispatch();
   const containerRef = useRef();
   const containerHeightRef = useRef();
 
-  // const [isNoteEditing] = useSelector(
-  //   state => [
-  //     selectors.isNoteEditing(state, annotation.Id),
-  //   ],
-  //   shallowEqual,
-  // );
-  // useEffect(() => {
-  //   if (isNoteEditing) {
-  //     if (core.canModify(annotation) && !annotation.getContents()) {
-  //       openRootEditing();
-  //     }
-  //   } else {
-  //     setIsRootContentEditing(false);
-  //   }
-  // }, [isNoteEditing]);
   useEffect(() => {
     const prevHeight = containerHeightRef.current;
     const currHeight = window.getComputedStyle(containerRef.current).height;
@@ -51,6 +37,10 @@ const Note = ({ annotation }) => {
 
   const handleNoteClick = e => {
     e.stopPropagation();
+
+    if (isFocusingElement()) {
+      return;
+    }
 
     if (isSelected) {
       core.deselectAnnotation(annotation);
@@ -133,7 +123,8 @@ const ReplyArea = ({ annotation }) => {
   }, [isNoteEditingTriggeredByAnnotationPopup]);
 
   const postReply = e => {
-    e.stopPropagation();
+    // prevent the textarea from blurring out
+    e.preventDefault();
 
     if (value) {
       core.createAnnotationReply(annotation, value);
@@ -163,7 +154,7 @@ const ReplyArea = ({ annotation }) => {
       />
 
       {isFocused && (
-        <div className="buttons" onMouseDown={e => e.preventDefault()}>
+        <div className="buttons">
           <button className={replyBtnClass} onMouseDown={postReply}>
             {t('action.reply')}
           </button>
