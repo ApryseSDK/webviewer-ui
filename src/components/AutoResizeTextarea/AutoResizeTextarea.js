@@ -1,6 +1,8 @@
 import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import { isMobileDevice } from 'helpers/device';
+
 const propTypes = {
   // same the value attribute of a HTML textarea element
   value: PropTypes.string,
@@ -65,13 +67,23 @@ const AutoResizeTextarea = ({
     }
   };
 
+  const handleBlur = e => {
+    if (isMobileDevice) {
+      // when press the "done" button in a virtual keyboard the textarea will be unfocused
+      // and we want to submit whatever that have been typed
+      // side effect: tapping outside of the textarea without pressing the "done" button will also submit the text, is this good?
+      onSubmit(e);
+    }
+    onBlur(e);
+  };
+
   return (
     <textarea
       ref={textareaRef}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       onFocus={onFocus}
-      onBlur={onBlur}
+      onBlur={handleBlur}
       value={value}
       placeholder={placeholder}
     />
