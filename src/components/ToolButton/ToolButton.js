@@ -15,7 +15,6 @@ import './ToolButton.scss';
 
 class ToolButton extends React.PureComponent {
   static propTypes = {
-    isDisabled: PropTypes.bool,
     isActive: PropTypes.bool.isRequired,
     activeToolStyles: PropTypes.object.isRequired,
     toolName: PropTypes.string.isRequired,
@@ -71,25 +70,20 @@ class ToolButton extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, toolName } = this.props;
+    const { toolName } = this.props;
     const color = this.getToolButtonColor();
     const className = [
       'ToolButton',
       toolStylesExist(toolName) ? 'hasStyles' : '',
     ].join(' ').trim();
 
-    if (isDisabled) {
-      return null;
-    }
-
     return (
-      <Button {...this.props} className={className} color={color} onClick={this.onClick} />
+      <Button {...this.props} disable={core.getTool(toolName)?.disabled} className={className} color={color} onClick={this.onClick} />
     );
   }
 }
 
 const mapStateToProps = (state, { toolName }) => ({
-  isDisabled: selectors.isToolButtonDisabled(state, toolName),
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
   iconColor: selectors.getIconColor(state, mapToolNameToKey(toolName)),

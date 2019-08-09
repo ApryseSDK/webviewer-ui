@@ -13,7 +13,6 @@ import selectors from 'selectors';
 
 class ToolGroupButton extends React.PureComponent {
   static propTypes = {
-    isDisabled: PropTypes.bool,
     activeToolName: PropTypes.string.isRequired,
     toolGroup: PropTypes.string.isRequired,
     mediaQueryClassName: PropTypes.string.isRequired,
@@ -105,7 +104,6 @@ class ToolGroupButton extends React.PureComponent {
   render() {
     const {
       mediaQueryClassName,
-      isDisabled,
       dataElement,
       toolButtonObjects,
       isActive,
@@ -116,10 +114,6 @@ class ToolGroupButton extends React.PureComponent {
     const allButtonsInGroupDisabled = toolNames.every(
       toolName => core.getTool(toolName).disabled,
     );
-
-    if (isDisabled || allButtonsInGroupDisabled) {
-      return null;
-    }
 
     const { toolName } = this.state;
     const img = this.props.img
@@ -139,6 +133,7 @@ class ToolGroupButton extends React.PureComponent {
     return (
       <Button
         title={title}
+        disable={allButtonsInGroupDisabled}
         className={className}
         mediaQueryClassName={mediaQueryClassName}
         isActive={isActive}
@@ -152,11 +147,6 @@ class ToolGroupButton extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isDisabled: selectors.isToolGroupButtonDisabled(
-    state,
-    ownProps.dataElement,
-    ownProps.toolGroup,
-  ),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),

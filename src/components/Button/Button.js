@@ -1,14 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
 
+import selectors from 'selectors';
+
 import './Button.scss';
 
 const propTypes = {
-  isDisabled: PropTypes.bool,
+  disable: PropTypes.bool,
   isActive: PropTypes.bool,
   mediaQueryClassName: PropTypes.string,
   img: PropTypes.string,
@@ -21,7 +24,7 @@ const propTypes = {
 };
 
 const Button = ({
-  isDisabled,
+  disable,
   isActive,
   mediaQueryClassName,
   img,
@@ -32,7 +35,12 @@ const Button = ({
   className,
   title,
 }) => {
+  const [isElementDisabled] = useSelector(state =>
+    selectors.isElementDisabled(state, dataElement),
+  );
+
   const handleClick = e => onClick(e);
+
   const buttonClass = classNames({
     Button: true,
     active: isActive,
@@ -63,7 +71,7 @@ const Button = ({
     </div>
   );
 
-  return isDisabled ? null : title ? (
+  return disable || isElementDisabled ? null : title ? (
     <Tooltip content={title}>{children}</Tooltip>
   ) : (
     children

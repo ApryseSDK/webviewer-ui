@@ -7,7 +7,6 @@ import actions from 'actions';
 
 const mapStateToProps = (state, ownProps) => ({
   className: ownProps.className || 'ToggleElementButton',
-  isDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
   isActive: selectors.isElementActive(state, ownProps),
 });
 

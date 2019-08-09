@@ -1,26 +1,10 @@
-import core from 'core';
 import { workerTypes } from 'constants/types';
 
 // viewer
 export const isElementDisabled = (state, dataElement) =>
   state.viewer.disabledElements[dataElement] &&
   state.viewer.disabledElements[dataElement].disabled;
-export const isToolGroupButtonDisabled = (state, dataElement, toolGroup) => {
-  const toolNames = getToolNamesByGroup(state, toolGroup);
-  const isEveryButtonInGroupDisabled = toolNames.every(toolName =>
-    isToolButtonDisabled(state, toolName),
-  );
 
-  return isElementDisabled(state, dataElement) || isEveryButtonInGroupDisabled;
-};
-export const isToolButtonDisabled = (state, toolName) => {
-  const dataElement = getToolButtonDataElement(state, toolName);
-
-  return (
-    isElementDisabled(state, dataElement) ||
-    (core.getTool(toolName) && core.getTool(toolName).disabled)
-  );
-};
 export const isElementOpen = (state, dataElement) => {
   if (state.viewer.disabledElements[dataElement]) {
     return (
