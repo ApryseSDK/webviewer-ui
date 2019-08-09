@@ -35,9 +35,9 @@ const Button = ({
   className,
   title,
 }) => {
-  const [isElementDisabled] = useSelector(state =>
+  const [isElementDisabled] = useSelector(state => [
     selectors.isElementDisabled(state, dataElement),
-  );
+  ]);
 
   const handleClick = e => onClick(e);
 
