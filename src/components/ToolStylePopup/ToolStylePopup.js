@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import onClickOutside from 'react-onclickoutside';
 import { connect } from 'react-redux';
 
 import StylePopup from 'components/StylePopup';
@@ -34,7 +35,7 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('resize', this.closeSelf);
   }
 
   componentDidUpdate(prevProps) {
@@ -58,12 +59,16 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('resize', this.closeSelf);
   }
 
-  handleWindowResize = () => {
+  handleClickOutside = () => {
+    this.closeSelf();
+  }
+
+  closeSelf = () => {
     this.props.closeElement('toolStylePopup');
-  };
+  }
 
   handleStyleChange = (property, value) => {
     setToolStyles(this.props.activeToolName, property, value);
@@ -161,4 +166,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ToolStylePopup);
+)(onClickOutside(ToolStylePopup));

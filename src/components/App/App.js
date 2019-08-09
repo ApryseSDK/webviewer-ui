@@ -75,7 +75,6 @@ const App = ({ removeEventHandlers }) => {
     const elements = [
       'annotationPopup',
       'contextMenuPopup',
-      'toolStylePopup',
       'textPopup',
       isDesktop() ? 'redactionOverlay' : '',
       isDesktop() ? 'toolsOverlay' : '',
