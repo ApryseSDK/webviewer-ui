@@ -65,10 +65,11 @@ const App = ({ removeEventHandlers }) => {
         <ViewControlsOverlay />
         <RedactionOverlay outsideClickIgnoreClass="ToolButton" />
         <MenuOverlay />
-        <PageNavOverlay />
         <ToolsOverlay outsideClickIgnoreClass="ToolStylePopup" />
         <SignatureOverlay />
+
         <CursorOverlay />
+        <PageNavOverlay />
         <ZoomOverlay />
         <MeasurementOverlay />
 
