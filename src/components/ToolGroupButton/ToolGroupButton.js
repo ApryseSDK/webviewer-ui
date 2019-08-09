@@ -57,11 +57,9 @@ class ToolGroupButton extends React.PureComponent {
     }
   }
 
-  onClick = e => {
+  onClick = () => {
     const { setActiveToolGroup, isActive, closeElement, toggleElement, openElement, toolGroup } = this.props;
     const { toolName } = this.state;
-
-    e.stopPropagation();
 
     setActiveToolGroup(toolGroup);
     closeElement('toolStylePopup');

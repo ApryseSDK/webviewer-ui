@@ -199,7 +199,7 @@ class AnnotationPopup extends React.PureComponent {
     const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
     return (
-      <div className={className} ref={this.popup} data-element="annotationPopup" style={{ left, top }} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
+      <div className={className} ref={this.popup} data-element="annotationPopup" style={{ left, top }}>
         {isStylePopupOpen
           ? <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
           : <>

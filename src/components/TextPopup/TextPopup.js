@@ -88,7 +88,7 @@ class TextPopup extends React.PureComponent {
     const isCreateRedactionEnabled = core.isCreateRedactionEnabled();
     
     return (
-      <div className={className} data-element={'textPopup'} ref={this.popup} style={{ left, top }} onMouseDown={e => e.stopPropagation()}>
+      <div className={className} data-element={'textPopup'} ref={this.popup} style={{ left, top }}>
         <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={this.onClickCopy} />
         {this.props.isAnnotationToolsEnabled &&
           <>

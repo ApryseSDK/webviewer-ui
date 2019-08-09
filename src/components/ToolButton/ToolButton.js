@@ -33,10 +33,8 @@ class ToolButton extends React.PureComponent {
     iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
   }
 
-  onClick = e => {
+  onClick = () => {
     const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement, onClick } = this.props;
-
-    e.stopPropagation();
    
     if (isActive) {
       if (toolStylesExist(toolName)) {

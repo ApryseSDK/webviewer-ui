@@ -81,7 +81,7 @@ class RedactionOverlay extends React.PureComponent {
     const className = getClassName('Overlay RedactionOverlay', this.props);
 
     return ( // TODO ask if there an easy way to keep the tool group as "redact"
-      <div className={className} ref={this.overlay} style={{ left, right }} data-element="redactionOverlay" onMouseDown={e => e.stopPropagation()}>
+      <div className={className} ref={this.overlay} style={{ left, right }} data-element="redactionOverlay">
         <ToolButton toolName="AnnotationCreateRedaction" />
         { showApply && <ActionButton dataElement="applyAllButton" title="action.applyAll" img="ic_check_black_24px" onClick={this.handleApplyButtonClick}/> }
 

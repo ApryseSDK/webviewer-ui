@@ -48,8 +48,6 @@ class LeftPanel extends React.Component {
       <div
         className={className}
         data-element="leftPanel"
-        onMouseDown={e => e.stopPropagation()}
-        onClick={e => e.stopPropagation()}
       >
         <div className="left-panel-header">
           <div

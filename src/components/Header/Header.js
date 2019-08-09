@@ -25,7 +25,7 @@ class Header extends React.PureComponent {
     }
 
     return (
-      <div className={className} data-element="header" onMouseDown={e => e.stopPropagation()}>
+      <div className={className} data-element="header">
         <HeaderItems items={activeHeaderItems} />
       </div>
     );

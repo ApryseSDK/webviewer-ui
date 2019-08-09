@@ -17,7 +17,7 @@ class ToggleElementOverlay extends React.PureComponent {
     isActive: PropTypes.bool
   }
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = { value: '100' };
   }
@@ -41,7 +41,7 @@ class ToggleElementOverlay extends React.PureComponent {
   }
 
   onKeyPress = e => {
-    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13){
+    if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
       const zoom = Math.ceil(core.getZoom() * 100).toString();
       if (e.target.value === zoom) {
         return;
@@ -56,7 +56,7 @@ class ToggleElementOverlay extends React.PureComponent {
 
   onChange = e => {
     const re = /^(\d){0,4}$/;
-    if (re.test(e.target.value) || e.target.value === ''){
+    if (re.test(e.target.value) || e.target.value === '') {
       this.setState({ value: e.target.value }); 
     }
   }
@@ -103,7 +103,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onClick: e => {
-    e.stopPropagation();
     dispatch(actions.toggleElement('zoomOverlay'));
   }
 });

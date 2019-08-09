@@ -319,7 +319,7 @@ class SearchOverlay extends React.PureComponent {
     const className = getClassName(`Overlay SearchOverlay ${isSearchPanelOpen ? 'transformed' : ''}`, this.props);
 
     return (
-      <div className={className} data-element="searchOverlay" onTransitionEnd={this.onTransitionEnd} onClick={e => e.stopPropagation()}>
+      <div className={className} data-element="searchOverlay" onTransitionEnd={this.onTransitionEnd}>
         <div className="wrapper">
           <div className="main">
             <div className="input-wrapper">

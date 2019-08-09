@@ -113,12 +113,6 @@ class ToolStylePopup extends React.PureComponent {
     return { left: popupLeft, top: popupTop };
   };
 
-  onClick = e => {
-    e.stopPropagation();
-
-    this.props.closeElement('toolStylePopup');
-  };
-
   render() {
     const { left, top } = this.state;
     const { isDisabled, activeToolName, activeToolStyle } = this.props;
@@ -137,8 +131,6 @@ class ToolStylePopup extends React.PureComponent {
         data-element="toolStylePopup"
         style={{ top, left }}
         ref={this.popup}
-        onMouseDown={e => e.stopPropagation()}
-        onClick={this.onClick}
       >
         <StylePopup
           key={activeToolName}

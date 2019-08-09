@@ -71,9 +71,7 @@ class StatefulButton extends React.PureComponent {
     }
   }
 
-  onClick = e => {
-    e.stopPropagation();
-
+  onClick = () => {
     const { activeState } = this.state;
     const { states, dispatch } = this.props;
 

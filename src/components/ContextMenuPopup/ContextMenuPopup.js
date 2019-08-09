@@ -114,7 +114,7 @@ class ContextMenuPopup extends React.PureComponent {
     const className = getClassName('Popup ContextMenuPopup', this.props);
 
     return (
-      <div className={className} ref={this.popup} data-element={'contextMenuPopup'} style={{ left, top }} onMouseDown={e => e.stopPropagation()}>
+      <div className={className} ref={this.popup} data-element={'contextMenuPopup'} style={{ left, top }}>
         <ActionButton dataElement="panToolButton" title="tool.pan" img="ic_pan_black_24px" onClick={() => this.handleClick('Pan')} />
         {isAnnotationToolsEnabled &&
           <>

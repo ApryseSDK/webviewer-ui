@@ -105,8 +105,6 @@ class StylePopup extends React.PureComponent {
       <div
         className="Popup StylePopup"
         data-element="stylePopup"
-        onClick={e => e.stopPropagation()}
-        onScroll={e => e.stopPropagation()}
       >
         {currentPalette && (
           <div className="colors-container">

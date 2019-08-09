@@ -86,7 +86,7 @@ class ViewControlsOverlay extends React.PureComponent {
     }
 
     return (
-      <div className={className} data-element="viewControlsOverlay" style={{ left, right }} ref={this.overlay} onClick={e => e.stopPropagation()}>
+      <div className={className} data-element="viewControlsOverlay" style={{ left, right }} ref={this.overlay}>
         {totalPages < 1000 &&
           <Element className="row" dataElement="pageTransitionButtons">
             <div className="type">{t('option.displayMode.pageTransition')}</div>
