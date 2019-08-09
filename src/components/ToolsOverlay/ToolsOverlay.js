@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
 
 import ToolButton from 'components/ToolButton';
 import Button from 'components/Button';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import { isDesktop } from 'helpers/device';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
@@ -22,7 +24,10 @@ class ToolsOverlay extends React.PureComponent {
     activeHeaderItems: PropTypes.arrayOf(PropTypes.object),
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
-    setActiveToolGroup: PropTypes.func.isRequired
+    setActiveToolGroup: PropTypes.func.isRequired,
+    // a prop that is used by the onClickOutside HOC to prevent this component from being closed
+    // when ToolStylePopup is clicked
+    outsideClickIgnoreClass: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -66,6 +71,12 @@ class ToolsOverlay extends React.PureComponent {
     this.setOverlayPosition();
   }
 
+  handleClickOutside = () => {
+    if (isDesktop()) {
+      this.props.closeElements(['toolsOverlay']);
+    }
+  }
+
   setOverlayPosition = () => {
     const { activeToolGroup, activeHeaderItems } = this.props;
     const element = activeHeaderItems.find(item => item.toolGroup === activeToolGroup);
@@ -95,7 +106,7 @@ class ToolsOverlay extends React.PureComponent {
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
     return (
-      <div className={className} ref={this.overlay} style={{ left, right }} data-element="toolsOverlay" onMouseDown={e => e.stopPropagation()}>
+      <div className={className} ref={this.overlay} style={{ left, right }} data-element="toolsOverlay">
         {toolNames.map((toolName, i) => <ToolButton key={`${toolName}-${i}`} toolName={toolName} />)}
         <div className="spacer hide-in-desktop"></div>
         <Button className="close hide-in-desktop" dataElement="toolsOverlayCloseButton" img="ic_check_black_24px" onClick={this.handleCloseClick} />
@@ -117,4 +128,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolsOverlay);
+export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(ToolsOverlay));

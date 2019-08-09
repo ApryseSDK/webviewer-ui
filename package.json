@@ -79,6 +79,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "react-measure": "^2.3.0",
-    "react-virtualized": "^9.21.1"
+    "react-virtualized": "^9.21.1",
+    "react-onclickoutside": "^6.8.0"
   }
 }

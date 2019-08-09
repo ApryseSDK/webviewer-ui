@@ -73,7 +73,7 @@ class SearchPanel extends React.PureComponent {
     const className = getClassName('Panel SearchPanel', this.props);
 
     return (
-      <div className={className} data-element="searchPanel" onClick={e => e.stopPropagation()}>
+      <div className={className} data-element="searchPanel">
         <Button className="close-btn hide-in-desktop hide-in-tablet" dataElement="searchPanelCloseButton" img="ic_close_black_24px" onClick={this.onClickClose} />
         <div className="results">
           {isSearching &&

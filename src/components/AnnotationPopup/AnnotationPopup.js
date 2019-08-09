@@ -51,7 +51,7 @@ class AnnotationPopup extends React.PureComponent {
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     core.addEventListener('updateAnnotationPermission', this.onUpdateAnnotationPermission);
     core.addEventListener('documentUnloaded', this.onDocumentUnloaded);
-    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('resize', this.close);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -79,7 +79,7 @@ class AnnotationPopup extends React.PureComponent {
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
     core.removeEventListener('updateAnnotationPermission', this.onUpdateAnnotationPermission);
     core.removeEventListener('documentUnloaded', this.onDocumentUnloaded);
-    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('resize', this.close);
   }
 
   close = () => {
@@ -124,10 +124,6 @@ class AnnotationPopup extends React.PureComponent {
 
   onUpdateAnnotationPermission = () => {
     this.forceUpdate();
-  }
-
-  handleWindowResize = () => {
-    this.props.closeElement('annotationPopup');
   }
 
   positionAnnotationPopup = () => {
@@ -205,7 +201,7 @@ class AnnotationPopup extends React.PureComponent {
     const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
     return (
-      <div className={className} ref={this.popup} data-element="annotationPopup" style={{ left, top }} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
+      <div className={className} ref={this.popup} data-element="annotationPopup" style={{ left, top }}>
         {isStylePopupOpen
           ? <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
           : <>

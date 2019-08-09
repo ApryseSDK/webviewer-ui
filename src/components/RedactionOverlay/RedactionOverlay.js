@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
 import ToolButton from 'components/ToolButton';
@@ -24,9 +25,11 @@ class RedactionOverlay extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     closeElements: PropTypes.func.isRequired,
-    
     applyRedactions: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
+    // a prop that is used by the onClickOutside HOC to prevent this component from being closed
+    // when ToolButton is clicked
+    outsideClickIgnoreClass: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -40,7 +43,7 @@ class RedactionOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      const {closeElements, setActiveToolGroup}  = this.props;
+      const { closeElements, setActiveToolGroup }  = this.props;
       closeElements(['menuOverlay', 'toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
 
       core.setToolMode('AnnotationCreateRedaction');
@@ -49,6 +52,10 @@ class RedactionOverlay extends React.PureComponent {
         this.setState(getOverlayPositionBasedOn('redactionButton', this.overlay));
       }
     }
+  }
+
+  handleClickOutside = () => {
+    this.props.closeElements([ 'redactionOverlay' ]);
   }
 
   handleApplyButtonClick = () => {
@@ -74,7 +81,7 @@ class RedactionOverlay extends React.PureComponent {
     const className = getClassName('Overlay RedactionOverlay', this.props);
 
     return ( // TODO ask if there an easy way to keep the tool group as "redact"
-      <div className={className} ref={this.overlay} style={{ left, right }} data-element="redactionOverlay" onMouseDown={e => e.stopPropagation()}>
+      <div className={className} ref={this.overlay} style={{ left, right }} data-element="redactionOverlay">
         <ToolButton toolName="AnnotationCreateRedaction" />
         { showApply && <ActionButton dataElement="applyAllButton" title="action.applyAll" img="ic_check_black_24px" onClick={this.handleApplyButtonClick}/> }
 
@@ -98,4 +105,4 @@ const mapDispatchToProps = dispatch => ({
   openElements: dataElements => dispatch(actions.openElements(dataElements)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(RedactionOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(RedactionOverlay)));

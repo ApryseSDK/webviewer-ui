@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import onClickOutside from 'react-onclickoutside';
 
 import Button from 'components/Button';
 import Tooltip from 'components/Tooltip';
@@ -64,6 +65,10 @@ class ViewControlsOverlay extends React.PureComponent {
     this.setState(getOverlayPositionBasedOn('viewControlsButton', this.overlay));
   }
 
+  handleClickOutside = () => {
+    this.props.closeElements(['viewControlsOverlay']);
+  }
+
   handleClick = (pageTransition, layout) => {
     const displayModeObject = displayModeObjects.find(obj => obj.pageTransition === pageTransition && obj.layout === layout);
 
@@ -81,7 +86,7 @@ class ViewControlsOverlay extends React.PureComponent {
     }
 
     return (
-      <div className={className} data-element="viewControlsOverlay" style={{ left, right }} ref={this.overlay} onClick={e => e.stopPropagation()}>
+      <div className={className} data-element="viewControlsOverlay" style={{ left, right }} ref={this.overlay}>
         {totalPages < 1000 &&
           <Element className="row" dataElement="pageTransitionButtons">
             <div className="type">{t('option.displayMode.pageTransition')}</div>
@@ -148,4 +153,4 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(ViewControlsOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(ViewControlsOverlay)));

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import onClickOutside from 'react-onclickoutside';
 import { connect } from 'react-redux';
 
 import StylePopup from 'components/StylePopup';
@@ -22,8 +23,11 @@ class ToolStylePopup extends React.PureComponent {
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
+    // a prop that is used by the onClickOutside HOC to prevent this component from being closed 
+    // when ToolButton is clicked
+    outsideClickIgnoreClass: PropTypes.string.isRequired,
   };
-
+  
   constructor(props) {
     super(props);
     this.popup = React.createRef();
@@ -34,7 +38,7 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('resize', this.closeSelf);
   }
 
   componentDidUpdate(prevProps) {
@@ -58,12 +62,16 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('resize', this.closeSelf);
   }
 
-  handleWindowResize = () => {
+  handleClickOutside = () => {
+    this.closeSelf();
+  }
+
+  closeSelf = () => {
     this.props.closeElement('toolStylePopup');
-  };
+  }
 
   handleStyleChange = (property, value) => {
     setToolStyles(this.props.activeToolName, property, value);
@@ -105,12 +113,6 @@ class ToolStylePopup extends React.PureComponent {
     return { left: popupLeft, top: popupTop };
   };
 
-  onClick = e => {
-    e.stopPropagation();
-
-    this.props.closeElement('toolStylePopup');
-  };
-
   render() {
     const { left, top } = this.state;
     const { isDisabled, activeToolName, activeToolStyle } = this.props;
@@ -129,8 +131,6 @@ class ToolStylePopup extends React.PureComponent {
         data-element="toolStylePopup"
         style={{ top, left }}
         ref={this.popup}
-        onMouseDown={e => e.stopPropagation()}
-        onClick={this.onClick}
       >
         <StylePopup
           key={activeToolName}
@@ -161,4 +161,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ToolStylePopup);
+)(onClickOutside(ToolStylePopup));

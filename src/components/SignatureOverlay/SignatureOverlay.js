@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
 
@@ -72,6 +73,10 @@ class SignatureOverlay extends React.PureComponent {
     this.signatureTool.off('saveDefault', this.onSaveDefault);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
     window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  handleClickOutside = () => {
+    this.props.closeElement('signatureOverlay');
   }
 
   handleWindowResize = () => {
@@ -187,7 +192,7 @@ class SignatureOverlay extends React.PureComponent {
     }
 
     return (
-      <div className={className} ref={this.overlay} style={{ left, right }} onClick={e => e.stopPropagation()}>
+      <div className={className} ref={this.overlay} style={{ left, right }}>
         <div className="default-signatures-container">
           {defaultSignatures.map(({ imgSrc }, index) => (
             <div className="default-signature" key={index}>
@@ -222,4 +227,4 @@ const mapDispatchToProps = {
   setCursorOverlay: actions.setCursorOverlay
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SignatureOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(SignatureOverlay)));

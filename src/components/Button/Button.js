@@ -20,14 +20,16 @@ class Button extends React.PureComponent {
     dataElement: PropTypes.string,
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
+    onMouseDown: PropTypes.func.isRequired,
   }
 
-  onClick = e => {
-    this.props.onClick(e);
+  static defaultProps = {
+    onClick: () => {},
+    onMouseDown: () => {}
   }
 
   render() {
-    const { isDisabled, isActive, mediaQueryClassName, img, label, color, dataElement } = this.props;
+    const { isDisabled, isActive, mediaQueryClassName, img, label, color, dataElement, onClick, onMouseDown } = this.props;
 
     if (isDisabled) {
       return null;
@@ -45,7 +47,7 @@ class Button extends React.PureComponent {
     const isGlyph = img && (img.indexOf('.') === -1 || img.indexOf('<svg') === 0) && !isBase64;
 
     return (
-      <div className={className} data-element={dataElement} onClick={this.onClick}>
+      <div className={className} data-element={dataElement} onClick={onClick} onMouseDown={onMouseDown}>
         {isGlyph &&
           <Icon glyph={img} color={color} />
         }

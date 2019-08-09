@@ -44,8 +44,6 @@ const LeftPanel = () => {
         closed: !isOpen,
       })}
       data-element="leftPanel"
-      onMouseDown={e => e.stopPropagation()}
-      onClick={e => e.stopPropagation()}
     >
       <div className="left-panel-header">
         <div
