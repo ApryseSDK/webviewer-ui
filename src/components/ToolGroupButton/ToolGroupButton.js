@@ -28,7 +28,7 @@ class ToolGroupButton extends React.PureComponent {
     setActiveToolGroup: PropTypes.func.isRequired,
     isActive: PropTypes.bool.isRequired,
     iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -38,26 +38,44 @@ class ToolGroupButton extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const activeToolNameChanged = prevProps.activeToolName !== this.props.activeToolName;
-    const wasAcitveToolNameInGroup = prevProps.toolNames.indexOf(prevProps.activeToolName) > -1;
-    const isAcitveToolNameInGroup = this.props.toolNames.indexOf(this.props.activeToolName) > -1;
-    const toolNamesLengthChanged = prevProps.toolNames.length !== this.props.toolNames.length;
+    const activeToolNameChanged =
+      prevProps.activeToolName !== this.props.activeToolName;
+    const wasAcitveToolNameInGroup =
+      prevProps.toolNames.indexOf(prevProps.activeToolName) > -1;
+    const isAcitveToolNameInGroup =
+      this.props.toolNames.indexOf(this.props.activeToolName) > -1;
+    const toolNamesLengthChanged =
+      prevProps.toolNames.length !== this.props.toolNames.length;
 
     if (activeToolNameChanged && isAcitveToolNameInGroup) {
       this.setState({ toolName: this.props.activeToolName });
     }
 
-    if (toolNamesLengthChanged && !this.props.toolNames.includes(this.state.toolName)) {
+    if (
+      toolNamesLengthChanged &&
+      !this.props.toolNames.includes(this.state.toolName)
+    ) {
       this.setState({ toolName: this.props.toolNames[0] });
     }
-    if (toolNamesLengthChanged && !wasAcitveToolNameInGroup && isAcitveToolNameInGroup) {
+    if (
+      toolNamesLengthChanged &&
+      !wasAcitveToolNameInGroup &&
+      isAcitveToolNameInGroup
+    ) {
       this.setState({ toolName: this.props.activeToolName });
       this.props.setActiveToolGroup(this.props.toolGroup);
     }
   }
 
   onClick = e => {
-    const { setActiveToolGroup, isActive, closeElement, toggleElement, openElement, toolGroup } = this.props;
+    const {
+      setActiveToolGroup,
+      isActive,
+      closeElement,
+      toggleElement,
+      openElement,
+      toolGroup,
+    } = this.props;
     const { toolName } = this.state;
 
     e.stopPropagation();
@@ -71,7 +89,7 @@ class ToolGroupButton extends React.PureComponent {
       this.setToolMode(toolName);
       openElement('toolsOverlay');
     }
-  }
+  };
 
   setToolMode = toolName => {
     const { toolGroup } = this.props;
@@ -82,37 +100,71 @@ class ToolGroupButton extends React.PureComponent {
     } else {
       core.setToolMode(toolName);
     }
-  }
+  };
 
   render() {
-    const { mediaQueryClassName, isDisabled, dataElement, toolButtonObjects, isActive, toolNames, iconColor } = this.props;
-    const allButtonsInGroupDisabled = toolNames.every(toolName => core.getTool(toolName).disabled);
+    const {
+      mediaQueryClassName,
+      isDisabled,
+      dataElement,
+      toolButtonObjects,
+      isActive,
+      toolNames,
+      iconColor,
+      title,
+    } = this.props;
+    const allButtonsInGroupDisabled = toolNames.every(
+      toolName => core.getTool(toolName).disabled,
+    );
 
     if (isDisabled || allButtonsInGroupDisabled) {
       return null;
     }
 
     const { toolName } = this.state;
-    const img = this.props.img ? this.props.img : toolButtonObjects[toolName].img;
-    const color = isActive && !this.props.img && iconColor ? getToolStyles(toolName)[iconColor] && getToolStyles(toolName)[iconColor].toHexString() : '';
+    const img = this.props.img
+      ? this.props.img
+      : toolButtonObjects[toolName].img;
+    const color =
+      isActive && !this.props.img && iconColor
+        ? getToolStyles(toolName)[iconColor] &&
+          getToolStyles(toolName)[iconColor].toHexString()
+        : '';
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
-    const className = [
-      'ToolGroupButton',
-      showDownArrow ? 'down-arrow' : '',
-    ].join(' ').trim();
+    const className = ['ToolGroupButton', showDownArrow ? 'down-arrow' : '']
+      .join(' ')
+      .trim();
 
-    return <Button className={className} mediaQueryClassName={mediaQueryClassName} isActive={isActive} onClick={this.onClick} dataElement={dataElement} img={img} color={color} />;
+    return (
+      <Button
+        title={title}
+        className={className}
+        mediaQueryClassName={mediaQueryClassName}
+        isActive={isActive}
+        onClick={this.onClick}
+        dataElement={dataElement}
+        img={img}
+        color={color}
+      />
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isDisabled: selectors.isToolGroupButtonDisabled(state, ownProps.dataElement, ownProps.toolGroup),
+  isDisabled: selectors.isToolGroupButtonDisabled(
+    state,
+    ownProps.dataElement,
+    ownProps.toolGroup,
+  ),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  iconColor: selectors.getIconColor(state, mapToolNameToKey(selectors.getActiveToolName(state))),
+  iconColor: selectors.getIconColor(
+    state,
+    mapToolNameToKey(selectors.getActiveToolName(state)),
+  ),
 });
 
 const mapDispatchToProps = {
@@ -122,4 +174,7 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ToolGroupButton);

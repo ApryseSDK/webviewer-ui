@@ -32,10 +32,6 @@ const Button = ({
   className,
   title,
 }) => {
-  if (isDisabled) {
-    return null;
-  }
-
   const handleClick = e => onClick(e);
   const buttonClass = classNames({
     Button: true,
