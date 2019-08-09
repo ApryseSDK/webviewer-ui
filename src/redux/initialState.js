@@ -197,7 +197,6 @@ export default {
   advanced: {
     azureWorkaround: getHashParams('azureWorkaround', false),
     customCSS: getHashParams('css', null),
-    customData: getHashParams('custom', null),
     customHeaders: { },
     defaultDisabledElements: getHashParams('disabledElements', ''),
     externalPath: getHashParams('p', ''),
