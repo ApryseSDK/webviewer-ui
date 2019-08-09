@@ -108,7 +108,7 @@ class ZoomOverlay extends React.PureComponent {
           <OverlayItem
             key={i}
             onClick={() => zoomTo(zoomValue)}
-            buttonName={zoomValue * 100 + '%'}
+            buttonName={`${zoomValue * 100}%`}
           />
         ))}
         <div className="spacer" />
@@ -121,10 +121,6 @@ class ZoomOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'zoomOverlay'),
   isOpen: selectors.isElementOpen(state, 'zoomOverlay'),
-  isMarqueeZoomToolDisabled: selectors.isToolButtonDisabled(
-    state,
-    'MarqueeZoomTool',
-  ),
   zoomList: selectors.getZoomList(state),
 });
 
@@ -132,7 +128,7 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(ZoomOverlay)));
-
-
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(onClickOutside(ZoomOverlay)));

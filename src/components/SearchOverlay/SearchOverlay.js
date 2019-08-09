@@ -214,7 +214,7 @@ class SearchOverlay extends React.PureComponent {
         wildcard: isWildcard,
         regex: isRegex,
         searchUp: isSearchUp,
-        ambientString: isAmbientString
+        ambientString: isAmbientString,
       }, results);
     });
   }
@@ -336,7 +336,7 @@ class SearchOverlay extends React.PureComponent {
             <div className="button next" onClick={this.onClickNext}>
               <Icon glyph="ic_chevron_right_black_24px" />
             </div>
-            <Tooltip content="action.showMoreResults" location="left">
+            <Tooltip content="action.showMoreResults">
               <div className={`advanced ${isSearchPanelOpen || isSearchPanelDisabled ? 'hidden' : ''}`} onClick={this.onClickOverflow}>
                 <Icon glyph="ic_overflow_black_24px" />
               </div>
@@ -387,7 +387,7 @@ const mapDispatchToProps = {
   setWholeWord: actions.setWholeWord,
   setNoResult: actions.setNoResult,
   setIsProgrammaticSearch: actions.setIsProgrammaticSearch,
-  setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull
+  setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(SearchOverlay)));

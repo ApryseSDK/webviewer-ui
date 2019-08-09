@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
-import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
 import toolStylesExist from 'helpers/toolStylesExist';
@@ -16,7 +15,6 @@ import './ToolButton.scss';
 
 class ToolButton extends React.PureComponent {
   static propTypes = {
-    isDisabled: PropTypes.bool,
     isActive: PropTypes.bool.isRequired,
     activeToolStyles: PropTypes.object.isRequired,
     toolName: PropTypes.string.isRequired,
@@ -25,16 +23,20 @@ class ToolButton extends React.PureComponent {
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
-    label: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
-    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
-  }
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
+  };
 
   onClick = () => {
-    const { isActive, toolName, group = '', setActiveToolGroup, closeElement, toggleElement } = this.props;
-   
+    const {
+      isActive,
+      toolName,
+      group = '',
+      setActiveToolGroup,
+      closeElement,
+      toggleElement,
+    } = this.props;
+
     if (isActive) {
       if (toolStylesExist(toolName)) {
         toggleElement('toolStylePopup');
@@ -44,10 +46,16 @@ class ToolButton extends React.PureComponent {
       setActiveToolGroup(group);
       closeElement('toolStylePopup');
     }
-  }
+  };
 
   getToolButtonColor = () => {
-    const { showColor, activeToolStyles, isActive, toolName, iconColor } = this.props;
+    const {
+      showColor,
+      activeToolStyles,
+      isActive,
+      toolName,
+      iconColor,
+    } = this.props;
 
     let toolStyles;
     if (showColor === 'always') {
@@ -62,38 +70,44 @@ class ToolButton extends React.PureComponent {
     }
 
     return color;
-  }
+  };
 
   render() {
-    const { isDisabled, toolName } = this.props;
+    const { toolName } = this.props;
     const color = this.getToolButtonColor();
     const className = [
       'ToolButton',
-      toolStylesExist(toolName) ? 'hasStyles' : ''
-    ].join(' ').trim();
-
-    if (isDisabled) {
-      return null;
-    }
+      toolStylesExist(toolName) ? 'hasStyles' : '',
+    ]
+      .join(' ')
+      .trim();
 
     return (
-      <Button {...this.props} className={className} color={color} onMouseDown={this.onClick} />
+      <Button
+        {...this.props}
+        disable={core.getTool(toolName)?.disabled}
+        className={className}
+        color={color}
+        onMouseDown={this.onClick}
+      />
     );
   }
 }
 
 const mapStateToProps = (state, { toolName }) => ({
-  isDisabled: selectors.isToolButtonDisabled(state, toolName),
   isActive: selectors.getActiveToolName(state) === toolName,
   activeToolStyles: selectors.getActiveToolStyles(state),
   iconColor: selectors.getIconColor(state, mapToolNameToKey(toolName)),
-  ...selectors.getToolButtonObject(state, toolName)
+  ...selectors.getToolButtonObject(state, toolName),
 });
 
 const mapDispatchToProps = {
   toggleElement: actions.toggleElement,
   closeElement: actions.closeElement,
-  setActiveToolGroup: actions.setActiveToolGroup
+  setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(ToolButton));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ToolButton);
