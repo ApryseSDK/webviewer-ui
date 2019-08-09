@@ -144,6 +144,18 @@
     "signatureOverlay": {
       "addSignature": "Add a signature"
     },
+    "status": {
+      "status": "Status"
+    },
+    "state": {
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "set": "Set status:",
+      "setBy": "set by",
+      "none": "None"
+    },
     "measurementOverlay": {
       "scale": "Scale Ratio",
       "angle": "Angle",
