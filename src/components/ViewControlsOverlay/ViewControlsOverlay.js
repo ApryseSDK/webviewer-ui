@@ -111,7 +111,7 @@ class ViewControlsOverlay extends React.PureComponent {
               isActive={pageTransition === 'continuous'}
             />
           </Element>
-        )}
+        }
         <Element className="row" dataElement="layoutButtons">
           <div className="type">{t('option.displayMode.layout')}</div>
           <Button
