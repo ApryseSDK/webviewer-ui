@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector, useStore, shallowEqual } from 'react-redux';
 import { translate } from 'react-i18next';
 import { hot } from 'react-hot-loader';
 
@@ -33,40 +33,45 @@ import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
+import defineReaderControlAPIs from 'src/apis';
 import { isDesktop } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './App.scss';
 
-class App extends React.PureComponent {
-  static propTypes = {
-    isSearchPanelOpen: PropTypes.bool,
-    removeEventHandlers: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
-  };
+const propTypes = {
+  removeEventHandlers: PropTypes.func.isRequired,
+};
 
-  componentDidMount() {
+const App = ({ removeEventHandlers }) => {
+  const [isSearchPanelOpen] = useSelector(
+    state => [selectors.isElementOpen(state, 'searchPanel')],
+    shallowEqual,
+  );
+  const dispatch = useDispatch();
+  const store = useStore();
+
+  useEffect(() => {
+    defineReaderControlAPIs(store);
     $(document).trigger('viewerLoaded');
-  }
 
-  componentWillUnmount() {
-    this.props.removeEventHandlers();
-  }
+    return removeEventHandlers;
+  }, []);
 
-  onClick = () => {
+  const handleClick = useCallback(() => {
     const elements = [
       'viewControlsOverlay',
       'menuOverlay',
       'zoomOverlay',
       'signatureOverlay',
-      this.props.isSearchPanelOpen ? '' : 'searchOverlay',
-    ].filter(element => element);
+      isSearchPanelOpen ? '' : 'searchOverlay',
+    ].filter(Boolean);
 
-    this.props.closeElements(elements);
-  };
+    dispatch(actions.closeElements(elements));
+  }, []);
 
-  onMouseDown = () => {
+  const handleMouseDown = useCallback(() => {
     const elements = [
       'annotationPopup',
       'contextMenuPopup',
@@ -74,75 +79,58 @@ class App extends React.PureComponent {
       'textPopup',
       isDesktop() ? 'redactionOverlay' : '',
       isDesktop() ? 'toolsOverlay' : '',
-    ].filter(element => element);
+    ].filter(Boolean);
 
-    this.props.closeElements(elements);
-  };
+    dispatch(actions.closeElements(elements));
+  }, []);
 
-  onScroll = () => {
-    this.onMouseDown();
-  };
+  return (
+    <>
+      <div
+        className="App"
+        onMouseDown={handleMouseDown}
+        onClick={handleClick}
+        onScroll={handleMouseDown}
+      >
+        <Header />
 
-  render() {
-    return (
-      <>
-        <div
-          className="App"
-          onMouseDown={this.onMouseDown}
-          onClick={this.onClick}
-          onScroll={this.onScroll}
-        >
-          <Header />
+        <LeftPanel />
+        <SearchPanel />
 
-          <LeftPanel />
-          <SearchPanel />
+        <DocumentContainer />
 
-          <DocumentContainer />
+        <SearchOverlay />
+        <ViewControlsOverlay />
+        <RedactionOverlay />
+        <MenuOverlay />
+        <PageNavOverlay />
+        <ToolsOverlay />
+        <SignatureOverlay />
+        <CursorOverlay />
+        <ZoomOverlay />
+        <MeasurementOverlay />
 
-          <SearchOverlay />
-          <ViewControlsOverlay />
-          <RedactionOverlay />
-          <MenuOverlay />
-          <PageNavOverlay />
-          <ToolsOverlay />
-          <SignatureOverlay />
-          <CursorOverlay />
-          <ZoomOverlay />
-          <MeasurementOverlay />
+        <AnnotationPopup />
+        <TextPopup />
+        <ContextMenuPopup />
+        <ToolStylePopup />
 
-          <AnnotationPopup />
-          <TextPopup />
-          <ContextMenuPopup />
-          <ToolStylePopup />
+        <SignatureModal />
+        <PrintModal />
+        <LoadingModal />
+        <ErrorModal />
+        <WarningModal />
+        <PasswordModal />
+        <ProgressModal />
+      </div>
 
-          <SignatureModal />
-          <PrintModal />
-          <LoadingModal />
-          <ErrorModal />
-          <WarningModal />
-          <PasswordModal />
-          <ProgressModal />
-        </div>
-
-        <PrintHandler />
-        <FilePickerHandler />
-        <CopyTextHandler />
-      </>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
-});
-
-const mapDispatchToProps = {
-  closeElements: actions.closeElements,
+      <PrintHandler />
+      <FilePickerHandler />
+      <CopyTextHandler />
+    </>
+  );
 };
 
-export default hot(module)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(translate()(App))
-);
+App.propTypes = propTypes;
+
+export default hot(module)(translate()(App));
