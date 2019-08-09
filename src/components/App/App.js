@@ -2,7 +2,6 @@ import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector, useStore, shallowEqual } from 'react-redux';
-import { translate } from 'react-i18next';
 import { hot } from 'react-hot-loader';
 
 import Header from 'components/Header';
