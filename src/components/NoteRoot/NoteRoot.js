@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
 import NoteContents from 'components/NoteContents';
@@ -99,4 +99,4 @@ const mapStateToProps = (state, { annotation }) => ({
   icon: selectors.getToolButtonIcon(state, annotation.ToolName)
 });
 
-export default connect(mapStateToProps)(translate()(NoteRoot));
+export default connect(mapStateToProps)(withTranslation()(NoteRoot));
