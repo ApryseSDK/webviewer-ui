@@ -31,18 +31,19 @@ export default {
         },
         title: 'annotation.signature',
         // we also consider if signatureOverlay is open in this state because there can be a case where all the default signatures are deleted
-        // when signatureOverlay is open and this button's state will become "newSignature" 
-        isActive: ({ openElements }) => openElements.signatureModal || openElements.signatureOverlay
+        // when signatureOverlay is open and this button's state will become "newSignature"
+        isActive: ({ openElements }) =>
+          openElements.signatureModal || openElements.signatureOverlay,
       },
       defaultSignature: {
         img: 'ic_annotation_signature_black_24px',
         onClick: (update, state, dispatch) => {
           dispatch(actions.toggleElement('signatureOverlay'));
         },
-        title: 'annotation.signature' ,
+        title: 'annotation.signature',
         isActive: ({ openElements }) => openElements.signatureOverlay,
-        className: 'down-arrow'
-      }
-    }
-  }
+        className: 'down-arrow',
+      },
+    },
+  },
 };

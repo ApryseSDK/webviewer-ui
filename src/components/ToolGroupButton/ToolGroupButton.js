@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
-import { withTooltip } from 'components/Tooltip';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
@@ -28,13 +27,13 @@ class ToolGroupButton extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
     isActive: PropTypes.bool.isRequired,
-    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor'])
+    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      toolName: props.toolNames[0]
+      toolName: props.toolNames[0],
     };
   }
 
@@ -113,14 +112,14 @@ const mapStateToProps = (state, ownProps) => ({
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  iconColor: selectors.getIconColor(state, mapToolNameToKey(selectors.getActiveToolName(state)))
+  iconColor: selectors.getIconColor(state, mapToolNameToKey(selectors.getActiveToolName(state))),
 });
 
 const mapDispatchToProps = {
   openElement: actions.openElement,
   toggleElement: actions.toggleElement,
   closeElement: actions.closeElement,
-  setActiveToolGroup: actions.setActiveToolGroup
+  setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTooltip()(ToolGroupButton));
+export default connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
