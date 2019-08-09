@@ -8,7 +8,7 @@ export default dispatch => (e, { added, removed }) => {
     dispatch(actions.setTotalPages(totalPages));
 
     setTimeout(() => {
-      // this handler 'onLayoutChange' in the UI get binded before it annotationManager.onLayoutChange handler
+      // this handler 'onLayoutChange' in the UI get binded before the annotationManager.onLayoutChange handler
       // so use 'setTimeout' so the annotationManager.onLayoutChange handler finish before we call 'setPageLabels'
       dispatch(actions.setPageLabels(getDefaultPageLabels(totalPages)));
     }, 0);
