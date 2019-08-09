@@ -22,8 +22,16 @@ class LeftPanel extends React.Component {
     isOpen: PropTypes.bool,
     customPanels: PropTypes.array.isRequired,
     activePanel: PropTypes.string.isRequired,
-    closeElement: PropTypes.func.isRequired
+    closeElement: PropTypes.func.isRequired,
   };
+
+  constructor() {
+    super();
+    this.state = {
+      // IE11 doesn't support css variables, so use the hard coded value from App.scss
+      width: !isIE11 ? document.body.style.getPropertyValue('--left-panel-width') : 300
+    };
+  }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
@@ -35,13 +43,29 @@ class LeftPanel extends React.Component {
     return panel === this.props.activePanel ? 'flex' : 'none';
   };
 
+  onWidthChange = width => {
+    this.setState({ width });
+  }
+
   render() {
     const { isDisabled, closeElement, customPanels } = this.props;
-    
+    const { width } = this.state;    
     if (isDisabled) {
       return null;
     }
-    
+
+    let style = { };
+    let innerStyle = { };
+
+    if (isIE11) {
+      // IE11 will use javascript for controlling width, other broswer will use CSS
+      style = width ? { width } : null;
+
+      innerStyle = {
+        left: width
+      };
+    }
+
     const className = getClassName('Panel LeftPanel', this.props);
 
     return (
@@ -50,6 +74,7 @@ class LeftPanel extends React.Component {
         data-element="leftPanel"
         onMouseDown={e => e.stopPropagation()}
         onClick={e => e.stopPropagation()}
+        style={style}
       >
         <div className="left-panel-header">
           <div
@@ -61,7 +86,7 @@ class LeftPanel extends React.Component {
           <LeftPanelTabs />
         </div>
 
-        <ResizeBar />
+        <ResizeBar onWidthChange={this.onWidthChange} style={innerStyle}/>
 
         <NotesPanel display={this.getDisplay('notesPanel')} />
         <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
@@ -80,12 +105,13 @@ class LeftPanel extends React.Component {
   }
 }
 
-const ResizeBar = () => {
+const ResizeBar = props => {
   const isMouseDownRef = useRef(false);
 
   useEffect(() => {
     const dragMouseMove = ({ clientX }) => {
       if (isMouseDownRef.current && clientX > 215 && clientX < 900) {
+        props.onWidthChange(clientX);
         document.body.style.setProperty('--left-panel-width', `${clientX}px`);
       }
     };
@@ -105,13 +131,17 @@ const ResizeBar = () => {
 
   // we are using css variables to make the panel resizable but IE11 doesn't support it
   return (
-    !isIE11 && (
-      <div
-        className="resize-bar"
-        onMouseDown={() => isMouseDownRef.current = true}
-      />
-    )
+    <div
+      style={props.style}
+      className="resize-bar"
+      onMouseDown={() => isMouseDownRef.current = true}
+    />
   );
+};
+
+ResizeBar.propTypes = {
+  style: PropTypes.object,
+  onWidthChange: PropTypes.func.isRequired
 };
 
 const mapStatesToProps = state => ({
