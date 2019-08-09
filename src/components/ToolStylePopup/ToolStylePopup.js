@@ -23,8 +23,11 @@ class ToolStylePopup extends React.PureComponent {
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
+    // a prop that is used by the onClickOutside HOC to prevent this component from being closed 
+    // when ToolButton is clicked
+    outsideClickIgnoreClass: PropTypes.string.isRequired,
   };
-
+  
   constructor(props) {
     super(props);
     this.popup = React.createRef();

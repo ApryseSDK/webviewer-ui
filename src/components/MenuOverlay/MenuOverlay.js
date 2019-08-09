@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
 
@@ -54,6 +55,10 @@ class MenuOverlay extends React.PureComponent {
     print(dispatch, isEmbedPrintSupported);
   }
 
+  handleClickOutside = () => {
+    this.props.closeElements(['menuOverlay']);
+  }
+
   downloadDocument = () => {
     const { dispatch, documentPath, documentFilename } = this.props;
 
@@ -103,4 +108,4 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(MenuOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(onClickOutside(MenuOverlay)));

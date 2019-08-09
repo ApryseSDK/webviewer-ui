@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
 
@@ -51,6 +52,10 @@ class TextPopup extends React.PureComponent {
 
   componentWillUnmount() {
     core.getTool('TextSelect').off('selectionComplete', this.onSelectionComplete);
+  }
+
+  handleClickOutside = () => {
+    this.props.closeElement('textPopup');
   }
 
   onSelectionComplete = (e, startQuad, allQuads) => {
@@ -112,4 +117,4 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TextPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(TextPopup));

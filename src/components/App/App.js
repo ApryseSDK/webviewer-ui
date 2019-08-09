@@ -1,6 +1,6 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
+import { useStore } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector, useStore, shallowEqual } from 'react-redux';
 import { translate } from 'react-i18next';
 import { hot } from 'react-hot-loader';
 
@@ -34,9 +34,6 @@ import PrintHandler from 'components/PrintHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
 import defineReaderControlAPIs from 'src/apis';
-import { isDesktop } from 'helpers/device';
-import actions from 'actions';
-import selectors from 'selectors';
 
 import './App.scss';
 
@@ -45,11 +42,6 @@ const propTypes = {
 };
 
 const App = ({ removeEventHandlers }) => {
-  const [isSearchPanelOpen] = useSelector(
-    state => [selectors.isElementOpen(state, 'searchPanel')],
-    shallowEqual,
-  );
-  const dispatch = useDispatch();
   const store = useStore();
 
   useEffect(() => {
@@ -59,38 +51,9 @@ const App = ({ removeEventHandlers }) => {
     return removeEventHandlers;
   }, []);
 
-  const handleClick = useCallback(() => {
-    const elements = [
-      'viewControlsOverlay',
-      'menuOverlay',
-      'zoomOverlay',
-      'signatureOverlay',
-      isSearchPanelOpen ? '' : 'searchOverlay',
-    ].filter(Boolean);
-
-    dispatch(actions.closeElements(elements));
-  }, []);
-
-  const handleMouseDown = useCallback(() => {
-    const elements = [
-      'annotationPopup',
-      'contextMenuPopup',
-      'textPopup',
-      isDesktop() ? 'redactionOverlay' : '',
-      isDesktop() ? 'toolsOverlay' : '',
-    ].filter(Boolean);
-
-    dispatch(actions.closeElements(elements));
-  }, []);
-
   return (
     <>
-      <div
-        className="App"
-        onMouseDown={handleMouseDown}
-        onClick={handleClick}
-        onScroll={handleMouseDown}
-      >
+      <div className="App">
         <Header />
 
         <LeftPanel />
@@ -98,12 +61,12 @@ const App = ({ removeEventHandlers }) => {
 
         <DocumentContainer />
 
-        <SearchOverlay />
+        <SearchOverlay outsideClickIgnoreClass="SearchPanel" />
         <ViewControlsOverlay />
-        <RedactionOverlay />
+        <RedactionOverlay outsideClickIgnoreClass="ToolButton" />
         <MenuOverlay />
         <PageNavOverlay />
-        <ToolsOverlay />
+        <ToolsOverlay outsideClickIgnoreClass="ToolStylePopup" />
         <SignatureOverlay />
         <CursorOverlay />
         <ZoomOverlay />
@@ -112,7 +75,7 @@ const App = ({ removeEventHandlers }) => {
         <AnnotationPopup />
         <TextPopup />
         <ContextMenuPopup />
-        <ToolStylePopup />
+        <ToolStylePopup outsideClickIgnoreClass="ToolButton" />
 
         <SignatureModal />
         <PrintModal />

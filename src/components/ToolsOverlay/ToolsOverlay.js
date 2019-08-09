@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
 
 import ToolButton from 'components/ToolButton';
 import Button from 'components/Button';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import { isDesktop } from 'helpers/device';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
@@ -22,7 +24,10 @@ class ToolsOverlay extends React.PureComponent {
     activeHeaderItems: PropTypes.arrayOf(PropTypes.object),
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
-    setActiveToolGroup: PropTypes.func.isRequired
+    setActiveToolGroup: PropTypes.func.isRequired,
+    // a prop that is used by the onClickOutside HOC to prevent this component from being closed
+    // when ToolStylePopup is clicked
+    outsideClickIgnoreClass: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -64,6 +69,12 @@ class ToolsOverlay extends React.PureComponent {
 
   handleWindowResize = () => {
     this.setOverlayPosition();
+  }
+
+  handleClickOutside = () => {
+    if (isDesktop()) {
+      this.props.closeElements(['toolsOverlay']);
+    }
   }
 
   setOverlayPosition = () => {
@@ -117,4 +128,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolsOverlay);
+export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(ToolsOverlay));

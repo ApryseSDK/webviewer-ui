@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import onClickOutside from 'react-onclickoutside';
 
 import Button from 'components/Button';
 import Tooltip from 'components/Tooltip';
@@ -62,6 +63,10 @@ class ViewControlsOverlay extends React.PureComponent {
 
   handleWindowResize = () => {
     this.setState(getOverlayPositionBasedOn('viewControlsButton', this.overlay));
+  }
+
+  handleClickOutside = () => {
+    this.props.closeElements(['viewControlsOverlay']);
   }
 
   handleClick = (pageTransition, layout) => {
@@ -148,4 +153,4 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(ViewControlsOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(onClickOutside(ViewControlsOverlay)));

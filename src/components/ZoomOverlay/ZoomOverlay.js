@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import onClickOutside from 'react-onclickoutside';
 
 import core from 'core';
 import actions from 'actions';
@@ -51,6 +52,10 @@ class ZoomOverlay extends React.PureComponent {
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleMouseDown);
     window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  handleClickOutside = () => {
+    this.props.closeElements('zoomOverlay');
   }
 
   handleWindowResize = () => {
@@ -111,7 +116,7 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(ZoomOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(onClickOutside(ZoomOverlay)));
 
 
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
 import ToolButton from 'components/ToolButton';
@@ -24,9 +25,11 @@ class RedactionOverlay extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     closeElements: PropTypes.func.isRequired,
-    
     applyRedactions: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
+    // a prop that is used by the onClickOutside HOC to prevent this component from being closed
+    // when ToolButton is clicked
+    outsideClickIgnoreClass: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -40,7 +43,7 @@ class RedactionOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      const {closeElements, setActiveToolGroup}  = this.props;
+      const { closeElements, setActiveToolGroup }  = this.props;
       closeElements(['menuOverlay', 'toolsOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup']);
 
       core.setToolMode('AnnotationCreateRedaction');
@@ -49,6 +52,10 @@ class RedactionOverlay extends React.PureComponent {
         this.setState(getOverlayPositionBasedOn('redactionButton', this.overlay));
       }
     }
+  }
+
+  handleClickOutside = () => {
+    this.props.closeElements([ 'redactionOverlay' ]);
   }
 
   handleApplyButtonClick = () => {
@@ -98,4 +105,4 @@ const mapDispatchToProps = dispatch => ({
   openElements: dataElements => dispatch(actions.openElements(dataElements)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(RedactionOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(onClickOutside(RedactionOverlay)));

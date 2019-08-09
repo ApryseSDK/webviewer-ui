@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
 
 import Icon from 'components/Icon';
 import Tooltip from 'components/Tooltip';
@@ -49,7 +50,10 @@ class SearchOverlay extends React.PureComponent {
     setNoResult: PropTypes.func.isRequired,
     setIsProgrammaticSearch: PropTypes.func.isRequired,
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
+    // a prop that is used by the onClickOutside HOC to prevent this component from being closed
+    // when SearchPanel is clicked
+    outsideClickIgnoreClass: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -91,6 +95,10 @@ class SearchOverlay extends React.PureComponent {
       this.props.closeElement('searchPanel');
       this.clearSearchResults();
     }
+  }
+
+  handleClickOutside = () => {
+    this.props.closeElements('searchOverlay');
   }
 
   clearSearchResults = () => {
@@ -382,4 +390,4 @@ const mapDispatchToProps = {
   setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(SearchOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(onClickOutside(SearchOverlay)));
