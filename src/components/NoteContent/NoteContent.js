@@ -133,7 +133,7 @@ const NoteContent = ({ annotation }) => {
     );
   } else {
     const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
-    const color = annotation[iconColor]?.toHexString();
+    const color = annotation[iconColor]?.toHexString?.();
     const numberOfReplies = annotation.getReplies().length;
 
     header = (

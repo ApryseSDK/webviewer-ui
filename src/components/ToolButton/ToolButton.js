@@ -1,113 +1,87 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import classNames from 'classnames';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
+import OverlayTrigger from 'components/OverlayTrigger';
+import ToolStylePopup from 'components/ToolStylePopup';
 import Button from 'components/Button';
 
 import core from 'core';
 import toolStylesExist from 'helpers/toolStylesExist';
 import getToolStyles from 'helpers/getToolStyles';
 import { mapToolNameToKey } from 'constants/map';
-import actions from 'actions';
 import selectors from 'selectors';
 
 import './ToolButton.scss';
 
-class ToolButton extends React.PureComponent {
-  static propTypes = {
-    isActive: PropTypes.bool.isRequired,
-    activeToolStyles: PropTypes.object.isRequired,
-    toolName: PropTypes.string.isRequired,
-    group: PropTypes.string,
-    showColor: PropTypes.string.isRequired,
-    toggleElement: PropTypes.func.isRequired,
-    closeElement: PropTypes.func.isRequired,
-    setActiveToolGroup: PropTypes.func.isRequired,
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    iconColor: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
-  };
-
-  onClick = () => {
-    const {
-      isActive,
-      toolName,
-      group = '',
-      setActiveToolGroup,
-      closeElement,
-      toggleElement,
-    } = this.props;
-
-    if (isActive) {
-      if (toolStylesExist(toolName)) {
-        toggleElement('toolStylePopup');
-      }
-    } else {
-      core.setToolMode(toolName);
-      setActiveToolGroup(group);
-      closeElement('toolStylePopup');
-    }
-  };
-
-  getToolButtonColor = () => {
-    const {
-      showColor,
-      activeToolStyles,
-      isActive,
-      toolName,
-      iconColor,
-    } = this.props;
-
-    let toolStyles;
-    if (showColor === 'always') {
-      toolStyles = getToolStyles(toolName);
-    } else if (showColor === 'active' && isActive) {
-      toolStyles = activeToolStyles;
-    }
-
-    let color = '';
-    if (toolStyles && iconColor) {
-      color = toolStyles[iconColor].toHexString();
-    }
-
-    return color;
-  };
-
-  render() {
-    const { toolName } = this.props;
-    const color = this.getToolButtonColor();
-    const className = [
-      'ToolButton',
-      toolStylesExist(toolName) ? 'hasStyles' : '',
-    ]
-      .join(' ')
-      .trim();
-
-    return (
-      <Button
-        {...this.props}
-        disable={core.getTool(toolName)?.disabled}
-        className={className}
-        color={color}
-        onMouseDown={this.onClick}
-      />
-    );
-  }
-}
-
-const mapStateToProps = (state, { toolName }) => ({
-  isActive: selectors.getActiveToolName(state) === toolName,
-  activeToolStyles: selectors.getActiveToolStyles(state),
-  iconColor: selectors.getIconColor(state, mapToolNameToKey(toolName)),
-  ...selectors.getToolButtonObject(state, toolName),
-});
-
-const mapDispatchToProps = {
-  toggleElement: actions.toggleElement,
-  closeElement: actions.closeElement,
-  setActiveToolGroup: actions.setActiveToolGroup,
+const propTypes = {
+  toolName: PropTypes.string.isRequired,
+  group: PropTypes.string,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ToolButton);
+const ToolButton = ({ toolName, ...restProps }) => {
+  const [
+    isActive,
+    // activeToolStyles,
+    iconColor,
+    { group, showColor, ...restObjectData },
+  ] = useSelector(
+    state => [
+      selectors.getActiveToolName(state) === toolName,
+      // selectors.getActiveToolStyles(state),
+      selectors.getIconColor(state, mapToolNameToKey(toolName)),
+      selectors.getToolButtonObject(state, toolName),
+    ],
+    shallowEqual,
+  );
+  const dispatch = useDispatch();
+
+  // const handleMouseDown = () => {
+  //   if (isActive) {
+  //     if (toolStylesExist(toolName)) {
+  //       dispatch(actions.toggleElement('toolStylePopup'));
+  //     }
+  //   } else {
+  //     core.setToolMode(toolName);
+  //     dispatch(actions.setActiveToolGroup(group));
+  //     dispatch(actions.closeElement('toolStylePopup'));
+  //   }
+  // };
+
+  const toolStyles = getToolStyles(toolName);
+  let color = '';
+
+  if (showColor === 'always' || (showColor === 'active' && isActive)) {
+    color = toolStyles?.[iconColor]?.toHexString?.();
+  }
+
+  const children = (
+    <Button
+      className={classNames({
+        ToolButton: true,
+        hasStyles: toolStylesExist(toolName),
+      })}
+      disable={core.getTool(toolName)?.disabled}
+      isActive={isActive}
+      color={color}
+      {...restProps}
+      {...restObjectData}
+    />
+  );
+
+  return toolStyles ? (
+    <>
+      <Overlay target={} show={show}>
+        <ToolStylePopup />
+      </Overlay>
+      {children}
+    </>
+  ) : (
+    children
+  );
+};
+
+ToolButton.propTypes = propTypes;
+
+export default ToolButton;
