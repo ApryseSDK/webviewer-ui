@@ -30,7 +30,8 @@ class DocumentContainer extends React.PureComponent {
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     displayMode: PropTypes.string.isRequired,
-    swipeOrientation: PropTypes.string
+    swipeOrientation: PropTypes.string,
+    leftPanelWidth: PropTypes.number,
   }
 
   constructor(props) {
@@ -195,7 +196,8 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  swipeOrientation: selectors.getSwipeOrientation(state)
+  swipeOrientation: selectors.getSwipeOrientation(state),
+  leftPanelWidth: selectors.getLeftPanelWidth(state),
 });
 
 const mapDispatchToProps = dispatch => ({

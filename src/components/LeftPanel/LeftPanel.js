@@ -23,15 +23,10 @@ class LeftPanel extends React.Component {
     customPanels: PropTypes.array.isRequired,
     activePanel: PropTypes.string.isRequired,
     closeElement: PropTypes.func.isRequired,
+    updateLeftPanel: PropTypes.func,
+    leftPanelWidth: PropTypes.number
   };
 
-  constructor() {
-    super();
-    this.state = {
-      // IE11 doesn't support css variables, so use the hard coded value from App.scss
-      width: !isIE11 ? document.body.style.getPropertyValue('--left-panel-width') : 300
-    };
-  }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
@@ -44,12 +39,13 @@ class LeftPanel extends React.Component {
   };
 
   onWidthChange = width => {
-    this.setState({ width });
+    if (isIE11) {
+      this.props.updateLeftPanel(width);
+    }
   }
 
   render() {
-    const { isDisabled, closeElement, customPanels } = this.props;
-    const { width } = this.state;    
+    const { isDisabled, closeElement, customPanels, leftPanelWidth } = this.props;
     if (isDisabled) {
       return null;
     }
@@ -58,11 +54,11 @@ class LeftPanel extends React.Component {
     let innerStyle = { };
 
     if (isIE11) {
-      // IE11 will use javascript for controlling width, other broswer will use CSS
-      style = width ? { width } : null;
+      // IE11 will use javascript for controlling width, other broswers will use CSS
+      style = leftPanelWidth ? { width: leftPanelWidth } : null;
 
       innerStyle = {
-        left: width
+        left: leftPanelWidth
       };
     }
 
@@ -148,11 +144,13 @@ const mapStatesToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'leftPanel'),
   isDisabled: selectors.isElementDisabled(state, 'leftPanel'),
   activePanel: selectors.getActiveLeftPanel(state),
-  customPanels: selectors.getCustomPanels(state)
+  customPanels: selectors.getCustomPanels(state),
+  leftPanelWidth: selectors.getLeftPanelWidth(state)
 });
 
 const mapDispatchToProps = {
-  closeElement: actions.closeElement
+  closeElement: actions.closeElement,
+  updateLeftPanel: actions.setLeftPanelWidth
 };
 
 export default connect(

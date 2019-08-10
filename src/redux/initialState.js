@@ -149,7 +149,8 @@ export default {
     measurementUnits: {
       from: ['in', 'mm', 'cm', 'pt'],
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi']
-    }
+    },
+    leftPanelWidth: 300
   },
   search: {
     listeners: [],
