@@ -25,7 +25,6 @@ const propTypes = {
 
 const defaultProps = {
   onClick: () => {},
-  onMouseDown: () => {},
 };
 
 const Button = ({
@@ -37,7 +36,6 @@ const Button = ({
   color,
   dataElement,
   onClick,
-  onMouseDown,
   className,
   title,
 }) => {
@@ -70,7 +68,6 @@ const Button = ({
       className={buttonClass}
       data-element={dataElement}
       onClick={onClick}
-      onMouseDown={onMouseDown}
     >
       {content}
     </div>

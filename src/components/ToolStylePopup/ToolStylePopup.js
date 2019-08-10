@@ -23,11 +23,8 @@ class ToolStylePopup extends React.PureComponent {
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
-    // a prop that is used by the onClickOutside HOC to prevent this component from being closed 
-    // when ToolButton is clicked
-    outsideClickIgnoreClass: PropTypes.string.isRequired,
   };
-  
+
   constructor(props) {
     super(props);
     this.popup = React.createRef();
@@ -38,7 +35,7 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.closeSelf);
+    window.addEventListener('resize', this.close);
   }
 
   componentDidUpdate(prevProps) {
@@ -62,14 +59,23 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.closeSelf);
+    window.removeEventListener('resize', this.close);
   }
 
-  handleClickOutside = () => {
-    this.closeSelf();
+  handleClickOutside = e => {
+    const toolsOverlay = document.querySelector(
+      '[data-element="toolsOverlay"]',
+    );
+    const header = document.querySelector('[data-element="header"]');
+    const clickedToolsOverlay = toolsOverlay?.contains(e.target);
+    const clickedHeader = header?.contains(e.target);
+
+    if (!clickedToolsOverlay && !clickedHeader) {
+      this.close();
+    }
   }
 
-  closeSelf = () => {
+  close = () => {
     this.props.closeElement('toolStylePopup');
   }
 
@@ -81,7 +87,7 @@ class ToolStylePopup extends React.PureComponent {
     const { toolButtonObjects, activeToolName } = this.props;
     const dataElement = toolButtonObjects[activeToolName].dataElement;
     const toolButton = document.querySelectorAll(
-      `.Header [data-element=${dataElement}], .ToolsOverlay [data-element=${dataElement}]`
+      `.Header [data-element=${dataElement}], .ToolsOverlay [data-element=${dataElement}]`,
     )[0];
 
     if (!toolButton) {
@@ -90,7 +96,7 @@ class ToolStylePopup extends React.PureComponent {
 
     const { left, top } = this.getToolStylePopupPositionBasedOn(
       toolButton,
-      this.popup
+      this.popup,
     );
 
     this.setState({ left, top });
@@ -160,5 +166,5 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(onClickOutside(ToolStylePopup));

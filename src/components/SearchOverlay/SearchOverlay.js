@@ -51,9 +51,6 @@ class SearchOverlay extends React.PureComponent {
     setIsProgrammaticSearch: PropTypes.func.isRequired,
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    // a prop that is used by the onClickOutside HOC to prevent this component from being closed
-    // when SearchPanel is clicked
-    outsideClickIgnoreClass: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -97,8 +94,13 @@ class SearchOverlay extends React.PureComponent {
     }
   }
 
-  handleClickOutside = () => {
-    this.props.closeElements('searchOverlay');
+  handleClickOutside = e => {
+    const { closeElements, isSearchPanelOpen } = this.props;
+    const clickedSearchButton = e.target.getAttribute('data-element') === 'searchButton';
+
+    if (!isSearchPanelOpen && !clickedSearchButton) {
+      closeElements(['searchOverlay']);
+    }
   }
 
   clearSearchResults = () => {

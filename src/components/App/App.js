@@ -61,12 +61,10 @@ const App = ({ removeEventHandlers }) => {
 
         <DocumentContainer />
 
-        <SearchOverlay outsideClickIgnoreClass="SearchPanel" />
+        <SearchOverlay />
         <ViewControlsOverlay />
-        {/* <RedactionOverlay outsideClickIgnoreClass="ToolButton" /> */}
         <RedactionOverlay />
         <MenuOverlay />
-        {/* <ToolsOverlay outsideClickIgnoreClass="ToolStylePopup" /> */}
         <ToolsOverlay />
         <SignatureOverlay />
 
@@ -78,7 +76,6 @@ const App = ({ removeEventHandlers }) => {
         <AnnotationPopup />
         <TextPopup />
         <ContextMenuPopup />
-        {/* <ToolStylePopup outsideClickIgnoreClass="ToolButton" /> */}
         <ToolStylePopup />
 
         <SignatureModal />

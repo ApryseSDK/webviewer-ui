@@ -30,7 +30,7 @@ class MenuOverlay extends React.PureComponent {
     isOpen: PropTypes.bool,
     closeElements: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
   }
 
   constructor() {
@@ -38,7 +38,7 @@ class MenuOverlay extends React.PureComponent {
     this.overlay = React.createRef();
     this.state = {
       left: 0,
-      right: 'auto'
+      right: 'auto',
     };
   }
 
@@ -55,8 +55,12 @@ class MenuOverlay extends React.PureComponent {
     print(dispatch, isEmbedPrintSupported);
   }
 
-  handleClickOutside = () => {
-    this.props.closeElements(['menuOverlay']);
+  handleClickOutside = e => {
+    const clickedMenuButton = e.target.getAttribute('data-element') === 'menuButton';
+
+    if (!clickedMenuButton) {
+      this.props.closeElements(['menuOverlay']);
+    }
   }
 
   downloadDocument = () => {
@@ -64,7 +68,7 @@ class MenuOverlay extends React.PureComponent {
 
     downloadPdf(dispatch, {
       documentPath,
-      filename: documentFilename
+      filename: documentFilename,
     });
   }
 
@@ -105,7 +109,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements))
+  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(MenuOverlay)));

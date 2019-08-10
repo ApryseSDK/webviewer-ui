@@ -26,7 +26,7 @@ class SignatureOverlay extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     setCursorOverlay: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -38,7 +38,7 @@ class SignatureOverlay extends React.PureComponent {
     this.state = {
       defaultSignatures: [],
       left: 0,
-      right: 'auto'
+      right: 'auto',
     };
   }
 
@@ -56,7 +56,7 @@ class SignatureOverlay extends React.PureComponent {
 
     const { freeHandAnnot } = this.signatureTool;
     if (
-      prevProps.isOpen && !this.props.isOpen && 
+      prevProps.isOpen && !this.props.isOpen &&
       !this.props.isSignatureModalOpen &&
       freeHandAnnot && !freeHandAnnot.getPaths().length
     ) {
@@ -64,7 +64,7 @@ class SignatureOverlay extends React.PureComponent {
       // we want to clear location when the overlay is closed without any default signatures selected
       // to prevent signature from being drawn to the previous location
       // however the overlay will be closed without any default signature selected if we clicked the "add signature" button(which opens the signature modal)
-      // we don't want to clear the location in the case because we still want the signature to be automatically added to the widget after the create button is hit in the modal 
+      // we don't want to clear the location in the case because we still want the signature to be automatically added to the widget after the create button is hit in the modal
       this.signatureTool.clearLocation();
     }
   }
@@ -75,8 +75,12 @@ class SignatureOverlay extends React.PureComponent {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  handleClickOutside = () => {
-    this.props.closeElement('signatureOverlay');
+  handleClickOutside = e => {
+    const clickedSignatureButton = e.target.getAttribute('data-element') === 'signatureToolButton';
+
+    if (!clickedSignatureButton) {
+      this.props.closeElement('signatureOverlay');
+    }
   }
 
   handleWindowResize = () => {
@@ -85,24 +89,24 @@ class SignatureOverlay extends React.PureComponent {
 
   setOverlayPosition = () => {
     const { left, right } = getOverlayPositionBasedOn('signatureToolButton', this.overlay);
-    this.setState({ 
-      // TODO: remove the hard-coded value. 
+    this.setState({
+      // TODO: remove the hard-coded value.
       left: left === -9999 ? window.innerWidth / 2 - 95 : left - 95,
-      right 
+      right,
     });
   }
 
   onSaveDefault = (e, paths, signatureAnnotation) => {
-    const defaultSignatures = [ ...this.state.defaultSignatures ];
+    const defaultSignatures = [...this.state.defaultSignatures];
     if (defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES) {
       defaultSignatures.unshift();
-    } 
+    }
 
     const signatureCanvas = document.querySelector('.signature-canvas');
     const savedSignature = {
       imgSrc: signatureCanvas.toDataURL(),
       paths: deepCopyPaths(paths),
-      styles: getAnnotationStyles(signatureAnnotation)
+      styles: getAnnotationStyles(signatureAnnotation),
     };
     defaultSignatures.push(savedSignature);
 
@@ -112,7 +116,7 @@ class SignatureOverlay extends React.PureComponent {
   onAnnotationChanged = (e, annotations, action) => {
     if (
       action === 'modify' &&
-      annotations.length === 1 && 
+      annotations.length === 1 &&
       mapAnnotationToKey(annotations[0]) === 'signature'
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
@@ -124,7 +128,7 @@ class SignatureOverlay extends React.PureComponent {
         return {
           imgSrc: document.querySelector('.signature-canvas').toDataURL(),
           paths,
-          styles: newStyles
+          styles: newStyles,
         };
       });
 
@@ -137,7 +141,7 @@ class SignatureOverlay extends React.PureComponent {
 
     const { setCursorOverlay, closeElement, openElement } = this.props;
     const { paths, styles } = this.state.defaultSignatures[this.currentSignatureIndex];
-    
+
     core.setToolMode('AnnotationCreateSignature');
     this.signatureTool.initAnnot();
     this.signatureTool.setUpSignature(paths, styles);
@@ -154,7 +158,7 @@ class SignatureOverlay extends React.PureComponent {
 
   deleteDefaultSignature = index => {
     const { closeElement, setCursorOverlay } = this.props;
-    const defaultSignatures = [ ...this.state.defaultSignatures ];
+    const defaultSignatures = [...this.state.defaultSignatures];
     const isDeletingCurrentSignature = this.currentSignatureIndex === index;
 
     defaultSignatures.splice(index, 1);
@@ -175,7 +179,7 @@ class SignatureOverlay extends React.PureComponent {
   openSignatureModal = () => {
     const { defaultSignatures } = this.state;
     const { openElement, closeElement } = this.props;
-    
+
     if (defaultSignatures.length < this.MAX_DEFAULT_SIGNATURES) {
       openElement('signatureModal');
       closeElement('signatureOverlay');
@@ -202,8 +206,8 @@ class SignatureOverlay extends React.PureComponent {
               <ActionButton dataElement="defaultSignatureDeleteButton" img="ic_delete_black_24px" onClick={() => this.deleteDefaultSignature(index)} />
             </div>
           ))}
-          <div 
-            className={`add-signature${defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES ? ' disabled' : ' enabled'}`} 
+          <div
+            className={`add-signature${defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES ? ' disabled' : ' enabled'}`}
             onClick={this.openSignatureModal}
           >
             {t('option.signatureOverlay.addSignature')}
@@ -217,14 +221,14 @@ class SignatureOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'signatureOverlay'),
   isOpen: selectors.isElementOpen(state, 'signatureOverlay'),
-  isSignatureModalOpen: selectors.isElementOpen(state, 'signatureModal')
+  isSignatureModalOpen: selectors.isElementOpen(state, 'signatureModal'),
 });
 
 const mapDispatchToProps = {
   closeElements: actions.closeElements,
   closeElement: actions.closeElement,
   openElement: actions.openElement,
-  setCursorOverlay: actions.setCursorOverlay
+  setCursorOverlay: actions.setCursorOverlay,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(SignatureOverlay)));

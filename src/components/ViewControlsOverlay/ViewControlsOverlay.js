@@ -46,6 +46,7 @@ class ViewControlsOverlay extends React.PureComponent {
         'groupOverlay',
         'searchOverlay',
         'menuOverlay',
+        'toolsOverlay',
         'toolStylePopup',
         'signatureOverlay',
         'zoomOverlay',
@@ -67,8 +68,12 @@ class ViewControlsOverlay extends React.PureComponent {
     );
   };
 
-  handleClickOutside = () => {
-    this.props.closeElements(['viewControlsOverlay']);
+  handleClickOutside = e => {
+    const clickedViewControlsButton = e.target.getAttribute('data-element') === 'viewControlsButton';
+
+    if (!clickedViewControlsButton) {
+      this.props.closeElements(['viewControlsOverlay']);
+    }
   }
 
   handleClick = (pageTransition, layout) => {
