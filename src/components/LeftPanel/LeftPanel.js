@@ -9,7 +9,7 @@ import OutlinesPanel from 'components/OutlinesPanel';
 import CustomElement from 'components/CustomElement';
 import Icon from 'components/Icon';
 
-import { isTabletOrMobile, isIE11 } from 'helpers/device';
+import { isTabletOrMobile, isIE11, isIEEdge } from 'helpers/device';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -39,7 +39,7 @@ class LeftPanel extends React.Component {
   };
 
   onWidthChange = width => {
-    if (isIE11) {
+    if (isIE11 || isIEEdge) {
       this.props.updateLeftPanel(width);
     }
   }
