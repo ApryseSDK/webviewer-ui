@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-// import OverlayTrigger from 'components/OverlayTrigger';
-// import ToolStylePopup from 'components/ToolStylePopup';
 import Button from 'components/Button';
 
 import core from 'core';

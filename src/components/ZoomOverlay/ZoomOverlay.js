@@ -61,8 +61,13 @@ class ZoomOverlay extends React.PureComponent {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  handleClickOutside = () => {
-    this.props.closeElements('zoomOverlay');
+  handleClickOutside = e => {
+    const ToggleZoomButton = document.querySelector('[data-element="zoomOverlayButton"]');
+    const clickedToggleZoomButton = ToggleZoomButton?.contains(e.target);
+
+    if (!clickedToggleZoomButton) {
+      this.props.closeElements('zoomOverlay');
+    }
   };
 
   handleWindowResize = () => {

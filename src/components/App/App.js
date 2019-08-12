@@ -67,7 +67,6 @@ const App = ({ removeEventHandlers }) => {
         <MenuOverlay />
         <ToolsOverlay />
         <SignatureOverlay />
-
         <CursorOverlay />
         <PageNavOverlay />
         <ZoomOverlay />
