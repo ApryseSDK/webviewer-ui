@@ -7,6 +7,7 @@ import StylePopup from 'components/StylePopup';
 
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
+import { isMobile } from 'helpers/device';
 import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -62,6 +63,17 @@ class ToolStylePopup extends React.PureComponent {
     window.removeEventListener('resize', this.close);
   }
 
+  handleClick = e => {
+    // in the mobile version, this component is viewport height minus the header height
+    // with the sub component stylePopup being 100% height so handleClickOutside won't get called
+    // when we click outside because we are always clicking on this component
+    // as a result we have this handler to specifically close this component
+    // if this comment is removed, please also remove the comment in handleClick, AnnotationStylePopup.js
+    if (isMobile() && e.target === e.currentTarget) {
+      this.props.closeElement('toolStylePopup');
+    }
+  };
+
   handleClickOutside = e => {
     const toolsOverlay = document.querySelector(
       '[data-element="toolsOverlay"]',
@@ -73,11 +85,11 @@ class ToolStylePopup extends React.PureComponent {
     if (!clickedToolsOverlay && !clickedHeader) {
       this.close();
     }
-  }
+  };
 
   close = () => {
     this.props.closeElement('toolStylePopup');
-  }
+  };
 
   handleStyleChange = (property, value) => {
     setToolStyles(this.props.activeToolName, property, value);
@@ -137,6 +149,7 @@ class ToolStylePopup extends React.PureComponent {
         data-element="toolStylePopup"
         style={{ top, left }}
         ref={this.popup}
+        onClick={this.handleClick}
       >
         <StylePopup
           key={activeToolName}
