@@ -93,7 +93,7 @@ if (window.CanvasRenderingContext2D) {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
-          }
+          },
         }, window.sampleL);
       });
     }
@@ -103,7 +103,7 @@ if (window.CanvasRenderingContext2D) {
         window.CoreControls.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
-          }
+          },
         }, window.sampleL);
       });
     }
@@ -113,11 +113,11 @@ if (window.CanvasRenderingContext2D) {
 
   const coreVersion = window.CoreControls.DocumentViewer.prototype.version;
   const uiVersion = packageConfig.version;
-  
+
   if (coreVersion && uiVersion) {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
-    const [ coreMajorVersion, coreMinorVersion ] = coreVersion.split('.');
-    const [ uiMajorVersion, uiMinorVersion ] = uiVersion.split('.');
+    const [coreMajorVersion, coreMinorVersion] = coreVersion.split('.');
+    const [uiMajorVersion, uiMinorVersion] = uiVersion.split('.');
 
     // eslint-disable-next-line no-console
     console.log(`[WebViewer] WebViewer UI version: ${uiVersion}, WebViewer Core version: ${coreVersion}`);
@@ -129,9 +129,7 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
-  fullAPIReady.then(() => {
-    return loadConfig();
-  }).then(() => {
+  fullAPIReady.then(() => loadConfig()).then(() => {
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
     window.docViewer = docViewer;
