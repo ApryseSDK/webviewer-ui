@@ -46,6 +46,14 @@ const App = ({ removeEventHandlers }) => {
 
   useEffect(() => {
     defineReaderControlAPIs(store);
+    window.ControlUtils = {
+      // discussed with the team internally, this will be removed in the next major release
+      getCustomData: () => {
+        console.warn('ControlUtils.getCustomData is deprecated, use instance.getCustomData instead');
+        return window.readerControl.getCustomData();
+      },
+    };
+
     $(document).trigger('viewerLoaded');
 
     return removeEventHandlers;

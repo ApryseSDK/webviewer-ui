@@ -225,6 +225,6 @@ export default store => {
     updateOutlines: updateOutlines(store), // undocumented
     updateTool: updateTool(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
-    getCustomData: () => getHashParams('custom', null) // undocumented
+    getCustomData: () => getHashParams('custom', null), // undocumented
   };
 };
