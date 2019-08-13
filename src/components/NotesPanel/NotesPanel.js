@@ -148,13 +148,6 @@ const NotesPanel = ({ display }) => {
     setSearchInput(value);
   }, 500);
 
-  const handleNotesPanelClick = e => {
-    if (e.target === e.currentTarget) {
-      // ignore clicks performed on notes
-      core.deselectAllAnnotations();
-    }
-  };
-
   const rowRenderer = (notes, { index, key, parent, style }) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
@@ -262,7 +255,7 @@ const NotesPanel = ({ display }) => {
           className="Panel NotesPanel"
           style={{ display }}
           data-element="notesPanel"
-          onClick={handleNotesPanelClick}
+          onMouseDown={core.deselectAllAnnotations}
         >
           {child}
         </div>

@@ -27,6 +27,7 @@ const AutoResizeTextarea = ({
   placeholder = '',
 }, ref) => {
   const { resize } = useContext(NoteContext);
+  const prevHeightRef = useRef();
   const textareaRef = useRef();
   const TEXTAREA_HEIGHT = '30px';
 
@@ -39,14 +40,6 @@ const AutoResizeTextarea = ({
     resizeHeight();
   }, []);
 
-  useLayoutEffect(() => {
-    // it is possible that the height of the textarea has changed due to
-    // the previous value. So we need to reset it if value becomes ''
-    if (!value) {
-      textareaRef.current.style.height = TEXTAREA_HEIGHT;
-    }
-  }, [value]);
-
   const handleChange = e => {
     resizeHeight();
     onChange(e.target.value);
@@ -58,11 +51,20 @@ const AutoResizeTextarea = ({
     // 1. make the height small enough so that we know the scroll bar height
     // 2. make the height a bit bigger than the scroll bar height to finish resizing
     textareaRef.current.style.height = TEXTAREA_HEIGHT;
-    textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 2}px`;
 
-    // when the height of the textarea changes, we also want to call resize
-    // to clear the cell measurer cache and update the note height in the virtualized list
-    resize();
+    const currHeight = textareaRef.current.scrollHeight + 2;
+    const hasScrollBar = currHeight !== 2;
+    if (hasScrollBar) {
+      textareaRef.current.style.height = `${currHeight}px`;
+
+      // when the height of the textarea changes, we also want to call resize
+      // to clear the cell measurer cache and update the note height in the virtualized list
+      if (!prevHeightRef.current || prevHeightRef.current !== currHeight) {
+        resize();
+      }
+
+      prevHeightRef.current = currHeight;
+    }
   };
 
   const handleKeyDown = e => {

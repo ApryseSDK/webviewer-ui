@@ -8,9 +8,7 @@ import AutoResizeTextarea from 'components/AutoResizeTextarea';
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 
-
 import core from 'core';
-import isFocusingElement from 'helpers/isFocusingElement';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -35,10 +33,10 @@ const Note = ({ annotation }) => {
     }
   });
 
-  const handleNoteClick = () => {
-    if (isFocusingElement()) {
-      return;
-    }
+  const handleNoteClick = e => {
+    // stop bubbling up otherwise the note will be closed
+    // due to annotation deselection
+    e.stopPropagation();
 
     if (isSelected) {
       core.deselectAnnotation(annotation);
@@ -64,7 +62,7 @@ const Note = ({ annotation }) => {
     .sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
   return (
-    <div ref={containerRef} className={noteClass} onClick={handleNoteClick}>
+    <div ref={containerRef} className={noteClass} onMouseDown={handleNoteClick}>
       <NoteContent annotation={annotation} />
 
       <div className={repliesClass}>
@@ -140,7 +138,12 @@ const ReplyArea = ({ annotation }) => {
   });
 
   return isReadOnly || isReplyDisabled ? null : (
-    <div className="reply-container" onClick={e => e.stopPropagation()}>
+    <div
+      className="reply-container"
+      // stop bubbling up otherwise the note will be closed
+      // due to annotation deselection
+      onMouseDown={e => e.stopPropagation()}
+    >
       <AutoResizeTextarea
         ref={textareaRef}
         value={value}
