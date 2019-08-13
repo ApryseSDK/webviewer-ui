@@ -148,7 +148,11 @@ const NotesPanel = ({ display }) => {
     setSearchInput(value);
   }, 500);
 
-  const rowRenderer = (notes, { index, key, parent, style }) => {
+  const rowRenderer = (notes, { index, key, parent, style, isScrolling }) => {
+    if (isScrolling) {
+      return <div style={style} key={`${key}`}>Hello world!</div>;
+    }
+
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
       sortStrategy
@@ -235,7 +239,7 @@ const NotesPanel = ({ display }) => {
             deferredMeasurementCache={cache}
             height={dimension.height}
             width={dimension.width}
-            overscanRowCount={3}
+            overscanRowCount={10}
             ref={listRef}
             rowCount={notesToRender.length}
             rowHeight={cache.rowHeight}
@@ -247,13 +251,19 @@ const NotesPanel = ({ display }) => {
     );
   }
 
-  return isDisabled ? null : (
+  // when either of the other two panel tabs is clicked, the "display" prop will become "none"
+  // like other two panels, we should set the display style of the div to props.display
+  // but if we do this, sometimes a maximum updates errors will be thrown from react-virtualized if we click the other two panels
+  // it looks like the issue is reported here: https://github.com/bvaughn/react-virtualized/issues/1375
+  // the PR for fixing this issue has been merged but not yet released so as a workaround we are unmounting
+  // the whole component when props.display === 'none'
+  // this should be changed back after the fixed is released in the next version of react-virtualized
+  return isDisabled || display === 'none' ? null : (
     <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
       {({ measureRef }) => (
         <div
           ref={measureRef}
           className="Panel NotesPanel"
-          style={{ display }}
           data-element="notesPanel"
           onMouseDown={core.deselectAllAnnotations}
         >
