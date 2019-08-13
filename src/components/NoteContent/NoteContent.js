@@ -109,14 +109,6 @@ const NoteContent = ({ annotation }) => {
     return text;
   };
 
-  const handleNoteContentsClick = e => {
-    // we stop propagation when we are editing the contents to
-    // prevent note components from receiving this event and collapsing the note
-    if (isEditing) {
-      e.stopPropagation();
-    }
-  };
-
   let header;
   if (isReply) {
     header = (
@@ -168,7 +160,7 @@ const NoteContent = ({ annotation }) => {
       onMouseDown={e => e.preventDefault()}
     >
       {header}
-      <div className="content-container" onClick={handleNoteContentsClick}>
+      <div className="content-container">
         {isEditing ? (
           <ContentArea annotation={annotation} setIsEditing={setIsEditing} />
         ) : (

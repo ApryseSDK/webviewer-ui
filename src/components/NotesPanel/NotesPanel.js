@@ -148,6 +148,13 @@ const NotesPanel = ({ display }) => {
     setSearchInput(value);
   }, 500);
 
+  const handleNotesPanelClick = e => {
+    if (e.target === e.currentTarget) {
+      // ignore clicks performed on notes
+      core.deselectAllAnnotations();
+    }
+  };
+
   const rowRenderer = (notes, { index, key, parent, style }) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
@@ -174,7 +181,7 @@ const NotesPanel = ({ display }) => {
       <CellMeasurer
         cache={cache}
         columnIndex={0}
-        key={key}
+        key={`${key}${currNote.Id}`}
         parent={parent}
         rowIndex={index}
         width={dimension.width}
@@ -235,7 +242,7 @@ const NotesPanel = ({ display }) => {
             deferredMeasurementCache={cache}
             height={dimension.height}
             width={dimension.width}
-            overscanRowCount={1}
+            overscanRowCount={3}
             ref={listRef}
             rowCount={notesToRender.length}
             rowHeight={cache.rowHeight}
@@ -255,8 +262,7 @@ const NotesPanel = ({ display }) => {
           className="Panel NotesPanel"
           style={{ display }}
           data-element="notesPanel"
-          onClick={core.deselectAllAnnotations}
-          onScroll={e => e.stopPropagation()}
+          onClick={handleNotesPanelClick}
         >
           {child}
         </div>

@@ -1,5 +1,7 @@
-import React, { useRef, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { useRef, useImperativeHandle, useLayoutEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+
+import NoteContext from 'components/Note/Context';
 
 const propTypes = {
   // same the value attribute of a HTML textarea element
@@ -24,6 +26,7 @@ const AutoResizeTextarea = ({
   onFocus = () => {},
   placeholder = '',
 }, ref) => {
+  const { resize } = useContext(NoteContext);
   const textareaRef = useRef();
   const TEXTAREA_HEIGHT = '30px';
 
@@ -33,7 +36,7 @@ const AutoResizeTextarea = ({
   }));
 
   useLayoutEffect(() => {
-    resize();
+    resizeHeight();
   }, []);
 
   useLayoutEffect(() => {
@@ -45,17 +48,21 @@ const AutoResizeTextarea = ({
   }, [value]);
 
   const handleChange = e => {
-    resize();
+    resizeHeight();
     onChange(e.target.value);
   };
 
-  const resize = () => {
+  const resizeHeight = () => {
     // for auto-resize the height of the textarea
     // https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize
     // 1. make the height small enough so that we know the scroll bar height
     // 2. make the height a bit bigger than the scroll bar height to finish resizing
     textareaRef.current.style.height = TEXTAREA_HEIGHT;
     textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 2}px`;
+
+    // when the height of the textarea changes, we also want to call resize
+    // to clear the cell measurer cache and update the note height in the virtualized list
+    resize();
   };
 
   const handleKeyDown = e => {

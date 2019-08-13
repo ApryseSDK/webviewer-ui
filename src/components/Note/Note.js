@@ -35,9 +35,7 @@ const Note = ({ annotation }) => {
     }
   });
 
-  const handleNoteClick = e => {
-    e.stopPropagation();
-
+  const handleNoteClick = () => {
     if (isFocusingElement()) {
       return;
     }

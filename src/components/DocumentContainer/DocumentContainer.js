@@ -159,7 +159,7 @@ class DocumentContainer extends React.PureComponent {
       'annotationPopup',
       'contextMenuPopup',
       'textPopup',
-    ]);    
+    ]);
   }
 
   getClassName = props => {
@@ -170,7 +170,7 @@ class DocumentContainer extends React.PureComponent {
       isLeftPanelOpen ? 'left-panel' : '',
       isRightPanelOpen ? 'right-panel' : '',
       isHeaderOpen ? '' : 'no-header',
-      isSearchOverlayOpen ? 'search-overlay' : ''
+      isSearchOverlayOpen ? 'search-overlay' : '',
     ].join(' ').trim();
   }
 
@@ -204,13 +204,13 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  swipeOrientation: selectors.getSwipeOrientation(state)
+  swipeOrientation: selectors.getSwipeOrientation(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
   openElement: dataElement => dispatch(actions.openElement(dataElement)),
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements))
+  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
