@@ -13,6 +13,7 @@ import Icon from 'components/Icon';
 
 import core from 'core';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
+import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -44,7 +45,7 @@ const NoteContent = ({ annotation }) => {
   const dispatch = useDispatch();
   const isReply = annotation.isReply();
 
-  useEffect(() => {
+  useDidUpdate(() => {
     if (!isEditing) {
       dispatch(actions.finishNoteEditing());
     }

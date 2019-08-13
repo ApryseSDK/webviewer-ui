@@ -9,6 +9,7 @@ import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 
 import core from 'core';
+import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -100,7 +101,7 @@ const ReplyArea = ({ annotation }) => {
   const dispatch = useDispatch();
   const textareaRef = useRef();
 
-  useEffect(() => {
+  useDidUpdate(() => {
     if (!isFocused) {
       dispatch(actions.finishNoteEditing());
     }
