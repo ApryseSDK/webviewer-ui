@@ -148,11 +148,7 @@ const NotesPanel = ({ display }) => {
     setSearchInput(value);
   }, 500);
 
-  const rowRenderer = (notes, { index, key, parent, style, isScrolling }) => {
-    if (isScrolling) {
-      return <div style={style} key={`${key}`}>Hello world!</div>;
-    }
-
+  const rowRenderer = (notes, { index, key, parent, style }) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
       sortStrategy
