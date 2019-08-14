@@ -247,6 +247,7 @@ if (window.CanvasRenderingContext2D) {
           setIconColor: apis.setIconColor(store),
           setLanguage: apis.setLanguage,
           setLayoutMode: apis.setLayoutMode,
+          setMaxSignaturesCount: apis.setMaxSignaturesCount(store),
           setMaxZoomLevel: apis.setMaxZoomLevel(store),
           setMinZoomLevel: apis.setMinZoomLevel(store),
           setNoteDateFormat: apis.setNoteDateFormat(store),
