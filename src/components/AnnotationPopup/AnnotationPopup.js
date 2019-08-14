@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import onClickOutside from 'react-onclickoutside';
 import { connect } from 'react-redux';
 
@@ -9,7 +10,6 @@ import AnnotationStylePopup from 'components/AnnotationStylePopup';
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
-import getClassName from 'helpers/getClassName';
 import applyRedactions from 'helpers/applyRedactions';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -29,7 +29,6 @@ class AnnotationPopup extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     triggerNoteEditing: PropTypes.func.isRequired,
     setActiveLeftPanel: PropTypes.func.isRequired,
-    serverURL: PropTypes.string,
   };
 
   constructor() {
@@ -218,7 +217,6 @@ class AnnotationPopup extends React.PureComponent {
 
     const style = getAnnotationStyles(firstAnnotation);
     const hasStyle = Object.keys(style).length > 0;
-    const className = getClassName(`Popup AnnotationPopup`, this.props);
     const redactionEnabled = core.isAnnotationRedactable(firstAnnotation);
     const canModify = core.canModify(firstAnnotation);
 
@@ -232,7 +230,13 @@ class AnnotationPopup extends React.PureComponent {
 
     return (
       <div
-        className={className}
+        className={classNames({
+          Popup: true,
+          AnnotationPopup: true,
+          open: isOpen,
+          closed: !isOpen,
+          stylePopupOpen: isStylePopupOpen,
+        })}
         ref={this.popup}
         data-element="annotationPopup"
         style={{ left, top }}
@@ -313,7 +317,6 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'annotationPopup'),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
-  serverURL: selectors.getServerUrl(state),
 });
 
 const mapDispatchToProps = {
