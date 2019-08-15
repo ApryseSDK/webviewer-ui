@@ -5,7 +5,13 @@ const setDefaultToolStyles = () => {
   const toolModeMap = core.getToolModeMap();
 
   Object.keys(toolModeMap).forEach(toolName => {
-    let toolStyles = localStorage.getItem(`toolData-${toolName}`);
+    let toolStyles = null;
+
+    try {
+      toolStyles = localStorage.getItem(`toolData-${toolName}`);
+    } catch (ex) {
+      console.warn('localStorage could not be accessed. ' + ex.message);
+    }
 
     if (!toolStyles && defaultToolStylesMap[toolName]) {
       toolStyles = JSON.stringify(defaultToolStylesMap[toolName]);
