@@ -19,23 +19,38 @@ const getAnnotationPosition = annotation => {
   let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageIndex);
   let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageIndex);
 
-  if (core.getRotation() > 1) {
-    const tmp = topLeft;
-    topLeft = bottomRight;
-    bottomRight = tmp;
-  }
-
   return { topLeft, bottomRight };
 };
 
 const getAnnotationPageCoordinates = annotation => {
-  const { x1: left, y1: top } = annotation.getRect();
-  let { x2: right, y2: bottom } = annotation.getRect();
+  const rect = annotation.getRect();
+  let { x1: left, y1: top, x2: right, y2: bottom } = rect;
 
-  if (annotation instanceof window.Annotations.StickyAnnotation) {
-    const zoom = core.getZoom();
-    right = left + annotation.getWidth() / zoom;
-    bottom = top + annotation.getHeight() / zoom;
+  const isNote = annotation instanceof window.Annotations.StickyAnnotation;
+  const noteAdjustment = annotation.Width;
+
+  const rotation = core.getCompleteRotation(annotation.PageNumber);
+  if (rotation === 1) {
+    [top, bottom] = [bottom, top];
+    if (isNote) {
+      top -= noteAdjustment;
+      bottom -= noteAdjustment;
+    }
+  } else if (rotation === 2) {
+    [left, right] = [right, left];
+    [top, bottom] = [bottom, top];
+    if (isNote) {
+      top -= noteAdjustment;
+      bottom -= noteAdjustment;
+      left -= noteAdjustment;
+      right -= noteAdjustment;
+    }
+  } else if (rotation === 3) {
+    [left, right] = [right, left];
+    if (isNote) {
+      left -= noteAdjustment;
+      right -= noteAdjustment;
+    }
   }
 
   return { left, top, right, bottom };

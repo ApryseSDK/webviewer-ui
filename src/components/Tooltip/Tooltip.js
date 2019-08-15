@@ -141,12 +141,12 @@ class Tooltip extends React.PureComponent {
       const hasShortcut = t(`shortcut.${this.props.content.split('.')[1]}`).indexOf('.') === -1;
 
       return (
-        <React.Fragment>
+        <>
           {`${content} `}
           {hasShortcut &&
             <span className="tooltip__shortcut">{this.renderShortcut()}</span>
           }
-        </React.Fragment>
+        </>
       );
     }
 
@@ -183,7 +183,7 @@ class Tooltip extends React.PureComponent {
     const isUsingMobileDevices = isIOS || isAndroid;
 
     return (
-      <React.Fragment>
+      <>
         {this.renderChildren()}
         {
           this.state.show && content && !isUsingMobileDevices &&
@@ -194,7 +194,7 @@ class Tooltip extends React.PureComponent {
             document.getElementById('app')
           )
         }
-      </React.Fragment>
+      </>
     );
   }
 }

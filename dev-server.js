@@ -1,4 +1,3 @@
-const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -12,14 +11,16 @@ const opn = require('opn');
 const app = express();
 const compiler = webpack(config);
 
-app.use(devMiddleware(compiler, {
-	logLevel: 'warn',
-	publicPath: config.output.publicPath,
-	watchOptions: {
-		aggregateTimeout: 300,
-		poll: true
-	}
-}));
+app.use(
+  devMiddleware(compiler, {
+    logLevel: 'warn',
+    publicPath: config.output.publicPath,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: true,
+    },
+  })
+);
 app.use(hotMiddleware(compiler));
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -30,18 +31,23 @@ app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
 app.use('/core', express.static(path.resolve(__dirname, 'lib/core')));
 
 app.get('/', (req, res) => {
-	res.sendFile(path.resolve(__dirname, 'src/index.html'));
+  res.sendFile(path.resolve(__dirname, 'src/index.html'));
 });
 
 app.get('/sample-url', (req, res) => {
-	res.redirect(`/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1`);
+  res.redirect(
+    `/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1`
+  );
 });
 
 app.listen(3000, '0.0.0.0', err => {
-	if (err) {
-		console.error(err);
-	} else {
-		console.info(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
-		opn('http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1');
-	}
+  if (err) {
+    console.error(err);
+  } else {
+    // eslint-disable-next-line
+    console.info(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
+    opn(
+      'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
+    );
+  }
 });

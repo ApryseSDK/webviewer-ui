@@ -215,3 +215,7 @@ export const useEmbeddedPrint = (useEmbeddedPrint = true) => ({
   type: 'USE_EMBEDDED_PRINT',
   payload: { useEmbeddedPrint },
 });
+export const setMaxSignaturesCount = maxSignaturesCount => ({
+  type: 'SET_MAX_SIGNATURES_COUNT',
+  payload: { maxSignaturesCount },
+});
