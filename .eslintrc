@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "plugins": ["babel", "react", "import", "cypress"],
+  "plugins": ["babel", "react", "react-hooks", "import", "cypress"],
   "env": {
     "browser": true,
     "node": true,
@@ -8,7 +8,8 @@
     "cypress/globals": true
   },
   "globals": {
-    "$": false
+    "$": false,
+    "_": false
   },
   "extends": [
     "eslint:recommended",
@@ -66,6 +67,8 @@
     "react/jsx-curly-spacing": 2,
     "react/jsx-boolean-value": 2,
     "react/prop-types": 2,
+    "react-hooks/rules-of-hooks": 2, 
+    "react-hooks/exhaustive-deps": 1,
     "react/sort-comp": 0,
     "react/no-find-dom-node": 0,
     "react/display-name": 0,
@@ -81,7 +84,8 @@
     "function-paren-newline": 0,
     "object-curly-newline": 0,
     "no-nested-ternary": 0,
-    "no-unexpected-multiline": 0
+    "no-unexpected-multiline": 0,
+    "no-unused-expressions": 0
   },
   "settings": {
     "react": {

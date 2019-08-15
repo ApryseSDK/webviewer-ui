@@ -96,9 +96,14 @@ const NotesPanel = ({ display }) => {
 
   let singleSelectedNoteIndex = -1;
   useEffect(() => {
-    if (singleSelectedNoteIndex !== -1 && listRef.current) {
-      listRef.current.scrollToRow(singleSelectedNoteIndex);
+    if (
+      Object.keys(selectedNoteIds).length &&
+      singleSelectedNoteIndex !== -1
+    ) {
+      listRef.current?.scrollToRow(singleSelectedNoteIndex);
     }
+    // we only want this effect to happen when we select some notes
+    // eslint-disable-next-line
   }, [selectedNoteIds]);
 
   // this effect should be removed once the next version of react-virtualized includes
@@ -197,6 +202,7 @@ const NotesPanel = ({ display }) => {
       );
     }
 
+    // can potentially optimize this a bit since a new reference will cause consumers to rerender
     const contextValue = {
       searchInput,
       resize,
@@ -308,11 +314,10 @@ const VirtualizedList = React.forwardRef(
 
     useEffect(() => {
       listRef.current.scrollToPosition(initialScrollTop);
-    }, []);
+    }, [initialScrollTop]);
 
     const _resize = index => {
       cache.clear(index);
-      // eslint-disable-next-line
       listRef.current?.recomputeRowHeights(index);
     };
 
@@ -389,7 +394,7 @@ const NormalList = React.forwardRef(
 
     useEffect(() => {
       listRef.current.scrollTop = initialScrollTop;
-    }, []);
+    }, [initialScrollTop]);
 
     const handleScroll = e => {
       onScroll(e.target.scrollTop);

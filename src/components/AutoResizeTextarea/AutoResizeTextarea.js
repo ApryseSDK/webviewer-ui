@@ -18,7 +18,7 @@ const propTypes = {
   onSubmit: PropTypes.func,
 };
 
-const AutoResizeTextarea = ({
+const AutoResizeTextarea = React.forwardRef(({
   value = '',
   onChange,
   onSubmit = () => {},
@@ -38,7 +38,7 @@ const AutoResizeTextarea = ({
 
   useLayoutEffect(() => {
     resizeHeight();
-  }, []);
+  }, [resizeHeight]);
 
   const handleChange = e => {
     resizeHeight();
@@ -85,8 +85,8 @@ const AutoResizeTextarea = ({
       placeholder={placeholder}
     />
   );
-};
+});
 
 AutoResizeTextarea.propTypes = propTypes;
 
-export default React.forwardRef(AutoResizeTextarea);
+export default AutoResizeTextarea;
