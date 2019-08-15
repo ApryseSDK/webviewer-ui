@@ -261,7 +261,7 @@ if (window.CanvasRenderingContext2D) {
           setSideWindowVisibility: apis.setSideWindowVisibility(store), // undocumented
           setSortNotesBy: apis.setSortNotesBy(store),
           setSortStrategy: apis.setSortStrategy(store),
-          setSwipeOrientation: apis.setSwipeOrientation(store),
+          setSwipeOrientation: apis.setSwipeOrientation,
           setTheme: apis.setTheme,
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,

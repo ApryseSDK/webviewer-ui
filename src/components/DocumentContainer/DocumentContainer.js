@@ -30,7 +30,6 @@ class DocumentContainer extends React.PureComponent {
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     displayMode: PropTypes.string.isRequired,
-    swipeOrientation: PropTypes.string
   }
 
   constructor(props) {
@@ -44,9 +43,6 @@ class DocumentContainer extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (isIE) {
       updateContainerWidth(prevProps, this.props, this.container.current);
-    }
-    if (prevProps.swipeOrientation !== this.props.swipeOrientation) {
-      TouchEventManager.updateOrientation(this.props.swipeOrientation);
     }
   }
 
@@ -195,7 +191,6 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  swipeOrientation: selectors.getSwipeOrientation(state)
 });
 
 const mapDispatchToProps = dispatch => ({

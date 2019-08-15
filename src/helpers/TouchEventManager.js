@@ -36,23 +36,6 @@ const TouchEventManager = {
     this.container.addEventListener('touchend', this.handleTouchEnd, { passive: false });
     this.container.addEventListener('touchcancel', this.handleTouchCancel, { passive: false });
   },
-
-  updateOrientation(newOrientation) {
-    if (newOrientation === 'both') {
-      this.allowVerticalSwipe = true;
-      this.allowHorizontalSwipe = true;
-    } else if (newOrientation === 'vertical') {
-      this.allowVerticalSwipe = true;
-      this.allowHorizontalSwipe = false;
-    } else if (newOrientation === 'horizontal') {
-      this.allowVerticalSwipe = false;
-      this.allowHorizontalSwipe = true;
-    } else {
-      console.warn(`${newOrientation} is not a valid orientation. Try 'vertical,' 'horizontal,' or 'both.`);
-      return;
-    }
-  },
-
   terminate() {
     this.container.removeEventListener('touchstart', this.handleTouchStart);
     this.container.removeEventListener('touchmove', this.handleTouchMove);

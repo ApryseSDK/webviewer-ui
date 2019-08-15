@@ -23,7 +23,7 @@ export const isElementOpen = (state, dataElement) => {
 };
 
 export const isElementActive = (state, tool) => {
-  const { viewer: { activeToolName, headers: { tools = [] }  }} = state;
+  const { viewer: { activeToolName, headers: { tools = [] }  } } = state;
   const { element, dataElement } = tool;
 
   return isElementOpen(state, element) || tools.some(tool => tool.dataElement === dataElement && tool.toolName === activeToolName);
@@ -76,7 +76,6 @@ export const getCursorOverlayData = state => state.viewer.cursorOverlay;
 export const getOpenElements = state => state.viewer.openElements;
 export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].currentPalette;
 export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey] && state.viewer.colorMap[colorMapKey].iconColor; 
-export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 export const getZoomList = state => state.viewer.zoomList;
 export const getMeasurementUnits = state => state.viewer.measurementUnits;
