@@ -227,6 +227,8 @@ export default initialState => (state = initialState, action) => {
     case 'SET_MEASUREMENT_UNITS': {
       return { ...state, measurementUnits: payload };
     }
+    case 'SET_MAX_SIGNATURES_COUNT':
+      return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
     default:
       return state;
   }
