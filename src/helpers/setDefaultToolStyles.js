@@ -8,7 +8,7 @@ const setDefaultToolStyles = () => {
     let toolStyles = null;
 
     try {
-      localStorage.getItem(`toolData-${toolName}`);
+      toolStyles = localStorage.getItem(`toolData-${toolName}`);
     } catch (ex) {
       console.warn('localStorage could not be accessed. ' + ex.message);
     }
