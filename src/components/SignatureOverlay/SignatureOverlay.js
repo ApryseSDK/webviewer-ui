@@ -27,13 +27,13 @@ class SignatureOverlay extends React.PureComponent {
     openElement: PropTypes.func.isRequired,
     setCursorOverlay: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
+    maxSignaturesCount: PropTypes.number.isRequired,
   }
 
   constructor(props) {
     super(props);
     this.signatureTool = core.getTool('AnnotationCreateSignature');
     this.overlay = React.createRef();
-    this.MAX_DEFAULT_SIGNATURES = 2;
     this.currentSignatureIndex = -1;
     this.state = {
       defaultSignatures: [],
@@ -98,7 +98,7 @@ class SignatureOverlay extends React.PureComponent {
 
   onSaveDefault = (e, paths, signatureAnnotation) => {
     const defaultSignatures = [...this.state.defaultSignatures];
-    if (defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES) {
+    if (defaultSignatures.length <= this.props.maxSignaturesCount) {
       defaultSignatures.unshift();
     }
 
@@ -178,9 +178,9 @@ class SignatureOverlay extends React.PureComponent {
 
   openSignatureModal = () => {
     const { defaultSignatures } = this.state;
-    const { openElement, closeElement } = this.props;
+    const { openElement, closeElement, maxSignaturesCount } = this.props;
 
-    if (defaultSignatures.length < this.MAX_DEFAULT_SIGNATURES) {
+    if (defaultSignatures.length < maxSignaturesCount) {
       openElement('signatureModal');
       closeElement('signatureOverlay');
     }
@@ -188,7 +188,7 @@ class SignatureOverlay extends React.PureComponent {
 
   render() {
     const { left, right, defaultSignatures } = this.state;
-    const { t, isDisabled } = this.props;
+    const { t, isDisabled, maxSignaturesCount } = this.props;
     const className = getClassName('Overlay SignatureOverlay', this.props);
 
     if (isDisabled) {
@@ -207,7 +207,7 @@ class SignatureOverlay extends React.PureComponent {
             </div>
           ))}
           <div
-            className={`add-signature${defaultSignatures.length === this.MAX_DEFAULT_SIGNATURES ? ' disabled' : ' enabled'}`}
+            className={`add-signature${defaultSignatures.length >= maxSignaturesCount ? ' disabled' : ' enabled'}`}
             onClick={this.openSignatureModal}
           >
             {t('option.signatureOverlay.addSignature')}
@@ -222,6 +222,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'signatureOverlay'),
   isOpen: selectors.isElementOpen(state, 'signatureOverlay'),
   isSignatureModalOpen: selectors.isElementOpen(state, 'signatureModal'),
+  maxSignaturesCount: selectors.getMaxSignaturesCount(state),
 });
 
 const mapDispatchToProps = {

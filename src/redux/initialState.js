@@ -149,6 +149,7 @@ export default {
       from: ['in', 'mm', 'cm', 'pt'],
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi'],
     },
+    maxSignaturesCount: 2,
   },
   search: {
     listeners: [],

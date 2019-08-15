@@ -109,6 +109,7 @@ import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
 import setMeasurementUnits from './setMeasurementUnits';
+import setMaxSignaturesCount from './setMaxSignaturesCount';
 
 export default store => {
   window.readerControl = {
@@ -225,6 +226,7 @@ export default store => {
     updateOutlines: updateOutlines(store), // undocumented
     updateTool: updateTool(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
+    setMaxSignaturesCount: setMaxSignaturesCount(store),
     getCustomData: () => getHashParams('custom', null), // undocumented
   };
 };

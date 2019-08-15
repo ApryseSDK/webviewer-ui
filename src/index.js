@@ -68,7 +68,7 @@ if (window.CanvasRenderingContext2D) {
 
   try {
     if (state.advanced.useSharedWorker && window.parent.WebViewer) {
-      var workerTransportPromise = window.parent.WebViewer.workerTransportPromise();
+      var workerTransportPromise = window.parent.WebViewer.workerTransportPromise(window.frameElement);
       // originally the option was just for the pdf worker transport promise, now it can be an object
       // containing both the pdf and office promises
       if (workerTransportPromise.pdf || workerTransportPromise.office) {
