@@ -20,7 +20,7 @@ const propTypes = {
   display: PropTypes.string.isRequired,
 };
 
-const cache = new CellMeasurerCache({ defaultHeight: 80, fixedWidth: true });
+const cache = new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
 
 const NotesPanel = ({ display }) => {
   const [sortStrategy, isDisabled, pageLabels, customNoteFilter] = useSelector(
@@ -40,6 +40,13 @@ const NotesPanel = ({ display }) => {
   const [searchInput, setSearchInput] = useState('');
   const [t] = useTranslation();
   const listRef = useRef();
+  const scrollTopRef = useRef(0);
+
+  useEffect(() => {
+    if (display === 'flex' && listRef.current && scrollTopRef.current) {
+      listRef.current.scrollToPosition(scrollTopRef.current);
+    }
+  }, [display]);
 
   useEffect(() => {
     const onDocumentUnloaded = () => {
@@ -148,7 +155,46 @@ const NotesPanel = ({ display }) => {
     setSearchInput(value);
   }, 500);
 
-  const rowRenderer = (notes, { index, key, parent, style }) => {
+  const handleScroll = ({ scrollTop }) => {
+    // this handler should be removed once the next version of react-virtualized includes
+    // the fix for https://github.com/bvaughn/react-virtualized/issues/1375.
+    // we are doing this because we want to maintain the scroll position when we switch between panels
+    // we need to keep the scroll position in a ref
+    // because currently we are unmounting this component when we clicked other panel tabs
+    // when the fix is out, we don't need to unmount this component anymore, and thus we don't need to keep the value.
+    if (scrollTop) {
+      scrollTopRef.current = scrollTop;
+    }
+  };
+
+  const overscanIndicesGetter = (
+    notes,
+    { cellCount, overscanCellsCount, scrollDirection, startIndex, stopIndex },
+  ) => {
+    if (notes.length < 300) {
+      return {
+        overscanStartIndex: 0,
+        overscanStopIndex: cellCount - 1,
+      };
+    }
+    const SCROLL_DIRECTION_FORWARD = 1;
+
+    if (scrollDirection === SCROLL_DIRECTION_FORWARD) {
+      return {
+        overscanStartIndex: Math.max(0, startIndex),
+        overscanStopIndex: Math.min(
+          cellCount - 1,
+          stopIndex + overscanCellsCount,
+        ),
+      };
+    }
+    return {
+      overscanStartIndex: Math.max(0, startIndex - overscanCellsCount),
+      overscanStopIndex: Math.min(cellCount - 1, stopIndex),
+    };
+  };
+
+  const rowRenderer = (notes, { index, key, parent, style, isVisible }) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
       sortStrategy
@@ -172,31 +218,32 @@ const NotesPanel = ({ display }) => {
 
     return (
       <CellMeasurer
+        key={`${key}${currNote.Id}`}
         cache={cache}
         columnIndex={0}
-        key={`${key}${currNote.Id}`}
         parent={parent}
         rowIndex={index}
-        width={dimension.width}
       >
         <div style={style}>
-          {listSeparator}
-          <NoteContext.Provider
-            value={{
-              searchInput,
-              isSelected: selectedNoteIds[currNote.Id],
-              resize: () => {
-                if (listRef.current) {
-                  cache.clear(index);
-                  listRef.current.recomputeRowHeights(index);
-                }
-              },
-              isContentEditable:
-                core.canModify(currNote) && !currNote.getContents(),
-            }}
-          >
-            <Note annotation={currNote} />
-          </NoteContext.Provider>
+            <>
+              {listSeparator}
+              <NoteContext.Provider
+                value={{
+                  searchInput,
+                  isSelected: selectedNoteIds[currNote.Id],
+                  resize: () => {
+                    if (listRef.current) {
+                      cache.clear(index);
+                      listRef.current.recomputeRowHeights(index);
+                    }
+                  },
+                  isContentEditable:
+                    core.canModify(currNote) && !currNote.getContents(),
+                }}
+              >
+                <Note annotation={currNote} />
+              </NoteContext.Provider>
+            </>
         </div>
       </CellMeasurer>
     );
@@ -233,6 +280,7 @@ const NotesPanel = ({ display }) => {
         ) : (
           <List
             deferredMeasurementCache={cache}
+            style={{ outline: 'none' }}
             height={dimension.height}
             width={dimension.width}
             overscanRowCount={10}
@@ -240,7 +288,10 @@ const NotesPanel = ({ display }) => {
             rowCount={notesToRender.length}
             rowHeight={cache.rowHeight}
             rowRenderer={arg => rowRenderer(notesToRender, arg)}
-            style={{ outline: 'none' }}
+            overscanIndicesGetter={arg =>
+              overscanIndicesGetter(notesToRender, arg)
+            }
+            onScroll={handleScroll}
           />
         )}
       </>
