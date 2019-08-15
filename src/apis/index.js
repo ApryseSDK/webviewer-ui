@@ -16,6 +16,7 @@ import disableRedaction from './disableRedaction';
 import disableTextSelection from './disableTextSelection';
 import disableTool from './disableTool';
 import disableTools from './disableTools';
+import disableTouchScrollLock from './disableTouchScrollLock';
 import downloadPdf from './downloadPdf';
 import enableAllElements from './enableAllElements';
 import enableAnnotations from './enableAnnotations';
@@ -31,6 +32,7 @@ import enableRedaction from './enableRedaction';
 import enableTextSelection from './enableTextSelection';
 import enableTool from './enableTool';
 import enableTools from './enableTools';
+import enableTouchScrollLock from './enableTouchScrollLock';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
@@ -126,6 +128,7 @@ export default {
   disableTextSelection,
   disableTool,
   disableTools,
+  disableTouchScrollLock,
   downloadPdf,
   enableAllElements,
   enableAnnotations,
@@ -141,6 +144,7 @@ export default {
   enableTextSelection,
   enableTool,
   enableTools,
+  enableTouchScrollLock,
   focusNote,
   getAnnotationUser,
   getBBAnnotManager,

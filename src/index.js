@@ -184,6 +184,7 @@ if (window.CanvasRenderingContext2D) {
           disableTextSelection: apis.disableTextSelection(store),
           disableTool: apis.disableTool(store), // undocumented
           disableTools: apis.disableTools(store),
+          disableTouchScrollLock: apis.disableTouchScrollLock,
           downloadPdf: apis.downloadPdf(store),
           enableAllElements: apis.enableAllElements(store), // undocumented
           enableAnnotations: apis.enableAnnotations(store),
@@ -199,6 +200,7 @@ if (window.CanvasRenderingContext2D) {
           enableTextSelection: apis.enableTextSelection(store),
           enableTool: apis.enableTool(store),
           enableTools: apis.enableTools(store),
+          enableTouchScrollLock: apis.enableTouchScrollLock,
           focusNote: apis.focusNote(store),
           getAnnotationUser: apis.getAnnotationUser,
           getBBAnnotManager: apis.getBBAnnotManager(store),
@@ -260,7 +262,7 @@ if (window.CanvasRenderingContext2D) {
           setSideWindowVisibility: apis.setSideWindowVisibility(store), // undocumented
           setSortNotesBy: apis.setSortNotesBy(store),
           setSortStrategy: apis.setSortStrategy(store),
-          setSwipeOrientation: apis.setSwipeOrientation(store),
+          setSwipeOrientation: apis.setSwipeOrientation,
           setTheme: apis.setTheme,
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
