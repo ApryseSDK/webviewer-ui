@@ -20,6 +20,7 @@ import disableRedaction from './disableRedaction';
 import disableTextSelection from './disableTextSelection';
 import disableTool from './disableTool';
 import disableTools from './disableTools';
+import disableTouchScrollLock from './disableTouchScrollLock';
 import downloadPdf from './downloadPdf';
 import enableAllElements from './enableAllElements';
 import enableAnnotations from './enableAnnotations';
@@ -35,6 +36,7 @@ import enableRedaction from './enableRedaction';
 import enableTextSelection from './enableTextSelection';
 import enableTool from './enableTool';
 import enableTools from './enableTools';
+import enableTouchScrollLock from './enableTouchScrollLock';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
@@ -138,6 +140,7 @@ export default store => {
     disableTextSelection: disableTextSelection(store),
     disableTool: disableTool(store), // undocumented
     disableTools: disableTools(store),
+    disableTouchScrollLock,
     downloadPdf: downloadPdf(store),
     enableAllElements: enableAllElements(store), // undocumented
     enableAnnotations: enableAnnotations(store),
@@ -153,6 +156,7 @@ export default store => {
     enableTextSelection: enableTextSelection(store),
     enableTool: enableTool(store),
     enableTools: enableTools(store),
+    enableTouchScrollLock,
     focusNote: focusNote(store),
     getAnnotationUser,
     getBBAnnotManager: getBBAnnotManager(store),
@@ -213,7 +217,7 @@ export default store => {
     setSideWindowVisibility: setSideWindowVisibility(store), // undocumented
     setSortNotesBy: setSortNotesBy(store),
     setSortStrategy: setSortStrategy(store),
-    setSwipeOrientation: setSwipeOrientation(store),
+    setSwipeOrientation,
     setTheme,
     setToolMode: setToolMode(store),
     setZoomLevel,
