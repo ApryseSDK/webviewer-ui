@@ -55,7 +55,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
 
   const togglePopup = () => {
     if (isOpen) {
-      this.closePopup();
+      closePopup();
     } else {
       dispatch(actions.setNotePopupId(annotation.Id));
     }
@@ -73,12 +73,6 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     core.deleteAnnotations([annotation]);
   };
 
-  const popupOptionsClass = classNames({
-    options: true,
-    open: isOpen,
-    closed: !isOpen,
-  });
-
   return !canModify || isDisabled ? null : (
     <div
       className="NotePopup"
@@ -88,18 +82,20 @@ const NotePopup = ({ annotation, setIsEditing }) => {
       <div className="overflow" onClick={togglePopup}>
         <Icon glyph="ic_overflow_black_24px" />
       </div>
-      <div className={popupOptionsClass} onClick={closePopup}>
-        {!isEditDisabled && (
-          <div data-element="notePopupEdit" onClick={handleEdit}>
-            {t('action.edit')}
-          </div>
-        )}
-        {!isDeleteDisabled && (
-          <div data-element="notePopupDelete" onClick={handleDelete}>
-            {t('action.delete')}
-          </div>
-        )}
-      </div>
+      {isOpen && (
+        <div className="options" onClick={closePopup}>
+          {!isEditDisabled && (
+            <div data-element="notePopupEdit" onClick={handleEdit}>
+              {t('action.edit')}
+            </div>
+          )}
+          {!isDeleteDisabled && (
+            <div data-element="notePopupDelete" onClick={handleDelete}>
+              {t('action.delete')}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

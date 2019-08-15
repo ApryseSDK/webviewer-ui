@@ -23,11 +23,16 @@
     }
   }
 
-  .no-results {
-    @extend %center-of-panel;
+  .virtualized-notes-container,
+  .normal-notes-container {
+    flex: 1;
   }
 
-  .notes-wrapper {
+  .normal-notes-container {
     overflow: auto;
+  }
+
+  .no-results {
+    @extend %center-of-panel;
   }
 }

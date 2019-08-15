@@ -193,7 +193,8 @@ const ContentArea = ({ annotation, setIsEditing }) => {
     // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
 
-    if (value) {
+    const hasEdited = value !== contents;
+    if (hasEdited) {
       core.setNoteContents(annotation, value);
       if (annotation instanceof window.Annotations.FreeTextAnnotation) {
         core.drawAnnotationsFromList([annotation]);
@@ -208,7 +209,12 @@ const ContentArea = ({ annotation, setIsEditing }) => {
   });
 
   return (
-    <div className="edit-content">
+    <div
+      className="edit-content"
+      // stop bubbling up otherwise the note will be closed
+      // due to annotation deselection
+      onMouseDown={e => e.stopPropagation()}
+    >
       <AutoResizeTextarea
         ref={textareaRef}
         value={value}
