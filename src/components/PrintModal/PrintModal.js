@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
 import Input from 'components/Input';
@@ -371,7 +371,7 @@ class PrintModal extends React.PureComponent {
 
     return (
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
-        <div className="container" onClick={e => e.stopPropagation()}>
+        <div className="container">
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
             <form className="col" onChange={this.onChange} onSubmit={this.createPagesAndPrint}>
@@ -417,4 +417,4 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(PrintModal));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(PrintModal));

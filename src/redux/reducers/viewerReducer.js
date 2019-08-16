@@ -80,30 +80,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, activeToolGroup: payload.toolGroup };
     case 'SET_NOTE_POPUP_ID':
       return { ...state, notePopupId: payload.id };
-    case 'EXPAND_NOTE':
-      return {
-        ...state,
-        expandedNotes: { ...state.expandedNotes, [payload.id]: true },
-      };
-    case 'EXPAND_NOTES': {
-      const expandedNotes = {};
-      payload.ids.forEach(id => {
-        expandedNotes[id] = true;
-      });
-
-      return {
-        ...state,
-        expandedNotes: { ...state.expandedNotes, ...expandedNotes },
-      };
-    }
-    case 'COLLAPSE_NOTE':
-      return {
-        ...state,
-        expandedNotes: { ...state.expandedNotes, [payload.id]: false },
-      };
-    case 'COLLAPSE_ALL_NOTES':
-      return { ...state, expandedNotes: { ...initialState.expandedNotes } };
-    case 'SET_IS_NOTE_EDITING':
+    case 'SET_NOTE_EDITING':
       return { ...state, isNoteEditing: payload.isNoteEditing };
     case 'SET_FIT_MODE':
       return { ...state, fitMode: payload.fitMode };

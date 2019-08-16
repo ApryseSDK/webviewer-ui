@@ -1,4 +1,4 @@
-import { t } from 'i18next';
+import i18n from 'i18next';
 
 import actions from 'actions';
 import core from 'core';
@@ -8,7 +8,7 @@ export default (dispatch, isEmbedPrintSupported) =>  {
 
   if (bbURLPromise) {
     const printPage = window.open('', '_blank');
-    printPage.document.write(t('message.preparingToPrint'));
+    printPage.document.write(i18n.t('message.preparingToPrint'));
     bbURLPromise.then(result => {
       printPage.location.href = result.url;
     });

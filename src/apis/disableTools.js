@@ -28,7 +28,7 @@ import selectors from 'selectors';
 
 
 export default store => (toolNames = getAnnotationCreateToolNames()) => {
-  const toolNameArray = typeof toolNames === 'string' ? [ toolNames ] : toolNames;
+  const toolNameArray = typeof toolNames === 'string' ? [toolNames] : toolNames;
   const dataElements = selectors.getToolButtonDataElements(store.getState(), toolNameArray);
 
   toolNameArray.forEach(toolName => {

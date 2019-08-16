@@ -5,6 +5,7 @@ import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import { zoomIn, zoomOut } from 'helpers/zoom';
 import print from 'helpers/print';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
+import isFocusingElement from 'helpers/isFocusingElement';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -37,7 +38,7 @@ export default store => e => {
         core.updateCopiedAnnotations();
       }
     } else if (e.key === 'v' || e.which === 86) { // (Ctrl/Cmd + V)
-      if (!document.activeElement || (document.activeElement.tagName.toLowerCase() !== 'textarea' && document.activeElement.tagName.toLowerCase() !== 'input')) {
+      if (!isFocusingElement()) {
         e.preventDefault();
         core.pasteCopiedAnnotations();
       }
@@ -85,7 +86,7 @@ export default store => e => {
     setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
     dispatch(actions.closeElements(['annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay']));
   } else if (!selectedTextFromCanvas) {
-    if (document.activeElement instanceof window.HTMLInputElement || document.activeElement instanceof window.HTMLTextAreaElement) {
+    if (isFocusingElement()) {
       return;
     }
     if (e.key === 'p' || e.which === 80) { // (P)

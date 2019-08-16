@@ -8,11 +8,8 @@ import thunk from 'redux-thunk';
 
 import core from 'core';
 import actions from 'actions';
-import apis from 'src/apis';
 import App from 'components/App';
 import { workerTypes } from 'constants/types';
-import LayoutMode from 'constants/layoutMode';
-import FitMode from 'constants/fitMode';
 import defaultTool from 'constants/defaultTool';
 import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
@@ -96,7 +93,7 @@ if (window.CanvasRenderingContext2D) {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
-          }
+          },
         }, window.sampleL);
       });
     }
@@ -106,7 +103,7 @@ if (window.CanvasRenderingContext2D) {
         window.CoreControls.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setWorkerLoadingProgress(percent));
-          }
+          },
         }, window.sampleL);
       });
     }
@@ -119,8 +116,8 @@ if (window.CanvasRenderingContext2D) {
 
   if (coreVersion && uiVersion) {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
-    const [ coreMajorVersion, coreMinorVersion ] = coreVersion.split('.');
-    const [ uiMajorVersion, uiMinorVersion ] = uiVersion.split('.');
+    const [coreMajorVersion, coreMinorVersion] = coreVersion.split('.');
+    const [uiMajorVersion, uiMinorVersion] = uiVersion.split('.');
 
     // eslint-disable-next-line no-console
     console.log(`[WebViewer] WebViewer UI version: ${uiVersion}, WebViewer Core version: ${coreVersion}`);
@@ -132,9 +129,7 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
-  fullAPIReady.then(() => {
-    return loadConfig();
-  }).then(() => {
+  fullAPIReady.then(() => loadConfig()).then(() => {
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
     window.docViewer = docViewer;
@@ -157,135 +152,6 @@ if (window.CanvasRenderingContext2D) {
         </I18nextProvider>
       </Provider>,
       document.getElementById('app'),
-      () => {
-        window.readerControl = {
-          docViewer,
-          FitMode,
-          LayoutMode,
-          loadedFromServer: false, // undocumented
-          serverFailed: false, // undocumented
-          i18n: i18next,
-          constants: apis.getConstants(), // undocumented
-          addSearchListener: apis.addSearchListener(store),
-          addSortStrategy: apis.addSortStrategy(store),
-          closeDocument: apis.closeDocument(store),
-          closeElement: apis.closeElement(store),
-          closeElements: apis.closeElements(store),
-          disableAnnotations: apis.disableAnnotations(store),
-          disableDownload: apis.disableDownload(store),
-          disableElement: apis.disableElement(store),
-          disableElements: apis.disableElements(store),
-          disableFilePicker: apis.disableFilePicker(store),
-          disableLocalStorage: apis.disableLocalStorage,
-          disableMeasurement: apis.disableMeasurement(store),
-          disableNotesPanel: apis.disableNotesPanel(store),
-          disablePrint: apis.disablePrint(store),
-          disableRedaction: apis.disableRedaction(store),
-          disableTextSelection: apis.disableTextSelection(store),
-          disableTool: apis.disableTool(store), // undocumented
-          disableTools: apis.disableTools(store),
-          disableTouchScrollLock: apis.disableTouchScrollLock,
-          downloadPdf: apis.downloadPdf(store),
-          enableAllElements: apis.enableAllElements(store), // undocumented
-          enableAnnotations: apis.enableAnnotations(store),
-          enableDownload: apis.enableDownload(store),
-          enableElement: apis.enableElement(store),
-          enableElements: apis.enableElements(store),
-          enableFilePicker: apis.enableFilePicker(store),
-          enableLocalStorage: apis.enableLocalStorage,
-          enableMeasurement: apis.enableMeasurement(store),
-          enableNotesPanel: apis.enableNotesPanel(store),
-          enablePrint: apis.enablePrint(store),
-          enableRedaction: apis.enableRedaction(store),
-          enableTextSelection: apis.enableTextSelection(store),
-          enableTool: apis.enableTool(store),
-          enableTools: apis.enableTools(store),
-          enableTouchScrollLock: apis.enableTouchScrollLock,
-          focusNote: apis.focusNote(store),
-          getAnnotationUser: apis.getAnnotationUser,
-          getBBAnnotManager: apis.getBBAnnotManager(store),
-          getCurrentPageNumber: apis.getCurrentPageNumber(store),
-          getFitMode: apis.getFitMode(store),
-          getLayoutMode: apis.getLayoutMode(store),
-          getPageCount: apis.getPageCount(store),
-          getShowSideWindow: apis.getShowSideWindow(store),
-          getSideWindowVisibility: apis.getSideWindowVisibility(store),
-          getToolMode: apis.getToolMode,
-          getZoomLevel: apis.getZoomLevel(store),
-          goToFirstPage: apis.goToFirstPage,
-          goToLastPage: apis.goToLastPage(store),
-          goToNextPage: apis.goToNextPage(store),
-          goToPrevPage: apis.goToPrevPage(store),
-          isAdminUser: apis.isAdminUser,
-          isElementDisabled: apis.isElementDisabled(store),
-          isElementOpen: apis.isElementOpen(store),
-          isMobileDevice: apis.isMobileDevice,
-          isReadOnly: apis.isReadOnly,
-          isToolDisabled: apis.isToolDisabled,
-          loadDocument: apis.loadDocument(store),
-          openElement: apis.openElement(store),
-          openElements: apis.openElements(store),
-          print: apis.print(store),
-          registerTool: apis.registerTool(store),
-          removeSearchListener: apis.removeSearchListener(store),
-          rotateClockwise: apis.rotateClockwise,
-          rotateCounterClockwise: apis.rotateCounterClockwise,
-          saveAnnotations: apis.saveAnnotations(store),
-          searchText: apis.searchText(store),
-          searchTextFull: apis.searchTextFull(store),
-          selectors: apis.getSelectors(store), // undocumented
-          setActiveHeaderGroup: apis.setActiveHeaderGroup(store),
-          setActiveLeftPanel: apis.setActiveLeftPanel(store),
-          setAdminUser: apis.setAdminUser,
-          setAnnotationUser: apis.setAnnotationUser,
-          setColorPalette: apis.setColorPalette(store), // undocumented
-          setCurrentPageNumber: apis.setCurrentPageNumber,
-          setCursorOverlay: apis.setCursorOverlay(store),
-          setCustomNoteFilter: apis.setCustomNoteFilter(store),
-          setCustomPanel: apis.setCustomPanel(store),
-          setEngineType: apis.setEngineType(store), // undocumented
-          setFitMode: apis.setFitMode,
-          setHeaderItems: apis.setHeaderItems(store),
-          setIconColor: apis.setIconColor(store),
-          setLanguage: apis.setLanguage,
-          setLayoutMode: apis.setLayoutMode,
-          setMaxSignaturesCount: apis.setMaxSignaturesCount(store),
-          setMaxZoomLevel: apis.setMaxZoomLevel(store),
-          setMinZoomLevel: apis.setMinZoomLevel(store),
-          setNoteDateFormat: apis.setNoteDateFormat(store),
-          setNotesPanelSort: apis.setNotesPanelSort(store), // undocumented
-          setMeasurementUnits: apis.setMeasurementUnits(store),
-          setPageLabels: apis.setPageLabels(store),
-          setPrintQuality: apis.setPrintQuality(store),
-          setReadOnly: apis.setReadOnly,
-          setShowSideWindow: apis.setShowSideWindow(store), // undocumented
-          setSideWindowVisibility: apis.setSideWindowVisibility(store), // undocumented
-          setSortNotesBy: apis.setSortNotesBy(store),
-          setSortStrategy: apis.setSortStrategy(store),
-          setSwipeOrientation: apis.setSwipeOrientation,
-          setTheme: apis.setTheme,
-          setToolMode: apis.setToolMode(store),
-          setZoomLevel: apis.setZoomLevel,
-          setZoomList: apis.setZoomList(store),
-          showErrorMessage: apis.showErrorMessage(store),
-          showWarningMessage: apis.showWarningMessage(store), // undocumented
-          toggleElement: apis.toggleElement(store),
-          toggleFullScreen: apis.toggleFullScreen,
-          unregisterTool: apis.unregisterTool(store),
-          updateOutlines: apis.updateOutlines(store), // undocumented
-          updateTool: apis.updateTool(store),
-          useEmbeddedPrint: apis.useEmbeddedPrint(store),
-        };
-
-        window.ControlUtils = {
-          byteRangeCheck: onComplete => {
-            onComplete(206);
-          },
-          getCustomData: () => {
-            return state.advanced.customData;
-          }
-        };
-      }
     );
   });
 }
