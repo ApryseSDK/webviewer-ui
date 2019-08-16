@@ -13,6 +13,7 @@ import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
+import AnnotationOverlay from 'components/AnnotationOverlay'
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import SearchPanel from 'components/SearchPanel';
@@ -104,6 +105,7 @@ class App extends React.PureComponent {
           <SignatureOverlay />
           <ZoomOverlay />
           <MeasurementOverlay />
+          <AnnotationOverlay />
 
           <AnnotationPopup />
           <TextPopup />
