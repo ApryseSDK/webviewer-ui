@@ -16,9 +16,19 @@ viewerElement.addEventListener('ready', function() {
   instance.setSwipeOrientation('vertical'); // set the swipe orientation to vertical.
 });
  */
+import TouchEventManager from 'helpers/TouchEventManager';
 
-import actions from 'actions';
-
-export default store => swipeOrientation => {
-  store.dispatch(actions.setSwipeOrientation(swipeOrientation));
+export default swipeOrientation => {
+  if (swipeOrientation === 'both') {
+    TouchEventManager.allowVerticalSwipe = true;
+    TouchEventManager.allowHorizontalSwipe = true;
+  } else if (swipeOrientation === 'vertical') {
+    TouchEventManager.allowVerticalSwipe = true;
+    TouchEventManager.allowHorizontalSwipe = false;
+  } else if (swipeOrientation === 'horizontal') {
+    TouchEventManager.allowVerticalSwipe = false;
+    TouchEventManager.allowHorizontalSwipe = true;
+  } else {
+    console.warn(`${swipeOrientation} is not a valid orientation. Try 'vertical,' 'horizontal,' or 'both.`);
+  }
 };

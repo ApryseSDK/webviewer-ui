@@ -124,10 +124,10 @@ export const getCurrentPalette = (state, colorMapKey) =>
 export const getIconColor = (state, colorMapKey) =>
   state.viewer.colorMap[colorMapKey] &&
   state.viewer.colorMap[colorMapKey].iconColor;
-export const getSwipeOrientation = state => state.viewer.swipeOrientation;
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 export const getZoomList = state => state.viewer.zoomList;
 export const getMeasurementUnits = state => state.viewer.measurementUnits;
+export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
 // warning message
 export const getWarningMessage = state =>

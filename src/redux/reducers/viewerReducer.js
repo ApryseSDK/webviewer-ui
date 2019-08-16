@@ -214,8 +214,6 @@ export default initialState => (state = initialState, action) => {
         cursorOverlay: { imgSrc, width, height },
       };
     }
-    case 'SET_SWIPE_ORIENTATION':
-      return { ...state, swipeOrientation: payload.swipeOrientation };
     case 'SET_WARNING_MESSAGE':
       return { ...state, warning: payload };
     case 'SET_ERROR_MESSAGE':
@@ -229,6 +227,8 @@ export default initialState => (state = initialState, action) => {
     }
     case 'SET_LEFT_PANEL_WIDTH': 
       return { ...state, leftPanelWidth: payload.width };
+    case 'SET_MAX_SIGNATURES_COUNT':
+      return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
     default:
       return state;
   }

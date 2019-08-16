@@ -71,7 +71,7 @@ if (window.CanvasRenderingContext2D) {
 
   try {
     if (state.advanced.useSharedWorker && window.parent.WebViewer) {
-      var workerTransportPromise = window.parent.WebViewer.workerTransportPromise();
+      var workerTransportPromise = window.parent.WebViewer.workerTransportPromise(window.frameElement);
       // originally the option was just for the pdf worker transport promise, now it can be an object
       // containing both the pdf and office promises
       if (workerTransportPromise.pdf || workerTransportPromise.office) {
@@ -116,7 +116,7 @@ if (window.CanvasRenderingContext2D) {
 
   const coreVersion = window.CoreControls.DocumentViewer.prototype.version;
   const uiVersion = packageConfig.version;
-  
+
   if (coreVersion && uiVersion) {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
     const [ coreMajorVersion, coreMinorVersion ] = coreVersion.split('.');
@@ -184,6 +184,7 @@ if (window.CanvasRenderingContext2D) {
           disableTextSelection: apis.disableTextSelection(store),
           disableTool: apis.disableTool(store), // undocumented
           disableTools: apis.disableTools(store),
+          disableTouchScrollLock: apis.disableTouchScrollLock,
           downloadPdf: apis.downloadPdf(store),
           enableAllElements: apis.enableAllElements(store), // undocumented
           enableAnnotations: apis.enableAnnotations(store),
@@ -199,6 +200,7 @@ if (window.CanvasRenderingContext2D) {
           enableTextSelection: apis.enableTextSelection(store),
           enableTool: apis.enableTool(store),
           enableTools: apis.enableTools(store),
+          enableTouchScrollLock: apis.enableTouchScrollLock,
           focusNote: apis.focusNote(store),
           getAnnotationUser: apis.getAnnotationUser,
           getBBAnnotManager: apis.getBBAnnotManager(store),
@@ -222,7 +224,7 @@ if (window.CanvasRenderingContext2D) {
           isToolDisabled: apis.isToolDisabled,
           loadDocument: apis.loadDocument(store),
           openElement: apis.openElement(store),
-          openElements: apis.openElements(store),          
+          openElements: apis.openElements(store),
           print: apis.print(store),
           registerTool: apis.registerTool(store),
           removeSearchListener: apis.removeSearchListener(store),
@@ -247,6 +249,7 @@ if (window.CanvasRenderingContext2D) {
           setIconColor: apis.setIconColor(store),
           setLanguage: apis.setLanguage,
           setLayoutMode: apis.setLayoutMode,
+          setMaxSignaturesCount: apis.setMaxSignaturesCount(store),
           setMaxZoomLevel: apis.setMaxZoomLevel(store),
           setMinZoomLevel: apis.setMinZoomLevel(store),
           setNoteDateFormat: apis.setNoteDateFormat(store),
@@ -259,7 +262,7 @@ if (window.CanvasRenderingContext2D) {
           setSideWindowVisibility: apis.setSideWindowVisibility(store), // undocumented
           setSortNotesBy: apis.setSortNotesBy(store),
           setSortStrategy: apis.setSortStrategy(store),
-          setSwipeOrientation: apis.setSwipeOrientation(store),
+          setSwipeOrientation: apis.setSwipeOrientation,
           setTheme: apis.setTheme,
           setToolMode: apis.setToolMode(store),
           setZoomLevel: apis.setZoomLevel,
