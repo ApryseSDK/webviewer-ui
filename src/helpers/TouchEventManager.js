@@ -10,6 +10,13 @@ const TouchEventManager = {
     this.container = container;
     this.allowHorizontalSwipe = true;
     this.allowVerticalSwipe = false;
+    this.verticalMomentum = 0;
+    this.horziontalMomentum = 0;
+    this.verticalLock = false;
+    this.horziontalLock = false;
+    this.enableTouchScrollLock = true;
+    this.startingScrollLeft = null;
+    this.startingScrollTop = null;
     this.touch = {
       clientX: 0,
       clientY: 0,
@@ -29,23 +36,6 @@ const TouchEventManager = {
     this.container.addEventListener('touchend', this.handleTouchEnd, { passive: false });
     this.container.addEventListener('touchcancel', this.handleTouchCancel, { passive: false });
   },
-
-  updateOrientation(newOrientation) {
-    if (newOrientation === 'both') {
-      this.allowVerticalSwipe = true;
-      this.allowHorizontalSwipe = true;
-    } else if (newOrientation === 'vertical') {
-      this.allowVerticalSwipe = true;
-      this.allowHorizontalSwipe = false;
-    } else if (newOrientation === 'horizontal') {
-      this.allowVerticalSwipe = false;
-      this.allowHorizontalSwipe = true;
-    } else {
-      console.warn(`${newOrientation} is not a valid orientation. Try 'vertical,' 'horizontal,' or 'both.`);
-      return;
-    }
-  },
-
   terminate() {
     this.container.removeEventListener('touchstart', this.handleTouchStart);
     this.container.removeEventListener('touchmove', this.handleTouchMove);
@@ -67,8 +57,11 @@ const TouchEventManager = {
           zoom: core.getZoom(),
           type: isDoubleTap ? 'doubleTap' : 'tap',
           touchStartTimeStamp: Date.now(),
-          stopMomentumScroll: true
+          stopMomentumScroll: true,
+          touchMoveCount: 0,
         };
+        this.startingScrollLeft = this.container.scrollLeft;
+        this.startingScrollTop = this.container.scrollTop;
         clearTimeout(this.doubleTapTimeout);
         break;
       }
@@ -101,6 +94,21 @@ const TouchEventManager = {
       }
     }
   },
+  axisLockThreshold: 8,
+  isScrollingVertically() {
+    return (Math.abs(this.verticalMomentum) > 0 && this.horziontalMomentum === 0) || (Math.abs(this.touch.verticalDistance) > this.axisLockThreshold * Math.abs(this.touch.horizontalDistance));
+  },
+  isScrollingHorziontally() {
+    return (Math.abs(this.horziontalMomentum) > 0 && this.verticalMomentum === 0) || (Math.abs(this.touch.horizontalDistance) > this.axisLockThreshold * Math.abs(this.touch.verticalDistance));
+  },
+  canLockScrolling() {
+    const { container, document: doc } = this;
+    const doesPagesFitOnScreen = doc.clientWidth < container.clientWidth || doc.clientHeight < container.clientHeight;
+    const alreadyLocked = this.verticalLock || this.horziontalLock;
+
+    // using 'touchMoveCount' to disable scroll locking when user is dragging
+    return !doesPagesFitOnScreen && this.enableTouchScrollLock && this.touch.touchMoveCount < 6 && !alreadyLocked;
+  },
   handleTouchMove(e) {
     e.preventDefault();
     
@@ -109,9 +117,30 @@ const TouchEventManager = {
         const t = e.touches[0];
         this.touch.horizontalDistance = this.touch.clientX - t.clientX;
         this.touch.verticalDistance = this.touch.clientY - t.clientY;
+        if (this.canLockScrolling()) {
+          this.verticalLock = this.isScrollingVertically();
+          this.horziontalLock = this.isScrollingHorziontally();
+        }
+
         if (this.getDistance(this.touch, t) > 10) {
           this.touch.type = 'swipe';
         }
+
+        if (this.enableTouchScrollLock) {
+          if (this.verticalLock) {
+            // undo horizontal scrolling caused by native touch when scrolling is disabled
+            this.container.scrollTo(this.startingScrollLeft, this.container.scrollTop);
+            // set 'horizontalDistance' to '0' to get rid of horiztonal momentum in 'handleTouchEnd'
+            this.touch.horizontalDistance = 0; 
+          }
+  
+          if (this.horziontalLock) {
+            this.container.scrollTo(this.container.scrollLeft, this.startingScrollTop);
+            this.touch.verticalDistance = 0; 
+          }
+        }
+
+        this.touch.touchMoveCount++;
         break;
       }
       case 2: {
@@ -144,6 +173,9 @@ const TouchEventManager = {
         this.doubleTapTimeout = setTimeout(() => {
           this.touch.type = ''; 
         }, 300);
+
+        this.horziontalLock = false;
+        this.verticalLock = false;
         break;
       }
       case 'swipe': {
@@ -184,6 +216,9 @@ const TouchEventManager = {
           if (touchDuration < 0.2) {
             this.touch.stopMomentumScroll = false;
             this.startMomentumScroll(touchDuration);
+          } else {
+            this.horziontalLock = false;
+            this.verticalLock = false;
           }
         }
         break;
@@ -219,24 +254,54 @@ const TouchEventManager = {
         break;
       }
     }
+    this.touch.touchMoveCount = 0;
+    // Want to use momentum values during 'TouchMove' event, so clear values in 'touchEnd' instead of 'touchStart'
+    this.verticalMomentum = 0;
+    this.horziontalMomentum = 0;
   },
   handleTouchCancel(e) {
     this.handleTouchEnd(e);
   },
   startMomentumScroll(touchDuration) {
-    let currentIteration = 0;
+    let currentIteration = 1;
     const iterationsCount = 70;
+    const momentumUnlockThreshold = 1;
     const initScrollLeft = this.container.scrollLeft;
     const initScrollTop = this.container.scrollTop;
     const dHorizontal = this.touch.horizontalDistance / touchDuration / 1.85;
     const dVertical = this.touch.verticalDistance / touchDuration / 1.85;
     const momentumScroll = () => {
-      this.container.scrollLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
-      this.container.scrollTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
+      const nextLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
+      const nextTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
+      this.verticalMomentum = dVertical;
+      this.horziontalMomentum = dHorizontal;   
+
+      // 'handleTouchEnd' should set 'touchMoveCount' to 0, using that to determine if a new touch event happened
+      const isNotNewTouchEvent = !this.touch.touchMoveCount;
+      const horzDiff = this.container.scrollLeft - nextLeft;
+      const vertDiff = this.container.scrollTop - nextTop;
+      // if momentum is small enought that it doesn't look like it's moving, disable scroll locking
+      const isMomentumScrollAlmostFinish = (Math.abs(horzDiff) < momentumUnlockThreshold) && (Math.abs(vertDiff) < momentumUnlockThreshold);
+
+      this.container.scrollLeft = nextLeft;
+      this.container.scrollTop = nextTop;
+
+      if (isNotNewTouchEvent && isMomentumScrollAlmostFinish) {
+        // disable lock when momentum scrolling is mostly done and not in the middle of another touch event
+        this.horziontalLock = false;
+        this.verticalLock = false;
+      }
 
       if (currentIteration < iterationsCount && !this.touch.stopMomentumScroll) {
         currentIteration++;
         requestAnimationFrame(momentumScroll);
+      }
+      if (isNotNewTouchEvent && currentIteration === iterationsCount) {
+        // if the page is against the sides and the users swipe quickly, it tries to set Scroll to a value that is outside the range and 'isMomentumScrollAlmostFinish' is never true
+        this.horziontalLock = false;
+        this.verticalLock = false;
+        this.verticalMomentum = 0;
+        this.horziontalMomentum = 0;
       }
     }; 
     

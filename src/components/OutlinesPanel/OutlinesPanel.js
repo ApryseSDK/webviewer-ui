@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Outline from 'components/Outline';
 
@@ -46,4 +46,4 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'outlinePanel')
 });
 
-export default connect(mapStateToProps)(translate()(OutlinesPanel));
+export default connect(mapStateToProps)(withTranslation()(OutlinesPanel));

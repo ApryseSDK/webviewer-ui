@@ -2,11 +2,11 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const webpack = require('webpack');
-const config = require('./webpack.config.dev');
 const devMiddleware = require('webpack-dev-middleware');
 const hotMiddleware = require('webpack-hot-middleware');
 const ip = require('ip');
 const opn = require('opn');
+const config = require('./webpack.config.dev');
 
 const app = express();
 const compiler = webpack(config);
