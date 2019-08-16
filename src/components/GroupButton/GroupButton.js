@@ -117,11 +117,6 @@ class GroupButton extends React.PureComponent {
     const allButtonsInGroupDisabled = toolNames.every(toolName =>
       (core.getTool(toolName) ? core.getTool(toolName).disabled : ''),
     );
-    if (isDisabled || allButtonsInGroupDisabled) {
-      if (isOnlyTools) {
-        return null;
-      }
-    }
     if (!this.props.img && !isOnlyTools) {
       console.warn(
         'GroupButton containing buttons other than tool button requires img. Please specify an img for the group button.',
@@ -156,7 +151,7 @@ class GroupButton extends React.PureComponent {
     return (
       <React.Fragment>
         <Button
-          disable={allButtonsInGroupDisabled}
+          disable={allButtonsInGroupDisabled && isOnlyTools}
           title={title}
           className={className}
           mediaQueryClassName={mediaQueryClassName}

@@ -12,7 +12,6 @@ import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
 
 import core from 'core';
-import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -27,13 +26,15 @@ const NoteContent = ({ annotation }) => {
   const [
     sortStrategy,
     noteDateFormat,
+    icon,
     iconColor,
     isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
       selectors.getNoteDateFormat(state),
-      selectors.getIconColor(state, mapAnnotationToKey(annotation)),
+      selectors.getToolButtonIcon(state, annotation.ToolName),
+      selectors.getIconColor(state, annotation.ToolName),
       selectors.getIsNoteEditing(state),
     ],
     shallowEqual,
@@ -64,7 +65,7 @@ const NoteContent = ({ annotation }) => {
     ) {
       setIsEditing(true);
     }
-  }, [isNoteEditingTriggeredByAnnotationPopup]);
+  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
   const renderAuthorName = annotation => {
     const name = core.getDisplayAuthor(annotation);
@@ -125,7 +126,6 @@ const NoteContent = ({ annotation }) => {
       </div>
     );
   } else {
-    const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
     const color = annotation[iconColor]?.toHexString?.();
     const numberOfReplies = annotation.getReplies().length;
 

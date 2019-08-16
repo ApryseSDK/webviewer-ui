@@ -197,7 +197,6 @@ export default store => {
     setAnnotationUser,
     setColorPalette: setColorPalette(store), // undocumented
     setCurrentPageNumber,
-    setCursorOverlay: setCursorOverlay(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
     setEngineType: setEngineType(store), // undocumented

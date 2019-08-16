@@ -42,21 +42,7 @@ export default store => e => {
         e.preventDefault();
         core.pasteCopiedAnnotations();
       }
-    }
-  } else {
-    if (e.key === 'Enter' || e.keyCode === 13) { // (Enter)
-      if (document.activeElement.className.includes('Note')) {
-        document.activeElement.click();
-      } else if (document.activeElement.className === 'skip-to-document') {
-        document.getElementById('pageText0').focus();
-      } else if (document.activeElement.className === 'skip-to-notes') {
-        dispatch(actions.openElement('notesPanel'));
-        const noteEl = document.querySelector('.Note');
-        if (noteEl) {
-          noteEl.focus();
-        }
-      }
-    } else if (e.key === 'PageUp' || e.which === 33) { // (PageUp)
+    } else if (e.key === 'o' || e.which === 79) { // (Ctrl/Cmd + O)
       e.preventDefault();
       openFilePicker();
     } else if (e.key === 'f' || e.which === 70) { // (Ctrl/Cmd + F)
@@ -77,53 +63,77 @@ export default store => e => {
       }
     } else if (e.key === 'P' || e.which === 80) { // (Ctrl/Cmd + P)
       e.preventDefault();
-      setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
-      dispatch(actions.closeElements([ 'annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay' ]));
 
-      const el = document.activeElement;
-      if (el && el.tabIndex === 0) {
-        const hackEl = document.querySelector('.skip-to-hack');
-        hackEl.focus();
-        hackEl.blur();
+      const isPrintDisabled = selectors.isElementDisabled(state, 'printModal');
+      if (isPrintDisabled) {
+        console.warn('Print has been disabled.');
+      } else {
+        print(dispatch, selectors.isEmbedPrintSupported(state));
       }
-    } else if (!selectedTextFromCanvas) {
-      if (isFocusingElement()) {
-        return;
+    }
+  } else if (e.key === 'Enter' || e.keyCode === 13) { // (Enter)
+    if (document.activeElement.className.includes('Note')) {
+      document.activeElement.click();
+    } else if (document.activeElement.className === 'skip-to-document') {
+      document.getElementById('pageText0').focus();
+    } else if (document.activeElement.className === 'skip-to-notes') {
+      dispatch(actions.openElement('notesPanel'));
+      const noteEl = document.querySelector('.Note');
+      if (noteEl) {
+        noteEl.focus();
       }
-      if (e.key === 'p' || e.which === 80) { // (P)
-        setToolModeAndGroup(dispatch, 'Pan', '');
-      } else if (e.which > 64 && e.which < 91) { 
-        if (e.key === 'a' || e.which === 65) {  // (A)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateArrow', 'shapeTools');
-        } else if (e.key === 'c' || e.which === 67) { // (C)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateCallout', 'miscTools');
-        } else if (e.key === 'f' || e.which === 70) { // (F)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateFreeHand', 'freeHandTools');
-        } else if (e.key === 'g' || e.which === 71) { // (G)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateTextSquiggly', 'textTools');
-        } else if (e.key === 'h' || e.which === 72) { // (H)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateTextHighlight', 'textTools');
-        } else if (e.key === 'i' || e.which === 73) { // (I)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateStamp', 'miscTools');
-        } else if (e.key === 'k' || e.which === 75) { // (K)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateTextStrikeout', 'textTools');
-        } else if (e.key === 'l' || e.which === 76) { // (L)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateLine', 'shapeTools');
-        } else if (e.key === 'n' || e.which === 78) { // (N)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateSticky', '');
-        } else if (e.key === 'o' || e.which === 79) { // (O)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateEllipse', 'shapeTools');
-        } else if (e.key === 'r' || e.which === 82) { // (R)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateRectangle', 'shapeTools');
-        } else if (e.key === 's' || e.which === 83) { // (S)
-          const sigToolButton = document.querySelector('[data-element="signatureToolButton"] .Button');
-          if (sigToolButton) {
-            sigToolButton.click();
-          }
-        } else if (e.key === 't' || e.which === 84) { // (T)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateFreeText', '');
-        } else if (e.key === 'u' || e.which === 85) { // (U)
-          setToolModeAndGroup(dispatch, 'AnnotationCreateTextUnderline', 'textTools');
+    }
+  } else if (e.key === 'PageUp' || e.which === 33) { // (PageUp)
+    e.preventDefault();
+    if (core.getCurrentPage() > 1) {
+      core.setCurrentPage(core.getCurrentPage() - 1);
+    }
+  } else if (e.key === 'PageDown' || e.which === 34) { // (PageDown)
+    e.preventDefault();
+    if (core.getCurrentPage() < core.getTotalPages()) {
+      core.setCurrentPage(core.getCurrentPage() + 1);
+    }
+  } else if (e.key === 'Escape' || e.which === 27) { // (Esc)
+    e.preventDefault();
+    setToolModeAndGroup(dispatch, 'AnnotationEdit', '');
+    dispatch(actions.closeElements(['annotationPopup', 'textPopup', 'contextMenuPopup', 'toolStylePopup', 'annotationStylePopup', 'signatureModal', 'printModal', 'searchOverlay']));
+
+    const el = document.activeElement;
+    if (el && el.tabIndex === 0) {
+      const hackEl = document.querySelector('.skip-to-hack');
+      hackEl.focus();
+      hackEl.blur();
+    }
+  } else if (!selectedTextFromCanvas && !isFocusingElement()) {
+    if (e.key === 'p' || e.which === 80) { // (P)
+      setToolModeAndGroup(dispatch, 'Pan', '');
+    } else if (e.which > 64 && e.which < 91) {
+      if (e.key === 'a' || e.which === 65) { // (A)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateArrow', 'shapeTools');
+      } else if (e.key === 'c' || e.which === 67) { // (C)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateCallout', 'miscTools');
+      } else if (e.key === 'f' || e.which === 70) { // (F)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateFreeHand', 'freeHandTools');
+      } else if (e.key === 'g' || e.which === 71) { // (G)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateTextSquiggly', 'textTools');
+      } else if (e.key === 'h' || e.which === 72) { // (H)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateTextHighlight', 'textTools');
+      } else if (e.key === 'i' || e.which === 73) { // (I)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateStamp', 'miscTools');
+      } else if (e.key === 'k' || e.which === 75) { // (K)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateTextStrikeout', 'textTools');
+      } else if (e.key === 'l' || e.which === 76) { // (L)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateLine', 'shapeTools');
+      } else if (e.key === 'n' || e.which === 78) { // (N)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateSticky', '');
+      } else if (e.key === 'o' || e.which === 79) { // (O)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateEllipse', 'shapeTools');
+      } else if (e.key === 'r' || e.which === 82) { // (R)
+        setToolModeAndGroup(dispatch, 'AnnotationCreateRectangle', 'shapeTools');
+      } else if (e.key === 's' || e.which === 83) { // (S)
+        const sigToolButton = document.querySelector('[data-element="signatureToolButton"] .Button');
+        if (sigToolButton) {
+          sigToolButton.click();
         }
       } else if (e.key === 't' || e.which === 84) { // (T)
         setToolModeAndGroup(dispatch, 'AnnotationCreateFreeText', '');

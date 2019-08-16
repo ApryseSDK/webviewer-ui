@@ -22,11 +22,13 @@ const ToolButton = ({ toolName, ...restProps }) => {
   const [
     isActive,
     iconColor,
-    { group = '', showColor, ...restObjectData },
+    group,
+    { showColor },
   ] = useSelector(
     state => [
       selectors.getActiveToolName(state) === toolName,
       selectors.getIconColor(state, toolName),
+      selectors.getGroupName(state, toolName),
       selectors.getToolButtonObject(state, toolName),
     ],
     shallowEqual,
@@ -63,7 +65,6 @@ const ToolButton = ({ toolName, ...restProps }) => {
       isActive={isActive}
       color={color}
       {...restProps}
-      {...restObjectData}
     />
   );
 };

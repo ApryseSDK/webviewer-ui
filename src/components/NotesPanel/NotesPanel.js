@@ -12,6 +12,7 @@ import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
+import selectors from 'selectors';
 
 import './NotesPanel.scss';
 

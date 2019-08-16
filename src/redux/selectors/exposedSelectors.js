@@ -152,6 +152,7 @@ export const getZoomList = state => state.viewer.zoomList;
 export const getMeasurementUnits = state => state.viewer.measurementUnits;
 export const getIsNoteEditing = state => state.viewer.isNoteEditing;
 export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
+export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 
 // warning message
 export const getWarningMessage = state =>
