@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import onClickOutside from 'react-onclickoutside';
 import { connect } from 'react-redux';
 
 import StylePopup from 'components/StylePopup';
 
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
+import { isMobile } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -32,7 +34,7 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('resize', this.close);
   }
 
   componentDidUpdate(prevProps) {
@@ -56,10 +58,34 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('resize', this.close);
   }
 
-  handleWindowResize = () => {
+  handleClick = e => {
+    // in the mobile version, this component is viewport height minus the header height
+    // with the sub component stylePopup being 100% height so handleClickOutside won't get called
+    // when we click outside because we are always clicking on this component
+    // as a result we have this handler to specifically close this component
+    // if this comment is removed, please also remove the comment in handleClick, AnnotationStylePopup.js
+    if (isMobile() && e.target === e.currentTarget) {
+      this.props.closeElement('toolStylePopup');
+    }
+  };
+
+  handleClickOutside = e => {
+    const toolsOverlay = document.querySelector(
+      '[data-element="toolsOverlay"]',
+    );
+    const header = document.querySelector('[data-element="header"]');
+    const clickedToolsOverlay = toolsOverlay?.contains(e.target);
+    const clickedHeader = header?.contains(e.target);
+
+    if (!clickedToolsOverlay && !clickedHeader) {
+      this.close();
+    }
+  };
+
+  close = () => {
     this.props.closeElement('toolStylePopup');
   };
 
@@ -69,7 +95,7 @@ class ToolStylePopup extends React.PureComponent {
 
   positionToolStylePopup = () => {
     const { dataElement } = this.props;
-    let toolButton = undefined;
+    let toolButton;
     if (dataElement) {
       toolButton = document.querySelectorAll(`.Header [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
       if (!toolButton) {
@@ -84,7 +110,7 @@ class ToolStylePopup extends React.PureComponent {
 
     const { left, top } = this.getToolStylePopupPositionBasedOn(
       toolButton,
-      this.popup
+      this.popup,
     );
 
     this.setState({ left, top });
@@ -107,12 +133,6 @@ class ToolStylePopup extends React.PureComponent {
     return { left: popupLeft, top: popupTop };
   };
 
-  onClick = e => {
-    e.stopPropagation();
-
-    this.props.closeElement('toolStylePopup');
-  };
-
   render() {
     const { left, top } = this.state;
     const { isDisabled, activeToolName, activeToolStyle, dataElement } = this.props;
@@ -123,15 +143,14 @@ class ToolStylePopup extends React.PureComponent {
       return null;
     }
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
-    
+
     return (
       <div
         className={className}
         data-element="toolStylePopup"
         style={{ top, left }}
         ref={this.popup}
-        onMouseDown={e => e.stopPropagation()}
-        onClick={this.onClick}
+        onClick={this.handleClick}
       >
         <StylePopup
           key={activeToolName}
@@ -152,7 +171,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
   isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  dataElement: selectors.getActiveDataElement(state)
+  dataElement: selectors.getActiveDataElement(state),
 });
 
 const mapDispatchToProps = {
@@ -162,5 +181,5 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(ToolStylePopup);
+  mapDispatchToProps,
+)(onClickOutside(ToolStylePopup));

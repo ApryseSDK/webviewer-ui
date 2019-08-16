@@ -18,12 +18,10 @@ class LeftPanelTabs extends React.Component {
     customPanels: PropTypes.array.isRequired,
     isLeftPanelTabsDisabled: PropTypes.bool,
     setActiveLeftPanel: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
-  }
+    t: PropTypes.func.isRequired,
+  };
 
-  isActive = panel => {
-    return this.props.activePanel === panel;
-  }
+  isActive = panel => this.props.activePanel === panel;
 
   render() {
     const {
@@ -90,7 +88,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setActiveLeftPanel: actions.setActiveLeftPanel
+  setActiveLeftPanel: actions.setActiveLeftPanel,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(LeftPanelTabs));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(LeftPanelTabs));

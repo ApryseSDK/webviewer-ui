@@ -47,16 +47,14 @@ export default store => id => {
       core.selectAnnotation(annotation);
     }
     store.dispatch(actions.setActiveLeftPanel('notesPanel'));
-    store.dispatch(actions.expandNote(id));
-    store.dispatch(actions.setIsNoteEditing(true));
+    store.dispatch(actions.triggerNoteEditing());
   } else {
     store.dispatch(actions.openElement('notesPanel'));
     setTimeout(() => {
       if (!core.isAnnotationSelected(annotation)) {
         core.selectAnnotation(annotation);
       }
-      store.dispatch(actions.expandNote(id));
-      store.dispatch(actions.setIsNoteEditing(true));
+      store.dispatch(actions.triggerNoteEditing());
     }, 400);
   }
 };

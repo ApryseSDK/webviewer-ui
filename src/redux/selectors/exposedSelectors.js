@@ -5,17 +5,6 @@ import getHeaderItemByToolName from 'helpers/getHeaderItemByToolName';
 export const isElementDisabled = (state, dataElement) =>
   state.viewer.disabledElements[dataElement] &&
   state.viewer.disabledElements[dataElement].disabled;
-export const isToolGroupButtonDisabled = (state, dataElement, toolNames) => {
-  const isEveryButtonInGroupDisabled = toolNames.every(toolName =>
-    isToolButtonDisabled(state, toolName)
-  );
-
-  return isElementDisabled(state, dataElement) || isEveryButtonInGroupDisabled;
-};
-export const isToolButtonDisabled = (state, toolName) => {
-  const dataElement = getToolButtonDataElement(state, toolName);
-  return !!isElementDisabled(state, dataElement);
-};
 export const isElementOpen = (state, dataElement) => {
   if (state.viewer.disabledElements[dataElement]) {
     return (
@@ -31,8 +20,8 @@ export const isElementActive = (state, tool) => {
   const {
     viewer: {
       activeToolName,
-      header: { tools = [] }
-    }
+      header: { tools = [] },
+    },
   } = state;
   const { element, dataElement } = tool;
 
@@ -40,7 +29,7 @@ export const isElementActive = (state, tool) => {
     isElementOpen(state, element) ||
     tools.some(
       tool =>
-        tool.dataElement === dataElement && tool.toolName === activeToolName
+        tool.dataElement === dataElement && tool.toolName === activeToolName,
     )
   );
 };
@@ -54,24 +43,24 @@ export const getToolButtonObjects = state =>
 export const getAnnotationToolNames = state =>
   Object.keys(state.viewer.toolButtonObjects).filter(
     toolButtonName =>
-      state.viewer.toolButtonObjects[toolButtonName].annotationCheck
+      state.viewer.toolButtonObjects[toolButtonName].annotationCheck,
   );
 export const getGroupName = (state, toolName) => {
   const defaultHeader = state.viewer.header.filter(
-    toolObject => toolObject.children
+    toolObject => toolObject.children,
   );
   for (let i = 0; i < defaultHeader.length; i++) {
-    let childrenToolNames = defaultHeader[i].children.map(
-      object => object.toolName
+    const childrenToolNames = defaultHeader[i].children.map(
+      object => object.toolName,
     );
     if (childrenToolNames.includes(toolName)) {
       return defaultHeader[i].toolGroup;
     }
     for (let j = 0; j < defaultHeader[i].children.length; j++) {
       if (defaultHeader[i].children[j].children) {
-        let grandchildrenToolNames = defaultHeader[i].children[j].children.map(
-          object => object.toolName
-        );
+        const grandchildrenToolNames = defaultHeader[i].children[
+          j
+        ].children.map(object => object.toolName);
         if (grandchildrenToolNames.includes(toolName)) {
           return defaultHeader[i].children[j].toolGroup;
         }
@@ -86,13 +75,13 @@ export const getToolButtonDataElements = (state, toolNames) =>
 export const getToolButtonObject = (state, toolName) =>
   state.viewer && state.viewer.toolButtonObjects[toolName];
 export const getToolButtonDataElement = (state, toolName) =>
-  getHeaderItemByToolName(state, toolName)
+  (getHeaderItemByToolName(state, toolName)
     ? getHeaderItemByToolName(state, toolName).dataElement
-    : '';
+    : '');
 export const getToolButtonIcon = (state, toolName) =>
-  getHeaderItemByToolName(state, toolName)
+  (getHeaderItemByToolName(state, toolName)
     ? getHeaderItemByToolName(state, toolName).img
-    : '';
+    : '');
 export const getToolNamesByGroup = (state, toolGroup) =>
   state.viewer.header
     .filter(toolButtonObject => toolButtonObject.toolGroup)
@@ -102,30 +91,23 @@ export const getToolNameByDataElement = (state, dataElement) =>
   Object.keys(state.viewer.toolButtonObjects).find(
     toolName =>
       getHeaderItemByToolName(state, toolName) &&
-      getHeaderItemByToolName(state, toolName).dataElement === dataElement
+      getHeaderItemByToolName(state, toolName).dataElement === dataElement,
   );
 export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
 export const getActiveDataElement = state =>
-  getHeaderItemByToolName(state, state.viewer.activeToolName)
+  (getHeaderItemByToolName(state, state.viewer.activeToolName)
     ? getHeaderItemByToolName(state, state.viewer.activeToolName).dataElement
-    : '';
+    : '');
 export const getListIndex = (state, panel) => {
   if (state.viewer.listIndex[panel] === undefined) {
     return null;
-  } else {
-    return state.viewer.listIndex[panel];
   }
+  return state.viewer.listIndex[panel];
 };
 export const getActiveLeftPanel = state => state.viewer.activeLeftPanel;
 export const getActiveToolGroup = state => state.viewer.activeToolGroup;
 export const getNotePopupId = state => state.viewer.notePopupId;
-export const isNoteExpanded = (state, id) => !!state.viewer.expandedNotes[id];
-export const isNoteEditing = (state, id) =>
-  state.viewer.isNoteEditing && isNoteExpanded(state, id);
-export const isAnnotationFocused = (state, id) =>
-  Object.keys(state.viewer.expandedNotes).length === 1 &&
-  isNoteExpanded(state, id); // Considered focused when it is the only annotation selected
 export const getFitMode = state => state.viewer.fitMode;
 export const getZoom = state => state.viewer.zoom;
 export const getDisplayMode = state => state.viewer.displayMode;
@@ -139,8 +121,8 @@ export const isDocumentLoaded = state => state.viewer.isDocumentLoaded;
 export const isDocumentReadOnly = state => state.viewer.isReadOnly;
 export const getCustomPanels = state => state.viewer.customPanels;
 export const getPageLabels = state => state.viewer.pageLabels;
-export const getDisabledCustomPanelTabs = state => {
-  return state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
+export const getDisabledCustomPanelTabs = state =>
+  state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
     if (
       state.viewer.disabledElements[tab.dataElement] &&
       state.viewer.disabledElements[tab.dataElement].disabled
@@ -149,7 +131,6 @@ export const getDisabledCustomPanelTabs = state => {
     }
     return disabledTabs;
   }, []);
-};
 export const isEmbedPrintSupported = state => {
   const isChrome =
     window.navigator.userAgent.indexOf('Chrome') > -1 &&
@@ -167,10 +148,10 @@ export const getCurrentPalette = (state, activeToolName) =>
 export const getIconColor = (state, activeToolName) =>
   state.viewer.toolButtonObjects[activeToolName] &&
   state.viewer.toolButtonObjects[activeToolName].iconColor;
-export const getSwipeOrientation = state => state.viewer.swipeOrientation;
-export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 export const getZoomList = state => state.viewer.zoomList;
 export const getMeasurementUnits = state => state.viewer.measurementUnits;
+export const getIsNoteEditing = state => state.viewer.isNoteEditing;
+export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
 // warning message
 export const getWarningMessage = state =>

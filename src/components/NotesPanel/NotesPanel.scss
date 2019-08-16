@@ -1,7 +1,9 @@
 @import '../../constants/panel';
 
 .NotesPanel {
+  overflow: hidden !important;
   padding: 8px 0px;
+  display: flex;
 
   .no-annotations {
     @extend %center-of-panel;
@@ -21,18 +23,16 @@
     }
   }
 
-  .no-results {
-    @extend %center-of-panel;
-    display: none;
-
-    &.visible {
-      display: block;
-    }
+  .virtualized-notes-container,
+  .normal-notes-container {
+    flex: 1;
   }
 
-  .notes-wrapper {
-    &.visible {
-      display: block;
-    }
+  .normal-notes-container {
+    overflow: auto;
+  }
+
+  .no-results {
+    @extend %center-of-panel;
   }
 }
