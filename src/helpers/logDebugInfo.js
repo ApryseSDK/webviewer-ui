@@ -15,7 +15,7 @@ export default ({ pdftronServer, fullAPI }) => {
       .map(version => parseInt(version, 10));
 
     console.log(
-      `[WebViewer] UI version: ${uiVersion}, Core version: ${coreVersion}`,
+      `[WebViewer] UI version: ${uiVersion}, Core version: ${coreVersion} WebViewer Server: ${!!pdftronServer} Full API: ${!!fullAPI}`,
     );
 
     if (coreMajorVersion < uiMajorVersion) {
@@ -28,8 +28,4 @@ export default ({ pdftronServer, fullAPI }) => {
       );
     }
   }
-
-  console.log(`[WebViewer] Is using WebViewer Server: ${!!pdftronServer}`);
-
-  console.log(`[WebViewer] Is using Full API: ${!!fullAPI}`);
 };
