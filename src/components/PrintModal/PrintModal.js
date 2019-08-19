@@ -369,6 +369,8 @@ class PrintModal extends React.PureComponent {
     return (
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
         <div className="container">
+          {/* TODO make use of t here for the hard coded string */}
+          <button>Apply Watermarks</button>
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
             <form className="col" onChange={this.onChange} onSubmit={this.createPagesAndPrint}>
