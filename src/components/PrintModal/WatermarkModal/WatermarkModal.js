@@ -8,6 +8,7 @@ export default class WatermarkModal extends React.PureComponent {
 
   static propTypes = {
     isVisible: PropTypes.bool,
+    modalClosed: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -18,24 +19,41 @@ export default class WatermarkModal extends React.PureComponent {
   }
 
   componentDidMount() {
-    console.log(this.props);
+    if (this.props.isVisible !== undefined) {
+      this.setState({
+        isVisible: this.props.isVisible,
+
+      });
+    }
   }
 
   componentDidUpdate(prevProps) {
-    console.log(prevProps);
-    //Typical usage, don't forget to compare the props
+    // Typical usage, don't forget to compare the props
     if (this.props.isVisible !== prevProps.isVisible) {
-      console.log(prevProps);
       this.setState({
         isVisible: this.props.isVisible,
       });
     }
-   }
+  }
+
+  closeModal() {
+    this.setState({
+      isVisible: false,
+    });
+    this.props.modalClosed();
+  }
 
   render() {
+    const { isVisible } = this.props;
+
+    if (!isVisible) {
+      return null;
+    }
     return (
       <>
-      <div>Hi! I'm the watermark modal</div>
+        <div className={'Modal Watermark'} data-element="waterMarkModal" onClick={() => this.closeModal()}>
+          test
+        </div>
       </>
     );
   }
