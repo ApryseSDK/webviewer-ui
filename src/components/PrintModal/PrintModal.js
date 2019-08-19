@@ -371,6 +371,7 @@ class PrintModal extends React.PureComponent {
       <WatermarkModal 
           isVisible = {this.state.isWatermarkModalVisible}
           modalClosed = {() => this.setWatermarkModalVisibility(false) }/>
+
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
         <div className="container" onClick={e => e.stopPropagation()}>
           <button onClick={ () => this.setWatermarkModalVisibility(true) }>Apply Watermarks</button>
