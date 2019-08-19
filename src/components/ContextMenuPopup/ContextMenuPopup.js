@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
+
 import ActionButton from 'components/ActionButton';
 
 import getClassName from 'helpers/getClassName';
@@ -90,6 +92,10 @@ class ContextMenuPopup extends React.PureComponent {
     return { left, top };
   }
 
+  handleClickOutside = () => {
+    this.props.closeElement('contextMenuPopup');
+  }
+
   handleClick = (toolName, group = '') => {
     const { dispatch, closeElement } = this.props;
     setToolModeAndGroup(dispatch, toolName, group);
@@ -108,7 +114,7 @@ class ContextMenuPopup extends React.PureComponent {
     const className = getClassName('Popup ContextMenuPopup', this.props);
 
     return (
-      <div className={className} ref={this.popup} data-element={'contextMenuPopup'} style={{ left, top }} onMouseDown={e => e.stopPropagation()}>
+      <div className={className} ref={this.popup} data-element={'contextMenuPopup'} style={{ left, top }}>
         <ActionButton dataElement="panToolButton" title="tool.pan" img="ic_pan_black_24px" onClick={() => this.handleClick('Pan')} />
         {isAnnotationToolsEnabled &&
           <>
@@ -136,4 +142,4 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContextMenuPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(ContextMenuPopup));

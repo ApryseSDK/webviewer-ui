@@ -78,10 +78,10 @@ const Tooltip = ({ content, children }) => {
         const { top: newTop, left: newLeft } = locationTopLeftMap[location];
 
         return (
-          newTop > 0
-          && newTop + tooltipRect.height < window.innerHeight
-          && newLeft > 0
-          && newLeft + tooltipRect.width < window.innerWidth
+          newTop > 0 &&
+          newTop + tooltipRect.height < window.innerHeight &&
+          newLeft > 0 &&
+          newLeft + tooltipRect.width < window.innerWidth
         );
       });
 
@@ -113,7 +113,8 @@ const Tooltip = ({ content, children }) => {
   const translatedContent = t(content);
   // If shortcut.xxx exists in translation-en.json file
   // method t will return the shortcut, otherwise it will return shortcut.xxx
-  const hasShortcut = t(`shortcut.${content.split('.')[1]}`).indexOf('.') === -1;
+  const hasShortcut =
+    t(`shortcut.${content.split('.')[1]}`).indexOf('.') === -1;
   let shortcut = t(`shortcut.${content.split('.')[1]}`);
   if (isMac) {
     shortcut = shortcut.replace('Ctrl', 'Cmd');
@@ -122,10 +123,10 @@ const Tooltip = ({ content, children }) => {
   return (
     <React.Fragment>
       {child}
-      {show
-        && translatedContent
-        && !isUsingMobileDevices
-        && ReactDOM.createPortal(
+      {show &&
+        translatedContent &&
+        !isUsingMobileDevices &&
+        ReactDOM.createPortal(
           <div
             className={`tooltip--${location}`}
             style={{ opacity, ...position }}

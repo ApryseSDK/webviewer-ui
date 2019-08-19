@@ -8,6 +8,8 @@
     "comment": "Comentário",
     "copy": "Copiar",
     "delete": "Apagar",
+    "group": "Grupo",
+    "ungroup": "Desagrupar",
     "download": "Download",
     "edit": "Editar",
     "enterFullscreen": "Tela cheia",
@@ -59,7 +61,8 @@
     "stickyNote": "Comentário",
     "strikeout": "Riscar",
     "underline": "Sublinhar",
-    "custom": "Personalizado"
+    "custom": "Personalizado",
+    "eraser": "Apagador"
   },
   "component": {
     "freehandToolsButton": "Ferramentas mão livre",
@@ -188,7 +191,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(AND)"
   },
   "tool": {
     "pan": "Pan",

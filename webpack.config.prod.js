@@ -9,26 +9,26 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'webviewer-ui.min.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
     new CopyWebpackPlugin([
       {
         from: './src/index.build.html',
-        to: '../build/index.html'
+        to: '../build/index.html',
       },
       {
         from: './i18n',
-        to: '../build/i18n'
+        to: '../build/i18n',
       },
       {
         from: './assets/pdftron.ico',
-        to: '../build/assets/pdftron.ico'
-      }
+        to: '../build/assets/pdftron.ico',
+      },
     ]),
     new MiniCssExtractPlugin({
-      filename: 'style.css'
-    })
+      filename: 'style.css',
+    }),
     // new BundleAnalyzerPlugin()
   ],
   module: {
@@ -44,14 +44,12 @@ module.exports = {
               '@babel/plugin-proposal-export-namespace-from',
               '@babel/plugin-proposal-numeric-separator',
               '@babel/plugin-proposal-throw-expressions',
-              '@babel/plugin-proposal-class-properties'
-            ]
-          }
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-proposal-optional-chaining',
+            ],
+          },
         },
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'webviewer/apis')
-        ]
+        include: [path.resolve(__dirname, 'src')],
       },
       {
         test: /\.scss$/,
@@ -65,19 +63,19 @@ module.exports = {
               plugins: loader => [
                 require('postcss-import')({ root: loader.resourcePath }),
                 require('postcss-preset-env')(),
-                require('cssnano')()
-              ]
-            }
+                require('cssnano')(),
+              ],
+            },
           },
-          'sass-loader'
+          'sass-loader',
         ],
-        include: path.resolve(__dirname, 'src')
+        include: path.resolve(__dirname, 'src'),
       },
       {
         test: /\.svg$/,
-        use: ['svg-inline-loader']
-      }
-    ]
+        use: ['svg-inline-loader'],
+      },
+    ],
   },
   resolve: {
     alias: {
@@ -85,10 +83,11 @@ module.exports = {
       components: path.resolve(__dirname, 'src/components/'),
       constants: path.resolve(__dirname, 'src/constants/'),
       helpers: path.resolve(__dirname, 'src/helpers/'),
+      hooks: path.resolve(__dirname, 'src/hooks/'),
       actions: path.resolve(__dirname, 'src/redux/actions/'),
       reducers: path.resolve(__dirname, 'src/redux/reducers/'),
       selectors: path.resolve(__dirname, 'src/redux/selectors/'),
-      core: path.resolve(__dirname, 'src/core/')
-    }
-  }
+      core: path.resolve(__dirname, 'src/core/'),
+    },
+  },
 };
