@@ -13,6 +13,8 @@ import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import WatermarkModal from './WatermarkModal';
+
 import './PrintModal.scss';
 
 class PrintModal extends React.PureComponent {
@@ -358,8 +360,10 @@ class PrintModal extends React.PureComponent {
     const isPrinting = count >= 0;
 
     return (
+      <>
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
         <div className="container" onClick={e => e.stopPropagation()}>
+        <WatermarkModal />
           <button>Apply Watermarks</button>
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
@@ -385,6 +389,7 @@ class PrintModal extends React.PureComponent {
           </div>
         </div>
       </div>
+      </>
     );
   }
 }
