@@ -43,6 +43,7 @@ class PrintModal extends React.PureComponent {
     this.state = {
       count: -1,
       pagesToPrint: [],
+      isWatermarkModalVisible: false,
     };
   }
 
@@ -347,6 +348,10 @@ class PrintModal extends React.PureComponent {
     this.setState({ count: -1 });
   }
 
+  toggleWaterMarkModal = (visible) => {
+    console.log(visible);
+  }
+
   render() {
     const { isDisabled, t } = this.props;
 
@@ -364,7 +369,7 @@ class PrintModal extends React.PureComponent {
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
         <div className="container" onClick={e => e.stopPropagation()}>
         <WatermarkModal />
-          <button>Apply Watermarks</button>
+          <button onClick={ () => this.toggleWaterMarkModal(true) }>Apply Watermarks</button>
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
             <form className="col" onChange={this.onChange} onSubmit={this.createPagesAndPrint}>
