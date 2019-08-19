@@ -3,7 +3,7 @@
 
 .Watermark {
   @extend %modal;
-  z-index: 999;
+  z-index: $modal-z-index + 10;
   border: 1px solid red;
 
   // .container {
