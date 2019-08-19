@@ -17,6 +17,10 @@ export default class WatermarkModal extends React.PureComponent {
     };
   }
 
+  componentDidMount() {
+    console.log(this.props);
+  }
+
   componentDidUpdate(prevProps) {
     console.log(prevProps);
     //Typical usage, don't forget to compare the props
