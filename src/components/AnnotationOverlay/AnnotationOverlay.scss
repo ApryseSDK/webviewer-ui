@@ -3,7 +3,11 @@
 
 .AnnotationOverlay {
   @extend %overlay;
-  // flex-direction: column;
+
+  position: absolute;
+  top: 0;
+  background: red;
+  
   width: 215px;
   font-size: 16px;
   padding: 8px;
