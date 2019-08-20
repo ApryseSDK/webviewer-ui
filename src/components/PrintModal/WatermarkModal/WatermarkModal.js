@@ -15,6 +15,7 @@ export default class WatermarkModal extends React.PureComponent {
     super(props);
     this.state = {
       isVisible: false,
+      color: new window.Annotations.Color(255, 255, 255, 1),
     };
     this.canvasContainerRef = React.createRef();
   }
@@ -84,6 +85,10 @@ export default class WatermarkModal extends React.PureComponent {
     this.props.modalClosed();
   }
 
+  onTextColorChange(property, color) {
+    console.log(property, color);
+  }
+
   render() {
     const { isVisible } = this.props;
     if (!isVisible) {
@@ -128,8 +133,11 @@ export default class WatermarkModal extends React.PureComponent {
 
               <label>Style</label>
               {/* TODO figure this one out */}
-              {/* <ColorPalette /> */}
-              
+              <ColorPalette 
+                color={this.state.color}
+                property={'TextColor'}
+                onStyleChange = {(property, color) => this.onTextColorChange(property, color)}
+              />
 
             </form>
 
