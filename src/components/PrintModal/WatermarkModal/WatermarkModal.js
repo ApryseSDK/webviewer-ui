@@ -156,8 +156,13 @@ class WatermarkModal extends React.PureComponent {
   }
 
   onOkPressed() {
-    this.props.formSubmitted(this.constructWatermarkOptions(this.state));
-    this.closeModal();
+    this.setState({
+      isVisible: false,
+    }, () => {
+      // the order of these fxn calls matter
+      this.props.modalClosed();
+      this.props.formSubmitted(this.constructWatermarkOptions(this.state));
+    });
   }
 
   render() {
