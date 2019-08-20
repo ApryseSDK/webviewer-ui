@@ -153,7 +153,6 @@ class WatermarkModal extends React.PureComponent {
       <>
         <div className={'Modal Watermark'} data-element="waterMarkModal" onClick={() => this.closeModal()}>
           <div onClick={e => e.stopPropagation()}>
-            {/* TODO pass in t */}
             <form>
               <label>
                 {`${t(`watermarkModal.size`)}`}
@@ -165,7 +164,7 @@ class WatermarkModal extends React.PureComponent {
               </select>
 
               <label>
-                Location
+                {`${t(`watermarkModal.location`)}`}
               </label>
               <select
                 value={this.state[FORM_FIELD_KEYS.location]}
@@ -174,14 +173,14 @@ class WatermarkModal extends React.PureComponent {
               </select>
 
               <label>
-                Text
+                {`${t(`watermarkModal.text`)}`}
               </label>
               <input
                 value={this.state[FORM_FIELD_KEYS.text]}
                 onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
                 type="text" />
 
-              <label>Opacity</label>
+              <label>{`${t(`watermarkModal.opacity`)}`}</label>
               {/* TODO style this like the stylepop up slider */}
               <input
                 type="range"
@@ -191,7 +190,7 @@ class WatermarkModal extends React.PureComponent {
                 onChange={event => this.handleInputChange(FORM_FIELD_KEYS.opacity, +event.target.value)}>
               </input>
 
-              <label>Style</label>
+              <label>{`${t(`watermarkModal.style`)}`}</label>
               {/* TODO style this to be just a div with the curr color. on click, show color palette */}
               <ColorPalette
                 color={this.state.color}
@@ -207,8 +206,8 @@ class WatermarkModal extends React.PureComponent {
           </div>
           <div onClick={e => e.stopPropagation()}>
             {/* TODO implement button functionality */}
-            <button>Reset</button>
-            <button>Ok</button>
+            <button>{`${t(`watermarkModal.reset`)}`}</button>
+            <button>{`${t(`watermarkModal.ok`)}`}</button>
           </div>
         </div>
       </>

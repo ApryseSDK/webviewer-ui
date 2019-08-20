@@ -213,6 +213,12 @@
     "Marquee": "Marquee Zoom"
   },
   "watermarkModal": {
-    "size": "Size"
+    "size": "Size",
+    "location": "Location",
+    "text": "Text",
+    "opacity": "Opacity",
+    "style": "Style",
+    "reset": "Reset",
+    "ok": "Ok"
   }
 }
