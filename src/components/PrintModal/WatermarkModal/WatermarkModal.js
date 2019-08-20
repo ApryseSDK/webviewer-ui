@@ -5,7 +5,6 @@ import ColorPalette from 'components/ColorPalette';
 import './WatermarkModal.scss';
 
 export default class WatermarkModal extends React.PureComponent {
-
   static propTypes = {
     isVisible: PropTypes.bool,
     modalClosed: PropTypes.func,
@@ -43,9 +42,9 @@ export default class WatermarkModal extends React.PureComponent {
             fontFamily: 'sans-serif',
             color: 'red',
             opacity: 50, // from 0 to 100
-            text: 'Watermark'
+            text: 'Watermark',
           },
-    
+
           // Draw header watermark
           header: {
             fontSize: 10,
@@ -54,8 +53,8 @@ export default class WatermarkModal extends React.PureComponent {
             opacity: 70,
             left: 'left watermark',
             center: 'center watermark',
-            right: ''
-          }
+            right: '',
+          },
         });
 
         // window.docViewer.refreshAll();
@@ -65,12 +64,11 @@ export default class WatermarkModal extends React.PureComponent {
 
         window.docViewer.getDocument().loadCanvasAsync({
           pageIndex: 0,
-          drawComplete: (canvas) => {
+          drawComplete: canvas => {
             this.canvasContainerRef.current.appendChild(canvas);
-          }
+          },
         });
-      }
-      else {
+      } else {
         window.docViewer.setWatermark({});
         // window.docViewer.refreshAll();
         // window.docViewer.updateView();
@@ -86,7 +84,9 @@ export default class WatermarkModal extends React.PureComponent {
   }
 
   onTextColorChange(property, color) {
-    console.log(property, color);
+    this.setState({
+      color,
+    });
   }
 
   render() {
@@ -101,7 +101,7 @@ export default class WatermarkModal extends React.PureComponent {
             {/* TODO pass in t */}
             {/* https://reactjs.org/docs/forms.html */}
             <form>
-            <label>
+              <label>
                 Size
               </label>
               {/* TODO turn this to a constant and iterate */}
@@ -129,11 +129,12 @@ export default class WatermarkModal extends React.PureComponent {
               <input type="text"/>
 
               <label>Opacity</label>
+              {/* TODO style this like the stylepop up slider */}
               <input type="range" min="1" max="100"></input>
 
               <label>Style</label>
-              {/* TODO figure this one out */}
-              <ColorPalette 
+              {/* TODO style this to be just a div with the curr color. on click, show color palette */}
+              <ColorPalette
                 color={this.state.color}
                 property={'TextColor'}
                 onStyleChange = {(property, color) => this.onTextColorChange(property, color)}
