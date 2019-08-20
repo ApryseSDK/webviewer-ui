@@ -30,14 +30,15 @@ const FORM_FIELD_KEYS = {
 
 const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.location]: WATERMARK_LOCATIONS.CENTER,
-  [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[0],
+  [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[FONT_SIZES.length / 2],
   [FORM_FIELD_KEYS.text]: '',
-  [FORM_FIELD_KEYS.color]: new window.Annotations.Color(255, 255, 255, 1),
+  [FORM_FIELD_KEYS.color]: new window.Annotations.Color(0, 0, 0, 1),
   [FORM_FIELD_KEYS.opacity]: 100,
 };
 
 export default class WatermarkModal extends React.PureComponent {
   onDocumentLoadFxn;
+
   static propTypes = {
     isVisible: PropTypes.bool,
     modalClosed: PropTypes.func,
@@ -53,7 +54,6 @@ export default class WatermarkModal extends React.PureComponent {
     this.onDocumentLoadFxn = () => {
       if (this.props.isVisible) {
         this.addWatermark(this.state);
-        // https://www.pdftron.com/documentation/web/guides/watermarks/#draw-watermark-without-documentviewer
       } else {
         this.removeWatermark();
       }
@@ -64,9 +64,7 @@ export default class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible !== undefined) {
       this.setState({
         isVisible: this.props.isVisible,
-      });
-
-      core.addEventListener('documentLoaded', this.onDocumentLoadFxn);
+      }, core.addEventListener('documentLoaded', this.onDocumentLoadFxn));
     }
   }
 
@@ -74,14 +72,7 @@ export default class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible !== prevProps.isVisible) {
       this.setState({
         isVisible: this.props.isVisible,
-      });
-
-      if (this.props.isVisible) {
-        this.addWatermark(this.state);
-        // https://www.pdftron.com/documentation/web/guides/watermarks/#draw-watermark-without-documentviewer
-      } else {
-        this.removeWatermark();
-      }
+      }, core.addEventListener('documentLoaded', this.onDocumentLoadFxn));
     }
   }
 
@@ -98,7 +89,7 @@ export default class WatermarkModal extends React.PureComponent {
     const watermarkOption = {
       fontSize: state.fontSize,
       fontFamily: 'sans-serif',
-      color: 'red', // TODO fix this
+      color: state.color.toString(),
       opacity: state.opacity,
       text: positionCenter ? state.text : null,
       left: positionLeft ? state.text : null,
@@ -209,6 +200,7 @@ export default class WatermarkModal extends React.PureComponent {
             </div>
           </div>
           <div onClick={e => e.stopPropagation()}>
+            {/* TODO implement button functionality */}
             <button>Reset</button>
             <button>Ok</button>
           </div>
