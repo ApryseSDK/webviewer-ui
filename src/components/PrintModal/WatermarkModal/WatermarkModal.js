@@ -8,6 +8,11 @@ import './WatermarkModal.scss';
 const FONT_SIZES = [
   8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48,
 ];
+// TODO maybe turn this into a map
+const WATERMARK_LOCATIONS = [
+  'Center', 'Top Left', 'Top Right', 'Top Center',
+  'Bottom Left', 'Bottom Right', 'Bottom Center',
+];
 
 export default class WatermarkModal extends React.PureComponent {
   static propTypes = {
@@ -112,19 +117,14 @@ export default class WatermarkModal extends React.PureComponent {
               <select>
                 { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
               </select>
+
               <label>
                 Location
               </label>
-              {/* TODO turn this to a constant and iterate */}
               <select>
-                <option>Center</option>
-                <option>Top Left</option>
-                <option>Top Right</option>
-                <option>Top Center</option>
-                <option>Bottom Left</option>
-                <option>Bottom Right</option>
-                <option>Bottom Center</option>
+                { WATERMARK_LOCATIONS.map(location => <option key={location}>{location}</option>) }
               </select>
+
               <label>
                 Text
               </label>
