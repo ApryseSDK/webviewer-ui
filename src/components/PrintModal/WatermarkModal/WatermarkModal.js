@@ -44,6 +44,7 @@ class WatermarkModal extends React.PureComponent {
     isVisible: PropTypes.bool,
     pageIndexToView: PropTypes.number,
     modalClosed: PropTypes.func,
+    t: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -67,7 +68,7 @@ class WatermarkModal extends React.PureComponent {
       this.setState({
         isVisible: this.props.isVisible,
         ...DEFAULT_VALS,
-      }, core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn));
+      }, () => core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn));
     }
   }
 
@@ -76,7 +77,7 @@ class WatermarkModal extends React.PureComponent {
       this.setState({
         isVisible: this.props.isVisible,
         ...DEFAULT_VALS,
-      }, this.handleWatermarkRenderFxn);
+      }, () => this.handleWatermarkRenderFxn());
     }
   }
 
@@ -129,8 +130,7 @@ class WatermarkModal extends React.PureComponent {
   closeModal() {
     this.setState({
       isVisible: false,
-    });
-    this.props.modalClosed();
+    }, () => this.props.modalClosed());
   }
 
   handleInputChange(key, value) {
@@ -141,6 +141,12 @@ class WatermarkModal extends React.PureComponent {
 
   componentWillUnmount() {
     core.removeEventListener('documentLoaded', this.handleWatermarkRenderFxn);
+  }
+
+  resetForm() {
+    this.setState({
+      ...DEFAULT_VALS,
+    }, () => this.addWatermark(this.state));
   }
 
   render() {
@@ -206,7 +212,7 @@ class WatermarkModal extends React.PureComponent {
           </div>
           <div onClick={e => e.stopPropagation()}>
             {/* TODO implement button functionality */}
-            <button>{`${t(`watermarkModal.reset`)}`}</button>
+            <button onClick={() => this.resetForm()}>{`${t(`watermarkModal.reset`)}`}</button>
             <button>{`${t(`watermarkModal.ok`)}`}</button>
           </div>
         </div>

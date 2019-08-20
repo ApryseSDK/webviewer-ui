@@ -43,7 +43,7 @@ class PrintModal extends React.PureComponent {
     this.state = {
       count: -1,
       pagesToPrint: [],
-      isWatermarkModalVisible: true,
+      isWatermarkModalVisible: false,
     };
   }
 
