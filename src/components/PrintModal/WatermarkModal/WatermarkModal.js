@@ -9,11 +9,7 @@ import './WatermarkModal.scss';
 const FONT_SIZES = [
   8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48,
 ];
-// TODO maybe turn this into a map
-// const WATERMARK_LOCATIONS = [
-//   'Center', 'Top Left', 'Top Right', 'Top Center',
-//   'Bottom Left', 'Bottom Right', 'Bottom Center',
-// ];
+
 const WATERMARK_LOCATIONS = {
   CENTER: 'Center',
   TOP_LEFT: 'Top Left',
