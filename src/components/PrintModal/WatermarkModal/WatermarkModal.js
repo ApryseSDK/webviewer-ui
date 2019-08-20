@@ -86,8 +86,18 @@ class WatermarkModal extends React.PureComponent {
     const watermarkOptions = this.constructWatermarkOptions(state);
     core.setWatermark(watermarkOptions);
 
+    const pageHeight = core.getPageHeight(this.props.pageIndexToView);
+    const pageWidth = core.getPageWidth(this.props.pageIndexToView);
+
+    const desiredZoomForWidth = 491 / pageWidth;
+    const desiredZoomForHeight = 648 / pageHeight;
+
+    const desiredZoom = Math.min(desiredZoomForHeight, desiredZoomForWidth);
+
     core.getDocument().loadCanvasAsync({
       pageIndex: this.props.pageIndexToView,
+      // pageRotation: core.getRotation(this.props.pageIndexToView),
+      zoom: desiredZoom,
       drawComplete: canvas => {
         const nodes = this.canvasContainerRef.current.childNodes;
         if (nodes && nodes.length > 0) {
@@ -174,7 +184,7 @@ class WatermarkModal extends React.PureComponent {
     return (
       <>
         <div className={'Modal Watermark'} data-element="waterMarkModal" onClick={() => this.closeModal()}>
-          <div onClick={e => e.stopPropagation()}>
+          <div className="form-container" onClick={e => e.stopPropagation()}>
             <form>
               <label>
                 {`${t(`watermarkModal.size`)}`}
@@ -222,11 +232,11 @@ class WatermarkModal extends React.PureComponent {
 
             </form>
 
-            <div ref={this.canvasContainerRef}>
+            <div className="canvas-container" ref={this.canvasContainerRef}>
 
             </div>
           </div>
-          <div onClick={e => e.stopPropagation()}>
+          <div className="button-container" onClick={e => e.stopPropagation()}>
             <button onClick={() => this.resetForm()}>{`${t(`watermarkModal.reset`)}`}</button>
             <button onClick={() => this.onOkPressed()}>{`${t(`watermarkModal.ok`)}`}</button>
           </div>

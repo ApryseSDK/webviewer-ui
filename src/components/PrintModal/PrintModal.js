@@ -353,7 +353,7 @@ class PrintModal extends React.PureComponent {
       isWatermarkModalVisible: visible,
     });
   }
-
+  // TODO rename this
   temp(watermarkOptions) {
     console.log(watermarkOptions);
   }
