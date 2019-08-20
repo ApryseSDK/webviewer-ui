@@ -233,11 +233,13 @@ class WatermarkModal extends React.PureComponent {
             <div className="canvas-container" ref={this.canvasContainerRef}>
 
             </div>
+
+            <div className="button-container" onClick={e => e.stopPropagation()}>
+              <button onClick={() => this.resetForm()}>{`${t(`watermarkModal.reset`)}`}</button>
+              <button onClick={() => this.onOkPressed()}>{`${t(`watermarkModal.ok`)}`}</button>
+            </div>
           </div>
-          <div className="button-container" onClick={e => e.stopPropagation()}>
-            <button onClick={() => this.resetForm()}>{`${t(`watermarkModal.reset`)}`}</button>
-            <button onClick={() => this.onOkPressed()}>{`${t(`watermarkModal.ok`)}`}</button>
-          </div>
+          
         </div>
       </>
     );

@@ -6,10 +6,15 @@
   z-index: $modal-z-index + 10;
   border: 1px solid red;
 
-  // .form-container {
-  //   width: 100%;
-  //   height: 100%;
-  // }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .form-container, .button-container {
+    @extend %modal-shared-container-style;
+    // width: 100%;
+    // height: 100%;
+  }
 
   // .container {
   //   @extend %modal-shared-container-style;
