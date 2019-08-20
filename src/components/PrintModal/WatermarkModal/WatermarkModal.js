@@ -14,6 +14,20 @@ const WATERMARK_LOCATIONS = [
   'Bottom Left', 'Bottom Right', 'Bottom Center',
 ];
 
+const FORM_FIELD_KEYS = {
+  location: 'location',
+  fontSize: 'fontSize',
+  text: 'text',
+  color: 'color',
+};
+
+const DEFAULT_VALS = {
+  [FORM_FIELD_KEYS.location]: WATERMARK_LOCATIONS[0],
+  [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[0],
+  [FORM_FIELD_KEYS.text]: '',
+  [FORM_FIELD_KEYS.color]: new window.Annotations.Color(255, 255, 255, 1),
+};
+
 export default class WatermarkModal extends React.PureComponent {
   static propTypes = {
     isVisible: PropTypes.bool,
@@ -24,7 +38,7 @@ export default class WatermarkModal extends React.PureComponent {
     super(props);
     this.state = {
       isVisible: false,
-      color: new window.Annotations.Color(255, 255, 255, 1),
+      ...DEFAULT_VALS,
     };
     this.canvasContainerRef = React.createRef();
   }
@@ -45,27 +59,27 @@ export default class WatermarkModal extends React.PureComponent {
       });
 
       if (this.props.isVisible) {
-        window.docViewer.setWatermark({
-          // Draw diagonal watermark in middle of the document
-          diagonal: {
-            fontSize: 25, // or even smaller size
-            fontFamily: 'sans-serif',
-            color: 'red',
-            opacity: 50, // from 0 to 100
-            text: 'Watermark',
-          },
+        // window.docViewer.setWatermark({
+        //   // Draw diagonal watermark in middle of the document
+        //   diagonal: {
+        //     fontSize: 25, // or even smaller size
+        //     fontFamily: 'sans-serif',
+        //     color: 'red',
+        //     opacity: 50, // from 0 to 100
+        //     text: 'Watermark',
+        //   },
 
-          // Draw header watermark
-          header: {
-            fontSize: 10,
-            fontFamily: 'sans-serif',
-            color: 'red',
-            opacity: 70,
-            left: 'left watermark',
-            center: 'center watermark',
-            right: '',
-          },
-        });
+        //   // Draw header watermark
+        //   header: {
+        //     fontSize: 10,
+        //     fontFamily: 'sans-serif',
+        //     color: 'red',
+        //     opacity: 70,
+        //     left: 'left watermark',
+        //     center: 'center watermark',
+        //     right: '',
+        //   },
+        // });
 
         // window.docViewer.refreshAll();
         // window.docViewer.updateView();
@@ -99,6 +113,16 @@ export default class WatermarkModal extends React.PureComponent {
     });
   }
 
+  handleInputChange(key, value) {
+    // const target = event.target;
+    // const value = target.type === 'checkbox' ? target.checked : target.value;
+    // const name = target.name;
+
+    this.setState({
+      [key]: value,
+    });
+  }
+
   render() {
     const { isVisible } = this.props;
     if (!isVisible) {
@@ -109,12 +133,11 @@ export default class WatermarkModal extends React.PureComponent {
         <div className={'Modal Watermark'} data-element="waterMarkModal" onClick={() => this.closeModal()}>
           <div onClick={e => e.stopPropagation()}>
             {/* TODO pass in t */}
-            {/* https://reactjs.org/docs/forms.html */}
             <form>
               <label>
                 Size
               </label>
-              <select>
+              <select value={this.state[FORM_FIELD_KEYS.fontSize]} onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}>
                 { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
               </select>
 
