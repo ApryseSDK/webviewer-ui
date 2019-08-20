@@ -123,10 +123,13 @@ export default class WatermarkModal extends React.PureComponent {
               </label>
               <input type="text"/>
 
-              {/* TODO figure this one out */}
-              {/* <ColorPalette /> */}
               <label>Opacity</label>
               <input type="range" min="1" max="100"></input>
+
+              <label>Style</label>
+              {/* TODO figure this one out */}
+              {/* <ColorPalette /> */}
+              
 
             </form>
 
