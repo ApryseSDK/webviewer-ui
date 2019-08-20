@@ -37,7 +37,7 @@ const DEFAULT_VALS = {
 };
 
 export default class WatermarkModal extends React.PureComponent {
-  onDocumentLoadFxn;
+  handleWatermarkRenderFxn;
 
   static propTypes = {
     isVisible: PropTypes.bool,
@@ -51,7 +51,7 @@ export default class WatermarkModal extends React.PureComponent {
       ...DEFAULT_VALS,
     };
     this.canvasContainerRef = React.createRef();
-    this.onDocumentLoadFxn = () => {
+    this.handleWatermarkRenderFxn = () => {
       if (this.props.isVisible) {
         this.addWatermark(this.state);
       } else {
@@ -64,7 +64,8 @@ export default class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible !== undefined) {
       this.setState({
         isVisible: this.props.isVisible,
-      }, core.addEventListener('documentLoaded', this.onDocumentLoadFxn));
+        ...DEFAULT_VALS,
+      }, core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn));
     }
   }
 
@@ -72,7 +73,8 @@ export default class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible !== prevProps.isVisible) {
       this.setState({
         isVisible: this.props.isVisible,
-      }, core.addEventListener('documentLoaded', this.onDocumentLoadFxn));
+        ...DEFAULT_VALS,
+      }, this.handleWatermarkRenderFxn);
     }
   }
 
@@ -135,7 +137,7 @@ export default class WatermarkModal extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    core.removeEventListener('documentLoaded', this.onDocumentLoadFxn);
+    core.removeEventListener('documentLoaded', this.handleWatermarkRenderFxn);
   }
 
   render() {
