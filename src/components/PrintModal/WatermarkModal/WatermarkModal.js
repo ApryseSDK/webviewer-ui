@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import React from 'react';
 import core from 'core';
 import PropTypes from 'prop-types';
@@ -100,7 +99,7 @@ export default class WatermarkModal extends React.PureComponent {
       right: positionRight ? state.text : null,
     };
 
-    window.docViewer.setWatermark({
+    core.setWatermark({
       diagonal: positionCenter ? watermarkOption : null,
       header: positionTop ? watermarkOption : null,
       footer: positionBot ? watermarkOption : null,
@@ -120,8 +119,9 @@ export default class WatermarkModal extends React.PureComponent {
     // Note: do not update and refresh the doc else it may affect other docs as well
   }
 
+  // eslint-disable-next-line class-methods-use-this
   removeWatermark() {
-    window.docViewer.setWatermark({});
+    core.setWatermark({});
   }
 
   closeModal() {

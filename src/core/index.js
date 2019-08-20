@@ -93,6 +93,7 @@ import getViewerElement from './getViewerElement';
 import { addEventListener, removeEventListener } from './eventListener';
 import setAnnotationCanvasTransform  from './setAnnotationCanvasTransform';
 import getAnnotationCopy from './getAnnotationCopy';
+import setWatermark from './setWatermark';
 
 export default {
   setToolMode,
@@ -190,5 +191,6 @@ export default {
   goToOutline,
   getViewerElement, 
   setAnnotationCanvasTransform,
-  getAnnotationCopy
+  getAnnotationCopy,
+  setWatermark,
 };
