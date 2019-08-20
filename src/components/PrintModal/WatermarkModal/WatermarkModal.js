@@ -41,6 +41,7 @@ export default class WatermarkModal extends React.PureComponent {
 
   static propTypes = {
     isVisible: PropTypes.bool,
+    pageIndexToView: PropTypes.number,
     modalClosed: PropTypes.func,
   }
 
@@ -105,8 +106,8 @@ export default class WatermarkModal extends React.PureComponent {
       footer: positionBot ? watermarkOption : null,
     });
 
-    window.docViewer.getDocument().loadCanvasAsync({
-      pageIndex: 0, // TODO get curr viewed page
+    core.getDocument().loadCanvasAsync({
+      pageIndex: this.props.pageIndexToView,
       drawComplete: canvas => {
         const nodes = this.canvasContainerRef.current.childNodes;
         if (nodes && nodes.length > 0) {

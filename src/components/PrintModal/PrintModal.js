@@ -370,6 +370,7 @@ class PrintModal extends React.PureComponent {
       <>
       <WatermarkModal 
           isVisible = {this.state.isWatermarkModalVisible}
+          pageIndexToView = {this.props.currentPage - 1} // pageIndex starts at index 0 and getCurrPage number starts at index 1
           modalClosed = {() => this.setWatermarkModalVisibility(false) }/>
 
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
