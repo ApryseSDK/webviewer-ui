@@ -37,7 +37,7 @@ const AnnotationOverlay = () => {
       setAnnotation(annotation);
       setOverlayPosition({
         left: mouseEvent.clientX + 20,
-        top:mouseEvent.clientY + 20
+        top: mouseEvent.clientY + 20
       });
       setRepliesCount(annotation.getReplies().length);
     }
