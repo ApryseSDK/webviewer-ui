@@ -19,6 +19,7 @@ const FORM_FIELD_KEYS = {
   fontSize: 'fontSize',
   text: 'text',
   color: 'color',
+  opacity: 'opacity',
 };
 
 const DEFAULT_VALS = {
@@ -26,6 +27,7 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[0],
   [FORM_FIELD_KEYS.text]: '',
   [FORM_FIELD_KEYS.color]: new window.Annotations.Color(255, 255, 255, 1),
+  [FORM_FIELD_KEYS.opacity]: 100,
 };
 
 export default class WatermarkModal extends React.PureComponent {
@@ -107,17 +109,7 @@ export default class WatermarkModal extends React.PureComponent {
     this.props.modalClosed();
   }
 
-  onTextColorChange(property, color) {
-    this.setState({
-      color,
-    });
-  }
-
   handleInputChange(key, value) {
-    // const target = event.target;
-    // const value = target.type === 'checkbox' ? target.checked : target.value;
-    // const name = target.name;
-
     this.setState({
       [key]: value,
     });
@@ -137,32 +129,45 @@ export default class WatermarkModal extends React.PureComponent {
               <label>
                 Size
               </label>
-              <select value={this.state[FORM_FIELD_KEYS.fontSize]} onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}>
+              <select
+                value={this.state[FORM_FIELD_KEYS.fontSize]}
+                onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}>
                 { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
               </select>
 
               <label>
                 Location
               </label>
-              <select>
+              <select
+                value={this.state[FORM_FIELD_KEYS.location]}
+                onChange={event => this.handleInputChange(FORM_FIELD_KEYS.location, event.target.value)}>
                 { WATERMARK_LOCATIONS.map(location => <option key={location}>{location}</option>) }
               </select>
 
               <label>
                 Text
               </label>
-              <input type="text"/>
+              <input
+                value={this.state[FORM_FIELD_KEYS.text]}
+                onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
+                type="text"/>
 
               <label>Opacity</label>
               {/* TODO style this like the stylepop up slider */}
-              <input type="range" min="1" max="100"></input>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value={this.state[FORM_FIELD_KEYS.opacity]}
+                onChange={event => this.handleInputChange(FORM_FIELD_KEYS.opacity, +event.target.value)}>
+              </input>
 
               <label>Style</label>
               {/* TODO style this to be just a div with the curr color. on click, show color palette */}
               <ColorPalette
                 color={this.state.color}
                 property={'TextColor'}
-                onStyleChange = {(property, color) => this.onTextColorChange(property, color)}
+                onStyleChange = {(property, color) => this.handleInputChange(FORM_FIELD_KEYS.color, color)}
               />
 
             </form>
