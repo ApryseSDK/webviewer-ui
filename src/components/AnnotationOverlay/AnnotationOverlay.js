@@ -7,15 +7,13 @@ import selectors from 'selectors';
 
 import './AnnotationOverlay.scss';
 
-const MAX_WORDS = 100;
+const MAX_CHARACTERS = 100;
 
 const AnnotationOverlay = () => {
   const isDisabled = useSelector(state => 
     selectors.isElementDisabled(state, 'annotationOverlay')
   );
-  const [isOpen, setIsOpen] = useState(false);
   const [annotation, setAnnotation] = useState();
-  const [repliesCount, setRepliesCount] = useState(0);
   const [overlayPosition, setOverlayPosition] = useState({
     left: 0,
     top: 0
@@ -24,31 +22,29 @@ const AnnotationOverlay = () => {
   const am = core.getAnnotationManager();
   
   useEffect(() => {
-    window.docViewer.on('mouseMove.hover', onMouseHover);
+    const onMouseHover = (e, mouseEvent) => {
+      const annotation = am.getAnnotationByMouseEvent(mouseEvent);
+      setAnnotation(annotation);
+      if (annotation) {
+        setOverlayPosition({
+          left: mouseEvent.clientX + 20,
+          top: mouseEvent.clientY + 20
+        });
+      }
+    }
+    core.addEventListener('mouseMove', onMouseHover);
     return () => {
-      window.docViewer.off('mouseMove.hover', onMouseHover);
+      core.removeEventListener('mouseMove', onMouseHover)
     }
   }, []);
-    
-  const onMouseHover = (e, mouseEvent) => {
-    const annotation = am.getAnnotationByMouseEvent(mouseEvent);
-    setIsOpen(!!annotation);
-    if (annotation) {
-      setAnnotation(annotation);
-      setOverlayPosition({
-        left: mouseEvent.clientX + 20,
-        top:mouseEvent.clientY + 20
-      });
-      setRepliesCount(annotation.getReplies().length);
-    }
-  }
 
-  if (!isDisabled && isOpen && annotation && annotation.getContents()) {
+  if (!isDisabled && annotation && annotation.getContents()) {
     const { left, top } = overlayPosition;
+    const repliesCount = annotation.getReplies().length || 0;
     let contents = annotation.getContents();
-    // display upto MAX_WORDS characters
-    if (contents && contents.length > MAX_WORDS) {
-      contents = contents.slice(0, MAX_WORDS);
+    // display upto MAX_CHARACTERS characters
+    if (contents && contents.length > MAX_CHARACTERS) {
+      contents = contents.slice(0, MAX_CHARACTERS);
       contents += '...';
     }
     return (
