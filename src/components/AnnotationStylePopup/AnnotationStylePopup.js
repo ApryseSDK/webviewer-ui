@@ -7,6 +7,7 @@ import StylePopup from 'components/StylePopup';
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
+import { isMobile } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -31,8 +32,15 @@ class AnnotationStylePopup extends React.Component {
     setToolStyles(annotation.ToolName, property, value);
   };
 
+  handleClick = e => {
+    // see the comments above handleClick in ToolStylePopup.js
+    if (isMobile() && e.target === e.currentTarget) {
+      this.props.closeElement('annotationPopup');
+    }
+  }
+
   render() {
-    const { isDisabled, annotation, style, closeElement } = this.props;
+    const { isDisabled, annotation, style } = this.props;
     const isFreeText =
       annotation instanceof window.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
@@ -49,7 +57,7 @@ class AnnotationStylePopup extends React.Component {
       <div
         className={className}
         data-element="annotationStylePopup"
-        onClick={() => closeElement('annotationPopup')}
+        onClick={this.handleClick}
       >
         <StylePopup
           activeToolName={annotation.ToolName}
@@ -73,5 +81,5 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(AnnotationStylePopup);

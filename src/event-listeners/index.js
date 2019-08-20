@@ -10,7 +10,6 @@ import onZoomUpdated from './onZoomUpdated';
 import onPageNumberUpdated from './onPageNumberUpdated';
 import onStampAnnotationAdded from './onStampAnnotationAdded';
 import onSignatureAnnotationAdded from './onSignatureAnnotationAdded';
-import onAnnotationSelected from './onAnnotationSelected';
 import onAnnotationChanged from './onAnnotationChanged';
 import onStickyAnnotationAdded from './onStickyAnnotationAdded';
 import onKeyDown from './onKeyDown';
@@ -33,7 +32,6 @@ export {
   onPageNumberUpdated,
   onStampAnnotationAdded,
   onSignatureAnnotationAdded,
-  onAnnotationSelected,
   onAnnotationChanged,
   onStickyAnnotationAdded,
   onKeyDown,
@@ -41,5 +39,5 @@ export {
   onUpdateAnnotationPermission,
   onLayoutChanged,
   onLocationSelected,
-  onPageComplete
+  onPageComplete,
 };

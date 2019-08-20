@@ -24,12 +24,12 @@ class SearchPanel extends React.PureComponent {
     noResult: PropTypes.bool,
     setActiveResultIndex: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
-  }
+    t: PropTypes.func.isRequired,
+  };
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
-      this.props.closeElement('leftPanel');  
+      this.props.closeElement('leftPanel');
     }
   }
 
@@ -38,15 +38,15 @@ class SearchPanel extends React.PureComponent {
 
     setActiveResultIndex(resultIndex);
     core.setActiveSearchResult(result);
-    
+
     if (isMobile()) {
       closeElement('searchPanel');
     }
-  }
+  };
 
   onClickClose = () => {
     this.props.closeElement('searchPanel');
-  }
+  };
 
   renderListSeparator = (prevResult, currResult) => {
     const isFirstResult = prevResult === currResult;
@@ -55,17 +55,19 @@ class SearchPanel extends React.PureComponent {
     if (isFirstResult || isInDifferentPage) {
       return (
         <ListSeparator
-          renderContent={() => `${this.props.t('option.shared.page')} ${currResult.page_num + 1}`}
+          renderContent={() =>
+            `${this.props.t('option.shared.page')} ${currResult.page_num + 1}`
+          }
         />
       );
     }
-  
+
     return null;
-  }
+  };
 
   render() {
     const { isDisabled, t, results, isSearching, noResult } = this.props;
-    
+
     if (isDisabled) {
       return null;
     }
@@ -73,22 +75,27 @@ class SearchPanel extends React.PureComponent {
     const className = getClassName('Panel SearchPanel', this.props);
 
     return (
-      <div className={className} data-element="searchPanel" onClick={e => e.stopPropagation()}>
-        <Button className="close-btn hide-in-desktop hide-in-tablet" dataElement="searchPanelCloseButton" img="ic_close_black_24px" onClick={this.onClickClose} />
+      <div className={className} data-element="searchPanel">
+        <Button
+          className="close-btn hide-in-desktop hide-in-tablet"
+          dataElement="searchPanelCloseButton"
+          img="ic_close_black_24px"
+          onClick={this.onClickClose}
+        />
         <div className="results">
-          {isSearching &&
-            <div className="info">{t('message.searching')}</div>
-          }
-          {noResult &&
-            <div className="info">{t('message.noResults')}</div>
-          }
+          {isSearching && <div className="info">{t('message.searching')}</div>}
+          {noResult && <div className="info">{t('message.noResults')}</div>}
           {results.map((result, i) => {
             const prevResult = i === 0 ? results[0] : results[i - 1];
 
             return (
               <React.Fragment key={i}>
                 {this.renderListSeparator(prevResult, result)}
-                <SearchResult result={result} index={i} onClickResult={this.onClickResult} />
+                <SearchResult
+                  result={result}
+                  index={i}
+                  onClickResult={this.onClickResult}
+                />
               </React.Fragment>
             );
           })}
@@ -111,4 +118,7 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SearchPanel));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(SearchPanel));
