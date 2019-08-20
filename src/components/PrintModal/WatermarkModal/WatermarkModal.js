@@ -96,6 +96,15 @@ export default class WatermarkModal extends React.PureComponent {
             {/* TODO pass in t */}
             {/* https://reactjs.org/docs/forms.html */}
             <form>
+            <label>
+                Size
+              </label>
+              {/* TODO turn this to a constant and iterate */}
+              <select>
+                <option>10</option>
+                <option>12</option>
+                <option>14</option>
+              </select>
               <label>
                 Location
               </label>
