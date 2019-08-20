@@ -44,6 +44,7 @@ class WatermarkModal extends React.PureComponent {
     isVisible: PropTypes.bool,
     pageIndexToView: PropTypes.number,
     modalClosed: PropTypes.func,
+    formSubmitted: PropTypes.func,
     t: PropTypes.func.isRequired,
   }
 
@@ -81,8 +82,26 @@ class WatermarkModal extends React.PureComponent {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   addWatermark(state) {
+    const watermarkOptions = this.constructWatermarkOptions(state);
+    core.setWatermark(watermarkOptions);
+
+    core.getDocument().loadCanvasAsync({
+      pageIndex: this.props.pageIndexToView,
+      drawComplete: canvas => {
+        const nodes = this.canvasContainerRef.current.childNodes;
+        if (nodes && nodes.length > 0) {
+          this.canvasContainerRef.current.removeChild(nodes[0]);
+        }
+        this.canvasContainerRef.current.appendChild(canvas);
+      },
+    });
+
+    // Note: do not update and refresh the doc else it may affect other docs as well
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  constructWatermarkOptions(state) {
     const positionTop = WATERMARK_LOCATIONS.TOP_CENTER === state.location || WATERMARK_LOCATIONS.TOP_LEFT === state.location || WATERMARK_LOCATIONS.TOP_RIGHT === state.location;
     const positionBot = WATERMARK_LOCATIONS.BOT_CENTER === state.location || WATERMARK_LOCATIONS.BOT_LEFT === state.location || WATERMARK_LOCATIONS.BOT_RIGHT === state.location;
 
@@ -102,24 +121,11 @@ class WatermarkModal extends React.PureComponent {
       right: positionRight ? state.text : null,
     };
 
-    core.setWatermark({
+    return {
       diagonal: positionCenter ? watermarkOption : null,
       header: positionTop ? watermarkOption : null,
       footer: positionBot ? watermarkOption : null,
-    });
-
-    core.getDocument().loadCanvasAsync({
-      pageIndex: this.props.pageIndexToView,
-      drawComplete: canvas => {
-        const nodes = this.canvasContainerRef.current.childNodes;
-        if (nodes && nodes.length > 0) {
-          this.canvasContainerRef.current.removeChild(nodes[0]);
-        }
-        this.canvasContainerRef.current.appendChild(canvas);
-      },
-    });
-
-    // Note: do not update and refresh the doc else it may affect other docs as well
+    };
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -147,6 +153,11 @@ class WatermarkModal extends React.PureComponent {
     this.setState({
       ...DEFAULT_VALS,
     }, () => this.addWatermark(this.state));
+  }
+
+  onOkPressed() {
+    this.props.formSubmitted(this.constructWatermarkOptions(this.state));
+    this.closeModal();
   }
 
   render() {
@@ -211,9 +222,8 @@ class WatermarkModal extends React.PureComponent {
             </div>
           </div>
           <div onClick={e => e.stopPropagation()}>
-            {/* TODO implement button functionality */}
             <button onClick={() => this.resetForm()}>{`${t(`watermarkModal.reset`)}`}</button>
-            <button>{`${t(`watermarkModal.ok`)}`}</button>
+            <button onClick={() => this.onOkPressed()}>{`${t(`watermarkModal.ok`)}`}</button>
           </div>
         </div>
       </>
