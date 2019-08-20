@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
-
+import core from 'core';
 import PropTypes from 'prop-types';
 import ColorPalette from 'components/ColorPalette';
 import './WatermarkModal.scss';
@@ -37,6 +37,7 @@ const DEFAULT_VALS = {
 };
 
 export default class WatermarkModal extends React.PureComponent {
+  onDocumentLoadFxn;
   static propTypes = {
     isVisible: PropTypes.bool,
     modalClosed: PropTypes.func,
@@ -49,6 +50,14 @@ export default class WatermarkModal extends React.PureComponent {
       ...DEFAULT_VALS,
     };
     this.canvasContainerRef = React.createRef();
+    this.onDocumentLoadFxn = () => {
+      if (this.props.isVisible) {
+        this.addWatermark(this.state);
+        // https://www.pdftron.com/documentation/web/guides/watermarks/#draw-watermark-without-documentviewer
+      } else {
+        this.removeWatermark();
+      }
+    };
   }
 
   componentDidMount() {
@@ -56,6 +65,8 @@ export default class WatermarkModal extends React.PureComponent {
       this.setState({
         isVisible: this.props.isVisible,
       });
+
+      core.addEventListener('documentLoaded', this.onDocumentLoadFxn);
     }
   }
 
@@ -102,7 +113,7 @@ export default class WatermarkModal extends React.PureComponent {
     });
 
     window.docViewer.getDocument().loadCanvasAsync({
-      pageIndex: 0,
+      pageIndex: 0, // TODO get curr viewed page
       drawComplete: canvas => {
         const nodes = this.canvasContainerRef.current.childNodes;
         if (nodes && nodes.length > 0) {
@@ -130,6 +141,10 @@ export default class WatermarkModal extends React.PureComponent {
     this.setState({
       [key]: value,
     }, () => this.addWatermark(this.state));
+  }
+
+  componentWillUnmount() {
+    core.removeEventListener('documentLoaded', this.onDocumentLoadFxn);
   }
 
   render() {
@@ -189,7 +204,7 @@ export default class WatermarkModal extends React.PureComponent {
 
             </form>
 
-            <div id="canvas" ref={this.canvasContainerRef}>
+            <div ref={this.canvasContainerRef}>
 
             </div>
           </div>
