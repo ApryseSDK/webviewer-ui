@@ -16,7 +16,10 @@ const AnnotationOverlay = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [annotation, setAnnotation] = useState();
   const [repliesCount, setRepliesCount] = useState(0);
-  const [overlayPosition, setOverlayPosition] = useState();
+  const [overlayPosition, setOverlayPosition] = useState({
+    left: 0,
+    top: 0
+  });
   
   const am = core.getAnnotationManager();
   
@@ -41,7 +44,7 @@ const AnnotationOverlay = () => {
   }
 
   if (!isDisabled && isOpen && annotation && annotation.getContents()) {
-    const { left = 0, top = 0 } = overlayPosition;
+    const { left, top } = overlayPosition;
     let contents = annotation.getContents();
     // display upto MAX_WORDS characters
     if (contents && contents.length > MAX_WORDS) {
