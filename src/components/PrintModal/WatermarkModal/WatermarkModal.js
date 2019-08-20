@@ -1,9 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-
-import Input from 'components/Input';
-
+import ColorPalette from 'components/ColorPalette';
 import './WatermarkModal.scss';
 
 export default class WatermarkModal extends React.PureComponent {
@@ -18,13 +16,13 @@ export default class WatermarkModal extends React.PureComponent {
     this.state = {
       isVisible: false,
     };
+    this.canvasContainerRef = React.createRef();
   }
 
   componentDidMount() {
     if (this.props.isVisible !== undefined) {
       this.setState({
         isVisible: this.props.isVisible,
-
       });
     }
   }
@@ -35,6 +33,47 @@ export default class WatermarkModal extends React.PureComponent {
       this.setState({
         isVisible: this.props.isVisible,
       });
+
+      if (this.props.isVisible) {
+        window.docViewer.setWatermark({
+          // Draw diagonal watermark in middle of the document
+          diagonal: {
+            fontSize: 25, // or even smaller size
+            fontFamily: 'sans-serif',
+            color: 'red',
+            opacity: 50, // from 0 to 100
+            text: 'Watermark'
+          },
+    
+          // Draw header watermark
+          header: {
+            fontSize: 10,
+            fontFamily: 'sans-serif',
+            color: 'red',
+            opacity: 70,
+            left: 'left watermark',
+            center: 'center watermark',
+            right: ''
+          }
+        });
+
+        // window.docViewer.refreshAll();
+        // window.docViewer.updateView();
+
+        // https://www.pdftron.com/documentation/web/guides/watermarks/#draw-watermark-without-documentviewer
+
+        window.docViewer.getDocument().loadCanvasAsync({
+          pageIndex: 0,
+          drawComplete: (canvas) => {
+            this.canvasContainerRef.current.appendChild(canvas);
+          }
+        });
+      }
+      else {
+        window.docViewer.setWatermark({});
+        // window.docViewer.refreshAll();
+        // window.docViewer.updateView();
+      }
     }
   }
 
@@ -47,7 +86,6 @@ export default class WatermarkModal extends React.PureComponent {
 
   render() {
     const { isVisible } = this.props;
-
     if (!isVisible) {
       return null;
     }
@@ -61,6 +99,7 @@ export default class WatermarkModal extends React.PureComponent {
               <label>
                 Location
               </label>
+              {/* TODO turn this to a constant and iterate */}
               <select>
                 <option>Center</option>
                 <option>Top Left</option>
@@ -75,7 +114,16 @@ export default class WatermarkModal extends React.PureComponent {
               </label>
               <input type="text"/>
 
+              {/* TODO figure this one out */}
+              {/* <ColorPalette /> */}
+              <label>Opacity</label>
+              <input type="range" min="1" max="100"></input>
+
             </form>
+
+            <div ref={this.canvasContainerRef}>
+
+            </div>
           </div>
           <div onClick={e => e.stopPropagation()}>
             <button>Reset</button>
