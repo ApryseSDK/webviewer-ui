@@ -211,5 +211,8 @@
     "pan": "Pan",
     "select": "Select",
     "Marquee": "Marquee Zoom"
+  },
+  "watermarkModal": {
+    "size": "Size"
   }
 }

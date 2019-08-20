@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import ColorPalette from 'components/ColorPalette';
 import './WatermarkModal.scss';
 
+import { withTranslation } from 'react-i18next'; 
+
 // numbers were taken from font dropdown menu in google docs
 const FONT_SIZES = [
   8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48,
@@ -35,7 +37,7 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.opacity]: 100,
 };
 
-export default class WatermarkModal extends React.PureComponent {
+class WatermarkModal extends React.PureComponent {
   handleWatermarkRenderFxn;
 
   static propTypes = {
@@ -146,6 +148,7 @@ export default class WatermarkModal extends React.PureComponent {
     if (!isVisible) {
       return null;
     }
+    const { t } = this.props;
     return (
       <>
         <div className={'Modal Watermark'} data-element="waterMarkModal" onClick={() => this.closeModal()}>
@@ -153,7 +156,7 @@ export default class WatermarkModal extends React.PureComponent {
             {/* TODO pass in t */}
             <form>
               <label>
-                Size
+                {`${t(`watermarkModal.size`)}`}
               </label>
               <select
                 value={this.state[FORM_FIELD_KEYS.fontSize]}
@@ -212,3 +215,5 @@ export default class WatermarkModal extends React.PureComponent {
     );
   }
 }
+
+export default withTranslation()(WatermarkModal);
