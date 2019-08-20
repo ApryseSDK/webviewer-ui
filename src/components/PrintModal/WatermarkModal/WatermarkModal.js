@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import ColorPalette from 'components/ColorPalette';
 import './WatermarkModal.scss';
 
+// numbers were taken from font dropdown menu in google docs
+const FONT_SIZES = [
+  8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48,
+];
+
 export default class WatermarkModal extends React.PureComponent {
   static propTypes = {
     isVisible: PropTypes.bool,
@@ -104,11 +109,8 @@ export default class WatermarkModal extends React.PureComponent {
               <label>
                 Size
               </label>
-              {/* TODO turn this to a constant and iterate */}
               <select>
-                <option>10</option>
-                <option>12</option>
-                <option>14</option>
+                { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
               </select>
               <label>
                 Location
