@@ -44,6 +44,7 @@ class PrintModal extends React.PureComponent {
       count: -1,
       pagesToPrint: [],
       isWatermarkModalVisible: false,
+      watermarkOptionToApply: null,
     };
   }
 
@@ -378,9 +379,11 @@ class PrintModal extends React.PureComponent {
       isWatermarkModalVisible: visible,
     });
   }
-  // TODO rename this
-  temp(watermarkOptions) {
-    console.log(watermarkOptions);
+
+  setWatermarkOptionToApply(watermarkOptions) {
+    this.setState({
+      watermarkOptionToApply: watermarkOptions,
+    });
   }
 
   render() {
@@ -401,7 +404,7 @@ class PrintModal extends React.PureComponent {
         isVisible = {this.state.isWatermarkModalVisible}
         pageIndexToView = {this.props.currentPage - 1} // pageIndex starts at index 0 and getCurrPage number starts at index 1
         modalClosed = {() => this.setWatermarkModalVisibility(false)}
-        formSubmitted = {watermarkOptions => this.temp(watermarkOptions)}
+        formSubmitted = {watermarkOptions => this.setWatermarkOptionToApply(watermarkOptions)}
       />
 
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>

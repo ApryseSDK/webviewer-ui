@@ -68,7 +68,6 @@ class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible !== undefined) {
       this.setState({
         isVisible: this.props.isVisible,
-        ...DEFAULT_VALS,
       }, () => core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn));
     }
   }
@@ -77,7 +76,6 @@ class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible !== prevProps.isVisible) {
       this.setState({
         isVisible: this.props.isVisible,
-        ...DEFAULT_VALS,
       }, () => this.handleWatermarkRenderFxn());
     }
   }
