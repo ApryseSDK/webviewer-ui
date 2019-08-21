@@ -45,6 +45,7 @@ class PrintModal extends React.PureComponent {
       pagesToPrint: [],
       isWatermarkModalVisible: false,
       watermarkOptionToApply: null,
+      existingWatermarks: null,
     };
   }
 
@@ -52,32 +53,6 @@ class PrintModal extends React.PureComponent {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.onChange();
       this.props.closeElements(['signatureModal', 'loadingModal', 'progressModal', 'errorModal']);
-
-      // // TODO remove this stub code
-      // window.docViewer.setWatermark({
-      //   // Draw diagonal watermark in middle of the document
-      //   diagonal: {
-      //     fontSize: 52, // or even smaller size
-      //     fontFamily: 'sans-serif',
-      //     color: 'red',
-      //     opacity: 100, // from 0 to 100
-      //     text: 'Watermark'
-      //   },
-  
-      //   // Draw header watermark
-      //   header: {
-      //     fontSize: 52,
-      //     fontFamily: 'sans-serif',
-      //     color: 'red',
-      //     opacity: 100,
-      //     left: 'left watermark',
-      //     center: 'center watermark',
-      //     right: ''
-      //   }
-      // });
-
-      // window.docViewer.refreshAll();
-      // window.docViewer.updateView();
     }
   }
 
