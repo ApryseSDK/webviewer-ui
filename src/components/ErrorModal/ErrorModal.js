@@ -45,8 +45,8 @@ const ErrorModal = () => {
       if (typeof error === 'string') {
         errorMessage = error;
 
-        // provide more specific error messages
-        if (error.indexOf('File does not exist') > -1) {
+        // provide a more specific error message
+        if (errorMessage.indexOf('File does not exist') > -1) {
           errorMessage = t('message.notSupported');
         }
       } else if (error?.type === 'InvalidPDF') {
