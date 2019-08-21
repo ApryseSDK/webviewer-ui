@@ -177,8 +177,7 @@ class WatermarkModal extends React.PureComponent {
 
   getCirclePosn(lineLength) {
     const lineStart = circleRadius;
-    // return this.state[FORM_FIELD_KEYS.opacity] * lineLength + lineStart;
-    return this.state[FORM_FIELD_KEYS.opacity] + lineStart;
+    return (this.state[FORM_FIELD_KEYS.opacity] / 100) * lineLength + lineStart;
   }
 
   render() {
@@ -219,23 +218,15 @@ class WatermarkModal extends React.PureComponent {
                 type="text" />
 
               <label>{`${t(`watermarkModal.opacity`)}`}</label>
-              {/* TODO style this like the stylepop up slider */}
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={this.state[FORM_FIELD_KEYS.opacity]}
-                onChange={event => this.handleInputChange(FORM_FIELD_KEYS.opacity, +event.target.value)}>
-              </input>
-              {/* <Slider
+              <Slider
                 property={'Opacity'}
                 displayProperty={'opacity'}
                 value={this.state[FORM_FIELD_KEYS.opacity]}
                 displayValue={`${Math.round(this.state[FORM_FIELD_KEYS.opacity])}%`}
                 getCirclePosition={ lineLength => this.getCirclePosn(lineLength)}
                 convertRelativeCirclePositionToValue={circlePosn => circlePosn}
-                onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, value * 100)}
-              /> */}
+                onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
+              />
 
               <label>{`${t(`watermarkModal.style`)}`}</label>
               {/* TODO style this to be just a div with the curr color. on click, show color palette */}
