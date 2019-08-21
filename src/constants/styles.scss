@@ -96,3 +96,15 @@ $mobile-width: 640px;
     display: none;
   }
 }
+
+%cell {
+  flex: 1 0 28px;
+  height: 26px;
+  display: flex;
+  margin: 0 1px;
+
+  @include mobile {
+    height: 30px;
+    margin: 0 1.2px;
+  }
+}

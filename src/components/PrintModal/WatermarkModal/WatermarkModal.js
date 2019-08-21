@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import ColorPalette from 'components/ColorPalette';
 import './WatermarkModal.scss';
 
-import { withTranslation } from 'react-i18next'; 
+import { withTranslation } from 'react-i18next';
+import Slider from 'components/Slider';
+import { circleRadius } from 'constants/slider';
 
 // numbers were taken from font dropdown menu in google docs
 const FONT_SIZES = [
@@ -173,6 +175,12 @@ class WatermarkModal extends React.PureComponent {
     });
   }
 
+  getCirclePosn(lineLength) {
+    const lineStart = circleRadius;
+    // return this.state[FORM_FIELD_KEYS.opacity] * lineLength + lineStart;
+    return this.state[FORM_FIELD_KEYS.opacity] + lineStart;
+  }
+
   render() {
     const { isVisible } = this.props;
     if (!isVisible) {
@@ -219,27 +227,39 @@ class WatermarkModal extends React.PureComponent {
                 value={this.state[FORM_FIELD_KEYS.opacity]}
                 onChange={event => this.handleInputChange(FORM_FIELD_KEYS.opacity, +event.target.value)}>
               </input>
+              {/* <Slider
+                property={'Opacity'}
+                displayProperty={'opacity'}
+                value={this.state[FORM_FIELD_KEYS.opacity]}
+                displayValue={`${Math.round(this.state[FORM_FIELD_KEYS.opacity])}%`}
+                getCirclePosition={ lineLength => this.getCirclePosn(lineLength)}
+                convertRelativeCirclePositionToValue={circlePosn => circlePosn}
+                onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, value * 100)}
+              /> */}
 
               <label>{`${t(`watermarkModal.style`)}`}</label>
               {/* TODO style this to be just a div with the curr color. on click, show color palette */}
+              <div className="cell" style={{ backgroundColor: this.state[FORM_FIELD_KEYS.color].toHexString() }}></div>
+              <div className={'Popup StylePopup'} data-element="stylePopup">
+
               <ColorPalette
-                color={this.state.color}
+                color={this.state[FORM_FIELD_KEYS.color]}
                 property={'TextColor'}
                 onStyleChange = {(property, color) => this.handleInputChange(FORM_FIELD_KEYS.color, color)}
               />
+              </div>
+              
 
             </form>
 
             <div className="canvas-container" ref={this.canvasContainerRef}>
 
             </div>
-
             <div className="button-container" onClick={e => e.stopPropagation()}>
               <button onClick={() => this.resetForm()}>{`${t(`watermarkModal.reset`)}`}</button>
               <button onClick={() => this.onOkPressed()}>{`${t(`watermarkModal.ok`)}`}</button>
             </div>
-          </div>
-          
+          </div>          
         </div>
       </>
     );
