@@ -117,7 +117,7 @@ const ReplyArea = ({ annotation }) => {
     ) {
       textareaRef.current.focus();
     }
-  }, [isNoteEditingTriggeredByAnnotationPopup]);
+  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
   const postReply = e => {
     // prevent the textarea from blurring out
