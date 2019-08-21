@@ -133,7 +133,12 @@ class PrintModal extends React.PureComponent {
       });
     };
 
-    const id = core.getDocument().loadCanvasAsync(pageIndex, zoom, printRotation, onCanvasLoaded);
+    const id = core.getDocument().loadCanvasAsync({
+      pageIndex,
+      zoom,
+      pageRotation: printRotation,
+      drawComplete: onCanvasLoaded,
+    });
     this.pendingCanvases.push(id);
   })
 
@@ -187,17 +192,16 @@ class PrintModal extends React.PureComponent {
       return core.drawAnnotations(pageNumber, canvas);
     }
 
-    // Currently annotationManager expects a jQuery node
     const widgetContainer = this.createWidgetContainer(pageNumber - 1);
     return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
-      document.body.appendChild(widgetContainer[0]);
-      return window.html2canvas(widgetContainer[0], {
+      document.body.appendChild(widgetContainer);
+      return window.html2canvas(widgetContainer, {
         canvas,
         backgroundColor: null,
         scale: 1,
         logging: false,
       }).then(() => {
-        document.body.removeChild(widgetContainer[0]);
+        document.body.removeChild(widgetContainer);
       });
     });
   }
