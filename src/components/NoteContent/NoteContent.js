@@ -174,7 +174,7 @@ const NoteContent = ({ annotation }) => {
         {isEditing ? (
           <ContentArea annotation={annotation} setIsEditing={setIsEditing} />
         ) : (
-          contents.length > 0 && (
+          contents && (
             <div className="container">{renderContents(contents)}</div>
           )
         )}
