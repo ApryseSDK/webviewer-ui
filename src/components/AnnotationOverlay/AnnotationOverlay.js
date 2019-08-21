@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
@@ -9,7 +10,7 @@ import './AnnotationOverlay.scss';
 
 const MAX_CHARACTERS = 100;
 
-const AnnotationOverlay = () => {
+const AnnotationOverlay = (props) => {
   const isDisabled = useSelector(state => 
     selectors.isElementDisabled(state, 'annotationOverlay')
   );
@@ -37,16 +38,16 @@ const AnnotationOverlay = () => {
       core.removeEventListener('mouseMove', onMouseHover)
     }
   }, []);
-
-  if (!isDisabled && annotation && annotation.getContents()) {
+  let contents = annotation ? annotation.getContents() : null;
+  if (!isDisabled && contents) {
     const { left, top } = overlayPosition;
     const repliesCount = annotation.getReplies().length || 0;
-    let contents = annotation.getContents();
     // display upto MAX_CHARACTERS characters
-    if (contents && contents.length > MAX_CHARACTERS) {
+    if (contents.length > MAX_CHARACTERS) {
       contents = contents.slice(0, MAX_CHARACTERS);
       contents += '...';
     }
+    const { t } = props;
     return (
       <div 
         className="Overlay AnnotationOverlay"
@@ -60,7 +61,7 @@ const AnnotationOverlay = () => {
           {contents}
         </div>
         <div>
-          {repliesCount > 0 && `Replies (${repliesCount})`}
+          {repliesCount > 0 && `${t('action.reply')} (${repliesCount})`}
         </div>
       </div>
     );
@@ -69,4 +70,4 @@ const AnnotationOverlay = () => {
   }
 }
 
-export default (withTranslation()(AnnotationOverlay));
+export default connect()(withTranslation()(AnnotationOverlay));
