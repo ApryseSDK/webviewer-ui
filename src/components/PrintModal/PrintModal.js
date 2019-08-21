@@ -53,6 +53,14 @@ class PrintModal extends React.PureComponent {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.onChange();
       this.props.closeElements(['signatureModal', 'loadingModal', 'progressModal', 'errorModal']);
+
+      this.setState({
+        existingWatermarks: core.getWatermark(),
+      });
+    }
+
+    if (prevProps.isOpen && !this.props.isOpen) {
+      core.setWatermark(this.state.existingWatermarks);
     }
   }
 
