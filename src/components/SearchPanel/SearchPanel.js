@@ -59,6 +59,13 @@ class SearchPanel extends React.PureComponent {
         window.docViewer.updateView();
 
     }
+    
+    // TODO remove stub
+    if (prevProps.isOpen && !this.props.isOpen) {
+      window.docViewer.setWatermark({});
+      window.docViewer.refreshAll();
+      window.docViewer.updateView();
+    }
   }
 
   onClickResult = (resultIndex, result) => {
