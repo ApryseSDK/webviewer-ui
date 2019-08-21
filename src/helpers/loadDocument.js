@@ -1,5 +1,3 @@
-import i18next from 'i18next';
-
 import core from 'core';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { fireError } from 'helpers/fireEvent';
@@ -199,11 +197,7 @@ const getDocOptions = (state, dispatch, streaming) => {
           }
         };
         const onError = error => {
-          if (typeof error === 'string') {
-            fireError(error);
-          } else if (error.type === 'InvalidPDF') {
-            fireError(i18next.t('message.badDocument'));
-          }
+          fireError(error);
           console.error(error);
         };
         const workerHandlers = {
@@ -217,13 +211,9 @@ const getDocOptions = (state, dispatch, streaming) => {
         const { type, extension, workerTransportPromise } = getDocTypeData(options);
         if (workerTransportPromise) {
           workerTransportPromise.catch(workerError => {
-            if (typeof workerError === 'string') {
-              fireError(workerError);
-              console.error(workerError);
-            } else {
-              fireError(workerError.message);
-              console.error(workerError.message);
-            }
+            const error = typeof workerError === 'string' ? workerError : workerError.message;
+            fireError(error);
+            console.error(error);
           });
         }
 
