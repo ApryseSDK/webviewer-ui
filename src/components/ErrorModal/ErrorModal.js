@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import actions from 'actions';
@@ -9,12 +9,15 @@ import selectors from 'selectors';
 import './ErrorModal.scss';
 
 const ErrorModal = () => {
-  const [message, isDisabled, isOpen, documentPath] = useSelector(state => [
-    selectors.getErrorMessage(state),
-    selectors.isElementDisabled(state, 'errorModal'),
-    selectors.isElementOpen(state, 'errorModal'),
-    selectors.getDocumentPath(state),
-  ]);
+  const [message, isDisabled, isOpen, documentPath] = useSelector(
+    state => [
+      selectors.getErrorMessage(state),
+      selectors.isElementDisabled(state, 'errorModal'),
+      selectors.isElementOpen(state, 'errorModal'),
+      selectors.getDocumentPath(state),
+    ],
+    shallowEqual,
+  );
   const dispatch = useDispatch();
   const [t] = useTranslation();
 
