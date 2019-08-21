@@ -1,3 +1,4 @@
 import WatermarkModal from './WatermarkModal';
+import * as FormFieldConstants from './FormFieldConstants';
 
-export default WatermarkModal;
+export { WatermarkModal, FormFieldConstants };
