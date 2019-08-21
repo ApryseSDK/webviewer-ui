@@ -54,6 +54,8 @@ class PrintModal extends React.PureComponent {
       this.onChange();
       this.props.closeElements(['signatureModal', 'loadingModal', 'progressModal', 'errorModal']);
 
+      // store any pre-existing water marks
+      // so that on close of print modal, we put it back
       this.setState({
         existingWatermarks: core.getWatermark(),
       });
@@ -96,7 +98,14 @@ class PrintModal extends React.PureComponent {
 
     this.setState({ count: 0 });
     this.setPrintQuality();
-    core.setWatermark(this.state.watermarkOptionToApply);
+
+    if (this.state.watermarkOptionToApply) {
+      core.setWatermark(this.state.watermarkOptionToApply);
+    }
+    else {
+      core.setWatermark(this.state.existingWatermarks);
+    }
+
     const creatingPages = this.creatingPages();
     Promise.all(creatingPages).then(pages => {
       this.printPages(pages);
@@ -352,7 +361,6 @@ class PrintModal extends React.PureComponent {
 
   closePrintModal = () => {
     this.setState({ count: -1 });
-    core.setWatermark({});
     this.props.closeElement('printModal');
   }
 

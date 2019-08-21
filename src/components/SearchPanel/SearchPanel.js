@@ -32,7 +32,6 @@ class SearchPanel extends React.PureComponent {
       this.props.closeElement('leftPanel');
     }
     if (!prevProps.isOpen && this.props.isOpen) {
-      // core.addEventListener('documentLoaded',  () => {
         // TODO remove this stub code
         window.docViewer.setWatermark({
           // Draw diagonal watermark in middle of the document
@@ -58,7 +57,6 @@ class SearchPanel extends React.PureComponent {
 
         window.docViewer.refreshAll();
         window.docViewer.updateView();
-      // });
 
     }
   }
