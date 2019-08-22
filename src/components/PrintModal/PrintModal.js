@@ -13,7 +13,7 @@ import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 
-import WatermarkModal  from './WatermarkModal';
+import WatermarkModal from './WatermarkModal';
 
 import './PrintModal.scss';
 
@@ -41,7 +41,7 @@ class PrintModal extends React.PureComponent {
     this.includeComments = React.createRef();
     this.pendingCanvases = [];
     this.state = {
-      showApplyWatermark: false,
+      allowWatermarkModal: false,
       count: -1,
       pagesToPrint: [],
       isWatermarkModalVisible: false,
@@ -54,15 +54,9 @@ class PrintModal extends React.PureComponent {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.onChange();
       this.props.closeElements(['signatureModal', 'loadingModal', 'progressModal', 'errorModal']);
-
-      // store any pre-existing water marks
-      // so that on close of print modal, we put it back
-      // this.setState({
-      //   existingWatermarks: core.getWatermark(),
-      // });
       core.getWatermark().then(watermark => {
         this.setState({
-          showApplyWatermark: watermark === null || Object.keys(watermark).length === 0,
+          allowWatermarkModal: watermark === undefined || watermark === null || Object.keys(watermark).length === 0,
           existingWatermarks: watermark,
         });
       });
@@ -106,13 +100,7 @@ class PrintModal extends React.PureComponent {
     this.setState({ count: 0 });
     this.setPrintQuality();
 
-    // if (this.state.watermarkOptionToApply) {
-    // core.setWatermark(this.state.watermarkOptionToApply);
-    // }
-    // else {
-    //   core.setWatermark(this.state.existingWatermarks);
-    // }
-    if (this.state.showApplyWatermark) {
+    if (this.state.allowWatermarkModal) {
       core.setWatermark(this.state.watermarkOptionToApply);
     }
     else {
@@ -418,7 +406,7 @@ class PrintModal extends React.PureComponent {
 
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
         <div className="container" onClick={e => e.stopPropagation()}>
-          {this.state.showApplyWatermark && <button onClick={() => this.setWatermarkModalVisibility(true)}>Apply Watermarks</button> }
+          {this.state.allowWatermarkModal && <button onClick={() => this.setWatermarkModalVisibility(true)}>Apply Watermarks</button> }
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
             <form className="col" onChange={this.onChange} onSubmit={this.createPagesAndPrint}>
