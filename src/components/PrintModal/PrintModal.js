@@ -13,7 +13,7 @@ import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 
-import { WatermarkModal } from './WatermarkModal';
+import WatermarkModal  from './WatermarkModal';
 
 import './PrintModal.scss';
 
@@ -57,12 +57,13 @@ class PrintModal extends React.PureComponent {
 
       // store any pre-existing water marks
       // so that on close of print modal, we put it back
-      this.setState({
-        existingWatermarks: core.getWatermark(),
-      });
+      // this.setState({
+      //   existingWatermarks: core.getWatermark(),
+      // });
       core.getWatermark().then(watermark => {
         this.setState({
           showApplyWatermark: watermark === null || Object.keys(watermark).length === 0,
+          watermarkOptionToApply: watermark,
         });
       });
     }
@@ -105,12 +106,12 @@ class PrintModal extends React.PureComponent {
     this.setState({ count: 0 });
     this.setPrintQuality();
 
-    if (this.state.watermarkOptionToApply) {
+    // if (this.state.watermarkOptionToApply) {
       core.setWatermark(this.state.watermarkOptionToApply);
-    }
-    else {
-      core.setWatermark(this.state.existingWatermarks);
-    }
+    // }
+    // else {
+    //   core.setWatermark(this.state.existingWatermarks);
+    // }
 
     const creatingPages = this.creatingPages();
     Promise.all(creatingPages).then(pages => {

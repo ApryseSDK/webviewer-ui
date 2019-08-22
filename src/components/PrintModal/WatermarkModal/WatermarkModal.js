@@ -45,7 +45,6 @@ class WatermarkModal extends React.PureComponent {
   static propTypes = {
     isVisible: PropTypes.bool,
     pageIndexToView: PropTypes.number,
-    // initialForm: PropTypes.object.isRequired,
     modalClosed: PropTypes.func,
     formSubmitted: PropTypes.func,
     t: PropTypes.func.isRequired,
