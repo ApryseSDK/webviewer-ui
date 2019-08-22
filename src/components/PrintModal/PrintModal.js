@@ -63,7 +63,7 @@ class PrintModal extends React.PureComponent {
       core.getWatermark().then(watermark => {
         this.setState({
           showApplyWatermark: watermark === null || Object.keys(watermark).length === 0,
-          watermarkOptionToApply: watermark,
+          existingWatermarks: watermark,
         });
       });
     }
@@ -107,11 +107,17 @@ class PrintModal extends React.PureComponent {
     this.setPrintQuality();
 
     // if (this.state.watermarkOptionToApply) {
-      core.setWatermark(this.state.watermarkOptionToApply);
+    // core.setWatermark(this.state.watermarkOptionToApply);
     // }
     // else {
     //   core.setWatermark(this.state.existingWatermarks);
     // }
+    if (this.state.showApplyWatermark) {
+      core.setWatermark(this.state.watermarkOptionToApply);
+    }
+    else {
+      core.setWatermark(this.state.existingWatermarks);
+    }
 
     const creatingPages = this.creatingPages();
     Promise.all(creatingPages).then(pages => {
