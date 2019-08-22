@@ -192,7 +192,7 @@ class WatermarkModal extends React.PureComponent {
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <form>
               <label>
-                {`${t(`watermarkModal.size`)}`}
+                {`${t(`watermark.size`)}`}
               </label>
               <select
                 value={this.state[FORM_FIELD_KEYS.fontSize]}
@@ -201,7 +201,7 @@ class WatermarkModal extends React.PureComponent {
               </select>
 
               <label>
-                {`${t(`watermarkModal.location`)}`}
+                {`${t(`watermark.location`)}`}
               </label>
               <select
                 value={this.state[FORM_FIELD_KEYS.location]}
@@ -210,14 +210,14 @@ class WatermarkModal extends React.PureComponent {
               </select>
 
               <label>
-                {`${t(`watermarkModal.text`)}`}
+                {`${t(`watermark.text`)}`}
               </label>
               <input
                 value={this.state[FORM_FIELD_KEYS.text]}
                 onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
                 type="text" />
 
-              <label>{`${t(`watermarkModal.opacity`)}`}</label>
+              <label>{`${t(`watermark.opacity`)}`}</label>
               <Slider
                 property={'Opacity'}
                 displayProperty={'opacity'}
@@ -228,7 +228,7 @@ class WatermarkModal extends React.PureComponent {
                 onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
               />
 
-              <label>{`${t(`watermarkModal.style`)}`}</label>
+              <label>{`${t(`watermark.style`)}`}</label>
               {/* TODO style this to be just a div with the curr color. on click, show color palette */}
               <div className="cell" style={{ backgroundColor: this.state[FORM_FIELD_KEYS.color].toHexString() }}></div>
               <div className={'Popup StylePopup'} data-element="stylePopup">
@@ -247,8 +247,8 @@ class WatermarkModal extends React.PureComponent {
 
             </div>
             <div className="button-container" onClick={e => e.stopPropagation()}>
-              <button onClick={() => this.resetForm()}>{`${t(`watermarkModal.reset`)}`}</button>
-              <button onClick={() => this.onOkPressed()}>{`${t(`watermarkModal.ok`)}`}</button>
+              <button onClick={() => this.resetForm()}>{`${t(`action.reset`)}`}</button>
+              <button onClick={() => this.onOkPressed()}>{`${t(`action.ok`)}`}</button>
             </div>
           </div>          
         </div>
