@@ -45,7 +45,7 @@ class PrintModal extends React.PureComponent {
       count: -1,
       pagesToPrint: [],
       isWatermarkModalVisible: false,
-      watermarkOptionToApply: null,
+      watermarkModalOption: null,
       existingWatermarks: null,
     };
   }
@@ -101,7 +101,7 @@ class PrintModal extends React.PureComponent {
     this.setPrintQuality();
 
     if (this.state.allowWatermarkModal) {
-      core.setWatermark(this.state.watermarkOptionToApply);
+      core.setWatermark(this.state.watermarkModalOption);
     }
     else {
       core.setWatermark(this.state.existingWatermarks);
@@ -377,9 +377,9 @@ class PrintModal extends React.PureComponent {
     });
   }
 
-  setWatermarkOptionToApply(watermarkOptions) {
+  setWatermarkModalOption(watermarkOptions) {
     this.setState({
-      watermarkOptionToApply: watermarkOptions,
+      watermarkModalOption: watermarkOptions,
     });
   }
 
@@ -401,12 +401,11 @@ class PrintModal extends React.PureComponent {
         isVisible = {this.state.isWatermarkModalVisible}
         pageIndexToView = {this.props.currentPage - 1} // pageIndex starts at index 0 and getCurrPage number starts at index 1
         modalClosed = {() => this.setWatermarkModalVisibility(false)}
-        formSubmitted = {watermarkOptions => this.setWatermarkOptionToApply(watermarkOptions)}
+        formSubmitted = {watermarkOptions => this.setWatermarkModalOption(watermarkOptions)}
       />
 
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
         <div className="container" onClick={e => e.stopPropagation()}>
-          {this.state.allowWatermarkModal && <button onClick={() => this.setWatermarkModalVisibility(true)}>Apply Watermarks</button> }
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
             <form className="col" onChange={this.onChange} onSubmit={this.createPagesAndPrint}>
@@ -415,6 +414,7 @@ class PrintModal extends React.PureComponent {
               <Input ref={this.customPages} id="custom-pages" name="pages" type="radio" label={customPagesLabelElement} />
               <Input ref={this.includeComments} id="include-comments" name="comments" type="checkbox" label={t('option.print.includeComments')} />
             </form>
+
           </div>
           <div className="total">
             {isPrinting
@@ -422,6 +422,7 @@ class PrintModal extends React.PureComponent {
               : <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
             }
           </div>
+          {this.state.allowWatermarkModal && <button onClick={() => this.setWatermarkModalVisibility(true)}>Apply Watermarks</button> }
           <div className="buttons">
             <div className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</div>
             {isPrinting
