@@ -218,7 +218,6 @@
     "size": "Size",
     "location": "Location",
     "text": "Text",
-    "opacity": "Opacity",
     "style": "Style"
   }
 }

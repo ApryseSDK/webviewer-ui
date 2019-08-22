@@ -8,6 +8,9 @@ import { withTranslation } from 'react-i18next';
 import Slider from 'components/Slider';
 import { circleRadius } from 'constants/slider';
 
+const DESIRED_WIDTH = 491;
+const DESIRED_HEIGHT = 698;
+
 // numbers were taken from font dropdown menu in google docs
 const FONT_SIZES = [
   8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48,
@@ -89,8 +92,8 @@ class WatermarkModal extends React.PureComponent {
     const pageHeight = core.getPageHeight(this.props.pageIndexToView);
     const pageWidth = core.getPageWidth(this.props.pageIndexToView);
 
-    const desiredZoomForWidth = 491 / pageWidth;
-    const desiredZoomForHeight = 648 / pageHeight;
+    const desiredZoomForWidth = DESIRED_WIDTH / pageWidth;
+    const desiredZoomForHeight = DESIRED_HEIGHT / pageHeight;
 
     const desiredZoom = Math.min(desiredZoomForHeight, desiredZoomForWidth);
 
@@ -192,7 +195,7 @@ class WatermarkModal extends React.PureComponent {
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <form>
               <label>
-                {`${t(`watermark.size`)}`}
+                {t(`watermark.size`)}
               </label>
               <select
                 value={this.state[FORM_FIELD_KEYS.fontSize]}
@@ -201,7 +204,7 @@ class WatermarkModal extends React.PureComponent {
               </select>
 
               <label>
-                {`${t(`watermark.location`)}`}
+                {t(`watermark.location`)}
               </label>
               <select
                 value={this.state[FORM_FIELD_KEYS.location]}
@@ -210,16 +213,15 @@ class WatermarkModal extends React.PureComponent {
               </select>
 
               <label>
-                {`${t(`watermark.text`)}`}
+                {t(`watermark.text`)}
               </label>
               <input
                 value={this.state[FORM_FIELD_KEYS.text]}
                 onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
                 type="text" />
 
-              <label>{`${t(`watermark.opacity`)}`}</label>
               <Slider
-                property={'Opacity'} // arbitrary property name. this property isn't used in this file
+                property={'opacity'} // arbitrary property name. this property isn't used in this file
                 displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
                 value={this.state[FORM_FIELD_KEYS.opacity]}
                 displayValue={`${Math.round(this.state[FORM_FIELD_KEYS.opacity])}%`}
@@ -228,7 +230,9 @@ class WatermarkModal extends React.PureComponent {
                 onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
               />
 
-              <label>{`${t(`watermark.style`)}`}</label>
+              <label>
+                {t(`watermark.style`)}
+              </label>
               {/* TODO style this to be just a div with the curr color. on click, show color palette */}
               <div className="cell" style={{ backgroundColor: this.state[FORM_FIELD_KEYS.color].toHexString() }}></div>
               <div className={'Popup StylePopup'} data-element="stylePopup">
@@ -247,8 +251,8 @@ class WatermarkModal extends React.PureComponent {
 
             </div>
             <div className="button-container" onClick={e => e.stopPropagation()}>
-              <button className="reset button" onClick={() => this.resetForm()}>{`${t(`action.reset`)}`}</button>
-              <button className="ok button" onClick={() => this.onOkPressed()}>{`${t(`action.ok`)}`}</button>
+              <button className="reset button" onClick={() => this.resetForm()}>{t(`action.reset`)}</button>
+              <button className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
             </div>
           </div>          
         </div>
