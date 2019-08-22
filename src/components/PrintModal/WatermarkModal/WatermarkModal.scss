@@ -16,9 +16,10 @@
   }
 
   .button-container {
-    @extend %modal-shared-container-style;
+    // @extend %modal-shared-container-style;
     display: flex;
     justify-content: space-between;
+    padding: 2px;
   }
 
   .cell {
@@ -26,14 +27,17 @@
     cursor: pointer;
   }
 
-  .ok {
-    color: #fff;
+  .button {
     font-weight: 600;
     padding: 6px 18px;
-    margin-right: 8px;
-    background: #00a4e4;
     border-radius: 4px 4px 4px 4px;
-    border: 1px solid #00a4e4;
     height: 32px;
+    cursor: pointer;
+  }
+
+  .ok, .reset {
+    color: #fff;
+    background: #00a4e4;
+    border: 1px solid #00a4e4;
   }
 }
