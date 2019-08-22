@@ -219,8 +219,8 @@ class WatermarkModal extends React.PureComponent {
 
               <label>{`${t(`watermark.opacity`)}`}</label>
               <Slider
-                property={'Opacity'}
-                displayProperty={'opacity'}
+                property={'Opacity'} // arbitrary property name. this property isn't used in this file
+                displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
                 value={this.state[FORM_FIELD_KEYS.opacity]}
                 displayValue={`${Math.round(this.state[FORM_FIELD_KEYS.opacity])}%`}
                 getCirclePosition={ lineLength => this.getCirclePosn(lineLength)}
@@ -235,7 +235,7 @@ class WatermarkModal extends React.PureComponent {
 
               <ColorPalette
                 color={this.state[FORM_FIELD_KEYS.color]}
-                property={'TextColor'}
+                property={'TextColor'} // arbitrary property name. this property isn't used in this file
                 onStyleChange = {(property, color) => this.handleInputChange(FORM_FIELD_KEYS.color, color)}
               />
               </div>
@@ -248,7 +248,7 @@ class WatermarkModal extends React.PureComponent {
             </div>
             <div className="button-container" onClick={e => e.stopPropagation()}>
               <button onClick={() => this.resetForm()}>{`${t(`action.reset`)}`}</button>
-              <button onClick={() => this.onOkPressed()}>{`${t(`action.ok`)}`}</button>
+              <button className="ok" onClick={() => this.onOkPressed()}>{`${t(`action.ok`)}`}</button>
             </div>
           </div>          
         </div>
