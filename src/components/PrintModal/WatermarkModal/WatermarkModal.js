@@ -8,8 +8,8 @@ import { withTranslation } from 'react-i18next';
 import Slider from 'components/Slider';
 import { circleRadius } from 'constants/slider';
 
-const DESIRED_WIDTH = 300;
-const DESIRED_HEIGHT = 300;
+const DESIRED_WIDTH = 250;
+const DESIRED_HEIGHT = 250;
 
 // numbers were taken from font dropdown menu in google docs
 const FONT_SIZES = [
@@ -202,7 +202,7 @@ class WatermarkModal extends React.PureComponent {
         <div className={'Modal Watermark'} data-element="waterMarkModal" onClick={() => this.closeModal()}>
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <div className="header-container" onClick={e => e.stopPropagation()}>
-              <h1>Apply Watermark</h1>
+              <h3>{t('option.print.printWatermarkSetting')}</h3>
             </div>
 
             <div className="form-content-container">
