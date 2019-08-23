@@ -164,6 +164,11 @@ class AnnotationPopup extends React.PureComponent {
     this.props.closeElement('annotationPopup');
   }
 
+  cropPage = () => {
+    core.getTool('CropPage').applyCrop();
+    this.props.closeElement('annotationPopup');
+  }
+
   render() {
     const { annotation, left, top, isStylePopupOpen } = this.state;
     const { isNotesPanelDisabled, isDisabled, isOpen, isAnnotationStylePopupDisabled } = this.props;
@@ -181,14 +186,17 @@ class AnnotationPopup extends React.PureComponent {
         {isStylePopupOpen
           ? <AnnotationStylePopup annotation={annotation} style={style} isOpen={isOpen} />
           : <>
-            {!isNotesPanelDisabled &&
+            {!isNotesPanelDisabled && annotation.ToolName !== 'CropPage' &&
               <ActionButton dataElement="annotationCommentButton" title="action.comment" img="ic_comment_black_24px" onClick={this.commentOnAnnotation} />
             }
-            {canModify && hasStyle && !isAnnotationStylePopupDisabled &&
+            {canModify && hasStyle && !isAnnotationStylePopupDisabled && annotation.ToolName !== 'CropPage' &&
               <ActionButton dataElement="annotationStyleEditButton" title="action.style" img="ic_palette_black_24px" onClick={this.openStylePopup} />
             }
             {redactionEnabled &&
               <ActionButton dataElement="annotationRedactButton" title="action.apply" img="ic_check_black_24px" onClick={this.redactAnnotation} />
+            }
+            {annotation.ToolName === 'CropPage' &&
+              <ActionButton dataElement="annotationCropButton" title="action.apply" img="ic_check_black_24px" onClick={this.cropPage} />
             }
             {canModify &&
               <ActionButton dataElement="annotationDeleteButton" title="action.delete" img="ic_delete_black_24px" onClick={this.deleteAnnotation} />

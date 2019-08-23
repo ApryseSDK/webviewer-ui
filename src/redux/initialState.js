@@ -89,7 +89,8 @@ export default {
             type: 'dropdownButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton',
             children: [
               { type: 'toolButton', img: 'ic_annotation_callout_black_24px', toolName: 'AnnotationCreateCallout', dataElement: 'calloutToolButton', title: 'annotation.callout' },
-              { type: 'toolButton', img: 'ic_annotation_image_black_24px', toolName: 'AnnotationCreateStamp', dataElement: 'stampToolButton', title: 'annotation.stamp' }
+              { type: 'toolButton', img: 'ic_annotation_image_black_24px', toolName: 'AnnotationCreateStamp', dataElement: 'stampToolButton', title: 'annotation.stamp' },
+              { type: 'toolButton', img: 'ic_crop_black_24px', toolName: 'CropPage', dataElement: 'cropToolButton', title: 'annotation.crop' }
             ]
           },
         ]
