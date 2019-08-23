@@ -243,16 +243,6 @@ class WatermarkModal extends React.PureComponent {
 
                 </div>
                 <div className="form-field">
-
-                  {/* <Slider
-                    property={'opacity'} // arbitrary property name. this property isn't used in this file
-                    displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
-                    value={this.state[FORM_FIELD_KEYS.opacity]}
-                    displayValue={`${Math.round(this.state[FORM_FIELD_KEYS.opacity])}%`}
-                    getCirclePosition={lineLength => this.getCirclePosn(lineLength)}
-                    convertRelativeCirclePositionToValue={circlePosn => circlePosn}
-                    onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
-                  /> */}
                   <Slider
                     property={'opacity'} // arbitrary property name. this property isn't used in this file
                     displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
@@ -262,7 +252,6 @@ class WatermarkModal extends React.PureComponent {
                     convertRelativeCirclePositionToValue={circlePosn => circlePosn}
                     onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
                   />
-                  {/* <input type="range" min="0" max="100" value={this.state[FORM_FIELD_KEYS.opacity]} onChange={event => this.handleInputChange(FORM_FIELD_KEYS.opacity, event.target.value)}></input> */}
                   
                 </div>
                 <div className="form-field">

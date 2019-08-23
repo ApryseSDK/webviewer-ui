@@ -33,13 +33,15 @@ $color-widget-border: 1px solid $gray12;
   
   .form-content-container {
     display: flex;
+    margin: 5px;
     & form {
-      margin: 5px;
-      flex: 0 0 10%;
+      margin-right: 5px;
+      flex-basis: 10%;
     }
 
     & .canvas-container {
-      flex: 0 0 90%;
+      flex-basis: 90%;
+      border: 1px solid black;
     }
   }
   
