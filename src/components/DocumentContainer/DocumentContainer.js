@@ -29,6 +29,7 @@ class DocumentContainer extends React.PureComponent {
     isHeaderOpen: PropTypes.bool,
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
+    closeElements: PropTypes.func.isRequired,
     displayMode: PropTypes.string.isRequired,
     leftPanelWidth: PropTypes.number,
   }
@@ -150,6 +151,14 @@ class DocumentContainer extends React.PureComponent {
     core.scrollViewUpdated();
   }
 
+  handleScroll = () => {
+    this.props.closeElements([
+      'annotationPopup',
+      'contextMenuPopup',
+      'textPopup',
+    ]);
+  }
+
   getClassName = props => {
     const { isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen } = props;
 
@@ -158,7 +167,7 @@ class DocumentContainer extends React.PureComponent {
       isLeftPanelOpen ? 'left-panel' : '',
       isRightPanelOpen ? 'right-panel' : '',
       isHeaderOpen ? '' : 'no-header',
-      isSearchOverlayOpen ? 'search-overlay' : ''
+      isSearchOverlayOpen ? 'search-overlay' : '',
     ].join(' ').trim();
   }
 
@@ -176,7 +185,7 @@ class DocumentContainer extends React.PureComponent {
     }
 
     return (
-      <div className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd} style={style}>
+      <div className={className} ref={this.container} data-element="documentContainer" onScroll={this.handleScroll} onTransitionEnd={this.onTransitionEnd} style={style}>
         <div className="document" ref={this.document}></div>
       </div>
     );
@@ -202,7 +211,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  openElement: dataElement => dispatch(actions.openElement(dataElement))
+  openElement: dataElement => dispatch(actions.openElement(dataElement)),
+  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);

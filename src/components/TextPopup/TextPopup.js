@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
 
@@ -53,6 +54,10 @@ class TextPopup extends React.PureComponent {
     core.getTool('TextSelect').off('selectionComplete', this.onSelectionComplete);
   }
 
+  handleClickOutside = () => {
+    this.props.closeElement('textPopup');
+  }
+
   onSelectionComplete = (e, startQuad, allQuads) => {
     const { isDisabled, openElement } = this.props;
     
@@ -83,7 +88,7 @@ class TextPopup extends React.PureComponent {
     const isCreateRedactionEnabled = core.isCreateRedactionEnabled();
     
     return (
-      <div className={className} data-element={'textPopup'} ref={this.popup} style={{ left, top }} onMouseDown={e => e.stopPropagation()}>
+      <div className={className} data-element={'textPopup'} ref={this.popup} style={{ left, top }}>
         <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={this.onClickCopy} />
         {this.props.isAnnotationToolsEnabled &&
           <>
@@ -112,4 +117,4 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TextPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(TextPopup));

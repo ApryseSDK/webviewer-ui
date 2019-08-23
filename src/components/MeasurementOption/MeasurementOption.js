@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import MeasurementsDropdown from 'components/MeasurementsDropdown';
 
@@ -185,4 +185,4 @@ const mapStateToProps = state => ({
   measurementUnits: selectors.getMeasurementUnits(state),
 });
 
-export default connect(mapStateToProps)(translate()(MeasurementOption));
+export default connect(mapStateToProps)(withTranslation()(MeasurementOption));

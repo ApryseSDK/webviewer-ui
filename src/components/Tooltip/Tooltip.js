@@ -1,202 +1,152 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { isMac, isIOS, isAndroid } from 'helpers/device';
 
 import './Tooltip.scss';
 
-class Tooltip extends React.PureComponent {
-  static propTypes = {
-    location: PropTypes.oneOf([
-      'top',
-      'right',
-      'bottom',
-      'left'
-    ]),
-    delayShow: PropTypes.number,
-    children: PropTypes.element,
-    content: PropTypes.string,
-    isDisabled: PropTypes.bool,
-    t: PropTypes.func.isRequired
-  }
+const propTypes = {
+  children: PropTypes.element.isRequired,
+  content: PropTypes.string,
+};
 
-  static defaultProps = {
-    location: 'bottom',
-    delayShow: 700,
-    content: '',
-    isDisabled: false
-  }
+const defaultProps = {
+  content: '',
+};
 
-  constructor(props) {
-    super(props);
-    this.wrapperRef = React.createRef();
-    this.showTimer = null;
-    this.opacityTimeout = 50; // This is used for tooltip fade-in animation
-    this.state = {
-      show: false,
-      style: {
-        top: 0,
-        left: 0,
-        opacity: 0
-      }
-    };
-  }
+const Tooltip = ({ content, children }) => {
+  const timeoutRef = useRef(null);
+  const childRef = useRef(null);
+  const tooltipRef = useRef(null);
+  const [show, setShow] = useState(false);
+  const [opacity, setOpacity] = useState(0);
+  const [position, setPosition] = useState({
+    top: 0,
+    left: 0,
+  });
+  const [location, setLocation] = useState('bottom');
+  const [t] = useTranslation();
+  const delayShow = 700;
+  const opacityTimeout = 50;
 
-  componentDidMount() {
-    if (!this.props.isDisabled) {
-      this.addEventListeners(ReactDOM.findDOMNode(this));
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.show && this.state.show) {
-      this.setTopAndLeft(ReactDOM.findDOMNode(this));
-      setTimeout(() => {
-        this.setOpacity(1);
-      }, this.opacityTimeout);
-    }
-
-    if (prevState.show && !this.state.show) {
-      this.setOpacity(0);
-    }
-
-    if (prevProps.isDisabled && !this.props.isDisabled) {
-      this.addEventListeners(ReactDOM.findDOMNode(this));
-    }
-  }
-
-  addEventListeners = DOMElement => {
-    try {
-      DOMElement.addEventListener('mouseenter', this.show);
-      DOMElement.addEventListener('mouseleave', this.hide);
-      DOMElement.addEventListener('click', this.hide);
-    } catch (e) {
-      // we have this catch block here just to make sure UI doesn't blow up when DOMElement is null
-      // although we haven't met this situation yet
-      console.warn(`${this.props.children} is rendering null`);
-    }
-  }
-
-  setTopAndLeft = DOMElement => {
-    const { location } = this.props;
-    const { top, bottom, left, right, width, height } = DOMElement.getBoundingClientRect();
-    const locationTopLeftMap = {
-      'bottom': {
-        top: bottom,
-        left: left + width / 2
-      },
-      'left': {
-        top: top + height / 2,
-        left
-      },
-      'right': {
-        top: top + height / 2,
-        left: right
-      },
-      'top': {
-        top,
-        left: left + width / 2
-      }
+  useEffect(() => {
+    const showToolTip = () => {
+      timeoutRef.current = setTimeout(() => {
+        setShow(true);
+      }, delayShow - opacityTimeout);
     };
 
-    const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[location];
-    this.setState({
-      style: {
-        ...this.state.style,
+    const hideTooltip = () => {
+      clearTimeout(timeoutRef.current);
+      setShow(false);
+    };
+
+    if (childRef.current) {
+      childRef.current.addEventListener('mouseenter', showToolTip);
+      childRef.current.addEventListener('mouseleave', hideTooltip);
+      childRef.current.addEventListener('click', hideTooltip);
+    }
+  }, []);
+
+  useEffect(() => {
+    const setTopAndLeft = (childEle, tooltipEle) => {
+      const childRect = childEle.getBoundingClientRect();
+      const tooltipRect = tooltipEle.getBoundingClientRect();
+
+      const locationTopLeftMap = {
+        bottom: {
+          top: childRect.bottom,
+          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2,
+        },
+        left: {
+          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
+          left: childRect.left - tooltipRect.width,
+        },
+        right: {
+          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
+          left: childRect.right,
+        },
+        top: {
+          top: childRect.top - tooltipRect.height,
+          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2,
+        },
+      };
+
+      const bestLocation = Object.keys(locationTopLeftMap).find(location => {
+        const { top: newTop, left: newLeft } = locationTopLeftMap[location];
+
+        return (
+          newTop > 0 &&
+          newTop + tooltipRect.height < window.innerHeight &&
+          newLeft > 0 &&
+          newLeft + tooltipRect.width < window.innerWidth
+        );
+      });
+
+      const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[
+        bestLocation
+      ];
+
+      setPosition({
         top: tooltipTop,
-        left: tooltipLeft
-      }
-    });
-  }
+        left: tooltipLeft,
+      });
+      setLocation(bestLocation);
+    };
 
-  setOpacity = opacity => {
-    this.setState({
-      style: {
-        ...this.state.style,
-        opacity
-      }
-    });
-  }
-
-  show = () => {
-    this.showTimer = setTimeout(() => {
-      this.setState({ show: true });
-    }, this.props.delayShow - this.opacityTimeout);
-  }
-
-  hide = () => {
-    clearTimeout(this.showTimer);
-    this.setState({ show: false });
-  }
-
-  renderContent = () => {
-    const { t } = this.props;
-    const content = t(this.props.content);
-
-    if (content) {
-      // If shortcut.xxx exists in translation-en.json file 
-      // method t will return the shortcut, otherwise it will return shortcut.xxx
-      const hasShortcut = t(`shortcut.${this.props.content.split('.')[1]}`).indexOf('.') === -1;
-
-      return (
-        <>
-          {`${content} `}
-          {hasShortcut &&
-            <span className="tooltip__shortcut">{this.renderShortcut()}</span>
-          }
-        </>
-      );
+    if (show) {
+      setTopAndLeft(childRef.current, tooltipRef.current);
+      setTimeout(() => {
+        setOpacity(1);
+      }, opacityTimeout);
+    } else {
+      setOpacity(0);
     }
+  }, [show]);
 
-    return null;
+  const isUsingMobileDevices = isIOS || isAndroid;
+  const child = React.cloneElement(children, {
+    ref: childRef,
+  });
+  const translatedContent = t(content);
+  // If shortcut.xxx exists in translation-en.json file
+  // method t will return the shortcut, otherwise it will return shortcut.xxx
+  const hasShortcut =
+    t(`shortcut.${content.split('.')[1]}`).indexOf('.') === -1;
+  let shortcut = t(`shortcut.${content.split('.')[1]}`);
+  if (isMac) {
+    shortcut = shortcut.replace('Ctrl', 'Cmd');
   }
 
-  renderShortcut = () => {
-    const { t, content } = this.props;
+  return (
+    <React.Fragment>
+      {child}
+      {show &&
+        translatedContent &&
+        !isUsingMobileDevices &&
+        ReactDOM.createPortal(
+          <div
+            className={`tooltip--${location}`}
+            style={{ opacity, ...position }}
+            ref={tooltipRef}
+          >
+            <div className={`tooltip__content`}>
+              {translatedContent}
+              {hasShortcut && (
+                <span className="tooltip__shortcut">{shortcut}</span>
+              )}
+            </div>
+          </div>,
+          document.getElementById('app'),
+        )}
+    </React.Fragment>
+  );
+};
 
-    const shortcut = t(`shortcut.${content.split('.')[1]}`);
+Tooltip.propTypes = propTypes;
 
-    return isMac ? shortcut.replace('Ctrl', 'Cmd') : shortcut;
-  }
+Tooltip.defaultProps = defaultProps;
 
-  renderChildren = () => {
-    const { children, isDisabled } = this.props;
-    const { type } = children;
-
-    if (type === 'div') {
-      // an example is the advanced button in the search overlay
-      // we don't want to add isDisabled to a DOM element since it's not a valid HTML attribute
-      return React.cloneElement(children);
-    }
-    if (typeof type === 'function') {
-      // children is a React component such as <ActionButton />
-      return React.cloneElement(children, { isDisabled });
-    }
-
-    return null;
-  }
-
-  render() {
-    const { location, content } = this.props;
-    const isUsingMobileDevices = isIOS || isAndroid;
-
-    return (
-      <>
-        {this.renderChildren()}
-        {
-          this.state.show && content && !isUsingMobileDevices &&
-          ReactDOM.createPortal(
-            <div className={`tooltip--${location}`} style={this.state.style}>
-              <div className={`tooltip__content`}>{this.renderContent()}</div>
-            </div>,
-            document.getElementById('app')
-          )
-        }
-      </>
-    );
-  }
-}
-
-export default translate(null, { wait: false })(Tooltip);
+export default Tooltip;

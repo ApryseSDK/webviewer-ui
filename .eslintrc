@@ -1,11 +1,6 @@
 {
   "parser": "babel-eslint",
-  "plugins": [
-    "babel",
-    "react",
-    "import",
-    "cypress"
-  ],
+  "plugins": ["babel", "react", "react-hooks", "import", "cypress"],
   "env": {
     "browser": true,
     "node": true,
@@ -13,7 +8,8 @@
     "cypress/globals": true
   },
   "globals": {
-    "$": false
+    "$": false,
+    "_": false
   },
   "extends": [
     "eslint:recommended",
@@ -29,14 +25,8 @@
       }
     ],
     "curly": 2,
-    "strict": [
-      2,
-      "never"
-    ],
-    "semi": [
-      2,
-      "always"
-    ],
+    "strict": [2, "never"],
+    "semi": [2, "always"],
     "no-redeclare": [
       2,
       {
@@ -48,20 +38,11 @@
     "no-console": [
       2,
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "allow": ["warn", "error"]
       }
     ],
-    "object-shorthand": [
-      2,
-      "always"
-    ],
-    "arrow-parens": [
-      2,
-      "as-needed"
-    ],
+    "object-shorthand": [2, "always"],
+    "arrow-parens": [2, "as-needed"],
     "no-useless-escape": 0,
     "eqeqeq": 2,
     "jsx-quotes": 2,
@@ -81,21 +62,30 @@
     "keyword-spacing": 2,
     "space-before-blocks": 2,
     "arrow-spacing": 2,
-    "object-curly-spacing": [
-      2,
-      "always"
-    ],
+    "object-curly-spacing": [2, "always"],
     "react/jsx-closing-bracket-location": 2,
     "react/jsx-curly-spacing": 2,
     "react/jsx-boolean-value": 2,
     "react/prop-types": 2,
+    "react-hooks/rules-of-hooks": 2, 
+    "react-hooks/exhaustive-deps": 1,
     "react/sort-comp": 0,
     "react/no-find-dom-node": 0,
     "react/display-name": 0,
     "import/no-unresolved": 0,
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
-    "import/no-dynamic-require": 0
+    "import/no-dynamic-require": 0,
+
+    // these are inherited from git WebViewer's eslint confirguration
+    "no-use-before-define": 0,
+    "implicit-arrow-linebreak": 0,
+    "operator-linebreak": 0,
+    "function-paren-newline": 0,
+    "object-curly-newline": 0,
+    "no-nested-ternary": 0,
+    "no-unexpected-multiline": 0,
+    "no-unused-expressions": 0
   },
   "settings": {
     "react": {

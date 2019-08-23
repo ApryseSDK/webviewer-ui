@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
 
 import Icon from 'components/Icon';
 import Tooltip from 'components/Tooltip';
@@ -49,7 +50,7 @@ class SearchOverlay extends React.PureComponent {
     setNoResult: PropTypes.func.isRequired,
     setIsProgrammaticSearch: PropTypes.func.isRequired,
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
   }
 
   constructor() {
@@ -90,6 +91,15 @@ class SearchOverlay extends React.PureComponent {
     if (searchOverlayClosed) {
       this.props.closeElement('searchPanel');
       this.clearSearchResults();
+    }
+  }
+
+  handleClickOutside = e => {
+    const { closeElements, isSearchPanelOpen } = this.props;
+    const clickedSearchButton = e.target.getAttribute('data-element') === 'searchButton';
+
+    if (!isSearchPanelOpen && !clickedSearchButton) {
+      closeElements(['searchOverlay']);
     }
   }
 
@@ -206,7 +216,7 @@ class SearchOverlay extends React.PureComponent {
         wildcard: isWildcard,
         regex: isRegex,
         searchUp: isSearchUp,
-        ambientString: isAmbientString
+        ambientString: isAmbientString,
       }, results);
     });
   }
@@ -311,7 +321,7 @@ class SearchOverlay extends React.PureComponent {
     const className = getClassName(`Overlay SearchOverlay ${isSearchPanelOpen ? 'transformed' : ''}`, this.props);
 
     return (
-      <div className={className} data-element="searchOverlay" onTransitionEnd={this.onTransitionEnd} onClick={e => e.stopPropagation()}>
+      <div className={className} data-element="searchOverlay" onTransitionEnd={this.onTransitionEnd}>
         <div className="wrapper">
           <div className="main">
             <div className="input-wrapper">
@@ -328,7 +338,7 @@ class SearchOverlay extends React.PureComponent {
             <div className="button next" onClick={this.onClickNext}>
               <Icon glyph="ic_chevron_right_black_24px" />
             </div>
-            <Tooltip content="action.showMoreResults" location="left">
+            <Tooltip content="action.showMoreResults">
               <div className={`advanced ${isSearchPanelOpen || isSearchPanelDisabled ? 'hidden' : ''}`} onClick={this.onClickOverflow}>
                 <Icon glyph="ic_overflow_black_24px" />
               </div>
@@ -379,7 +389,7 @@ const mapDispatchToProps = {
   setWholeWord: actions.setWholeWord,
   setNoResult: actions.setNoResult,
   setIsProgrammaticSearch: actions.setIsProgrammaticSearch,
-  setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull
+  setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(SearchOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(SearchOverlay)));

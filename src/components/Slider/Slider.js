@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { isIE11 } from 'helpers/device';
 import { circleRadius, svgHeight } from 'constants/slider';
@@ -53,7 +53,7 @@ class Slider extends React.PureComponent {
   }
 
   setLineLength = () => {
-    this.lineLength = this.sliderSvg.current.getBoundingClientRect().width - 2*circleRadius; 
+    this.lineLength = 0.94 * this.sliderSvg.current.getBoundingClientRect().width - 2 * circleRadius;
   }
 
   onMouseDown = e => {
@@ -142,4 +142,4 @@ class Slider extends React.PureComponent {
   }
 }             
 
-export default translate(null, { wait: false })(Slider);
+export default withTranslation(null, { wait: false })(Slider);

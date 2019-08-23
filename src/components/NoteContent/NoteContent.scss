@@ -1,0 +1,100 @@
+@import '../../constants/styles';
+@import '../../constants/note';
+
+.NoteContent {
+  .title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    color: #808080;
+    color: var(--text-color);
+    margin-bottom: 3px;
+  
+    .type {
+      display: flex;
+      align-items: center;
+      height: 20px;
+      padding-right: 10px;
+      font-weight: bold;
+  
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  
+    .author {
+      opacity: 0.8;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    
+    .time {
+      opacity: 0.8;
+    }
+
+    .spacer {
+      opacity: 0.8;
+      height: 1px;
+      width: 7px;
+      margin: 0 5px;
+      background: #808080;
+      background: var(--text-color);
+      opacity: 0.5;
+    }
+  }
+
+  .content-container {
+    padding-top: 3px;
+    cursor: auto;
+    white-space: pre-wrap;
+  
+    .edit-content {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+  
+      textarea {
+        width: 100%;
+        resize: none;
+        overflow: hidden;
+        box-sizing: border-box;
+        border: 1px solid $gray12;
+        font-size: 12px;
+      }
+  
+      .buttons  {
+        @extend %textarea-buttons;
+        margin-top: 5px;
+      }
+    }
+  
+    .container {
+      &.visible {
+        display: block;
+      }
+  
+      &.hidden {
+        display: none;
+      }
+    }
+  
+    .contents {
+      color: var(--text-color);
+      margin-right: 5px;
+      padding: 0;
+      word-wrap: break-word;
+      user-select: text;
+  
+      .highlight {
+        background: #fffc95;
+      }
+    }
+  }
+
+  .highlight {
+    background: #fffc95;
+  }
+}
