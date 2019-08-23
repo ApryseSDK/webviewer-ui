@@ -57,6 +57,7 @@ class WatermarkModal extends React.PureComponent {
     super(props);
     this.state = {
       isVisible: false,
+      isColorPaletteVisible: false,
       ...DEFAULT_VALS,
     };
     this.canvasContainerRef = React.createRef();
@@ -183,6 +184,10 @@ class WatermarkModal extends React.PureComponent {
     return (this.state[FORM_FIELD_KEYS.opacity] / 100) * lineLength + lineStart;
   }
 
+  setColorPaletteVisibility(visible) {
+    this.setState({ isColorPaletteVisible: visible });
+  }
+
   render() {
     const { isVisible } = this.props;
     if (!isVisible) {
@@ -195,56 +200,83 @@ class WatermarkModal extends React.PureComponent {
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <div className="form-content-container">
               <form>
-              <label>
-                  {t(`watermark.location`)}
-                </label>
-                <select
-                  value={this.state[FORM_FIELD_KEYS.location]}
-                  onChange={event => this.handleInputChange(FORM_FIELD_KEYS.location, event.target.value)}>
-                  { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
-                </select>
 
-                <label>
-                  {t(`watermark.text`)}
-                </label>
-                <input
-                  value={this.state[FORM_FIELD_KEYS.text]}
-                  onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
-                  type="text" />
+                <div className="form-field">
 
-                <label>
-                  {t(`watermark.size`)}
-                </label>
-                <select
-                  value={this.state[FORM_FIELD_KEYS.fontSize]}
-                  onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}>
-                  { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
-                </select>
+                  <label>
+                    {t(`watermark.location`)}
+                  </label>
+                  <select
+                    value={this.state[FORM_FIELD_KEYS.location]}
+                    onChange={event => this.handleInputChange(FORM_FIELD_KEYS.location, event.target.value)}>
+                    { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
+                  </select>
 
-                <Slider
-                  property={'opacity'} // arbitrary property name. this property isn't used in this file
-                  displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
-                  value={this.state[FORM_FIELD_KEYS.opacity]}
-                  displayValue={`${Math.round(this.state[FORM_FIELD_KEYS.opacity])}%`}
-                  getCirclePosition={ lineLength => this.getCirclePosn(lineLength)}
-                  convertRelativeCirclePositionToValue={circlePosn => circlePosn}
-                  onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
-                />
-
-                <label>
-                  {t(`watermark.style`)}
-                </label>
-                {/* TODO style this to be just a div with the curr color. on click, show color palette */}
-                <div className="cell" style={{ backgroundColor: this.state[FORM_FIELD_KEYS.color].toHexString() }}></div>
-                <div className={'Popup StylePopup'} data-element="stylePopup">
-
-                <ColorPalette
-                  color={this.state[FORM_FIELD_KEYS.color]}
-                  property={'TextColor'} // arbitrary property name. this property isn't used in this file
-                  onStyleChange = {(property, color) => this.handleInputChange(FORM_FIELD_KEYS.color, color)}
-                />
                 </div>
-                
+                <div className="form-field">
+
+                  <label>
+                    {t(`watermark.text`)}
+                  </label>
+                  <input
+                    value={this.state[FORM_FIELD_KEYS.text]}
+                    onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
+                    type="text" />
+
+                </div>
+                <div className="form-field">
+
+                  <label>
+                    {t(`watermark.size`)}
+                  </label>
+                  <select
+                    value={this.state[FORM_FIELD_KEYS.fontSize]}
+                    onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}>
+                    { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
+                  </select>
+
+                </div>
+                <div className="form-field">
+
+                  <Slider
+                    property={'opacity'} // arbitrary property name. this property isn't used in this file
+                    displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
+                    value={this.state[FORM_FIELD_KEYS.opacity]}
+                    displayValue={`${Math.round(this.state[FORM_FIELD_KEYS.opacity])}%`}
+                    getCirclePosition={ lineLength => this.getCirclePosn(lineLength)}
+                    convertRelativeCirclePositionToValue={circlePosn => circlePosn}
+                    onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
+                  />
+
+                </div>
+                <div className="form-field">
+
+                  <label>
+                    {t(`watermark.style`)}
+                  </label>
+                  <div
+                    className="cell"
+                    style={{ backgroundColor: this.state[FORM_FIELD_KEYS.color].toHexString() }}
+                    onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
+                  >
+                  </div>
+
+                </div>
+                <div className="form-field">
+
+                  <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
+
+                    {this.state.isColorPaletteVisible &&
+                  <ColorPalette
+                    color={this.state[FORM_FIELD_KEYS.color]}
+                    property={'TextColor'} // arbitrary property name. this property isn't used in this file
+                    onStyleChange = {(property, color) => {this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
+                  />}
+                  </div>
+
+                </div>
+
+                <div className="form-field">Hi</div>
 
               </form>
 
@@ -256,9 +288,9 @@ class WatermarkModal extends React.PureComponent {
             <div className="button-container" onClick={e => e.stopPropagation()}>
               <button className="reset button" onClick={() => this.resetForm()}>{t(`action.reset`)}</button>
               <button className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
-            </div> 
+            </div>
 
-          </div>       
+          </div>
         </div>
       </>
     );

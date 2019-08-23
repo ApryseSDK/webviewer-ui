@@ -2,6 +2,10 @@
 @import '../../../constants/modal';
 @import '../../../constants/popup';
 
+.StylePopup {
+  width: initial;
+}
+
 .Watermark {
   @extend %modal;
   z-index: $modal-z-index + 10;
@@ -26,6 +30,7 @@
     @extend %cell;
     cursor: pointer;
     flex: initial;
+    border: 1px solid #e1e1e3;
   }
 
   .button {
@@ -48,6 +53,17 @@
     & form {
       display: flex;
       flex-direction: column;
+      margin: 5px;
+    }
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+
+    >label {
+      margin: 3px 0;
     }
   }
 }
