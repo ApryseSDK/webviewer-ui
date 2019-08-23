@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useStore } from 'react-redux';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { hot } from 'react-hot-loader';
 
@@ -32,112 +32,68 @@ import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
-import { isDesktop } from 'helpers/device';
-import actions from 'actions';
-import selectors from 'selectors';
+import defineReaderControlAPIs from 'src/apis';
+import fireEvent from 'helpers/fireEvent';
 
 import './App.scss';
 
-class App extends React.PureComponent {
-  static propTypes = {
-    isSearchPanelOpen: PropTypes.bool,
-    removeEventHandlers: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
-  };
-
-  componentWillUnmount() {
-    this.props.removeEventHandlers();
-  }
-
-  onClick = () => {
-    const elements = [
-      'viewControlsOverlay',
-      'menuOverlay',
-      'zoomOverlay',
-      'signatureOverlay',
-      this.props.isSearchPanelOpen ? '' : 'searchOverlay',
-    ].filter(element => element);
-
-    this.props.closeElements(elements);
-  };
-
-  onMouseDown = () => {
-    const elements = [
-      'annotationPopup',
-      'contextMenuPopup',
-      'toolStylePopup',
-      'textPopup',
-      isDesktop() ? 'redactionOverlay' : '',
-      isDesktop() ? 'groupOverlay' : '',
-    ].filter(element => element);
-
-    this.props.closeElements(elements);
-  };
-
-  onScroll = () => {
-    this.onMouseDown();
-  };
-
-  render() {
-    return (
-      <>
-        <div
-          className="App"
-          onMouseDown={this.onMouseDown}
-          onClick={this.onClick}
-          onScroll={this.onScroll}
-        >
-          <Accessibility />
-
-          <Header />
-
-          <LeftPanel />
-          <SearchPanel />
-
-          <DocumentContainer />
-
-          <SearchOverlay />
-          <ViewControlsOverlay />
-          <RedactionOverlay />
-          <MenuOverlay />
-          <PageNavOverlay />
-          <SignatureOverlay />
-          <ZoomOverlay />
-          <MeasurementOverlay />
-
-          <AnnotationPopup />
-          <TextPopup />
-          <ContextMenuPopup />
-          <ToolStylePopup />
-
-          <SignatureModal />
-          <PrintModal />
-          <LoadingModal />
-          <ErrorModal />
-          <WarningModal />
-          <PasswordModal />
-          <ProgressModal />
-        </div>
-
-        <PrintHandler />
-        <FilePickerHandler />
-        <CopyTextHandler />
-      </>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
-});
-
-const mapDispatchToProps = {
-  closeElements: actions.closeElements,
+const propTypes = {
+  removeEventHandlers: PropTypes.func.isRequired,
 };
 
-export default hot(module)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(withTranslation()(App)),
-);
+const App = ({ removeEventHandlers }) => {
+  const store = useStore();
+
+  useEffect(() => {
+    defineReaderControlAPIs(store);
+    fireEvent('viewerLoaded');
+
+    return removeEventHandlers;
+  // eslint-disable-next-line
+  }, []);
+
+  return (
+    <>
+      <div className="App">
+        <Accessibility />
+
+        <Header />
+
+        <LeftPanel />
+        <SearchPanel />
+
+        <DocumentContainer />
+
+        <SearchOverlay />
+        <ViewControlsOverlay />
+        <RedactionOverlay />
+        <MenuOverlay />
+        <SignatureOverlay />
+        <PageNavOverlay />
+        <ZoomOverlay />
+        <MeasurementOverlay />
+
+        <AnnotationPopup />
+        <TextPopup />
+        <ContextMenuPopup />
+        <ToolStylePopup />
+
+        <SignatureModal />
+        <PrintModal />
+        <LoadingModal />
+        <ErrorModal />
+        <WarningModal />
+        <PasswordModal />
+        <ProgressModal />
+      </div>
+
+      <PrintHandler />
+      <FilePickerHandler />
+      <CopyTextHandler />
+    </>
+  );
+};
+
+App.propTypes = propTypes;
+
+export default hot(module)(withTranslation()(App));

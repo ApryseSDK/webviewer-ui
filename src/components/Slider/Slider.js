@@ -36,6 +36,7 @@ class Slider extends React.PureComponent {
     window.addEventListener('mousemove', this.onMove);
     window.addEventListener('mouseup', this.onMouseUp);
     window.addEventListener('orientationchange', this.updateSvg);
+    window.addEventListener('resize', this.updateSvg);
     this.sliderSvg.current.addEventListener('touchmove', this.onMove, { passive: false });
     this.updateSvg();
   }
@@ -44,6 +45,7 @@ class Slider extends React.PureComponent {
     window.removeEventListener('mousemove', this.onMove);
     window.removeEventListener('mouseup', this.onMouseUp);
     window.removeEventListener('orientationchange', this.updateSvg);
+    window.removeEventListener('resize', this.updateSvg);
     this.sliderSvg.current.removeEventListener('touchmove', this.onMove, { passive: false });
   } 
 

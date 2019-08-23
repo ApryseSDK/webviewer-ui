@@ -8,6 +8,8 @@
     "comment": "注释",
     "copy": "复制",
     "delete": "删除",
+    "group": "组",
+    "ungroup": "取消组合",
     "download": "下载",
     "edit": "编辑",
     "enterFullscreen": "全屏",
@@ -59,7 +61,8 @@
     "stickyNote": "注释",
     "strikeout": "删除线",
     "underline": "下划线",
-    "custom": "自定义"
+    "custom": "自定义",
+    "eraser": "橡皮"
   },
   "component": {
     "freehandToolsButton": "手绘工具",
@@ -189,7 +192,8 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "移动",

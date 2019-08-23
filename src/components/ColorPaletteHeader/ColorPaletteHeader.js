@@ -23,7 +23,7 @@ class ColorPaletteHeader extends React.PureComponent {
 
   setColorPalette = newPalette => {
     const { setColorPalette, activeToolName } = this.props;
-    
+
     setColorPalette(activeToolName, newPalette);
   }
 
@@ -133,10 +133,10 @@ class ColorPaletteHeader extends React.PureComponent {
 }
 
 const mapStateToProps = (state, { activeToolName }) => ({
-  availablePalettes: selectors.getAvailablePalettes(state, activeToolName)
-}); 
+  availablePalettes: selectors.getAvailablePalettes(state, activeToolName),
+});
 const mapDispatchToProps = {
-  setColorPalette: actions.setColorPalette
+  setColorPalette: actions.setColorPalette,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));

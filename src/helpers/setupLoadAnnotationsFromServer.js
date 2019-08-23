@@ -32,6 +32,8 @@ export default store =>  {
       serverUrl += `&did=${documentId}`;
     }
 
+    serverUrl = documentId ? `${serverUrl}?did=${documentId}` : serverUrl;
+
     fetch(serverUrl, {
       headers: serverUrlHeaders,
     }).then(response => {

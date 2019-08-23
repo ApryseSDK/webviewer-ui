@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
 
 import ToolButton from 'components/ToolButton';
 import ToggleElementButton from 'components/ToggleElementButton';
@@ -11,6 +12,7 @@ import Button from 'components/Button';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
+import { isDesktop } from 'helpers/device';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
@@ -25,15 +27,15 @@ class GroupOverlay extends React.PureComponent {
     activeHeaderItems: PropTypes.arrayOf(PropTypes.object),
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
-    setActiveToolGroup: PropTypes.func.isRequired
-  }
+    setActiveToolGroup: PropTypes.func.isRequired,
+  };
 
   constructor() {
     super();
     this.overlay = React.createRef();
     this.state = {
       left: 0,
-      right: 'auto'
+      right: 'auto',
     };
   }
 
@@ -41,7 +43,7 @@ class GroupOverlay extends React.PureComponent {
     window.addEventListener('resize', this.handleWindowResize);
 
     // this component can be opened before mounting to the DOM if users call the setToolMode API
-    // in this case we need to set its position immediately after it's mounted 
+    // in this case we need to set its position immediately after it's mounted
     // otherwise its left is 0 instead of left-aligned with the tool group button
     if (this.props.isOpen) {
       this.setOverlayPosition();
@@ -49,10 +51,19 @@ class GroupOverlay extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const clickedOnAnotherToolGroupButton = prevProps.activeToolGroup !== this.props.activeToolGroup;
+    const clickedOnAnotherToolGroupButton =
+      prevProps.activeToolGroup !== this.props.activeToolGroup;
 
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([ 'viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay' ]);
+      this.props.closeElements([
+        'viewControlsOverlay',
+        'searchOverlay',
+        'menuOverlay',
+        'toolStylePopup',
+        'signatureOverlay',
+        'zoomOverlay',
+        'redactionOverlay',
+      ]);
       this.setOverlayPosition();
     }
 
@@ -67,21 +78,34 @@ class GroupOverlay extends React.PureComponent {
 
   handleWindowResize = () => {
     this.setOverlayPosition();
-  }
+  };
+
+  handleClickOutside = e => {
+    const toolStylePopup = document.querySelector(
+      '[data-element="toolStylePopup"]',
+    );
+    const header = document.querySelector('[data-element="header"]');
+    const clickedToolStylePopup = toolStylePopup?.contains(e.target);
+    const clickedHeader = header?.contains(e.target);
+
+    if (isDesktop() && !clickedToolStylePopup && !clickedHeader) {
+      this.props.closeElements(['toolsOverlay']);
+    }
+  };
 
   setOverlayPosition = () => {
     const { dataElement } = this.props;
     if (dataElement) {
       this.setState(getOverlayPositionBasedOn(dataElement, this.overlay));
     }
-  }
+  };
 
   handleCloseClick = () => {
     const { setActiveToolGroup, closeElements } = this.props;
 
     core.setToolMode(defaultTool);
     setActiveToolGroup('');
-    closeElements([ 'toolStylePopup', 'groupOverlay' ]);
+    closeElements(['toolStylePopup', 'groupOverlay']);
   }
 
   render() {
@@ -107,7 +131,7 @@ class GroupOverlay extends React.PureComponent {
             case 'customElement':
               return <CustomElement key={i} {...element} />;
           }
-        }
+        },
         )}
         <div className="spacer hide-in-desktop"></div>
         <Button className="close hide-in-desktop" dataElement="groupOverlayCloseButton" img="ic_check_black_24px" onClick={this.handleCloseClick} />
@@ -120,12 +144,15 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'groupOverlay'),
   isOpen: selectors.isElementOpen(state, 'groupOverlay'),
   activeHeaderItems: selectors.getActiveHeaderItems(state),
-  activeToolGroup: selectors.getActiveToolGroup(state)
+  activeToolGroup: selectors.getActiveToolGroup(state),
 });
 
 const mapDispatchToProps = {
   closeElements: actions.closeElements,
-  setActiveToolGroup: actions.setActiveToolGroup
+  setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupOverlay);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(onClickOutside(GroupOverlay));

@@ -6,7 +6,7 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 // viewer
 export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',
-  payload: {}
+  payload: {},
 });
 export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
@@ -36,7 +36,7 @@ export const openElement = dataElement => (dispatch, getState) => {
     if (dataElement === 'leftPanel' && !isLeftPanelOpen) {
       fireEvent('visibilityChanged', {
         element: state.viewer.activeLeftPanel,
-        isVisible: true
+        isVisible: true,
       });
     }
   }
@@ -77,7 +77,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
     if (dataElement === 'leftPanel' && state.viewer.openElements['leftPanel']) {
       fireEvent('visibilityChanged', {
         element: state.viewer.activeLeftPanel,
-        isVisible: false
+        isVisible: false,
       });
     }
   }
@@ -111,7 +111,7 @@ export const toggleElement = dataElement => (dispatch, getState) => {
 
 export const setActiveHeaderGroup = headerGroup => ({
   type: 'SET_ACTIVE_HEADER_GROUP',
-  payload: { headerGroup }
+  payload: { headerGroup },
 });
 export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
   const state = getState();
@@ -120,11 +120,11 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
     if (state.viewer.activeLeftPanel !== dataElement) {
       dispatch({
         type: 'CLOSE_ELEMENT',
-        payload: { dataElement: state.viewer.activeLeftPanel }
+        payload: { dataElement: state.viewer.activeLeftPanel },
       });
       fireEvent('visibilityChanged', {
         element: state.viewer.activeLeftPanel,
-        isVisible: false
+        isVisible: false,
       });
       dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
       fireEvent('visibilityChanged', { element: dataElement, isVisible: true });
@@ -135,31 +135,31 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       'thumbnailsPanel',
       'outlinesPanel',
       'notesPanel',
-      'layersPanel'
+      'layersPanel',
     ].join(', ');
     console.warn(
-      `${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`
+      `${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`,
     );
   }
 };
 export const setSortStrategy = sortStrategy => ({
   type: 'SET_SORT_STRATEGY',
-  payload: { sortStrategy }
+  payload: { sortStrategy },
 });
 export const setSortNotesBy = sortStrategy => {
   console.warn(
-    'setSortNotesBy is deprecated, please use setSortStrategy instead'
+    'setSortNotesBy is deprecated, please use setSortStrategy instead',
   );
 
   return setSortStrategy(sortStrategy);
 };
 export const setNoteDateFormat = noteDateFormat => ({
   type: 'SET_NOTE_DATE_FORMAT',
-  payload: { noteDateFormat }
+  payload: { noteDateFormat },
 });
 export const setCustomPanel = newPanel => ({
   type: 'SET_CUSTOM_PANEL',
-  payload: { newPanel }
+  payload: { newPanel },
 });
 export const setPageLabels = pageLabels => dispatch => {
   if (pageLabels.length !== core.getTotalPages()) {
@@ -168,13 +168,13 @@ export const setPageLabels = pageLabels => dispatch => {
   }
   dispatch({
     type: 'SET_PAGE_LABELS',
-    payload: { pageLabels: pageLabels.map(String) }
+    payload: { pageLabels: pageLabels.map(String) },
   });
 };
 
 export const setSwipeOrientation = swipeOrientation => ({
   type: 'SET_SWIPE_ORIENTATION',
-  payload: { swipeOrientation }
+  payload: { swipeOrientation },
 });
 
 export const showWarningMessage = options => dispatch => {
@@ -187,18 +187,18 @@ export const showErrorMessage = message => dispatch => {
 };
 export const setCustomNoteFilter = filterFunc => ({
   type: 'SET_CUSTOM_NOTE_FILTER',
-  payload: { customNoteFilter: filterFunc }
+  payload: { customNoteFilter: filterFunc },
 });
 export const setZoomList = zoomList => dispatch => {
   const minZoomLevel = getMinZoomLevel();
   const maxZoomLevel = getMaxZoomLevel();
   const filteredZoomList = zoomList.filter(
-    zoom => zoom >= minZoomLevel && zoom <= maxZoomLevel
+    zoom => zoom >= minZoomLevel && zoom <= maxZoomLevel,
   );
 
   if (filteredZoomList.length !== zoomList.length) {
     const outOfRangeZooms = zoomList.filter(
-      zoom => !filteredZoomList.includes(zoom)
+      zoom => !filteredZoomList.includes(zoom),
     );
     console.warn(`
       ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI. 
@@ -212,9 +212,13 @@ export const setZoomList = zoomList => dispatch => {
 };
 export const updateTool = (toolName, properties) => ({
   type: 'UPDATE_TOOL',
-  payload: { toolName, properties }
+  payload: { toolName, properties },
 });
 export const useEmbeddedPrint = (useEmbeddedPrint = true) => ({
   type: 'USE_EMBEDDED_PRINT',
-  payload: { useEmbeddedPrint }
+  payload: { useEmbeddedPrint },
+});
+export const setMaxSignaturesCount = maxSignaturesCount => ({
+  type: 'SET_MAX_SIGNATURES_COUNT',
+  payload: { maxSignaturesCount },
 });
