@@ -30,7 +30,6 @@ class DocumentContainer extends React.PureComponent {
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     displayMode: PropTypes.string.isRequired,
-    leftPanelWidth: PropTypes.number,
   }
 
   constructor(props) {
@@ -196,7 +195,6 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  leftPanelWidth: selectors.getLeftPanelWidth(state),
 });
 
 const mapDispatchToProps = dispatch => ({

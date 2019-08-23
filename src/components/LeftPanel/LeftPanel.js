@@ -27,7 +27,6 @@ class LeftPanel extends React.Component {
     leftPanelWidth: PropTypes.number
   };
 
-
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
       this.props.closeElement('searchPanel');
