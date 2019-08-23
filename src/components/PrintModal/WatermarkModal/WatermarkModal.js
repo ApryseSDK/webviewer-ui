@@ -7,6 +7,7 @@ import './WatermarkModal.scss';
 import { withTranslation } from 'react-i18next';
 import Slider from 'components/Slider';
 import { circleRadius } from 'constants/slider';
+import LoadingModal from 'components/LoadingModal';
 
 const DESIRED_WIDTH = 275;
 const DESIRED_HEIGHT = 275;
@@ -61,6 +62,7 @@ class WatermarkModal extends React.PureComponent {
       ...DEFAULT_VALS,
     };
     this.canvasContainerRef = React.createRef();
+
     this.handleWatermarkRenderFxn = () => {
       if (this.props.isVisible) {
         this.addWatermark(this.state);
@@ -72,6 +74,14 @@ class WatermarkModal extends React.PureComponent {
 
   componentDidMount() {
     if (this.props.isVisible !== undefined) {
+
+      if (this.props.isVisible && this.canvasContainerRef.current && this.canvasContainerRef.current.childNodes && this.canvasContainerRef.current.childNodes.length === 0) {
+        const div = document.createElement('div');
+        div.style.width="300px";
+        div.style.height="300px";
+        this.canvasContainerRef.current.appendChild(div);
+      }
+
       this.setState({
         isVisible: this.props.isVisible,
       }, () => core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn));
@@ -80,6 +90,14 @@ class WatermarkModal extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (this.props.isVisible !== prevProps.isVisible) {
+
+      if (this.props.isVisible && this.canvasContainerRef.current && this.canvasContainerRef.current.childNodes && this.canvasContainerRef.current.childNodes.length === 0) {
+        const div = document.createElement('div');
+        div.style.width="300px";
+        div.style.height="300px";
+        this.canvasContainerRef.current.appendChild(div);
+      }
+
       this.setState({
         isVisible: this.props.isVisible,
       }, () => this.handleWatermarkRenderFxn());
@@ -154,7 +172,6 @@ class WatermarkModal extends React.PureComponent {
   }
 
   handleInputChange(key, value) {
-    console.log(value);
     this.setState({
       [key]: value,
     }, () => {
@@ -193,16 +210,24 @@ class WatermarkModal extends React.PureComponent {
 
   render() {
     const { isVisible } = this.props;
+    const noContent = !this.canvasContainerRef.current || this.canvasContainerRef.current.childNodes.length === 0;
+    console.log(noContent);
     if (!isVisible) {
       return null;
     }
+    // if (noContent) {
+    //   return <LoadingModal
+    //   isDisabled={true}
+    //   isOpen={noContent}
+    //   />;
+    // }
     const { t } = this.props;
     return (
       <>
         <div className={'Modal Watermark'} data-element="waterMarkModal" onClick={() => this.closeModal()}>
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <div className="header-container" onClick={e => e.stopPropagation()}>
-              <h4>{t('option.print.printWatermarkSetting')}</h4>
+              <h4>{t('option.print.printWatermarkSettings')}</h4>
             </div>
 
             <div className="form-content-container">
@@ -252,7 +277,7 @@ class WatermarkModal extends React.PureComponent {
                     convertRelativeCirclePositionToValue={circlePosn => circlePosn}
                     onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
                   />
-                  
+                 
                 </div>
                 <div className="form-field">
 

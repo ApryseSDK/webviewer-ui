@@ -423,7 +423,7 @@ class PrintModal extends React.PureComponent {
               : <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
             }
           </div>
-          {this.state.allowWatermarkModal && <button className="apply-watermark" onClick={() => this.setWatermarkModalVisibility(true)}>{t('option.print.printWatermarkSetting')}</button> }
+          {this.state.allowWatermarkModal && <button className="apply-watermark" onClick={() => this.setWatermarkModalVisibility(true)}>{t('option.print.printWatermarkSettings')}</button> }
           <div className="buttons">
             <div className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</div>
             {isPrinting

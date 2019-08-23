@@ -135,7 +135,7 @@
       "current": "Current",
       "pages": "Pages",
       "includeComments": "Include comments",
-      "printWatermarkSetting": "Print watermark setting"
+      "printWatermarkSettings": "Print watermark settings"
     },
     "redaction": {
       "markForRedaction": "Mark for redaction",
