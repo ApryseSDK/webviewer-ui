@@ -10,13 +10,6 @@ export default () => {
       document.webkitExitFullscreen();
     }
   } else {
-    // this is to fix an issue reported in the forum https://groups.google.com/forum/?nomobile=true#!topic/pdfnet-webviewer/PH6dyTu5WVw
-    // set the src to '' to prevent the <embed> element from printing the document, which will exit the full screen mode immediately
-    const printHandler = document.getElementById('print-handler');
-    if (printHandler?.src) {
-      printHandler.src = '';
-    }
-
     const docElm = document.documentElement;
     if (docElm.requestFullscreen) {
       docElm.requestFullscreen();

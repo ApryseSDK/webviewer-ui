@@ -19,7 +19,7 @@ export default store => {
   const onSignatureAnnotationAdded = eventListeners.onSignatureAnnotationAdded(dispatch);
   const onStickyAnnotationAdded = eventListeners.onStickyAnnotationAdded(store);
   const onKeyDown = eventListeners.onKeyDown(store);
-  const onFullScreenChange = eventListeners.onFullScreenChange(dispatch);
+  const onFullScreenChange = eventListeners.onFullScreenChange(store);
   const onLayoutChanged = eventListeners.onLayoutChanged(dispatch);
   const onLocationSelected = eventListeners.onLocationSelected(store);
 
