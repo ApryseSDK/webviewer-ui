@@ -8,8 +8,8 @@ import { withTranslation } from 'react-i18next';
 import Slider from 'components/Slider';
 import { circleRadius } from 'constants/slider';
 
-const DESIRED_WIDTH = 250;
-const DESIRED_HEIGHT = 250;
+const DESIRED_WIDTH = 275;
+const DESIRED_HEIGHT = 275;
 
 // numbers were taken from font dropdown menu in google docs
 const FONT_SIZES = [
@@ -100,13 +100,13 @@ class WatermarkModal extends React.PureComponent {
 
     core.getDocument().loadCanvasAsync({
       pageIndex: this.props.pageIndexToView,
-      // pageRotation: core.getRotation(this.props.pageIndexToView),
       zoom: desiredZoom,
       drawComplete: canvas => {
         const nodes = this.canvasContainerRef.current.childNodes;
         if (nodes && nodes.length > 0) {
           this.canvasContainerRef.current.removeChild(nodes[0]);
         }
+        canvas.style.border = '1px solid black';
         this.canvasContainerRef.current.appendChild(canvas);
       },
     });
@@ -202,7 +202,7 @@ class WatermarkModal extends React.PureComponent {
         <div className={'Modal Watermark'} data-element="waterMarkModal" onClick={() => this.closeModal()}>
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <div className="header-container" onClick={e => e.stopPropagation()}>
-              <h3>{t('option.print.printWatermarkSetting')}</h3>
+              <h4>{t('option.print.printWatermarkSetting')}</h4>
             </div>
 
             <div className="form-content-container">

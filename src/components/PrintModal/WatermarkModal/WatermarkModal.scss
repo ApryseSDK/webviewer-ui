@@ -34,20 +34,19 @@ $color-widget-border: 1px solid $gray12;
   
   .form-content-container {
     display: flex;
-    margin: 5px;
+    margin: 13px;
     & form {
-      margin-right: 5px;
+      margin-right: 13px;
       flex-basis: 10%;
     }
 
     & .canvas-container {
       flex-basis: 90%;
-      border: 1px solid black;
     }
   }
   
   .button-container {
-    @extend %modal-shared-container-style;
+    border-top: $color-widget-border;
     display: flex;
     justify-content: space-between;
     padding: 5px;
