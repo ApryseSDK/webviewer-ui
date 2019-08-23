@@ -35,6 +35,11 @@ $color-widget-border: 1px solid $gray12;
     display: flex;
     & form {
       margin: 5px;
+      flex: 0 0 10%;
+    }
+
+    & .canvas-container {
+      flex: 0 0 90%;
     }
   }
   
@@ -42,7 +47,7 @@ $color-widget-border: 1px solid $gray12;
     @extend %modal-shared-container-style;
     display: flex;
     justify-content: space-between;
-    padding: 2px;
+    padding: 5px;
   }
   
   .cell {
