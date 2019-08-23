@@ -2,7 +2,7 @@
 @import '../../../constants/modal';
 @import '../../../constants/popup';
 
-$color-widget-border: 1px solid #e1e1e3;
+$color-widget-border: 1px solid $gray12;
 
 .Watermark {
   @extend %modal;
@@ -17,6 +17,13 @@ $color-widget-border: 1px solid #e1e1e3;
     position: absolute;
     margin-top: 25px;
     border: $color-widget-border;
+  }
+
+  .header-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border-bottom: $color-widget-border;
   }
 
   .form-container {
