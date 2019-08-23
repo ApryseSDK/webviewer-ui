@@ -89,6 +89,7 @@ export default {
               { type: 'toolButton', img: 'ic_annotation_cloud_black_24px', toolName: 'AnnotationCreatePolygonCloud', dataElement: 'cloudToolButton', title: 'annotation.polygonCloud' },
             ],
           },
+          { type: 'toolButton', img: 'ic_annotation_eraser_black_24px', toolName: 'AnnotationEraserTool', dataElement: 'eraserToolButton', title: 'annotation.eraser' },
           {
             type: 'customElement',
             render: () => <SignatureToolButton />,
@@ -146,6 +147,7 @@ export default {
       AnnotationEdit: { showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
       TextSelect: { showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', title: 'tool.select', label: 'Marquee Zoom', showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
+      AnnotationEraserTool: { iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null, dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'ic_annotation_eraser_black_24px', showColor: 'never' },
     },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
