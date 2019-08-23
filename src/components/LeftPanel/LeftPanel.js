@@ -23,7 +23,7 @@ class LeftPanel extends React.Component {
     customPanels: PropTypes.array.isRequired,
     activePanel: PropTypes.string.isRequired,
     closeElement: PropTypes.func.isRequired,
-    updateLeftPanel: PropTypes.func,
+    setLeftPanelWidth: PropTypes.func,
     leftPanelWidth: PropTypes.number
   };
 
@@ -40,7 +40,9 @@ class LeftPanel extends React.Component {
 
   onWidthChange = width => {
     if (isIE11 || isIEEdge) {
-      this.props.updateLeftPanel(width);
+      // for IE11 we need to manaully set the left panel because CSS variables aren't supported
+      // for Edge, we need to manually resize it to cause the main document container to resize 
+      this.props.setLeftPanelWidth(width);
     }
   }
 
@@ -50,17 +52,8 @@ class LeftPanel extends React.Component {
       return null;
     }
 
-    let style = { };
-    let innerStyle = { };
-
-    if (isIE11) {
-      // IE11 will use javascript for controlling width, other broswers will use CSS
-      style = leftPanelWidth ? { width: leftPanelWidth } : null;
-
-      innerStyle = {
-        left: leftPanelWidth
-      };
-    }
+    // IE11 will use javascript for controlling width, other broswers will use CSS
+    const style = isIE11 && leftPanelWidth ? { width: leftPanelWidth } : { };
 
     const className = getClassName('Panel LeftPanel', this.props);
 
@@ -82,7 +75,7 @@ class LeftPanel extends React.Component {
           <LeftPanelTabs />
         </div>
 
-        <ResizeBar onWidthChange={this.onWidthChange} style={innerStyle}/>
+        <ResizeBar onWidthChange={this.onWidthChange} />
 
         <NotesPanel display={this.getDisplay('notesPanel')} />
         <ThumbnailsPanel display={this.getDisplay('thumbnailsPanel')} />
@@ -128,7 +121,6 @@ const ResizeBar = props => {
   // we are using css variables to make the panel resizable but IE11 doesn't support it
   return (
     <div
-      style={props.style}
       className="resize-bar"
       onMouseDown={() => isMouseDownRef.current = true}
     />
@@ -136,7 +128,6 @@ const ResizeBar = props => {
 };
 
 ResizeBar.propTypes = {
-  style: PropTypes.object,
   onWidthChange: PropTypes.func.isRequired
 };
 
@@ -150,7 +141,7 @@ const mapStatesToProps = state => ({
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
-  updateLeftPanel: actions.setLeftPanelWidth
+  setLeftPanelWidth: actions.setLeftPanelWidth
 };
 
 export default connect(
