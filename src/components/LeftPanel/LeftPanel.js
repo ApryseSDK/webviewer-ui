@@ -9,7 +9,7 @@ import OutlinesPanel from 'components/OutlinesPanel';
 import CustomElement from 'components/CustomElement';
 import Icon from 'components/Icon';
 
-import { isTabletOrMobile, isIE11, isIEEdge } from 'helpers/device';
+import { isTabletOrMobile, isIE, isIE11 } from 'helpers/device';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -39,7 +39,7 @@ class LeftPanel extends React.Component {
   };
 
   onWidthChange = width => {
-    if (isIE11 || isIEEdge) {
+    if (isIE) {
       // for IE11 we need to manaully set the left panel because CSS variables aren't supported
       // for Edge, we need to manually resize it to cause the main document container to resize 
       this.props.setLeftPanelWidth(width);
