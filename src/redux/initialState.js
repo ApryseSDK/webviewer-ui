@@ -147,6 +147,7 @@ export default {
       AnnotationEdit: { showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
       TextSelect: { showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', title: 'tool.select', label: 'Marquee Zoom', showColor: 'never', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
+      CropPage: { showColor: 'active', iconColor: null, currentPalette: null, availablePalettes: [], annotationCheck: null },
     },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',

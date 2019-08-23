@@ -256,7 +256,7 @@ class AnnotationPopup extends React.PureComponent {
         <>
           {!isNotesPanelDisabled && 
             !multipleAnnotationsSelected &&
-            annotation.ToolName !== 'CropPage' && (
+            firstAnnotation.ToolName !== 'CropPage' && (
             <ActionButton
               dataElement="annotationCommentButton"
               title="action.comment"
@@ -268,7 +268,7 @@ class AnnotationPopup extends React.PureComponent {
             hasStyle &&
             !isAnnotationStylePopupDisabled &&
             !multipleAnnotationsSelected &&
-            annotation.ToolName !== 'CropPage' && (
+            firstAnnotation.ToolName !== 'CropPage' && (
             <ActionButton
               dataElement="annotationStyleEditButton"
               title="action.style"
@@ -284,7 +284,7 @@ class AnnotationPopup extends React.PureComponent {
               onClick={this.redactAnnotation}
             />
           )}
-          {annotation.ToolName === 'CropPage' && (
+          {firstAnnotation.ToolName === 'CropPage' && (
             <ActionButton 
               dataElement="annotationCropButton" 
               title="action.apply" 
