@@ -10,7 +10,7 @@ import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExt
 export default (state, dispatch) => {
   core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
-      Promise.all([ getPartRetriever(state, streaming, dispatch), getDocOptions(state, dispatch, streaming) ])
+      Promise.all([getPartRetriever(state, streaming, dispatch), getDocOptions(state, dispatch, streaming)])
         .then(params => {
           const partRetriever = params[0];
           const docOptions = params[1];
@@ -52,17 +52,16 @@ const checkByteRange = state => {
       resolve(streaming);
     } else {
       // make sure we are not getting cached responses
-      const url =`${window.location.href.split('#')[0]}?_=${Date.now()}`;
+      const url = `${window.location.href.split('#')[0]}?_=${Date.now()}`;
       fetch(url, {
         headers: {
-          'Range': 'bytes=0-0'
-        }
+          'Range': 'bytes=0-0',
+        },
       }).then(response => {
         if (!response.ok || response.status !== 206) {
           console.warn('HTTP range requests not supported. Switching to streaming mode.');
           streaming = true;
         }
-
         resolve(streaming);
       }).catch(() => {
         streaming = true;
@@ -113,7 +112,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
           onProgress: e => {
             dispatch(actions.setUploadProgress(e.loaded / e.total));
           },
-          extension: file.name.split('.').pop()
+          extension: file.name.split('.').pop(),
         };
         blackboxOptions.filename = file.name;
 
@@ -158,7 +157,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
     }
 
     if (process.env.NODE_ENV !== 'production') {
-      console.warn('Loading %c' + documentPath + '%c with %c' + partRetrieverName, 'font-weight: bold; color: blue', '', 'font-weight: bold; color: red');
+      console.warn(`Loading %c${documentPath}%c with %c${partRetrieverName}`, 'font-weight: bold; color: blue', '', 'font-weight: bold; color: red');
     }
 
     if (customHeaders && partRetriever.setCustomHeaders) {
@@ -183,7 +182,7 @@ const getDocOptions = (state, dispatch, streaming) => {
     } else {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit } = state.advanced;
 
-      Promise.all([ getBackendPromise(pdfType), getBackendPromise(officeType) ]).then(([ pdfBackendType, officeBackendType ]) => {
+      Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
         let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
         let attempt = 0;
         const getPassword = checkPassword => {
@@ -210,12 +209,12 @@ const getDocOptions = (state, dispatch, streaming) => {
         const workerHandlers = {
           workerLoadingProgress: percent => {
             dispatch(actions.setWorkerLoadingProgress(percent));
-          }
+          },
         };
 
         const docName = getDocName(state);
         const options = { docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit };
-        let { type, extension, workerTransportPromise } = getDocTypeData(options);
+        const { type, extension, workerTransportPromise } = getDocTypeData(options);
         if (workerTransportPromise) {
           workerTransportPromise.catch(workerError => {
             if (typeof workerError === 'string') {
@@ -290,17 +289,11 @@ export const getDocName = state => {
   return filename || path || initialDoc;
 };
 
-const createFakeFilename = (initialDoc, ext) => {
-  return initialDoc.replace(/^.*[\\\/]/, '') + '.' + ext.replace(/^\./, '');
-};
+const createFakeFilename = (initialDoc, ext) => `${initialDoc.replace(/^.*[\\\/]/, '')}.${ext.replace(/^\./, '')}`;
 
-export const isOfficeExtension = extension => {
-  return supportedOfficeExtensions.indexOf(extension) !== -1;
-};
+export const isOfficeExtension = extension => supportedOfficeExtensions.indexOf(extension) !== -1;
 
-export const isPDFExtension = extension => {
-  return supportedPDFExtensions.indexOf(extension) !== -1;
-};
+export const isPDFExtension = extension => supportedPDFExtensions.indexOf(extension) !== -1;
 
 const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise }) => {
   const originalExtension = getDocumentExtension(docName);

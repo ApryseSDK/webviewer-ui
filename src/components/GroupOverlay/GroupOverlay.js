@@ -89,7 +89,7 @@ class GroupOverlay extends React.PureComponent {
     const clickedHeader = header?.contains(e.target);
 
     if (isDesktop() && !clickedToolStylePopup && !clickedHeader) {
-      this.props.closeElements(['toolsOverlay']);
+      this.props.closeElements(['groupOverlay']);
     }
   };
 
