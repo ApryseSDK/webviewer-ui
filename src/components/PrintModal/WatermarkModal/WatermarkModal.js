@@ -8,8 +8,11 @@ import { withTranslation } from 'react-i18next';
 import Slider from 'components/Slider';
 import { circleRadius } from 'constants/slider';
 
+// const DESIRED_WIDTH = 491;
+// const DESIRED_HEIGHT = 698;
+
 const DESIRED_WIDTH = 491;
-const DESIRED_HEIGHT = 698;
+const DESIRED_HEIGHT = 491;
 
 // numbers were taken from font dropdown menu in google docs
 const FONT_SIZES = [
@@ -262,16 +265,17 @@ class WatermarkModal extends React.PureComponent {
                     style={{ backgroundColor: this.state[FORM_FIELD_KEYS.color].toHexString() }}
                     onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
                   >
-
-                    {this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
-                      <ColorPalette
-                        color={this.state[FORM_FIELD_KEYS.color]}
-                        property={'TextColor'} // arbitrary property name. this property isn't used in this file
-                        onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
-                      />
-                    </div>}
-
                   </div>
+
+                  {
+                      this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
+                        <ColorPalette
+                          color={this.state[FORM_FIELD_KEYS.color]}
+                          property={'TextColor'} // arbitrary property name. this property isn't used in this file
+                          onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
+                        />
+                      </div>
+                    }
 
                 </div>
               </form>

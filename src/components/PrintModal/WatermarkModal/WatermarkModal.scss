@@ -13,9 +13,8 @@ $color-widget-border: 1px solid $gray12;
   align-items: center;
 
   .StylePopup {
-    width: 100%;
     position: absolute;
-    margin-top: 25px;
+    margin-top: 50px;
     border: $color-widget-border;
   }
 
@@ -49,7 +48,7 @@ $color-widget-border: 1px solid $gray12;
   .cell {
     @extend %cell;
     cursor: pointer;
-    flex: initial;
+    width: 35px;
     border: $color-widget-border;
     position: relative;
   }
