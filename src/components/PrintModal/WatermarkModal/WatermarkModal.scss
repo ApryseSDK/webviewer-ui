@@ -2,8 +2,11 @@
 @import '../../../constants/modal';
 @import '../../../constants/popup';
 
+$color-widget-border: 1px solid #e1e1e3;
+
 .StylePopup {
   width: initial;
+  border: $color-widget-border;
 }
 
 .Watermark {
@@ -14,56 +17,56 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
 
-  .form-container {
-    @extend %modal-shared-container-style;
-  }
+.form-container {
+  @extend %modal-shared-container-style;
+}
 
-  .button-container {
-    @extend %modal-shared-container-style;
-    display: flex;
-    justify-content: space-between;
-    padding: 2px;
-  }
+.button-container {
+  @extend %modal-shared-container-style;
+  display: flex;
+  justify-content: space-between;
+  padding: 2px;
+}
 
-  .cell {
-    @extend %cell;
-    cursor: pointer;
-    flex: initial;
-    border: 1px solid #e1e1e3;
-  }
+.cell {
+  @extend %cell;
+  cursor: pointer;
+  flex: initial;
+  border: $color-widget-border;
+}
 
-  .button {
-    font-weight: 600;
-    padding: 6px 18px;
-    border-radius: 4px 4px 4px 4px;
-    height: 32px;
-    cursor: pointer;
-  }
+.button {
+  font-weight: 600;
+  padding: 6px 18px;
+  border-radius: 4px 4px 4px 4px;
+  height: 32px;
+  cursor: pointer;
+}
 
-  .ok, .reset {
-    color: #fff;
-    background: #00a4e4;
-    border: 1px solid #00a4e4;
-  }
+.ok, .reset {
+  color: #fff;
+  background: #00a4e4;
+  border: 1px solid #00a4e4;
+}
 
-  .form-content-container {
-    display: flex;
+.form-content-container {
+  display: flex;
 
-    & form {
-      display: flex;
-      flex-direction: column;
-      margin: 5px;
-    }
-  }
-
-  .form-field {
+  & form {
     display: flex;
     flex-direction: column;
-    margin: 5px 0;
+    margin: 5px;
+  }
+}
 
-    >label {
-      margin: 3px 0;
-    }
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+
+  >label {
+    margin: 3px 0;
   }
 }
