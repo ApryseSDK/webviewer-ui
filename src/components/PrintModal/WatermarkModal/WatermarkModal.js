@@ -200,7 +200,6 @@ class WatermarkModal extends React.PureComponent {
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <div className="form-content-container">
               <form>
-
                 <div className="form-field">
 
                   <label>
@@ -283,13 +282,13 @@ class WatermarkModal extends React.PureComponent {
               <div className="canvas-container" ref={this.canvasContainerRef}>
 
               </div>
-
             </div>
+
+
             <div className="button-container" onClick={e => e.stopPropagation()}>
               <button className="reset button" onClick={() => this.resetForm()}>{t(`action.reset`)}</button>
               <button className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
             </div>
-
           </div>
         </div>
       </>

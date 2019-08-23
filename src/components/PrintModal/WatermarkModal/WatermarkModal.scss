@@ -12,7 +12,6 @@ $color-widget-border: 1px solid #e1e1e3;
 .Watermark {
   @extend %modal;
   z-index: $modal-z-index + 10;
-  border: 1px solid red;
 
   display: flex;
   flex-direction: column;
@@ -21,6 +20,15 @@ $color-widget-border: 1px solid #e1e1e3;
 
 .form-container {
   @extend %modal-shared-container-style;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-content-container {
+  display: flex;
+  & form {
+    margin: 5px;
+  }
 }
 
 .button-container {
@@ -49,16 +57,6 @@ $color-widget-border: 1px solid #e1e1e3;
   color: #fff;
   background: #00a4e4;
   border: 1px solid #00a4e4;
-}
-
-.form-content-container {
-  display: flex;
-
-  & form {
-    display: flex;
-    flex-direction: column;
-    margin: 5px;
-  }
 }
 
 .form-field {
