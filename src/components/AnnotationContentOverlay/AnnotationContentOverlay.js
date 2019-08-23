@@ -5,13 +5,13 @@ import { useTranslation } from 'react-i18next';
 import core from 'core';
 import selectors from 'selectors';
 
-import './AnnotationOverlay.scss';
+import './AnnotationContentOverlay.scss';
 
 const MAX_CHARACTERS = 100;
 
-const AnnotationOverlay = () => {
+const AnnotationContentOverlay = () => {
   const isDisabled = useSelector(state =>
-    selectors.isElementDisabled(state, 'annotationOverlay'),
+    selectors.isElementDisabled(state, 'annotationContentOverlay'),
   );
   const [t] = useTranslation();
   const [annotation, setAnnotation] = useState();
@@ -41,12 +41,12 @@ const AnnotationOverlay = () => {
   }, []);
 
   const contents = annotation?.getContents();
-  const replies = annotation?.getReplies();
+  const numberOfReplies = annotation?.getReplies().length;
 
   return isDisabled || !contents ? null : (
     <div
-      className="Overlay AnnotationOverlay"
-      data-element="annotationOverlay"
+      className="Overlay AnnotationContentOverlay"
+      data-element="annotationContentOverlay"
       style={{ ...overlayPosition }}
     >
       <div className="author">{core.getDisplayAuthor(annotation)}</div>
@@ -55,13 +55,13 @@ const AnnotationOverlay = () => {
           ? `${contents.slice(0, MAX_CHARACTERS)}...`
           : contents}
       </div>
-      {replies.length > 0 && (
+      {numberOfReplies > 0 && (
         <div className="replies">
-          {`${t('action.reply')} (${replies.length})`}
+          {t('message.annotationReplyCount', { count: numberOfReplies })}
         </div>
       )}
     </div>
   );
 };
 
-export default AnnotationOverlay;
+export default AnnotationContentOverlay;

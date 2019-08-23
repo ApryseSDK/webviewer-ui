@@ -13,7 +13,7 @@ import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
-import AnnotationOverlay from 'components/AnnotationOverlay'
+import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import SearchPanel from 'components/SearchPanel';
@@ -73,7 +73,7 @@ const App = ({ removeEventHandlers }) => {
         <PageNavOverlay />
         <ZoomOverlay />
         <MeasurementOverlay />
-        <AnnotationOverlay />
+        <AnnotationContentOverlay />
 
         <AnnotationPopup />
         <TextPopup />

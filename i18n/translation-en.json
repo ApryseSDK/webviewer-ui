@@ -94,6 +94,8 @@
     "notSupported": "That file type is not supported.",
     "passwordRequired": "Password required",
     "preparingToPrint": "Preparing to print...",
+    "annotationReplyCount": "Reply ({{count}})",
+    "annotationReplyCount_plural" : "Replies ({{count}})",
     "printTotalPageCount": "{{count}} page",
     "printTotalPageCount_plural": "{{count}} pages",
     "processing": "Processing...",

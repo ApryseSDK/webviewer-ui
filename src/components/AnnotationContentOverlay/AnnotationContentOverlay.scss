@@ -1,7 +1,7 @@
 @import '../../constants/styles';
 @import '../../constants//overlay';
 
-.AnnotationOverlay {
+.AnnotationContentOverlay {
   @extend %overlay;
   
   display: flex;
