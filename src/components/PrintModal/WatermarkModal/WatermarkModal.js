@@ -270,7 +270,7 @@ class WatermarkModal extends React.PureComponent {
                   <ColorPalette
                     color={this.state[FORM_FIELD_KEYS.color]}
                     property={'TextColor'} // arbitrary property name. this property isn't used in this file
-                    onStyleChange = {(property, color) => {this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
+                    onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
                   />}
                   </div>
 
