@@ -16,7 +16,7 @@
   }
 
   .button-container {
-    // @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style;
     display: flex;
     justify-content: space-between;
     padding: 2px;
@@ -25,6 +25,7 @@
   .cell {
     @extend %cell;
     cursor: pointer;
+    flex: initial;
   }
 
   .button {
@@ -39,5 +40,14 @@
     color: #fff;
     background: #00a4e4;
     border: 1px solid #00a4e4;
+  }
+
+  .form-content-container {
+    display: flex;
+
+    & form {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
