@@ -242,7 +242,7 @@ class WatermarkModal extends React.PureComponent {
                     displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
                     value={this.state[FORM_FIELD_KEYS.opacity]}
                     displayValue={`${Math.round(this.state[FORM_FIELD_KEYS.opacity])}%`}
-                    getCirclePosition={ lineLength => this.getCirclePosn(lineLength)}
+                    getCirclePosition={lineLength => this.getCirclePosn(lineLength)}
                     convertRelativeCirclePositionToValue={circlePosn => circlePosn}
                     onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
                   />
@@ -258,25 +258,18 @@ class WatermarkModal extends React.PureComponent {
                     style={{ backgroundColor: this.state[FORM_FIELD_KEYS.color].toHexString() }}
                     onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
                   >
+
+                    {this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
+                      <ColorPalette
+                        color={this.state[FORM_FIELD_KEYS.color]}
+                        property={'TextColor'} // arbitrary property name. this property isn't used in this file
+                        onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
+                      />
+                    </div>}
+
                   </div>
 
                 </div>
-                <div className="form-field">
-
-                  <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
-
-                    {this.state.isColorPaletteVisible &&
-                  <ColorPalette
-                    color={this.state[FORM_FIELD_KEYS.color]}
-                    property={'TextColor'} // arbitrary property name. this property isn't used in this file
-                    onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
-                  />}
-                  </div>
-
-                </div>
-
-                <div className="form-field">Hi</div>
-
               </form>
 
               <div className="canvas-container" ref={this.canvasContainerRef}>

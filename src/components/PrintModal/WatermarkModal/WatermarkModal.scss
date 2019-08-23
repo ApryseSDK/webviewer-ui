@@ -4,11 +4,6 @@
 
 $color-widget-border: 1px solid #e1e1e3;
 
-.StylePopup {
-  width: initial;
-  border: $color-widget-border;
-}
-
 .Watermark {
   @extend %modal;
   z-index: $modal-z-index + 10;
@@ -16,55 +11,63 @@ $color-widget-border: 1px solid #e1e1e3;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
 
-.form-container {
-  @extend %modal-shared-container-style;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-content-container {
-  display: flex;
-  & form {
-    margin: 5px;
+  .StylePopup {
+    width: 100%;
+    position: absolute;
+    margin-top: 25px;
+    border: $color-widget-border;
   }
-}
 
-.button-container {
-  @extend %modal-shared-container-style;
-  display: flex;
-  justify-content: space-between;
-  padding: 2px;
-}
-
-.cell {
-  @extend %cell;
-  cursor: pointer;
-  flex: initial;
-  border: $color-widget-border;
-}
-
-.button {
-  font-weight: 600;
-  padding: 6px 18px;
-  border-radius: 4px 4px 4px 4px;
-  height: 32px;
-  cursor: pointer;
-}
-
-.ok, .reset {
-  color: #fff;
-  background: #00a4e4;
-  border: 1px solid #00a4e4;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  margin: 5px 0;
-
-  >label {
-    margin: 3px 0;
+  .form-container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-content-container {
+    display: flex;
+    & form {
+      margin: 5px;
+    }
+  }
+  
+  .button-container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    justify-content: space-between;
+    padding: 2px;
+  }
+  
+  .cell {
+    @extend %cell;
+    cursor: pointer;
+    flex: initial;
+    border: $color-widget-border;
+    position: relative;
+  }
+  
+  .button {
+    font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 4px 4px 4px 4px;
+    height: 32px;
+    cursor: pointer;
+  }
+  
+  .ok, .reset {
+    color: #fff;
+    background: #00a4e4;
+    border: 1px solid #00a4e4;
+  }
+  
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+  
+    >label {
+      margin: 3px 0;
+    }
   }
 }
