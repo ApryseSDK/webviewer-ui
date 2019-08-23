@@ -79,7 +79,7 @@ const LeftPanel = () => {
 
 export default LeftPanel;
 
-const ResizeBar = props => {
+const ResizeBar = () => {
   const isMouseDownRef = useRef(false);
   const dispatch = useDispatch();
 

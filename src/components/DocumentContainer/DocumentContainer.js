@@ -172,20 +172,16 @@ class DocumentContainer extends React.PureComponent {
   }
 
   render() {
-    let className, style;
+    let className;
 
     if (isIE) {
       className = getClassNameInIE(this.props);
-      style = {
-       transition: 'none'
-      };
     } else {
       className = this.getClassName(this.props);
-      style = null;
     }
 
     return (
-      <div className={className} ref={this.container} data-element="documentContainer" onScroll={this.handleScroll} onTransitionEnd={this.onTransitionEnd} style={style}>
+      <div className={className} ref={this.container} data-element="documentContainer" onScroll={this.handleScroll} onTransitionEnd={this.onTransitionEnd}>
         <div className="document" ref={this.document}></div>
       </div>
     );
