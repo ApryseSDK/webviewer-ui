@@ -25,6 +25,7 @@ module.exports = {
           options: {
             presets: ['@babel/preset-react', '@babel/preset-env'],
             plugins: [
+              'react-hot-loader/babel',
               '@babel/plugin-proposal-function-sent',
               '@babel/plugin-proposal-export-namespace-from',
               '@babel/plugin-proposal-numeric-separator',
@@ -64,6 +65,7 @@ module.exports = {
   },
   resolve: {
     alias: {
+      'react-dom': '@hot-loader/react-dom',
       src: path.resolve(__dirname, 'src/'),
       components: path.resolve(__dirname, 'src/components/'),
       constants: path.resolve(__dirname, 'src/constants/'),

@@ -31,7 +31,7 @@ const LeftPanel = () => {
     if (isOpen && isTabletOrMobile()) {
       dispatch(actions.closeElement('searchPanel'));
     }
-  }, [isOpen]);
+  }, [dispatch, isOpen]);
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
