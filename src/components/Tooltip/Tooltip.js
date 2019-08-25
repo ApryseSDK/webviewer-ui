@@ -121,7 +121,7 @@ const Tooltip = ({ content, children }) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {child}
       {show &&
         translatedContent &&
@@ -141,7 +141,7 @@ const Tooltip = ({ content, children }) => {
           </div>,
           document.getElementById('app'),
         )}
-    </React.Fragment>
+    </>
   );
 };
 
