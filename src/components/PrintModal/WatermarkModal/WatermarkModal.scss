@@ -19,6 +19,11 @@ $gap: 15px;
     border: $color-widget-border;
     background-color: #fafafa;
 
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      /* IE10+ CSS styles go here */
+      margin-top: 0;
+    }
+
     .ColorPalette {
       padding: 10px;
     }
@@ -43,7 +48,7 @@ $gap: 15px;
 
     @include mobile {
       // flex-direction: column;
-      // width: 100vw;
+      width: 100vw;
       // height: 100vh;
       // margin-left: $gap;
       // max-height: 100vh;
@@ -116,7 +121,7 @@ $gap: 15px;
     border: $color-widget-border;
     position: relative;
     @include mobile {
-      width: auto;
+      // width: auto;
       // height: auto;
       // margin-left: $gap;
     }
