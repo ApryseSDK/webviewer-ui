@@ -18,6 +18,10 @@ $gap: 15px;
     margin-top: 50px;
     border: $color-widget-border;
     background-color: #fafafa;
+
+    .ColorPalette {
+      padding: 10px;
+    }
   }
 
   .header-container {
@@ -60,7 +64,7 @@ $gap: 15px;
       align-items: center;
       width: 300px;
       height: 300px;
-      border: 1px solid red;
+      // border: 1px solid red;
     }
   }
   

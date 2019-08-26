@@ -212,8 +212,6 @@ class WatermarkModal extends React.PureComponent {
 
   render() {
     const { isVisible } = this.props;
-    const noContent = !this.canvasContainerRef.current || this.canvasContainerRef.current.childNodes.length === 0;
-    console.log(noContent);
     if (!isVisible) {
       return null;
     }
