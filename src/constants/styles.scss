@@ -49,6 +49,23 @@ $mobile-width: 640px;
   }
 }
 
+input[type=text] {
+  border: 1px solid grey;
+
+  // &::-webkit-input-placeholder, &:-ms-input-placeholder, &::placeholder  { /* Edge */
+  //   color: red;
+  // }
+  &::placeholder {
+    color:$gray12;
+  }
+  &::-webkit-input-placeholder {
+    color:$gray12;
+  }
+  &:-ms-input-placeholder {
+    color:$gray12;
+  }
+}
+
 @mixin desktop {
   @media (min-width: #{$tablet-width + 1px}) {
     @content;
