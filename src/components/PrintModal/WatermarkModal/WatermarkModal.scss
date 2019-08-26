@@ -3,6 +3,7 @@
 @import '../../../constants/popup';
 
 $color-widget-border: 1px solid $gray12;
+$gap: 15px;
 
 .Watermark {
   @extend %modal;
@@ -22,8 +23,14 @@ $color-widget-border: 1px solid $gray12;
   .header-container {
     display: flex;
     align-content: center;
-    justify-content: center;
+    // justify-content: center;
+    justify-content: flex-start;
+    padding: $gap;
     border-bottom: $color-widget-border;
+  }
+
+  .header {
+    font-weight: bold;
   }
 
   .form-container {
@@ -34,9 +41,9 @@ $color-widget-border: 1px solid $gray12;
   
   .form-content-container {
     display: flex;
-    margin: 13px;
+    margin: $gap;
     & form {
-      margin-right: 13px;
+      margin-right: $gap;
       flex-basis: 10%;
     }
 
@@ -52,7 +59,7 @@ $color-widget-border: 1px solid $gray12;
     border-top: $color-widget-border;
     display: flex;
     justify-content: space-between;
-    padding: 5px;
+    padding: $gap;
   }
   
   .cell {

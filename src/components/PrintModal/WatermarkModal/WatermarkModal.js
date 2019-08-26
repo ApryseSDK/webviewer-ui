@@ -227,7 +227,7 @@ class WatermarkModal extends React.PureComponent {
         <div className={'Modal Watermark'} data-element="waterMarkModal" onClick={() => this.closeModal()}>
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <div className="header-container" onClick={e => e.stopPropagation()}>
-              <h4>{t('option.print.printWatermarkSettings')}</h4>
+              <div className="header">{t('option.print.printWatermarkSettings')}</div>
             </div>
 
             <div className="form-content-container">
