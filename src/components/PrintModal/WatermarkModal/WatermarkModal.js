@@ -76,10 +76,10 @@ class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible !== undefined) {
 
       if (this.props.isVisible && this.canvasContainerRef.current && this.canvasContainerRef.current.childNodes && this.canvasContainerRef.current.childNodes.length === 0) {
-        const div = document.createElement('div');
-        div.style.width="300px";
-        div.style.height="300px";
-        this.canvasContainerRef.current.appendChild(div);
+        // const div = document.createElement('div');
+        // div.style.width="300px";
+        // div.style.height="300px";
+        // this.canvasContainerRef.current.appendChild(div);
       }
 
       this.setState({
@@ -92,10 +92,10 @@ class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible !== prevProps.isVisible) {
 
       if (this.props.isVisible && this.canvasContainerRef.current && this.canvasContainerRef.current.childNodes && this.canvasContainerRef.current.childNodes.length === 0) {
-        const div = document.createElement('div');
-        div.style.width="300px";
-        div.style.height="300px";
-        this.canvasContainerRef.current.appendChild(div);
+        // const div = document.createElement('div');
+        // div.style.width="300px";
+        // div.style.height="300px";
+        // this.canvasContainerRef.current.appendChild(div);
       }
 
       this.setState({
@@ -125,6 +125,8 @@ class WatermarkModal extends React.PureComponent {
           this.canvasContainerRef.current.removeChild(nodes[0]);
         }
         canvas.style.border = '1px solid black';
+        canvas.style.height = this.canvasContainerRef.current.style.height;
+        canvas.style.margin = '15px';
         this.canvasContainerRef.current.appendChild(canvas);
       },
     });

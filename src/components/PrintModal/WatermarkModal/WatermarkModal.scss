@@ -23,7 +23,6 @@ $gap: 15px;
   .header-container {
     display: flex;
     align-content: center;
-    // justify-content: center;
     justify-content: flex-start;
     padding: $gap;
     border-bottom: $color-widget-border;
@@ -42,16 +41,26 @@ $gap: 15px;
   .form-content-container {
     display: flex;
     margin: $gap;
+    
+    justify-content: space-around;
     & form {
       margin-right: $gap;
-      flex-basis: 10%;
+      // flex-basis: 10%;
+      // flex-basis: 30px;
+      // flex: 0 0 173px;
+      width: 175px;
     }
 
     & .canvas-container {
-      flex-basis: 90%;
+      // flex-basis: 90%;
+      // flex-basis: 277px;
+      // flex: 0 0 240px;
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 300px;
+      height: 300px;
+      border: 1px solid red;
     }
   }
   
