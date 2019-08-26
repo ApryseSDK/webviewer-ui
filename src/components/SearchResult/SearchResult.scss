@@ -13,7 +13,7 @@
 
   &.selected {
     background: $gray10;
-    color: var(--textHighlighted);
+    color: var(--text-highlighted-color);
 
     .search-value {
       background: #fbcd9f;
@@ -22,6 +22,6 @@
 
   .search-value {
     background: #fffc95;
-    color: var(--textHighlighted);
+    color: var(--text-highlighted-color);
   }
 }

@@ -113,7 +113,7 @@ const setTheme = theme => {
     buttonHover: '--button-hover-color',
     buttonActive: '--button-active-color',
     text: '--text-color',
-    textHighlighted: '--textHighlighted',
+    textHighlighted: '--text-highlighted-color',
     icon: '--icon-color',
     iconActive: '--icon-active-color'
   };
