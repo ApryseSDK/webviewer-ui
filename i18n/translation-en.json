@@ -218,6 +218,6 @@
     "size": "Size",
     "location": "Location",
     "text": "Text",
-    "style": "Style"
+    "colors": "Colors"
   }
 }

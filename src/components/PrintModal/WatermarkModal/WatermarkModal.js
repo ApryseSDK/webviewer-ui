@@ -39,7 +39,7 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.location]: WATERMARK_LOCATIONS.CENTER,
   [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[FONT_SIZES.length / 2],
   [FORM_FIELD_KEYS.text]: '',
-  [FORM_FIELD_KEYS.color]: new window.Annotations.Color(0, 0, 0),
+  [FORM_FIELD_KEYS.color]: new window.Annotations.Color(228, 66, 52),
   [FORM_FIELD_KEYS.opacity]: 100,
 };
 
@@ -207,7 +207,7 @@ class WatermarkModal extends React.PureComponent {
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <div className="header-container" onClick={e => e.stopPropagation()}>
               <div className="header">{t('option.print.printWatermarkSettings')}</div>
-              <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} /> 
+              <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={() => this.closeModal()} /> 
             </div>
 
             <div className="form-content-container">
@@ -262,7 +262,7 @@ class WatermarkModal extends React.PureComponent {
                 <div className="form-field">
 
                   <label>
-                    {t(`watermark.style`)}
+                    {t(`watermark.colors`)}
                   </label>
                   <div
                     className="cell"
@@ -282,6 +282,8 @@ class WatermarkModal extends React.PureComponent {
                   }
 
                 </div>
+
+                <button className="reset button" onClick={() => this.resetForm()}>{t(`action.reset`)}</button>
               </form>
 
               <div className="canvas-container" ref={this.canvasContainerRef}>
@@ -290,7 +292,7 @@ class WatermarkModal extends React.PureComponent {
             </div>
 
             <div className="button-container" onClick={e => e.stopPropagation()}>
-              <button className="reset button" onClick={() => this.resetForm()}>{t(`action.reset`)}</button>
+              {/* <button className="reset button" onClick={() => this.resetForm()}>{t(`action.reset`)}</button> */}
               <button className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
             </div>
           </div>

@@ -87,7 +87,8 @@ $gap: 15px;
   .button-container {
     border-top: $color-widget-border;
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
+    justify-content: flex-end;
     padding: $gap;
   }
   
@@ -105,18 +106,22 @@ $gap: 15px;
     border-radius: 4px 4px 4px 4px;
     height: 32px;
     cursor: pointer;
+
+    &.ok, &.reset {
+      color: #fff;
+      background: #00a4e4;
+      border: 1px solid #00a4e4;
+    }
+
+    &.ok {
+      font-weight: normal;
+    }
   }
-  
-  .ok, .reset {
-    color: #fff;
-    background: #00a4e4;
-    border: 1px solid #00a4e4;
-  }
-  
+    
   .form-field {
     display: flex;
     flex-direction: column;
-    margin: 5px 0;
+    margin: 0 0 $gap 0;
   
     >label {
       margin: 3px 0;
