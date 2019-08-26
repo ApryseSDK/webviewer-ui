@@ -47,12 +47,25 @@ $gap: 15px;
     margin: $gap;
     
     justify-content: space-around;
+
+    @include mobile {
+      flex-direction: column;
+      // width: 100vw;
+      // height: 100vh;
+      margin-left: $gap;
+    }
+
     & form {
       margin-right: $gap;
       // flex-basis: 10%;
       // flex-basis: 30px;
       // flex: 0 0 173px;
       width: 175px;
+
+      @include mobile {
+        width: auto;
+        // margin-left: $gap;
+      }
     }
 
     & .canvas-container {
@@ -65,6 +78,12 @@ $gap: 15px;
       width: 300px;
       height: 300px;
       // border: 1px solid red;
+
+      @include mobile {
+        // width: auto;
+        // height: auto;
+        // margin-left: $gap;
+      }
     }
   }
   
@@ -81,6 +100,11 @@ $gap: 15px;
     width: 35px;
     border: $color-widget-border;
     position: relative;
+    @include mobile {
+      width: auto;
+      // height: auto;
+      // margin-left: $gap;
+    }
   }
   
   .button {
