@@ -80,6 +80,7 @@ const setPresetTheme = theme => {
       buttonHover: '#F6F6F6',
       buttonActive: '#F0F0F0',
       text: '#333333',
+      textHighlighted: '#333333',
       icon: '#757575',
       iconActive: '#757575'
     },
@@ -90,6 +91,7 @@ const setPresetTheme = theme => {
       buttonHover: '#686880',
       buttonActive: '#686880',
       text: '#FFFFFF',
+      textHighlighted: '#333333',
       icon: '#FFFFFF',
       iconActive: '#FFFFFF'
     }
@@ -111,6 +113,7 @@ const setTheme = theme => {
     buttonHover: '--button-hover-color',
     buttonActive: '--button-active-color',
     text: '--text-color',
+    textHighlighted: '--textHighlighted',
     icon: '--icon-color',
     iconActive: '--icon-active-color'
   };
