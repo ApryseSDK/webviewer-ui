@@ -35,8 +35,8 @@ const LeftPanel = () => {
   }, [isOpen]);
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
-    // IE11 will use javascript for controlling width, other broswers will use CSS
-    const style = isIE11 && leftPanelWidth ? { width: leftPanelWidth } : { };
+  // IE11 will use javascript for controlling width, other broswers will use CSS variables
+  const style = isIE11 && leftPanelWidth ? { width: leftPanelWidth } : { };
 
   return isDisabled ? null : (
     <div
@@ -89,8 +89,10 @@ const ResizeBar = () => {
     // it to rerender too often
     const dragMouseMove = _.throttle(({ clientX }) => {
       if (isMouseDownRef.current && clientX > 215 && clientX < 900) {
-         // we are using css variables to make the panel resizable but IE11 doesn't support it
-        dispatch(actions.setLeftPanelWidth(clientX));
+        // we are using css variables to make the panel resizable but IE11 doesn't support it
+        if (isIE) {
+          dispatch(actions.setLeftPanelWidth(clientX));
+        }
         document.body.style.setProperty('--left-panel-width', `${clientX}px`);
       }
     }, 50);
