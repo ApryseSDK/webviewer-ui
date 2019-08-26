@@ -292,8 +292,7 @@ class WatermarkModal extends React.PureComponent {
             </div>
 
             <div className="button-container" onClick={e => e.stopPropagation()}>
-              {/* <button className="reset button" onClick={() => this.resetForm()}>{t(`action.reset`)}</button> */}
-              <button className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
+              <a className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</a>
             </div>
           </div>
         </div>

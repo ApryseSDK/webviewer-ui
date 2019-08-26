@@ -29,6 +29,10 @@ $gap: 15px;
     }
   }
 
+  input[type=text] {
+    border: 1px solid grey;
+  }
+
   .header-container {
     display: flex;
     align-content: center;
@@ -104,10 +108,10 @@ $gap: 15px;
     font-weight: 600;
     padding: 6px 18px;
     border-radius: 4px 4px 4px 4px;
-    height: 32px;
+    // height: 32px;
     cursor: pointer;
 
-    &.ok, &.reset {
+    &.reset {
       color: #fff;
       background: #00a4e4;
       border: 1px solid #00a4e4;
@@ -115,6 +119,8 @@ $gap: 15px;
 
     &.ok {
       font-weight: normal;
+      color: #00a4e4;
+      border: 1px solid #00a4e4;
     }
   }
     
