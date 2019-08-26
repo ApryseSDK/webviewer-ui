@@ -32,13 +32,15 @@ $gap: 15px;
   .header-container {
     display: flex;
     align-content: center;
-    justify-content: flex-start;
-    padding: $gap;
+    justify-content: space-between;
+    padding: 10px;
     border-bottom: $color-widget-border;
   }
 
   .header {
     font-weight: bold;
+    display: flex;
+    align-items: center;
   }
 
   .form-container {

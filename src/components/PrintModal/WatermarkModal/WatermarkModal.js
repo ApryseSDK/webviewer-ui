@@ -7,6 +7,8 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import './WatermarkModal.scss';
 
+import ActionButton from 'components/ActionButton';
+
 const DESIRED_WIDTH = 275;
 const DESIRED_HEIGHT = 275;
 
@@ -205,6 +207,7 @@ class WatermarkModal extends React.PureComponent {
           <div className="form-container" onClick={e => e.stopPropagation()}>
             <div className="header-container" onClick={e => e.stopPropagation()}>
               <div className="header">{t('option.print.printWatermarkSettings')}</div>
+              <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} /> 
             </div>
 
             <div className="form-content-container">
