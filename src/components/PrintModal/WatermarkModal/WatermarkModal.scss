@@ -47,13 +47,7 @@ $gap: 15px;
     flex-direction: column;
 
     @include mobile {
-      // flex-direction: column;
       width: 100vw;
-      // height: 100vh;
-      // margin-left: $gap;
-      // max-height: 100vh;
-      // max-width: 100vw;
-      // overflow:auto;
       max-height: 100vh;
       overflow:auto;
     }
@@ -67,43 +61,24 @@ $gap: 15px;
 
     @include mobile {
       flex-direction: column;
-      // width: 100vw;
-      // height: 100vh;
       margin-left: $gap;
-      // max-height: 100vh;
-      // max-width: 100vw;
-      // overflow:auto;
     }
 
     & form {
       margin-right: $gap;
-      // flex-basis: 10%;
-      // flex-basis: 30px;
-      // flex: 0 0 173px;
       width: 175px;
 
       @include mobile {
         width: auto;
-        // margin-left: $gap;
       }
     }
 
     & .canvas-container {
-      // flex-basis: 90%;
-      // flex-basis: 277px;
-      // flex: 0 0 240px;
       display: flex;
       justify-content: center;
       align-items: center;
       width: 300px;
       height: 300px;
-      // border: 1px solid red;
-
-      @include mobile {
-        // width: auto;
-        // height: 2px;
-        // margin-left: $gap;
-      }
     }
   }
   
@@ -120,11 +95,6 @@ $gap: 15px;
     width: 35px;
     border: $color-widget-border;
     position: relative;
-    @include mobile {
-      // width: auto;
-      // height: auto;
-      // margin-left: $gap;
-    }
   }
   
   .button {

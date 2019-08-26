@@ -1,13 +1,11 @@
-import React from 'react';
-import core from 'core';
-import PropTypes from 'prop-types';
 import ColorPalette from 'components/ColorPalette';
-import './WatermarkModal.scss';
-
-import { withTranslation } from 'react-i18next';
 import Slider from 'components/Slider';
 import { circleRadius } from 'constants/slider';
-import LoadingModal from 'components/LoadingModal';
+import core from 'core';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+import './WatermarkModal.scss';
 
 const DESIRED_WIDTH = 275;
 const DESIRED_HEIGHT = 275;
@@ -74,14 +72,6 @@ class WatermarkModal extends React.PureComponent {
 
   componentDidMount() {
     if (this.props.isVisible !== undefined) {
-
-      if (this.props.isVisible && this.canvasContainerRef.current && this.canvasContainerRef.current.childNodes && this.canvasContainerRef.current.childNodes.length === 0) {
-        // const div = document.createElement('div');
-        // div.style.width="300px";
-        // div.style.height="300px";
-        // this.canvasContainerRef.current.appendChild(div);
-      }
-
       this.setState({
         isVisible: this.props.isVisible,
       }, () => core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn));
@@ -90,14 +80,6 @@ class WatermarkModal extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (this.props.isVisible !== prevProps.isVisible) {
-
-      if (this.props.isVisible && this.canvasContainerRef.current && this.canvasContainerRef.current.childNodes && this.canvasContainerRef.current.childNodes.length === 0) {
-        // const div = document.createElement('div');
-        // div.style.width="300px";
-        // div.style.height="300px";
-        // this.canvasContainerRef.current.appendChild(div);
-      }
-
       this.setState({
         isVisible: this.props.isVisible,
       }, () => this.handleWatermarkRenderFxn());
@@ -215,12 +197,7 @@ class WatermarkModal extends React.PureComponent {
     if (!isVisible) {
       return null;
     }
-    // if (noContent) {
-    //   return <LoadingModal
-    //   isDisabled={true}
-    //   isOpen={noContent}
-    //   />;
-    // }
+
     const { t } = this.props;
     return (
       <>
@@ -277,7 +254,7 @@ class WatermarkModal extends React.PureComponent {
                     convertRelativeCirclePositionToValue={circlePosn => circlePosn}
                     onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
                   />
-                 
+
                 </div>
                 <div className="form-field">
 
