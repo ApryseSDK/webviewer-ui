@@ -1,6 +1,5 @@
 import React, {
   useRef,
-  useImperativeHandle,
   useLayoutEffect,
   useContext,
 } from 'react';
@@ -33,20 +32,12 @@ const AutoResizeTextarea = React.forwardRef(
       onFocus = () => {},
       placeholder = '',
     },
-    ref,
+    forwardedRef,
   ) => {
     const { resize } = useContext(NoteContext);
     const prevHeightRef = useRef();
     const textareaRef = useRef();
     const TEXTAREA_HEIGHT = '30px';
-
-    useImperativeHandle(ref, () => ({
-      focus: () => textareaRef.current.focus(),
-      blur: () => textareaRef.current.blur(),
-      setSelectionRange: (...args) =>
-        textareaRef.current.setSelectionRange(...args),
-      value: () => textareaRef.current.value,
-    }));
 
     useLayoutEffect(() => {
       // for auto-resize the height of the textarea
@@ -83,7 +74,10 @@ const AutoResizeTextarea = React.forwardRef(
 
     return (
       <textarea
-        ref={textareaRef}
+        ref={el => {
+          textareaRef.current = el;
+          forwardedRef(el);
+        }}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         onFocus={onFocus}

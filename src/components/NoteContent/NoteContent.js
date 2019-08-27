@@ -195,10 +195,11 @@ const ContentArea = ({ annotation, setIsEditing }) => {
   const textareaRef = useRef();
 
   useEffect(() => {
+    // on initial mount, focus the last character of the textarea
     if (textareaRef.current) {
       textareaRef.current.focus();
 
-      const textLength = textareaRef.current.value().length;
+      const textLength = textareaRef.current.value.length;
       textareaRef.current.setSelectionRange(textLength, textLength);
     }
   }, []);
@@ -225,7 +226,9 @@ const ContentArea = ({ annotation, setIsEditing }) => {
   return (
     <div className="edit-content">
       <AutoResizeTextarea
-        ref={textareaRef}
+        ref={el => {
+          textareaRef.current = el;
+        }}
         value={value}
         onChange={value => setValue(value)}
         onBlur={() => setIsEditing(false)}
