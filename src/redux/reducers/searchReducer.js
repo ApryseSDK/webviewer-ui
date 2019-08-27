@@ -14,7 +14,7 @@ export default initialState => (state = initialState, action) => {
         isRegex: regex,
         isSearchUp: searchUp,
         isAmbientString: ambientString,
-        isProgrammaticSearch: true
+        isProgrammaticSearch: true,
       };
     }
     case 'SEARCH_TEXT_FULL': {
@@ -29,7 +29,7 @@ export default initialState => (state = initialState, action) => {
         isRegex: regex,
         isSearchUp: false,
         isAmbientString: true,
-        isProgrammaticSearchFull: true
+        isProgrammaticSearchFull: true,
       };
     }
     case 'ADD_SEARCH_LISTENER': {
@@ -38,7 +38,7 @@ export default initialState => (state = initialState, action) => {
 
       return {
         ...state,
-        listeners: [ ...listeners, func ]
+        listeners: [...listeners, func],
       };
     }
     case 'REMOVE_SEARCH_LISTENER': {
@@ -49,37 +49,37 @@ export default initialState => (state = initialState, action) => {
 
       return {
         ...state,
-        listeners: [ ...listeners ]
+        listeners: [...listeners],
       };
     }
     case 'SET_SEARCH_VALUE': {
       return {
         ...state,
-        value: payload.value
+        value: payload.value,
       };
     }
     case 'SET_IS_PROG_SEARCH': {
       return {
         ...state,
-        isProgrammaticSearch: payload.isProgrammaticSearch
+        isProgrammaticSearch: payload.isProgrammaticSearch,
       };
     }
     case 'SET_IS_PROG_SEARCH_FULL': {
       return {
         ...state,
-        isProgrammaticSearchFull: payload.isProgrammaticSearchFull
+        isProgrammaticSearchFull: payload.isProgrammaticSearchFull,
       };
     }
     case 'SET_ACTIVE_RESULT': {
       return {
         ...state,
-        activeResult: payload.activeResult
+        activeResult: payload.activeResult,
       };
     }
     case 'SET_ACTIVE_RESULT_INDEX': {
       return {
         ...state,
-        activeResultIndex: payload.index
+        activeResultIndex: payload.index,
       };
     }
     case 'ADD_RESULT': {
@@ -87,32 +87,32 @@ export default initialState => (state = initialState, action) => {
         ...state,
         results: [
           ...state.results,
-          payload.result
-        ]
+          payload.result,
+        ],
       };
     }
     case 'SET_CASE_SENSITIVE': {
       return {
         ...state,
-        isCaseSensitive: payload.isCaseSensitive
+        isCaseSensitive: payload.isCaseSensitive,
       };
     }
     case 'SET_WHOLE_WORD': {
       return {
         ...state,
-        isWholeWord: payload.isWholeWord
+        isWholeWord: payload.isWholeWord,
       };
     }
     case 'SET_IS_SEARCHING': {
       return {
         ...state,
-        isSearching: payload.isSearching
+        isSearching: payload.isSearching,
       };
     }
     case 'SET_NO_RESULT': {
       return {
         ...state,
-        noResult: payload.noResult
+        noResult: payload.noResult,
       };
     }
     case 'RESET_SEARCH': {

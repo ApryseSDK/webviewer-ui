@@ -10,7 +10,7 @@ export default dispatch => (e, tool) => {
     storeStyle(toolName, toolStyles);
   }
 
-  const currentTool = core.getToolMode(); 
+  const currentTool = core.getToolMode();
   if (currentTool && currentTool.name === toolName) {
     dispatch(actions.setActiveToolStyles(toolStyles));
   }
@@ -20,6 +20,6 @@ const storeStyle = (toolName, toolStyles) => {
   try {
     localStorage.setItem(`toolData-${toolName}`, JSON.stringify(toolStyles));
   } catch (err) {
-    console.warn('localStorage could not be accessed. ' + err.message);
+    console.warn(`localStorage could not be accessed. ${err.message}`);
   }
 };

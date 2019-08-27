@@ -42,9 +42,7 @@ const CustomElement = ({
       }
     };
 
-    const isReactElement = element => {
-      return React.isValidElement(element);
-    };
+    const isReactElement = element => React.isValidElement(element);
 
     if (!isDisabled) {
       const element = render();
@@ -55,11 +53,11 @@ const CustomElement = ({
         setReactComponent(element);
       } else {
         console.warn(
-          'The object returned by the render function does not seem to be either a DOM element or a React Component'
+          'The object returned by the render function does not seem to be either a DOM element or a React Component',
         );
       }
     }
-  }, [isDisabled]);
+  }, [isDisabled, render]);
 
   return isDisabled ? null : (
     <div

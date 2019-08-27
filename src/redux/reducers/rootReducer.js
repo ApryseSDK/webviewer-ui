@@ -12,5 +12,5 @@ export default combineReducers({
   search: searchReducer(initialState.search),
   user: userReducer(initialState.user),
   document: documentReducer(initialState.document),
-  advanced: advancedReducer(initialState.advanced)
+  advanced: advancedReducer(initialState.advanced),
 });

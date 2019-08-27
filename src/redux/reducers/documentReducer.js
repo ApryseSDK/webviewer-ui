@@ -39,7 +39,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_IS_UPLOADING':
       return { ...state, isUploading: payload.isUploading };
     case 'SET_UPLOAD_PROGRESS':
-      return { ...state, uploadProgress: payload.progress };  
+      return { ...state, uploadProgress: payload.progress };
     default:
       return state;
   }

@@ -20,8 +20,7 @@ import actions from 'actions';
 import core from 'core';
 import disableRedaction from './disableRedaction';
 
-export default store => (enable = true) =>  {
-
+export default store => (enable = true) => {
   if (enable) {
     store.dispatch(actions.enableElement('redactionButton', 1));
     core.enableRedaction(true);

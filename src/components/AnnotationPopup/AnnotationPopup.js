@@ -155,7 +155,7 @@ class AnnotationPopup extends React.PureComponent {
   commentOnAnnotation = () => {
     const { firstAnnotation } = this.state;
 
-    if (firstAnnotation instanceof Annotations.FreeTextAnnotation) {
+    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
       core
         .getAnnotationManager()
         .trigger('annotationDoubleClicked', firstAnnotation);

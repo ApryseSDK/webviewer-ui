@@ -11,12 +11,12 @@ class Element extends React.PureComponent {
     isDisabled: PropTypes.bool,
     className: PropTypes.string.isRequired,
     dataElement: PropTypes.string.isRequired,
-    children: PropTypes.node
+    children: PropTypes.node,
   }
 
   render() {
     const { isDisabled, className, dataElement, children } = this.props;
-    
+
     if (isDisabled) {
       return null;
     }

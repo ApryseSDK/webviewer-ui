@@ -10,7 +10,7 @@ const setDefaultToolStyles = () => {
     try {
       toolStyles = localStorage.getItem(`toolData-${toolName}`);
     } catch (ex) {
-      console.warn('localStorage could not be accessed. ' + ex.message);
+      console.warn(`localStorage could not be accessed. ${ex.message}`);
     }
 
     if (!toolStyles && defaultToolStylesMap[toolName]) {
@@ -23,24 +23,29 @@ const setDefaultToolStyles = () => {
       toolStyles = getParsedToolStyles(toolStyles);
       tool.setStyles(oldStyle => ({
         ...oldStyle,
-        ...toolStyles
+        ...toolStyles,
       }));
     }
   });
 };
 
-const getParsedToolStyles = toolStyles => {
-  return JSON.parse(toolStyles, (_, styles) => {
-    Object.entries(styles).forEach(([ key, style ]) => {
+const getParsedToolStyles = toolStyles =>
+  JSON.parse(toolStyles, (_, styles) => {
+    Object.entries(styles).forEach(([key, style]) => {
       if (isKeyColorProperty(key) && typeof style === 'object') {
-        styles[key] = new window.Annotations.Color(style.R, style.G, style.B, style.A); 
+        styles[key] = new window.Annotations.Color(
+          style.R,
+          style.G,
+          style.B,
+          style.A,
+        );
       }
     });
 
     return styles;
   });
-};
 
-const isKeyColorProperty = key => [ 'TextColor', 'StrokeColor', 'FillColor' ].includes(key);
+const isKeyColorProperty = key =>
+  ['TextColor', 'StrokeColor', 'FillColor'].includes(key);
 
 export default setDefaultToolStyles;

@@ -325,6 +325,7 @@ const VirtualizedList = React.forwardRef(
       onScroll(scrollTop);
     };
 
+    /* eslint-disable react/prop-types */
     const rowRenderer = ({ index, key, parent, style }) => {
       const currNote = notes[index];
 

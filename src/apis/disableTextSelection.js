@@ -25,7 +25,7 @@ export default store => () => {
   core.clearSelection();
   core.setToolMode(defaultTool);
   store.dispatch(actions.closeElement('textPopup'));
-  store.dispatch(actions.disableElements([ 'textPopup', 'textSelectButton' ], PRIORITY_ONE));
+  store.dispatch(actions.disableElements(['textPopup', 'textSelectButton'], PRIORITY_ONE));
 
   window.Tools.Tool.ENABLE_TEXT_SELECTION = false;
 };

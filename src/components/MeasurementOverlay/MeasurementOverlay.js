@@ -112,7 +112,7 @@ class MeasurementOverlay extends React.PureComponent {
       annotations.length === 1 &&
       annotations[0] === this.state.annotation
     ) {
-      // a style change won't result in a adjustRect call, 
+      // a style change won't result in a adjustRect call,
       // so we call it here manually to update the content of the annotation to display the correct measurement
       this.state.annotation.adjustRect();
       this.forceUpdate();
@@ -121,12 +121,12 @@ class MeasurementOverlay extends React.PureComponent {
 
   isMeasurementAnnotation = annotation =>
     ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
-      mapAnnotationToKey(annotation)
+      mapAnnotationToKey(annotation),
     );
 
   isMeasurementTool = toolName =>
     ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
-      mapToolNameToKey(toolName)
+      mapToolNameToKey(toolName),
     );
 
   shouldShowInfo = annotation => {
@@ -150,13 +150,13 @@ class MeasurementOverlay extends React.PureComponent {
       if (pt3) {
         // calculate the angle using Law of cosines
         const AB = Math.sqrt(
-          Math.pow(pt2.x - pt1.x, 2) + Math.pow(pt2.y - pt1.y, 2)
+          Math.pow(pt2.x - pt1.x, 2) + Math.pow(pt2.y - pt1.y, 2),
         );
         const BC = Math.sqrt(
-          Math.pow(pt2.x - pt3.x, 2) + Math.pow(pt2.y - pt3.y, 2)
+          Math.pow(pt2.x - pt3.x, 2) + Math.pow(pt2.y - pt3.y, 2),
         );
         const AC = Math.sqrt(
-          Math.pow(pt3.x - pt1.x, 2) + Math.pow(pt3.y - pt1.y, 2)
+          Math.pow(pt3.x - pt1.x, 2) + Math.pow(pt3.y - pt1.y, 2),
         );
         angle = Math.acos((BC * BC + AB * AB - AC * AC) / (2 * BC * AB));
       } else {
@@ -172,9 +172,9 @@ class MeasurementOverlay extends React.PureComponent {
   };
 
   getNumberOfDecimalPlaces = annotation =>
-    annotation.Precision === 1
+    (annotation.Precision === 1
       ? 0
-      : annotation.Precision.toString().split('.')[1].length;
+      : annotation.Precision.toString().split('.')[1].length);
 
   renderTitle = () => {
     const { t } = this.props;
@@ -304,5 +304,5 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(withTranslation()(MeasurementOverlay));

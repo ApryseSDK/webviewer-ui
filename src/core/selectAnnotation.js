@@ -3,6 +3,6 @@
  * @fires annotationSelected on AnnotationManager
  * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#event:annotationSelected__anchor
  */
-export default annotation =>  {
+export default annotation => {
   window.docViewer.getAnnotationManager().selectAnnotation(annotation);
 };

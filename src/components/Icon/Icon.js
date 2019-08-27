@@ -7,7 +7,7 @@ class Icon extends React.PureComponent {
   static propTypes = {
     className: PropTypes.string,
     color: PropTypes.string,
-    glyph: PropTypes.string.isRequired
+    glyph: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -51,7 +51,7 @@ class Icon extends React.PureComponent {
     const svgElement = this.isInlineSvg() ? glyph : require(`../../../assets/${this.props.glyph}.svg`);
 
     return (
-      <div ref={this.icon} className={`Icon ${className}`} style={{ color: (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color, filter }} dangerouslySetInnerHTML={{__html: svgElement}}></div>
+      <div ref={this.icon} className={`Icon ${className}`} style={{ color: (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color, filter }} dangerouslySetInnerHTML={{ __html: svgElement }}></div>
     );
   }
 }

@@ -22,7 +22,7 @@ class ColorPaletteHeader extends React.PureComponent {
 
   setColorPalette = newPalette => {
     const { setColorPalette, colorMapKey } = this.props;
-    
+
     setColorPalette(colorMapKey, newPalette);
   }
 
@@ -134,7 +134,7 @@ class ColorPaletteHeader extends React.PureComponent {
 }
 
 const mapDispatchToProps = {
-  setColorPalette: actions.setColorPalette
+  setColorPalette: actions.setColorPalette,
 };
 
 export default connect(null, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));

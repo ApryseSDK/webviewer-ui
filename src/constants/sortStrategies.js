@@ -21,15 +21,15 @@ const sortStrategies = {
           rotateRad(center.x, center.y, b.X + b.Width, b.Y + b.Height, rotation),
         ];
 
-        const smallestA = rotatedA.reduce((smallest, current) => current.y < smallest ? current.y : smallest, Number.MAX_SAFE_INTEGER);
-        const smallestB = rotatedB.reduce((smallest, current) => current.y < smallest ? current.y : smallest, Number.MAX_SAFE_INTEGER);
+        const smallestA = rotatedA.reduce((smallest, current) => (current.y < smallest ? current.y : smallest), Number.MAX_SAFE_INTEGER);
+        const smallestB = rotatedB.reduce((smallest, current) => (current.y < smallest ? current.y : smallest), Number.MAX_SAFE_INTEGER);
 
         return smallestA - smallestB;
       }
       return a.PageNumber - b.PageNumber;
     }),
     shouldRenderSeparator: (prevNote, currNote) => currNote.PageNumber !== prevNote.PageNumber,
-    getSeparatorContent: (prevNote, currNote, { pageLabels }) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`
+    getSeparatorContent: (prevNote, currNote, { pageLabels }) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
   time: {
     getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
@@ -46,8 +46,8 @@ const sortStrategies = {
         return i18next.t('option.notesPanel.separator.yesterday');
       }
       return latestActivityDate;
-    }
-  }
+    },
+  },
 };
 
 export const getSortStrategies = () => sortStrategies;
@@ -58,6 +58,6 @@ export const addSortStrategy = newStrategy => {
   sortStrategies[name] = {
     getSortedNotes,
     shouldRenderSeparator,
-    getSeparatorContent
+    getSeparatorContent,
   };
 };

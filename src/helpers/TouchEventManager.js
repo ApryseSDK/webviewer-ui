@@ -25,7 +25,7 @@ const TouchEventManager = {
       verticalDistance: 0,
       scale: 1,
       zoom: 1,
-      type: ''
+      type: '',
     };
     this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
@@ -85,7 +85,7 @@ const TouchEventManager = {
           zoom: core.getZoom(),
           type: 'pinch',
           touchStartTimeStamp: Date.now(),
-          stopMomentumScroll: true
+          stopMomentumScroll: true,
         };
         if (!isIOS) {
           this.document.style.transformOrigin = `${docX}px ${docY}px`;
@@ -111,7 +111,7 @@ const TouchEventManager = {
   },
   handleTouchMove(e) {
     e.preventDefault();
-    
+
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
@@ -131,12 +131,12 @@ const TouchEventManager = {
             // undo horizontal scrolling caused by native touch when scrolling is disabled
             this.container.scrollTo(this.startingScrollLeft, this.container.scrollTop);
             // set 'horizontalDistance' to '0' to get rid of horiztonal momentum in 'handleTouchEnd'
-            this.touch.horizontalDistance = 0; 
+            this.touch.horizontalDistance = 0;
           }
-  
+
           if (this.horziontalLock) {
             this.container.scrollTo(this.container.scrollLeft, this.startingScrollTop);
-            this.touch.verticalDistance = 0; 
+            this.touch.verticalDistance = 0;
           }
         }
 
@@ -171,7 +171,7 @@ const TouchEventManager = {
     switch (this.touch.type) {
       case 'tap': {
         this.doubleTapTimeout = setTimeout(() => {
-          this.touch.type = ''; 
+          this.touch.type = '';
         }, 300);
 
         this.horziontalLock = false;
@@ -181,7 +181,7 @@ const TouchEventManager = {
       case 'swipe': {
         if (
           this.isUsingAnnotationTools() ||
-          core.getSelectedText().length || 
+          core.getSelectedText().length ||
           core.getSelectedAnnotations().length
         ) {
           return;
@@ -198,10 +198,10 @@ const TouchEventManager = {
         const totalPages = core.getTotalPages();
         const displayMode = core.getDisplayMode();
         const numberOfPagesToNavigate = getNumberOfPagesToNavigate(displayMode);
-        
+
         const isFirstPage = currentPage === 1;
-        const isLastPage = currentPage === totalPages;    
-        const isSingleDisplayMode = !core.isContinuousDisplayMode(); 
+        const isLastPage = currentPage === totalPages;
+        const isSingleDisplayMode = !core.isContinuousDisplayMode();
         const shouldGoToPrevPage = isSingleDisplayMode && !isFirstPage && ((swipedToLeft && this.allowHorizontalSwipe) || (swipedToTop && this.allowVerticalSwipe));
         const shouldGoToNextPage = isSingleDisplayMode && !isLastPage && ((swipedToRight && this.allowHorizontalSwipe) || (swipedToBottom && this.allowVerticalSwipe));
 
@@ -212,7 +212,7 @@ const TouchEventManager = {
         } else {
           const millisecondsToSeconds = 1000;
           const touchDuration = (Date.now() - this.touch.touchStartTimeStamp) / millisecondsToSeconds;
-          
+
           if (touchDuration < 0.2) {
             this.touch.stopMomentumScroll = false;
             this.startMomentumScroll(touchDuration);
@@ -236,7 +236,7 @@ const TouchEventManager = {
             this.oldZoom = this.touch.zoom;
           }
           const zoom = core.getZoom() * this.touch.scale;
-          const { x, y } = this.getPointAfterScale(); 
+          const { x, y } = this.getPointAfterScale();
           core.zoomTo(zoom, x, y);
         }
         break;
@@ -249,7 +249,7 @@ const TouchEventManager = {
           this.document.style.transform = 'none';
         }
         const zoom = core.getZoom() * this.touch.scale;
-        const { x, y } = this.getPointAfterScale(); 
+        const { x, y } = this.getPointAfterScale();
         core.zoomTo(zoom, x, y);
         break;
       }
@@ -274,7 +274,7 @@ const TouchEventManager = {
       const nextLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
       const nextTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
       this.verticalMomentum = dVertical;
-      this.horziontalMomentum = dHorizontal;   
+      this.horziontalMomentum = dHorizontal;
 
       // 'handleTouchEnd' should set 'touchMoveCount' to 0, using that to determine if a new touch event happened
       const isNotNewTouchEvent = !this.touch.touchMoveCount;
@@ -303,8 +303,8 @@ const TouchEventManager = {
         this.verticalMomentum = 0;
         this.horziontalMomentum = 0;
       }
-    }; 
-    
+    };
+
     requestAnimationFrame(momentumScroll);
   },
   easeOutQuad(currentTime, startValue, changeInValue, duration) {
@@ -321,7 +321,7 @@ const TouchEventManager = {
       reachedLeft: scrollLeft <= 0,
       reachedTop: scrollTop <= 0,
       reachedBottom: scrollHeight + scrollTop >= viewerHeight,
-      reachedRight: scrollWidth + scrollLeft >= viewerWidth
+      reachedRight: scrollWidth + scrollLeft >= viewerWidth,
     };
   },
   getDistance(t1, t2) {
@@ -335,10 +335,9 @@ const TouchEventManager = {
   },
   isUsingAnnotationTools() {
     const tool = core.getToolMode();
-    
+
     return getDataWithKey(mapToolNameToKey(tool.name)).annotationCheck;
-  }
+  },
 };
 
 export default Object.create(TouchEventManager);
-

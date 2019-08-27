@@ -1,19 +1,19 @@
 export const supportedPDFExtensions = [
-  'pdf', 
-  'jpg', 
-  'jpeg', 
-  'png'
+  'pdf',
+  'jpg',
+  'jpeg',
+  'png',
 ];
 export const supportedOfficeExtensions = [
-  'docx', 
-  'xlsx', 
-  'pptx', 
-  'md'
+  'docx',
+  'xlsx',
+  'pptx',
+  'md',
 ];
 export const supportedClientOnlyExtensions = [
   'xod',
-  ...supportedPDFExtensions, 
-  ...supportedOfficeExtensions
+  ...supportedPDFExtensions,
+  ...supportedOfficeExtensions,
 ];
 export const supportedBlackboxExtensions = [
   ...supportedClientOnlyExtensions,
@@ -35,9 +35,9 @@ export const supportedBlackboxExtensions = [
   'ods',
   'dwg',
   'dgn',
-  'dxf'
+  'dxf',
 ];
 export const supportedExtensions = [
   ...supportedClientOnlyExtensions,
-  ...supportedBlackboxExtensions
+  ...supportedBlackboxExtensions,
 ];

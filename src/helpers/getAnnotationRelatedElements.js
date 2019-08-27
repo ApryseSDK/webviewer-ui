@@ -1,6 +1,6 @@
 import core from 'core';
 
-export default state =>  {
+export default state => {
   const elements = [
     'textUnderlineToolButton',
     'textHighlightToolButton',

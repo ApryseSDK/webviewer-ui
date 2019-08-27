@@ -30,4 +30,3 @@ viewerElement.addEventListener('ready', function() {
 import selectors from 'selectors';
 
 export default store => () => selectors.getCurrentPage(store.getState());
-

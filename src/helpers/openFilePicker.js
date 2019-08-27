@@ -1,4 +1,4 @@
-export default () =>  {
+export default () => {
   const filePicker = document.getElementById('file-picker');
 
   if (filePicker) {

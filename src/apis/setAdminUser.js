@@ -19,6 +19,6 @@ viewerElement.addEventListener('ready', function() {
 
 import core from 'core';
 
-export default isAdmin =>  {
+export default isAdmin => {
   core.setIsAdminUser(isAdmin);
 };

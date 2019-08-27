@@ -6,21 +6,21 @@ export default state => {
     fallbackLng: 'en',
     react: {
       useSuspense: false,
-      wait: true
-    }
+      wait: true,
+    },
   };
   const callback = (err, t) => {
-    window.Annotations.Utilities.setAnnotationSubjectHandler(type => {
-      return t('annotation.' + type);
-    });
+    window.Annotations.Utilities.setAnnotationSubjectHandler(type =>
+      t(`annotation.${type}`),
+    );
 
-    window.Tools.SignatureCreateTool.setTextHandler(() => {
-      return t('message.signHere');
-    });
+    window.Tools.SignatureCreateTool.setTextHandler(() =>
+      t('message.signHere'),
+    );
 
-    window.Tools.FreeTextCreateTool.setTextHandler(() => {
-      return t('message.insertTextHere');
-    });
+    window.Tools.FreeTextCreateTool.setTextHandler(() =>
+      t('message.insertTextHere'),
+    );
   };
 
   if (state.advanced.disableI18n) {
@@ -30,10 +30,10 @@ export default state => {
       {
         ...options,
         backend: {
-          loadPath: './i18n/{{ns}}-{{lng}}.json'
-        }
+          loadPath: './i18n/{{ns}}-{{lng}}.json',
+        },
       },
-      callback
+      callback,
     );
   }
 };

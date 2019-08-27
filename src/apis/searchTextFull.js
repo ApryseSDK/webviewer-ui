@@ -27,7 +27,7 @@ viewerElement.addEventListener('ready', function() {
   var instance = viewer.getInstance();
   var docViewer = instance.docViewer;
 
-  // you must have a document loaded when calling this api  
+  // you must have a document loaded when calling this api
   docViewer.on('documentLoaded', function() {
     instance.searchTextFull('test', {
       wholeWord: true
@@ -38,6 +38,6 @@ viewerElement.addEventListener('ready', function() {
 
 import actions from 'actions';
 
-export default store => (searchValue, options) =>  {
+export default store => (searchValue, options) => {
   store.dispatch(actions.searchTextFull(searchValue, options));
 };

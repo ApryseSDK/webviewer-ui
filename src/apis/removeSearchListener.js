@@ -8,7 +8,7 @@ WebViewer(...)
     function searchListener(searchValue, options, results) {
       console.log(searchValue, options, results);
     };
-    
+
     instance.addSearchListener(searchListener);
     instance.removeSearchListener(searchListener);
   });
