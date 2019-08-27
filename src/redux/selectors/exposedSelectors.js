@@ -60,6 +60,7 @@ export const getActiveToolName = state => state.viewer.activeToolName;
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
 export const getActiveLeftPanel = state => state.viewer.activeLeftPanel;
 export const getActiveToolGroup = state => state.viewer.activeToolGroup;
+export const getLeftPanelWidth = state => state.viewer.leftPanelWidth;
 export const getNotePopupId = state => state.viewer.notePopupId;
 export const getFitMode = state => state.viewer.fitMode;
 export const getZoom = state => state.viewer.zoom;

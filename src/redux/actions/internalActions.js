@@ -184,6 +184,10 @@ export const setColorMap = colorMap => ({
   type: 'SET_COLOR_MAP',
   payload: { colorMap },
 });
+export const setLeftPanelWidth = width => ({
+  type: 'SET_LEFT_PANEL_WIDTH',
+  payload: { width },
+});
 
 // document
 export const setDocumentId = documentId => ({

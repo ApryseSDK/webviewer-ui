@@ -9,19 +9,20 @@ import OutlinesPanel from 'components/OutlinesPanel';
 import CustomElement from 'components/CustomElement';
 import Icon from 'components/Icon';
 
-import { isTabletOrMobile, isIE11 } from 'helpers/device';
+import { isTabletOrMobile, isIE, isIE11 } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
-  const [isDisabled, isOpen, activePanel, customPanels] = useSelector(
+  const [isDisabled, isOpen, activePanel, customPanels, leftPanelWidth] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'leftPanel'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.getActiveLeftPanel(state),
       selectors.getCustomPanels(state),
+      selectors.getLeftPanelWidth(state),
     ],
     shallowEqual,
   );
@@ -34,6 +35,8 @@ const LeftPanel = () => {
   }, [isOpen]);
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
+  // IE11 will use javascript for controlling width, other broswers will use CSS variables
+  const style = isIE11 && leftPanelWidth ? { width: leftPanelWidth } : { };
 
   return isDisabled ? null : (
     <div
@@ -44,6 +47,7 @@ const LeftPanel = () => {
         closed: !isOpen,
       })}
       data-element="leftPanel"
+      style={style}
     >
       <div className="left-panel-header">
         <div
@@ -77,6 +81,7 @@ export default LeftPanel;
 
 const ResizeBar = () => {
   const isMouseDownRef = useRef(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // this listener is throttled because the notes panel listens to the panel width
@@ -84,6 +89,10 @@ const ResizeBar = () => {
     // it to rerender too often
     const dragMouseMove = _.throttle(({ clientX }) => {
       if (isMouseDownRef.current && clientX > 215 && clientX < 900) {
+        // we are using css variables to make the panel resizable but IE11 doesn't support it
+        if (isIE) {
+          dispatch(actions.setLeftPanelWidth(clientX));
+        }
         document.body.style.setProperty('--left-panel-width', `${clientX}px`);
       }
     }, 50);
@@ -101,15 +110,12 @@ const ResizeBar = () => {
     return () => document.removeEventListener('mouseup', finishDrag);
   }, []);
 
-  // we are using css variables to make the panel resizable but IE11 doesn't support it
   return (
-    !isIE11 && (
-      <div
-        className="resize-bar"
-        onMouseDown={() => {
-          isMouseDownRef.current = true;
-        }}
-      />
-    )
+    <div
+      className="resize-bar"
+      onMouseDown={() => {
+        isMouseDownRef.current = true;
+      }}
+    />
   );
 };
