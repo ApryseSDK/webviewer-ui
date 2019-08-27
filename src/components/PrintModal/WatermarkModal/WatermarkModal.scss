@@ -83,6 +83,7 @@ $gap: 15px;
     margin: $gap;
     
     justify-content: space-around;
+    align-items: center;
 
     // @include mobile {
     //   flex-direction: column;
@@ -105,7 +106,10 @@ $gap: 15px;
       margin-right: $gap;
       width: 175px;
 
-      @include mobile {
+      // @include mobile {
+      //   width: auto;
+      // }
+      @include portrait-mobile {
         width: auto;
       }
     }
@@ -117,13 +121,17 @@ $gap: 15px;
       width: 300px;
       height: 300px;
 
-      @include mobile {
-        margin-left: $gap;
-        justify-content: center;
-      }
-      @include tablet {
-        margin-left: $gap;
-        justify-content: center;
+      // @include mobile {
+      //   margin-left: $gap;
+      //   justify-content: center;
+      // }
+      // @include tablet {
+      //   margin-left: $gap;
+      //   justify-content: center;
+      // }
+      @include portrait-mobile {
+        // margin-left: $gap;
+        // justify-content: center;
       }
     }
   }
