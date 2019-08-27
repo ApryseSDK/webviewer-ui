@@ -66,11 +66,16 @@ $gap: 15px;
       max-height: 100vh;
       overflow:auto;
     }
-    @include tablet {
+    @include tablets-and-landscape-ipads {
       width: 100vw;
       max-height: 100vh;
       overflow:auto;
     }
+    // @include tablet {
+    //   width: 100vw;
+    //   max-height: 100vh;
+    //   overflow:auto;
+    // }
   }
   
   .form-content-container {
@@ -79,10 +84,22 @@ $gap: 15px;
     
     justify-content: space-around;
 
-    @include mobile {
+    // @include mobile {
+    //   flex-direction: column;
+    //   margin-left: $gap;
+    // }
+    @include portrait-mobile {
       flex-direction: column;
       margin-left: $gap;
     }
+    @include low-res-tablet-landscape-mobiles {
+      // flex-direction: column;
+      // margin-left: $gap;
+    }
+    // @include tablet {
+    //   flex-direction: column;
+    //   margin-left: $gap;
+    // }
 
     & form {
       margin-right: $gap;
