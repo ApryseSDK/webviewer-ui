@@ -178,6 +178,15 @@ $gap: 15px;
     display: flex;
     flex-direction: column;
     margin: 0 0 $gap 0;
+
+    @include low-res-tablet-landscape-mobiles {
+      // flex-direction: column;
+      // margin-left: $gap;
+      margin: 0 0 $gap+10 0;
+    }
+    @include tablets-and-landscape-ipads {
+      margin: 0 0 $gap+10 0;
+    }
   
     >label {
       margin: 3px 0;
