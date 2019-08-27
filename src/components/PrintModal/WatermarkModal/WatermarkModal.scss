@@ -2,6 +2,8 @@
 @import '../../../constants/modal';
 @import '../../../constants/popup';
 
+@import './media-query';
+
 $color-widget-border: 1px solid $gray12;
 $gap: 15px;
 
@@ -19,7 +21,8 @@ $gap: 15px;
     border: $color-widget-border;
     background-color: #fafafa;
 
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    // @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    @include ie11 {
       /* IE10+ CSS styles go here */
       margin-top: 0;
     }
@@ -48,7 +51,22 @@ $gap: 15px;
     display: flex;
     flex-direction: column;
 
-    @include mobile {
+    // @include mobile {
+    //   width: 100vw;
+    //   max-height: 100vh;
+    //   overflow:auto;
+    // }
+    @include portrait-mobile {
+      width: 100vw;
+      max-height: 100vh;
+      overflow:auto;
+    }
+    @include low-res-tablet-landscape-mobiles {
+      width: 100vw;
+      max-height: 100vh;
+      overflow:auto;
+    }
+    @include tablet {
       width: 100vw;
       max-height: 100vh;
       overflow:auto;
@@ -83,7 +101,12 @@ $gap: 15px;
       height: 300px;
 
       @include mobile {
-        justify-content: flex-end;
+        margin-left: $gap;
+        justify-content: center;
+      }
+      @include tablet {
+        margin-left: $gap;
+        justify-content: center;
       }
     }
   }
