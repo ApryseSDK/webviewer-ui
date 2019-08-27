@@ -96,6 +96,10 @@ $gap: 15px;
     @include low-res-tablet-landscape-mobiles {
       // flex-direction: column;
       // margin-left: $gap;
+      justify-content: center;
+    }
+    @include tablets-and-landscape-ipads {
+      justify-content: center;
     }
     // @include tablet {
     //   flex-direction: column;
