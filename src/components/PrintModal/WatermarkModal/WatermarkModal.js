@@ -70,8 +70,6 @@ class WatermarkModal extends React.PureComponent {
         this.removeWatermark();
       }
     };
-
-    window.addEventListener('resize', () => console.log('resized'));
   }
 
   componentDidMount() {
