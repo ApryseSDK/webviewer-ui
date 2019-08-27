@@ -4,8 +4,8 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 export default store => toolName => {
-  const dataElement = selectors.getToolButtonDataElement(store.getState(), toolName); 
+  const dataElement = selectors.getToolButtonDataElement(store.getState(), toolName);
 
-  store.dispatch(actions.enableElement(dataElement, PRIORITY_ONE));
   core.getTool(toolName).disabled = false;
+  store.dispatch(actions.enableElement(dataElement, PRIORITY_ONE));
 };

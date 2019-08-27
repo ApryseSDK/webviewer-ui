@@ -25,11 +25,11 @@ import { getAnnotationCreateToolNames } from 'constants/map';
 
 import disableAnnotations from './disableAnnotations';
 
-export default store => (enable = true) =>  {
+export default store => (enable = true) => {
   let elements = [
     'notesPanel',
     'notesPanelButton',
-    ...getAnnotationRelatedElements(store.getState())
+    ...getAnnotationRelatedElements(store.getState()),
   ];
 
   if (enable) {
