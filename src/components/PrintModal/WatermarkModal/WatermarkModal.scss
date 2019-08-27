@@ -78,10 +78,12 @@ $gap: 15px;
       margin-left: $gap;
     }
     @include low-res-tablet-landscape-mobiles {
-      justify-content: center;
+      justify-content: space-evenly;
+      // justify-content: space-between;
     }
     @include tablets-and-landscape-ipads {
-      justify-content: center;
+      justify-content: space-evenly;
+      // justify-content: space-between;
     }
 
     & form {
