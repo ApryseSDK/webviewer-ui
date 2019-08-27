@@ -18,13 +18,13 @@ export default store => () => new Promise((resolve, reject) => {
     headers: serverUrlHeaders,
     data: {
       ...docIdQuery,
-      'data': core.exportAnnotations()
+      'data': core.exportAnnotations(),
     },
     success: () => {
       resolve();
     },
     error: e => {
       reject(e);
-    }
+    },
   });
 });

@@ -44,7 +44,7 @@ export default store => (documentPath, options = {}) => {
     customHeaders = {},
     withCredentials = false,
     cacheKey = null,
-    password = ''
+    password = '',
   } = options;
 
   store.dispatch(actions.setDocumentId(documentId));

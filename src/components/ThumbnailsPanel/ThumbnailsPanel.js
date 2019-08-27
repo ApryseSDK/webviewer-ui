@@ -23,7 +23,7 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs = [];
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
-      canLoad: true
+      canLoad: true,
     };
   }
 
@@ -34,7 +34,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
     window.addEventListener('resize', this.onWindowResize);
   }
-  
+
   componentWillUnmount() {
     core.removeEventListener('beginRendering', this.onBeginRendering);
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
@@ -45,14 +45,14 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onBeginRendering = () => {
     this.setState({
-      canLoad: false
+      canLoad: false,
     });
   }
 
   onFinishedRendering = (e, needsMoreRendering) => {
     if (!needsMoreRendering) {
       this.setState({
-        canLoad: true
+        canLoad: true,
       });
     }
   }
@@ -73,7 +73,7 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onWindowResize = () => {
     this.setState({
-      numberOfColumns: this.getNumberOfColumns()
+      numberOfColumns: this.getNumberOfColumns(),
     });
   }
 
@@ -108,7 +108,7 @@ class ThumbnailsPanel extends React.PureComponent {
 
     const { width, height } = this.getThumbnailSize(pageWidth, pageHeight);
 
-    let annotCanvas = thumbContainer.querySelector('.annotation-image') || document.createElement('canvas');
+    const annotCanvas = thumbContainer.querySelector('.annotation-image') || document.createElement('canvas');
     annotCanvas.className = 'annotation-image';
     const ctx = annotCanvas.getContext('2d');
 
@@ -118,7 +118,7 @@ class ThumbnailsPanel extends React.PureComponent {
     if (rotation < 0) {
       rotation += 4;
     }
-    let multiplier = window.utils.getCanvasMultiplier();
+    const multiplier = window.utils.getCanvasMultiplier();
 
     if (rotation % 2 === 0) {
       annotCanvas.width = width;
@@ -153,12 +153,14 @@ class ThumbnailsPanel extends React.PureComponent {
     core.drawAnnotations({
       pageNumber,
       overrideCanvas: annotCanvas,
-      namespace: 'thumbnails'
+      namespace: 'thumbnails',
     });
   }
 
   getThumbnailSize = (pageWidth, pageHeight) => {
-    let width, height, ratio;
+    let width;
+    let height;
+    let ratio;
 
     if (pageWidth > pageHeight) {
       ratio = pageWidth / 150;
@@ -172,7 +174,7 @@ class ThumbnailsPanel extends React.PureComponent {
 
     return {
       width,
-      height
+      height,
     };
   }
 
@@ -180,7 +182,7 @@ class ThumbnailsPanel extends React.PureComponent {
     if (!this.thumbIsLoaded(pageIndex) && !this.thumbIsPending(pageIndex)) {
       this.thumbs[pageIndex] = {
         element,
-        loaded: false
+        loaded: false,
       };
 
       const id = core.loadThumbnailAsync(pageIndex, thumb => {
@@ -196,7 +198,7 @@ class ThumbnailsPanel extends React.PureComponent {
 
       this.pendingThumbs.push({
         pageIndex,
-        id
+        id,
       });
     }
   }
@@ -208,13 +210,9 @@ class ThumbnailsPanel extends React.PureComponent {
     }
   }
 
-  thumbIsLoaded = pageIndex => {
-    return this.thumbs[pageIndex] && this.thumbs[pageIndex].loaded;
-  }
+  thumbIsLoaded = pageIndex => this.thumbs[pageIndex]?.loaded
 
-  thumbIsPending = pageIndex => {
-    return this.getPendingThumbIndex(pageIndex) !== -1;
-  }
+  thumbIsPending = pageIndex => this.getPendingThumbIndex(pageIndex) !== -1
 
   onCancel = pageIndex => {
     const index = this.getPendingThumbIndex(pageIndex);
@@ -224,11 +222,7 @@ class ThumbnailsPanel extends React.PureComponent {
     }
   }
 
-  getPendingThumbIndex = pageIndex => {
-    return this.pendingThumbs.findIndex(thumbStatus => {
-      return thumbStatus.pageIndex === pageIndex;
-    });
-  }
+  getPendingThumbIndex = pageIndex => this.pendingThumbs.findIndex(thumbStatus => thumbStatus.pageIndex === pageIndex)
 
   onRemove = pageIndex => {
     this.onCancel(pageIndex);
@@ -247,7 +241,7 @@ class ThumbnailsPanel extends React.PureComponent {
             const updateHandler = thumbs && thumbs[index] ? thumbs[index].updateAnnotationHandler : null;
 
             return (
-              index < this.props.totalPages 
+              index < this.props.totalPages
                 ? <Thumbnail key={index} index={index} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
                 : null
             );

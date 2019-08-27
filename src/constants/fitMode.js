@@ -24,5 +24,5 @@ viewerElement.addEventListener('ready', function() {
 export default {
   FitPage: 'FitPage',
   FitWidth: 'FitWidth',
-  Zoom: 'Zoom'
+  Zoom: 'Zoom',
 };

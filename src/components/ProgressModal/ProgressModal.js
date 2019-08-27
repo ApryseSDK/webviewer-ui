@@ -15,12 +15,12 @@ class ProgressModal extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     loadingProgress: PropTypes.number,
     isUploading: PropTypes.bool,
-    uploadProgress: PropTypes.number
+    uploadProgress: PropTypes.number,
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([ 'signatureModal', 'printModal', 'errorModal', 'loadingModal' ]);
+      this.props.closeElements(['signatureModal', 'printModal', 'errorModal', 'loadingModal']);
     }
   }
 
@@ -34,7 +34,7 @@ class ProgressModal extends React.PureComponent {
       return null;
     }
 
-    let progressToUse = isUploading ? uploadProgress : loadingProgress;
+    const progressToUse = isUploading ? uploadProgress : loadingProgress;
     const className = getClassName('Modal ProgressModal', this.props);
 
     return (
@@ -55,11 +55,11 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'progressModal'),
   loadingProgress: selectors.getLoadingProgress(state),
   isUploading: selectors.isUploading(state),
-  uploadProgress: selectors.getUploadProgress(state)
+  uploadProgress: selectors.getUploadProgress(state),
 });
 
 const mapDispatchToProps = {
-  closeElements: actions.closeElements
+  closeElements: actions.closeElements,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProgressModal);

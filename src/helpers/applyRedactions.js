@@ -9,23 +9,21 @@ export default annotations => dispatch => {
   if (core.isWebViewerServerDocument()) {
     // when are using Webviewer Server, it'll download the redacted document
     return webViewerServerApply(annotations, dispatch);
-  } else {
-    return webViewerApply(annotations, dispatch);
   }
+  return webViewerApply(annotations, dispatch);
 };
 
-const webViewerServerApply = (annotations, dispatch) => {
-  return core.applyRedactions(annotations).then(results => {
+const webViewerServerApply = (annotations, dispatch) =>
+  core.applyRedactions(annotations).then(results => {
     if (results && results.url) {
       return downloadPdf(dispatch, {
         filename: 'redacted.pdf',
         includeAnnotations: true,
-        externalURL: results.url
+        externalURL: results.url,
       });
     }
     console.warn('WebViewer Server did not return a valid result');
   });
-};
 
 const webViewerApply = (annotations, dispatch) => {
   const message = i18next.t('option.redaction.warningPopupMessage');
@@ -39,7 +37,7 @@ const webViewerApply = (annotations, dispatch) => {
     onConfirm: () => {
       core.applyRedactions(annotations).catch(err => fireError(err));
       return Promise.resolve();
-    }
+    },
   };
 
   return dispatch(actions.showWarningMessage(warning));

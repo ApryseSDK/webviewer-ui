@@ -32,7 +32,7 @@ const LeftPanel = () => {
     if (isOpen && isTabletOrMobile()) {
       dispatch(actions.closeElement('searchPanel'));
     }
-  }, [isOpen]);
+  }, [dispatch, isOpen]);
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
   // IE11 will use javascript for controlling width, other broswers will use CSS variables

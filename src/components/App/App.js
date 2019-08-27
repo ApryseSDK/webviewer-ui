@@ -1,8 +1,7 @@
+import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
 import { useStore } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
-import { hot } from 'react-hot-loader';
 
 import Header from 'components/Header';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
@@ -57,7 +56,7 @@ const App = ({ removeEventHandlers }) => {
     $(document).trigger('viewerLoaded');
 
     return removeEventHandlers;
-  }, []);
+  }, [removeEventHandlers, store]);
 
   return (
     <>
@@ -103,4 +102,4 @@ const App = ({ removeEventHandlers }) => {
 
 App.propTypes = propTypes;
 
-export default hot(module)(withTranslation()(App));
+export default hot(App);

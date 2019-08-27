@@ -20,7 +20,7 @@ viewerElement.addEventListener('ready', function() {
 import core from 'core';
 import actions from 'actions';
 
-export default store => toolName =>  {
+export default store => toolName => {
   const state = store.getState();
   const group = state.viewer.toolButtonObjects[toolName].group;
 
@@ -35,5 +35,5 @@ const setActiveToolGroupAndToolsOverlay = (store, group) => {
   } else {
     store.dispatch(actions.setActiveToolGroup(group));
     store.dispatch(actions.openElement('toolsOverlay'));
-  }  
+  }
 };

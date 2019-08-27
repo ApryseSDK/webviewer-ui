@@ -9,7 +9,7 @@ import './PrintHandler.scss';
 class PrintHandler extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
-    isEmbedPrintSupported: PropTypes.bool
+    isEmbedPrintSupported: PropTypes.bool,
   }
 
   render() {
@@ -30,7 +30,7 @@ class PrintHandler extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'printHandler'),
-  isEmbedPrintSupported: selectors.isEmbedPrintSupported(state)
+  isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
 });
 
 export default connect(mapStateToProps)(PrintHandler);

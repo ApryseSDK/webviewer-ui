@@ -12,8 +12,8 @@ class Input extends React.PureComponent {
     onChange: PropTypes.func,
     label: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.object
-    ]).isRequired
+      PropTypes.object,
+    ]).isRequired,
   }
 
   constructor() {

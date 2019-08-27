@@ -14,39 +14,39 @@ class Dropdown extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     setSortStrategy: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
   }
 
   constructor() {
     super();
-    this.state = { isOpen: false };  
+    this.state = { isOpen: false };
     this.sortStrategyToTranslationMap = {
       position: 'option.notesPanel.orderPosition',
-      time: 'option.notesPanel.orderTime'
+      time: 'option.notesPanel.orderTime',
     };
   }
 
   toggleDropdown = () => {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
-  
+
   handleDisplayItemChange = (e, item) => {
     e.stopPropagation();
-    
+
     this.props.setSortStrategy(item);
     this.setState({ isOpen: false });
   }
-  
+
   getTranslatedContent = sortStrategy => this.props.t(this.sortStrategyToTranslationMap[sortStrategy]) || sortStrategy;
 
   renderDropdownItems = () => {
     const { sortStrategy, items } = this.props;
     const dropdownItems = items.filter(item => item !== sortStrategy);
 
-    return dropdownItems.map(item => 
+    return dropdownItems.map(item =>
       <div key={item} className="dropdown-item" onClick={e => this.handleDisplayItemChange(e, item)}>
         {this.getTranslatedContent(item)}
-      </div>
+      </div>,
     );
   }
 
@@ -58,7 +58,7 @@ class Dropdown extends React.PureComponent {
     }
 
     return (
-      <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}> 
+      <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
         <div className="items">
           <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>
           <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
@@ -72,11 +72,11 @@ class Dropdown extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'dropdown'),
-  sortStrategy: selectors.getSortStrategy(state)
+  sortStrategy: selectors.getSortStrategy(state),
 });
 
 const mapDispatchToProps = {
-  setSortStrategy: actions.setSortStrategy
+  setSortStrategy: actions.setSortStrategy,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dropdown));

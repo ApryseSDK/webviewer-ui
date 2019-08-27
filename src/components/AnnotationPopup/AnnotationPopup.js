@@ -97,7 +97,7 @@ class AnnotationPopup extends React.PureComponent {
     if (firstAnnotation) {
       const annot = core.getAnnotationManager().getAnnotationByMouseEvent(mouseEvent);
 
-      if (annot === firstAnnotation) {
+      if (annot === firstAnnotation && !this.props.isDisabled) {
         this.positionAnnotationPopup();
         this.props.openElement('annotationPopup');
       }
@@ -155,7 +155,7 @@ class AnnotationPopup extends React.PureComponent {
   commentOnAnnotation = () => {
     const { firstAnnotation } = this.state;
 
-    if (firstAnnotation instanceof Annotations.FreeTextAnnotation) {
+    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
       core
         .getAnnotationManager()
         .trigger('annotationDoubleClicked', firstAnnotation);

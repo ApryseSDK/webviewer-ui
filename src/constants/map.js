@@ -311,11 +311,15 @@ export const register = (tool, annotationConstructor) => {
 // if the map doesn't have a key for some annotations
 export const getDataWithKey = key => map[key] || {};
 
-export const getAnnotationCreateToolNames = () =>
-  Object.values(map).reduce(
+export const getAnnotationCreateToolNames = () => {
+  const toolNames = Object.values(map).reduce(
     (annotationCreateToolNames, { toolNames, annotationCheck }) =>
       (annotationCheck
         ? [...annotationCreateToolNames, ...toolNames]
         : annotationCreateToolNames),
     [],
   );
+  toolNames.push('AnnotationEraserTool');
+
+  return toolNames;
+};

@@ -31,7 +31,7 @@ export default store => e => {
         core.rotateCounterClockwise();
       }
     } else if (e.key === 'c' || e.which === 67) { // (Ctrl/Cmd + C)
-      if (selectedTextFromCanvas) {
+      if (selectedTextFromCanvas && !selectors.isFeatureDisabled(state, 'copyText')) {
         copyText();
         dispatch(actions.closeElement('textPopup'));
       } else if (core.getSelectedAnnotations().length > 0 && !selectedTextFromDOM) {

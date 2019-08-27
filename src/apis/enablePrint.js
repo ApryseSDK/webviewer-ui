@@ -24,7 +24,7 @@ import disablePrint from './disablePrint';
 export default store => (enable = true) => {
   const elements = [
     'printButton',
-    'printModal'
+    'printModal',
   ];
 
   if (enable) {

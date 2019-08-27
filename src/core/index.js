@@ -184,5 +184,5 @@ export default {
   showAnnotations,
   hideAnnotations,
   goToOutline,
-  getViewerElement
+  getViewerElement,
 };

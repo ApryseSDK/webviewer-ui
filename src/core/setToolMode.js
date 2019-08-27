@@ -12,6 +12,6 @@ export default toolName => {
     console.warn(`${toolName} has been disabled.`);
     return;
   }
-  
+
   window.docViewer.setToolMode(tool);
 };

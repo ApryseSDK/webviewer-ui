@@ -53,13 +53,12 @@ const ToolButton = ({ toolName, ...restProps }) => {
     color = toolStyles[iconColor]?.toHexString?.();
   }
 
-  return (
+  return core.getTool(toolName)?.disabled ? null : (
     <Button
       className={classNames({
         ToolButton: true,
         hasStyles: toolStylesExist(toolName),
       })}
-      disable={core.getTool(toolName)?.disabled}
       onClick={handleClick}
       isActive={isActive}
       color={color}

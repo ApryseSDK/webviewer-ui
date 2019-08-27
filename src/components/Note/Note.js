@@ -117,7 +117,7 @@ const ReplyArea = ({ annotation }) => {
     ) {
       textareaRef.current.focus();
     }
-  }, [isNoteEditingTriggeredByAnnotationPopup]);
+  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
   const postReply = e => {
     // prevent the textarea from blurring out
@@ -146,7 +146,9 @@ const ReplyArea = ({ annotation }) => {
       onMouseDown={e => e.stopPropagation()}
     >
       <AutoResizeTextarea
-        ref={textareaRef}
+        ref={el => {
+          textareaRef.current = el;
+        }}
         value={value}
         onChange={value => setValue(value)}
         onSubmit={e => postReply(e)}

@@ -2,31 +2,31 @@ export default [
   {
     displayMode: 'Single',
     pageTransition: 'default',
-    layout: 'single'
+    layout: 'single',
   },
   {
     displayMode: 'Continuous',
     pageTransition: 'continuous',
-    layout: 'single'
+    layout: 'single',
   },
   {
     displayMode: 'Facing',
     pageTransition: 'default',
-    layout: 'double'
+    layout: 'double',
   },
   {
     displayMode: 'FacingContinuous',
     pageTransition: 'continuous',
-    layout: 'double'
+    layout: 'double',
   },
   {
     displayMode: 'CoverFacing',
     pageTransition: 'default',
-    layout: 'cover'
+    layout: 'cover',
   },
   {
     displayMode: 'Cover',
     pageTransition: 'continuous',
-    layout: 'cover'
-  }
+    layout: 'cover',
+  },
 ];

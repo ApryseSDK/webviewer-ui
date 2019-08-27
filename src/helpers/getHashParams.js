@@ -1,4 +1,4 @@
-export default (property, defaultValue) =>  {
+export default (property, defaultValue) => {
   const defaultType = typeof defaultValue;
 
   const result = getWindowHash().split('&').reduce(function (result, item) {
@@ -11,11 +11,12 @@ export default (property, defaultValue) =>  {
     const value = result[property];
     if (value === 'true' || value === '1') {
       return true;
-    } else if (value === 'false' || value === '0') {
+    }
+    if (value === 'false' || value === '0') {
       return false;
     }
   }
-  return result[property] || defaultValue;  
+  return result[property] || defaultValue;
 };
 
 // use instead of window.location.hash because of https://bugzilla.mozilla.org/show_bug.cgi?id=483304

@@ -16,9 +16,10 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import { PRIORITY_ONE } from 'constants/actionPriority';
-import actions from 'actions';
+import disableFeatures from './disableFeatures';
 
 export default store => () => {
-  store.dispatch(actions.disableElement('downloadButton', PRIORITY_ONE));
+  // TODO: remove comment in 5.3
+  // console.warn(`disableDownload is deprecated, please use disableFeatures(['download']) instead`);
+  disableFeatures(store)(['download']);
 };

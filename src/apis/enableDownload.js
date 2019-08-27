@@ -16,16 +16,17 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import actions from 'actions';
-import { PRIORITY_ONE } from 'constants/actionPriority';
+import enableFeatures from './enableFeatures';
+import disableFeatures from './disableFeatures';
 
-import disableDownload from './disableDownload';
-
-export default store => (enable = true) =>  {
+export default store => (enable = true) => {
   if (enable) {
-    store.dispatch(actions.enableElement('downloadButton', PRIORITY_ONE));
+    // TODO: remove comment in 5.3
+    // console.warn(`enableDownload is deprecated, please use enableFeatures(['download']) instead`);
+    enableFeatures(store)(['download']);
   } else {
+    // TODO: in 5.3, change the message to warn about using disableFeatures instead
     console.warn('enableDownload(false) is deprecated, please use disableDownload() instead');
-    disableDownload(store)();
+    disableFeatures(store)(['download']);
   }
 };

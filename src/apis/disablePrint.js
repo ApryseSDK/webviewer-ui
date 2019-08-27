@@ -19,10 +19,11 @@ viewerElement.addEventListener('ready', function() {
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
 
+// TODO: Change this to use enable/disableFeatures, need to change onKeyDown.js as well
 export default store => () => {
   const elements = [
     'printButton',
-    'printModal'
+    'printModal',
   ];
 
   store.dispatch(actions.disableElements(elements, PRIORITY_ONE));

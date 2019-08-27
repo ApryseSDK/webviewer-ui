@@ -18,7 +18,7 @@ class PasswordModal extends React.PureComponent {
     checkPassword: PropTypes.func,
     setPasswordAttempts: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    closeElement: PropTypes.func.isRequired
+    closeElement: PropTypes.func.isRequired,
   }
 
   constructor() {
@@ -27,7 +27,7 @@ class PasswordModal extends React.PureComponent {
     this.passwordInput = React.createRef();
     this.initialState = {
       password: '',
-      userCanceled: false
+      userCanceled: false,
     };
     this.state = this.initialState;
   }
@@ -73,13 +73,9 @@ class PasswordModal extends React.PureComponent {
     return this.renderEnterPasswordContent();
   }
 
-  renderMaxAttemptsContent = () => {
-    return <p>{this.props.t('message.encryptedAttemptsExceeded')}</p>;
-  }
+  renderMaxAttemptsContent = () => <p>{this.props.t('message.encryptedAttemptsExceeded')}</p>
 
-  renderUserCancelContent = () => {
-    return <p>{this.props.t('message.encryptedUserCancelled')}</p>;
-  }
+  renderUserCancelContent = () => <p>{this.props.t('message.encryptedUserCancelled')}</p>
 
   renderEnterPasswordContent = () => {
     const { t } = this.props;
@@ -101,8 +97,8 @@ class PasswordModal extends React.PureComponent {
           </div>
           {wrongPassword &&
             <div className="incorrect-password">
-              {t('message.incorrectPassword', { 
-                remainingAttempts: this.maxAttempts - this.props.attempt
+              {t('message.incorrectPassword', {
+                remainingAttempts: this.maxAttempts - this.props.attempt,
               })}
             </div>
           }
@@ -139,12 +135,12 @@ class PasswordModal extends React.PureComponent {
 const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'passwordModal'),
   checkPassword: selectors.getCheckPasswordFunction(state),
-  attempt: selectors.getPasswordAttempts(state)
+  attempt: selectors.getPasswordAttempts(state),
 });
 
 const mapDispatchToProps = {
   setPasswordAttempts: actions.setPasswordAttempts,
-  closeElement: actions.closeElement
+  closeElement: actions.closeElement,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(PasswordModal));

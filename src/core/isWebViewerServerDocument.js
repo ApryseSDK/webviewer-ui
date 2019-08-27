@@ -1,3 +1,1 @@
-export default () =>  {
-  return window.docViewer.getDocument().isWebViewerServerDocument();
-};
+export default () => window.docViewer.getDocument().isWebViewerServerDocument();

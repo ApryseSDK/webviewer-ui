@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -51,7 +50,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
         'updateAnnotationPermission',
         onUpdateAnnotationPermission,
       );
-  }, []);
+  }, [annotation]);
 
   const togglePopup = () => {
     if (isOpen) {

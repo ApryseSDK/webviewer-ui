@@ -25,17 +25,14 @@ import { getAnnotationCreateToolNames } from 'constants/map';
 
 import disableAnnotations from './disableAnnotations';
 
-export default store => (enable = true) =>  {
-  let elements = [
+export default store => (enable = true) => {
+  const elements = [
     'notesPanel',
     'notesPanelButton',
-    ...getAnnotationRelatedElements(store.getState())
+    ...getAnnotationRelatedElements(store.getState()),
   ];
 
   if (enable) {
-    if (!core.isCreateRedactionEnabled()) {
-      elements = elements.filter(ele => ele !== 'redactionButton');
-    }
     getAnnotationCreateToolNames().forEach(toolName => {
       core.getTool(toolName).disabled = false;
     });

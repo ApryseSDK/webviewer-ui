@@ -2,7 +2,7 @@ export const engineTypes = {
   UNIVERSAL: 'universal',
   PDFNETJS: 'pdfnetjs',
   PDFTRON_SERVER: 'pdftronServer',
-  AUTO: null
+  AUTO: null,
 };
 
 export const workerTypes = {
