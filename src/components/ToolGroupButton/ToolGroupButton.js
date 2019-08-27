@@ -128,10 +128,9 @@ class ToolGroupButton extends React.PureComponent {
       .join(' ')
       .trim();
 
-    return (
+    return allButtonsInGroupDisabled ? null : (
       <Button
         title={title}
-        disable={allButtonsInGroupDisabled}
         className={className}
         mediaQueryClassName={mediaQueryClassName}
         isActive={isActive}
