@@ -9,8 +9,8 @@ import './WatermarkModal.scss';
 
 import ActionButton from 'components/ActionButton';
 
-const DESIRED_WIDTH = 275;
-const DESIRED_HEIGHT = 275;
+const DESIRED_WIDTH = 300;
+const DESIRED_HEIGHT = 300;
 
 // numbers were taken from font dropdown menu in google docs
 const FONT_SIZES = [
@@ -112,7 +112,6 @@ class WatermarkModal extends React.PureComponent {
         }
         canvas.style.border = '1px solid black';
         canvas.style.height = this.canvasContainerRef.current.style.height;
-        canvas.style.margin = '15px';
         this.canvasContainerRef.current.appendChild(canvas);
       },
     });

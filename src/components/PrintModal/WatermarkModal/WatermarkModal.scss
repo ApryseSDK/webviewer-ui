@@ -21,9 +21,7 @@ $gap: 15px;
     border: $color-widget-border;
     background-color: #fafafa;
 
-    // @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     @include ie11 {
-      /* IE10+ CSS styles go here */
       margin-top: 0;
     }
 
@@ -51,11 +49,6 @@ $gap: 15px;
     display: flex;
     flex-direction: column;
 
-    // @include mobile {
-    //   width: 100vw;
-    //   max-height: 100vh;
-    //   overflow:auto;
-    // }
     @include portrait-mobile {
       width: 100vw;
       max-height: 100vh;
@@ -71,11 +64,6 @@ $gap: 15px;
       max-height: 100vh;
       overflow:auto;
     }
-    // @include tablet {
-    //   width: 100vw;
-    //   max-height: 100vh;
-    //   overflow:auto;
-    // }
   }
   
   .form-content-container {
@@ -85,34 +73,20 @@ $gap: 15px;
     justify-content: space-around;
     align-items: center;
 
-    // @include mobile {
-    //   flex-direction: column;
-    //   margin-left: $gap;
-    // }
     @include portrait-mobile {
       flex-direction: column;
       margin-left: $gap;
     }
     @include low-res-tablet-landscape-mobiles {
-      // flex-direction: column;
-      // margin-left: $gap;
       justify-content: center;
     }
     @include tablets-and-landscape-ipads {
       justify-content: center;
     }
-    // @include tablet {
-    //   flex-direction: column;
-    //   margin-left: $gap;
-    // }
 
     & form {
       margin-right: $gap;
       width: 175px;
-
-      // @include mobile {
-      //   width: auto;
-      // }
       @include portrait-mobile {
         width: auto;
       }
@@ -124,19 +98,6 @@ $gap: 15px;
       align-items: center;
       width: 300px;
       height: 300px;
-
-      // @include mobile {
-      //   margin-left: $gap;
-      //   justify-content: center;
-      // }
-      // @include tablet {
-      //   margin-left: $gap;
-      //   justify-content: center;
-      // }
-      @include portrait-mobile {
-        // margin-left: $gap;
-        // justify-content: center;
-      }
     }
   }
   
@@ -180,8 +141,6 @@ $gap: 15px;
     margin: 0 0 $gap 0;
 
     @include low-res-tablet-landscape-mobiles {
-      // flex-direction: column;
-      // margin-left: $gap;
       margin: 0 0 $gap+10 0;
     }
     @include tablets-and-landscape-ipads {
