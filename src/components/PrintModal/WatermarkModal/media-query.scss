@@ -65,7 +65,7 @@
 
 /* 
   ##Device = Most of the Smartphones Mobiles (Portrait)
-  ##Screen = B/w 320px to 479px
+  ##Screen = B/w 315px to 479px
 */
 @mixin portrait-mobile {
   @media (min-width: 315px) and (max-width: 480px) {
@@ -73,9 +73,4 @@
     @content;
     
   }
-  // @media (max-width: 480px) {
-  
-  //   @content;
-    
-  // }
 }
