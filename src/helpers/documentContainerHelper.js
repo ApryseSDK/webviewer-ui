@@ -71,8 +71,7 @@ export const getClassNameInIE = ({ isHeaderOpen, isSearchOverlayOpen }) => [
   isSearchOverlayOpen ? 'search-overlay' : '',
 ].join(' ').trim();
 
-export const handleWindowResize = ({ isLeftPanelOpen, isRightPanelOpen }, container) => {
-  const leftPanelWidth = 300;
+export const handleWindowResize = ({ isLeftPanelOpen, isRightPanelOpen, leftPanelWidth = 300 }, container) => {
   const rightPanelWidth = 300;
   let width = window.innerWidth;
 
