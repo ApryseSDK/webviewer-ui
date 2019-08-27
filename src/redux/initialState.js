@@ -12,7 +12,8 @@ import actions from 'actions';
 
 export default {
   viewer: {
-    disabledElements: { },
+    disabledElements: {},
+    disabledFeatures: {},
     openElements: {
       header: true,
     },

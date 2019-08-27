@@ -11,6 +11,7 @@ import disableAnnotations from './disableAnnotations';
 import disableDownload from './disableDownload';
 import disableElement from './disableElement';
 import disableElements from './disableElements';
+import disableFeatures from './disableFeatures';
 import disableFilePicker from './disableFilePicker';
 import disableLocalStorage from './disableLocalStorage';
 import disableMeasurement from './disableMeasurement';
@@ -27,6 +28,7 @@ import enableAnnotations from './enableAnnotations';
 import enableDownload from './enableDownload';
 import enableElement from './enableElement';
 import enableElements from './enableElements';
+import enableFeatures from './enableFeatures';
 import enableFilePicker from './enableFilePicker';
 import enableLocalStorage from './enableLocalStorage';
 import enableMeasurement from './enableMeasurement';
@@ -131,6 +133,7 @@ export default store => {
     disableDownload: disableDownload(store),
     disableElement: disableElement(store),
     disableElements: disableElements(store),
+    disableFeatures: disableFeatures(store),
     disableFilePicker: disableFilePicker(store),
     disableLocalStorage,
     disableMeasurement: disableMeasurement(store),
@@ -147,6 +150,7 @@ export default store => {
     enableDownload: enableDownload(store),
     enableElement: enableElement(store),
     enableElements: enableElements(store),
+    enableFeatures: enableFeatures(store),
     enableFilePicker: enableFilePicker(store),
     enableLocalStorage,
     enableMeasurement: enableMeasurement(store),
