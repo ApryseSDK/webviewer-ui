@@ -11,5 +11,5 @@ export default (callback = () => {}, deps) => {
 
     return callback();
   // eslint-disable-next-line
-  }, [deps]);
+  }, deps);
 };
