@@ -5,7 +5,7 @@
     "cancel": "Cancelar",
     "clear": "Limpar",
     "close": "Fechar",
-    "comment": "Comentário",
+    "comment": "Novo comentário",
     "copy": "Copiar",
     "delete": "Apagar",
     "group": "Grupo",
@@ -71,7 +71,7 @@
     "menuOverlay": "Menu",
     "miscToolsButton": "Ferramentas diversas",
     "notesPanel": "Anotações",
-    "outlinesPanel": "Contorno",
+    "outlinesPanel": "Esquemas",
     "shapeToolsButton": "Ferramentas de forma",
     "textToolsButton": "Ferramentas de texto",
     "thumbnailsPanel": "Miniaturas",
@@ -192,7 +192,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
-    "eraser": "(AND)"
+    "eraser": "(E)"
   },
   "tool": {
     "pan": "Pan",
