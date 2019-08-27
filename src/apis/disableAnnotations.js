@@ -26,7 +26,7 @@ export default store => () => {
   const elements = [
     'notesPanel',
     'notesPanelButton',
-    ...getAnnotationRelatedElements(store.getState())
+    ...getAnnotationRelatedElements(store.getState()),
   ];
 
   getAnnotationCreateToolNames().forEach(toolName => {
