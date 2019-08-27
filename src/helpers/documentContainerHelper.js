@@ -7,7 +7,7 @@ import { isIEEdge, isIE11 } from 'helpers/device';
 // However, IE11 and Edge haven't supported using transition and calc(...) together,
 // So we have to calculate the width manually.
 export const updateContainerWidth = (prevProps, props, container) => {
-  const leftPanelWidth = 300;
+  const { leftPanelWidth = 300 } = props;
   const rightPanelWidth = 300;
 
   const leftPanelClosed = prevProps.isLeftPanelOpen && !props.isLeftPanelOpen;
@@ -24,6 +24,12 @@ export const updateContainerWidth = (prevProps, props, container) => {
   const leftPanelOpened = !prevProps.isLeftPanelOpen && props.isLeftPanelOpen;
   if (leftPanelOpened) {
     shrinkContainerWidthBy(leftPanelWidth, container);
+    container.style.marginLeft = `${leftPanelWidth}px`;
+  }
+
+  const leftPanelResized = props.isLeftPanelOpen && prevProps.leftPanelWidth !== props.leftPanelWidth;
+  if (leftPanelResized) {
+    container.style.width = `${window.innerWidth - leftPanelWidth}px`;
     container.style.marginLeft = `${leftPanelWidth}px`;
   }
 
@@ -65,8 +71,7 @@ export const getClassNameInIE = ({ isHeaderOpen, isSearchOverlayOpen }) => [
   isSearchOverlayOpen ? 'search-overlay' : '',
 ].join(' ').trim();
 
-export const handleWindowResize = ({ isLeftPanelOpen, isRightPanelOpen }, container) => {
-  const leftPanelWidth = 300;
+export const handleWindowResize = ({ isLeftPanelOpen, isRightPanelOpen, leftPanelWidth = 300 }, container) => {
   const rightPanelWidth = 300;
   let width = window.innerWidth;
 
