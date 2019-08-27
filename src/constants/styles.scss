@@ -49,12 +49,8 @@ $mobile-width: 640px;
   }
 }
 
-input[type=text] {
+.text-input {
   border: 1px solid grey;
-
-  // &::-webkit-input-placeholder, &:-ms-input-placeholder, &::placeholder  { /* Edge */
-  //   color: red;
-  // }
   &::placeholder {
     color:$gray12;
   }

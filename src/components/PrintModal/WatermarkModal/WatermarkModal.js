@@ -70,6 +70,8 @@ class WatermarkModal extends React.PureComponent {
         this.removeWatermark();
       }
     };
+
+    window.addEventListener('resize', () => console.log('resized'));
   }
 
   componentDidMount() {
@@ -230,6 +232,7 @@ class WatermarkModal extends React.PureComponent {
                     {t(`watermark.text`)}
                   </label>
                   <input
+                    className="text-input"
                     value={this.state[FORM_FIELD_KEYS.text]}
                     onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
                     type="text" />

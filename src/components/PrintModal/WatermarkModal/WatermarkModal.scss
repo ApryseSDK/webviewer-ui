@@ -81,13 +81,16 @@ $gap: 15px;
       align-items: center;
       width: 300px;
       height: 300px;
+
+      @include mobile {
+        justify-content: flex-end;
+      }
     }
   }
   
   .button-container {
     border-top: $color-widget-border;
     display: flex;
-    // justify-content: space-between;
     justify-content: flex-end;
     padding: $gap;
   }
@@ -104,7 +107,6 @@ $gap: 15px;
     font-weight: 600;
     padding: 6px 18px;
     border-radius: 4px 4px 4px 4px;
-    // height: 32px;
     cursor: pointer;
 
     &.reset {
