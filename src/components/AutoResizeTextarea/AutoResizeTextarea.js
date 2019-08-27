@@ -46,16 +46,6 @@ const AutoResizeTextarea = React.forwardRef(
     }));
 
     useLayoutEffect(() => {
-      resizeHeight();
-      // eslint-disable-next-line
-    }, []);
-
-    const handleChange = e => {
-      resizeHeight();
-      onChange(e.target.value);
-    };
-
-    const resizeHeight = () => {
       // for auto-resize the height of the textarea
       // https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize
       // 1. make the height small enough so that we know the scroll bar height
@@ -75,6 +65,10 @@ const AutoResizeTextarea = React.forwardRef(
 
         prevHeightRef.current = currHeight;
       }
+    }, [resize, value]);
+
+    const handleChange = e => {
+      onChange(e.target.value);
     };
 
     const handleKeyDown = e => {
