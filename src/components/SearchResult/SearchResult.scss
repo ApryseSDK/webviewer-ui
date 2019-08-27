@@ -13,6 +13,7 @@
 
   &.selected {
     background: $gray10;
+    color: #333333;
 
     .search-value {
       background: #fbcd9f;
@@ -21,5 +22,6 @@
 
   .search-value {
     background: #fffc95;
+    color: #333333;
   }
 }
