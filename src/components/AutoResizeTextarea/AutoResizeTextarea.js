@@ -43,6 +43,9 @@ const AutoResizeTextarea = React.forwardRef(
     useImperativeHandle(ref, () => ({
       focus: () => textareaRef.current.focus(),
       blur: () => textareaRef.current.blur(),
+      setSelectionRange: (...args) =>
+        textareaRef.current.setSelectionRange(...args),
+      value: () => textareaRef.current.value,
     }));
 
     useLayoutEffect(() => {

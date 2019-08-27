@@ -197,6 +197,9 @@ const ContentArea = ({ annotation, setIsEditing }) => {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.focus();
+
+      const textLength = textareaRef.current.value().length;
+      textareaRef.current.setSelectionRange(textLength, textLength);
     }
   }, []);
 
