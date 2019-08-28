@@ -68,10 +68,6 @@ class MeasurementOption extends React.Component {
     });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-  }
-
   getLanguage = () => {
     let lang = 'en';
 
