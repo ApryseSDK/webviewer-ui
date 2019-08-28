@@ -32,11 +32,20 @@ import selectors from 'selectors';
 export default store => () => {
   const state = store.getState();
   const currentPage = selectors.getCurrentPage(state);
+  const totalPages = selectors.getTotalPages(state);
 
-  if (currentPage === selectors.getTotalPages(state)) {
+  const DisplayModes = window.CoreControls.DisplayModes;
+  const currentDisplayMode = window.readerControl.getLayoutMode();
+  let pageIncrease = 1;
+  if (currentDisplayMode !== DisplayModes.Single
+    && currentDisplayMode !== DisplayModes.Continuous) {
+    pageIncrease = 2;
+  }
+
+  if (currentPage === totalPages) {
     console.warn('you are at the last page');
   } else {
-    const nextPage = currentPage + 1;
+    const nextPage = currentPage + pageIncrease > totalPages ? totalPages : currentPage + pageIncrease;
     core.setCurrentPage(nextPage);
   }
 };

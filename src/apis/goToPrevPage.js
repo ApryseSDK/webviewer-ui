@@ -32,10 +32,18 @@ import selectors from 'selectors';
 export default store => () => {
   const currentPage = selectors.getCurrentPage(store.getState());
 
+  const DisplayModes = window.CoreControls.DisplayModes;
+  const currentDisplayMode = window.readerControl.getLayoutMode();
+  let pageDecrease = 1;
+  if (currentDisplayMode !== DisplayModes.Single
+    && currentDisplayMode !== DisplayModes.Continuous) {
+    pageDecrease = 2;
+  }
+
   if (currentPage === 1) {
     console.warn('You are at the first page');
   } else {
-    const prevPage = currentPage - 1;
+    const prevPage = currentPage - pageDecrease > 1 ? currentPage - pageDecrease : 1;
     core.setCurrentPage(prevPage);
   }
 };
