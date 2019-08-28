@@ -80,7 +80,8 @@ describe ('Tests for watermark modal', () => {
         // TODO try not to use wait
         cy.wait(500);
 
-    cy.get('[data-element="watermarkModal"]').find('.form-container').first().screenshot();
+    // cy.get('[data-element="watermarkModal"]').find('.form-container').first().screenshot();
+    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot('b4-watermark');
 
     cy.get('[data-element="watermarkModal"]').find('form').within(() => {
       cy.get('.text-input').type('Pamela') // Only yield inputs within form
@@ -96,7 +97,8 @@ describe ('Tests for watermark modal', () => {
     });
     // TODO try not to use wait
     cy.wait(500);
-    cy.get('[data-element="watermarkModal"]').find('.form-container').first().screenshot();
+    // cy.get('[data-element="watermarkModal"]').find('.form-container').first().screenshot();
+    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot('after-watermark');
     // cy.screenshot();
 
     // cy.window().then((window) => {
