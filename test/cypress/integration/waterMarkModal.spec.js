@@ -15,14 +15,23 @@ describe ('Tests for watermark modal', () => {
     cy.route({
       method: 'GET',
       url: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
-    }).as('getAccount');
+      status: 206,
+    }).as('temp1');
+    cy.route({
+      method: 'GET',
+      url: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+      status: 200,
+    }).as('temp2');
     cy.visit ('/');
-    cy.wait('@getAccount').then((xhr) => {
-      assert.isNotNull(xhr.response.body.data, '1st API call has data');
+
+    cy.wait(['@temp2']).then((xhr) => {
+      // assert.isNotNull(xhr.response.body.data, '1st API call has data');
+      cy.window({ timeout: 10000 }).should('have.property', 'appReady', true);
     });
-    cy.wait('@getAccount').then((xhr) => {
-      assert.isNotNull(xhr.response.body.data, '2nd API call has data')
-    });
+    // cy.wait('@temp2').then((xhr) => {
+    //   assert.isNotNull(xhr.response.body.data, '2nd API call has data')
+    // });
+    // cy.window().should('have.property', 'appReady', true);
   });
 
   it ('Should be able to open watermark modal from print modal', () => {
