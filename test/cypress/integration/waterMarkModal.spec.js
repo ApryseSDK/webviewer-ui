@@ -77,8 +77,12 @@ describe ('Tests for watermark modal', () => {
 
     cy.get( '[data-element="watermarkModal"]').should("visible");
 
-        // TODO try not to use wait
-        cy.wait(500);
+    // TODO try not to use wait
+    cy.wait(500);
+
+    /**
+     * https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595
+     */
 
     // cy.get('[data-element="watermarkModal"]').find('.form-container').first().screenshot();
     cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot('b4-watermark');
@@ -89,10 +93,12 @@ describe ('Tests for watermark modal', () => {
       cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
         // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
         cy.get('select').first().select(val);
+        cy.get('select').first().focus().blur();
       });
       cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
         // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
         cy.get('select').last().select(val);
+        cy.get('select').first().focus().blur();
       });
     });
     // TODO try not to use wait
