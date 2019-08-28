@@ -10,24 +10,19 @@ describe ('Tests for watermark modal', () => {
       url: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
     }).as('getAccount');
     cy.visit ('/');
+    cy.wait('@getAccount');
     cy.wait('@getAccount').then((xhr) => {
-      assert.isNotNull(xhr.response.body.data, '1st API call has data');
-    });
-    cy.wait('@getAccount').then((xhr) => {
-      assert.isNotNull(xhr.response.body.data, '2nd API call has data');
-
       cy.window().should('have.property', 'appReady', true);
     });
-
-    // cy.get('[data-element="menuButton"]').click();
-    // cy.get( '[data-element="loadingModal"]').should("not.visible");
-    // console.log(cy.window().docViewer);
-
-    // cy.window().should('have.property', 'appReady', true);
   });
 
-  it ('Visit the app', () => {
-    // cy.get( '[data-element="progressModal"]').should("not.visible");
+  it ('Should be able to open watermark modal from print modal', () => {
     cy.get('[data-element="menuButton"]').click();
+    cy.get('[data-element="printButton"]').click();
+    cy.get( '[data-element="printModal"]').should("visible");
+
+    cy.get('.apply-watermark').click();
+
+    cy.get( '[data-element="watermarkModal"]').should("visible");
   });
 });
