@@ -17,6 +17,10 @@ export default dispatch => () => {
     dispatch(actions.resetLoadingProgress());
     dispatch(actions.resetUploadProgress());
     dispatch(actions.setIsUploading(false));
+
+    if (window.Cypress) {
+      window.appReady = true;
+    }
   }, 300);
 
   if (onFirstLoad) {
