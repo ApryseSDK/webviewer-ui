@@ -25,4 +25,18 @@ describe ('Tests for watermark modal', () => {
 
     cy.get( '[data-element="watermarkModal"]').should("visible");
   });
+
+  it ('Should be able to close watermark modal by clicking on close icon', () => {
+    cy.get('[data-element="menuButton"]').click();
+    cy.get('[data-element="printButton"]').click();
+    cy.get( '[data-element="printModal"]').should("visible");
+
+    cy.get('.apply-watermark').click();
+
+    cy.get( '[data-element="watermarkModal"]').should("visible");
+
+    cy.get( '[data-element="watermarkModalCloseButton"]').click();
+
+    cy.get( '[data-element="watermarkModal"]').should("not.visible");
+  });
 });
