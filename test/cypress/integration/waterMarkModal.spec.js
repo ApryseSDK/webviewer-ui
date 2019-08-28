@@ -80,11 +80,19 @@ describe ('Tests for watermark modal', () => {
     cy.get('[data-element="watermarkModal"]').find('form').within(() => {
       cy.get('.text-input').type('Pamela') // Only yield inputs within form
       // cy.get('textarea').type('is a developer') // Only yield textareas within form
-      cy.get('select').first().find('option').eq(20).invoke('val').then((val) => {
+      cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
         // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
         cy.get('select').first().select(val);
       });
+      cy.get('select').last().find('option').eq(2).invoke('val').then((val) => {
+        // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
+        cy.get('select').last().select(val);
+      });
     });
+
+    cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
+
+    cy.get( '[data-element="watermarkModal"]').should("not.visible");
 
     // cy.get('[data-element="watermarkModal"]').find('.text-input').type('blah');
     // const dropdowns = cy.get('[data-element="watermarkModal"]').find('select');
