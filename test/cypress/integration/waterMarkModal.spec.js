@@ -4,9 +4,25 @@
  */
 describe ('Tests for watermark modal', () => {
   beforeEach(() => {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+    }).as('getAccount');
     cy.visit ('/');
+    cy.wait('@getAccount').then((xhr) => {
+      assert.isNotNull(xhr.response.body.data, '1st API call has data')
+    });
+    cy.wait('@getAccount').then((xhr) => {
+      assert.isNotNull(xhr.response.body.data, '2nd API call has data')
+    });
+
+    // cy.get('[data-element="menuButton"]').click();
+    // cy.get( '[data-element="loadingModal"]').should("not.visible");
   });
+
   it ('Visit the app', () => {
-    cy.get('[data-element="menuButton"]');
+    // cy.get( '[data-element="progressModal"]').should("not.visible");
+    cy.get('[data-element="menuButton"]').click();
   });
 });
