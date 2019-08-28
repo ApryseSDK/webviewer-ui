@@ -28,13 +28,9 @@ describe ('Tests for watermark modal', () => {
       // assert.isNotNull(xhr.response.body.data, '1st API call has data');
       cy.window({ timeout: 10000 }).should('have.property', 'appReady', true);
     });
-    // cy.wait('@temp2').then((xhr) => {
-    //   assert.isNotNull(xhr.response.body.data, '2nd API call has data')
-    // });
-    // cy.window().should('have.property', 'appReady', true);
   });
 
-  it ('Should be able to open watermark modal from print modal', () => {
+  xit ('Should be able to open watermark modal from print modal', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
     cy.get( '[data-element="printModal"]').should("visible");
@@ -44,7 +40,7 @@ describe ('Tests for watermark modal', () => {
     cy.get( '[data-element="watermarkModal"]').should("visible");
   });
 
-  it ('Should be able to close watermark modal by clicking on close icon', () => {
+  xit ('Should be able to close watermark modal by clicking on close icon', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
     cy.get( '[data-element="printModal"]').should("visible");
@@ -58,7 +54,7 @@ describe ('Tests for watermark modal', () => {
     cy.get( '[data-element="watermarkModal"]').should("not.visible");
   });
 
-  it ('Should be able to close watermark modal by clicking outside of it', () => {
+  xit ('Should be able to close watermark modal by clicking outside of it', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
     cy.get( '[data-element="printModal"]').should("visible");
@@ -70,5 +66,31 @@ describe ('Tests for watermark modal', () => {
     cy.get( '[data-element="watermarkModal"]').click('topLeft');
 
     cy.get( '[data-element="watermarkModal"]').should("not.visible");
+  });
+
+  it ('Should be able to apply watermark', () => {
+    cy.get('[data-element="menuButton"]').click();
+    cy.get('[data-element="printButton"]').click();
+    cy.get( '[data-element="printModal"]').should("visible");
+
+    cy.get('.apply-watermark').click();
+
+    cy.get( '[data-element="watermarkModal"]').should("visible");
+
+    cy.get('[data-element="watermarkModal"]').find('form').within(() => {
+      cy.get('.text-input').type('Pamela') // Only yield inputs within form
+      // cy.get('textarea').type('is a developer') // Only yield textareas within form
+      cy.get('select').first().find('option').eq(20).invoke('val').then((val) => {
+        // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
+        cy.get('select').first().select(val);
+      });
+    });
+
+    // cy.get('[data-element="watermarkModal"]').find('.text-input').type('blah');
+    // const dropdowns = cy.get('[data-element="watermarkModal"]').find('select');
+
+    // if (dropdowns) {
+    //   dropdowns.forEach(dropdown => dropdown.eq(2));
+    // }
   });
 });
