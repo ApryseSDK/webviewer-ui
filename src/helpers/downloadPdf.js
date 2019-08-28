@@ -39,7 +39,6 @@ export default (dispatch, options) => {
       downloadIframe.src = externalURL;
       dispatch(actions.closeElement('loadingModal'));
       fireEvent('finishedSavingPDF');
-      return Promise.resolve({ url: externalURL })
     } else {
       return doc.getFileData(downloadOptions).then(data => {
         const arr = new Uint8Array(data);
