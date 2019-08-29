@@ -1,3 +1,9 @@
+
+const ID = {
+  INIT: 'initial',
+  WATERMARK_APPLIED: 'watermark-applied',
+  TEST_RESET: 'test-reset'
+};
 /**
  * For these tests to work
  * npm run start must be ran in the UI project
@@ -27,105 +33,78 @@ describe ('Tests for watermark modal', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
     cy.get( '[data-element="printModal"]').should("visible");
-
-    cy.get('.apply-watermark').click();
-
+    cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
     cy.get( '[data-element="watermarkModal"]').should("visible");
 
     // TODO try not to use wait
     cy.wait(500);
 
-    /**
-     * https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595
-     */
-    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot();
+    cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.INIT);
   });
 
   xit ('Should be able to close watermark modal by clicking on close icon', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
-    cy.get( '[data-element="printModal"]').should("visible");
 
-    cy.get('.apply-watermark').click();
-
-    cy.get( '[data-element="watermarkModal"]').should("visible");
-
+    cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
     cy.get( '[data-element="watermarkModalCloseButton"]').click();
 
-    cy.get( '[data-element="watermarkModal"]').should("not.visible");
+    cy.get( '[data-element="watermarkModal"]').should('not.visible');
   });
 
   xit ('Should be able to close watermark modal by clicking outside of it', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
-    cy.get( '[data-element="printModal"]').should("visible");
-
-    cy.get('.apply-watermark').click();
-
-    cy.get( '[data-element="watermarkModal"]').should("visible");
-
+    cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
     cy.get( '[data-element="watermarkModal"]').click('topLeft');
-
     cy.get( '[data-element="watermarkModal"]').should("not.visible");
   });
 
   xit ('Should be able to apply watermark', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
-    cy.get( '[data-element="printModal"]').should("visible");
-
-    cy.get('.apply-watermark').click();
-
-    cy.get( '[data-element="watermarkModal"]').should("visible");
+    cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
 
     cy.get('[data-element="watermarkModal"]').find('form').within(() => {
       cy.get('.text-input').type('Pamela');
       cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
-        // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
         cy.get('select').first().select(val);
         cy.get('select').first().focus().blur();
       });
       cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
-        // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
         cy.get('select').last().select(val);
         cy.get('select').first().focus().blur();
       });
     });
     // TODO try not to use wait
     cy.wait(500);
-    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot();
+    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot(ID.WATERMARK_APPLIED);
     cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
-    cy.get( '[data-element="watermarkModal"]').should("not.visible");
   });
 
   it ('Should be able to use reset button', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
-    cy.get( '[data-element="printModal"]').should("visible");
-
-    cy.get('.apply-watermark').click();
+    cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
 
     // TODO try not to use wait
     cy.wait(500);
 
-    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot('initial-state');
+    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot(ID.TEST_RESET);
 
     cy.get('[data-element="watermarkModal"]').find('form').within(() => {
       cy.get('.text-input').type('Pamela');
       cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
-        // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
         cy.get('select').first().select(val);
         cy.get('select').first().focus().blur();
       });
       cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
-        // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
         cy.get('select').last().select(val);
         cy.get('select').first().focus().blur();
       });
     });
 
     cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
-    cy.get( '[data-element="watermarkModal"]').should("not.visible");
 
     cy.get('.apply-watermark').click();
 
@@ -135,6 +114,6 @@ describe ('Tests for watermark modal', () => {
 
     // TODO try not to use wait
     cy.wait(1500);
-    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot();
+    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot(ID.TEST_RESET);
   });
 });
