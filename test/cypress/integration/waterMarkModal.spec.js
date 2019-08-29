@@ -23,7 +23,6 @@ describe ('Tests for watermark modal', () => {
     }).as('temp2');
     cy.visit ('/');
     cy.wait(['@temp2']).then((xhr) => {
-      // assert.isNotNull(xhr.response.body.data, '1st API call has data');
       cy.window({ timeout: 25000 }).should('have.property', 'appReady', true);
     });
     cy.get('[data-element="menuButton"]').click();
@@ -75,6 +74,8 @@ describe ('Tests for watermark modal', () => {
     cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
   });
 
+  // TODO write up tests to see that watermark options are persisted
+
   it.skip ('Should be able to use reset button', () => {
     cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
 
@@ -116,4 +117,53 @@ describe ('Tests for watermark modal', () => {
 
     cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
   });
+
+  // describe(('Tests for when there is existing watermark'), () => {
+  //   beforeEach(() => {
+  //     cy.window()
+  //       .then((window) => {
+  //         window.docViewer.setWatermark({
+  //         // Draw diagonal watermark in middle of the document
+  //           diagonal: {
+  //             fontSize: 52, // or even smaller size
+  //             fontFamily: 'sans-serif',
+  //             color: 'red',
+  //             opacity: 100, // from 0 to 100
+  //             text: 'Watermark'
+  //           },
+    
+  //           // Draw header watermark
+  //           header: {
+  //             fontSize: 52,
+  //             fontFamily: 'sans-serif',
+  //             color: 'red',
+  //             opacity: 100,
+  //             left: 'left watermark',
+  //             center: 'center watermark',
+  //             right: ''
+  //           }
+  //         });
+
+  //         window.docViewer.refreshAll();
+  //         window.docViewer.updateView();
+  //       });
+
+  //       // it('Should not be able to see watermark modal button', () => {
+  //       //   cy.get( '[data-element="printModal"]').find('.apply-watermark').should('not.visible');
+  //       // });
+      
+  //       // it('Should be able to see watermark modal button when existing watermark dissapear', () => {
+  //       //   cy.window()
+  //       //   .then((window) => {
+  //       //     window.docViewer.setWatermark({});
+      
+  //       //     window.docViewer.refreshAll();
+  //       //     window.docViewer.updateView();
+      
+  //       //     cy.get( '[data-element="printModal"]').find('.apply-watermark').should('visible');
+  //       //   });
+          
+  //       // });
+  //   });
+  // });
 });

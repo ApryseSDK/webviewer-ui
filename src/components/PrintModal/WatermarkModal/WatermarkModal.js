@@ -56,10 +56,16 @@ class WatermarkModal extends React.PureComponent {
 
   constructor(props) {
     super(props);
+    const locationSettings = {};
+    Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
+      locationSettings[key] = { ...DEFAULT_VALS };
+    });
     this.state = {
       isVisible: false,
       isColorPaletteVisible: false,
       ...DEFAULT_VALS,
+      locationSettings,
+      currLocation: WATERMARK_LOCATIONS.CENTER,
     };
     this.canvasContainerRef = React.createRef();
 
@@ -194,6 +200,12 @@ class WatermarkModal extends React.PureComponent {
     this.setState({ isColorPaletteVisible: visible });
   }
 
+  setLocation(newLocation) {
+    this.setState({
+      currLocation: newLocation,
+    });
+  }
+
   render() {
     const { isVisible } = this.props;
     if (!isVisible) {
@@ -219,7 +231,7 @@ class WatermarkModal extends React.PureComponent {
                   </label>
                   <select
                     value={this.state[FORM_FIELD_KEYS.location]}
-                    onChange={event => this.handleInputChange(FORM_FIELD_KEYS.location, event.target.value)}>
+                    onChange={event => { this.setLocation(event.target.value); this.handleInputChange(FORM_FIELD_KEYS.location, event.target.value) } }>
                     { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
                   </select>
 
