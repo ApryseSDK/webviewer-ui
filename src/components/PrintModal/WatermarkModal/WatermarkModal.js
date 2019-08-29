@@ -168,7 +168,8 @@ class WatermarkModal extends React.PureComponent {
     core.removeEventListener('documentLoaded', this.handleWatermarkRenderFxn);
   }
 
-  resetForm() {
+  resetForm(event) {
+    event.preventDefault();
     this.setState({
       ...DEFAULT_VALS,
     }, () => this.addWatermark(this.state));
@@ -283,7 +284,7 @@ class WatermarkModal extends React.PureComponent {
 
                 </div>
 
-                <button className="reset button" onClick={() => this.resetForm()}>{t(`action.reset`)}</button>
+                <button className="reset button" onClick={event => this.resetForm(event)}>{t(`action.reset`)}</button>
               </form>
 
               <div className="canvas-container" ref={this.canvasContainerRef}>

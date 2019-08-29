@@ -19,7 +19,7 @@ describe ('Tests for watermark modal', () => {
 
     cy.wait(['@temp2']).then((xhr) => {
       // assert.isNotNull(xhr.response.body.data, '1st API call has data');
-      cy.window({ timeout: 10000 }).should('have.property', 'appReady', true);
+      cy.window({ timeout: 20000 }).should('have.property', 'appReady', true);
     });
   });
 
@@ -69,7 +69,7 @@ describe ('Tests for watermark modal', () => {
     cy.get( '[data-element="watermarkModal"]').should("not.visible");
   });
 
-  it ('Should be able to apply watermark', () => {
+  xit ('Should be able to apply watermark', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
     cy.get( '[data-element="printModal"]').should("visible");
@@ -95,7 +95,46 @@ describe ('Tests for watermark modal', () => {
     cy.wait(500);
     cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot();
     cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
-
     cy.get( '[data-element="watermarkModal"]').should("not.visible");
+  });
+
+  it ('Should be able to use reset button', () => {
+    cy.get('[data-element="menuButton"]').click();
+    cy.get('[data-element="printButton"]').click();
+    cy.get( '[data-element="printModal"]').should("visible");
+
+    cy.get('.apply-watermark').click();
+
+    // TODO try not to use wait
+    cy.wait(500);
+
+    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot('initial-state');
+
+    cy.get('[data-element="watermarkModal"]').find('form').within(() => {
+      cy.get('.text-input').type('Pamela');
+      cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
+        // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
+        cy.get('select').first().select(val);
+        cy.get('select').first().focus().blur();
+      });
+      cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
+        // TODO https://stackoverflow.com/questions/51943474/how-to-use-result-of-length-in-selector-cypress
+        cy.get('select').last().select(val);
+        cy.get('select').first().focus().blur();
+      });
+    });
+
+    cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
+    cy.get( '[data-element="watermarkModal"]').should("not.visible");
+
+    cy.get('.apply-watermark').click();
+
+    cy.wait(500);
+
+    cy.get('[data-element="watermarkModal"]').find('.reset.button').click();
+
+    // TODO try not to use wait
+    cy.wait(1500);
+    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot();
   });
 });
