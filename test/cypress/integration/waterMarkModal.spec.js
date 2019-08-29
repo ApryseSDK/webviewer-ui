@@ -22,29 +22,26 @@ describe ('Tests for watermark modal', () => {
       status: 200,
     }).as('temp2');
     cy.visit ('/');
-
     cy.wait(['@temp2']).then((xhr) => {
       // assert.isNotNull(xhr.response.body.data, '1st API call has data');
-      cy.window({ timeout: 20000 }).should('have.property', 'appReady', true);
+      cy.window({ timeout: 25000 }).should('have.property', 'appReady', true);
     });
-  });
-
-  xit ('Should be able to open watermark modal from print modal', () => {
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
-    cy.get( '[data-element="printModal"]').should("visible");
+    cy.get( '[data-element="printModal"]').should('visible');
+  });
+
+  it.skip ('Should be able to open watermark modal from print modal', () => {
     cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
-    cy.get( '[data-element="watermarkModal"]').should("visible");
+    cy.get( '[data-element="watermarkModal"]').should('visible');
 
     // TODO try not to use wait
-    cy.wait(500);
+    cy.wait(1500);
 
     cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.INIT);
   });
 
-  xit ('Should be able to close watermark modal by clicking on close icon', () => {
-    cy.get('[data-element="menuButton"]').click();
-    cy.get('[data-element="printButton"]').click();
+  it.skip ('Should be able to close watermark modal by clicking on close icon', () => {
 
     cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
     cy.get( '[data-element="watermarkModalCloseButton"]').click();
@@ -52,17 +49,13 @@ describe ('Tests for watermark modal', () => {
     cy.get( '[data-element="watermarkModal"]').should('not.visible');
   });
 
-  xit ('Should be able to close watermark modal by clicking outside of it', () => {
-    cy.get('[data-element="menuButton"]').click();
-    cy.get('[data-element="printButton"]').click();
+  it.skip ('Should be able to close watermark modal by clicking outside of it', () => {
     cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
     cy.get( '[data-element="watermarkModal"]').click('topLeft');
-    cy.get( '[data-element="watermarkModal"]').should("not.visible");
+    cy.get( '[data-element="watermarkModal"]').should('not.visible');
   });
 
-  xit ('Should be able to apply watermark', () => {
-    cy.get('[data-element="menuButton"]').click();
-    cy.get('[data-element="printButton"]').click();
+  it ('Should be able to apply watermark', () => {
     cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
 
     cy.get('[data-element="watermarkModal"]').find('form').within(() => {
@@ -77,20 +70,18 @@ describe ('Tests for watermark modal', () => {
       });
     });
     // TODO try not to use wait
-    cy.wait(500);
-    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot(ID.WATERMARK_APPLIED);
+    cy.wait(1500);
+    cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.WATERMARK_APPLIED);
     cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
   });
 
-  it ('Should be able to use reset button', () => {
-    cy.get('[data-element="menuButton"]').click();
-    cy.get('[data-element="printButton"]').click();
+  it.skip ('Should be able to use reset button', () => {
     cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
 
     // TODO try not to use wait
-    cy.wait(500);
+    cy.wait(2000);
 
-    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot(ID.TEST_RESET);
+    cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
 
     cy.get('[data-element="watermarkModal"]').find('form').within(() => {
       cy.get('.text-input').type('Pamela');
@@ -106,14 +97,23 @@ describe ('Tests for watermark modal', () => {
 
     cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
 
-    cy.get('.apply-watermark').click();
+    cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
 
-    cy.wait(500);
+    cy.wait(1500);
 
     cy.get('[data-element="watermarkModal"]').find('.reset.button').click();
 
     // TODO try not to use wait
     cy.wait(1500);
-    cy.get('[data-element="watermarkModal"]').find('.form-container').first().matchImageSnapshot(ID.TEST_RESET);
+    cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
+
+    cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
+
+    cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
+
+    // TODO try not to use wait
+    cy.wait(2000);
+
+    cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
   });
 });
