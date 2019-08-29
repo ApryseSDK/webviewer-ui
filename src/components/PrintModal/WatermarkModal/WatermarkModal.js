@@ -58,14 +58,16 @@ class WatermarkModal extends React.PureComponent {
     super(props);
     const locationSettings = {};
     Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
-      locationSettings[key] = { ...DEFAULT_VALS };
+      const temp = { ...DEFAULT_VALS };
+      temp[FORM_FIELD_KEYS.location] = WATERMARK_LOCATIONS[key];
+      locationSettings[key] = temp;
     });
     this.state = {
       isVisible: false,
       isColorPaletteVisible: false,
       ...DEFAULT_VALS,
       locationSettings,
-      currLocation: WATERMARK_LOCATIONS.CENTER,
+      currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, WATERMARK_LOCATIONS.CENTER),
     };
     this.canvasContainerRef = React.createRef();
 
@@ -163,8 +165,13 @@ class WatermarkModal extends React.PureComponent {
   }
 
   handleInputChange(key, value) {
+    const currLocationSettings = {
+      ...this.state.locationSettings,
+    };
+    currLocationSettings[this.state.currLocation][key] = value;
     this.setState({
       [key]: value,
+      locationSettings: currLocationSettings
     }, () => {
       this.addWatermark(this.state);
     });
@@ -201,9 +208,14 @@ class WatermarkModal extends React.PureComponent {
   }
 
   setLocation(newLocation) {
+    const key = this.getKeyByValue(WATERMARK_LOCATIONS, newLocation);
     this.setState({
-      currLocation: newLocation,
+      currLocation: key,
     });
+  }
+
+  getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
   }
 
   render() {
