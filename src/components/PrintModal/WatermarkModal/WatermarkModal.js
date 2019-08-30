@@ -36,7 +36,6 @@ const FORM_FIELD_KEYS = {
 };
 
 const DEFAULT_VALS = {
-  [FORM_FIELD_KEYS.location]: WATERMARK_LOCATIONS.CENTER,
   [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[FONT_SIZES.length / 2],
   [FORM_FIELD_KEYS.text]: '',
   [FORM_FIELD_KEYS.color]: new window.Annotations.Color(241, 160, 153),
@@ -59,21 +58,26 @@ class WatermarkModal extends React.PureComponent {
     const locationSettings = {};
     Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
       const temp = { ...DEFAULT_VALS };
-      temp[FORM_FIELD_KEYS.location] = WATERMARK_LOCATIONS[key];
+      // temp[FORM_FIELD_KEYS.location] = WATERMARK_LOCATIONS[key];
       locationSettings[key] = temp;
     });
     this.state = {
       isVisible: false,
       isColorPaletteVisible: false,
-      ...DEFAULT_VALS,
+      // ...DEFAULT_VALS,
       locationSettings,
+      previousLocationSettings: locationSettings,
       currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, WATERMARK_LOCATIONS.CENTER),
     };
     this.canvasContainerRef = React.createRef();
 
     this.handleWatermarkRenderFxn = () => {
       if (this.props.isVisible) {
-        this.addWatermark(this.state);
+        this.setState({
+          locationSettings: this.state.previousLocationSettings
+        }, () => {
+          this.addWatermark(this.state.locationSettings[this.state.currLocation]);
+        });
       } else {
         this.removeWatermark();
       }
@@ -97,7 +101,7 @@ class WatermarkModal extends React.PureComponent {
   }
 
   addWatermark(state) {
-    const watermarkOptions = this.constructWatermarkOptions(state);
+    const watermarkOptions = this.constructWatermarkOptions(WATERMARK_LOCATIONS[this.state.currLocation], state);
     core.setWatermark(watermarkOptions);
 
     const pageHeight = core.getPageHeight(this.props.pageIndexToView);
@@ -126,14 +130,14 @@ class WatermarkModal extends React.PureComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  constructWatermarkOptions(state) {
-    const positionTop = WATERMARK_LOCATIONS.TOP_CENTER === state.location || WATERMARK_LOCATIONS.TOP_LEFT === state.location || WATERMARK_LOCATIONS.TOP_RIGHT === state.location;
-    const positionBot = WATERMARK_LOCATIONS.BOT_CENTER === state.location || WATERMARK_LOCATIONS.BOT_LEFT === state.location || WATERMARK_LOCATIONS.BOT_RIGHT === state.location;
+  constructWatermarkOptions(location, state) {
+    const positionTop = WATERMARK_LOCATIONS.TOP_CENTER === location || WATERMARK_LOCATIONS.TOP_LEFT === location || WATERMARK_LOCATIONS.TOP_RIGHT === location;
+    const positionBot = WATERMARK_LOCATIONS.BOT_CENTER === location || WATERMARK_LOCATIONS.BOT_LEFT === location || WATERMARK_LOCATIONS.BOT_RIGHT === location;
 
-    const positionLeft = WATERMARK_LOCATIONS.TOP_LEFT === state.location || WATERMARK_LOCATIONS.BOT_LEFT === state.location;
-    const positionRight = WATERMARK_LOCATIONS.TOP_RIGHT === state.location || WATERMARK_LOCATIONS.BOT_RIGHT === state.location;
-    const positionTopOrBotCenter = WATERMARK_LOCATIONS.TOP_CENTER === state.location || WATERMARK_LOCATIONS.BOT_CENTER === state.location;
-    const positionCenter = WATERMARK_LOCATIONS.CENTER === state.location;
+    const positionLeft = WATERMARK_LOCATIONS.TOP_LEFT === location || WATERMARK_LOCATIONS.BOT_LEFT === location;
+    const positionRight = WATERMARK_LOCATIONS.TOP_RIGHT === location || WATERMARK_LOCATIONS.BOT_RIGHT === location;
+    const positionTopOrBotCenter = WATERMARK_LOCATIONS.TOP_CENTER === location || WATERMARK_LOCATIONS.BOT_CENTER === location;
+    const positionCenter = WATERMARK_LOCATIONS.CENTER === location;
 
     const watermarkOption = {
       fontSize: state.fontSize,
@@ -168,13 +172,18 @@ class WatermarkModal extends React.PureComponent {
     const currLocationSettings = {
       ...this.state.locationSettings,
     };
-    currLocationSettings[this.state.currLocation][key] = value;
+    currLocationSettings[this.state.currLocation] = {
+      ...currLocationSettings[this.state.currLocation],
+      [key]: value
+    };
+    // currLocationSettings[this.state.currLocation][key] = value;
     this.setState({
       [key]: value,
       locationSettings: currLocationSettings
     }, () => {
-      this.addWatermark(this.state);
+      this.addWatermark(this.state.locationSettings[this.state.currLocation]);
     });
+    // this.addWatermark(currLocationSettings[this.state.currLocation]);
   }
 
   componentWillUnmount() {
@@ -183,24 +192,31 @@ class WatermarkModal extends React.PureComponent {
 
   resetForm(event) {
     event.preventDefault();
+    const locationSettings = {};
+    Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
+      const temp = { ...DEFAULT_VALS };
+      // temp[FORM_FIELD_KEYS.location] = WATERMARK_LOCATIONS[key];
+      locationSettings[key] = temp;
+    });
     this.setState({
-      ...DEFAULT_VALS,
-    }, () => this.addWatermark(this.state));
+      locationSettings: locationSettings,
+    }, () => this.addWatermark(this.state.locationSettings[this.state.currLocation]));
   }
 
   onOkPressed() {
     this.setState({
       isVisible: false,
+      previousLocationSettings: this.state.locationSettings
     }, () => {
       // the order of these fxn calls matter
       this.props.modalClosed();
-      this.props.formSubmitted(this.constructWatermarkOptions(this.state));
+      this.props.formSubmitted(this.constructWatermarkOptions(WATERMARK_LOCATIONS[this.state.currLocation], this.state.locationSettings[this.state.currLocation]));
     });
   }
 
   getCirclePosn(lineLength) {
     const lineStart = circleRadius;
-    return (this.state[FORM_FIELD_KEYS.opacity] / 100) * lineLength + lineStart;
+    return (this.state.locationSettings[this.state.currLocation][FORM_FIELD_KEYS.opacity] / 100) * lineLength + lineStart;
   }
 
   setColorPaletteVisibility(visible) {
@@ -211,6 +227,8 @@ class WatermarkModal extends React.PureComponent {
     const key = this.getKeyByValue(WATERMARK_LOCATIONS, newLocation);
     this.setState({
       currLocation: key,
+    }, () => {
+      this.addWatermark(this.state.locationSettings[this.state.currLocation]);
     });
   }
 
@@ -225,6 +243,7 @@ class WatermarkModal extends React.PureComponent {
     }
 
     const { t } = this.props;
+    const formInfo = this.state.locationSettings[this.state.currLocation];
     return (
       <>
         <div className={'Modal Watermark'} data-element="watermarkModal" onClick={() => this.closeModal()}>
@@ -242,8 +261,10 @@ class WatermarkModal extends React.PureComponent {
                     {t(`watermark.location`)}
                   </label>
                   <select
-                    value={this.state[FORM_FIELD_KEYS.location]}
-                    onChange={event => { this.setLocation(event.target.value); this.handleInputChange(FORM_FIELD_KEYS.location, event.target.value) } }>
+                    // value={this.state[FORM_FIELD_KEYS.location]}
+                    value={WATERMARK_LOCATIONS[this.state.currLocation]}
+                    // onChange={event => { this.setLocation(event.target.value); this.handleInputChange(FORM_FIELD_KEYS.location, event.target.value) } }>
+                    onChange={event => { this.setLocation(event.target.value); } }>
                     { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
                   </select>
 
@@ -255,7 +276,8 @@ class WatermarkModal extends React.PureComponent {
                   </label>
                   <input
                     className="text-input"
-                    value={this.state[FORM_FIELD_KEYS.text]}
+                    // value={this.state[FORM_FIELD_KEYS.text]}
+                    value={formInfo[FORM_FIELD_KEYS.text]}
                     onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
                     type="text" />
 
@@ -266,7 +288,8 @@ class WatermarkModal extends React.PureComponent {
                     {t(`watermark.size`)}
                   </label>
                   <select
-                    value={this.state[FORM_FIELD_KEYS.fontSize]}
+                    // value={this.state[FORM_FIELD_KEYS.fontSize]}
+                    value={formInfo[FORM_FIELD_KEYS.fontSize]}
                     onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}>
                     { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
                   </select>
@@ -276,8 +299,10 @@ class WatermarkModal extends React.PureComponent {
                   <Slider
                     property={'opacity'} // arbitrary property name. this property isn't used in this file
                     displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
-                    value={this.state[FORM_FIELD_KEYS.opacity]}
-                    displayValue={`${(this.state[FORM_FIELD_KEYS.opacity])}%`}
+                    // value={this.state[FORM_FIELD_KEYS.opacity]}
+                    value={formInfo[FORM_FIELD_KEYS.opacity]}
+                    // displayValue={`${(this.state[FORM_FIELD_KEYS.opacity])}%`}
+                    displayValue={`${(formInfo[FORM_FIELD_KEYS.opacity])}%`}
                     getCirclePosition={lineLength => this.getCirclePosn(lineLength)}
                     convertRelativeCirclePositionToValue={circlePosn => circlePosn}
                     onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
@@ -291,7 +316,8 @@ class WatermarkModal extends React.PureComponent {
                   </label>
                   <div
                     className="cell"
-                    style={{ backgroundColor: this.state[FORM_FIELD_KEYS.color].toHexString() }}
+                    // style={{ backgroundColor: this.state[FORM_FIELD_KEYS.color].toHexString() }}
+                    style={{ backgroundColor: formInfo[FORM_FIELD_KEYS.color].toHexString() }}
                     onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
                   >
                   </div>
@@ -299,7 +325,8 @@ class WatermarkModal extends React.PureComponent {
                   {
                     this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
                       <ColorPalette
-                        color={this.state[FORM_FIELD_KEYS.color]}
+                        // color={this.state[FORM_FIELD_KEYS.color]}
+                        color={formInfo[FORM_FIELD_KEYS.color]}
                         property={'TextColor'} // arbitrary property name. this property isn't used in this file
                         onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
                       />
