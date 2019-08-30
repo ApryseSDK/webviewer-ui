@@ -13,7 +13,6 @@ import actions from 'actions';
 export default {
   viewer: {
     disabledElements: {},
-    disabledFeatures: {},
     openElements: {
       header: true,
     },
@@ -150,7 +149,7 @@ export default {
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi'],
     },
     maxSignaturesCount: 2,
-    leftPanelWidth: 300
+    leftPanelWidth: 300,
   },
   search: {
     listeners: [],

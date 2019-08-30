@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
+import Feature from 'constants/feature';
 import getHashParams from 'helpers/getHashParams';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
@@ -120,6 +121,7 @@ export default store => {
     docViewer: window.docViewer,
     FitMode,
     LayoutMode,
+    Feature,
     loadedFromServer: false, // undocumented
     serverFailed: false, // undocumented
     i18n: i18next,

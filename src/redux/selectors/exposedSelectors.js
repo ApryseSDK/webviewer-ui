@@ -4,9 +4,6 @@ import { workerTypes } from 'constants/types';
 export const isElementDisabled = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.disabled;
 
-export const isFeatureDisabled = (state, feature) =>
-  state.viewer.disabledFeatures[feature];
-
 export const isElementOpen = (state, dataElement) =>
   state.viewer.openElements[dataElement] &&
   !state.viewer.disabledElements[dataElement]?.disabled;

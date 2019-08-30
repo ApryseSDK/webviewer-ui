@@ -11,26 +11,7 @@ WebViewer(...)
   });
  */
 
-import actions from 'actions';
-import { PRIORITY_ONE } from '../constants/actionPriority';
+import createFeatureAPI from 'helpers/createFeatureAPI';
 
-export default store => features => {
-  if (!Array.isArray(features)) {
-    features = [features];
-  }
-
-  store.dispatch({ type: 'DISABLE_FEATURES', payload: features });
-
-  let dataElements = [];
-  features.forEach(feature => {
-    if (feature === 'download') {
-      dataElements = dataElements.concat(['downloadButton']);
-    }
-
-    if (feature === 'copyText') {
-      dataElements = dataElements.concat(['copyTextButton']);
-    }
-  });
-
-  store.dispatch(actions.disableElements(dataElements, PRIORITY_ONE));
-};
+const enable = false;
+export default store => createFeatureAPI(enable, store);

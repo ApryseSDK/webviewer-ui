@@ -33,6 +33,7 @@ export default store => (enable = true) => {
   ];
 
   if (enable) {
+    // TODO: remove
     getAnnotationCreateToolNames().forEach(toolName => {
       core.getTool(toolName).disabled = false;
     });

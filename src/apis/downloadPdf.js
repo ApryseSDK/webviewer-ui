@@ -35,10 +35,6 @@ import { workerTypes } from 'constants/types';
 
 export default store => includeAnnotations => {
   const state = store.getState();
-  if (selectors.isFeatureDisabled(state, 'download')) {
-    console.warn('Download has been disabled.');
-    return;
-  }
 
   const documentType = selectors.getDocumentType(state);
   const { PDF, BLACKBOX, OFFICE } = workerTypes;

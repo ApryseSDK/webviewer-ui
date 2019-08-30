@@ -16,26 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import core from 'core';
-import { PRIORITY_ONE } from 'constants/actionPriority';
-import actions from 'actions';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import disableFeatures from './disableFeatures';
 
 export default store => () => {
-  store.dispatch(actions.disableElements([
-    'measurementToolGroupButton',
-    'measurementOverlay',
-    'distanceMeasurementToolButton',
-    'perimeterMeasurementToolButton',
-    'areaMeasurementToolButton',
-  ], PRIORITY_ONE));
-
-  const measurementToolNames = [
-    'AnnotationCreateDistanceMeasurement',
-    'AnnotationCreatePerimeterMeasurement',
-    'AnnotationCreateAreaMeasurement',
-  ];
-  measurementToolNames.forEach(toolName => {
-    core.getTool(toolName).disabled = true;
-  });
-  core.setToolMode('AnnotationEdit');
+  warnDeprecatedAPI(
+    'disableMeasurement()',
+    'disableFeatures([instance.Feature.Measurement])',
+    '6.0',
+  );
+  disableFeatures(store)([Feature.Measurement]);
 };

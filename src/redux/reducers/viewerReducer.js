@@ -23,17 +23,6 @@ export default initialState => (state = initialState, action) => {
         disabledElements: { ...state.disabledElements, ...disabledElements },
       };
     }
-    case 'DISABLE_FEATURES': {
-      const disabledFeatures = {};
-      payload.forEach(feature => {
-        disabledFeatures[feature] = true;
-      });
-
-      return {
-        ...state,
-        disabledFeatures: { ...state.disabledFeatures, ...disabledFeatures },
-      };
-    }
     case 'ENABLE_ELEMENT':
       return {
         ...state,
@@ -63,17 +52,6 @@ export default initialState => (state = initialState, action) => {
         ...state,
         disabledElements: { ...initialState.disabledElements },
       };
-    case 'ENABLE_FEATURES': {
-      const disabledFeatures = {};
-      payload.forEach(feature => {
-        disabledFeatures[feature] = false;
-      });
-
-      return {
-        ...state,
-        disabledFeatures: { ...state.disabledFeatures, ...disabledFeatures },
-      };
-    }
     case 'OPEN_ELEMENT':
       return {
         ...state,
@@ -224,7 +202,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_MEASUREMENT_UNITS': {
       return { ...state, measurementUnits: payload };
     }
-    case 'SET_LEFT_PANEL_WIDTH': 
+    case 'SET_LEFT_PANEL_WIDTH':
       return { ...state, leftPanelWidth: payload.width };
     case 'SET_MAX_SIGNATURES_COUNT':
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };

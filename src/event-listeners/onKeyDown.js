@@ -15,13 +15,6 @@ export default store => e => {
   const selectedTextFromCanvas = core.getSelectedText();
   const selectedTextFromDOM = window.getSelection().toString();
   if (e.metaKey || e.ctrlKey) {
-    if (e.key === 'z' || e.which === 90) {
-      if (e.shiftKey) {
-        window.docViewer.getAnnotationHistoryManager().redo();
-      } else {
-        window.docViewer.getAnnotationHistoryManager().undo();
-      }
-    }
     if (e.shiftKey) {
       if (e.key === '+' || e.key === '=' || e.key === 'Add' || e.which === 187) { // (Ctrl/Cmd + Shift + +)
         e.preventDefault();
@@ -31,7 +24,8 @@ export default store => e => {
         core.rotateCounterClockwise();
       }
     } else if (e.key === 'c' || e.which === 67) { // (Ctrl/Cmd + C)
-      if (selectedTextFromCanvas && !selectors.isFeatureDisabled(state, 'copyText')) {
+      // TODO: replace this with disableHotKeys
+      if (selectedTextFromCanvas) {
         copyText();
         dispatch(actions.closeElement('textPopup'));
       } else if (core.getSelectedAnnotations().length > 0 && !selectedTextFromDOM) {
