@@ -187,7 +187,7 @@ describe ('Tests for watermark modal', () => {
 
       cy.get('[data-element="watermarkModal"]').find('.reset.button').click();
       // wait for changes to canvas
-      cy.timeout(1000);
+      cy.timeout(2000);
 
       cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
 
