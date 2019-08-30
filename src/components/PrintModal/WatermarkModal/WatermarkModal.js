@@ -133,7 +133,7 @@ class WatermarkModal extends React.PureComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  constructWatermarkOptions(value) {
+  constructWatermarkOption(value) {
     const watermarkOption = {
       fontSize: value.fontSize,
       fontFamily: 'sans-serif',
@@ -149,7 +149,7 @@ class WatermarkModal extends React.PureComponent {
     let watermark = {};
 
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
-      const temp = this.constructWatermarkOptions(this.state.locationSettings[key]);
+      const temp = this.constructWatermarkOption(this.state.locationSettings[key]);
 
       if (WATERMARK_LOCATIONS.CENTER === WATERMARK_LOCATIONS[key]) {
         watermark = {
@@ -215,16 +215,15 @@ class WatermarkModal extends React.PureComponent {
     };
     currLocationSettings[this.state.currLocation] = {
       ...currLocationSettings[this.state.currLocation],
-      [key]: value
+      [key]: value,
     };
 
     this.setState({
       [key]: value,
-      locationSettings: currLocationSettings
+      locationSettings: currLocationSettings,
     }, () => {
       this.addWatermarks();
     });
-
   }
 
   componentWillUnmount() {
@@ -234,11 +233,12 @@ class WatermarkModal extends React.PureComponent {
   resetForm(event) {
     event.preventDefault();
     const locationSettings = {};
-    Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
+    Object.keys(WATERMARK_LOCATIONS).forEach(key => {
       const temp = { ...DEFAULT_VALS };
       locationSettings[key] = temp;
     });
     this.setState({
+      // eslint-disable-next-line object-shorthand
       locationSettings: locationSettings,
       currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, DEFAULT_VALS.location),
     }, () => this.addWatermarks());
@@ -314,7 +314,6 @@ class WatermarkModal extends React.PureComponent {
 
                 <div className="form-field separator">
 
-
                 </div>
                 <div className="form-field">
 
@@ -350,7 +349,6 @@ class WatermarkModal extends React.PureComponent {
                     convertRelativeCirclePositionToValue={circlePosn => circlePosn}
                     onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
                   />
-
                 </div>
                 <div className="form-field">
 
