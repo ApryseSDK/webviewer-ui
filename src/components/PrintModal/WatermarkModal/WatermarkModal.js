@@ -130,7 +130,6 @@ class WatermarkModal extends React.PureComponent {
 
   // eslint-disable-next-line class-methods-use-this
   constructWatermarkOptions(value) {
-
     const watermarkOption = {
       fontSize: value.fontSize,
       fontFamily: 'sans-serif',
@@ -164,6 +163,30 @@ class WatermarkModal extends React.PureComponent {
         watermark = {
           ...watermark,
           headerRight: temp,
+        };
+      }
+      if (WATERMARK_LOCATIONS.TOP_CENTER === WATERMARK_LOCATIONS[key]) {
+        watermark = {
+          ...watermark,
+          headerCenter: temp,
+        };
+      }
+      if (WATERMARK_LOCATIONS.BOT_LEFT === WATERMARK_LOCATIONS[key]) {
+        watermark = {
+          ...watermark,
+          footerLeft: temp,
+        };
+      }
+      if (WATERMARK_LOCATIONS.BOT_RIGHT === WATERMARK_LOCATIONS[key]) {
+        watermark = {
+          ...watermark,
+          footerRight: temp,
+        };
+      }
+      if (WATERMARK_LOCATIONS.BOT_CENTER === WATERMARK_LOCATIONS[key]) {
+        watermark = {
+          ...watermark,
+          footerCenter: temp,
         };
       }
     });
