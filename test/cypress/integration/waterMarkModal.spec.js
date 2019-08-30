@@ -1,7 +1,8 @@
 const ID = {
   INIT: 'initial',
   WATERMARK_APPLIED: 'watermark-applied',
-  TEST_RESET: 'test-reset'
+  TEST_RESET: 'test-reset',
+  TEST_PERSIST_CHANGE: 'test-persist-change',
 };
 /**
  * For these tests to work
@@ -73,7 +74,37 @@ describe ('Tests for watermark modal', () => {
       cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
     });
 
-    // TODO write up tests to see that watermark options are persisted
+    it('should be able to persist changes on save', () => {
+      cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
+      cy.get('[data-element="watermarkModal"]').find('form').within(() => {
+        cy.get('.text-input').type('Pamela');
+        cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
+          cy.get('select').first().select(val);
+          cy.get('select').first().focus().blur();
+        });
+        cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
+          cy.get('select').last().select(val);
+          cy.get('select').first().focus().blur();
+        });
+      });
+
+      // wait for changes to canvas
+      cy.timeout(1000);
+
+      cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE);
+
+      cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
+
+      cy.get( '[data-element="watermarkModal"]').should('not.visible');
+
+      cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
+
+      cy.get( '[data-element="watermarkModal"]').should('visible');
+
+      cy.get('[data-element="watermarkModal"]').find('canvas', {timeout: 5000});
+
+      cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE);
+    });
 
     it ('Should be able to use reset button', () => {
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
