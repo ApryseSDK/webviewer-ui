@@ -305,6 +305,11 @@ class WatermarkModal extends React.PureComponent {
                   </select>
 
                 </div>
+
+                <div className="form-field separator">
+
+
+                </div>
                 <div className="form-field">
 
                   <label>
@@ -374,8 +379,10 @@ class WatermarkModal extends React.PureComponent {
 
             <div className="button-container">
               <a className="reset button" onClick={event => this.resetForm(event)}>{t(`watermark.resetAllSettings`)}</a>
-              <button className="cancel button" onClick={() => this.closeModal()}>{t(`action.cancel`)}</button>
-              <button className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
+              <div className="action-button-container">
+                <button className="cancel button" onClick={() => this.closeModal()}>{t(`action.cancel`)}</button>
+                <button className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
+              </div>
             </div>
           </div>
         </div>

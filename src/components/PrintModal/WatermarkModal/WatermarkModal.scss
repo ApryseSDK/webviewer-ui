@@ -4,7 +4,7 @@
 
 @import './media-query';
 
-$color-widget-border: 1px solid $gray12;
+$color-widget-border: 1px solid #e1e1e3;
 $gap: 15px;
 
 .Watermark {
@@ -105,8 +105,12 @@ $gap: 15px;
   .button-container {
     // border-top: $color-widget-border;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: $gap;
+  }
+
+  .action-button-container {
+
   }
   
   .cell {
@@ -118,21 +122,31 @@ $gap: 15px;
   }
   
   .button {
-    font-weight: 600;
     padding: 6px 18px;
     border-radius: 4px 4px 4px 4px;
     cursor: pointer;
 
     &.reset {
-      color: #fff;
-      background: #00a4e4;
-      border: 1px solid #00a4e4;
+      // color: #fff;
+      // background: #00a4e4;
+      // border: 1px solid #00a4e4;
+      color: $pdftronBlue;
+      font-weight: 600;
     }
 
     &.ok {
       font-weight: normal;
-      color: #00a4e4;
-      border: 1px solid #00a4e4;
+      background: $pdftronBlue;
+      border: 1px solid $pdftronBlue;
+      color: white;
+    }
+
+    &.cancel {
+      font-weight: normal;
+      background: white;
+      border: 1px solid $pdftronBlue;
+      color: $pdftronBlue;
+      margin-right: 5px;
     }
   }
     
@@ -157,6 +171,10 @@ $gap: 15px;
       grid-template-columns: auto auto 1fr;
       grid-column-gap: 5px;
       align-items: center;
+    }
+
+    &.separator {
+      border: 1px solid $color-widget-border;
     }
   }
 }
