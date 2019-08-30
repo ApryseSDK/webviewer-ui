@@ -16,17 +16,25 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
 import enableFeatures from './enableFeatures';
 import disableFeatures from './disableFeatures';
 
 export default store => (enable = true) => {
   if (enable) {
-    // TODO: remove comment in 5.3
-    // console.warn(`enableDownload is deprecated, please use enableFeatures(['download']) instead`);
-    enableFeatures(store)(['download']);
+    warnDeprecatedAPI(
+      'enableDownload()',
+      'enableFeatures([instance.Feature.Download])',
+      '6.0',
+    );
+    enableFeatures(store)([Feature.Measurement]);
   } else {
-    // TODO: in 5.3, change the message to warn about using disableFeatures instead
-    console.warn('enableDownload(false) is deprecated, please use disableDownload() instead');
-    disableFeatures(store)(['download']);
+    warnDeprecatedAPI(
+      'enableDownload(false)',
+      'disableFeatures([instance.Feature.Download])',
+      '6.0',
+    );
+    disableFeatures(store)([Feature.Download]);
   }
 };

@@ -16,10 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
 import disableFeatures from './disableFeatures';
 
 export default store => () => {
-  // TODO: remove comment in 5.3
-  // console.warn(`disableDownload is deprecated, please use disableFeatures(['download']) instead`);
-  disableFeatures(store)(['download']);
+  warnDeprecatedAPI(
+    'disableDownload()',
+    'disableFeatures([instance.Feature.Download])',
+    '6.0',
+  );
+  disableFeatures(store)([Feature.Download]);
 };

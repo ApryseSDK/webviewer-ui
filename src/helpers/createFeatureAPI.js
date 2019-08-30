@@ -48,7 +48,6 @@ export default (enable, store) => features => {
         }
       },
     },
-    // store.dispatch(actions.setActiveLeftPanel('notesPanel'));
     [Feature.NotesPanel]: {
       dataElements: [
         'annotationCommentButton',
@@ -64,6 +63,7 @@ export default (enable, store) => features => {
       },
     },
     [Feature.Print]: {
+      // TODO: disableHotkeys
       dataElements: ['printButton', 'printModal'],
     },
     [Feature.Redaction]: {
@@ -83,6 +83,9 @@ export default (enable, store) => features => {
     [Feature.TextSelection]: {
       dataElements: ['textPopup', 'textSelectButton'],
       fn: () => {
+        if (!enable) {
+          core.clearSelection();
+        }
         window.Tools.Tool.ENABLE_TEXT_SELECTION = enable;
       },
     },
