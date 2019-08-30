@@ -12,12 +12,12 @@ export default dispatch => () => {
   dispatch(actions.setDocumentLoadingProgress(1));
   dispatch(actions.setWorkerLoadingProgress(1));
 
-  setTimeout(() => {
+  // setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
     dispatch(actions.resetLoadingProgress());
     dispatch(actions.resetUploadProgress());
     dispatch(actions.setIsUploading(false));
-  }, 300);
+  // }, 300);
 
   if (onFirstLoad) {
     onFirstLoad = false;

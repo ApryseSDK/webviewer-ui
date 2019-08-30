@@ -411,7 +411,7 @@ class PrintModal extends React.PureComponent {
         <div className="container" onClick={e => e.stopPropagation()}>
           <div className="header-container">
             <div className="header">{t('action.print')}</div>
-            <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={() => this.closePrintModal()} /> 
+            <ActionButton dataElement="printModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={() => this.closePrintModal()} /> 
           </div>
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
