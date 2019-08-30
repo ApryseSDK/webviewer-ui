@@ -99,43 +99,44 @@ class WatermarkModal extends React.PureComponent {
   }
 
   addWatermark(state) {
-    let watermarkOptions = {};
+    // let watermarkOptions = {};
     
-    let diagonal = {};
-    let header = {};
-    let footer = {};
+    // let diagonal = {};
+    // let header = {};
+    // let footer = {};
 
-    Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
-      const temp = this.constructWatermarkOptions(WATERMARK_LOCATIONS[key], this.state.locationSettings[key]);
+    // Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
+    //   const temp = this.constructWatermarkOptions(WATERMARK_LOCATIONS[key], this.state.locationSettings[key]);
 
-      const positionTop = WATERMARK_LOCATIONS.TOP_CENTER === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.TOP_LEFT === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.TOP_RIGHT === WATERMARK_LOCATIONS[key];
-      const positionBot = WATERMARK_LOCATIONS.BOT_CENTER === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.BOT_LEFT === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.BOT_RIGHT === WATERMARK_LOCATIONS[key];
+    //   const positionTop = WATERMARK_LOCATIONS.TOP_CENTER === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.TOP_LEFT === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.TOP_RIGHT === WATERMARK_LOCATIONS[key];
+    //   const positionBot = WATERMARK_LOCATIONS.BOT_CENTER === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.BOT_LEFT === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.BOT_RIGHT === WATERMARK_LOCATIONS[key];
   
-      const positionCenter = WATERMARK_LOCATIONS.CENTER === WATERMARK_LOCATIONS[key];
-      if (positionCenter) {
-        diagonal = {
-          ...diagonal,
-          ...temp
-        };
-      }
-      else if (positionTop) {
-        header = {
-          ...header,
-          ...temp
-        };
-      }
-      else if (positionBot) {
-        footer = {
-          ...footer,
-          ...temp
-        };
-      }
-    });
-    watermarkOptions = {
-      diagonal,
-      header,
-      footer
-    };
+    //   const positionCenter = WATERMARK_LOCATIONS.CENTER === WATERMARK_LOCATIONS[key];
+    //   if (positionCenter) {
+    //     diagonal = {
+    //       ...diagonal,
+    //       ...temp
+    //     };
+    //   }
+    //   else if (positionTop) {
+    //     header = {
+    //       ...header,
+    //       ...temp
+    //     };
+    //   }
+    //   else if (positionBot) {
+    //     footer = {
+    //       ...footer,
+    //       ...temp
+    //     };
+    //   }
+    // });
+    // watermarkOptions = {
+    //   diagonal,
+    //   header,
+    //   footer
+    // };
+    const watermarkOptions = this.temp();
 
     core.setWatermark(watermarkOptions);
 
@@ -167,32 +168,62 @@ class WatermarkModal extends React.PureComponent {
   // eslint-disable-next-line class-methods-use-this
   constructWatermarkOptions(location, state) {
 
-    const positionLeft = WATERMARK_LOCATIONS.TOP_LEFT === location || WATERMARK_LOCATIONS.BOT_LEFT === location;
-    const positionRight = WATERMARK_LOCATIONS.TOP_RIGHT === location || WATERMARK_LOCATIONS.BOT_RIGHT === location;
-    const positionTopOrBotCenter = WATERMARK_LOCATIONS.TOP_CENTER === location || WATERMARK_LOCATIONS.BOT_CENTER === location;
-    const positionCenter = WATERMARK_LOCATIONS.CENTER === location;
+    // const positionLeft = WATERMARK_LOCATIONS.TOP_LEFT === location || WATERMARK_LOCATIONS.BOT_LEFT === location;
+    // const positionRight = WATERMARK_LOCATIONS.TOP_RIGHT === location || WATERMARK_LOCATIONS.BOT_RIGHT === location;
+    // const positionTopOrBotCenter = WATERMARK_LOCATIONS.TOP_CENTER === location || WATERMARK_LOCATIONS.BOT_CENTER === location;
+    // const positionCenter = WATERMARK_LOCATIONS.CENTER === location;
 
     const watermarkOption = {
       fontSize: state.fontSize,
       fontFamily: 'sans-serif',
       color: state.color.toString(),
       opacity: state.opacity,
+      text: state.text,
     };
 
-    if (positionCenter) {
-      watermarkOption.text = state.text;
-    }
-    else if (positionLeft) {
-      watermarkOption.left = state.text;
-    }
-    else if (positionTopOrBotCenter) {
-      watermarkOption.center = state.text;
-    }
-    else if (positionRight) {
-      watermarkOption.right = state.text;
-    }
+    // if (positionCenter) {
+    //   watermarkOption.text = state.text;
+    // }
+    // else if (positionLeft) {
+    //   watermarkOption.left = state.text;
+    // }
+    // else if (positionTopOrBotCenter) {
+    //   watermarkOption.center = state.text;
+    // }
+    // else if (positionRight) {
+    //   watermarkOption.right = state.text;
+    // }
 
     return watermarkOption;
+  }
+
+  temp() {
+    let watermark = {};
+
+    Object.keys(WATERMARK_LOCATIONS).forEach(key => {
+      const temp = this.constructWatermarkOptions(WATERMARK_LOCATIONS[key], this.state.locationSettings[key]);
+
+      if (WATERMARK_LOCATIONS.CENTER === WATERMARK_LOCATIONS[key]) {
+        watermark = {
+          ...watermark,
+          diagonal: temp,
+        };
+      }
+      if (WATERMARK_LOCATIONS.TOP_LEFT === WATERMARK_LOCATIONS[key]) {
+        watermark = {
+          ...watermark,
+          headerLeft: temp,
+        };
+      }
+      if (WATERMARK_LOCATIONS.TOP_RIGHT === WATERMARK_LOCATIONS[key]) {
+        watermark = {
+          ...watermark,
+          headerRight: temp,
+        };
+      }
+    });
+
+    return watermark;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -247,43 +278,44 @@ class WatermarkModal extends React.PureComponent {
     }, () => {
       // the order of these fxn calls matter
       this.props.modalClosed();
-      let watermarkOptions = {};
+      // let watermarkOptions = {};
     
-      let diagonal = {};
-      let header = {};
-      let footer = {};
+      // let diagonal = {};
+      // let header = {};
+      // let footer = {};
   
-      Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
-        const temp = this.constructWatermarkOptions(WATERMARK_LOCATIONS[key], this.state.locationSettings[key]);
+      // Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
+      //   const temp = this.constructWatermarkOptions(WATERMARK_LOCATIONS[key], this.state.locationSettings[key]);
   
-        const positionTop = WATERMARK_LOCATIONS.TOP_CENTER === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.TOP_LEFT === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.TOP_RIGHT === WATERMARK_LOCATIONS[key];
-        const positionBot = WATERMARK_LOCATIONS.BOT_CENTER === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.BOT_LEFT === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.BOT_RIGHT === WATERMARK_LOCATIONS[key];
+      //   const positionTop = WATERMARK_LOCATIONS.TOP_CENTER === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.TOP_LEFT === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.TOP_RIGHT === WATERMARK_LOCATIONS[key];
+      //   const positionBot = WATERMARK_LOCATIONS.BOT_CENTER === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.BOT_LEFT === WATERMARK_LOCATIONS[key] || WATERMARK_LOCATIONS.BOT_RIGHT === WATERMARK_LOCATIONS[key];
     
-        const positionCenter = WATERMARK_LOCATIONS.CENTER === WATERMARK_LOCATIONS[key];
-        if (positionCenter) {
-          diagonal = {
-            ...diagonal,
-            ...temp
-          };
-        }
-        else if (positionTop) {
-          header = {
-            ...header,
-            ...temp
-          };
-        }
-        else if (positionBot) {
-          footer = {
-            ...footer,
-            ...temp
-          };
-        }
-      });
-      watermarkOptions = {
-        diagonal,
-        header,
-        footer
-      };
+      //   const positionCenter = WATERMARK_LOCATIONS.CENTER === WATERMARK_LOCATIONS[key];
+      //   if (positionCenter) {
+      //     diagonal = {
+      //       ...diagonal,
+      //       ...temp
+      //     };
+      //   }
+      //   else if (positionTop) {
+      //     header = {
+      //       ...header,
+      //       ...temp
+      //     };
+      //   }
+      //   else if (positionBot) {
+      //     footer = {
+      //       ...footer,
+      //       ...temp
+      //     };
+      //   }
+      // });
+      // watermarkOptions = {
+      //   diagonal,
+      //   header,
+      //   footer
+      // };
+      const watermarkOptions = this.temp();
       this.props.formSubmitted(watermarkOptions);
     });
   }
