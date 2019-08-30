@@ -45,17 +45,6 @@ class SearchPanel extends React.PureComponent {
             opacity: 100, // from 0 to 100
             text: 'Watermark'
           },
-    
-          // Draw header watermark
-          // header: {
-          //   fontSize: 52,
-          //   fontFamily: 'sans-serif',
-          //   color: 'red',
-          //   opacity: 100,
-          //   left: 'left watermark',
-          //   center: 'center watermark',
-          //   right: ''
-          // }
           headerLeft: {
             fontSize: 30, // or even smaller size
             fontFamily: 'sans-serif',
