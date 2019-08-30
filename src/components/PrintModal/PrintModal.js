@@ -46,7 +46,6 @@ class PrintModal extends React.PureComponent {
       allowWatermarkModal: false,
       count: -1,
       pagesToPrint: [],
-      // TODO change this back to be false
       isWatermarkModalVisible: false,
       watermarkModalOption: null,
       existingWatermarks: null,
