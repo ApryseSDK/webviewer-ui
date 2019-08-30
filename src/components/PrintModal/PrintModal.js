@@ -12,11 +12,8 @@ import getClassName from 'helpers/getClassName';
 import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
-
-import WatermarkModal from './WatermarkModal';
-
 import ActionButton from 'components/ActionButton';
-
+import WatermarkModal from './WatermarkModal';
 import './PrintModal.scss';
 
 class PrintModal extends React.PureComponent {
@@ -401,7 +398,8 @@ class PrintModal extends React.PureComponent {
       <>
       <WatermarkModal
         isVisible = {this.state.isWatermarkModalVisible}
-        pageIndexToView = {this.props.currentPage - 1} // pageIndex starts at index 0 and getCurrPage number starts at index 1
+        // pageIndex starts at index 0 and getCurrPage number starts at index 1
+        pageIndexToView = {this.props.currentPage - 1}
         modalClosed = {() => this.setWatermarkModalVisibility(false)}
         formSubmitted = {watermarkOptions => this.setWatermarkModalOption(watermarkOptions)}
       />

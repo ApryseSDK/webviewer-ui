@@ -57,22 +57,25 @@ class WatermarkModal extends React.PureComponent {
   constructor(props) {
     super(props);
     const locationSettings = {};
-    Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
+    Object.keys(WATERMARK_LOCATIONS).forEach(key => {
       const temp = { ...DEFAULT_VALS };
       locationSettings[key] = temp;
     });
     this.state = {
       isVisible: false,
       isColorPaletteVisible: false,
-      locationSettings,
+      // eslint-disable-next-line object-shorthand
+      locationSettings: locationSettings,
       previousLocationSettings: locationSettings,
       currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, DEFAULT_VALS.location),
+      previouslySavedLocation: this.getKeyByValue(WATERMARK_LOCATIONS, DEFAULT_VALS.location),
     };
     this.canvasContainerRef = React.createRef();
 
     this.handleWatermarkRenderFxn = () => {
       if (this.props.isVisible) {
         this.setState({
+          currLocation: this.state.previouslySavedLocation,
           locationSettings: this.state.previousLocationSettings,
         }, () => {
           this.addWatermarks();
@@ -245,6 +248,7 @@ class WatermarkModal extends React.PureComponent {
     this.setState({
       isVisible: false,
       previousLocationSettings: this.state.locationSettings,
+      previouslySavedLocation: this.state.currLocation,
     }, () => {
       // the order of these fxn calls matter
       this.props.modalClosed();
@@ -262,12 +266,12 @@ class WatermarkModal extends React.PureComponent {
     this.setState({ isColorPaletteVisible: visible });
   }
 
-  setLocation(newLocation) {
+  onLocationChanged(newLocation) {
     const key = this.getKeyByValue(WATERMARK_LOCATIONS, newLocation);
     this.setState({
       currLocation: key,
     }, () => {
-      this.addWatermarks(this.state.locationSettings[this.state.currLocation]);
+      this.addWatermarks();
     });
   }
 
@@ -302,7 +306,7 @@ class WatermarkModal extends React.PureComponent {
                   </label>
                   <select
                     value={WATERMARK_LOCATIONS[this.state.currLocation]}
-                    onChange={event => { this.setLocation(event.target.value); } }>
+                    onChange={event => { this.onLocationChanged(event.target.value); } }>
                     { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
                   </select>
 
