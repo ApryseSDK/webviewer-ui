@@ -2,6 +2,7 @@ const ID = {
   INIT: 'initial',
   WATERMARK_APPLIED: 'watermark-applied',
   TEST_RESET: 'test-reset',
+  TEST_PERSIST_CHANGE_BEFORE_SAVING: 'test-persist-change-before-saving',
   TEST_PERSIST_CHANGE: 'test-persist-change',
   TEST_PERSIST_CHANGE_EXISTING_WATERMARK: 'test-persist-change-existing-watermark',
 };
@@ -63,9 +64,9 @@ const WATERMARK = {
  * npm run start must be ran in the UI project
  */
 
-describe ('Tests for watermark modal', () => {
+describe('Tests for watermark modal', () => {
   beforeEach(() => {
-    cy.visit ('/');
+    cy.visit('/');
     cy.window()
       .then({ timeout: 30000 }, $window => {
         return new Cypress.Promise(resolve => { // Cypress will wait for this Promise to resolve
@@ -85,7 +86,7 @@ describe ('Tests for watermark modal', () => {
       cy.get( '[data-element="printModal"]').should('visible');
     });
 
-    it ('Should be able to open watermark modal from print modal',  () => {
+    it('Should be able to open watermark modal from print modal',  () => {
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
       cy.get( '[data-element="watermarkModal"]').should('visible');
 
@@ -94,20 +95,20 @@ describe ('Tests for watermark modal', () => {
       cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.INIT);
     });
 
-    it ('Should be able to close watermark modal by clicking on close icon', () => {
+    it('Should be able to close watermark modal by clicking on close icon', () => {
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
       cy.get( '[data-element="watermarkModalCloseButton"]').click();
 
       cy.get( '[data-element="watermarkModal"]').should('not.visible');
     });
 
-    it ('Should be able to close watermark modal by clicking outside of it', () => {
+    it('Should be able to close watermark modal by clicking outside of it', () => {
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
       cy.get( '[data-element="watermarkModal"]').click('topLeft');
       cy.get( '[data-element="watermarkModal"]').should('not.visible');
     });
 
-    it ('Should be able to apply watermark', () => {
+    it('Should be able to apply watermark', () => {
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
 
       cy.get('[data-element="watermarkModal"]').find('form').within(() => {
@@ -126,6 +127,43 @@ describe ('Tests for watermark modal', () => {
 
       cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.WATERMARK_APPLIED);
       cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
+    });
+
+    it('should be able to persist location settings before saving', () => {
+      const someNumber = 2;
+      cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
+      cy.get('[data-element="watermarkModal"]').find('form').within(() => {
+        cy.get('select').first().find('option').eq(someNumber).invoke('val').then((val) => {
+          cy.get('select').first().select(val);
+          cy.get('select').first().focus().blur();
+        });
+        cy.get('.text-input').type('Pamela');
+        cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
+          cy.get('select').last().select(val);
+          cy.get('select').first().focus().blur();
+        });
+      });
+
+      // wait for changes to canvas
+      cy.timeout(1000);
+
+      cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
+
+      cy.get('[data-element="watermarkModal"]').find('form').within(() => {
+        cy.get('select').first().find('option').eq(0).invoke('val').then((val) => {
+          cy.get('select').first().select(val);
+          cy.get('select').first().focus().blur();
+        });
+  
+        cy.get('select').first().find('option').eq(someNumber).invoke('val').then((val) => {
+          cy.get('select').first().select(val);
+          cy.get('select').first().focus().blur();
+        });
+      });
+
+      cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
+
+      
     });
 
     it('should be able to persist changes on save', () => {
@@ -160,7 +198,7 @@ describe ('Tests for watermark modal', () => {
       cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE);
     });
 
-    it ('Should be able to use reset button', () => {
+    it('Should be able to use reset button', () => {
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
 
       cy.get('[data-element="watermarkModal"]').find('canvas', {timeout: 5000});
