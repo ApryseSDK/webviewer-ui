@@ -47,15 +47,57 @@ class SearchPanel extends React.PureComponent {
           },
     
           // Draw header watermark
-          header: {
-            fontSize: 52,
+          // header: {
+          //   fontSize: 52,
+          //   fontFamily: 'sans-serif',
+          //   color: 'red',
+          //   opacity: 100,
+          //   left: 'left watermark',
+          //   center: 'center watermark',
+          //   right: ''
+          // }
+          headerLeft: {
+            fontSize: 30, // or even smaller size
             fontFamily: 'sans-serif',
-            color: 'red',
-            opacity: 100,
-            left: 'left watermark',
-            center: 'center watermark',
-            right: ''
-          }
+            color: 'blue',
+            opacity: 100, // from 0 to 100
+            text: 'header left'
+          },
+          headerRight: {
+            fontSize: 30, // or even smaller size
+            fontFamily: 'sans-serif',
+            color: 'green',
+            opacity: 100, // from 0 to 100
+            text: 'header right'
+          },
+          headerCenter: {
+            fontSize: 30, // or even smaller size
+            fontFamily: 'sans-serif',
+            color: 'yellow',
+            opacity: 100, // from 0 to 100
+            text: 'header center'
+          },
+          footerLeft: {
+            fontSize: 30, // or even smaller size
+            fontFamily: 'sans-serif',
+            color: 'blue',
+            opacity: 100, // from 0 to 100
+            text: 'header left'
+          },
+          footerRight: {
+            fontSize: 30, // or even smaller size
+            fontFamily: 'sans-serif',
+            color: 'green',
+            opacity: 100, // from 0 to 100
+            text: 'header right'
+          },
+          footerCenter: {
+            fontSize: 30, // or even smaller size
+            fontFamily: 'sans-serif',
+            color: 'yellow',
+            opacity: 100, // from 0 to 100
+            text: 'header center'
+          },
         });
 
         window.docViewer.refreshAll();
