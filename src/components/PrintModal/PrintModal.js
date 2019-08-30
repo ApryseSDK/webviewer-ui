@@ -15,6 +15,8 @@ import selectors from 'selectors';
 
 import WatermarkModal from './WatermarkModal';
 
+import ActionButton from 'components/ActionButton';
+
 import './PrintModal.scss';
 
 class PrintModal extends React.PureComponent {
@@ -407,6 +409,10 @@ class PrintModal extends React.PureComponent {
 
       <div className={className} data-element="printModal" onClick={this.closePrintModal}>
         <div className="container" onClick={e => e.stopPropagation()}>
+          <div className="header-container">
+            <div className="header">{t('action.print')}</div>
+            <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={() => this.closePrintModal()} /> 
+          </div>
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
             <form className="col" onChange={this.onChange} onSubmit={this.createPagesAndPrint}>
@@ -417,19 +423,15 @@ class PrintModal extends React.PureComponent {
             </form>
 
           </div>
-          <div className="total">
-            {isPrinting
-              ? <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
-              : <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
-            }
-          </div>
-          {this.state.allowWatermarkModal && <button className="apply-watermark" onClick={() => this.setWatermarkModalVisibility(true)}>{t('option.print.printWatermarkSettings')}</button> }
+          {this.state.allowWatermarkModal && <button className="apply-watermark" onClick={() => this.setWatermarkModalVisibility(true)}>{t('option.print.addWatermarkSettings')}</button> }
           <div className="buttons">
+            <div className="total">
+              {isPrinting
+                ? <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
+                : <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
+              }
+            </div>
             <div className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</div>
-            {isPrinting
-              ? <div className="button" onClick={this.cancelPrint}>{t('action.cancel')}</div>
-              : <div className="button" onClick={this.closePrintModal}>{t('action.close')}</div>
-            }
           </div>
         </div>
       </div>
