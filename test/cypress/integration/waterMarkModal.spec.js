@@ -117,91 +117,88 @@ describe ('Tests for watermark modal', () => {
     });
   });
 
-  // describe(('Tests for when there is existing watermark'), () => {
-  //   beforeEach(() => {
+  describe(('Tests for when there is existing watermark'), () => {
+    beforeEach(() => {
 
-  //     cy.then(() => {
-  //       cy.window().then((window) => {
-  //         window.docViewer.setWatermark({
-  //           // Draw diagonal watermark in middle of the document
-  //           diagonal: {
-  //             fontSize: 52, // or even smaller size
-  //             fontFamily: 'sans-serif',
-  //             color: 'red',
-  //             opacity: 100, // from 0 to 100
-  //             text: 'Watermark'
-  //           },
-  //           headerLeft: {
-  //             fontSize: 30, // or even smaller size
-  //             fontFamily: 'sans-serif',
-  //             color: 'blue',
-  //             opacity: 100, // from 0 to 100
-  //             text: 'header left'
-  //           },
-  //           headerRight: {
-  //             fontSize: 30, // or even smaller size
-  //             fontFamily: 'sans-serif',
-  //             color: 'green',
-  //             opacity: 100, // from 0 to 100
-  //             text: 'header right'
-  //           },
-  //           headerCenter: {
-  //             fontSize: 30, // or even smaller size
-  //             fontFamily: 'sans-serif',
-  //             color: 'yellow',
-  //             opacity: 100, // from 0 to 100
-  //             text: 'header center'
-  //           },
-  //           footerLeft: {
-  //             fontSize: 30, // or even smaller size
-  //             fontFamily: 'sans-serif',
-  //             color: 'blue',
-  //             opacity: 100, // from 0 to 100
-  //             text: 'header left'
-  //           },
-  //           footerRight: {
-  //             fontSize: 30, // or even smaller size
-  //             fontFamily: 'sans-serif',
-  //             color: 'green',
-  //             opacity: 100, // from 0 to 100
-  //             text: 'header right'
-  //           },
-  //           footerCenter: {
-  //             fontSize: 30, // or even smaller size
-  //             fontFamily: 'sans-serif',
-  //             color: 'yellow',
-  //             opacity: 100, // from 0 to 100
-  //             text: 'header center'
-  //           },
-  //         });
-  //         window.docViewer.refreshAll();
-  //         window.docViewer.updateView();
-  //       });
-  //         //         cy.get('[data-element="menuButton"]').click();
-  //         // cy.get('[data-element="printButton"]').click();
-  //         // cy.get( '[data-element="printModal"]').should('visible');
-  //     });
-  //     // cy.get('[data-element="menuButton"]').click();
-  //     // cy.get('[data-element="printButton"]').click();
-  //     // cy.get( '[data-element="printModal"]').should('visible');
-  //   });
+      cy.window()
+        .then({ timeout: 30000 }, window => {
+          window.docViewer.setWatermark({
+            // Draw diagonal watermark in middle of the document
+            diagonal: {
+              fontSize: 52, // or even smaller size
+              fontFamily: 'sans-serif',
+              color: 'red',
+              opacity: 100, // from 0 to 100
+              text: 'Watermark'
+            },
+            headerLeft: {
+              fontSize: 30, // or even smaller size
+              fontFamily: 'sans-serif',
+              color: 'blue',
+              opacity: 100, // from 0 to 100
+              text: 'header left'
+            },
+            headerRight: {
+              fontSize: 30, // or even smaller size
+              fontFamily: 'sans-serif',
+              color: 'green',
+              opacity: 100, // from 0 to 100
+              text: 'header right'
+            },
+            headerCenter: {
+              fontSize: 30, // or even smaller size
+              fontFamily: 'sans-serif',
+              color: 'yellow',
+              opacity: 100, // from 0 to 100
+              text: 'header center'
+            },
+            footerLeft: {
+              fontSize: 30, // or even smaller size
+              fontFamily: 'sans-serif',
+              color: 'blue',
+              opacity: 100, // from 0 to 100
+              text: 'header left'
+            },
+            footerRight: {
+              fontSize: 30, // or even smaller size
+              fontFamily: 'sans-serif',
+              color: 'green',
+              opacity: 100, // from 0 to 100
+              text: 'header right'
+            },
+            footerCenter: {
+              fontSize: 30, // or even smaller size
+              fontFamily: 'sans-serif',
+              color: 'yellow',
+              opacity: 100, // from 0 to 100
+              text: 'header center'
+            },
+          });
+  
+          window.docViewer.refreshAll();
+          window.docViewer.updateView();
 
-  //   it('Should not be able to see watermark modal button', () => {
+          cy.get('[data-element="menuButton"]').click({});
+          cy.get('[data-element="printButton"]').click();
+          cy.get( '[data-element="printModal"]').should('visible');
+        });
+    });
 
-  //     cy.get( '[data-element="printModal"]').find('.apply-watermark').should('not.visible');
-  //   });
+    it('Should not be able to see watermark modal button', () => {
+      cy.get( '[data-element="printModal"]').find('.apply-watermark').should('not.visible');
+    });
   
-  //   // it('Should be able to see watermark modal button when existing watermark dissapear', () => {
-  //   //   cy.window()
-  //   //   .then((window) => {
-  //   //     window.docViewer.setWatermark({});
+    // it('Should be able to see watermark modal button when existing watermark dissapear', () => {
+    //   cy.window()
+    //   .then((window) => {
+    //     window.docViewer.setWatermark({});
   
-  //   //     window.docViewer.refreshAll();
-  //   //     window.docViewer.updateView();
+    //     window.docViewer.refreshAll();
+    //     window.docViewer.updateView();
   
-  //   //     cy.get( '[data-element="printModal"]').find('.apply-watermark').should('visible');
-  //   //   });
+    //     cy.get( '[data-element="printModal"]').find('.apply-watermark').should('visible');
+    //   });
       
-  //   // });
-  // });
+    // });
+  });
 });
