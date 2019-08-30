@@ -14,12 +14,11 @@ describe ('Tests for watermark modal', () => {
     cy.window()
       .then({ timeout: 30000 }, $window => {
         return new Cypress.Promise(resolve => { // Cypress will wait for this Promise to resolve
-          const onQueryEnd = () => {
-            console.log('document loaded');
-            // $window.removeEventListener('documentLoaded', onQueryEnd) // cleanup
+          const onDocloaded = () => {
+            $window.docViewer.off('documentLoaded', onDocloaded); // cleanup
             resolve(); // resolve and allow Cypress to continue
           };
-          $window.docViewer.on('documentLoaded', onQueryEnd);
+          $window.docViewer.on('documentLoaded', onDocloaded);
         });
       });
   });
@@ -34,9 +33,7 @@ describe ('Tests for watermark modal', () => {
     it ('Should be able to open watermark modal from print modal',  () => {
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
       cy.get( '[data-element="watermarkModal"]').should('visible');
-    
-      // TODO try not to use wait
-      // cy.wait(1500);
+
       cy.get('[data-element="watermarkModal"]').find('canvas', {timeout: 5000});
     
       cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.INIT);
@@ -70,8 +67,7 @@ describe ('Tests for watermark modal', () => {
           cy.get('select').first().focus().blur();
         });
       });
-      // TODO try not to use wait
-      // cy.wait(1500);
+
       cy.get('[data-element="watermarkModal"]').find('canvas', {timeout: 5000});
 
       cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.WATERMARK_APPLIED);
@@ -83,8 +79,6 @@ describe ('Tests for watermark modal', () => {
     it ('Should be able to use reset button', () => {
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
   
-      // TODO try not to use wait
-      // cy.wait(2000);
       cy.get('[data-element="watermarkModal"]').find('canvas', {timeout: 5000});
   
       cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
@@ -104,23 +98,19 @@ describe ('Tests for watermark modal', () => {
       cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
   
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
-  
-      // cy.wait(1500);
+
       cy.get('[data-element="watermarkModal"]').find('canvas', {timeout: 5000});
   
       cy.get('[data-element="watermarkModal"]').find('.reset.button').click();
-  
-      // TODO try not to use wait
-      // cy.wait(1500);
-      cy.get('[data-element="watermarkModal"]').find('canvas', {timeout: 5000});
+      // wait for changes to canvas
+      cy.timeout(1000);
+
       cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
   
       cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
   
       cy.get( '[data-element="printModal"]').find('.apply-watermark').click();
-  
-      // TODO try not to use wait
-      // cy.wait(2000);
+
       cy.get('[data-element="watermarkModal"]').find('canvas', {timeout: 5000});
   
       cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_RESET);

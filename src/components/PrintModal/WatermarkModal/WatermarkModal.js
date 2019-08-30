@@ -36,6 +36,7 @@ const FORM_FIELD_KEYS = {
 };
 
 const DEFAULT_VALS = {
+  [FORM_FIELD_KEYS.location]: WATERMARK_LOCATIONS.CENTER,
   [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[FONT_SIZES.length / 2],
   [FORM_FIELD_KEYS.text]: '',
   [FORM_FIELD_KEYS.color]: new window.Annotations.Color(241, 160, 153),
@@ -65,7 +66,7 @@ class WatermarkModal extends React.PureComponent {
       isColorPaletteVisible: false,
       locationSettings,
       previousLocationSettings: locationSettings,
-      currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, WATERMARK_LOCATIONS.CENTER),
+      currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, DEFAULT_VALS.location),
     };
     this.canvasContainerRef = React.createRef();
 
@@ -236,6 +237,7 @@ class WatermarkModal extends React.PureComponent {
     });
     this.setState({
       locationSettings: locationSettings,
+      currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, DEFAULT_VALS.location),
     }, () => this.addWatermarks());
   }
 
