@@ -12,17 +12,12 @@ export default dispatch => () => {
   dispatch(actions.setDocumentLoadingProgress(1));
   dispatch(actions.setWorkerLoadingProgress(1));
 
-  // setTimeout(() => {
+  setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
     dispatch(actions.resetLoadingProgress());
     dispatch(actions.resetUploadProgress());
     dispatch(actions.setIsUploading(false));
-
-    if (window.Cypress) {
-      console.log('setting window.appReady');
-      window.appReady = true;
-    }
-  // }, 300);
+  }, 300);
 
   if (onFirstLoad) {
     onFirstLoad = false;
