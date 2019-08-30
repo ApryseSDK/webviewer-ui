@@ -431,7 +431,8 @@ class PrintModal extends React.PureComponent {
                 : <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
               }
             </div>
-            <div className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</div>
+            {/* <div className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</div> */}
+            <button className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</button>
           </div>
         </div>
       </div>

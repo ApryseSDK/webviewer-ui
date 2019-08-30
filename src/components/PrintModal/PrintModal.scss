@@ -4,8 +4,6 @@
 .PrintModal {
   @extend %modal;
 
-  // font-size: 14px;
-
   .container {
     @extend %modal-shared-container-style;
 
@@ -43,7 +41,7 @@
     .total {
       display: flex;
       flex-direction: row;
-      justify-content: center;
+      justify-content: flex-start;
       flex: 1;
       padding: 5px 0;
       font-size: 0.9em;
@@ -73,13 +71,11 @@
       box-sizing: border-box;
 
       .button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
-        height: 30px;
-        cursor: pointer;
-        color: $pdftronBlue;
+        color: white;
+        border: 1px solid $pdftronBlue;
+        background: $pdftronBlue;
+        border-radius: 4px;
+        padding: 6px 18px;
       }
     }
 
@@ -89,6 +85,7 @@
       background: white;
       border-radius: 4px;
       border: 1px solid $pdftronBlue;
+      padding: 6px 18px;
     }
 
     .header-container {
