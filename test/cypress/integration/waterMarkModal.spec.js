@@ -22,9 +22,7 @@ describe ('Tests for watermark modal', () => {
       status: 200,
     }).as('temp2');
     cy.visit ('/');
-    cy.wait(['@temp2']).then((xhr) => {
-      cy.window({ timeout: 25000 }).should('have.property', 'appReady', true);
-    });
+    cy.wait(['@temp2']);
     cy.get('[data-element="menuButton"]').click();
     cy.get('[data-element="printButton"]').click();
     cy.get( '[data-element="printModal"]').should('visible');
