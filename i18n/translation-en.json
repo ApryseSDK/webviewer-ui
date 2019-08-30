@@ -216,8 +216,9 @@
   },
   "watermark": {
     "size": "Size",
-    "location": "Location",
+    "location": "Choose a location to edit watermarks",
     "text": "Text",
-    "colors": "Colors"
+    "colors": "Colors",
+    "resetAllSettings": "Reset All Settings"
   }
 }

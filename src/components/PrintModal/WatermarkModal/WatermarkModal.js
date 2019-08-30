@@ -329,7 +329,7 @@ class WatermarkModal extends React.PureComponent {
                   </select>
 
                 </div>
-                <div className="form-field">
+                <div className="form-field slider">
                   <Slider
                     property={'opacity'} // arbitrary property name. this property isn't used in this file
                     displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
@@ -365,7 +365,6 @@ class WatermarkModal extends React.PureComponent {
 
                 </div>
 
-                <button className="reset button" onClick={event => this.resetForm(event)}>{t(`action.reset`)}</button>
               </form>
 
               <div className="canvas-container" ref={this.canvasContainerRef}>
@@ -373,8 +372,10 @@ class WatermarkModal extends React.PureComponent {
               </div>
             </div>
 
-            <div className="button-container" onClick={e => e.stopPropagation()}>
-              <a className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</a>
+            <div className="button-container">
+              <a className="reset button" onClick={event => this.resetForm(event)}>{t(`watermark.resetAllSettings`)}</a>
+              <button className="cancel button" onClick={() => this.closeModal()}>{t(`action.cancel`)}</button>
+              <button className="ok button" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
             </div>
           </div>
         </div>

@@ -35,7 +35,7 @@ $gap: 15px;
     align-content: center;
     justify-content: space-between;
     padding: 10px;
-    border-bottom: $color-widget-border;
+    // border-bottom: $color-widget-border;
   }
 
   .header {
@@ -86,7 +86,7 @@ $gap: 15px;
 
     & form {
       margin-right: $gap;
-      width: 175px;
+      width: 265px;
       @include portrait-mobile {
         width: auto;
       }
@@ -103,7 +103,7 @@ $gap: 15px;
   }
   
   .button-container {
-    border-top: $color-widget-border;
+    // border-top: $color-widget-border;
     display: flex;
     justify-content: flex-end;
     padding: $gap;
@@ -150,6 +150,13 @@ $gap: 15px;
   
     >label {
       margin: 3px 0;
+    }
+
+    &.slider {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      grid-column-gap: 5px;
+      align-items: center;
     }
   }
 }
