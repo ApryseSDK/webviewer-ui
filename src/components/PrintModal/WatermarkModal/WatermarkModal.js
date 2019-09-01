@@ -81,7 +81,7 @@ class WatermarkModal extends React.PureComponent {
           this.addWatermarks();
         });
       } else {
-        this.removeWatermarks();
+        this.removeAllWatermarks();
       }
     };
   }
@@ -200,7 +200,7 @@ class WatermarkModal extends React.PureComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  removeWatermarks() {
+  removeAllWatermarks() {
     core.setWatermark({});
   }
 
