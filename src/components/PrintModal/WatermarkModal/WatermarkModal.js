@@ -58,7 +58,10 @@ class WatermarkModal extends React.PureComponent {
     super(props);
     const locationSettings = {};
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
-      const temp = { ...DEFAULT_VALS };
+      const temp = {
+        ...DEFAULT_VALS,
+        isSelected: WATERMARK_LOCATIONS[key] === DEFAULT_VALS.location,
+      };
       locationSettings[key] = temp;
     });
     this.state = {
@@ -67,7 +70,6 @@ class WatermarkModal extends React.PureComponent {
       // eslint-disable-next-line object-shorthand
       locationSettings: locationSettings,
       previousLocationSettings: locationSettings,
-      currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, DEFAULT_VALS.location),
     };
     this.canvasContainerRef = React.createRef();
 
@@ -220,8 +222,9 @@ class WatermarkModal extends React.PureComponent {
     const currLocationSettings = {
       ...this.state.locationSettings,
     };
-    currLocationSettings[this.state.currLocation] = {
-      ...currLocationSettings[this.state.currLocation],
+    const currSelectedLocation = this.getCurrentSelectedLocation();
+    currLocationSettings[currSelectedLocation] = {
+      ...currLocationSettings[currSelectedLocation],
       [key]: value,
     };
 
@@ -240,12 +243,12 @@ class WatermarkModal extends React.PureComponent {
     event.preventDefault();
     const locationSettings = {};
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
-      const temp = { ...DEFAULT_VALS };
+      const temp = { ...DEFAULT_VALS, isSelected: WATERMARK_LOCATIONS[key] === DEFAULT_VALS.location };
       locationSettings[key] = temp;
     });
     this.setState({
       // eslint-disable-next-line object-shorthand
-      locationSettings: locationSettings
+      locationSettings: locationSettings,
     }, () => this.addWatermarks());
   }
 
@@ -263,7 +266,8 @@ class WatermarkModal extends React.PureComponent {
 
   getCirclePosn(lineLength) {
     const lineStart = circleRadius;
-    return (this.state.locationSettings[this.state.currLocation][FORM_FIELD_KEYS.opacity] / 100) * lineLength + lineStart;
+    const currSelectedLocation = this.getCurrentSelectedLocation();
+    return (this.state.locationSettings[currSelectedLocation][FORM_FIELD_KEYS.opacity] / 100) * lineLength + lineStart;
   }
 
   setColorPaletteVisibility(visible) {
@@ -272,8 +276,19 @@ class WatermarkModal extends React.PureComponent {
 
   onLocationChanged(newLocation) {
     const key = this.getKeyByValue(WATERMARK_LOCATIONS, newLocation);
+    const currLocationSettings = {
+      ...this.state.locationSettings,
+    };
+    Object.keys(currLocationSettings).forEach(locationKey => {
+      let locationSetting = currLocationSettings[locationKey];
+      locationSetting = {
+        ...locationSetting,
+        isSelected: key === locationKey,
+      };
+      currLocationSettings[locationKey] = locationSetting;
+    });
     this.setState({
-      currLocation: key,
+      locationSettings: currLocationSettings,
     }, () => {
       this.addWatermarks();
     });
@@ -284,6 +299,13 @@ class WatermarkModal extends React.PureComponent {
     return Object.keys(object).find(key => object[key] === value);
   }
 
+  getCurrentSelectedLocation() {
+    return Object.keys(this.state.locationSettings).find(locationKey => {
+      const locationSetting = this.state.locationSettings[locationKey];
+      return locationSetting.isSelected;
+    });
+  }
+
   render() {
     const { isVisible } = this.props;
     if (!isVisible) {
@@ -291,7 +313,9 @@ class WatermarkModal extends React.PureComponent {
     }
 
     const { t } = this.props;
-    const formInfo = this.state.locationSettings[this.state.currLocation];
+
+    const currLocation = this.getCurrentSelectedLocation();
+    const formInfo = this.state.locationSettings[currLocation];
     return (
       <>
         <div className={'Modal Watermark'} data-element="watermarkModal" onMouseDown={() => this.closeModal()}>
@@ -309,7 +333,7 @@ class WatermarkModal extends React.PureComponent {
                     {t(`watermark.location`)}
                   </label>
                   <select
-                    value={WATERMARK_LOCATIONS[this.state.currLocation]}
+                    value={WATERMARK_LOCATIONS[currLocation]}
                     onChange={event => { this.onLocationChanged(event.target.value); } }>
                     { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
                   </select>
