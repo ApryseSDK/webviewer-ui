@@ -147,56 +147,64 @@ class WatermarkModal extends React.PureComponent {
   }
 
   createWatermarks() {
-    let watermark = {};
+    let watermarks = {};
 
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
       const temp = this.constructWatermarkOption(this.state.locationSettings[key]);
 
-      if (WATERMARK_LOCATIONS.CENTER === WATERMARK_LOCATIONS[key]) {
-        watermark = {
-          ...watermark,
-          diagonal: temp,
-        };
-      }
-      if (WATERMARK_LOCATIONS.TOP_LEFT === WATERMARK_LOCATIONS[key]) {
-        watermark = {
-          ...watermark,
-          headerLeft: temp,
-        };
-      }
-      if (WATERMARK_LOCATIONS.TOP_RIGHT === WATERMARK_LOCATIONS[key]) {
-        watermark = {
-          ...watermark,
-          headerRight: temp,
-        };
-      }
-      if (WATERMARK_LOCATIONS.TOP_CENTER === WATERMARK_LOCATIONS[key]) {
-        watermark = {
-          ...watermark,
-          headerCenter: temp,
-        };
-      }
-      if (WATERMARK_LOCATIONS.BOT_LEFT === WATERMARK_LOCATIONS[key]) {
-        watermark = {
-          ...watermark,
-          footerLeft: temp,
-        };
-      }
-      if (WATERMARK_LOCATIONS.BOT_RIGHT === WATERMARK_LOCATIONS[key]) {
-        watermark = {
-          ...watermark,
-          footerRight: temp,
-        };
-      }
-      if (WATERMARK_LOCATIONS.BOT_CENTER === WATERMARK_LOCATIONS[key]) {
-        watermark = {
-          ...watermark,
-          footerCenter: temp,
-        };
+      switch(WATERMARK_LOCATIONS[key]) {
+        case WATERMARK_LOCATIONS.CENTER:
+          watermarks = {
+            ...watermarks,
+            diagonal: temp,
+          };
+          break;
+
+        case WATERMARK_LOCATIONS.TOP_LEFT:
+          watermarks = {
+            ...watermarks,
+            headerLeft: temp,
+          };
+          break;
+
+        case WATERMARK_LOCATIONS.TOP_RIGHT:
+          watermarks = {
+            ...watermarks,
+            headerRight: temp,
+          };
+          break;
+
+        case WATERMARK_LOCATIONS.TOP_CENTER:
+          watermarks = {
+            ...watermarks,
+            headerCenter: temp,
+          };
+          break;
+
+        case WATERMARK_LOCATIONS.BOT_LEFT:
+          watermarks = {
+            ...watermarks,
+            footerLeft: temp,
+          };
+          break;
+
+        case WATERMARK_LOCATIONS.BOT_RIGHT:
+          watermarks = {
+            ...watermarks,
+            footerRight: temp,
+          };
+          break;
+
+        case WATERMARK_LOCATIONS.BOT_CENTER:
+          watermarks = {
+            ...watermarks,
+            footerCenter: temp,
+          };
+          break;
       }
     });
 
-    return watermark;
+    return watermarks;
   }
 
   // eslint-disable-next-line class-methods-use-this
