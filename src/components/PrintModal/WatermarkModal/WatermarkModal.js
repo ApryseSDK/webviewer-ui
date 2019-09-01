@@ -98,6 +98,7 @@ class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible !== prevProps.isVisible) {
       this.setState({
         isVisible: this.props.isVisible,
+        isColorPaletteVisible: false,
       }, () => this.handleWatermarkRenderFxn());
     }
   }
