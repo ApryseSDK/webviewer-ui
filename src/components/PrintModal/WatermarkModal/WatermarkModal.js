@@ -68,14 +68,12 @@ class WatermarkModal extends React.PureComponent {
       locationSettings: locationSettings,
       previousLocationSettings: locationSettings,
       currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, DEFAULT_VALS.location),
-      previouslySavedLocation: this.getKeyByValue(WATERMARK_LOCATIONS, DEFAULT_VALS.location),
     };
     this.canvasContainerRef = React.createRef();
 
     this.handleWatermarkRenderFxn = () => {
       if (this.props.isVisible) {
         this.setState({
-          currLocation: this.state.previouslySavedLocation,
           locationSettings: this.state.previousLocationSettings,
         }, () => {
           this.addWatermarks();
@@ -152,7 +150,7 @@ class WatermarkModal extends React.PureComponent {
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
       const temp = this.constructWatermarkOption(this.state.locationSettings[key]);
 
-      switch(WATERMARK_LOCATIONS[key]) {
+      switch (WATERMARK_LOCATIONS[key]) {
         case WATERMARK_LOCATIONS.CENTER:
           watermarks = {
             ...watermarks,
@@ -228,7 +226,6 @@ class WatermarkModal extends React.PureComponent {
     };
 
     this.setState({
-      [key]: value,
       locationSettings: currLocationSettings,
     }, () => {
       this.addWatermarks();
@@ -248,8 +245,7 @@ class WatermarkModal extends React.PureComponent {
     });
     this.setState({
       // eslint-disable-next-line object-shorthand
-      locationSettings: locationSettings,
-      currLocation: this.getKeyByValue(WATERMARK_LOCATIONS, DEFAULT_VALS.location),
+      locationSettings: locationSettings
     }, () => this.addWatermarks());
   }
 
@@ -257,7 +253,6 @@ class WatermarkModal extends React.PureComponent {
     this.setState({
       isVisible: false,
       previousLocationSettings: this.state.locationSettings,
-      previouslySavedLocation: this.state.currLocation,
     }, () => {
       // the order of these fxn calls matter
       this.props.modalClosed();
