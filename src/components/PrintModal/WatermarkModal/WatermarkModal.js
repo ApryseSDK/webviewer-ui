@@ -56,14 +56,7 @@ class WatermarkModal extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    const locationSettings = {};
-    Object.keys(WATERMARK_LOCATIONS).forEach(key => {
-      const temp = {
-        ...DEFAULT_VALS,
-        isSelected: WATERMARK_LOCATIONS[key] === DEFAULT_VALS.location,
-      };
-      locationSettings[key] = temp;
-    });
+    const locationSettings = this.initializeLocationSettings();
     this.state = {
       isVisible: false,
       isColorPaletteVisible: false,
@@ -241,11 +234,7 @@ class WatermarkModal extends React.PureComponent {
 
   resetForm(event) {
     event.preventDefault();
-    const locationSettings = {};
-    Object.keys(WATERMARK_LOCATIONS).forEach(key => {
-      const temp = { ...DEFAULT_VALS, isSelected: WATERMARK_LOCATIONS[key] === DEFAULT_VALS.location };
-      locationSettings[key] = temp;
-    });
+    const locationSettings = this.initializeLocationSettings();
     this.setState({
       // eslint-disable-next-line object-shorthand
       locationSettings: locationSettings,
@@ -287,11 +276,25 @@ class WatermarkModal extends React.PureComponent {
       };
       currLocationSettings[locationKey] = locationSetting;
     });
+
+    
     this.setState({
       locationSettings: currLocationSettings,
     }, () => {
       this.addWatermarks();
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  initializeLocationSettings () {
+    const locationSettings = {};
+    Object.keys(WATERMARK_LOCATIONS).forEach(key => {
+      // ignore location as it is redundant as we already have location key
+      const { location, ...others } = DEFAULT_VALS;
+      const temp = { ...others, isSelected: WATERMARK_LOCATIONS[key] === DEFAULT_VALS.location };
+      locationSettings[key] = temp;
+    });
+    return locationSettings;
   }
 
   // eslint-disable-next-line class-methods-use-this
