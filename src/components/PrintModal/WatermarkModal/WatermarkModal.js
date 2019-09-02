@@ -321,7 +321,7 @@ class WatermarkModal extends React.PureComponent {
     const formInfo = this.state.locationSettings[currLocation];
     return (
       <>
-        <div className={'Modal Watermark'} data-element="watermarkModal" onMouseDown={() => this.closeModal()}>
+        <div className={'Modal Watermark'} data-cy="watermarkModal" data-element="watermarkModal" onMouseDown={() => this.closeModal()}>
           <div className="form-container" onMouseDown={e => e.stopPropagation()}>
             <div className="header-container" onMouseDown={e => e.stopPropagation()}>
               <div className="header">{t('option.print.addWatermarkSettings')}</div>
