@@ -404,7 +404,7 @@ class PrintModal extends React.PureComponent {
         formSubmitted = {watermarkOptions => this.setWatermarkModalOption(watermarkOptions)}
       />
 
-      <div className={className} data-element="printModal" onClick={this.closePrintModal}>
+      <div className={className} data-cy="printModal" data-element="printModal" onClick={this.closePrintModal}>
         <div className="container" onClick={e => e.stopPropagation()}>
           <div className="header-container">
             <div className="header">{t('action.print')}</div>
