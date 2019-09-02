@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import Feature from 'constants/feature';
@@ -57,6 +58,7 @@ import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
 import goToPrevPage from './goToPrevPage';
+import hotkeys from './hotkeys';
 import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
@@ -178,6 +180,7 @@ export default store => {
     goToLastPage: goToLastPage(store),
     goToNextPage: goToNextPage(store),
     goToPrevPage: goToPrevPage(store),
+    hotkeys,
     isAdminUser,
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),

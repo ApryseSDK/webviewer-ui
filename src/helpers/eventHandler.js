@@ -42,7 +42,8 @@ export default store => {
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
-      document.addEventListener('keydown', onKeyDown);
+      onKeyDown();
+      // document.addEventListener('keydown', onKeyDown);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
