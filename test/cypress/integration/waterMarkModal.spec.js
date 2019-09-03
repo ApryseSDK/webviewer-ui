@@ -3,11 +3,11 @@ const ID = {
   WATERMARK_APPLIED: 'watermark-applied',
   TEST_RESET: 'test-reset',
   TEST_PERSIST_CHANGE_BEFORE_SAVING: 'test-persist-change-before-saving',
-  TEST_PERSIST_CHANGE: 'test-persist-change',
+  TEST_PERSIST_CHANGE_AFTER_SAVING: 'test-persist-change-after-saving',
   TEST_PERSIST_CHANGE_EXISTING_WATERMARK: 'test-persist-change-existing-watermark',
 };
 
-const CANVAS_TIMEOUT_MS = 5000;
+const CANVAS_TIMEOUT_MS = 2000;
 
 const WATERMARK = {
   diagonal: {
@@ -73,7 +73,7 @@ const fillOutForm = () => {
   // fill out form arbitrarily
   return cy.get('[data-element="watermarkModal"]').find('[data-element="form"]').within(() => {
     cy.get('[data-element="textInput"]').as('textInput').type('Test');
-    cy.get('@textInput').focus().blur();
+    cy.get('@textInput').blur();
     cy.get('[data-element="fontSize"]').as('fontSize').find('option').eq(FONT_SIZE_DROPDOWN_INDEX).invoke('val').then((val) => {
       cy.get('@fontSize').last().select(val);
       cy.get('@fontSize').first().focus().blur();
@@ -90,7 +90,10 @@ const fillOutForm = () => {
       cy.get('@location').first().focus().blur();
     });
     cy.get('@textInput').type('Test2');
-    cy.get('@textInput').focus().blur();
+
+    cy.get('@textInput').blur();
+
+    cy.wait(CANVAS_TIMEOUT_MS);
   });
 };
 
@@ -126,8 +129,6 @@ describe('Tests for watermark modal', () => {
       cy.get('@watermarkModal').find('[data-element="submit"]').as('submit');
       cy.get('@watermarkModal').find('[data-element="cancel"]').as('cancel');
       cy.get('@watermarkModal').find('[data-element="reset"]').as('reset');
-
-      // cy.get('@watermarkModal').find('[data-element="form"]').as('form');
     });
 
     it('Should be able to open watermark modal from print modal', () => {
@@ -163,7 +164,7 @@ describe('Tests for watermark modal', () => {
       fillOutForm();
 
       // wait for changes to canvas
-      cy.timeout(CANVAS_TIMEOUT_MS);
+      cy.wait(CANVAS_TIMEOUT_MS);
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
 
@@ -180,17 +181,20 @@ describe('Tests for watermark modal', () => {
         });
       });
 
+      // wait for changes to canvas
+      cy.wait(CANVAS_TIMEOUT_MS);
+
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
     });
 
-    it('should be able to persist changes on save', () => {
+    it('should be able to persist changes after saving', () => {
 
       fillOutForm();
 
       // wait for changes to canvas
-      cy.timeout(CANVAS_TIMEOUT_MS);
+      cy.wait(CANVAS_TIMEOUT_MS);
 
-      cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE);
+      cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_AFTER_SAVING);
 
       cy.get('@submit').click();
 
@@ -202,11 +206,11 @@ describe('Tests for watermark modal', () => {
 
       cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
 
-      cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE);
+      cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_AFTER_SAVING);
     });
 
     it('Should be able to use reset button', () => {
-      cy.get('@watermarkModal').find('canvas', {timeout: CANVAS_TIMEOUT_MS });
+      cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_RESET);
 
@@ -220,7 +224,7 @@ describe('Tests for watermark modal', () => {
 
       cy.get('@reset').click();
       // wait for changes to canvas
-      cy.timeout(CANVAS_TIMEOUT_MS);
+      cy.wait(CANVAS_TIMEOUT_MS);
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_RESET);
 
@@ -284,7 +288,7 @@ describe('Tests for watermark modal', () => {
             fillOutForm();
 
             // wait for changes to canvas
-            cy.timeout(CANVAS_TIMEOUT_MS);
+            cy.wait(CANVAS_TIMEOUT_MS);
 
             cy.get('[data-element="watermarkModal"]').as('watermarkModal').find('[data-element="formContainer"]').as('formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_EXISTING_WATERMARK);
             cy.get('@watermarkModal').find('[data-element="submit"]').click();
