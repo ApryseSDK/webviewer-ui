@@ -260,7 +260,7 @@ describe('Tests for watermark modal', () => {
 
     it('Should be able to see watermark modal button when existing watermark dissapear', () => {
       cy.window()
-        .then((window) => {
+        .then(window => {
           window.docViewer.setWatermark({});
 
           window.docViewer.refreshAll();
@@ -274,9 +274,9 @@ describe('Tests for watermark modal', () => {
         });
     });
 
-    it('Should be able to persist watermark modal changes when existing watermark appear/dissapear', () => {
+    it.only('Should be able to persist watermark modal changes when existing watermark appear/dissapear', () => {
       cy.window()
-        .then(async(window) => {
+        .then(async window => {
           window.docViewer.setWatermark({});
 
           window.docViewer.refreshAll();
@@ -285,7 +285,7 @@ describe('Tests for watermark modal', () => {
           await window.docViewer.getWatermark();
 
           cy.get('[data-element="menuButton"]').click();
-          cy.get('@printModal').click();
+          cy.get('[data-element="printButton"]').click();
           cy.get( '@printModal').should('visible');
 
           cy.get( '@printModal').find('.apply-watermark').click();
