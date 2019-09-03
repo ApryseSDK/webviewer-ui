@@ -373,7 +373,7 @@ class WatermarkModal extends React.PureComponent {
                   </select>
 
                 </div>
-                <div className="form-field slider" data-element="opacitySlider">
+                <div className="form-field opacity-slider" data-element="opacitySlider">
                   <Slider
                     property={'opacity'} // arbitrary property name. this property isn't used in this file
                     displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file

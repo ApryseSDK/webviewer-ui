@@ -156,11 +156,15 @@ $gap: 15px;
       margin: 3px 0;
     }
 
-    &.slider {
+    &.opacity-slider {
       display: grid;
       grid-column-gap: 2px;
       grid-template-columns: auto auto 1fr;
       align-items: center;
+
+      @include ie11 {
+        align-items: stretch;
+      }
     }
 
     &.separator {
