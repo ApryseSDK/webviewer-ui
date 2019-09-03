@@ -88,21 +88,29 @@ describe('Tests for watermark modal', () => {
       cy.get( '@printModal').find('.apply-watermark').click();
       cy.get( '[data-cy="watermarkModal"]').as('watermarkModal').should('visible');
 
+      cy.get( '[data-element="watermarkModalCloseButton"]').as('watermarkModalCloseButton');
       cy.get('@watermarkModal').find('[data-cy="form-container"]').as('form-container');
+      cy.get('@watermarkModal').find('[data-cy="submit"]').as('submit');
+      cy.get('@watermarkModal').find('[data-cy="cancel"]').as('cancel');
     });
 
-    it.only('Should be able to open watermark modal from print modal',  () => {
+    it('Should be able to open watermark modal from print modal',  () => {
       cy.get('@watermarkModal').find('canvas', {timeout: 5000});
       cy.get('@form-container').matchImageSnapshot(ID.INIT);
     });
 
     it('Should be able to close watermark modal by clicking on close icon', () => {
-      cy.get( '[data-element="watermarkModalCloseButton"]').click();
+      cy.get( '@watermarkModalCloseButton').click();
       cy.get( '@watermarkModal').should('not.visible');
     });
 
     it('Should be able to close watermark modal by clicking outside of it', () => {
       cy.get( '@watermarkModal').click('topLeft');
+      cy.get( '@watermarkModal').should('not.visible');
+    });
+
+    it.only('Should be able to close watermark modal by clicking on cancel', () => {
+      cy.get( '@cancel').click();
       cy.get( '@watermarkModal').should('not.visible');
     });
 
@@ -121,8 +129,8 @@ describe('Tests for watermark modal', () => {
 
       cy.get('@watermarkModal').find('canvas', {timeout: 5000});
 
-      cy.get('@watermarkModal').find('.form-container').matchImageSnapshot(ID.WATERMARK_APPLIED);
-      cy.get('@watermarkModal').find('.ok.button').click();
+      cy.get('@form-container').matchImageSnapshot(ID.WATERMARK_APPLIED);
+      cy.get('@submit').click();
     });
 
     it('should be able to persist location settings before saving', () => {
