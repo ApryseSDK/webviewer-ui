@@ -373,7 +373,7 @@ class WatermarkModal extends React.PureComponent {
                   </select>
 
                 </div>
-                <div className="form-field slider">
+                <div className="form-field slider" data-element="opacitySlider">
                   <Slider
                     property={'opacity'} // arbitrary property name. this property isn't used in this file
                     displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
@@ -390,6 +390,7 @@ class WatermarkModal extends React.PureComponent {
                     {t(`watermark.colors`)}
                   </label>
                   <div
+                    data-element="currentColorCell"
                     className="cell"
                     style={{ backgroundColor: formInfo[FORM_FIELD_KEYS.color].toHexString() }}
                     onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
@@ -399,6 +400,7 @@ class WatermarkModal extends React.PureComponent {
                   {
                     this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
                       <ColorPalette
+                        data-element="colorPalette"
                         color={formInfo[FORM_FIELD_KEYS.color]}
                         property={'TextColor'} // arbitrary property name. this property isn't used in this file
                         onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}

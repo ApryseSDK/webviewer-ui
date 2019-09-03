@@ -72,15 +72,25 @@ const FONT_SIZE_DROPDOWN_INDEX = 11;
 const fillOutForm = () => {
   // fill out form arbitrarily
   return cy.get('[data-element="watermarkModal"]').find('[data-element="form"]').within(() => {
-    cy.get('[data-element="textInput"]').type('Test');
+    cy.get('[data-element="textInput"]').as('textInput').type('Test');
+    cy.get('@textInput').focus().blur();
     cy.get('[data-element="fontSize"]').as('fontSize').find('option').eq(FONT_SIZE_DROPDOWN_INDEX).invoke('val').then((val) => {
       cy.get('@fontSize').last().select(val);
       cy.get('@fontSize').first().focus().blur();
     });
+    cy.get('[data-element="currentColorCell"]').click();
+    cy.get('[data-element="colorPalette"]').find('[style="background-color: rgb(0, 0, 0);"]').click();
+
+    cy.get('[data-element="opacitySlider"]').as('opacitySlider').find('[data-element="slider"]').as('slider').trigger('mousedown');
+    cy.get('@slider').trigger('mousemove', { pageX: 5 });
+    cy.get('@slider').trigger('mouseup');
+
     cy.get('[data-element="location"]').as('location').first().find('option').eq(LOCATION_DROPDOWN_INDEX).invoke('val').then((val) => {
       cy.get('@location').first().select(val);
       cy.get('@location').first().focus().blur();
     });
+    cy.get('@textInput').type('Test2');
+    cy.get('@textInput').focus().blur();
   });
 };
 
@@ -149,7 +159,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@submit').click();
     });
 
-    it.only('should be able to persist location settings before saving', () => {
+    it('should be able to persist location settings before saving', () => {
       fillOutForm();
 
       // wait for changes to canvas
@@ -158,7 +168,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
 
       // go to another drop down option
-      cy.get('@form').within(() => {
+      cy.get('@watermarkModal').find('[data-element="form"]').within(() => {
         cy.get('select').first().find('option').eq(0).invoke('val').then((val) => {
           cy.get('select').first().select(val);
           cy.get('select').first().focus().blur();
@@ -249,11 +259,11 @@ describe('Tests for watermark modal', () => {
     describe('Tests of when existings watermarks are programtically removed', () => {
       beforeEach(() => {
         cy.window()
-          .then(window => {
+          .then(async window => {
             window.docViewer.setWatermark({});
             window.docViewer.refreshAll();
             window.docViewer.updateView();
-
+            await window.docViewer.getWatermark();
             cy.get('@menuButton').click();
             cy.get('@printButton').click();
             cy.get('@printModal').should('visible');
