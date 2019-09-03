@@ -71,15 +71,15 @@ const FONT_SIZE_DROPDOWN_INDEX = 11;
 
 const fillOutForm = () => {
   // fill out form arbitrarily
-  return cy.get('[data-element="watermarkModal"]').find('[data-element="form"]').as('form').within(() => {
-    cy.get('.text-input').type('Pamela');
-    cy.get('select').first().find('option').eq(LOCATION_DROPDOWN_INDEX).invoke('val').then((val) => {
-      cy.get('select').first().select(val);
-      cy.get('select').first().focus().blur();
+  return cy.get('[data-element="watermarkModal"]').find('[data-element="form"]').within(() => {
+    cy.get('[data-element="textInput"]').type('Test');
+    cy.get('[data-element="fontSize"]').find('option').eq(FONT_SIZE_DROPDOWN_INDEX).invoke('val').then((val) => {
+      cy.get('[data-element="fontSize"]').last().select(val);
+      cy.get('[data-element="fontSize"]').first().focus().blur();
     });
-    cy.get('select').last().find('option').eq(FONT_SIZE_DROPDOWN_INDEX).invoke('val').then((val) => {
-      cy.get('select').last().select(val);
-      cy.get('select').first().focus().blur();
+    cy.get('[data-element="location"]').first().find('option').eq(LOCATION_DROPDOWN_INDEX).invoke('val').then((val) => {
+      cy.get('[data-element="location"]').first().select(val);
+      cy.get('[data-element="location"]').first().focus().blur();
     });
   });
 };
@@ -149,7 +149,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@submit').click();
     });
 
-    it('should be able to persist location settings before saving', () => {
+    it.only('should be able to persist location settings before saving', () => {
       fillOutForm();
 
       // wait for changes to canvas
@@ -157,6 +157,7 @@ describe('Tests for watermark modal', () => {
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
 
+      // go to another drop down option
       cy.get('@form').within(() => {
         cy.get('select').first().find('option').eq(0).invoke('val').then((val) => {
           cy.get('select').first().select(val);

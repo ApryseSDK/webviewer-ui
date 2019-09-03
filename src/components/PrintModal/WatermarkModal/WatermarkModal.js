@@ -336,6 +336,7 @@ class WatermarkModal extends React.PureComponent {
                     {t(`watermark.location`)}
                   </label>
                   <select
+                    data-element="location"
                     value={WATERMARK_LOCATIONS[currLocation]}
                     onChange={event => { this.onLocationChanged(event.target.value); } }>
                     { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
@@ -353,6 +354,7 @@ class WatermarkModal extends React.PureComponent {
                   </label>
                   <input
                     className="text-input"
+                    data-element="textInput"
                     value={formInfo[FORM_FIELD_KEYS.text]}
                     onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
                     type="text" />
@@ -364,6 +366,7 @@ class WatermarkModal extends React.PureComponent {
                     {t(`watermark.size`)}
                   </label>
                   <select
+                    data-element="fontSize"
                     value={formInfo[FORM_FIELD_KEYS.fontSize]}
                     onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}>
                     { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
