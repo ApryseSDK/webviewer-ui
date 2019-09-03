@@ -36,6 +36,7 @@ import setViewerElement from './setViewerElement';
 import isContinuousDisplayMode from './isContinuousDisplayMode';
 import scrollViewUpdated from './scrollViewUpdated';
 import canModify from './canModify';
+import canModifyContents from './canModifyContents';
 import deleteAnnotations from './deleteAnnotations';
 import getDisplayAuthor from './getDisplayAuthor';
 import getDocument from './getDocument';
@@ -130,6 +131,7 @@ export default {
   isContinuousDisplayMode,
   scrollViewUpdated,
   canModify,
+  canModifyContents,
   deleteAnnotations,
   getDisplayAuthor,
   getDocument,
