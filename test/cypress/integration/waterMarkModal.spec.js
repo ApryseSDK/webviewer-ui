@@ -73,13 +73,13 @@ const fillOutForm = () => {
   // fill out form arbitrarily
   return cy.get('[data-element="watermarkModal"]').find('[data-element="form"]').within(() => {
     cy.get('[data-element="textInput"]').type('Test');
-    cy.get('[data-element="fontSize"]').find('option').eq(FONT_SIZE_DROPDOWN_INDEX).invoke('val').then((val) => {
-      cy.get('[data-element="fontSize"]').last().select(val);
-      cy.get('[data-element="fontSize"]').first().focus().blur();
+    cy.get('[data-element="fontSize"]').as('fontSize').find('option').eq(FONT_SIZE_DROPDOWN_INDEX).invoke('val').then((val) => {
+      cy.get('@fontSize').last().select(val);
+      cy.get('@fontSize').first().focus().blur();
     });
-    cy.get('[data-element="location"]').first().find('option').eq(LOCATION_DROPDOWN_INDEX).invoke('val').then((val) => {
-      cy.get('[data-element="location"]').first().select(val);
-      cy.get('[data-element="location"]').first().focus().blur();
+    cy.get('[data-element="location"]').as('location').first().find('option').eq(LOCATION_DROPDOWN_INDEX).invoke('val').then((val) => {
+      cy.get('@location').first().select(val);
+      cy.get('@location').first().focus().blur();
     });
   });
 };
