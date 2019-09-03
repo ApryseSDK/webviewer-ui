@@ -75,6 +75,8 @@ describe('Tests for watermark modal', () => {
           // cleanup
           $window.docViewer.off('documentLoaded', onDocloaded);
           cy.get( '[data-cy="printModal"]').as('printModal');
+          cy.get('[data-element="menuButton"]').as('menuButton');
+          cy.get('[data-element="printButton"]').as('printButton');
           // resolve and allow Cypress to continue
           resolve();
         };
@@ -84,8 +86,8 @@ describe('Tests for watermark modal', () => {
 
   describe('Tests for when there is no existing water mark', () => {
     beforeEach(() => {
-      cy.get('[data-element="menuButton"]').click({});
-      cy.get('[data-element="printButton"]').click();
+      cy.get('@menuButton').click();
+      cy.get('@printButton').click();
       cy.get( '[data-cy="printModal"]').should('visible');
       cy.get( '@printModal').find('.apply-watermark').as('openWatermark').click();
       cy.get( '[data-cy="watermarkModal"]').as('watermarkModal').should('visible');
@@ -245,15 +247,14 @@ describe('Tests for watermark modal', () => {
       cy.window()
         .then({ timeout: 30000 }, window => {
           window.docViewer.setWatermark(WATERMARK);
-
           window.docViewer.refreshAll();
           window.docViewer.updateView();
         });
     });
 
     it('Should not be able to see watermark modal button', () => {
-      cy.get('[data-element="menuButton"]').click();
-      cy.get('[data-element="printButton"]').click();
+      cy.get('@menuButton').click();
+      cy.get('@printButton').click();
       cy.get( '@printModal').should('visible');
       cy.get( '@printModal').find('.apply-watermark').should('not.visible');
     });
@@ -262,19 +263,18 @@ describe('Tests for watermark modal', () => {
       cy.window()
         .then(window => {
           window.docViewer.setWatermark({});
-
           window.docViewer.refreshAll();
           window.docViewer.updateView();
 
-          cy.get('[data-element="menuButton"]').click();
-          cy.get('[data-element="printButton"]').click();
+          cy.get('@menuButton').click();
+          cy.get('@printButton').click();
           cy.get( '@printModal').should('visible');
 
           cy.get( '@printModal').find('.apply-watermark').should('visible');
         });
     });
 
-    it.only('Should be able to persist watermark modal changes when existing watermark appear/dissapear', () => {
+    it('Should be able to persist watermark modal changes when existing watermark appear/dissapear', () => {
       cy.window()
         .then(async window => {
           window.docViewer.setWatermark({});
@@ -284,8 +284,8 @@ describe('Tests for watermark modal', () => {
 
           await window.docViewer.getWatermark();
 
-          cy.get('[data-element="menuButton"]').click();
-          cy.get('[data-element="printButton"]').click();
+          cy.get('@menuButton').click();
+          cy.get('@printButton').click();
           cy.get( '@printModal').should('visible');
 
           cy.get( '@printModal').find('.apply-watermark').click();
@@ -317,8 +317,8 @@ describe('Tests for watermark modal', () => {
               await window.docViewer.getWatermark();
             });
 
-          cy.get('[data-element="menuButton"]').click();
-          cy.get('[data-element="printButton"]').click();
+          cy.get('@menuButton').click();
+          cy.get('@printButton').click();
           cy.get( '@printModal').find('.apply-watermark').should('not.visible');
 
           cy.get('[data-element="printModalCloseButton"]').click()
@@ -330,8 +330,8 @@ describe('Tests for watermark modal', () => {
               await window.docViewer.getWatermark();
             });
 
-          cy.get('[data-element="menuButton"]').click();
-          cy.get('[data-element="printButton"]').click();
+          cy.get('@menuButton').click();
+          cy.get('@printButton').click();
           cy.get( '@printModal').find('.apply-watermark').should('visible');
 
           cy.get( '@printModal').find('.apply-watermark').click();
