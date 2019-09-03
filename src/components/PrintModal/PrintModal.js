@@ -404,7 +404,7 @@ class PrintModal extends React.PureComponent {
         formSubmitted = {watermarkOptions => this.setWatermarkModalOption(watermarkOptions)}
       />
 
-      <div className={className} data-cy="printModal" data-element="printModal" onClick={this.closePrintModal}>
+      <div className={className} data-element="printModal" onClick={this.closePrintModal}>
         <div className="container" onClick={e => e.stopPropagation()}>
           <div className="header-container">
             <div className="header">{t('action.print')}</div>
@@ -420,7 +420,7 @@ class PrintModal extends React.PureComponent {
             </form>
 
           </div>
-          {this.state.allowWatermarkModal && <button className="apply-watermark" onClick={() => this.setWatermarkModalVisibility(true)}>{t('option.print.addWatermarkSettings')}</button> }
+          {this.state.allowWatermarkModal && <button data-element="applyWatermark" className="apply-watermark" onClick={() => this.setWatermarkModalVisibility(true)}>{t('option.print.addWatermarkSettings')}</button> }
           <div className="buttons">
             <div className="total">
               {isPrinting
@@ -428,7 +428,6 @@ class PrintModal extends React.PureComponent {
                 : <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
               }
             </div>
-            {/* <div className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</div> */}
             <button className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</button>
           </div>
         </div>

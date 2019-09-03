@@ -321,15 +321,15 @@ class WatermarkModal extends React.PureComponent {
     const formInfo = this.state.locationSettings[currLocation];
     return (
       <>
-        <div className={'Modal Watermark'} data-cy="watermarkModal" data-element="watermarkModal" onMouseDown={() => this.closeModal()}>
-          <div className="form-container" data-cy="form-container" onMouseDown={e => e.stopPropagation()}>
+        <div className={'Modal Watermark'} data-element="watermarkModal" onMouseDown={() => this.closeModal()}>
+          <div className="form-container" data-element="formContainer" onMouseDown={e => e.stopPropagation()}>
             <div className="header-container" onMouseDown={e => e.stopPropagation()}>
               <div className="header">{t('option.print.addWatermarkSettings')}</div>
               <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={() => this.closeModal()} /> 
             </div>
 
             <div className="form-content-container">
-              <form>
+              <form data-element="form">
                 <div className="form-field">
 
                   <label>
@@ -413,10 +413,10 @@ class WatermarkModal extends React.PureComponent {
             </div>
 
             <div className="button-container">
-              <a className="reset button" data-cy="reset" onClick={event => this.resetForm(event)}>{t(`watermark.resetAllSettings`)}</a>
+              <a className="reset button" data-element="reset" onClick={event => this.resetForm(event)}>{t(`watermark.resetAllSettings`)}</a>
               <div className="action-button-container">
-                <button className="cancel button" data-cy="cancel" onClick={() => this.closeModal()}>{t(`action.cancel`)}</button>
-                <button className="ok button" data-cy="submit" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
+                <button className="cancel button" data-element="cancel" onClick={() => this.closeModal()}>{t(`action.cancel`)}</button>
+                <button className="ok button" data-element="submit" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
               </div>
             </div>
           </div>
