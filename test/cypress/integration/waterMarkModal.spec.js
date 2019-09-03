@@ -7,6 +7,8 @@ const ID = {
   TEST_PERSIST_CHANGE_EXISTING_WATERMARK: 'test-persist-change-existing-watermark',
 };
 
+const CANVAS_TIMEOUT_MS = 5000;
+
 const WATERMARK = {
   diagonal: {
     fontSize: 52,
@@ -85,17 +87,18 @@ describe('Tests for watermark modal', () => {
       cy.get('[data-element="menuButton"]').click({});
       cy.get('[data-element="printButton"]').click();
       cy.get( '[data-cy="printModal"]').should('visible');
-      cy.get( '@printModal').find('.apply-watermark').click();
+      cy.get( '@printModal').find('.apply-watermark').as('openWatermark').click();
       cy.get( '[data-cy="watermarkModal"]').as('watermarkModal').should('visible');
 
       cy.get( '[data-element="watermarkModalCloseButton"]').as('watermarkModalCloseButton');
       cy.get('@watermarkModal').find('[data-cy="form-container"]').as('form-container');
       cy.get('@watermarkModal').find('[data-cy="submit"]').as('submit');
       cy.get('@watermarkModal').find('[data-cy="cancel"]').as('cancel');
+      cy.get('@watermarkModal').find('[data-cy="reset"]').as('reset');
     });
 
-    it('Should be able to open watermark modal from print modal',  () => {
-      cy.get('@watermarkModal').find('canvas', {timeout: 5000});
+    it('Should be able to open watermark modal from print modal', () => {
+      cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
       cy.get('@form-container').matchImageSnapshot(ID.INIT);
     });
 
@@ -109,7 +112,7 @@ describe('Tests for watermark modal', () => {
       cy.get( '@watermarkModal').should('not.visible');
     });
 
-    it.only('Should be able to close watermark modal by clicking on cancel', () => {
+    it('Should be able to close watermark modal by clicking on cancel', () => {
       cy.get( '@cancel').click();
       cy.get( '@watermarkModal').should('not.visible');
     });
@@ -127,7 +130,7 @@ describe('Tests for watermark modal', () => {
         });
       });
 
-      cy.get('@watermarkModal').find('canvas', {timeout: 5000});
+      cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
 
       cy.get('@form-container').matchImageSnapshot(ID.WATERMARK_APPLIED);
       cy.get('@submit').click();
@@ -148,9 +151,9 @@ describe('Tests for watermark modal', () => {
       });
 
       // wait for changes to canvas
-      cy.timeout(1000);
+      cy.timeout(CANVAS_TIMEOUT_MS);
 
-      cy.get('@watermarkModal').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
+      cy.get('@form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
 
       cy.get('@watermarkModal').find('form').within(() => {
         cy.get('select').first().find('option').eq(0).invoke('val').then((val) => {
@@ -164,9 +167,7 @@ describe('Tests for watermark modal', () => {
         });
       });
 
-      cy.get('@watermarkModal').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
-
-      
+      cy.get('@form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);      
     });
 
     it('should be able to persist changes on save', () => {
@@ -183,27 +184,27 @@ describe('Tests for watermark modal', () => {
       });
 
       // wait for changes to canvas
-      cy.timeout(1000);
+      cy.timeout(CANVAS_TIMEOUT_MS);
 
-      cy.get('@watermarkModal').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE);
+      cy.get('@form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE);
 
-      cy.get('@watermarkModal').find('.ok.button').click();
+      cy.get('@submit').click();
 
       cy.get( '@watermarkModal').should('not.visible');
 
-      cy.get( '@printModal').find('.apply-watermark').click();
+      cy.get( '@openWatermark').click();
 
       cy.get( '@watermarkModal').should('visible');
 
-      cy.get('@watermarkModal').find('canvas', {timeout: 5000});
+      cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
 
-      cy.get('@watermarkModal').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE);
+      cy.get('@form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE);
     });
 
     it('Should be able to use reset button', () => {
-      cy.get('@watermarkModal').find('canvas', {timeout: 5000});
+      cy.get('@watermarkModal').find('canvas', {timeout: CANVAS_TIMEOUT_MS });
 
-      cy.get('@watermarkModal').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
+      cy.get('@form-container').matchImageSnapshot(ID.TEST_RESET);
 
       cy.get('@watermarkModal').find('form').within(() => {
         cy.get('.text-input').type('Pamela');
@@ -217,25 +218,25 @@ describe('Tests for watermark modal', () => {
         });
       });
 
-      cy.get('@watermarkModal').find('.ok.button').click();
+      cy.get('@submit').click();
 
-      cy.get( '@printModal').find('.apply-watermark').click();
+      cy.get('@openWatermark').click();
 
-      cy.get('@watermarkModal').find('canvas', {timeout: 5000});
+      cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
 
-      cy.get('@watermarkModal').find('.reset.button').click();
+      cy.get('@reset').click();
       // wait for changes to canvas
-      cy.timeout(2000);
+      cy.timeout(CANVAS_TIMEOUT_MS);
 
-      cy.get('@watermarkModal').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
+      cy.get('@form-container').matchImageSnapshot(ID.TEST_RESET);
 
-      cy.get('@watermarkModal').find('.ok.button').click();
+      cy.get('@submit').click();
 
-      cy.get( '@printModal').find('.apply-watermark').click();
+      cy.get( '@openWatermark').click();
 
-      cy.get('@watermarkModal').find('canvas', {timeout: 5000});
+      cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
 
-      cy.get('@watermarkModal').find('.form-container').matchImageSnapshot(ID.TEST_RESET);
+      cy.get('@form-container').matchImageSnapshot(ID.TEST_RESET);
     });
   });
 
@@ -251,7 +252,7 @@ describe('Tests for watermark modal', () => {
     });
 
     it('Should not be able to see watermark modal button', () => {
-      cy.get('[data-element="menuButton"]').click({});
+      cy.get('[data-element="menuButton"]').click();
       cy.get('[data-element="printButton"]').click();
       cy.get( '@printModal').should('visible');
       cy.get( '@printModal').find('.apply-watermark').should('not.visible');
@@ -265,7 +266,7 @@ describe('Tests for watermark modal', () => {
           window.docViewer.refreshAll();
           window.docViewer.updateView();
 
-          cy.get('[data-element="menuButton"]').click({});
+          cy.get('[data-element="menuButton"]').click();
           cy.get('[data-element="printButton"]').click();
           cy.get( '@printModal').should('visible');
 
@@ -302,7 +303,7 @@ describe('Tests for watermark modal', () => {
           });
     
           // wait for changes to canvas
-          cy.timeout(1000);
+          cy.timeout(CANVAS_TIMEOUT_MS);
     
           cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_EXISTING_WATERMARK);
           cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
@@ -336,7 +337,7 @@ describe('Tests for watermark modal', () => {
           cy.get( '@printModal').find('.apply-watermark').click();
 
           // wait for canvas to load
-          cy.get('[data-element="watermarkModal"]').find('canvas', {timeout: 5000});
+          cy.get('[data-element="watermarkModal"]').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
 
           cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_EXISTING_WATERMARK);
 

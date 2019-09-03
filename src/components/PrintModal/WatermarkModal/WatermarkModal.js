@@ -413,7 +413,7 @@ class WatermarkModal extends React.PureComponent {
             </div>
 
             <div className="button-container">
-              <a className="reset button" onClick={event => this.resetForm(event)}>{t(`watermark.resetAllSettings`)}</a>
+              <a className="reset button" data-cy="reset" onClick={event => this.resetForm(event)}>{t(`watermark.resetAllSettings`)}</a>
               <div className="action-button-container">
                 <button className="cancel button" data-cy="cancel" onClick={() => this.closeModal()}>{t(`action.cancel`)}</button>
                 <button className="ok button" data-cy="submit" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
