@@ -89,7 +89,7 @@ const fillOutForm = () => {
       cy.get('@location').first().select(val);
       cy.get('@location').first().focus().blur();
     });
-    cy.get('@textInput').type('Test2');
+    cy.get('@textInput').type('Test');
 
     cy.get('@textInput').blur();
 
@@ -209,8 +209,8 @@ describe('Tests for watermark modal', () => {
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_AFTER_SAVING);
     });
 
-    it('Should be able to use reset button', () => {
-      cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
+    it.only('Should be able to use reset button', () => {
+      cy.wait(CANVAS_TIMEOUT_MS);
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_RESET);
 

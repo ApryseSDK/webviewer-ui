@@ -354,7 +354,7 @@ class WatermarkModal extends React.PureComponent {
                   </label>
                   <input
                     className="text-input"
-                    spellCheck="false"
+                    // spellCheck="false"
                     data-element="textInput"
                     value={formInfo[FORM_FIELD_KEYS.text]}
                     onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
