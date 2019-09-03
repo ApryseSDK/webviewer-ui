@@ -65,6 +65,21 @@ const WATERMARK = {
  * npm run start must be ran in the UI project
  */
 
+const fillOutForm = () => {
+  // fill out form arbitrarily
+  return cy.get('[data-element="watermarkModal"]').find('[data-element="form"]').as('form').within(() => {
+    cy.get('.text-input').type('Pamela');
+    cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
+      cy.get('select').first().select(val);
+      cy.get('select').first().focus().blur();
+    });
+    cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
+      cy.get('select').last().select(val);
+      cy.get('select').first().focus().blur();
+    });
+  });
+};
+
 describe('Tests for watermark modal', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -98,7 +113,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@watermarkModal').find('[data-element="cancel"]').as('cancel');
       cy.get('@watermarkModal').find('[data-element="reset"]').as('reset');
 
-      cy.get('@watermarkModal').find('[data-element="form"]').as('form');
+      // cy.get('@watermarkModal').find('[data-element="form"]').as('form');
     });
 
     it('Should be able to open watermark modal from print modal', () => {
@@ -122,17 +137,7 @@ describe('Tests for watermark modal', () => {
     });
 
     it('Should be able to apply watermark', () => {
-      cy.get('@form').within(() => {
-        cy.get('.text-input').type('Pamela');
-        cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
-          cy.get('select').first().select(val);
-          cy.get('select').first().focus().blur();
-        });
-        cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
-          cy.get('select').last().select(val);
-          cy.get('select').first().focus().blur();
-        });
-      });
+      fillOutForm();
 
       cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
 
@@ -142,17 +147,7 @@ describe('Tests for watermark modal', () => {
 
     it('should be able to persist location settings before saving', () => {
       const someNumber = 2;
-      cy.get('@form').within(() => {
-        cy.get('select').first().find('option').eq(someNumber).invoke('val').then((val) => {
-          cy.get('select').first().select(val);
-          cy.get('select').first().focus().blur();
-        });
-        cy.get('.text-input').type('Pamela');
-        cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
-          cy.get('select').last().select(val);
-          cy.get('select').first().focus().blur();
-        });
-      });
+      fillOutForm();
 
       // wait for changes to canvas
       cy.timeout(CANVAS_TIMEOUT_MS);
@@ -175,17 +170,8 @@ describe('Tests for watermark modal', () => {
     });
 
     it('should be able to persist changes on save', () => {
-      cy.get('@form').within(() => {
-        cy.get('.text-input').type('Pamela');
-        cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
-          cy.get('select').first().select(val);
-          cy.get('select').first().focus().blur();
-        });
-        cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
-          cy.get('select').last().select(val);
-          cy.get('select').first().focus().blur();
-        });
-      });
+
+      fillOutForm();
 
       // wait for changes to canvas
       cy.timeout(CANVAS_TIMEOUT_MS);
@@ -210,17 +196,7 @@ describe('Tests for watermark modal', () => {
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_RESET);
 
-      cy.get('@form').within(() => {
-        cy.get('.text-input').type('Pamela');
-        cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
-          cy.get('select').first().select(val);
-          cy.get('select').first().focus().blur();
-        });
-        cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
-          cy.get('select').last().select(val);
-          cy.get('select').first().focus().blur();
-        });
-      });
+      fillOutForm();
 
       cy.get('@submit').click();
 
@@ -291,22 +267,12 @@ describe('Tests for watermark modal', () => {
           .then(window => {
             cy.get('@applyWatermark').click();
 
-            cy.get('[data-element="watermarkModal"]').as('watermarkModal').find('[data-element="form"]').as('form').within(() => {
-              cy.get('.text-input').type('Pamela');
-              cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
-                cy.get('select').first().select(val);
-                cy.get('select').first().focus().blur();
-              });
-              cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
-                cy.get('select').last().select(val);
-                cy.get('select').first().focus().blur();
-              });
-            });
+            fillOutForm();
 
             // wait for changes to canvas
             cy.timeout(CANVAS_TIMEOUT_MS);
 
-            cy.get('@watermarkModal').find('[data-element="formContainer"]').as('formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_EXISTING_WATERMARK);
+            cy.get('[data-element="watermarkModal"]').as('watermarkModal').find('[data-element="formContainer"]').as('formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_EXISTING_WATERMARK);
             cy.get('@watermarkModal').find('[data-element="submit"]').click();
 
             cy.get('[data-element="printModalCloseButton"]').as('printModalCloseButton').click()
