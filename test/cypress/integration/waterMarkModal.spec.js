@@ -162,14 +162,14 @@ describe('Tests for watermark modal', () => {
           cy.get('select').first().select(val);
           cy.get('select').first().focus().blur();
         });
-  
+
         cy.get('select').first().find('option').eq(someNumber).invoke('val').then((val) => {
           cy.get('select').first().select(val);
           cy.get('select').first().focus().blur();
         });
       });
 
-      cy.get('@form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);      
+      cy.get('@form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
     });
 
     it('should be able to persist changes on save', () => {
@@ -252,11 +252,16 @@ describe('Tests for watermark modal', () => {
         });
     });
 
-    it('Should not be able to see watermark modal button', () => {
-      cy.get('@menuButton').click();
-      cy.get('@printButton').click();
-      cy.get( '@printModal').should('visible');
-      cy.get( '@printModal').find('.apply-watermark').should('not.visible');
+    describe('Tests for when print modal is already opened', () => {
+      beforeEach(() => {
+        cy.get('@menuButton').click();
+        cy.get('@printButton').click();
+        cy.get('@printModal').should('visible');
+      });
+
+      it('Should not be able to see watermark modal button', () => {
+        cy.get('@printModal').find('.apply-watermark').should('not.visible');
+      });
     });
 
     it('Should be able to see watermark modal button when existing watermark dissapear', () => {
@@ -268,13 +273,13 @@ describe('Tests for watermark modal', () => {
 
           cy.get('@menuButton').click();
           cy.get('@printButton').click();
-          cy.get( '@printModal').should('visible');
+          cy.get('@printModal').should('visible');
 
-          cy.get( '@printModal').find('.apply-watermark').should('visible');
+          cy.get('@printModal').find('.apply-watermark').should('visible');
         });
     });
 
-    it.only('Should be able to persist watermark modal changes when existing watermark appear/dissapear', () => {
+    it('Should be able to persist watermark modal changes when existing watermark appear/dissapear', () => {
       cy.window()
         .then(window => {
           window.docViewer.setWatermark({});
@@ -299,10 +304,10 @@ describe('Tests for watermark modal', () => {
               cy.get('select').first().focus().blur();
             });
           });
-    
+
           // wait for changes to canvas
           cy.timeout(CANVAS_TIMEOUT_MS);
-    
+
           cy.get('[data-element="watermarkModal"]').find('.form-container').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_EXISTING_WATERMARK);
           cy.get('[data-element="watermarkModal"]').find('.ok.button').click();
 
