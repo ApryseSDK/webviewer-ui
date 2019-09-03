@@ -65,15 +65,19 @@ const WATERMARK = {
  * npm run start must be ran in the UI project
  */
 
+const LOCATION_DROPDOWN_INDEX = 2;
+
+const FONT_SIZE_DROPDOWN_INDEX = 11;
+
 const fillOutForm = () => {
   // fill out form arbitrarily
   return cy.get('[data-element="watermarkModal"]').find('[data-element="form"]').as('form').within(() => {
     cy.get('.text-input').type('Pamela');
-    cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
+    cy.get('select').first().find('option').eq(LOCATION_DROPDOWN_INDEX).invoke('val').then((val) => {
       cy.get('select').first().select(val);
       cy.get('select').first().focus().blur();
     });
-    cy.get('select').last().find('option').eq(11).invoke('val').then((val) => {
+    cy.get('select').last().find('option').eq(FONT_SIZE_DROPDOWN_INDEX).invoke('val').then((val) => {
       cy.get('select').last().select(val);
       cy.get('select').first().focus().blur();
     });
@@ -146,7 +150,6 @@ describe('Tests for watermark modal', () => {
     });
 
     it('should be able to persist location settings before saving', () => {
-      const someNumber = 2;
       fillOutForm();
 
       // wait for changes to canvas
@@ -160,7 +163,7 @@ describe('Tests for watermark modal', () => {
           cy.get('select').first().focus().blur();
         });
 
-        cy.get('select').first().find('option').eq(someNumber).invoke('val').then((val) => {
+        cy.get('select').first().find('option').eq(LOCATION_DROPDOWN_INDEX).invoke('val').then((val) => {
           cy.get('select').first().select(val);
           cy.get('select').first().focus().blur();
         });
