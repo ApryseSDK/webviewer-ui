@@ -322,7 +322,7 @@ class WatermarkModal extends React.PureComponent {
     return (
       <>
         <div className={'Modal Watermark'} data-cy="watermarkModal" data-element="watermarkModal" onMouseDown={() => this.closeModal()}>
-          <div className="form-container" onMouseDown={e => e.stopPropagation()}>
+          <div className="form-container" data-cy="form-container" onMouseDown={e => e.stopPropagation()}>
             <div className="header-container" onMouseDown={e => e.stopPropagation()}>
               <div className="header">{t('option.print.addWatermarkSettings')}</div>
               <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={() => this.closeModal()} /> 

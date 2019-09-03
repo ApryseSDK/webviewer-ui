@@ -87,11 +87,13 @@ describe('Tests for watermark modal', () => {
       cy.get( '[data-cy="printModal"]').should('visible');
       cy.get( '@printModal').find('.apply-watermark').click();
       cy.get( '[data-cy="watermarkModal"]').as('watermarkModal').should('visible');
+
+      cy.get('@watermarkModal').find('[data-cy="form-container"]').as('form-container');
     });
 
-    it('Should be able to open watermark modal from print modal',  () => {
+    it.only('Should be able to open watermark modal from print modal',  () => {
       cy.get('@watermarkModal').find('canvas', {timeout: 5000});
-      cy.get('@watermarkModal').find('.form-container').matchImageSnapshot(ID.INIT);
+      cy.get('@form-container').matchImageSnapshot(ID.INIT);
     });
 
     it('Should be able to close watermark modal by clicking on close icon', () => {
