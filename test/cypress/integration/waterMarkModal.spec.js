@@ -71,6 +71,7 @@ const FONT_SIZE_DROPDOWN_INDEX = 11;
 
 const fillOutForm = () => {
   // fill out form arbitrarily
+  // Note: type words in text field that don't have typos else picture diffing may cause problems
   return cy.get('[data-element="watermarkModal"]').find('[data-element="form"]').within(() => {
     cy.get('[data-element="textInput"]').as('textInput').type('Test');
     cy.get('@textInput').blur();
@@ -209,7 +210,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_AFTER_SAVING);
     });
 
-    it.only('Should be able to use reset button', () => {
+    it('Should be able to use reset button', () => {
       cy.wait(CANVAS_TIMEOUT_MS);
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_RESET);
