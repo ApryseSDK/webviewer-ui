@@ -97,6 +97,8 @@ describe('Tests for watermark modal', () => {
       cy.get('@watermarkModal').find('[data-element="submit"]').as('submit');
       cy.get('@watermarkModal').find('[data-element="cancel"]').as('cancel');
       cy.get('@watermarkModal').find('[data-element="reset"]').as('reset');
+
+      cy.get('@watermarkModal').find('[data-element="form"]').as('form');
     });
 
     it('Should be able to open watermark modal from print modal', () => {
@@ -120,7 +122,7 @@ describe('Tests for watermark modal', () => {
     });
 
     it('Should be able to apply watermark', () => {
-      cy.get('@watermarkModal').find('form').within(() => {
+      cy.get('@form').within(() => {
         cy.get('.text-input').type('Pamela');
         cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
           cy.get('select').first().select(val);
@@ -140,7 +142,7 @@ describe('Tests for watermark modal', () => {
 
     it('should be able to persist location settings before saving', () => {
       const someNumber = 2;
-      cy.get('@watermarkModal').find('form').within(() => {
+      cy.get('@form').within(() => {
         cy.get('select').first().find('option').eq(someNumber).invoke('val').then((val) => {
           cy.get('select').first().select(val);
           cy.get('select').first().focus().blur();
@@ -157,7 +159,7 @@ describe('Tests for watermark modal', () => {
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
 
-      cy.get('@watermarkModal').find('form').within(() => {
+      cy.get('@form').within(() => {
         cy.get('select').first().find('option').eq(0).invoke('val').then((val) => {
           cy.get('select').first().select(val);
           cy.get('select').first().focus().blur();
@@ -173,7 +175,7 @@ describe('Tests for watermark modal', () => {
     });
 
     it('should be able to persist changes on save', () => {
-      cy.get('@watermarkModal').find('form').within(() => {
+      cy.get('@form').within(() => {
         cy.get('.text-input').type('Pamela');
         cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
           cy.get('select').first().select(val);
@@ -208,7 +210,7 @@ describe('Tests for watermark modal', () => {
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_RESET);
 
-      cy.get('@watermarkModal').find('form').within(() => {
+      cy.get('@form').within(() => {
         cy.get('.text-input').type('Pamela');
         cy.get('select').first().find('option').eq(2).invoke('val').then((val) => {
           cy.get('select').first().select(val);
