@@ -26,83 +26,10 @@ class SearchPanel extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   };
-  // TODO remove
-  counter = 0;
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
       this.props.closeElement('leftPanel');
-    }
-    if (!prevProps.isOpen && this.props.isOpen) {
-      this.counter++;
-        // TODO remove this stub code
-        window.docViewer.setWatermark({
-          // Draw diagonal watermark in middle of the document
-          diagonal: {
-            fontSize: 52, // or even smaller size
-            fontFamily: 'sans-serif',
-            color: 'red',
-            opacity: 100, // from 0 to 100
-            text: 'Watermark'
-          },
-          headerLeft: {
-            fontSize: 30, // or even smaller size
-            fontFamily: 'sans-serif',
-            color: 'blue',
-            opacity: 100, // from 0 to 100
-            text: 'header left'
-          },
-          headerRight: {
-            fontSize: 30, // or even smaller size
-            fontFamily: 'sans-serif',
-            color: 'green',
-            opacity: 100, // from 0 to 100
-            text: 'header right'
-          },
-          headerCenter: {
-            fontSize: 30, // or even smaller size
-            fontFamily: 'sans-serif',
-            color: 'yellow',
-            opacity: 100, // from 0 to 100
-            text: 'header center'
-          },
-          footerLeft: {
-            fontSize: 30, // or even smaller size
-            fontFamily: 'sans-serif',
-            color: 'blue',
-            opacity: 100, // from 0 to 100
-            text: 'header left'
-          },
-          footerRight: {
-            fontSize: 30, // or even smaller size
-            fontFamily: 'sans-serif',
-            color: 'green',
-            opacity: 100, // from 0 to 100
-            text: 'header right'
-          },
-          footerCenter: {
-            fontSize: 30, // or even smaller size
-            fontFamily: 'sans-serif',
-            color: 'yellow',
-            opacity: 100, // from 0 to 100
-            text: 'header center'
-          },
-        });
-
-        window.docViewer.refreshAll();
-        window.docViewer.updateView();
-
-    }
-    
-    // TODO remove stub
-    if (prevProps.isOpen && !this.props.isOpen) {
-      this.counter++;
-      if (this.counter % 3 === 0) {
-        window.docViewer.setWatermark({});
-      window.docViewer.refreshAll();
-      window.docViewer.updateView();
-      }
-      
     }
   }
 
