@@ -26,5 +26,4 @@ jobs:
       # - run:
       #     name: Generate minified bundle
       #     command: npm run build
-      - cypress/run:
-        start: npm start
+      - cypress/run
