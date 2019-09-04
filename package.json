@@ -9,7 +9,7 @@
     "test": "npx babel-node ./test-server.js",
     "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
     "cypress:open": "cypress open --project ./test/cypress",
-    "cy:run": "cypress run --project \"test/cypress\"  --spec \"test/cypress/**/watermarkModal.spec.js\" --browser chrome",
+    "cy:run": "cypress run --project \"test/cypress\"  --spec \"test/cypress/integration/watermarkModal.spec.js\" --browser chrome",
     "cy:run2": "cypress run --project \"test/cypress\" --spec \"test/cypress/integration/watermarkModal.spec.js\" --browser chrome",
     "lint": "eslint ./src/**/*.js",
     "lint:fix": "eslint --fix ./src/**/*.js",
