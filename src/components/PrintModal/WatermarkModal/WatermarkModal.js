@@ -34,7 +34,8 @@ const FORM_FIELD_KEYS = {
   color: 'color',
   opacity: 'opacity',
 };
-
+console.log(window);
+console.log(window.Annotations);
 const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.location]: WATERMARK_LOCATIONS.CENTER,
   [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[FONT_SIZES.length / 2],
