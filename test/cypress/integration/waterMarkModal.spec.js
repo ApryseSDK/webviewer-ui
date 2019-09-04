@@ -295,10 +295,11 @@ describe('Tests for watermark modal', () => {
             cy.get('@watermarkModal').find('[data-element="submit"]').click();
 
             cy.get('[data-element="printModalCloseButton"]').as('printModalCloseButton').click()
-              .then(() => {
+              .then(async () => {
                 window.docViewer.setWatermark(WATERMARK);
                 window.docViewer.refreshAll();
                 window.docViewer.updateView();
+                await window.docViewer.getWatermark();
               });
 
             cy.get('@menuButton').click();
@@ -306,10 +307,11 @@ describe('Tests for watermark modal', () => {
             cy.get('@applyWatermark').should('not.visible');
 
             cy.get('@printModalCloseButton').click()
-              .then(() => {
+              .then(async () => {
                 window.docViewer.setWatermark({});
                 window.docViewer.refreshAll();
                 window.docViewer.updateView();
+                await window.docViewer.getWatermark();
               });
 
             cy.get('@menuButton').click();
