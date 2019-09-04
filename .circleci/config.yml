@@ -17,12 +17,14 @@ jobs:
       - run:
           name: Lint
           command: npm run lint
-      - run:
-          name: Spin up server for e2e
-          command: npm start
-      - run:
-          name: Run e2e tests
-          command: npm run cy:run
-      - run:
-          name: Generate minified bundle
-          command: npm run build
+      # - run:
+      #     name: Spin up server for e2e
+      #     command: npm start
+      # - run:
+      #     name: Run e2e tests
+      #     command: npm run cy:run
+      # - run:
+      #     name: Generate minified bundle
+      #     command: npm run build
+      - cypress/run:
+        start: npm start
