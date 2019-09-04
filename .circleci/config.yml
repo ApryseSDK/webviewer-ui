@@ -31,10 +31,12 @@ workflows:
   test_and_deploy:
     jobs:
       # - build
+      - checkout
+      - cypress/install
       - cypress/run:
-        pre-steps:
-          - run: npm install
-        start: npm start
-        wait-on: 'http://localhost:3000'
-        command: npm run cy:run
-        no-workspace: true
+          requires:
+            - cypress/install
+          start: npm start
+          wait-on: 'http://localhost:3000'
+          command: npm run cy:run
+          no-workspace: true
