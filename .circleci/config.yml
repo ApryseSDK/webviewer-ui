@@ -36,8 +36,8 @@ workflows:
           requires:
             - cypress/install
           start: npm start
-          wait-on: 'http://localhost:3000'
-          # command: npm run cy:run
+          wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
+          command: npm run cy:run
           no-workspace: true
-          browser: chrome
+          # browser: chrome
           executor: cypress/browsers-chrome69
