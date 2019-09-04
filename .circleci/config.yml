@@ -31,8 +31,9 @@ workflows:
   test_and_deploy:
     jobs:
       # - build
-      - cypress/install:
-          build: 'npm run build'
+      # - cypress/install:
+      #     build: 'npm run build'
+      - cypress/install
       - cypress/run:
           requires:
             - cypress/install
