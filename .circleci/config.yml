@@ -33,7 +33,7 @@ workflows:
       # - build
       - cypress/run:
         pre-steps:
-            - run: npm install
+          - run: npm install
         start: npm start
         wait-on: 'http://localhost:3000'
         command: npm run cy:run
