@@ -15,7 +15,7 @@ function waitOneSecond(time) {
 }
 
 
-describe('Test extension and preloadWorker options', () => {
+describe.skip('Test extension and preloadWorker options', () => {
   // beforeEach(() => {
   //   cy.visit(WebViewerUrl + '#d=/files/png_file&a=1');
   // });
@@ -177,7 +177,7 @@ describe('Test extension and preloadWorker options', () => {
 
 
 
-describe('Test extension in url', () => {
+describe.skip('Test extension in url', () => {
 
   it('should fail loading image doc without extension', function () {
     cy.visit(WebViewerUrl + '#d=' + testFilesPath + '/png_file');
@@ -223,7 +223,7 @@ describe('Test extension in url', () => {
 
 })
 
-describe('Test loadDocument extension and preloadWorker options', () => {
+describe.skip('Test loadDocument extension and preloadWorker options', () => {
   before(() => {
     cy.server()
     cy.visit(WebViewerUrl + '#preloadWorker=pdf');
