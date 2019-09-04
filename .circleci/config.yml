@@ -12,5 +12,8 @@ jobs:
           name: Lint
           command: npm run lint
       - run:
+        name: Run e2e tests
+        command: npm run cy:run -- --project "test/cypress" --spec "test/cypress/integration/watermarkModal.spec.js" --browser chrome
+      - run:
           name: Generate minified bundle
           command: npm run build
