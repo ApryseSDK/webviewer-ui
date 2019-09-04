@@ -17,8 +17,9 @@ jobs:
       - run:
           name: Lint
           command: npm run lint
-      - cypress/run:
-          start: npm start
+      - run:
+          name: Spin up server for e2e
+          command: npm start
       - run:
           name: Run e2e tests
           command: npm run cy:run
