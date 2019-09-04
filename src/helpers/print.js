@@ -4,7 +4,9 @@ import actions from 'actions';
 import core from 'core';
 
 export default (dispatch, isEmbedPrintSupported) =>  {
-  if (!core.getDocument()) return;
+  if (!core.getDocument()) {
+    return;
+  }
 
   const bbURLPromise = core.getPrintablePDF();
 

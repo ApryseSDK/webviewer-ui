@@ -9,6 +9,7 @@
     "test": "npx babel-node ./test-server.js",
     "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
     "cypress:open": "cypress open --project ./test/cypress",
+    "cy:run": "cypress run",
     "lint": "eslint ./src/**/*.js",
     "lint:fix": "eslint --fix ./src/**/*.js",
     "clean": "rimraf build",
