@@ -132,7 +132,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@watermarkModal').find('[data-element="reset"]').as('reset');
     });
 
-    it.only('Should be able to open watermark modal from print modal', () => {
+    it('Should be able to open watermark modal from print modal', () => {
       cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
       cy.get('@formContainer').matchImageSnapshot(ID.INIT);
     });
