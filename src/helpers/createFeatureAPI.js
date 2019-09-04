@@ -1,11 +1,11 @@
 import core from 'core';
+import hotkeys from 'src/apis/hotkeys';
 import localStorageManager from 'helpers/localStorageManager';
 import TouchEventManager from 'helpers/TouchEventManager';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import Feature from 'constants/feature';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
-
 
 // a higher older function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => features => {
@@ -24,6 +24,7 @@ export default (enable, store) => features => {
       dataElements: [
         'notesPanel',
         'notesPanelButton',
+        // TODO: use disableTools?
         ...getAnnotationRelatedElements(store.getState()),
       ],
       fn: () => {
@@ -41,9 +42,9 @@ export default (enable, store) => features => {
       dataElements: ['filePickerHandler', 'filePickerButton'],
       fn: () => {
         if (enable) {
-          hotkeysManager.on('ctrl+o, command+o');
+          hotkeys.on('ctrl+o, command+o');
         } else {
-          hotkeysManager.off('ctrl+o, command+o');
+          hotkeys.off('ctrl+o, command+o');
         }
       },
     },

@@ -1,18 +1,27 @@
 import core from 'core';
+import createDisableFeatures from 'src/apis/disableFeatures';
 import getHashParams from 'helpers/getHashParams';
 import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import { isMobileDevice } from 'helpers/device';
 import { PRIORITY_THREE, PRIORITY_ONE } from 'constants/actionPriority';
+import Feature from 'constants/feature';
 import actions from 'actions';
 
 export default store => {
   const { dispatch, getState } = store;
   const state = getState();
 
+  const disableFeatures = createDisableFeatures(store);
+
   disableElementsPassedByConstructor(state, dispatch);
   disableElementsIfReadOnly(state, dispatch);
   disableElementsIfAnnotationDisabled(state, dispatch);
-  disableElementsIfFilePickerDisabled(dispatch);
+
+  const filePickerDisabled = !getHashParams('filepicker', false);
+  if (filePickerDisabled) {
+    disableFeatures([Feature.FilePicker]);
+  }
+
   disableElementsIfHideAnnotationPanel(dispatch);
   disableElementsIfToolBarDisabled(dispatch);
   disableElementsIfMeasurementsDisabled(dispatch);
@@ -46,19 +55,6 @@ const disableElementsIfAnnotationDisabled = (state, dispatch) => {
       'notesPanel',
       'notesPanelButton',
       ...getAnnotationRelatedElements(state),
-    ];
-
-    dispatch(actions.disableElements(elements, PRIORITY_ONE));
-  }
-};
-
-const disableElementsIfFilePickerDisabled = dispatch => {
-  const filePickerDisabled = !getHashParams('filepicker', false);
-
-  if (filePickerDisabled) {
-    const elements = [
-      'filePickerHandler',
-      'filePickerButton',
     ];
 
     dispatch(actions.disableElements(elements, PRIORITY_ONE));
