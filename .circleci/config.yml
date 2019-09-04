@@ -30,5 +30,4 @@ jobs:
 workflows: 
   test_and_deploy:
     jobs: 
-      - test
       - cypress/run
