@@ -29,7 +29,8 @@ jobs:
       # - cypress/run
 workflows: 
   test_and_deploy:
-    jobs: 
+    jobs:
+      - build
       - cypress/run:
           start: npm start
           wait-on: 'http://localhost:3000'
