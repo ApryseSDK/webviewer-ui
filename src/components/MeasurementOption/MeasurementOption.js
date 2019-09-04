@@ -9,16 +9,6 @@ import selectors from 'selectors';
 import './MeasurementOption.scss';
 
 class MeasurementOption extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { currScaleFrom: props.scale[0][0],
-      currUnitFrom: props.scale[0][1],
-      currScaleTo: props.scale[1][0],
-      currUnitTo: props.scale[1][1],
-      currPrecision: props.precision,
-      isEditing: false };
-  }
-
   static propTypes = {
     /**
      * The current scale of a measurement tool that is consisted of two arrays
@@ -40,9 +30,35 @@ class MeasurementOption extends React.Component {
       to: PropTypes.array,
     }).isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    onOpenDropdownChange: PropTypes.func.isRequired,
     openMeasurementDropdown: PropTypes.number,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = { 
+      currScaleFrom: props.scale[0][0],
+      currUnitFrom: props.scale[0][1],
+      currScaleTo: props.scale[1][0],
+      currUnitTo: props.scale[1][1],
+      currPrecision: props.precision,
+      isEditing: false };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.scale !== prevProps.scale) {
+      this.setState((state, props) => ({
+        currScaleFrom: props.scale[0][0],
+        currUnitFrom: props.scale[0][1],
+        currScaleTo: props.scale[1][0],
+        currUnitTo: props.scale[1][1]
+      }));
+    }
+    if (this.props.precision !== prevProps.precision) {
+      this.setState((state, props) => ({
+        currPrecision: props.precision
+      }));
+    }
+  }
 
   onScaleChange = (value, type) => {
     this.setState({ [type]: Number(value) }, () => {
@@ -82,24 +98,23 @@ class MeasurementOption extends React.Component {
     const lang = this.getLanguage();
     
     if (lang === 'de') {
-      return value.toLocaleString('de-DE', { maximumFractionDigits: 4 });
+      value = value.toLocaleString('de-DE', { maximumFractionDigits: 4 });
     } else if (lang === 'fr') {
-      return value.toLocaleString('fr-FR', { maximumFractionDigits: 4 });
+      value =  value.toLocaleString('fr-FR', { maximumFractionDigits: 4 });
     } else if (lang === 'ru') {
-      return value.toLocaleString('ru-RU', { maximumFractionDigits: 4 });
+      value = value.toLocaleString('ru-RU', { maximumFractionDigits: 4 });
     }
     
     return value;
   }
 
   toggleEditing = () => {
-    this.setState({ isEditing: !this.state.isEditing });
+    this.setState(state => ({ isEditing: !state.isEditing }));
   }
 
   render() {
     const {
       measurementUnits,
-      onOpenDropdownChange,
       t,
     } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
@@ -113,7 +128,6 @@ class MeasurementOption extends React.Component {
     return (
       <div
         className="MeasurementOption"
-        onClick={() => onOpenDropdownChange(-1)}
       >
         <div className="Scale">
           <div className="LayoutTitle">

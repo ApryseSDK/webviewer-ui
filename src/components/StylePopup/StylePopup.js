@@ -22,14 +22,6 @@ class StylePopup extends React.PureComponent {
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
   };
 
-  state = {
-    openMeasurementDropdown: -1,
-  };
-
-  onOpenDropdownChange = dropdown => {
-    this.setState({ openMeasurementDropdown: dropdown });
-  };
-
   renderColorPalette = () => {
     const { style, onStyleChange, currentPalette } = this.props;
 
@@ -98,7 +90,6 @@ class StylePopup extends React.PureComponent {
 
   render() {
     const { currentPalette, style, colorMapKey, onStyleChange } = this.props;
-    const { openMeasurementDropdown } = this.state;
     const { Scale, Precision } = style;
 
     return (
@@ -121,7 +112,6 @@ class StylePopup extends React.PureComponent {
         <div
           className="sliders-container"
           onMouseDown={e => e.preventDefault()}
-          onClick={() => this.onOpenDropdownChange(-1)}
         >
           <div className="sliders">
             {!this.props.hideSlider && this.renderSliders()}
@@ -131,8 +121,6 @@ class StylePopup extends React.PureComponent {
           <MeasurementOption
             scale={Scale}
             precision={Precision}
-            onOpenDropdownChange={this.onOpenDropdownChange}
-            openMeasurementDropdown={openMeasurementDropdown}
             onStyleChange={onStyleChange}
           />
         )}
