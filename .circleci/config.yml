@@ -6,6 +6,8 @@ orbs:
   # to lock the version and prevent unexpected CI changes
   cypress: cypress-io/cypress@1
 jobs:
+- cypress/run:
+    start: npm start
   build:
     docker:
       - image: circleci/node:10-browsers
