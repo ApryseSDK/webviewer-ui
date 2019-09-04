@@ -40,3 +40,4 @@ workflows:
           # command: npm run cy:run
           no-workspace: true
           browser: chrome
+          executor: cypress/browsers-chrome69
