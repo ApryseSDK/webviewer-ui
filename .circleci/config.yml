@@ -32,6 +32,9 @@ workflows:
     jobs:
       # - build
       - cypress/run:
+        pre-steps:
+            - run: npm install
           start: npm start
           wait-on: 'http://localhost:3000'
           command: npm run cy:run
+          no-workspace: true
