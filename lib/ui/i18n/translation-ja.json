@@ -1,0 +1,202 @@
+{
+  "action": {
+    "apply": "適用",
+    "applyAll": "すべて適用",
+    "cancel": "キャンセル",
+    "clear": "クリア",
+    "close": "閉じる",
+    "comment": "コメント",
+    "copy": "コピー",
+    "delete": "削除",
+    "group": "グループ",
+    "ungroup": "グループ解除",
+    "download": "ダウンロード",
+    "edit": "編集",
+    "enterFullscreen": "全画面表示",
+    "exitFullscreen": "全画面表示を終了",
+    "fit": "フィット",
+    "fitToPage": "ページに合わせる",
+    "fitToWidth": "幅に合わせる",
+    "openFile": "ファイルを開く",
+    "print": "印刷",
+    "ok": "OK",
+    "reply": "返信",
+    "rotate": "回転",
+    "rotateClockwise": "時計回り",
+    "rotateCounterClockwise": "反時計回り",
+    "save": "保存",
+    "create": "作成",
+    "showMoreResults": "より多くの結果を表示",
+    "saveSignature": "署名の保存",
+    "sign": "署名",
+    "style": "スタイル",
+    "submit": "送信",
+    "zoom": "ズーム",
+    "zoomIn": "ズームイン",
+    "zoomOut": "ズームアウト"
+  },
+  "annotation": {
+    "areaMeasurement": "面積測定",
+    "arrow": "矢印",
+    "callout": "コールアウト",
+    "caret": "キャレット",
+    "distanceMeasurement": "距離測定",
+    "ellipse": "楕円",
+    "freehand": "フリーハンド",
+    "freehand2": "フリーハンド",
+    "freetext": "フリーテキスト",
+    "freetext2": "フリーテキスト",
+    "highlight": "ハイライト",
+    "highlight2": "ハイライト",
+    "line": "線",
+    "perimeterMeasurement": "境界測定",
+    "polygon": "ポリゴン",
+    "polygonCloud": "クラウド",
+    "polyline": "ポリライン",
+    "rectangle": "矩形",
+    "redact": "改訂",
+    "signature": "署名",
+    "squiggly": "波線",
+    "stamp": "スタンプ",
+    "stickyNote": "コメント",
+    "strikeout": "抹消線",
+    "underline": "下線",
+    "custom": "カスタム",
+    "eraser": "消しゴム"
+  },
+  "component": {
+    "freehandToolsButton": "フリーハンド ツール",
+    "leftPanel": "パネル",
+    "searchOverlay": "検索",
+    "menuOverlay": "メニュー",
+    "miscToolsButton": "その他のツール",
+    "notesPanel": "備考",
+    "outlinesPanel": "アウトライン",
+    "shapeToolsButton": "シェイプ ツール",
+    "textToolsButton": "テキスト ツール",
+    "thumbnailsPanel": "サムネイル",
+    "toolsButton": "ツール",
+    "redaction": "改訂",
+    "viewControlsOverlay": "コントロールの表示",
+    "measurementToolsButton": "測定ツール"
+  },
+  "message": {
+    "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
+    "customPrintPlaceholder": "例：3, 4-10",
+    "encryptedAttemptsExceeded": "暗号化されたドキュメントを読み込めませんでした。試行回数が多すぎます。",
+    "encryptedUserCancelled": "暗号化されたドキュメントを読み込目ませんでした。パスワード入力が取り消されました。",
+    "enterPassword": "このドキュメントは、パスワード保護されています。 パスワードを入力してください。",
+    "incorrectPassword": "パスワードが正しくありません。残りの試行回数：{{ remainingAttempts }}",
+    "noAnnotations": "このドキュメントには注釈がありません。",
+    "noOutlines": "このドキュメントには概要がありません。",
+    "noResults": "結果が見つかりませんでした。",
+    "notSupported": "このファイルの種類はサポートされていません。",
+    "passwordRequired": "パスワードが必要です",
+    "preparingToPrint": "印刷の準備をしています...",
+    "printTotalPageCount": "{{count}} ページ",
+    "printTotalPageCount_plural": "{{count}} ページ",
+    "processing": "処理中...",
+    "searching": "検索中...",
+    "searchPlaceholder": "コメントを検索...",
+    "signHere": "ここに署名",
+    "insertTextHere": "ここにテキストを挿入"
+  },
+  "option": {
+    "annotationColor": {
+      "StrokeColor": "罫線の色",
+      "FillColor": "塗りつぶしの色",
+      "TextColor": "テキストの色"
+    },
+    "displayMode": {
+      "layout": "レイアウト",
+      "pageTransition": "ページ遷移"
+    },
+    "layout": {
+      "cover": "カバー",
+      "double": "ダブル",
+      "single": "シングル"
+    },
+    "notesPanel": {
+      "orderPosition": "位置",
+      "orderTime": "時間",
+      "separator": {
+        "today": "今日",
+        "yesterday": "昨日"
+      }
+    },
+    "pageTransition": {
+      "continuous": "続く",
+      "default": "ページごと"
+    },
+    "print": {
+      "all": "すべて",
+      "current": "現在の",
+      "pages": "ページ",
+      "includeComments": "コメントを含める"
+    },
+    "redaction": {
+      "markForRedaction": "改訂マーク",
+      "warningPopupMessage": "この操作を行うと、編集対象として選択されているすべてのアイテムが完全に削除されます。 元に戻すことはできません。",
+      "warningPopupTitle": "改定を適用"
+    },
+    "searchPanel": {
+      "caseSensitive": "大文字と小文字を区別",
+      "wholeWordOnly": "単語全体"
+    },
+    "signatureOverlay": {
+      "addSignature": "署名を追加"
+    },
+    "measurementOverlay": {
+      "scale": "スケール比",
+      "angle": "角度",
+      "distance": "距離",
+      "perimeter": "境界",
+      "area": "領域",
+      "distanceMeasurement": "距離測定",
+      "perimeterMeasurement": "境界測定",
+      "areaMeasurement": "面積測定"
+    },
+    "measurementOption": {
+      "scale": "スケール"
+    },
+    "slider": {
+      "opacity": "不透明度",
+      "thickness": "厚さ",
+      "text": "テキスト サイズ"
+    },
+    "shared": {
+      "page": "ページ",
+      "precision": "精度"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
+  },
+  "tool": {
+    "pan": "パン",
+    "select": "選択",
+    "Marquee": "マーキーズーム"
+  }
+}

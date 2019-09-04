@@ -1,0 +1,203 @@
+{
+  "action": {
+    "apply": "Toepassen",
+    "applyAll": "Alles toepassen",
+    "cancel": "Annuleren",
+    "clear": "Legen",
+    "close": "Sluiten",
+    "comment": "Opmerking",
+    "copy": "Kopieer",
+    "delete": "Verwijder",
+    "group": "Groep",
+    "ungroup": "Ungroup",
+    "download": "Download bestand",
+    "edit": "Titel aanpassen",
+    "enterFullscreen": "Document in volledig scherm",
+    "exitFullscreen": "Document normaal weergeven",
+    "fit": "Zoomen",
+    "fitToPage": "Vensterhoogte",
+    "fitToWidth": "Vensterbreedte",
+    "openFile": "Open bestand",
+    "print": "Printen",
+    "ok": "OK",
+    "reply": "Antwoorden",
+    "rotate": "Roteren",
+    "rotateClockwise": "Met de klok mee",
+    "rotateCounterClockwise": "Tegen de klok in",
+    "save": "Bewaren",
+    "create": "creëren",
+    "showMoreResults": "Toon meer resultaten",
+    "saveSignature": "Sla handtekening op",
+    "sign": "Ondertekenen",
+    "style": "Opmaak",
+    "submit": "Verzenden",
+    "zoom": "Zoom",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom uit"
+  },
+  "annotation": {
+    "areaMeasurement": "Oppervlaktemeting",
+    "arrow": "Pijl",
+    "callout": "Opmerking met pijl",
+    "caret": "Dakje",
+    "distanceMeasurement": "Afstandsmeting",
+    "ellipse": "Ellips",
+    "freehand": "Vrije hand",
+    "freehand2": "Vrije hand",
+    "freetext": "Tekst plaatsen",
+    "freetext2": "Tekst plaatsen",
+    "highlight": "Arceren",
+    "highlight2": "Arceren",
+    "line": "Lijn",
+    "perimeterMeasurement": "Perimeter meting",
+    "polygon": "Veelhoek",
+    "polygonCloud": "Cloud",
+    "polyline": "Polyline",
+    "rectangle": "Rechthoek",
+    "redact": "Redigeren",
+    "signature": "Handtekening",
+    "squiggly": "Squiggly",
+    "stamp": "Stempel",
+    "stickyNote": "Commentaar",
+    "strikeout": "Doorstrepen",
+    "underline": "Onderstrepen",
+    "custom": "maatwerk",
+    "eraser": "Gom"
+  },
+  "component": {
+    "freehandToolsButton": "Vrije hand tools",
+    "leftPanel": "Panel",
+    "searchOverlay": "Zoeken",
+    "menuOverlay": "Menu",
+    "miscToolsButton": "Diverse tools",
+    "notesPanel": "Notities",
+    "outlinesPanel": "Hoofdlijnen",
+    "layersPanel": "Lagen",
+    "shapeToolsButton": "Vorm tools",
+    "textToolsButton": "Tekst tools",
+    "thumbnailsPanel": "Miniatuurweergave",
+    "toolsButton": "Tools",
+    "redaction": "Redigeren",
+    "viewControlsOverlay": "Scherm opties",
+    "measurementToolsButton": "Meetinstrumenten"
+  },
+  "message": {
+    "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
+    "customPrintPlaceholder": "bijv. 3, 4-10",
+    "encryptedAttemptsExceeded": "Fout bij het laden van versleuteld document. Te veel pogingen.",
+    "encryptedUserCancelled": "Fout bij het laden van versleuteld document. Wachtwoord invoer geannuleerd.",
+    "enterPassword": "Dit document heeft een wachtwoord beveiliging. Geen een wachtwoord",
+    "incorrectPassword": "Fout wachtwoord, overgebleven pogingen: {{ remainingAttempts }}",
+    "noAnnotations": "Dit document heeft geen annotaties.",
+    "noOutlines": "Dit document heeft geen hoofdlijnen.",
+    "noResults": "Geen resultaten.",
+    "notSupported": "Dit bestandstype wordt niet ondersteund.",
+    "passwordRequired": "Wachtwoord vereist",
+    "preparingToPrint": "Printen voorbereiden...",
+    "printTotalPageCount": "{{count}} pagina",
+    "printTotalPageCount_plural": "{{count}} pagina's",
+    "processing": "Bezig...",
+    "searching": "Zoeken...",
+    "searchPlaceholder": "Zoek opmerkingen...",
+    "signHere": "Teken hier",
+    "insertTextHere": "Vul hier tekst in"
+  },
+  "option": {
+    "annotationColor": {
+      "StrokeColor": "Rand kleur",
+      "FillColor": "Vulling kleur",
+      "TextColor": "Tekst kleur"
+    },
+    "displayMode": {
+      "layout": "Layout",
+      "pageTransition": "Pagina overgang"
+    },
+    "layout": {
+      "cover": "Blad",
+      "double": "Dubbel",
+      "single": "Enkel"
+    },
+    "notesPanel": {
+      "orderPosition": "Positie",
+      "orderTime": "Tijd",
+      "separator": {
+        "today": "Vandaag",
+        "yesterday": "Gisteren"
+      }
+    },
+    "pageTransition": {
+      "continuous": "Doorlopend",
+      "default": "Pagina voor pagina"
+    },
+    "print": {
+      "all": "Alles",
+      "current": "Huidige",
+      "pages": "Pagina's",
+      "includeComments": "Inclusief commentaar"
+    },
+    "redaction": {
+      "markForRedaction": "Markeren voor redactie",
+      "warningPopupMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
+      "warningPopupTitle": "Redactiewijziging Toepassen"
+    },
+    "searchPanel": {
+      "caseSensitive": "Hoofdlettergevoelig",
+      "wholeWordOnly": "Hele woorden"
+    },
+    "signatureOverlay": {
+      "addSignature": "Voeg een handtekening toe"
+    },
+    "measurementOverlay": {
+      "scale": "Schaalverhouding",
+      "angle": "Hoek",
+      "distance": "Afstand",
+      "perimeter": "Omtrek",
+      "area": "Gebied",
+      "distanceMeasurement": "Afstands meting",
+      "perimeterMeasurement": "Perimeter meting",
+      "areaMeasurement": "Gebieds meting"
+    },
+    "measurementOption": {
+      "scale": "Schaal"
+    },
+    "slider": {
+      "opacity": "Dekking",
+      "thickness": "Randdikte",
+      "text": "Lettergrootte"
+    },
+    "shared": {
+      "page": "Pagina",
+      "precision": "precisie"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
+  },
+  "tool": {
+    "pan": "Schuiven",
+    "select": "Selecteren",
+    "Marquee": "Selectie zoom"
+  }
+}

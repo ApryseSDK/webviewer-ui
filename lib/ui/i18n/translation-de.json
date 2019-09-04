@@ -1,0 +1,202 @@
+{
+  "action": {
+    "apply": "Anwenden",
+    "applyAll": "Alles anwenden",
+    "cancel": "Abbrechen",
+    "clear": "Löschen",
+    "close": "Schliessen",
+    "comment": "Kommentar",
+    "copy": "Kopieren",
+    "delete": "Löschen",
+    "group": "Gruppe",
+    "ungroup": "Gruppierung aufheben",
+    "download": "Download",
+    "edit": "Bearbeiten",
+    "enterFullscreen": "Vollbildansicht",
+    "exitFullscreen": "Vollbildansicht beenden",
+    "fit": "Anpassen",
+    "fitToPage": "An Seite anpassen",
+    "fitToWidth": "An Breite anpassen",
+    "openFile": "Datei öffnen",
+    "print": "Drucken",
+    "ok": "OK",
+    "reply": "Antwort",
+    "rotate": "Drehen",
+    "rotateClockwise": "Im Uhrzeigersinn",
+    "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
+    "save": "Speichern",
+    "create": "Erzeugen",
+    "showMoreResults": "Mehr Ergebnisse anzeigen",
+    "saveSignature": "Unterschrift speichern",
+    "sign": "Unterschrift",
+    "style": "Stil",
+    "submit": "Abgeben",
+    "zoom": "Zoom",
+    "zoomIn": "Heranzoomen",
+    "zoomOut": "Rauszoomen"
+  },
+  "annotation": {
+    "areaMeasurement": "Flächenmessung",
+    "arrow": "Pfeil",
+    "callout": "Callout",
+    "caret": "Caret",
+    "distanceMeasurement": "Abstandsmessung",
+    "ellipse": "Ellipse",
+    "freehand": "Freihandzeichnen",
+    "freehand2": "Freihandzeichnen",
+    "freetext": "Freitext",
+    "freetext2": "Freitext",
+    "highlight": "Hervorheben",
+    "highlight2": "Hervorheben",
+    "line": "Linie",
+    "perimeterMeasurement": "Umfangsmessung",
+    "polygon": "Polygon",
+    "polygonCloud": "Wolke",
+    "polyline": "Linienzug",
+    "rectangle": "Rechteck",
+    "redact": "Schwärzen",
+    "signature": "Unterschrift",
+    "squiggly": "Gewellte Linie",
+    "stamp": "Stempel",
+    "stickyNote": "Kommentar",
+    "strikeout": "Durchstreichen",
+    "underline": "Unterstreichen",
+    "custom": "Angepasst",
+    "eraser": "Radiergummi"
+  },
+  "component": {
+    "freehandToolsButton": "Freihand-Werkzeuge",
+    "leftPanel": "Linke Leiste",
+    "searchOverlay": "Suche",
+    "menuOverlay": "Menü",
+    "miscToolsButton": "Verschiedene Werkzeuge",
+    "notesPanel": "Annotationen",
+    "outlinesPanel": "Gliederung",
+    "shapeToolsButton": "Formwerkzeuge",
+    "textToolsButton": "Textwerkzeuge",
+    "thumbnailsPanel": "Miniaturansicht",
+    "toolsButton": "Werkzeuge",
+    "redaction": "Schwärzen",
+    "viewControlsOverlay": "Anzeigeoptionen",
+    "measurementToolsButton": "Messwerkzeuge"
+  },
+  "message": {
+    "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
+    "customPrintPlaceholder": "z.B. 3, 4-10",
+    "encryptedAttemptsExceeded": "Fehler beim Laden des verlüsselten Dokuments. Zu viele Versuche.",
+    "encryptedUserCancelled": "Fehler beim Laden des verlüsselten Dokuments. Passworteingabe wurde abgebrochen.",
+    "enterPassword": "Dieses Dokument ist durch ein Passwort geschützt. Bitte geben Sie ein Passwort ein",
+    "incorrectPassword": "Falsches Passwort, Verbleibende Versuche: {{ remainingAttempts }}",
+    "noAnnotations": "Dieses Dokument hat keine Annotationen.",
+    "noOutlines": "Dieses Dokument enthält keine Gliederung.",
+    "noResults": "Keine Ergebnisse gefunden.",
+    "notSupported": "Dieser Dateityp ist nicht unterstützt.",
+    "passwordRequired": "Passwort erforderlich",
+    "preparingToPrint": "Druckvorbereitung...",
+    "printTotalPageCount": "{{count}} Seite",
+    "printTotalPageCount_plural": "{{count}} Seiten",
+    "processing": "Bearbeite...",
+    "searching": "Suche...",
+    "searchPlaceholder": "Suche Kommentare...",
+    "signHere": "Hier unterschreiben",
+    "insertTextHere": "Hier Text eingeben"
+  },
+  "option": {
+    "annotationColor": {
+      "StrokeColor": "Randfarbe",
+      "FillColor": "Füllfarbe",
+      "TextColor": "Textfarbe"
+    },
+    "displayMode": {
+      "layout": "Layout",
+      "pageTransition": "Seitenübergang"
+    },
+    "layout": {
+      "cover": "Deckblatt",
+      "double": "Zweiseitig",
+      "single": "Einseitig"
+    },
+    "notesPanel": {
+      "orderPosition": "Position",
+      "orderTime": "Zeit",
+      "separator": {
+        "today": "Heute",
+        "yesterday": "Gestern"
+      }
+    },
+    "pageTransition": {
+      "continuous": "Fortlaufend",
+      "default": "Seite für Seite"
+    },
+    "print": {
+      "all": "Alle",
+      "current": "Aktuelle Seite",
+      "pages": "Seiten",
+      "includeComments": "Kommentare einfügen"
+    },
+    "redaction": {
+      "markForRedaction": "Zum Schwärzen markieren",
+      "warningPopupMessage": "Diese Aktion wird dauerhaft die markierten Elemente zur Überarbeitung löschen. Dies kann nicht rückgängig gemacht werden.",
+      "warningPopupTitle": "Schwärzung anwenden"
+    },
+    "searchPanel": {
+      "caseSensitive": "Groß-/Klein- schreibung beachten",
+      "wholeWordOnly": "Ganzes Wort"
+    },
+    "signatureOverlay": {
+      "addSignature": "Eine Unterschrift hinzufügen"
+    },
+    "measurementOverlay": {
+      "scale": "Maßstab",
+      "angle": "Winkel",
+      "distance": "Abstand",
+      "perimeter": "Umfang",
+      "area": "Fläche",
+      "distanceMeasurement": "Abstandsmessung",
+      "perimeterMeasurement": "Umfangsmessung",
+      "areaMeasurement": "Flächenmessung"
+    },
+    "measurementOption": {
+      "scale": "Maßstab"
+    },
+    "slider": {
+      "opacity": "Deckkraft",
+      "thickness": "Dicke",
+      "text": "Textgröße"
+    },
+    "shared": {
+      "page": "Seite",
+      "precision": "Genauigkeit"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(E)"
+  },
+  "tool": {
+    "pan": "Hand",
+    "select": "Auswählen",
+    "Marquee": "Auswahl Zoom"
+  }
+}

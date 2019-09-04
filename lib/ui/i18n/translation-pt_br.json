@@ -1,0 +1,202 @@
+{
+  "action": {
+    "apply": "Aplicar",
+    "applyAll": "Aplicar todos",
+    "cancel": "Cancelar",
+    "clear": "Limpar",
+    "close": "Fechar",
+    "comment": "Comentário",
+    "copy": "Copiar",
+    "delete": "Apagar",
+    "group": "Grupo",
+    "ungroup": "Desagrupar",
+    "download": "Download",
+    "edit": "Editar",
+    "enterFullscreen": "Tela cheia",
+    "exitFullscreen": "Sair da tela cheia",
+    "fit": "Ajustar",
+    "fitToPage": "Ajustar à página",
+    "fitToWidth": "Ajustar à largura",
+    "openFile": "Abrir arquivo",
+    "print": "Imprimir",
+    "ok": "OK",
+    "reply": "Responder",
+    "rotate": "Girar",
+    "rotateClockwise": "Sentido horário",
+    "rotateCounterClockwise": "Sentido anti-horário",
+    "save": "Salvar",
+    "create": "Criar",
+    "showMoreResults": "Mostrar mais resultados",
+    "saveSignature": "Salvar assinatura",
+    "sign": "Assinar",
+    "style": "Estilo",
+    "submit": "Enviar",
+    "zoom": "Zoom",
+    "zoomIn": "Aproximar",
+    "zoomOut": "Afastar"
+  },
+  "annotation": {
+    "areaMeasurement": "Medição de área",
+    "arrow": "Seta",
+    "callout": "Texto explicativo",
+    "caret": "Cursor",
+    "distanceMeasurement": "Medição de distância",
+    "ellipse": "Elipse",
+    "freehand": "Mão livre",
+    "freehand2": "Mão livre",
+    "freetext": "Texto livre",
+    "freetext2": "Texto livre",
+    "highlight": "Destacar",
+    "highlight2": "Destacar",
+    "line": "Linha",
+    "perimeterMeasurement": "Medição de perímetro",
+    "polygon": "Polígono",
+    "polygonCloud": "Nuvem",
+    "polyline": "Polilinha",
+    "rectangle": "Retângulo",
+    "redact": "Suprimir",
+    "signature": "Assinatura",
+    "squiggly": "Linha ondulada",
+    "stamp": "Carimbo",
+    "stickyNote": "Comentário",
+    "strikeout": "Riscar",
+    "underline": "Sublinhar",
+    "custom": "Personalizado",
+    "eraser": "Apagador"
+  },
+  "component": {
+    "freehandToolsButton": "Ferramentas mão livre",
+    "leftPanel": "Painel",
+    "searchOverlay": "Procurar",
+    "menuOverlay": "Menu",
+    "miscToolsButton": "Ferramentas diversas",
+    "notesPanel": "Anotações",
+    "outlinesPanel": "Contorno",
+    "shapeToolsButton": "Ferramentas de forma",
+    "textToolsButton": "Ferramentas de texto",
+    "thumbnailsPanel": "Miniaturas",
+    "toolsButton": "Ferramentas",
+    "redaction": "Supressão",
+    "viewControlsOverlay": "Controles de visualização",
+    "measurementToolsButton": "Ferramentas de medição"
+  },
+  "message": {
+    "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
+    "customPrintPlaceholder": "p. ex. 3, 4-10",
+    "encryptedAttemptsExceeded": "Falha ao carregar documento criptografado. Tentativas demais.",
+    "encryptedUserCancelled": "Falha ao carregar documento criptografado. Digitação de senha cancelada.",
+    "enterPassword": "Esse documento é protegido por senha. Digite uma senha",
+    "incorrectPassword": "Senha incorreta, tentativas restantes: {{ remainingAttempts }}",
+    "noAnnotations": "Esse documento não tem anotações.",
+    "noOutlines": "Esse documento não tem esquema.",
+    "noResults": "Nenhum resultado encontrado.",
+    "notSupported": "Esse tipo de arquivo não é compatível.",
+    "passwordRequired": "Senha obrigatória",
+    "preparingToPrint": "Preparando impressão...",
+    "printTotalPageCount": "{{count}} página",
+    "printTotalPageCount_plural": "{{count}} páginas",
+    "processing": "Processando...",
+    "searching": "Procurando...",
+    "searchPlaceholder": "Buscar comentários...",
+    "signHere": "Assine aqui",
+    "insertTextHere": "Insira texto aqui"
+  },
+  "option": {
+    "annotationColor": {
+      "StrokeColor": "Cor da borda",
+      "FillColor": "Cor de preenchimento",
+      "TextColor": "Cor do texto"
+    },
+    "displayMode": {
+      "layout": "Layout",
+      "pageTransition": "Transição de página"
+    },
+    "layout": {
+      "cover": "Capa",
+      "double": "Duplo",
+      "single": "Único"
+    },
+    "notesPanel": {
+      "orderPosition": "Posição",
+      "orderTime": "Hora",
+      "separator": {
+        "today": "Hoje",
+        "yesterday": "Ontem"
+      }
+    },
+    "pageTransition": {
+      "continuous": "Contínuo",
+      "default": "Página por página"
+    },
+    "print": {
+      "all": "Todas",
+      "current": "Atual",
+      "pages": "Páginas",
+      "includeComments": "Incluir comentários"
+    },
+    "redaction": {
+      "markForRedaction": "Marcar para supressão",
+      "warningPopupMessage": "Todos os itens selecionados para supressão serão permanentemente removidos. Isso não pode ser desfeito.",
+      "warningPopupTitle": "Aplicar supressão"
+    },
+    "searchPanel": {
+      "caseSensitive": "Diferenciar maiúsculas e minúsculas",
+      "wholeWordOnly": "Palavra inteira"
+    },
+    "signatureOverlay": {
+      "addSignature": "Adicionar assinatura"
+    },
+    "measurementOverlay": {
+      "scale": "Razão de escala",
+      "angle": "Ângulo",
+      "distance": "Distância",
+      "perimeter": "Perímetro",
+      "area": "Área",
+      "distanceMeasurement": "Medição de distância",
+      "perimeterMeasurement": "Medição de perímetro",
+      "areaMeasurement": "Medição de área"
+    },
+    "measurementOption": {
+      "scale": "Escala"
+    },
+    "slider": {
+      "opacity": "Opacidade",
+      "thickness": "Espessura",
+      "text": "Tamanho do texto"
+    },
+    "shared": {
+      "page": "Página",
+      "precision": "Precisão"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)",
+    "eraser": "(AND)"
+  },
+  "tool": {
+    "pan": "Pan",
+    "select": "Selecionar",
+    "Marquee": "Zoom Marquee"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "program": {
+    "portable": {
+      "pnacl-translate": {
+        "url": "PDFWorker.pexe",
+        "optlevel": 0
+      }
+    }
+  }
+}

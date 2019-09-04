@@ -1,0 +1,10 @@
+{
+  "program": {
+    "portable": {
+      "pnacl-translate": {
+        "url": "SimpleWorker.pexe",
+        "optlevel": 0
+      }
+    }
+  }
+}
