@@ -26,4 +26,9 @@ jobs:
       # - run:
       #     name: Generate minified bundle
       #     command: npm run build
+      # - cypress/run
+workflows: 
+  test_and_deploy:
+    jobs: 
+      - test
       - cypress/run
