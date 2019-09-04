@@ -6,8 +6,6 @@ orbs:
   # to lock the version and prevent unexpected CI changes
   cypress: cypress-io/cypress@1
 jobs:
-- cypress/run:
-    start: npm start
   build:
     docker:
       - image: circleci/node:10-browsers
@@ -19,6 +17,8 @@ jobs:
       - run:
           name: Lint
           command: npm run lint
+      - cypress/run:
+          start: npm start
       - run:
           name: Run e2e tests
           command: npm run cy:run
