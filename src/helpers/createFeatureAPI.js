@@ -5,7 +5,7 @@ import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import Feature from 'constants/feature';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
-import hotkeys from '../apis/hotkeys';
+
 
 // a higher older function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => features => {
@@ -41,9 +41,9 @@ export default (enable, store) => features => {
       dataElements: ['filePickerHandler', 'filePickerButton'],
       fn: () => {
         if (enable) {
-          hotkeysManager.on('o');
+          hotkeysManager.on('ctrl+o, command+o');
         } else {
-          hotkeysManager.off('o');
+          hotkeysManager.off('ctrl+o, command+o');
         }
       },
     },

@@ -1,7 +1,10 @@
-import hotkeys from 'hotkeys-js';
+import hotkeysManager from 'helpers/hotkeysManager';
 
-// using on and off to make hotkeys have a similar event interface as docViewer and annotManager
 export default {
-  on: hotkeys,
-  off: hotkeys.unbind,
+  on: (...args) => {
+    hotkeysManager.on(...args);
+  },
+  off: (...args) => {
+    hotkeysManager.off(...args);
+  },
 };
