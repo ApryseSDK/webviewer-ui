@@ -39,3 +39,4 @@ workflows:
           wait-on: 'http://localhost:3000'
           command: npm run cy:run
           no-workspace: true
+          browser: chrome
