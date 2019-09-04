@@ -34,12 +34,11 @@ workflows:
       # - cypress/install:
       #     build: 'npm run build'
       - cypress/install
-      - run:
-          name: blah
-          command: ls
       - cypress/run:
           requires:
             - cypress/install
+          pre-steps:
+            - run: 'ls'
           start: npm start
           wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
           command: npm run cy:run
