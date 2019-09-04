@@ -16,6 +16,26 @@ const {
 } = require('cypress-image-snapshot/plugin');
 
 module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.name === 'electron') {
+      args['width'] = 1600;
+      args['height'] = 900;
+      args['resizable'] = false;
+
+      // whatever you return here becomes the new args
+      return args;
+    }
+    // if (browser.name === 'chrome' || browser.name === 'chromium') {
+    // https://github.com/cypress-io/cypress/issues/2102#issuecomment-521299946
+    // args.push('--window-size=200,800');
+    args.push('--cast-initial-screen-width=1600');
+    args.push('--cast-initial-screen-height=900');
+    args.push('--force-device-scale-factor=1');
+
+    // whatever you return here becomes the new args
+    return args;
+    // }
+  });
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   addMatchImageSnapshotPlugin(on, config);
