@@ -132,7 +132,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@watermarkModal').find('[data-element="reset"]').as('reset');
     });
 
-    it('Should be able to open watermark modal from print modal', () => {
+    it.only('Should be able to open watermark modal from print modal', () => {
       cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
       cy.get('@formContainer').matchImageSnapshot(ID.INIT);
     });
@@ -161,7 +161,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@submit').click();
     });
 
-    it.only('should be able to persist location settings before saving', () => {
+    it('should be able to persist location settings before saving', () => {
       fillOutForm();
 
       // wait for changes to canvas
