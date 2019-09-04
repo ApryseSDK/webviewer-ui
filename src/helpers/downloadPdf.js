@@ -28,20 +28,17 @@ export default (dispatch, options) => {
     const downloadName = getDownloadFilename(name, '.pdf');
 
     const doc = core.getDocument();
-    const bbURLPromise = externalURL ? Promise.resolve({ url: externalURL }) : doc.getDownloadLink({ filename: downloadName });
-    
-    if (bbURLPromise) {
+
+    if (externalURL) {
       const downloadIframe = document.getElementById('download-iframe') || document.createElement('iframe');
       downloadIframe.width = 0;
       downloadIframe.height = 0;
       downloadIframe.id = 'download-iframe';
       downloadIframe.src = null;
       document.body.appendChild(downloadIframe);
-      return bbURLPromise.then(result => {
-        downloadIframe.src = result.url;
-        dispatch(actions.closeElement('loadingModal'));
-        fireEvent('finishedSavingPDF');
-      });
+      downloadIframe.src = externalURL;
+      dispatch(actions.closeElement('loadingModal'));
+      fireEvent('finishedSavingPDF');
     } else {
       return doc.getFileData(downloadOptions).then(data => {
         const arr = new Uint8Array(data);
