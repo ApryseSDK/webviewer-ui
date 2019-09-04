@@ -34,6 +34,9 @@ workflows:
       # - cypress/install:
       #     build: 'npm run build'
       - cypress/install
+      - run:
+          name: blah
+          command: ls
       - cypress/run:
           requires:
             - cypress/install
