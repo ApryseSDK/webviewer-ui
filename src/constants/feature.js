@@ -12,7 +12,6 @@
  * @property {string} TextSelection
  * @property {string} TouchScrollLock
  * @property {string} Copy
- * @property {string} ReadOnly
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -34,5 +33,4 @@ export default {
   TextSelection: 'TextSelection',
   TouchScrollLock: 'TouchScrollLock',
   Copy: 'Copy',
-  ReadOnly: 'ReadOnly',
 };

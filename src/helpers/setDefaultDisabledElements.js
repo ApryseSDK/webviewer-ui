@@ -17,9 +17,10 @@ export default store => {
     dispatch(actions.disableElements(elements, PRIORITY_THREE));
   }
 
-  if (state.viewer.isReadOnly) {
-    disableFeatures([Feature.ReadOnly]);
-  }
+  // disabling/enabling elements will be handled in onUpdateAnnotationPermission.js
+  // the reason for doing this is to avoid duplicate code for handling the `enableReadOnly` constructor option
+  // and the effect of programmatically calling instance.docViewer.setReadOnly
+  core.setReadOnly(state.viewer.isReadOnly);
 
   const annotationDisabled = !getHashParams('a', false);
   if (annotationDisabled) {

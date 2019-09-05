@@ -26,6 +26,15 @@ export const isElementActive = (state, tool) => {
   );
 };
 
+export const allButtonsInGroupDisabled = (state, toolGroup) => {
+  const toolButtonObjects = getToolButtonObjects(state);
+  const dataElements = Object.values(toolButtonObjects)
+    .filter(({ group }) => group === toolGroup)
+    .map(({ dataElement }) => dataElement);
+
+  return dataElements.every(dataElement => isElementDisabled(state, dataElement));
+};
+
 export const getActiveHeaderItems = state =>
   state.viewer.headers[state.viewer.activeHeaderGroup];
 

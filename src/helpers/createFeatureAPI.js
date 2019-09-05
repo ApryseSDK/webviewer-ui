@@ -25,7 +25,6 @@ export default (enable, store) => features => {
       dataElements: [
         'notesPanel',
         'notesPanelButton',
-        'annotationCommentButton',
         'toolsButton',
       ],
       fn: () => {
@@ -66,13 +65,6 @@ export default (enable, store) => features => {
         'notesPanelButton',
         'notesPanel',
       ],
-      fn: () => {
-        if (enable) {
-          store.dispatch(actions.setActiveLeftPanel('notesPanel'));
-        } else {
-          store.dispatch(actions.setActiveLeftPanel('thumbnailsPanel'));
-        }
-      },
     },
     [Feature.Print]: {
       dataElements: ['printButton', 'printModal'],
