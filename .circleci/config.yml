@@ -27,6 +27,9 @@ jobs:
           name: Lint
           command: npm run lint
       - run:
+          name: start server
+          command: npm start
+      - run:
           name: Run tests
           command: npm run cy:run
       - run:
