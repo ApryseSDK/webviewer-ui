@@ -74,6 +74,12 @@ const HotkeysManager = {
     const isToolName = !!core.getToolModeMap()[key];
     if (isToolName) {
       key = this.getHotkeyByToolName(key);
+
+      // need to return here otherwise all the handlers will be removed
+      // if the tool name doesn't have a corresponding hotkey
+      if (!key) {
+        return;
+      }
     }
 
     // https://github.com/jaywcjlove/hotkeys#unbind
