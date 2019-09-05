@@ -17,25 +17,14 @@ jobs:
     steps:
       - checkout
       - run:
-        # https://gist.github.com/phra/192b6c0ada3f6eaf4029e430430b79fe
-        # TODO remove this b/c we don't need this
-          name: install Chrome
-          command:  |
-            sudo apt-get update
-            sudo apt-get install lsb-release libappindicator3-1
-            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            sudo dpkg -i google-chrome.deb
-            sudo sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox|g' /opt/google/chrome/google-chrome
-            rm google-chrome.deb
-      # - run:
-      #     name: Install dependencies
-      #     command: npm install
-      # - run:
-      #     name: Lint
-      #     command: npm run lint
-      # - run:
-      #     name: Generate minified bundle
-      #     command: npm run build
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Lint
+          command: npm run lint
+      - run:
+          name: Generate minified bundle
+          command: npm run build
 
 workflows:
   version: 2
@@ -48,8 +37,8 @@ workflows:
       # - cypress/install:
       #     executor: with-chrome
       - cypress/run:
-          requires:
-            - build
+          # requires:
+          #   - build
           #   - cypress/install
           post-steps:
             # TODO make it download webviewer here once the newest version is rdy and published to npm repo
