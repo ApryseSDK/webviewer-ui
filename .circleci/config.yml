@@ -24,6 +24,7 @@ jobs:
 workflows: 
   test_and_deploy:
     jobs:
+      - build
       - cypress/install
       - cypress/run:
           requires:
