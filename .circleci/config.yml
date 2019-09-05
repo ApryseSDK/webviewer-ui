@@ -52,5 +52,5 @@ workflows:
           command: npm run cy:run
           # no-workspace: true
           # https://github.com/cypress-io/cypress-docker-images/tree/master/browsers
-          executor: cypress/browsers:node12.4.0-chrome76
+          executor: cypress/base:12.4.0
           # browser: chrome
