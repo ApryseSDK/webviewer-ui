@@ -152,7 +152,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@watermarkModal').should('not.visible');
     });
 
-    it.only('Should be able to apply watermark', () => {
+    it('Should be able to apply watermark', () => {
       fillOutForm();
 
       cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
