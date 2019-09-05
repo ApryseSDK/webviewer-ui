@@ -44,7 +44,7 @@ workflows:
       #     requires:
       #       - build
       - cypress/install:
-          - executor: with-chrome
+          executor: with-chrome
       - cypress/run:
           requires:
             - cypress/install
