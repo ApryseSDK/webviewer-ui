@@ -50,10 +50,6 @@ workflows:
       - cypress/run:
           requires:
             - cypress/install
-          pre-steps:
-            - run:
-                name: temp
-                command: ls ./test/cypress/snapshots
           post-steps:
             # TODO make it download webviewer here once the newest version is rdy and published to npm repo
             - store_artifacts:
