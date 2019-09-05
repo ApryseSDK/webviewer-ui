@@ -94,7 +94,7 @@ class SignatureOverlay extends React.PureComponent {
     });
   }
 
-  onSignatureSaved = async (e, annotations) => {
+  onSignatureSaved = async annotations => {
     const numberOfSignaturesToRemove = this.state.defaultSignatures.length + annotations.length - this.props.maxSignaturesCount;
     const defaultSignatures = [...this.state.defaultSignatures];
 
@@ -120,7 +120,7 @@ class SignatureOverlay extends React.PureComponent {
     });
   }
 
-  onAnnotationChanged = async (e, annotations, action) => {
+  onAnnotationChanged = async (annotations, action) => {
     if (
       action === 'modify' &&
       annotations.length === 1 &&

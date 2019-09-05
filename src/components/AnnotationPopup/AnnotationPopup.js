@@ -92,10 +92,10 @@ class AnnotationPopup extends React.PureComponent {
     this.setState({ ...this.initialState });
   };
 
-  onMouseLeftUp = (e, mouseEvent) => {
+  onMouseLeftUp = e => {
     const { firstAnnotation } = this.state;
     if (firstAnnotation) {
-      const annot = core.getAnnotationManager().getAnnotationByMouseEvent(mouseEvent);
+      const annot = core.getAnnotationManager().getAnnotationByMouseEvent(e);
 
       if (annot === firstAnnotation) {
         this.positionAnnotationPopup();
@@ -112,7 +112,7 @@ class AnnotationPopup extends React.PureComponent {
     this.props.closeElement('annotationPopup');
   };
 
-  onAnnotationSelected = (e, annotations, action) => {
+  onAnnotationSelected = (annotations, action) => {
     if (action === 'selected') {
       if (annotations.length > 0) {
         const firstAnnotation = annotations[0];
@@ -125,7 +125,7 @@ class AnnotationPopup extends React.PureComponent {
     }
   };
 
-  onAnnotationChanged = (e, annotations, action) => {
+  onAnnotationChanged = (annotations, action) => {
     if (
       action === 'modify' &&
       core.isAnnotationSelected(this.state.firstAnnotation) &&

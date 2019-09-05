@@ -52,12 +52,12 @@ class Thumbnail extends React.PureComponent {
     onRemove(index);
   }
 
-  onLayoutChanged(e, changes) {
+  onLayoutChanged(changes) {
     const { contentChanged, moved, added, removed } = changes;
     const { index } = this.props;
 
     const currentPage = index + 1;
-    const currentPageStr = currentPage + '';
+    const currentPageStr = `${currentPage}`;
 
     const isPageAdded = added.indexOf(currentPage) > -1;
     const didPageChange = contentChanged.some(changedPage => currentPageStr === changedPage);
@@ -80,7 +80,7 @@ class Thumbnail extends React.PureComponent {
   }
 
   handleClick = () => {
-    const { index, closeElement} = this.props;
+    const { index, closeElement } = this.props;
 
     core.setCurrentPage(index + 1);
 
@@ -105,11 +105,11 @@ class Thumbnail extends React.PureComponent {
 
 const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
-  pageLabels: selectors.getPageLabels(state)
+  pageLabels: selectors.getPageLabels(state),
 });
 
 const mapDispatchToProps = {
-  closeElement: actions.closeElement
+  closeElement: actions.closeElement,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Thumbnail);

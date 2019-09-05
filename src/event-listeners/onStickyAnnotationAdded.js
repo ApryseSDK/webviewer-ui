@@ -3,7 +3,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import defaultTool from 'constants/defaultTool';
 
-export default ({ dispatch, getState }) => (e, annotation) => {
+export default ({ dispatch, getState }) => annotation => {
   const state = getState();
   const isNotesPanelDisabled = selectors.isElementDisabled(state, 'notesPanel');
   const isLeftPanelOpen = selectors.isElementOpen(state, 'leftPanel');
