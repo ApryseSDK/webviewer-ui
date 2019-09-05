@@ -224,7 +224,7 @@ class WatermarkModal extends React.PureComponent {
     this.setState({
       locationSettings: currLocationSettings,
     }, () => {
-      this.addWatermarks();
+      // this.addWatermarks();
     });
   }
 
