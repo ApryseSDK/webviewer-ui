@@ -5,6 +5,11 @@ let testFilesPath = '/test/files';
 let WebViewerUrl = 'http://localhost:3001/' //'http://localhost/WebViewerJS/lib/uix/build/'
 // let WebViewerUrl = 'http://localhost/WebViewerJS/lib/uix/build/'
 // let testFilesPath = '/WebViewerJS/samples/files';
+
+/**
+ * Note Skip running of all these tests because they aren't working
+ */
+
 function waitOneSecond(time) {
   return new Cypress.Promise((resolve, reject) => {
     setTimeout(() => {

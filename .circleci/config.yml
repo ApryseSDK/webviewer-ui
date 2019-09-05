@@ -48,4 +48,4 @@ workflows:
           no-workspace: true
           # browser: chrome
           executor: cypress/browsers-chrome69
-          store_artifacts: true
+          # store_artifacts: true

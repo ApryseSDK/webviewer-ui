@@ -1,6 +1,10 @@
 /// <reference types="Cypress" />
 import defaultToolStylesMap from '../../../src/constants/defaultToolStylesMap';
 
+/**
+ * Note Skip running of all these tests because they aren't working
+ */
+
 describe.skip('Local Storage', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/#d=/files/webviewer-demo-annotated.xod&a=1');
