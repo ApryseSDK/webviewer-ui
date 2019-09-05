@@ -123,9 +123,9 @@ if (window.CanvasRenderingContext2D) {
     setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
+    addEventHandlers();
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
-    addEventHandlers();
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
 

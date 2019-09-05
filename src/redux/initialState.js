@@ -121,7 +121,7 @@ export default {
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
-    activeLeftPanel: getHashParams('hideAnnotationPanel', false) || !getHashParams('a', false) || getHashParams('readonly', false) ? 'thumbnailsPanel' : 'notesPanel',
+    activeLeftPanel: getHashParams('hideAnnotationPanel', false) || !getHashParams('a', false) ? 'thumbnailsPanel' : 'notesPanel',
     activeToolGroup: '',
     notePopupId: '',
     isNoteEditing: false,

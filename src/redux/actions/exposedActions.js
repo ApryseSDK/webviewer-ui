@@ -12,8 +12,7 @@ export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   const isElementDisabled =
-    state.viewer.disabledElements[dataElement] &&
-    state.viewer.disabledElements[dataElement].disabled;
+    state.viewer.disabledElements[dataElement]?.disabled;
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
   const isElementOpen = isDataElementPanel(dataElement, state)
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
@@ -54,8 +53,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   const isElementDisabled =
-    state.viewer.disabledElements[dataElement] &&
-    state.viewer.disabledElements[dataElement].disabled;
+    state.viewer.disabledElements[dataElement]?.disabled;
   const isElementClosed = isDataElementPanel(dataElement, state)
     ? state.viewer.activeLeftPanel !== dataElement
     : !state.viewer.openElements[dataElement];
@@ -95,10 +93,7 @@ export const closeElements = dataElements => dispatch => {
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  if (
-    state.viewer.disabledElements[dataElement] &&
-    state.viewer.disabledElements[dataElement].disabled
-  ) {
+  if (state.viewer.disabledElements[dataElement]?.disabled) {
     return;
   }
 

@@ -7,7 +7,7 @@ import { isIE } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
-import TouchEventManager from 'helpers/TouchEventManager';
+import touchEventManager from 'helpers/TouchEventManager';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -49,7 +49,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    TouchEventManager.initialize(this.document.current, this.container.current);
+    touchEventManager.initialize(this.document.current, this.container.current);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
@@ -67,7 +67,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    TouchEventManager.terminate();
+    touchEventManager.terminate();
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
