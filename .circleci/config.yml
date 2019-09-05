@@ -27,6 +27,9 @@ jobs:
           name: Lint
           command: npm run lint
       - run:
+          name: Run tests
+          command: npm run cy:run
+      - run:
           name: Generate minified bundle
           command: npm run build
 
