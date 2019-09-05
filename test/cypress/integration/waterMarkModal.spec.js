@@ -152,7 +152,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@watermarkModal').should('not.visible');
     });
 
-    it('Should be able to apply watermark', () => {
+    it.only('Should be able to apply watermark', () => {
       fillOutForm();
 
       cy.get('@watermarkModal').find('canvas', { timeout: CANVAS_TIMEOUT_MS });
@@ -161,7 +161,7 @@ describe('Tests for watermark modal', () => {
       cy.get('@submit').click();
     });
 
-    it.only('should be able to persist location settings before saving', () => {
+    it('should be able to persist location settings before saving', () => {
       fillOutForm();
 
       // wait for changes to canvas
