@@ -8,6 +8,7 @@ orbs:
 executors:
   with-chrome:
     docker:
+      # https://github.com/cypress-io/cypress-docker-images/tree/master/browsers
       - image: 'cypress/browsers:node12.4.0-chrome76'
 jobs:
   build:
@@ -57,7 +58,6 @@ workflows:
           wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
           command: npm run cy:run
           executor: with-chrome
-          # no-workspace: true
-          # https://github.com/cypress-io/cypress-docker-images/tree/master/browsers
+          no-workspace: true
           # executor: cypress/base:12.4.0
           # browser: chrome
