@@ -17,6 +17,7 @@ jobs:
       - checkout
       - run:
         # https://gist.github.com/phra/192b6c0ada3f6eaf4029e430430b79fe
+        # TODO remove this b/c we don't need this
           name: install Chrome
           command:  |
             sudo apt-get update
