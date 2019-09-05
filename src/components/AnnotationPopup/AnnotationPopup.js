@@ -108,8 +108,17 @@ class AnnotationPopup extends React.PureComponent {
     this.close();
   };
 
-  handleClickOutside = () => {
-    this.props.closeElement('annotationPopup');
+  handleClickOutside = e => {
+    const notesPanel = document.querySelector('[data-element="notesPanel"]');
+    const clickedInNotesPanel = notesPanel?.contains(e.target);
+
+    // the notes panel has mousedown handlers to handle the opening/closing states of this component
+    // we don't want this handler to run when clicked in the notes panel otherwise the opening/closing states may mess up
+    // for example: click on a note will call core.selectAnnotation which triggers the annotationSelected event
+    // and opens this component. If we don't exclude the notes panel this handler will run and close it after
+    if (!clickedInNotesPanel) {
+      this.props.closeElement('annotationPopup');
+    }
   };
 
   onAnnotationSelected = (e, annotations, action) => {
