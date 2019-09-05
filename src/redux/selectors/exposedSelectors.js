@@ -35,9 +35,9 @@ export const getDisabledElementPriority = (state, dataElement) =>
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
 
 export const getToolButtonDataElements = (state, toolNames) =>
-  toolNames.map(
-    toolName => state.viewer.toolButtonObjects[toolName].dataElement,
-  );
+  toolNames
+    .map(toolName => state.viewer.toolButtonObjects[toolName]?.dataElement)
+    .filter(Boolean);
 
 export const getToolButtonObject = (state, toolName) =>
   state.viewer.toolButtonObjects[toolName];

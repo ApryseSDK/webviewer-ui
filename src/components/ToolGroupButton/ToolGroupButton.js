@@ -109,6 +109,7 @@ class ToolGroupButton extends React.PureComponent {
       iconColor,
       title,
     } = this.props;
+    // TODO: fix this
     const allButtonsInGroupDisabled = toolNames.every(
       toolName => core.getTool(toolName).disabled,
     );

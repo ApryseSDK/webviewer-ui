@@ -20,4 +20,5 @@ viewerElement.addEventListener('ready', function() {
 
 import core from 'core';
 
+// TODO: fix
 export default toolName => !!core.getTool(toolName).disabled;

@@ -2,10 +2,11 @@ import core from 'core';
 import hotkeys from 'src/apis/hotkeys';
 import localStorageManager from 'helpers/localStorageManager';
 import TouchEventManager from 'helpers/TouchEventManager';
-import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
 import Feature from 'constants/feature';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
+import enableTools from 'src/apis/enableTools';
+import disableTools from 'src/apis/disableTools';
 
 // a higher older function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => features => {
@@ -24,14 +25,16 @@ export default (enable, store) => features => {
       dataElements: [
         'notesPanel',
         'notesPanelButton',
-        // TODO: use disableTools?
-        ...getAnnotationRelatedElements(store.getState()),
+        'annotationCommentButton',
+        'toolsButton',
       ],
       fn: () => {
         if (enable) {
           core.showAnnotations(core.getAnnotationsList());
+          enableTools(store)();
         } else {
           core.hideAnnotations(core.getAnnotationsList());
+          disableTools(store)();
         }
       },
     },
@@ -72,8 +75,14 @@ export default (enable, store) => features => {
       },
     },
     [Feature.Print]: {
-      // TODO: disableHotkeys
       dataElements: ['printButton', 'printModal'],
+      fn: () => {
+        if (enable) {
+          hotkeys.on('ctrl+p, command+p');
+        } else {
+          hotkeys.off('ctrl+p, command+p');
+        }
+      },
     },
     [Feature.Redaction]: {
       dataElements: ['redactionButton'],
@@ -103,10 +112,14 @@ export default (enable, store) => features => {
         TouchEventManager.enableTouchScrollLock = enable;
       },
     },
-    [Feature.CopyText]: {
-      dataElements: ['CopyTextButton'],
+    [Feature.Copy]: {
+      dataElements: ['copyTextButton'],
       fn: () => {
-        // TODO: disable hotkey
+        if (enable) {
+          hotkeys.on('ctrl+c, command+c');
+        } else {
+          hotkeys.off('ctrl+c, command+c');
+        }
       },
     },
   };

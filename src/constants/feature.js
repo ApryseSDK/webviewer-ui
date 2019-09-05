@@ -11,14 +11,14 @@
  * @property {string} Redaction
  * @property {string} TextSelection
  * @property {string} TouchScrollLock
- * @property {string} CopyText
+ * @property {string} Copy
  * @property {string} ReadOnly
  * @example
 WebViewer(...)
   .then(function(instance) {
     var Feature = instance.Feature;
     instance.enableFeatures([Feature.Measurement]);
-    instance.disableFeatures([Feature.CopyText]);
+    instance.disableFeatures([Feature.Copy]);
   });
  */
 
@@ -33,6 +33,6 @@ export default {
   Redaction: 'Redaction',
   TextSelection: 'TextSelection',
   TouchScrollLock: 'TouchScrollLock',
-  CopyText: 'CopyText',
+  Copy: 'Copy',
   ReadOnly: 'ReadOnly',
 };
