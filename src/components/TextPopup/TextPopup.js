@@ -23,7 +23,7 @@ class TextPopup extends React.PureComponent {
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired
+    closeElements: PropTypes.func.isRequired,
   }
 
   constructor() {
@@ -31,7 +31,7 @@ class TextPopup extends React.PureComponent {
     this.popup = React.createRef();
     this.state = {
       left: 0,
-      top: 0
+      top: 0,
     };
   }
 
@@ -46,7 +46,7 @@ class TextPopup extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([ 'annotationPopup', 'contextMenuPopup' ]);
+      this.props.closeElements(['annotationPopup', 'contextMenuPopup']);
     }
   }
 
@@ -58,9 +58,9 @@ class TextPopup extends React.PureComponent {
     this.props.closeElement('textPopup');
   }
 
-  onSelectionComplete = (e, startQuad, allQuads) => {
+  onSelectionComplete = (startQuad, allQuads) => {
     const { isDisabled, openElement } = this.props;
-    
+
     if (!isDisabled) {
       this.positionTextPopup(allQuads);
       openElement('textPopup');
@@ -86,7 +86,7 @@ class TextPopup extends React.PureComponent {
     const { left, top } = this.state;
     const className = getClassName('Popup TextPopup', this.props);
     const isCreateRedactionEnabled = core.isCreateRedactionEnabled();
-    
+
     return (
       <div className={className} data-element={'textPopup'} ref={this.popup} style={{ left, top }}>
         <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={this.onClickCopy} />

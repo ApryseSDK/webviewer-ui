@@ -3,7 +3,7 @@ import actions from 'actions';
 import defaultTool from 'constants/defaultTool';
 import fireEvent from 'helpers/fireEvent';
 
-export default dispatch => (e, newTool, oldTool) => {
+export default dispatch => (newTool, oldTool) => {
   if (oldTool && oldTool.name === 'TextSelect') {
     core.clearSelection();
     dispatch(actions.closeElement('textPopup'));
@@ -16,5 +16,5 @@ export default dispatch => (e, newTool, oldTool) => {
 
   dispatch(actions.setActiveToolNameAndStyle(newTool));
 
-  fireEvent('toolModeChanged', [ newTool, oldTool ]);
+  fireEvent('toolModeChanged', [newTool, oldTool]);
 };

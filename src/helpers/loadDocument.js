@@ -19,11 +19,11 @@ export default (state, dispatch) => {
             // If its a blackbox part retriever but the user uploaded a local file,
             // we dont set this because we already show an upload modal
             if (!partRetriever._isBlackboxLocalFile) {
-              partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+              partRetriever.on('documentLoadingProgress', (loaded, total) => {
                 dispatch(actions.setDocumentLoadingProgress(loaded / total));
               });
             }
-            partRetriever.on('error', function(e, type, message) {
+            partRetriever.on('error', function(type, message) {
               fireError(message);
             });
           }
