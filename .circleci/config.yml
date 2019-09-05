@@ -41,15 +41,16 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      # - build
+      - build
       # - cypress/install:
       #     requires:
       #       - build
-      - cypress/install:
-          executor: with-chrome
+      # - cypress/install:
+      #     executor: with-chrome
       - cypress/run:
           requires:
-            - cypress/install
+            - build
+          #   - cypress/install
           post-steps:
             # TODO make it download webviewer here once the newest version is rdy and published to npm repo
             - store_artifacts:
