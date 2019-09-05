@@ -29,16 +29,6 @@ workflows:
       - cypress/run:
           requires:
             - cypress/install
-          pre-steps:
-            - run:
-                name: Install Chromedriver latest version
-                command: |
-                  sudo apt-get update
-                  sudo apt-get install lsb-release libappindicator3-1
-                  curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-                  sudo dpkg -i google-chrome.deb
-                  sudo sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox|g' /opt/google/chrome/google-chrome
-                  rm google-chrome.deb
           post-steps:
             # TODO make it download webviewer here once the newest version is rdy and published to npm repo
             - store_artifacts:
@@ -47,5 +37,5 @@ workflows:
           wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
           command: npm run cy:run
           no-workspace: true
-          executor: cypress/browsers-chrome69
-          browser: chrome
+          # executor: cypress/browsers-chrome69
+          # browser: chrome
