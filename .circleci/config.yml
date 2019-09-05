@@ -12,6 +12,7 @@ jobs:
     steps:
       - checkout
       - run:
+        # https://gist.github.com/phra/192b6c0ada3f6eaf4029e430430b79fe
           name: install Chrome
           command:  |
             sudo apt-get update
@@ -34,10 +35,11 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - build
-      - cypress/install:
-          requires:
-            - build
+      # - build
+      # - cypress/install:
+      #     requires:
+      #       - build
+      - cypress/install
       - cypress/run:
           requires:
             - cypress/install
@@ -49,5 +51,6 @@ workflows:
           wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
           command: npm run cy:run
           # no-workspace: true
-          # executor: cypress/browsers-chrome69
+          # https://github.com/cypress-io/cypress-docker-images/tree/master/browsers
+          executor: cypress/browsers:node12.4.0-chrome76
           # browser: chrome
