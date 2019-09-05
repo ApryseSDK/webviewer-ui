@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Lint
           command: npm run lint
-      - cypress/run
+      # - cypress/run
       # - run:
       #     name: start server
       #     command: npm start
@@ -37,21 +37,22 @@ jobs:
           name: Generate minified bundle
           command: npm run build
 
-# workflows: 
-#   test_and_deploy:
-#     jobs:
-#       # - build
-#       - cypress/install
-#       - cypress/run:
-#           requires:
-#             - cypress/install
-#           post-steps:
-#             # TODO make it download webviewer here once the newest version is rdy and published to npm repo
-#             - store_artifacts:
-#                 path: ./test/cypress/snapshots
-#           start: npm start
-#           wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
-#           command: npm run cy:run
-#           no-workspace: true
-#           # executor: cypress/browsers-chrome69
-#           # browser: chrome
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - build
+      # - cypress/install
+      # - cypress/run:
+      #     requires:
+      #       - cypress/install
+      #     post-steps:
+      #       # TODO make it download webviewer here once the newest version is rdy and published to npm repo
+      #       - store_artifacts:
+      #           path: ./test/cypress/snapshots
+      #     start: npm start
+      #     wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
+      #     command: npm run cy:run
+      #     no-workspace: true
+      #     # executor: cypress/browsers-chrome69
+      #     # browser: chrome
