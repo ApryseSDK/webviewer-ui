@@ -52,7 +52,7 @@ export const getToolButtonObject = (state, toolName) =>
   state.viewer.toolButtonObjects[toolName];
 
 export const getToolButtonDataElement = (state, toolName) =>
-  state.viewer.toolButtonObjects[toolName].dataElement;
+  state.viewer.toolButtonObjects[toolName]?.dataElement;
 
 export const getToolNamesByGroup = (state, toolGroup) =>
   Object.keys(state.viewer.toolButtonObjects).filter(

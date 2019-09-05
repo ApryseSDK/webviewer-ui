@@ -186,7 +186,7 @@ export default store => {
     isElementOpen: isElementOpen(store),
     isMobileDevice,
     isReadOnly,
-    isToolDisabled,
+    isToolDisabled: isToolDisabled(store),
     loadDocument: loadDocument(store),
     openElement: openElement(store),
     openElements: openElements(store),
