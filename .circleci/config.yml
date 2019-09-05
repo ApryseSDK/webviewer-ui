@@ -20,9 +20,9 @@ jobs:
             sudo dpkg -i google-chrome.deb
             sudo sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox|g' /opt/google/chrome/google-chrome
             rm google-chrome.deb
-      - run:
-          name: Install dependencies
-          command: npm install
+      # - run:
+      #     name: Install dependencies
+      #     command: npm install
       # - run:
       #     name: Lint
       #     command: npm run lint
@@ -50,4 +50,4 @@ workflows:
           command: npm run cy:run
           no-workspace: true
           # executor: cypress/browsers-chrome69
-          # browser: chrome
+          browser: chrome
