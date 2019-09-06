@@ -5,7 +5,7 @@
     "cancel": "취소",
     "clear": "지우기",
     "close": "닫기",
-    "comment": "코멘트",
+    "comment": "댓글",
     "copy": "복사",
     "delete": "삭제",
     "group": "그룹",
@@ -31,7 +31,7 @@
     "sign": "서명",
     "style": "스타일",
     "submit": "제출",
-    "zoom": "확대/축소",
+    "zoom": "확대\/축소",
     "zoomIn": "확대",
     "zoomOut": "축소"
   },
@@ -51,7 +51,7 @@
     "line": "선",
     "perimeterMeasurement": "둘레 측정",
     "polygon": "다각형",
-    "polygonCloud": "클라우드",
+    "polygonCloud": "구름",
     "polyline": "폴리라인",
     "rectangle": "직사각형",
     "redact": "개정",
@@ -140,7 +140,7 @@
       "warningPopupTitle": "개정 적용"
     },
     "searchPanel": {
-      "caseSensitive": "대/소문자 구분",
+      "caseSensitive": "대\/소문자 구분",
       "wholeWordOnly": "단어 단위로"
     },
     "signatureOverlay": {
@@ -197,6 +197,6 @@
   "tool": {
     "pan": "이동",
     "select": "선택",
-    "Marquee": "선택 윤곽 확대/축소"
+    "Marquee": "선택 윤곽 확대\/축소"
   }
 }
