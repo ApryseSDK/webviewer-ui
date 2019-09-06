@@ -16,23 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import core from 'core';
-import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
-import { PRIORITY_ONE } from 'constants/actionPriority';
-import actions from 'actions';
-import selectors from 'selectors';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import disableFeatures from './disableFeatures';
 
 export default store => () => {
-  const elements = [
-    'notesPanel',
-    'notesPanelButton',
-    ...getAnnotationRelatedElements(store.getState())
-  ];
-
-  const annotationToolNames = selectors.getAnnotationToolNames(store.getState());
-  annotationToolNames.forEach(toolName => {
-    core.getTool(toolName).disabled = true;
-  });
-  store.dispatch(actions.disableElements(elements, PRIORITY_ONE));
-  core.hideAnnotations(core.getAnnotationsList());
+  warnDeprecatedAPI(
+    'disableAnnotations()',
+    'disableFeatures([instance.Feature.Annotations])',
+    '6.0',
+  );
+  disableFeatures(store)([Feature.Annotations]);
 };

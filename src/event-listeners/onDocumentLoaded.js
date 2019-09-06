@@ -31,7 +31,7 @@ export default dispatch => () => {
   }
 
   core.setOptions({
-    enableAnnotations: getHashParams('a', false)
+    enableAnnotations: getHashParams('a', false),
   });
 
   core.getOutlines(outlines => {

@@ -16,20 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import actions from 'actions';
-import core from 'core';
-import disableRedaction from './disableRedaction';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import enableFeatures from './enableFeatures';
 
-export default store => (enable = true) =>  {
-
-  if (enable) {
-    store.dispatch(actions.enableElement('redactionButton', 1));
-    core.enableRedaction(true);
-
-    if (!core.isFullPDFEnabled()) {
-      console.warn('Full api is not enabled, applying redactions is disabled');
-    }
-  } else {
-    disableRedaction(store)();
-  }
+export default store => () => {
+  warnDeprecatedAPI(
+    'enableRedaction()',
+    'enableFeatures([instance.Feature.Redaction])',
+    '6.0',
+  );
+  enableFeatures(store)([Feature.Redaction]);
 };

@@ -1,3 +1,4 @@
+// import { hot } from 'react-hot-loader';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -122,9 +123,9 @@ if (window.CanvasRenderingContext2D) {
     setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
+    addEventHandlers();
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
-    addEventHandlers();
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
 

@@ -8,6 +8,7 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
+import { mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -49,6 +50,8 @@ class AnnotationStylePopup extends React.Component {
     const hideSlider =
       annotation instanceof window.Annotations.RedactionAnnotation;
 
+    const colorMapKey = mapAnnotationToKey(annotation);
+
     if (isDisabled) {
       return null;
     }
@@ -60,7 +63,7 @@ class AnnotationStylePopup extends React.Component {
         onClick={this.handleClick}
       >
         <StylePopup
-          activeToolName={annotation.ToolName}
+          colorMapKey={colorMapKey}
           style={style}
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}

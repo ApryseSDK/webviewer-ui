@@ -146,7 +146,9 @@ const ReplyArea = ({ annotation }) => {
       onMouseDown={e => e.stopPropagation()}
     >
       <AutoResizeTextarea
-        ref={textareaRef}
+        ref={el => {
+          textareaRef.current = el;
+        }}
         value={value}
         onChange={value => setValue(value)}
         onSubmit={e => postReply(e)}

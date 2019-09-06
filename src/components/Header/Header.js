@@ -13,7 +13,7 @@ class Header extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    activeHeaderItems: PropTypes.array.isRequired
+    activeHeaderItems: PropTypes.array.isRequired,
   }
 
   render() {

@@ -16,11 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import actions from 'actions';
-import core from 'core';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import disableFeatures from './disableFeatures';
 
 export default store => () => {
-  store.dispatch(actions.disableElement('redactionButton', 1));
-  core.enableRedaction(false);
-  core.setToolMode('AnnotationEdit');
+  warnDeprecatedAPI(
+    'disableRedaction()',
+    'disableFeatures([instance.Feature.Redaction])',
+    '6.0',
+  );
+  disableFeatures(store)([Feature.Redaction]);
 };

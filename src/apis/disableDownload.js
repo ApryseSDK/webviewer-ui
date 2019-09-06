@@ -16,9 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import { PRIORITY_ONE } from 'constants/actionPriority';
-import actions from 'actions';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import disableFeatures from './disableFeatures';
 
 export default store => () => {
-  store.dispatch(actions.disableElement('downloadButton', PRIORITY_ONE));
+  warnDeprecatedAPI(
+    'disableDownload()',
+    'disableFeatures([instance.Feature.Download])',
+    '6.0',
+  );
+  disableFeatures(store)([Feature.Download]);
 };

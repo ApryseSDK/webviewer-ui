@@ -19,7 +19,7 @@ export default dispatch => () => {
 
   dispatch(actions.setPageLabels(getDefaultPageLabels(totalPages)));
   dispatch(actions.setTotalPages(totalPages));
-  
+
   const currentPage = core.getCurrentPage();
   dispatch(actions.setCurrentPage(currentPage));
 };

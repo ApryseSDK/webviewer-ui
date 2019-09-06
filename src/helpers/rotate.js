@@ -9,7 +9,7 @@ export const rotateRad = (cx, cy, x, y, radians) => {
 };
 
 export const rotateDeg = (cx, cy, x, y, angle) => {
-  const radians = (Math.PI/180) * angle;
+  const radians = (Math.PI / 180) * angle;
   const s = Math.sin(radians);
   const c = Math.cos(radians);
 

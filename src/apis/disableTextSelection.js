@@ -16,16 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import core from 'core';
-import { PRIORITY_ONE } from 'constants/actionPriority';
-import defaultTool from 'constants/defaultTool';
-import actions from 'actions';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import disableFeatures from './disableFeatures';
 
 export default store => () => {
-  core.clearSelection();
-  core.setToolMode(defaultTool);
-  store.dispatch(actions.closeElement('textPopup'));
-  store.dispatch(actions.disableElements([ 'textPopup', 'textSelectButton' ], PRIORITY_ONE));
-
-  window.Tools.Tool.ENABLE_TEXT_SELECTION = false;
+  warnDeprecatedAPI(
+    'disableTextSelection()',
+    'disableFeatures([instance.Feature.TextSelection])',
+    '6.0',
+  );
+  disableFeatures(store)([Feature.TextSelection]);
 };

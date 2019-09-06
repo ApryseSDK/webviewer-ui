@@ -172,48 +172,22 @@ export const setHeaderItems = (header, headerItems) => ({
   type: 'SET_HEADER_ITEMS',
   payload: { header, headerItems },
 });
-export const setColorPalette = (toolName, colorPalette) => ({
+export const setColorPalette = (colorMapKey, colorPalette) => ({
   type: 'SET_COLOR_PALETTE',
-  payload: { toolName, colorPalette },
+  payload: { colorMapKey, colorPalette },
 });
-export const setIconColor = (toolName, color) => ({
+export const setIconColor = (colorMapKey, color) => ({
   type: 'SET_ICON_COLOR',
-  payload: { toolName, color },
+  payload: { colorMapKey, color },
 });
-
-// header API
-export const addItems = (newItems, index, group) => dispatch => {
-  if (Array.isArray(newItems)) {
-    dispatch({ type: 'ADD_ITEMS', payload: { newItems, index, group } });
-  } else {
-    dispatch({
-      type: 'ADD_ITEMS',
-      payload: { newItems: [newItems], index, group },
-    });
-  }
-};
-export const removeItems = (itemList, group) => dispatch => {
-  if (Array.isArray(itemList)) {
-    dispatch({ type: 'REMOVE_ITEMS', payload: { itemList, group } });
-  } else {
-    dispatch({
-      type: 'REMOVE_ITEMS',
-      payload: { itemList: [itemList], group },
-    });
-  }
-};
-
-export const updateItem = (dataElement, newProps, group) => ({
-  type: 'UPDATE_ITEM',
-  payload: { dataElement, newProps, group },
+export const setColorMap = colorMap => ({
+  type: 'SET_COLOR_MAP',
+  payload: { colorMap },
 });
-export const setItems = (items, group) => dispatch => {
-  if (Array.isArray(items)) {
-    dispatch({ type: 'SET_ITEMS', payload: { items, group } });
-  } else {
-    dispatch({ type: 'SET_ITEMS', payload: { items: [items], group } });
-  }
-};
+export const setLeftPanelWidth = width => ({
+  type: 'SET_LEFT_PANEL_WIDTH',
+  payload: { width },
+});
 
 // document
 export const setDocumentId = documentId => ({

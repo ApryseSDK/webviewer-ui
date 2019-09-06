@@ -1,6 +1,6 @@
 import core from 'core';
 
-export default store => (e, pageIndex) => {
+export default store => pageIndex => {
   const state = store.getState();
   if (state.viewer.isAccessibleMode) {
     core.getDocument().loadPageText(pageIndex, text => {

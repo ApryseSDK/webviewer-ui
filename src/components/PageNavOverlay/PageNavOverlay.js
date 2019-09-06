@@ -25,14 +25,14 @@ class PageNavOverlay extends React.PureComponent {
     this.textInput = React.createRef();
     this.state = {
       input: '',
-      isCustomPageLabels: false
+      isCustomPageLabels: false,
     };
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.pageLabels !== this.props.pageLabels) {
       const isCustomPageLabels = this.props.pageLabels.some((label, index) => label !== `${index + 1}`);
-      this.setState({ isCustomPageLabels });   
+      this.setState({ isCustomPageLabels });
     }
 
     if (prevProps.currentPage !== this.props.currentPage || prevProps.pageLabels !== this.props.pageLabels) {
@@ -47,9 +47,9 @@ class PageNavOverlay extends React.PureComponent {
       this.setInputWidth();
     }
   }
-  
+
   setInputWidth = () => {
-    this.textInput.current.style.width = (this.props.totalPages.toString().length * 11.5) + 'px';
+    this.textInput.current.style.width = `${this.props.totalPages.toString().length * 11.5}px`;
   }
 
   onClick = () => {
@@ -72,7 +72,7 @@ class PageNavOverlay extends React.PureComponent {
 
   onSubmit = e => {
     e.preventDefault();
-    
+
     const { input } = this.state;
     const isValidInput = input === '' || this.props.pageLabels.includes(input);
 
@@ -97,12 +97,12 @@ class PageNavOverlay extends React.PureComponent {
     }
 
     const className = getClassName(`Overlay PageNavOverlay ${isLeftPanelOpen && !isLeftPanelDisabled ? 'shifted' : ''}`, this.props);
-    
+
     return (
       <div className={className} data-element="pageNavOverlay" onClick={this.onClick}>
         <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
           <input ref={this.textInput} type="text" value={this.state.input} onChange={this.onChange} tabIndex={-1} />
-          {this.state.isCustomPageLabels 
+          {this.state.isCustomPageLabels
             ? ` (${currentPage}/${totalPages})`
             : ` / ${totalPages}`
           }
@@ -119,7 +119,7 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'pageNavOverlay'),
   currentPage: selectors.getCurrentPage(state),
   totalPages: selectors.getTotalPages(state),
-  pageLabels: selectors.getPageLabels(state)
+  pageLabels: selectors.getPageLabels(state),
 });
 
 export default connect(mapStateToProps)(PageNavOverlay);

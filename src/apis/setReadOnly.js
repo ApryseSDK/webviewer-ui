@@ -19,8 +19,6 @@ viewerElement.addEventListener('ready', function() {
 
 import core from 'core';
 
-export default isReadOnly =>  {
-  core.setReadOnly(isReadOnly);  
+export default isReadOnly => {
+  core.setReadOnly(isReadOnly);
 };
-
-

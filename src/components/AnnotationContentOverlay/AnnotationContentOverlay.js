@@ -21,16 +21,16 @@ const AnnotationContentOverlay = () => {
   });
 
   useEffect(() => {
-    const onMouseHover = (e, mouseEvent) => {
+    const onMouseHover = e => {
       const annotation = core
         .getAnnotationManager()
-        .getAnnotationByMouseEvent(mouseEvent);
+        .getAnnotationByMouseEvent(e);
 
       setAnnotation(annotation);
       if (annotation) {
         setOverlayPosition({
-          left: mouseEvent.clientX + 20,
-          top: mouseEvent.clientY + 20,
+          left: e.clientX + 20,
+          top: e.clientY + 20,
         });
       }
     };

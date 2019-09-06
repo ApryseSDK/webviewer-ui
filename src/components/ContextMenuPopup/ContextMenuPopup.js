@@ -20,7 +20,7 @@ class ContextMenuPopup extends React.PureComponent {
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired
+    closeElements: PropTypes.func.isRequired,
   }
 
   constructor() {
@@ -28,20 +28,20 @@ class ContextMenuPopup extends React.PureComponent {
     this.popup = React.createRef();
     this.state = {
       left: 0,
-      top: 0
+      top: 0,
     };
   }
 
   componentDidMount() {
     document.addEventListener('contextmenu', this.onContextMenu);
   }
-  
+
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([ 'annotationPopup', 'textPopup' ]);
+      this.props.closeElements(['annotationPopup', 'textPopup']);
     }
   }
-  
+
   componentWillUnmount() {
     document.removeEventListener('contextmenu', this.onContextMenu);
   }
@@ -54,9 +54,9 @@ class ContextMenuPopup extends React.PureComponent {
 
     if (clickedOnDocumentContainer && !(clickedOnInput || clickedOnTextarea)) {
       e.preventDefault();
-      
+
       const { left, top } = this.getPopupPosition(e);
-  
+
       this.setState({ left, top });
       this.props.openElement('contextMenuPopup');
     } else {
@@ -105,11 +105,11 @@ class ContextMenuPopup extends React.PureComponent {
 
   render() {
     const { isDisabled, isAnnotationToolsEnabled } = this.props;
-   
-    if (isDisabled) { 
+
+    if (isDisabled) {
       return null;
     }
-   
+
     const { left, top } = this.state;
     const className = getClassName('Popup ContextMenuPopup', this.props);
 
@@ -139,7 +139,7 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
   openElement: dataElement => dispatch(actions.openElement(dataElement)),
   closeElement: dataElement => dispatch(actions.closeElement(dataElement)),
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements))
+  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(ContextMenuPopup));

@@ -14,16 +14,16 @@ class Outline extends React.PureComponent {
   static propTypes = {
     outline: PropTypes.object.isRequired,
     closeElement: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool.isRequired
+    isVisible: PropTypes.bool.isRequired,
   }
 
   state = {
-    isExpanded: false
+    isExpanded: false,
   }
 
   onClickExpand = () => {
     this.setState(prevState => ({
-      isExpanded: !prevState.isExpanded
+      isExpanded: !prevState.isExpanded,
     }));
   }
 
@@ -39,7 +39,7 @@ class Outline extends React.PureComponent {
   render() {
     const { outline, isVisible, closeElement } = this.props;
     const { isExpanded } = this.state;
-    
+
     return (
       <div className={`Outline ${isVisible ? 'visible' : 'hidden'}`}>
         <div className="padding">
@@ -63,7 +63,7 @@ class Outline extends React.PureComponent {
 }
 
 const mapDispatchToProps = {
-  closeElement: actions.closeElement
+  closeElement: actions.closeElement,
 };
 
 export default connect(null, mapDispatchToProps)(Outline);

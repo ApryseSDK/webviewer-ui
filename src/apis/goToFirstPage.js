@@ -29,5 +29,5 @@ viewerElement.addEventListener('ready', function() {
 import core from 'core';
 
 export default () => {
-  core.setCurrentPage(1);  
+  core.setCurrentPage(1);
 };

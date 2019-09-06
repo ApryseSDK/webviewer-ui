@@ -81,7 +81,7 @@ const setPresetTheme = theme => {
       buttonActive: '#F0F0F0',
       text: '#333333',
       icon: '#757575',
-      iconActive: '#757575'
+      iconActive: '#757575',
     },
     dark: {
       primary: '#2C2B3A',
@@ -91,11 +91,11 @@ const setPresetTheme = theme => {
       buttonActive: '#686880',
       text: '#FFFFFF',
       icon: '#FFFFFF',
-      iconActive: '#FFFFFF'
-    }
+      iconActive: '#FFFFFF',
+    },
   };
   const presetTheme = themeToPresetThemeMap[theme];
-  
+
   if (presetTheme) {
     setTheme(themeToPresetThemeMap[theme]);
   } else {
@@ -112,7 +112,7 @@ const setTheme = theme => {
     buttonActive: '--button-active-color',
     text: '--text-color',
     icon: '--icon-color',
-    iconActive: '--icon-active-color'
+    iconActive: '--icon-active-color',
   };
 
   Object.keys(theme).forEach(key => {

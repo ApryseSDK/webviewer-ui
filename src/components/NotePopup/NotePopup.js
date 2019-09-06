@@ -32,6 +32,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     shallowEqual,
   );
   const [canModify, setCanModify] = useState(core.canModify(annotation));
+  const [canModifyContents, setCanModifyContents] = useState(core.canModifyContents(annotation));
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const isOpen = notePopupId === annotation.Id;
@@ -39,6 +40,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
   useEffect(() => {
     const onUpdateAnnotationPermission = () => {
       setCanModify(core.canModify(annotation));
+      setCanModifyContents(core.canModifyContents(annotation));
     };
 
     core.addEventListener(
@@ -72,7 +74,10 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     core.deleteAnnotations([annotation]);
   };
 
-  return !canModify || isDisabled ? null : (
+  const isEditable = !isEditDisabled && canModifyContents;
+  const isDeletable = !isDeleteDisabled && canModify;
+
+  return !(isEditable || isDeletable) || isDisabled ? null : (
     <div
       className="NotePopup"
       data-element="notePopup"
@@ -83,12 +88,12 @@ const NotePopup = ({ annotation, setIsEditing }) => {
       </div>
       {isOpen && (
         <div className="options" onClick={closePopup}>
-          {!isEditDisabled && (
+          {isEditable && (
             <div data-element="notePopupEdit" onClick={handleEdit}>
               {t('action.edit')}
             </div>
           )}
-          {!isDeleteDisabled && (
+          {isDeletable && (
             <div data-element="notePopupDelete" onClick={handleDelete}>
               {t('action.delete')}
             </div>

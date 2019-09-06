@@ -12,8 +12,7 @@ export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   const isElementDisabled =
-    state.viewer.disabledElements[dataElement] &&
-    state.viewer.disabledElements[dataElement].disabled;
+    state.viewer.disabledElements[dataElement]?.disabled;
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
   const isElementOpen = isDataElementPanel(dataElement, state)
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
@@ -54,8 +53,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   const isElementDisabled =
-    state.viewer.disabledElements[dataElement] &&
-    state.viewer.disabledElements[dataElement].disabled;
+    state.viewer.disabledElements[dataElement]?.disabled;
   const isElementClosed = isDataElementPanel(dataElement, state)
     ? state.viewer.activeLeftPanel !== dataElement
     : !state.viewer.openElements[dataElement];
@@ -96,8 +94,7 @@ export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   if (
-    state.viewer.disabledElements[dataElement] &&
-    state.viewer.disabledElements[dataElement].disabled
+    state.viewer.disabledElements[dataElement]?.disabled
   ) {
     return;
   }
@@ -171,12 +168,10 @@ export const setPageLabels = pageLabels => dispatch => {
     payload: { pageLabels: pageLabels.map(String) },
   });
 };
-
 export const setSwipeOrientation = swipeOrientation => ({
   type: 'SET_SWIPE_ORIENTATION',
   payload: { swipeOrientation },
 });
-
 export const showWarningMessage = options => dispatch => {
   dispatch({ type: 'SET_WARNING_MESSAGE', payload: options });
   dispatch(openElement('warningModal'));
@@ -210,10 +205,6 @@ export const setZoomList = zoomList => dispatch => {
 
   dispatch({ type: 'SET_ZOOM_LIST', payload: { zoomList: filteredZoomList } });
 };
-export const updateTool = (toolName, properties) => ({
-  type: 'UPDATE_TOOL',
-  payload: { toolName, properties },
-});
 export const useEmbeddedPrint = (useEmbeddedPrint = true) => ({
   type: 'USE_EMBEDDED_PRINT',
   payload: { useEmbeddedPrint },

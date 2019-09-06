@@ -43,9 +43,9 @@ export default (dispatch, options) => {
       return doc.getFileData(downloadOptions).then(data => {
         const arr = new Uint8Array(data);
         if (isIE) {
-          file = new Blob([ arr ], { type: 'application/pdf' });
+          file = new Blob([arr], { type: 'application/pdf' });
         } else {
-          file = new File([ arr ], downloadName, { type: 'application/pdf' });
+          file = new File([arr], downloadName, { type: 'application/pdf' });
         }
 
         saveAs(file, downloadName);

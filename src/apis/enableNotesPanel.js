@@ -16,17 +16,25 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import actions from 'actions';
-import { PRIORITY_TWO } from 'constants/actionPriority';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import enableFeatures from './enableFeatures';
+import disableFeatures from './disableFeatures';
 
-import disableNotesPanel from './disableNotesPanel';
-
-export default store => (enable = true) =>  {
+export default store => (enable = true) => {
   if (enable) {
-    store.dispatch(actions.enableElements([ 'annotationCommentButton', 'notesPanelButton', 'notesPanel' ], PRIORITY_TWO));
-    store.dispatch(actions.setActiveLeftPanel('notesPanel'));
+    warnDeprecatedAPI(
+      'enableNotesPanel()',
+      'enableFeatures([instance.Feature.NotesPanel])',
+      '6.0',
+    );
+    enableFeatures(store)([Feature.Measurement]);
   } else {
-    console.warn('enableNotesPanel(false) is deprecated, please use disableNotesPanel() instead');
-    disableNotesPanel(store)();
+    warnDeprecatedAPI(
+      'enableNotesPanel(false)',
+      'disableFeatures([instance.Feature.NotesPanel])',
+      '6.0',
+    );
+    disableFeatures(store)([Feature.NotesPanel]);
   }
 };

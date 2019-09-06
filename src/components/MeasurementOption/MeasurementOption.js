@@ -36,6 +36,7 @@ class MeasurementOption extends React.PureComponent {
   };
 
   scaleFromRef = React.createRef();
+
   scaleToRef = React.createRef();
 
   /**

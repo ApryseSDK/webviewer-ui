@@ -1,8 +1,7 @@
+import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
 import { useStore } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
-import { hot } from 'react-hot-loader';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
@@ -14,6 +13,7 @@ import PageNavOverlay from 'components/PageNavOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
+import ToolsOverlay from 'components/ToolsOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import SearchPanel from 'components/SearchPanel';
@@ -74,6 +74,7 @@ const App = ({ removeEventHandlers }) => {
         <ZoomOverlay />
         <MeasurementOverlay />
         <AnnotationContentOverlay />
+        <ToolsOverlay />
 
         <AnnotationPopup />
         <TextPopup />
@@ -98,4 +99,4 @@ const App = ({ removeEventHandlers }) => {
 
 App.propTypes = propTypes;
 
-export default hot(module)(withTranslation()(App));
+export default hot(App);

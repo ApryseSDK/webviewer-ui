@@ -1,11 +1,11 @@
-import core from 'core';
-import { PRIORITY_ONE } from 'constants/actionPriority';
-import actions from 'actions';
-import selectors from 'selectors';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import enableTools from './enableTools';
 
 export default store => toolName => {
-  const dataElement = selectors.getToolButtonDataElement(store.getState(), toolName); 
-
-  core.getTool(toolName).disabled = false;
-  store.dispatch(actions.enableElement(dataElement, PRIORITY_ONE));
+  warnDeprecatedAPI(
+    'enableTool(toolName)',
+    'enableTools([toolName])',
+    '6.0',
+  );
+  enableTools(store)([toolName]);
 };

@@ -1,5 +1,3 @@
-import i18next from 'i18next';
-
 import core from 'core';
 import actions from 'actions';
 import getBackendPromise from 'helpers/getBackendPromise';
@@ -19,11 +17,11 @@ export default (state, dispatch) => {
             // If its a blackbox part retriever but the user uploaded a local file,
             // we dont set this because we already show an upload modal
             if (!partRetriever._isBlackboxLocalFile) {
-              partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+              partRetriever.on('documentLoadingProgress', (loaded, total) => {
                 dispatch(actions.setDocumentLoadingProgress(loaded / total));
               });
             }
-            partRetriever.on('error', function(e, type, message) {
+            partRetriever.on('error', function(type, message) {
               fireError(message);
             });
           }
@@ -199,11 +197,7 @@ const getDocOptions = (state, dispatch, streaming) => {
           }
         };
         const onError = error => {
-          if (typeof error === 'string') {
-            fireError(error);
-          } else if (error.type === 'InvalidPDF') {
-            fireError(i18next.t('message.badDocument'));
-          }
+          fireError(error);
           console.error(error);
         };
         const workerHandlers = {
@@ -217,13 +211,9 @@ const getDocOptions = (state, dispatch, streaming) => {
         const { type, extension, workerTransportPromise } = getDocTypeData(options);
         if (workerTransportPromise) {
           workerTransportPromise.catch(workerError => {
-            if (typeof workerError === 'string') {
-              fireError(workerError);
-              console.error(workerError);
-            } else {
-              fireError(workerError.message);
-              console.error(workerError.message);
-            }
+            const error = typeof workerError === 'string' ? workerError : workerError.message;
+            fireError(error);
+            console.error(error);
           });
         }
 

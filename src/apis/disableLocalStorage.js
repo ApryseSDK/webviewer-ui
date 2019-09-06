@@ -16,8 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import localStorageManager from 'helpers/localStorageManager';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import disableFeatures from './disableFeatures';
 
-export default () => {
-  localStorageManager.disableLocalStorage();
+export default store => () => {
+  warnDeprecatedAPI(
+    'disableLocalStorage()',
+    'disableFeatures([instance.Feature.LocalStorage])',
+    '6.0',
+  );
+  disableFeatures(store)([Feature.LocalStorage]);
 };

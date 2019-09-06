@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import onClickOutside from 'react-onclickoutside';
 
 import ToolButton from 'components/ToolButton';
-import ToggleElementButton from 'components/ToggleElementButton';
-import ActionButton from 'components/ActionButton';
-import StatefulButton from 'components/StatefulButton';
-import CustomElement from 'components/CustomElement';
 import Button from 'components/Button';
 
 import core from 'core';
@@ -18,12 +14,13 @@ import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
 
-import './GroupOverlay.scss';
+import './ToolsOverlay.scss';
 
-class GroupOverlay extends React.PureComponent {
+class ToolsOverlay extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
+    toolButtonObjects: PropTypes.object,
     activeHeaderItems: PropTypes.arrayOf(PropTypes.object),
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
@@ -89,14 +86,20 @@ class GroupOverlay extends React.PureComponent {
     const clickedHeader = header?.contains(e.target);
 
     if (isDesktop() && !clickedToolStylePopup && !clickedHeader) {
-      this.props.closeElements(['groupOverlay']);
+      this.props.closeElements(['toolsOverlay']);
     }
   };
 
   setOverlayPosition = () => {
-    const { dataElement } = this.props;
-    if (dataElement) {
-      this.setState(getOverlayPositionBasedOn(dataElement, this.overlay));
+    const { activeToolGroup, activeHeaderItems } = this.props;
+    const element = activeHeaderItems.find(
+      item => item.toolGroup === activeToolGroup,
+    );
+
+    if (element) {
+      this.setState(
+        getOverlayPositionBasedOn(element.dataElement, this.overlay),
+      );
     }
   };
 
@@ -105,44 +108,53 @@ class GroupOverlay extends React.PureComponent {
 
     core.setToolMode(defaultTool);
     setActiveToolGroup('');
-    closeElements(['toolStylePopup', 'groupOverlay']);
-  }
+    closeElements(['toolStylePopup', 'toolsOverlay']);
+  };
 
   render() {
     const { left, right } = this.state;
-    const { isDisabled, isOpen, activeToolGroup, nestedChildren } = this.props;
+    const {
+      isDisabled,
+      isOpen,
+      toolButtonObjects,
+      activeToolGroup,
+    } = this.props;
 
     if (isDisabled || !activeToolGroup) {
       return null;
     }
-    const className = getClassName('Overlay GroupOverlay', { isOpen });
+
+    const toolNames = Object.keys(toolButtonObjects).filter(
+      toolName => toolButtonObjects[toolName].group === activeToolGroup,
+    );
+    const className = getClassName('Overlay ToolsOverlay', { isOpen });
+
     return (
-      <div className={className} ref={this.overlay} style={{ left, right }} data-element="groupOverlay" onMouseDown={e => e.stopPropagation()}>
-        {nestedChildren.map((element, i) => {
-          switch (element.type) {
-            case 'toolButton':
-              return <ToolButton key={`${element.toolName}-${i}`} toolName={element.toolName} toolGroup={this.props.toolGroup} {...element} />;
-            case 'toggleElementButton':
-              return <ToggleElementButton key={i} {...element} />;
-            case 'actionButton':
-              return <ActionButton key={i} {...element} />;
-            case 'statefulButton':
-              return <StatefulButton key={i} {...element} />;
-            case 'customElement':
-              return <CustomElement key={i} {...element} />;
-          }
-        },
-        )}
-        <div className="spacer hide-in-desktop"></div>
-        <Button className="close hide-in-desktop" dataElement="groupOverlayCloseButton" img="ic_check_black_24px" onClick={this.handleCloseClick} />
+      <div
+        className={className}
+        ref={this.overlay}
+        style={{ left, right }}
+        data-element="toolsOverlay"
+      >
+        {toolNames.map((toolName, i) => (
+          <ToolButton key={`${toolName}-${i}`} toolName={toolName} />
+        ))}
+        <div className="spacer hide-in-desktop" />
+        <Button
+          className="close hide-in-desktop"
+          dataElement="toolsOverlayCloseButton"
+          img="ic_check_black_24px"
+          onClick={this.handleCloseClick}
+        />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'groupOverlay'),
-  isOpen: selectors.isElementOpen(state, 'groupOverlay'),
+  isDisabled: selectors.isElementDisabled(state, 'toolsOverlay'),
+  isOpen: selectors.isElementOpen(state, 'toolsOverlay'),
+  toolButtonObjects: selectors.getToolButtonObjects(state),
   activeHeaderItems: selectors.getActiveHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
 });
@@ -155,4 +167,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(onClickOutside(GroupOverlay));
+)(onClickOutside(ToolsOverlay));

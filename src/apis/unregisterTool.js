@@ -28,8 +28,12 @@ export default store => toolName => {
 
 const unregisterToolInHeader = (store, toolName) => {
   const state = store.getState();
-  const headerItems = state.viewer.header.filter(headerItem => headerItem.toolName !== toolName);
-  store.dispatch(actions.setItems(headerItems));
+
+  Object.keys(state.viewer.headers).forEach(header => {
+    const headerItems = state.viewer.headers[header].filter(headerItem => headerItem.toolName !== toolName);
+
+    store.dispatch(actions.setHeaderItems(header, headerItems));
+  });
 };
 
 const unregisterToolInRedux = (store, toolName) => {

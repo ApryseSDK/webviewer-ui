@@ -8,6 +8,6 @@
  * it will be fired with deselect action if you selected any annotations before paste
  * it will be fired with select action after the annotation is pasted
  */
-export default () =>  {
+export default () => {
   window.docViewer.getAnnotationManager().pasteCopiedAnnotations();
 };

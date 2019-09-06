@@ -45,15 +45,18 @@ viewerElement.addEventListener('ready', function() {
  */
 
 import core from 'core';
+import { register, copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
 
 export default store => (tool, annotationConstructor) => {
   registerToolInToolModeMap(tool);
-  registerToolInRedux(store, tool, annotationConstructor);
+  registerToolInRedux(store, tool);
+  register(tool, annotationConstructor);
+  updateColorMapInRedux(store);
 };
 
-const registerToolInRedux = (store, tool, annotationConstructor) => {
-  store.dispatch(actions.registerTool(tool, annotationConstructor));
+const registerToolInRedux = (store, tool) => {
+  store.dispatch(actions.registerTool(tool));
 };
 
 const registerToolInToolModeMap = ({ toolObject, toolName }) => {
@@ -61,4 +64,8 @@ const registerToolInToolModeMap = ({ toolObject, toolName }) => {
 
   toolModeMap[toolName] = toolObject;
   toolModeMap[toolName].name = toolName;
+};
+
+const updateColorMapInRedux = store => {
+  store.dispatch(actions.setColorMap(copyMapWithDataProperties('iconColor', 'currentPalette')));
 };

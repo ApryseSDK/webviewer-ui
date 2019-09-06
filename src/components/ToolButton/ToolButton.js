@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import core from 'core';
 import toolStylesExist from 'helpers/toolStylesExist';
 import getToolStyles from 'helpers/getToolStyles';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -22,13 +23,16 @@ const ToolButton = ({ toolName, ...restProps }) => {
   const [
     isActive,
     iconColor,
-    group,
-    { showColor },
+    // use this to trigger rerender so the color will be right
+    // TODO: fix the issue properly. Can listen to toolUpdated
+    // eslint-disable-next-line
+    activeToolStyles,
+    { group = '', showColor, ...restObjectData },
   ] = useSelector(
     state => [
       selectors.getActiveToolName(state) === toolName,
-      selectors.getIconColor(state, toolName),
-      selectors.getGroupName(state, toolName),
+      selectors.getIconColor(state, mapToolNameToKey(toolName)),
+      selectors.getActiveToolStyles(state),
       selectors.getToolButtonObject(state, toolName),
     ],
     shallowEqual,
@@ -60,11 +64,11 @@ const ToolButton = ({ toolName, ...restProps }) => {
         ToolButton: true,
         hasStyles: toolStylesExist(toolName),
       })}
-      disable={core.getTool(toolName)?.disabled}
       onClick={handleClick}
       isActive={isActive}
       color={color}
       {...restProps}
+      {...restObjectData}
     />
   );
 };

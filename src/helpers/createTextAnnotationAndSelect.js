@@ -2,10 +2,10 @@ import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
 import actions from 'actions';
 
-export default (dispatch, annotationConstructor) =>  {
+export default (dispatch, annotationConstructor) => {
   const annotations = createTextAnnotation(annotationConstructor);
 
-  core.clearSelection();    
+  core.clearSelection();
   core.addAnnotations(annotations);
   core.selectAnnotations(annotations);
   setAnnotationColor(annotations[0]);
@@ -16,9 +16,9 @@ export default (dispatch, annotationConstructor) =>  {
 const createTextAnnotation = annotationConstructor => {
   const annotations = [];
   const quads = core.getSelectedTextQuads();
-  
+
   Object.keys(quads).forEach(pageIndex => {
-    const pageNumber = parseInt(pageIndex) + 1;
+    const pageNumber = parseInt(pageIndex, 10) + 1;
     const annotation = createAnnotation(annotationConstructor, pageNumber, quads);
 
     if (window.Tools.TextAnnotationCreateTool.AUTO_SET_TEXT && !(annotation instanceof window.Annotations.RedactionAnnotation)) {
@@ -28,7 +28,7 @@ const createTextAnnotation = annotationConstructor => {
     if (annotation instanceof window.Annotations.RedactionAnnotation) {
       setRedactionStyle(annotation);
     }
-    
+
     annotations.push(annotation);
   });
 
@@ -45,7 +45,8 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
 };
 
 const setAnnotationColor = annotation => {
-  const toolName = annotation.ToolName;  
+  const toolName = mapAnnotationToToolName(annotation);
+
   if (toolName) {
     const { StrokeColor } = getToolStyles(toolName);
     annotation.StrokeColor = StrokeColor;
@@ -60,7 +61,7 @@ const setRedactionStyle = annotation => {
       const color = style.StrokeColor;
       annotation.StrokeColor = new window.Annotations.Color(color['R'], color['G'], color['B'], color['A']);
     }
-    if ( style.StrokeThickness) {
+    if (style.StrokeThickness) {
       annotation.StrokeThickness = style['StrokeThickness'];
     }
     if (style.FillColor) {

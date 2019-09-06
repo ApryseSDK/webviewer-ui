@@ -121,11 +121,11 @@ import actions from 'actions';
 export default store => callback => {
   const state = store.getState();
   const headerGroups = Object.keys(state.viewer.headers);
-  let header = Object.create(Header).initialize(state.viewer, headerGroups);
+  const header = Object.create(Header).initialize(state.viewer, headerGroups);
 
   callback(header);
   headerGroups.forEach(headerGroup => {
-    store.dispatch(actions.setHeaderItems(headerGroup, [ ...header.headers[headerGroup] ]));
+    store.dispatch(actions.setHeaderItems(headerGroup, [...header.headers[headerGroup]]));
   });
 };
 
@@ -156,7 +156,7 @@ const Header = {
   initialize(viewerState) {
     this.headers = viewerState.headers;
     this.toolButtonObjects = viewerState.toolButtonObjects;
-    this.headerGroup = 'default'; 
+    this.headerGroup = 'default';
     this.index = -1;
 
     return this;
@@ -182,7 +182,9 @@ const Header = {
       console.warn(`${dataElement} does not exist in ${this.headerGroup} header`);
     } else {
       const item = this.headers[this.headerGroup][this.index];
-      Object.keys(item).forEach(key => this[key] = item[key]);
+      Object.keys(item).forEach(key => {
+        this[key] = item[key];
+      });
     }
 
     return this;
@@ -210,7 +212,7 @@ const Header = {
     } else {
       console.warn(`Header must be one of: ${headerGroups.join(' or ')}.`);
     }
-    
+
     return this;
   },
   /**
@@ -287,7 +289,7 @@ const Header = {
    */
   shift() {
     this.headers[this.headerGroup].shift();
-    
+
     return this;
   },
   /**
@@ -298,7 +300,7 @@ const Header = {
    */
   unshift(...newItem) {
     this.headers[this.headerGroup].unshift(...newItem);
-    
+
     return this;
   },
   /**
@@ -308,16 +310,8 @@ const Header = {
    * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
    */
   push(...newItem) {
-    if (newItem[0].group) {
-      if (this.headers[this.headerGroup].find(buttonObject => buttonObject.toolGroup === newItem[0].group)) {
-        const buttonIndex = this.headers[this.headerGroup].findIndex(buttonObject => buttonObject.toolGroup === newItem[0].group);
-        this.headers[this.headerGroup][buttonIndex].children.push(...newItem);
-      } else {
-        console.warn(`${newItem[0].group} is not a valid group.`);
-      }
-    } else {
-      this.headers[this.headerGroup].push(...newItem);
-    }
+    this.headers[this.headerGroup].push(...newItem);
+
     return this;
   },
   /**
@@ -327,7 +321,7 @@ const Header = {
    */
   pop() {
     this.headers[this.headerGroup].pop();
-    
+
     return this;
   },
   /**
@@ -347,7 +341,7 @@ const Header = {
   },
   _updateItems(items) {
     this.headers[this.headerGroup] = items;
-    
+
     return this;
   },
   _setIndex(dataElement) {
@@ -356,17 +350,17 @@ const Header = {
   _getIndexOfElement(dataElement) {
     return this.headers[this.headerGroup].findIndex(item => {
       let dataElementOfItem;
-      
+
       if (item.type === 'toolButton') {
         dataElementOfItem = this.toolButtonObjects[item.toolName].dataElement;
       } else {
         dataElementOfItem = item.dataElement;
       }
-      
+
       return dataElementOfItem === dataElement;
-    }); 
+    });
   },
   _resetIndex() {
     this.index = -1;
-  }
+  },
 };

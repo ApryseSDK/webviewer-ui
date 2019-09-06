@@ -18,6 +18,11 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import core from 'core';
+import selectors from 'selectors';
 
-export default toolName => !!core.getTool(toolName).disabled;
+export default store => toolName => {
+  const state = store.getState();
+  const dataElement = selectors.getToolButtonDataElement(state, toolName);
+
+  return selectors.isElementDisabled(state, dataElement);
+};

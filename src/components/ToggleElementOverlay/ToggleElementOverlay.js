@@ -103,7 +103,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClick: e => {
+  onClick: () => {
     dispatch(actions.toggleElement('zoomOverlay'));
   },
 });

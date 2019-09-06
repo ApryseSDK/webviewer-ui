@@ -7,7 +7,7 @@ import { isIE } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
-import TouchEventManager from 'helpers/TouchEventManager';
+import touchEventManager from 'helpers/TouchEventManager';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -31,6 +31,7 @@ class DocumentContainer extends React.PureComponent {
     openElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
     displayMode: PropTypes.string.isRequired,
+    leftPanelWidth: PropTypes.number,
   }
 
   constructor(props) {
@@ -48,7 +49,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    TouchEventManager.initialize(this.document.current, this.container.current, this.props.toolButtonObjects);
+    touchEventManager.initialize(this.document.current, this.container.current);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
@@ -71,7 +72,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    TouchEventManager.terminate();
+    touchEventManager.terminate();
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
@@ -221,7 +222,8 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  toolButtonObjects: selectors.getToolButtonObjects(state),
+  // using leftPanelWidth to trigger render
+  leftPanelWidth: selectors.getLeftPanelWidth(state),
 });
 
 const mapDispatchToProps = dispatch => ({

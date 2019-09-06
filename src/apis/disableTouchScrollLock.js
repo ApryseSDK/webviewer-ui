@@ -16,8 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
 */
 
-import TouchEventManager from 'helpers/TouchEventManager';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import disableFeatures from './disableFeatures';
 
-export default () => {
-  TouchEventManager.enableTouchScrollLock = false;
+export default store => () => {
+  warnDeprecatedAPI(
+    'disableTouchScrollLock()',
+    'disableFeatures([instance.Feature.TouchScrollLock])',
+    '6.0',
+  );
+  disableFeatures(store)([Feature.TouchScrollLock]);
 };

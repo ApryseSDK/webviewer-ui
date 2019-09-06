@@ -47,7 +47,7 @@ export default store => (searchValue, options) => {
   if (typeof options === 'string') {
     const modes = options.split(',');
     modes.forEach(mode => {
-      searchOptions[lowerCaseFirstLetter(mode)] = true;        
+      searchOptions[lowerCaseFirstLetter(mode)] = true;
     });
   } else {
     searchOptions = options;
@@ -56,4 +56,4 @@ export default store => (searchValue, options) => {
   store.dispatch(actions.searchText(searchValue, searchOptions));
 };
 
-const lowerCaseFirstLetter = mode => `${mode.charAt(0).toLowerCase()}${mode.slice(1)}`; 
+const lowerCaseFirstLetter = mode => `${mode.charAt(0).toLowerCase()}${mode.slice(1)}`;
