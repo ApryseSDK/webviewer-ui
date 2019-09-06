@@ -272,7 +272,8 @@ export const getDocumentExtension = docName => {
 
 export const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
-  let { path, filename, initialDoc, ext } = state.document;
+  const { initialDoc, ext, path } = state.document;
+  let { filename } = state.document;
   if (ext && !filename) {
     filename = createFakeFilename(path || initialDoc, ext);
   }

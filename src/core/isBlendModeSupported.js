@@ -5,7 +5,6 @@
 export default type => {
   if (window.utils.isBlendModeSupported) {
     return window.utils.isBlendModeSupported(type);
-  } else {
-    return false;
   }
+  return false;
 };

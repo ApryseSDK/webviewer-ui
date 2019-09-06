@@ -3,7 +3,8 @@ import { workerTypes } from 'constants/types';
 
 export default store => {
   const state = store.getState();
-  let { serverUrl, serverUrlHeaders } = state.advanced;
+  let { serverUrl } = state.advanced;
+  const { serverUrlHeaders } = state.advanced;
 
   if (!serverUrl) {
     return;
