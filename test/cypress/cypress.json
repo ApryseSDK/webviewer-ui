@@ -7,6 +7,5 @@
   "videosFolder": "videos",
   "baseUrl": "http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1",
   "chromeWebSecurity": false,
-  "projectId": "8xr2ye",
   "customSnapshotsDir": "./snapshots"
 }

@@ -4,6 +4,7 @@ orbs:
 executors:
   with-chrome:
     docker:
+      # use custom cypress image that will use a newer version of chrome
       # https://github.com/cypress-io/cypress-docker-images/tree/master/browsers
       - image: 'cypress/browsers:node12.4.0-chrome76'
 jobs:
@@ -21,7 +22,7 @@ jobs:
 
 workflows:
   version: 2
-  test_and_deploy:
+  lint_and_test:
     jobs:
       - run-lint
       - cypress/run:
@@ -34,5 +35,4 @@ workflows:
           command: npm run cy:run
           executor: with-chrome
           no-workspace: true
-          # executor: cypress/base:12.4.0
           browser: chrome
