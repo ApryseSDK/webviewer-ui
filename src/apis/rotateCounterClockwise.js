@@ -29,5 +29,5 @@ viewerElement.addEventListener('ready', function() {
 import core from 'core';
 
 export default () => {
-  core.rotateCounterClockwise();  
+  core.rotateCounterClockwise();
 };

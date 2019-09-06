@@ -24,17 +24,15 @@ class WarningModal extends React.PureComponent {
     title: PropTypes.string,
     message: PropTypes.string,
     onConfirm: PropTypes.func,
-    onCancel: PropTypes.func
-  }
+    onCancel: PropTypes.func,
+  };
 
-  constructor() {
-    super();
-  }
-
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      //TODO want to do make something like'closeOtherElements', but that for latter
-      let popUpToClose = getPopupElements().filter(ele => ele !== 'warningModal'); 
+      // TODO want to do make something like'closeOtherElements', but that for latter
+      const popUpToClose = getPopupElements().filter(
+        ele => ele !== 'warningModal',
+      );
       this.props.closeElements(popUpToClose);
     }
   }
@@ -48,17 +46,16 @@ class WarningModal extends React.PureComponent {
     } else {
       this.props.closeElement('warningModal');
     }
-  }
+  };
 
   onConfirm = () => {
     this.props.onConfirm().then(() => {
       this.props.closeElement('warningModal');
-    }
-    );
-  }
-  
-  render () {
-    const { title, message, confirmBtnText} = this.props;
+    });
+  };
+
+  render() {
+    const { title, message, confirmBtnText } = this.props;
 
     if (this.props.isDisabled) {
       return null;
@@ -75,8 +72,17 @@ class WarningModal extends React.PureComponent {
           <div className="header">{title}</div>
           <div className="body">{message}</div>
           <div className="footer">
-            <Button dataElement="WarningModalClearButton" label={cancelBtnText} onClick={this.onCancel} />
-            <Button className="warningMessageConfirm" dataElement="WarningModalSignButton" label={label} onClick={this.onConfirm} />
+            <Button
+              dataElement="WarningModalClearButton"
+              label={cancelBtnText}
+              onClick={this.onCancel}
+            />
+            <Button
+              className="warningMessageConfirm"
+              dataElement="WarningModalSignButton"
+              label={label}
+              onClick={this.onConfirm}
+            />
           </div>
         </div>
       </div>
@@ -85,7 +91,7 @@ class WarningModal extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  title: selectors.getWarningTitle(state) ||  '',
+  title: selectors.getWarningTitle(state) || '',
   message: selectors.getWarningMessage(state),
   onConfirm: selectors.getWarningConfirmEvent(state),
   confirmBtnText: selectors.getWarningConfirmBtnText(state),
@@ -96,7 +102,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
-  closeElements: actions.closeElements
+  closeElements: actions.closeElements,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WarningModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(WarningModal);

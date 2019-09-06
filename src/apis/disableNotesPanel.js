@@ -16,10 +16,15 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import { PRIORITY_TWO } from 'constants/actionPriority';
-import actions from 'actions';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import disableFeatures from './disableFeatures';
 
 export default store => () => {
-  store.dispatch(actions.disableElements([ 'annotationCommentButton', 'notesPanelButton', 'notesPanel' ], PRIORITY_TWO));
-  store.dispatch(actions.setActiveLeftPanel('thumbnailsPanel'));
+  warnDeprecatedAPI(
+    'disableNotesPanel()',
+    'disableFeatures([instance.Feature.NotesPanel])',
+    '6.0',
+  );
+  disableFeatures(store)([Feature.NotesPanel]);
 };

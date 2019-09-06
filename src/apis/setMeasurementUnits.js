@@ -9,7 +9,7 @@ WebViewer(...)
     instance.setMeasurementUnits({
       from: ['in', 'cm', 'm'],
       to: ['cm', 'm', 'km']
-    }); 
+    });
   });
  * @example // 4.0 ~ 5.0
 var viewerElement = document.getElementById('viewer');
@@ -20,7 +20,7 @@ viewerElement.addEventListener('ready', function() {
   instance.setMeasurementUnits({
     from: ['in', 'cm', 'm'],
     to: ['cm', 'm', 'km']
-  }); 
+  });
 });
  */
 

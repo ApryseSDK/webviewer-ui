@@ -36,6 +36,7 @@ import setViewerElement from './setViewerElement';
 import isContinuousDisplayMode from './isContinuousDisplayMode';
 import scrollViewUpdated from './scrollViewUpdated';
 import canModify from './canModify';
+import canModifyContents from './canModifyContents';
 import deleteAnnotations from './deleteAnnotations';
 import getDisplayAuthor from './getDisplayAuthor';
 import getDocument from './getDocument';
@@ -91,7 +92,7 @@ import hideAnnotations from './hideAnnotations';
 import goToOutline from './goToOutline';
 import getViewerElement from './getViewerElement';
 import { addEventListener, removeEventListener } from './eventListener';
-import setAnnotationCanvasTransform  from './setAnnotationCanvasTransform';
+import setAnnotationCanvasTransform from './setAnnotationCanvasTransform';
 import getAnnotationCopy from './getAnnotationCopy';
 
 export default {
@@ -133,6 +134,7 @@ export default {
   isContinuousDisplayMode,
   scrollViewUpdated,
   canModify,
+  canModifyContents,
   deleteAnnotations,
   getDisplayAuthor,
   getDocument,
@@ -188,7 +190,7 @@ export default {
   showAnnotations,
   hideAnnotations,
   goToOutline,
-  getViewerElement, 
+  getViewerElement,
   setAnnotationCanvasTransform,
-  getAnnotationCopy
+  getAnnotationCopy,
 };

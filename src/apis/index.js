@@ -1,6 +1,8 @@
 import i18next from 'i18next';
+
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
+import Feature from 'constants/feature';
 import getHashParams from 'helpers/getHashParams';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
@@ -11,6 +13,7 @@ import disableAnnotations from './disableAnnotations';
 import disableDownload from './disableDownload';
 import disableElement from './disableElement';
 import disableElements from './disableElements';
+import disableFeatures from './disableFeatures';
 import disableFilePicker from './disableFilePicker';
 import disableLocalStorage from './disableLocalStorage';
 import disableMeasurement from './disableMeasurement';
@@ -27,6 +30,7 @@ import enableAnnotations from './enableAnnotations';
 import enableDownload from './enableDownload';
 import enableElement from './enableElement';
 import enableElements from './enableElements';
+import enableFeatures from './enableFeatures';
 import enableFilePicker from './enableFilePicker';
 import enableLocalStorage from './enableLocalStorage';
 import enableMeasurement from './enableMeasurement';
@@ -54,7 +58,7 @@ import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
 import goToPrevPage from './goToPrevPage';
-import header from './header';
+import hotkeys from './hotkeys';
 import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
@@ -118,6 +122,7 @@ export default store => {
     docViewer: window.docViewer,
     FitMode,
     LayoutMode,
+    Feature,
     loadedFromServer: false, // undocumented
     serverFailed: false, // undocumented
     i18n: i18next,
@@ -131,6 +136,7 @@ export default store => {
     disableDownload: disableDownload(store),
     disableElement: disableElement(store),
     disableElements: disableElements(store),
+    disableFeatures: disableFeatures(store),
     disableFilePicker: disableFilePicker(store),
     disableLocalStorage,
     disableMeasurement: disableMeasurement(store),
@@ -147,6 +153,7 @@ export default store => {
     enableDownload: enableDownload(store),
     enableElement: enableElement(store),
     enableElements: enableElements(store),
+    enableFeatures: enableFeatures(store),
     enableFilePicker: enableFilePicker(store),
     enableLocalStorage,
     enableMeasurement: enableMeasurement(store),
@@ -172,13 +179,13 @@ export default store => {
     goToLastPage: goToLastPage(store),
     goToNextPage: goToNextPage(store),
     goToPrevPage: goToPrevPage(store),
-    header: header(store),
+    hotkeys,
     isAdminUser,
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),
     isMobileDevice,
     isReadOnly,
-    isToolDisabled,
+    isToolDisabled: isToolDisabled(store),
     loadDocument: loadDocument(store),
     openElement: openElement(store),
     openElements: openElements(store),

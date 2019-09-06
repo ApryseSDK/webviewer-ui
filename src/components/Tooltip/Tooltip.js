@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -12,11 +12,7 @@ const propTypes = {
   content: PropTypes.string,
 };
 
-const defaultProps = {
-  content: '',
-};
-
-const Tooltip = ({ content, children }) => {
+const Tooltip = ({ content = '', children }) => {
   const timeoutRef = useRef(null);
   const childRef = useRef(null);
   const tooltipRef = useRef(null);
@@ -43,15 +39,16 @@ const Tooltip = ({ content, children }) => {
       setShow(false);
     };
 
-    if (childRef.current) {
-      childRef.current.addEventListener('mouseenter', showToolTip);
-      childRef.current.addEventListener('mouseleave', hideTooltip);
-      childRef.current.addEventListener('click', hideTooltip);
-    }
+    childRef.current?.addEventListener('mouseenter', showToolTip);
+    childRef.current?.addEventListener('mouseleave', hideTooltip);
+    childRef.current?.addEventListener('click', hideTooltip);
   }, []);
 
-  useEffect(() => {
-    const setTopAndLeft = (childEle, tooltipEle) => {
+  useLayoutEffect(() => {
+    const childEle = childRef.current;
+    const tooltipEle = tooltipRef.current;
+
+    const setTopAndLeft = () => {
       const childRect = childEle.getBoundingClientRect();
       const tooltipRect = tooltipEle.getBoundingClientRect();
 
@@ -74,6 +71,8 @@ const Tooltip = ({ content, children }) => {
         },
       };
 
+      // starting from placing the tooltip at the bottom location
+      // if the tooltip can't fit into the window, try placing it counterclockwise until we can find a location to fit it
       const bestLocation = Object.keys(locationTopLeftMap).find(location => {
         const { top: newTop, left: newLeft } = locationTopLeftMap[location];
 
@@ -96,8 +95,8 @@ const Tooltip = ({ content, children }) => {
       setLocation(bestLocation);
     };
 
-    if (show) {
-      setTopAndLeft(childRef.current, tooltipRef.current);
+    if (show && childEle && tooltipEle) {
+      setTopAndLeft();
       setTimeout(() => {
         setOpacity(1);
       }, opacityTimeout);
@@ -121,7 +120,7 @@ const Tooltip = ({ content, children }) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {child}
       {show &&
         translatedContent &&
@@ -141,12 +140,10 @@ const Tooltip = ({ content, children }) => {
           </div>,
           document.getElementById('app'),
         )}
-    </React.Fragment>
+    </>
   );
 };
 
 Tooltip.propTypes = propTypes;
-
-Tooltip.defaultProps = defaultProps;
 
 export default Tooltip;

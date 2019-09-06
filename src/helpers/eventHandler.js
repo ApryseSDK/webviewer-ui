@@ -1,4 +1,5 @@
 import * as eventListeners from 'src/event-listeners';
+import hotkeysManager from 'helpers/hotkeysManager';
 import core from 'core';
 
 export default store => {
@@ -18,8 +19,7 @@ export default store => {
   const onStampAnnotationAdded = eventListeners.onStampAnnotationAdded(dispatch);
   const onSignatureAnnotationAdded = eventListeners.onSignatureAnnotationAdded(dispatch);
   const onStickyAnnotationAdded = eventListeners.onStickyAnnotationAdded(store);
-  const onKeyDown = eventListeners.onKeyDown(store);
-  const onFullScreenChange = eventListeners.onFullScreenChange(dispatch);
+  const onFullScreenChange = eventListeners.onFullScreenChange(store);
   const onLayoutChanged = eventListeners.onLayoutChanged(dispatch);
   const onLocationSelected = eventListeners.onLocationSelected(store);
   const onPageComplete = eventListeners.onPageComplete(store);
@@ -44,7 +44,7 @@ export default store => {
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
-      document.addEventListener('keydown', onKeyDown);
+      hotkeysManager.initialize(store);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
@@ -68,7 +68,7 @@ export default store => {
       core.getTool('AnnotationCreateStamp').off('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').off('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').off('locationSelected', onLocationSelected);
-      document.removeEventListener('keydown', onKeyDown);
+      hotkeysManager.off();
       document.removeEventListener('fullscreenchange', onFullScreenChange);
       document.removeEventListener('mozfullscreenchange', onFullScreenChange);
       document.removeEventListener('webkitfullscreenchange', onFullScreenChange);

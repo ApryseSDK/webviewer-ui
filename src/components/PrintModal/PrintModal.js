@@ -298,6 +298,7 @@ class PrintModal extends React.PureComponent {
       let innerHTML;
       if (icon) {
         const isInlineSvg = icon.indexOf('<svg') === 0;
+        /* eslint-disable global-require */
         innerHTML = isInlineSvg ? icon : require(`../../../assets/${icon}.svg`);
       } else {
         innerHTML = annotation.Subject;

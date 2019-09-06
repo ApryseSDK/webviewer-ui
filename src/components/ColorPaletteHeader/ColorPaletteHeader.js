@@ -22,9 +22,10 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   setColorPalette = newPalette => {
-    const { setColorPalette, activeToolName } = this.props;
+    // TODO: fix
+    const { setColorPalette, colorMapKey } = this.props;
 
-    setColorPalette(activeToolName, newPalette);
+    setColorPalette(colorMapKey, newPalette);
   }
 
   renderTextColorIcon = () => {

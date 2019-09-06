@@ -19,6 +19,6 @@ viewerElement.addEventListener('ready', function() {
 
 import i18next from 'i18next';
 
-export default language =>  {
+export default language => {
   i18next.changeLanguage(language);
 };

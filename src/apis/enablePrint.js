@@ -16,21 +16,25 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import actions from 'actions';
-import { PRIORITY_ONE } from 'constants/actionPriority';
-
-import disablePrint from './disablePrint';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import enableFeatures from './enableFeatures';
+import disableFeatures from './disableFeatures';
 
 export default store => (enable = true) => {
-  const elements = [
-    'printButton',
-    'printModal'
-  ];
-
   if (enable) {
-    store.dispatch(actions.enableElements(elements, PRIORITY_ONE));
+    warnDeprecatedAPI(
+      'enablePrint()',
+      'enableFeatures([instance.Feature.Print])',
+      '6.0',
+    );
+    enableFeatures(store)([Feature.Measurement]);
   } else {
-    console.warn('enablePrint(false) is deprecated, please use disablePrint() instead');
-    disablePrint(store)();
+    warnDeprecatedAPI(
+      'enablePrint(false)',
+      'disableFeatures([instance.Feature.Print])',
+      '6.0',
+    );
+    disableFeatures(store)([Feature.Print]);
   }
 };

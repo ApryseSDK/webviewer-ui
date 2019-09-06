@@ -96,10 +96,7 @@ const NotesPanel = ({ display }) => {
 
   let singleSelectedNoteIndex = -1;
   useEffect(() => {
-    if (
-      Object.keys(selectedNoteIds).length &&
-      singleSelectedNoteIndex !== -1
-    ) {
+    if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
       listRef.current?.scrollToRow(singleSelectedNoteIndex);
     }
     // we only want this effect to happen when we select some notes
@@ -248,8 +245,6 @@ const NotesPanel = ({ display }) => {
     >
       {notes.length === 0 ? (
         <div className="no-annotations">{t('message.noAnnotations')}</div>
-      ) : notesToRender.length === 0 ? (
-        <div className="no-results">{t('message.noResults')}</div>
       ) : (
         <>
           <div className="header">
@@ -260,7 +255,9 @@ const NotesPanel = ({ display }) => {
             />
             <Dropdown items={Object.keys(getSortStrategies())} />
           </div>
-          {notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
+          {notesToRender.length === 0 ? (
+            <div className="no-results">{t('message.noResults')}</div>
+          ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
             <NormalList
               ref={listRef}
               notes={notesToRender}
@@ -325,6 +322,7 @@ const VirtualizedList = React.forwardRef(
       onScroll(scrollTop);
     };
 
+    /* eslint-disable react/prop-types */
     const rowRenderer = ({ index, key, parent, style }) => {
       const currNote = notes[index];
 

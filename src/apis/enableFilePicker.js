@@ -16,16 +16,25 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import actions from 'actions';
-import { PRIORITY_ONE } from 'constants/actionPriority';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import enableFeatures from './enableFeatures';
+import disableFeatures from './disableFeatures';
 
-import disableFilePicker from './disableFilePicker';
-
-export default store => (enable = true) =>  {
+export default store => (enable = true) => {
   if (enable) {
-    store.dispatch(actions.enableElements([ 'filePickerHandler', 'filePickerButton' ], PRIORITY_ONE));
+    warnDeprecatedAPI(
+      'enableFilePicker()',
+      'enableFeatures([instance.Feature.FilePicker])',
+      '6.0',
+    );
+    enableFeatures(store)([Feature.Measurement]);
   } else {
-    console.warn('enableFilePicker(false) is deprecated, please use disableFilePicker() instead');
-    disableFilePicker(store)();
+    warnDeprecatedAPI(
+      'enableFilePicker(false)',
+      'disableFeatures([instance.Feature.FilePicker])',
+      '6.0',
+    );
+    disableFeatures(store)([Feature.FilePicker]);
   }
 };

@@ -224,7 +224,7 @@ class ThumbnailsPanel extends React.PureComponent {
     }
   }
 
-  thumbIsLoaded = pageIndex => this.thumbs[pageIndex] && this.thumbs[pageIndex].loaded
+  thumbIsLoaded = pageIndex => this.thumbs[pageIndex]?.loaded
 
   thumbIsPending = pageIndex => this.getPendingThumbIndex(pageIndex) !== -1
 

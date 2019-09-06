@@ -23,19 +23,14 @@ const propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const defaultProps = {
-  onClick: () => {},
-};
-
 const Button = ({
-  disable,
   isActive,
   mediaQueryClassName,
   img,
   label,
   color,
   dataElement,
-  onClick,
+  onClick = () => {},
   className,
   title,
 }) => {
@@ -73,7 +68,7 @@ const Button = ({
     </div>
   );
 
-  return disable || isElementDisabled ? null : title ? (
+  return isElementDisabled ? null : title ? (
     <Tooltip content={title}>{children}</Tooltip>
   ) : (
     children
@@ -81,7 +76,5 @@ const Button = ({
 };
 
 Button.propTypes = propTypes;
-
-Button.defaultProps = defaultProps;
 
 export default React.memo(Button);

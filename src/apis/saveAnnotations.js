@@ -18,8 +18,8 @@ export default store => () => new Promise((resolve, reject) => {
       headers: serverUrlHeaders,
       body: {
         ...docIdQuery,
-        data: xfdfString
-      }
+        data: xfdfString,
+      },
     }).then(response => {
       if (response.ok) {
         resolve();

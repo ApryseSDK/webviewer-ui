@@ -60,7 +60,6 @@ const ToolButton = ({ toolName, ...restProps }) => {
         ToolButton: true,
         hasStyles: toolStylesExist(toolName),
       })}
-      disable={core.getTool(toolName)?.disabled}
       onClick={handleClick}
       isActive={isActive}
       color={color}

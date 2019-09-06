@@ -29,7 +29,7 @@ class MeasurementsDropdown extends React.PureComponent {
         .concat([selectedItem]);
     } else {
       sortedDropdownList = [selectedItem].concat(
-        dropdownList.filter(item => item !== selectedItem)
+        dropdownList.filter(item => item !== selectedItem),
       );
     }
     return (
@@ -44,15 +44,13 @@ class MeasurementsDropdown extends React.PureComponent {
           />
         )}
         {isDropdownOpen &&
-          sortedDropdownList.map((item, i) => {
-            return (
-              <MeasurementsDropdownItem
-                key={i}
-                content={item}
-                onClick={e => this.onClick(e, item)}
-              />
-            );
-          })}
+          sortedDropdownList.map((item, i) => (
+            <MeasurementsDropdownItem
+              key={i}
+              content={item}
+              onClick={e => this.onClick(e, item)}
+            />
+          ))}
       </div>
     );
   }

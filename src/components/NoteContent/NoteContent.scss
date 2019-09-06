@@ -71,16 +71,6 @@
       }
     }
   
-    .container {
-      &.visible {
-        display: block;
-      }
-  
-      &.hidden {
-        display: none;
-      }
-    }
-  
     .contents {
       color: var(--text-color);
       margin-right: 5px;
@@ -90,6 +80,7 @@
   
       .highlight {
         background: #fffc95;
+        color: #333333;
       }
     }
   }

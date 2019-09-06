@@ -12,12 +12,12 @@ class Slider extends React.PureComponent {
     property: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([
       PropTypes.number,
-      PropTypes.string
+      PropTypes.string,
     ]),
     displayProperty: PropTypes.string.isRequired,
     displayValue: PropTypes.oneOfType([
       PropTypes.number,
-      PropTypes.string
+      PropTypes.string,
     ]),
     getCirclePosition: PropTypes.func.isRequired,
     convertRelativeCirclePositionToValue: PropTypes.func.isRequired,
@@ -29,9 +29,9 @@ class Slider extends React.PureComponent {
     super(props);
     this.isMouseDown = false;
     this.sliderSvg = React.createRef();
-    this.lineLength = 0;  
+    this.lineLength = 0;
   }
-  
+
   componentDidMount() {
     window.addEventListener('mousemove', this.onMove);
     window.addEventListener('mouseup', this.onMouseUp);
@@ -47,7 +47,7 @@ class Slider extends React.PureComponent {
     window.removeEventListener('orientationchange', this.updateSvg);
     window.removeEventListener('resize', this.updateSvg);
     this.sliderSvg.current.removeEventListener('touchmove', this.onMove, { passive: false });
-  } 
+  }
 
   updateSvg = () => {
     this.setLineLength();
@@ -82,7 +82,7 @@ class Slider extends React.PureComponent {
     const { property, onStyleChange, convertRelativeCirclePositionToValue } = this.props;
     const relativeCirclePosition = this.getRelativeCirclePosition(e);
     const value = convertRelativeCirclePositionToValue(relativeCirclePosition);
-    
+
     onStyleChange(property, value);
   }
 
@@ -91,8 +91,8 @@ class Slider extends React.PureComponent {
     const lineStart = circleRadius;
     const lineEnd = lineStart + this.lineLength;
     const svgLeft = this.sliderSvg.current.getBoundingClientRect().left;
-    let circlePosition; 
-    
+    let circlePosition;
+
     if (isUsingMouse) {
       circlePosition = e.pageX - svgLeft;
     } else {
@@ -140,8 +140,8 @@ class Slider extends React.PureComponent {
       );
     }
 
-    return this.renderSlider();  
+    return this.renderSlider();
   }
-}             
+}
 
 export default withTranslation(null, { wait: false })(Slider);

@@ -12,6 +12,8 @@ import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
 
 import core from 'core';
+import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
+import escapeHtml from 'helpers/escapeHtml';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -67,6 +69,16 @@ const NoteContent = ({ annotation }) => {
     }
   }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
+  const handleContainerClick = e => {
+    if (isSelected) {
+      // stop bubbling up otherwise the note will be closed due to annotation deselection
+      // when the note is selected, we only want it to be closed when the note content header is clicked
+      // because users may try to select text or click any links in contents and we don't want the note to collapse
+      // when they are doing that
+      e.stopPropagation();
+    }
+  };
+
   const renderAuthorName = annotation => {
     const name = core.getDisplayAuthor(annotation);
 
@@ -77,12 +89,8 @@ const NoteContent = ({ annotation }) => {
     return <span dangerouslySetInnerHTML={{ __html: getText(name) }} />;
   };
 
-  const renderContents = () => {
-    const contents = annotation.getContents();
-
-    if (!contents) {
-      return null;
-    }
+  const renderContents = contents => {
+    contents = escapeHtml(contents);
 
     let text;
     const isContentsLinkable = Autolinker.link(contents).indexOf('<a') !== -1;
@@ -154,6 +162,8 @@ const NoteContent = ({ annotation }) => {
     );
   }
 
+  const contents = annotation.getContents();
+
   return (
     <div
       className="NoteContent"
@@ -161,11 +171,13 @@ const NoteContent = ({ annotation }) => {
       onMouseDown={e => e.preventDefault()}
     >
       {header}
-      <div className="content-container">
+      <div className="content-container" onMouseDown={handleContainerClick}>
         {isEditing ? (
           <ContentArea annotation={annotation} setIsEditing={setIsEditing} />
         ) : (
-          <div className="container">{renderContents()}</div>
+          contents && (
+            <div className="container">{renderContents(contents)}</div>
+          )
         )}
       </div>
     </div>
@@ -184,8 +196,12 @@ const ContentArea = ({ annotation, setIsEditing }) => {
   const textareaRef = useRef();
 
   useEffect(() => {
+    // on initial mount, focus the last character of the textarea
     if (textareaRef.current) {
       textareaRef.current.focus();
+
+      const textLength = textareaRef.current.value.length;
+      textareaRef.current.setSelectionRange(textLength, textLength);
     }
   }, []);
 
@@ -209,14 +225,11 @@ const ContentArea = ({ annotation, setIsEditing }) => {
   });
 
   return (
-    <div
-      className="edit-content"
-      // stop bubbling up otherwise the note will be closed
-      // due to annotation deselection
-      onMouseDown={e => e.stopPropagation()}
-    >
+    <div className="edit-content">
       <AutoResizeTextarea
-        ref={textareaRef}
+        ref={el => {
+          textareaRef.current = el;
+        }}
         value={value}
         onChange={value => setValue(value)}
         onBlur={() => setIsEditing(false)}

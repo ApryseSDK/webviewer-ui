@@ -16,16 +16,25 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import actions from 'actions';
-import { PRIORITY_ONE } from 'constants/actionPriority';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import enableFeatures from './enableFeatures';
+import disableFeatures from './disableFeatures';
 
-import disableDownload from './disableDownload';
-
-export default store => (enable = true) =>  {
+export default store => (enable = true) => {
   if (enable) {
-    store.dispatch(actions.enableElement('downloadButton', PRIORITY_ONE));
+    warnDeprecatedAPI(
+      'enableDownload()',
+      'enableFeatures([instance.Feature.Download])',
+      '6.0',
+    );
+    enableFeatures(store)([Feature.Measurement]);
   } else {
-    console.warn('enableDownload(false) is deprecated, please use disableDownload() instead');
-    disableDownload(store)();
+    warnDeprecatedAPI(
+      'enableDownload(false)',
+      'disableFeatures([instance.Feature.Download])',
+      '6.0',
+    );
+    disableFeatures(store)([Feature.Download]);
   }
 };

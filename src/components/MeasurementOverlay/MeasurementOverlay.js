@@ -114,9 +114,15 @@ class MeasurementOverlay extends React.PureComponent {
     }
   };
 
-  isMeasurementAnnotation = annotation => ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'].includes(annotation.ToolName);
+  isMeasurementAnnotation = annotation =>
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+      mapAnnotationToKey(annotation),
+    );
 
-  isMeasurementTool = toolName => ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'].includes(toolName);
+  isMeasurementTool = toolName =>
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+      mapToolNameToKey(toolName),
+    );
 
   shouldShowInfo = annotation => {
     const toolName = annotation.ToolName;

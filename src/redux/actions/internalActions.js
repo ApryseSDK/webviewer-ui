@@ -207,13 +207,11 @@ export const updateItem = (dataElement, newProps, group) => ({
   type: 'UPDATE_ITEM',
   payload: { dataElement, newProps, group },
 });
-export const setItems = (items, group) => dispatch => {
-  if (Array.isArray(items)) {
-    dispatch({ type: 'SET_ITEMS', payload: { items, group } });
-  } else {
-    dispatch({ type: 'SET_ITEMS', payload: { items: [items], group } });
-  }
-};
+
+export const setLeftPanelWidth = width => ({
+  type: 'SET_LEFT_PANEL_WIDTH',
+  payload: { width },
+});
 
 // document
 export const setDocumentId = documentId => ({

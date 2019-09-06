@@ -1,6 +1,6 @@
 /**
  * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#scrollViewUpdated__anchor
  */
-export default () =>  {
+export default () => {
   window.docViewer.scrollViewUpdated();
 };

@@ -37,7 +37,7 @@ class HeaderItems extends React.PureComponent {
             case 'statefulButton': {
               return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             }
-            case 'customElement': 
+            case 'customElement':
               return <CustomElement key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'responsiveButton':
               return <ResponsiveButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
