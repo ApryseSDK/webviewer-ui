@@ -1,5 +1,6 @@
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
+import { mapAnnotationToToolName } from 'constants/map';
 import actions from 'actions';
 
 export default (dispatch, annotationConstructor) => {
@@ -8,7 +9,6 @@ export default (dispatch, annotationConstructor) => {
   core.clearSelection();
   core.addAnnotations(annotations);
   core.selectAnnotations(annotations);
-  setAnnotationColor(annotations[0]);
   dispatch(actions.closeElement('textPopup'));
 };
 
@@ -28,6 +28,8 @@ const createTextAnnotation = annotationConstructor => {
     if (annotation instanceof window.Annotations.RedactionAnnotation) {
       setRedactionStyle(annotation);
     }
+
+    setAnnotationColor(annotation);
 
     annotations.push(annotation);
   });
