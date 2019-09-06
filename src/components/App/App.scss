@@ -59,10 +59,4 @@ html, body , #app {
     appearance: none;
     user-select: text !important;
   }
-
-  select {
-    -webkit-appearance: none;  /* for webkit (safari, chrome) compatibility */
-    -moz-appearance: none; /* for firefox compatibility */
-    appearance: none;
-  }
 }
