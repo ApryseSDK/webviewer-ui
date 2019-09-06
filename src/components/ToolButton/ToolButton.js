@@ -58,8 +58,6 @@ const ToolButton = ({ toolName, ...restProps }) => {
     color = toolStyles[iconColor]?.toHexString?.();
   }
 
-  console.log(toolName);
-
   return (
     <Button
       className={classNames({
