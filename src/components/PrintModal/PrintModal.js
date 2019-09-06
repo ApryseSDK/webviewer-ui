@@ -10,6 +10,7 @@ import core from 'core';
 import getPagesToPrint from 'helpers/getPagesToPrint';
 import getClassName from 'helpers/getClassName';
 import { getSortStrategies } from 'constants/sortStrategies';
+import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -28,7 +29,8 @@ class PrintModal extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     sortStrategy: PropTypes.string.isRequired,
-  }
+    colorMap: PropTypes.object.isRequired,
+  };
 
   constructor() {
     super();
@@ -123,33 +125,33 @@ class PrintModal extends React.PureComponent {
     return creatingPages;
   };
 
-  creatingImage = pageNumber => new Promise(resolve => {
-    const pageIndex = pageNumber - 1;
-    const zoom = 1;
-    const printRotation = this.getPrintRotation(pageIndex);
-    const onCanvasLoaded = canvas => {
-      this.pendingCanvases = this.pendingCanvases.filter(pendingCanvas => pendingCanvas !== id);
-      this.positionCanvas(canvas, pageIndex);
-      this.drawAnnotationsOnCanvas(canvas, pageNumber).then(() => {
-        const img = document.createElement('img');
-        img.src = canvas.toDataURL();
-        img.onload = () => {
-          this.setState(({ count }) => ({
-            count: (count < 0) ? -1 : count + 1,
-          }));
-          resolve(img);
-        };
-      });
-    };
+  creatingImage = pageNumber =>
+    new Promise(resolve => {
+      const pageIndex = pageNumber - 1;
+      const zoom = 1;
+      const printRotation = this.getPrintRotation(pageIndex);
+      const onCanvasLoaded = canvas => {
+        this.pendingCanvases = this.pendingCanvases.filter(
+          pendingCanvas => pendingCanvas !== id,
+        );
+        this.positionCanvas(canvas, pageIndex);
+        this.drawAnnotationsOnCanvas(canvas, pageNumber).then(() => {
+          const img = document.createElement('img');
+          img.src = canvas.toDataURL();
+          img.onload = () => {
+            this.setState(({ count }) => ({
+              count: count < 0 ? -1 : count + 1,
+            }));
+            resolve(img);
+          };
+        });
+      };
 
-    const id = core.getDocument().loadCanvasAsync({
-      pageIndex,
-      zoom,
-      pageRotation: printRotation,
-      drawComplete: onCanvasLoaded,
+      const id = core
+        .getDocument()
+        .loadCanvasAsync(pageIndex, zoom, printRotation, onCanvasLoaded);
+      this.pendingCanvases.push(id);
     });
-    this.pendingCanvases.push(id);
-  })
 
   getPrintRotation = pageIndex => {
     const { width, height } = core.getPageInfo(pageIndex);
@@ -207,19 +209,24 @@ class PrintModal extends React.PureComponent {
       return core.drawAnnotations(pageNumber, canvas);
     }
 
-    const widgetContainer = this.createWidgetContainer(pageNumber - 1);
-    return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
-      document.body.appendChild(widgetContainer);
-      return window.html2canvas(widgetContainer, {
-        canvas,
-        backgroundColor: null,
-        scale: 1,
-        logging: false,
-      }).then(() => {
-        document.body.removeChild(widgetContainer);
+    // Currently annotationManager expects a jQuery node
+    const widgetContainer = $(this.createWidgetContainer(pageNumber - 1));
+    return core
+      .drawAnnotations(pageNumber, canvas, true, widgetContainer)
+      .then(() => {
+        document.body.appendChild(widgetContainer[0]);
+        return window
+          .html2canvas(widgetContainer[0], {
+            canvas,
+            backgroundColor: null,
+            scale: 1,
+            logging: false,
+          })
+          .then(() => {
+            document.body.removeChild(widgetContainer[0]);
+          });
       });
-    });
-  }
+  };
 
   createWidgetContainer = pageIndex => {
     const { width, height } = core.getPageInfo(pageIndex);
@@ -232,27 +239,37 @@ class PrintModal extends React.PureComponent {
     widgetContainer.style.top = '-10000px';
 
     return widgetContainer;
-  }
+  };
 
-  getPrintableAnnotations = pageNumber => core.getAnnotationsList().filter(annotation => annotation.Listable && annotation.PageNumber === pageNumber && !annotation.isReply() && annotation.Printable)
+  getPrintableAnnotations = pageNumber =>
+    core
+      .getAnnotationsList()
+      .filter(
+        annotation =>
+          annotation.Listable &&
+          annotation.PageNumber === pageNumber &&
+          !annotation.isReply() &&
+          annotation.Printable,
+      );
 
-  creatingNotesPage = (annotations, pageNumber) => new Promise(resolve => {
-    const container = document.createElement('div');
-    container.className = 'page__container';
+  creatingNotesPage = (annotations, pageNumber) =>
+    new Promise(resolve => {
+      const container = document.createElement('div');
+      container.className = 'page__container';
 
-    const header = document.createElement('div');
-    header.className = 'page__header';
-    header.innerHTML = `Page ${pageNumber}`;
+      const header = document.createElement('div');
+      header.className = 'page__header';
+      header.innerHTML = `Page ${pageNumber}`;
 
-    container.appendChild(header);
-    annotations.forEach(annotation => {
-      const note = this.getNote(annotation);
+      container.appendChild(header);
+      annotations.forEach(annotation => {
+        const note = this.getNote(annotation);
 
-      container.appendChild(note);
+        container.appendChild(note);
+      });
+
+      resolve(container);
     });
-
-    resolve(container);
-  })
 
   getNote = annotation => {
     const note = document.createElement('div');
@@ -285,9 +302,10 @@ class PrintModal extends React.PureComponent {
   };
 
   getNoteIcon = annotation => {
-    const { toolButtonObjects } = this.props;
-    const iconColor = toolButtonObjects[annotation.ToolName].iconColor;
-    const icon = toolButtonObjects[annotation.ToolName].img;
+    const { colorMap } = this.props;
+    const key = mapAnnotationToKey(annotation);
+    const iconColor = colorMap[key] && colorMap[key].iconColor;
+    const icon = getDataWithKey(key).icon;
     const isBase64 = icon && icon.trim().indexOf('data:') === 0;
 
     let noteIcon;
@@ -309,7 +327,7 @@ class PrintModal extends React.PureComponent {
     }
 
     noteIcon.className = 'note__icon';
-    noteIcon.style.color = iconColor && annotation[iconColor] && annotation[iconColor].toHexString();
+    noteIcon.style.color = iconColor && annotation[iconColor].toHexString();
     return noteIcon;
   };
 
@@ -474,7 +492,7 @@ const mapStateToProps = state => ({
   printQuality: selectors.getPrintQuality(state),
   pageLabels: selectors.getPageLabels(state),
   sortStrategy: selectors.getSortStrategy(state),
-  toolButtonObjects: selectors.getToolButtonObjects(state),
+  colorMap: selectors.getColorMap(state),
 });
 
 const mapDispatchToProps = dispatch => ({

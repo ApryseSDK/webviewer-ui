@@ -13,6 +13,7 @@ import PageNavOverlay from 'components/PageNavOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
+import ToolsOverlay from 'components/ToolsOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import SearchPanel from 'components/SearchPanel';
@@ -73,6 +74,7 @@ const App = ({ removeEventHandlers }) => {
         <ZoomOverlay />
         <MeasurementOverlay />
         <AnnotationContentOverlay />
+        <ToolsOverlay />
 
         <AnnotationPopup />
         <TextPopup />

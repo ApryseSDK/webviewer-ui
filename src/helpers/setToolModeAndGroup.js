@@ -9,9 +9,9 @@ export default (store, toolName) => {
     selectors.getToolButtonObject(getState(), toolName)?.group || '';
 
   if (toolGroup) {
-    dispatch(actions.openElement('groupOverlay'));
+    dispatch(actions.openElement('toolsOverlay'));
   } else {
-    dispatch(actions.closeElement('groupOverlay'));
+    dispatch(actions.closeElement('toolsOverlay'));
   }
 
   const hasToolBeenSelected = core.getToolMode().name === toolName;

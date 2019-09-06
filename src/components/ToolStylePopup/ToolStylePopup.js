@@ -8,6 +8,7 @@ import StylePopup from 'components/StylePopup';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -19,6 +20,7 @@ class ToolStylePopup extends React.PureComponent {
     activeToolStyle: PropTypes.object,
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
+    toolButtonObjects: PropTypes.object.isRequired,
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
@@ -73,14 +75,14 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   handleClickOutside = e => {
-    const groupOverlay = document.querySelector(
-      '[data-element="groupOverlay"]',
+    const toolsOverlay = document.querySelector(
+      '[data-element="toolsOverlay"]',
     );
     const header = document.querySelector('[data-element="header"]');
-    const clickedGroupOverlay = groupOverlay?.contains(e.target);
+    const clickedToolsOverlay = toolsOverlay?.contains(e.target);
     const clickedHeader = header?.contains(e.target);
 
-    if (!clickedGroupOverlay && !clickedHeader) {
+    if (!clickedToolsOverlay && !clickedHeader) {
       this.close();
     }
   };
@@ -94,17 +96,13 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   positionToolStylePopup = () => {
-    const { dataElement } = this.props;
-    let toolButton;
-    if (dataElement) {
-      toolButton = document.querySelectorAll(`.Header [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
-      if (!toolButton) {
-        toolButton = document.querySelectorAll(`.ResponsiveOverlay [data-element=${dataElement}], .GroupOverlay [data-element=${dataElement}]`)[0];
-      }
-      if (!toolButton) {
-        return;
-      }
-    } else {
+    const { toolButtonObjects, activeToolName } = this.props;
+    const dataElement = toolButtonObjects[activeToolName].dataElement;
+    const toolButton = document.querySelectorAll(
+      `.Header [data-element=${dataElement}], .ToolsOverlay [data-element=${dataElement}]`,
+    )[0];
+
+    if (!toolButton) {
       return;
     }
 
@@ -135,9 +133,10 @@ class ToolStylePopup extends React.PureComponent {
 
   render() {
     const { left, top } = this.state;
-    const { isDisabled, activeToolName, activeToolStyle, dataElement } = this.props;
+    const { isDisabled, activeToolName, activeToolStyle } = this.props;
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const className = getClassName(`Popup ToolStylePopup`, this.props);
+    const colorMapKey = mapToolNameToKey(activeToolName);
 
     if (isDisabled) {
       return null;
@@ -154,7 +153,7 @@ class ToolStylePopup extends React.PureComponent {
       >
         <StylePopup
           key={activeToolName}
-          activeToolName={activeToolName}
+          colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}
           hideSlider={hideSlider}
@@ -171,7 +170,6 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
   isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  dataElement: selectors.getActiveDataElement(state),
 });
 
 const mapDispatchToProps = {

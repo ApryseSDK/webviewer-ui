@@ -1,5 +1,4 @@
 import { workerTypes } from 'constants/types';
-import getHeaderItemByToolName from 'helpers/getHeaderItemByToolName';
 
 // viewer
 export const isElementDisabled = (state, dataElement) =>
@@ -8,24 +7,6 @@ export const isElementDisabled = (state, dataElement) =>
 export const isElementOpen = (state, dataElement) =>
   state.viewer.openElements[dataElement] &&
   !state.viewer.disabledElements[dataElement]?.disabled;
-
-export const isElementActive = (state, tool) => {
-  const {
-    viewer: {
-      activeToolName,
-      header: { tools = [] },
-    },
-  } = state;
-  const { element, dataElement } = tool;
-
-  return (
-    isElementOpen(state, element) ||
-    tools.some(
-      tool =>
-        tool.dataElement === dataElement && tool.toolName === activeToolName,
-    )
-  );
-};
 
 export const allButtonsInGroupDisabled = (state, toolGroup) => {
   const toolButtonObjects = getToolButtonObjects(state);
@@ -64,9 +45,7 @@ export const getToolNamesByGroup = (state, toolGroup) =>
 
 export const getToolNameByDataElement = (state, dataElement) =>
   Object.keys(state.viewer.toolButtonObjects).find(
-    toolName =>
-      getHeaderItemByToolName(state, toolName) &&
-      getHeaderItemByToolName(state, toolName).dataElement === dataElement,
+    name => state.viewer.toolButtonObjects[name].dataElement === dataElement,
   );
 
 export const getActiveToolName = state => state.viewer.activeToolName;

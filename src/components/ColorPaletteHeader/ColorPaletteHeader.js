@@ -6,9 +6,8 @@ import { withTranslation } from 'react-i18next';
 import Tooltip from 'components/Tooltip';
 
 import getBrightness from 'helpers/getBrightness';
+import { getDataWithKey } from 'constants/map';
 import actions from 'actions';
-
-import selectors from 'selectors';
 
 import './ColorPaletteHeader.scss';
 
@@ -16,13 +15,12 @@ class ColorPaletteHeader extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     colorPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
+    colorMapKey: PropTypes.string.isRequired,
     setColorPalette: PropTypes.func.isRequired,
-    availablePalettes: PropTypes.arrayOf(PropTypes.string).isRequired,
     t: PropTypes.func.isRequired,
   }
 
   setColorPalette = newPalette => {
-    // TODO: fix
     const { setColorPalette, colorMapKey } = this.props;
 
     setColorPalette(colorMapKey, newPalette);
@@ -107,7 +105,9 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   render() {
-    const { t, colorPalette, availablePalettes } = this.props;
+    const { t, colorPalette, colorMapKey } = this.props;
+    const { availablePalettes } = getDataWithKey(colorMapKey);
+
     if (availablePalettes.length < 2) {
       return null;
     }
@@ -133,11 +133,8 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, { activeToolName }) => ({
-  availablePalettes: selectors.getAvailablePalettes(state, activeToolName),
-});
 const mapDispatchToProps = {
   setColorPalette: actions.setColorPalette,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));
+export default connect(null, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));

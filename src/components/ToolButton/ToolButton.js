@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import core from 'core';
 import toolStylesExist from 'helpers/toolStylesExist';
 import getToolStyles from 'helpers/getToolStyles';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -22,13 +23,11 @@ const ToolButton = ({ toolName, ...restProps }) => {
   const [
     isActive,
     iconColor,
-    group,
-    { showColor },
+    { group = '', showColor, ...restObjectData },
   ] = useSelector(
     state => [
       selectors.getActiveToolName(state) === toolName,
-      selectors.getIconColor(state, toolName),
-      selectors.getGroupName(state, toolName),
+      selectors.getIconColor(state, mapToolNameToKey(toolName)),
       selectors.getToolButtonObject(state, toolName),
     ],
     shallowEqual,
@@ -54,6 +53,8 @@ const ToolButton = ({ toolName, ...restProps }) => {
     color = toolStyles[iconColor]?.toHexString?.();
   }
 
+  console.log(toolName);
+
   return (
     <Button
       className={classNames({
@@ -64,6 +65,7 @@ const ToolButton = ({ toolName, ...restProps }) => {
       isActive={isActive}
       color={color}
       {...restProps}
+      {...restObjectData}
     />
   );
 };

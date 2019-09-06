@@ -18,6 +18,7 @@ class StylePopup extends React.PureComponent {
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
     hideSlider: PropTypes.bool,
+    colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
   };
 
@@ -96,18 +97,21 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { currentPalette, style, activeToolName, onStyleChange } = this.props;
+    const { currentPalette, style, colorMapKey, onStyleChange } = this.props;
     const { openMeasurementDropdown } = this.state;
     const { Scale, Precision } = style;
 
     return (
-      <div className="Popup StylePopup" data-element="stylePopup">
-        {currentPalette && style[currentPalette] && (
+      <div
+        className="Popup StylePopup"
+        data-element="stylePopup"
+      >
+        {currentPalette && (
           <div className="colors-container">
             <div className="inner-wrapper">
               <ColorPaletteHeader
                 colorPalette={currentPalette}
-                activeToolName={activeToolName}
+                colorMapKey={colorMapKey}
                 style={style}
               />
               {this.renderColorPalette()}
@@ -137,8 +141,8 @@ class StylePopup extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, { activeToolName }) => ({
-  currentPalette: selectors.getCurrentPalette(state, activeToolName),
+const mapStateToProps = (state, { colorMapKey }) => ({
+  currentPalette: selectors.getCurrentPalette(state, colorMapKey),
 });
 
 export default connect(mapStateToProps)(StylePopup);

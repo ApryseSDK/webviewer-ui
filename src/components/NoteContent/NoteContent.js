@@ -28,15 +28,13 @@ const NoteContent = ({ annotation }) => {
   const [
     sortStrategy,
     noteDateFormat,
-    icon,
     iconColor,
     isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
       selectors.getNoteDateFormat(state),
-      selectors.getToolButtonIcon(state, annotation.ToolName),
-      selectors.getIconColor(state, annotation.ToolName),
+      selectors.getIconColor(state, mapAnnotationToKey(annotation)),
       selectors.getIsNoteEditing(state),
     ],
     shallowEqual,
@@ -134,6 +132,7 @@ const NoteContent = ({ annotation }) => {
       </div>
     );
   } else {
+    const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
     const color = annotation[iconColor]?.toHexString?.();
     const numberOfReplies = annotation.getReplies().length;
 
