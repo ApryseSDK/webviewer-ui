@@ -168,7 +168,6 @@ describe('Tests for watermark modal', () => {
       cy.wait(CANVAS_TIMEOUT_MS);
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
-      // cy.matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
 
       // go to another drop down option
       cy.get('@watermarkModal').find('[data-element="form"]').within(() => {
@@ -187,7 +186,6 @@ describe('Tests for watermark modal', () => {
       cy.wait(CANVAS_TIMEOUT_MS);
 
       cy.get('@formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
-      // cy.matchImageSnapshot(ID.TEST_PERSIST_CHANGE_BEFORE_SAVING);
     });
 
     it('should be able to persist changes after saving', () => {
