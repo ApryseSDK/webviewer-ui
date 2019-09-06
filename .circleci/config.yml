@@ -1,9 +1,5 @@
 version: 2.1
 orbs:
-  # "cypress-io/cypress@1" installs the latest published
-  # version "1.x.y" of the orb. We recommend you then use
-  # the strict explicit version "cypress-io/cypress@1.x.y"
-  # to lock the version and prevent unexpected CI changes
   cypress: cypress-io/cypress@1
 executors:
   with-chrome:
@@ -11,7 +7,7 @@ executors:
       # https://github.com/cypress-io/cypress-docker-images/tree/master/browsers
       - image: 'cypress/browsers:node12.4.0-chrome76'
 jobs:
-  build:
+  run-lint:
     docker:
       - image: circleci/node:10-browsers
     steps:
@@ -22,24 +18,13 @@ jobs:
       - run:
           name: Lint
           command: npm run lint
-      # - run:
-      #     name: Generate minified bundle
-      #     command: npm run build
 
 workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - build
-      # - cypress/install:
-      #     requires:
-      #       - build
-      # - cypress/install:
-      #     executor: with-chrome
+      - run-lint
       - cypress/run:
-          # requires:
-          #   - build
-          #   - cypress/install
           post-steps:
             # TODO make it download webviewer here once the newest version is rdy and published to npm repo
             - store_artifacts:
@@ -50,4 +35,4 @@ workflows:
           executor: with-chrome
           no-workspace: true
           # executor: cypress/base:12.4.0
-          # browser: chrome
+          browser: chrome
