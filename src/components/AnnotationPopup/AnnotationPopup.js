@@ -39,6 +39,7 @@ const AnnotationPopup = () => {
   const [position, setPosition] = useState({ left: 0, top: 0 });
   // first annotation in the array when there're multiple annotations selected
   const [firstAnnotation, setFirstAnnotation] = useState(null);
+  const [canModify, setCanModify] = useState(false);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
   const popupRef = useRef();
 
@@ -73,6 +74,9 @@ const AnnotationPopup = () => {
     }
 
     const onMouseLeftUp = e => {
+      // clicking on the selected annotation is considered clicking outside of this component
+      // so this component will close due to useOnClickOutside
+      // this handler is used to make sure that if we click on the selected annotation, this component will show up again
       if (firstAnnotation) {
         const annotUnderMouse = core.getAnnotationByMouseEvent(e);
 
@@ -90,9 +94,7 @@ const AnnotationPopup = () => {
 
     const onUpdateAnnotationPermission = () => {
       if (firstAnnotation) {
-        // number of buttons may changed due to "canModify"
-        // so we need to reposition this component
-        setPopupPositionAndShow();
+        setCanModify(core.canModify(firstAnnotation));
       }
     };
 
@@ -110,24 +112,27 @@ const AnnotationPopup = () => {
         onUpdateAnnotationPermission,
       );
     };
-  }, [dispatch, firstAnnotation, isStylePopupOpen]);
+  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen]);
 
   useEffect(() => {
     const closeAndReset = () => {
       dispatch(actions.closeElement('annotationPopup'));
       setPosition({ left: 0, top: 0 });
       setFirstAnnotation(null);
+      setCanModify(false);
       setIsStylePopupOpen(false);
     };
 
     const isContainerShifted = isLeftPanelOpen || isRightPanelOpen;
     if (isContainerShifted) {
+      // closing because we can't correctly reposition the popup on panel transition
       closeAndReset();
     }
 
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected' && annotations.length) {
         setFirstAnnotation(annotations[0]);
+        setCanModify(annotations[0]);
       } else {
         closeAndReset();
       }
@@ -156,7 +161,6 @@ const AnnotationPopup = () => {
   );
   const numberOfSelectedAnnotations = selectedAnnotations.length;
   const numberOfGroups = core.getNumberOfGroups(selectedAnnotations);
-  const canModify = core.canModify(firstAnnotation);
   const canGroup = numberOfGroups > 1;
   const canUngroup = numberOfGroups === 1 && numberOfSelectedAnnotations > 1;
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
