@@ -73,6 +73,7 @@ import getSelectedTextQuads from './getSelectedTextQuads';
 import getDisplayModeObject from './getDisplayModeObject';
 import getScrollViewElement from './getScrollViewElement';
 import getAnnotationById from './getAnnotationById';
+import getAnnotationByMouseEvent from './getAnnotationByMouseEvent';
 import isFullPDFEnabled from './isFullPDFEnabled';
 import isBlendModeSupported from './isBlendModeSupported';
 import isAnnotationSelected from './isAnnotationSelected';
@@ -94,6 +95,9 @@ import getViewerElement from './getViewerElement';
 import { addEventListener, removeEventListener } from './eventListener';
 import setAnnotationCanvasTransform from './setAnnotationCanvasTransform';
 import getAnnotationCopy from './getAnnotationCopy';
+import groupAnnotations from './groupAnnotations';
+import ungroupAnnotations from './ungroupAnnotations';
+import getNumberOfGroups from './getNumberOfGroups';
 
 export default {
   setToolMode,
@@ -193,4 +197,8 @@ export default {
   getViewerElement,
   setAnnotationCanvasTransform,
   getAnnotationCopy,
+  getAnnotationByMouseEvent,
+  groupAnnotations,
+  ungroupAnnotations,
+  getNumberOfGroups,
 };
