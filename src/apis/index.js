@@ -6,6 +6,7 @@ import Feature from 'constants/feature';
 import getHashParams from 'helpers/getHashParams';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
+import annotationPopup from './annotationPopup';
 import closeDocument from './closeDocument';
 import closeElement from './closeElement';
 import closeElements from './closeElements';
@@ -129,6 +130,7 @@ export default store => {
     constants: getConstants(), // undocumented
     addSearchListener: addSearchListener(store),
     addSortStrategy: addSortStrategy(store),
+    annotationPopup: annotationPopup(store),
     closeDocument: closeDocument(store),
     closeElement: closeElement(store),
     closeElements: closeElements(store),

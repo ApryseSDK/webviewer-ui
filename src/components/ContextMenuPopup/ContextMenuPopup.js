@@ -98,6 +98,7 @@ class ContextMenuPopup extends React.PureComponent {
 
   handleClick = (toolName, group = '') => {
     const { dispatch, closeElement } = this.props;
+    // TODO: fix this
     setToolModeAndGroup(dispatch, toolName, group);
     closeElement('contextMenuPopup');
   }
