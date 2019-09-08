@@ -20,7 +20,9 @@ export default store => {
   // disabling/enabling elements will be handled in onUpdateAnnotationPermission.js
   // the reason for doing this is to avoid duplicate code for handling the `enableReadOnly` constructor option
   // and the effect of programmatically calling instance.setReadOnly
-  core.setReadOnly(state.viewer.isReadOnly);
+  if (state.viewer.isReadOnly) {
+    core.setReadOnly(state.viewer.isReadOnly);
+  }
 
   const annotationDisabled = !getHashParams('a', false);
   if (annotationDisabled) {

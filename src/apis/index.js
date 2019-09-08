@@ -6,9 +6,11 @@ import Feature from 'constants/feature';
 import getHashParams from 'helpers/getHashParams';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
+import annotationPopup from './annotationPopup';
 import closeDocument from './closeDocument';
 import closeElement from './closeElement';
 import closeElements from './closeElements';
+import contextMenuPopup from './contextMenuPopup';
 import disableAnnotations from './disableAnnotations';
 import disableDownload from './disableDownload';
 import disableElement from './disableElement';
@@ -108,6 +110,7 @@ import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
 import showErrorMessage from './showErrorMessage';
 import showWarningMessage from './showWarningMessage';
+import textPopup from './textPopup';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import unregisterTool from './unregisterTool';
@@ -129,9 +132,11 @@ export default store => {
     constants: getConstants(), // undocumented
     addSearchListener: addSearchListener(store),
     addSortStrategy: addSortStrategy(store),
+    annotationPopup: annotationPopup(store),
     closeDocument: closeDocument(store),
     closeElement: closeElement(store),
     closeElements: closeElements(store),
+    contextMenuPopup: contextMenuPopup(store),
     disableAnnotations: disableAnnotations(store),
     disableDownload: disableDownload(store),
     disableElement: disableElement(store),
@@ -231,6 +236,7 @@ export default store => {
     setZoomList: setZoomList(store),
     showErrorMessage: showErrorMessage(store),
     showWarningMessage: showWarningMessage(store), // undocumented
+    textPopup: textPopup(store),
     toggleElement: toggleElement(store),
     toggleFullScreen,
     unregisterTool: unregisterTool(store),

@@ -1,36 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import selectors from 'selectors';
 
 import './PrintHandler.scss';
 
-class PrintHandler extends React.PureComponent {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    isEmbedPrintSupported: PropTypes.bool,
-  }
+const PrintHandler = () => {
+  const [isDisabled, isEmbedPrintSupported] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, 'printHandler'),
+      selectors.isEmbedPrintSupported(state),
+    ],
+    shallowEqual,
+  );
 
-  render() {
-    if (this.props.isDisabled) {
-      return null;
-    }
+  return isDisabled ? null : (
+    <div className="PrintHandler">
+      {isEmbedPrintSupported ? (
+        <embed id="print-handler" type="application/pdf" tabIndex={-1}></embed>
+      ) : (
+        <div id="print-handler"></div>
+      )}
+    </div>
+  );
+};
 
-    return (
-      <div className="PrintHandler">
-        {this.props.isEmbedPrintSupported
-          ? <embed id="print-handler" type="application/pdf" tabIndex={-1}></embed>
-          : <div id="print-handler"></div>
-        }
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'printHandler'),
-  isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
-});
-
-export default connect(mapStateToProps)(PrintHandler);
+export default PrintHandler;

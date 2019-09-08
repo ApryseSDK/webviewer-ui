@@ -172,6 +172,13 @@ export const setHeaderItems = (header, headerItems) => ({
   type: 'SET_HEADER_ITEMS',
   payload: { header, headerItems },
 });
+export const setPopupItems = (dataElement, items) => ({
+  type: 'SET_POPUP_ITEMS',
+  payload: {
+    dataElement,
+    items,
+  },
+});
 export const setColorPalette = (colorMapKey, colorPalette) => ({
   type: 'SET_COLOR_PALETTE',
   payload: { colorMapKey, colorPalette },
