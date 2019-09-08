@@ -103,10 +103,10 @@ export default initialState => (state = initialState, action) => {
         ...state,
         headers: { ...state.headers, [payload.header]: payload.headerItems },
       };
-    case 'SET_ANNOTATION_POPUP_ITEMS':
+    case 'SET_POPUP_ITEMS':
       return {
         ...state,
-        annotationPopup: payload,
+        [payload.dataElement]: payload.items,
       };
     case 'REGISTER_TOOL':
       return {

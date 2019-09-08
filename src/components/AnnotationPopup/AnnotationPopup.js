@@ -4,11 +4,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import ActionButton from 'components/ActionButton';
 import AnnotationStylePopup from 'components/AnnotationStylePopup';
-import ToolButton from 'components/ToolButton';
-import ToolGroupButton from 'components/ToolGroupButton';
-import ToggleElementButton from 'components/ToggleElementButton';
-import StatefulButton from 'components/StatefulButton';
-import CustomElement from 'components/CustomElement';
+import CustomizablePopup from 'components/CustomizablePopup';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
@@ -26,7 +22,6 @@ const AnnotationPopup = () => {
     isOpen,
     isNotesPanelDisabled,
     isAnnotationStylePopupDisabled,
-    items,
     // can probably use mutation observer
     isLeftPanelOpen,
     isRightPanelOpen,
@@ -36,7 +31,6 @@ const AnnotationPopup = () => {
       selectors.isElementOpen(state, 'annotationPopup'),
       selectors.isElementDisabled(state, 'notesPanel'),
       selectors.isElementDisabled(state, 'annotationStylePopup'),
-      selectors.getPopupItems(state, 'annotationPopup'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementOpen(state, 'searchPanel'),
     ],
@@ -191,20 +185,19 @@ const AnnotationPopup = () => {
     dispatch(actions.closeElement('annotationPopup'));
   };
 
-  // TODO: can probably hide this
   const dataElementButtonMap = {
-    annotationCommentButton: props =>
+    annotationCommentButton: overrides =>
       !isNotesPanelDisabled &&
       !multipleAnnotationsSelected && (
         <ActionButton
           title="action.comment"
           img="ic_comment_black_24px"
           onClick={commentOnAnnotation}
-          {...props}
+          {...overrides}
           dataElement="annotationCommentButton"
         />
       ),
-    annotationStyleEditButton: props =>
+    annotationStyleEditButton: overrides =>
       canModify &&
       hasStyle &&
       !isAnnotationStylePopupDisabled &&
@@ -213,11 +206,11 @@ const AnnotationPopup = () => {
           title="action.style"
           img="ic_palette_black_24px"
           onClick={() => setIsStylePopupOpen(true)}
-          {...props}
+          {...overrides}
           dataElement="annotationStyleEditButton"
         />
       ),
-    annotationRedactButton: props =>
+    annotationRedactButton: overrides =>
       redactionEnabled &&
       !multipleAnnotationsSelected && (
         <ActionButton
@@ -227,11 +220,11 @@ const AnnotationPopup = () => {
             applyRedactions(firstAnnotation);
             dispatch(actions.closeElement('annotationPopup'));
           }}
-          {...props}
+          {...overrides}
           dataElement="annotationRedactButton"
         />
       ),
-    annotationGroupButton: props =>
+    annotationGroupButton: overrides =>
       canGroup && (
         <ActionButton
           title="action.group"
@@ -239,21 +232,21 @@ const AnnotationPopup = () => {
           onClick={() =>
             core.groupAnnotations(primaryAnnotation, selectedAnnotations)
           }
-          {...props}
+          {...overrides}
           dataElement="annotationGroupButton"
         />
       ),
-    annotationUngroupButton: props =>
+    annotationUngroupButton: overrides =>
       canUngroup && (
         <ActionButton
           title="action.ungroup"
           img="ic_ungroup_24px"
           onClick={() => core.ungroupAnnotations(selectedAnnotations)}
-          {...props}
+          {...overrides}
           dataElement="annotationUngroupButton"
         />
       ),
-    annotationDeleteButton: props =>
+    annotationDeleteButton: overrides =>
       canModify && (
         <ActionButton
           title="action.delete"
@@ -262,7 +255,7 @@ const AnnotationPopup = () => {
             core.deleteAnnotations(core.getSelectedAnnotations());
             dispatch(actions.closeElement('annotationPopup'));
           }}
-          {...props}
+          {...overrides}
           dataElement="annotationDeleteButton"
         />
       ),
@@ -288,36 +281,9 @@ const AnnotationPopup = () => {
           isOpen={isOpen}
         />
       ) : (
-        items.map((item, i) => {
-          const { dataElement, type, hidden, ...buttonProps } = item;
-          const Button = dataElementButtonMap[dataElement];
-
-          if (typeof Button === 'undefined') {
-            const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : `${item.className || ''}`;
-            const key = `${type}-${dataElement || i}`;
-            switch (type) {
-              case 'toolButton':
-                return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-              case 'toolGroupButton':
-                return <ToolGroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-              case 'toggleElementButton':
-                return <ToggleElementButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-              case 'actionButton':
-                return <ActionButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-              case 'statefulButton':
-                return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-              case 'customElement':
-                return <CustomElement key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-              case 'spacer':
-              case 'divider':
-                return <div key={key} className={`${type} ${mediaQueryClassName}`}></div>;
-              default:
-                console.warn(`${type} is not a valid header item type.`);
-            }
-          }
-
-          return <Button key={dataElement} {...buttonProps} />;
-        })
+        <CustomizablePopup dataElement="annotationPopup">
+          {dataElementButtonMap}
+        </CustomizablePopup>
       )}
     </div>
   );

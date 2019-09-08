@@ -18,7 +18,7 @@ const AnnotationPopup = {
 
     items.splice(index, 0, ...buttons);
 
-    this.store.dispatch(actions.setAnnotationPopupItems(items));
+    this.store.dispatch(actions.setPopupItems('annotationPopup', items));
 
     return this;
   },
@@ -35,7 +35,7 @@ const AnnotationPopup = {
       ...props,
     };
 
-    this.store.dispatch(actions.setAnnotationPopupItems(items));
+    this.store.dispatch(actions.setPopupItems('annotationPopup', items));
 
     return this;
   },
@@ -45,7 +45,7 @@ const AnnotationPopup = {
 
     items.splice(index, 1);
 
-    this.store.dispatch(actions.setAnnotationPopupItems(items));
+    this.store.dispatch(actions.setPopupItems('annotationPopup', items));
 
     return this;
   },
