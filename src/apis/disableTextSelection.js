@@ -24,7 +24,7 @@ export default store => () => {
   warnDeprecatedAPI(
     'disableTextSelection()',
     'disableFeatures([instance.Feature.TextSelection])',
-    '6.0',
+    '7.0',
   );
   disableFeatures(store)([Feature.TextSelection]);
 };

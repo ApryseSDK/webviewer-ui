@@ -5,7 +5,7 @@ export default store => toolName => {
   warnDeprecatedAPI(
     'enableTool(toolName)',
     'enableTools([toolName])',
-    '6.0',
+    '7.0',
   );
   enableTools(store)([toolName]);
 };
