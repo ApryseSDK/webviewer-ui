@@ -101,6 +101,14 @@ export default {
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'annotationDeleteButton' },
     ],
+    textPopup: [
+      { dataElement: 'copyTextButton' },
+      { dataElement: 'textHighlightToolButton' },
+      { dataElement: 'textUnderlineToolButton' },
+      { dataElement: 'textSquigglyToolButton' },
+      { dataElement: 'textStrikeoutToolButton' },
+      { dataElement: 'textRedactToolButton' },
+    ],
     toolButtonObjects: {
       AnnotationCreateDistanceMeasurement: { dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'measurementTools', showColor: 'active' },
       AnnotationCreatePerimeterMeasurement: { dataElement: 'perimeterMeasurementToolButton', title: 'annotation.perimeterMeasurement', img: 'ic_annotation_perimeter_black_24px', group: 'measurementTools', showColor: 'active' },

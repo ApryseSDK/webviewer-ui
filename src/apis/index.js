@@ -109,6 +109,7 @@ import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
 import showErrorMessage from './showErrorMessage';
 import showWarningMessage from './showWarningMessage';
+import textPopup from './textPopup';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import unregisterTool from './unregisterTool';
@@ -233,6 +234,7 @@ export default store => {
     setZoomList: setZoomList(store),
     showErrorMessage: showErrorMessage(store),
     showWarningMessage: showWarningMessage(store), // undocumented
+    textPopup: textPopup(store),
     toggleElement: toggleElement(store),
     toggleFullScreen,
     unregisterTool: unregisterTool(store),

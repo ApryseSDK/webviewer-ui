@@ -8,7 +8,9 @@
     "cypress/globals": true
   },
   "globals": {
-    "_": false
+    "_": false,
+    "Annotations": false,
+    "Tools": false
   },
   "extends": [
     "eslint:recommended",
