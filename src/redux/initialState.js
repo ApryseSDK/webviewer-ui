@@ -109,6 +109,13 @@ export default {
       { dataElement: 'textStrikeoutToolButton' },
       { dataElement: 'textRedactToolButton' },
     ],
+    contextMenuPopup: [
+      { dataElement: 'panToolButton' },
+      { dataElement: 'stickyToolButton' },
+      { dataElement: 'highlightToolButton' },
+      { dataElement: 'freeHandToolButton' },
+      { dataElement: 'freeTextToolButton' },
+    ],
     toolButtonObjects: {
       AnnotationCreateDistanceMeasurement: { dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'measurementTools', showColor: 'active' },
       AnnotationCreatePerimeterMeasurement: { dataElement: 'perimeterMeasurementToolButton', title: 'annotation.perimeterMeasurement', img: 'ic_annotation_perimeter_black_24px', group: 'measurementTools', showColor: 'active' },

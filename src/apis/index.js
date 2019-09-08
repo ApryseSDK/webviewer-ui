@@ -10,6 +10,7 @@ import annotationPopup from './annotationPopup';
 import closeDocument from './closeDocument';
 import closeElement from './closeElement';
 import closeElements from './closeElements';
+import contextMenuPopup from './contextMenuPopup';
 import disableAnnotations from './disableAnnotations';
 import disableDownload from './disableDownload';
 import disableElement from './disableElement';
@@ -135,6 +136,7 @@ export default store => {
     closeDocument: closeDocument(store),
     closeElement: closeElement(store),
     closeElements: closeElements(store),
+    contextMenuPopup: contextMenuPopup(store),
     disableAnnotations: disableAnnotations(store),
     disableDownload: disableDownload(store),
     disableElement: disableElement(store),
