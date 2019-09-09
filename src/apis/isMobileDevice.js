@@ -1,8 +1,10 @@
-export default () =>
-  console.warn('instance.isMobileDevice is deprecated, please check https://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device for an alternative. The deprecated API will be removed in 7.0.');
+export default () => {
+  console.warn(
+    'instance.isMobileDevice is deprecated, please check https://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device for an alternative. The deprecated API will be removed in 7.0.',
+  );
 
-!!(
-  !isIE() &&
+  return !!(
+    !isIE() &&
     ((scrollbarWidth() === 0 && navigator.userAgent.match(/Edge/i)) ||
       navigator.userAgent.match(/Android/i) ||
       navigator.userAgent.match(/webOS/i) ||
@@ -12,7 +14,8 @@ export default () =>
       navigator.userAgent.match(/Touch/i) ||
       navigator.userAgent.match(/IEMobile/i) ||
       navigator.userAgent.match(/Silk/i))
-);
+  );
+};
 
 const isIE = () => {
   const ua = navigator.userAgent.toLowerCase();
