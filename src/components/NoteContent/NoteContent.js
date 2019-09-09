@@ -43,6 +43,7 @@ const NoteContent = ({ annotation }) => {
     NoteContext,
   );
   const [isEditing, setIsEditing] = useState(false);
+  const [textAreaValue, setTextAreaValue] = useState(annotation.getContents());
   const dispatch = useDispatch();
   const isReply = annotation.isReply();
 
@@ -172,7 +173,12 @@ const NoteContent = ({ annotation }) => {
       {header}
       <div className="content-container" onMouseDown={handleContainerClick}>
         {isEditing ? (
-          <ContentArea annotation={annotation} setIsEditing={setIsEditing} />
+          <ContentArea
+            textAreaValue={textAreaValue}
+            onTextAreaValueChange={setTextAreaValue}
+            annotation={annotation}
+            setIsEditing={setIsEditing}
+          />
         ) : (
           contents && (
             <div className="container">{renderContents(contents)}</div>
@@ -188,9 +194,13 @@ NoteContent.propTypes = propTypes;
 export default NoteContent;
 
 // a component that contains the content textarea, the save button and the cancel button
-const ContentArea = ({ annotation, setIsEditing }) => {
+const ContentArea = ({
+  annotation,
+  setIsEditing,
+  textAreaValue,
+  onTextAreaValueChange,
+}) => {
   const contents = annotation.getContents();
-  const [value, setValue] = useState(contents);
   const [t] = useTranslation();
   const textareaRef = useRef();
 
@@ -208,9 +218,9 @@ const ContentArea = ({ annotation, setIsEditing }) => {
     // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
 
-    const hasEdited = value !== contents;
+    const hasEdited = textAreaValue !== contents;
     if (hasEdited) {
-      core.setNoteContents(annotation, value);
+      core.setNoteContents(annotation, textAreaValue);
       if (annotation instanceof window.Annotations.FreeTextAnnotation) {
         core.drawAnnotationsFromList([annotation]);
       }
@@ -220,7 +230,7 @@ const ContentArea = ({ annotation, setIsEditing }) => {
   };
 
   const saveBtnClass = classNames({
-    disabled: value === contents,
+    disabled: textAreaValue === contents,
   });
 
   return (
@@ -229,17 +239,22 @@ const ContentArea = ({ annotation, setIsEditing }) => {
         ref={el => {
           textareaRef.current = el;
         }}
-        value={value}
-        onChange={value => setValue(value)}
+        value={textAreaValue}
+        onChange={onTextAreaValueChange}
         onBlur={() => setIsEditing(false)}
-        onSubmit={e => setContents(e)}
+        onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
       />
       <span className="buttons">
         <button className={saveBtnClass} onMouseDown={setContents}>
           {t('action.save')}
         </button>
-        <button onMouseDown={() => setIsEditing(false)}>
+        <button
+          onMouseDown={() => {
+            setIsEditing(false);
+            onTextAreaValueChange(contents);
+          }}
+        >
           {t('action.cancel')}
         </button>
       </span>
@@ -250,4 +265,6 @@ const ContentArea = ({ annotation, setIsEditing }) => {
 ContentArea.propTypes = {
   annotation: PropTypes.object.isRequired,
   setIsEditing: PropTypes.func.isRequired,
+  textAreaValue: PropTypes.string,
+  onTextAreaValueChange: PropTypes.func.isRequired,
 };
