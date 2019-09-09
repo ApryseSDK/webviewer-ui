@@ -1,35 +1,14 @@
-/**
- * Go to the next page of the document. Makes the document viewer display the next page of the document.
- * @method WebViewer#goToNextPage
- * @example // 5.1 and after
-WebViewer(...)
-  .then(function(instance) {
-    var docViewer = instance.docViewer;
-
-    // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', function() {
-      instance.goToNextPage();
-    });
-  });
- * @example // 4.0 ~ 5.0
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  var docViewer = instance.docViewer;
-
-  // you must have a document loaded when calling this api
-  docViewer.on('documentLoaded', function() {
-    instance.goToNextPage();
-  });
-});
- */
-
 import core from 'core';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
 import selectors from 'selectors';
 
 export default store => () => {
+  warnDeprecatedAPI(
+    'goToNextPage',
+    'docViewer.setCurrentPage(Math.min(instance.docViewer.getCurrentPage() + 1, instance.docViewer.getPageCount()))',
+    '7.0',
+  );
+
   const state = store.getState();
   const currentPage = selectors.getCurrentPage(state);
 

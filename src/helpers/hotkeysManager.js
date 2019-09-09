@@ -141,6 +141,20 @@ const HotkeysManager = {
 
         print(dispatch, selectors.isEmbedPrintSupported(getState()));
       },
+      enter: () => {
+        // TODO: move this to Accessibility
+        if (document.activeElement.className.includes('Note')) {
+          document.activeElement.click();
+        } else if (document.activeElement.className === 'skip-to-document') {
+          document.getElementById('pageText0').focus();
+        } else if (document.activeElement.className === 'skip-to-notes') {
+          dispatch(actions.openElement('notesPanel'));
+          const noteEl = document.querySelector('.Note');
+          if (noteEl) {
+            noteEl.focus();
+          }
+        }
+      },
       pageup: e => {
         e.preventDefault();
 

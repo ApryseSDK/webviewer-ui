@@ -175,7 +175,6 @@ class DocumentContainer extends React.PureComponent {
   handleScroll = () => {
     this.props.closeElements([
       'annotationPopup',
-      'contextMenuPopup',
       'textPopup',
     ]);
   }
