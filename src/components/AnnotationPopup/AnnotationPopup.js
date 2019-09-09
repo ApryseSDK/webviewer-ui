@@ -188,7 +188,8 @@ const AnnotationPopup = () => {
   const dataElementButtonMap = {
     annotationCommentButton: overrides =>
       !isNotesPanelDisabled &&
-      !multipleAnnotationsSelected && (
+      !multipleAnnotationsSelected &&
+      firstAnnotation.ToolName !== 'CropPage' && (
         <ActionButton
           title="action.comment"
           img="ic_comment_black_24px"
@@ -201,13 +202,27 @@ const AnnotationPopup = () => {
       canModify &&
       hasStyle &&
       !isAnnotationStylePopupDisabled &&
-      !multipleAnnotationsSelected && (
+      !multipleAnnotationsSelected &&
+      firstAnnotation.ToolName !== 'CropPage' && (
         <ActionButton
           title="action.style"
           img="ic_palette_black_24px"
           onClick={() => setIsStylePopupOpen(true)}
           {...overrides}
           dataElement="annotationStyleEditButton"
+        />
+      ),
+    annotationCropButton: overrides =>
+      firstAnnotation.ToolName === 'CropPage' && (
+        <ActionButton
+          title="action.apply"
+          img="ic_check_black_24px"
+          onClick={() => {
+            core.getTool('CropPage').applyCrop();
+            dispatch(actions.closeElement('annotationPopup'));
+          }}
+          {...overrides}
+          dataElement="annotationCropButton"
         />
       ),
     annotationRedactButton: overrides =>

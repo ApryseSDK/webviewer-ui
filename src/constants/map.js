@@ -264,6 +264,14 @@ const map = {
     toolNames: ['AnnotationEraserTool'],
     annotationCheck: null,
   },
+  cropPage: {
+    icon: 'ic_crop_black_24px',
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: ['CropPage'],
+    annotationCheck: null,
+  },
 };
 
 export const mapToolNameToKey = toolName =>
