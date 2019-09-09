@@ -333,7 +333,7 @@ class WatermarkModal extends React.PureComponent {
                 <div className="form-field">
 
                   <label>
-                    {t(`watermark.location`)}
+                    {t(`option.watermark.location`)}
                   </label>
                   <select
                     data-element="location"
@@ -350,7 +350,7 @@ class WatermarkModal extends React.PureComponent {
                 <div className="form-field">
 
                   <label>
-                    {t(`watermark.text`)}
+                    {t(`option.watermark.text`)}
                   </label>
                   <input
                     className="text-input"
@@ -363,7 +363,7 @@ class WatermarkModal extends React.PureComponent {
                 <div className="form-field">
 
                   <label>
-                    {t(`watermark.size`)}
+                    {t(`option.watermark.size`)}
                   </label>
                   <select
                     data-element="fontSize"
@@ -387,7 +387,7 @@ class WatermarkModal extends React.PureComponent {
                 <div className="form-field">
 
                   <label>
-                    {t(`watermark.colors`)}
+                    {t(`option.watermark.colors`)}
                   </label>
                   <div
                     data-element="currentColorCell"
@@ -418,7 +418,7 @@ class WatermarkModal extends React.PureComponent {
             </div>
 
             <div className="button-container">
-              <a className="reset button" data-element="reset" onClick={event => this.resetForm(event)}>{t(`watermark.resetAllSettings`)}</a>
+              <a className="reset button" data-element="reset" onClick={event => this.resetForm(event)}>{t(`option.watermark.resetAllSettings`)}</a>
               <div className="action-button-container">
                 <button className="cancel button" data-element="cancel" onClick={() => this.closeModal()}>{t(`action.cancel`)}</button>
                 <button className="ok button" data-element="submit" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>

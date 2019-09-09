@@ -184,6 +184,13 @@
     "shared": {
       "page": "Page",
       "precision": "Precision"
+    },
+    "watermark": {
+      "size": "Size",
+      "location": "Choose a location to edit watermarks",
+      "text": "Text",
+      "colors": "Colors",
+      "resetAllSettings": "Reset All Settings"
     }
   },
   "shortcut": {
@@ -215,12 +222,5 @@
     "pan": "Pan",
     "select": "Select",
     "Marquee": "Marquee Zoom"
-  },
-  "watermark": {
-    "size": "Size",
-    "location": "Choose a location to edit watermarks",
-    "text": "Text",
-    "colors": "Colors",
-    "resetAllSettings": "Reset All Settings"
   }
 }
