@@ -3,7 +3,7 @@ import i18n from 'i18next';
 import actions from 'actions';
 import core from 'core';
 
-export default (dispatch, isEmbedPrintSupported) =>  {
+export default (dispatch, isEmbedPrintSupported) => {
   if (!core.getDocument()) {
     return;
   }

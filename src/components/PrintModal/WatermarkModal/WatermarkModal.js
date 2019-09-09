@@ -58,10 +58,8 @@ class WatermarkModal extends React.PureComponent {
     super(props);
     const locationSettings = this.initializeLocationSettings();
     this.state = {
-      isVisible: false,
       isColorPaletteVisible: false,
-      // eslint-disable-next-line object-shorthand
-      locationSettings: locationSettings,
+      locationSettings,
       previousLocationSettings: locationSettings,
     };
     this.canvasContainerRef = React.createRef();
@@ -81,16 +79,13 @@ class WatermarkModal extends React.PureComponent {
 
   componentDidMount() {
     if (this.props.isVisible !== undefined) {
-      this.setState({
-        isVisible: this.props.isVisible,
-      }, () => core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn));
+      core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn);
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.isVisible !== prevProps.isVisible) {
       this.setState({
-        isVisible: this.props.isVisible,
         isColorPaletteVisible: false,
       }, () => this.handleWatermarkRenderFxn());
     }
@@ -206,9 +201,7 @@ class WatermarkModal extends React.PureComponent {
   }
 
   closeModal() {
-    this.setState({
-      isVisible: false,
-    }, () => this.props.modalClosed());
+    this.props.modalClosed();
   }
 
   handleInputChange(key, value) {
@@ -236,14 +229,12 @@ class WatermarkModal extends React.PureComponent {
     event.preventDefault();
     const locationSettings = this.initializeLocationSettings();
     this.setState({
-      // eslint-disable-next-line object-shorthand
-      locationSettings: locationSettings,
+      locationSettings,
     }, () => this.addWatermarks());
   }
 
   onOkPressed() {
     this.setState({
-      isVisible: false,
       previousLocationSettings: this.state.locationSettings,
     }, () => {
       // the order of these fxn calls matter
