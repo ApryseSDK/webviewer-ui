@@ -1,6 +1,6 @@
 import core from 'core';
 import defaultToolStylesMap from 'constants/defaultToolStylesMap';
-
+import localStorageManager from 'helpers/localStorageManager';
 const setDefaultToolStyles = () => {
   const toolModeMap = core.getToolModeMap();
 
@@ -11,6 +11,7 @@ const setDefaultToolStyles = () => {
       toolStyles = localStorage.getItem(`toolData-${toolName}`);
     } catch (ex) {
       console.warn(`localStorage could not be accessed. ${ex.message}`);
+      localStorageManager.disableLocalStorage();
     }
 
     if (!toolStyles && defaultToolStylesMap[toolName]) {
