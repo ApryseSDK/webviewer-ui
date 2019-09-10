@@ -184,7 +184,7 @@ export default store => {
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
 
-    // deprecated, to be removed in 7.0
+    // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),
     disableAnnotations: disableAnnotations(store),
     disableDownload: disableDownload(store),

@@ -1,3 +1,9 @@
+/**
+ * A class which contains popup APIs.<br/><br/>
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewer#annotationPopup instance.annotationPopup}, {@link WebViewer#textPopup instance.textPopup} or {@link WebViewer#contextMenuPopup instance.contextMenuPopup}
+ * @name WebViewer.Popup
+ * @class
+ */
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -9,6 +15,22 @@ const PopupAPI = {
     this.popupDataElement = popupDataElement;
     return this;
   },
+  /**
+   * Add an array of items after the item that has the given data element
+   * @method WebViewer.Popup#add
+   * @param {Array.<object>} items Same as <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>header items</a>.
+   * @param {string} [dataElement] An optional string. If not given, items will be added in the beginning.
+   * @returns {object} The instance itself
+   * @example // 6.0 and after
+WebViewer(...)
+  .then(function(instance) {
+    instance.contextMenuPopup.add({
+      type: 'actionButton',
+      img: 'path/to/image',
+      onClick: instance.downloadPdf,
+    });
+  });
+   */
   add(buttons, dataElement) {
     if (!Array.isArray(buttons)) {
       buttons = [buttons];
@@ -23,6 +45,37 @@ const PopupAPI = {
 
     return this;
   },
+  /**
+   * Update one item or all the items in the popup
+   * @method WebViewer.Popup#update
+   * @param {string|Array.<object>} dataElement
+   * If a string is passed, the item that has the given data element will be updated based on the given props.
+   * If an array of object is passed, the items in the popup will become the array.
+   * @param {object} [props] An optional object that is used to override an existing item's properties. Only useful when the first argument is a string.
+   * @returns {object} The instance itself
+   * @example // 6.0 and after
+WebViewer(...)
+  .then(function(instance) {
+    // use a new image for a button
+    instance.textPopup.update('copyTextButton', {
+      img: 'path/to/image',
+    });
+
+    // replace existing items with a new array of items
+    instance.contextMenuPopup.update([
+      {
+        type: 'actionButton',
+        img: 'path/to/image',
+        onClick: instance.downloadPdf,
+      },
+      {
+        type: 'actionButton',
+        img: 'path/to/image',
+        onClick: instance.print,
+      },
+    ]);
+  });
+   */
   update(dataElement, props) {
     let items;
 
@@ -42,6 +95,17 @@ const PopupAPI = {
 
     return this;
   },
+  /**
+   * Delete the item that has the given data element
+   * @method WebViewer.Popup#delete
+   * @param {string} dataElement The data element of the item to be deleted
+   * @returns {object} The instance itself
+   * @example // 6.0 and after
+WebViewer(...)
+  .then(function(instance) {
+    instance.annotationPopup.delete('annotationCommentButton');
+  });
+   */
   delete(dataElement) {
     const index = this._getIndexByDataElement(dataElement);
     const items = this.getItems();
@@ -52,6 +116,15 @@ const PopupAPI = {
 
     return this;
   },
+  /**
+   * Return the array of items in the popup
+   * @method WebViewer.Popup#getItems
+   * @example // 6.0 and after
+WebViewer(...)
+  .then(function(instance) {
+    instance.annotationPopup.delete('annotationCommentButton');
+  });
+   */
   getItems() {
     return [...selectors.getPopupItems(this.store.getState(), this.popupDataElement)];
   },
