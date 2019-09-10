@@ -39,7 +39,7 @@ WebViewer(...)
     const index = this._getIndexByDataElement(dataElement);
     const items = this.getItems();
 
-    items.splice(index, 0, ...buttons);
+    items.splice(index + 1, 0, ...buttons);
 
     this.store.dispatch(actions.setPopupItems(this.popupDataElement, items));
 

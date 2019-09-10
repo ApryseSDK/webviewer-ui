@@ -64,9 +64,7 @@ const CustomizablePopup = ({ dataElement, children }) => {
       }
 
       if (type === 'spacer' || type === 'divider') {
-        Component = () => {
-          <div className={`${type} ${mediaQueryClassName}`} />;
-        };
+        Component = () => <div className={`${type} ${mediaQueryClassName}`} />;
       }
     }
 

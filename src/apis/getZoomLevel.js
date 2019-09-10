@@ -27,6 +27,6 @@ viewerElement.addEventListener('ready', function() {
 });
  */
 
-import selectors from 'selectors';
+import core from 'core';
 
-export default store => () => selectors.getZoom(store.getState());
+export default () => core.getZoom();

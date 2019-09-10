@@ -142,7 +142,7 @@ export default store => {
     getFitMode: getFitMode(store),
     getLayoutMode: getLayoutMode(store),
     getToolMode,
-    getZoomLevel: getZoomLevel(store),
+    getZoomLevel,
     hotkeys,
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),
