@@ -74,7 +74,8 @@ class PrintModal extends React.PureComponent {
       switch (layoutMode) {
         case LayoutMode.FacingCover:
         case LayoutMode.FacingCoverContinuous:
-          if (currentPage === 1 || currentPage === pageCount) {
+          if (currentPage === 1 || (currentPage === pageCount && pageCount % 2 === 0)) {
+            // first page or last page if single page
             pagesToPrint.push(currentPage);
           } else {
             pagesToPrint = currentPage % 2 ? [currentPage - 1, currentPage] : [currentPage, currentPage + 1];
@@ -82,7 +83,8 @@ class PrintModal extends React.PureComponent {
           break;
         case LayoutMode.FacingContinuous:
         case LayoutMode.Facing:
-          if (currentPage === pageCount) {
+          if (currentPage === pageCount && pageCount % 2 === 1) {
+            // last page if single page
             pagesToPrint.push(currentPage);
           } else {
             pagesToPrint = currentPage % 2 ? [currentPage, currentPage + 1] : [currentPage - 1, currentPage];
