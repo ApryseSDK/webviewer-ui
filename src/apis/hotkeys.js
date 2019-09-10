@@ -1,11 +1,11 @@
 /**
- * Add a handler to the given keyboard shortcut
- * @method WebViewer#
- * @param {Array.<WebViewer#Feature>} features Array of features to enable.
- * @example
+ * An instance of Hotkeys that can be used to add custom or remove existing hotkey handlers
+ * @name WebViewer#hotkeys
+ * @see WebViewer.Hotkeys
+ * @example // 6.0 and after
 WebViewer(...)
   .then(function(instance) {
-    instance.enableFeatures(instance.Feature.Measurement);
+    instance.hotkeys.someAPIs();
   });
  */
 
