@@ -29,11 +29,7 @@ export default store => zoomLevel => {
   if (zoomLevel) {
     zoomFactors.setMinZoomLevel(zoomLevel);
     store.dispatch(actions.setZoomList(zoomList));
-    try {
-      window.Tools.MarqueeZoomTool.setMinZoomLevel(zoomLevel);
-    } catch (e) {
-      console.warn('Tools.MarqueeZoomTool.setMinZoomLevel is not a function. To fix this issue, download the latest package from http://www.pdftron.com/downloads/WebViewer.zip and replace your CoreControls.js with the one in the package');
-    }
+    window.Tools.MarqueeZoomTool.setMinZoomLevel(zoomLevel);
   } else {
     console.warn('Type of the argument for setMinZoomLevel must be either string or number');
   }
