@@ -25,14 +25,15 @@ workflows:
   lint_and_test:
     jobs:
       - run-lint
-      - cypress/run:
-          post-steps:
-            # TODO make it download webviewer here once the newest version is rdy and published to npm repo
-            - store_artifacts:
-                path: ./test/cypress/snapshots
-          start: npm start
-          wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
-          command: npm run cy:run
-          executor: with-chrome
-          no-workspace: true
-          browser: chrome
+      # TODO uncomment when we can run tests locally as stated in https://trello.com/c/uq5eEsqH/454-allow-cypress-end-to-end-tests-to-be-ran-locally-on-machine
+      # - cypress/run:
+      #     post-steps:
+      #       # TODO make it download webviewer here once the newest version is rdy and published to npm repo
+      #       - store_artifacts:
+      #           path: ./test/cypress/snapshots
+      #     start: npm start
+      #     wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
+      #     command: npm run cy:run
+      #     executor: with-chrome
+      #     no-workspace: true
+      #     browser: chrome

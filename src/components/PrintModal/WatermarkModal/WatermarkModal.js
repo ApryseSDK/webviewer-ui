@@ -9,6 +9,10 @@ import './WatermarkModal.scss';
 
 import ActionButton from 'components/ActionButton';
 
+/**
+ * TODO refactor this component so that the Print Modal passes in the form fields and it will store the previous form field settings
+ */
+
 const DESIRED_WIDTH = 300;
 const DESIRED_HEIGHT = 300;
 

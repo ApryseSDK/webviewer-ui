@@ -1,5 +1,6 @@
 /**
  * Comment out tests for now
+ * https://trello.com/c/uq5eEsqH/454-allow-cypress-end-to-end-tests-to-be-ran-locally-on-machine
  */
 const ID = {
   INIT: 'initial',
