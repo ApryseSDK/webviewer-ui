@@ -133,7 +133,7 @@ const AnnotationPopup = () => {
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected' && annotations.length) {
         setFirstAnnotation(annotations[0]);
-        setCanModify(annotations[0]);
+        setCanModify(core.canModify(annotations[0]));
       } else {
         closeAndReset();
       }
