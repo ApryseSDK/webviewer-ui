@@ -10,7 +10,7 @@ export default store => (enable = true) => {
       'enableFeatures([instance.Feature.NotesPanel])',
       '7.0',
     );
-    enableFeatures(store)([Feature.Measurement]);
+    enableFeatures(store)([Feature.NotesPanel]);
   } else {
     warnDeprecatedAPI(
       'enableNotesPanel(false)',

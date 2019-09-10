@@ -10,7 +10,7 @@ export default store => (enable = true) => {
       'enableFeatures([instance.Feature.Print])',
       '7.0',
     );
-    enableFeatures(store)([Feature.Measurement]);
+    enableFeatures(store)([Feature.Print]);
   } else {
     warnDeprecatedAPI(
       'enablePrint(false)',

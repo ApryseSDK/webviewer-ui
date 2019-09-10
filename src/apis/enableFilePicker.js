@@ -10,7 +10,7 @@ export default store => (enable = true) => {
       'enableFeatures([instance.Feature.FilePicker])',
       '7.0',
     );
-    enableFeatures(store)([Feature.Measurement]);
+    enableFeatures(store)([Feature.FilePicker]);
   } else {
     warnDeprecatedAPI(
       'enableFilePicker(false)',
