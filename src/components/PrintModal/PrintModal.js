@@ -404,7 +404,7 @@ class PrintModal extends React.PureComponent {
     });
   }
 
-  setWatermarkModalOption(watermarkOptions) {
+  setWatermarkModalOption = watermarkOptions => {
     this.setState({
       watermarkModalOption: watermarkOptions,
     });
@@ -435,8 +435,8 @@ class PrintModal extends React.PureComponent {
         isVisible = {this.state.isWatermarkModalVisible}
         // pageIndex starts at index 0 and getCurrPage number starts at index 1
         pageIndexToView = {this.props.currentPage - 1}
-        modalClosed = {() => this.setWatermarkModalVisibility(false)}
-        formSubmitted = {watermarkOptions => this.setWatermarkModalOption(watermarkOptions)}
+        modalClosed = {this.setWatermarkModalVisibility}
+        formSubmitted = {this.setWatermarkModalOption}
       />
       <div
         className={className}
@@ -446,7 +446,7 @@ class PrintModal extends React.PureComponent {
         <div className="container" onClick={e => e.stopPropagation()}>
           <div className="header-container">
             <div className="header">{t('action.print')}</div>
-            <ActionButton dataElement="printModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={() => this.closePrintModal()} /> 
+            <ActionButton dataElement="printModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closePrintModal} /> 
           </div>
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
@@ -495,8 +495,7 @@ class PrintModal extends React.PureComponent {
                 : <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
               }
             </div>
-            <button className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</button>
-            {/* <button className="button" onClick={this.createPagesAndPrint} disabled={count > -1}>{t('action.print')}</button> */}
+            <button className="button" onClick={this.createPagesAndPrint} disabled={count > -1}>{t('action.print')}</button>
           </div>
         </div>
       </div>

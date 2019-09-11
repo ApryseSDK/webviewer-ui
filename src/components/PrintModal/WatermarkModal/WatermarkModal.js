@@ -107,7 +107,7 @@ class WatermarkModal extends React.PureComponent {
     }
   }
 
-  addWatermarks() {
+  addWatermarks = () => {
     const watermarkOptions = this.createWatermarks();
 
     core.setWatermark(watermarkOptions);
@@ -138,7 +138,7 @@ class WatermarkModal extends React.PureComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  constructWatermarkOption(value) {
+  constructWatermarkOption = value => {
     const watermarkOption = {
       fontSize: value.fontSize,
       fontFamily: 'sans-serif',
@@ -150,7 +150,7 @@ class WatermarkModal extends React.PureComponent {
     return watermarkOption;
   }
 
-  createWatermarks() {
+  createWatermarks = () => {
     const watermarks = {};
 
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
@@ -162,15 +162,15 @@ class WatermarkModal extends React.PureComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  removeAllWatermarks() {
+  removeAllWatermarks = () => {
     core.setWatermark({});
   }
 
-  closeModal() {
+  closeModal = () => {
     this.props.modalClosed();
   }
 
-  handleInputChange(key, value) {
+  handleInputChange = (key, value) => {
     const currLocationSettings = {
       ...this.state.locationSettings,
     };
@@ -191,7 +191,7 @@ class WatermarkModal extends React.PureComponent {
     core.removeEventListener('documentLoaded', this.handleWatermarkRenderFxn);
   }
 
-  resetForm(event) {
+  resetForm = event => {
     event.preventDefault();
     const locationSettings = this.initializeLocationSettings();
     this.setState({
@@ -199,7 +199,7 @@ class WatermarkModal extends React.PureComponent {
     }, () => this.addWatermarks());
   }
 
-  onOkPressed() {
+  onOkPressed = () => {
     this.setState({
       previousLocationSettings: this.state.locationSettings,
     }, () => {
@@ -210,17 +210,17 @@ class WatermarkModal extends React.PureComponent {
     });
   }
 
-  getCirclePosn(lineLength) {
+  getCirclePosn = lineLength => {
     const lineStart = circleRadius;
     const currSelectedLocation = this.getCurrentSelectedLocation();
     return (this.state.locationSettings[currSelectedLocation][FORM_FIELD_KEYS.opacity] / 100) * lineLength + lineStart;
   }
 
-  setColorPaletteVisibility(visible) {
+  setColorPaletteVisibility = visible => {
     this.setState({ isColorPaletteVisible: visible });
   }
 
-  onLocationChanged(newLocation) {
+  onLocationChanged = newLocation => {
     const key = this.getKeyByValue(WATERMARK_LOCATIONS, newLocation);
     const currLocationSettings = {
       ...this.state.locationSettings,
@@ -243,7 +243,7 @@ class WatermarkModal extends React.PureComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  initializeLocationSettings () {
+  initializeLocationSettings = () => {
     const locationSettings = {};
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
       // ignore location as it is redundant as we already have location key
@@ -255,16 +255,12 @@ class WatermarkModal extends React.PureComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
-  }
+  getKeyByValue = (object, value) => Object.keys(object).find(key => object[key] === value)
 
-  getCurrentSelectedLocation() {
-    return Object.keys(this.state.locationSettings).find(locationKey => {
-      const locationSetting = this.state.locationSettings[locationKey];
-      return locationSetting.isSelected;
-    });
-  }
+  getCurrentSelectedLocation = () => Object.keys(this.state.locationSettings).find(locationKey => {
+    const locationSetting = this.state.locationSettings[locationKey];
+    return locationSetting.isSelected;
+  })
 
   render() {
     const { isVisible } = this.props;
@@ -278,11 +274,11 @@ class WatermarkModal extends React.PureComponent {
     const formInfo = this.state.locationSettings[currLocation];
     return (
       <>
-        <div className={'Modal Watermark'} data-element="watermarkModal" onMouseDown={() => this.closeModal()}>
+        <div className={'Modal Watermark'} data-element="watermarkModal" onMouseDown={this.closeModal}>
           <div className="form-container" data-element="formContainer" onMouseDown={e => e.stopPropagation()}>
             <div className="header-container" onMouseDown={e => e.stopPropagation()}>
               <div className="header">{t('option.print.addWatermarkSettings')}</div>
-              <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={() => this.closeModal()} /> 
+              <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} /> 
             </div>
 
             <div className="form-content-container">
@@ -336,7 +332,7 @@ class WatermarkModal extends React.PureComponent {
                     displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
                     value={formInfo[FORM_FIELD_KEYS.opacity]}
                     displayValue={`${(formInfo[FORM_FIELD_KEYS.opacity])}%`}
-                    getCirclePosition={lineLength => this.getCirclePosn(lineLength)}
+                    getCirclePosition={this.getCirclePosn}
                     convertRelativeCirclePositionToValue={circlePosn => circlePosn}
                     onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
                   />
@@ -375,10 +371,10 @@ class WatermarkModal extends React.PureComponent {
             </div>
 
             <div className="button-container">
-              <a className="reset button" data-element="reset" onClick={event => this.resetForm(event)}>{t(`option.watermark.resetAllSettings`)}</a>
+              <a className="reset button" data-element="reset" onClick={this.resetForm}>{t(`option.watermark.resetAllSettings`)}</a>
               <div className="action-button-container">
-                <button className="cancel button" data-element="cancel" onClick={() => this.closeModal()}>{t(`action.cancel`)}</button>
-                <button className="ok button" data-element="submit" onClick={() => this.onOkPressed()}>{t(`action.ok`)}</button>
+                <button className="cancel button" data-element="cancel" onClick={this.closeModal}>{t(`action.cancel`)}</button>
+                <button className="ok button" data-element="submit" onClick={this.onOkPressed}>{t(`action.ok`)}</button>
               </div>
             </div>
           </div>
