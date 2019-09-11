@@ -46,6 +46,18 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.color]: new window.Annotations.Color(241, 160, 153),
   [FORM_FIELD_KEYS.opacity]: 100,
 };
+/**
+ * Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
+ */
+const WATERMARK_API_LOCATIONS = {
+  [WATERMARK_LOCATIONS.CENTER]: 'diagonal',
+  [WATERMARK_LOCATIONS.TOP_LEFT]: 'headerLeft',
+  [WATERMARK_LOCATIONS.TOP_RIGHT]: 'headerRight',
+  [WATERMARK_LOCATIONS.TOP_CENTER]: 'headerCenter',
+  [WATERMARK_LOCATIONS.BOT_LEFT]: 'footerLeft',
+  [WATERMARK_LOCATIONS.BOT_RIGHT]: 'footerRight',
+  [WATERMARK_LOCATIONS.BOT_CENTER]: 'footerCenter',
+};
 
 class WatermarkModal extends React.PureComponent {
   handleWatermarkRenderFxn;
@@ -139,63 +151,13 @@ class WatermarkModal extends React.PureComponent {
   }
 
   createWatermarks() {
-    let watermarks = {};
+    const watermarks = {};
 
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
       const temp = this.constructWatermarkOption(this.state.locationSettings[key]);
-
-      switch (WATERMARK_LOCATIONS[key]) {
-        case WATERMARK_LOCATIONS.CENTER:
-          watermarks = {
-            ...watermarks,
-            diagonal: temp,
-          };
-          break;
-
-        case WATERMARK_LOCATIONS.TOP_LEFT:
-          watermarks = {
-            ...watermarks,
-            headerLeft: temp,
-          };
-          break;
-
-        case WATERMARK_LOCATIONS.TOP_RIGHT:
-          watermarks = {
-            ...watermarks,
-            headerRight: temp,
-          };
-          break;
-
-        case WATERMARK_LOCATIONS.TOP_CENTER:
-          watermarks = {
-            ...watermarks,
-            headerCenter: temp,
-          };
-          break;
-
-        case WATERMARK_LOCATIONS.BOT_LEFT:
-          watermarks = {
-            ...watermarks,
-            footerLeft: temp,
-          };
-          break;
-
-        case WATERMARK_LOCATIONS.BOT_RIGHT:
-          watermarks = {
-            ...watermarks,
-            footerRight: temp,
-          };
-          break;
-
-        case WATERMARK_LOCATIONS.BOT_CENTER:
-          watermarks = {
-            ...watermarks,
-            footerCenter: temp,
-          };
-          break;
-      }
+      const value = WATERMARK_LOCATIONS[key];
+      watermarks[WATERMARK_API_LOCATIONS[value]] = temp;
     });
-
     return watermarks;
   }
 

@@ -496,6 +496,7 @@ class PrintModal extends React.PureComponent {
               }
             </div>
             <button className="button" onClick={event => this.createPagesAndPrint(event)} disabled={count > -1}>{t('action.print')}</button>
+            {/* <button className="button" onClick={this.createPagesAndPrint} disabled={count > -1}>{t('action.print')}</button> */}
           </div>
         </div>
       </div>
