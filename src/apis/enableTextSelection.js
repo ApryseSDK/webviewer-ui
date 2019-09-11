@@ -10,7 +10,7 @@ export default store => (enable = true) => {
       'enableFeatures([instance.Feature.TextSelection])',
       '7.0',
     );
-    enableFeatures(store)([Feature.Measurement]);
+    enableFeatures(store)([Feature.TextSelection]);
   } else {
     warnDeprecatedAPI(
       'enableTextSelection(false)',

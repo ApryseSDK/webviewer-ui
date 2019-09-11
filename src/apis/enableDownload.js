@@ -10,7 +10,7 @@ export default store => (enable = true) => {
       'enableFeatures([instance.Feature.Download])',
       '7.0',
     );
-    enableFeatures(store)([Feature.Measurement]);
+    enableFeatures(store)([Feature.Download]);
   } else {
     warnDeprecatedAPI(
       'enableDownload(false)',

@@ -208,12 +208,12 @@ const NotesPanel = ({ display }) => {
     };
 
     return (
-      <>
+      <React.Fragment>
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
           <Note annotation={currNote} />
         </NoteContext.Provider>
-      </>
+      </React.Fragment>
     );
   };
 
@@ -246,7 +246,7 @@ const NotesPanel = ({ display }) => {
       {notes.length === 0 ? (
         <div className="no-annotations">{t('message.noAnnotations')}</div>
       ) : (
-        <>
+        <React.Fragment>
           <div className="header">
             <input
               type="text"
@@ -276,7 +276,7 @@ const NotesPanel = ({ display }) => {
               {renderChild}
             </VirtualizedList>
           )}
-        </>
+        </React.Fragment>
       )}
     </div>
   );

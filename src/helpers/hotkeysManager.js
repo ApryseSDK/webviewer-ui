@@ -12,6 +12,12 @@ import isFocusingElement from 'helpers/isFocusingElement';
 import actions from 'actions';
 import selectors from 'selectors';
 
+/**
+ * A class which contains hotkeys APIs.<br/><br/>
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewer#hotkeys instance.hotkeys}
+ * @name WebViewer.Hotkeys
+ * @class
+ */
 const HotkeysManager = {
   initialize(store) {
     // still allow hotkeys when focusing a textarea or an input
@@ -25,11 +31,13 @@ const HotkeysManager = {
   },
   /**
    * Add an event handler for the given hotkey
-   * This method is exposed in hotkeys.js so users can call instance.hotkeys.on(...)
+   * @method WebViewer.Hotkeys#on
    * @param {string} key a keyboard key or a tool name
    * @param {function} [handler] an optional function. If not passed, the default handler of the given key will be registered
-   * @example
-      instance.hotkeys.on('ctrl+d', e => {
+   * @example // 6.0 and after
+WebViewer(...)
+  .then(function(instance) {
+      instance.hotkeys.on('ctrl+d, command+d', e => {
         e.preventDefault();
         instance.closeDocument();
       });
@@ -39,6 +47,7 @@ const HotkeysManager = {
 
       // this is equivalent to instance.hotkeys.on('escape');
       instance.hotkeys.on('AnnotationEdit');
+  });
    */
   on(key, handler) {
     const isToolName = !!core.getToolModeMap()[key];
@@ -58,17 +67,19 @@ const HotkeysManager = {
     hotkeys(key, handler);
   },
   /**
-   *
    * Remove an event handler for the given hotkey
-   * This method is exposed in hotkeys.js so users can call instance.hotkeys.off(...)
+   * @method WebViewer.Hotkeys#off
    * @param {string} [key] an optional keyboard key or a tool name. If not passed, all handlers will be removed
    * @param {function} [handler] an optional function. If not passed, all handlers of the given key will be removed
-   * @example
+   * @example // 6.0 and after
+WebViewer(...)
+  .then(function(instance) {
       // this will remove all handlers for ctrl = and command =
       instance.hotkeys.off('ctrl+=, command+=');
 
       // this is equivalent to instance.hotkeys.off('escape');
       instance.hotkeys.off('AnnotationEdit');
+  });
    */
   off(key, handler) {
     const isToolName = !!core.getToolModeMap()[key];
@@ -142,7 +153,6 @@ const HotkeysManager = {
         print(dispatch, selectors.isEmbedPrintSupported(getState()));
       },
       enter: () => {
-        // TODO: move this to Accessibility
         if (document.activeElement.className.includes('Note')) {
           document.activeElement.click();
         } else if (document.activeElement.className === 'skip-to-document') {
@@ -282,6 +292,7 @@ const HotkeysManager = {
   /**
    * Returns a function that will be used as a handler to a hotkey
    * @param {func} handler a function that only gets called when no textarea or input elements are focused
+   * @ignore
    */
   createToolHotkeyHandler(handler) {
     return (...args) => {

@@ -54,7 +54,7 @@ const App = ({ removeEventHandlers }) => {
   }, []);
 
   return (
-    <>
+    <React.Fragment>
       <div className="App">
         <Accessibility />
 
@@ -93,7 +93,7 @@ const App = ({ removeEventHandlers }) => {
       <PrintHandler />
       <FilePickerHandler />
       <CopyTextHandler />
-    </>
+    </React.Fragment>
   );
 };
 
