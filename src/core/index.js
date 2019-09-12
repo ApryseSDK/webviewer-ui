@@ -95,6 +95,8 @@ import getViewerElement from './getViewerElement';
 import { addEventListener, removeEventListener } from './eventListener';
 import setAnnotationCanvasTransform from './setAnnotationCanvasTransform';
 import getAnnotationCopy from './getAnnotationCopy';
+import setWatermark from './setWatermark';
+import getWatermark from './getWatermark';
 import groupAnnotations from './groupAnnotations';
 import ungroupAnnotations from './ungroupAnnotations';
 import getNumberOfGroups from './getNumberOfGroups';
@@ -197,6 +199,8 @@ export default {
   getViewerElement,
   setAnnotationCanvasTransform,
   getAnnotationCopy,
+  setWatermark,
+  getWatermark,
   getAnnotationByMouseEvent,
   groupAnnotations,
   ungroupAnnotations,

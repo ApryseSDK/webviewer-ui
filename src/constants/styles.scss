@@ -49,6 +49,19 @@ $mobile-width: 640px;
   }
 }
 
+.text-input {
+  border: 1px solid grey;
+  &::placeholder {
+    color:$gray12;
+  }
+  &::-webkit-input-placeholder {
+    color:$gray12;
+  }
+  &:-ms-input-placeholder {
+    color:$gray12;
+  }
+}
+
 @mixin desktop {
   @media (min-width: #{$tablet-width + 1px}) {
     @content;
@@ -94,5 +107,17 @@ $mobile-width: 640px;
 .hide-in-mobile {
   @include mobile {
     display: none;
+  }
+}
+
+%cell {
+  flex: 1 0 28px;
+  height: 26px;
+  display: flex;
+  margin: 0 1px;
+
+  @include mobile {
+    height: 30px;
+    margin: 0 1.2px;
   }
 }

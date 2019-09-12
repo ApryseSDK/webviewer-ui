@@ -33,7 +33,8 @@
     "submit": "Submit",
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom out"
+    "zoomOut": "Zoom out",
+    "reset": "Reset"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",
@@ -97,8 +98,8 @@
     "preparingToPrint": "Preparing to print...",
     "annotationReplyCount": "Reply ({{count}})",
     "annotationReplyCount_plural" : "Replies ({{count}})",
-    "printTotalPageCount": "{{count}} page",
-    "printTotalPageCount_plural": "{{count}} pages",
+    "printTotalPageCount": "Total: {{count}} page",
+    "printTotalPageCount_plural": "Total: {{count}} pages",
     "processing": "Processing...",
     "searching": "Searching...",
     "searchPlaceholder": "Search comments...",
@@ -136,7 +137,8 @@
       "all": "All",
       "current": "Current",
       "pages": "Pages",
-      "includeComments": "Include comments"
+      "includeComments": "Include comments",
+      "addWatermarkSettings": "Add Watermark Settings"
     },
     "redaction": {
       "markForRedaction": "Mark for redaction",
@@ -183,6 +185,13 @@
     "shared": {
       "page": "Page",
       "precision": "Precision"
+    },
+    "watermark": {
+      "size": "Size",
+      "location": "Choose a location to edit watermarks",
+      "text": "Text",
+      "colors": "Colors",
+      "resetAllSettings": "Reset All Settings"
     }
   },
   "shortcut": {

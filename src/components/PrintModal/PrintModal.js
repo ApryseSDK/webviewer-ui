@@ -13,7 +13,8 @@ import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
-
+import ActionButton from 'components/ActionButton';
+import WatermarkModal from './WatermarkModal';
 import './PrintModal.scss';
 
 class PrintModal extends React.PureComponent {
@@ -41,20 +42,29 @@ class PrintModal extends React.PureComponent {
     this.includeComments = React.createRef();
     this.pendingCanvases = [];
     this.state = {
+      allowWatermarkModal: false,
       count: -1,
       pagesToPrint: [],
+      isWatermarkModalVisible: false,
+      watermarkModalOption: null,
+      existingWatermarks: null,
     };
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.onChange();
-      this.props.closeElements([
-        'signatureModal',
-        'loadingModal',
-        'progressModal',
-        'errorModal',
-      ]);
+      this.props.closeElements(['signatureModal', 'loadingModal', 'progressModal', 'errorModal']);
+      core.getWatermark().then(watermark => {
+        this.setState({
+          allowWatermarkModal: watermark === undefined || watermark === null || Object.keys(watermark).length === 0,
+          existingWatermarks: watermark,
+        });
+      });
+    }
+
+    if (prevProps.isOpen && !this.props.isOpen) {
+      core.setWatermark(this.state.existingWatermarks);
     }
   }
 
@@ -90,6 +100,13 @@ class PrintModal extends React.PureComponent {
 
     this.setState({ count: 0 });
     this.setPrintQuality();
+
+    if (this.state.allowWatermarkModal) {
+      core.setWatermark(this.state.watermarkModalOption);
+    }
+    else {
+      core.setWatermark(this.state.existingWatermarks);
+    }
 
     const creatingPages = this.creatingPages();
     Promise.all(creatingPages)
@@ -147,9 +164,12 @@ class PrintModal extends React.PureComponent {
         });
       };
 
-      const id = core
-        .getDocument()
-        .loadCanvasAsync(pageIndex, zoom, printRotation, onCanvasLoaded);
+      const id = core.getDocument().loadCanvasAsync({
+        pageIndex,
+        zoom,
+        pageRotation: printRotation,
+        drawComplete: onCanvasLoaded,
+      });
       this.pendingCanvases.push(id);
     });
 
@@ -209,24 +229,19 @@ class PrintModal extends React.PureComponent {
       return core.drawAnnotations(pageNumber, canvas);
     }
 
-    // Currently annotationManager expects a jQuery node
-    const widgetContainer = $(this.createWidgetContainer(pageNumber - 1));
-    return core
-      .drawAnnotations(pageNumber, canvas, true, widgetContainer)
-      .then(() => {
-        document.body.appendChild(widgetContainer[0]);
-        return window
-          .html2canvas(widgetContainer[0], {
-            canvas,
-            backgroundColor: null,
-            scale: 1,
-            logging: false,
-          })
-          .then(() => {
-            document.body.removeChild(widgetContainer[0]);
-          });
+    const widgetContainer = this.createWidgetContainer(pageNumber - 1);
+    return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
+      document.body.appendChild(widgetContainer);
+      return window.html2canvas(widgetContainer, {
+        canvas,
+        backgroundColor: null,
+        scale: 1,
+        logging: false,
+      }).then(() => {
+        document.body.removeChild(widgetContainer);
       });
-  };
+    });
+  }
 
   createWidgetContainer = pageIndex => {
     const { width, height } = core.getPageInfo(pageIndex);
@@ -383,6 +398,18 @@ class PrintModal extends React.PureComponent {
     this.setState({ count: -1 });
   };
 
+  setWatermarkModalVisibility = visible => {
+    this.setState({
+      isWatermarkModalVisible: visible,
+    });
+  }
+
+  setWatermarkModalOption = watermarkOptions => {
+    this.setState({
+      watermarkModalOption: watermarkOptions,
+    });
+  }
+
   render() {
     const { isDisabled, t } = this.props;
 
@@ -403,12 +430,24 @@ class PrintModal extends React.PureComponent {
     const isPrinting = count >= 0;
 
     return (
+      <>
+      <WatermarkModal
+        isVisible = {this.state.isWatermarkModalVisible}
+        // pageIndex starts at index 0 and getCurrPage number starts at index 1
+        pageIndexToView = {this.props.currentPage - 1}
+        modalClosed = {this.setWatermarkModalVisibility}
+        formSubmitted = {this.setWatermarkModalOption}
+      />
       <div
         className={className}
         data-element="printModal"
         onClick={this.closePrintModal}
       >
         <div className="container" onClick={e => e.stopPropagation()}>
+          <div className="header-container">
+            <div className="header">{t('action.print')}</div>
+            <ActionButton dataElement="printModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closePrintModal} /> 
+          </div>
           <div className="settings">
             <div className="col">{`${t('option.print.pages')}:`}</div>
             <form
@@ -446,40 +485,21 @@ class PrintModal extends React.PureComponent {
                 label={t('option.print.includeComments')}
               />
             </form>
+
           </div>
-          <div className="total">
-            {isPrinting ? (
-              <div>{`${t('message.processing')} ${count}/${
-                pagesToPrint.length
-              }`}</div>
-            ) : (
-              <div>
-                {t('message.printTotalPageCount', {
-                  count: pagesToPrint.length,
-                })}
-              </div>
-            )}
-          </div>
+          {this.state.allowWatermarkModal && <button data-element="applyWatermark" className="apply-watermark" onClick={() => this.setWatermarkModalVisibility(true)}>{t('option.print.addWatermarkSettings')}</button> }
           <div className="buttons">
-            <div
-              className="button"
-              onClick={this.createPagesAndPrint}
-              disabled={count > -1}
-            >
-              {t('action.print')}
+            <div className="total">
+              {isPrinting
+                ? <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
+                : <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
+              }
             </div>
-            {isPrinting ? (
-              <div className="button" onClick={this.cancelPrint}>
-                {t('action.cancel')}
-              </div>
-            ) : (
-              <div className="button" onClick={this.closePrintModal}>
-                {t('action.close')}
-              </div>
-            )}
+            <button className="button" onClick={this.createPagesAndPrint} disabled={count > -1}>{t('action.print')}</button>
           </div>
         </div>
       </div>
+      </>
     );
   }
 }
