@@ -279,7 +279,13 @@ export const getDocName = state => {
   return filename || path || initialDoc;
 };
 
-const createFakeFilename = (initialDoc, ext) => `${initialDoc.replace(/^.*[\\\/]/, '')}.${ext.replace(/^\./, '')}`;
+const createFakeFilename = (initialDoc, ext) => {
+  // get end of the URL without the query or hash parameters
+  const match = initialDoc.match(/(^|[\/\\])([a-zA-Z0-9.]+)(&|$|\?|#)/);
+  const filename = match && match[2];
+
+  return `${filename || initialDoc.replace(/^.*[\\\/]/, '')}.${ext.replace(/^\./, '')}`;
+};
 
 export const isOfficeExtension = extension => supportedOfficeExtensions.indexOf(extension) !== -1;
 
