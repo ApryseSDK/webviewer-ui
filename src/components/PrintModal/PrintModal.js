@@ -71,6 +71,7 @@ class PrintModal extends React.PureComponent {
     } else if (this.currentPage.current.checked) {
       const pageCount = core.getTotalPages();
 
+      // when displaying 2 pages, "Current" should print both of them
       switch (layoutMode) {
         case LayoutMode.FacingCover:
         case LayoutMode.FacingCoverContinuous:
