@@ -12,6 +12,7 @@ import getClassName from 'helpers/getClassName';
 import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
+import LayoutMode from 'constants/layoutMode';
 
 import './PrintModal.scss';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
@@ -30,6 +31,7 @@ class PrintModal extends React.PureComponent {
     t: PropTypes.func.isRequired,
     sortStrategy: PropTypes.string.isRequired,
     colorMap: PropTypes.object.isRequired,
+    layoutMode: PropTypes.string.isRequired,
   };
 
   constructor() {
@@ -59,7 +61,7 @@ class PrintModal extends React.PureComponent {
   }
 
   onChange = () => {
-    const { currentPage, pageLabels } = this.props;
+    const { currentPage, pageLabels, layoutMode } = this.props;
     let pagesToPrint = [];
 
     if (this.allPages.current.checked) {
@@ -67,7 +69,32 @@ class PrintModal extends React.PureComponent {
         pagesToPrint.push(i);
       }
     } else if (this.currentPage.current.checked) {
-      pagesToPrint.push(currentPage);
+      const pageCount = core.getTotalPages();
+
+      // when displaying 2 pages, "Current" should print both of them
+      switch (layoutMode) {
+        case LayoutMode.FacingCover:
+        case LayoutMode.FacingCoverContinuous:
+          if (currentPage === 1 || (currentPage === pageCount && pageCount % 2 === 0)) {
+            // first page or last page if single page
+            pagesToPrint.push(currentPage);
+          } else {
+            pagesToPrint = currentPage % 2 ? [currentPage - 1, currentPage] : [currentPage, currentPage + 1];
+          }
+          break;
+        case LayoutMode.FacingContinuous:
+        case LayoutMode.Facing:
+          if (currentPage === pageCount && pageCount % 2 === 1) {
+            // last page if single page
+            pagesToPrint.push(currentPage);
+          } else {
+            pagesToPrint = currentPage % 2 ? [currentPage, currentPage + 1] : [currentPage - 1, currentPage];
+          }
+          break;
+        default:
+          pagesToPrint.push(currentPage);
+          break;
+      }
     } else if (this.customPages.current.checked) {
       const customInput = this.customInput.current.value.replace(/\s+/g, '');
       pagesToPrint = getPagesToPrint(customInput, pageLabels);
@@ -493,6 +520,7 @@ const mapStateToProps = state => ({
   pageLabels: selectors.getPageLabels(state),
   sortStrategy: selectors.getSortStrategy(state),
   colorMap: selectors.getColorMap(state),
+  layoutMode: selectors.getDisplayMode(state),
 });
 
 const mapDispatchToProps = dispatch => ({
