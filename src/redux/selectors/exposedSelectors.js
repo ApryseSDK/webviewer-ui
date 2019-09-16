@@ -11,6 +11,17 @@ export const isElementOpen = (state, dataElement) =>
   state.viewer.openElements[dataElement] &&
   !state.viewer.disabledElements[dataElement]?.disabled;
 
+export const allButtonsInGroupDisabled = (state, toolGroup) => {
+  const toolButtonObjects = getToolButtonObjects(state);
+  const dataElements = Object.values(toolButtonObjects)
+    .filter(({ group }) => group === toolGroup)
+    .map(({ dataElement }) => dataElement);
+
+  const result = dataElements.every(dataElement => isElementDisabled(state, dataElement));
+
+  return result;
+};
+
 export const isElementActive = (state, tool) => {
   const {
     viewer: {

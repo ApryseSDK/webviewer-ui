@@ -105,13 +105,10 @@ class ToolGroupButton extends React.PureComponent {
       dataElement,
       toolButtonObjects,
       isActive,
-      toolNames,
+      allButtonsInGroupDisabled,
       iconColor,
       title,
     } = this.props;
-    const allButtonsInGroupDisabled = toolNames.every(
-      toolName => core.getTool(toolName).disabled,
-    );
 
     const { toolName } = this.state;
     const img = this.props.img
@@ -148,6 +145,7 @@ const mapStateToProps = (state, ownProps) => ({
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
+  allButtonsInGroupDisabled: selectors.allButtonsInGroupDisabled(state, ownProps.toolGroup),
   iconColor: selectors.getIconColor(
     state,
     mapToolNameToKey(selectors.getActiveToolName(state)),
