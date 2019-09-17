@@ -137,7 +137,7 @@ export default {
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
-    useEmbeddedPrint: true,
+    useEmbeddedPrint: false,
     pageLabels: [],
     noteDateFormat: 'MMM D, h:mma',
     colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
