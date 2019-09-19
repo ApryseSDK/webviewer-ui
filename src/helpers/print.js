@@ -32,10 +32,16 @@ const printPdf = () => {
       .then(data => {
         const arr = new Uint8Array(data);
         const blob = new Blob([arr], { type: 'application/pdf' });
-        document.getElementById('print-handler').src = URL.createObjectURL(
-          blob,
-        );
-        resolve();
+
+        var printHandler = document.getElementById('print-handler');
+        printHandler.src = URL.createObjectURL(blob);
+
+        var loadListener = function() {
+          printHandler.contentWindow.print();
+          printHandler.removeEventListener('load', loadListener);
+          resolve();
+        };
+        printHandler.addEventListener('load', loadListener);
       });
   });
 };
