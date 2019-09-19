@@ -17,7 +17,7 @@ const PrintHandler = () => {
   return isDisabled ? null : (
     <div className="PrintHandler">
       {isEmbedPrintSupported ? (
-        <embed id="print-handler" type="application/pdf" tabIndex={-1}></embed>
+        <iframe id="print-handler" tabIndex={-1}></iframe>
       ) : (
         <div id="print-handler"></div>
       )}
