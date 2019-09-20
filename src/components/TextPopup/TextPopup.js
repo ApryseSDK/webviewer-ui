@@ -117,7 +117,7 @@ const TextPopup = () => {
       />
     ),
     textRedactToolButton: overrides =>
-      core.isCreateRedactionEnabled() && (
+      core.isCreateRedactionEnabled() ? (
         <ActionButton
           title="option.redaction.markForRedaction"
           img="ic_annotation_add_redact_black_24px"
@@ -130,7 +130,7 @@ const TextPopup = () => {
           {...overrides}
           dataElement="textRedactToolButton"
         />
-      ),
+      ) : null,
   };
 
   return isDisabled ? null : (
