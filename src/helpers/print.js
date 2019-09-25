@@ -36,14 +36,18 @@ const printPdf = () =>
         const arr = new Uint8Array(data);
         const blob = new Blob([arr], { type: 'application/pdf' });
 
-        var printHandler = document.getElementById('print-handler');
+        const printHandler = document.getElementById('print-handler');
         printHandler.src = URL.createObjectURL(blob);
 
-        var loadListener = function() {
-          printHandler.contentWindow.print();
-          printHandler.removeEventListener('load', loadListener);
-          resolve();
-        };
-        printHandler.addEventListener('load', loadListener);
+        return new Promise(resolve => {
+          const loadListener = function() {
+            printHandler.contentWindow.print();
+            printHandler.removeEventListener('load', loadListener);
+
+            resolve();
+          };
+
+          printHandler.addEventListener('load', loadListener);
+        });
       });
   });
