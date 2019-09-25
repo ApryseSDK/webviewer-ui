@@ -120,15 +120,16 @@ class MeasurementOption extends React.Component {
      */
     const isFirefox = typeof InstallTrigger !== 'undefined';
     if (isFirefox) {
-      return (<input
-        className="ScaleInput"
-        type="number"
-        step="any"
-        value={val}
-        onChange={e =>
-          this.onScaleChange(e.target.value, type)
-        }
-      />
+      return (
+        <input
+          className="ScaleInput"
+          type="number"
+          step="any"
+          value={val}
+          onChange={e =>
+            this.onScaleChange(e.target.value, type)
+          }
+        />
       );
     } else {
       if (this.state.isEditing) {
