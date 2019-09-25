@@ -122,6 +122,14 @@ WebViewer(...)
           core.pasteCopiedAnnotations();
         }
       },
+      'ctrl+z, command+z': e => {
+        e.preventDefault();
+        core.undo();
+      },
+      'ctrl+y, command+shift+z': e => {
+        e.preventDefault();
+        core.redo();
+      },
       'ctrl+o, command+o': e => {
         e.preventDefault();
         openFilePicker();

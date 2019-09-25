@@ -100,6 +100,8 @@ import getWatermark from './getWatermark';
 import groupAnnotations from './groupAnnotations';
 import ungroupAnnotations from './ungroupAnnotations';
 import getNumberOfGroups from './getNumberOfGroups';
+import undo from './undo';
+import redo from './redo';
 
 export default {
   setToolMode,
@@ -205,4 +207,6 @@ export default {
   groupAnnotations,
   ungroupAnnotations,
   getNumberOfGroups,
+  undo,
+  redo,
 };
