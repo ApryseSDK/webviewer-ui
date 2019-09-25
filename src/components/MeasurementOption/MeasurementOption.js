@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
+import { isFirefox } from 'helpers/device';
 import i18next from 'i18next';
 
 import selectors from 'selectors';
@@ -117,8 +118,7 @@ class MeasurementOption extends React.Component {
   renderScaleInput = (type, val) => {
     /**
      * There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
-     */
-    const isFirefox = typeof InstallTrigger !== 'undefined';
+     */ 
     if (isFirefox) {
       return (
         <input
