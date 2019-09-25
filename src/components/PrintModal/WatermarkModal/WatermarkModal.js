@@ -234,7 +234,7 @@ class WatermarkModal extends React.PureComponent {
       currLocationSettings[locationKey] = locationSetting;
     });
 
-    
+
     this.setState({
       locationSettings: currLocationSettings,
     }, () => {
@@ -273,113 +273,114 @@ class WatermarkModal extends React.PureComponent {
     const currLocation = this.getCurrentSelectedLocation();
     const formInfo = this.state.locationSettings[currLocation];
     return (
-      <>
-        <div className={'Modal Watermark'} data-element="watermarkModal" onMouseDown={this.closeModal}>
-          <div className="form-container" data-element="formContainer" onMouseDown={e => e.stopPropagation()}>
-            <div className="header-container" onMouseDown={e => e.stopPropagation()}>
-              <div className="header">{t('option.print.addWatermarkSettings')}</div>
-              <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} /> 
-            </div>
+      <div className={'Modal Watermark'} data-element="watermarkModal" onMouseDown={this.closeModal}>
+        <div className="form-container" data-element="formContainer" onMouseDown={e => e.stopPropagation()}>
+          <div className="header-container" onMouseDown={e => e.stopPropagation()}>
+            <div className="header">{t('option.print.addWatermarkSettings')}</div>
+            <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} />
+          </div>
 
-            <div className="form-content-container">
-              <form data-element="form">
-                <div className="form-field">
+          <div className="form-content-container">
+            <form data-element="form">
+              <div className="form-field">
 
-                  <label>
-                    {t(`option.watermark.location`)}
-                  </label>
-                  <select
-                    data-element="location"
-                    value={WATERMARK_LOCATIONS[currLocation]}
-                    onChange={event => { this.onLocationChanged(event.target.value); } }>
-                    { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
-                  </select>
+                <label>
+                  {t(`option.watermark.location`)}
+                </label>
+                <select
+                  data-element="location"
+                  value={WATERMARK_LOCATIONS[currLocation]}
+                  onChange={event => { this.onLocationChanged(event.target.value); }}
+                >
+                  { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
+                </select>
 
+              </div>
+
+              <div className="form-field separator">
+
+              </div>
+              <div className="form-field">
+
+                <label>
+                  {t(`option.watermark.text`)}
+                </label>
+                <input
+                  className="text-input"
+                  data-element="textInput"
+                  value={formInfo[FORM_FIELD_KEYS.text]}
+                  onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
+                  type="text"
+                />
+
+              </div>
+              <div className="form-field">
+
+                <label>
+                  {t(`option.watermark.size`)}
+                </label>
+                <select
+                  data-element="fontSize"
+                  value={formInfo[FORM_FIELD_KEYS.fontSize]}
+                  onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}
+                >
+                  { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
+                </select>
+
+              </div>
+              <div className="form-field opacity-slider" data-element="opacitySlider">
+                <Slider
+                  property={'opacity'} // arbitrary property name. this property isn't used in this file
+                  displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
+                  value={formInfo[FORM_FIELD_KEYS.opacity]}
+                  displayValue={`${(formInfo[FORM_FIELD_KEYS.opacity])}%`}
+                  getCirclePosition={this.getCirclePosn}
+                  convertRelativeCirclePositionToValue={circlePosn => circlePosn}
+                  onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
+                />
+              </div>
+              <div className="form-field">
+
+                <label>
+                  {t(`option.watermark.colors`)}
+                </label>
+                <div
+                  data-element="currentColorCell"
+                  className="cell"
+                  style={{ backgroundColor: formInfo[FORM_FIELD_KEYS.color].toHexString() }}
+                  onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
+                >
                 </div>
 
-                <div className="form-field separator">
-
-                </div>
-                <div className="form-field">
-
-                  <label>
-                    {t(`option.watermark.text`)}
-                  </label>
-                  <input
-                    className="text-input"
-                    data-element="textInput"
-                    value={formInfo[FORM_FIELD_KEYS.text]}
-                    onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
-                    type="text" />
-
-                </div>
-                <div className="form-field">
-
-                  <label>
-                    {t(`option.watermark.size`)}
-                  </label>
-                  <select
-                    data-element="fontSize"
-                    value={formInfo[FORM_FIELD_KEYS.fontSize]}
-                    onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}>
-                    { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
-                  </select>
-
-                </div>
-                <div className="form-field opacity-slider" data-element="opacitySlider">
-                  <Slider
-                    property={'opacity'} // arbitrary property name. this property isn't used in this file
-                    displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
-                    value={formInfo[FORM_FIELD_KEYS.opacity]}
-                    displayValue={`${(formInfo[FORM_FIELD_KEYS.opacity])}%`}
-                    getCirclePosition={this.getCirclePosn}
-                    convertRelativeCirclePositionToValue={circlePosn => circlePosn}
-                    onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
-                  />
-                </div>
-                <div className="form-field">
-
-                  <label>
-                    {t(`option.watermark.colors`)}
-                  </label>
-                  <div
-                    data-element="currentColorCell"
-                    className="cell"
-                    style={{ backgroundColor: formInfo[FORM_FIELD_KEYS.color].toHexString() }}
-                    onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
-                  >
+                {
+                  this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
+                    <ColorPalette
+                      data-element="colorPalette"
+                      color={formInfo[FORM_FIELD_KEYS.color]}
+                      property={'TextColor'} // arbitrary property name. this property isn't used in this file
+                      onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
+                    />
                   </div>
-
-                  {
-                    this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
-                      <ColorPalette
-                        data-element="colorPalette"
-                        color={formInfo[FORM_FIELD_KEYS.color]}
-                        property={'TextColor'} // arbitrary property name. this property isn't used in this file
-                        onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
-                      />
-                    </div>
-                  }
-
-                </div>
-
-              </form>
-
-              <div className="canvas-container" ref={this.canvasContainerRef}>
+                }
 
               </div>
+
+            </form>
+
+            <div className="canvas-container" ref={this.canvasContainerRef}>
+
             </div>
+          </div>
 
-            <div className="button-container">
-              <a className="reset button" data-element="reset" onClick={this.resetForm}>{t(`option.watermark.resetAllSettings`)}</a>
-              <div className="action-button-container">
-                <button className="cancel button" data-element="cancel" onClick={this.closeModal}>{t(`action.cancel`)}</button>
-                <button className="ok button" data-element="submit" onClick={this.onOkPressed}>{t(`action.ok`)}</button>
-              </div>
+          <div className="button-container">
+            <a className="reset button" data-element="reset" onClick={this.resetForm}>{t(`option.watermark.resetAllSettings`)}</a>
+            <div className="action-button-container">
+              <button className="cancel button" data-element="cancel" onClick={this.closeModal}>{t(`action.cancel`)}</button>
+              <button className="ok button" data-element="submit" onClick={this.onOkPressed}>{t(`action.ok`)}</button>
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
