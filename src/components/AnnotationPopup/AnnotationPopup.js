@@ -232,7 +232,7 @@ const AnnotationPopup = () => {
           title="action.apply"
           img="ic_check_black_24px"
           onClick={() => {
-            applyRedactions(firstAnnotation);
+            dispatch(applyRedactions(firstAnnotation));
             dispatch(actions.closeElement('annotationPopup'));
           }}
           {...overrides}
