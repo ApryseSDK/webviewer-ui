@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
+import { isFirefox } from 'helpers/device';
 import i18next from 'i18next';
 
 import selectors from 'selectors';
@@ -35,13 +36,14 @@ class MeasurementOption extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       currScaleFrom: props.scale[0][0],
       currUnitFrom: props.scale[0][1],
       currScaleTo: props.scale[1][0],
       currUnitTo: props.scale[1][1],
       currPrecision: props.precision,
-      isEditing: false };
+      isEditing: false,
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -50,12 +52,12 @@ class MeasurementOption extends React.Component {
         currScaleFrom: props.scale[0][0],
         currUnitFrom: props.scale[0][1],
         currScaleTo: props.scale[1][0],
-        currUnitTo: props.scale[1][1]
+        currUnitTo: props.scale[1][1],
       }));
     }
     if (this.props.precision !== prevProps.precision) {
       this.setState((state, props) => ({
-        currPrecision: props.precision
+        currPrecision: props.precision,
       }));
     }
   }
@@ -67,13 +69,13 @@ class MeasurementOption extends React.Component {
         [this.state.currScaleTo, this.state.currUnitTo],
       ]);
     });
-  }
+  };
 
   onPrecisionChange = (value, type) => {
     this.setState({ [type]: Number(value) }, () => {
       this.props.onStyleChange('Precision', this.state.currPrecision);
     });
-  }
+  };
 
   onUnitChange = (event, type) => {
     this.setState({ [type]: event.target.value }, () => {
@@ -82,7 +84,7 @@ class MeasurementOption extends React.Component {
         [this.state.currScaleTo, this.state.currUnitTo],
       ]);
     });
-  }
+  };
 
   getLanguage = () => {
     let lang = 'en';
@@ -92,31 +94,66 @@ class MeasurementOption extends React.Component {
     }
 
     return lang;
-  }
+  };
 
   formatValue = value => {
     const lang = this.getLanguage();
-    
+
     if (lang === 'de') {
       value = value.toLocaleString('de-DE', { maximumFractionDigits: 4 });
     } else if (lang === 'fr') {
-      value =  value.toLocaleString('fr-FR', { maximumFractionDigits: 4 });
+      value = value.toLocaleString('fr-FR', { maximumFractionDigits: 4 });
     } else if (lang === 'ru') {
       value = value.toLocaleString('ru-RU', { maximumFractionDigits: 4 });
     }
-    
+
     return value;
-  }
+  };
 
   toggleEditing = () => {
     this.setState(state => ({ isEditing: !state.isEditing }));
-  }
+  };
+
+  renderScaleInput = (type, val) => {
+    /**
+     * There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
+     */
+    if (isFirefox) {
+      return (
+        <input
+          className="ScaleInput"
+          type="number"
+          step="any"
+          value={val}
+          onChange={e => this.onScaleChange(e.target.value, type)}
+        />
+      );
+    }
+    if (this.state.isEditing) {
+      return (
+        <input
+          className="ScaleInput"
+          type="number"
+          step="any"
+          value={val}
+          onChange={e => this.onScaleChange(e.target.value, type)}
+          onBlur={this.toggleEditing}
+        />
+      );
+    }
+    return (
+      <input
+        className="ScaleInput"
+        type="text"
+        value={this.formatValue(val)}
+        onFocus={this.toggleEditing}
+        readOnly
+      />
+    );
+  };
 
   render() {
-    const {
-      measurementUnits,
-      t,
-    } = this.props;
+    const { measurementUnits, t } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
     const precisionOptions = [
       { value: 0.1, name: '0.1' },
@@ -126,79 +163,57 @@ class MeasurementOption extends React.Component {
     ];
 
     return (
-      <div
-        className="MeasurementOption"
-      >
+      <div className="MeasurementOption">
         <div className="Scale">
           <div className="LayoutTitle">
             {t('option.measurementOption.scale')}
           </div>
           <div className="Layout">
-            {this.state.isEditing ? (
-              <input
-                className="ScaleInput"
-                type="number"
-                step="any"
-                value={this.state.currScaleFrom}
-                onChange={e =>
-                  this.onScaleChange(e.target.value, 'currScaleFrom')}
-                onBlur={this.toggleEditing}
-              />
-            ) : (
-              <input
-                className="ScaleInput"
-                type="text"
-                value={this.formatValue(this.state.currScaleFrom)}
-                onFocus={this.toggleEditing}
-                readOnly
-              />
-            )}
-            <select 
+            {this.renderScaleInput('currScaleFrom', this.state.currScaleFrom)}
+            <select
               className="UnitInput"
               value={this.state.currUnitFrom}
-              onChange={event => this.onUnitChange(event,'currUnitFrom')}
-            >{unitFromOptions.map(unit => {
-                return <option key={unit} value={unit}>{unit}</option>;
-              })}</select>
+              onChange={event => this.onUnitChange(event, 'currUnitFrom')}
+            >
+              {unitFromOptions.map(unit => (
+                <option key={unit} value={unit}>
+                  {unit}
+                </option>
+              ))}
+            </select>
             <div className="ScaleEquals">=</div>
-            {this.state.isEditing ? (
-              <input
-                className="ScaleInput"
-                type="number"
-                step="any"
-                value={this.state.currScaleTo}
-                onChange={e =>
-                  this.onScaleChange(e.target.value, 'currScaleTo')}
-                onBlur={this.toggleEditing}
-              />
-            ) : (
-              <input
-                className="ScaleInput"
-                type="text"
-                value={this.formatValue(this.state.currScaleTo)}
-                onFocus={this.toggleEditing}
-                readOnly
-              />
-            )}
+            {this.renderScaleInput('currScaleTo', this.state.currScaleTo)}
             <select
               className="UnitInput"
               value={this.state.currUnitTo}
-              onChange={event => this.onUnitChange(event,'currUnitTo')}
-            >{unitToOptions.map(unit => {
-                return <option key={unit} value={unit}>{unit}</option>;
-              })}</select>
+              onChange={event => this.onUnitChange(event, 'currUnitTo')}
+            >
+              {unitToOptions.map(unit => (
+                <option key={unit} value={unit}>
+                  {unit}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="Precision">
-          <div className="LayoutTitlePrecision">{t('option.shared.precision')}</div>
+          <div className="LayoutTitlePrecision">
+            {t('option.shared.precision')}
+          </div>
           <div className="LayoutPrecision">
             <select
               className="PrecisionInput"
               value={this.state.currPrecision}
-              onChange={e => this.onPrecisionChange(e.target.value, 'currPrecision')}
-            >{precisionOptions.map(e => {
-                return <option key={e.value} value={e.value}>{this.formatValue(e.value)}</option>;
-              })}</select>
+              onChange={e =>
+                this.onPrecisionChange(e.target.value, 'currPrecision')
+              }
+            >
+              {precisionOptions.map(e => (
+                <option key={e.value} value={e.value}>
+                  {this.formatValue(e.value)}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
