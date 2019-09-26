@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
+import { isFirefox } from 'helpers/device';
 import i18next from 'i18next';
 
 import selectors from 'selectors';
@@ -114,6 +115,50 @@ class MeasurementOption extends React.Component {
     this.setState(state => ({ isEditing: !state.isEditing }));
   };
 
+  renderScaleInput = (type, val) => {
+    /**
+     * There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
+     */ 
+    if (isFirefox) {
+      return (
+        <input
+          className="ScaleInput"
+          type="number"
+          step="any"
+          value={val}
+          onChange={e =>
+            this.onScaleChange(e.target.value, type)
+          }
+        />
+      );
+    } else {
+      if (this.state.isEditing) {
+        return (
+          <input
+            className="ScaleInput"
+            type="number"
+            step="any"
+            value={val}
+            onChange={e =>
+              this.onScaleChange(e.target.value, type)
+            }
+            onBlur={this.toggleEditing}
+          />
+        );
+      } else {
+        return (
+          <input
+            className="ScaleInput"
+            type="text"
+            value={this.formatValue(val)}
+            onFocus={this.toggleEditing}
+            readOnly
+          />
+        );
+      }
+    }
+  }
+
   render() {
     const { measurementUnits, t } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
@@ -131,26 +176,7 @@ class MeasurementOption extends React.Component {
             {t('option.measurementOption.scale')}
           </div>
           <div className="Layout">
-            {this.state.isEditing ? (
-              <input
-                className="ScaleInput"
-                type="number"
-                step="any"
-                value={this.state.currScaleFrom}
-                onChange={e =>
-                  this.onScaleChange(e.target.value, 'currScaleFrom')
-                }
-                onBlur={this.toggleEditing}
-              />
-            ) : (
-              <input
-                className="ScaleInput"
-                type="text"
-                value={this.formatValue(this.state.currScaleFrom)}
-                onFocus={this.toggleEditing}
-                readOnly
-              />
-            )}
+            {this.renderScaleInput('currScaleFrom', this.state.currScaleFrom)}
             <select
               className="UnitInput"
               value={this.state.currUnitFrom}
@@ -163,26 +189,7 @@ class MeasurementOption extends React.Component {
               ))}
             </select>
             <div className="ScaleEquals">=</div>
-            {this.state.isEditing ? (
-              <input
-                className="ScaleInput"
-                type="number"
-                step="any"
-                value={this.state.currScaleTo}
-                onChange={e =>
-                  this.onScaleChange(e.target.value, 'currScaleTo')
-                }
-                onBlur={this.toggleEditing}
-              />
-            ) : (
-              <input
-                className="ScaleInput"
-                type="text"
-                value={this.formatValue(this.state.currScaleTo)}
-                onFocus={this.toggleEditing}
-                readOnly
-              />
-            )}
+            {this.renderScaleInput('currScaleTo', this.state.currScaleTo)}
             <select
               className="UnitInput"
               value={this.state.currUnitTo}
