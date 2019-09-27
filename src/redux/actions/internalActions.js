@@ -255,7 +255,10 @@ export const setCacheKey = cacheKey => ({
   type: 'SET_CACHE_KEY',
   payload: { cacheKey },
 });
-
+export const setPageSizes = pageSizes => ({
+  type: 'SET_PAGE_SIZES',
+  payload: { pageSizes },
+});
 export const setIsUploading = isUploading => ({
   type: 'SET_IS_UPLOADING',
   payload: { isUploading },
