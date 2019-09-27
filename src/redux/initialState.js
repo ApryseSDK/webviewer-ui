@@ -246,6 +246,7 @@ export default {
     serverUrl: getHashParams('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
     cacheKey: JSON.parse(getHashParams('cacheKey', null)),
+    pageSizes: null,
     streaming: getHashParams('streaming', false),
     subzero: getHashParams('subzero', false),
     useDownloader: getHashParams('useDownloader', true),

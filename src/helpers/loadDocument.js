@@ -178,7 +178,7 @@ const getDocOptions = (state, dispatch, streaming) => {
       dispatch(actions.setDocumentType(workerTypes.XOD));
       resolve(docId);
     } else {
-      const { pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit } = state.advanced;
+      const { pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit, pageSizes } = state.advanced;
 
       Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
         let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
@@ -219,7 +219,7 @@ const getDocOptions = (state, dispatch, streaming) => {
 
         dispatch(actions.setDocumentType(type));
 
-        resolve({ docId, pdfBackendType, officeBackendType, extension, getPassword, onError, streaming, type, workerHandlers, workerTransportPromise, forceClientSideInit });
+        resolve({ docId, pdfBackendType, officeBackendType, extension, getPassword, onError, streaming, type, workerHandlers, workerTransportPromise, forceClientSideInit, pageSizes });
       });
     }
   });

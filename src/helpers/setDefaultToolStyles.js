@@ -11,7 +11,7 @@ const setDefaultToolStyles = () => {
     try {
       toolStyles = localStorage.getItem(`toolData-${toolName}`);
     } catch (ex) {
-      console.warn(`localStorage could not be accessed. ${ex.message}`);
+      console.warn(`Disabling "localStorage" because it could not be accessed.`);
       localStorageManager.disableLocalStorage();
     }
 
