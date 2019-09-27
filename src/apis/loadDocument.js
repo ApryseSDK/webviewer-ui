@@ -45,6 +45,7 @@ export default store => (documentPath, options = {}) => {
     withCredentials = false,
     cacheKey = null,
     password = '',
+    pageSizes = null,
   } = options;
 
   store.dispatch(actions.setDocumentId(documentId));
@@ -57,6 +58,7 @@ export default store => (documentPath, options = {}) => {
   store.dispatch(actions.setWithCredentials(withCredentials));
   store.dispatch(actions.setPassword(password));
   store.dispatch(actions.setCacheKey(cacheKey));
+  store.dispatch(actions.setPageSizes(pageSizes));
 
   if (window.CoreControls.isFullPDFEnabled() && documentPath instanceof window.PDFNet.PDFDoc) {
     store.dispatch(actions.setPDFDoc(documentPath));
