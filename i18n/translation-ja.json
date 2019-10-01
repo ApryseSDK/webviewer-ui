@@ -39,6 +39,7 @@
     "areaMeasurement": "面積測定",
     "arrow": "矢印",
     "callout": "コールアウト",
+    "crop": "切り抜きページ",
     "caret": "キャレット",
     "distanceMeasurement": "距離測定",
     "ellipse": "楕円",
@@ -72,6 +73,7 @@
     "miscToolsButton": "その他のツール",
     "notesPanel": "備考",
     "outlinesPanel": "概要",
+    "layersPanel": "レイヤー",
     "shapeToolsButton": "シェイプ ツール",
     "textToolsButton": "テキスト ツール",
     "thumbnailsPanel": "サムネイル",
@@ -93,6 +95,8 @@
     "notSupported": "このファイルの種類はサポートされていません。",
     "passwordRequired": "パスワードが必要です",
     "preparingToPrint": "印刷の準備をしています...",
+    "annotationReplyCount": "{{count}} 応答",
+    "annotationReplyCount_plural": "{{count}} 返信",
     "printTotalPageCount": "{{count}} ページ",
     "printTotalPageCount_plural": "{{count}} ページ",
     "processing": "処理中...",
@@ -132,7 +136,8 @@
       "all": "すべて",
       "current": "現在の",
       "pages": "ページ",
-      "includeComments": "コメントを含める"
+      "includeComments": "コメントを含める",
+      "addWatermarkSettings": "透かし設定を追加"
     },
     "redaction": {
       "markForRedaction": "改訂マーク",
@@ -145,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "署名を追加"
+    },
+    "status": {
+      "status": "状態"
+    },
+    "state": {
+      "accepted": "受け入れられた",
+      "rejected": "拒否されました",
+      "completed": "完了しました",
+      "cancelled": "キャンセル",
+      "set": "ステータスを設定：",
+      "setBy": "によって設定されました",
+      "none": "無し"
     },
     "measurementOverlay": {
       "scale": "スケール比",
@@ -167,6 +184,13 @@
     "shared": {
       "page": "ページ",
       "precision": "精度"
+    },
+    "watermark": {
+      "size": "サイズ",
+      "location": "透かしを編集する場所を選択してください",
+      "text": "テキスト",
+      "colors": "色",
+      "resetAllSettings": "すべての設定をリセット"
     }
   },
   "shortcut": {

@@ -19,7 +19,7 @@ const runTranslation = () => {
   filesToTranslate.forEach(async file => {
     const translationData = require(file);
     const updatedData = {};
-    const languageCode = file.match(/-(.+?)\.json/i)[1];
+    const languageCode = file.match(/translation-(.+?)\.json/i)[1];
 
     if (!languageCode) {
       console.error(`Can't determine language code of ${file}`);
@@ -50,7 +50,9 @@ const addMissingKey = (
               result[key] = {};
               await addMissingKey(
                 baseTranslationData[key],
-                translationData[key],
+                // translationData[key] may not exist when the base object is nested so we need to pass an empty object
+                // an empty object is okay since the translated values are added to result[key]
+                translationData[key] || {},
                 result[key],
                 languageCode,
               );

@@ -39,6 +39,7 @@
     "areaMeasurement": "Surface mesurée",
     "arrow": "Flèche",
     "callout": "Faire appel à",
+    "crop": "Page de recadrage",
     "caret": "Caret",
     "distanceMeasurement": "Mesure de distance",
     "ellipse": "Ellipse",
@@ -94,6 +95,8 @@
     "notSupported": "Ce type de fichier n'est pas pris en charge.",
     "passwordRequired": "Mot de passe requis",
     "preparingToPrint": "Préparation à l'impression...",
+    "annotationReplyCount": "{{count}} Répondre",
+    "annotationReplyCount_plural": "{{count}} réponses",
     "printTotalPageCount": "{{count}} page",
     "printTotalPageCount_plural": "{{count}} pages",
     "processing": "Traitement...",
@@ -133,7 +136,8 @@
       "all": "Toutes",
       "current": "Actuelle",
       "pages": "Pages",
-      "includeComments": "Inclure les commentaires"
+      "includeComments": "Inclure les commentaires",
+      "addWatermarkSettings": "Ajouter des paramètres de filigrane"
     },
     "redaction": {
       "markForRedaction": "Repérer les biffures",
@@ -146,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "Ajouter une signature"
+    },
+    "status": {
+      "status": "Statut"
+    },
+    "state": {
+      "accepted": "Accepté",
+      "rejected": "Rejeté",
+      "completed": "Terminé",
+      "cancelled": "Annulé",
+      "set": "Définir le statut:",
+      "setBy": "fixé par",
+      "none": "Aucun"
     },
     "measurementOverlay": {
       "scale": "Ratio d'échelle",
@@ -168,6 +184,13 @@
     "shared": {
       "page": "Page",
       "precision": "Précision"
+    },
+    "watermark": {
+      "size": "Taille",
+      "location": "Choisissez un emplacement pour modifier les filigranes",
+      "text": "Texte",
+      "colors": "Couleurs",
+      "resetAllSettings": "Réinitialiser tous les réglages"
     }
   },
   "shortcut": {

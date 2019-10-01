@@ -39,6 +39,7 @@
     "areaMeasurement": "測量面積",
     "arrow": "箭頭",
     "callout": "圖說文字",
+    "crop": "裁剪頁面",
     "caret": "插入號",
     "distanceMeasurement": "測量距離",
     "ellipse": "橢圓",
@@ -72,6 +73,7 @@
     "miscToolsButton": "其他工具",
     "notesPanel": "備忘稿",
     "outlinesPanel": "大綱",
+    "layersPanel": "圖層",
     "shapeToolsButton": "圖形工具",
     "textToolsButton": "文字工具",
     "thumbnailsPanel": "縮圖",
@@ -93,6 +95,8 @@
     "notSupported": "不支援該檔案類型。",
     "passwordRequired": "需要密碼",
     "preparingToPrint": "正在準備列印...",
+    "annotationReplyCount": "{{count}} 回复",
+    "annotationReplyCount_plural": "{{count}} 回复",
     "printTotalPageCount": "{{count}} 頁",
     "printTotalPageCount_plural": "{{count}} 頁",
     "processing": "正在處理...",
@@ -132,7 +136,8 @@
       "all": "全部",
       "current": "目前",
       "pages": "頁面",
-      "includeComments": "包括評論"
+      "includeComments": "包括評論",
+      "addWatermarkSettings": "添加水印設置"
     },
     "redaction": {
       "markForRedaction": "標示為修訂",
@@ -145,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "新增簽名"
+    },
+    "status": {
+      "status": "狀態"
+    },
+    "state": {
+      "accepted": "公認",
+      "rejected": "被拒絕",
+      "completed": "已完成",
+      "cancelled": "取消",
+      "set": "設定狀態：",
+      "setBy": "通過設置",
+      "none": "沒有"
     },
     "measurementOverlay": {
       "scale": "比例",
@@ -167,6 +184,13 @@
     "shared": {
       "page": "頁面",
       "precision": "精確度"
+    },
+    "watermark": {
+      "size": "尺寸",
+      "location": "選擇一個位置來編輯水印",
+      "text": "文本",
+      "colors": "顏色",
+      "resetAllSettings": "重置所有設置"
     }
   },
   "shortcut": {

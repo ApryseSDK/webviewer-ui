@@ -39,6 +39,7 @@
     "areaMeasurement": "Oppervlaktemeting",
     "arrow": "Pijl",
     "callout": "Opmerking met pijl",
+    "crop": "Pagina bijsnijden",
     "caret": "Dakje",
     "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
@@ -94,6 +95,8 @@
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
     "passwordRequired": "Wachtwoord vereist",
     "preparingToPrint": "Printen voorbereiden...",
+    "annotationReplyCount": "{{count}} Antwoord",
+    "annotationReplyCount_plural": "{{count}} Antwoorden",
     "printTotalPageCount": "{{count}} pagina",
     "printTotalPageCount_plural": "{{count}} pagina's",
     "processing": "Bezig...",
@@ -133,7 +136,8 @@
       "all": "Alles",
       "current": "Huidige",
       "pages": "Pagina's",
-      "includeComments": "Inclusief commentaar"
+      "includeComments": "Inclusief commentaar",
+      "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
     "redaction": {
       "markForRedaction": "Markeren voor redactie",
@@ -146,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
+    },
+    "status": {
+      "status": "staat"
+    },
+    "state": {
+      "accepted": "Geaccepteerd",
+      "rejected": "Afgekeurd",
+      "completed": "Voltooid",
+      "cancelled": "Geannuleerd",
+      "set": "Stel status in:",
+      "setBy": "ingesteld door",
+      "none": "Geen"
     },
     "measurementOverlay": {
       "scale": "Schaalverhouding",
@@ -168,6 +184,13 @@
     "shared": {
       "page": "Pagina",
       "precision": "precisie"
+    },
+    "watermark": {
+      "size": "Grootte",
+      "location": "Kies een locatie om watermerken te bewerken",
+      "text": "Tekst",
+      "colors": "kleuren",
+      "resetAllSettings": "Reset alle instellingen"
     }
   },
   "shortcut": {

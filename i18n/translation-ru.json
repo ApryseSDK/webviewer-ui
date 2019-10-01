@@ -39,6 +39,7 @@
     "areaMeasurement": "Площадь",
     "arrow": "Стрела",
     "callout": "Вызыв",
+    "crop": "Обрезать страницу",
     "caret": "Знак вставки",
     "distanceMeasurement": "Дистанция",
     "ellipse": "Эллипс",
@@ -94,6 +95,8 @@
     "notSupported": "Расширение файла не поддерживается.",
     "passwordRequired": "Пароль необходим",
     "preparingToPrint": "Документ печатается...",
+    "annotationReplyCount": "{{count}} Ответить",
+    "annotationReplyCount_plural": "{{count}} Ответы",
     "printTotalPageCount": "{{count}} страница",
     "printTotalPageCount_plural": "{{count}} страниц",
     "processing": "Обработка документа...",
@@ -133,7 +136,8 @@
       "all": "Все",
       "current": "Текущий",
       "pages": "Страницы",
-      "includeComments": "Приложить комментарии"
+      "includeComments": "Приложить комментарии",
+      "addWatermarkSettings": "Добавить настройки водяного знака"
     },
     "redaction": {
       "markForRedaction": "Пометить для редактирования",
@@ -146,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"
+    },
+    "status": {
+      "status": "Статус"
+    },
+    "state": {
+      "accepted": "Принято",
+      "rejected": "Отклонено",
+      "completed": "Завершенный",
+      "cancelled": "отменен",
+      "set": "Установить статус:",
+      "setBy": "установить с помощью",
+      "none": "Никто"
     },
     "measurementOverlay": {
       "scale": "Масштаб",
@@ -168,6 +184,13 @@
     "shared": {
       "page": "Страница",
       "precision": "Точность"
+    },
+    "watermark": {
+      "size": "Размер",
+      "location": "Выберите место для редактирования водяных знаков",
+      "text": "Текст",
+      "colors": "Цвета",
+      "resetAllSettings": "Сбросить все настройки"
     }
   },
   "shortcut": {

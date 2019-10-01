@@ -39,6 +39,7 @@
     "areaMeasurement": "面积测量",
     "arrow": "箭头",
     "callout": "标注",
+    "crop": "裁剪页面",
     "caret": "插入符号",
     "distanceMeasurement": "距离测量",
     "ellipse": "椭圆",
@@ -94,6 +95,8 @@
     "notSupported": "不支持该文件类型。",
     "passwordRequired": "需要输入密码",
     "preparingToPrint": "正在准备打印…",
+    "annotationReplyCount": "{{count}} 回复",
+    "annotationReplyCount_plural": "{{count}} 回复",
     "printTotalPageCount": "{{count}} 页",
     "printTotalPageCount_plural": "{{count}} 页",
     "processing": "正在处理…",
@@ -133,7 +136,8 @@
       "all": "全部",
       "current": "当前",
       "pages": "页数",
-      "includeComments": "包括评论"
+      "includeComments": "包括评论",
+      "addWatermarkSettings": "添加水印设置"
     },
     "redaction": {
       "markForRedaction": "标记为编辑",
@@ -146,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "添加签名"
+    },
+    "status": {
+      "status": "状态"
+    },
+    "state": {
+      "accepted": "公认",
+      "rejected": "被拒绝",
+      "completed": "已完成",
+      "cancelled": "取消",
+      "set": "设定状态：",
+      "setBy": "通过设置",
+      "none": "没有"
     },
     "measurementOverlay": {
       "scale": "比例",
@@ -168,6 +184,13 @@
     "shared": {
       "page": "页",
       "precision": "精准度"
+    },
+    "watermark": {
+      "size": "尺寸",
+      "location": "选择一个位置来编辑水印",
+      "text": "文本",
+      "colors": "颜色",
+      "resetAllSettings": "重置所有设置"
     }
   },
   "shortcut": {

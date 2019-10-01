@@ -39,6 +39,7 @@
     "areaMeasurement": "Flächenmessung",
     "arrow": "Pfeil",
     "callout": "Callout",
+    "crop": "Seite zuschneiden",
     "caret": "Caret",
     "distanceMeasurement": "Abstandsmessung",
     "ellipse": "Ellipse",
@@ -72,6 +73,7 @@
     "miscToolsButton": "Verschiedene Werkzeuge",
     "notesPanel": "Annotationen",
     "outlinesPanel": "Gliederung",
+    "layersPanel": "Schichten",
     "shapeToolsButton": "Formwerkzeuge",
     "textToolsButton": "Textwerkzeuge",
     "thumbnailsPanel": "Miniaturansicht",
@@ -93,6 +95,8 @@
     "notSupported": "Dieser Dateityp ist nicht unterstützt.",
     "passwordRequired": "Passwort erforderlich",
     "preparingToPrint": "Druckvorbereitung...",
+    "annotationReplyCount": "{{count}} Antworten",
+    "annotationReplyCount_plural": "{{count}} Antworten",
     "printTotalPageCount": "{{count}} Seite",
     "printTotalPageCount_plural": "{{count}} Seiten",
     "processing": "Bearbeite...",
@@ -132,7 +136,8 @@
       "all": "Alle",
       "current": "Aktuelle Seite",
       "pages": "Seiten",
-      "includeComments": "Kommentare einfügen"
+      "includeComments": "Kommentare einfügen",
+      "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"
     },
     "redaction": {
       "markForRedaction": "Zum Schwärzen markieren",
@@ -145,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "Eine Unterschrift hinzufügen"
+    },
+    "status": {
+      "status": "Status"
+    },
+    "state": {
+      "accepted": "Akzeptiert",
+      "rejected": "Abgelehnt",
+      "completed": "Vollendet, fertiggestellt",
+      "cancelled": "Abgesagt",
+      "set": "Status setzen:",
+      "setBy": "eingestellt von",
+      "none": "Keiner"
     },
     "measurementOverlay": {
       "scale": "Maßstab",
@@ -167,6 +184,13 @@
     "shared": {
       "page": "Seite",
       "precision": "Genauigkeit"
+    },
+    "watermark": {
+      "size": "Größe",
+      "location": "Wählen Sie einen Ort zum Bearbeiten von Wasserzeichen",
+      "text": "Text",
+      "colors": "Farben",
+      "resetAllSettings": "Alle Einstellungen zurücksetzen"
     }
   },
   "shortcut": {

@@ -39,6 +39,7 @@
     "areaMeasurement": "Medición del área",
     "arrow": "Flecha",
     "callout": "Llamada",
+    "crop": "Recortar página",
     "caret": "Circunflejo",
     "distanceMeasurement": "Medición de distancia",
     "ellipse": "Elipse",
@@ -72,6 +73,7 @@
     "miscToolsButton": "Herramientas varias",
     "notesPanel": "Notas",
     "outlinesPanel": "Esquemas",
+    "layersPanel": "Capas",
     "shapeToolsButton": "Herramientas de forma",
     "textToolsButton": "Herramientas de texto",
     "thumbnailsPanel": "Miniaturas",
@@ -93,6 +95,8 @@
     "notSupported": "Ese tipo de archivo no es compatible.",
     "passwordRequired": "Se requiere contraseña",
     "preparingToPrint": "Preparando para imprimir...",
+    "annotationReplyCount": "{{count}} Respuesta",
+    "annotationReplyCount_plural": "{{count}} Respuestas",
     "printTotalPageCount": "{{count}} página",
     "printTotalPageCount_plural": "{{count}} páginas",
     "processing": "Procesando...",
@@ -132,7 +136,8 @@
       "all": "Todo",
       "current": "Actual",
       "pages": "Páginas",
-      "includeComments": "Incluir comentarios"
+      "includeComments": "Incluir comentarios",
+      "addWatermarkSettings": "Agregar configuraciones de marca de agua"
     },
     "redaction": {
       "markForRedaction": "Marcar para modificación",
@@ -145,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "Añadir una firma"
+    },
+    "status": {
+      "status": "Estado"
+    },
+    "state": {
+      "accepted": "Aceptado",
+      "rejected": "Rechazado",
+      "completed": "Terminado",
+      "cancelled": "Cancelado",
+      "set": "Establecer estado:",
+      "setBy": "establecido por",
+      "none": "Ninguna"
     },
     "measurementOverlay": {
       "scale": "Relación de escala",
@@ -167,6 +184,13 @@
     "shared": {
       "page": "Página",
       "precision": "Precisión"
+    },
+    "watermark": {
+      "size": "Talla",
+      "location": "Elija una ubicación para editar marcas de agua",
+      "text": "Texto",
+      "colors": "Colores",
+      "resetAllSettings": "Restablecer todos los ajustes"
     }
   },
   "shortcut": {
