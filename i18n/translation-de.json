@@ -42,6 +42,7 @@
     "caret": "Caret",
     "distanceMeasurement": "Abstandsmessung",
     "ellipse": "Ellipse",
+    "eraser": "Radiergummi",
     "freehand": "Freihandzeichnen",
     "freehand2": "Freihandzeichnen",
     "freetext": "Freitext",
@@ -61,8 +62,7 @@
     "stickyNote": "Kommentar",
     "strikeout": "Durchstreichen",
     "underline": "Unterstreichen",
-    "custom": "Angepasst",
-    "eraser": "Radiergummi"
+    "custom": "Angepasst"
   },
   "component": {
     "freehandToolsButton": "Freihand-Werkzeuge",
@@ -175,6 +175,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +192,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "Hand",

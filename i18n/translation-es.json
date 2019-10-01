@@ -42,6 +42,7 @@
     "caret": "Circunflejo",
     "distanceMeasurement": "Medición de distancia",
     "ellipse": "Elipse",
+    "eraser": "Borrador",
     "freehand": "A mano alzada",
     "freehand2": "A mano alzada",
     "freetext": "Texto libre",
@@ -61,8 +62,7 @@
     "stickyNote": "Comentario",
     "strikeout": "Tachado",
     "underline": "Subrayado",
-    "custom": "Personalizado",
-    "eraser": "Borrador"
+    "custom": "Personalizado"
   },
   "component": {
     "freehandToolsButton": "Herramientas a mano alzada",
@@ -175,6 +175,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +192,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "Panorámica",

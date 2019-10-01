@@ -8,6 +8,8 @@
     "comment": "Commenter",
     "copy": "Copier",
     "delete": "Supprimer",
+    "group": "Groupe",
+    "ungroup": "Dissocier",
     "download": "Télécharger",
     "edit": "Éditer",
     "enterFullscreen": "Plein écran",
@@ -31,9 +33,7 @@
     "submit": "Soumettre",
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
-    "zoomOut": "Dézoomer",
-    "group": "Groupe",
-    "ungroup": "Dissocier"
+    "zoomOut": "Dézoomer"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -42,6 +42,7 @@
     "caret": "Caret",
     "distanceMeasurement": "Mesure de distance",
     "ellipse": "Ellipse",
+    "eraser": "La gomme",
     "freehand": "Stylo",
     "freehand2": "Stylo",
     "freetext": "Texte libre",
@@ -61,8 +62,7 @@
     "stickyNote": "Note collante",
     "strikeout": "Barré",
     "underline": "Soulignage",
-    "custom": "personnalisation",
-    "eraser": "La gomme"
+    "custom": "personnalisation"
   },
   "component": {
     "freehandToolsButton": "Outils de stylo",
@@ -176,6 +176,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -192,8 +193,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "Panoramique",

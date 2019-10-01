@@ -42,6 +42,7 @@
     "caret": "Знак вставки",
     "distanceMeasurement": "Дистанция",
     "ellipse": "Эллипс",
+    "eraser": "ластик",
     "freehand": "От руки",
     "freehand2": "От руки",
     "freetext": "Текст",
@@ -61,8 +62,7 @@
     "stickyNote": "Комментировать",
     "strikeout": "Зачеркнуть",
     "underline": "Подчеркнуть",
-    "custom": "Свой стиль",
-    "eraser": "ластик"
+    "custom": "Свой стиль"
   },
   "component": {
     "freehandToolsButton": "Инструменты",
@@ -176,6 +176,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -192,8 +193,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "Панорамирование",

@@ -42,6 +42,7 @@
     "caret": "キャレット",
     "distanceMeasurement": "距離測定",
     "ellipse": "楕円",
+    "eraser": "消しゴム",
     "freehand": "フリーハンド",
     "freehand2": "フリーハンド",
     "freetext": "フリーテキスト",
@@ -61,8 +62,7 @@
     "stickyNote": "コメント",
     "strikeout": "抹消線",
     "underline": "下線",
-    "custom": "カスタム",
-    "eraser": "消しゴム"
+    "custom": "カスタム"
   },
   "component": {
     "freehandToolsButton": "フリーハンド ツール",
@@ -175,6 +175,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +192,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "パン",

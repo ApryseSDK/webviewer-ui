@@ -42,6 +42,7 @@
     "caret": "插入號",
     "distanceMeasurement": "測量距離",
     "ellipse": "橢圓",
+    "eraser": "橡皮",
     "freehand": "手繪",
     "freehand2": "手繪",
     "freetext": "任意文字",
@@ -61,8 +62,7 @@
     "stickyNote": "評論",
     "strikeout": "刪除線",
     "underline": "底線",
-    "custom": "自訂",
-    "eraser": "橡皮"
+    "custom": "自訂"
   },
   "component": {
     "freehandToolsButton": "手繪工具",
@@ -175,6 +175,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +192,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "移動瀏覽",

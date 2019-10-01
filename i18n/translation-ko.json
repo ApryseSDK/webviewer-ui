@@ -42,6 +42,7 @@
     "caret": "캐럿",
     "distanceMeasurement": "거리 측정",
     "ellipse": "타원",
+    "eraser": "지우개",
     "freehand": "자유형",
     "freehand2": "자유형",
     "freetext": "자유 텍스트",
@@ -61,8 +62,7 @@
     "stickyNote": "코멘트",
     "strikeout": "취소선",
     "underline": "밑줄",
-    "custom": "사용자 지정",
-    "eraser": "지우개"
+    "custom": "사용자 지정"
   },
   "component": {
     "freehandToolsButton": "자유형 도구",
@@ -175,6 +175,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +192,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "이동",
