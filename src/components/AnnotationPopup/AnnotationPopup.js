@@ -274,6 +274,17 @@ const AnnotationPopup = () => {
           dataElement="annotationDeleteButton"
         />
       ),
+    calibrateButton: overrides =>
+      !!firstAnnotation.Measure &&
+      firstAnnotation instanceof Annotations.LineAnnotation && (
+        <ActionButton
+          title="action.calibrate"
+          label="haha"
+          onClick={() => dispatch(actions.openElement('calibrationModal'))}
+          {...overrides}
+          dataElement="calibrateButton"
+        />
+      ),
   };
 
   return (
