@@ -49,7 +49,6 @@ class MeasurementOption extends React.Component {
     const { scale, precision } = this.props;
 
     if (this.props.scale !== prevProps.scale) {
-<<<<<<< HEAD
       this.setState({
         currScaleFrom: scale[0][0],
         currUnitFrom: scale[0][1],
@@ -61,19 +60,6 @@ class MeasurementOption extends React.Component {
       this.setState({
         currPrecision: precision,
       });
-=======
-      this.setState((state, props) => ({
-        currScaleFrom: props.scale[0][0],
-        currUnitFrom: props.scale[0][1],
-        currScaleTo: props.scale[1][0],
-        currUnitTo: props.scale[1][1],
-      }));
-    }
-    if (this.props.precision !== prevProps.precision) {
-      this.setState((state, props) => ({
-        currPrecision: props.precision,
-      }));
->>>>>>> master
     }
   }
 
@@ -145,7 +131,7 @@ class MeasurementOption extends React.Component {
           }
         />
       );
-    } else {
+    } 
       if (this.state.isEditing) {
         return (
           <input
@@ -170,7 +156,7 @@ class MeasurementOption extends React.Component {
           />
         );
       }
-    }
+    
   }
 
   render() {
