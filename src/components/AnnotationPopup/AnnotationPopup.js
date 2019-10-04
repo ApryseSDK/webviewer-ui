@@ -279,7 +279,7 @@ const AnnotationPopup = () => {
       firstAnnotation instanceof Annotations.LineAnnotation && (
         <ActionButton
           title="action.calibrate"
-          label="haha"
+          img="calibrate"
           onClick={() => dispatch(actions.openElement('calibrationModal'))}
           {...overrides}
           dataElement="calibrateButton"

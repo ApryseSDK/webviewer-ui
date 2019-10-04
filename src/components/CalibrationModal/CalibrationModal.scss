@@ -7,63 +7,35 @@
   .container {
     @extend %modal-shared-container-style;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 155px;
-    width: 500px;
-    padding: 10px;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 180px;
+    width: 400px;
+    padding: 20px 20px 0px 20px;
 
-    .wrapper {
-      align-self: stretch;
-      flex-grow: 1;
+    .calibration__header {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .calibration__body {
+      margin-top: 5px;
+
+      input {
+        margin-top: 20px;
+        width: 70%;
+        border: none;
+        outline: none;
+        border-bottom: 2px solid #00a5e4;
+      }
+    }
+
+    .calibration__footer {
       display: flex;
-      flex-direction: column;
-      position: relative;
+      justify-content: flex-end;
 
-      .header {
-        font-size: 16px;
-        font-weight: 700;
-      }
-
-      .enter {
-        margin-top: 22px;
-        font-size: 14px;
-
-        input {
-          margin-top: 8px;
-          width: 100%;
-          border: none;
-          outline: none;
-          
-          &.correct {
-            border-bottom: 2px solid #00a5e4;
-          }
-          
-          &.wrong {
-            border-bottom: 2px solid red;
-          }
-        }
-      }
-
-      .incorrect-password {
-        margin-top: 2px;
-        font-size: 14px;
-        color: red;
-      }
-
-      .buttons {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        display: flex;
-
-        .Button {
-          font-size: 14px;
-        }
-
-        .Button:hover{
-          background: none;
-        }
+      .Button:hover {
+        background: none;
       }
     }
   }
