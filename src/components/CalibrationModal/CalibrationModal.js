@@ -12,7 +12,7 @@ import selectors from 'selectors';
 
 import './CalibrationModal.scss';
 
-const numberRegex = /^\d*(.\d*)?$/;
+const numberRegex = /^\d*(\.\d*)?$/;
 
 const CalibrationModal = () => {
   const [isOpen, isDisabled] = useSelector(
