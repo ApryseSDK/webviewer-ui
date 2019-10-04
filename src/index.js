@@ -52,18 +52,12 @@ if (window.CanvasRenderingContext2D) {
 
   if (state.advanced.fullAPI) {
     window.CoreControls.enableFullPDF(true);
-    if (process.env.NODE_ENV === 'production') {
-      fullAPIReady = loadScript('../core/pdf/PDFNet.js');
-    } else {
-      fullAPIReady = loadScript('../core/pdf/PDFNet.js');
-    }
+    fullAPIReady = loadScript('../core/pdf/PDFNet.js');
   }
 
   window.CoreControls.enableSubzero(state.advanced.subzero);
-  if (process.env.NODE_ENV === 'production') {
-    window.CoreControls.setWorkerPath('../core');
-    window.CoreControls.setResourcesPath('../core/assets');
-  }
+  window.CoreControls.setWorkerPath('../core');
+  window.CoreControls.setResourcesPath('../core/assets');
 
   try {
     if (state.advanced.useSharedWorker && window.parent.WebViewer) {
