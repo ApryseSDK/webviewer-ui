@@ -1,6 +1,4 @@
-import React, {
-  useState, useEffect, useRef,
-} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -9,17 +7,17 @@ import core from 'core';
 import './ImageSignature.scss';
 
 const propTypes = {
-  setSaveSignature: PropTypes.func.isRequired,
+  _setSaveSignature: PropTypes.func.isRequired,
 };
 
-const ImageSignature = ({ setSaveSignature }) => {
+const ImageSignature = ({ _setSaveSignature }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
   useEffect(() => {
-    setSaveSignature(!!imageSrc);
-  }, [imageSrc]);
+    _setSaveSignature(!!imageSrc);
+  }, [_setSaveSignature, imageSrc]);
 
   const handleFileChange = e => {
     readFile(e.target.files[0]);
@@ -78,17 +76,29 @@ const ImageSignature = ({ setSaveSignature }) => {
         <img src={imageSrc} style={{ width: '100%', height: '100%' }} />
       ) : (
         <>
-          <div className="image-signature-upload-container" onDragEnter={handleDragEnter} onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleFileDrop} onDragExit={handleDragExit}>
-            <div className="image-signature-dnd">Drag & Drop your image here</div>
+          <div
+            className="image-signature-upload-container"
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleFileDrop}
+            onDragExit={handleDragExit}
+          >
+            <div className="image-signature-dnd">
+              Drag & Drop your image here
+            </div>
             <div className="image-signature-separator">or</div>
             <div className="image-signature-upload">
-              <input id="upload" type="file" accept=".png" onChange={handleFileChange} />
+              <input
+                id="upload"
+                type="file"
+                accept=".png"
+                onChange={handleFileChange}
+              />
               <label htmlFor="upload">Upload Signature Image</label>
             </div>
           </div>
-          {isDragging
-            && <div className="image-signature-background" />
-          }
+          {isDragging && <div className="image-signature-background" />}
         </>
       )}
     </div>

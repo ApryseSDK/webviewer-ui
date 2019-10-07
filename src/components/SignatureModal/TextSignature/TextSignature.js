@@ -1,6 +1,4 @@
-import React, {
-  useState, useEffect, useRef,
-} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -9,16 +7,16 @@ import core from 'core';
 import './TextSignature.scss';
 
 const propTypes = {
-  setSaveSignature: PropTypes.func.isRequired,
+  _setSaveSignature: PropTypes.func.isRequired,
 };
 
-const TextSignature = ({ setSaveSignature }) => {
+const TextSignature = ({ _setSaveSignature }) => {
   const [value, setValue] = useState(core.getCurrentUser());
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
-    setSaveSignature(!!value);
-  }, [value]);
+    _setSaveSignature(!!value);
+  }, [_setSaveSignature, value]);
 
   const handleInputChange = e => {
     const value = e.target.value;
@@ -36,12 +34,13 @@ const TextSignature = ({ setSaveSignature }) => {
         onChange={handleInputChange}
       />
       <div className="text-signature-container">
-
         {fonts.map((font, index) => (
-          <div key={font} className={classNames({
-            'text-signature-canvas-container': true,
-            active: index === activeIndex,
-          })}
+          <div
+            key={font}
+            className={classNames({
+              'text-signature-canvas-container': true,
+              active: index === activeIndex,
+            })}
           >
             <div className="text-signature-background" />
             <Canvas
@@ -60,9 +59,7 @@ TextSignature.propTypes = propTypes;
 
 export default TextSignature;
 
-const Canvas = ({
-  text, font, onSelect,
-}) => {
+const Canvas = ({ text, font, onSelect }) => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
   const canvasRef = useRef();
   const fontSize = '30px';
@@ -79,7 +76,7 @@ const Canvas = ({
     ctx.font = `${fontSize} ${font}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-  }, []);
+  }, [font]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -96,10 +93,5 @@ const Canvas = ({
     signatureTool.setSignature(canvasRef.current.toDataURL());
   };
 
-  return (
-    <canvas
-      ref={canvasRef}
-      onClick={handleClick}
-    />
-  );
+  return <canvas ref={canvasRef} onClick={handleClick} />;
 };

@@ -1,5 +1,9 @@
 import React, {
-  useState, useEffect, useRef, useLayoutEffect,
+  useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  useCallback,
 } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -11,10 +15,10 @@ import './InkSignature.scss';
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
-  setSaveSignature: PropTypes.func,
+  _setSaveSignature: PropTypes.func,
 };
 
-const InkSignature = ({ isModalOpen, setSaveSignature }) => {
+const InkSignature = ({ isModalOpen, _setSaveSignature }) => {
   const canvasRef = useRef();
   const [canClear, setCanClear] = useState(false);
   const [t] = useTranslation();
@@ -44,7 +48,7 @@ const InkSignature = ({ isModalOpen, setSaveSignature }) => {
   useEffect(() => {
     const handleDrawing = _.throttle(() => {
       if (!signatureTool.isEmptySignature()) {
-        setSaveSignature(true);
+        _setSaveSignature(true);
         setCanClear(true);
       }
     }, 300);
@@ -65,7 +69,7 @@ const InkSignature = ({ isModalOpen, setSaveSignature }) => {
         canvas.removeEventListener('touchmove', handleDrawing);
       };
     }
-  }, []);
+  }, [_setSaveSignature, signatureTool]);
 
   useLayoutEffect(() => {
     // use layout effect here because we want to clear the signature canvas
@@ -73,13 +77,13 @@ const InkSignature = ({ isModalOpen, setSaveSignature }) => {
     if (isModalOpen) {
       clearCanvas();
     }
-  }, [isModalOpen]);
+  }, [clearCanvas, isModalOpen]);
 
-  const clearCanvas = () => {
+  const clearCanvas = useCallback(() => {
     signatureTool.clearSignatureCanvas();
     setCanClear(false);
-    setSaveSignature(false);
-  };
+    _setSaveSignature(false);
+  }, [_setSaveSignature, signatureTool]);
 
   const clearBtnClass = classNames({
     'ink-signature-clear': true,
@@ -88,7 +92,12 @@ const InkSignature = ({ isModalOpen, setSaveSignature }) => {
 
   return (
     <div className="ink-signature">
-      <canvas width="100%" height="100%" className="ink-signature-canvas" ref={canvasRef} />
+      <canvas
+        width="100%"
+        height="100%"
+        className="ink-signature-canvas"
+        ref={canvasRef}
+      />
       <div className="ink-signature-background">
         <div className="ink-signature-sign-here">{t('message.signHere')}</div>
         <div className={clearBtnClass} onClick={clearCanvas}>

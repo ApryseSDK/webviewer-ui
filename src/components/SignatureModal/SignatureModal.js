@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
-import {
-  Tabs, TabList, Tab, TabPanels, TabPanel,
-} from 'components/Tabs';
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
 import TextSignature from 'components/SignatureModal/TextSignature';
 import ImageSignature from 'components/SignatureModal/ImageSignature';
@@ -19,8 +17,9 @@ import selectors from 'selectors';
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
-  const [isDisabled, isOpen] = useSelector(state => [
+  const [isDisabled, isSaveSignatureDisabled, isOpen] = useSelector(state => [
     selectors.isElementDisabled(state, 'signatureModal'),
+    selectors.isElementDisabled(state, 'saveSignatureButton'),
     selectors.isElementOpen(state, 'signatureModal'),
   ]);
   const dispatch = useDispatch();
@@ -28,10 +27,18 @@ const SignatureModal = () => {
   const [t] = useTranslation();
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
+  const _setSaveSignature = useCallback(save => {
+    if (isSaveSignatureDisabled && save) {
+      return;
+    }
+
+    setSaveSignature(save);
+  }, [isSaveSignatureDisabled]);
+
   useEffect(() => {
     if (isOpen) {
       core.setToolMode('AnnotationCreateSignature');
-      setSaveSignature(false);
+      _setSaveSignature(false);
       dispatch(
         actions.closeElements([
           'printModal',
@@ -41,7 +48,7 @@ const SignatureModal = () => {
         ]),
       );
     }
-  }, [dispatch, isOpen]);
+  }, [_setSaveSignature, dispatch, isOpen]);
 
   const closeModal = () => {
     signatureTool.clearLocation();
@@ -50,7 +57,7 @@ const SignatureModal = () => {
   };
 
   const toggleSaveSignature = () => {
-    setSaveSignature(!saveSignature);
+    _setSaveSignature(!saveSignature);
   };
 
   const createSignature = () => {
@@ -75,11 +82,8 @@ const SignatureModal = () => {
   });
 
   return isDisabled ? null : (
-    <div className={modalClass} onClick={closeModal}>
-      <div
-        className="container"
-        onClick={e => e.stopPropagation()}
-      >
+    <div className={modalClass} onMouseDown={closeModal}>
+      <div className="container" onMouseDown={e => e.stopPropagation()}>
         <Tabs>
           <div className="header">
             <TabList>
@@ -105,30 +109,39 @@ const SignatureModal = () => {
             <TabPanel>
               <InkSignature
                 isModalOpen={isOpen}
-                setSaveSignature={setSaveSignature}
+                _setSaveSignature={_setSaveSignature}
               />
             </TabPanel>
             <TabPanel>
-              <TextSignature setSaveSignature={setSaveSignature} />
+              <TextSignature _setSaveSignature={_setSaveSignature} />
             </TabPanel>
             <TabPanel>
-              <ImageSignature setSaveSignature={setSaveSignature} />
+              <ImageSignature _setSaveSignature={_setSaveSignature} />
             </TabPanel>
           </TabPanels>
         </Tabs>
 
-        <div className="footer">
-          <div className="signature-save">
-            <input
-              id="default-signature"
-              type="checkbox"
-              checked={saveSignature}
-              onChange={toggleSaveSignature}
-            />
-            <label htmlFor="default-signature">
-              {t('action.saveSignature')}
-            </label>
-          </div>
+        <div
+          className="footer"
+          style={{
+            justifyContent: isSaveSignatureDisabled
+              ? 'flex-end'
+              : 'space-between',
+          }}
+        >
+          {!isSaveSignatureDisabled && (
+            <div className="signature-save" data-element="saveSignatureButton">
+              <input
+                id="default-signature"
+                type="checkbox"
+                checked={saveSignature}
+                onChange={toggleSaveSignature}
+              />
+              <label htmlFor="default-signature">
+                {t('action.saveSignature')}
+              </label>
+            </div>
+          )}
           <div className="signature-create" onClick={createSignature}>
             {t('action.create')}
           </div>
