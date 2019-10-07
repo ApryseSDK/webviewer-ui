@@ -95,3 +95,9 @@ const Canvas = ({ text, font, onSelect }) => {
 
   return <canvas ref={canvasRef} onClick={handleClick} />;
 };
+
+Canvas.propTypes = {
+  text: PropTypes.string.isRequired,
+  font: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
