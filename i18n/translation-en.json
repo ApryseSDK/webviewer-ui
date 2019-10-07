@@ -103,7 +103,8 @@
     "searching": "Searching...",
     "searchPlaceholder": "Search comments...",
     "signHere": "Sign here",
-    "insertTextHere": "Insert text here"
+    "insertTextHere": "Insert text here",
+    "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted"
   },
   "option": {
     "annotationColor": {
