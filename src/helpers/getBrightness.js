@@ -4,7 +4,7 @@
    */
 const getBrightness = color => {
   const threshold = 0.15;
-  const darkness = 1 - (0.299 * color.R + 0.587 * color.G + 0.114 * color.B) / 255;   
+  const darkness = 1 - (0.299 * color.R + 0.587 * color.G + 0.114 * color.B) / 255;
 
   if (darkness < threshold || color.toHexString() === null) { // Also return dark color if selected transparency cell.
     return 'dark';

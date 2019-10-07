@@ -6,6 +6,7 @@ class OrientationManager {
 
     return { x: width / 2, y: height / 2 };
   }
+
   getRotationRad = pageNumber => {
     const orientation = core.getRotation(pageNumber);
 
@@ -13,6 +14,7 @@ class OrientationManager {
 
     return radians;
   }
+
   getRotationDeg = pageNumber => {
     const orientation = core.getRotation(pageNumber);
 

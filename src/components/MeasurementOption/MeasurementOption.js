@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
-
-import MeasurementsDropdown from 'components/MeasurementsDropdown';
+import { isFirefox } from 'helpers/device';
+import i18next from 'i18next';
 
 import selectors from 'selectors';
 
 import './MeasurementOption.scss';
 
-class MeasurementOption extends React.PureComponent {
+class MeasurementOption extends React.Component {
   static propTypes = {
     /**
      * The current scale of a measurement tool that is consisted of two arrays
@@ -31,149 +31,196 @@ class MeasurementOption extends React.PureComponent {
       to: PropTypes.array,
     }).isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    onOpenDropdownChange: PropTypes.func.isRequired,
-    openMeasurementDropdown: PropTypes.number,
   };
 
-  scaleFromRef = React.createRef();
-  scaleToRef = React.createRef();
+  constructor(props) {
+    super(props);
+    this.state = {
+      currScaleFrom: props.scale[0][0],
+      currUnitFrom: props.scale[0][1],
+      currScaleTo: props.scale[1][0],
+      currUnitTo: props.scale[1][1],
+      currPrecision: props.precision,
+      isEditing: false,
+    };
+  }
 
-  /**
-   * A callback function that is used to change the scale for a measurement tool
-   * The argument has the same format as this.props.scale
-   * If values in the array are falsy then current value will be used instead
-   */
-  onScaleChange = ([[scaleFrom, unitFrom], [scaleTo, unitTo]]) => {
-    const { scale } = this.props;
+  componentDidUpdate(prevProps) {
+    const { scale, precision } = this.props;
 
-    scaleFrom = scaleFrom || scale[0][0];
-    unitFrom = unitFrom || scale[0][1];
-    scaleTo = scaleTo || scale[1][0];
-    unitTo = unitTo || scale[1][1];
-
-    this.props.onStyleChange('Scale', [
-      [scaleFrom, unitFrom],
-      [scaleTo, unitTo],
-    ]);
-    this.props.onOpenDropdownChange(-1);
-  };
-
-  onPrecisionChange = precision => {
-    this.props.onStyleChange('Precision', precision);
-    this.props.onOpenDropdownChange(-1);
-  };
-
-  onBlur = () => {
-    const scaleFromRefValue = this.scaleFromRef.current.value;
-    const scaleToRefValue = this.scaleToRef.current.value;
-    const [[scaleFrom], [scaleTo]] = this.props.scale;
-
-    if (scaleFromRefValue === '') {
-      this.scaleFromRef.current.value = scaleFrom;
-    } else if (scaleToRefValue === '') {
-      this.scaleToRef.current.value = scaleTo;
+    if (this.props.scale !== prevProps.scale) {
+      this.setState({
+        currScaleFrom: scale[0][0],
+        currUnitFrom: scale[0][1],
+        currScaleTo: scale[1][0],
+        currUnitTo: scale[1][1],
+      });
     }
+    if (this.props.precision !== prevProps.precision) {
+      this.setState({
+        currPrecision: precision,
+      });
+    }
+  }
+
+  onScaleChange = (value, type) => {
+    this.setState({ [type]: Number(value) }, () => {
+      this.props.onStyleChange('Scale', [
+        [this.state.currScaleFrom, this.state.currUnitFrom],
+        [this.state.currScaleTo, this.state.currUnitTo],
+      ]);
+    });
   };
+
+  onPrecisionChange = (value, type) => {
+    this.setState({ [type]: Number(value) }, () => {
+      this.props.onStyleChange('Precision', this.state.currPrecision);
+    });
+  };
+
+  onUnitChange = (event, type) => {
+    this.setState({ [type]: event.target.value }, () => {
+      this.props.onStyleChange('Scale', [
+        [this.state.currScaleFrom, this.state.currUnitFrom],
+        [this.state.currScaleTo, this.state.currUnitTo],
+      ]);
+    });
+  };
+
+  getLanguage = () => {
+    let lang = 'en';
+
+    if (i18next.language) {
+      lang = i18next.language;
+    }
+
+    return lang;
+  };
+
+  formatValue = value => {
+    const lang = this.getLanguage();
+
+    if (lang === 'de') {
+      value = value.toLocaleString('de-DE', { maximumFractionDigits: 4 });
+    } else if (lang === 'fr') {
+      value = value.toLocaleString('fr-FR', { maximumFractionDigits: 4 });
+    } else if (lang === 'ru') {
+      value = value.toLocaleString('ru-RU', { maximumFractionDigits: 4 });
+    }
+
+    return value;
+  };
+
+  toggleEditing = () => {
+    this.setState(state => ({ isEditing: !state.isEditing }));
+  };
+
+  renderScaleInput = (type, val) => {
+    /**
+     * There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
+     */ 
+    if (isFirefox) {
+      return (
+        <input
+          className="ScaleInput"
+          type="number"
+          step="any"
+          value={val}
+          onChange={e =>
+            this.onScaleChange(e.target.value, type)
+          }
+        />
+      );
+    } 
+      if (this.state.isEditing) {
+        return (
+          <input
+            className="ScaleInput"
+            type="number"
+            step="any"
+            value={val}
+            onChange={e =>
+              this.onScaleChange(e.target.value, type)
+            }
+            onBlur={this.toggleEditing}
+          />
+        );
+      } else {
+        return (
+          <input
+            className="ScaleInput"
+            type="text"
+            value={this.formatValue(val)}
+            onFocus={this.toggleEditing}
+            readOnly
+          />
+        );
+      }
+    
+  }
 
   render() {
-    const {
-      scale,
-      precision,
-      measurementUnits,
-      openMeasurementDropdown,
-      onOpenDropdownChange,
-      t,
-    } = this.props;
-    const [[scaleFrom, unitFrom], [scaleTo, unitTo]] = scale;
+    const { measurementUnits, t } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
-    const scaleOptions = [0.1, 0.01, 0.001, 0.0001];
+    const precisionOptions = [
+      { value: 0.1, name: '0.1' },
+      { value: 0.01, name: '0.01' },
+      { value: 0.001, name: '0.001' },
+      { value: 0.0001, name: '0.0001' },
+    ];
 
     return (
-      <div
-        className="MeasurementOption"
-        onClick={() => onOpenDropdownChange(-1)}
-      >
+      <div className="MeasurementOption">
         <div className="Scale">
           <div className="LayoutTitle">
             {t('option.measurementOption.scale')}
           </div>
           <div className="Layout">
-            <input
-              className="textarea"
-              type="text"
-              ref={this.scaleFromRef}
-              defaultValue={scaleFrom}
-              onChange={e =>
-                e.target.value &&
-                this.onScaleChange([[Number(e.target.value)], []])
-              }
-              onBlur={this.onBlur}
-            />
-            <div
-              className={[
-                'ScaleDropdown',
-                openMeasurementDropdown === 0 ? 'open' : '',
-              ]
-                .join(' ')
-                .trim()}
+            {this.renderScaleInput('currScaleFrom', this.state.currScaleFrom)}
+            <select
+              className="UnitInput"
+              value={this.state.currUnitFrom}
+              onChange={event => this.onUnitChange(event, 'currUnitFrom')}
             >
-              <MeasurementsDropdown
-                onClick={unit => this.onScaleChange([[undefined, unit], []])}
-                onDropdownChange={() => onOpenDropdownChange(0)}
-                dropdownList={unitFromOptions}
-                selectedItem={unitFrom}
-                isDropdownOpen={openMeasurementDropdown === 0}
-              />
-            </div>
-            =
-            <input
-              className="textarea"
-              type="text"
-              ref={this.scaleToRef}
-              defaultValue={scaleTo}
-              onChange={e =>
-                e.target.value &&
-                this.onScaleChange([[], [Number(e.target.value)]])
-              }
-              onBlur={this.onBlur}
-            />
-            <div
-              className={[
-                'ScaleDropdown',
-                openMeasurementDropdown === 1 ? 'open' : '',
-              ]
-                .join(' ')
-                .trim()}
+              {unitFromOptions.map(unit => (
+                <option key={unit} value={unit}>
+                  {unit}
+                </option>
+              ))}
+            </select>
+            <div className="ScaleEquals">=</div>
+            {this.renderScaleInput('currScaleTo', this.state.currScaleTo)}
+            <select
+              className="UnitInput"
+              value={this.state.currUnitTo}
+              onChange={event => this.onUnitChange(event, 'currUnitTo')}
             >
-              <MeasurementsDropdown
-                onClick={unit => this.onScaleChange([[], [undefined, unit]])}
-                onDropdownChange={() => onOpenDropdownChange(1)}
-                dropdownList={unitToOptions}
-                selectedItem={unitTo}
-                isDropdownOpen={openMeasurementDropdown === 1}
-              />
-            </div>
+              {unitToOptions.map(unit => (
+                <option key={unit} value={unit}>
+                  {unit}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="Precision">
-          <div className="LayoutTitle">{t('option.shared.precision')}</div>
-          <div className="Layout">
-            <div
-              className={[
-                'PrecisionDropdown',
-                openMeasurementDropdown === 2 ? 'open' : '',
-              ]
-                .join(' ')
-                .trim()}
+          <div className="LayoutTitlePrecision">
+            {t('option.shared.precision')}
+          </div>
+          <div className="LayoutPrecision">
+            <select
+              className="PrecisionInput"
+              value={this.state.currPrecision}
+              onChange={e =>
+                this.onPrecisionChange(e.target.value, 'currPrecision')
+              }
             >
-              <MeasurementsDropdown
-                onClick={this.onPrecisionChange}
-                onDropdownChange={() => onOpenDropdownChange(2)}
-                dropdownList={scaleOptions}
-                selectedItem={precision}
-                isDropdownOpen={openMeasurementDropdown === 2}
-              />
-            </div>
+              {precisionOptions.map(e => (
+                <option key={e.value} value={e.value}>
+                  {this.formatValue(e.value)}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>

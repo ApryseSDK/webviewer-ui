@@ -4,5 +4,8 @@
   "pluginsFile": "plugins/index.js",
   "screenshotsFolder": "screenshotsFolder",
   "supportFile": "support/index.js",
-  "videosFolder": "videos"
+  "videosFolder": "videos",
+  "baseUrl": "http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1",
+  "chromeWebSecurity": false,
+  "customSnapshotsDir": "./snapshots"
 }

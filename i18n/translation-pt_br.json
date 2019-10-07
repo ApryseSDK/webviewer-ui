@@ -5,9 +5,11 @@
     "cancel": "Cancelar",
     "clear": "Limpar",
     "close": "Fechar",
-    "comment": "Comentário",
+    "comment": "Novo comentário",
     "copy": "Copiar",
     "delete": "Apagar",
+    "group": "Grupo",
+    "ungroup": "Desagrupar",
     "download": "Download",
     "edit": "Editar",
     "enterFullscreen": "Tela cheia",
@@ -37,9 +39,11 @@
     "areaMeasurement": "Medição de área",
     "arrow": "Seta",
     "callout": "Texto explicativo",
+    "crop": "Cortar página",
     "caret": "Cursor",
     "distanceMeasurement": "Medição de distância",
     "ellipse": "Elipse",
+    "eraser": "Apagador",
     "freehand": "Mão livre",
     "freehand2": "Mão livre",
     "freetext": "Texto livre",
@@ -68,7 +72,8 @@
     "menuOverlay": "Menu",
     "miscToolsButton": "Ferramentas diversas",
     "notesPanel": "Anotações",
-    "outlinesPanel": "Contorno",
+    "outlinesPanel": "Esquemas",
+    "layersPanel": "Camadas",
     "shapeToolsButton": "Ferramentas de forma",
     "textToolsButton": "Ferramentas de texto",
     "thumbnailsPanel": "Miniaturas",
@@ -90,6 +95,8 @@
     "notSupported": "Esse tipo de arquivo não é compatível.",
     "passwordRequired": "Senha obrigatória",
     "preparingToPrint": "Preparando impressão...",
+    "annotationReplyCount": "{{count}} Resposta",
+    "annotationReplyCount_plural": "{{count}} Respostas",
     "printTotalPageCount": "{{count}} página",
     "printTotalPageCount_plural": "{{count}} páginas",
     "processing": "Processando...",
@@ -129,7 +136,8 @@
       "all": "Todas",
       "current": "Atual",
       "pages": "Páginas",
-      "includeComments": "Incluir comentários"
+      "includeComments": "Incluir comentários",
+      "addWatermarkSettings": "Adicionar configurações de marca d'água"
     },
     "redaction": {
       "markForRedaction": "Marcar para supressão",
@@ -142,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "Adicionar assinatura"
+    },
+    "status": {
+      "status": "Status"
+    },
+    "state": {
+      "accepted": "Aceitaram",
+      "rejected": "Rejeitado",
+      "completed": "Concluído",
+      "cancelled": "Cancelado",
+      "set": "Definir status:",
+      "setBy": "definido pela",
+      "none": "Nenhum"
     },
     "measurementOverlay": {
       "scale": "Razão de escala",
@@ -164,6 +184,13 @@
     "shared": {
       "page": "Página",
       "precision": "Precisão"
+    },
+    "watermark": {
+      "size": "Tamanho",
+      "location": "Escolha um local para editar marcas d'água",
+      "text": "Texto",
+      "colors": "Cores",
+      "resetAllSettings": "Redefinir todas as configurações"
     }
   },
   "shortcut": {
@@ -172,6 +199,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",

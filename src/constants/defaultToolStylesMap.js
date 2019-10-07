@@ -3,7 +3,7 @@
 // we could change the default styles in core but we don't want the legacy UI to be affected, so we do it here
 export default {
   AnnotationCreateFreeHand: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 }
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateFreeHand2: {
     StrokeColor: { R: 0, G: 204, B: 99, A: 1 },
@@ -39,6 +39,6 @@ export default {
     TextColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateSticky: {
-    StrokeColor: { R: 255, G: 230, B: 162, A: 1 }
+    StrokeColor: { R: 255, G: 230, B: 162, A: 1 },
   },
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import NotesPanel from 'components/NotesPanel';
@@ -10,32 +10,34 @@ import LayersPanel from 'components/LayersPanel';
 import CustomElement from 'components/CustomElement';
 import Icon from 'components/Icon';
 
-import { isTabletOrMobile, isIE11 } from 'helpers/device';
+import { isTabletOrMobile, isIE, isIE11 } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
-  const isDisabled = useSelector(state =>
-    selectors.isElementDisabled(state, 'leftPanel')
+  const [isDisabled, isOpen, activePanel, customPanels, leftPanelWidth] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, 'leftPanel'),
+      selectors.isElementOpen(state, 'leftPanel'),
+      selectors.getActiveLeftPanel(state),
+      selectors.getCustomPanels(state),
+      selectors.getLeftPanelWidth(state),
+    ],
+    shallowEqual,
   );
-  const isOpen = useSelector(state =>
-    selectors.isElementOpen(state, 'leftPanel')
-  );
-  const activePanel = useSelector(state => selectors.getActiveLeftPanel(state));
-  const customPanels = useSelector(state => selectors.getCustomPanels(state));
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isOpen && isTabletOrMobile()) {
       dispatch(actions.closeElement('searchPanel'));
     }
-  }, [isOpen]);
+  }, [dispatch, isOpen]);
 
-  const getDisplay = panel => {
-    return panel === activePanel ? 'flex' : 'none';
-  };
+  const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
+  // IE11 will use javascript for controlling width, other broswers will use CSS variables
+  const style = isIE11 && leftPanelWidth ? { width: leftPanelWidth } : { };
 
   return isDisabled ? null : (
     <div
@@ -43,11 +45,10 @@ const LeftPanel = () => {
         Panel: true,
         LeftPanel: true,
         open: isOpen,
-        closed: !isOpen
+        closed: !isOpen,
       })}
       data-element="leftPanel"
-      onMouseDown={e => e.stopPropagation()}
-      onClick={e => e.stopPropagation()}
+      style={style}
     >
       <div className="left-panel-header">
         <div
@@ -65,6 +66,7 @@ const LeftPanel = () => {
       <ThumbnailsPanel display={getDisplay('thumbnailsPanel')} />
       <OutlinesPanel display={getDisplay('outlinesPanel')} />
       <LayersPanel display={getDisplay('layersPanel')} />
+
       {customPanels.map(({ panel }, index) => (
         <CustomElement
           key={panel.dataElement || index}
@@ -82,13 +84,21 @@ export default LeftPanel;
 
 const ResizeBar = () => {
   const isMouseDownRef = useRef(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const dragMouseMove = ({ clientX }) => {
+    // this listener is throttled because the notes panel listens to the panel width
+    // change in order to rerender to have the correct width and we don't want
+    // it to rerender too often
+    const dragMouseMove = _.throttle(({ clientX }) => {
       if (isMouseDownRef.current && clientX > 215 && clientX < 900) {
+        // we are using css variables to make the panel resizable but IE11 doesn't support it
+        if (isIE) {
+          dispatch(actions.setLeftPanelWidth(clientX));
+        }
         document.body.style.setProperty('--left-panel-width', `${clientX}px`);
       }
-    };
+    }, 50);
 
     document.addEventListener('mousemove', dragMouseMove);
     return () => document.removeEventListener('mousemove', dragMouseMove);
@@ -103,13 +113,12 @@ const ResizeBar = () => {
     return () => document.removeEventListener('mouseup', finishDrag);
   }, []);
 
-  // we are using css variables to make the panel resizable but IE11 doesn't support it
   return (
-    !isIE11 && (
-      <div
-        className="resize-bar"
-        onMouseDown={() => (isMouseDownRef.current = true)}
-      />
-    )
+    <div
+      className="resize-bar"
+      onMouseDown={() => {
+        isMouseDownRef.current = true;
+      }}
+    />
   );
 };

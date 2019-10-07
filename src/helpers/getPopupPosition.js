@@ -16,26 +16,41 @@ const getAnnotationPosition = annotation => {
   const { left, top, right, bottom } = getAnnotationPageCoordinates(annotation);
 
   const pageIndex = annotation.getPageNumber() - 1;
-  let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageIndex);
-  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageIndex);
-
-  if (core.getRotation() > 1) {
-    const tmp = topLeft;
-    topLeft = bottomRight;
-    bottomRight = tmp;
-  }
+  const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageIndex);
+  const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageIndex);
 
   return { topLeft, bottomRight };
 };
 
 const getAnnotationPageCoordinates = annotation => {
-  const { x1: left, y1: top } = annotation.getRect();
-  let { x2: right, y2: bottom } = annotation.getRect();
+  const rect = annotation.getRect();
+  let { x1: left, y1: top, x2: right, y2: bottom } = rect;
 
-  if (annotation instanceof window.Annotations.StickyAnnotation) {
-    const zoom = core.getZoom();
-    right = left + annotation.getWidth() / zoom;
-    bottom = top + annotation.getHeight() / zoom;
+  const isNote = annotation instanceof window.Annotations.StickyAnnotation;
+  const noteAdjustment = annotation.Width;
+
+  const rotation = core.getCompleteRotation(annotation.PageNumber);
+  if (rotation === 1) {
+    [top, bottom] = [bottom, top];
+    if (isNote) {
+      top -= noteAdjustment;
+      bottom -= noteAdjustment;
+    }
+  } else if (rotation === 2) {
+    [left, right] = [right, left];
+    [top, bottom] = [bottom, top];
+    if (isNote) {
+      top -= noteAdjustment;
+      bottom -= noteAdjustment;
+      left -= noteAdjustment;
+      right -= noteAdjustment;
+    }
+  } else if (rotation === 3) {
+    [left, right] = [right, left];
+    if (isNote) {
+      left -= noteAdjustment;
+      right -= noteAdjustment;
+    }
   }
 
   return { left, top, right, bottom };
@@ -72,14 +87,15 @@ const getSelectedTextPageCoordinates = (allQuads, startPageIndex, endPageIndex) 
     const top = firstQuad.y3;
 
     const endPageQuads = allQuads[endPageIndex];
-    const lastQuad = endPageQuads[endPageQuads.length-1];
+    const lastQuad = endPageQuads[endPageQuads.length - 1];
     const bottom = lastQuad.y1;
 
     return { top, bottom };
   };
 
   const getLeftAndRight = () => {
-    let left, right;
+    let left;
+    let right;
 
     Object.keys(allQuads).forEach(pageIndex => {
       allQuads[pageIndex].forEach(quad => {
@@ -145,20 +161,20 @@ const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
   return Math.round(left);
 };
 
-const calcPopupTop = ({ topLeft, bottomRight } , { height }, topThreshold) => {
+const calcPopupTop = ({ topLeft, bottomRight }, { height }, topThreshold) => {
   const { scrollTop, clientHeight } = core.getScrollViewElement();
   const topGap = 10;
   const stylePopupHeight = 252;
   const bottomGap = 17;
   const bottomThreshold = topThreshold - 60;
   let top = topLeft.y - scrollTop - topGap;
-  let bottom = bottomRight.y;
+  const bottom = bottomRight.y;
   const annotationHeight = bottomRight.y - top;
 
   if (top >= topThreshold) {
     top -= height;
   } else if (bottom - scrollTop > clientHeight - bottomThreshold) {
-    top = top + (annotationHeight - stylePopupHeight) / 2;
+    top += (annotationHeight - stylePopupHeight) / 2;
   } else {
     top = bottomRight.y - scrollTop + bottomGap;
   }

@@ -1,15 +1,15 @@
-export const addEventListener = (event, eventListener) =>  {
-  const eventToObjectMap = getEventToObjectMap(); 
+export const addEventListener = (event, eventListener) => {
+  const eventToObjectMap = getEventToObjectMap();
   const object = eventToObjectMap[event];
-  
+
   object.on(event, eventListener);
 };
 
-export const removeEventListener = (event, eventListener) =>  {
-  const eventToObjectMap = getEventToObjectMap(); 
+export const removeEventListener = (event, eventListener) => {
+  const eventToObjectMap = getEventToObjectMap();
   const object = eventToObjectMap[event];
-  
-  object.off(event, eventListener);  
+
+  object.off(event, eventListener);
 };
 
 const getEventToObjectMap = () => {
@@ -61,4 +61,3 @@ const getEventToObjectMap = () => {
     setNoteText: annotManager,
   };
 };
-

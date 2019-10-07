@@ -41,7 +41,7 @@ const SignatureModal = () => {
         ]),
       );
     }
-  }, [isOpen]);
+  }, [dispatch, isOpen]);
 
   const closeModal = () => {
     signatureTool.clearLocation();

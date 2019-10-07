@@ -18,15 +18,8 @@ class StylePopup extends React.PureComponent {
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
     hideSlider: PropTypes.bool,
-    currentPalette: PropTypes.oneOf([ 'TextColor', 'StrokeColor', 'FillColor' ])
-  }
-
-  state = {
-    openMeasurementDropdown: -1
-  }
-
-  onOpenDropdownChange = dropdown => {
-    this.setState({ openMeasurementDropdown: dropdown });
+    colorMapKey: PropTypes.string.isRequired,
+    currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
   };
 
   renderColorPalette = () => {
@@ -64,11 +57,11 @@ class StylePopup extends React.PureComponent {
         displayValue: `${Math.round(StrokeThickness)}pt`,
         // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
         getCirclePosition: lineLength =>
-          isFreeText
+          (isFreeText
             ? (StrokeThickness / 20) * lineLength + lineStart
-            : ((StrokeThickness - 1) / 19) * lineLength + lineStart,
+            : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
         convertRelativeCirclePositionToValue: circlePosition =>
-          isFreeText ? circlePosition * 20 : circlePosition * 19 + 1,
+          (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
       },
       {
         property: 'FontSize',
@@ -78,7 +71,7 @@ class StylePopup extends React.PureComponent {
         getCirclePosition: lineLength =>
           ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
         convertRelativeCirclePositionToValue: circlePosition =>
-          circlePosition * 40 + 5 + 'pt',
+          `${circlePosition * 40 + 5}pt`,
       },
     ];
 
@@ -96,16 +89,22 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { currentPalette, style, activeToolName } = this.props;
-    const { openMeasurementDropdown } = this.state;
+    const { currentPalette, style, colorMapKey, onStyleChange } = this.props;
     const { Scale, Precision } = style;
 
     return (
-      <div className="Popup StylePopup" data-element="stylePopup" onClick={e => e.stopPropagation()} onScroll={e => e.stopPropagation()}>
-        {currentPalette && style[currentPalette] && (
+      <div
+        className="Popup StylePopup"
+        data-element="stylePopup"
+      >
+        {currentPalette && (
           <div className="colors-container">
             <div className="inner-wrapper">
-              <ColorPaletteHeader colorPalette={currentPalette} activeToolName={activeToolName} style={style} />
+              <ColorPaletteHeader
+                colorPalette={currentPalette}
+                colorMapKey={colorMapKey}
+                style={style}
+              />
               {this.renderColorPalette()}
             </div>
           </div>
@@ -113,7 +112,6 @@ class StylePopup extends React.PureComponent {
         <div
           className="sliders-container"
           onMouseDown={e => e.preventDefault()}
-          onClick={() => this.onOpenDropdownChange(-1)}
         >
           <div className="sliders">
             {!this.props.hideSlider && this.renderSliders()}
@@ -123,8 +121,6 @@ class StylePopup extends React.PureComponent {
           <MeasurementOption
             scale={Scale}
             precision={Precision}
-            onOpenDropdownChange={this.onOpenDropdownChange}
-            openMeasurementDropdown={openMeasurementDropdown}
             onStyleChange={onStyleChange}
           />
         )}
@@ -133,8 +129,8 @@ class StylePopup extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, { activeToolName }) => ({
-  currentPalette: selectors.getCurrentPalette(state, activeToolName)
+const mapStateToProps = (state, { colorMapKey }) => ({
+  currentPalette: selectors.getCurrentPalette(state, colorMapKey),
 });
 
 export default connect(mapStateToProps)(StylePopup);

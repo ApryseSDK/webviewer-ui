@@ -1,12 +1,21 @@
+import i18next from 'i18next';
+
+import LayoutMode from 'constants/layoutMode';
+import FitMode from 'constants/fitMode';
+import Feature from 'constants/feature';
+import getHashParams from 'helpers/getHashParams';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
+import annotationPopup from './annotationPopup';
 import closeDocument from './closeDocument';
 import closeElement from './closeElement';
 import closeElements from './closeElements';
+import contextMenuPopup from './contextMenuPopup';
 import disableAnnotations from './disableAnnotations';
 import disableDownload from './disableDownload';
 import disableElement from './disableElement';
 import disableElements from './disableElements';
+import disableFeatures from './disableFeatures';
 import disableFilePicker from './disableFilePicker';
 import disableLocalStorage from './disableLocalStorage';
 import disableMeasurement from './disableMeasurement';
@@ -16,12 +25,14 @@ import disableRedaction from './disableRedaction';
 import disableTextSelection from './disableTextSelection';
 import disableTool from './disableTool';
 import disableTools from './disableTools';
+import disableTouchScrollLock from './disableTouchScrollLock';
 import downloadPdf from './downloadPdf';
 import enableAllElements from './enableAllElements';
 import enableAnnotations from './enableAnnotations';
 import enableDownload from './enableDownload';
 import enableElement from './enableElement';
 import enableElements from './enableElements';
+import enableFeatures from './enableFeatures';
 import enableFilePicker from './enableFilePicker';
 import enableLocalStorage from './enableLocalStorage';
 import enableMeasurement from './enableMeasurement';
@@ -31,6 +42,7 @@ import enableRedaction from './enableRedaction';
 import enableTextSelection from './enableTextSelection';
 import enableTool from './enableTool';
 import enableTools from './enableTools';
+import enableTouchScrollLock from './enableTouchScrollLock';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
@@ -48,7 +60,7 @@ import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
 import goToPrevPage from './goToPrevPage';
-import header from './header';
+import hotkeys from './hotkeys';
 import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
@@ -98,6 +110,7 @@ import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
 import showErrorMessage from './showErrorMessage';
 import showWarningMessage from './showWarningMessage';
+import textPopup from './textPopup';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import unregisterTool from './unregisterTool';
@@ -105,113 +118,136 @@ import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
 import setMeasurementUnits from './setMeasurementUnits';
+import setMaxSignaturesCount from './setMaxSignaturesCount';
 
-export default {
-  addSearchListener,
-  addSortStrategy,
-  closeDocument,
-  closeElement,
-  closeElements,
-  disableAnnotations,
-  disableDownload,
-  disableElement,
-  disableElements,
-  disableFilePicker,
-  disableLocalStorage,
-  disableMeasurement,
-  disableNotesPanel,
-  disablePrint,
-  disableRedaction,
-  disableTextSelection,
-  disableTool,
-  disableTools,
-  downloadPdf,
-  enableAllElements,
-  enableAnnotations,
-  enableDownload,
-  enableElement,
-  enableElements,
-  enableFilePicker,
-  enableLocalStorage,
-  enableMeasurement,
-  enableNotesPanel,
-  enablePrint,
-  enableRedaction,
-  enableTextSelection,
-  enableTool,
-  enableTools,
-  focusNote,
-  getAnnotationUser,
-  getBBAnnotManager,
-  getConstants,
-  getCurrentPageNumber,
-  getFitMode,
-  getLayoutMode,
-  getPageCount,
-  getSelectors,
-  getShowSideWindow,
-  getSideWindowVisibility,
-  getToolMode,
-  getZoomLevel,
-  goToFirstPage,
-  goToLastPage,
-  goToNextPage,
-  goToPrevPage,
-  header,
-  isAdminUser,
-  isElementDisabled,
-  isElementOpen,
-  isMobileDevice,
-  isReadOnly,
-  isToolDisabled,
-  loadDocument,
-  openElement,
-  openElements,
-  print,
-  registerTool,
-  removeSearchListener,
-  rotateClockwise,
-  rotateCounterClockwise,
-  saveAnnotations,
-  searchText,
-  searchTextFull,
-  setActiveHeaderGroup,
-  setActiveLeftPanel,
-  setAdminUser,
-  setAnnotationUser,
-  setColorPalette,
-  setCurrentPageNumber,
-  setCustomNoteFilter,
-  setCustomPanel,
-  setEngineType,
-  setFitMode,
-  setHeaderItems,
-  setIconColor,
-  setLanguage,
-  setLayoutMode,
-  setMaxZoomLevel,
-  setMinZoomLevel,
-  setNoteDateFormat,
-  setNotesPanelSort,
-  setPageLabels,
-  setPrintQuality,
-  setReadOnly,
-  setShowSideWindow,
-  setSideWindowVisibility,
-  setSortNotesBy,
-  setSortStrategy,
-  setSwipeOrientation,
-  setTheme,
-  setToolMode,
-  setZoomLevel,
-  setZoomList,
-  showErrorMessage,
-  showWarningMessage,
-  toggleElement,
-  toggleFullScreen,
-  unregisterTool,
-  updateOutlines,
-  updateTool,
-  useEmbeddedPrint,
-  setMeasurementUnits
+export default store => {
+  window.readerControl = {
+    docViewer: window.docViewer,
+    FitMode,
+    LayoutMode,
+    Feature,
+    addSearchListener: addSearchListener(store),
+    addSortStrategy: addSortStrategy(store),
+    annotationPopup: annotationPopup(store),
+    closeDocument: closeDocument(store),
+    closeElements: closeElements(store),
+    contextMenuPopup: contextMenuPopup(store),
+    disableElements: disableElements(store),
+    disableFeatures: disableFeatures(store),
+    disableTools: disableTools(store),
+    downloadPdf: downloadPdf(store),
+    enableElements: enableElements(store),
+    enableTools: enableTools(store),
+    focusNote: focusNote(store),
+    getFitMode: getFitMode(store),
+    getLayoutMode: getLayoutMode(store),
+    getToolMode,
+    getZoomLevel,
+    hotkeys,
+    isElementDisabled: isElementDisabled(store),
+    isElementOpen: isElementOpen(store),
+    isToolDisabled: isToolDisabled(store),
+    loadDocument: loadDocument(store),
+    openElements: openElements(store),
+    print: print(store),
+    registerTool: registerTool(store),
+    removeSearchListener: removeSearchListener(store),
+    searchText: searchText(store),
+    searchTextFull: searchTextFull(store),
+    setActiveHeaderGroup: setActiveHeaderGroup(store),
+    setActiveLeftPanel: setActiveLeftPanel(store),
+    setCustomNoteFilter: setCustomNoteFilter(store),
+    setCustomPanel: setCustomPanel(store),
+    setFitMode,
+    setHeaderItems: setHeaderItems(store),
+    setIconColor: setIconColor(store),
+    setLanguage,
+    setLayoutMode,
+    setMaxZoomLevel: setMaxZoomLevel(store),
+    setMinZoomLevel: setMinZoomLevel(store),
+    setNoteDateFormat: setNoteDateFormat(store),
+    setMeasurementUnits: setMeasurementUnits(store),
+    setPageLabels: setPageLabels(store),
+    setPrintQuality: setPrintQuality(store),
+    setSortStrategy: setSortStrategy(store),
+    setSwipeOrientation,
+    setTheme,
+    setToolMode: setToolMode(store),
+    setZoomLevel,
+    setZoomList: setZoomList(store),
+    showErrorMessage: showErrorMessage(store),
+    textPopup: textPopup(store),
+    toggleElement: toggleElement(store),
+    toggleFullScreen,
+    unregisterTool: unregisterTool(store),
+    updateTool: updateTool(store),
+    useEmbeddedPrint: useEmbeddedPrint(store),
+    setMaxSignaturesCount: setMaxSignaturesCount(store),
+
+    // undocumented and deprecated, to be removed in 7.0
+    closeElement: closeElement(store),
+    disableAnnotations: disableAnnotations(store),
+    disableDownload: disableDownload(store),
+    disableElement: disableElement(store),
+    disableFilePicker: disableFilePicker(store),
+    disableLocalStorage,
+    disableMeasurement: disableMeasurement(store),
+    disableNotesPanel: disableNotesPanel(store),
+    disablePrint: disablePrint(store),
+    disableRedaction: disableRedaction(store),
+    disableTextSelection: disableTextSelection(store),
+    disableTouchScrollLock,
+    enableAnnotations: enableAnnotations(store),
+    enableDownload: enableDownload(store),
+    enableElement: enableElement(store),
+    enableFeatures: enableFeatures(store),
+    enableFilePicker: enableFilePicker(store),
+    enableLocalStorage,
+    enableMeasurement: enableMeasurement(store),
+    enableNotesPanel: enableNotesPanel(store),
+    enablePrint: enablePrint(store),
+    enableRedaction: enableRedaction(store),
+    enableTextSelection: enableTextSelection(store),
+    enableTool: enableTool(store),
+    enableTouchScrollLock,
+    getAnnotationUser,
+    getCurrentPageNumber: getCurrentPageNumber(store),
+    getPageCount: getPageCount(store),
+    getShowSideWindow: getShowSideWindow(store),
+    getSideWindowVisibility: getSideWindowVisibility(store),
+    setNotesPanelSort: setNotesPanelSort(store),
+    setShowSideWindow: setShowSideWindow(store),
+    setSideWindowVisibility: setSideWindowVisibility(store),
+    disableTool: disableTool(store),
+    enableAllElements: enableAllElements(store),
+    goToFirstPage,
+    goToLastPage: goToLastPage(store),
+    goToNextPage: goToNextPage(store),
+    goToPrevPage: goToPrevPage(store),
+    isAdminUser,
+    isMobileDevice,
+    isReadOnly,
+    openElement: openElement(store),
+    rotateClockwise,
+    rotateCounterClockwise,
+    saveAnnotations: saveAnnotations(store),
+    setAdminUser,
+    setAnnotationUser,
+    setCurrentPageNumber,
+    setReadOnly,
+    setSortNotesBy: setSortNotesBy(store),
+
+    // undocumented
+    loadedFromServer: false,
+    serverFailed: false,
+    i18n: i18next,
+    constants: getConstants(),
+    setColorPalette: setColorPalette(store),
+    setEngineType: setEngineType(store),
+    showWarningMessage: showWarningMessage(store),
+    updateOutlines: updateOutlines(store),
+    getCustomData: () => getHashParams('custom', null),
+    getBBAnnotManager: getBBAnnotManager(store),
+    selectors: getSelectors(store),
+  };
 };

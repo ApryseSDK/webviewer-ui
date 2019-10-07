@@ -51,6 +51,19 @@ $signature-modal-shared-color: #E1E1E3;
   }
 }
 
+.text-input {
+  border: 1px solid grey;
+  &::placeholder {
+    color:$gray12;
+  }
+  &::-webkit-input-placeholder {
+    color:$gray12;
+  }
+  &:-ms-input-placeholder {
+    color:$gray12;
+  }
+}
+
 @mixin desktop {
   @media (min-width: #{$tablet-width + 1px}) {
     @content;
@@ -96,5 +109,17 @@ $signature-modal-shared-color: #E1E1E3;
 .hide-in-mobile {
   @include mobile {
     display: none;
+  }
+}
+
+%cell {
+  flex: 1 0 28px;
+  height: 26px;
+  display: flex;
+  margin: 0 1px;
+
+  @include mobile {
+    height: 30px;
+    margin: 0 1.2px;
   }
 }

@@ -1,221 +1,307 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react';
+import classNames from 'classnames';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import ActionButton from 'components/ActionButton';
 import AnnotationStylePopup from 'components/AnnotationStylePopup';
+import CustomizablePopup from 'components/CustomizablePopup';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
-import getClassName from 'helpers/getClassName';
 import applyRedactions from 'helpers/applyRedactions';
+import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './AnnotationPopup.scss';
 
-class AnnotationPopup extends React.PureComponent {
-  static propTypes = {
-    isNotesPanelDisabled: PropTypes.bool,
-    isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    isLeftPanelOpen: PropTypes.bool,
-    isRightPanelOpen: PropTypes.bool,
-    isAnnotationStylePopupDisabled: PropTypes.bool,
-    applyRedactions: PropTypes.func.isRequired,
-    openElement: PropTypes.func.isRequired,
-    closeElement: PropTypes.func.isRequired,
-    setIsNoteEditing: PropTypes.func.isRequired,
-    setActiveLeftPanel: PropTypes.func.isRequired,
-    serverURL: PropTypes.string
-  }
+const AnnotationPopup = () => {
+  const [
+    isDisabled,
+    isOpen,
+    isNotesPanelDisabled,
+    isAnnotationStylePopupDisabled,
+    // can probably use mutation observer
+    isLeftPanelOpen,
+    isRightPanelOpen,
+  ] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, 'annotationPopup'),
+      selectors.isElementOpen(state, 'annotationPopup'),
+      selectors.isElementDisabled(state, 'notesPanel'),
+      selectors.isElementDisabled(state, 'annotationStylePopup'),
+      selectors.isElementOpen(state, 'leftPanel'),
+      selectors.isElementOpen(state, 'searchPanel'),
+    ],
+    shallowEqual,
+  );
+  const dispatch = useDispatch();
+  const [position, setPosition] = useState({ left: 0, top: 0 });
+  // first annotation in the array when there're multiple annotations selected
+  const [firstAnnotation, setFirstAnnotation] = useState(null);
+  const [canModify, setCanModify] = useState(false);
+  const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
+  const popupRef = useRef();
 
-  constructor() {
-    super();
-    this.popup = React.createRef();
-    this.initialState = {
-      annotation: {},
-      left: 0,
-      top: 0,
-      isStylePopupOpen: false,
-      isMouseLeftDown: false,
+  useOnClickOutside(popupRef, e => {
+    const notesPanel = document.querySelector('[data-element="notesPanel"]');
+    const clickedInNotesPanel = notesPanel?.contains(e.target);
+
+    // the notes panel has mousedown handlers to handle the opening/closing states of this component
+    // we don't want this handler to run when clicked in the notes panel otherwise the opening/closing states may mess up
+    // for example: click on a note will call core.selectAnnotation which triggers the annotationSelected event
+    // and opens this component. If we don't exclude the notes panel this handler will run and close it after
+    if (!clickedInNotesPanel) {
+      dispatch(actions.closeElement('annotationPopup'));
+    }
+  });
+
+  useEffect(() => {
+    // calling this function will always rerender this component
+    // because the position state always has a new object reference
+    const setPopupPositionAndShow = () => {
+      if (popupRef.current) {
+        setPosition(
+          getAnnotationPopupPositionBasedOn(firstAnnotation, popupRef),
+        );
+
+        dispatch(actions.openElement('annotationPopup'));
+      }
     };
-    this.state = this.initialState;
-  }
 
-  componentDidMount() {
-    core.addEventListener('mouseLeftUp', this.onMouseLeftUp);
-    core.addEventListener('mouseLeftDown', this.onMouseLeftDown);
-    core.addEventListener('annotationSelected', this.onAnnotationSelected);
-    core.addEventListener('annotationChanged', this.onAnnotationChanged);
-    core.addEventListener('updateAnnotationPermission', this.onUpdateAnnotationPermission);
-    core.addEventListener('documentUnloaded', this.onDocumentUnloaded);
-    window.addEventListener('resize', this.handleWindowResize);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { isMouseLeftDown } = this.state;
-
-    const isAnnotationSelected = Object.keys(this.state.annotation).length !== 0;
-    const isClosingAnnotationPopup = this.props.isOpen === false && this.props.isOpen !== prevProps.isOpen;
-    const isStylePopupOpen = !prevState.isStylePopupOpen && this.state.isStylePopupOpen;
-    const isContainerShifted = prevProps.isLeftPanelOpen !== this.props.isLeftPanelOpen || prevProps.isRightPanelOpen !== this.props.isRightPanelOpen;
-
-    if (isAnnotationSelected && !isMouseLeftDown && !isContainerShifted && !isClosingAnnotationPopup && !this.props.isDisabled || isStylePopupOpen) {
-      this.positionAnnotationPopup();
-      this.props.openElement('annotationPopup');
+    if (firstAnnotation || isStylePopupOpen) {
+      setPopupPositionAndShow();
     }
 
-    if (isContainerShifted) { //closing because we can't correctly reposition the popup on panel transition
-      this.props.closeElement('annotationPopup');
+    const onMouseLeftUp = e => {
+      // clicking on the selected annotation is considered clicking outside of this component
+      // so this component will close due to useOnClickOutside
+      // this handler is used to make sure that if we click on the selected annotation, this component will show up again
+      if (firstAnnotation) {
+        const annotUnderMouse = core.getAnnotationByMouseEvent(e);
+
+        if (annotUnderMouse === firstAnnotation) {
+          setPopupPositionAndShow();
+        }
+      }
+    };
+
+    const onAnnotationChanged = (annotations, action) => {
+      if (action === 'modify' && core.isAnnotationSelected(firstAnnotation)) {
+        setPopupPositionAndShow();
+      }
+    };
+
+    const onUpdateAnnotationPermission = () => {
+      if (firstAnnotation) {
+        setCanModify(core.canModify(firstAnnotation));
+      }
+    };
+
+    core.addEventListener('mouseLeftUp', onMouseLeftUp);
+    core.addEventListener('annotationChanged', onAnnotationChanged);
+    core.addEventListener(
+      'updateAnnotationPermission',
+      onUpdateAnnotationPermission,
+    );
+    return () => {
+      core.removeEventListener('mouseLeftUp', onMouseLeftUp);
+      core.removeEventListener('annotationChanged', onAnnotationChanged);
+      core.removeEventListener(
+        'updateAnnotationPermission',
+        onUpdateAnnotationPermission,
+      );
+    };
+  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen]);
+
+  useEffect(() => {
+    const closeAndReset = () => {
+      dispatch(actions.closeElement('annotationPopup'));
+      setPosition({ left: 0, top: 0 });
+      setFirstAnnotation(null);
+      setCanModify(false);
+      setIsStylePopupOpen(false);
+    };
+
+    const isContainerShifted = isLeftPanelOpen || isRightPanelOpen;
+    if (isContainerShifted) {
+      // closing because we can't correctly reposition the popup on panel transition
+      closeAndReset();
     }
+
+    const onAnnotationSelected = (annotations, action) => {
+      if (action === 'selected' && annotations.length) {
+        setFirstAnnotation(annotations[0]);
+        setCanModify(core.canModify(annotations[0]));
+      } else {
+        closeAndReset();
+      }
+    };
+
+    core.addEventListener('annotationSelected', onAnnotationSelected);
+    core.addEventListener('documentUnloaded', closeAndReset);
+    window.addEventListener('resize', closeAndReset);
+    return () => {
+      core.removeEventListener('annotationSelected', onAnnotationSelected);
+      core.removeEventListener('documentUnloaded', closeAndReset);
+      window.addEventListener('resize', closeAndReset);
+    };
+  }, [dispatch, isLeftPanelOpen, isRightPanelOpen]);
+
+  if (isDisabled || !firstAnnotation) {
+    return null;
   }
 
-  componentWillUnmount() {
-    core.removeEventListener('mouseLeftUp', this.onMouseLeftUp);
-    core.removeEventListener('mouseLeftDown', this.onMouseLeftDown);
-    core.removeEventListener('annotationSelected', this.onAnnotationSelected);
-    core.removeEventListener('annotationChanged', this.onAnnotationChanged);
-    core.removeEventListener('updateAnnotationPermission', this.onUpdateAnnotationPermission);
-    core.removeEventListener('documentUnloaded', this.onDocumentUnloaded);
-    window.removeEventListener('resize', this.handleWindowResize);
-  }
+  const style = getAnnotationStyles(firstAnnotation);
+  const hasStyle = Object.keys(style).length > 0;
+  const redactionEnabled = core.isAnnotationRedactable(firstAnnotation);
+  const selectedAnnotations = core.getSelectedAnnotations();
+  const primaryAnnotation = selectedAnnotations.find(
+    selectedAnnotation => !selectedAnnotation.InReplyTo,
+  );
+  const numberOfSelectedAnnotations = selectedAnnotations.length;
+  const numberOfGroups = core.getNumberOfGroups(selectedAnnotations);
+  const canGroup = numberOfGroups > 1;
+  const canUngroup = numberOfGroups === 1 && numberOfSelectedAnnotations > 1;
+  const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
-  close = () => {
-    this.props.closeElement('annotationPopup');
-    this.setState({ ...this.initialState });
-  }
-
-  onMouseLeftUp = () => {
-    this.setState({ isMouseLeftDown:false });
-  }
-
-  onMouseLeftDown = () => {
-    this.setState({ isMouseLeftDown:true });
-  }
-
-  onDocumentUnloaded = () => {
-    this.close();
-  }
-
-  onAnnotationSelected = (e, annotations, action) => {
-    if (action === 'selected' && annotations.length === 1) {
-      const annotation = annotations[0];
-      this.setState({
-        annotation
-      });
-    } else {
-      this.close();
-    }
-  }
-
-  onAnnotationChanged = (e, annotations, action) => {
-    if (action === 'modify' && core.isAnnotationSelected(this.state.annotation) && !this.props.isDisabled) {
-      // Position change
-      this.positionAnnotationPopup();
-      this.props.openElement('annotationPopup');
-      // Style change
-      this.forceUpdate();
-    }
-  }
-
-  onUpdateAnnotationPermission = () => {
-    this.forceUpdate();
-  }
-
-  handleWindowResize = () => {
-    this.props.closeElement('annotationPopup');
-  }
-
-  positionAnnotationPopup = () => {
-    const { left, top } = getAnnotationPopupPositionBasedOn(this.state.annotation, this.popup);
-
-    this.setState({ left, top });
-  }
-
-  commentOnAnnotation = () => {
-    if (this.state.annotation instanceof Annotations.FreeTextAnnotation) {
-      core.getAnnotationManager().trigger('annotationDoubleClicked', this.state.annotation);
-    } else if (!this.props.isLeftPanelOpen) {
-      this.props.openElement('notesPanel');
+  const commentOnAnnotation = () => {
+    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
+      core
+        .getAnnotationManager()
+        .trigger('annotationDoubleClicked', firstAnnotation);
+    } else if (!isLeftPanelOpen) {
+      dispatch(actions.openElement('notesPanel'));
+      // wait for the notes panel to be fully opened before focusing
       setTimeout(() => {
-        this.props.setIsNoteEditing(true);
+        dispatch(actions.triggerNoteEditing());
       }, 400);
     } else {
-      this.props.setActiveLeftPanel('notesPanel');
-      this.props.setIsNoteEditing(true);
+      dispatch(actions.setActiveLeftPanel('notesPanel'));
+      dispatch(actions.triggerNoteEditing());
     }
 
-    this.props.closeElement('annotationPopup');
-  }
+    dispatch(actions.closeElement('annotationPopup'));
+  };
 
-  openStylePopup = () => {
-    this.setState({ isStylePopupOpen: true });
-  }
+  const dataElementButtonMap = {
+    annotationCommentButton: overrides =>
+      !isNotesPanelDisabled &&
+      !multipleAnnotationsSelected &&
+      firstAnnotation.ToolName !== 'CropPage' && (
+        <ActionButton
+          title="action.comment"
+          img="ic_comment_black_24px"
+          onClick={commentOnAnnotation}
+          {...overrides}
+          dataElement="annotationCommentButton"
+        />
+      ),
+    annotationStyleEditButton: overrides =>
+      canModify &&
+      hasStyle &&
+      !isAnnotationStylePopupDisabled &&
+      !multipleAnnotationsSelected &&
+      firstAnnotation.ToolName !== 'CropPage' && (
+        <ActionButton
+          title="action.style"
+          img="ic_palette_black_24px"
+          onClick={() => setIsStylePopupOpen(true)}
+          {...overrides}
+          dataElement="annotationStyleEditButton"
+        />
+      ),
+    annotationCropButton: overrides =>
+      firstAnnotation.ToolName === 'CropPage' && (
+        <ActionButton
+          title="action.apply"
+          img="ic_check_black_24px"
+          onClick={() => {
+            core.getTool('CropPage').applyCrop();
+            dispatch(actions.closeElement('annotationPopup'));
+          }}
+          {...overrides}
+          dataElement="annotationCropButton"
+        />
+      ),
+    annotationRedactButton: overrides =>
+      redactionEnabled &&
+      !multipleAnnotationsSelected && (
+        <ActionButton
+          title="action.apply"
+          img="ic_check_black_24px"
+          onClick={() => {
+            dispatch(applyRedactions(firstAnnotation));
+            dispatch(actions.closeElement('annotationPopup'));
+          }}
+          {...overrides}
+          dataElement="annotationRedactButton"
+        />
+      ),
+    annotationGroupButton: overrides =>
+      canGroup && (
+        <ActionButton
+          title="action.group"
+          img="ic_group_24px"
+          onClick={() =>
+            core.groupAnnotations(primaryAnnotation, selectedAnnotations)
+          }
+          {...overrides}
+          dataElement="annotationGroupButton"
+        />
+      ),
+    annotationUngroupButton: overrides =>
+      canUngroup && (
+        <ActionButton
+          title="action.ungroup"
+          img="ic_ungroup_24px"
+          onClick={() => core.ungroupAnnotations(selectedAnnotations)}
+          {...overrides}
+          dataElement="annotationUngroupButton"
+        />
+      ),
+    annotationDeleteButton: overrides =>
+      canModify && (
+        <ActionButton
+          title="action.delete"
+          img="ic_delete_black_24px"
+          onClick={() => {
+            core.deleteAnnotations(core.getSelectedAnnotations());
+            dispatch(actions.closeElement('annotationPopup'));
+          }}
+          {...overrides}
+          dataElement="annotationDeleteButton"
+        />
+      ),
+  };
 
-  deleteAnnotation = () => {
-    core.deleteAnnotations([this.state.annotation]);
-    this.props.closeElement('annotationPopup');
-  }
-
-  redactAnnotation = () => {
-    this.props.applyRedactions(this.state.annotation);
-    this.props.closeElement('annotationPopup');
-  }
-
-  render() {
-    const { annotation, left, top, isStylePopupOpen } = this.state;
-    const { isNotesPanelDisabled, isDisabled, isOpen, isAnnotationStylePopupDisabled } = this.props;
-    const style = getAnnotationStyles(annotation);
-    const hasStyle = Object.keys(style).length > 0;
-    const className = getClassName(`Popup AnnotationPopup`, this.props);
-    const redactionEnabled = core.isAnnotationRedactable(annotation);
-    const canModify = core.canModify(annotation);
-    if (isDisabled) {
-      return null;
-    }
-
-    return (
-      <div className={className} ref={this.popup} data-element="annotationPopup" style={{ left, top }} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
-        {isStylePopupOpen
-          ? <AnnotationStylePopup annotation={annotation} style={style} isOpen={isOpen} />
-          : <>
-            {!isNotesPanelDisabled &&
-              <ActionButton dataElement="annotationCommentButton" title="action.comment" img="ic_comment_black_24px" onClick={this.commentOnAnnotation} />
-            }
-            {canModify && hasStyle && !isAnnotationStylePopupDisabled &&
-              <ActionButton dataElement="annotationStyleEditButton" title="action.style" img="ic_palette_black_24px" onClick={this.openStylePopup} />
-            }
-            {redactionEnabled &&
-              <ActionButton dataElement="annotationRedactButton" title="action.apply" img="ic_check_black_24px" onClick={this.redactAnnotation} />
-            }
-            {canModify &&
-              <ActionButton dataElement="annotationDeleteButton" title="action.delete" img="ic_delete_black_24px" onClick={this.deleteAnnotation} />
-            }
-          </>
-        }
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  isNotesPanelDisabled: selectors.isElementDisabled(state, 'notesPanel'),
-  isDisabled: selectors.isElementDisabled(state, 'annotationPopup'),
-  isAnnotationStylePopupDisabled: selectors.isElementDisabled(state, 'annotationStylePopup'),
-  isOpen: selectors.isElementOpen(state, 'annotationPopup'),
-  isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
-  isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
-  serverURL: selectors.getServerUrl(state),
-});
-
-const mapDispatchToProps = {
-  applyRedactions,
-  openElement: actions.openElement,
-  closeElement: actions.closeElement,
-  setIsNoteEditing: actions.setIsNoteEditing,
-  setActiveLeftPanel: actions.setActiveLeftPanel
+  return (
+    <div
+      className={classNames({
+        Popup: true,
+        AnnotationPopup: true,
+        open: isOpen,
+        closed: !isOpen,
+        stylePopupOpen: isStylePopupOpen,
+      })}
+      ref={popupRef}
+      data-element="annotationPopup"
+      style={{ ...position }}
+    >
+      {isStylePopupOpen ? (
+        <AnnotationStylePopup
+          annotation={firstAnnotation}
+          style={style}
+          isOpen={isOpen}
+        />
+      ) : (
+        <CustomizablePopup dataElement="annotationPopup">
+          {dataElementButtonMap}
+        </CustomizablePopup>
+      )}
+    </div>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AnnotationPopup);
+export default AnnotationPopup;

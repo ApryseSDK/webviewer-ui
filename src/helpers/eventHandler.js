@@ -1,4 +1,5 @@
 import * as eventListeners from 'src/event-listeners';
+import hotkeysManager from 'helpers/hotkeysManager';
 import core from 'core';
 
 export default store => {
@@ -14,14 +15,12 @@ export default store => {
   const onZoomUpdated = eventListeners.onZoomUpdated(dispatch);
   const onPageNumberUpdated = eventListeners.onPageNumberUpdated(dispatch);
   const onUpdateAnnotationPermission = eventListeners.onUpdateAnnotationPermission(store);
-  const onAnnotationSelected = eventListeners.onAnnotationSelected(dispatch);
   const onAnnotationChanged = eventListeners.onAnnotationChanged(dispatch);
   const onStampAnnotationAdded = eventListeners.onStampAnnotationAdded(dispatch);
   const onSignatureAnnotationAdded = eventListeners.onSignatureAnnotationAdded(dispatch);
   const onStickyAnnotationAdded = eventListeners.onStickyAnnotationAdded(store);
-  const onKeyDown = eventListeners.onKeyDown(store);
-  const onFullScreenChange = eventListeners.onFullScreenChange(dispatch);
-  const onLayoutChanged = eventListeners.onLayoutChanged(dispatch); 
+  const onFullScreenChange = eventListeners.onFullScreenChange(store);
+  const onLayoutChanged = eventListeners.onLayoutChanged(dispatch);
   const onLocationSelected = eventListeners.onLocationSelected(store);
   const onPageComplete = eventListeners.onPageComplete(store);
 
@@ -39,14 +38,13 @@ export default store => {
       core.addEventListener('pageNumberUpdated', onPageNumberUpdated);
       core.addEventListener('layoutChanged', onLayoutChanged);
       core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
-      core.addEventListener('annotationSelected', onAnnotationSelected);
       core.addEventListener('annotationChanged', onAnnotationChanged);
       core.addEventListener('pageComplete', onPageComplete);
       core.getTool('AnnotationCreateStamp').on('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
-      document.addEventListener('keydown', onKeyDown);
+      hotkeysManager.initialize(store);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
@@ -65,17 +63,16 @@ export default store => {
       core.removeEventListener('pageNumberUpdated', onPageNumberUpdated);
       core.removeEventListener('layoutChanged', onLayoutChanged);
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
-      core.removeEventListener('annotationSelected', onAnnotationSelected);
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('pageComplete', onPageComplete);
       core.getTool('AnnotationCreateStamp').off('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').off('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').off('locationSelected', onLocationSelected);
-      document.removeEventListener('keydown', onKeyDown);
+      hotkeysManager.off();
       document.removeEventListener('fullscreenchange', onFullScreenChange);
       document.removeEventListener('mozfullscreenchange', onFullScreenChange);
       document.removeEventListener('webkitfullscreenchange', onFullScreenChange);
       document.removeEventListener('MSFullscreenChange', onFullScreenChange);
-    }
+    },
   };
 };

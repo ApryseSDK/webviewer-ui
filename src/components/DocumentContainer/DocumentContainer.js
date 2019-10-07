@@ -7,7 +7,7 @@ import { isIE } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
-import TouchEventManager from 'helpers/TouchEventManager';
+import touchEventManager from 'helpers/TouchEventManager';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -29,8 +29,9 @@ class DocumentContainer extends React.PureComponent {
     isHeaderOpen: PropTypes.bool,
     dispatch: PropTypes.func.isRequired,
     openElement: PropTypes.func.isRequired,
+    closeElements: PropTypes.func.isRequired,
     displayMode: PropTypes.string.isRequired,
-    swipeOrientation: PropTypes.string,
+    leftPanelWidth: PropTypes.number,
   }
 
   constructor(props) {
@@ -45,13 +46,10 @@ class DocumentContainer extends React.PureComponent {
     if (isIE) {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
-    if (prevProps.swipeOrientation !== this.props.swipeOrientation) {
-      TouchEventManager.updateOrientation(this.props.swipeOrientation);
-    }
   }
 
   componentDidMount() {
-    TouchEventManager.initialize(this.document.current, this.container.current, this.props.toolButtonObjects);
+    touchEventManager.initialize(this.document.current, this.container.current);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
@@ -76,7 +74,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    TouchEventManager.terminate();
+    touchEventManager.terminate();
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
@@ -176,6 +174,13 @@ class DocumentContainer extends React.PureComponent {
     core.scrollViewUpdated();
   }
 
+  handleScroll = () => {
+    this.props.closeElements([
+      'annotationPopup',
+      'textPopup',
+    ]);
+  }
+
   getClassName = props => {
     const {
       isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen,
@@ -200,7 +205,7 @@ class DocumentContainer extends React.PureComponent {
     }
 
     return (
-      <div className={className} ref={this.container} data-element="documentContainer" onTransitionEnd={this.onTransitionEnd}>
+      <div className={className} ref={this.container} data-element="documentContainer" onScroll={this.handleScroll} onTransitionEnd={this.onTransitionEnd}>
         <div className="document" ref={this.document}></div>
       </div>
     );
@@ -220,13 +225,14 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  swipeOrientation: selectors.getSwipeOrientation(state),
-  toolButtonObjects: selectors.getToolButtonObjects(state),
+  // using leftPanelWidth to trigger render
+  leftPanelWidth: selectors.getLeftPanelWidth(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
   openElement: dataElement => dispatch(actions.openElement(dataElement)),
+  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);

@@ -8,11 +8,11 @@ import './Accessibility.scss';
 
 class Accessibility extends React.PureComponent {
   static propTypes = {
-    isAccessibleMode: PropTypes.bool
+    isAccessibleMode: PropTypes.bool,
   }
 
   state = {
-    isVisible: false
+    isVisible: false,
   }
 
   onFocus = () => {
@@ -34,18 +34,18 @@ class Accessibility extends React.PureComponent {
     const className = `Accessibility ${isVisible ? 'visible' : 'hidden'}`;
 
     return (
-      <div className={className} data-element='accessibility'>
+      <div className={className} data-element="accessibility">
         <div>Skip to: </div>
-        <input className='skip-to-hack' tabIndex={-1}></input>
-        <div className='skip-to-document' onFocus={this.onFocus} onBlur={this.onBlur} tabIndex={0}>Document</div>
-        <div className='skip-to-notes' onFocus={this.onFocus} onBlur={this.onBlur} tabIndex={0}>Notes</div>
+        <input className="skip-to-hack" tabIndex={-1}></input>
+        <div className="skip-to-document" onFocus={this.onFocus} onBlur={this.onBlur} tabIndex={0}>Document</div>
+        <div className="skip-to-notes" onFocus={this.onFocus} onBlur={this.onBlur} tabIndex={0}>Notes</div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  isAccessibleMode: selectors.isAccessibleMode(state)
+const mapStateToProps = state => ({
+  isAccessibleMode: selectors.isAccessibleMode(state),
 });
 
 export default connect(mapStateToProps)(Accessibility);

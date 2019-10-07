@@ -6,6 +6,11 @@ import { connect } from 'react-redux';
 import Icon from 'components/Icon';
 
 import core from 'core';
+import {
+  mapAnnotationToKey,
+  mapToolNameToKey,
+  getDataWithKey,
+} from 'constants/map';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -72,7 +77,7 @@ class MeasurementOverlay extends React.PureComponent {
     }
   };
 
-  onAnnotationSelected = (e, annotations, action) => {
+  onAnnotationSelected = (annotations, action) => {
     const { openElement, closeElement } = this.props;
 
     if (
@@ -90,7 +95,7 @@ class MeasurementOverlay extends React.PureComponent {
     }
   };
 
-  onAnnotationChanged = (e, annotations, action) => {
+  onAnnotationChanged = (annotations, action) => {
     // measurement overlay will open and show the annotation information when we are creating an annotation using measurement tools
     // since by default we don't auto select an annotation after it's created, we close the overlay here to avoid the confusion
     // where no annotation is selected but measurement overlay shows the information about the annotation we were creating
@@ -107,24 +112,28 @@ class MeasurementOverlay extends React.PureComponent {
       annotations.length === 1 &&
       annotations[0] === this.state.annotation
     ) {
-      // a style change won't result in a adjustRect call, 
-      // so we call it here manually to update the content of the annotation to display the correct measurement
-      this.state.annotation.adjustRect();
       this.forceUpdate();
     }
   };
 
-  isMeasurementAnnotation = annotation => ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'].includes(annotation.ToolName);
+  isMeasurementAnnotation = annotation =>
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+      mapAnnotationToKey(annotation),
+    );
 
-  isMeasurementTool = toolName => ['AnnotationCreateDistanceMeasurement', 'AnnotationCreatePerimeterMeasurement', 'AnnotationCreateAreaMeasurement'].includes(toolName);
+  isMeasurementTool = toolName =>
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+      mapToolNameToKey(toolName),
+    );
 
   shouldShowInfo = annotation => {
-    const toolName = annotation.ToolName;
+    const key = mapAnnotationToKey(annotation);
+
     let showInfo;
-    if (toolName === 'AnnotationCreatePerimeterMeasurement' || toolName === 'AnnotationCreateAreaMeasurement') {
+    if (key === 'perimeterMeasurement' || key === 'areaMeasurement') {
       // for polyline and polygon, there's no useful information we can show if it has no vertices or only one vertex.
       showInfo = annotation.getPath().length > 1;
-    } else if (toolName === 'AnnotationCreateDistanceMeasurement') {
+    } else if (key === 'distanceMeasurement') {
       showInfo = true;
     }
 
@@ -138,13 +147,13 @@ class MeasurementOverlay extends React.PureComponent {
       if (pt3) {
         // calculate the angle using Law of cosines
         const AB = Math.sqrt(
-          Math.pow(pt2.x - pt1.x, 2) + Math.pow(pt2.y - pt1.y, 2)
+          Math.pow(pt2.x - pt1.x, 2) + Math.pow(pt2.y - pt1.y, 2),
         );
         const BC = Math.sqrt(
-          Math.pow(pt2.x - pt3.x, 2) + Math.pow(pt2.y - pt3.y, 2)
+          Math.pow(pt2.x - pt3.x, 2) + Math.pow(pt2.y - pt3.y, 2),
         );
         const AC = Math.sqrt(
-          Math.pow(pt3.x - pt1.x, 2) + Math.pow(pt3.y - pt1.y, 2)
+          Math.pow(pt3.x - pt1.x, 2) + Math.pow(pt3.y - pt1.y, 2),
         );
         angle = Math.acos((BC * BC + AB * AB - AC * AC) / (2 * BC * AB));
       } else {
@@ -160,27 +169,25 @@ class MeasurementOverlay extends React.PureComponent {
   };
 
   getNumberOfDecimalPlaces = annotation =>
-    annotation.Precision === 1
+    (annotation.Precision === 1
       ? 0
-      : annotation.Precision.toString().split('.')[1].length;
+      : annotation.Precision.toString().split('.')[1].length);
 
   renderTitle = () => {
-    const { t, activeIcon, activeToolName } = this.props;
-    // TODO: should be checking the selected annotation to determine the icon
-    const icon = activeIcon;
+    const { t } = this.props;
+    const key = mapAnnotationToKey(this.state.annotation);
+    const { icon } = getDataWithKey(key);
 
-    const toolTitleMap = {
-      AnnotationCreateDistanceMeasurement: t('option.measurementOverlay.distanceMeasurement'),
-      AnnotationCreatePerimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
-      AnnotationCreateAreaMeasurement: t('option.measurementOverlay.areaMeasurement')
+    const keyTitleMap = {
+      distanceMeasurement: t('option.measurementOverlay.distanceMeasurement'),
+      perimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
+      areaMeasurement: t('option.measurementOverlay.areaMeasurement'),
     };
 
     return (
       <div className="measurement__title">
-        {icon &&
-          <Icon className="measurement__icon" glyph={icon} />
-        }
-        {toolTitleMap[activeToolName]}
+        {icon && <Icon className="measurement__icon" glyph={icon} />}
+        {keyTitleMap[key]}
       </div>
     );
   };
@@ -188,15 +195,17 @@ class MeasurementOverlay extends React.PureComponent {
   renderValue = () => {
     const { annotation } = this.state;
     const { t } = this.props;
-    const toolDisplayNameMap = {
-      AnnotationCreateDistanceMeasurement: t('option.measurementOverlay.distance'),
-      AnnotationCreatePerimeterMeasurement: t('option.measurementOverlay.perimeter'),
-      AnnotationCreateAreaMeasurement: t('option.measurementOverlay.area')
+    const key = mapAnnotationToKey(annotation);
+
+    const keyDisplayNameMap = {
+      distanceMeasurement: t('option.measurementOverlay.distance'),
+      perimeterMeasurement: t('option.measurementOverlay.perimeter'),
+      areaMeasurement: t('option.measurementOverlay.area'),
     };
 
     return (
       <div className="measurement__value">
-        {toolDisplayNameMap[annotation.ToolName]}: {annotation.getContents()}
+        {keyDisplayNameMap[key]}: {annotation.getContents()}
       </div>
     );
   };
@@ -224,18 +233,19 @@ class MeasurementOverlay extends React.PureComponent {
 
   renderAngle = () => {
     const { annotation } = this.state;
+    const key = mapAnnotationToKey(annotation);
     const getIPathAnnotationPts = annotation => {
       const path = annotation.getPath();
       const length = path.length;
       return [path[length - 3], path[length - 2], path[length - 1]];
     };
-    const toolPtMap = {
-      AnnotationCreateDistanceMeasurement: ({ Start, End }) => [Start, End],
-      AnnotationCreatePerimeterMeasurement: getIPathAnnotationPts,
-      AnnotationCreateAreaMeasurement: getIPathAnnotationPts
+    const keyPtMap = {
+      distanceMeasurement: ({ Start, End }) => [Start, End],
+      perimeterMeasurement: getIPathAnnotationPts,
+      areaMeasurement: getIPathAnnotationPts,
     };
-    const pts = toolPtMap[annotation.ToolName](annotation).filter(pt => !!pt);
-    
+    const pts = keyPtMap[key](annotation).filter(pt => !!pt);
+
     let angle = this.getAngleInRadians(...pts);
     if (angle) {
       const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
@@ -255,6 +265,7 @@ class MeasurementOverlay extends React.PureComponent {
     const { annotation } = this.state;
     const { isDisabled, t } = this.props;
     const className = getClassName('Overlay MeasurementOverlay', this.props);
+    const key = mapAnnotationToKey(annotation);
 
     if (isDisabled || !annotation) {
       return null;
@@ -270,9 +281,7 @@ class MeasurementOverlay extends React.PureComponent {
           {t('option.shared.precision')}: {annotation.Precision}
         </div>
         {this.renderValue()}
-        {annotation.ToolName === 'AnnotationCreateDistanceMeasurement' &&
-          this.renderDeltas()
-        }
+        {key === 'distanceMeasurement' && this.renderDeltas()}
         {this.renderAngle()}
       </div>
     );
@@ -283,7 +292,6 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'measurementOverlay'),
   isDisabled: selectors.isElementDisabled(state, 'measurementOverlay'),
   activeToolName: selectors.getActiveToolName(state),
-  activeIcon: selectors.getToolButtonIcon(state, selectors.getActiveToolName(state))
 });
 
 const mapDispatchToProps = {
@@ -293,5 +301,5 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(withTranslation()(MeasurementOverlay));

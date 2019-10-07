@@ -37,7 +37,8 @@ const getStep = currentZoomFactor => {
 const isCurrentZoomFactorInRange = (zoomFactor, ranges) => {
   if (ranges[0] === null) {
     return zoomFactor <= ranges[1];
-  } else if (ranges[1] === null) {
+  }
+  if (ranges[1] === null) {
     return zoomFactor >= ranges[0];
   }
   return zoomFactor >= ranges[0] && zoomFactor <= ranges[1];
@@ -46,7 +47,7 @@ const isCurrentZoomFactorInRange = (zoomFactor, ranges) => {
 export const zoomTo = newZoomFactor => {
   const currentZoomFactor = core.getZoom();
   const scale = newZoomFactor / currentZoomFactor;
-  const { x, y } = getViewCenterAfterScale(scale); 
+  const { x, y } = getViewCenterAfterScale(scale);
 
   core.zoomTo(newZoomFactor, x, y);
 };
@@ -56,11 +57,9 @@ const getViewCenterAfterScale = scale => {
   const documentWrapper = document.getElementsByClassName('document')[0];
   const clientX = window.innerWidth / 2;
   const clientY = window.innerHeight / 2;
-  
+
   const x = (clientX + documentContainer.scrollLeft - documentWrapper.offsetLeft) * scale - clientX + documentContainer.offsetLeft;
   const y = (clientY + documentContainer.scrollTop - documentWrapper.offsetTop) * scale - clientY + documentContainer.offsetTop;
 
   return { x, y };
 };
-
-

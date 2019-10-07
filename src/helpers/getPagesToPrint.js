@@ -29,7 +29,7 @@ export default (customInput, pageLabels) => {
   return pagesToPrint
     .filter((pageNumber, index, pagesToPrint) => {
       const isUnique = pagesToPrint.indexOf(pageNumber) === index;
-      const isValidPageNumber = pageNumber > 0 && pageNumber <= totalPages; 
+      const isValidPageNumber = pageNumber > 0 && pageNumber <= totalPages;
       return isUnique && isValidPageNumber;
     })
     .sort((a, b) => a - b);
@@ -55,7 +55,7 @@ const getPageNumber = (character, pageLabels) => {
   const pageIndex = pageLabels.indexOf(character);
   let pageNumber;
 
-  if (pageIndex === - 1) {
+  if (pageIndex === -1) {
     console.warn(`${character} is not a valid page label`);
   } else {
     pageNumber = pageIndex + 1;
@@ -63,4 +63,3 @@ const getPageNumber = (character, pageLabels) => {
 
   return pageNumber;
 };
-

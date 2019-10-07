@@ -3,7 +3,11 @@ import i18n from 'i18next';
 import actions from 'actions';
 import core from 'core';
 
-export default (dispatch, isEmbedPrintSupported) =>  {
+export default (dispatch, isEmbedPrintSupported) => {
+  if (!core.getDocument()) {
+    return;
+  }
+
   const bbURLPromise = core.getPrintablePDF();
 
   if (bbURLPromise) {
@@ -22,13 +26,28 @@ export default (dispatch, isEmbedPrintSupported) =>  {
   }
 };
 
-const printPdf = () => {
-  return core.exportAnnotations().then(xfdfString => {
+const printPdf = () =>
+  core.exportAnnotations().then(xfdfString => {
     const printDocument = true;
-    return core.getDocument().getFileData({ xfdfString, printDocument }).then(data => {
-      const arr = new Uint8Array(data);
-      const blob = new Blob([ arr ], { type: 'application/pdf' });
-      document.getElementById('print-handler').src = URL.createObjectURL(blob);
-    });
+    return core
+      .getDocument()
+      .getFileData({ xfdfString, printDocument })
+      .then(data => {
+        const arr = new Uint8Array(data);
+        const blob = new Blob([arr], { type: 'application/pdf' });
+
+        const printHandler = document.getElementById('print-handler');
+        printHandler.src = URL.createObjectURL(blob);
+
+        return new Promise(resolve => {
+          const loadListener = function() {
+            printHandler.contentWindow.print();
+            printHandler.removeEventListener('load', loadListener);
+
+            resolve();
+          };
+
+          printHandler.addEventListener('load', loadListener);
+        });
+      });
   });
-};

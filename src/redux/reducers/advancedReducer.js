@@ -14,6 +14,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customHeaders: payload.customHeaders };
     case 'SET_CACHE_KEY':
       return { ...state, cacheKey: payload.cacheKey };
+    case 'SET_PAGE_SIZES':
+      return { ...state, pageSizes: payload.pageSizes };
     case 'SET_WITH_CREDENTIALS':
       return { ...state, withCredentials: payload.withCredentials };
     default:

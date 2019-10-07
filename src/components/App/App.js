@@ -1,8 +1,7 @@
-import React from 'react';
+import { hot } from 'react-hot-loader/root';
+import React, { useEffect } from 'react';
+import { useStore } from 'react-redux';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import { hot } from 'react-hot-loader';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
@@ -13,6 +12,8 @@ import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
+import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
+import ToolsOverlay from 'components/ToolsOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import SearchPanel from 'components/SearchPanel';
@@ -32,117 +33,70 @@ import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
-import { isDesktop } from 'helpers/device';
+import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
-import actions from 'actions';
-import selectors from 'selectors';
 
 import './App.scss';
 
-class App extends React.PureComponent {
-  static propTypes = {
-    isSearchPanelOpen: PropTypes.bool,
-    removeEventHandlers: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired
-  };
-
-  componentDidMount() {
-    fireEvent('viewerLoaded');
-  }
-
-  componentWillUnmount() {
-    this.props.removeEventHandlers();
-  }
-
-  onClick = () => {
-    const elements = [
-      'viewControlsOverlay',
-      'menuOverlay',
-      'zoomOverlay',
-      'signatureOverlay',
-      this.props.isSearchPanelOpen ? '' : 'searchOverlay'
-    ].filter(element => element);
-
-    this.props.closeElements(elements);
-  };
-
-  onMouseDown = () => {
-    const elements = [
-      'annotationPopup',
-      'contextMenuPopup',
-      'toolStylePopup',
-      'textPopup',
-      isDesktop() ? 'redactionOverlay' : '',
-      isDesktop() ? 'groupOverlay' : ''
-    ].filter(element => element);
-
-    this.props.closeElements(elements);
-  };
-
-  onScroll = () => {
-    this.onMouseDown();
-  };
-
-  render() {
-    return (
-      <>
-        <div
-          className="App"
-          onMouseDown={this.onMouseDown}
-          onClick={this.onClick}
-          onScroll={this.onScroll}
-        >
-          <Accessibility />
-
-          <Header />
-
-          <LeftPanel />
-          <SearchPanel />
-
-          <DocumentContainer />
-
-          <SearchOverlay />
-          <ViewControlsOverlay />
-          <RedactionOverlay />
-          <MenuOverlay />
-          <PageNavOverlay />
-          <SignatureOverlay />
-          <ZoomOverlay />
-          <MeasurementOverlay />
-
-          <AnnotationPopup />
-          <TextPopup />
-          <ContextMenuPopup />
-          <ToolStylePopup />
-
-          <SignatureModal />
-          <PrintModal />
-          <LoadingModal />
-          <ErrorModal />
-          <WarningModal />
-          <PasswordModal />
-          <ProgressModal />
-        </div>
-
-        <PrintHandler />
-        <FilePickerHandler />
-        <CopyTextHandler />
-      </>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel')
-});
-
-const mapDispatchToProps = {
-  closeElements: actions.closeElements
+const propTypes = {
+  removeEventHandlers: PropTypes.func.isRequired,
 };
 
-export default hot(module)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withTranslation()(App))
-);
+const App = ({ removeEventHandlers }) => {
+  const store = useStore();
+
+  useEffect(() => {
+    defineReaderControlAPIs(store);
+    fireEvent('viewerLoaded');
+
+    return removeEventHandlers;
+  // eslint-disable-next-line
+  }, []);
+
+  return (
+    <React.Fragment>
+      <div className="App">
+        <Accessibility />
+
+        <Header />
+
+        <LeftPanel />
+        <SearchPanel />
+
+        <DocumentContainer />
+
+        <SearchOverlay />
+        <ViewControlsOverlay />
+        <RedactionOverlay />
+        <MenuOverlay />
+        <SignatureOverlay />
+        <PageNavOverlay />
+        <ZoomOverlay />
+        <MeasurementOverlay />
+        <AnnotationContentOverlay />
+        <ToolsOverlay />
+
+        <AnnotationPopup />
+        <TextPopup />
+        <ContextMenuPopup />
+        <ToolStylePopup />
+
+        <SignatureModal />
+        <PrintModal />
+        <LoadingModal />
+        <ErrorModal />
+        <WarningModal />
+        <PasswordModal />
+        <ProgressModal />
+      </div>
+
+      <PrintHandler />
+      <FilePickerHandler />
+      <CopyTextHandler />
+    </React.Fragment>
+  );
+};
+
+App.propTypes = propTypes;
+
+export default hot(App);

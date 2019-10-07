@@ -12,8 +12,8 @@ class Input extends React.PureComponent {
     onChange: PropTypes.func,
     label: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.object
-    ]).isRequired
+      PropTypes.object,
+    ]).isRequired,
   }
 
   constructor() {
@@ -31,12 +31,11 @@ class Input extends React.PureComponent {
 
   render() {
     const { id, type, name, defaultChecked, onChange, label } = this.props;
-
     return (
-      <>
+      <React.Fragment>
         <input className="Input" id={id} ref={this.inputRef} type={type} name={name} onChange={onChange} defaultChecked={defaultChecked} />
         <label className="Input" htmlFor={id}>{label}</label>
-      </>
+      </React.Fragment>
     );
   }
 }

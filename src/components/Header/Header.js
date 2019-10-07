@@ -13,7 +13,7 @@ class Header extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    activeHeaderItems: PropTypes.array.isRequired
+    activeHeaderItems: PropTypes.array.isRequired,
   }
 
   render() {
@@ -25,7 +25,7 @@ class Header extends React.PureComponent {
     }
 
     return (
-      <div className={className} data-element="header" onMouseDown={e => e.stopPropagation()}>
+      <div className={className} data-element="header">
         <HeaderItems items={activeHeaderItems} />
       </div>
     );

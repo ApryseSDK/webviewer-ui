@@ -6,9 +6,10 @@ import './OverlayItem.scss';
 class OverlayItem extends React.PureComponent {
   static propTypes = {
     onClick: PropTypes.func,
-    buttonName: PropTypes.string
+    buttonName: PropTypes.string,
   }
-  render() { 
+
+  render() {
     const { buttonName } = this.props;
     return (
       <div className="OverlayItem" onClick={this.props.onClick}>
@@ -19,5 +20,5 @@ class OverlayItem extends React.PureComponent {
     );
   }
 }
- 
+
 export default OverlayItem;

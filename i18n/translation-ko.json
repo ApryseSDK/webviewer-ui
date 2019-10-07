@@ -5,9 +5,11 @@
     "cancel": "취소",
     "clear": "지우기",
     "close": "닫기",
-    "comment": "코멘트",
+    "comment": "댓글",
     "copy": "복사",
     "delete": "삭제",
+    "group": "그룹",
+    "ungroup": "그룹 해제",
     "download": "다운로드",
     "edit": "편집",
     "enterFullscreen": "전체 화면",
@@ -37,9 +39,11 @@
     "areaMeasurement": "면적 측정",
     "arrow": "화살표",
     "callout": "설명선",
+    "crop": "자르기 페이지",
     "caret": "캐럿",
     "distanceMeasurement": "거리 측정",
     "ellipse": "타원",
+    "eraser": "지우개",
     "freehand": "자유형",
     "freehand2": "자유형",
     "freetext": "자유 텍스트",
@@ -49,7 +53,7 @@
     "line": "선",
     "perimeterMeasurement": "둘레 측정",
     "polygon": "다각형",
-    "polygonCloud": "클라우드",
+    "polygonCloud": "구름",
     "polyline": "폴리라인",
     "rectangle": "직사각형",
     "redact": "개정",
@@ -69,6 +73,7 @@
     "miscToolsButton": "기타 도구",
     "notesPanel": "참고",
     "outlinesPanel": "개요",
+    "layersPanel": "레이어",
     "shapeToolsButton": "도형 도구",
     "textToolsButton": "텍스트 도구",
     "thumbnailsPanel": "축소판",
@@ -90,6 +95,8 @@
     "notSupported": "해당 파일 유형은 지원되지 않습니다.",
     "passwordRequired": "비밀번호가 필요합니다",
     "preparingToPrint": "인쇄 준비 중...",
+    "annotationReplyCount": "{{count}} 댓글",
+    "annotationReplyCount_plural": "{{count}} 답글",
     "printTotalPageCount": "{{count}} 페이지",
     "printTotalPageCount_plural": "{{count}} 페이지",
     "processing": "처리 중...",
@@ -129,7 +136,8 @@
       "all": "모두",
       "current": "현재",
       "pages": "페이지",
-      "includeComments": "코멘트 포함"
+      "includeComments": "코멘트 포함",
+      "addWatermarkSettings": "워터 마크 설정 추가"
     },
     "redaction": {
       "markForRedaction": "개정 표시",
@@ -142,6 +150,18 @@
     },
     "signatureOverlay": {
       "addSignature": "서명 추가"
+    },
+    "status": {
+      "status": "지위"
+    },
+    "state": {
+      "accepted": "받아 들여",
+      "rejected": "거부",
+      "completed": "완료",
+      "cancelled": "취소 된",
+      "set": "상태 설정 :",
+      "setBy": "에 의해 설정",
+      "none": "없음"
     },
     "measurementOverlay": {
       "scale": "배율",
@@ -164,6 +184,13 @@
     "shared": {
       "page": "페이지",
       "precision": "정밀도"
+    },
+    "watermark": {
+      "size": "크기",
+      "location": "워터 마크를 편집 할 위치를 선택하십시오",
+      "text": "본문",
+      "colors": "그림 물감",
+      "resetAllSettings": "모든 설정 초기화"
     }
   },
   "shortcut": {
@@ -172,6 +199,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",

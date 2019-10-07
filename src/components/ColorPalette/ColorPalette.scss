@@ -1,17 +1,5 @@
 @import '../../constants/styles.scss';
 
-%cell {
-  flex: 1 0 28px;
-  height: 26px;
-  display: flex;
-  margin: 0 1px;
-
-  @include mobile {
-    height: 30px;
-    margin: 0 1.2px;
-  }
-}
-
 .ColorPalette {
   margin-top: 6px;
   display: flex;

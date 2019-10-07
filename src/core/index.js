@@ -36,6 +36,7 @@ import setViewerElement from './setViewerElement';
 import isContinuousDisplayMode from './isContinuousDisplayMode';
 import scrollViewUpdated from './scrollViewUpdated';
 import canModify from './canModify';
+import canModifyContents from './canModifyContents';
 import deleteAnnotations from './deleteAnnotations';
 import getDisplayAuthor from './getDisplayAuthor';
 import getDocument from './getDocument';
@@ -72,6 +73,7 @@ import getSelectedTextQuads from './getSelectedTextQuads';
 import getDisplayModeObject from './getDisplayModeObject';
 import getScrollViewElement from './getScrollViewElement';
 import getAnnotationById from './getAnnotationById';
+import getAnnotationByMouseEvent from './getAnnotationByMouseEvent';
 import isFullPDFEnabled from './isFullPDFEnabled';
 import isBlendModeSupported from './isBlendModeSupported';
 import isAnnotationSelected from './isAnnotationSelected';
@@ -91,8 +93,16 @@ import hideAnnotations from './hideAnnotations';
 import goToOutline from './goToOutline';
 import getViewerElement from './getViewerElement';
 import { addEventListener, removeEventListener } from './eventListener';
-import setAnnotationCanvasTransform  from './setAnnotationCanvasTransform';
+import setAnnotationCanvasTransform from './setAnnotationCanvasTransform';
 import getAnnotationCopy from './getAnnotationCopy';
+import setWatermark from './setWatermark';
+import getWatermark from './getWatermark';
+import groupAnnotations from './groupAnnotations';
+import ungroupAnnotations from './ungroupAnnotations';
+import getNumberOfGroups from './getNumberOfGroups';
+import undo from './undo';
+import redo from './redo';
+import updateAnnotationState from './updateAnnotationState';
 
 export default {
   setToolMode,
@@ -133,6 +143,7 @@ export default {
   isContinuousDisplayMode,
   scrollViewUpdated,
   canModify,
+  canModifyContents,
   deleteAnnotations,
   getDisplayAuthor,
   getDocument,
@@ -188,7 +199,16 @@ export default {
   showAnnotations,
   hideAnnotations,
   goToOutline,
-  getViewerElement, 
+  getViewerElement,
   setAnnotationCanvasTransform,
-  getAnnotationCopy
+  getAnnotationCopy,
+  setWatermark,
+  getWatermark,
+  getAnnotationByMouseEvent,
+  groupAnnotations,
+  ungroupAnnotations,
+  getNumberOfGroups,
+  undo,
+  redo,
+  updateAnnotationState,
 };

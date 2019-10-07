@@ -3,9 +3,9 @@ import actions from 'actions';
 import { isAndroid } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 
-export default dispatch => (e, fitMode) => {
+export default dispatch => fitMode => {
   const docViewer = core.getDocumentViewer();
-  
+
   if (fitMode === docViewer.FitMode.Zoom) {
     dispatch(actions.setFitMode('Zoom'));
   } else if (fitMode === docViewer.FitMode.FitWidth) {
@@ -20,5 +20,5 @@ export default dispatch => (e, fitMode) => {
     dispatch(actions.setFitMode('FitPage'));
   }
 
-  fireEvent('fitModeChanged', [ fitMode ]);
+  fireEvent('fitModeChanged', [fitMode]);
 };
