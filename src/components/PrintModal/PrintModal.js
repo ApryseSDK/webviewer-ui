@@ -187,16 +187,20 @@ class PrintModal extends React.PureComponent {
           pendingCanvas => pendingCanvas !== id,
         );
         this.positionCanvas(canvas, pageIndex);
-        this.drawAnnotationsOnCanvas(canvas, pageNumber).then(() => {
-          const img = document.createElement('img');
-          img.src = canvas.toDataURL();
-          img.onload = () => {
-            this.setState(({ count }) => ({
-              count: count < 0 ? -1 : count + 1,
-            }));
-            resolve(img);
-          };
-        });
+        this.drawAnnotationsOnCanvas(canvas, pageNumber)
+          .then(() => {
+            const img = document.createElement('img');
+            img.src = canvas.toDataURL();
+            img.onload = () => {
+              this.setState(({ count }) => ({
+                count: count < 0 ? -1 : count + 1,
+              }));
+              resolve(img);
+            };
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       };
 
       const id = core.getDocument().loadCanvasAsync({
