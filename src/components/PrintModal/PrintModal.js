@@ -148,9 +148,6 @@ class PrintModal extends React.PureComponent {
       .then(pages => {
         this.printPages(pages);
         this.resetPrintQuality();
-      })
-      .catch(e => {
-        console.error(e);
       });
   };
 
@@ -197,9 +194,6 @@ class PrintModal extends React.PureComponent {
               }));
               resolve(img);
             };
-          })
-          .catch((error) => {
-            console.log(error);
           });
       };
 
