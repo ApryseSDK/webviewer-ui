@@ -12,6 +12,7 @@ import selectors from 'selectors';
 
 import './CalibrationModal.scss';
 
+const commaRegex = /,/g;
 const numberRegex = /^\d*(\.\d*)?$/;
 
 const CalibrationModal = () => {
@@ -28,20 +29,45 @@ const CalibrationModal = () => {
   const [t] = useTranslation();
 
   useEffect(() => {
-    core.addEventListener('annotationSelected', (annotations, action) => {
+    const onAnnotationSelected = (annotations, action) => {
       if (
         annotations?.length === 1 &&
         mapAnnotationToKey(annotations[0]) === 'distanceMeasurement' &&
         action === 'selected'
       ) {
         setAnnotation(annotations[0]);
-        setValue(parseFloat(annotations[0].getContents()));
+        setValue(parseContent(annotations[0].getContents()));
       } else if (action === 'deselected') {
         setAnnotation(null);
         setValue('');
       }
-    });
-  });
+    };
+
+    core.addEventListener('annotationSelected', onAnnotationSelected);
+    return () =>
+      core.removeEventListener('annotationSelected', onAnnotationSelected);
+  }, []);
+
+  useEffect(() => {
+    const onAnnotationChanged = (annotations, action) => {
+      if (
+        action === 'modify' &&
+        annotations.length === 1 &&
+        annotations[0] === annotation
+      ) {
+        setValue(parseContent(annotation.getContents()));
+      }
+    };
+
+    core.addEventListener('annotationChanged', onAnnotationChanged);
+    return () =>
+      core.removeEventListener('annotationChanged', onAnnotationChanged);
+  }, [annotation]);
+
+  const parseContent = content => {
+    content = content.replace(commaRegex, '');
+    return parseFloat(content);
+  };
 
   const handleChange = e => {
     if (numberRegex.test(e.target.value)) {
@@ -50,7 +76,6 @@ const CalibrationModal = () => {
   };
 
   const handleApply = () => {
-
     // TODO
   };
 

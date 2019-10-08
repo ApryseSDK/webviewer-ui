@@ -280,7 +280,10 @@ const AnnotationPopup = () => {
         <ActionButton
           title="action.calibrate"
           img="calibrate"
-          onClick={() => dispatch(actions.openElement('calibrationModal'))}
+          onClick={() => {
+            dispatch(actions.closeElement('annotationPopup'));
+            dispatch(actions.openElement('calibrationModal'));
+          }}
           {...overrides}
           dataElement="calibrateButton"
         />

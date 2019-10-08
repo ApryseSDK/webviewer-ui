@@ -112,9 +112,6 @@ class MeasurementOverlay extends React.PureComponent {
       annotations.length === 1 &&
       annotations[0] === this.state.annotation
     ) {
-      // a style change won't result in a adjustRect call,
-      // so we call it here manually to update the content of the annotation to display the correct measurement
-      this.state.annotation.adjustRect();
       this.forceUpdate();
     }
   };
