@@ -7,6 +7,7 @@ import Button from 'components/Button';
 
 import core from 'core';
 import { mapAnnotationToKey } from 'constants/map';
+import setToolStyles from 'helpers/setToolStyles';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -16,16 +17,18 @@ const commaRegex = /,/g;
 const numberRegex = /^\d*(\.\d*)?$/;
 
 const CalibrationModal = () => {
-  const [isOpen, isDisabled] = useSelector(
+  const [isOpen, isDisabled, units] = useSelector(
     state => [
       selectors.isElementOpen(state, 'calibrationModal'),
       selectors.isElementDisabled(state, 'calibrationModal'),
+      selectors.getMeasurementUnits(state),
     ],
     shallowEqual,
   );
   const dispatch = useDispatch();
   const [annotation, setAnnotation] = useState(null);
   const [value, setValue] = useState('');
+  const [unitTo, setUnitTo] = useState('');
   const [t] = useTranslation();
 
   useEffect(() => {
@@ -35,11 +38,14 @@ const CalibrationModal = () => {
         mapAnnotationToKey(annotations[0]) === 'distanceMeasurement' &&
         action === 'selected'
       ) {
-        setAnnotation(annotations[0]);
-        setValue(parseContent(annotations[0].getContents()));
+        const annot = annotations[0];
+        setAnnotation(annot);
+        setValue(parseContent(annot.getContents()));
+        setUnitTo(annot.Scale[1][1]);
       } else if (action === 'deselected') {
         setAnnotation(null);
         setValue('');
+        setUnitTo('');
       }
     };
 
@@ -56,6 +62,7 @@ const CalibrationModal = () => {
         annotations[0] === annotation
       ) {
         setValue(parseContent(annotation.getContents()));
+        setUnitTo(annotation.Scale[1][1]);
       }
     };
 
@@ -64,23 +71,57 @@ const CalibrationModal = () => {
       core.removeEventListener('annotationChanged', onAnnotationChanged);
   }, [annotation]);
 
-  const parseContent = content => {
-    content = content.replace(commaRegex, '');
-    return parseFloat(content);
-  };
-
-  const handleChange = e => {
+  const handleInputChange = e => {
     if (numberRegex.test(e.target.value)) {
       setValue(e.target.value);
     }
   };
 
+  const handleSelectChange = e => {
+    setUnitTo(e.target.value);
+  };
+
   const handleApply = () => {
-    // TODO
+    const currentDistance = parseContent(annotation.getContents());
+    const newDistance = parseFloat(value);
+    const ratio = newDistance / currentDistance;
+
+    const currentScale = annotation.Scale;
+    const newScale = [
+      [currentScale[0][0], currentScale[0][1]],
+      [
+        parseFloat(
+          (currentScale[1][0] * ratio).toFixed(getNumberOfDecimalPlaces()),
+        ),
+        unitTo,
+      ],
+    ];
+
+    // set all the measurement annotations and tools to have the same scale
+    const measurementAnnotations = core
+      .getAnnotationsList()
+      .filter(annot => !!annot.Measure);
+    measurementAnnotations.forEach(annot => {
+      core.setAnnotationStyles(annot, () => ({
+        Scale: newScale,
+      }));
+    });
+
+    setToolStyles('AnnotationCreateDistanceMeasurement', 'Scale', newScale);
   };
 
   const handleCancel = () => {
     dispatch(actions.closeElements(['calibrationModal']));
+  };
+
+  const getNumberOfDecimalPlaces = () =>
+    (annotation.Precision === 1
+      ? 0
+      : annotation.Precision.toString().split('.')[1].length);
+
+  const parseContent = content => {
+    content = content.replace(commaRegex, '');
+    return parseFloat(content);
   };
 
   return isDisabled || !annotation ? null : (
@@ -97,7 +138,18 @@ const CalibrationModal = () => {
         <div className="calibration__body">
           <div>{t('message.enterMeasurement')}</div>
           <div>
-            <input type="text" value={value} onChange={handleChange} />
+            <input type="text" value={value} onChange={handleInputChange} />
+            <select
+              className="unitToInput"
+              value={unitTo}
+              onChange={handleSelectChange}
+            >
+              {units.to.map(unit => (
+                <option key={unit} value={unit}>
+                  {unit}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="calibration__footer">
