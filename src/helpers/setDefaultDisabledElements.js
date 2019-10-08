@@ -56,11 +56,6 @@ export default store => {
     dispatch(actions.disableElement('header', PRIORITY_ONE));
   }
 
-  if (state.advanced.pdftronServer !== '') {
-    // disable crop tool if pdftron server is being used
-    dispatch(actions.disableElement('cropToolButton', PRIORITY_THREE));
-  }
-
   if (isMobileDevice) {
     dispatch(actions.disableElement('marqueeToolButton', PRIORITY_THREE));
   } else {
