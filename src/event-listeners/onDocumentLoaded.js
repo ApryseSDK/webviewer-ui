@@ -2,7 +2,8 @@ import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
-import { PRIORITY_ONE } from 'constants/actionPriority';
+import { workerTypes } from 'constants/types';
+import { PRIORITY_ONE, PRIORITY_THREE } from 'constants/actionPriority';
 
 let onFirstLoad = true;
 
@@ -52,6 +53,12 @@ export default dispatch => () => {
         dispatch(actions.setLayers(layers));
       }
     });
+  }
+
+  if (doc.getType() === workerTypes.PDF) {
+    dispatch(actions.enableElement('cropToolButton', PRIORITY_THREE));
+  } else {
+    dispatch(actions.disableElement('cropToolButton', PRIORITY_THREE));
   }
 
   window.readerControl.loadedFromServer = false;
