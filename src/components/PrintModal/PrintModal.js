@@ -148,6 +148,9 @@ class PrintModal extends React.PureComponent {
       .then(pages => {
         this.printPages(pages);
         this.resetPrintQuality();
+      })
+      .catch(e => {
+        console.error(e);
       });
   };
 
