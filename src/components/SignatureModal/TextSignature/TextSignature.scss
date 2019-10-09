@@ -22,6 +22,7 @@
     border: 1px solid $signature-modal-shared-color;
     display: flex;
     flex-wrap: wrap;
+    overflow: scroll;
   }
 
   &-canvas-container {

@@ -27,13 +27,16 @@ const SignatureModal = () => {
   const [t] = useTranslation();
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
-  const _setSaveSignature = useCallback(save => {
-    if (isSaveSignatureDisabled && save) {
-      return;
-    }
+  const _setSaveSignature = useCallback(
+    save => {
+      if (isSaveSignatureDisabled && save) {
+        return;
+      }
 
-    setSaveSignature(save);
-  }, [isSaveSignatureDisabled]);
+      setSaveSignature(save);
+    },
+    [isSaveSignatureDisabled],
+  );
 
   useEffect(() => {
     if (isOpen) {
