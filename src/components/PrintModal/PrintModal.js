@@ -418,7 +418,14 @@ class PrintModal extends React.PureComponent {
     });
 
     printHandler.appendChild(fragment);
-    window.print();
+
+    try {
+      // Print for Safari browser. Makes Safari 11 consistently work.
+      document.execCommand('print', false, null);
+    } catch {
+      // fallback
+      window.print();
+    }
     this.closePrintModal();
   };
 
