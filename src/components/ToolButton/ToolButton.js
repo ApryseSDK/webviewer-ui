@@ -58,7 +58,7 @@ const ToolButton = ({ toolName, ...restProps }) => {
     color = toolStyles[iconColor]?.toHexString?.();
   }
 
-  return core.getTool(toolName)?.disabled ? null : (
+  return (
     <Button
       className={classNames({
         ToolButton: true,
