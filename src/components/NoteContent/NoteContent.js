@@ -107,12 +107,12 @@ const NoteContent = ({ annotation }) => {
       contents = escapeHtml(contents);
 
       let text;
-      const isContentsLinkable = Autolinker.link(contents).indexOf('<a') !== -1;
+      const transformedContents = Autolinker.link(contents, { stripPrefix: false });
+      const isContentsLinkable = transformedContents.indexOf('<a') !== -1;
       if (isContentsLinkable) {
-        const linkedContent = Autolinker.link(contents, { stripPrefix: false });
         // if searchInput is 't', replace <a ...>text</a> with
         // <a ...><span class="highlight">t</span>ext</a>
-        text = linkedContent.replace(/>(.+)</i, (_, p1) => `>${getText(p1)}<`);
+        text = transformedContents.replace(/>(.+)</i, (_, p1) => `>${getText(p1)}<`);
       } else {
         text = getText(contents);
       }
