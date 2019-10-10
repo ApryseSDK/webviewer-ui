@@ -1,4 +1,11 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+  useMemo,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
@@ -69,76 +76,88 @@ const NoteContent = ({ annotation }) => {
     }
   }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
-  const handleContainerClick = e => {
-    if (isSelected) {
-      // stop bubbling up otherwise the note will be closed due to annotation deselection
-      // when the note is selected, we only want it to be closed when the note content header is clicked
-      // because users may try to select text or click any links in contents and we don't want the note to collapse
-      // when they are doing that
-      e.stopPropagation();
-    }
-  };
+  const handleContainerClick = useCallback(
+    e => {
+      if (isSelected) {
+        // stop bubbling up otherwise the note will be closed due to annotation deselection
+        // when the note is selected, we only want it to be closed when the note content header is clicked
+        // because users may try to select text or click any links in contents and we don't want the note to collapse
+        // when they are doing that
+        e.stopPropagation();
+      }
+    },
+    [isSelected],
+  );
 
-  const renderAuthorName = annotation => {
-    const name = core.getDisplayAuthor(annotation);
+  const renderAuthorName = useCallback(
+    annotation => {
+      const name = core.getDisplayAuthor(annotation);
 
-    if (!name) {
-      return '(no name)';
-    }
+      if (!name) {
+        return '(no name)';
+      }
 
-    return <span dangerouslySetInnerHTML={{ __html: getText(name) }} />;
-  };
+      return <span dangerouslySetInnerHTML={{ __html: getText(name) }} />;
+    },
+    [getText],
+  );
 
-  const renderContents = contents => {
-    contents = escapeHtml(contents);
+  const renderContents = useCallback(
+    contents => {
+      contents = escapeHtml(contents);
 
-    let text;
-    const isContentsLinkable = Autolinker.link(contents).indexOf('<a') !== -1;
-    if (isContentsLinkable) {
-      const linkedContent = Autolinker.link(contents, { stripPrefix: false });
-      // if searchInput is 't', replace <a ...>text</a> with
-      // <a ...><span class="highlight">t</span>ext</a>
-      text = linkedContent.replace(/>(.+)</i, (_, p1) => `>${getText(p1)}<`);
-    } else {
-      text = getText(contents);
-    }
+      let text;
+      const transformedContents = Autolinker.link(contents, { stripPrefix: false });
+      const isContentsLinkable = transformedContents.indexOf('<a') !== -1;
+      if (isContentsLinkable) {
+        // if searchInput is 't', replace <a ...>text</a> with
+        // <a ...><span class="highlight">t</span>ext</a>
+        text = transformedContents.replace(/>(.+)</i, (_, p1) => `>${getText(p1)}<`);
+      } else {
+        text = getText(contents);
+      }
 
-    return (
-      <span className="contents" dangerouslySetInnerHTML={{ __html: text }} />
-    );
-  };
+      return (
+        <span className="contents" dangerouslySetInnerHTML={{ __html: text }} />
+      );
+    },
+    [getText],
+  );
 
-  const getText = text => {
-    if (searchInput.trim()) {
-      return text.replace(
-        new RegExp(`(${searchInput})`, 'gi'),
-        '<span class="highlight">$1</span>',
+  const getText = useCallback(
+    text => {
+      if (searchInput.trim()) {
+        return text.replace(
+          new RegExp(`(${searchInput})`, 'gi'),
+          '<span class="highlight">$1</span>',
+        );
+      }
+
+      return text;
+    },
+    [searchInput],
+  );
+
+  const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
+  const color = annotation[iconColor]?.toHexString?.();
+  const numberOfReplies = annotation.getReplies().length;
+  const header = useMemo(() => {
+    if (isReply) {
+      return (
+        <div className="title">
+          {renderAuthorName(annotation)}
+          <span className="spacer" />
+          <span className="time">
+            {` ${dayjs(annotation.DateCreated).format(noteDateFormat)}`}
+          </span>
+          {isSelected && (
+            <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
+          )}
+        </div>
       );
     }
 
-    return text;
-  };
-
-  let header;
-  if (isReply) {
-    header = (
-      <div className="title">
-        {renderAuthorName(annotation)}
-        <span className="spacer" />
-        <span className="time">
-          {` ${dayjs(annotation.DateCreated).format(noteDateFormat)}`}
-        </span>
-        {isSelected && (
-          <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
-        )}
-      </div>
-    );
-  } else {
-    const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
-    const color = annotation[iconColor]?.toHexString?.();
-    const numberOfReplies = annotation.getReplies().length;
-
-    header = (
+    return (
       <div className="title">
         <div className="type">
           {icon ? (
@@ -161,38 +180,61 @@ const NoteContent = ({ annotation }) => {
         )}
       </div>
     );
-  }
+  }, [
+    annotation,
+    color,
+    icon,
+    isReply,
+    isSelected,
+    noteDateFormat,
+    numberOfReplies,
+    renderAuthorName,
+    sortStrategy,
+  ]);
 
   const annotationState = annotation.getStatus();
   const contents = annotation.getContents();
 
-  return (
-    <div
-      className="NoteContent"
-      // to prevent textarea from blurring out during editing when clicking on the note content
-      onMouseDown={e => e.preventDefault()}
-    >
-      {header}
-      {annotationState && annotationState !== 'None' && (
-        <div className="status">
-          {t('option.status.status')}: {annotationState}
-        </div>
-      )}
-      <div className="content-container" onMouseDown={handleContainerClick}>
-        {isEditing ? (
-          <ContentArea
-            textAreaValue={textAreaValue}
-            onTextAreaValueChange={setTextAreaValue}
-            annotation={annotation}
-            setIsEditing={setIsEditing}
-          />
-        ) : (
-          contents && (
-            <div className="container">{renderContents(contents)}</div>
-          )
+  return useMemo(
+    () => (
+      <div
+        className="NoteContent"
+        // to prevent textarea from blurring out during editing when clicking on the note content
+        onMouseDown={e => e.preventDefault()}
+      >
+        {header}
+        {annotationState && annotationState !== 'None' && (
+          <div className="status">
+            {t('option.status.status')}: {annotationState}
+          </div>
         )}
+        <div className="content-container" onMouseDown={handleContainerClick}>
+          {isEditing ? (
+            <ContentArea
+              textAreaValue={textAreaValue}
+              onTextAreaValueChange={setTextAreaValue}
+              annotation={annotation}
+              setIsEditing={setIsEditing}
+            />
+          ) : (
+            contents && (
+              <div className="container">{renderContents(contents)}</div>
+            )
+          )}
+        </div>
       </div>
-    </div>
+    ),
+    [
+      t,
+      annotation,
+      annotationState,
+      contents,
+      handleContainerClick,
+      header,
+      isEditing,
+      renderContents,
+      textAreaValue,
+    ],
   );
 };
 
