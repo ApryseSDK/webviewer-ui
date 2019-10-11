@@ -7,14 +7,6 @@ WebViewer(...)
   .then(function(instance) {
     instance.setMaxSignaturesCount(5); // allow up to 5 stored signatures
   });
- * @example // 4.0 ~ 5.0
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setMaxSignaturesCount(5); // allow up to 5 stored signatures
-});
  */
 
 import actions from 'actions';

@@ -187,16 +187,17 @@ class PrintModal extends React.PureComponent {
           pendingCanvas => pendingCanvas !== id,
         );
         this.positionCanvas(canvas, pageIndex);
-        this.drawAnnotationsOnCanvas(canvas, pageNumber).then(() => {
-          const img = document.createElement('img');
-          img.src = canvas.toDataURL();
-          img.onload = () => {
-            this.setState(({ count }) => ({
-              count: count < 0 ? -1 : count + 1,
-            }));
-            resolve(img);
-          };
-        });
+        this.drawAnnotationsOnCanvas(canvas, pageNumber)
+          .then(() => {
+            const img = document.createElement('img');
+            img.src = canvas.toDataURL();
+            img.onload = () => {
+              this.setState(({ count }) => ({
+                count: count < 0 ? -1 : count + 1,
+              }));
+              resolve(img);
+            };
+          });
       };
 
       const id = core.getDocument().loadCanvasAsync({
@@ -418,7 +419,12 @@ class PrintModal extends React.PureComponent {
     });
 
     printHandler.appendChild(fragment);
-    window.print();
+
+    // Print for Safari browser. Makes Safari 11 consistently work.
+    if (!document.execCommand('print')) {
+      // fallback for firefox
+      window.print();
+    }
     this.closePrintModal();
   };
 

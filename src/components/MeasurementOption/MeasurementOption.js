@@ -131,7 +131,7 @@ class MeasurementOption extends React.Component {
           }
         />
       );
-    } else {
+    } 
       if (this.state.isEditing) {
         return (
           <input
@@ -156,7 +156,7 @@ class MeasurementOption extends React.Component {
           />
         );
       }
-    }
+    
   }
 
   render() {

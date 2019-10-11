@@ -196,7 +196,10 @@ class SearchOverlay extends React.PureComponent {
         core.displaySearchResult(result);
         setActiveResult(result);
         this.runSearchListeners();
+      } else {
+        core.clearSearchResults();
       }
+
       if (isSearchDone) {
         core.getDocumentViewer().trigger('endOfDocumentResult', true);
       }

@@ -102,6 +102,7 @@ import ungroupAnnotations from './ungroupAnnotations';
 import getNumberOfGroups from './getNumberOfGroups';
 import undo from './undo';
 import redo from './redo';
+import updateAnnotationState from './updateAnnotationState';
 
 export default {
   setToolMode,
@@ -209,4 +210,5 @@ export default {
   getNumberOfGroups,
   undo,
   redo,
+  updateAnnotationState,
 };

@@ -39,11 +39,12 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: ['tablet', 'mobile'] },
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: ['tablet', 'mobile'] },
         { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: ['tablet', 'mobile'] },
-        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        { type: 'toolButton', toolName: 'AnnotationEraserTool', hidden: ['tablet', 'mobile'] },
         {
           type: 'customElement',
           render: () => <SignatureToolButton />,
           dataElement: 'signatureToolButton',
+          hidden: ['tablet', 'mobile'],
         },
         { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction', hidden: ['tablet', 'mobile'] },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: ['tablet', 'mobile'] },
@@ -78,6 +79,7 @@ export default {
         { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText' },
         { type: 'toolButton', toolName: 'AnnotationCreateSticky' },
+        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
         { type: 'spacer' },
         {

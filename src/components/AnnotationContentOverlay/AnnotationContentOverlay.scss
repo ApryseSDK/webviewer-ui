@@ -3,13 +3,13 @@
 
 .AnnotationContentOverlay {
   @extend %overlay;
+  @extend %word-wrap;
   
   display: flex;
   flex-direction: column;
   max-width: 215px;
   font-size: 14px;
   padding: 8px;
-  overflow-wrap: break-word;
 
   .author {
     font-weight: bold;
