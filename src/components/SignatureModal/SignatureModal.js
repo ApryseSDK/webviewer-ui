@@ -41,7 +41,6 @@ const SignatureModal = () => {
   useEffect(() => {
     if (isOpen) {
       core.setToolMode('AnnotationCreateSignature');
-      _setSaveSignature(false);
       dispatch(
         actions.closeElements([
           'printModal',

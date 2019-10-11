@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import './Tabs.scss';
@@ -29,21 +30,27 @@ export const TabList = props => {
 
   return (
     <div className="tab-list">
-      {React.Children.map(props.children, (child, index) => React.cloneElement(child, {
-        index,
-        isActive: activeIndex === index,
-      }))}
+      {React.Children.map(props.children, (child, index) =>
+        React.cloneElement(child, {
+          index,
+          isActive: activeIndex === index,
+        }),
+      )}
     </div>
   );
 };
 
 export const Tab = ({ children, index }) => {
-  const { setActiveIndex } = useContext(TabsContext);
-
+  const { activeIndex, setActiveIndex } = useContext(TabsContext);
+  const className = classNames({
+    active: activeIndex === index,
+    [children.props.className]: !!children.props.className,
+  });
   // TODO: check if children.type is a function
   // TODO: check if it's just a string
 
   return React.cloneElement(children, {
+    className,
     onClick: () => {
       if (children.props.onClick) {
         children.props.onClick();
@@ -59,11 +66,14 @@ export const TabPanels = props => {
 
   return (
     <div className="tab-panels">
-      {React.Children.map(props.children, (child, index) => React.cloneElement(child, {
-        isActive: activeIndex === index,
-      }))}
+      {React.Children.map(props.children, (child, index) =>
+        React.cloneElement(child, {
+          isActive: activeIndex === index,
+        }),
+      )}
     </div>
   );
 };
 
-export const TabPanel = ({ isActive, children }) => (isActive ? children : null);
+export const TabPanel = ({ isActive, children }) =>
+  (isActive ? children : null);

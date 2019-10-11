@@ -7,10 +7,10 @@
 WebViewer(...)
   .then(function(instance) {
     instance.setSignatureFonts(['GreatVibes-Regular']);
-    instance.setSignatureFonts(currentFonts => ([
+    instance.setSignatureFonts(currentFonts => [
       ...currentFonts,
       'sans-serif',
-    ]));
+    ]);
   });
  */
 

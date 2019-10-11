@@ -1,6 +1,8 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
 
+$signature-blue: #00A4E4;
+
 .SignatureModal {
   @extend %modal;
   font-size: 0.9em;
@@ -21,6 +23,21 @@
       margin: 11px 11px 0px 24px;
       display: flex;
       justify-content: space-between;
+
+      p {
+        margin: 0px;
+        padding: 5px 12px;
+        border-radius: 4px;
+      }
+
+      p.active {
+        color: #FFFFFF;
+        background: $signature-blue;
+      }
+      
+      p:not(.active) {
+        color: $signature-blue;
+      }
     }
 
     .footer {
@@ -51,7 +68,7 @@
           }
 
           &:checked + label:before {
-            background: #00A4E4;
+            background: $signature-blue;
             border: 1px solid transparent;
           }
 
@@ -60,16 +77,16 @@
             position: absolute;
             left: 4px;
             top: 9px;
-            background: white;
+            background: #FFFFFF;
             width: 2px;
             height: 2px;
             box-shadow: 
-              2px 0 0 white,
-              4px 0 0 white,
-              4px -2px 0 white,
-              4px -4px 0 white,
-              4px -6px 0 white,
-              4px -8px 0 white;
+              2px 0 0 #FFFFFF,
+              4px 0 0 #FFFFFF,
+              4px -2px 0 #FFFFFF,
+              4px -4px 0 #FFFFFF,
+              4px -6px 0 #FFFFFF,
+              4px -8px 0 #FFFFFF;
             transform: rotate(45deg);
           }
         }
@@ -83,9 +100,9 @@
         font-weight: 600;
         padding: 6px 18px;
         margin-right: 8px;
-        background: #00A4E4;
+        background: $signature-blue;
         border-radius: 4px 4px 4px 4px;
-        border: 1px solid #00A4E4;
+        border: 1px solid $signature-blue;
         height: 32px;
         cursor: pointer;
 

@@ -18,11 +18,28 @@ const TextSignature = ({ _setSaveSignature }) => {
     shallowEqual,
   );
   const [value, setValue] = useState(core.getCurrentUser());
-  const [activeIndex, setActiveIndex] = useState(-1);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const canvasesRef = useRef([]);
 
   useEffect(() => {
+    // this can happen when an user added a new signature font, select it and then removed it
+    // in this case we just assume there's at least one font and set the active index to 0
+    if (activeIndex >= fonts.length) {
+      setActiveIndex(0);
+    }
+  }, [activeIndex, fonts]);
+
+  useEffect(() => {
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+
     _setSaveSignature(!!value);
-  }, [_setSaveSignature, value]);
+
+    if (value) {
+      signatureTool.setSignature(canvasesRef.current[activeIndex].toDataURL());
+    } else {
+      signatureTool.annot = null;
+    }
+  }, [_setSaveSignature, activeIndex, value]);
 
   const handleInputChange = e => {
     const value = e.target.value;
@@ -51,6 +68,9 @@ const TextSignature = ({ _setSaveSignature }) => {
               text={value}
               font={font}
               onSelect={() => setActiveIndex(index)}
+              ref={el => {
+                canvasesRef.current[index] = el;
+              }}
             />
           </div>
         ))}
@@ -63,8 +83,7 @@ TextSignature.propTypes = propTypes;
 
 export default TextSignature;
 
-const Canvas = ({ text, font, onSelect }) => {
-  const signatureTool = core.getTool('AnnotationCreateSignature');
+const Canvas = React.forwardRef(({ text, font, onSelect }, forwardedRef) => {
   const canvasRef = useRef();
 
   useEffect(() => {
@@ -93,12 +112,26 @@ const Canvas = ({ text, font, onSelect }) => {
   }, [text]);
 
   const handleClick = () => {
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+    if (text) {
+      signatureTool.setSignature(canvasRef.current.toDataURL());
+    } else {
+      signatureTool.annot = null;
+    }
+
     onSelect();
-    signatureTool.setSignature(canvasRef.current.toDataURL());
   };
 
-  return <canvas ref={canvasRef} onClick={handleClick} />;
-};
+  return (
+    <canvas
+      ref={el => {
+        canvasRef.current = el;
+        forwardedRef(el);
+      }}
+      onClick={handleClick}
+    />
+  );
+});
 
 Canvas.propTypes = {
   text: PropTypes.string.isRequired,
