@@ -23,7 +23,7 @@ const TextSignature = ({ _setSaveSignature }) => {
     setValue(value);
   };
 
-  const fonts = ['Comic Sans MS', 'Garamond', 'Palatino', 'Courier'];
+  const fonts = ['Comic Sans MS', 'Caveat', 'GreatVibes-Regular', 'Courier'];
 
   return (
     <div className="text-signature">
