@@ -2,11 +2,7 @@ import core from 'core';
 
 class OrientationManager {
   getDocumentCenter = pageNumber => {
-    if (pageNumber === 2) {
-      console.log('OrientationManager', 'page num is 2');
-    }
     let result;
-    // result = core.getPageInfo(pageNumber - 1);
     if (pageNumber <= core.getTotalPages()) {
       result = core.getPageInfo(pageNumber - 1);
     }
