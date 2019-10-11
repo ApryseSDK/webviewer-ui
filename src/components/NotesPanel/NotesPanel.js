@@ -49,7 +49,6 @@ const NotesPanel = ({ display }) => {
       setSelectedNoteIds({});
       setSearchInput('');
     };
-
     core.addEventListener('documentUnloaded', onDocumentUnloaded);
     return () =>
       core.removeEventListener('documentUnloaded', onDocumentUnloaded);
@@ -70,12 +69,42 @@ const NotesPanel = ({ display }) => {
       );
     };
 
+    const onLayoutChanged = event => {
+      const removedPageNums = new Set(event.removed);
+      console.log(
+        core
+        .getAnnotationsList()
+        .filter(
+          annot =>
+            !removedPageNums.has(annot.PageNumber) &&
+            annot.Listable &&
+            !annot.isReply() &&
+            !annot.Hidden &&
+            !annot.isGrouped(),
+        )
+      );
+      setNotes(
+        core
+          .getAnnotationsList()
+          .filter(
+            annot =>
+              !removedPageNums.has(annot.PageNumber) &&
+              annot.Listable &&
+              !annot.isReply() &&
+              !annot.Hidden &&
+              !annot.isGrouped(),
+          ),
+      );
+    }
+
     core.addEventListener('annotationChanged', _setNotes);
     core.addEventListener('annotationHidden', _setNotes);
+    core.addEventListener('layoutChanged', (e) => {console.log('layout changed', e); onLayoutChanged(e);});
 
     return () => {
-      core.addEventListener('annotationChanged', _setNotes);
+      core.removeEventListener('annotationChanged', _setNotes);
       core.removeEventListener('annotationHidden', _setNotes);
+      core.removeEventListener('layoutChanged', _setNotes);
     };
   }, []);
 

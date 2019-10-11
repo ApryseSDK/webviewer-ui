@@ -7,6 +7,7 @@ import getLatestActivityDate from 'helpers/getLatestActivityDate';
 const sortStrategies = {
   position: {
     getSortedNotes: notes => notes.sort((a, b) => {
+      console.log(a.PageNumber , b.PageNumber);
       if (a.PageNumber === b.PageNumber) {
         const rotation = orientationManager.getRotationRad(a.PageNumber);
         const center = orientationManager.getDocumentCenter(a.PageNumber);
