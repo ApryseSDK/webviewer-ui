@@ -185,6 +185,7 @@ export default {
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi'],
     },
     maxSignaturesCount: 2,
+    signatureFonts: ['GreatVibes-Regular'],
     leftPanelWidth: 300,
   },
   search: {

@@ -119,6 +119,7 @@ import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
 import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
+import setSignatureFonts from './setSignatureFonts';
 
 export default store => {
   window.readerControl = {
@@ -183,6 +184,7 @@ export default store => {
     updateTool: updateTool(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
+    setSignatureFonts: setSignatureFonts(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),

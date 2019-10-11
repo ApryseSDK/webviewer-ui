@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import core from 'core';
+import selectors from 'selectors';
 
 import './TextSignature.scss';
 
@@ -11,6 +13,10 @@ const propTypes = {
 };
 
 const TextSignature = ({ _setSaveSignature }) => {
+  const fonts = useSelector(
+    state => selectors.getSignatureFonts(state),
+    shallowEqual,
+  );
   const [value, setValue] = useState(core.getCurrentUser());
   const [activeIndex, setActiveIndex] = useState(-1);
 
@@ -22,8 +28,6 @@ const TextSignature = ({ _setSaveSignature }) => {
     const value = e.target.value;
     setValue(value);
   };
-
-  const fonts = ['Comic Sans MS', 'Caveat', 'GreatVibes-Regular', 'Courier'];
 
   return (
     <div className="text-signature">
@@ -62,7 +66,7 @@ export default TextSignature;
 const Canvas = ({ text, font, onSelect }) => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
   const canvasRef = useRef();
-  const fontSize = '30px';
+  const fontSize = '100px';
 
   useEffect(() => {
     const canvas = canvasRef.current;

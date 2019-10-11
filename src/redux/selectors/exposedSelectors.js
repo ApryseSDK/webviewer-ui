@@ -124,6 +124,8 @@ export const getIsNoteEditing = state => state.viewer.isNoteEditing;
 
 export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
+export const getSignatureFonts = state => state.viewer.signatureFonts;
+
 export const getPopupItems = (state, popupDataElement) =>
   state.viewer[popupDataElement] || [];
 

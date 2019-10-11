@@ -203,6 +203,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, leftPanelWidth: payload.width };
     case 'SET_MAX_SIGNATURES_COUNT':
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
+    case 'SET_SIGNATURE_FONTS':
+      return { ...state, signatureFonts: payload.signatureFonts };
     default:
       return state;
   }
