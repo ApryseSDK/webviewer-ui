@@ -108,7 +108,7 @@ const Canvas = React.forwardRef(({ text, font, onSelect }, forwardedRef) => {
 
     ctx.fillStyle = '#000';
     ctx.clearRect(0, 0, width, height);
-    ctx.fillText(text, width / 2, height / 2);
+    ctx.fillText(text, width / 2, height / 2, width);
   }, [text]);
 
   const handleClick = () => {
