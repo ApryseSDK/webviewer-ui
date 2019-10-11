@@ -66,14 +66,14 @@ export default TextSignature;
 const Canvas = ({ text, font, onSelect }) => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
   const canvasRef = useRef();
-  const fontSize = '100px';
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const multiplier = window.utils.getCanvasMultiplier();
+    const fontSize = `${100 * multiplier}px`;
     const { width, height } = canvas.getBoundingClientRect();
-    // TODO: get canvas multiplier?
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = width * multiplier;
+    canvas.height = height * multiplier;
 
     const ctx = canvas.getContext('2d');
 
