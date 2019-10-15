@@ -33,7 +33,8 @@
     "submit": "Отправить",
     "zoom": "Увеличить",
     "zoomIn": "Увеличить",
-    "zoomOut": "Уменьшить"
+    "zoomOut": "Уменьшить",
+    "calibrate": "калибровать"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -80,7 +81,8 @@
     "toolsButton": "Инструменты",
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
-    "measurementToolsButton": "Инструменты для замерения"
+    "measurementToolsButton": "Инструменты для замерения",
+    "calibration": "калибровка"
   },
   "message": {
     "badDocument": "Произошла ошибка при загрузке документа. Документ содержит ошибки или недостоверный.",
@@ -103,7 +105,8 @@
     "searching": "Поиск...",
     "searchPlaceholder": "Поиск комментарий...",
     "signHere": "Распишетесь здесь",
-    "insertTextHere": "Вставьте текст здесь"
+    "insertTextHere": "Вставьте текст здесь",
+    "enterMeasurement": "Введите измерение между двумя точками"
   },
   "option": {
     "annotationColor": {
