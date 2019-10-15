@@ -49,7 +49,6 @@ const NotesPanel = ({ display }) => {
       setSelectedNoteIds({});
       setSearchInput('');
     };
-
     core.addEventListener('documentUnloaded', onDocumentUnloaded);
     return () =>
       core.removeEventListener('documentUnloaded', onDocumentUnloaded);
@@ -74,7 +73,7 @@ const NotesPanel = ({ display }) => {
     core.addEventListener('annotationHidden', _setNotes);
 
     return () => {
-      core.addEventListener('annotationChanged', _setNotes);
+      core.removeEventListener('annotationChanged', _setNotes);
       core.removeEventListener('annotationHidden', _setNotes);
     };
   }, []);
