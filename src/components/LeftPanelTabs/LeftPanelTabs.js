@@ -57,7 +57,13 @@ class LeftPanelTabs extends React.Component {
           onClick={() => setActiveLeftPanel('notesPanel')}
           title="component.notesPanel"
         />
-
+        <Button
+          isActive={this.isActive('bookmarksPanel')}
+          dataElement="notesPanelButton"
+          img="ic_bookmarks_black_24px"
+          onClick={() => setActiveLeftPanel('bookmarksPanel')}
+          title="component.bookmarksPanel"
+        />
         {customPanels.map(({ panel, tab }, index) => (
           <Button
             key={tab.dataElement || index}
