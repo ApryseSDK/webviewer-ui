@@ -5,15 +5,14 @@ class OrientationManager {
     let result;
     if (pageNumber <= core.getTotalPages()) {
       result = core.getPageInfo(pageNumber - 1);
-    }
-    else {
+    } else {
       result = {
         width: 0,
         height: 0,
       };
     }
     return { x: result.width / 2, y: result.height / 2 };
-  }
+  };
 
   getRotationRad = pageNumber => {
     const orientation = core.getRotation(pageNumber);
@@ -21,7 +20,7 @@ class OrientationManager {
     const radians = (4 - orientation) * (Math.PI / 2);
 
     return radians;
-  }
+  };
 
   getRotationDeg = pageNumber => {
     const orientation = core.getRotation(pageNumber);
@@ -29,7 +28,7 @@ class OrientationManager {
     const degrees = (4 - orientation) * 90;
 
     return degrees;
-  }
+  };
 }
 
 export default new OrientationManager();
