@@ -8,12 +8,12 @@ import Button from 'components/Button';
 import core from 'core';
 import { mapAnnotationToKey } from 'constants/map';
 import setToolStyles from 'helpers/setToolStyles';
+import parseMeasurementContents from 'helpers/parseMeasurementContents';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './CalibrationModal.scss';
 
-const commaRegex = /,/g;
 const numberRegex = /^\d*(\.\d*)?$/;
 
 const CalibrationModal = () => {
@@ -40,7 +40,7 @@ const CalibrationModal = () => {
       ) {
         const annot = annotations[0];
         setAnnotation(annot);
-        setValue(parseContent(annot.getContents()));
+        setValue(parseMeasurementContents(annot.getContents()));
         setUnitTo(annot.Scale[1][1]);
       } else if (action === 'deselected') {
         setAnnotation(null);
@@ -61,7 +61,7 @@ const CalibrationModal = () => {
         annotations.length === 1 &&
         annotations[0] === annotation
       ) {
-        setValue(parseContent(annotation.getContents()));
+        setValue(parseMeasurementContents(annotation.getContents()));
         setUnitTo(annotation.Scale[1][1]);
       }
     };
@@ -82,19 +82,14 @@ const CalibrationModal = () => {
   };
 
   const handleApply = () => {
-    const currentDistance = parseContent(annotation.getContents());
+    const currentDistance = parseMeasurementContents(annotation.getContents());
     const newDistance = parseFloat(value);
     const ratio = newDistance / currentDistance;
 
     const currentScale = annotation.Scale;
     const newScale = [
       [currentScale[0][0], currentScale[0][1]],
-      [
-        parseFloat(
-          (currentScale[1][0] * ratio).toFixed(getNumberOfDecimalPlaces()),
-        ),
-        unitTo,
-      ],
+      [currentScale[1][0] * ratio, unitTo],
     ];
 
     // set all the measurement annotations and tools to have the same scale
@@ -112,16 +107,6 @@ const CalibrationModal = () => {
 
   const handleCancel = () => {
     dispatch(actions.closeElements(['calibrationModal']));
-  };
-
-  const getNumberOfDecimalPlaces = () =>
-    (annotation.Precision === 1
-      ? 0
-      : annotation.Precision.toString().split('.')[1].length);
-
-  const parseContent = content => {
-    content = content.replace(commaRegex, '');
-    return parseFloat(content);
   };
 
   return isDisabled || !annotation ? null : (
