@@ -82,6 +82,7 @@ import setCurrentPageNumber from './setCurrentPageNumber';
 import setCursorOverlay from './setCursorOverlay';
 import setCustomNoteFilter from './setCustomNoteFilter';
 import setCustomPanel from './setCustomPanel';
+import setBookmarks from './setBookmarks';
 import setEngineType from './setEngineType';
 import setFitMode from './setFitMode';
 import setHeaderItems from './setHeaderItems';
@@ -203,6 +204,7 @@ export default store => {
     setCursorOverlay: setCursorOverlay(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
+    setBookmarks: setBookmarks(store),
     setEngineType: setEngineType(store), // undocumented
     setFitMode,
     setHeaderItems: setHeaderItems(store),

@@ -22,6 +22,10 @@ export default initialState => (state = initialState, action) => {
       return { ...state, totalPages: payload.totalPages };
     case 'SET_OUTLINES':
       return { ...state, outlines: payload.outlines };
+    case 'SET_BOOKMARKS':
+    {
+      return { ...state, bookmarks: payload.bookmarks };
+    }
     case 'ADD_BOOKMARK':
       return { ...state, bookmarks: [...state.bookmarks, payload.bookmark] };
     case 'EDIT_BOOKMARK':

@@ -226,12 +226,16 @@ export const setOutlines = outlines => ({
   type: 'SET_OUTLINES',
   payload: { outlines },
 });
+export const setBookmarks = bookmarks => ({
+  type: 'SET_BOOKMARKS',
+  payload: { bookmarks },
+});
 export const addBookmark = bookmark => ({
   type: 'ADD_BOOKMARK',
   payload: { bookmark },
 });
 export const editBookmark = (index, text) => ({
-  type: 'ADD_BOOKMARK',
+  type: 'EDIT_BOOKMARK',
   payload: { index, text },
 });
 export const removeBookmark = index => ({
