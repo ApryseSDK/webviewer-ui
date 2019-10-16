@@ -230,18 +230,39 @@ export const setBookmarks = bookmarks => ({
   type: 'SET_BOOKMARKS',
   payload: { bookmarks },
 });
-export const addBookmark = bookmark => ({
-  type: 'ADD_BOOKMARK',
-  payload: { bookmark },
-});
-export const editBookmark = (index, text) => ({
-  type: 'EDIT_BOOKMARK',
-  payload: { index, text },
-});
-export const removeBookmark = index => ({
-  type: 'REMOVE_BOOKMARK',
-  payload: { index },
-});
+export const addBookmark = bookmark => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: 'ADD_BOOKMARK',
+    payload: { bookmark },
+  });
+  const bookmarks = selectors.getBookmarks(getState());
+  $(document).trigger('bookmarksChanged', [bookmarks]);
+};
+export const editBookmark = (index, text) => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: 'EDIT_BOOKMARK',
+    payload: { index, text },
+  });
+  const bookmarks = selectors.getBookmarks(getState());
+  $(document).trigger('bookmarksChanged', [bookmarks]);
+};
+export const removeBookmark = (index) => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: 'REMOVE_BOOKMARK',
+    payload: { index },
+  });
+  const bookmarks = selectors.getBookmarks(getState());
+  $(document).trigger('bookmarksChanged', [bookmarks]);
+};
 export const setCheckPasswordFunction = func => ({
   type: 'SET_CHECKPASSWORD',
   payload: { func },

@@ -29,7 +29,9 @@ class BookmarksPanel extends React.PureComponent {
 
     return (
       <div className="Panel BookmarksPanel" style={{ display }} data-element="bookmarksPanel">
-        <div onClick={() => addBookmark({ pageIndex: core.getCurrentPage() - 1, text: 'asdf' })}>
+        <div onClick={() => {
+          addBookmark({ pageIndex: core.getCurrentPage() - 1, text: 'asdf' });
+        }}>
           ADD BOOKMARK
         </div>
         <div>
@@ -39,7 +41,6 @@ class BookmarksPanel extends React.PureComponent {
         </div>
       </div>
     );
-
   }
 }
 
