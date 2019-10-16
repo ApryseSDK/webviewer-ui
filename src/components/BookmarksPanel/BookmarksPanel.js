@@ -29,7 +29,7 @@ class BookmarksPanel extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, display, bookmarks, addBookmark, editBookmark, removeBookmark } = this.props;
+    const { isDisabled, display, bookmarks, addBookmark } = this.props;
 
     if (isDisabled) {
       return null;
@@ -41,8 +41,6 @@ class BookmarksPanel extends React.PureComponent {
           this.state.isAdding ?
             <EditingBookmark
               bookmarkText={''}
-              editBookmark={editBookmark}
-              removeBookmark={removeBookmark}
               onSave={(bookmarkText) => {
                 addBookmark({ pageIndex: core.getCurrentPage() - 1, text: bookmarkText });
                 this.setState({ isAdding: false });
