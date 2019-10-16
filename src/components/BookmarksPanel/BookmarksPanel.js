@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 
 import Bookmark from 'components/Bookmark';
 import EditingBookmark from 'components/Bookmark/EditingBookmark';
+import Icon from 'components/Icon';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -40,6 +41,7 @@ class BookmarksPanel extends React.PureComponent {
         {
           this.state.isAdding ?
             <EditingBookmark
+              label={`PAGE ${core.getCurrentPage()}: NEW BOOKMARK`}
               bookmarkText={''}
               onSave={(bookmarkText) => {
                 addBookmark({ pageIndex: core.getCurrentPage() - 1, text: bookmarkText });
@@ -49,11 +51,23 @@ class BookmarksPanel extends React.PureComponent {
                 this.setState({ isAdding: false });
               }}
             /> :
-            <div>
-              <div onClick={() => {
-                this.setState({ isAdding: true });
-              }}>
-                ADD BOOKMARK
+            <div className='bookmark-header'>
+              <div className="whatever">
+                <Icon
+                  className='icon'
+                  glyph='ic_bookmarks_black_24px'
+                />
+                <div>BOOKMARKS</div>
+              </div>
+              <div
+                className="b-btn"
+                onClick={() => {
+                  this.setState({ isAdding: true });
+                }}
+                tabIndex={0}
+                role="button"
+              >
+                New Bookmark
               </div>
             </div>
         }

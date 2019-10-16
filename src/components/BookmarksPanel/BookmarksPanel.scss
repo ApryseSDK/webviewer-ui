@@ -3,3 +3,24 @@
 .BookmarksPanel {
   padding: 0px 0px;
 }
+
+.b-btn {
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  padding: 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.bookmark-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 16px;
+  align-items: center;
+  font-size: 0.8em;
+}
+
+.whatever {
+  display: flex;
+  align-items: center;
+}

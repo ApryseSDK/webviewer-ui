@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import EditingBookmark from 'components/Bookmark/EditingBookmark';
+import Icon from 'components/Icon';
 
 import actions from 'actions';
 
@@ -45,8 +46,24 @@ class Bookmark extends React.PureComponent {
     return (
       <div className="Bookmark">
         <div onClick={() => core.setCurrentPage(bookmark.pageIndex + 1)}>{bookmark.text}</div>
-        <div onClick={() => this.setState({ isEditing: true })}>EDIT</div>
-        <div onClick={() => removeBookmark(index)}>DELETE</div>
+        <div className="Controls-2">
+          <div
+            onClick={() => this.setState({ isEditing: true })}
+          >
+            <Icon
+              className='icon'
+              glyph='edit-24px'
+            />
+          </div>
+          <div
+            onClick={() => removeBookmark(index)}
+          >
+            <Icon
+              className='icon'
+              glyph='cancel-24px'
+            />
+          </div>
+        </div>
       </div>
     );
   }
