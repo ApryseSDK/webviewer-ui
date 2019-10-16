@@ -55,10 +55,6 @@ const App = ({ removeEventHandlers }) => {
 
     $(document).trigger('viewerLoaded');
 
-    $(document).on('fitModeChanged', () => {
-      debugger;
-    });
-
     return removeEventHandlers;
   }, [removeEventHandlers, store]);
 

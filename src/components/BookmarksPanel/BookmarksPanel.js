@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
 import Bookmark from 'components/Bookmark';
+import EditingBookmark from 'components/Bookmark/EditingBookmark';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -13,6 +14,13 @@ import core from 'core';
 import './BookmarksPanel.scss';
 
 class BookmarksPanel extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAdding: false,
+    };
+  }
+
   static propTypes = {
     bookmarks: PropTypes.arrayOf(PropTypes.object),
     addBookmark: PropTypes.func.isRequired,
@@ -21,7 +29,7 @@ class BookmarksPanel extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, display, bookmarks, addBookmark } = this.props;
+    const { isDisabled, display, bookmarks, addBookmark, editBookmark, removeBookmark } = this.props;
 
     if (isDisabled) {
       return null;
@@ -29,11 +37,28 @@ class BookmarksPanel extends React.PureComponent {
 
     return (
       <div className="Panel BookmarksPanel" style={{ display }} data-element="bookmarksPanel">
-        <div onClick={() => {
-          addBookmark({ pageIndex: core.getCurrentPage() - 1, text: 'asdf' });
-        }}>
-          ADD BOOKMARK
-        </div>
+        {
+          this.state.isAdding ?
+            <EditingBookmark
+              bookmarkText={''}
+              editBookmark={editBookmark}
+              removeBookmark={removeBookmark}
+              onSave={(bookmarkText) => {
+                addBookmark({ pageIndex: core.getCurrentPage() - 1, text: bookmarkText });
+                this.setState({ isAdding: false });
+              }}
+              onCancel={() => {
+                this.setState({ isAdding: false });
+              }}
+            /> :
+            <div>
+              <div onClick={() => {
+                this.setState({ isAdding: true });
+              }}>
+                ADD BOOKMARK
+              </div>
+            </div>
+        }
         <div>
           {bookmarks.map((bookmark, i) => (
             <Bookmark key={i} bookmark={bookmark} index={i} />
@@ -51,6 +76,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   addBookmark: actions.addBookmark,
+  editBookmark: actions.editBookmark,
+  removeBookmark: actions.removeBookmark,
 };
 
 export default connect(
