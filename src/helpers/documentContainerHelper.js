@@ -14,7 +14,7 @@ export const updateContainerWidth = (prevProps, props, container) => {
   if (leftPanelClosed) {
     expandContainerWidthBy(leftPanelWidth, container);
     container.style.marginLeft = '0px';
-  } 
+  }
 
   const rightPanelClosed = prevProps.isRightPanelOpen && !props.isRightPanelOpen;
   if (rightPanelClosed) {
