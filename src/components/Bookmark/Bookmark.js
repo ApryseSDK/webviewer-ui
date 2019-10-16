@@ -11,16 +11,17 @@ import './bookmark.scss';
 class Bookmark extends React.PureComponent {
   static propTypes = {
     bookmark: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
   }
 
   render() {
-    const { bookmark, editBookmark, removeBookmark, } = this.props;
+    const { bookmark, editBookmark, removeBookmark, index } = this.props;
 
     return (
       <div className="Bookmark">
         <div onClick={() => core.setCurrentPage(bookmark.pageIndex + 1)}>{bookmark.text}</div>
         {/* <div onClick={() => editBookmark()}>EDIT</div> */}
-        <div onClick={() => removeBookmark(bookmark.pageIndex)}>DELETE</div>
+        <div onClick={() => removeBookmark(index)}>DELETE</div>
       </div>
     );
   }

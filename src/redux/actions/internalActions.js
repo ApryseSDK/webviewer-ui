@@ -239,7 +239,7 @@ export const addBookmark = bookmark => (
     payload: { bookmark },
   });
   const bookmarks = selectors.getBookmarks(getState());
-  $(document).trigger('bookmarksChanged', [bookmarks]);
+  // $(document).trigger('bookmarksChanged', [bookmarks]);
 };
 export const editBookmark = (index, text) => (
   dispatch,
@@ -250,7 +250,7 @@ export const editBookmark = (index, text) => (
     payload: { index, text },
   });
   const bookmarks = selectors.getBookmarks(getState());
-  $(document).trigger('bookmarksChanged', [bookmarks]);
+  // $(document).trigger('bookmarksChanged', [bookmarks]);
 };
 export const removeBookmark = (index) => (
   dispatch,
@@ -261,7 +261,7 @@ export const removeBookmark = (index) => (
     payload: { index },
   });
   const bookmarks = selectors.getBookmarks(getState());
-  $(document).trigger('bookmarksChanged', [bookmarks]);
+  // $(document).trigger('bookmarksChanged', [bookmarks]);
 };
 export const setCheckPasswordFunction = func => ({
   type: 'SET_CHECKPASSWORD',
