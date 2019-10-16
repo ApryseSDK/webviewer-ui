@@ -14,7 +14,7 @@ export const updateContainerWidth = (prevProps, props, container) => {
   if (leftPanelClosed) {
     expandContainerWidthBy(leftPanelWidth, container);
     container.style.marginLeft = '0px';
-  }
+  } 
 
   const rightPanelClosed = prevProps.isRightPanelOpen && !props.isRightPanelOpen;
   if (rightPanelClosed) {
@@ -39,29 +39,36 @@ export const updateContainerWidth = (prevProps, props, container) => {
   }
 };
 
-const expandContainerWidthBy = (panelWidth, container) => {
+const getWidthAfterTransition = container => {
+  const oldTransition = container.style.transition;
+  container.style.transition = 'none';
   const containerWidth = parseInt(window.getComputedStyle(container).width, 10);
+  container.style.transition = oldTransition;
+
+  return containerWidth;
+};
+
+const expandContainerWidthBy = (panelWidth, container) => {
+  const containerWidth = getWidthAfterTransition(container);
 
   if (isIEEdge) {
     container.style.width = `${containerWidth + panelWidth}px`;
   }
 
   if (isIE11) {
-    const scrollBarWidth = 17;
-    container.style.width = `${containerWidth + panelWidth + scrollBarWidth}px`;
+    container.style.width = `${containerWidth + panelWidth}px`;
   }
 };
 
 const shrinkContainerWidthBy = (panelWidth, container) => {
-  const containerWidth = parseInt(window.getComputedStyle(container).width, 10);
+  const containerWidth = getWidthAfterTransition(container);
 
   if (isIEEdge) {
     container.style.width = `${containerWidth - panelWidth}px`;
   }
 
   if (isIE11) {
-    const scrollBarWidth = 17;
-    container.style.width = `${containerWidth - panelWidth + scrollBarWidth}px`;
+    container.style.width = `${containerWidth - panelWidth}px`;
   }
 };
 
