@@ -226,6 +226,18 @@ export const setOutlines = outlines => ({
   type: 'SET_OUTLINES',
   payload: { outlines },
 });
+export const addBookmark = bookmark => ({
+  type: 'ADD_BOOKMARK',
+  payload: { bookmark },
+});
+export const editBookmark = (index, text) => ({
+  type: 'ADD_BOOKMARK',
+  payload: { index, text },
+});
+export const removeBookmark = index => ({
+  type: 'REMOVE_BOOKMARK',
+  payload: { index },
+});
 export const setCheckPasswordFunction = func => ({
   type: 'SET_CHECKPASSWORD',
   payload: { func },

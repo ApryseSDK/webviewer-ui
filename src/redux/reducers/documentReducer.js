@@ -22,6 +22,23 @@ export default initialState => (state = initialState, action) => {
       return { ...state, totalPages: payload.totalPages };
     case 'SET_OUTLINES':
       return { ...state, outlines: payload.outlines };
+    case 'ADD_BOOKMARK':
+      return { ...state, bookmarks: [...state.bookmarks, payload.bookmark] };
+    case 'EDIT_BOOKMARK':
+    {
+      const newBookmarks = [...state.bookmarks];
+      newBookmarks[payload.index] = {
+        ...newBookmarks[payload.index],
+        text: payload.text,
+      }
+      return { ...state, bookmarks: newBookmarks };
+    }
+    case 'REMOVE_BOOKMARK':
+    {
+      const newBookmarks = [...state.bookmarks];
+      newBookmarks.splice(payload.index, 1);
+      return { ...state, bookmarks: newBookmarks };
+    }
     case 'SET_CHECKPASSWORD':
       return { ...state, checkPassword: payload.func };
     case 'SET_PASSWORD_ATTEMPTS':
