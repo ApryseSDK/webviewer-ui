@@ -56,7 +56,9 @@ const expandContainerWidthBy = (panelWidth, container) => {
   }
 
   if (isIE11) {
-    container.style.width = `${containerWidth + panelWidth}px`;
+    //need to add 'scrollBarWidth' or it breaks after "npm run build", this isn't needed for npm run start
+    const scrollBarWidth = 17;
+    container.style.width = `${containerWidth + panelWidth + scrollBarWidth}px`;
   }
 };
 
@@ -68,7 +70,8 @@ const shrinkContainerWidthBy = (panelWidth, container) => {
   }
 
   if (isIE11) {
-    container.style.width = `${containerWidth - panelWidth}px`;
+    const scrollBarWidth = 17;
+    container.style.width = `${containerWidth - panelWidth + scrollBarWidth}px`;
   }
 };
 
