@@ -184,7 +184,7 @@ export default {
     totalPages: 0,
     outlines: [],
     // bookmarks: [],
-    bookmarks: JSON.parse('[{"pageIndex":0,"text":"asdfweqwe"},{"pageIndex":2,"text":"asdf123123123"},{"pageIndex":0,"text":"asdf"},{"pageIndex":0,"text":"asdfqweqwe"},{"pageIndex":0,"text":"asdf"},{"pageIndex":0,"text":"123123"}]'),
+    bookmarks: JSON.parse('[{"pageIndex":0,"text":"bookmark 1"},{"pageIndex":0,"text":"bookmark 2"},{"pageIndex":0,"text":"bookmark 3"},{"pageIndex":0,"text":"bookmark 4"},{"pageIndex":0,"text":"bookmark 5"},{"pageIndex":1,"text":"bookmark  6"}]'),
     checkPassword: null,
     password: '',
     printQuality: 1,

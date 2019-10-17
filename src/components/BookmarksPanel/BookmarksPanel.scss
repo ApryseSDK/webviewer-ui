@@ -15,12 +15,26 @@
 .bookmark-header {
   display: flex;
   justify-content: space-between;
-  margin: 0px 16px;
   align-items: center;
   font-size: 0.8em;
+  margin: 0px 16px;
 }
 
 .whatever {
   display: flex;
   align-items: center;
+}
+
+.bbb {
+  margin-left: 8px;
+}
+
+.page-label {
+  margin-top: 16px;
+  font-weight: bold;
+  // margin-left: 20px;
+}
+
+.bm-content {
+  margin: 0px 20px;
 }

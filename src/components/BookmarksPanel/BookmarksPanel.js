@@ -28,13 +28,14 @@ class BookmarksPanel extends React.PureComponent {
     display: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
   }
-
   render() {
     const { isDisabled, display, bookmarks, addBookmark } = this.props;
 
     if (isDisabled) {
       return null;
     }
+
+    let lastPageIndex;
 
     return (
       <div className="Panel BookmarksPanel" style={{ display }} data-element="bookmarksPanel">
@@ -57,7 +58,7 @@ class BookmarksPanel extends React.PureComponent {
                   className='icon'
                   glyph='ic_bookmarks_black_24px'
                 />
-                <div>BOOKMARKS</div>
+                <div className="bbb">BOOKMARKS</div>
               </div>
               <div
                 className="b-btn"
@@ -71,10 +72,21 @@ class BookmarksPanel extends React.PureComponent {
               </div>
             </div>
         }
-        <div>
-          {bookmarks.map((bookmark, i) => (
-            <Bookmark key={i} bookmark={bookmark} index={i} />
-          ))}
+        <div className="bm-content">
+          {bookmarks.map((bookmark, i) => {
+            let showPageLabel = false;
+            if (lastPageIndex !== bookmark.pageIndex) {
+              showPageLabel = true;
+              lastPageIndex = bookmark.pageIndex;
+            }
+
+            return (
+              <React.Fragment>
+                {showPageLabel && <div className="page-label">{`Page ${lastPageIndex + 1}`}</div>}
+                <Bookmark key={i} bookmark={bookmark} index={i} />
+              </React.Fragment>
+            );
+          })}
         </div>
       </div>
     );

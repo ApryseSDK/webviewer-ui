@@ -24,10 +24,10 @@ export default initialState => (state = initialState, action) => {
       return { ...state, outlines: payload.outlines };
     case 'SET_BOOKMARKS':
     {
-      return { ...state, bookmarks: payload.bookmarks };
+      return { ...state, bookmarks: _.sortBy(payload.bookmarks, ['pageIndex'])};
     }
     case 'ADD_BOOKMARK':
-      return { ...state, bookmarks: [...state.bookmarks, payload.bookmark] };
+      return { ...state, bookmarks: _.sortBy([...state.bookmarks, payload.bookmark], ['pageIndex']) };
     case 'EDIT_BOOKMARK':
     {
       const newBookmarks = [...state.bookmarks];

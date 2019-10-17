@@ -1,15 +1,14 @@
 .Bookmark {
   display: flex;
   justify-content: space-between;
-  margin: 0px 10px;
-  padding: 10px;
+  // margin: 0px 10px;
+  padding-top: 10px;
   font-size: 0.8em;
   align-items: center;
+  // margin-left: 20px;
 }
 
 .Controls-2 {
   display: flex;
   cursor: pointer;
-  transform: scale(0.8);
-  height: 19.2px;
 }
