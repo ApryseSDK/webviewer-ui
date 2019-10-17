@@ -35,10 +35,10 @@ class Bookmark extends React.PureComponent {
           bookmarkText={bookmark.text}
           onSave={(bookmarkValue) => {
             editBookmark(index, bookmarkValue);
-            this.setState({ isEditing: false });
+            this.setState({ isEditing: false, isHovered: false });
           }}
           onCancel={() => {
-            this.setState({ isEditing: false });
+            this.setState({ isEditing: false, isHovered: false });
           }}
         />
       );
