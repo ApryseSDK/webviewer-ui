@@ -16,6 +16,7 @@ class Bookmark extends React.PureComponent {
     super(props);
     this.state = {
       isEditing: false,
+      isHovered: false,
     };
   }
 
@@ -44,26 +45,33 @@ class Bookmark extends React.PureComponent {
     }
 
     return (
-      <div className="Bookmark">
+      <div
+        className="Bookmark"
+        onMouseEnter={() => this.setState({ isHovered: true })}
+        onMouseMove={() => this.setState({ isHovered: true })}
+        onMouseLeave={() => this.setState({ isHovered: false })}
+      >
         <div onClick={() => core.setCurrentPage(bookmark.pageIndex + 1)}>{bookmark.text}</div>
-        <div className="Controls-2">
-          <div
-            onClick={() => this.setState({ isEditing: true })}
-          >
-            <Icon
-              className='icon'
-              glyph='edit-24px'
-            />
+        {this.state.isHovered &&
+          <div className="Controls-2">
+            <div
+              onClick={() => this.setState({ isEditing: true })}
+            >
+              <Icon
+                className='icon'
+                glyph='edit-24px'
+              />
+            </div>
+            <div
+              onClick={() => removeBookmark(index)}
+            >
+              <Icon
+                className='icon'
+                glyph='cancel-24px'
+              />
+            </div>
           </div>
-          <div
-            onClick={() => removeBookmark(index)}
-          >
-            <Icon
-              className='icon'
-              glyph='cancel-24px'
-            />
-          </div>
-        </div>
+        }
       </div>
     );
   }
