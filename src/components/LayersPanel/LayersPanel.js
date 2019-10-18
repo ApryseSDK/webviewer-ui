@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
+
 import Layer from 'components/Layer';
 
-// import getClassName from 'helpers/getClassName';
+import actions from 'actions';
 import selectors from 'selectors';
 
 import './LayersPanel.scss';
@@ -18,7 +19,7 @@ class LayersPanel extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, layers, display } = this.props;
+    const { isDisabled, layers, display, setLayers } = this.props;
 
     if (isDisabled) {
       return null;
@@ -27,7 +28,15 @@ class LayersPanel extends React.PureComponent {
     return (
       <div className="Panel LayersPanel" style={{ display }} data-element="layersPanel">
         {layers.map((layer, i) => (
-          <Layer key={i} layer={layer} layers={layers} index={i} />
+          <Layer
+            key={i}
+            layer={layer}
+            updateLayer={(modifiedSubLayer) => {
+              const newLayers = [...layers];
+              newLayers[i] = modifiedSubLayer;
+              setLayers(newLayers);
+            }}
+          />
         ))}
       </div>
     );
@@ -39,4 +48,9 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'layersPanel'),
 });
 
-export default connect(mapStateToProps)(withTranslation()(LayersPanel));
+export default connect(
+  mapStateToProps,
+  {
+    setLayers: actions.setLayers,
+  },
+)(withTranslation()(LayersPanel));

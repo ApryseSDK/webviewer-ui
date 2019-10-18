@@ -233,10 +233,16 @@ export const setOutlines = outlines => ({
   type: 'SET_OUTLINES',
   payload: { outlines },
 });
-export const setLayers = layers => ({
-  type: 'SET_LAYERS',
-  payload: { layers },
-});
+export const setLayers = layers => (dispatch) => {
+  dispatch({
+    type: 'SET_LAYERS',
+    payload: { layers },
+  });
+  const doc = core.getDocument();
+  doc.setLayersArray(layers);
+  window.docViewer.refreshAll();
+  window.docViewer.updateView();
+};
 export const setCheckPasswordFunction = func => ({
   type: 'SET_CHECKPASSWORD',
   payload: { func },

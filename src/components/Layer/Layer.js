@@ -11,22 +11,32 @@ import './Layer.scss';
 class Layer extends React.PureComponent {
   static propTypes = {
     layer: PropTypes.object.isRequired,
-    layers: PropTypes.arrayOf(PropTypes.object).isRequired,
-    index: PropTypes.number.isRequired,
   };
 
   state = {
     isExpanded: false,
   };
 
-  onChange = e => {
-    const { index, layers } = this.props;
-    layers[index].visible = e.target.checked;
-    const doc = core.getDocument();
-    doc.setLayersArray(layers);
+  unCheckChildren = (layer) => {
+    const newLayer = {...layer};
+    layer.children && layer.children.forEach((childLayer, i) => {
+      let newChildLayer = {...childLayer};
+      newChildLayer.visible = false;
+      newChildLayer = this.unCheckChildren(newChildLayer);
+      newLayer.children[i] = newChildLayer;
+    });
+    return newLayer;
+  }
 
-    window.docViewer.refreshAll();
-    window.docViewer.updateView();
+  onChange = e => {
+    const { updateLayer, layer } = this.props;
+
+    let newLayer = {...layer};
+    newLayer.visible = e.target.checked;
+    if (e.target.checked === false) {
+      newLayer = this.unCheckChildren(newLayer);
+    }
+    updateLayer(newLayer);
   };
 
   onClickExpand = () => {
@@ -37,7 +47,7 @@ class Layer extends React.PureComponent {
 
   render() {
     const { isExpanded } = this.state;
-    const { layer } = this.props;
+    const { layer, updateLayer } = this.props;
     const hasSubLayers = layer.children.length > 0;
 
     return (
@@ -60,13 +70,26 @@ class Layer extends React.PureComponent {
             type="checkbox"
             label={layer.name}
             onChange={this.onChange}
-            defaultChecked={layer.visible}
+            checked={layer.visible}
           />
         </div>
         {hasSubLayers && isExpanded && (
           <div className="sub-layers">
             {layer.children.map((subLayer, i) => (
-              <Layer key={i} layer={subLayer} layers={layer.children} index={i} />
+              <Layer
+                key={i}
+                index={i}
+                layer={subLayer}
+                layers={layer.children}
+                updateLayer={(modifiedSubLayer) => {
+                  const children = [...layer.children];
+                  children[i] = modifiedSubLayer;
+                  const newLayer = {...layer};
+                  newLayer.children = children;
+
+                  updateLayer(newLayer);
+                }}
+              />
             ))}
           </div>
         )}
