@@ -18,6 +18,7 @@ class Layer extends React.PureComponent {
   };
 
   unCheckChildren = (layer) => {
+    // new references for redux state
     const newLayer = {...layer};
     layer.children && layer.children.forEach((childLayer, i) => {
       let newChildLayer = {...childLayer};
@@ -31,6 +32,7 @@ class Layer extends React.PureComponent {
   onChange = e => {
     const { updateLayer, layer } = this.props;
 
+    // new references for redux state
     let newLayer = {...layer};
     newLayer.visible = e.target.checked;
     if (e.target.checked === false) {
@@ -82,6 +84,7 @@ class Layer extends React.PureComponent {
                 layer={subLayer}
                 layers={layer.children}
                 updateLayer={(modifiedSubLayer) => {
+                  // new references for redux state
                   const children = [...layer.children];
                   children[i] = modifiedSubLayer;
                   const newLayer = {...layer};

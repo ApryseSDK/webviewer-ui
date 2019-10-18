@@ -32,6 +32,7 @@ class LayersPanel extends React.PureComponent {
             key={i}
             layer={layer}
             updateLayer={(modifiedSubLayer) => {
+              // new references for redux state
               const newLayers = [...layers];
               newLayers[i] = modifiedSubLayer;
               setLayers(newLayers);
