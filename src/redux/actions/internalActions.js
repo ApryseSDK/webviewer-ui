@@ -238,10 +238,10 @@ export const setLayers = layers => (dispatch) => {
     type: 'SET_LAYERS',
     payload: { layers },
   });
-  const doc = core.getDocument();
-  doc.setLayersArray(layers);
-  window.docViewer.refreshAll();
-  window.docViewer.updateView();
+  // const doc = core.getDocument();
+  // doc.setLayersArray(layers);
+  // window.docViewer.refreshAll();
+  // window.docViewer.updateView();
 };
 export const setCheckPasswordFunction = func => ({
   type: 'SET_CHECKPASSWORD',

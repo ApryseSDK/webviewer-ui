@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-
+import core from 'core';
 
 import Layer from 'components/Layer';
 
@@ -17,6 +17,15 @@ class LayersPanel extends React.PureComponent {
     display: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
     setLayers: PropTypes.func.isRequired,
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.layers !== this.props.layers) {
+      const doc = core.getDocument();
+      doc.setLayersArray(this.props.layers);
+      window.docViewer.refreshAll();
+      window.docViewer.updateView();
+    }
   }
 
   render() {

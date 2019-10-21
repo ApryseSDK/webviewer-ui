@@ -11,6 +11,7 @@ import './Layer.scss';
 class Layer extends React.PureComponent {
   static propTypes = {
     layer: PropTypes.object.isRequired,
+    parentLayer: PropTypes.object,
     updateLayer: PropTypes.func.isRequired,
   };
 
@@ -31,15 +32,19 @@ class Layer extends React.PureComponent {
   }
 
   onChange = e => {
-    const { updateLayer, layer } = this.props;
+    const { updateLayer, layer, parentLayer } = this.props;
 
-    // new references for redux state
-    let newLayer = {...layer};
-    newLayer.visible = e.target.checked;
-    if (e.target.checked === false) {
-      newLayer = this.unCheckChildren(newLayer);
+    if (e.target.checked === true && parentLayer && !parentLayer.visible) {
+      window.alert('This layer has been disabled because its parent layer is disabled.');
+    } else {
+      // new references for redux state
+      let newLayer = {...layer};
+      newLayer.visible = e.target.checked;
+      if (e.target.checked === false) {
+        newLayer = this.unCheckChildren(newLayer);
+      }
+      updateLayer(newLayer);
     }
-    updateLayer(newLayer);
   };
 
   onClickExpand = () => {
@@ -82,6 +87,7 @@ class Layer extends React.PureComponent {
               <Layer
                 key={i}
                 layer={subLayer}
+                parentLayer={layer}
                 updateLayer={(modifiedSubLayer) => {
                   // new references for redux state
                   const children = [...layer.children];
