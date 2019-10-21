@@ -11,6 +11,7 @@ import './Layer.scss';
 class Layer extends React.PureComponent {
   static propTypes = {
     layer: PropTypes.object.isRequired,
+    updateLayer: PropTypes.func.isRequired,
   };
 
   state = {
@@ -80,9 +81,7 @@ class Layer extends React.PureComponent {
             {layer.children.map((subLayer, i) => (
               <Layer
                 key={i}
-                index={i}
                 layer={subLayer}
-                layers={layer.children}
                 updateLayer={(modifiedSubLayer) => {
                   // new references for redux state
                   const children = [...layer.children];

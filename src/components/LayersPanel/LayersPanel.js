@@ -16,6 +16,7 @@ class LayersPanel extends React.PureComponent {
     layers: PropTypes.arrayOf(PropTypes.object),
     display: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
+    setLayers: PropTypes.func.isRequired,
   }
 
   render() {
