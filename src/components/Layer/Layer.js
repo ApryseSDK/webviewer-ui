@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Input from 'components/Input';
 
-import core from 'core';
-
 import './Layer.scss';
 
 class Layer extends React.PureComponent {
