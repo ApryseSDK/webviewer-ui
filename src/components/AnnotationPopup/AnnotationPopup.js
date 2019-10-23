@@ -185,97 +185,6 @@ const AnnotationPopup = () => {
     dispatch(actions.closeElement('annotationPopup'));
   };
 
-  const dataElementButtonMap = {
-    annotationCommentButton: overrides =>
-      !isNotesPanelDisabled &&
-      !multipleAnnotationsSelected &&
-      firstAnnotation.ToolName !== 'CropPage' && (
-        <ActionButton
-          title="action.comment"
-          img="ic_comment_black_24px"
-          onClick={commentOnAnnotation}
-          {...overrides}
-          dataElement="annotationCommentButton"
-        />
-      ),
-    annotationStyleEditButton: overrides =>
-      canModify &&
-      hasStyle &&
-      !isAnnotationStylePopupDisabled &&
-      !multipleAnnotationsSelected &&
-      firstAnnotation.ToolName !== 'CropPage' && (
-        <ActionButton
-          title="action.style"
-          img="ic_palette_black_24px"
-          onClick={() => setIsStylePopupOpen(true)}
-          {...overrides}
-          dataElement="annotationStyleEditButton"
-        />
-      ),
-    annotationCropButton: overrides =>
-      firstAnnotation.ToolName === 'CropPage' && (
-        <ActionButton
-          title="action.apply"
-          img="ic_check_black_24px"
-          onClick={() => {
-            core.getTool('CropPage').applyCrop();
-            dispatch(actions.closeElement('annotationPopup'));
-          }}
-          {...overrides}
-          dataElement="annotationCropButton"
-        />
-      ),
-    annotationRedactButton: overrides =>
-      redactionEnabled &&
-      !multipleAnnotationsSelected && (
-        <ActionButton
-          title="action.apply"
-          img="ic_check_black_24px"
-          onClick={() => {
-            dispatch(applyRedactions(firstAnnotation));
-            dispatch(actions.closeElement('annotationPopup'));
-          }}
-          {...overrides}
-          dataElement="annotationRedactButton"
-        />
-      ),
-    annotationGroupButton: overrides =>
-      canGroup && (
-        <ActionButton
-          title="action.group"
-          img="ic_group_24px"
-          onClick={() =>
-            core.groupAnnotations(primaryAnnotation, selectedAnnotations)
-          }
-          {...overrides}
-          dataElement="annotationGroupButton"
-        />
-      ),
-    annotationUngroupButton: overrides =>
-      canUngroup && (
-        <ActionButton
-          title="action.ungroup"
-          img="ic_ungroup_24px"
-          onClick={() => core.ungroupAnnotations(selectedAnnotations)}
-          {...overrides}
-          dataElement="annotationUngroupButton"
-        />
-      ),
-    annotationDeleteButton: overrides =>
-      canModify && (
-        <ActionButton
-          title="action.delete"
-          img="ic_delete_black_24px"
-          onClick={() => {
-            core.deleteAnnotations(core.getSelectedAnnotations());
-            dispatch(actions.closeElement('annotationPopup'));
-          }}
-          {...overrides}
-          dataElement="annotationDeleteButton"
-        />
-      ),
-  };
-
   return (
     <div
       className={classNames({
@@ -297,7 +206,79 @@ const AnnotationPopup = () => {
         />
       ) : (
         <CustomizablePopup dataElement="annotationPopup">
-          {dataElementButtonMap}
+          {!isNotesPanelDisabled &&
+            !multipleAnnotationsSelected &&
+            firstAnnotation.ToolName !== 'CropPage' && (
+            <ActionButton
+              dataElement="annotationCommentButton"
+              title="action.comment"
+              img="ic_comment_black_24px"
+              onClick={commentOnAnnotation}
+            />
+          )}
+          {canModify &&
+            hasStyle &&
+            !isAnnotationStylePopupDisabled &&
+            !multipleAnnotationsSelected &&
+            firstAnnotation.ToolName !== 'CropPage' && (
+            <ActionButton
+              dataElement="annotationStyleEditButton"
+              title="action.style"
+              img="ic_palette_black_24px"
+              onClick={() => setIsStylePopupOpen(true)}
+            />
+          )}
+          {firstAnnotation.ToolName === 'CropPage' && (
+            <ActionButton
+              dataElement="annotationCropButton"
+              title="action.apply"
+              img="ic_check_black_24px"
+              onClick={() => {
+                core.getTool('CropPage').applyCrop();
+                dispatch(actions.closeElement('annotationPopup'));
+              }}
+            />
+          )}
+          {redactionEnabled && !multipleAnnotationsSelected && (
+            <ActionButton
+              dataElement="annotationRedactButton"
+              title="action.apply"
+              img="ic_check_black_24px"
+              onClick={() => {
+                dispatch(applyRedactions(firstAnnotation));
+                dispatch(actions.closeElement('annotationPopup'));
+              }}
+            />
+          )}
+          {canGroup && (
+            <ActionButton
+              dataElement="annotationGroupButton"
+              title="action.group"
+              img="ic_group_24px"
+              onClick={() =>
+                core.groupAnnotations(primaryAnnotation, selectedAnnotations)
+              }
+            />
+          )}
+          {canUngroup && (
+            <ActionButton
+              dataElement="annotationUngroupButton"
+              title="action.ungroup"
+              img="ic_ungroup_24px"
+              onClick={() => core.ungroupAnnotations(selectedAnnotations)}
+            />
+          )}
+          {canModify && (
+            <ActionButton
+              dataElement="annotationDeleteButton"
+              title="action.delete"
+              img="ic_delete_black_24px"
+              onClick={() => {
+                core.deleteAnnotations(core.getSelectedAnnotations());
+                dispatch(actions.closeElement('annotationPopup'));
+              }}
+            />
+          )}
         </CustomizablePopup>
       )}
     </div>

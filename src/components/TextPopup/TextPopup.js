@@ -50,89 +50,6 @@ const TextPopup = () => {
     return () => textSelectTool.on('selectionComplete', onSelectionComplete);
   }, [dispatch]);
 
-  const dataElementButtonMap = {
-    copyTextButton: overrides => (
-      <ActionButton
-        title="action.copy"
-        img="ic_copy_black_24px"
-        onClick={copyText}
-        {...overrides}
-        dataElement="copyTextButton"
-      />
-    ),
-    textHighlightToolButton: overrides => (
-      <ActionButton
-        title="annotation.highlight"
-        img="ic_annotation_highlight_black_24px"
-        onClick={() =>
-          createTextAnnotationAndSelect(
-            dispatch,
-            Annotations.TextHighlightAnnotation,
-          )
-        }
-        {...overrides}
-        dataElement="textHighlightToolButton"
-      />
-    ),
-    textUnderlineToolButton: overrides => (
-      <ActionButton
-        title="annotation.underline"
-        img="ic_annotation_underline_black_24px"
-        onClick={() =>
-          createTextAnnotationAndSelect(
-            dispatch,
-            Annotations.TextUnderlineAnnotation,
-          )
-        }
-        {...overrides}
-        dataElement="textUnderlineToolButton"
-      />
-    ),
-    textSquigglyToolButton: overrides => (
-      <ActionButton
-        title="annotation.squiggly"
-        img="ic_annotation_squiggly_black_24px"
-        onClick={() =>
-          createTextAnnotationAndSelect(
-            dispatch,
-            Annotations.TextSquigglyAnnotation,
-          )
-        }
-        {...overrides}
-        dataElement="textSquigglyToolButton"
-      />
-    ),
-    textStrikeoutToolButton: overrides => (
-      <ActionButton
-        title="annotation.strikeout"
-        img="ic_annotation_strikeout_black_24px"
-        onClick={() =>
-          createTextAnnotationAndSelect(
-            dispatch,
-            Annotations.TextStrikeoutAnnotation,
-          )
-        }
-        {...overrides}
-        dataElement="textStrikeoutToolButton"
-      />
-    ),
-    textRedactToolButton: overrides =>
-      core.isCreateRedactionEnabled() ? (
-        <ActionButton
-          title="option.redaction.markForRedaction"
-          img="ic_annotation_add_redact_black_24px"
-          onClick={() =>
-            createTextAnnotationAndSelect(
-              dispatch,
-              Annotations.RedactionAnnotation,
-            )
-          }
-          {...overrides}
-          dataElement="textRedactToolButton"
-        />
-      ) : null,
-  };
-
   return isDisabled ? null : (
     <div
       className={classNames({
@@ -147,7 +64,69 @@ const TextPopup = () => {
       onClick={() => dispatch(actions.closeElement('textPopup'))}
     >
       <CustomizablePopup dataElement="textPopup">
-        {dataElementButtonMap}
+        <ActionButton
+          dataElement="copyTextButton"
+          title="action.copy"
+          img="ic_copy_black_24px"
+          onClick={copyText}
+        />
+        <ActionButton
+          dataElement="textHighlightToolButton"
+          title="annotation.highlight"
+          img="ic_annotation_highlight_black_24px"
+          onClick={() =>
+            createTextAnnotationAndSelect(
+              dispatch,
+              Annotations.TextHighlightAnnotation,
+            )
+          }
+        />
+        <ActionButton
+          dataElement="textUnderlineToolButton"
+          title="annotation.underline"
+          img="ic_annotation_underline_black_24px"
+          onClick={() =>
+            createTextAnnotationAndSelect(
+              dispatch,
+              Annotations.TextUnderlineAnnotation,
+            )
+          }
+        />
+        <ActionButton
+          dataElement="textSquigglyToolButton"
+          title="annotation.squiggly"
+          img="ic_annotation_squiggly_black_24px"
+          onClick={() =>
+            createTextAnnotationAndSelect(
+              dispatch,
+              Annotations.TextSquigglyAnnotation,
+            )
+          }
+        />
+        <ActionButton
+          title="annotation.strikeout"
+          img="ic_annotation_strikeout_black_24px"
+          onClick={() =>
+            createTextAnnotationAndSelect(
+              dispatch,
+              Annotations.TextStrikeoutAnnotation,
+            )
+          }
+          dataElement="textStrikeoutToolButton"
+        />
+        {core.isCreateRedactionEnabled() && (
+          <ActionButton
+            dataElement="textRedactToolButton"
+            title="option.redaction.markForRedaction"
+            img="ic_annotation_add_redact_black_24px"
+            onClick={() =>
+              createTextAnnotationAndSelect(
+                dispatch,
+                Annotations.RedactionAnnotation,
+              )
+            }
+          />
+        )}
       </CustomizablePopup>
     </div>
   );

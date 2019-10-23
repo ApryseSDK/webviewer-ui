@@ -20,7 +20,7 @@ const propTypes = {
   /**
    * An object that maps an item's dataElement to a functional React component
    */
-  children: PropTypes.objectOf(PropTypes.func.isRequired).isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const CustomizablePopup = ({ dataElement, children }) => {
@@ -28,54 +28,77 @@ const CustomizablePopup = ({ dataElement, children }) => {
     state => selectors.getPopupItems(state, dataElement),
     shallowEqual,
   );
+  const childrenArray = React.Children.toArray(children);
+
+  if (process.env.NODE_ENV !== 'production') {
+    // give a error message in the console if a child's dataElement in the childrenArray isn't in the redux state
+    childrenArray.forEach(child => {
+      const found = items.some(({ dataElement }) => dataElement === child.props.dataElement);
+      if (!found) {
+        const error = `
+        A React component with dataElement ${child.props.dataElement} won't be rendered because it isn't in the redux state. Modify initialState.js like below to fix this issue:
+
+        {
+          viewer: {
+            ...,
+            ${dataElement}: [
+              ...,
+              { dataElement: '${child.props.dataElement}' },
+            ]
+          }
+        }
+      `;
+        console.error(error.replace(/\s+/, ''));
+      }
+    });
+  }
 
   return items.map((item, i) => {
-    const { dataElement, type, hidden, ...overrides } = item;
+    const { dataElement, type, hidden } = item;
     const key = `${type}-${dataElement || i}`;
-    const mediaQueryClassName = hidden
-      ? hidden.map(screen => `hide-in-${screen}`).join(' ')
-      : `${item.className || ''}`;
-    let Component = children[dataElement];
+    const mediaQueryClassName = hidden?.map(screen => `hide-in-${screen}`).join(' ');
+    let component = childrenArray.find(child => child.props.dataElement === dataElement);
 
     // duplicate code in HeaderItems.js, must clean up after 6.0
-    if (typeof Component === 'undefined') {
+    if (!component) {
       if (type === 'toolButton') {
-        Component = ToolButton;
+        component = <ToolButton />;
       }
 
       if (type === 'toolGroupButton') {
-        Component = ToolGroupButton;
+        component = <ToolGroupButton />;
       }
 
       if (type === 'toggleElementButton') {
-        Component = ToggleElementButton;
+        component = <ToggleElementButton />;
       }
 
       if (type === 'actionButton') {
-        Component = ActionButton;
+        component = <ActionButton />;
       }
 
       if (type === 'statefulButton') {
-        Component = StatefulButton;
+        component = <StatefulButton />;
       }
 
       if (type === 'customElement') {
-        Component = CustomElement;
+        component = <CustomElement />;
       }
 
       if (type === 'spacer' || type === 'divider') {
-        Component = () => <div className={`${type} ${mediaQueryClassName}`} />;
+        component = <div className={`${type} ${mediaQueryClassName}`} />;
       }
     }
 
-    return (
-      <Component
-        key={key}
-        dataElement={dataElement}
-        mediaQueryClassName={mediaQueryClassName}
-        {...overrides}
-      />
-    );
+    const overrides = { ...item, mediaQueryClassName };
+    return component ? React.cloneElement(
+      component,
+      {
+        ...component.props,
+        ...overrides,
+        key,
+      },
+    ) : null;
   });
 };
 
