@@ -65,7 +65,11 @@ WebViewer(...)
     }
 
     // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
-    hotkeys(key, handler);
+    if(key === 'space') {
+      hotkeys(key, {keyup: true}, handler);
+    } else {
+      hotkeys(key, handler);
+    }
   },
   /**
    * Remove an event handler for the given hotkey
@@ -244,6 +248,19 @@ WebViewer(...)
         const currPageNumber = core.getCurrentPage();
         if (currPageNumber < core.getTotalPages()) {
           core.setCurrentPage(currPageNumber + 1);
+        }
+      },
+      /**
+       * Hold to switch between AnnotationEdit mode and Pan Mode
+       * @name WebViewer.Hotkeys#Space
+       */
+      space: e => {
+        e.preventDefault();
+        if(e.type === 'keyup') {
+          setToolModeAndGroup(store, 'AnnotationEdit', '');
+        }
+        if(e.type === 'keydown') {
+          setToolModeAndGroup(store, 'Pan');
         }
       },
       /**
