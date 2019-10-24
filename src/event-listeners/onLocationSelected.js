@@ -15,7 +15,7 @@ export default store => () => {
     const signatureToolButton = document.querySelector('[data-element="signatureToolButton"]');
 
     if (signatureToolButton) {
-      if (isTabletOrMobile) {
+      if (isTabletOrMobile()) {
         store.dispatch(actions.setActiveHeaderGroup('tools'));
       }
       document.querySelector('[data-element="signatureToolButton"] .Button').click();
