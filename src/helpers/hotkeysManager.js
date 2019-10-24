@@ -65,8 +65,8 @@ WebViewer(...)
     }
 
     // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
-    if(key === 'space') {
-      hotkeys(key, {keyup: true}, handler);
+    if (key === 'space') {
+      hotkeys(key, { keyup: true }, handler);
     } else {
       hotkeys(key, handler);
     }
@@ -256,10 +256,10 @@ WebViewer(...)
        */
       space: e => {
         e.preventDefault();
-        if(e.type === 'keyup') {
+        if (e.type === 'keyup') {
           setToolModeAndGroup(store, 'AnnotationEdit', '');
         }
-        if(e.type === 'keydown') {
+        if (e.type === 'keydown') {
           setToolModeAndGroup(store, 'Pan');
         }
       },
