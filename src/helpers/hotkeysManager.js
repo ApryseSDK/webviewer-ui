@@ -23,9 +23,8 @@ const HotkeysManager = {
   initialize(store) {
     // still allow hotkeys when focusing a textarea or an input
     hotkeys.filter = () => true;
-
     this.keyHandlerMap = this.createKeyHandlerMap(store);
-
+    this.prevTool = null;
     Object.keys(this.keyHandlerMap).forEach(key => {
       this.on(key, this.keyHandlerMap[key]);
     });
@@ -65,11 +64,7 @@ WebViewer(...)
     }
 
     // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
-    if (key === 'space') {
-      hotkeys(key, { keyup: true }, handler);
-    } else {
-      hotkeys(key, handler);
-    }
+    hotkeys(key, { keyup: true }, handler);
   },
   /**
    * Remove an event handler for the given hotkey
@@ -256,10 +251,14 @@ WebViewer(...)
        */
       space: e => {
         e.preventDefault();
+
         if (e.type === 'keyup') {
-          setToolModeAndGroup(store, 'AnnotationEdit', '');
+          setToolModeAndGroup(store, this.prevTool);
         }
         if (e.type === 'keydown') {
+          if (core.getToolMode().name !== 'Pan') {
+            this.prevTool = core.getToolMode().name;
+          }
           setToolModeAndGroup(store, 'Pan');
         }
       },
