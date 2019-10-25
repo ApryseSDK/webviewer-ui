@@ -64,15 +64,13 @@ WebViewer(...)
     }
 
     // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
-    const { keyup, keydown } = handler;
-    const keyuphandler = keyup || (() => {});
-    const keydownhandler = keydown || handler;
+    const { keyup = () => {}, keydown = handler } = handler;
     hotkeys(key, { keyup: true }, e => {
       if (e.type === 'keyup') {
-        keyuphandler(e);
+        keyup(e);
       }
       if (e.type === 'keydown') {
-        keydownhandler(e);
+        keydown(e);
       }
     });
   },
@@ -260,20 +258,20 @@ WebViewer(...)
        * @name WebViewer.Hotkeys#Space
        */
       space: {
-        keyup: e => {
+        keyup: this.createToolHotkeyHandler(e => {
           e.preventDefault();
 
           setToolModeAndGroup(store, this.prevToolName);
           this.prevToolName = null;
-        },
-        keydown: e => {
+        }),
+        keydown: this.createToolHotkeyHandler(e => {
           e.preventDefault();
 
           if (core.getToolMode().name !== 'Pan') {
             this.prevToolName = core.getToolMode().name;
             setToolModeAndGroup(store, 'Pan');
           }
-        },
+        }),
       },
       /**
        * Select the AnnotationEdit tool
