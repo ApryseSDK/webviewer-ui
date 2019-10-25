@@ -24,7 +24,7 @@ const HotkeysManager = {
     // still allow hotkeys when focusing a textarea or an input
     hotkeys.filter = () => true;
     this.keyHandlerMap = this.createKeyHandlerMap(store);
-    this.prevTool = null;
+    this.prevToolName = null;
     Object.keys(this.keyHandlerMap).forEach(key => {
       this.on(key, this.keyHandlerMap[key]);
     });
@@ -64,7 +64,17 @@ WebViewer(...)
     }
 
     // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
-    hotkeys(key, { keyup: true }, handler);
+    const { keyup, keydown } = handler;
+    const keyuphandler = keyup || (() => {});
+    const keydownhandler = keydown || handler;
+    hotkeys(key, { keyup: true }, e => {
+      if (e.type === 'keyup') {
+        keyuphandler(e);
+      }
+      if (e.type === 'keydown') {
+        keydownhandler(e);
+      }
+    });
   },
   /**
    * Remove an event handler for the given hotkey
@@ -249,18 +259,21 @@ WebViewer(...)
        * Hold to switch to Pan mode and release to return to previous tool
        * @name WebViewer.Hotkeys#Space
        */
-      space: e => {
-        e.preventDefault();
+      space: {
+        keyup: e => {
+          e.preventDefault();
 
-        if (e.type === 'keyup') {
-          setToolModeAndGroup(store, this.prevTool);
-        }
-        if (e.type === 'keydown') {
+          setToolModeAndGroup(store, this.prevToolName);
+          this.prevToolName = null;
+        },
+        keydown: e => {
+          e.preventDefault();
+
           if (core.getToolMode().name !== 'Pan') {
-            this.prevTool = core.getToolMode().name;
+            this.prevToolName = core.getToolMode().name;
+            setToolModeAndGroup(store, 'Pan');
           }
-          setToolModeAndGroup(store, 'Pan');
-        }
+        },
       },
       /**
        * Select the AnnotationEdit tool
