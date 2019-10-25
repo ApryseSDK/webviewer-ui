@@ -246,7 +246,7 @@ WebViewer(...)
         }
       },
       /**
-       * Hold to switch between AnnotationEdit mode and Pan Mode
+       * Hold to switch to Pan mode and release to return to previous tool
        * @name WebViewer.Hotkeys#Space
        */
       space: e => {
