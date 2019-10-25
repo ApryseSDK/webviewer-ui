@@ -397,8 +397,8 @@ WebViewer(...)
        * Select the AnnotationCreateTextSquiggly tool
        * @name WebViewer.Hotkeys#G
        */
-      g: this.createToolHotkeyHandler(selectedText => {
-        if (selectedText) {
+      g: this.createToolHotkeyHandler(() => {
+        if (core.getSelectedText()) {
           createTextAnnotationAndSelect(
             dispatch,
             window.Annotations.TextSquigglyAnnotation,
@@ -411,8 +411,8 @@ WebViewer(...)
        * Select the AnnotationCreateTextHighlight tool
        * @name WebViewer.Hotkeys#H
        */
-      h: this.createToolHotkeyHandler(selectedText => {
-        if (selectedText) {
+      h: this.createToolHotkeyHandler(() => {
+        if (core.getSelectedText()) {
           createTextAnnotationAndSelect(
             dispatch,
             window.Annotations.TextHighlightAnnotation,
@@ -425,8 +425,8 @@ WebViewer(...)
        * Select the AnnotationCreateTextStrikeout tool
        * @name WebViewer.Hotkeys#K
        */
-      k: this.createToolHotkeyHandler(selectedText => {
-        if (selectedText) {
+      k: this.createToolHotkeyHandler(() => {
+        if (core.getSelectedText()) {
           createTextAnnotationAndSelect(
             dispatch,
             window.Annotations.TextStrikeoutAnnotation,
@@ -439,8 +439,8 @@ WebViewer(...)
        * Select the AnnotationCreateTextUnderline tool
        * @name WebViewer.Hotkeys#U
        */
-      u: this.createToolHotkeyHandler(selectedText => {
-        if (selectedText) {
+      u: this.createToolHotkeyHandler(() => {
+        if (core.getSelectedText()) {
           createTextAnnotationAndSelect(
             dispatch,
             window.Annotations.TextUnderlineAnnotation,
@@ -459,7 +459,7 @@ WebViewer(...)
   createToolHotkeyHandler(handler) {
     return (...args) => {
       if (!isFocusingElement()) {
-        handler(core.getSelectedText(), ...args);
+        handler(...args);
       }
     };
   },
