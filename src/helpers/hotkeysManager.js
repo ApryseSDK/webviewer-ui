@@ -12,6 +12,7 @@ import isFocusingElement from 'helpers/isFocusingElement';
 import actions from 'actions';
 import selectors from 'selectors';
 
+const NOOP = () => {};
 /**
  * A class which contains hotkeys APIs.<br/><br/>
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> Hotkeys are listed in the <i>Members</i> section. They should be passed to {@link WebViewer.Hotkeys#on instance.hotkeys.on} or {@link WebViewer.Hotkeys#off instance.hotkeys.off} as lowercase. Hotkeys that use the Ctrl key can also be activated by pressing the Command key. <br />
@@ -64,7 +65,7 @@ WebViewer(...)
     }
 
     // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
-    const { keyup = () => {}, keydown = handler } = handler;
+    const { keyup = NOOP, keydown = handler } = handler;
     hotkeys(key, { keyup: true }, e => {
       if (e.type === 'keyup') {
         keyup(e);
