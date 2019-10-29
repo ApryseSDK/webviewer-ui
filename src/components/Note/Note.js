@@ -24,6 +24,8 @@ const Note = ({ annotation }) => {
   const containerRef = useRef();
   const containerHeightRef = useRef();
 
+  const isReplyDisabled = useSelector(state => selectors.getIsReplyDisabled(state))(annotation);
+
   useEffect(() => {
     const prevHeight = containerHeightRef.current;
     const currHeight = window.getComputedStyle(containerRef.current).height;
@@ -65,13 +67,12 @@ const Note = ({ annotation }) => {
   return (
     <div ref={containerRef} className={noteClass} onMouseDown={handleNoteClick}>
       <NoteContent annotation={annotation} />
-
-      <div className={repliesClass}>
+      {!isReplyDisabled && <div className={repliesClass}>
         {replies.map(reply => (
           <NoteContent key={reply.Id} annotation={reply} />
         ))}
         <ReplyArea annotation={annotation} />
-      </div>
+      </div>}
     </div>
   );
 };
