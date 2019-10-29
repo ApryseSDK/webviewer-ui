@@ -19,13 +19,16 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
+const RETURN_FALSE = () => false;
+
 const Note = ({ annotation }) => {
   const { isSelected, resize } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
 
-  const isReplyDisabled = useSelector(state => selectors.getIsReplyDisabled(state))(annotation);
-
+  const isReplyDisabledFunc = useSelector(state => selectors.getIsReplyDisabled(state)) || RETURN_FALSE;
+  const isReplyDisabled = isReplyDisabledFunc(annotation);
+  
   useEffect(() => {
     const prevHeight = containerHeightRef.current;
     const currHeight = window.getComputedStyle(containerRef.current).height;
