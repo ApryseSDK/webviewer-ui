@@ -63,7 +63,7 @@ class SearchOverlay extends React.PureComponent {
     this.executeDebouncedFullSearch = debounce(this.executeFullSearch, 300);
     this.state = {
       noResultSingleSearch: false,
-    }
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -357,7 +357,11 @@ class SearchOverlay extends React.PureComponent {
             <Input id="case-sensitive-option" type="checkbox" ref={this.caseSensitiveInput} onChange={this.onChangeCaseSensitive} label={t('option.searchPanel.caseSensitive')} />
             <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
           </div>
-          {((!isSearchPanelOpen && this.state.noResultSingleSearch && searchValue!=="") ? <div className="no-result">{t('message.noResults')}</div>: null)}
+          {!isSearchPanelOpen &&
+            this.state.noResultSingleSearch &&
+            searchValue !== '' && (
+            <div className="no-result">{t('message.noResults')}</div>
+          )}
         </div>
       </div>
     );
