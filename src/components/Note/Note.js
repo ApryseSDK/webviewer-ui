@@ -19,15 +19,14 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-const RETURN_FALSE = () => false;
 
 const Note = ({ annotation }) => {
   const { isSelected, resize } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
 
-  const isReplyDisabledFunc = useSelector(state => selectors.getIsReplyDisabled(state)) || RETURN_FALSE;
-  const isReplyDisabled = isReplyDisabledFunc(annotation);
+  const isReplyDisabledFunc = useSelector(state => selectors.getIsReplyDisabled(state));
+  const isReplyDisabled = isReplyDisabledFunc?.(annotation);
   
   useEffect(() => {
     const prevHeight = containerHeightRef.current;
@@ -70,12 +69,12 @@ const Note = ({ annotation }) => {
   return (
     <div ref={containerRef} className={noteClass} onMouseDown={handleNoteClick}>
       <NoteContent annotation={annotation} />
-      {!isReplyDisabled && <div className={repliesClass}>
+      <div className={repliesClass}>
         {replies.map(reply => (
           <NoteContent key={reply.Id} annotation={reply} />
         ))}
-        <ReplyArea annotation={annotation} />
-      </div>}
+        {!isReplyDisabled && <ReplyArea annotation={annotation} />}
+      </div>
     </div>
   );
 };
