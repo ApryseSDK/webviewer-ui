@@ -150,5 +150,13 @@
         padding: 5px 0 0 20px;
       }
     }
+
+    .no-result {
+      font-size: .8em;
+      color: var(--text-color);
+      padding-top: 10px;
+      margin-left: 0;
+      margin-right: auto;
+    }
   }
 }
