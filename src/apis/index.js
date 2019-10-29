@@ -136,6 +136,7 @@ export default store => {
     disableElements: disableElements(store),
     disableFeatures: disableFeatures(store),
     disableTools: disableTools(store),
+    disableReplyForAnnotations: disableReplyForAnnotations(store),
     downloadPdf: downloadPdf(store),
     enableElements: enableElements(store),
     enableTools: enableTools(store),
@@ -250,6 +251,5 @@ export default store => {
     getCustomData: () => getHashParams('custom', null),
     getBBAnnotManager: getBBAnnotManager(store),
     selectors: getSelectors(store),
-    disableReplyForAnnotations: disableReplyForAnnotations(store),
   };
 };

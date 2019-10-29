@@ -84,11 +84,13 @@ const ReplyArea = ({ annotation }) => {
   const [
     isReadOnly,
     isReplyDisabled,
+    isReplyDisabledForAnnotation,
     isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector(
     state => [
       selectors.isDocumentReadOnly(state),
       selectors.isElementDisabled(state, 'noteReply'),
+      selectors.getIsReplyDisabled(state)?.(annotation),
       selectors.getIsNoteEditing(state),
     ],
     shallowEqual,
@@ -99,9 +101,6 @@ const ReplyArea = ({ annotation }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const textareaRef = useRef();
-
-  const isReplyDisabledForAnnotationFunc = useSelector(state => selectors.getIsReplyDisabled(state));
-  const isReplyDisabledForAnnotation = isReplyDisabledForAnnotationFunc?.(annotation);
 
   useDidUpdate(() => {
     if (!isFocused) {
