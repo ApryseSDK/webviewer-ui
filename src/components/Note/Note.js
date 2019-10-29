@@ -142,7 +142,7 @@ const ReplyArea = ({ annotation }) => {
     disabled: !value,
   });
 
-  return isReadOnly || isReplyDisabled ? null : (
+  return isReadOnly || isReplyDisabled || (isNoteEditingTriggeredByAnnotationPopup && isContentEditable) ? null : (
     <div
       className="reply-container"
       // stop bubbling up otherwise the note will be closed
