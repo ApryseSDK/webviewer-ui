@@ -19,15 +19,11 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-
 const Note = ({ annotation }) => {
   const { isSelected, resize } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
 
-  const isReplyDisabledFunc = useSelector(state => selectors.getIsReplyDisabled(state));
-  const isReplyDisabled = isReplyDisabledFunc?.(annotation);
-  
   useEffect(() => {
     const prevHeight = containerHeightRef.current;
     const currHeight = window.getComputedStyle(containerRef.current).height;
@@ -73,7 +69,7 @@ const Note = ({ annotation }) => {
         {replies.map(reply => (
           <NoteContent key={reply.Id} annotation={reply} />
         ))}
-        {!isReplyDisabled && <ReplyArea annotation={annotation} />}
+        <ReplyArea annotation={annotation} />
       </div>
     </div>
   );
@@ -103,6 +99,9 @@ const ReplyArea = ({ annotation }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const textareaRef = useRef();
+
+  const isReplyDisabledForAnnotationFunc = useSelector(state => selectors.getIsReplyDisabled(state));
+  const isReplyDisabledForAnnotation = isReplyDisabledForAnnotationFunc?.(annotation);
 
   useDidUpdate(() => {
     if (!isFocused) {
@@ -142,7 +141,13 @@ const ReplyArea = ({ annotation }) => {
     disabled: !value,
   });
 
-  return isReadOnly || isReplyDisabled || (isNoteEditingTriggeredByAnnotationPopup && isContentEditable) ? null : (
+  const ifReplyNotAllowed =
+    isReadOnly ||
+    isReplyDisabled ||
+    isReplyDisabledForAnnotation ||
+    (isNoteEditingTriggeredByAnnotationPopup && isContentEditable); 
+    
+  return ifReplyNotAllowed ? null : (
     <div
       className="reply-container"
       // stop bubbling up otherwise the note will be closed
