@@ -12,6 +12,7 @@ import isFocusingElement from 'helpers/isFocusingElement';
 import actions from 'actions';
 import selectors from 'selectors';
 
+const NOOP = () => {};
 /**
  * A class which contains hotkeys APIs.<br/><br/>
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> Hotkeys are listed in the <i>Members</i> section. They should be passed to {@link WebViewer.Hotkeys#on instance.hotkeys.on} or {@link WebViewer.Hotkeys#off instance.hotkeys.off} as lowercase. Hotkeys that use the Ctrl key can also be activated by pressing the Command key. <br />
@@ -23,9 +24,8 @@ const HotkeysManager = {
   initialize(store) {
     // still allow hotkeys when focusing a textarea or an input
     hotkeys.filter = () => true;
-
     this.keyHandlerMap = this.createKeyHandlerMap(store);
-
+    this.prevToolName = null;
     Object.keys(this.keyHandlerMap).forEach(key => {
       this.on(key, this.keyHandlerMap[key]);
     });
@@ -65,7 +65,15 @@ WebViewer(...)
     }
 
     // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
-    hotkeys(key, handler);
+    const { keyup = NOOP, keydown = handler } = handler;
+    hotkeys(key, { keyup: true }, e => {
+      if (e.type === 'keyup') {
+        keyup(e);
+      }
+      if (e.type === 'keydown') {
+        keydown(e);
+      }
+    });
   },
   /**
    * Remove an event handler for the given hotkey
@@ -247,6 +255,26 @@ WebViewer(...)
         }
       },
       /**
+       * Hold to switch to Pan mode and release to return to previous tool
+       * @name WebViewer.Hotkeys#Space
+       */
+      space: {
+        keyup: this.createToolHotkeyHandler(e => {
+          e.preventDefault();
+
+          setToolModeAndGroup(store, this.prevToolName);
+          this.prevToolName = null;
+        }),
+        keydown: this.createToolHotkeyHandler(e => {
+          e.preventDefault();
+
+          if (core.getToolMode().name !== 'Pan') {
+            this.prevToolName = core.getToolMode().name;
+            setToolModeAndGroup(store, 'Pan');
+          }
+        }),
+      },
+      /**
        * Select the AnnotationEdit tool
        * @name WebViewer.Hotkeys#Escape
        */
@@ -368,8 +396,8 @@ WebViewer(...)
        * Select the AnnotationCreateTextSquiggly tool
        * @name WebViewer.Hotkeys#G
        */
-      g: this.createToolHotkeyHandler(selectedText => {
-        if (selectedText) {
+      g: this.createToolHotkeyHandler(() => {
+        if (core.getSelectedText()) {
           createTextAnnotationAndSelect(
             dispatch,
             window.Annotations.TextSquigglyAnnotation,
@@ -382,8 +410,8 @@ WebViewer(...)
        * Select the AnnotationCreateTextHighlight tool
        * @name WebViewer.Hotkeys#H
        */
-      h: this.createToolHotkeyHandler(selectedText => {
-        if (selectedText) {
+      h: this.createToolHotkeyHandler(() => {
+        if (core.getSelectedText()) {
           createTextAnnotationAndSelect(
             dispatch,
             window.Annotations.TextHighlightAnnotation,
@@ -396,8 +424,8 @@ WebViewer(...)
        * Select the AnnotationCreateTextStrikeout tool
        * @name WebViewer.Hotkeys#K
        */
-      k: this.createToolHotkeyHandler(selectedText => {
-        if (selectedText) {
+      k: this.createToolHotkeyHandler(() => {
+        if (core.getSelectedText()) {
           createTextAnnotationAndSelect(
             dispatch,
             window.Annotations.TextStrikeoutAnnotation,
@@ -410,8 +438,8 @@ WebViewer(...)
        * Select the AnnotationCreateTextUnderline tool
        * @name WebViewer.Hotkeys#U
        */
-      u: this.createToolHotkeyHandler(selectedText => {
-        if (selectedText) {
+      u: this.createToolHotkeyHandler(() => {
+        if (core.getSelectedText()) {
           createTextAnnotationAndSelect(
             dispatch,
             window.Annotations.TextUnderlineAnnotation,
@@ -430,7 +458,7 @@ WebViewer(...)
   createToolHotkeyHandler(handler) {
     return (...args) => {
       if (!isFocusingElement()) {
-        handler(core.getSelectedText(), ...args);
+        handler(...args);
       }
     };
   },
