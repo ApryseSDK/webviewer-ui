@@ -18,7 +18,7 @@ const propTypes = {
 
 const Input = React.forwardRef((props, ref) => (
   <React.Fragment>
-    <input className="Input" forwardref={ref} {...props}/>
+    <input className="Input" ref={ref} {...props}/>
     <label className="Input" htmlFor={props.id}>{props.label}</label>
   </React.Fragment>
 ));
