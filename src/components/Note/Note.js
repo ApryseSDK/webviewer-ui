@@ -65,7 +65,6 @@ const Note = ({ annotation }) => {
   return (
     <div ref={containerRef} className={noteClass} onMouseDown={handleNoteClick}>
       <NoteContent annotation={annotation} />
-
       <div className={repliesClass}>
         {replies.map(reply => (
           <NoteContent key={reply.Id} annotation={reply} />
@@ -85,11 +84,13 @@ const ReplyArea = ({ annotation }) => {
   const [
     isReadOnly,
     isReplyDisabled,
+    isReplyDisabledForAnnotation,
     isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector(
     state => [
       selectors.isDocumentReadOnly(state),
       selectors.isElementDisabled(state, 'noteReply'),
+      selectors.getIsReplyDisabled(state)?.(annotation),
       selectors.getIsNoteEditing(state),
     ],
     shallowEqual,
@@ -139,7 +140,13 @@ const ReplyArea = ({ annotation }) => {
     disabled: !value,
   });
 
-  return isReadOnly || isReplyDisabled || (isNoteEditingTriggeredByAnnotationPopup && isContentEditable) ? null : (
+  const ifReplyNotAllowed =
+    isReadOnly ||
+    isReplyDisabled ||
+    isReplyDisabledForAnnotation ||
+    (isNoteEditingTriggeredByAnnotationPopup && isContentEditable); 
+    
+  return ifReplyNotAllowed ? null : (
     <div
       className="reply-container"
       // stop bubbling up otherwise the note will be closed
