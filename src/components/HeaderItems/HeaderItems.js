@@ -21,7 +21,7 @@ class HeaderItems extends React.PureComponent {
       <div className="HeaderItems">
         {items.map((item, i) => {
           const { type, dataElement, hidden } = item;
-          const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : `${item.className || ''}`;
+          const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
           const key = `${type}-${dataElement || i}`;
           switch (type) {
             case 'toolButton':

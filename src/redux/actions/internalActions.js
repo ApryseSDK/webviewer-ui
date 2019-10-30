@@ -195,6 +195,10 @@ export const setLeftPanelWidth = width => ({
   type: 'SET_LEFT_PANEL_WIDTH',
   payload: { width },
 });
+export const disableReplyForAnnotations = func => ({
+  type: 'SET_REPLY_DISABLED_FUNC',
+  payload: { func },
+});
 
 // document
 export const setDocumentId = documentId => ({
