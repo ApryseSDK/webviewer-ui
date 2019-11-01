@@ -1,14 +1,17 @@
 @import '../../constants/panel';
 
 .ThumbnailsPanel {
+  display: flex;
   padding: 8px 0px;
 
-  .thumbs {
+  .virtualized-thumbsnail-container {
+    flex: 1;
     display: flex;
     justify-content: center;
   }
 
   .row {
     display: flex;
+    justify-content: center;
   }
 }

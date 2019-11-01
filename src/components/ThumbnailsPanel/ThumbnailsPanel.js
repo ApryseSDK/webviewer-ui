@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactList from 'react-list';
 import { connect } from 'react-redux';
-
+import { List } from 'react-virtualized';
+import Measure from 'react-measure';
 import Thumbnail from 'components/Thumbnail';
 
 import core from 'core';
@@ -25,6 +26,8 @@ class ThumbnailsPanel extends React.PureComponent {
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       canLoad: true,
+      height: 0,
+      width: 0,
     };
   }
 
@@ -241,20 +244,20 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs[pageIndex] = null;
   }
 
-  renderThumbnails = rowIndex => {
+  renderThumbnails = ({ index, key, style }) => {
     const { numberOfColumns, canLoad } = this.state;
     const { thumbs } = this;
 
     return (
-      <div className="row" key={rowIndex}>
+      <div className="row" key={key} style={style}>
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
-            const index = rowIndex * numberOfColumns + columnIndex;
-            const updateHandler = thumbs && thumbs[index] ? thumbs[index].updateAnnotationHandler : null;
+            const thunmIndex = index * numberOfColumns + columnIndex;
+            const updateHandler = thumbs && thumbs[thunmIndex] ? thumbs[thunmIndex].updateAnnotationHandler : null;
 
             return (
-              index < this.props.totalPages
-                ? <Thumbnail key={index} index={index} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
+              thunmIndex < this.props.totalPages
+                ? <Thumbnail key={thunmIndex} index={thunmIndex} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
                 : null
             );
           })
@@ -265,22 +268,39 @@ class ThumbnailsPanel extends React.PureComponent {
 
   render() {
     const { isDisabled, totalPages, display } = this.props;
-
     if (isDisabled) {
       return null;
     }
 
     return (
-      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel" ref={this.thumbnailsPanel}>
-        <div className="thumbs">
-          <ReactList
-            key="panel"
-            itemRenderer={this.renderThumbnails}
-            length={totalPages / this.state.numberOfColumns}
-            type="uniform"
-            useStaticSize
-          />
-        </div>
+      <div
+        className="Panel ThumbnailsPanel"
+        style={{ display }}
+        data-element="thumbnailsPanel"
+        ref={this.thumbnailsPanel}
+      >
+        <Measure
+          bounds
+          onResize={({ bounds }) => {
+            this.setState({
+              height: bounds.height,
+              width: bounds.width,
+            });
+          }}
+        >
+          {({ measureRef }) => (
+            <div ref={measureRef} className="virtualized-thumbsnail-container">
+              <List
+                height={this.state.height}
+                width={this.state.width}
+                rowHeight={180}
+                rowCount={totalPages}
+                rowRenderer={this.renderThumbnails}
+                overscanRowCount={3}
+              />
+            </div>
+          )}
+        </Measure>
       </div>
     );
   }
