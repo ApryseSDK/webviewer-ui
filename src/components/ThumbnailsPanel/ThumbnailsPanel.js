@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactList from 'react-list';
 import { connect } from 'react-redux';
 import { List } from 'react-virtualized';
 import Measure from 'react-measure';
