@@ -289,14 +289,15 @@ class ThumbnailsPanel extends React.PureComponent {
           }}
         >
           {({ measureRef }) => (
-            <div ref={measureRef} className="virtualized-thumbsnail-container">
+            <div ref={measureRef} className="virtualized-thumbnails-container" >
               <List
                 height={this.state.height}
                 width={this.state.width}
                 rowHeight={180}
                 rowCount={totalPages}
                 rowRenderer={this.renderThumbnails}
-                overscanRowCount={3}
+                overscanRowCount={10}
+                style={{ outline: 'none' }}
               />
             </div>
           )}
