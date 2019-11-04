@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactList from 'react-list';
 import { connect } from 'react-redux';
-
+import { List } from 'react-virtualized';
+import Measure from 'react-measure';
 import Thumbnail from 'components/Thumbnail';
 
 import core from 'core';
@@ -22,9 +22,12 @@ class ThumbnailsPanel extends React.PureComponent {
     this.pendingThumbs = [];
     this.thumbs = [];
     this.thumbnailsPanel = React.createRef();
+    this.thumbnailHeight = 180; // refer to Thumbnail.scss
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       canLoad: true,
+      height: 0,
+      width: 0,
     };
   }
 
@@ -78,9 +81,8 @@ class ThumbnailsPanel extends React.PureComponent {
     const { thumbnailsPanel } = this;
 
     if (thumbnailsPanel && thumbnailsPanel.current) {
-      const thumbnailHeight = 180; // refer to Thumbnail.scss
       const pageIndex = pageNumber - 1;
-      const scrollLocation = pageIndex * thumbnailHeight;
+      const scrollLocation = pageIndex * this.thumbnailHeight;
       thumbnailsPanel.current.scrollTop = scrollLocation;
     }
   }
@@ -241,20 +243,20 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs[pageIndex] = null;
   }
 
-  renderThumbnails = rowIndex => {
+  renderThumbnails = ({ index, key, style }) => {
     const { numberOfColumns, canLoad } = this.state;
     const { thumbs } = this;
 
     return (
-      <div className="row" key={rowIndex}>
+      <div className="row" key={key} style={style}>
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
-            const index = rowIndex * numberOfColumns + columnIndex;
-            const updateHandler = thumbs && thumbs[index] ? thumbs[index].updateAnnotationHandler : null;
+            const thunmIndex = index * numberOfColumns + columnIndex;
+            const updateHandler = thumbs && thumbs[thunmIndex] ? thumbs[thunmIndex].updateAnnotationHandler : null;
 
             return (
-              index < this.props.totalPages
-                ? <Thumbnail key={index} index={index} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
+              thunmIndex < this.props.totalPages
+                ? <Thumbnail key={thunmIndex} index={thunmIndex} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
                 : null
             );
           })
@@ -265,22 +267,41 @@ class ThumbnailsPanel extends React.PureComponent {
 
   render() {
     const { isDisabled, totalPages, display } = this.props;
-
+    const { numberOfColumns, height, width } = this.state;
     if (isDisabled) {
       return null;
     }
 
     return (
-      <div className="Panel ThumbnailsPanel" style={{ display }} data-element="thumbnailsPanel" ref={this.thumbnailsPanel}>
-        <div className="thumbs">
-          <ReactList
-            key="panel"
-            itemRenderer={this.renderThumbnails}
-            length={totalPages / this.state.numberOfColumns}
-            type="uniform"
-            useStaticSize
-          />
-        </div>
+      <div
+        className="Panel ThumbnailsPanel"
+        style={{ display }}
+        data-element="thumbnailsPanel"
+        ref={this.thumbnailsPanel}
+      >
+        <Measure
+          bounds
+          onResize={({ bounds }) => {
+            this.setState({
+              height: bounds.height,
+              width: bounds.width,
+            });
+          }}
+        >
+          {({ measureRef }) => (
+            <div ref={measureRef} className="virtualized-thumbnails-container" >
+              <List
+                height={height}
+                width={width}
+                rowHeight={this.thumbnailHeight}
+                rowCount={totalPages / numberOfColumns}
+                rowRenderer={this.renderThumbnails}
+                overscanRowCount={10}
+                style={{ outline: 'none' }}
+              />
+            </div>
+          )}
+        </Measure>
       </div>
     );
   }
