@@ -8,14 +8,14 @@ import { zoomTo } from 'helpers/zoom';
 import selectors from 'selectors';
 import actions from 'actions';
 
-import './ToggleElementOverlay.scss';
+import './ToggleZoomOverlay.scss';
 
 const propTypes = {
   onClick: PropTypes.func.isRequired,
   isActive: PropTypes.bool,
 };
 
-const ToggleElementOverlay = ({
+const ToggleZoomOverlay = ({
   onClick,
   isActive,
 }) => {
@@ -69,7 +69,7 @@ const ToggleElementOverlay = ({
   };
 
   return (
-    <div className="ToggleElementOverlay">
+    <div className="ToggleZoomOverlay">
       <div className={['OverlayContainer', isActive ? 'active' : ''].join(' ').trim()}>
         <div className="OverlayText" onClick={onClick}>
           <input
@@ -89,7 +89,7 @@ const ToggleElementOverlay = ({
   );
 };
 
-ToggleElementOverlay.propTypes = propTypes;
+ToggleZoomOverlay.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   isActive: selectors.isElementOpen(state, 'zoomOverlay'),
@@ -101,4 +101,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToggleElementOverlay);
+export default connect(mapStateToProps, mapDispatchToProps)(ToggleZoomOverlay);
