@@ -22,6 +22,7 @@ class ThumbnailsPanel extends React.PureComponent {
     this.pendingThumbs = [];
     this.thumbs = [];
     this.thumbnailsPanel = React.createRef();
+    this.thumbnailHeight = 180; // refer to Thumbnail.scss
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       canLoad: true,
@@ -80,9 +81,8 @@ class ThumbnailsPanel extends React.PureComponent {
     const { thumbnailsPanel } = this;
 
     if (thumbnailsPanel && thumbnailsPanel.current) {
-      const thumbnailHeight = 180; // refer to Thumbnail.scss
       const pageIndex = pageNumber - 1;
-      const scrollLocation = pageIndex * thumbnailHeight;
+      const scrollLocation = pageIndex * this.thumbnailHeight;
       thumbnailsPanel.current.scrollTop = scrollLocation;
     }
   }
@@ -267,6 +267,7 @@ class ThumbnailsPanel extends React.PureComponent {
 
   render() {
     const { isDisabled, totalPages, display } = this.props;
+    const { numberOfColumns, height, width } = this.state;
     if (isDisabled) {
       return null;
     }
@@ -290,10 +291,10 @@ class ThumbnailsPanel extends React.PureComponent {
           {({ measureRef }) => (
             <div ref={measureRef} className="virtualized-thumbnails-container" >
               <List
-                height={this.state.height}
-                width={this.state.width}
-                rowHeight={180}
-                rowCount={totalPages}
+                height={height}
+                width={width}
+                rowHeight={this.thumbnailHeight}
+                rowCount={totalPages / numberOfColumns}
                 rowRenderer={this.renderThumbnails}
                 overscanRowCount={10}
                 style={{ outline: 'none' }}
