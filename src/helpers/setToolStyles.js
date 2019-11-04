@@ -20,9 +20,8 @@ export default (toolName, property, value) => {
   }
 
   tools.forEach(tool => {
-    tool.setStyles(oldStyle => ({
-      ...oldStyle,
+    tool.setStyles({
       [property]: value,
-    }));
+    });
   });
 };
