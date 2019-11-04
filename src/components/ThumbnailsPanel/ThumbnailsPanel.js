@@ -251,12 +251,12 @@ class ThumbnailsPanel extends React.PureComponent {
       <div className="row" key={key} style={style}>
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
-            const thunmIndex = index * numberOfColumns + columnIndex;
-            const updateHandler = thumbs && thumbs[thunmIndex] ? thumbs[thunmIndex].updateAnnotationHandler : null;
+            const thumbIndex = index * numberOfColumns + columnIndex;
+            const updateHandler = thumbs && thumbs[thumbIndex] ? thumbs[thumbIndex].updateAnnotationHandler : null;
 
             return (
-              thunmIndex < this.props.totalPages
-                ? <Thumbnail key={thunmIndex} index={thunmIndex} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
+              thumbIndex < this.props.totalPages
+                ? <Thumbnail key={thumbIndex} index={thumbIndex} canLoad={canLoad} onLoad={this.onLoad} onCancel={this.onCancel} onRemove={this.onRemove} updateAnnotations={updateHandler} />
                 : null
             );
           })
