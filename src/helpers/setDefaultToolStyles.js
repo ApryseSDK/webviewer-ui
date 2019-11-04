@@ -23,10 +23,7 @@ const setDefaultToolStyles = () => {
       const tool = toolModeMap[toolName];
 
       toolStyles = getParsedToolStyles(toolStyles);
-      tool.setStyles(oldStyle => ({
-        ...oldStyle,
-        ...toolStyles,
-      }));
+      tool.setStyles(toolStyles);
     }
   });
 };
