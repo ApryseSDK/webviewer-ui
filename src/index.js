@@ -142,10 +142,6 @@ if (window.CanvasRenderingContext2D) {
       document.getElementById('app'),
     );
   });
-
-
-
-
 }
 
 window.addEventListener('hashchange', () => {
