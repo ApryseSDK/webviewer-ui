@@ -19,6 +19,8 @@ export default store => {
   disableElementsIfRedactionsDisabled(dispatch);
   disableElementsIfDesktop(dispatch);
   disableElementsIfMobile(dispatch);
+
+  dispatch(actions.disableElements(['bookmarksPanel', 'bookmarksPanelButton'], PRIORITY_ONE));
 };
 
 const disableElementsPassedByConstructor = (state, dispatch) => {
