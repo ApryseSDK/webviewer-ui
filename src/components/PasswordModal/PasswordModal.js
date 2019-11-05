@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
@@ -45,12 +45,12 @@ const PasswordModal = props => {
       // when a user enters the correct password or calls core.closeDocument
       // reset state in case user loads another password-protected document
       setPassword(initialState.password);
-      setUserCancelled(initialState.userCanceled);
+      setUserCancelled(initialState.userCancelled);
     }
     if (passwordInput.current) {
       passwordInput.current.focus();
     }
-  }, [isOpen,passwordInput]);
+  }, [isOpen, passwordInput, closeElement, initialState.password, initialState.userCancelled]);
 
   const handleInputChange = e => {
     setPassword(e.target.value);
