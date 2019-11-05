@@ -22,6 +22,8 @@ class Bookmark extends React.PureComponent {
 
 
   static propTypes = {
+    editBookmark: PropTypes.func.isRequired,
+    removeBookmark: PropTypes.func.isRequired,
     bookmark: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
   }
