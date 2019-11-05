@@ -1,10 +1,10 @@
 @import '../../constants/panel';
 
-.BookmarksPanel {
+.bookmarks-panel {
   padding: 0px 0px;
 }
 
-.b-btn {
+.new-bookmark-btn {
   border: 1px solid var(--border-color);
   border-radius: 3px;
   padding: 10px;
@@ -25,16 +25,15 @@
   align-items: center;
 }
 
-.bbb {
+.label {
   margin-left: 8px;
 }
 
 .page-label {
   margin-top: 16px;
   font-weight: bold;
-  // margin-left: 20px;
 }
 
-.bm-content {
+.bookmark-row {
   margin: 0px 20px;
 }

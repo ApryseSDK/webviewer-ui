@@ -369,36 +369,36 @@ export const setBookmarks = bookmarks => ({
   type: 'SET_BOOKMARKS',
   payload: { bookmarks },
 });
-export const addBookmark = bookmark => (
+export const addBookmark = (pageIndex, text) => (
   dispatch,
   getState,
 ) => {
   dispatch({
     type: 'ADD_BOOKMARK',
-    payload: { bookmark },
+    payload: { pageIndex, text },
   });
 
   const bookmarks = selectors.getBookmarks(getState());
   fireEvent('userBookmarksChanged', bookmarks);
 };
-export const editBookmark = (index, text) => (
+export const editBookmark = (pageIndex, text) => (
   dispatch,
   getState,
 ) => {
   dispatch({
     type: 'EDIT_BOOKMARK',
-    payload: { index, text },
+    payload: { pageIndex, text },
   });
   const bookmarks = selectors.getBookmarks(getState());
   fireEvent('userBookmarksChanged', bookmarks);
 };
-export const removeBookmark = (index) => (
+export const removeBookmark = pageIndex => (
   dispatch,
   getState,
 ) => {
   dispatch({
     type: 'REMOVE_BOOKMARK',
-    payload: { index },
+    payload: { pageIndex },
   });
   const bookmarks = selectors.getBookmarks(getState());
   fireEvent('userBookmarksChanged', bookmarks);

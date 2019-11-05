@@ -24,19 +24,19 @@ class Bookmark extends React.PureComponent {
   static propTypes = {
     editBookmark: PropTypes.func.isRequired,
     removeBookmark: PropTypes.func.isRequired,
-    bookmark: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
+    text: PropTypes.string.isRequired,
+    pageIndex: PropTypes.number.isRequired,
   }
 
   render() {
-    const { bookmark, editBookmark, removeBookmark, index } = this.props;
+    const { text, editBookmark, removeBookmark, pageIndex } = this.props;
 
     if (this.state.isEditing) {
       return (
         <EditingBookmark
-          bookmarkText={bookmark.text}
-          onSave={bookmarkValue => {
-            editBookmark(index, bookmarkValue);
+          bookmarkText={text}
+          onSave={newText => {
+            editBookmark(pageIndex, newText);
             this.setState({ isEditing: false, isHovered: false });
           }}
           onCancel={() => {
@@ -53,7 +53,7 @@ class Bookmark extends React.PureComponent {
         onMouseMove={() => this.setState({ isHovered: true })}
         onMouseLeave={() => this.setState({ isHovered: false })}
       >
-        <div onClick={() => core.setCurrentPage(bookmark.pageIndex + 1)}>{bookmark.text}</div>
+        <div onClick={() => core.setCurrentPage(pageIndex + 1)}>{text}</div>
         {this.state.isHovered &&
           <div className="Controls-2">
             <div
@@ -65,7 +65,7 @@ class Bookmark extends React.PureComponent {
               />
             </div>
             <div
-              onClick={() => removeBookmark(index)}
+              onClick={() => removeBookmark(pageIndex)}
             >
               <Icon
                 className="icon"

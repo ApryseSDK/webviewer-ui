@@ -24,23 +24,39 @@ export default initialState => (state = initialState, action) => {
       return { ...state, outlines: payload.outlines };
     case 'SET_BOOKMARKS':
     {
-      return { ...state, bookmarks: _.sortBy(payload.bookmarks, ['pageIndex'])};
+      // return { ...state, bookmarks: _.sortBy(payload.bookmarks, ['pageIndex']) };
+      return { ...state, bookmarks: payload.bookmarks };
     }
     case 'ADD_BOOKMARK':
-      return { ...state, bookmarks: _.sortBy([...state.bookmarks, payload.bookmark], ['pageIndex']) };
+    {
+      // const newBookmarks = { ...state.bookmarks };
+      // newBookmarks[payload.index] = payload.text;
+
+      // // return { ...state, bookmarks: _.sortBy([...state.bookmarks, payload.bookmark], ['pageIndex']) };
+      // return { ...state, bookmarks: { ...state.bookmarks, [payload.pageIndex]: payload.bookmark } };
+      const newBookmarks = { ...state.bookmarks };
+      newBookmarks[payload.pageIndex] = payload.text;
+      return { ...state, bookmarks: newBookmarks };
+    }
     case 'EDIT_BOOKMARK':
     {
-      const newBookmarks = [...state.bookmarks];
-      newBookmarks[payload.index] = {
-        ...newBookmarks[payload.index],
-        text: payload.text,
-      }
+      // const newBookmarks = [...state.bookmarks];
+      // newBookmarks[payload.index] = {
+      //   ...newBookmarks[payload.index],
+      //   text: payload.text,
+      // }
+
+      const newBookmarks = { ...state.bookmarks };
+      newBookmarks[payload.pageIndex] = payload.text;
       return { ...state, bookmarks: newBookmarks };
     }
     case 'REMOVE_BOOKMARK':
     {
-      const newBookmarks = [...state.bookmarks];
-      newBookmarks.splice(payload.index, 1);
+      // const newBookmarks = [...state.bookmarks];
+      // newBookmarks.splice(payload.index, 1);
+      const newBookmarks = { ...state.bookmarks };
+      delete newBookmarks[payload.pageIndex];
+
       return { ...state, bookmarks: newBookmarks };
     }
     case 'SET_CHECKPASSWORD':

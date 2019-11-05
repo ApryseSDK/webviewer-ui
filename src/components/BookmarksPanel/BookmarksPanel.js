@@ -12,8 +12,6 @@ import Icon from 'components/Icon';
 import actions from 'actions';
 import selectors from 'selectors';
 
-import core from 'core';
-
 import './BookmarksPanel.scss';
 
 class BookmarksPanel extends React.PureComponent {
@@ -28,26 +26,26 @@ class BookmarksPanel extends React.PureComponent {
     bookmarks: PropTypes.arrayOf(PropTypes.object),
     addBookmark: PropTypes.func.isRequired,
     display: PropTypes.string.isRequired,
+    currentPage: PropTypes.number.isRequired,
     isDisabled: PropTypes.bool,
   }
   render() {
-    const { isDisabled, display, bookmarks, addBookmark } = this.props;
+    const { isDisabled, display, bookmarks, addBookmark, currentPage } = this.props;
 
     if (isDisabled) {
       return null;
     }
 
-    let lastPageIndex;
-
+    const pageIndexes = Object.keys(bookmarks);
     return (
-      <div className="Panel BookmarksPanel" style={{ display }} data-element="bookmarksPanel">
+      <div className="Panel bookmarks-panel" style={{ display }} data-element="bookmarksPanel">
         {
           this.state.isAdding ?
             <EditingBookmark
-              label={`PAGE ${core.getCurrentPage()}: NEW BOOKMARK`}
+              label={`PAGE ${currentPage}: NEW BOOKMARK`}
               bookmarkText={''}
-              onSave={bookmarkText => {
-                addBookmark({ pageIndex: core.getCurrentPage() - 1, text: bookmarkText });
+              onSave={newText => {
+                addBookmark(currentPage - 1, newText);
                 this.setState({ isAdding: false });
               }}
               onCancel={() => {
@@ -60,10 +58,10 @@ class BookmarksPanel extends React.PureComponent {
                   className="icon"
                   glyph="ic_bookmarks_black_24px"
                 />
-                <div className="bbb">BOOKMARKS</div>
+                <div className="label">BOOKMARKS</div>
               </div>
               <div
-                className="b-btn"
+                className="new-bookmark-btn"
                 onClick={() => {
                   this.setState({ isAdding: true });
                 }}
@@ -74,21 +72,13 @@ class BookmarksPanel extends React.PureComponent {
               </div>
             </div>
         }
-        <div className="bm-content">
-          {bookmarks.map((bookmark, i) => {
-            let showPageLabel = false;
-            if (lastPageIndex !== bookmark.pageIndex) {
-              showPageLabel = true;
-              lastPageIndex = bookmark.pageIndex;
-            }
-
-            return (
-              <>
-                {showPageLabel && <div className="page-label">{`Page ${lastPageIndex + 1}`}</div>}
-                <Bookmark bookmark={bookmark} index={i} />
-              </>
-            );
-          })}
+        <div className="bookmark-row">
+          {pageIndexes.map(pageIndex => (
+            <>
+              <div className="page-label">{`Page ${parseInt(pageIndex, 10) + 1}`}</div>
+              <Bookmark text={bookmarks[pageIndex]} pageIndex={pageIndex} />
+            </>
+          ))}
         </div>
       </div>
     );
@@ -97,7 +87,8 @@ class BookmarksPanel extends React.PureComponent {
 
 const mapStateToProps = state => ({
   bookmarks: selectors.getBookmarks(state),
-  isDisabled: selectors.isElementDisabled(state, 'bookmarksPanel')
+  isDisabled: selectors.isElementDisabled(state, 'bookmarksPanel'),
+  currentPage: selectors.getCurrentPage(state),
 });
 
 const mapDispatchToProps = {
