@@ -88,12 +88,25 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   setOverlayPosition = () => {
-    const { left, right } = getOverlayPositionBasedOn('signatureToolButton', this.overlay);
-    this.setState({
-      // TODO: remove the hard-coded value.
-      left: left === -9999 ? window.innerWidth / 2 - 95 : left - 95,
-      right,
-    });
+    const signatureToolButton = document.querySelector(
+      '[data-element="signatureToolButton"]',
+    );
+
+    if (!signatureToolButton && this.overlay.current) {
+      // the button has been disabled using instance.disableElements
+      // but this component can still be opened by clicking on a signature widget
+      // in this case we just place it in the center
+      const { width } = this.overlay.current.getBoundingClientRect();
+      this.setState({ left: (window.innerWidth - width) / 2, right: 'auto' });
+    } else {
+      this.setState(
+        getOverlayPositionBasedOn(
+          'signatureToolButton',
+          this.overlay,
+          'center',
+        ),
+      );
+    }
   }
 
   onSaveDefault = (e, paths, signatureAnnotation) => {

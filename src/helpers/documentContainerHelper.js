@@ -39,21 +39,31 @@ export const updateContainerWidth = (prevProps, props, container) => {
   }
 };
 
-const expandContainerWidthBy = (panelWidth, container) => {
+const getWidthAfterTransition = container => {
+  const oldTransition = container.style.transition;
+  container.style.transition = 'none';
   const containerWidth = parseInt(window.getComputedStyle(container).width, 10);
+  container.style.transition = oldTransition;
+
+  return containerWidth;
+};
+
+const expandContainerWidthBy = (panelWidth, container) => {
+  const containerWidth = getWidthAfterTransition(container);
 
   if (isIEEdge) {
     container.style.width = `${containerWidth + panelWidth}px`;
   }
 
   if (isIE11) {
+    //need to add 'scrollBarWidth' or it breaks after "npm run build", this isn't needed for npm run start
     const scrollBarWidth = 17;
     container.style.width = `${containerWidth + panelWidth + scrollBarWidth}px`;
   }
 };
 
 const shrinkContainerWidthBy = (panelWidth, container) => {
-  const containerWidth = parseInt(window.getComputedStyle(container).width, 10);
+  const containerWidth = getWidthAfterTransition(container);
 
   if (isIEEdge) {
     container.style.width = `${containerWidth - panelWidth}px`;
