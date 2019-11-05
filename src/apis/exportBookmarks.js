@@ -1,5 +1,5 @@
 import selectors from 'selectors';
 
 export default store => () => {
-  return selectors.exportBookmarks(store.getState());
+  return selectors.getBookmarks(store.getState());
 };
