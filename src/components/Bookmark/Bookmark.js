@@ -58,16 +58,16 @@ class Bookmark extends React.PureComponent {
               onClick={() => this.setState({ isEditing: true })}
             >
               <Icon
-                className='icon'
-                glyph='edit-24px'
+                className="icon"
+                glyph="edit-24px"
               />
             </div>
             <div
               onClick={() => removeBookmark(index)}
             >
               <Icon
-                className='icon'
-                glyph='cancel-24px'
+                className="icon"
+                glyph="cancel-24px"
               />
             </div>
           </div>
