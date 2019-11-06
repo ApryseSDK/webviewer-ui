@@ -187,6 +187,7 @@ export default {
     maxSignaturesCount: 2,
     signatureFonts: ['GreatVibes-Regular'],
     leftPanelWidth: 300,
+    isReplyDisabledFunc: null,
   },
   search: {
     listeners: [],

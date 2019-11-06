@@ -84,56 +84,6 @@ const ContextMenuPopup = () => {
     return () => document.removeEventListener('contextmenu', onContextMenu);
   }, [dispatch]);
 
-  const dataElementButtonMap = {
-    panToolButton: overrides => (
-      <ActionButton
-        title="tool.pan"
-        img="ic_pan_black_24px"
-        onClick={() => setToolModeAndGroup(store, 'Pan')}
-        {...overrides}
-        dataElement="panToolButton"
-      />
-    ),
-    stickyToolButton: overrides => (
-      <ActionButton
-        title="annotation.stickyNote"
-        img="ic_annotation_sticky_note_black_24px"
-        onClick={() => setToolModeAndGroup(store, 'AnnotationCreateSticky')}
-        {...overrides}
-        dataElement="stickyToolButton"
-      />
-    ),
-    highlightToolButton: overrides => (
-      <ActionButton
-        title="annotation.highlight"
-        img="ic_annotation_highlight_black_24px"
-        onClick={() =>
-          setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
-        }
-        {...overrides}
-        dataElement="highlightToolButton"
-      />
-    ),
-    freeHandToolButton: overrides => (
-      <ActionButton
-        title="annotation.freehand"
-        img="ic_annotation_freehand_black_24px"
-        onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHand')}
-        {...overrides}
-        dataElement="freeHandToolButton"
-      />
-    ),
-    freeTextToolButton: overrides => (
-      <ActionButton
-        title="annotation.freetext"
-        img="ic_annotation_freetext_black_24px"
-        onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeText')}
-        {...overrides}
-        dataElement="freeTextToolButton"
-      />
-    ),
-  };
-
   return isDisabled ? null : (
     <div
       className={classNames({
@@ -148,7 +98,38 @@ const ContextMenuPopup = () => {
       onClick={() => dispatch(actions.closeElement('contextMenuPopup'))}
     >
       <CustomizablePopup dataElement="contextMenuPopup">
-        {dataElementButtonMap}
+        <ActionButton
+          dataElement="panToolButton"
+          title="tool.pan"
+          img="ic_pan_black_24px"
+          onClick={() => setToolModeAndGroup(store, 'Pan')}
+        />
+        <ActionButton
+          dataElement="stickyToolButton"
+          title="annotation.stickyNote"
+          img="ic_annotation_sticky_note_black_24px"
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateSticky')}
+        />
+        <ActionButton
+          dataElement="highlightToolButton"
+          title="annotation.highlight"
+          img="ic_annotation_highlight_black_24px"
+          onClick={() =>
+            setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
+          }
+        />
+        <ActionButton
+          dataElement="freeHandToolButton"
+          title="annotation.freehand"
+          img="ic_annotation_freehand_black_24px"
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHand')}
+        />
+        <ActionButton
+          dataElement="freeTextToolButton"
+          title="annotation.freetext"
+          img="ic_annotation_freetext_black_24px"
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeText')}
+        />
       </CustomizablePopup>
     </div>
   );

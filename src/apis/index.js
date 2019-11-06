@@ -120,6 +120,7 @@ import useEmbeddedPrint from './useEmbeddedPrint';
 import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
 import setSignatureFonts from './setSignatureFonts';
+import disableReplyForAnnotations from './disableReplyForAnnotations';
 
 export default store => {
   window.readerControl = {
@@ -136,6 +137,7 @@ export default store => {
     disableElements: disableElements(store),
     disableFeatures: disableFeatures(store),
     disableTools: disableTools(store),
+    disableReplyForAnnotations: disableReplyForAnnotations(store),
     downloadPdf: downloadPdf(store),
     enableElements: enableElements(store),
     enableTools: enableTools(store),

@@ -176,6 +176,13 @@ export default initialState => (state = initialState, action) => {
         },
       };
     }
+    case 'SET_REPLY_DISABLED_FUNC': {
+      const { func } = payload;
+      return {
+        ...state,
+        isReplyDisabledFunc: func,
+      };
+    }
     case 'SET_ICON_COLOR': {
       const { colorMapKey, color } = payload;
       return {

@@ -6,7 +6,7 @@ export default (element, overlay, align = 'left') => {
   // by default the button is visible in the header
   // but it can be removed from the DOM by calling viewerInstance.disableElement(...);
   // in this case we are not able to position the overlay correctly so we just "hide" the overlay
-  if (!button) {
+  if (!button || !overlay.current) {
     return { left: -9999, right };
   }
 

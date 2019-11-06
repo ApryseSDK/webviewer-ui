@@ -16,12 +16,13 @@ export default ({ dispatch, getState }) => annotation => {
   if (isLeftPanelOpen) {
     core.selectAnnotation(annotation);
     dispatch(actions.setActiveLeftPanel('notesPanel'));
-    dispatch(actions.setIsNoteEditing(true));
+    dispatch(actions.triggerNoteEditing());
   } else {
     dispatch(actions.openElement('notesPanel'));
+    // wait for the left panel to fully open
     setTimeout(() => {
       core.selectAnnotation(annotation);
-      dispatch(actions.setIsNoteEditing(true));
+      dispatch(actions.triggerNoteEditing());
     }, 400);
   }
 };
