@@ -36,7 +36,7 @@ class BookmarksPanel extends React.PureComponent {
       return null;
     }
 
-    const pageIndexes = Object.keys(bookmarks);
+    const pageIndexes = Object.keys(bookmarks).map(pageIndex => parseInt(pageIndex, 10));
     return (
       <div className="Panel bookmarks-panel" style={{ display }} data-element="bookmarksPanel">
         {
@@ -75,7 +75,7 @@ class BookmarksPanel extends React.PureComponent {
         <div className="bookmark-row">
           {pageIndexes.map(pageIndex => (
             <>
-              <div className="page-label">{`Page ${parseInt(pageIndex, 10) + 1}`}</div>
+              <div className="page-label">{`Page ${pageIndex + 1}`}</div>
               <Bookmark text={bookmarks[pageIndex]} pageIndex={pageIndex} />
             </>
           ))}
