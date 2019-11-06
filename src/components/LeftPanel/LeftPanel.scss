@@ -29,8 +29,9 @@
 
 .resize-bar {
   cursor: col-resize;
-  left: $left-panel-width;
   right: 0px;
+  // make sure the resize bar is always at the right of the native scrollbar
+  margin-right: -20px;
   width: 20px;
   height: 100%;
   margin-bottom: 0;
