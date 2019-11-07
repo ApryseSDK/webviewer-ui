@@ -91,6 +91,6 @@ const errorMIMEType = fileExtension => {
     `Your server does not have a MIME type set for extension ${fileExtension}. Open developer console to see the link for correct MIME type setup`,
   );
   console.error(
-    `Your server does not have a MIME type set for extension ${fileExtension}. Please see https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading/#mime-types for more information.`,
+    `Your server does not have a MIME type set for extension ${fileExtension}. Please see https://www.pdftron.com/documentation/web/faq/mime-types for more information.`,
   );
 };

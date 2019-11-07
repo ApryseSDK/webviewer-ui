@@ -13,7 +13,9 @@ export default dispatch => () => {
   if (isIOS) {
     window.CoreControls.SetCachingLevel(8); // 32MB
     window.CoreControls.SetPreRenderLevel(2); // so that we can enable high res thumb
-  } else if (totalPages > 500) {
+  }
+
+  if (totalPages >= 500) {
     core.setDisplayMode(window.CoreControls.DisplayModes.Single);
   }
 
