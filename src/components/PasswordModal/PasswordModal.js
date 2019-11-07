@@ -19,7 +19,7 @@ const PasswordModal = () => {
     shallowEqual,
   );
   const dispatch = useDispatch();
-  const [t] = useTranslation(); 
+  const [t] = useTranslation();
   const passwordInput = React.createRef();
   const maxAttempts = 3;
   const [password, setPassword] = useState('');
@@ -38,10 +38,6 @@ const PasswordModal = () => {
       setUserCancelled(false);
     }
   }, [dispatch, isOpen, passwordInput]);
-
-  const handleInputChange = e => {
-    setPassword(e.target.value);
-  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -67,7 +63,7 @@ const PasswordModal = () => {
     return (
       <div className="wrapper">
         <div className="header">{t('message.passwordRequired')}</div>
-        <form onSubmit={() => setUserCancelled(true)}>
+        <form onSubmit={handleSubmit}>
           <div className="enter">
             <div>{t('message.enterPassword')}</div>
             <input
@@ -75,7 +71,7 @@ const PasswordModal = () => {
               type="password"
               ref={passwordInput}
               value={password}
-              onChange={handleInputChange}
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
           {wrongPassword &&
