@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'production',
-  entry: ['@babel/polyfill', path.resolve(__dirname, 'src')],
+  entry: path.resolve(__dirname, 'src'),
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'webviewer-ui.min.js',
@@ -38,7 +38,16 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react', '@babel/preset-env'],
+            presets: [
+              '@babel/preset-react',
+              [
+                '@babel/preset-env',
+                {
+                  useBuiltIns: 'usage',
+                  corejs: 3,
+                },
+              ],
+            ],
             plugins: [
               '@babel/plugin-proposal-function-sent',
               '@babel/plugin-proposal-export-namespace-from',
