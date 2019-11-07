@@ -1,56 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'components/Button';
-
-import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './PasswordModal.scss';
 
-const propTypes = {
-  isOpen: PropTypes.bool,
-  attempt: PropTypes.number.isRequired,
-  checkPassword: PropTypes.func,
-  setPasswordAttempts: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
-  closeElement: PropTypes.func.isRequired,
-};
-
-const PasswordModal = props => {
-  const {
-    isOpen,
-    attempt,
-    checkPassword,
-    t,
-    closeElement,
-  } = props;
-  const initialState = {
-    password: '',
-    userCancelled: false,
-  };
+const PasswordModal = () => {
+  const [isOpen, attempt, checkPassword] = useSelector(
+    state => [
+      selectors.isElementOpen(state, 'passwordModal'),
+      selectors.getPasswordAttempts(state),
+      selectors.getCheckPasswordFunction(state),
+    ],
+    shallowEqual,
+  );
+  const dispatch = useDispatch();
+  const [t] = useTranslation(); 
   const passwordInput = React.createRef();
   const maxAttempts = 3;
-  const [password, setPassword] = useState(initialState.password);
-  const [userCancelled, setUserCancelled] = useState(initialState.userCancelled);
+  const [password, setPassword] = useState('');
+  const [userCancelled, setUserCancelled] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
-      closeElement('progressModal');
-    }
-    if (!isOpen) {
+      dispatch(
+        actions.closeElement('progressModal'),
+      );
+      passwordInput.current?.focus();
+    } else {
       // when a user enters the correct password or calls core.closeDocument
       // reset state in case user loads another password-protected document
-      setPassword(initialState.password);
-      setUserCancelled(initialState.userCancelled);
+      setPassword('');
+      setUserCancelled(false);
     }
-    if (passwordInput.current) {
-      passwordInput.current.focus();
-    }
-  }, [isOpen, passwordInput, closeElement, initialState.password, initialState.userCancelled]);
+  }, [dispatch, isOpen, passwordInput]);
 
   const handleInputChange = e => {
     setPassword(e.target.value);
@@ -62,25 +49,17 @@ const PasswordModal = props => {
     checkPassword(password);
   };
 
-  const handleCancel = () => {
-    setUserCancelled(true);
-  };
-
   const renderContent = () => {
     const userExceedsMaxAttempts = attempt === maxAttempts;
     if (userExceedsMaxAttempts) {
-      return renderMaxAttemptsContent();
+      return (<p>{t('message.encryptedAttemptsExceeded')}</p>);
     }
     if (userCancelled) {
-      return renderUserCancelContent();
+      return (<p>{t('message.encryptedUserCancelled')}</p>);
     }
 
     return renderEnterPasswordContent();
   };
-
-  const renderMaxAttemptsContent = () => <p>{t('message.encryptedAttemptsExceeded')}</p>;
-
-  const renderUserCancelContent = () => <p>{t('message.encryptedUserCancelled')}</p>;
 
   const renderEnterPasswordContent = () => {
     const wrongPassword = attempt !== 0;
@@ -88,7 +67,7 @@ const PasswordModal = props => {
     return (
       <div className="wrapper">
         <div className="header">{t('message.passwordRequired')}</div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={() => setUserCancelled(true)}>
           <div className="enter">
             <div>{t('message.enterPassword')}</div>
             <input
@@ -115,7 +94,7 @@ const PasswordModal = props => {
             <Button
               dataElement="passwordCancelButton"
               label={t('action.cancel')}
-              onClick={handleCancel}
+              onClick={() => setUserCancelled(true)}
             />
           </div>
         </form>
@@ -124,7 +103,13 @@ const PasswordModal = props => {
   };
 
   return (
-    <div className={getClassName('Modal PasswordModal', props)} data-element="passwordModal">
+    <div className={classNames({
+      Modal: true,
+      PasswordModal: true,
+      open: isOpen,
+      closed: !isOpen,
+    })} data-element="passwordModal"
+    >
       <div className="container">
         {renderContent()}
       </div>
@@ -132,17 +117,4 @@ const PasswordModal = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  isOpen: selectors.isElementOpen(state, 'passwordModal'),
-  checkPassword: selectors.getCheckPasswordFunction(state),
-  attempt: selectors.getPasswordAttempts(state),
-});
-
-const mapDispatchToProps = {
-  setPasswordAttempts: actions.setPasswordAttempts,
-  closeElement: actions.closeElement,
-};
-
-PasswordModal.propTypes = propTypes;
-
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(PasswordModal));
+export default PasswordModal;

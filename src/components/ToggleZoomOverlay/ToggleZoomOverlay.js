@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import core from 'core';
+import classNames from 'classnames';
 
 import ToggleElementButton from 'components/ToggleElementButton';
 import { zoomTo } from 'helpers/zoom';
@@ -10,15 +10,14 @@ import actions from 'actions';
 
 import './ToggleZoomOverlay.scss';
 
-const propTypes = {
-  onClick: PropTypes.func.isRequired,
-  isActive: PropTypes.bool,
-};
-
-const ToggleZoomOverlay = ({
-  onClick,
-  isActive,
-}) => {
+const ToggleZoomOverlay = () => {
+  const [isActive] = useSelector(
+    state => [
+      selectors.isElementOpen(state, 'zoomOverlay'),
+    ],
+    shallowEqual,
+  );
+  const dispatch = useDispatch();
   const [value, setValue] = useState('100');
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const ToggleZoomOverlay = ({
       core.removeEventListener('documentLoaded', onDocumentLoaded);
       core.removeEventListener('zoomUpdated', onZoomUpdated);
     };
-  });
+  }, []);
 
   const onKeyPress = e => {
     if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
@@ -70,8 +69,12 @@ const ToggleZoomOverlay = ({
 
   return (
     <div className="ToggleZoomOverlay">
-      <div className={['OverlayContainer', isActive ? 'active' : ''].join(' ').trim()}>
-        <div className="OverlayText" onClick={onClick}>
+      <div className={classNames({
+        OverlayContainer: true,
+        'active': isActive,
+      })}
+      >
+        <div className="OverlayText" onClick={() => dispatch(actions.toggleElement('zoomOverlay'))}>
           <input
             type="text"
             className="textarea"
@@ -89,16 +92,4 @@ const ToggleZoomOverlay = ({
   );
 };
 
-ToggleZoomOverlay.propTypes = propTypes;
-
-const mapStateToProps = state => ({
-  isActive: selectors.isElementOpen(state, 'zoomOverlay'),
-});
-
-const mapDispatchToProps = dispatch => ({
-  onClick: () => {
-    dispatch(actions.toggleElement('zoomOverlay'));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ToggleZoomOverlay);
+export default ToggleZoomOverlay;
