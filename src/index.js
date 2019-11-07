@@ -78,9 +78,9 @@ if (window.CanvasRenderingContext2D) {
   }
 
   const { preloadWorker } = state.advanced;
-  const { PDF, OFFICE, ALL } = workerTypes;
 
-  if (preloadWorker) {
+  function initTransports() {
+    const { PDF, OFFICE, ALL } = workerTypes;
     if (preloadWorker === PDF || preloadWorker === ALL) {
       getBackendPromise(state.document.pdfType).then(pdfType => {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
@@ -102,11 +102,16 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
+
   loadCustomCSS(state.advanced.customCSS);
 
   logDebugInfo(state.advanced);
 
   fullAPIReady.then(() => loadConfig()).then(() => {
+    if (preloadWorker) {
+      initTransports();
+    }
+
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
     window.docViewer = docViewer;
