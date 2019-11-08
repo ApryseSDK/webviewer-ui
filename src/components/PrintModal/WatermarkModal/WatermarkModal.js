@@ -77,16 +77,16 @@ class WatermarkModal extends React.PureComponent {
       isColorPaletteVisible: false,
       locationSettings,
       previousLocationSettings: locationSettings,
-      preExistingWatermarks: {},
+      preExistingWatermark: {},
     };
     this.canvasContainerRef = React.createRef();
 
     this.handleWatermarkRenderFxn = async () => {
       if (this.props.isVisible) {
-        const watermark = await core.getWatermark();
+        const preExistingWatermark = await core.getWatermark();
         this.setState({
           locationSettings: this.state.previousLocationSettings,
-          preExistingWatermarks: watermark,
+          preExistingWatermark,
         }, () => {
           this.addWatermarks();
         });
