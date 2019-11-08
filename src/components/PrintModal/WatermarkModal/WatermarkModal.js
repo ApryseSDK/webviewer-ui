@@ -80,7 +80,9 @@ class WatermarkModal extends React.PureComponent {
     };
     this.canvasContainerRef = React.createRef();
 
-    this.handleWatermarkRenderFxn = () => {
+    this.handleWatermarkRenderFxn = async () => {
+      // preserve watermark first
+      const watermark = await core.getWatermark();
       if (this.props.isVisible) {
         this.setState({
           locationSettings: this.state.previousLocationSettings,
@@ -89,6 +91,7 @@ class WatermarkModal extends React.PureComponent {
         });
       } else {
         this.removeAllWatermarks();
+        core.setWatermark(watermark);
       }
     };
   }
