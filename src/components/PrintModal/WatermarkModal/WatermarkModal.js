@@ -77,29 +77,24 @@ class WatermarkModal extends React.PureComponent {
       isColorPaletteVisible: false,
       locationSettings,
       previousLocationSettings: locationSettings,
+      preExistingWatermarks: {},
     };
     this.canvasContainerRef = React.createRef();
 
     this.handleWatermarkRenderFxn = async () => {
-      // preserve watermark first
-      const watermark = await core.getWatermark();
       if (this.props.isVisible) {
+        const watermark = await core.getWatermark();
         this.setState({
           locationSettings: this.state.previousLocationSettings,
+          preExistingWatermarks: watermark,
         }, () => {
           this.addWatermarks();
         });
       } else {
-        this.removeAllWatermarks();
-        core.setWatermark(watermark);
+        this.removeWatermarkCreatedByModal();
+        core.setWatermark(this.state.preExistingWatermarks);
       }
     };
-  }
-
-  componentDidMount() {
-    if (this.props.isVisible !== undefined) {
-      core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn);
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -165,7 +160,7 @@ class WatermarkModal extends React.PureComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  removeAllWatermarks = () => {
+  removeWatermarkCreatedByModal = () => {
     core.setWatermark({});
   }
 
@@ -188,10 +183,6 @@ class WatermarkModal extends React.PureComponent {
     }, () => {
       this.addWatermarks();
     });
-  }
-
-  componentWillUnmount() {
-    core.removeEventListener('documentLoaded', this.handleWatermarkRenderFxn);
   }
 
   resetForm = event => {
