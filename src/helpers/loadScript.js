@@ -42,7 +42,7 @@ const loadConfig = () =>
 
       window.parent.postMessage({
         type: 'requestConfig',
-        id: getHashParams('id'),
+        id: parseInt(getHashParams('id'), 10),
       }, '*');
     }
   });
