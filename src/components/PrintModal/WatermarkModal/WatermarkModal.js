@@ -60,8 +60,6 @@ const WATERMARK_API_LOCATIONS = {
 };
 
 class WatermarkModal extends React.PureComponent {
-  handleWatermarkRenderFxn;
-
   static propTypes = {
     isVisible: PropTypes.bool,
     pageIndexToView: PropTypes.number,
@@ -70,6 +68,8 @@ class WatermarkModal extends React.PureComponent {
     t: PropTypes.func.isRequired,
   }
 
+  preExistingWatermark;
+
   constructor(props) {
     super(props);
     const locationSettings = this.initializeLocationSettings();
@@ -77,33 +77,34 @@ class WatermarkModal extends React.PureComponent {
       isColorPaletteVisible: false,
       locationSettings,
       previousLocationSettings: locationSettings,
-      preExistingWatermark: {},
     };
     this.canvasContainerRef = React.createRef();
-
-    this.handleWatermarkRenderFxn = async () => {
-      if (this.props.isVisible) {
-        const preExistingWatermark = await core.getWatermark();
-        this.setState({
-          locationSettings: this.state.previousLocationSettings,
-          preExistingWatermark,
-        }, () => {
-          this.addWatermarks();
-        });
-      } else {
-        this.removeWatermarkCreatedByModal();
-        core.setWatermark(this.state.preExistingWatermarks);
-      }
-    };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.isVisible !== prevProps.isVisible) {
       this.setState({
         isColorPaletteVisible: false,
-      }, () => this.handleWatermarkRenderFxn());
+      }, () => this.handleWatermarkOnVisibilityChanged());
     }
   }
+
+  handleWatermarkOnVisibilityChanged = () => {
+    if (this.props.isVisible) {
+      this.setState({
+        locationSettings: this.state.previousLocationSettings,
+      }, async () => {
+      /**
+       * Store the pre-existing watermark (if any) before we overwrite it
+       */
+        this.preExistingWatermark = await core.getWatermark();
+        this.addWatermarks();
+      });
+    } else {
+      this.removeWatermarkCreatedByModal();
+      core.setWatermark(this.preExistingWatermarks);
+    }
+  };
 
   addWatermarks = () => {
     const watermarkOptions = this.createWatermarks();
