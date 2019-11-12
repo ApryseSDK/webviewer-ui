@@ -1,15 +1,16 @@
-.Bookmark {
+.bookmark {
   display: flex;
   justify-content: space-between;
-  // margin: 0px 10px;
   margin-top: 10px;
   font-size: 0.8em;
   align-items: center;
-  // margin-left: 20px;
   height: 24px;
 }
 
 .Controls-2 {
   display: flex;
+}
+
+.bookmark-button {
   cursor: pointer;
 }
