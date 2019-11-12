@@ -116,6 +116,8 @@ export const getIconColor = (state, colorMapKey) =>
 
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 
+export const getIsReplyDisabled = state => state.viewer.isReplyDisabledFunc;
+
 export const getZoomList = state => state.viewer.zoomList;
 
 export const getMeasurementUnits = state => state.viewer.measurementUnits;

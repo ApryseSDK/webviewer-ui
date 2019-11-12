@@ -7,7 +7,6 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-hot-middleware/client?name=ui&path=/__webpack_hmr',
-    '@babel/polyfill',
     path.resolve(__dirname, 'src'),
   ],
   output: {
@@ -23,7 +22,16 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react', '@babel/preset-env'],
+            presets: [
+              '@babel/preset-react',
+              [
+                '@babel/preset-env',
+                {
+                  useBuiltIns: 'usage',
+                  corejs: 3,
+                },
+              ],
+            ],
             plugins: [
               'react-hot-loader/babel',
               '@babel/plugin-proposal-function-sent',
