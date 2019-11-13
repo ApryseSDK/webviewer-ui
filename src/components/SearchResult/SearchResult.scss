@@ -2,15 +2,15 @@
 
 .SearchResult {
   margin-top: -1px;
-  padding: 10px;
+  padding: 0.625rem;
   box-sizing: border-box;
-  font-size: 15px;
+  font-size: 0.9375rem;
   cursor: pointer;
   background: white;
   background: var(--primary-color);
   border: 1px solid $gray12;
   border: 1px solid var(--border-color);
-
+  overflow-wrap: break-word;
   &.selected {
     background: $gray10;
     color: #333333;

@@ -1,3 +1,5 @@
+import getHashParams from 'helpers/getHashParams';
+
 const loadScript = (scriptSrc, warning) =>
   new Promise(resolve => {
     if (!scriptSrc) {
@@ -38,7 +40,10 @@ const loadConfig = () =>
         }
       });
 
-      window.parent.postMessage('requestConfig', '*');
+      window.parent.postMessage({
+        type: 'requestConfig',
+        id: parseInt(getHashParams('id'), 10),
+      }, '*');
     }
   });
 

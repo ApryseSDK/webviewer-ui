@@ -3,43 +3,26 @@ import PropTypes from 'prop-types';
 
 import './Input.scss';
 
-class Input extends React.PureComponent {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    defaultChecked: PropTypes.bool,
-    onChange: PropTypes.func,
-    label: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]).isRequired,
-    checked: PropTypes.bool,
-  }
+const propTypes = {
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  defaultChecked: PropTypes.bool,
+  onChange: PropTypes.func,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]).isRequired,
+  checked: PropTypes.bool,
+};
 
-  constructor() {
-    super();
-    this.inputRef = React.createRef();
-  }
+const Input = React.forwardRef((props, ref) => (
+  <React.Fragment>
+    <input className="Input" ref={ref} {...props}/>
+    <label className="Input" htmlFor={props.id}>{props.label}</label>
+  </React.Fragment>
+));
 
-  get checked() {
-    return this.inputRef.current.checked;
-  }
-
-  set checked(value) {
-    this.inputRef.current.checked = value;
-  }
-
-  render() {
-    const { id, type, name, checked, defaultChecked, onChange, label } = this.props;
-
-    return (
-      <React.Fragment>
-        <input className="Input" id={id} ref={this.inputRef} type={type} name={name} onChange={onChange} checked={checked} defaultChecked={defaultChecked} />
-        <label className="Input" htmlFor={id}>{label}</label>
-      </React.Fragment>
-    );
-  }
-}
+Input.propTypes = propTypes;
 
 export default Input;

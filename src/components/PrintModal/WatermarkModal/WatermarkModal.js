@@ -60,8 +60,6 @@ const WATERMARK_API_LOCATIONS = {
 };
 
 class WatermarkModal extends React.PureComponent {
-  handleWatermarkRenderFxn;
-
   static propTypes = {
     isVisible: PropTypes.bool,
     pageIndexToView: PropTypes.number,
@@ -69,6 +67,8 @@ class WatermarkModal extends React.PureComponent {
     formSubmitted: PropTypes.func,
     t: PropTypes.func.isRequired,
   }
+
+  preExistingWatermark;
 
   constructor(props) {
     super(props);
@@ -79,33 +79,32 @@ class WatermarkModal extends React.PureComponent {
       previousLocationSettings: locationSettings,
     };
     this.canvasContainerRef = React.createRef();
-
-    this.handleWatermarkRenderFxn = () => {
-      if (this.props.isVisible) {
-        this.setState({
-          locationSettings: this.state.previousLocationSettings,
-        }, () => {
-          this.addWatermarks();
-        });
-      } else {
-        this.removeAllWatermarks();
-      }
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.isVisible !== undefined) {
-      core.addEventListener('documentLoaded', this.handleWatermarkRenderFxn);
-    }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.isVisible !== prevProps.isVisible) {
       this.setState({
         isColorPaletteVisible: false,
-      }, () => this.handleWatermarkRenderFxn());
+      }, () => this.handleWatermarkOnVisibilityChanged());
     }
   }
+
+  handleWatermarkOnVisibilityChanged = () => {
+    if (this.props.isVisible) {
+      this.setState({
+        locationSettings: this.state.previousLocationSettings,
+      }, async () => {
+      /**
+       * Store the pre-existing watermark (if any) before we overwrite it
+       */
+        this.preExistingWatermark = await core.getWatermark();
+        this.addWatermarks();
+      });
+    } else {
+      this.removeWatermarkCreatedByModal();
+      core.setWatermark(this.preExistingWatermarks);
+    }
+  };
 
   addWatermarks = () => {
     const watermarkOptions = this.createWatermarks();
@@ -162,7 +161,7 @@ class WatermarkModal extends React.PureComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  removeAllWatermarks = () => {
+  removeWatermarkCreatedByModal = () => {
     core.setWatermark({});
   }
 
@@ -185,10 +184,6 @@ class WatermarkModal extends React.PureComponent {
     }, () => {
       this.addWatermarks();
     });
-  }
-
-  componentWillUnmount() {
-    core.removeEventListener('documentLoaded', this.handleWatermarkRenderFxn);
   }
 
   resetForm = event => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ToggleElementOverlay from 'components/ToggleElementOverlay';
+import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import SignatureToolButton from 'components/SignatureToolButton';
 
 import core from 'core';
@@ -29,7 +29,7 @@ export default {
         { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: ['mobile'] },
         {
           type: 'customElement',
-          render: () => <ToggleElementOverlay />,
+          render: () => <ToggleZoomOverlay />,
           dataElement: 'zoomOverlayButton',
           hidden: ['mobile'],
           element: 'zoomOverlay',
