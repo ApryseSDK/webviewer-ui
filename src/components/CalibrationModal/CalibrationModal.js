@@ -92,11 +92,11 @@ const CalibrationModal = () => {
       [currentScale[1][0] * ratio, unitTo],
     ];
 
-    core.setAnnotationStyles(annotation, () => ({
+    core.setAnnotationStyles(annotation, {
       Scale: newScale,
-    }));
+    });
 
-    // this will also set the Scale for the other two measuremenet tools
+    // this will also set the Scale for the other two measurement tools
     setToolStyles('AnnotationCreateDistanceMeasurement', 'Scale', newScale);
 
     dispatch(actions.closeElements(['calibrationModal']));
