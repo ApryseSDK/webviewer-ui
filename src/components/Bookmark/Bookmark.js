@@ -20,7 +20,6 @@ class Bookmark extends React.PureComponent {
     };
   }
 
-
   static propTypes = {
     editBookmark: PropTypes.func.isRequired,
     removeBookmark: PropTypes.func.isRequired,
@@ -60,7 +59,7 @@ class Bookmark extends React.PureComponent {
           {text}
         </div>
         {this.state.isHovered &&
-          <div className="Controls-2 bookmark-button">
+          <div className="bookmark-controls bookmark-button">
             <div
               onClick={() => this.setState({ isEditing: true })}
             >

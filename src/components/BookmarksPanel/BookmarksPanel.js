@@ -1,5 +1,3 @@
-/* eslint-disable lines-between-class-members */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -29,6 +27,7 @@ class BookmarksPanel extends React.PureComponent {
     currentPage: PropTypes.number.isRequired,
     isDisabled: PropTypes.bool,
   }
+
   render() {
     const { isDisabled, display, bookmarks, addBookmark, currentPage } = this.props;
 
@@ -52,30 +51,27 @@ class BookmarksPanel extends React.PureComponent {
                 this.setState({ isAdding: false });
               }}
             /> :
-            <div className="bookmark-header">
-              <div className="whatever">
+            <div className="bookmarks-panel-header ">
+              <div className="bookmarks-panel-container">
                 <Icon
-                  className="icon"
                   glyph="ic_bookmarks_black_24px"
                 />
                 <div className="label">BOOKMARKS</div>
               </div>
               <div
-                className="new-bookmark-btn"
+                className="bookmarks-panel-button"
                 onClick={() => {
                   this.setState({ isAdding: true });
                 }}
-                tabIndex={0}
-                role="button"
               >
                 New Bookmark
               </div>
             </div>
         }
-        <div className="bookmark-row">
+        <div className="bookmarks-panel-row">
           {pageIndexes.map(pageIndex => (
             <>
-              <div className="page-label">{`Page ${pageIndex + 1}`}</div>
+              <div className="bookmarks-panel-label">{`Page ${pageIndex + 1}`}</div>
               <Bookmark text={bookmarks[pageIndex]} pageIndex={pageIndex} />
             </>
           ))}

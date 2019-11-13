@@ -10,27 +10,35 @@ class EditingBookmark extends React.PureComponent {
       bookmarkText: props.bookmarkText,
     };
   }
+
+  static propTypes = {
+    onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+    bookmarkText: PropTypes.string.isRequired,
+  }
+
   render() {
     const { onSave, onCancel, label } = this.props;
 
     return (
-      <div className="Editing">
-        {label && <div className="bm-label">{label}</div>}
+      <div className="editing-bookmark">
+        {label && <div className="editing-label">{label}</div>}
         <input
           type="text"
           name="bookmark"
-          className="bm-input"
+          className="editing-input"
           placeholder="Name"
           value={this.state.bookmarkText}
-          onChange={(e) => {
+          onChange={e => {
             this.setState({ bookmarkText: e.target.value });
           }}
         />
-        <div className="Controls-1">
-          <div className="b-btn2 cancel" onClick={onCancel}>
+        <div className="editing-controls">
+          <div className="editing-button editing-pad" onClick={onCancel}>
             Cancel
           </div>
-          <div className="b-btn2" onClick={() => onSave(this.state.bookmarkText)}>
+          <div className="editing-button" onClick={() => onSave(this.state.bookmarkText)}>
             Save
           </div>
         </div>
