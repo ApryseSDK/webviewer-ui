@@ -5,7 +5,7 @@ import { engineTypes, workerTypes } from 'constants/types';
 import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
 import actions from 'actions';
 
-export default (state, dispatch) => {
+export default (state, dispatch, extraOptions) => {
   core.closeDocument(dispatch).then(() => {
     checkByteRange(state).then(streaming => {
       Promise.all([getPartRetriever(state, streaming, dispatch), getDocOptions(state, dispatch, streaming)])
@@ -30,7 +30,7 @@ export default (state, dispatch) => {
           }
 
           dispatch(actions.openElement('progressModal'));
-          core.loadAsync(partRetriever, docOptions);
+          core.loadAsync(partRetriever, { ...extraOptions, ...docOptions });
         })
         .catch(error => {
           fireError(error);
