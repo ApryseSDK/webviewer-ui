@@ -29,7 +29,7 @@ const CustomizablePopup = ({ dataElement, children }) => {
     shallowEqual,
   );
 
-  const childrenArray = React.Children.toArray(children).filter(Boolean);
+  const childrenArray = React.Children.toArray(children);
 
   if (process.env.NODE_ENV !== 'production') {
     // give a error message in the console if a child's dataElement in the childrenArray isn't in the redux state
