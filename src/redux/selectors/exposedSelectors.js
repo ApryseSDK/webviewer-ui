@@ -170,6 +170,7 @@ export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;
+export const getBookmarks = state => state.document.bookmarks;
 
 export const getLayers = state => state.document.layers;
 
