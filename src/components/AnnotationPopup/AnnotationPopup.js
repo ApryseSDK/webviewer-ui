@@ -279,6 +279,19 @@ const AnnotationPopup = () => {
               }}
             />
           )}
+          {canModify &&
+            firstAnnotation.Measure &&
+            firstAnnotation instanceof Annotations.LineAnnotation && (
+            <ActionButton
+              dataElement="calibrateButton"
+              title="action.calibrate"
+              img="calibrate"
+              onClick={() => {
+                dispatch(actions.closeElement('annotationPopup'));
+                dispatch(actions.openElement('calibrationModal'));
+              }}
+            />
+          )}
         </CustomizablePopup>
       )}
     </div>

@@ -33,7 +33,8 @@
     "submit": "Enviar",
     "zoom": "Zoom",
     "zoomIn": "Acercar zoom",
-    "zoomOut": "Alejar zoom"
+    "zoomOut": "Alejar zoom",
+    "calibrate": "Calibrar"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -80,7 +81,8 @@
     "toolsButton": "Herramientas",
     "redaction": "Modificación",
     "viewControlsOverlay": "Ver controles",
-    "measurementToolsButton": "Herramientas de medición"
+    "measurementToolsButton": "Herramientas de medición",
+    "calibration": "Calibración"
   },
   "message": {
     "badDocument": "Error al cargar el documento. El documento está dañado o no es válido.",
@@ -103,7 +105,8 @@
     "searching": "Buscando...",
     "searchPlaceholder": "Buscar comentarios...",
     "signHere": "Firma aquí",
-    "insertTextHere": "Inserta el texto aquí"
+    "insertTextHere": "Inserta el texto aquí",
+    "enterMeasurement": "Ingrese la medición entre los dos puntos"
   },
   "option": {
     "annotationColor": {

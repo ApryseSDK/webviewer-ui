@@ -33,7 +33,8 @@
     "submit": "Soumettre",
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
-    "zoomOut": "Dézoomer"
+    "zoomOut": "Dézoomer",
+    "calibrate": "Étalonner"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -80,7 +81,8 @@
     "toolsButton": "Outils",
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
-    "measurementToolsButton": "Outils de mesure"
+    "measurementToolsButton": "Outils de mesure",
+    "calibration": "Étalonnage"
   },
   "message": {
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
@@ -103,7 +105,8 @@
     "searching": "Recherche...",
     "searchPlaceholder": "Rechercher des commentaires ici...",
     "signHere": "Signer ici",
-    "insertTextHere": "Insérer du texte ici"
+    "insertTextHere": "Insérer du texte ici",
+    "enterMeasurement": "Entrez la mesure entre les deux points"
   },
   "option": {
     "annotationColor": {

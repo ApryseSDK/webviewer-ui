@@ -33,7 +33,8 @@
     "submit": "Verzenden",
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom uit"
+    "zoomOut": "Zoom uit",
+    "calibrate": "Ijken"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -80,7 +81,8 @@
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
-    "measurementToolsButton": "Meetinstrumenten"
+    "measurementToolsButton": "Meetinstrumenten",
+    "calibration": "ijking"
   },
   "message": {
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
@@ -103,7 +105,8 @@
     "searching": "Zoeken...",
     "searchPlaceholder": "Zoek opmerkingen...",
     "signHere": "Teken hier",
-    "insertTextHere": "Vul hier tekst in"
+    "insertTextHere": "Vul hier tekst in",
+    "enterMeasurement": "Voer de meting tussen de twee punten in"
   },
   "option": {
     "annotationColor": {

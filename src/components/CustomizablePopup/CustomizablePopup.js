@@ -28,6 +28,7 @@ const CustomizablePopup = ({ dataElement, children }) => {
     state => selectors.getPopupItems(state, dataElement),
     shallowEqual,
   );
+
   const childrenArray = React.Children.toArray(children);
 
   if (process.env.NODE_ENV !== 'production') {

@@ -103,6 +103,7 @@ export default {
       { dataElement: 'annotationGroupButton' },
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'annotationDeleteButton' },
+      { dataElement: 'calibrateButton' },
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
