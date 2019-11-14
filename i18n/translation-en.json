@@ -75,6 +75,8 @@
     "notesPanel": "Notes",
     "outlinesPanel": "Outlines",
     "bookmarksPanel": "Bookmarks",
+    "newBookmark": "New Bookmark",
+    "bookmarkPage": "Page",
     "layersPanel": "Layers",
     "shapeToolsButton": "Shape tools",
     "textToolsButton": "Text tools",

@@ -29,7 +29,7 @@ class BookmarksPanel extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, display, bookmarks, addBookmark, currentPage } = this.props;
+    const { isDisabled, display, bookmarks, addBookmark, currentPage, t } = this.props;
 
     if (isDisabled) {
       return null;
@@ -41,7 +41,7 @@ class BookmarksPanel extends React.PureComponent {
         {
           this.state.isAdding ?
             <EditingBookmark
-              label={`PAGE ${currentPage}: NEW BOOKMARK`}
+              label={`${t('component.bookmarkPage')} ${currentPage}: ${t('component.newBookmark')}`}
               bookmarkText={''}
               onSave={newText => {
                 addBookmark(currentPage - 1, newText);
@@ -56,7 +56,7 @@ class BookmarksPanel extends React.PureComponent {
                 <Icon
                   glyph="ic_bookmarks_black_24px"
                 />
-                <div className="label">BOOKMARKS</div>
+                <div className="label">{t('component.bookmarksPanel')}</div>
               </div>
               <div
                 className="bookmarks-panel-button"
@@ -64,14 +64,14 @@ class BookmarksPanel extends React.PureComponent {
                   this.setState({ isAdding: true });
                 }}
               >
-                New Bookmark
+                {t('component.newBookmark')}
               </div>
             </div>
         }
         <div className="bookmarks-panel-row">
           {pageIndexes.map(pageIndex => (
             <>
-              <div className="bookmarks-panel-label">{`Page ${pageIndex + 1}`}</div>
+              <div className="bookmarks-panel-label">{`${t('component.bookmarkPage')} ${pageIndex + 1}`}</div>
               <Bookmark text={bookmarks[pageIndex]} pageIndex={pageIndex} />
             </>
           ))}
