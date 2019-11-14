@@ -42,6 +42,7 @@ import enableTextSelection from './enableTextSelection';
 import enableTool from './enableTool';
 import enableTools from './enableTools';
 import enableTouchScrollLock from './enableTouchScrollLock';
+import extractPages from './extractPages';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
@@ -67,6 +68,7 @@ import isMobileDevice from './isMobileDevice';
 import isReadOnly from './isReadOnly';
 import isToolDisabled from './isToolDisabled';
 import loadDocument from './loadDocument';
+import mergeDocument from './mergeDocument';
 import openElement from './openElement';
 import openElements from './openElements';
 import print from './print';
@@ -140,6 +142,7 @@ export default store => {
     downloadPdf: downloadPdf(store),
     enableElements: enableElements(store),
     enableTools: enableTools(store),
+    extractPages: extractPages(store),
     focusNote: focusNote(store),
     getFitMode: getFitMode(store),
     getLayoutMode: getLayoutMode(store),
@@ -150,6 +153,7 @@ export default store => {
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),
     loadDocument: loadDocument(store),
+    mergeDocument: mergeDocument(store),
     openElements: openElements(store),
     print: print(store),
     registerTool: registerTool(store),
