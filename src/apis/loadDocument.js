@@ -10,7 +10,7 @@
  * @param {boolean} options.withCredentials Whether or not cross-site requests should be made using credentials.
  * @param {string} options.cacheKey A key that will be used for caching the document on WebViewer Server.
  * @param {string} options.password A string that will be used to as the password to load a password protected document.
- * @example // 5.1 and after
+ * @example
 WebViewer(...)
   .then(function(instance) {
     instance.loadDocument('https://www.pdftron.com/downloads/pl/test.pdf', {
@@ -18,17 +18,6 @@ WebViewer(...)
       filename: 'sample-1.pdf'
     });
   });
- * @example // 4.0 ~ 5.0
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.loadDocument('https://www.pdftron.com/downloads/pl/test.pdf', {
-    documentId: '1',
-    filename: 'sample-1.pdf'
-  });
-});
  */
 
 import loadDocument from 'helpers/loadDocument';

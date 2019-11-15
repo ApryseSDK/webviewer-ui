@@ -2,7 +2,7 @@
  * Adds a listener function to be called when search is completed.
  * @method WebViewer#addSearchListener
  * @param {WebViewer~searchListener} searchListener Callback function that will be triggered when search completed
- * @example // 5.1 and after
+ * @example
 WebViewer(...)
   .then(function(instance) {
     function searchListener(searchValue, options, results) {
@@ -11,18 +11,6 @@ WebViewer(...)
 
     instance.addSearchListener(searchListener);
   });
-   * @example // 4.0 ~ 5.0
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  var searchListener = function(searchValue, options, results) {
-    console.log(searchValue, options, results);
-  };
-
-  instance.addSearchListener(searchListener);
-});
  */
 /**
  * Callback that gets passed to {@link CoreControls.ReaderControl#addSearchListener addSearchListener}.

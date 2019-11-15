@@ -21,7 +21,7 @@ const PopupAPI = {
    * @param {Array.<object>} items Same as <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>header items</a>.
    * @param {string} [dataElement] An optional string. If not given, items will be added in the beginning.
    * @returns {object} The instance itself
-   * @example // 6.0 and after
+   * @example
 WebViewer(...)
   .then(function(instance) {
     instance.contextMenuPopup.add({
@@ -53,7 +53,7 @@ WebViewer(...)
    * If an array of object is passed, the items in the popup will become the array.
    * @param {object} [props] An optional object that is used to override an existing item's properties. Only useful when the first argument is a string.
    * @returns {object} The instance itself
-   * @example // 6.0 and after
+   * @example
 WebViewer(...)
   .then(function(instance) {
     // use a new image for a button
@@ -100,7 +100,7 @@ WebViewer(...)
    * @method WebViewer.Popup#delete
    * @param {string} dataElement The data element of the item to be deleted
    * @returns {object} The instance itself
-   * @example // 6.0 and after
+   * @example
 WebViewer(...)
   .then(function(instance) {
     instance.annotationPopup.delete('annotationCommentButton');
@@ -119,7 +119,7 @@ WebViewer(...)
   /**
    * Return the array of items in the popup
    * @method WebViewer.Popup#getItems
-   * @example // 6.0 and after
+   * @example
 WebViewer(...)
   .then(function(instance) {
     instance.annotationPopup.delete('annotationCommentButton');

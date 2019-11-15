@@ -35,7 +35,7 @@ const HotkeysManager = {
    * @method WebViewer.Hotkeys#on
    * @param {string} key a keyboard key or a tool name
    * @param {function} [handler] an optional function. If not passed, the default handler of the given key will be registered
-   * @example // 6.0 and after
+   * @example
 WebViewer(...)
   .then(function(instance) {
       instance.hotkeys.on('ctrl+d, command+d', e => {
@@ -80,7 +80,7 @@ WebViewer(...)
    * @method WebViewer.Hotkeys#off
    * @param {string} [key] an optional keyboard key or a tool name. If not passed, all handlers will be removed
    * @param {function} [handler] an optional function. If not passed, all handlers of the given key will be removed
-   * @example // 6.0 and after
+   * @example
 WebViewer(...)
   .then(function(instance) {
       // this will remove all handlers for ctrl = and command =
