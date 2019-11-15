@@ -23,6 +23,13 @@
     display: block;
     height: 100%;
 
+    // hack for getting safari to print to the whole page
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    position: absolute;
+
     img {
       display: block !important;
       max-width: 100%;
