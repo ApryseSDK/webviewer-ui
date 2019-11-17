@@ -33,7 +33,8 @@
     "submit": "提交",
     "zoom": "縮放",
     "zoomIn": "放大",
-    "zoomOut": "縮小"
+    "zoomOut": "縮小",
+    "calibrate": "校準"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -80,7 +81,8 @@
     "toolsButton": "工具",
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
-    "measurementToolsButton": "測量工具"
+    "measurementToolsButton": "測量工具",
+    "calibration": "校準"
   },
   "message": {
     "badDocument": "無法載入文件。此文件已損壞或無效。",
@@ -103,7 +105,8 @@
     "searching": "正在搜尋...",
     "searchPlaceholder": "搜尋評論...",
     "signHere": "在這裡簽名",
-    "insertTextHere": "在這裡插入文字"
+    "insertTextHere": "在這裡插入文字",
+    "enterMeasurement": "在兩點之間輸入測量值"
   },
   "option": {
     "annotationColor": {

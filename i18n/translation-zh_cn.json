@@ -33,7 +33,8 @@
     "submit": "提交",
     "zoom": "缩放",
     "zoomIn": "放大",
-    "zoomOut": "缩小"
+    "zoomOut": "缩小",
+    "calibrate": "校准"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -80,7 +81,8 @@
     "toolsButton": "工具",
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
-    "measurementToolsButton": "测量工具"
+    "measurementToolsButton": "测量工具",
+    "calibration": "校准"
   },
   "message": {
     "badDocument": "无法加载文档，此文档已损坏或无效。",
@@ -103,7 +105,8 @@
     "searching": "正在搜索…",
     "searchPlaceholder": "在此处搜索注释…",
     "signHere": "在此处签名",
-    "insertTextHere": "在这里插入文字"
+    "insertTextHere": "在这里插入文字",
+    "enterMeasurement": "在两点之间输入测量值"
   },
   "option": {
     "annotationColor": {

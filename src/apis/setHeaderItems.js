@@ -2,7 +2,7 @@
  * Customize header. Refer to <a href='https://www.pdftron.com/documentation/web/guides/customizing-header' target='_blank'>Customizing header</a> for details.
  * @method WebViewer#setHeaderItems
  * @param {WebViewer~headerCallback} headerCallback Callback function to perform different operations on the header.
- * @example // 5.1 and after
+ * @example
 // Adding save annotations button
 WebViewer(...)
   .then(function(instance) {
@@ -18,26 +18,7 @@ WebViewer(...)
       header.push(myCustomButton);
     });
   });
- * @example // 4.0 ~ 5.0
-// Adding save annotations button
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setHeaderItems(function(header) {
-    var myCustomButton = {
-      type: 'actionButton',
-      img: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>',
-      onClick: function() {
-        instance.saveAnnotations();
-      }
-    };
-
-    header.push(myCustomButton);
-  });
-});
- * @example // 5.1 and after
+ * @example
 // Removing existing buttons
 WebViewer(...)
   .then(function(instance) {
@@ -46,19 +27,7 @@ WebViewer(...)
       header.update(items);
     });
   });
- * @example // 4.0 ~ 5.0
-// Removing existing buttons
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setHeaderItems(function(header) {
-    var items = header.getItems().slice(9, -3);
-    header.update(items);
-  });
-});
- * @example // 5.1 and after
+ * @example
 // Appending logo and shifting existing buttons to the right
 WebViewer(...)
   .then(function(instance) {
@@ -82,33 +51,6 @@ WebViewer(...)
       });
     });
   });
- * @example // 4.0 ~ 5.0
-// Removing existing buttons
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setHeaderItems(function(header) {
-    header.delete(9);
-    header.unshift({
-      type: 'customElement',
-      render: function() {
-        var logo = document.createElement('img');
-        logo.src = 'https://www.pdftron.com/downloads/logo.svg';
-        logo.style.width = '200px';
-        logo.style.marginLeft = '10px';
-        logo.style.cursor = 'pointer';
-        logo.onclick = function() {
-          window.open('https://www.pdftron.com', '_blank');
-        }
-        return logo;
-      }
-    }, {
-      type: 'spacer'
-    });
-  });
-});
  */
 /**
  * Callback that gets passed to {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems}.
@@ -134,23 +76,13 @@ export default store => callback => {
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access the header instance in {@link WebViewer#setHeaderItems setHeaderItems} as follows:
  * @name WebViewer.Header
  * @class
- * @example // 5.1 and after
+ * @example
 WebViewer(...)
   .then(function(instance) {
     instance.setHeaderItems(function(header) {
       // instance of Header is passed to the callback
     });
   });
- * @example // 4.0 ~ 5.0
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setHeaderItems(function(header) {
-    // instance of Header is passed to the callback
-  });
-});
  */
 const Header = {
   initialize(viewerState) {

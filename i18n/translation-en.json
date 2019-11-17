@@ -2,6 +2,7 @@
   "action": {
     "apply": "Apply",
     "applyAll": "Apply all",
+    "calibrate": "Calibrate",
     "cancel": "Cancel",
     "clear": "Clear",
     "close": "Close",
@@ -80,7 +81,8 @@
     "toolsButton": "Tools",
     "redaction": "Redaction",
     "viewControlsOverlay": "View controls",
-    "measurementToolsButton": "Measurement tools"
+    "measurementToolsButton": "Measurement tools",
+    "calibration": "Calibration"
   },
   "message": {
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
@@ -104,7 +106,8 @@
     "searchPlaceholder": "Search comments...",
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
-    "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted"
+    "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
+    "enterMeasurement": "Enter measurement between the two points"
   },
   "option": {
     "annotationColor": {

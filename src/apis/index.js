@@ -3,7 +3,6 @@ import i18next from 'i18next';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import Feature from 'constants/feature';
-import getHashParams from 'helpers/getHashParams';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
@@ -121,6 +120,7 @@ import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
 import setSignatureFonts from './setSignatureFonts';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
+import getCustomData from './getCustomData';
 
 export default store => {
   window.readerControl = {
@@ -240,6 +240,7 @@ export default store => {
     setCurrentPageNumber,
     setReadOnly,
     setSortNotesBy: setSortNotesBy(store),
+    getCustomData,
 
     // undocumented
     loadedFromServer: false,
@@ -250,7 +251,6 @@ export default store => {
     setEngineType: setEngineType(store),
     showWarningMessage: showWarningMessage(store),
     updateOutlines: updateOutlines(store),
-    getCustomData: () => getHashParams('custom', null),
     getBBAnnotManager: getBBAnnotManager(store),
     selectors: getSelectors(store),
   };

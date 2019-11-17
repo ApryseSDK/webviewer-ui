@@ -118,7 +118,7 @@ class MeasurementOption extends React.Component {
   renderScaleInput = (type, val) => {
     /**
      * There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
-     */ 
+     */
     if (isFirefox) {
       return (
         <input
@@ -131,32 +131,30 @@ class MeasurementOption extends React.Component {
           }
         />
       );
-    } 
-      if (this.state.isEditing) {
-        return (
-          <input
-            className="ScaleInput"
-            type="number"
-            step="any"
-            value={val}
-            onChange={e =>
-              this.onScaleChange(e.target.value, type)
-            }
-            onBlur={this.toggleEditing}
-          />
-        );
-      } else {
-        return (
-          <input
-            className="ScaleInput"
-            type="text"
-            value={this.formatValue(val)}
-            onFocus={this.toggleEditing}
-            readOnly
-          />
-        );
-      }
-    
+    }
+    if (this.state.isEditing) {
+      return (
+        <input
+          className="ScaleInput"
+          type="number"
+          step="any"
+          value={val}
+          onChange={e =>
+            this.onScaleChange(e.target.value, type)
+          }
+          onBlur={this.toggleEditing}
+        />
+      );
+    }
+    return (
+      <input
+        className="ScaleInput"
+        type="text"
+        value={this.formatValue(val)}
+        onFocus={this.toggleEditing}
+        readOnly
+      />
+    );
   }
 
   render() {

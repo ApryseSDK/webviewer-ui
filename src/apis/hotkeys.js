@@ -2,7 +2,7 @@
  * An instance of Hotkeys that can be used to add custom or remove existing hotkey handlers
  * @name WebViewer#hotkeys
  * @see WebViewer.Hotkeys
- * @example // 6.0 and after
+ * @example
 WebViewer(...)
   .then(function(instance) {
     instance.hotkeys.someAPIs();

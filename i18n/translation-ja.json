@@ -33,7 +33,8 @@
     "submit": "送信",
     "zoom": "ズーム",
     "zoomIn": "ズームイン",
-    "zoomOut": "ズームアウト"
+    "zoomOut": "ズームアウト",
+    "calibrate": "調整する"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -80,7 +81,8 @@
     "toolsButton": "ツール",
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
-    "measurementToolsButton": "測定ツール"
+    "measurementToolsButton": "測定ツール",
+    "calibration": "較正"
   },
   "message": {
     "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
@@ -103,7 +105,8 @@
     "searching": "検索中...",
     "searchPlaceholder": "コメントを検索...",
     "signHere": "ここに署名",
-    "insertTextHere": "ここにテキストを挿入"
+    "insertTextHere": "ここにテキストを挿入",
+    "enterMeasurement": "2点間の測定値を入力します"
   },
   "option": {
     "annotationColor": {

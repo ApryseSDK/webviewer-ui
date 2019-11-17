@@ -33,7 +33,8 @@
     "submit": "Abgeben",
     "zoom": "Zoom",
     "zoomIn": "Heranzoomen",
-    "zoomOut": "Rauszoomen"
+    "zoomOut": "Rauszoomen",
+    "calibrate": "Kalibrieren"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -80,7 +81,8 @@
     "toolsButton": "Werkzeuge",
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
-    "measurementToolsButton": "Messwerkzeuge"
+    "measurementToolsButton": "Messwerkzeuge",
+    "calibration": "Kalibrierung"
   },
   "message": {
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
@@ -103,7 +105,8 @@
     "searching": "Suche...",
     "searchPlaceholder": "Suche Kommentare...",
     "signHere": "Hier unterschreiben",
-    "insertTextHere": "Hier Text eingeben"
+    "insertTextHere": "Hier Text eingeben",
+    "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein"
   },
   "option": {
     "annotationColor": {
