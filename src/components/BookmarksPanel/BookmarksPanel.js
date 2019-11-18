@@ -37,7 +37,7 @@ class BookmarksPanel extends React.PureComponent {
 
     const pageIndexes = Object.keys(bookmarks).map(pageIndex => parseInt(pageIndex, 10));
     return (
-      <div className="Panel bookmarksPanel" style={{ display }} data-element="bookmarksPanel">
+      <div className="Panel BookmarksPanel" style={{ display }} data-element="bookmarksPanel">
         {
           this.state.isAdding ?
             <EditingBookmark
