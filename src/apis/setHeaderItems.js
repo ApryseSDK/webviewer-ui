@@ -1,7 +1,7 @@
 /**
  * Customize header. Refer to <a href='https://www.pdftron.com/documentation/web/guides/customizing-header' target='_blank'>Customizing header</a> for details.
  * @method WebViewer#setHeaderItems
- * @param {WebViewer~headerCallback} headerCallback Callback function to perform different operations on the header.
+ * @param {WebViewer.headerCallback} headerCallback Callback function to perform different operations on the header.
  * @example
 // Adding save annotations button
 WebViewer(...)
@@ -54,7 +54,7 @@ WebViewer(...)
  */
 /**
  * Callback that gets passed to {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems}.
- * @callback WebViewer~headerCallback
+ * @callback WebViewer.headerCallback
  * @param {Header} header Header instance with helper functions
  * @ignore
  */
