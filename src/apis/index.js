@@ -59,7 +59,7 @@ import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
 import goToPrevPage from './goToPrevPage';
-import Hotkeys from './hotkeys';
+import hotkeys from './hotkeys';
 import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
@@ -147,8 +147,7 @@ export default store => {
     getLayoutMode: getLayoutMode(store),
     getToolMode,
     getZoomLevel,
-    hotkeys: Hotkeys,
-    Hotkeys,
+    hotkeys,
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),
