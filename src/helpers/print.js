@@ -37,7 +37,12 @@ const printPdf = () => {
         printHandler.src = URL.createObjectURL(blob);
 
         var loadListener = function() {
+
+          
           printHandler.contentWindow.print();
+
+
+
           printHandler.removeEventListener('load', loadListener);
           resolve();
         };
