@@ -19,16 +19,16 @@ const NOOP = () => {};
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> These strings are not static properties of this class. They are listed here only for the documentation purpose.
  * @name WebViewer.Hotkeys.AvailableHotkeys
  * @enum {string}
- * @property {string} Ctrl_Shift_= Rotate the document clockwise.
- * @property {string} Ctrl_Shift_- Rotate the document counterclockwise
+ * @property {string} Ctrl_Shift_Equals Rotate the document clockwise (Ctrl+Shift+=).
+ * @property {string} Ctrl_Shift_Minus Rotate the document counterclockwise (Ctrl+Shift+-)
  * @property {string} Ctrl_C Copy selected text or annotations
  * @property {string} Ctrl_V Paste text or annotations
  * @property {string} Ctrl_Z Undo an annotation change
  * @property {string} Ctrl_Y Redo an annotation change
  * @property {string} Ctrl_O Open the file picker
  * @property {string} Ctrl_F Open the search overlay
- * @property {string} Ctrl_= Zoom in
- * @property {string} Ctrl_- Zoom out
+ * @property {string} Ctrl_Equals Zoom in (Ctrl+=)
+ * @property {string} Ctrl_Minus Zoom out (Ctrl+-)
  * @property {string} Ctrl_0 Fit the document to the screen width in a small screen(< 640px), otherwise fit it to its original size
  * @property {string} Ctrl_P Print
  * @property {string} PageUp Go to the previous page
@@ -56,8 +56,8 @@ const NOOP = () => {};
 /**
  * A class which contains hotkeys APIs.<br/><br/>
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewer#hotkeys instance.hotkeys}
- * @name WebViewer.Hotkeys
- * @class
+ * @namespace Hotkeys
+ * @memberof WebViewer
  */
 const HotkeysManager = {
   initialize(store) {

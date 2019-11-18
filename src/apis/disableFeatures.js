@@ -1,7 +1,7 @@
 /**
  * disable certain features in the WebViewer UI.
  * @method WebViewer#disableFeatures
- * @param {Array.<WebViewer#Feature>} features Array of features to disable.
+ * @param {Array.<WebViewer.Feature>} features Array of features to disable.
  * @example
 WebViewer(...)
   .then(function(instance) {
