@@ -19,18 +19,18 @@ const NOOP = () => {};
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> These strings are not static properties of this class. They are listed here only for the documentation purpose.
  * @name WebViewer.Hotkeys.AvailableHotkeys
  * @enum {string}
- * @property {string} Ctrl+Shift+= Rotate the document clockwise.
- * @property {string} Ctrl+Shift+- Rotate the document counterclockwise
- * @property {string} Ctrl+C Copy selected text or annotations
- * @property {string} Ctrl+V Paste text or annotations
- * @property {string} Ctrl+Z Undo an annotation change
- * @property {string} Ctrl+Y Redo an annotation change
- * @property {string} Ctrl+O Open the file picker
- * @property {string} Ctrl+F Open the search overlay
- * @property {string} Ctrl+= Zoom in
- * @property {string} Ctrl+- Zoom out
- * @property {string} Ctrl+0 Fit the document to the screen width in a small screen(< 640px), otherwise fit it to its original size
- * @property {string} Ctrl+P Print
+ * @property {string} Ctrl_Shift_= Rotate the document clockwise.
+ * @property {string} Ctrl_Shift_- Rotate the document counterclockwise
+ * @property {string} Ctrl_C Copy selected text or annotations
+ * @property {string} Ctrl_V Paste text or annotations
+ * @property {string} Ctrl_Z Undo an annotation change
+ * @property {string} Ctrl_Y Redo an annotation change
+ * @property {string} Ctrl_O Open the file picker
+ * @property {string} Ctrl_F Open the search overlay
+ * @property {string} Ctrl_= Zoom in
+ * @property {string} Ctrl_- Zoom out
+ * @property {string} Ctrl_0 Fit the document to the screen width in a small screen(< 640px), otherwise fit it to its original size
+ * @property {string} Ctrl_P Print
  * @property {string} PageUp Go to the previous page
  * @property {string} PageDown Go to the next page
  * @property {string} Space Hold to switch to Pan mode and release to return to previous tool
@@ -72,8 +72,9 @@ const HotkeysManager = {
   /**
    * Add an event handler for the given hotkey
    * @method WebViewer.Hotkeys#on
-   * @param {string} key a keyboard key or a tool name
-   * @param {function|object} [handler] an optional argument <br/>
+   * @param {string} key A keyboard key or a tool name. <br/>
+   * If a hotkey is consisted of more than one key. Those keys should be connected using '+'.
+   * @param {function|object} [handler] An optional argument <br/>
    * If it is undefined, the default handler of the given key will be registered <br/>
    * If it is an function, it will be called on key down <br/>
    * If it is an object, it should have the shape of { keydown: func1, keyup: func2 }. Func1 will be called on keydown while func2 will be called on keyup
@@ -130,8 +131,8 @@ WebViewer(...)
   /**
    * Remove an event handler for the given hotkey
    * @method WebViewer.Hotkeys#off
-   * @param {string} [key] an optional keyboard key or a tool name. If not passed, all handlers will be removed
-   * @param {function} [handler] an optional function. If not passed, all handlers of the given key will be removed
+   * @param {string} [key] An optional keyboard key or a tool name. If not passed, all handlers will be removed
+   * @param {function} [handler] An optional function. If not passed, all handlers of the given key will be removed
    * @example
 WebViewer(...)
   .then(function(instance) {
