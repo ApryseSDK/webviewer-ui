@@ -37,7 +37,7 @@ class BookmarksPanel extends React.PureComponent {
 
     const pageIndexes = Object.keys(bookmarks).map(pageIndex => parseInt(pageIndex, 10));
     return (
-      <div className="Panel bookmarks-panel" style={{ display }} data-element="bookmarksPanel">
+      <div className="Panel bookmarksPanel" style={{ display }} data-element="bookmarksPanel">
         {
           this.state.isAdding ?
             <EditingBookmark
@@ -70,10 +70,10 @@ class BookmarksPanel extends React.PureComponent {
         }
         <div className="bookmarks-panel-row">
           {pageIndexes.map(pageIndex => (
-            <>
+            <React.Fragment>
               <div className="bookmarks-panel-label">{`${t('component.bookmarkPage')} ${pageIndex + 1}`}</div>
               <Bookmark text={bookmarks[pageIndex]} pageIndex={pageIndex} />
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>

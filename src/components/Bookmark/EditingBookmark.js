@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 
 import './EditingBookmark.scss';
 
@@ -19,7 +20,7 @@ class EditingBookmark extends React.PureComponent {
   }
 
   render() {
-    const { onSave, onCancel, label } = this.props;
+    const { onSave, onCancel, label, t } = this.props;
 
     return (
       <div className="editing-bookmark">
@@ -36,10 +37,10 @@ class EditingBookmark extends React.PureComponent {
         />
         <div className="editing-controls">
           <div className="editing-button editing-pad" onClick={onCancel}>
-            Cancel
+            {t('action.cancel')}
           </div>
           <div className="editing-button" onClick={() => onSave(this.state.bookmarkText)}>
-            Save
+            {t('action.save')}
           </div>
         </div>
       </div>
@@ -47,4 +48,4 @@ class EditingBookmark extends React.PureComponent {
   }
 }
 
-export default EditingBookmark;
+export default withTranslation()(EditingBookmark);

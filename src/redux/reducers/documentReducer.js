@@ -27,11 +27,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, bookmarks: payload.bookmarks };
     }
     case 'ADD_BOOKMARK':
-    {
-      const newBookmarks = { ...state.bookmarks };
-      newBookmarks[payload.pageIndex] = payload.text;
-      return { ...state, bookmarks: newBookmarks };
-    }
     case 'EDIT_BOOKMARK':
     {
       const newBookmarks = { ...state.bookmarks };
