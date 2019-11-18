@@ -1,0 +1,31 @@
+// App.scss imports this file so the url should be relative to App.scss
+// https://github.com/webpack-contrib/sass-loader#problems-with-url
+
+@font-face {
+  font-family: "Carlito";
+  src: url("../../../assets/fonts/Carlito-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Carlito";
+  src: url("../../../assets/fonts/Carlito-Italic.woff") format("woff");
+  font-style: italic;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Carlito";
+  src: url("../../../assets/fonts/Carlito-Bold.woff") format("woff");
+  font-style: normal;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Carlito";
+  src: url("../../../assets/fonts/Carlito-Bold-Italic.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+}
+

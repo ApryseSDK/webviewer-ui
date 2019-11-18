@@ -49,7 +49,7 @@ const SignatureToolButton = () => {
     <Button
       className={buttonClass}
       isActive={isSignatureModalOpen || isSignatureOverlayOpen}
-      img="ic_annotation_signature_black_24px"
+      img="icon-tool-signature"
       onClick={handleClick}
       title="annotation.signature"
     />
