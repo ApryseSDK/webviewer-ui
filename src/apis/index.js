@@ -59,7 +59,7 @@ import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
 import goToPrevPage from './goToPrevPage';
-import hotkeys from './hotkeys';
+import Hotkeys from './hotkeys';
 import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
@@ -123,7 +123,7 @@ import setMaxSignaturesCount from './setMaxSignaturesCount';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 
-export default store => {
+export default store => {  
   window.readerControl = {
     docViewer: window.docViewer,
     FitMode,
@@ -147,7 +147,8 @@ export default store => {
     getLayoutMode: getLayoutMode(store),
     getToolMode,
     getZoomLevel,
-    hotkeys,
+    hotkeys: Hotkeys,
+    Hotkeys,
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),

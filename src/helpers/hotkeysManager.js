@@ -56,8 +56,8 @@ const NOOP = () => {};
 /**
  * A class which contains hotkeys APIs.<br/><br/>
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewer#hotkeys instance.hotkeys}
- * @name WebViewer.Hotkeys
- * @class
+ * @namespace Hotkeys
+ * @memberof WebViewer
  */
 const HotkeysManager = {
   initialize(store) {
