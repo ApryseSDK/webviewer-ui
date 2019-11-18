@@ -220,6 +220,7 @@ export default {
     isOffline: getHashParams('startOffline', false),
     totalPages: 0,
     outlines: [],
+    bookmarks: {},
     layers: [],
     checkPassword: null,
     password: '',
