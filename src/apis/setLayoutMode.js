@@ -1,7 +1,7 @@
 /**
  * Sets the layout mode of the viewer.
  * @method WebViewer#setLayoutMode
- * @param {CoreControls.ReaderControl#LayoutMode} layoutMode Layout mode of WebViewer.
+ * @param {WebViewer.LayoutMode} layoutMode Layout mode of WebViewer.
  * @example
 WebViewer(...)
   .then(function(instance) {
