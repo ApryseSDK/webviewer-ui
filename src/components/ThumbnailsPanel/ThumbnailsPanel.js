@@ -21,7 +21,7 @@ class ThumbnailsPanel extends React.PureComponent {
     super();
     this.pendingThumbs = [];
     this.thumbs = [];
-    this.thumbnailsPanel = React.createRef();
+    this.listRef = React.createRef();
     this.thumbnailHeight = 180; // refer to Thumbnail.scss
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
@@ -78,13 +78,7 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   onPageNumberUpdated = pageNumber => {
-    const { thumbnailsPanel } = this;
-
-    if (thumbnailsPanel && thumbnailsPanel.current) {
-      const pageIndex = pageNumber - 1;
-      const scrollLocation = pageIndex * this.thumbnailHeight;
-      thumbnailsPanel.current.scrollTop = scrollLocation;
-    }
+    this.listRef.current?.scrollToRow(pageNumber - 1);
   }
 
   onWindowResize = () => {
@@ -277,7 +271,6 @@ class ThumbnailsPanel extends React.PureComponent {
         className="Panel ThumbnailsPanel"
         style={{ display }}
         data-element="thumbnailsPanel"
-        ref={this.thumbnailsPanel}
       >
         <Measure
           bounds
@@ -291,6 +284,7 @@ class ThumbnailsPanel extends React.PureComponent {
           {({ measureRef }) => (
             <div ref={measureRef} className="virtualized-thumbnails-container" >
               <List
+                ref={this.listRef}
                 height={height}
                 width={width}
                 rowHeight={this.thumbnailHeight}
