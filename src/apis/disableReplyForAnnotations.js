@@ -14,7 +14,7 @@
 /**
  * Callback that gets passed to {@link WebViewer#disableReplyForAnnotations disableReplyForAnnotations}
  * @callback WebViewer.storeisReplyDisabled
- * @param {Annotations} annotation Annotation object
+ * @param {Annotations.Annotation} annotation Annotation object
  * @returns {boolean} Whether the reply of the annotation should be disabled.
  */
 import actions from 'actions';

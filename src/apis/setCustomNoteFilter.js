@@ -14,7 +14,7 @@ WebViewer(...)
 /**
  * Callback that gets passed to {@link CoreControls.ReaderControl#setCustomNoteFilter setCustomNoteFilter}.
  * @callback WebViewer.filterAnnotation
- * @param {Annotations} annotation Annotation object
+ * @param {Annotations.Annotation} annotation Annotation object
  * @returns {boolean} Whether the annotation should be kept.
  */
 
