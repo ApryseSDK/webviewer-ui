@@ -97,14 +97,17 @@ class SignatureModal extends React.PureComponent {
     }
 
     const canvas = this.canvas.current;
+    const imageData = canvas.toDataURL();
     const { width, height } = canvas.getBoundingClientRect();
     canvas.width = width;
     canvas.height = height;
 
-    if (!this.signatureTool.isEmptySignature()) {
-      // if the canvas is resized the content get cleared. So redraw it
-      this.signatureTool.drawAnnot();
-    }
+    const image = new Image();
+    const ctx = canvas.getContext('2d');
+    image.onload = function() {
+      ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
+    };
+    image.src = imageData;
   };
 
   handleFinishDrawing = e => {
