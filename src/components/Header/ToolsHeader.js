@@ -7,9 +7,9 @@ import HeaderItems from 'components/HeaderItems';
 import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
 
-import './Header.scss';
+import './ToolsHeader.scss';
 
-class Header extends React.PureComponent {
+class ToolsHeader extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
@@ -18,7 +18,7 @@ class Header extends React.PureComponent {
 
   render() {
     const { isDisabled, activeHeaderItems } = this.props;
-    const className = getClassName('Header', this.props);
+    const className = getClassName('Tools-Header', this.props);
 
     if (isDisabled) {
       return null;
@@ -35,7 +35,7 @@ class Header extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'header'),
   isOpen: selectors.isElementOpen(state, 'header'),
-  activeHeaderItems: selectors.getActiveHeaderItems(state),
+  activeHeaderItems: selectors.getToolsHeaderItems(state),
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(ToolsHeader);

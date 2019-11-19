@@ -22,6 +22,9 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
 export const getActiveHeaderItems = state =>
   state.viewer.headers[state.viewer.activeHeaderGroup];
 
+export const getToolsHeaderItems = state =>
+  state.viewer.headers['tools'];
+
 export const getDisabledElementPriority = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.priority;
 
