@@ -1,6 +1,6 @@
 @import '../../constants/styles';
 
-.Header {
+.Tools-Header {
   display: flex;
   align-items: center;
   z-index: 100;
@@ -8,7 +8,7 @@
   min-width: 300px;
   height: $top-bar-height;
   background: $white;
-  background: var(--primary-color);
+  background: var(--tools-header-color);
   // border-bottom: 1px solid $gray12;
   // border-bottom: 1px solid var(--border-color);
   border-bottom: solid 1px var(--new-border-color);

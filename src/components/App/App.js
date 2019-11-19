@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
+import ToolsHeader from 'components/Header/ToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
@@ -60,6 +61,7 @@ const App = ({ removeEventHandlers }) => {
         <Accessibility />
 
         <Header />
+        <ToolsHeader />
 
         <LeftPanel />
         <SearchPanel />
