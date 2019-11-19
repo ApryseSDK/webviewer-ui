@@ -21,7 +21,7 @@ class BookmarksPanel extends React.PureComponent {
   }
 
   static propTypes = {
-    bookmarks: PropTypes.arrayOf(PropTypes.object),
+    bookmarks: PropTypes.object,
     addBookmark: PropTypes.func.isRequired,
     display: PropTypes.string.isRequired,
     currentPage: PropTypes.number.isRequired,
