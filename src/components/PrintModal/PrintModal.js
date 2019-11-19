@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 
 import Input from 'components/Input';
 import ActionButton from 'components/ActionButton';
+import WatermarkModal from 'components/PrintModal/WatermarkModal';
 
 import core from 'core';
 import getPagesToPrint from 'helpers/getPagesToPrint';
@@ -15,7 +16,7 @@ import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import LayoutMode from 'constants/layoutMode';
 import actions from 'actions';
 import selectors from 'selectors';
-import WatermarkModal from './WatermarkModal';
+import { isSafari, isChromeOniOS } from 'helpers/device';
 
 import './PrintModal.scss';
 
@@ -420,9 +421,10 @@ class PrintModal extends React.PureComponent {
 
     printHandler.appendChild(fragment);
 
-    // Print for Safari browser. Makes Safari 11 consistently work.
-    if (!document.execCommand('print')) {
-      // fallback for firefox
+    if (isSafari && !isChromeOniOS) {
+      // Print for Safari browser. Makes Safari 11 consistently work.
+      document.execCommand('print');
+    } else {
       window.print();
     }
     this.closePrintModal();

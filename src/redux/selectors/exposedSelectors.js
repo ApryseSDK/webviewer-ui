@@ -1,4 +1,5 @@
 import { workerTypes } from 'constants/types';
+import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
 export const isElementDisabled = (state, dataElement) =>
@@ -95,11 +96,8 @@ export const getDisabledCustomPanelTabs = state =>
   }, []);
 
 export const isEmbedPrintSupported = state => {
-  const isChrome =
-    window.navigator.userAgent.indexOf('Chrome') > -1 &&
-    window.navigator.userAgent.indexOf('Edge') === -1;
   const isPDF = getDocumentType(state) === workerTypes.PDF;
-  return isPDF && isChrome && state.viewer.useEmbeddedPrint;
+  return isPDF && (isChrome && !isAndroid) && state.viewer.useEmbeddedPrint;
 };
 
 export const getColorMap = state => state.viewer.colorMap;
