@@ -10,7 +10,7 @@
   background: $gray4;
   background: var(--secondary-color);
   transition: transform .3s ease, visibility 0s .3s ease;
-  
+
   @include mobile {
     top: 0px;
     width: 100%;
