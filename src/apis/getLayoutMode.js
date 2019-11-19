@@ -1,7 +1,7 @@
 /**
  * Return the current layout mode of the WebViewer.
  * @method WebViewer#getLayoutMode
- * @return {CoreControls.ReaderControl.LayoutMode} Current layout mode
+ * @return {WebViewer.LayoutMode} Current layout mode
  * @example
 WebViewer(...)
   .then(function(instance) {
