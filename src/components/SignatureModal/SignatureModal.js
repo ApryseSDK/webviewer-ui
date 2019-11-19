@@ -100,26 +100,24 @@ class SignatureModal extends React.PureComponent {
   };
 
   onRotate = () => {
-    const canvas = this.canvas.current;
-    const imageData = canvas.toDataURL();
+    const imageData = this.canvas.current.toDataURL();
     this.setSignatureCanvasSize();
     this.redrawSignatureCanvas(imageData);
   };
 
   onResize = () => {
-    const canvas = this.canvas.current;
-    const imageData = canvas.toDataURL();
+    const imageData = this.canvas.current.toDataURL();
     this.setSignatureCanvasSize();
     this.redrawSignatureCanvas(imageData);
   };
 
   redrawSignatureCanvas = signatureData => {
     const canvas = this.canvas.current;
+    const ctx = canvas.getContext('2d');
 
     const image = new Image();
-    const ctx = canvas.getContext('2d');
     image.onload = function() {
-      ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
     };
     image.src = signatureData;
   };
