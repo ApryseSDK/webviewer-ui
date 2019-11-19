@@ -1,7 +1,7 @@
 /**
  * Sets the fit mode of the viewer.
  * @method WebViewer#setFitMode
- * @param {CoreControls.ReaderControl#FitMode} fitMode Whether or not to set the current user to be an admin.
+ * @param {WebViewer.FitMode} fitMode Whether or not to set the current user to be an admin.
  * @example
 WebViewer(...)
   .then(function(instance) {

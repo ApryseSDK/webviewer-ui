@@ -1,7 +1,7 @@
 /**
  * Disable reply for annotations determined by the function passed in as parameter
  * @method WebViewer#disableReplyForAnnotations
- * @param {WebViewer~isReplyDisabled} isReplyDisabled Function that takes an annotation and returns if the reply of the annotation should be disabled.
+ * @param {WebViewer.storeisReplyDisabled} isReplyDisabled Function that takes an annotation and returns if the reply of the annotation should be disabled.
  * @example
  WebViewer(...)
   .then(function(instance) {
@@ -13,7 +13,7 @@
  */
 /**
  * Callback that gets passed to {@link WebViewer#disableReplyForAnnotations disableReplyForAnnotations}
- * @callback WebViewer~isReplyDisabled
+ * @callback WebViewer.storeisReplyDisabled
  * @param {Annotations} annotation Annotation object
  * @returns {boolean} Whether the reply of the annotation should be disabled.
  */
