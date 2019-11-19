@@ -100,6 +100,11 @@ class SignatureModal extends React.PureComponent {
     const { width, height } = canvas.getBoundingClientRect();
     canvas.width = width;
     canvas.height = height;
+
+    if (!this.signatureTool.isEmptySignature()) {
+      // if the canvas is resized the content get cleared. So redraw it
+      this.signatureTool.drawAnnot();
+    }
   };
 
   handleFinishDrawing = e => {
