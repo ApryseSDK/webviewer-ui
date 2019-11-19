@@ -2,11 +2,11 @@
 
 %panel {
   position: fixed;
-  top: $top-bar-height;
+  // top: $top-bar-height;
   z-index: 65;
   display: flex;
   flex-direction: column;
-  height: calc(100% - #{$top-bar-height});
+  // height: calc(100% - #{$top-bar-height});
   background: $gray4;
   background: var(--secondary-color);
   transition: transform .3s ease, visibility 0s .3s ease;
