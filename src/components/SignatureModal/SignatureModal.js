@@ -38,8 +38,8 @@ class SignatureModal extends React.PureComponent {
 
   componentDidMount() {
     this.setUpSignatureCanvas();
-    window.addEventListener('resize', this.setSignatureCanvasSize);
-    window.addEventListener('orientationchange', this.setSignatureCanvasSize);
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('orientationchange', this.onRotate);
   }
 
   componentDidUpdate(prevProps) {
@@ -62,11 +62,8 @@ class SignatureModal extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.setSignatureCanvasSize);
-    window.removeEventListener(
-      'orientationchange',
-      this.setSignatureCanvasSize,
-    );
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('orientationchange', this.onRotate);
   }
 
   setUpSignatureCanvas = () => {
@@ -100,6 +97,29 @@ class SignatureModal extends React.PureComponent {
     const { width, height } = canvas.getBoundingClientRect();
     canvas.width = width;
     canvas.height = height;
+  };
+
+  onRotate = () => {
+    const imageData = this.canvas.current.toDataURL();
+    this.setSignatureCanvasSize();
+    this.redrawSignatureCanvas(imageData);
+  };
+
+  onResize = () => {
+    const imageData = this.canvas.current.toDataURL();
+    this.setSignatureCanvasSize();
+    this.redrawSignatureCanvas(imageData);
+  };
+
+  redrawSignatureCanvas = signatureData => {
+    const canvas = this.canvas.current;
+    const ctx = canvas.getContext('2d');
+
+    const image = new Image();
+    image.onload = function() {
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
+    image.src = signatureData;
   };
 
   handleFinishDrawing = e => {
