@@ -33,6 +33,7 @@ const Button = ({
   onClick = () => {},
   className,
   title,
+  style = {},
 }) => {
   const [isElementDisabled] = useSelector(state => [
     selectors.isElementDisabled(state, dataElement),
@@ -58,11 +59,14 @@ const Button = ({
     content = <p>{label}</p>;
   }
 
+
+
   const children = (
     <div
       className={buttonClass}
       data-element={dataElement}
       onClick={onClick}
+      style={style}
     >
       {content}
     </div>

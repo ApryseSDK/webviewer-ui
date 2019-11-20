@@ -21,6 +21,7 @@ const CustomElement = ({
   display,
   render,
   mediaQueryClassName,
+  style = {},
 }) => {
   const [reactComponent, setReactComponent] = useState(null);
   const wrapperRef = useRef();
@@ -72,7 +73,8 @@ const CustomElement = ({
       })}
       ref={wrapperRef}
       data-element={dataElement}
-      style={{ display }}
+      style={{ display, ...style }}
+
     >
       {reactComponent}
     </div>

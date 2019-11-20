@@ -2,7 +2,6 @@
 @import '../../constants/overlay';
 
 .PageNavOverlay {
-  @extend %overlay;
   bottom: 10px;
   left: 10px;
   padding: 10px;

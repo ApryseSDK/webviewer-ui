@@ -13,6 +13,11 @@
   // border-bottom: 1px solid var(--border-color);
   border-bottom: solid 1px var(--new-border-color);
   transition: all .3s ease;
+  padding: 2px 0px;
+
+  &.Dark {
+    background: var(--tools-header-color);
+  }
 
   &.closed {
     transform: translateY(-100%);

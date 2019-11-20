@@ -73,7 +73,6 @@ const App = ({ removeEventHandlers }) => {
         <RedactionOverlay />
         <MenuOverlay />
         <SignatureOverlay />
-        <PageNavOverlay />
         <ZoomOverlay />
         <MeasurementOverlay />
         <AnnotationContentOverlay />

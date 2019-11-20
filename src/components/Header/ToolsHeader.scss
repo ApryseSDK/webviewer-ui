@@ -1,25 +1,5 @@
 @import '../../constants/styles';
 
-.Tools-Header {
-  display: flex;
-  align-items: center;
-  z-index: 100;
-  width: 100%;
-  min-width: 300px;
-  height: $top-bar-height;
-  background: $white;
+.DarkHeader {
   background: var(--tools-header-color);
-  // border-bottom: 1px solid $gray12;
-  // border-bottom: 1px solid var(--border-color);
-  border-bottom: solid 1px var(--new-border-color);
-  transition: all .3s ease;
-
-  &.closed {
-    transform: translateY(-100%);
-    margin-bottom: -$top-bar-height;
-  }
-
-  @include mobile {
-    height: $top-bar-height-m;
-  }
 }

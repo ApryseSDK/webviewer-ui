@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 
 import HeaderItems from 'components/HeaderItems';
 
-import getClassName from 'helpers/getClassName';
+import classNames from 'classnames';
+// import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
 
-import './ToolsHeader.scss';
+import './Header.scss';
 
 class ToolsHeader extends React.PureComponent {
   static propTypes = {
@@ -17,15 +18,19 @@ class ToolsHeader extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, activeHeaderItems } = this.props;
-    const className = getClassName('Tools-Header', this.props);
+    const { isDisabled, activeHeaderItems, isOpen } = this.props;
+    // const className = getClassName('Tools-Header', this.props);
 
-    if (isDisabled) {
+    if (isDisabled || !isOpen) {
       return null;
     }
 
     return (
-      <div className={className} data-element="header">
+      <div
+        className="Header Dark"
+        data-element="toolsHeader"
+      >
+        <div className='test'></div>
         <HeaderItems items={activeHeaderItems} />
       </div>
     );
@@ -33,8 +38,8 @@ class ToolsHeader extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'header'),
-  isOpen: selectors.isElementOpen(state, 'header'),
+  isDisabled: selectors.isElementDisabled(state, 'toolsHeader'),
+  isOpen: selectors.isElementOpen(state, 'toolsHeader'),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
 });
 

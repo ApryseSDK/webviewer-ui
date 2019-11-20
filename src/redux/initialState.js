@@ -10,12 +10,14 @@ import { zoomIn, zoomOut } from 'helpers/zoom';
 import defaultTool from 'constants/defaultTool';
 import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
+import PageNavOverlay from '../components/PageNavOverlay/PageNavOverlay';
 
 export default {
   viewer: {
     disabledElements: {},
     openElements: {
       header: true,
+      toolsHeader: true,
     },
     headers: {
       // newReadOnly: [
@@ -66,38 +68,33 @@ export default {
         { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },
         { type: 'spacer' },
-        // { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', hidden: ['tablet', 'mobile'] },
-        // { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: ['tablet', 'mobile'] },
-        // { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: ['tablet', 'mobile'] },
-        // { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: ['tablet', 'mobile'] },
-        // { type: 'toolButton', toolName: 'AnnotationEraserTool', hidden: ['tablet', 'mobile'] },
-        // {
-        //   type: 'customElement',
-        //   render: () => <SignatureToolButton />,
-        //   dataElement: 'signatureToolButton',
-        //   hidden: ['tablet', 'mobile'],
-        // },
-        // { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction', hidden: ['tablet', 'mobile'] },
-        // { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: ['tablet', 'mobile'] },
-        // { type: 'toolButton', toolName: 'AnnotationCreateSticky', hidden: ['tablet', 'mobile'] },
-        // { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', hidden: ['tablet', 'mobile'] },
-        // {
-        //   type: 'actionButton',
-        //   img: 'ic_edit_black_24px',
-        //   onClick: dispatch => {
-        //     dispatch(actions.setActiveHeaderGroup('tools'));
-        //     core.setToolMode(defaultTool);
-        //     dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'zoomOverlay', 'redactionOverlay']));
-        //   },
-        //   dataElement: 'toolsButton',
-        //   title: 'component.toolsButton',
-        //   hidden: ['desktop'],
-        // },
-        // { type: 'divider', hidden: ['tablet', 'mobile'] },
-        { type: 'toggleElementButton', dataElement: 'toggleToolsButton', element: 'searchOverlay', img: 'icon-header-annotations-line', title: 'component.searchOverlay' },
+        { type: 'toggleElementButton', dataElement: 'toggleToolsButton', element: 'toolsHeader', img: 'icon-header-annotations-line', title: 'component.searchOverlay' },
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchOverlay', img: 'ic_search_black_24px', title: 'component.searchOverlay' },
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'searchOverlay', img: 'icon-header-chat-line', title: 'component.searchOverlay' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
+        // {
+        //   type: 'actionButton',
+        //   img: 'icon-header-zoom-in-line',
+        //   onClick: zoomIn,
+        //   title: 'action.zoomIn',
+        //   dataElement: 'zoomInButton',
+        //   hidden: ['mobile'],
+        //   style: {
+        //     position: 'absolute',
+        //     left: '50%',
+        //     transform: 'translateX(-50%)',
+        //   },
+        // },
+        {
+          type: 'customElement',
+          render: () => <PageNavOverlay />,
+          dataElement: 'pageNavOverlay',
+          style: {
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+          },
+        },
       ],
       // second header
       tools: [
@@ -122,10 +119,12 @@ export default {
           dataElement: 'defaultHeaderButton',
           titile: 'action.close',
           img: 'ic_close_black_24px',
+          style: { position: 'absolute', right: 0},
           onClick: dispatch => {
-            dispatch(actions.setActiveHeaderGroup('default'));
-            core.setToolMode(defaultTool);
-            dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'redactionOverlay']));
+            // dispatch(actions.setActiveHeaderGroup('default'));
+            // core.setToolMode(defaultTool);
+            // dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'redactionOverlay']));
+            dispatch(actions.closeElements(['toolsHeader']));
           },
         },
       ],
