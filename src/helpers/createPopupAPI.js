@@ -1,5 +1,6 @@
 /**
  * A class which contains popup APIs.<br/><br/>
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> If you want to remove an item in a popup, use {@link WebViewer#disableElements disableElements}.
  * @interface WebViewer.Popup
  */
 import actions from 'actions';
@@ -88,27 +89,6 @@ WebViewer(...)
         ...props,
       };
     }
-
-    this.store.dispatch(actions.setPopupItems(this.popupDataElement, items));
-
-    return this;
-  },
-  /**
-   * Delete the item that has the given data element
-   * @method WebViewer.Popup#delete
-   * @param {string} dataElement The data element of the item to be deleted
-   * @returns {object} The instance itself
-   * @example
-WebViewer(...)
-  .then(function(instance) {
-    instance.annotationPopup.delete('annotationCommentButton');
-  });
-   */
-  delete(dataElement) {
-    const index = this._getIndexByDataElement(dataElement);
-    const items = this.getItems();
-
-    items.splice(index, 1);
 
     this.store.dispatch(actions.setPopupItems(this.popupDataElement, items));
 
