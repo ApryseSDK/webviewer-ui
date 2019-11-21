@@ -15,17 +15,23 @@ class Thumbnail extends React.PureComponent {
     currentPage: PropTypes.number,
     pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
+    isSelected: PropTypes.bool,
     onLoad: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
     updateAnnotations: PropTypes.func,
     closeElement: PropTypes.func.isRequired,
+    onDragStartCallback: PropTypes.func,
+    onDragOverCallback: PropTypes.func,
+    draggable: PropTypes.bool,
   }
 
   constructor(props) {
     super(props);
     this.thumbContainer = React.createRef();
     this.onLayoutChangedHandler = this.onLayoutChanged.bind(this);
+    this.onDragStartHandler = this.onDragStart.bind(this);
+    this.onDragOverHandler = this.onDragOver.bind(this);
   }
 
   componentDidMount() {
@@ -89,14 +95,24 @@ class Thumbnail extends React.PureComponent {
     }
   }
 
+  onDragStart = e => {
+    const { index } = this.props;
+    this.props.onDragStartCallback(e, index);
+  }
+
+  onDragOver = e => {
+    const { index } = this.props;
+    this.props.onDragOverCallback(e, index);
+  }
+
   render() {
-    const { index, currentPage, pageLabels } = this.props;
+    const { index, currentPage, pageLabels, isSelected, draggable } = this.props;
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
 
     return (
-      <div className={`Thumbnail ${isActive ? 'active' : ''}`}>
-        <div className="container" ref={this.thumbContainer} onClick={this.handleClick}></div>
+      <div className={`Thumbnail ${isActive ? 'active' : ''} ${isSelected ? 'selected' : ''}`} onDragOver={this.onDragOverHandler}>
+        <div className="container" ref={this.thumbContainer} onClick={this.handleClick} onDragStart={this.onDragStartHandler} draggable={draggable}></div>
         <div className="page-label">{pageLabel}</div>
       </div>
     );

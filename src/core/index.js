@@ -5,6 +5,7 @@ import setDisplayMode from './setDisplayMode';
 import getDisplayMode from './getDisplayMode';
 import rotateClockwise from './rotateClockwise';
 import rotateCounterClockwise from './rotateCounterClockwise';
+import movePages from './movePages';
 import getFitMode from './getFitMode';
 import fitToPage from './fitToPage';
 import fitToWidth from './fitToWidth';
@@ -112,6 +113,7 @@ export default {
   getDisplayMode,
   rotateClockwise,
   rotateCounterClockwise,
+  movePages,
   getFitMode,
   fitToPage,
   fitToWidth,

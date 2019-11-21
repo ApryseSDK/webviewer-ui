@@ -169,6 +169,8 @@ export default {
     currentPage: 1,
     sortStrategy: 'position',
     isFullScreen: false,
+    isThumbnailMerging: false,
+    isThumbnailReordering: false,
     doesAutoLoad: getHashParams('auto_load', true),
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),

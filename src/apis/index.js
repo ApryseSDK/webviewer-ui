@@ -67,6 +67,7 @@ import isMobileDevice from './isMobileDevice';
 import isReadOnly from './isReadOnly';
 import isToolDisabled from './isToolDisabled';
 import loadDocument from './loadDocument';
+import mergeDocument from './mergeDocument';
 import openElement from './openElement';
 import openElements from './openElements';
 import print from './print';
@@ -152,6 +153,7 @@ export default store => {
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),
     loadDocument: loadDocument(store),
+    mergeDocument: mergeDocument(store),
     openElements: openElements(store),
     print: print(store),
     registerTool: registerTool(store),
