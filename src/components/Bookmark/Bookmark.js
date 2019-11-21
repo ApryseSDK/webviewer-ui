@@ -9,7 +9,7 @@ import actions from 'actions';
 
 import core from 'core';
 
-import './bookmark.scss';
+import './Bookmark.scss';
 
 class Bookmark extends React.PureComponent {
   constructor(props) {

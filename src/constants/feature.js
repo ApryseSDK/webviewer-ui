@@ -1,6 +1,8 @@
 /**
  * Contains string enums for all features for WebViewer UI
- * @name WebViewer#Feature
+ * @enum {string}
+ * @name Feature
+ * @memberof WebViewer
  * @property {string} Measurement Measurement tools that can create annotations to measure distance, perimeter and area.
  * @property {string} Annotations Render annotations in the document and be able to edit them.
  * @property {string} Download A download button to download the current document.

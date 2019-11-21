@@ -1,8 +1,6 @@
 /**
  * A class which contains popup APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewer#annotationPopup instance.annotationPopup}, {@link WebViewer#textPopup instance.textPopup} or {@link WebViewer#contextMenuPopup instance.contextMenuPopup}
- * @name WebViewer.Popup
- * @class
+ * @interface WebViewer.Popup
  */
 import actions from 'actions';
 import selectors from 'selectors';
