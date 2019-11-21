@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import HeaderItems from 'components/HeaderItems';
 
-import classNames from 'classnames';
-// import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
 
 import './Header.scss';
@@ -19,7 +17,6 @@ class ToolsHeader extends React.PureComponent {
 
   render() {
     const { isDisabled, activeHeaderItems, isOpen } = this.props;
-    // const className = getClassName('Tools-Header', this.props);
 
     if (isDisabled || !isOpen) {
       return null;
@@ -30,7 +27,6 @@ class ToolsHeader extends React.PureComponent {
         className="Header Dark"
         data-element="toolsHeader"
       >
-        <div className='test'></div>
         <HeaderItems items={activeHeaderItems} />
       </div>
     );
