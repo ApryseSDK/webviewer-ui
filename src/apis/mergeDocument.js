@@ -3,6 +3,7 @@
  * @method WebViewer#mergeDocument
  * @param {(string|File)} documentPath Path to the document OR <a href='https://developer.mozilla.org/en-US/docs/Web/API/File' target='_blank'>File object</a> if opening local file.
  * @param {number} position Position to put the merged document, default to end of file if nothing entered
+ * @returns {Promise<any>} a promise that resolves on completion
  * @example // 5.1 and after
 WebViewer(...)
   .then(function(instance) {
