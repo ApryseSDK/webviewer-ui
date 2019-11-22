@@ -30,8 +30,9 @@ export const openElement = dataElement => (dispatch, getState) => {
     dispatch(setActiveLeftPanel(dataElement));
   } else {
     if (dataElement === 'progressModal') {
-      // if document already loaded no need to open progressModal
-      if (!getState().viewer.isDocumentLoaded) {
+      // if document already loaded and there is no error message
+      // no need to open progressModal
+      if (!getState().viewer.isDocumentLoaded && !getState().viewer.errorMessage) {
         dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
       } 
     } else {
