@@ -1,9 +1,9 @@
 @import '../../constants/styles';
 
 .ToggleZoomOverlay{
-  height: $button-height;  
+  height: $button-height;
   width: auto;
-  top:0;
+  top: 0;
 
   .textarea{
     resize: none;
@@ -35,6 +35,8 @@
 }
 
 .OverlayText{
+  display: flex;
+  align-items: center;
   margin-right:-8px;
   font-size: 16px;
   font-weight: normal;
@@ -50,8 +52,8 @@
   }
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
