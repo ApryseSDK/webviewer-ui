@@ -7,6 +7,8 @@ import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
 import { isIOS } from 'helpers/device';
 
+import Icon from 'components/Icon';
+
 import './PageNavOverlay.scss';
 
 class PageNavOverlay extends React.PureComponent {
@@ -49,7 +51,7 @@ class PageNavOverlay extends React.PureComponent {
   }
 
   setInputWidth = () => {
-    this.textInput.current.style.width = `${this.props.totalPages.toString().length * 11.5}px`;
+    this.textInput.current.style.width = `${this.props.totalPages.toString().length * 8}px`;
   }
 
   onClick = () => {
@@ -91,30 +93,36 @@ class PageNavOverlay extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, isLeftPanelOpen, isLeftPanelDisabled, currentPage, totalPages } = this.props;
+    const { isDisabled, currentPage, totalPages } = this.props;
     if (isDisabled) {
       return null;
     }
 
-    const className = getClassName(`Overlay PageNavOverlay ${isLeftPanelOpen && !isLeftPanelDisabled ? 'shifted' : ''}`, this.props);
+    const className = getClassName(`Overlay PageNavOverlay`, this.props);
 
     return (
       <div className={className} data-element="pageNavOverlay" onClick={this.onClick}>
-        <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
-          <input ref={this.textInput} type="text" value={this.state.input} onChange={this.onChange} tabIndex={-1} />
-          {this.state.isCustomPageLabels
-            ? ` (${currentPage}/${totalPages})`
-            : ` / ${totalPages}`
-          }
-        </form>
+        <Icon
+          glyph="icon-chevron-left"
+        />
+        <div className="formContainer">
+          <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
+            <input ref={this.textInput} type="text" value={this.state.input} onChange={this.onChange} tabIndex={-1} />
+            {this.state.isCustomPageLabels
+              ? ` (${currentPage}/${totalPages})`
+              : ` / ${totalPages}`
+            }
+          </form>
+        </div>
+        <Icon
+          glyph="icon-chevron-right"
+        />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  isLeftPanelDisabled: selectors.isElementDisabled(state, 'leftPanel'),
-  isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isDisabled: selectors.isElementDisabled(state, 'pageNavOverlay'),
   isOpen: selectors.isElementOpen(state, 'pageNavOverlay'),
   currentPage: selectors.getCurrentPage(state),
