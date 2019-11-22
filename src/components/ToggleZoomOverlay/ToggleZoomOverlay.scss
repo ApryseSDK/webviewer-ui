@@ -1,9 +1,11 @@
 @import '../../constants/styles';
 
+.asdf123{
+  display: flex;
+}
+
 .ToggleZoomOverlay{
-  height: $button-height;
-  width: auto;
-  top: 0;
+
 
   .textarea{
     resize: none;

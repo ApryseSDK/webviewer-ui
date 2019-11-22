@@ -4,7 +4,8 @@ import core from 'core';
 import classNames from 'classnames';
 
 import ToggleElementButton from 'components/ToggleElementButton';
-import { zoomTo } from 'helpers/zoom';
+import ActionButton from 'components/ActionButton';
+import { zoomTo, zoomIn, zoomOut } from 'helpers/zoom';
 import selectors from 'selectors';
 import actions from 'actions';
 
@@ -68,26 +69,40 @@ const ToggleZoomOverlay = () => {
   };
 
   return (
-    <div className="ToggleZoomOverlay">
-      <div className={classNames({
-        OverlayContainer: true,
-        'active': isActive,
-      })}
-      >
-        <div className="OverlayText" onClick={() => dispatch(actions.toggleElement('zoomOverlay'))}>
-          <input
-            type="text"
-            className="textarea"
-            value={value}
-            onChange={onChange}
-            onKeyPress={onKeyPress}
-            onBlur={onBlur}
-            tabIndex={-1}
-          />
-          <span>%</span>
+    <div className="asdf123">
+      <div className="ToggleZoomOverlay">
+        <div className={classNames({
+          OverlayContainer: true,
+          'active': isActive,
+        })}
+        >
+          <div className="OverlayText" onClick={() => dispatch(actions.toggleElement('zoomOverlay'))}>
+            <input
+              type="text"
+              className="textarea"
+              value={value}
+              onChange={onChange}
+              onKeyPress={onKeyPress}
+              onBlur={onBlur}
+              tabIndex={-1}
+            />
+            <span>%</span>
+          </div>
+          <ToggleElementButton className="OverlayButton" img="ic-triangle" element="zoomOverlay" dataElement="zoomOverlay"/>
         </div>
-        <ToggleElementButton className="OverlayButton" img="ic-triangle" element="zoomOverlay" dataElement="zoomOverlay"/>
       </div>
+      <ActionButton
+        img="icon-header-zoom-out-line"
+        onClick={zoomOut}
+        title="action.zoomOut"
+        dataElement="zoomOutButton"
+      />
+      <ActionButton
+        img="icon-header-zoom-in-line"
+        onClick={zoomIn}
+        title="action.zoomIn"
+        dataElement="zoomInButton"
+      />
     </div>
   );
 };

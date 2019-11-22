@@ -20,37 +20,6 @@ export default {
       toolsHeader: true,
     },
     headers: {
-      // newReadOnly: [
-
-      // ],
-      // newTools: [
-      //   { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton' },
-      //   { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton' },
-      //   { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton' },
-      //   {
-      //     type: 'customElement',
-      //     render: () => <SignatureToolButton />,
-      //     dataElement: 'signatureToolButton',
-      //   },
-      //   { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton' },
-      //   { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
-      //   { type: 'toolButton', toolName: 'AnnotationCreateFreeText' },
-      //   { type: 'toolButton', toolName: 'AnnotationCreateSticky' },
-      //   { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-      //   { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
-      //   { type: 'spacer' },
-      //   {
-      //     type: 'actionButton',
-      //     dataElement: 'defaultHeaderButton',
-      //     titile: 'action.close',
-      //     img: 'ic_close_black_24px',
-      //     onClick: dispatch => {
-      //       dispatch(actions.setActiveHeaderGroup('default'));
-      //       core.setToolMode(defaultTool);
-      //       dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'redactionOverlay']));
-      //     },
-      //   },
-      // ],
       default: [
         { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
         { type: 'divider', hidden: ['tablet', 'mobile'] },
@@ -62,8 +31,6 @@ export default {
           hidden: ['mobile'],
           element: 'zoomOverlay',
         },
-        { type: 'actionButton', img: 'icon-header-zoom-out-line', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: ['mobile'] },
-        { type: 'actionButton', img: 'icon-header-zoom-in-line', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: ['mobile'] },
         { type: 'toolButton', toolName: 'Pan' },
         { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },
@@ -72,19 +39,6 @@ export default {
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchOverlay', img: 'ic_search_black_24px', title: 'component.searchOverlay' },
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'searchOverlay', img: 'icon-header-chat-line', title: 'component.searchOverlay' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
-        // {
-        //   type: 'actionButton',
-        //   img: 'icon-header-zoom-in-line',
-        //   onClick: zoomIn,
-        //   title: 'action.zoomIn',
-        //   dataElement: 'zoomInButton',
-        //   hidden: ['mobile'],
-        //   style: {
-        //     position: 'absolute',
-        //     left: '50%',
-        //     transform: 'translateX(-50%)',
-        //   },
-        // },
         {
           type: 'customElement',
           render: () => <PageNavOverlay />,
