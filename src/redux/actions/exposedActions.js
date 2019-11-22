@@ -29,7 +29,15 @@ export const openElement = dataElement => (dispatch, getState) => {
     }
     dispatch(setActiveLeftPanel(dataElement));
   } else {
-    dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
+    if (dataElement === 'progressModal') {
+      // if document already loaded no need to open progressModal
+      if (!getState().viewer.isDocumentLoaded) {
+        dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
+      } 
+    } else {
+      dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
+    }
+    
     fireEvent('visibilityChanged', { element: dataElement, isVisible: true });
 
     if (dataElement === 'leftPanel' && !isLeftPanelOpen) {

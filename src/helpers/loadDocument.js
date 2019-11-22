@@ -29,7 +29,11 @@ export default (state, dispatch, extraOptions) => {
             partRetriever.setErrorCallback(fireError);
           }
 
-          dispatch(actions.openElement('progressModal'));
+          // Delay opening of progress for 1 sec
+          setTimeout(() => {
+            dispatch(actions.openElement('progressModal'));
+          }, 1000);
+
           core.loadAsync(partRetriever, { ...extraOptions, ...docOptions });
         })
         .catch(error => {
