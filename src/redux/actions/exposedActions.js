@@ -30,8 +30,8 @@ export const openElement = dataElement => (dispatch, getState) => {
     dispatch(setActiveLeftPanel(dataElement));
   } else {
     if (dataElement === 'progressModal') {
-      // Opening progress modal will not be nccessary if document is
-      // already loaded or there is error or passwordModal is open
+      // Opening progress modal will not be necessary if the document 
+      // is already loaded or there is error or passwordModal is open
       if (!state.viewer.isDocumentLoaded && 
           !state.viewer.errorMessage &&
           !state.viewer.openElements['passwordModal']) {

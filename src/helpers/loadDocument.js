@@ -30,7 +30,7 @@ export default (state, dispatch, extraOptions) => {
           }
 
           // Delaying progress modal for 2 sec, so that UI will wait and
-          // fade-in the progress modal if the file donwloading is too slow
+          // fade-in the progress modal if the file downloading is too slow
           setTimeout(() => {
             dispatch(actions.openElement('progressModal'));
           }, 2000);
