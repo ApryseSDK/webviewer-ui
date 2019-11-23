@@ -29,10 +29,11 @@ export default (state, dispatch, extraOptions) => {
             partRetriever.setErrorCallback(fireError);
           }
 
-          // Delay opening of progress for 1 sec
+          // Delaying progress modal for 2 sec, so that UI will wait and
+          // fade-in the progress modal if the file donwloading is too slow
           setTimeout(() => {
             dispatch(actions.openElement('progressModal'));
-          }, 1000);
+          }, 2000);
 
           core.loadAsync(partRetriever, { ...extraOptions, ...docOptions });
         })

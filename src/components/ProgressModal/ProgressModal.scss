@@ -4,6 +4,19 @@
 .ProgressModal {
   @extend %modal;
   
+  &.open {
+    animation: fadeIn 1s;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity:0;
+    }
+    to {
+      opacity:1;
+    }
+  }
+
   .container {
     @extend %modal-shared-container-style;
     display: flex;
