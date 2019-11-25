@@ -5,16 +5,12 @@
   @extend %modal;
   
   &.open {
-    animation: fadeIn 1s;
+    opacity: 1;
+    transition: opacity 2s 1s;
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity:0;
-    }
-    to {
-      opacity:1;
-    }
+  &.closed {
+    opacity: 0;
   }
 
   .container {
