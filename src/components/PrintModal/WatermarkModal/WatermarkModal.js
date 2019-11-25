@@ -68,11 +68,10 @@ class WatermarkModal extends React.PureComponent {
     t: PropTypes.func.isRequired,
   }
 
-  preExistingWatermark;
-
   constructor(props) {
     super(props);
     const locationSettings = this.initializeLocationSettings();
+    this.preExistingWatermark = undefined;
     this.state = {
       isColorPaletteVisible: false,
       locationSettings,
