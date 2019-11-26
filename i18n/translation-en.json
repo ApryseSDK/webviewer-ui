@@ -196,7 +196,8 @@
       "location": "Choose a location to edit watermarks",
       "text": "Text",
       "colors": "Colors",
-      "resetAllSettings": "Reset All Settings"
+      "resetAllSettings": "Reset All Settings",
+      "font": "Font"
     }
   },
   "shortcut": {

@@ -5,9 +5,10 @@ import core from 'core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import ActionButton from 'components/ActionButton';
+import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 
-import ActionButton from 'components/ActionButton';
 
 /**
  * TODO refactor this component so that the Print Modal passes in the form fields and it will store the previous form field settings
@@ -37,6 +38,7 @@ const FORM_FIELD_KEYS = {
   text: 'text',
   color: 'color',
   opacity: 'opacity',
+  font: 'font',
 };
 
 const DEFAULT_VALS = {
@@ -45,6 +47,7 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.text]: '',
   [FORM_FIELD_KEYS.color]: new window.Annotations.Color(241, 160, 153),
   [FORM_FIELD_KEYS.opacity]: 100,
+  [FORM_FIELD_KEYS.font]: FONTS[0],
 };
 /**
  * Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
@@ -139,7 +142,7 @@ class WatermarkModal extends React.PureComponent {
   constructWatermarkOption = value => {
     const watermarkOption = {
       fontSize: value.fontSize,
-      fontFamily: 'sans-serif',
+      fontFamily: value.font,
       color: value.color.toString(),
       opacity: value.opacity,
       text: value.text,
@@ -277,7 +280,6 @@ class WatermarkModal extends React.PureComponent {
           <div className="form-content-container">
             <form data-element="form">
               <div className="form-field">
-
                 <label>
                   {t(`option.watermark.location`)}
                 </label>
@@ -295,7 +297,6 @@ class WatermarkModal extends React.PureComponent {
 
               </div>
               <div className="form-field">
-
                 <label>
                   {t(`option.watermark.text`)}
                 </label>
@@ -309,7 +310,18 @@ class WatermarkModal extends React.PureComponent {
 
               </div>
               <div className="form-field">
-
+                <label>
+                  {t(`option.watermark.font`)}
+                </label>
+                <select
+                  data-element="fonts"
+                  value={formInfo[FORM_FIELD_KEYS.font]}
+                  onChange={event => this.handleInputChange(FORM_FIELD_KEYS.font, event.target.value)}
+                >
+                  { FONTS.map(font => <option key={font}>{font}</option>) }
+                </select>
+              </div>
+              <div className="form-field">
                 <label>
                   {t(`option.watermark.size`)}
                 </label>
@@ -320,7 +332,6 @@ class WatermarkModal extends React.PureComponent {
                 >
                   { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
                 </select>
-
               </div>
               <div className="form-field opacity-slider" data-element="opacitySlider">
                 <Slider
