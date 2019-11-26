@@ -1,6 +1,7 @@
 /**
  * Returns a dictionary with page indices as keys and the bookmark text as the values
  * @method WebViewer#exportBookmarks
+ * @return {Object} A dictionary with page indices as keys and the bookmark text as the values. ex: {"0":"Bookmark 1","2":"Bookmark 2"}
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -12,9 +13,6 @@ WebViewer(...)
       body: bookmarksString // written into a json file on server
     });
   });
- */
-/**
- * @returns {Object} A dictionary with page indices as keys and the bookmark text as the values. ex: {"0":"Bookmark 1","2":"Bookmark 2"}
  */
 
 import selectors from 'selectors';
