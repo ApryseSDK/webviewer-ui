@@ -1,16 +1,22 @@
+import actions from 'actions';
+import selectors from 'selectors';
+
 const NOOP = () => {};
 
 const MentionsManager = {
-  initialize() {
+  initialize(store) {
     this.userData = [];
     this.mentionsData = [];
     this.observer = NOOP;
+    this.store = store;
+
+    return this;
   },
   setUserData(userData) {
-    this.userData = userData;
+    this.store.dispatch(actions.setUserData(userData));
   },
   getUserData() {
-    return this.userData;
+    return selectors.getUserData(this.store.getState());
   },
   setMentionsData(mentionsData) {
     this.mentionsData = mentionsData;
@@ -28,34 +34,4 @@ const MentionsManager = {
   },
 };
 
-const mentions = Object.create(MentionsManager);
-mentions.initialize();
-
-mentions.setUserData([
-  {
-    id: 'zhijie',
-    name: 'Zhijie Zhang',
-    display: 'Zhijie Zhang',
-    email: 'zhijiezhang0124@gmail.com',
-  },
-  {
-    id: 'qiuyi',
-    name: 'Qiuyi Ji',
-    display: 'Qiuyi Ji',
-    email: 'qiuyiji1006gmail.com',
-  },
-  {
-    id: 'wei',
-    name: 'Wei Zhang',
-    display: 'Wei Zhang',
-    email: 'weizhang1206@gmail.com',
-  },
-  {
-    id: 'qiong',
-    name: 'Qiong Shen',
-    display: 'Qiong Shen',
-    email: 'qiongshen0411@gmail.com',
-  },
-]);
-
-export default mentions;
+export default Object.create(MentionsManager);

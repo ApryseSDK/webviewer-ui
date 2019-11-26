@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { MentionsInput, Mention } from 'react-mentions';
@@ -8,7 +9,7 @@ import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 
 import core from 'core';
-import mentions from 'helpers/MentionsManager';
+import selectors from 'selectors';
 
 import './MentionArea.scss';
 import './Note.scss';
@@ -79,6 +80,7 @@ Note.propTypes = propTypes;
 export default Note;
 
 const MentionsArea = () => {
+  const userData = useSelector(selectors.getUserData, shallowEqual);
   const [value, setValue] = useState('');
 
   const handleChange = e => {
@@ -102,7 +104,8 @@ const MentionsArea = () => {
       >
         <Mention
           trigger="@"
-          data={mentions.getUserData()}
+          // hack for now to bypass the data instanceof Array check in this library
+          data={JSON.parse(JSON.stringify(userData))}
           displayTransform={(_, display) => `@${display}`}
           renderSuggestion={renderSuggestion}
         />
@@ -110,19 +113,3 @@ const MentionsArea = () => {
     </div>
   );
 };
-
-// const highlight = text => {
-//   const i = text.toLowerCase().indexOf(search.toLowerCase());
-
-//   if (i === -1) {
-//     return <div>{text}</div>;
-//   }
-
-//   return (
-//     <div>
-//       {text.substring(0, i)}
-//       <span className="highlight">{text.substring(i, i + search.length)}</span>
-//       {text.substring(i + search.length)}
-//     </div>
-//   );
-// };

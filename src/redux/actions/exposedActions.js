@@ -214,3 +214,7 @@ export const setMaxSignaturesCount = maxSignaturesCount => ({
   type: 'SET_MAX_SIGNATURES_COUNT',
   payload: { maxSignaturesCount },
 });
+export const setUserData = userData => ({
+  type: 'SET_USER_DATA',
+  payload: { userData },
+});

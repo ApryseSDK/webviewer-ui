@@ -188,6 +188,7 @@ export default {
     maxSignaturesCount: 2,
     leftPanelWidth: 300,
     isReplyDisabledFunc: null,
+    userData: [],
   },
   search: {
     listeners: [],

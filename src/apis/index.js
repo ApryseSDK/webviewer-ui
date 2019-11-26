@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import Feature from 'constants/feature';
+import mentions from 'helpers/MentionsManager';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
@@ -189,6 +190,7 @@ export default store => {
     updateTool: updateTool(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
+    mentions: mentions.initialize(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),
