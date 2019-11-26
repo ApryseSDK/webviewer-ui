@@ -11,12 +11,14 @@
   // background: var(--primary-color);
   // border-bottom: 1px solid $gray12;
   // border-bottom: 1px solid var(--border-color);
-  border-bottom: solid 1px var(--new-border-color);
+
   transition: all .3s ease;
   padding: 2px 0px;
 
   &.Dark {
+    padding-bottom: 1px;
     background: var(--tools-header-color);
+    border-bottom: solid 1px var(--new-border-color);
   }
 
   &.closed {

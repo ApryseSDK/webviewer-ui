@@ -30,6 +30,9 @@ export default {
           dataElement: 'zoomOverlayButton',
           hidden: ['mobile'],
           element: 'zoomOverlay',
+          style: {
+            height: '100%',
+          }
         },
         { type: 'toolButton', toolName: 'Pan' },
         { type: 'toolButton', toolName: 'TextSelect' },
