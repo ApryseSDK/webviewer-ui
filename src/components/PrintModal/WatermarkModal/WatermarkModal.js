@@ -359,11 +359,12 @@ class WatermarkModal extends React.PureComponent {
                   onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
                 >
                 </div>
+                <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.bold, !formInfo[FORM_FIELD_KEYS.bold])}>
+                  <Icon
+                    glyph="format_bold-24px"
+                  />
+                </div>
 
-                <Icon
-                  glyph="format_bold-24px"
-                  iconClicked={() => this.handleInputChange(FORM_FIELD_KEYS.bold, !formInfo[FORM_FIELD_KEYS.bold])}
-                />
 
                 {
                   this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
