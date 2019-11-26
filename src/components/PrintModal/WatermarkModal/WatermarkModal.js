@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import ActionButton from 'components/ActionButton';
+import Icon from 'components/Icon';
 import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 
@@ -39,6 +40,7 @@ const FORM_FIELD_KEYS = {
   color: 'color',
   opacity: 'opacity',
   font: 'font',
+  bold: 'bold',
 };
 
 const DEFAULT_VALS = {
@@ -48,6 +50,7 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.color]: new window.Annotations.Color(241, 160, 153),
   [FORM_FIELD_KEYS.opacity]: 100,
   [FORM_FIELD_KEYS.font]: FONTS[0],
+  [FORM_FIELD_KEYS.bold]: false,
 };
 /**
  * Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
@@ -357,6 +360,11 @@ class WatermarkModal extends React.PureComponent {
                 >
                 </div>
 
+                <Icon
+                  glyph="format_bold-24px"
+                  iconClicked={() => this.handleInputChange(FORM_FIELD_KEYS.bold, !formInfo[FORM_FIELD_KEYS.bold])}
+                />
+
                 {
                   this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
                     <ColorPalette
@@ -369,7 +377,6 @@ class WatermarkModal extends React.PureComponent {
                 }
 
               </div>
-
             </form>
 
             <div className="canvas-container" ref={this.canvasContainerRef}>

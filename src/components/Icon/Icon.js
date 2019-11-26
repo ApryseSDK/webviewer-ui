@@ -8,6 +8,7 @@ class Icon extends React.PureComponent {
     className: PropTypes.string,
     color: PropTypes.string,
     glyph: PropTypes.string.isRequired,
+    iconClicked: PropTypes.func,
   }
 
   constructor() {
@@ -45,13 +46,19 @@ class Icon extends React.PureComponent {
     return glyph && glyph.indexOf('<svg') === 0;
   }
 
+  onIconClicked(event) {
+    if (this.props.iconClicked) {
+      this.props.iconClicked(event);
+    }
+  }
+
   render() {
     const { className = '', color, glyph } = this.props;
     const filter = (color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)')) ? 'drop-shadow(0 0 .5px #333)' : undefined;
     const svgElement = this.isInlineSvg() ? glyph : require(`../../../assets/${this.props.glyph}.svg`);
 
     return (
-      <div ref={this.icon} className={`Icon ${className}`} style={{ color: (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color, filter }} dangerouslySetInnerHTML={{ __html: svgElement }}></div>
+      <div ref={this.icon} onClick={() => this.onIconClicked()} className={`Icon ${className}`} style={{ color: (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color, filter }} dangerouslySetInnerHTML={{ __html: svgElement }}></div>
     );
   }
 }
