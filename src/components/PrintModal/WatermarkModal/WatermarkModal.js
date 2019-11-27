@@ -10,7 +10,6 @@ import Icon from 'components/Icon';
 import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 
-
 /**
  * TODO refactor this component so that the Print Modal passes in the form fields and it will store the previous form field settings
  */
@@ -143,12 +142,18 @@ class WatermarkModal extends React.PureComponent {
 
   // eslint-disable-next-line class-methods-use-this
   constructWatermarkOption = value => {
+    const fontStyles = [];
+    if (value.bold) {
+      // fontStyles.push(window.CoreControls.FONT_STYLES.BOLD);
+      fontStyles.push(core.getFontStyles().BOLD);
+    }
     const watermarkOption = {
       fontSize: value.fontSize,
       fontFamily: value.font,
       color: value.color.toString(),
       opacity: value.opacity,
       text: value.text,
+      fontStyles: fontStyles,
     };
 
     return watermarkOption;

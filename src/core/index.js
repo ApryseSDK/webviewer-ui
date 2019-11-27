@@ -103,6 +103,7 @@ import getNumberOfGroups from './getNumberOfGroups';
 import undo from './undo';
 import redo from './redo';
 import updateAnnotationState from './updateAnnotationState';
+import getFontStyles from './getFontStyles';
 
 export default {
   setToolMode,
@@ -211,4 +212,5 @@ export default {
   undo,
   redo,
   updateAnnotationState,
+  getFontStyles,
 };
