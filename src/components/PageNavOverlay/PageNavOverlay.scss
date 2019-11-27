@@ -12,6 +12,11 @@
   display: flex;
   cursor: pointer;
 
+  .Icon{
+    width: 16px;
+    height: 16px;
+  }
+
   &>.formContainer {
     display: flex;
     align-items: center;

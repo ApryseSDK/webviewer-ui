@@ -8,7 +8,7 @@
   --button-hover-color: #F6F6F6;
   --text-color: #333333;
   --button-active-color: #F0F0F0;
-  --icon-color: #757575;
+  --icon-color: #8c8c8c;
   --icon-active-color: #757575;
   --left-panel-width: 300px;
   // for new webui
@@ -62,7 +62,7 @@ html, body , #app {
   }
 
   input[type=text] {
-    font-family: 'Carlito', sans-serif;
+    font-family: 'Carlito';
     appearance: none;
     user-select: text !important;
   }

@@ -40,6 +40,7 @@
   }
 
   &.active {
+    border-radius: 4px;
     background: #F0F0F0;
     background: var(--button-active-color);
 

@@ -2,12 +2,23 @@
 
 .asdf123{
   display: flex;
-  background-color: #eeeeee;
-  border-radius: 4px;
+  padding: 2px 0;
+
+  .Button{
+    margin: 0px 1px;
+  }
+
+  &>.Container {
+    display: flex;
+    background-color: #eeeeee;
+    border-radius: 4px;
+  }
 }
+
 
 .ToggleZoomOverlay{
   height: 100%;
+  color: var(--icon-color);
 
   .textarea{
     resize: none;
@@ -15,11 +26,15 @@
     outline: none;
     color: inherit;
     background-color: transparent;
-    font-size: 16px;
-    margin-top: -2px;
-    margin-right: 2px;
-    width: 42px;
+    font-size: 14px;
+    font-weight: bold;
+    width: 28px;
     text-align: right;
+  }
+
+  .Icon{
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -27,6 +42,8 @@
   display: flex;
   align-items: center;
   height: 100%;
+  border-radius: 4px;
+
   &:hover {
     background-color: #F6F6F6;
     background-color: var(--button-hover-color);
@@ -39,11 +56,13 @@
 
 
 .OverlayText{
+  border-radius: 4px;
   display: flex;
   align-items: center;
   margin-right:-8px;
-  font-size: 16px;
-  font-weight: normal;
+  margin-bottom: -1px;
+  font-size: 14px;
+  font-weight: bold;
   // height: $button-height;
   // line-height: $button-height;
   height: 100%;
