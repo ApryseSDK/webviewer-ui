@@ -104,6 +104,8 @@ import getNumberOfGroups from './getNumberOfGroups';
 import undo from './undo';
 import redo from './redo';
 import updateAnnotationState from './updateAnnotationState';
+import mergeDocument from './mergeDocument';
+
 
 export default {
   setToolMode,
@@ -213,4 +215,5 @@ export default {
   undo,
   redo,
   updateAnnotationState,
+  mergeDocument,
 };
