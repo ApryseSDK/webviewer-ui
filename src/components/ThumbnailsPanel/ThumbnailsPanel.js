@@ -288,7 +288,9 @@ class ThumbnailsPanel extends React.PureComponent {
                 height={height}
                 width={width}
                 rowHeight={this.thumbnailHeight}
-                rowCount={totalPages / numberOfColumns}
+                // Round it to a whole number because React-Virtualized list library doesn't round it for us and throws errors when rendering non whole number rows
+                // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
+                rowCount={Math.ceil(totalPages / numberOfColumns)}
                 rowRenderer={this.renderThumbnails}
                 overscanRowCount={10}
                 style={{ outline: 'none' }}
