@@ -32,7 +32,7 @@ export default {
           element: 'zoomOverlay',
           style: {
             height: '100%',
-          }
+          },
         },
         { type: 'toolButton', toolName: 'Pan' },
         { type: 'toolButton', toolName: 'TextSelect' },
@@ -68,15 +68,20 @@ export default {
           render: () => <SignatureToolButton />,
           dataElement: 'signatureToolButton',
         },
-        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
+        { type: 'divider', hidden: ['tablet', 'mobile'] },
+        { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'icon-operation-undo', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
+        { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'icon-operation-redo', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
+        // { type: 'toolButton', toolName: 'UndoTool' },
+        // { type: 'toolButton', toolName: 'RedoTool' },
+        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer' },
         {
           type: 'actionButton',
           dataElement: 'defaultHeaderButton',
           titile: 'action.close',
           img: 'ic_close_black_24px',
-          style: { position: 'absolute', right: 0},
+          style: { position: 'absolute', right: 0 },
           onClick: dispatch => {
             // dispatch(actions.setActiveHeaderGroup('default'));
             // core.setToolMode(defaultTool);
