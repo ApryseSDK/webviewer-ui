@@ -71,15 +71,32 @@ export default {
         },
         { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
         { type: 'divider', hidden: ['tablet', 'mobile'] },
-        { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'icon-operation-undo', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
-        { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'icon-operation-redo', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
+        {
+          type: 'actionButton',
+          dataElement: 'undoButton',
+          titile: 'action.close',
+          img: 'icon-operation-undo',
+          onClick: dispatch => {
+            console.log('undo');
+          },
+        },
+        {
+          type: 'actionButton',
+          dataElement: 'redoButton',
+          titile: 'action.close',
+          img: 'icon-operation-redo',
+          onClick: dispatch => {
+            console.log('redo');
+          },
+        },
+
         // { type: 'toolButton', toolName: 'UndoTool' },
         // { type: 'toolButton', toolName: 'RedoTool' },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer' },
         {
           type: 'actionButton',
-          dataElement: 'defaultHeaderButton',
+          dataElement: 'closeToolsButton',
           titile: 'action.close',
           img: 'ic_close_black_24px',
           style: { position: 'absolute', right: 0 },
