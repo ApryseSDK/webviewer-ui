@@ -27,6 +27,7 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs = [];
     this.listRef = React.createRef();
     this.thumbnailHeight = 180; // refer to Thumbnail.scss
+    this.afterMovePageNumber = null;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       canLoad: true,
@@ -34,7 +35,6 @@ class ThumbnailsPanel extends React.PureComponent {
       width: 0,
       draggingOverPageIndex: null,
       isDraggingOverTopHalf: false,
-      afterMovePageNumber: null,
     };
   }
 
@@ -79,8 +79,7 @@ class ThumbnailsPanel extends React.PureComponent {
         afterMovePageNumber = targetPageNumber;
       }
 
-      this.setState({ afterMovePageNumber });
-
+      this.afterMovePageNumber = afterMovePageNumber;
       core.movePages([currentPage], targetPageNumber);
     }
 
@@ -88,12 +87,10 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   onPageComplete = () => {
-    const { afterMovePageNumber } = this.state;
-    if (afterMovePageNumber) {
-      core.setCurrentPage(afterMovePageNumber);
+    if (this.afterMovePageNumber) {
+      core.setCurrentPage(this.afterMovePageNumber);
+      this.afterMovePageNumber = null;
     }
-
-    this.setState({ afterMovePageNumber: null });
   }
 
   onDragOver = (e, index) => {
