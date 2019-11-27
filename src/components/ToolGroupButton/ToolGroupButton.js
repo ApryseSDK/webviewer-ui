@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
@@ -10,6 +11,8 @@ import defaultTool from 'constants/defaultTool';
 import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
+
+import './ToolGroupButton.scss';
 
 class ToolGroupButton extends React.PureComponent {
   static propTypes = {
@@ -122,21 +125,26 @@ class ToolGroupButton extends React.PureComponent {
         : '';
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
     const showDownArrow = this.props.img === undefined;
-    const className = ['ToolGroupButton', showDownArrow ? 'down-arrow' : '']
-      .join(' ')
-      .trim();
+    // const className = ['ToolGroupButton']
+    //   .join(' ')
+    //   .trim();
 
     return allButtonsInGroupDisabled ? null : (
-      <Button
-        title={title}
-        className={className}
-        mediaQueryClassName={mediaQueryClassName}
-        isActive={isActive}
-        onClick={this.onClick}
-        dataElement={dataElement}
-        img={img}
-        color={color}
-      />
+      <div
+        className="ToolGroupButton"
+        data-element={dataElement}
+      >
+        <Button
+          title={title}
+          mediaQueryClassName={mediaQueryClassName}
+          isActive={isActive}
+          onClick={this.onClick}
+          img={img}
+          color={color}
+        />
+        {showDownArrow && <Icon className="DownArrow" glyph="icon-chevron-down" />}
+      </div>
+
     );
   }
 }
