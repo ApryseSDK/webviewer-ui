@@ -10,8 +10,10 @@ export default (element, overlay, align = 'left') => {
     return { left: -9999, right };
   }
 
-  const { left: buttonLeft, right: buttonRight, width: buttonWidth } = button.getBoundingClientRect();
+  const { top: buttonTop, bottom: buttonBottom, left: buttonLeft, right: buttonRight, width: buttonWidth } = button.getBoundingClientRect();
   const { width: overlayWidth } = overlay.current.getBoundingClientRect();
+
+  console.log(button, buttonTop, buttonBottom, buttonLeft, buttonRight, buttonWidth, overlayWidth);
 
   if (align === 'left') {
     if (buttonLeft + overlayWidth > window.innerWidth) {
@@ -39,5 +41,5 @@ export default (element, overlay, align = 'left') => {
     right = 'auto';
     left = buttonLeft - (overlayWidth - buttonWidth);
   }
-  return { left, right };
+  return { left, right, top: buttonBottom + 4 };
 };

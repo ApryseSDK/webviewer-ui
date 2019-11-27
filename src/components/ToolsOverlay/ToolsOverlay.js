@@ -33,6 +33,7 @@ class ToolsOverlay extends React.PureComponent {
     this.state = {
       left: 0,
       right: 'auto',
+      top: 'auto',
     };
   }
 
@@ -112,7 +113,7 @@ class ToolsOverlay extends React.PureComponent {
   };
 
   render() {
-    const { left, right } = this.state;
+    const { left, right, top } = this.state;
     const {
       isDisabled,
       isOpen,
@@ -133,7 +134,7 @@ class ToolsOverlay extends React.PureComponent {
       <div
         className={className}
         ref={this.overlay}
-        style={{ left, right }}
+        style={{ left, right, top }}
         data-element="toolsOverlay"
       >
         {toolNames.map((toolName, i) => (
@@ -155,7 +156,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'toolsOverlay'),
   isOpen: selectors.isElementOpen(state, 'toolsOverlay'),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  activeHeaderItems: selectors.getActiveHeaderItems(state),
+  activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
 });
 
