@@ -9,6 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'webviewer-ui.min.js',
+    chunkFilename: '[name].bundle.js',
     publicPath: '/',
   },
   plugins: [

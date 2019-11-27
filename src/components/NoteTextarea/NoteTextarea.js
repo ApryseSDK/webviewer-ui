@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import MentionsTextarea from 'components/NoteTextarea/MentionsTextarea';
+// import MentionsTextarea from 'components/NoteTextarea/MentionsTextarea';
 import AutoResizeTextarea from 'components/NoteTextarea/AutoResizeTextarea';
 import NoteContext from 'components/Note/Context';
 
@@ -23,6 +23,10 @@ const propTypes = {
   onSubmit: PropTypes.func,
 };
 
+const MentionsTextarea = React.lazy(() =>
+  import('components/NoteTextarea/MentionsTextarea'),
+);
+
 const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   const userData = useSelector(selectors.getUserData, shallowEqual);
   const { resize } = useContext(NoteContext);
@@ -32,14 +36,14 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   useLayoutEffect(() => {
     // when the height of the textarea changes, we also want to call resize
     // to clear the cell measurer cache and update the note height in the virtualized list
-    const { height } = textareaRef.current.getBoundingClientRect();
-    if (prevHeightRef.current && prevHeightRef.current !== height) {
+    const boundingBox = textareaRef.current?.getBoundingClientRect() || {};
+    if (prevHeightRef.current && prevHeightRef.current !== boundingBox.height) {
       resize();
     }
 
-    prevHeightRef.current = height;
-  // we need value to be in the dependency array because the height will only change when value changes
-  // eslint-disable-next-line
+    prevHeightRef.current = boundingBox.height;
+    // we need value to be in the dependency array because the height will only change when value changes
+    // eslint-disable-next-line
   }, [props.value, resize]);
 
   const handleKeyDown = e => {
@@ -64,7 +68,9 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   };
 
   return userData?.length ? (
-    <MentionsTextarea {...textareaProps} userData={userData} />
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <MentionsTextarea {...textareaProps} userData={userData} />
+    </React.Suspense>
   ) : (
     <AutoResizeTextarea {...textareaProps} />
   );
