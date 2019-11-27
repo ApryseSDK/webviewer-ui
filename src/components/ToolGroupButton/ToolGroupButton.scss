@@ -1,0 +1,10 @@
+.ToolGroupButton {
+  display: flex;
+  align-items: center;
+
+  .DownArrow {
+    margin-left: -10px;
+    width: 16px;
+    height: 16px;
+  }
+}
