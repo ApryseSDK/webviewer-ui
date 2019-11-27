@@ -382,7 +382,7 @@ class ThumbnailsPanel extends React.PureComponent {
         className="Panel ThumbnailsPanel"
         style={{ display }}
         data-element="thumbnailsPanel"
-        onDragOver={e => e.preventDefault()}
+    
         onDrop={this.onDrop}
       >
         <Measure
