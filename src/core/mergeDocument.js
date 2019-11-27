@@ -5,6 +5,7 @@ import actions from 'actions';
 
 export default (dispatch, documentToMerge, position) => {
   dispatch(actions.openElement('loadingModal'));
+
   return window.docViewer.getDocument().mergeDocument(documentToMerge, position)
     .then(() => {
       dispatch(actions.closeElement('loadingModal'));
