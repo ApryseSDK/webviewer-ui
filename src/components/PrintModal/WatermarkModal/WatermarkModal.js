@@ -39,7 +39,7 @@ const FORM_FIELD_KEYS = {
   color: 'color',
   opacity: 'opacity',
   font: 'font',
-  bold: 'bold',
+  isBolded: 'isBolded',
 };
 
 const DEFAULT_VALS = {
@@ -143,7 +143,7 @@ class WatermarkModal extends React.PureComponent {
   // eslint-disable-next-line class-methods-use-this
   constructWatermarkOption = value => {
     const fontStyles = [];
-    if (value.bold) {
+    if (value.isBolded) {
       // fontStyles.push(window.CoreControls.FONT_STYLES.BOLD);
       fontStyles.push(core.getFontStyles().BOLD);
     }
@@ -364,7 +364,7 @@ class WatermarkModal extends React.PureComponent {
                   onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
                 >
                 </div>
-                <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.bold, !formInfo[FORM_FIELD_KEYS.bold])}>
+                <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isBolded, !formInfo[FORM_FIELD_KEYS.isBolded])}>
                   <Icon
                     glyph="format_bold-24px"
                   />
