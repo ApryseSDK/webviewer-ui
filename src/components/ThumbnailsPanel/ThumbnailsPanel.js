@@ -7,6 +7,7 @@ import Thumbnail from 'components/Thumbnail';
 
 import core from 'core';
 import selectors from 'selectors';
+import actions from 'actions';
 
 import './ThumbnailsPanel.scss';
 
@@ -18,7 +19,7 @@ class ThumbnailsPanel extends React.PureComponent {
     currentPage: PropTypes.number,
     isThumbnailMergingEnabled: PropTypes.bool,
     isThumbnailReorderingEnabled: PropTypes.bool,
-    mergeDocument: PropTypes.func,
+    dispatch: PropTypes.func,
   }
 
   constructor() {
@@ -125,7 +126,7 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onDrop = e => {
     e.preventDefault();
-    const { isThumbnailMergingEnabled, mergeDocument } = this.props;
+    const { isThumbnailMergingEnabled, dispatch } = this.props;
     const { draggingOverPageIndex, isDraggingOverTopHalf } = this.state;
     const { files } = e.dataTransfer;
 
@@ -133,8 +134,13 @@ class ThumbnailsPanel extends React.PureComponent {
       const file = files[0];
       const insertTo = isDraggingOverTopHalf ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
 
-      mergeDocument(file, insertTo).then(() => {
+      dispatch(actions.openElement('loadingModal'));
+
+      core.mergeDocument(file, insertTo).then(() => {
+        dispatch(actions.closeElement('loadingModal'));
         core.setCurrentPage(insertTo);
+      }).catch(() => {
+        dispatch(actions.closeElement('loadingModal'));
       });
 
       this.setState({ draggingOverPageIndex: null });
@@ -379,7 +385,7 @@ class ThumbnailsPanel extends React.PureComponent {
         className="Panel ThumbnailsPanel"
         style={{ display }}
         data-element="thumbnailsPanel"
-    
+
         onDrop={this.onDrop}
       >
         <Measure
@@ -412,7 +418,7 @@ class ThumbnailsPanel extends React.PureComponent {
 }
 
 const mapDispatchToProps = dispatch => ({
-  mergeDocument: (documentToMerge, position) => core.mergeDocument(dispatch, documentToMerge, position),
+  dispatch,
 });
 
 const mapStateToProps = state => ({
