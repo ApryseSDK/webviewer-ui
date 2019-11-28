@@ -12,4 +12,9 @@
     display: flex;
     justify-content: center;
   }
+
+  .thumbnailPlaceholder{
+    border-color: $gray87;
+    margin: 0px;
+  }
 }
