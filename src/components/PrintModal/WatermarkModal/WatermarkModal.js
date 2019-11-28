@@ -162,7 +162,7 @@ class WatermarkModal extends React.PureComponent {
       color: value.color.toString(),
       opacity: value.opacity,
       text: value.text,
-      fontStyles: fontStyles,
+      fontStyles,
     };
 
     return watermarkOption;
@@ -375,17 +375,17 @@ class WatermarkModal extends React.PureComponent {
                 </div>
                 <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isBolded, !formInfo[FORM_FIELD_KEYS.isBolded])}>
                   <Icon
-                    glyph="format_bold-24px"
+                    glyph="icon-text-bold"
                   />
                 </div>
                 <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isItalic, !formInfo[FORM_FIELD_KEYS.isItalic])}>
                   <Icon
-                    glyph="format_bold-24px"
+                    glyph="icon-text-italic"
                   />
                 </div>
                 <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isUnderlined, !formInfo[FORM_FIELD_KEYS.isUnderlined])}>
                   <Icon
-                    glyph="format_bold-24px"
+                    glyph="icon-text-underline"
                   />
                 </div>
 
