@@ -40,6 +40,7 @@ const FORM_FIELD_KEYS = {
   opacity: 'opacity',
   font: 'font',
   isBolded: 'isBolded',
+  isItalic: 'isItalic',
 };
 
 const DEFAULT_VALS = {
@@ -49,7 +50,8 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.color]: new window.Annotations.Color(241, 160, 153),
   [FORM_FIELD_KEYS.opacity]: 100,
   [FORM_FIELD_KEYS.font]: FONTS[0],
-  [FORM_FIELD_KEYS.bold]: false,
+  [FORM_FIELD_KEYS.isBolded]: false,
+  [FORM_FIELD_KEYS.isItalic]: false,
 };
 /**
  * Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
@@ -144,8 +146,10 @@ class WatermarkModal extends React.PureComponent {
   constructWatermarkOption = value => {
     const fontStyles = [];
     if (value.isBolded) {
-      // fontStyles.push(window.CoreControls.FONT_STYLES.BOLD);
       fontStyles.push(core.getFontStyles().BOLD);
+    }
+    if (value.isItalic) {
+      fontStyles.push(core.getFontStyles().ITALIC);
     }
     const watermarkOption = {
       fontSize: value.fontSize,
@@ -365,6 +369,11 @@ class WatermarkModal extends React.PureComponent {
                 >
                 </div>
                 <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isBolded, !formInfo[FORM_FIELD_KEYS.isBolded])}>
+                  <Icon
+                    glyph="format_bold-24px"
+                  />
+                </div>
+                <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isItalic, !formInfo[FORM_FIELD_KEYS.isItalic])}>
                   <Icon
                     glyph="format_bold-24px"
                   />
