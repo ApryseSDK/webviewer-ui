@@ -40,7 +40,7 @@ export default {
         { type: 'spacer' },
         { type: 'toggleElementButton', dataElement: 'toggleToolsButton', element: 'toolsHeader', img: 'icon-header-annotations-line', title: 'component.searchOverlay' },
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchOverlay', img: 'ic_search_black_24px', title: 'component.searchOverlay' },
-        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'searchOverlay', img: 'icon-header-chat-line', title: 'component.searchOverlay' },
+        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
         {
           type: 'customElement',
@@ -172,7 +172,7 @@ export default {
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
-    activeLeftPanel: getHashParams('hideAnnotationPanel', false) || !getHashParams('a', false) ? 'thumbnailsPanel' : 'notesPanel',
+    activeLeftPanel: 'thumbnailsPanel',
     activeToolGroup: '',
     notePopupId: '',
     isNoteEditing: false,

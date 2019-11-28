@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -182,13 +183,13 @@ class DocumentContainer extends React.PureComponent {
   getClassName = props => {
     const { isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen } = props;
 
-    return [
-      'DocumentContainer',
-      isLeftPanelOpen ? 'left-panel' : '',
-      isRightPanelOpen ? 'right-panel' : '',
-      isHeaderOpen ? '' : 'no-header',
-      isSearchOverlayOpen ? 'search-overlay' : '',
-    ].join(' ').trim();
+    return classNames({
+      DocumentContainer: true,
+      'left-panel': isLeftPanelOpen,
+      'right-panel': isRightPanelOpen,
+      'no-header': !isHeaderOpen,
+      'search-overlay': isSearchOverlayOpen,
+    });
   }
 
   render() {
@@ -212,7 +213,7 @@ const mapStateToProps = state => ({
   document: selectors.getDocument(state),
   advanced: selectors.getAdvanced(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
-  isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
   hasPath: selectors.hasPath(state),
   doesDocumentAutoLoad: selectors.doesDocumentAutoLoad(state),

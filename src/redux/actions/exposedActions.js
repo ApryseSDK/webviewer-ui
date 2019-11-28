@@ -1,5 +1,5 @@
 import core from 'core';
-import isDataElementPanel from 'helpers/isDataElementPanel';
+import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
@@ -14,7 +14,7 @@ export const openElement = dataElement => (dispatch, getState) => {
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
-  const isElementOpen = isDataElementPanel(dataElement, state)
+  const isElementOpen = isDataElementLeftPanel(dataElement, state)
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
     : state.viewer.openElements[dataElement];
 
@@ -22,7 +22,7 @@ export const openElement = dataElement => (dispatch, getState) => {
     return;
   }
 
-  if (isDataElementPanel(dataElement, state)) {
+  if (isDataElementLeftPanel(dataElement, state)) {
     if (!isLeftPanelOpen) {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
       fireEvent('visibilityChanged', { element: 'leftPanel', isVisible: true });
@@ -54,7 +54,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
 
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;
-  const isElementClosed = isDataElementPanel(dataElement, state)
+  const isElementClosed = isDataElementLeftPanel(dataElement, state)
     ? state.viewer.activeLeftPanel !== dataElement
     : !state.viewer.openElements[dataElement];
 
@@ -63,7 +63,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
   }
 
   if (
-    isDataElementPanel(dataElement, state) &&
+    isDataElementLeftPanel(dataElement, state) &&
     state.viewer.openElements['leftPanel']
   ) {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
@@ -113,7 +113,7 @@ export const setActiveHeaderGroup = headerGroup => ({
 export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  if (isDataElementPanel(dataElement, state)) {
+  if (isDataElementLeftPanel(dataElement, state)) {
     if (state.viewer.activeLeftPanel !== dataElement) {
       dispatch({
         type: 'CLOSE_ELEMENT',
@@ -131,7 +131,6 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       ...state.viewer.customPanels.map(({ panel }) => panel.dataElement),
       'thumbnailsPanel',
       'outlinesPanel',
-      'notesPanel',
       'layersPanel',
       'bookmarksPanel',
     ].join(', ');

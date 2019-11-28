@@ -1,9 +1,9 @@
 @import '../../constants/panel';
 
 .NotesPanel {
+  @extend %right-panel;
+
   overflow: hidden !important;
-  padding: 8px 0px;
-  display: flex;
 
   .no-annotations {
     @extend %center-of-panel;

@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
-import NotesPanel from 'components/NotesPanel';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
 import OutlinesPanel from 'components/OutlinesPanel';
 import BookmarksPanel from 'components/BookmarksPanel';
@@ -63,7 +62,6 @@ const LeftPanel = () => {
 
       <ResizeBar />
 
-      <NotesPanel display={getDisplay('notesPanel')} />
       <ThumbnailsPanel display={getDisplay('thumbnailsPanel')} />
       <OutlinesPanel display={getDisplay('outlinesPanel')} />
       <BookmarksPanel display={getDisplay('bookmarksPanel')} />
@@ -104,7 +102,7 @@ const ResizeBar = () => {
 
     document.addEventListener('mousemove', dragMouseMove);
     return () => document.removeEventListener('mousemove', dragMouseMove);
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const finishDrag = () => {
