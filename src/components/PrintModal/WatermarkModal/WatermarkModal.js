@@ -46,7 +46,7 @@ const FORM_FIELD_KEYS = {
 
 const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.location]: WATERMARK_LOCATIONS.CENTER,
-  [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[FONT_SIZES.length / 2],
+  [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[FONT_SIZES.length - 1],
   [FORM_FIELD_KEYS.text]: '',
   [FORM_FIELD_KEYS.color]: new window.Annotations.Color(241, 160, 153),
   [FORM_FIELD_KEYS.opacity]: 100,
