@@ -41,6 +41,7 @@ const FORM_FIELD_KEYS = {
   font: 'font',
   isBolded: 'isBolded',
   isItalic: 'isItalic',
+  isUnderlined: 'isUnderlined',
 };
 
 const DEFAULT_VALS = {
@@ -52,6 +53,7 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.font]: FONTS[0],
   [FORM_FIELD_KEYS.isBolded]: false,
   [FORM_FIELD_KEYS.isItalic]: false,
+  [FORM_FIELD_KEYS.isUnderlined]: false,
 };
 /**
  * Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
@@ -150,6 +152,9 @@ class WatermarkModal extends React.PureComponent {
     }
     if (value.isItalic) {
       fontStyles.push(core.getFontStyles().ITALIC);
+    }
+    if (value.isUnderlined) {
+      fontStyles.push(core.getFontStyles().UNDERLINED);
     }
     const watermarkOption = {
       fontSize: value.fontSize,
@@ -374,6 +379,11 @@ class WatermarkModal extends React.PureComponent {
                   />
                 </div>
                 <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isItalic, !formInfo[FORM_FIELD_KEYS.isItalic])}>
+                  <Icon
+                    glyph="format_bold-24px"
+                  />
+                </div>
+                <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isUnderlined, !formInfo[FORM_FIELD_KEYS.isUnderlined])}>
                   <Icon
                     glyph="format_bold-24px"
                   />
