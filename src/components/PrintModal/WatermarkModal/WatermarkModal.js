@@ -276,6 +276,12 @@ class WatermarkModal extends React.PureComponent {
     return locationSetting.isSelected;
   });
 
+  isTextValid = text => text !== undefined && text !== null && text !== '';
+
+  setDefaultColor = () => {
+    
+  }
+
   render() {
     const { isVisible } = this.props;
     if (!isVisible) {
