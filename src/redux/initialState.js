@@ -13,7 +13,12 @@ import actions from 'actions';
 
 export default {
   viewer: {
-    disabledElements: {},
+    disabledElements: {
+      thumbnailControl: {
+        disabled: true,
+        priority: 1,
+      },
+    },
     openElements: {
       header: true,
     },
