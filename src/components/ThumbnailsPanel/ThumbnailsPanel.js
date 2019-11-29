@@ -349,11 +349,10 @@ class ThumbnailsPanel extends React.PureComponent {
 
             return (
               thumbIndex < this.props.totalPages
-                ? <div key={key} onDragEnd={this.onDragEnd}>
+                ? <div key={thumbIndex} onDragEnd={this.onDragEnd}>
                   {showPlaceHolder && isDraggingOverTopHalf && <hr className="thumbnailPlaceholder" />}
                   <Thumbnail
                     isDraggable={isThumbnailReorderingEnabled}
-                    key={key}
                     index={thumbIndex}
                     canLoad={canLoad}
                     onLoad={this.onLoad}
