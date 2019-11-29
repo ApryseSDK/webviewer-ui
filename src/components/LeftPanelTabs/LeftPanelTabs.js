@@ -51,13 +51,6 @@ class LeftPanelTabs extends React.Component {
           title="component.outlinesPanel"
         />
         <Button
-          isActive={this.isActive('notesPanel')}
-          dataElement="notesPanelButton"
-          img="ic_annotations_black_24px"
-          onClick={() => setActiveLeftPanel('notesPanel')}
-          title="component.notesPanel"
-        />
-        <Button
           isActive={this.isActive('layersPanel')}
           dataElement="layersPanelButton"
           img="ic_layers_24px"

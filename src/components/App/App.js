@@ -16,6 +16,7 @@ import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
+import NotesPanel from 'components/NotesPanel';
 import SearchPanel from 'components/SearchPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
@@ -40,7 +41,7 @@ import fireEvent from 'helpers/fireEvent';
 import './App.scss';
 
 const propTypes = {
-  removeEventHandlers: PropTypes.func.isRequired,
+  removeEventHandlers: PropTypes.func.isRequired
 };
 
 const App = ({ removeEventHandlers }) => {
@@ -51,7 +52,7 @@ const App = ({ removeEventHandlers }) => {
     fireEvent('viewerLoaded');
 
     return removeEventHandlers;
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -64,6 +65,7 @@ const App = ({ removeEventHandlers }) => {
 
         <LeftPanel />
         <SearchPanel />
+        <NotesPanel />
 
         <DocumentContainer />
 

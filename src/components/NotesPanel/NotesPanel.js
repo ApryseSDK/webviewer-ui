@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, shallowEqual } from 'react-redux';
+import classNames from 'classnames';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import Measure from 'react-measure';
 import { CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
 import { useTranslation } from 'react-i18next';
@@ -12,24 +13,29 @@ import ListSeparator from 'components/ListSeparator';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
+import actions from 'actions';
 import selectors from 'selectors';
 
 import './NotesPanel.scss';
 
-const propTypes = {
-  display: PropTypes.string.isRequired,
-};
-
-const NotesPanel = ({ display }) => {
-  const [sortStrategy, isDisabled, pageLabels, customNoteFilter] = useSelector(
+const NotesPanel = () => {
+  const [
+    sortStrategy,
+    isOpen,
+    isDisabled,
+    pageLabels,
+    customNoteFilter,
+  ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
+      selectors.isElementOpen(state, 'notesPanel'),
       selectors.isElementDisabled(state, 'notesPanel'),
       selectors.getPageLabels(state),
       selectors.getCustomNoteFilter(state),
     ],
     shallowEqual,
   );
+  const dispatch = useDispatch();
   const [notes, setNotes] = useState([]);
   // the object will be in a shape of { [note.Id]: true }
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
@@ -102,16 +108,11 @@ const NotesPanel = ({ display }) => {
     // eslint-disable-next-line
   }, [selectedNoteIds]);
 
-  // this effect should be removed once the next version of react-virtualized includes
-  // the fix for https://github.com/bvaughn/react-virtualized/issues/1375.
-  // we are doing this because we want to maintain the scroll position when we switch between panels
-  // currently we are unmounting this component when we clicked other panel tabs
-  // when the fix is out, we don't need to unmount this component anymore, and thus we don't call scrollToPosition whenever this panel is displaying
   useEffect(() => {
-    if (display === 'flex' && listRef.current && scrollTopRef.current) {
-      listRef.current.scrollToPosition(scrollTopRef.current);
+    if (isOpen) {
+      dispatch(actions.closeElements(['searchPanel', 'searchOverlay']));
     }
-  }, [display]);
+  }, [dispatch, isOpen]);
 
   const handleScroll = scrollTop => {
     if (scrollTop) {
@@ -229,16 +230,14 @@ const NotesPanel = ({ display }) => {
     );
   }
 
-  // when either of the other two panel tabs is clicked, the "display" prop will become "none"
-  // like other two panels, we should set the display style of the div to props.display
-  // but if we do this, sometimes a maximum updates errors will be thrown from react-virtualized if we click the other two panels
-  // it looks like the issue is reported here: https://github.com/bvaughn/react-virtualized/issues/1375
-  // the PR for fixing this issue has been merged but not yet released so as a workaround we are unmounting
-  // the whole component when props.display === 'none'
-  // this should be changed back after the fixed is released in the next version of react-virtualized
-  return isDisabled || display === 'none' ? null : (
+  return isDisabled ? null : (
     <div
-      className="Panel NotesPanel"
+      className={classNames({
+        Panel: true,
+        NotesPanel: true,
+        open: isOpen,
+        closed: !isOpen,
+      })}
       data-element="notesPanel"
       onMouseDown={core.deselectAllAnnotations}
     >
@@ -280,8 +279,6 @@ const NotesPanel = ({ display }) => {
     </div>
   );
 };
-
-NotesPanel.propTypes = propTypes;
 
 export default NotesPanel;
 

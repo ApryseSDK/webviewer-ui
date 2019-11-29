@@ -23,29 +23,33 @@ class SearchPanel extends React.PureComponent {
     isSearching: PropTypes.bool,
     noResult: PropTypes.bool,
     setActiveResultIndex: PropTypes.func.isRequired,
-    closeElement: PropTypes.func.isRequired,
+    closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   };
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen && isTabletOrMobile()) {
-      this.props.closeElement('leftPanel');
+    if (!prevProps.isOpen && this.props.isOpen) {
+      if (isTabletOrMobile()) {
+        this.props.closeElements(['leftPanel']);
+      }
+
+      this.props.closeElements(['notesPanel']);
     }
   }
 
   onClickResult = (resultIndex, result) => {
-    const { setActiveResultIndex, closeElement } = this.props;
+    const { setActiveResultIndex, closeElements } = this.props;
 
     setActiveResultIndex(resultIndex);
     core.setActiveSearchResult(result);
 
     if (isMobile()) {
-      closeElement('searchPanel');
+      closeElements('searchPanel');
     }
   };
 
   onClickClose = () => {
-    this.props.closeElement('searchPanel');
+    this.props.closeElements('searchPanel');
   };
 
   renderListSeparator = (prevResult, currResult) => {
@@ -115,7 +119,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setActiveResultIndex: actions.setActiveResultIndex,
-  closeElement: actions.closeElement,
+  closeElements: actions.closeElements,
 };
 
 export default connect(
