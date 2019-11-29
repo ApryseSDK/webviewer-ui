@@ -1,6 +1,7 @@
 @import '../../constants/panel';
 
 .ThumbnailsPanel {
+  overflow: hidden;
   display: flex;
   padding: 8px 0px;
 
