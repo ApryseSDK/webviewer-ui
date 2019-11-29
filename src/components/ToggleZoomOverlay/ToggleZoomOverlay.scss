@@ -10,8 +10,8 @@
 
   &>.Container {
     display: flex;
-    background-color: #eeeeee;
-    border-radius: 4px;
+    background-color: var(--zoom-background);
+    border-radius: var(--header-items-border-radius);
   }
 }
 
@@ -33,7 +33,7 @@
   }
 
   .Icon{
-    width: 16px;
+    width: 12px;
     height: 16px;
   }
 }

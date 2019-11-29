@@ -27,6 +27,7 @@
   &:hover {
     background: #F6F6F6;
     background: var(--button-hover-color);
+    border-radius: var(--header-items-border-radius);
 
     @media (hover: none) {
       background: transparent;
