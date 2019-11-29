@@ -364,18 +364,17 @@ class WatermarkModal extends React.PureComponent {
               <div className="form-field">
 
                 <label>
-                  {t(`option.watermark.colors`)}
+                  {t(`option.watermark.style`)}
                 </label>
-                <div style={{display: 'flex'}}>
+                <div className="style-container">
                   <div
                     data-element="currentColorCell"
-                    // className="cell"
                     className="Button"
                     style={{ backgroundColor: formInfo[FORM_FIELD_KEYS.color].toHexString() }}
                     onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
                   >
                   </div>
-                  <div style={{display: 'flex'}}>
+                  <div className="style-container">
                     <Button
                       dataElement="boldText"
                       img="icon-text-bold"
