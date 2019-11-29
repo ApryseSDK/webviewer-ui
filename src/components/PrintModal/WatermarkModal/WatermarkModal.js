@@ -5,8 +5,8 @@ import core from 'core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import Button from 'components/Button';
 import ActionButton from 'components/ActionButton';
-import Icon from 'components/Icon';
 import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 
@@ -274,7 +274,7 @@ class WatermarkModal extends React.PureComponent {
   getCurrentSelectedLocation = () => Object.keys(this.state.locationSettings).find(locationKey => {
     const locationSetting = this.state.locationSettings[locationKey];
     return locationSetting.isSelected;
-  })
+  });
 
   render() {
     const { isVisible } = this.props;
@@ -366,29 +366,37 @@ class WatermarkModal extends React.PureComponent {
                 <label>
                   {t(`option.watermark.colors`)}
                 </label>
-                <div
-                  data-element="currentColorCell"
-                  className="cell"
-                  style={{ backgroundColor: formInfo[FORM_FIELD_KEYS.color].toHexString() }}
-                  onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
-                >
-                </div>
-                <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isBolded, !formInfo[FORM_FIELD_KEYS.isBolded])}>
-                  <Icon
-                    glyph="icon-text-bold"
-                  />
-                </div>
-                <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isItalic, !formInfo[FORM_FIELD_KEYS.isItalic])}>
-                  <Icon
-                    glyph="icon-text-italic"
-                  />
-                </div>
-                <div onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isUnderlined, !formInfo[FORM_FIELD_KEYS.isUnderlined])}>
-                  <Icon
-                    glyph="icon-text-underline"
-                  />
-                </div>
+                <div style={{display: 'flex'}}>
+                  <div
+                    data-element="currentColorCell"
+                    // className="cell"
+                    className="Button"
+                    style={{ backgroundColor: formInfo[FORM_FIELD_KEYS.color].toHexString() }}
+                    onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
+                  >
+                  </div>
+                  <div style={{display: 'flex'}}>
+                    <Button
+                      dataElement="boldText"
+                      img="icon-text-bold"
+                      isActive={formInfo[FORM_FIELD_KEYS.isBolded]}
+                      onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isBolded, !formInfo[FORM_FIELD_KEYS.isBolded])}
+                    />
+                    <Button
+                      dataElement="italicizeText"
+                      img="icon-text-italic"
+                      isActive={formInfo[FORM_FIELD_KEYS.isItalic]}
+                      onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isItalic, !formInfo[FORM_FIELD_KEYS.isItalic])}
+                    />
+                    <Button
+                      dataElement="underlineText"
+                      img="icon-text-underline"
+                      isActive={formInfo[FORM_FIELD_KEYS.isUnderlined]}
+                      onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isUnderlined, !formInfo[FORM_FIELD_KEYS.isUnderlined])}
+                    />
+                  </div>
 
+                </div>
 
                 {
                   this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
