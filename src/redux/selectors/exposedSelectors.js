@@ -127,6 +127,10 @@ export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 export const getPopupItems = (state, popupDataElement) =>
   state.viewer[popupDataElement] || [];
 
+export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMerging;
+
+export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 

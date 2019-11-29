@@ -114,6 +114,16 @@ export default (enable, store) => features => {
         }
       },
     },
+    [Feature.ThumbnailMerging]: {
+      fn: () => {
+        store.dispatch(actions.setThumbnailMerging(enable));
+      },
+    },
+    [Feature.ThumbnailReordering]: {
+      fn: () => {
+        store.dispatch(actions.setThumbnailReordering(enable));
+      },
+    },
   };
 
   if (!Array.isArray(features)) {

@@ -56,9 +56,9 @@ export default dispatch => () => {
   }
 
   if (doc.getType() === workerTypes.PDF) {
-    dispatch(actions.enableElement('cropToolButton', PRIORITY_THREE));
+    dispatch(actions.enableElement('cropToolButton', PRIORITY_ONE));
   } else {
-    dispatch(actions.disableElement('cropToolButton', PRIORITY_THREE));
+    dispatch(actions.disableElement('cropToolButton', PRIORITY_ONE));
   }
 
   window.readerControl.loadedFromServer = false;

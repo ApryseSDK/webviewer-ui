@@ -5,6 +5,7 @@ import setDisplayMode from './setDisplayMode';
 import getDisplayMode from './getDisplayMode';
 import rotateClockwise from './rotateClockwise';
 import rotateCounterClockwise from './rotateCounterClockwise';
+import movePages from './movePages';
 import getFitMode from './getFitMode';
 import fitToPage from './fitToPage';
 import fitToWidth from './fitToWidth';
@@ -104,6 +105,7 @@ import undo from './undo';
 import redo from './redo';
 import updateAnnotationState from './updateAnnotationState';
 import getFontStyles from './getFontStyles';
+import mergeDocument from './mergeDocument';
 
 export default {
   setToolMode,
@@ -113,6 +115,7 @@ export default {
   getDisplayMode,
   rotateClockwise,
   rotateCounterClockwise,
+  movePages,
   getFitMode,
   fitToPage,
   fitToWidth,
@@ -213,4 +216,5 @@ export default {
   redo,
   updateAnnotationState,
   getFontStyles,
+  mergeDocument,
 };

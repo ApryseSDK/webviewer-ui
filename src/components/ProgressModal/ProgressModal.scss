@@ -4,6 +4,15 @@
 .ProgressModal {
   @extend %modal;
   
+  &.open {
+    opacity: 1;
+    transition: opacity 2s 1s;
+  }
+
+  &.closed {
+    opacity: 0;
+  }
+
   .container {
     @extend %modal-shared-container-style;
     display: flex;

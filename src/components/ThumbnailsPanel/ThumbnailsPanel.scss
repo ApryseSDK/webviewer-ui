@@ -1,6 +1,7 @@
 @import '../../constants/panel';
 
 .ThumbnailsPanel {
+  overflow: hidden;
   display: flex;
   padding: 8px 0px;
 
@@ -11,5 +12,10 @@
   .row {
     display: flex;
     justify-content: center;
+  }
+
+  .thumbnailPlaceholder{
+    border-color: $gray87;
+    margin: 0px;
   }
 }
