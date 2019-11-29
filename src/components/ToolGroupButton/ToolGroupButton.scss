@@ -8,20 +8,27 @@
   align-items: center;
 
   .DownArrow {
-    margin-left: -5px;
+    margin-left: -4px;
     width: 12px;
     height: 16px;
   }
 
 
-
+  &:hover {
+    background: var(--button-hover-color);;
+    border-radius: var(--header-items-border-radius);
+  }
 }
 
 .HeaderItems {
   & .ToolGroupButton {
-    padding: 4px;
+    padding: 4px 4px 4px 0px;
     & .Button {
       margin: 0;
+      &:hover {
+        background: transparent;
+        border-radius: 0;
+      }
     }
   }
 }

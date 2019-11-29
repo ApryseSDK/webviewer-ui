@@ -124,7 +124,8 @@ class ToolGroupButton extends React.PureComponent {
           getToolStyles(toolName)[iconColor].toHexString()
         : '';
     // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
-    const showDownArrow = this.props.img === undefined;
+    // const showDownArrow = this.props.img === undefined;
+    const showDownArrow = true;
     // const className = ['ToolGroupButton']
     //   .join(' ')
     //   .trim();
