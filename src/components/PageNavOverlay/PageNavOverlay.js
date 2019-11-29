@@ -10,6 +10,7 @@ import { isIOS } from 'helpers/device';
 import Icon from 'components/Icon';
 
 import './PageNavOverlay.scss';
+import goToPrevPage from '../../apis/goToPrevPage';
 
 class PageNavOverlay extends React.PureComponent {
   static propTypes = {
@@ -101,11 +102,13 @@ class PageNavOverlay extends React.PureComponent {
     const className = getClassName(`Overlay PageNavOverlay`, this.props);
 
     return (
-      <div className={className} data-element="pageNavOverlay" onClick={this.onClick}>
-        <Icon
-          glyph="icon-chevron-left"
-        />
-        <div className="formContainer">
+      <div className={className} data-element="pageNavOverlay">
+        <div onClick={() => window.docViewer.setCurrentPage(Math.max(window.docViewer.getCurrentPage() - 1, 1))}>
+          <Icon
+            glyph="icon-chevron-left"
+          />
+        </div>
+        <div className="formContainer" onClick={this.onClick}>
           <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
             <input ref={this.textInput} type="text" value={this.state.input} onChange={this.onChange} tabIndex={-1} />
             {this.state.isCustomPageLabels
@@ -114,9 +117,12 @@ class PageNavOverlay extends React.PureComponent {
             }
           </form>
         </div>
-        <Icon
-          glyph="icon-chevron-right"
-        />
+        <div onClick={() => window.docViewer.setCurrentPage(Math.min(window.docViewer.getCurrentPage() + 1, window.docViewer.getPageCount()))}>
+          <Icon
+            glyph="icon-chevron-right"
+          />
+        </div>
+
       </div>
     );
   }
