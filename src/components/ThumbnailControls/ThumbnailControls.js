@@ -30,17 +30,17 @@ class ThumbnailControls extends React.PureComponent {
         <Button
           img="ic_rotate_left_black_24px"
           onClick={this.rotateCounterClockwise}
-          title="action.rotateCounterClockwise"
+          title="option.thumbnailPanel.rotateCounterClockwise"
         />
         <Button
           img="ic_delete_black_24px"
           onClick={this.props.handleDelete}
-          title="action.delete"
+          title="option.thumbnailPanel.delete"
         />
         <Button
           img="ic_rotate_right_black_24px"
           onClick={this.rotateClockwise}
-          title="action.rotateClockwise"
+          title="option.thumbnailPanel.rotateClockwise"
         />
       </div>
     );

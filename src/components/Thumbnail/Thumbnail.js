@@ -5,7 +5,7 @@ import i18next from 'i18next';
 
 import core from 'core';
 import { isMobile } from 'helpers/device';
-import removePage from 'helpers/removePage';
+import removePages from 'helpers/removePages';
 import actions from 'actions';
 import selectors from 'selectors';
 import ThumbnailControls from 'components/ThumbnailControls';
@@ -26,7 +26,7 @@ class Thumbnail extends React.PureComponent {
     onDragStart: PropTypes.func,
     onDragOver: PropTypes.func,
     isDraggable: PropTypes.bool,
-    removePage: PropTypes.func.isRequired,
+    removePages: PropTypes.func.isRequired,
     showWarningMessage: PropTypes.func.isRequired,
     isThumbnailControlDisabled: PropTypes.bool,
   }
@@ -99,7 +99,7 @@ class Thumbnail extends React.PureComponent {
   }
 
   handleDelete = () => {
-    const { index, removePage, showWarningMessage } = this.props;
+    const { index, removePages, showWarningMessage } = this.props;
 
     const message = i18next.t('option.thumbnailPanel.deleteWarningMessage');
     const title = i18next.t('option.thumbnailPanel.deleteWarningTitle');
@@ -109,7 +109,7 @@ class Thumbnail extends React.PureComponent {
       message,
       title,
       confirmBtnText,
-      onConfirm: () => removePage(index + 1),
+      onConfirm: () => removePages([index + 1]),
       keepOpen: ['leftPanel'],
     };
     showWarningMessage(warning);
@@ -147,7 +147,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
-  removePage: pageNumber => removePage(pageNumber),
+  removePages: pageNumbers => removePages(pageNumbers),
   showWarningMessage: warning => actions.showWarningMessage(warning),
 };
 

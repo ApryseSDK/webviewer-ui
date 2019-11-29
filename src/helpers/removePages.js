@@ -2,7 +2,7 @@ import core from 'core';
 import actions from 'actions';
 import i18next from 'i18next';
 
-export default page => dispatch => {
+export default pages => dispatch => {
   if (core.getDocumentViewer().getPageCount() === 1) {
     const message = i18next.t('option.thumbnailPanel.deleteLastPageError');
     const title = i18next.t('option.thumbnailPanel.deleteWarningTitle');
@@ -23,5 +23,5 @@ export default page => dispatch => {
     return Promise.resolve();
   }
 
-  return core.removePages([page]);
+  return core.removePages(pages);
 };

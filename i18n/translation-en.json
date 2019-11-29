@@ -202,7 +202,10 @@
       "deleteWarningTitle": "Delete Page",
       "deleteWarningMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
       "deleteWarningConfirmText": "OK",
-      "deleteLastPageError": "This would result in no pages remaining. Please leave at least one page"
+      "deleteLastPageError": "This would result in no pages remaining. Please leave at least one page",
+      "delete": "Delete",
+      "rotateClockwise": "Clockwise",
+      "rotateCounterClockwise": "Counter-clockwise"
     }
   },
   "shortcut": {
