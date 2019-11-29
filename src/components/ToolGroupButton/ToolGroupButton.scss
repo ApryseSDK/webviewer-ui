@@ -2,13 +2,26 @@
   // background: green;
   // border-radius: var(--header-items-border-radius);
 
+  margin: 0 2px;
 
   display: flex;
   align-items: center;
 
   .DownArrow {
-    margin-left: -10px;
+    margin-left: -5px;
     width: 12px;
     height: 16px;
+  }
+
+
+
+}
+
+.HeaderItems {
+  & .ToolGroupButton {
+    padding: 4px;
+    & .Button {
+      margin: 0;
+    }
   }
 }
