@@ -133,12 +133,12 @@ class ToolGroupButton extends React.PureComponent {
       <div
         className="ToolGroupButton"
         data-element={dataElement}
+        onClick={this.onClick}
       >
         <Button
           title={title}
           mediaQueryClassName={mediaQueryClassName}
           isActive={isActive}
-          onClick={this.onClick}
           img={img}
           color={color}
         />
