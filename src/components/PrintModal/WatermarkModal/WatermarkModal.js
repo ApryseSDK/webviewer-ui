@@ -278,8 +278,28 @@ class WatermarkModal extends React.PureComponent {
 
   isTextValid = text => text !== undefined && text !== null && text !== '';
 
-  setDefaultColor = () => {
-    
+  onColorChanged = newColor => {
+    const currLocation = this.getCurrentSelectedLocation();
+    const currLocationSetting = this.state.locationSettings[currLocation];
+    const locationSettings = {
+      ...this.state.locationSettings,
+    };
+    if (!this.isTextValid(currLocationSetting[FORM_FIELD_KEYS.text])) {
+      DEFAULT_VALS[FORM_FIELD_KEYS.color] = new window.Annotations.Color(newColor.R, newColor.G, newColor.B);
+      Object.keys(WATERMARK_LOCATIONS).forEach(location => {
+        const locationSetting = locationSettings[location];
+        if (location !== currLocation && !this.isTextValid(locationSetting[FORM_FIELD_KEYS.text])) {
+          locationSetting[FORM_FIELD_KEYS.color] = DEFAULT_VALS[FORM_FIELD_KEYS.color];
+        }
+      });
+    }
+    this.setState(
+      {
+        locationSettings,
+      }, () => {
+        this.handleInputChange(FORM_FIELD_KEYS.color, newColor);
+      },
+    );
   }
 
   render() {
@@ -409,7 +429,7 @@ class WatermarkModal extends React.PureComponent {
                       data-element="colorPalette"
                       color={formInfo[FORM_FIELD_KEYS.color]}
                       property={'TextColor'} // arbitrary property name. this property isn't used in this file
-                      onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
+                      onStyleChange = {(property, color) => { this.onColorChanged(color); this.setColorPaletteVisibility(false); }}
                     />
                   </div>
                 }
