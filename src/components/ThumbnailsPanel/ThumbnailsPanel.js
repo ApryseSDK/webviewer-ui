@@ -37,7 +37,7 @@ class ThumbnailsPanel extends React.PureComponent {
       height: 0,
       width: 0,
       draggingOverPageIndex: null,
-      isDraggingOverTopHalf: false,
+      isDraggingToPreviousPage: false,
     };
   }
 
@@ -69,9 +69,9 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onDragEnd = () => {
     const { currentPage } = this.props;
-    const { draggingOverPageIndex, isDraggingOverTopHalf } = this.state;
+    const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     if (draggingOverPageIndex !== null) {
-      const targetPageNumber = isDraggingOverTopHalf ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
+      const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
       let afterMovePageNumber = null;
 
       if (currentPage < targetPageNumber) {
@@ -103,6 +103,7 @@ class ThumbnailsPanel extends React.PureComponent {
     e.preventDefault();
     e.stopPropagation();
 
+    const { numberOfColumns } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
 
     if (!isThumbnailReorderingEnabled && !isThumbnailMergingEnabled) {
@@ -110,13 +111,17 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     const thumbnail = e.target.getBoundingClientRect();
-
-    console.log(`index: ${index} isDraggingOverTopHalf: ${!(e.pageY > (thumbnail.y + thumbnail.height / 2))}`);
-
+    let isDraggingToPreviousPage = false;
+    if (numberOfColumns > 1) {
+    // row with more than 1 thumbnail so user are dragging to the left and right
+      isDraggingToPreviousPage = !(e.pageX > (thumbnail.x + thumbnail.width / 2));
+    } else {
+      isDraggingToPreviousPage = !(e.pageY > (thumbnail.y + thumbnail.height / 2));
+    }
 
     this.setState({
       draggingOverPageIndex: index,
-      isDraggingOverTopHalf: !(e.pageY > (thumbnail.y + thumbnail.height / 2)),
+      isDraggingToPreviousPage,
     });
   }
 
@@ -134,12 +139,12 @@ class ThumbnailsPanel extends React.PureComponent {
   onDrop = e => {
     e.preventDefault();
     const { isThumbnailMergingEnabled, dispatch } = this.props;
-    const { draggingOverPageIndex, isDraggingOverTopHalf } = this.state;
+    const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     const { files } = e.dataTransfer;
 
     if (isThumbnailMergingEnabled && files.length) {
       const file = files[0];
-      const insertTo = isDraggingOverTopHalf ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
+      const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
 
       dispatch(actions.openElement('loadingModal'));
 
@@ -341,7 +346,7 @@ class ThumbnailsPanel extends React.PureComponent {
       numberOfColumns,
       canLoad,
       draggingOverPageIndex,
-      isDraggingOverTopHalf,
+      isDraggingToPreviousPage,
     } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled, isThumbnailControlDisabled } = this.props;
     const { thumbs } = this;
@@ -361,7 +366,7 @@ class ThumbnailsPanel extends React.PureComponent {
             return (
               thumbIndex < this.props.totalPages
                 ? <div key={thumbIndex} onDragEnd={this.onDragEnd}>
-                  {showPlaceHolder && isDraggingOverTopHalf && <hr className="thumbnailPlaceholder" />}
+                  {showPlaceHolder && isDraggingToPreviousPage && <hr className="thumbnailPlaceholder" />}
                   <Thumbnail
                     isDraggable={isThumbnailReorderingEnabled}
                     isThumbnailControlDisabled={isThumbnailControlDisabled}
@@ -374,7 +379,7 @@ class ThumbnailsPanel extends React.PureComponent {
                     onDragOver={this.onDragOver}
                     updateAnnotations={updateHandler}
                   />
-                  {showPlaceHolder && !isDraggingOverTopHalf && <hr className="thumbnailPlaceholder" />}
+                  {showPlaceHolder && !isDraggingToPreviousPage && <hr className="thumbnailPlaceholder" />}
                 </div>
                 : null
             );
