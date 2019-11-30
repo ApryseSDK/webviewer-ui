@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { List } from 'react-virtualized';
 import Measure from 'react-measure';
+import classNames from 'classnames';
+
 import Thumbnail from 'components/Thumbnail';
 
 import core from 'core';
@@ -84,6 +86,8 @@ class ThumbnailsPanel extends React.PureComponent {
       core.movePages([currentPage], targetPageNumber);
     }
 
+    
+
     this.setState({ draggingOverPageIndex: null });
   }
 
@@ -106,6 +110,9 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     const thumbnail = e.target.getBoundingClientRect();
+
+    console.log(`index: ${index} isDraggingOverTopHalf: ${!(e.pageY > (thumbnail.y + thumbnail.height / 2))}`);
+
 
     this.setState({
       draggingOverPageIndex: index,
@@ -338,14 +345,18 @@ class ThumbnailsPanel extends React.PureComponent {
     } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled, isThumbnailControlDisabled } = this.props;
     const { thumbs } = this;
+    const className = classNames({
+      columnsOfThumbnails: (numberOfColumns > 1),
+      row: true,
+    });
 
     return (
-      <div className="row" key={key} style={style}>
+      <div className={className} key={key} style={style}>
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
             const thumbIndex = index * numberOfColumns + columnIndex;
             const updateHandler = thumbs && thumbs[thumbIndex] ? thumbs[thumbIndex].updateAnnotationHandler : null;
-            const showPlaceHolder = (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && draggingOverPageIndex === index;
+            const showPlaceHolder = (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && draggingOverPageIndex === thumbIndex;
 
             return (
               thumbIndex < this.props.totalPages

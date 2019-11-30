@@ -18,4 +18,15 @@
     border-color: $gray87;
     margin: 0px;
   }
+
+  .columnsOfThumbnails{
+    .Thumbnail{
+      display: inline-flex
+    }
+
+    .thumbnailPlaceholder{
+      height: 100px;
+      display: inline-flex;
+    }
+  }
 }
