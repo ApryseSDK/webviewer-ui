@@ -10,10 +10,6 @@ import ActionButton from 'components/ActionButton';
 import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 
-/**
- * TODO refactor this component so that the Print Modal passes in the form fields and it will store the previous form field settings
- */
-
 const DESIRED_WIDTH = 300;
 const DESIRED_HEIGHT = 300;
 
@@ -48,16 +44,16 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.location]: WATERMARK_LOCATIONS.CENTER,
   [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[FONT_SIZES.length - 1],
   [FORM_FIELD_KEYS.text]: '',
-  [FORM_FIELD_KEYS.color]: new window.Annotations.Color(241, 160, 153),
+  // red
+  [FORM_FIELD_KEYS.color]: new window.Annotations.Color(228, 66, 52),
   [FORM_FIELD_KEYS.opacity]: 100,
   [FORM_FIELD_KEYS.font]: FONTS[0],
   [FORM_FIELD_KEYS.isBolded]: false,
   [FORM_FIELD_KEYS.isItalic]: false,
   [FORM_FIELD_KEYS.isUnderlined]: false,
 };
-/**
- * Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
- */
+
+// Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
 const WATERMARK_API_LOCATIONS = {
   [WATERMARK_LOCATIONS.CENTER]: 'diagonal',
   [WATERMARK_LOCATIONS.TOP_LEFT]: 'headerLeft',
@@ -102,9 +98,7 @@ class WatermarkModal extends React.PureComponent {
       this.setState({
         locationSettings: this.state.previousLocationSettings,
       }, async () => {
-      /**
-       * Store the pre-existing watermark (if any) before we overwrite it
-       */
+        // Store the pre-existing watermark (if any) before we overwrite it
         this.preExistingWatermark = await core.getWatermark();
         this.addWatermarks();
       });
@@ -285,11 +279,10 @@ class WatermarkModal extends React.PureComponent {
       ...this.state.locationSettings,
     };
     if (!this.isTextValid(currLocationSetting[FORM_FIELD_KEYS.text])) {
-      DEFAULT_VALS[FORM_FIELD_KEYS.color] = new window.Annotations.Color(newColor.R, newColor.G, newColor.B);
       Object.keys(WATERMARK_LOCATIONS).forEach(location => {
         const locationSetting = locationSettings[location];
         if (location !== currLocation && !this.isTextValid(locationSetting[FORM_FIELD_KEYS.text])) {
-          locationSetting[FORM_FIELD_KEYS.color] = DEFAULT_VALS[FORM_FIELD_KEYS.color];
+          locationSetting[FORM_FIELD_KEYS.color] = new window.Annotations.Color(newColor.R, newColor.G, newColor.B);
         }
       });
     }
