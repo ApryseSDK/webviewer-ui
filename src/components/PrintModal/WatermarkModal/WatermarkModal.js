@@ -280,7 +280,7 @@ class WatermarkModal extends React.PureComponent {
       ...this.state.locationSettings,
     };
     if (!this.isTextValid(currLocationSetting[FORM_FIELD_KEYS.text])) {
-      // if text is undefined, persist the changed color to other location settings (customer request)
+      // if text is undefined, persist the changed color to other location settings (customer's request)
       Object.keys(WATERMARK_LOCATIONS).forEach(location => {
         const locationSetting = locationSettings[location];
         if (!this.isTextValid(locationSetting[FORM_FIELD_KEYS.text])) {
