@@ -151,6 +151,16 @@
       }
     }
 
+    .wildcard {
+      display: none;
+      user-select: none;
+
+      &.visible {
+        display: flex;
+        padding-right: 10.5em;
+      }
+    }
+
     .no-result {
       font-size: .8em;
       color: var(--text-color);

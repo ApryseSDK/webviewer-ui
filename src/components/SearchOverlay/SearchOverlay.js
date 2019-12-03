@@ -48,6 +48,7 @@ class SearchOverlay extends React.PureComponent {
     addResult: PropTypes.func.isRequired,
     setCaseSensitive: PropTypes.func.isRequired,
     setWholeWord: PropTypes.func.isRequired,
+    setWildcard: PropTypes.func.isRequired,
     setNoResult: PropTypes.func.isRequired,
     setIsProgrammaticSearch: PropTypes.func.isRequired,
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
@@ -59,6 +60,7 @@ class SearchOverlay extends React.PureComponent {
     this.searchTextInput = React.createRef();
     this.wholeWordInput = React.createRef();
     this.caseSensitiveInput = React.createRef();
+    this.wildcardInput = React.createRef();
     this.executeDebouncedSingleSearch = debounce(this.executeSingleSearch, 300);
     this.executeDebouncedFullSearch = debounce(this.executeFullSearch, 300);
     this.state = {
@@ -320,6 +322,12 @@ class SearchOverlay extends React.PureComponent {
     this.executeDebouncedFullSearch();
   }
 
+  onChangeWildcard = e => {
+    this.props.setWildcard(e.target.checked);
+    this.clearSearchResults();
+    this.executeDebouncedFullSearch();
+  }
+
   render() {
     const { isDisabled, t, isSearchPanelOpen, isSearchPanelDisabled, results, searchValue, activeResultIndex } = this.props;
 
@@ -356,6 +364,9 @@ class SearchOverlay extends React.PureComponent {
           <div className={`options ${isSearchPanelOpen ? 'visible' : ''}`}>
             <Input id="case-sensitive-option" type="checkbox" ref={this.caseSensitiveInput} onChange={this.onChangeCaseSensitive} label={t('option.searchPanel.caseSensitive')} />
             <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
+          </div>
+          <div className={`wildcard ${isSearchPanelOpen ? 'visible' : ''}`}>
+              <Input id="wild-card-option" type="checkbox" ref={this.wildcardInput} onChange={this.onChangeWildcard} label={t('option.searchPanel.wildcard')} />
           </div>
           {!isSearchPanelOpen &&
             this.state.noResultSingleSearch &&
@@ -401,6 +412,7 @@ const mapDispatchToProps = {
   addResult: actions.addResult,
   setCaseSensitive: actions.setCaseSensitive,
   setWholeWord: actions.setWholeWord,
+  setWildcard: actions.setWildcard,
   setNoResult: actions.setNoResult,
   setIsProgrammaticSearch: actions.setIsProgrammaticSearch,
   setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull,
