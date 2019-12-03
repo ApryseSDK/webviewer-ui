@@ -35,6 +35,7 @@ class ToolsOverlay extends React.PureComponent {
       left: 0,
       right: 'auto',
       top: 'auto',
+      isStylingOpen: false,
     };
   }
 
@@ -113,8 +114,13 @@ class ToolsOverlay extends React.PureComponent {
     closeElements(['toolStylePopup', 'toolsOverlay']);
   };
 
+  handleStyleClick = () => {
+    this.props.toggleElement('toolStylePopup');
+    this.setState({ isStylingOpen: !this.state.isStylingOpen });
+  }
+
   render() {
-    const { left, right, top } = this.state;
+    const { left, right, top, isStylingOpen } = this.state;
     const {
       isDisabled,
       isOpen,
@@ -138,35 +144,40 @@ class ToolsOverlay extends React.PureComponent {
         style={{ left, right, top }}
         data-element="toolsOverlay"
       >
-        <div
-          className="Items-Container"
-        >
-          {toolNames.map((toolName, i) => (
-            <ToolButton key={`${toolName}-${i}`} toolName={toolName} />
-          ))}
-          <div className="divider" />
+        <div className="Foo-Container">
           <div
-            className="Button ToolButton"
+            className="Items-Container"
           >
-            <Icon
-              className="Close-Icon"
-              glyph="icon-menu-add-style-line"
-            />
+            {toolNames.map((toolName, i) => (
+              <ToolButton key={`${toolName}-${i}`} toolName={toolName} />
+            ))}
+            <div className="divider" />
+            <div
+              className="Button ToolButton"
+              onClick={this.handleStyleClick}
+            >
+              <Icon
+                glyph="icon-menu-add-style-line"
+              />
+            </div>
           </div>
+          {isStylingOpen && <React.Fragment>
+            <div className="divider-horizontal" />
+          </React.Fragment>}
         </div>
         <div
-          className="Close-Container"
-        >
-          <div
-            className="Close-Container2"
-            onClick={this.handleCloseClick}
+            className="Close-Container"
           >
-            <Icon
-              className="Close-Icon"
-              glyph="icon-close"
-            />
+            <div
+              className="Close-Container2"
+              onClick={this.handleCloseClick}
+            >
+              <Icon
+                className="Close-Icon"
+                glyph="icon-close"
+              />
+            </div>
           </div>
-        </div>
       </div>
     );
   }
@@ -181,6 +192,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  toggleElement: actions.toggleElement,
   closeElements: actions.closeElements,
   setActiveToolGroup: actions.setActiveToolGroup,
 };

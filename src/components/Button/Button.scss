@@ -10,6 +10,7 @@
   padding: 6px;
   font-size: 16px;
   cursor: pointer;
+  border-radius: var(--header-items-border-radius);
 
   @include mobile {
     min-width: $button-width-m;
@@ -27,7 +28,6 @@
   &:hover {
     background: #F6F6F6;
     background: var(--button-hover-color);
-    border-radius: var(--header-items-border-radius);
 
     @media (hover: none) {
       background: transparent;
@@ -39,24 +39,22 @@
   }
 
   &.active {
-    border-radius: var(--header-items-border-radius);
-
     .Icon {
       color: var(--icon-active-color);
     }
   }
 
-  &.down-arrow:after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid  #757575;
-    border-top: 6px solid var(--icon-color);
+  // &.down-arrow:after {
+  //   content: '';
+  //   width: 0;
+  //   height: 0;
+  //   border-left: 5px solid transparent;
+  //   border-right: 5px solid transparent;
+  //   border-top: 6px solid  #757575;
+  //   border-top: 6px solid var(--icon-color);
 
-    @include mobile {
-      font-size: 10px;
-    }
-  }
+  //   @include mobile {
+  //     font-size: 10px;
+  //   }
+  // }
 }

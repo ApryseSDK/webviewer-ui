@@ -40,15 +40,17 @@ const ToolButton = ({ toolName, ...restProps }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    if (isActive) {
-      if (toolStylesExist(toolName)) {
-        dispatch(actions.toggleElement('toolStylePopup'));
-      }
-    } else {
-      core.setToolMode(toolName);
-      dispatch(actions.setActiveToolGroup(group));
-      dispatch(actions.closeElement('toolStylePopup'));
-    }
+    // if (isActive) {
+    //   if (toolStylesExist(toolName)) {
+    //     dispatch(actions.toggleElement('toolStylePopup'));
+    //   }
+    // } else {
+    //   core.setToolMode(toolName);
+    //   dispatch(actions.setActiveToolGroup(group));
+    //   dispatch(actions.closeElement('toolStylePopup'));
+    // }
+    core.setToolMode(toolName);
+    dispatch(actions.setActiveToolGroup(group));
   };
 
   const toolStyles = getToolStyles(toolName);
