@@ -1,7 +1,7 @@
 /**
  * Return the current fit mode of the WebViewer.
  * @method WebViewer#getFitMode
- * @return {CoreControls.ReaderControl#FitMode} Current fit mode
+ * @return {WebViewer.FitMode} Current fit mode
  * @example
 WebViewer(...)
   .then(function(instance) {

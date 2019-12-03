@@ -7,6 +7,7 @@
   border-radius: 4px;
   border: 1px solid $gray12;
   border: 1px solid var(--border-color);
+  overflow: hidden;
 
   .Button {
     flex-grow: 1;
@@ -23,7 +24,7 @@
     &:nth-child(n+2) {
       border-left: 1px solid $gray12;
       border-left: 1px solid var(--border-color);
-    }
+    }  
 
     &.active {
       background: rgba(0, 0, 0, 0.078);

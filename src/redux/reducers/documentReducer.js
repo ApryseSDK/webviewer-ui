@@ -22,6 +22,24 @@ export default initialState => (state = initialState, action) => {
       return { ...state, totalPages: payload.totalPages };
     case 'SET_OUTLINES':
       return { ...state, outlines: payload.outlines };
+    case 'SET_BOOKMARKS':
+    {
+      return { ...state, bookmarks: payload.bookmarks };
+    }
+    case 'ADD_BOOKMARK':
+    case 'EDIT_BOOKMARK':
+    {
+      const newBookmarks = { ...state.bookmarks };
+      newBookmarks[payload.pageIndex] = payload.text;
+      return { ...state, bookmarks: newBookmarks };
+    }
+    case 'REMOVE_BOOKMARK':
+    {
+      const newBookmarks = { ...state.bookmarks };
+      delete newBookmarks[payload.pageIndex];
+
+      return { ...state, bookmarks: newBookmarks };
+    }
     case 'SET_LAYERS':
       return { ...state, layers: payload.layers };
     case 'SET_CHECKPASSWORD':

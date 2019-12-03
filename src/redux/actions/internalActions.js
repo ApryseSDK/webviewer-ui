@@ -1,5 +1,6 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { isIOS, isAndroid } from 'helpers/device';
+import fireEvent from 'helpers/fireEvent';
 import selectors from 'selectors';
 import core from 'core';
 
@@ -79,6 +80,15 @@ export const enableElements = (dataElements, priority) => (
     payload: { dataElements: filteredDataElements, priority },
   });
 };
+export const setThumbnailMerging = (useThumbnailMerging = true) => ({
+  type: 'SET_THUMBNAIL_MERGING',
+  payload: { useThumbnailMerging },
+});
+
+export const setThumbnailReordering = (useThumbnailReordering = true) => ({
+  type: 'SET_THUMBNAIL_REORDERING',
+  payload: { useThumbnailReordering },
+});
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;
@@ -237,6 +247,44 @@ export const setOutlines = outlines => ({
   type: 'SET_OUTLINES',
   payload: { outlines },
 });
+export const setBookmarks = bookmarks => ({
+  type: 'SET_BOOKMARKS',
+  payload: { bookmarks },
+});
+export const addBookmark = (pageIndex, text) => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: 'ADD_BOOKMARK',
+    payload: { pageIndex, text },
+  });
+
+  const bookmarks = selectors.getBookmarks(getState());
+  fireEvent('userBookmarksChanged', bookmarks);
+};
+export const editBookmark = (pageIndex, text) => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: 'EDIT_BOOKMARK',
+    payload: { pageIndex, text },
+  });
+  const bookmarks = selectors.getBookmarks(getState());
+  fireEvent('userBookmarksChanged', bookmarks);
+};
+export const removeBookmark = pageIndex => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: 'REMOVE_BOOKMARK',
+    payload: { pageIndex },
+  });
+  const bookmarks = selectors.getBookmarks(getState());
+  fireEvent('userBookmarksChanged', bookmarks);
+};
 export const setLayers = layers => ({
   type: 'SET_LAYERS',
   payload: { layers },

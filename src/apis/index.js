@@ -85,6 +85,8 @@ import setColorPalette from './setColorPalette';
 import setCurrentPageNumber from './setCurrentPageNumber';
 import setCustomNoteFilter from './setCustomNoteFilter';
 import setCustomPanel from './setCustomPanel';
+import exportBookmarks from './exportBookmarks';
+import importBookmarks from './importBookmarks';
 import setEngineType from './setEngineType';
 import setFitMode from './setFitMode';
 import setHeaderItems from './setHeaderItems';
@@ -121,7 +123,7 @@ import setMaxSignaturesCount from './setMaxSignaturesCount';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 
-export default store => {
+export default store => {  
   window.readerControl = {
     docViewer: window.docViewer,
     FitMode,
@@ -160,6 +162,8 @@ export default store => {
     setActiveLeftPanel: setActiveLeftPanel(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
+    exportBookmarks: exportBookmarks(store),
+    importBookmarks: importBookmarks(store),
     setFitMode,
     setHeaderItems: setHeaderItems(store),
     setIconColor: setIconColor(store),

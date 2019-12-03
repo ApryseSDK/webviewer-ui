@@ -1,4 +1,5 @@
 import { workerTypes } from 'constants/types';
+import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
 export const isElementDisabled = (state, dataElement) =>
@@ -95,11 +96,8 @@ export const getDisabledCustomPanelTabs = state =>
   }, []);
 
 export const isEmbedPrintSupported = state => {
-  const isChrome =
-    window.navigator.userAgent.indexOf('Chrome') > -1 &&
-    window.navigator.userAgent.indexOf('Edge') === -1;
   const isPDF = getDocumentType(state) === workerTypes.PDF;
-  return isPDF && isChrome && state.viewer.useEmbeddedPrint;
+  return isPDF && (isChrome && !isAndroid) && state.viewer.useEmbeddedPrint;
 };
 
 export const getColorMap = state => state.viewer.colorMap;
@@ -128,6 +126,10 @@ export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
 export const getPopupItems = (state, popupDataElement) =>
   state.viewer[popupDataElement] || [];
+
+export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMerging;
+
+export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
@@ -170,6 +172,7 @@ export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;
+export const getBookmarks = state => state.document.bookmarks;
 
 export const getLayers = state => state.document.layers;
 

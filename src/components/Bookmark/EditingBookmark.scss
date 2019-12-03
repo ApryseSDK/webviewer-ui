@@ -1,0 +1,40 @@
+.editing-bookmark {
+  margin-top: 10px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 13px;
+  box-shadow: 0 0 10px 5px rgb(190, 188, 188);
+
+  .editing-controls {
+    display: flex;
+    margin-top: 13px;
+    font-size: 0.8em;
+  }
+
+  .editing-button {
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    padding: 8px;
+    background: white;
+    cursor: pointer;
+  }
+
+  .editing-pad {
+    margin-right: 6.5px;
+  }
+
+  .editing-input {
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    padding: 6.5px 13px;
+    font-size: 0.8em;
+    font-weight: normal;
+  }
+
+  .editing-label {
+    margin-top: 9.750px;
+    margin-bottom: 13px;
+    font-size: 0.8em;
+  }
+}
