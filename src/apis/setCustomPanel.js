@@ -8,7 +8,7 @@
  * @param {string} options.tab.img Url for an image.
  * @param {object} options.panel Panel options.
  * @param {string} options.panel.dataElement data-element for panel.
- * @param {WebViewer~renderCustomPanel} options.panel.render Function that returns panel element.
+ * @param {WebViewer.renderCustomPanel} options.panel.render Function that returns panel element.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -33,7 +33,7 @@ WebViewer(...)
  */
 /**
  * Callback that gets passed to `options.panel.render` in {@link CoreControls.ReaderControl#setCustomPanel setCustomPanel}.
- * @callback WebViewer~renderCustomPanel
+ * @callback WebViewer.renderCustomPanel
  * @returns {HTMLElement} Panel element.
  */
 

@@ -148,6 +148,10 @@ export default initialState => (state = initialState, action) => {
         },
       };
     }
+    case 'SET_THUMBNAIL_MERGING':
+      return { ...state, isThumbnailMerging: payload.useThumbnailMerging };
+    case 'SET_THUMBNAIL_REORDERING':
+      return { ...state, isThumbnailReordering: payload.useThumbnailReordering };
     case 'SET_TOOL_BUTTON_OBJECTS':
       return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
     case 'SET_DOCUMENT_LOADED':

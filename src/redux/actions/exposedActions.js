@@ -133,6 +133,7 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       'outlinesPanel',
       'notesPanel',
       'layersPanel',
+      'bookmarksPanel',
     ].join(', ');
     console.warn(
       `${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`,
@@ -196,7 +197,7 @@ export const setZoomList = zoomList => dispatch => {
       zoom => !filteredZoomList.includes(zoom),
     );
     console.warn(`
-      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI. 
+      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI.
       Valid zoom levels should be in the range of ${minZoomLevel}-${maxZoomLevel}.
       You can use setMinZoomLevel or setMaxZoomLevel APIs to change the range.
       See https://www.pdftron.com/documentation/web/guides/ui/apis for more information.

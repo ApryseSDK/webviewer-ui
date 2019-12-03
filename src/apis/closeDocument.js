@@ -1,7 +1,7 @@
 /**
  * Closes the document that's currently opened.
  * @method WebViewer#closeDocument
- * @return {Promise} A promise resolved after document is closed.
+ * @return {Promise<void>} A promise resolved after document is closed.
  * @example
 WebViewer(...)
   .then(function(instance) {
