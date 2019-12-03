@@ -149,6 +149,7 @@ class ToolsOverlay extends React.PureComponent {
             className="Button ToolButton"
           >
             <Icon
+              className="Close-Icon"
               glyph="icon-menu-add-style-line"
             />
           </div>
