@@ -41,5 +41,5 @@ export default (element, overlay, align = 'left') => {
     right = 'auto';
     left = buttonLeft - (overlayWidth - buttonWidth);
   }
-  return { left, right, top: buttonBottom + 4 };
+  return { left, right, top: buttonBottom + 6 };
 };

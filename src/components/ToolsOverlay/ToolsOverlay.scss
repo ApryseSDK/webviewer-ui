@@ -1,14 +1,54 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
+
+
 .ToolsOverlay {
   @extend %overlay;
 
-  top: 46px;
-  padding: 0;
-  border-radius: 0;
+  padding: 0px;
   flex-wrap: nowrap;
   overflow: hidden;
+
+
+  border: 0px;
+  border-radius: 0px;
+  background: transparent;
+
+  .divider {
+    width: 1px;
+    height: 50%;
+    margin: 0 4px;
+    background: var(--icon-color);
+  }
+
+  &>.Items-Container {
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--tools-overlay-border);
+    border-radius: var(--header-items-border-radius);
+    background: var(--tools-overlay-background);
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
+  }
+
+  &>.Close-Container {
+    margin-left: 2px;
+
+    &>.Close-Container2 {
+      padding: 1px;
+      background: var(--tools-overlay-background);
+      border: 1px solid var(--tools-overlay-border);
+      border-radius: 100000px;
+      box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
+    }
+
+    .Close-Icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
 
   @include tablet-and-mobile {
     left: 0 !important;

@@ -11,6 +11,7 @@ import getClassName from 'helpers/getClassName';
 import { isDesktop } from 'helpers/device';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
+import Icon from 'components/Icon';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -137,16 +138,34 @@ class ToolsOverlay extends React.PureComponent {
         style={{ left, right, top }}
         data-element="toolsOverlay"
       >
-        {toolNames.map((toolName, i) => (
-          <ToolButton key={`${toolName}-${i}`} toolName={toolName} />
-        ))}
-        <div className="spacer hide-in-desktop" />
-        <Button
-          className="close hide-in-desktop"
-          dataElement="toolsOverlayCloseButton"
-          img="ic_check_black_24px"
-          onClick={this.handleCloseClick}
-        />
+        <div
+          className="Items-Container"
+        >
+          {toolNames.map((toolName, i) => (
+            <ToolButton key={`${toolName}-${i}`} toolName={toolName} />
+          ))}
+          <div className="divider" />
+          <div
+            className="Button ToolButton"
+          >
+            <Icon
+              glyph="icon-menu-add-style-line"
+            />
+          </div>
+        </div>
+        <div
+          className="Close-Container"
+        >
+          <div
+            className="Close-Container2"
+            onClick={this.handleCloseClick}
+          >
+            <Icon
+              className="Close-Icon"
+              glyph="icon-close"
+            />
+          </div>
+        </div>
       </div>
     );
   }

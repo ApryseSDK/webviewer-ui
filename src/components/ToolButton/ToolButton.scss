@@ -1,6 +1,12 @@
 @import '../../constants/styles';
 
 .ToolButton {
+  min-width: 32px;
+  min-height: 32px;
+  height: 100%;
+  margin: 0 4px;
+  padding: 0;
+
   &.hasStyles.active {
     &:after {
       position: absolute;
