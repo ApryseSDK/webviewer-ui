@@ -22,6 +22,7 @@ class ThumbnailsPanel extends React.PureComponent {
     isThumbnailMergingEnabled: PropTypes.bool,
     isThumbnailReorderingEnabled: PropTypes.bool,
     dispatch: PropTypes.func,
+    isThumbnailControlDisabled: PropTypes.bool,
   }
 
   constructor() {
@@ -443,6 +444,7 @@ const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   isThumbnailMergingEnabled: selectors.getIsThumbnailMergingEnabled(state),
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),
+  isThumbnailControlDisabled: selectors.isElementDisabled(state, 'thumbnailControl'),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThumbnailsPanel);

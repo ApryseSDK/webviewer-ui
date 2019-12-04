@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
 
 import core from 'core';
 import { isMobile } from 'helpers/device';
@@ -25,7 +24,6 @@ class Thumbnail extends React.PureComponent {
     onDragStart: PropTypes.func,
     onDragOver: PropTypes.func,
     isDraggable: PropTypes.bool,
-    t: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -132,4 +130,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Thumbnail));
+export default connect(mapStateToProps, mapDispatchToProps)(Thumbnail);

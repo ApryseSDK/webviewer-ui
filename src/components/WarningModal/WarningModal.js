@@ -99,7 +99,7 @@ const mapStateToProps = state => ({
   confirmBtnText: selectors.getWarningConfirmBtnText(state),
   onCancel: selectors.getWarningCancelEvent(state),
   isDisabled: selectors.isElementDisabled(state, 'warningModal'),
-  isOpen: selectors.isElementOpen(state, 'warningModal')
+  isOpen: selectors.isElementOpen(state, 'warningModal'),
 });
 
 const mapDispatchToProps = {
