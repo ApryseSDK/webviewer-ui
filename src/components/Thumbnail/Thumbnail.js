@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import i18next from 'i18next';
+import { withTranslation } from 'react-i18next';
 
 import core from 'core';
 import { isMobile } from 'helpers/device';
@@ -27,6 +27,7 @@ class Thumbnail extends React.PureComponent {
     isDraggable: PropTypes.bool,
     showWarningMessage: PropTypes.func.isRequired,
     isThumbnailControlDisabled: PropTypes.bool,
+    t: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -100,11 +101,11 @@ class Thumbnail extends React.PureComponent {
   }
 
   handleDelete = () => {
-    const { index, showWarningMessage } = this.props;
+    const { index, showWarningMessage, t } = this.props;
 
-    let message = i18next.t('option.thumbnailPanel.deleteWarningMessage');
-    const title = i18next.t('option.thumbnailPanel.deleteWarningTitle');
-    const confirmBtnText = i18next.t('option.thumbnailPanel.deleteWarningConfirmText');
+    let message = t('option.thumbnailPanel.deleteWarningMessage');
+    const title = t('option.thumbnailPanel.deleteWarningTitle');
+    const confirmBtnText = t('option.thumbnailPanel.deleteWarningConfirmText');
 
     let warning = {
       message,
@@ -114,7 +115,7 @@ class Thumbnail extends React.PureComponent {
     };
 
     if (core.getDocumentViewer().getPageCount() === 1) {
-      message = i18next.t('option.thumbnailPanel.deleteLastPageError');
+      message = t('option.thumbnailPanel.deleteLastPageError');
 
       warning = {
         message,
@@ -162,4 +163,4 @@ const mapDispatchToProps = {
   showWarningMessage: warning => actions.showWarningMessage(warning),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Thumbnail);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Thumbnail));
