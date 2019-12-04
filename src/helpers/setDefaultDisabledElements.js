@@ -66,5 +66,5 @@ export default store => {
   }
 
   // disable layersPanel by default, it will be enabled in onDocumentLoaded.js
-  dispatch(actions.disableElements(['layersPanel', 'layersPanelButton', 'bookmarksPanel', 'bookmarksPanelButton'], PRIORITY_ONE));
+  dispatch(actions.disableElements(['layersPanel', 'layersPanelButton', 'bookmarksPanel', 'bookmarksPanelButton', 'thumbnailControl'], PRIORITY_ONE));
 };
