@@ -63,7 +63,7 @@ class Thumbnail extends React.PureComponent {
 
   onLayoutChanged(changes) {
     const { contentChanged, moved, added, removed } = changes;
-    const { index } = this.props;
+    const { index, pageLabels } = this.props;
 
     const currentPage = index + 1;
     const currentPageStr = `${currentPage}`;
@@ -72,8 +72,11 @@ class Thumbnail extends React.PureComponent {
     const didPageChange = contentChanged.some(changedPage => currentPageStr === changedPage);
     const didPageMove = Object.keys(moved).some(movedPage => currentPageStr === movedPage);
     const isPageRemoved = removed.indexOf(currentPage) > -1;
+    const newPageCount = pageLabels.length - removed.length;
 
-    if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
+    if (removed.length > 0 && index + 1 > newPageCount) {
+      // don't load thumbnail is going to be removed
+    } else if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
       const { thumbContainer } = this;
       const { current } = thumbContainer;
 
@@ -110,7 +113,6 @@ class Thumbnail extends React.PureComponent {
       title,
       confirmBtnText,
       onConfirm: () => removePages([index + 1]),
-      keepOpen: ['leftPanel'],
     };
     showWarningMessage(warning);
   }

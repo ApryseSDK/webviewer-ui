@@ -13,7 +13,6 @@ export default pages => dispatch => {
       title,
       confirmBtnText,
       onConfirm: () => Promise.resolve(),
-      keepOpen: ['leftPanel'],
     };
 
     setTimeout(() => {

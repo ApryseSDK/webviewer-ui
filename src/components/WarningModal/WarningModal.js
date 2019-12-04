@@ -25,16 +25,15 @@ class WarningModal extends React.PureComponent {
     message: PropTypes.string,
     onConfirm: PropTypes.func,
     onCancel: PropTypes.func,
-    keepOpen: PropTypes.array,
   };
 
   componentDidUpdate(prevProps) {
-    const { keepOpen, isOpen, closeElements } = this.props;
+    const { isOpen, closeElements } = this.props;
 
     if (!prevProps.isOpen && isOpen) {
       // TODO want to do make something like'closeOtherElements', but that for latter
       const popupElementsToClose = getPopupElements().filter(
-        ele => ele !== 'warningModal' && (!keepOpen || !keepOpen.includes(ele)),
+        ele => ele !== 'warningModal' && ele !== 'leftPanel',
       );
       closeElements(popupElementsToClose);
     }
@@ -100,8 +99,7 @@ const mapStateToProps = state => ({
   confirmBtnText: selectors.getWarningConfirmBtnText(state),
   onCancel: selectors.getWarningCancelEvent(state),
   isDisabled: selectors.isElementDisabled(state, 'warningModal'),
-  isOpen: selectors.isElementOpen(state, 'warningModal'),
-  keepOpen: selectors.getWarningKeepOpen(state),
+  isOpen: selectors.isElementOpen(state, 'warningModal')
 });
 
 const mapDispatchToProps = {
