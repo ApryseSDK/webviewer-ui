@@ -18,9 +18,12 @@
         }
 
         &:hover {
+            background-color: #757575;
             background-color: var(--icon-color);
+
             border-radius: 2px;
             .Icon {
+                color: #d3d3d3;
                 color: var(--border-color);
             }
         }
