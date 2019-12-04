@@ -5,7 +5,6 @@ import i18next from 'i18next';
 
 import core from 'core';
 import { isMobile } from 'helpers/device';
-import removePages from 'helpers/removePages';
 import actions from 'actions';
 import selectors from 'selectors';
 import ThumbnailControls from 'components/ThumbnailControls';
@@ -26,7 +25,6 @@ class Thumbnail extends React.PureComponent {
     onDragStart: PropTypes.func,
     onDragOver: PropTypes.func,
     isDraggable: PropTypes.bool,
-    removePages: PropTypes.func.isRequired,
     showWarningMessage: PropTypes.func.isRequired,
     isThumbnailControlDisabled: PropTypes.bool,
   }
@@ -102,18 +100,30 @@ class Thumbnail extends React.PureComponent {
   }
 
   handleDelete = () => {
-    const { index, removePages, showWarningMessage } = this.props;
+    const { index, showWarningMessage } = this.props;
 
-    const message = i18next.t('option.thumbnailPanel.deleteWarningMessage');
+    let message = i18next.t('option.thumbnailPanel.deleteWarningMessage');
     const title = i18next.t('option.thumbnailPanel.deleteWarningTitle');
     const confirmBtnText = i18next.t('option.thumbnailPanel.deleteWarningConfirmText');
 
-    const warning = {
+    let warning = {
       message,
       title,
       confirmBtnText,
-      onConfirm: () => removePages([index + 1]),
+      onConfirm: () => core.removePages([index + 1]),
     };
+
+    if (core.getDocumentViewer().getPageCount() === 1) {
+      message = i18next.t('option.thumbnailPanel.deleteLastPageError');
+
+      warning = {
+        message,
+        title,
+        confirmBtnText,
+        onConfirm: () => Promise.resolve(),
+      };
+    }
+
     showWarningMessage(warning);
   }
 
@@ -149,7 +159,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
-  removePages: pageNumbers => removePages(pageNumbers),
   showWarningMessage: warning => actions.showWarningMessage(warning),
 };
 
