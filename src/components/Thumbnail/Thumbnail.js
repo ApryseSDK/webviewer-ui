@@ -105,7 +105,7 @@ class Thumbnail extends React.PureComponent {
 
     let message = t('option.thumbnailPanel.deleteWarningMessage');
     const title = t('option.thumbnailPanel.deleteWarningTitle');
-    const confirmBtnText = t('option.thumbnailPanel.deleteWarningConfirmText');
+    const confirmBtnText = t('action.ok');
 
     let warning = {
       message,

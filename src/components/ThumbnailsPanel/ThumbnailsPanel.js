@@ -86,8 +86,6 @@ class ThumbnailsPanel extends React.PureComponent {
       core.movePages([currentPage], targetPageNumber);
     }
 
-    
-
     this.setState({ draggingOverPageIndex: null });
   }
 
