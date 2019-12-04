@@ -8,6 +8,7 @@
   width: 552px;
   height: 200px;
   display: flex;
+  overflow: hidden;
 
   @include mobile {
     margin: 18px 12px 0px 12px;

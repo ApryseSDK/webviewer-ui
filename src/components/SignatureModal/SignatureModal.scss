@@ -24,19 +24,22 @@ $signature-blue: #00A4E4;
       display: flex;
       justify-content: space-between;
 
-      p {
-        margin: 0px;
-        padding: 5px 12px;
-        border-radius: 4px;
+      .tab-list {
+        border-bottom: 1px solid #ddd;
       }
 
-      p.active {
-        color: #FFFFFF;
-        background: $signature-blue;
-      }
-      
-      p:not(.active) {
-        color: $signature-blue;
+      p {
+        margin: 0px;
+        padding: 0px 10px;
+        border-bottom: 3px solid transparent;
+        
+        &.active {
+          border-bottom: 3px solid $signature-blue;
+        }
+        
+        &:hover {
+          color: $signature-blue;
+        }
       }
     }
 
