@@ -26,7 +26,6 @@ class Thumbnail extends React.PureComponent {
     onDragOver: PropTypes.func,
     isDraggable: PropTypes.bool,
     showWarningMessage: PropTypes.func.isRequired,
-    isThumbnailControlDisabled: PropTypes.bool,
     t: PropTypes.func.isRequired,
   }
 
@@ -139,7 +138,7 @@ class Thumbnail extends React.PureComponent {
   }
 
   render() {
-    const { index, currentPage, pageLabels, isDraggable, isThumbnailControlDisabled } = this.props;
+    const { index, currentPage, pageLabels, isDraggable } = this.props;
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
 
@@ -147,7 +146,7 @@ class Thumbnail extends React.PureComponent {
       <div className={`Thumbnail ${isActive ? 'active' : ''} `} onDragOver={this.onDragOver}>
         <div className="container" ref={this.thumbContainer} onClick={this.handleClick} onDragStart={this.onDragStart} draggable={isDraggable}></div>
         <div className="page-label">{pageLabel}</div>
-        {isActive && !isThumbnailControlDisabled && <ThumbnailControls index={index} data-element="thumbnailControl" handleDelete={this.handleDelete} />}
+        {isActive && <ThumbnailControls index={index} data-element="thumbnailControl" handleDelete={this.handleDelete} />}
       </div>
     );
   }

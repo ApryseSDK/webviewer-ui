@@ -22,7 +22,6 @@ class ThumbnailsPanel extends React.PureComponent {
     isThumbnailMergingEnabled: PropTypes.bool,
     isThumbnailReorderingEnabled: PropTypes.bool,
     dispatch: PropTypes.func,
-    isThumbnailControlDisabled: PropTypes.bool,
   }
 
   constructor() {
@@ -346,7 +345,7 @@ class ThumbnailsPanel extends React.PureComponent {
       draggingOverPageIndex,
       isDraggingToPreviousPage,
     } = this.state;
-    const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled, isThumbnailControlDisabled } = this.props;
+    const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
     const { thumbs } = this;
     const className = classNames({
       columnsOfThumbnails: (numberOfColumns > 1),
@@ -367,7 +366,6 @@ class ThumbnailsPanel extends React.PureComponent {
                   {showPlaceHolder && isDraggingToPreviousPage && <hr className="thumbnailPlaceholder" />}
                   <Thumbnail
                     isDraggable={isThumbnailReorderingEnabled}
-                    isThumbnailControlDisabled={isThumbnailControlDisabled}
                     index={thumbIndex}
                     canLoad={canLoad}
                     onLoad={this.onLoad}
@@ -445,7 +443,6 @@ const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   isThumbnailMergingEnabled: selectors.getIsThumbnailMergingEnabled(state),
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),
-  isThumbnailControlDisabled: selectors.isElementDisabled(state, 'thumbnailControl'),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThumbnailsPanel);

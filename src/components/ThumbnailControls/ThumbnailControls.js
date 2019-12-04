@@ -1,49 +1,57 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 
 import Button from 'components/Button';
 import core from 'core';
+import selectors from 'selectors';
 
 import './ThumbnailControls.scss';
 
-class ThumbnailControls extends React.PureComponent {
-  static propTypes = {
-    index: PropTypes.number.isRequired,
-    handleDelete: PropTypes.func.isRequired,
-  }
+const propTypes = {
+  index: PropTypes.number.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+};
 
-  rotateClockwise = () => {
-    const { index } = this.props;
+const dataElementName = 'thumbnailControl';
+
+const ThumbnailControls = ({
+  index,
+  handleDelete,
+}) => {
+  const [isElementDisabled] = useSelector(state => [
+    selectors.isElementDisabled(state, dataElementName),
+  ]);
+
+  const rotateClockwise = () => {
     core.rotatePages([index + 1], window.CoreControls.PageRotation.e_90);
-  }
+  };
 
-  rotateCounterClockwise = () => {
-    const { index } = this.props;
+  const rotateCounterClockwise = () => {
     core.rotatePages([index + 1], window.CoreControls.PageRotation.e_270);
-  }
+  };
 
-  render() {
-    return (
-      <div className="thumbnailControls" data-element="thumbnailControls">
-        <Button
-          img="ic_rotate_left_black_24px"
-          onClick={this.rotateCounterClockwise}
-          title="option.thumbnailPanel.rotateCounterClockwise"
-        />
-        <Button
-          img="ic_delete_black_24px"
-          onClick={this.props.handleDelete}
-          title="option.thumbnailPanel.delete"
-        />
-        <Button
-          img="ic_rotate_right_black_24px"
-          onClick={this.rotateClockwise}
-          title="option.thumbnailPanel.rotateClockwise"
-        />
-      </div>
-    );
-  }
-}
+  return isElementDisabled ? null : (
+    <div className="thumbnailControls" data-element={dataElementName}>
+      <Button
+        img="ic_rotate_left_black_24px"
+        onClick={rotateCounterClockwise}
+        title="option.thumbnailPanel.rotateCounterClockwise"
+      />
+      <Button
+        img="ic_delete_black_24px"
+        onClick={handleDelete}
+        title="option.thumbnailPanel.delete"
+      />
+      <Button
+        img="ic_rotate_right_black_24px"
+        onClick={rotateClockwise}
+        title="option.thumbnailPanel.rotateClockwise"
+      />
+    </div>
+  );
+};
 
-export default withTranslation()(ThumbnailControls);
+ThumbnailControls.propTypes = propTypes;
+
+export default ThumbnailControls;
