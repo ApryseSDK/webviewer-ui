@@ -81,6 +81,7 @@ class SearchOverlay extends React.PureComponent {
       this.props.openElements(['searchOverlay', 'searchPanel']);
       this.caseSensitiveInput.current.checked = this.props.isCaseSensitive;
       this.wholeWordInput.current.checked = this.props.isWholeWord;
+      this.wildcardInput.current.checked = this.props.isWildcard;
       this.clearSearchResults();
       this.executeFullSearch();
       this.props.setIsProgrammaticSearchFull(false);
@@ -362,11 +363,15 @@ class SearchOverlay extends React.PureComponent {
             </Tooltip>
           </div>
           <div className={`options ${isSearchPanelOpen ? 'visible' : ''}`}>
-            <Input id="case-sensitive-option" type="checkbox" ref={this.caseSensitiveInput} onChange={this.onChangeCaseSensitive} label={t('option.searchPanel.caseSensitive')} />
-            <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
-          </div>
-          <div className={`wildcard ${isSearchPanelOpen ? 'visible' : ''}`}>
+            <div className="search-option">
+              <Input id="case-sensitive-option" type="checkbox" ref={this.caseSensitiveInput} onChange={this.onChangeCaseSensitive} label={t('option.searchPanel.caseSensitive')} />
+            </div>
+            <div className="search-option">              
+              <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
+            </div>
+            <div className="search-option">
               <Input id="wild-card-option" type="checkbox" ref={this.wildcardInput} onChange={this.onChangeWildcard} label={t('option.searchPanel.wildcard')} />
+            </div>
           </div>
           {!isSearchPanelOpen &&
             this.state.noResultSingleSearch &&
