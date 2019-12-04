@@ -1,6 +1,21 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
+.grid-container{
+  display: inline-flex;
+  position: absolute;
+  top: 70px;
+  // width: 174px;
+  flex-wrap: wrap;
+
+  .cell-123 {
+    background: black;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    margin: 3px;
+  }
+}
 
 
 .ToolsOverlay {
@@ -8,7 +23,6 @@
 
   padding: 0px;
   flex-wrap: nowrap;
-  overflow: hidden;
   border: 0px;
   border-radius: 0px;
   background: transparent;
@@ -29,7 +43,8 @@
     background: var(--tools-divider-color);
   }
 
-  &>.Foo-Container {
+  &>.ToolsContainer {
+    position: relative;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--tools-overlay-border);
@@ -39,8 +54,12 @@
 
     &>.Items-Container {
       display: flex;
-      padding: 8px 0;
+      margin: 8px 0;
       align-items: center;
+
+      .StyleButton {
+        margin-right: 8px;
+      }
     }
   }
 

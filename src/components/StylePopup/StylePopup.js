@@ -8,6 +8,7 @@ import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 
 import { circleRadius } from 'constants/slider';
+
 import selectors from 'selectors';
 
 import './StylePopup.scss';
@@ -92,12 +93,21 @@ class StylePopup extends React.PureComponent {
     const { currentPalette, style, colorMapKey, onStyleChange } = this.props;
     const { Scale, Precision } = style;
 
+    const circleCenter = 0;
+
     return (
       <div
-        className="Popup StylePopup"
+        className="grid-container"
         data-element="stylePopup"
       >
-        {currentPalette && (
+        <div className="cell-123">1</div>
+        <div className="cell-123">2</div>
+        <div className="cell-123">3</div>
+        <div className="cell-123">4</div>
+        <div className="cell-123">5</div>
+        <div className="cell-123">6</div>
+        <div className="cell-123">7</div>
+        {/* {currentPalette && (
           <div className="colors-container">
             <div className="inner-wrapper">
               <ColorPaletteHeader
@@ -108,22 +118,29 @@ class StylePopup extends React.PureComponent {
               {this.renderColorPalette()}
             </div>
           </div>
-        )}
-        <div
-          className="sliders-container"
-          onMouseDown={e => e.preventDefault()}
-        >
-          <div className="sliders">
-            {!this.props.hideSlider && this.renderSliders()}
+        )} */}
+        {/* {!this.props.hideSlider &&
+          <div
+            className="sliders-container"
+            onMouseDown={e => e.preventDefault()}
+          >
+            <div className="sliders">
+              {this.renderSliders()}
+            </div>
           </div>
-        </div>
-        {Scale && Precision && (
+        } */}
+        {/* <svg width="10%" data-element="slider">
+          <line x1={circleRadius} y1="50%" x2={circleCenter} y2="50%" strokeWidth="2" stroke="#00a5e4" strokeLinecap="round" />
+          <line x1={circleCenter} y1="50%" x2={0 + circleRadius} y2="50%" strokeWidth="2" stroke="#e0e0e0" strokeLinecap="round" />
+          <circle cx={circleCenter} cy="50%" r={circleRadius} fill="#00a5e4" />
+        </svg> */}
+        {/* {Scale && Precision && (
           <MeasurementOption
             scale={Scale}
             precision={Precision}
             onStyleChange={onStyleChange}
           />
-        )}
+        )} */}
       </div>
     );
   }

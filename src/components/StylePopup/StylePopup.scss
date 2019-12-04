@@ -4,13 +4,12 @@
 .StylePopup {
   display: flex;
   flex-direction: column;
-  width: 256px;
+  // width: 256px;
   border-radius: 4px;
   overflow: auto;
-  box-shadow: 1px 2px 10px 1px rgba(0, 0, 0, .05);
   z-index: 80;
   user-select: none;
-  
+
   &:empty {
     box-shadow: none;
   }
@@ -28,13 +27,11 @@
   }
 
   .colors-container {
-    background-color: #fafafa;
-    box-shadow: inset 0px -1px rgba(0, 0, 0, .12);
     border-collapse: separate;
-    
+
     .inner-wrapper {
       margin: 16px;
-      
+
       @include mobile {
         margin-top: 12px;
       }
@@ -46,17 +43,15 @@
   }
 
   .sliders-container {
-    background-color: $white;
-
     .sliders {
       display: grid;
       grid-template-columns: auto 1fr 33px;
-      grid-auto-rows: 32px; 
+      grid-auto-rows: 32px;
       grid-column-gap: 5px;
       align-items: center;
       margin: 12px 16px;
       overflow: hidden;
-      
+
       @include mobile {
         grid-auto-rows: 48px;
       }
@@ -65,5 +60,5 @@
         margin: 0;
       }
     }
-  }   
+  }
 }

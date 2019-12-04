@@ -82,7 +82,6 @@ const App = ({ removeEventHandlers }) => {
         <AnnotationPopup />
         <TextPopup />
         <ContextMenuPopup />
-        <ToolStylePopup />
 
         <SignatureModal />
         <PrintModal />

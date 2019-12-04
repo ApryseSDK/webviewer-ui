@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import onClickOutside from 'react-onclickoutside';
 
 import ToolButton from 'components/ToolButton';
-import Button from 'components/Button';
+import ToolStylePopup from 'components/ToolStylePopup';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
@@ -36,7 +36,9 @@ class ToolsOverlay extends React.PureComponent {
       right: 'auto',
       top: 'auto',
       isStylingOpen: false,
+      // siblingWidth: 0
     };
+    this.itemsContainer = React.createRef();
   }
 
   componentDidMount() {
@@ -47,6 +49,10 @@ class ToolsOverlay extends React.PureComponent {
     // otherwise its left is 0 instead of left-aligned with the tool group button
     if (this.props.isOpen) {
       this.setOverlayPosition();
+    }
+
+    if (this.itemsContainer.current) {
+      console.log(this.itemsContainer.current.offsetWidth)
     }
   }
 
@@ -69,6 +75,10 @@ class ToolsOverlay extends React.PureComponent {
 
     if (clickedOnAnotherToolGroupButton) {
       this.setOverlayPosition();
+    }
+
+    if (this.itemsContainer.current) {
+      console.log(this.itemsContainer.current.offsetWidth)
     }
   }
 
@@ -115,7 +125,7 @@ class ToolsOverlay extends React.PureComponent {
   };
 
   handleStyleClick = () => {
-    this.props.toggleElement('toolStylePopup');
+    // this.props.toggleElement('toolStylePopup');
     this.setState({ isStylingOpen: !this.state.isStylingOpen });
   }
 
@@ -144,16 +154,17 @@ class ToolsOverlay extends React.PureComponent {
         style={{ left, right, top }}
         data-element="toolsOverlay"
       >
-        <div className="Foo-Container">
+        <div className="ToolsContainer">
           <div
             className="Items-Container"
+            ref={this.itemsContainer}
           >
             {toolNames.map((toolName, i) => (
               <ToolButton key={`${toolName}-${i}`} toolName={toolName} />
             ))}
             <div className="divider" />
             <div
-              className="Button ToolButton"
+              className="Button ToolButton StyleButton"
               onClick={this.handleStyleClick}
             >
               <Icon
@@ -161,9 +172,21 @@ class ToolsOverlay extends React.PureComponent {
               />
             </div>
           </div>
-          {isStylingOpen && <React.Fragment>
-            <div className="divider-horizontal" />
-          </React.Fragment>}
+          {isStylingOpen &&
+            <React.Fragment>
+              <div className="divider-horizontal" />
+              <div
+                className="grid-container"
+
+                data-element="stylePopup"
+              >
+                <div className="cell-123">1</div>
+                <div className="cell-123">2</div>
+                <div className="cell-123">3</div>
+                <div className="cell-123">4</div>
+              </div>
+            </React.Fragment>
+          }
         </div>
         <div
             className="Close-Container"

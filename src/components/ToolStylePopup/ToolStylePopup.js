@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import StylePopup from 'components/StylePopup';
 
@@ -132,10 +133,8 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   render() {
-    const { left, top } = this.state;
     const { isDisabled, activeToolName, activeToolStyle } = this.props;
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
-    const className = getClassName(`Popup ToolStylePopup`, this.props);
     const colorMapKey = mapToolNameToKey(activeToolName);
 
     if (isDisabled) {
@@ -145,9 +144,10 @@ class ToolStylePopup extends React.PureComponent {
 
     return (
       <div
-        className={className}
+        className={classNames({
+          ToolStylePopup: true,
+        })}
         data-element="toolStylePopup"
-        style={{ top, left }}
         ref={this.popup}
         onClick={this.handleClick}
       >
