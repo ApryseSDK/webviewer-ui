@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 
-import { PageRotation } from 'constants/pageRotation';
 import Button from 'components/Button';
 import core from 'core';
 
@@ -16,12 +15,12 @@ class ThumbnailControls extends React.PureComponent {
 
   rotateClockwise = () => {
     const { index } = this.props;
-    core.rotatePages([index + 1], PageRotation.e_90);
+    core.rotatePages([index + 1], window.CoreControls.PageRotation.e_90);
   }
 
   rotateCounterClockwise = () => {
     const { index } = this.props;
-    core.rotatePages([index + 1], PageRotation.e_270);
+    core.rotatePages([index + 1], window.CoreControls.PageRotation.e_270);
   }
 
   render() {
