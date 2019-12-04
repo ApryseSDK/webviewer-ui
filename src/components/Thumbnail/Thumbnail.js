@@ -25,7 +25,6 @@ class Thumbnail extends React.PureComponent {
     onDragStart: PropTypes.func,
     onDragOver: PropTypes.func,
     isDraggable: PropTypes.bool,
-    showWarningMessage: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   }
 
@@ -99,34 +98,6 @@ class Thumbnail extends React.PureComponent {
     }
   }
 
-  handleDelete = () => {
-    const { index, showWarningMessage, t } = this.props;
-
-    let message = t('option.thumbnailPanel.deleteWarningMessage');
-    const title = t('option.thumbnailPanel.deleteWarningTitle');
-    const confirmBtnText = t('action.ok');
-
-    let warning = {
-      message,
-      title,
-      confirmBtnText,
-      onConfirm: () => core.removePages([index + 1]),
-    };
-
-    if (core.getDocumentViewer().getPageCount() === 1) {
-      message = t('option.thumbnailPanel.deleteLastPageError');
-
-      warning = {
-        message,
-        title,
-        confirmBtnText,
-        onConfirm: () => Promise.resolve(),
-      };
-    }
-
-    showWarningMessage(warning);
-  }
-
   onDragStart = e => {
     const { index, onDragStart } = this.props;
     onDragStart(e, index);
@@ -146,7 +117,7 @@ class Thumbnail extends React.PureComponent {
       <div className={`Thumbnail ${isActive ? 'active' : ''} `} onDragOver={this.onDragOver}>
         <div className="container" ref={this.thumbContainer} onClick={this.handleClick} onDragStart={this.onDragStart} draggable={isDraggable}></div>
         <div className="page-label">{pageLabel}</div>
-        {isActive && <ThumbnailControls index={index} data-element="thumbnailControl" handleDelete={this.handleDelete} />}
+        {isActive && <ThumbnailControls index={index} />}
       </div>
     );
   }
@@ -159,7 +130,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
-  showWarningMessage: warning => actions.showWarningMessage(warning),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Thumbnail));
