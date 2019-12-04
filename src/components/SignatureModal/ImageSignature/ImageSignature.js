@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +17,7 @@ const ImageSignature = ({ _setSaveSignature }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const fileInputRef = useRef();
   const [t] = useTranslation();
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
@@ -114,12 +115,15 @@ const ImageSignature = ({ _setSaveSignature }) => {
           <div className="image-signature-separator">or</div>
           <div className="image-signature-upload">
             <input
+              ref={fileInputRef}
               id="upload"
               type="file"
               accept={acceptedFileTypes.map(type => `.${type}`).join(',')}
               onChange={handleFileChange}
             />
-            <label htmlFor="upload">Pick Signature Image</label>
+            <button onClick={() => fileInputRef.current.click()}>
+              Pick Signature Image
+            </button>
           </div>
           {isDragging && <div className="image-signature-background" />}
           {errorMessage && (

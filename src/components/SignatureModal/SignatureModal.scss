@@ -1,8 +1,6 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
 
-$signature-blue: #00A4E4;
-
 .SignatureModal {
   @extend %modal;
   font-size: 0.9em;
@@ -11,22 +9,16 @@ $signature-blue: #00A4E4;
     @extend %modal-shared-container-style;
     border-radius: 4px;
     box-shadow: 0 2px 16px 0 $signature-modal-shared-color; 
-
     width: 600px;
-    height: 350px;
 
     @include mobile {
       width: 100%;
     }
 
     .header {
-      margin: 11px 11px 0px 24px;
+      margin: 11px 24px 0px 24px;
       display: flex;
       justify-content: space-between;
-
-      .tab-list {
-        border-bottom: 1px solid #ddd;
-      }
 
       p {
         margin: 0px;
@@ -34,11 +26,23 @@ $signature-blue: #00A4E4;
         border-bottom: 3px solid transparent;
         
         &.active {
-          border-bottom: 3px solid $signature-blue;
+          border-bottom: 3px solid $pdftron-blue;
         }
         
         &:hover {
-          color: $signature-blue;
+          color: $pdftron-blue;
+        }
+      }
+
+      .ActionButton {
+        margin-right: -13px;
+
+        &:hover {
+          background: transparent;
+
+          svg {
+            color: $pdftron-blue;  
+          }
         }
       }
     }
@@ -50,14 +54,12 @@ $signature-blue: #00A4E4;
 
       .signature-save {
         position: relative;
-        display: flex;
-        align-items: center;
         margin-left: 8px;
         user-select: none;
-
+        
         input {
           display: none;
-
+          
           & + label:before {
             cursor: pointer;
             content: '';
@@ -71,7 +73,7 @@ $signature-blue: #00A4E4;
           }
 
           &:checked + label:before {
-            background: $signature-blue;
+            background: $pdftron-blue;
             border: 1px solid transparent;
           }
 
@@ -93,6 +95,11 @@ $signature-blue: #00A4E4;
             transform: rotate(45deg);
           }
         }
+
+        label {
+          display: flex;
+          align-items: center;
+        }
       }
 
       .signature-create {
@@ -103,9 +110,9 @@ $signature-blue: #00A4E4;
         font-weight: 600;
         padding: 6px 18px;
         margin-right: 8px;
-        background: $signature-blue;
+        background: $pdftron-blue;
         border-radius: 4px 4px 4px 4px;
-        border: 1px solid $signature-blue;
+        border: 1px solid $pdftron-blue;
         height: 32px;
         cursor: pointer;
 
