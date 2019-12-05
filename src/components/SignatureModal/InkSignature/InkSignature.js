@@ -67,10 +67,10 @@ const InkSignature = ({
   useLayoutEffect(() => {
     // use layout effect here because we want to clear the signature canvas
     // before browser paints, otherwise we will see a flash where the signature disappears after the modal opens
-    if (isModalOpen) {
+    if (isModalOpen && isTabPanelSelected) {
       clearCanvas();
     }
-  }, [clearCanvas, isModalOpen]);
+  }, [clearCanvas, isModalOpen, isTabPanelSelected]);
 
   const setSignatureCanvasSize = useCallback(() => {
     const canvas = canvasRef.current;
