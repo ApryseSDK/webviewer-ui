@@ -367,6 +367,7 @@ class WatermarkModal extends React.PureComponent {
                   {t(`option.watermark.style`)}
                 </label>
                 <div className="style-container">
+                  {/* use Button class so that it looks consistent with the other form fields below */}
                   <div
                     data-element="currentColorCell"
                     className="Button"
