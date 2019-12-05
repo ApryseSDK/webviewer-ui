@@ -52,7 +52,7 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     if (this.itemsContainer.current) {
-      console.log(this.itemsContainer.current.offsetWidth)
+      this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
   }
 
@@ -78,7 +78,7 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     if (this.itemsContainer.current) {
-      console.log(this.itemsContainer.current.offsetWidth)
+      this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
   }
 
@@ -177,30 +177,34 @@ class ToolsOverlay extends React.PureComponent {
               <div className="divider-horizontal" />
               <div
                 className="grid-container"
-
+                style={{ width: `${this.state.siblingWidth}px` }}
                 data-element="stylePopup"
               >
                 <div className="cell-123">1</div>
                 <div className="cell-123">2</div>
                 <div className="cell-123">3</div>
                 <div className="cell-123">4</div>
+                <div className="cell-123">5</div>
+                <div className="cell-123">6</div>
+                <div className="cell-123">7</div>
+                <div className="cell-123">8</div>
               </div>
             </React.Fragment>
           }
         </div>
         <div
-            className="Close-Container"
+          className="Close-Container"
+        >
+          <div
+            className="Close-Container2"
+            onClick={this.handleCloseClick}
           >
-            <div
-              className="Close-Container2"
-              onClick={this.handleCloseClick}
-            >
-              <Icon
-                className="Close-Icon"
-                glyph="icon-close"
-              />
-            </div>
+            <Icon
+              className="Close-Icon"
+              glyph="icon-close"
+            />
           </div>
+        </div>
       </div>
     );
   }

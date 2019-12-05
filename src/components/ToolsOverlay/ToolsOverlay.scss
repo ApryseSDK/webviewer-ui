@@ -2,9 +2,9 @@
 @import '../../constants/overlay';
 
 .grid-container{
-  display: inline-flex;
-  position: absolute;
-  top: 70px;
+  display: flex;
+  // position: absolute;
+  // top: 70px;
   // width: 174px;
   flex-wrap: wrap;
 
