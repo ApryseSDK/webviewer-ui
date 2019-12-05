@@ -29,11 +29,9 @@ const SignatureModal = () => {
 
   const _setSaveSignature = useCallback(
     save => {
-      if (isSaveSignatureDisabled && save) {
-        return;
+      if (!isSaveSignatureDisabled) {
+        setSaveSignature(save);
       }
-
-      setSaveSignature(save);
     },
     [isSaveSignatureDisabled],
   );
