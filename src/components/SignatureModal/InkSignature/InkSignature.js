@@ -25,26 +25,10 @@ const InkSignature = ({
   isTabPanelSelected,
 }) => {
   const canvasRef = useRef();
+  // TODO: add a documentation here
   const freeHandPathRef = useRef();
   const [canClear, setCanClear] = useState(false);
   const [t] = useTranslation();
-
-  const setSignatureCanvasSize = () => {
-    const canvas = canvasRef.current;
-
-    if (canvas) {
-      // since the canvas will be cleared when the size changes,
-      // we grab the image data before resizing and use it to redraw afterwards
-      const { width, height } = canvas.getBoundingClientRect();
-      const ctx = canvasRef.current.getContext('2d');
-      const imageData = ctx.getImageData(0, 0, width, height);
-
-      canvas.width = width;
-      canvas.height = height;
-
-      ctx.putImageData(imageData, 0, 0);
-    }
-  };
 
   useEffect(() => {
     window.addEventListener('resize', setSignatureCanvasSize);
@@ -54,7 +38,7 @@ const InkSignature = ({
       window.removeEventListener('resize', setSignatureCanvasSize);
       window.removeEventListener('orientationchange', setSignatureCanvasSize);
     };
-  }, []);
+  }, [setSignatureCanvasSize]);
 
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -67,7 +51,7 @@ const InkSignature = ({
     }
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isTabPanelSelected) {
       // the panel have display: none when it's not selected, which may affect the canvas size
       // so we resize the canvas whenever this panel is selected
@@ -75,8 +59,10 @@ const InkSignature = ({
 
       const signatureTool = core.getTool('AnnotationCreateSignature');
       signatureTool.setSignature(freeHandPathRef.current);
+      setCanClear(!!freeHandPathRef.current);
+      _setSaveSignature(!!freeHandPathRef.current);
     }
-  }, [isTabPanelSelected]);
+  }, [isTabPanelSelected, _setSaveSignature, setSignatureCanvasSize]);
 
   useLayoutEffect(() => {
     // use layout effect here because we want to clear the signature canvas
@@ -86,23 +72,40 @@ const InkSignature = ({
     }
   }, [clearCanvas, isModalOpen]);
 
+  const setSignatureCanvasSize = useCallback(() => {
+    const canvas = canvasRef.current;
+
+    if (isTabPanelSelected && canvas) {
+      // since the canvas will be cleared when the size changes,
+      // we grab the image data before resizing and use it to redraw afterwards
+      const { width, height } = canvas.getBoundingClientRect();
+      const ctx = canvasRef.current.getContext('2d');
+      const imageData = ctx.getImageData(0, 0, width, height);
+
+      canvas.width = width;
+      canvas.height = height;
+
+      ctx.putImageData(imageData, 0, 0);
+    }
+  }, [isTabPanelSelected]);
+
   const clearCanvas = useCallback(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
     signatureTool.clearSignatureCanvas();
     setCanClear(false);
     _setSaveSignature(false);
+    freeHandPathRef.current = null;
   }, [_setSaveSignature]);
 
   const handleDrawing = _.throttle(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
     if (!signatureTool.isEmptySignature()) {
-      _setSaveSignature(true);
       setCanClear(true);
+      _setSaveSignature(true);
 
       freeHandPathRef.current = signatureTool.annot.getPaths();
-      console.log(freeHandPathRef.current);
     }
   }, 300);
 

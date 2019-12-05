@@ -10,9 +10,10 @@ import './TextSignature.scss';
 
 const propTypes = {
   _setSaveSignature: PropTypes.func.isRequired,
+  isTabPanelSelected: PropTypes.bool,
 };
 
-const TextSignature = ({ _setSaveSignature }) => {
+const TextSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
   const fonts = useSelector(
     state => selectors.getSignatureFonts(state),
     shallowEqual,
@@ -37,9 +38,9 @@ const TextSignature = ({ _setSaveSignature }) => {
     if (value) {
       signatureTool.setSignature(canvasesRef.current[activeIndex].toDataURL());
     } else {
-      signatureTool.annot = null;
+      signatureTool.setSignature(null);
     }
-  }, [_setSaveSignature, activeIndex, value]);
+  }, [_setSaveSignature, isTabPanelSelected, activeIndex, value]);
 
   const handleInputChange = e => {
     const value = e.target.value;
@@ -65,12 +66,13 @@ const TextSignature = ({ _setSaveSignature }) => {
           >
             <div className="text-signature-background" />
             <Canvas
-              text={value}
-              font={font}
-              onSelect={() => setActiveIndex(index)}
               ref={el => {
                 canvasesRef.current[index] = el;
               }}
+              text={value}
+              font={font}
+              onSelect={() => setActiveIndex(index)}
+              isTabPanelSelected={isTabPanelSelected}
             />
           </div>
         ))}
@@ -83,8 +85,20 @@ TextSignature.propTypes = propTypes;
 
 export default TextSignature;
 
-const Canvas = React.forwardRef(({ text, font, onSelect }, forwardedRef) => {
+const Canvas = React.forwardRef(({ text, font, onSelect, isTabPanelSelected }, forwardedRef) => {
   const canvasRef = useRef();
+
+  useEffect(() => {
+    // the panel have display: none when it's not selected, which may affect the canvas size
+    // so we resize the canvas whenever this panel is selected
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const { width, height } = canvas.getBoundingClientRect();
+      canvas.width = width;
+      canvas.height = height;
+    }
+  }, [isTabPanelSelected]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -99,7 +113,7 @@ const Canvas = React.forwardRef(({ text, font, onSelect }, forwardedRef) => {
     ctx.font = `${fontSize} ${font}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-  }, [font]);
+  }, [font, isTabPanelSelected]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -109,7 +123,7 @@ const Canvas = React.forwardRef(({ text, font, onSelect }, forwardedRef) => {
     ctx.fillStyle = '#000';
     ctx.clearRect(0, 0, width, height);
     ctx.fillText(text, width / 2, height / 2, width);
-  }, [text]);
+  }, [text, isTabPanelSelected]);
 
   const handleClick = () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -137,4 +151,5 @@ Canvas.propTypes = {
   text: PropTypes.string.isRequired,
   font: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired,
+  isTabPanelSelected: PropTypes.bool,
 };
