@@ -7,13 +7,13 @@ import './Tabs.scss';
 const TabsContext = React.createContext();
 
 export const Tabs = props => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <TabsContext.Provider
       value={{
-        activeIndex,
-        setActiveIndex,
+        currentIndex,
+        setCurrentIndex,
       }}
     >
       {props.children}
@@ -25,55 +25,85 @@ Tabs.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const TabList = props => {
-  const { activeIndex } = useContext(TabsContext);
+export const TabList = ({ children }) => {
+  const { currentIndex } = useContext(TabsContext);
 
   return (
     <div className="tab-list">
-      {React.Children.map(props.children, (child, index) =>
+      {React.Children.map(children, (child, index) =>
         React.cloneElement(child, {
           index,
-          isActive: activeIndex === index,
+          isSelected: currentIndex === index,
         }),
       )}
     </div>
   );
 };
 
-export const Tab = ({ children, index }) => {
-  const { activeIndex, setActiveIndex } = useContext(TabsContext);
-  const className = classNames({
-    active: activeIndex === index,
-    [children.props.className]: !!children.props.className,
-  });
-  // TODO: check if children.type is a function
-  // TODO: check if it's just a string
-
-  return React.cloneElement(children, {
-    className,
-    onClick: () => {
-      if (children.props.onClick) {
-        children.props.onClick();
-      }
-
-      setActiveIndex(index);
-    },
-  });
+TabList.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
-export const TabPanels = props => {
-  const { activeIndex } = useContext(TabsContext);
+export const Tab = ({ children, index, isSelected }) => {
+  const { setCurrentIndex } = useContext(TabsContext);
+
+  let propsToInject = {
+    className: classNames({
+      selected: isSelected,
+      [children.props.className]: !!children.props.className,
+    }),
+    onClick: () => {
+      children.props.onClick?.();
+      setCurrentIndex(index);
+    },
+  };
+
+  // only inject isSelected if children is a component
+  if (typeof children.type === 'function') {
+    propsToInject = Object.assign(propsToInject, {
+      isTabSelected: isSelected,
+    });
+  }
+
+  return React.cloneElement(children, propsToInject);
+};
+
+Tab.propTypes = {
+  children: PropTypes.node.isRequired,
+  index: PropTypes.number,
+  isSelected: PropTypes.bool,
+};
+
+export const TabPanels = ({ children }) => {
+  const { currentIndex } = useContext(TabsContext);
 
   return (
     <div className="tab-panels">
-      {React.Children.map(props.children, (child, index) =>
+      {React.Children.map(children, (child, index) =>
         React.cloneElement(child, {
-          isActive: activeIndex === index,
+          isSelected: currentIndex === index,
         }),
       )}
     </div>
   );
 };
 
-export const TabPanel = ({ isActive, children }) =>
-  (isActive ? children : null);
+TabPanels.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+// eslint-disable-next-line arrow-body-style
+export const TabPanel = ({ isSelected, children }) => {
+  return (
+    <div className="tab-panel" style={{ display: isSelected ? '' : 'none' }}>
+      {typeof children.type === 'function'
+        ? React.cloneElement(children, { isTabPanelSelected: isSelected })
+        : children}
+    </div>
+  );
+};
+
+TabPanel.propTypes = {
+  children: PropTypes.node.isRequired,
+  isSelected: PropTypes.bool,
+};

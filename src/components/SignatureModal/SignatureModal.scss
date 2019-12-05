@@ -20,12 +20,11 @@
       display: flex;
       justify-content: space-between;
 
-      p {
-        margin: 0px;
-        padding: 0px 10px;
+      span {
+        padding: 0px 12px;
         border-bottom: 3px solid transparent;
         
-        &.active {
+        &.selected {
           border-bottom: 3px solid $pdftron-blue;
         }
         

@@ -16,22 +16,33 @@ import './InkSignature.scss';
 const propTypes = {
   isModalOpen: PropTypes.bool,
   _setSaveSignature: PropTypes.func,
+  isTabPanelSelected: PropTypes.bool,
 };
 
-const InkSignature = ({ isModalOpen, _setSaveSignature }) => {
+const InkSignature = ({
+  isModalOpen,
+  _setSaveSignature,
+  isTabPanelSelected,
+}) => {
   const canvasRef = useRef();
+  const freeHandPathRef = useRef();
   const [canClear, setCanClear] = useState(false);
   const [t] = useTranslation();
-  const signatureTool = core.getTool('AnnotationCreateSignature');
 
   const setSignatureCanvasSize = () => {
     const canvas = canvasRef.current;
 
     if (canvas) {
+      // since the canvas will be cleared when the size changes,
+      // we grab the image data before resizing and use it to redraw afterwards
       const { width, height } = canvas.getBoundingClientRect();
-      // TODO: get canvas multiplier?
+      const ctx = canvasRef.current.getContext('2d');
+      const imageData = ctx.getImageData(0, 0, width, height);
+
       canvas.width = width;
       canvas.height = height;
+
+      ctx.putImageData(imageData, 0, 0);
     }
   };
 
@@ -43,33 +54,29 @@ const InkSignature = ({ isModalOpen, _setSaveSignature }) => {
       window.removeEventListener('resize', setSignatureCanvasSize);
       window.removeEventListener('orientationchange', setSignatureCanvasSize);
     };
-  });
+  }, []);
 
   useEffect(() => {
-    const handleDrawing = _.throttle(() => {
-      if (!signatureTool.isEmptySignature()) {
-        _setSaveSignature(true);
-        setCanClear(true);
-      }
-    }, 300);
-
+    const signatureTool = core.getTool('AnnotationCreateSignature');
     const canvas = canvasRef.current;
+
     if (canvas) {
       signatureTool.setSignatureCanvas(canvas);
-
       const multiplier = window.utils.getCanvasMultiplier();
       canvas.getContext('2d').scale(multiplier, multiplier);
-      canvas.addEventListener('mousemove', handleDrawing);
-      canvas.addEventListener('touchmove', handleDrawing);
+    }
+  }, []);
 
+  useLayoutEffect(() => {
+    if (isTabPanelSelected) {
+      // the panel have display: none when it's not selected, which may affect the canvas size
+      // so we resize the canvas whenever this panel is selected
       setSignatureCanvasSize();
 
-      return () => {
-        canvas.removeEventListener('mousemove', handleDrawing);
-        canvas.removeEventListener('touchmove', handleDrawing);
-      };
+      const signatureTool = core.getTool('AnnotationCreateSignature');
+      signatureTool.setSignature(freeHandPathRef.current);
     }
-  }, [_setSaveSignature, signatureTool]);
+  }, [isTabPanelSelected]);
 
   useLayoutEffect(() => {
     // use layout effect here because we want to clear the signature canvas
@@ -80,15 +87,24 @@ const InkSignature = ({ isModalOpen, _setSaveSignature }) => {
   }, [clearCanvas, isModalOpen]);
 
   const clearCanvas = useCallback(() => {
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+
     signatureTool.clearSignatureCanvas();
     setCanClear(false);
     _setSaveSignature(false);
-  }, [_setSaveSignature, signatureTool]);
+  }, [_setSaveSignature]);
 
-  const clearBtnClass = classNames({
-    'ink-signature-clear': true,
-    active: canClear,
-  });
+  const handleDrawing = _.throttle(() => {
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+
+    if (!signatureTool.isEmptySignature()) {
+      _setSaveSignature(true);
+      setCanClear(true);
+
+      freeHandPathRef.current = signatureTool.annot.getPaths();
+      console.log(freeHandPathRef.current);
+    }
+  }, 300);
 
   return (
     <div className="ink-signature">
@@ -96,11 +112,19 @@ const InkSignature = ({ isModalOpen, _setSaveSignature }) => {
         width="100%"
         height="100%"
         className="ink-signature-canvas"
+        onMouseMove={handleDrawing}
+        onTouchMove={handleDrawing}
         ref={canvasRef}
       />
       <div className="ink-signature-background">
         <div className="ink-signature-sign-here">{t('message.signHere')}</div>
-        <div className={clearBtnClass} onClick={clearCanvas}>
+        <div
+          className={classNames({
+            'ink-signature-clear': true,
+            active: canClear,
+          })}
+          onClick={clearCanvas}
+        >
           {t('action.clear')}
         </div>
       </div>

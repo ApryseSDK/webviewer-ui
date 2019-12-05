@@ -88,13 +88,13 @@ const SignatureModal = () => {
           <div className="header">
             <TabList>
               <Tab>
-                <p>Draw</p>
+                <span>Draw</span>
               </Tab>
               <Tab>
-                <p>Type</p>
+                <span>Type</span>
               </Tab>
               <Tab>
-                <p>Upload</p>
+                <span>Upload</span>
               </Tab>
             </TabList>
             <ActionButton

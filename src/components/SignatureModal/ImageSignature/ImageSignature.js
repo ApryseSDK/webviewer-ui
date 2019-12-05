@@ -9,27 +9,26 @@ import './ImageSignature.scss';
 
 const propTypes = {
   _setSaveSignature: PropTypes.func.isRequired,
+  isTabPanelSelected: PropTypes.bool.isRequired,
 };
 
 const acceptedFileTypes = ['png', 'jpg', 'jpeg'];
 
-const ImageSignature = ({ _setSaveSignature }) => {
+const ImageSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const fileInputRef = useRef();
   const [t] = useTranslation();
-  const signatureTool = core.getTool('AnnotationCreateSignature');
 
   useEffect(() => {
-    _setSaveSignature(!!imageSrc);
-    signatureTool.setSignature(imageSrc);
+    const signatureTool = core.getTool('AnnotationCreateSignature');
 
-    // should probably move this to WebViewer
-    if (!imageSrc) {
-      signatureTool.annot = null;
+    if (isTabPanelSelected) {
+      _setSaveSignature(!!imageSrc);
+      signatureTool.setSignature(imageSrc);
     }
-  }, [_setSaveSignature, imageSrc, signatureTool]);
+  }, [imageSrc, isTabPanelSelected, _setSaveSignature]);
 
   const handleFileChange = e => {
     readFile(e.target.files[0]);
