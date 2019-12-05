@@ -37,6 +37,7 @@
     }
 
     button {
+      font-family: inherit;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -45,7 +46,6 @@
       border: 1px solid $pdftron-blue;
       color: $pdftron-blue;
       font-size: inherit;
-      font-weight: 600;
       cursor: pointer;
 
       &:hover {
