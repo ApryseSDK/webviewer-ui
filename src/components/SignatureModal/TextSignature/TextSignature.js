@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+
+import FontHandler from 'components/FontHandler';
 
 import core from 'core';
 import selectors from 'selectors';
@@ -14,10 +16,7 @@ const propTypes = {
 };
 
 const TextSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
-  const fonts = useSelector(
-    state => selectors.getSignatureFonts(state),
-    shallowEqual,
-  );
+  const fonts = useSelector(state => selectors.getSignatureFonts(state));
   const [value, setValue] = useState(core.getCurrentUser());
   const [activeIndex, setActiveIndex] = useState(0);
   const canvasesRef = useRef([]);
@@ -37,7 +36,9 @@ const TextSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
       _setSaveSignature(!!value);
 
       if (value) {
-        signatureTool.setSignature(canvasesRef.current[activeIndex].toDataURL());
+        signatureTool.setSignature(
+          canvasesRef.current[activeIndex].toDataURL(),
+        );
       } else {
         signatureTool.setSignature(null);
       }
@@ -79,6 +80,7 @@ const TextSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
           </div>
         ))}
       </div>
+      <FontHandler fonts={fonts} />
     </div>
   );
 };
@@ -107,9 +109,9 @@ const Canvas = React.forwardRef(
       }
     }, [drawTextSignature, isTabPanelSelected, setFont]);
 
-    useEffect(() => setFont(), [setFont]);
+    useEffect(() => setFont(), [font, setFont]);
 
-    useEffect(() => drawTextSignature(), [drawTextSignature]);
+    useEffect(() => drawTextSignature(), [text, drawTextSignature]);
 
     const setFont = useCallback(() => {
       const canvas = canvasRef.current;
