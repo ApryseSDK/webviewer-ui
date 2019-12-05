@@ -147,8 +147,13 @@
       
       &.visible {
         display: flex;
+        flex-wrap: wrap;
         padding: 5px 0 0 20px;
       }
+    }
+
+    .search-option {
+      width: 115px;
     }
 
     .no-result {

@@ -152,7 +152,8 @@
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",
-      "wholeWordOnly": "Whole word"
+      "wholeWordOnly": "Whole word",
+      "wildcard": "Wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Add a signature"
