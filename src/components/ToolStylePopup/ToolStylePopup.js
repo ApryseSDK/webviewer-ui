@@ -147,6 +147,7 @@ class ToolStylePopup extends React.PureComponent {
         className={classNames({
           ToolStylePopup: true,
         })}
+        style={{ width: this.props.siblingWidth }}
         data-element="toolStylePopup"
         ref={this.popup}
         onClick={this.handleClick}

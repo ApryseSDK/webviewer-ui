@@ -75,14 +75,12 @@ class ColorPalette extends React.PureComponent {
     return (
       <div className="ColorPalette" data-element="colorPalette">
         {this.palette.map((row, i) =>
-          <div className="row" key={i}>
-            {row.map((bg, j) => {
-              if (i === 3 && j === 0) {
-                return this.renderTransparencyCell(bg, j);
-              }
-              return this.renderColorCell(bg, j);
-            })}
-          </div>,
+          row.map((bg, j) => {
+            if (i === 3 && j === 0) {
+              return this.renderTransparencyCell(bg, j);
+            }
+            return this.renderColorCell(bg, j);
+          }),
         )}
       </div>
     );

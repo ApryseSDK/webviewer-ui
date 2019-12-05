@@ -1,56 +1,13 @@
 @import '../../constants/styles.scss';
 
 .ColorPalette {
-  margin-top: 6px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 
-  .row {
-    display: flex;
-    flex-direction: row;
-    margin: 1px 0;
-
-    &:nth-child(4) {
-      .cell:nth-child(1), .cell:nth-child(2) {
-        border: 1px solid #e0e0e0;
-        overflow: hidden;
-        background-color: $white;
-      }
-    }
-
-    .cell {
-      @extend %cell;
-      position: relative;
-      justify-content: center;
-      align-items: center;
-      border-radius: 1px;
-      border: 1px solid transparent;
-
-      @include mobile {
-        height: 30px;
-        margin: 0 1.2px;
-      }
-
-      &:hover {
-        cursor: pointer;
-      }
-    
-      .check-mark {
-        width: 20px;
-        height: 20px;
-
-        &.dark {
-          color: rgba(0, 0, 0, 0.54);
-        }
-
-        &.bright {
-          color: rgba(255, 255, 255, 0.70);
-        }
-      }
-    }
-  }
-
-  .dummy-cell {
-    @extend %cell;
+  .cell {
+    width: 50px;
+    height: 50px;
+    border-radius: 10000000px;
+    background: black;
   }
 }

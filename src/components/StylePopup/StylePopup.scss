@@ -44,21 +44,9 @@
 
   .sliders-container {
     .sliders {
-      display: grid;
-      grid-template-columns: auto 1fr 33px;
-      grid-auto-rows: 32px;
-      grid-column-gap: 5px;
+      display: flex;
       align-items: center;
       margin: 12px 16px;
-      overflow: hidden;
-
-      @include mobile {
-        grid-auto-rows: 48px;
-      }
-
-      &:empty {
-        margin: 0;
-      }
     }
   }
 }

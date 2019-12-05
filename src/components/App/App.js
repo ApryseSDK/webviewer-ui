@@ -1,7 +1,8 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useStore } from 'react-redux';
+import { useStore, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import selectors from 'selectors';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
@@ -45,6 +46,12 @@ const propTypes = {
 };
 
 const App = ({ removeEventHandlers }) => {
+  const [isToolsOverlayOpen] = useSelector(
+    state => [
+      selectors.isElementOpen(state, 'toolsOverlay'),
+    ],
+  );
+
   const store = useStore();
 
   useEffect(() => {
@@ -77,7 +84,7 @@ const App = ({ removeEventHandlers }) => {
         <ZoomOverlay />
         <MeasurementOverlay />
         <AnnotationContentOverlay />
-        <ToolsOverlay />
+        {isToolsOverlayOpen && <ToolsOverlay />}
 
         <AnnotationPopup />
         <TextPopup />
