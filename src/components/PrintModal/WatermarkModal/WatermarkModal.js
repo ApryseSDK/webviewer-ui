@@ -270,8 +270,6 @@ class WatermarkModal extends React.PureComponent {
     return locationSetting.isSelected;
   });
 
-  isTextValid = text => text !== undefined && text !== null && text !== '';
-
   onColorChanged = newColor => {
     const currLocation = this.getCurrentSelectedLocation();
     const currLocationSetting = this.state.locationSettings[currLocation];
@@ -279,11 +277,11 @@ class WatermarkModal extends React.PureComponent {
     const locationSettings = {
       ...this.state.locationSettings,
     };
-    if (!this.isTextValid(currLocationSetting[FORM_FIELD_KEYS.text])) {
+    if (!(currLocationSetting[FORM_FIELD_KEYS.text])) {
       // if text is undefined, persist the changed color to other location settings (customer's request)
       Object.keys(WATERMARK_LOCATIONS).forEach(location => {
         const locationSetting = locationSettings[location];
-        if (!this.isTextValid(locationSetting[FORM_FIELD_KEYS.text])) {
+        if (!(locationSetting[FORM_FIELD_KEYS.text])) {
           locationSetting[FORM_FIELD_KEYS.color] = new window.Annotations.Color(newColor.R, newColor.G, newColor.B);
         }
       });
