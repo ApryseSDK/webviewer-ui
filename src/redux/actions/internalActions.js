@@ -409,6 +409,10 @@ export const setWholeWord = isWholeWord => ({
   type: 'SET_WHOLE_WORD',
   payload: { isWholeWord },
 });
+export const setWildcard = isWildcard => ({
+  type: 'SET_WILD_CARD',
+  payload: { isWildcard }
+});
 export const setIsSearching = isSearching => ({
   type: 'SET_IS_SEARCHING',
   payload: { isSearching },
