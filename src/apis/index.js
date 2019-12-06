@@ -100,6 +100,7 @@ import setNotesPanelSort from './setNotesPanelSort';
 import setPageLabels from './setPageLabels';
 import setPrintQuality from './setPrintQuality';
 import setReadOnly from './setReadOnly';
+import setSelectedTab from './setSelectedTab';
 import setShowSideWindow from './setShowSideWindow';
 import setSideWindowVisibility from './setSideWindowVisibility';
 import setSortNotesBy from './setSortNotesBy';
@@ -191,6 +192,7 @@ export default store => {
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
     setSignatureFonts: setSignatureFonts(store),
+    setSelectedTab: setSelectedTab(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),
