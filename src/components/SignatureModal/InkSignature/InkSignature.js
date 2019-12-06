@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-  useCallback,
-} from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -52,7 +46,7 @@ const InkSignature = ({
   }, []);
 
   useEffect(() => {
-    if (isTabPanelSelected) {
+    if (isModalOpen && isTabPanelSelected) {
       // the panel have display: none when it's not selected, which may affect the canvas size
       // so we resize the canvas whenever this panel is selected
       setSignatureCanvasSize();
@@ -62,15 +56,12 @@ const InkSignature = ({
       setCanClear(!!freeHandPathRef.current);
       _setSaveSignature(!!freeHandPathRef.current);
     }
-  }, [isTabPanelSelected, _setSaveSignature, setSignatureCanvasSize]);
-
-  useLayoutEffect(() => {
-    // use layout effect here because we want to clear the signature canvas
-    // before browser paints, otherwise we will see a flash where the signature disappears after the modal opens
-    if (isModalOpen && isTabPanelSelected) {
-      clearCanvas();
-    }
-  }, [clearCanvas, isModalOpen, isTabPanelSelected]);
+  }, [
+    isTabPanelSelected,
+    _setSaveSignature,
+    setSignatureCanvasSize,
+    isModalOpen,
+  ]);
 
   const setSignatureCanvasSize = useCallback(() => {
     const canvas = canvasRef.current;

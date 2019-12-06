@@ -8,13 +8,18 @@ import ActionButton from 'components/ActionButton';
 import './ImageSignature.scss';
 
 const propTypes = {
+  isModalOpen: PropTypes.bool,
   _setSaveSignature: PropTypes.func.isRequired,
-  isTabPanelSelected: PropTypes.bool.isRequired,
+  isTabPanelSelected: PropTypes.bool,
 };
 
 const acceptedFileTypes = ['png', 'jpg', 'jpeg'];
 
-const ImageSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
+const ImageSignature = ({
+  isModalOpen,
+  _setSaveSignature,
+  isTabPanelSelected,
+}) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -24,11 +29,11 @@ const ImageSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
-    if (isTabPanelSelected) {
+    if (isModalOpen && isTabPanelSelected) {
       _setSaveSignature(!!imageSrc);
       signatureTool.setSignature(imageSrc);
     }
-  }, [imageSrc, isTabPanelSelected, _setSaveSignature]);
+  }, [imageSrc, isTabPanelSelected, _setSaveSignature, isModalOpen]);
 
   const handleFileChange = e => {
     readFile(e.target.files[0]);

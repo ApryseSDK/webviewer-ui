@@ -124,7 +124,7 @@ import setSignatureFonts from './setSignatureFonts';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 
-export default store => {  
+export default store => {
   window.readerControl = {
     docViewer: window.docViewer,
     FitMode,

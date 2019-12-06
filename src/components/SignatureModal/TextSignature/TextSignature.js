@@ -11,11 +11,16 @@ import selectors from 'selectors';
 import './TextSignature.scss';
 
 const propTypes = {
+  isModalOpen: PropTypes.bool,
   _setSaveSignature: PropTypes.func.isRequired,
   isTabPanelSelected: PropTypes.bool,
 };
 
-const TextSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
+const TextSignature = ({
+  isModalOpen,
+  _setSaveSignature,
+  isTabPanelSelected,
+}) => {
   const fonts = useSelector(state => selectors.getSignatureFonts(state));
   const [value, setValue] = useState(core.getCurrentUser());
   const [activeIndex, setActiveIndex] = useState(0);
@@ -32,7 +37,7 @@ const TextSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
-    if (isTabPanelSelected) {
+    if (isModalOpen && isTabPanelSelected) {
       _setSaveSignature(!!value);
 
       if (value) {
@@ -43,7 +48,7 @@ const TextSignature = ({ _setSaveSignature, isTabPanelSelected }) => {
         signatureTool.setSignature(null);
       }
     }
-  }, [_setSaveSignature, isTabPanelSelected, activeIndex, value]);
+  }, [_setSaveSignature, isTabPanelSelected, activeIndex, value, isModalOpen]);
 
   const handleInputChange = e => {
     const value = e.target.value;

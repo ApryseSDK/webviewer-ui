@@ -113,10 +113,16 @@ const SignatureModal = () => {
               />
             </TabPanel>
             <TabPanel>
-              <TextSignature _setSaveSignature={_setSaveSignature} />
+              <TextSignature
+                isModalOpen={isOpen}
+                _setSaveSignature={_setSaveSignature}
+              />
             </TabPanel>
             <TabPanel>
-              <ImageSignature _setSaveSignature={_setSaveSignature} />
+              <ImageSignature
+                isModalOpen={isOpen}
+                _setSaveSignature={_setSaveSignature}
+              />
             </TabPanel>
           </TabPanels>
         </Tabs>
