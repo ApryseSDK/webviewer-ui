@@ -1,6 +1,9 @@
 import React, { useState, useContext } from 'react';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+
+import selectors from 'selectors';
 
 import './Tabs.scss';
 
@@ -44,7 +47,10 @@ TabList.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const Tab = ({ children, index, isSelected }) => {
+export const Tab = ({ children, index, isSelected, dataElement }) => {
+  const isDisabled = useSelector(state =>
+    selectors.isElementDisabled(state, dataElement),
+  );
   const { setCurrentIndex } = useContext(TabsContext);
 
   let propsToInject = {
@@ -58,20 +64,28 @@ export const Tab = ({ children, index, isSelected }) => {
     },
   };
 
+  // need to do this because the children may be wrapped by React.memo
+  const type = typeof (children.type.type || children.type);
   // only inject isSelected if children is a component
-  if (typeof children.type === 'function') {
+  if (type === 'function') {
     propsToInject = Object.assign(propsToInject, {
       isTabSelected: isSelected,
+      dataElement,
+    });
+  } else {
+    propsToInject = Object.assign(propsToInject, {
+      'data-element': dataElement,
     });
   }
 
-  return React.cloneElement(children, propsToInject);
+  return isDisabled ? null : React.cloneElement(children, propsToInject);
 };
 
 Tab.propTypes = {
   children: PropTypes.node.isRequired,
   index: PropTypes.number,
   isSelected: PropTypes.bool,
+  dataElement: PropTypes.string.isRequired,
 };
 
 export const TabPanels = ({ children }) => {
@@ -92,10 +106,17 @@ TabPanels.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-// eslint-disable-next-line arrow-body-style
-export const TabPanel = ({ isSelected, children }) => {
-  return (
-    <div className="tab-panel" style={{ display: isSelected ? '' : 'none' }}>
+export const TabPanel = ({ isSelected, children, dataElement }) => {
+  const isDisabled = useSelector(state =>
+    selectors.isElementDisabled(state, dataElement),
+  );
+
+  return isDisabled ? null : (
+    <div
+      className="tab-panel"
+      data-element={dataElement}
+      style={{ display: isSelected ? '' : 'none' }}
+    >
       {typeof children.type === 'function'
         ? React.cloneElement(children, { isTabPanelSelected: isSelected })
         : children}
@@ -106,4 +127,5 @@ export const TabPanel = ({ isSelected, children }) => {
 TabPanel.propTypes = {
   children: PropTypes.node.isRequired,
   isSelected: PropTypes.bool,
+  dataElement: PropTypes.string.isRequired,
 };

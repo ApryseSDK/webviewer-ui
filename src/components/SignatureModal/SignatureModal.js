@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import Button from 'components/Button';
 import ActionButton from 'components/ActionButton';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
@@ -87,14 +88,14 @@ const SignatureModal = () => {
         <Tabs>
           <div className="header">
             <TabList>
-              <Tab>
-                <span>{t('action.draw')}</span>
+              <Tab dataElement="inkSignaturePanelButton">
+                <Button label={t('action.draw')} />
               </Tab>
-              <Tab>
-                <span>{t('action.type')}</span>
+              <Tab dataElement="textSignaturePanelButton">
+                <Button label={t('action.type')} />
               </Tab>
-              <Tab>
-                <span>{t('action.upload')}</span>
+              <Tab dataElement="imageSignaturePanelButton">
+                <Button label={t('action.upload')} />
               </Tab>
             </TabList>
             <ActionButton
@@ -106,19 +107,19 @@ const SignatureModal = () => {
           </div>
 
           <TabPanels>
-            <TabPanel>
+            <TabPanel dataElement="inkSignaturePanel">
               <InkSignature
                 isModalOpen={isOpen}
                 _setSaveSignature={_setSaveSignature}
               />
             </TabPanel>
-            <TabPanel>
+            <TabPanel dataElement="textSignaturePanel">
               <TextSignature
                 isModalOpen={isOpen}
                 _setSaveSignature={_setSaveSignature}
               />
             </TabPanel>
-            <TabPanel>
+            <TabPanel dataElement="imageSignaturePanel">
               <ImageSignature
                 isModalOpen={isOpen}
                 _setSaveSignature={_setSaveSignature}

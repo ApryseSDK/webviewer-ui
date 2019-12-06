@@ -4,7 +4,5 @@ import defaultTool from 'constants/defaultTool';
 export default () => signatureAnnotation => {
   core.setToolMode(defaultTool);
   core.getTool('AnnotationCreateSignature').hidePreview();
-  setTimeout(() => {
-    core.selectAnnotation(signatureAnnotation);
-  }, 0);
+  core.selectAnnotation(signatureAnnotation);
 };
