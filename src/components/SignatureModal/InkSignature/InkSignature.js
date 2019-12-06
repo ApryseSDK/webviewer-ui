@@ -65,7 +65,7 @@ const InkSignature = ({
   const setSignatureCanvasSize = useCallback(() => {
     const canvas = canvasRef.current;
 
-    if (isTabPanelSelected && canvas) {
+    if (isModalOpen && isTabPanelSelected && canvas) {
       // since the canvas will be cleared when the size changes,
       // we grab the image data before resizing and use it to redraw afterwards
       const { width, height } = canvas.getBoundingClientRect();
@@ -77,7 +77,7 @@ const InkSignature = ({
 
       ctx.putImageData(imageData, 0, 0);
     }
-  }, [isTabPanelSelected]);
+  }, [isModalOpen, isTabPanelSelected]);
 
   const clearCanvas = useCallback(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
