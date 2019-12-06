@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import Button from 'components/Button';
 import ActionButton from 'components/ActionButton';
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'components/Tabs';
+import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
 import TextSignature from 'components/SignatureModal/TextSignature';
 import ImageSignature from 'components/SignatureModal/ImageSignature';
@@ -83,7 +83,11 @@ const SignatureModal = () => {
   });
 
   return isDisabled ? null : (
-    <div className={modalClass} onMouseDown={closeModal}>
+    <div
+      className={modalClass}
+      data-element="signatureModal"
+      onMouseDown={closeModal}
+    >
       <div className="container" onMouseDown={e => e.stopPropagation()}>
         <Tabs id="signatureModal">
           <div className="header">

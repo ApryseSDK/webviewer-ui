@@ -26,7 +26,7 @@ export const Tab = ({ children, dataElement }) => {
   const id = useContext(TabsContext);
   const [isDisabled, isSelected] = useSelector(state => [
     selectors.isElementDisabled(state, dataElement),
-    selectors.getCurrentTab(state, id) === dataElement,
+    selectors.getSelectedTab(state, id) === dataElement,
   ]);
   const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ export const Tab = ({ children, dataElement }) => {
     }),
     onClick: () => {
       children.props.onClick?.();
-      dispatch(actions.setCurrentTab(id, dataElement));
+      dispatch(actions.setSelectedTab(id, dataElement));
     },
   };
 
@@ -68,7 +68,7 @@ export const TabPanel = ({ children, dataElement }) => {
   const id = useContext(TabsContext);
   const [isDisabled, isSelected] = useSelector(state => [
     selectors.isElementDisabled(state, dataElement),
-    selectors.getCurrentTab(state, id).includes(dataElement),
+    selectors.getSelectedTab(state, id).includes(dataElement),
   ]);
 
   return isDisabled ? null : (

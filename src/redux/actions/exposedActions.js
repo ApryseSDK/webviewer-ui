@@ -214,7 +214,7 @@ export const setMaxSignaturesCount = maxSignaturesCount => ({
   type: 'SET_MAX_SIGNATURES_COUNT',
   payload: { maxSignaturesCount },
 });
-export const setCurrentTab = (id, dataElement) => ({
-  type: 'SET_CURRENT_TAB',
+export const setSelectedTab = (id, dataElement) => ({
+  type: 'SET_SELECTED_TAB',
   payload: { id, dataElement },
 });
