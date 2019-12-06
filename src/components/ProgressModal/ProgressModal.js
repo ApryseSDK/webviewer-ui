@@ -55,8 +55,7 @@ const ProgressModal = () => {
           <div
             className="progress-bar"
             style={{
-              transform: `translateX(${-(1 - progressToUse) * 100}%`,
-              transition: progressToUse ? 'transform 0.5s ease' : 'none',
+              transform: `translateX(${-(1 - progressToUse) * 100}%)`,
             }}
           />
         </div>
