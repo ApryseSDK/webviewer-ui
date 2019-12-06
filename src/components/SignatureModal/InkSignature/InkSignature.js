@@ -89,7 +89,7 @@ const InkSignature = ({
     freeHandPathRef.current = null;
   }, [_setSaveSignature]);
 
-  const handleDrawing = _.throttle(() => {
+  const handleFinishDrawing = () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
     if (!signatureTool.isEmptySignature()) {
@@ -98,7 +98,7 @@ const InkSignature = ({
 
       freeHandPathRef.current = signatureTool.annot.getPaths();
     }
-  }, 300);
+  };
 
   return (
     <div className="ink-signature">
@@ -106,8 +106,8 @@ const InkSignature = ({
         width="100%"
         height="100%"
         className="ink-signature-canvas"
-        onMouseMove={handleDrawing}
-        onTouchMove={handleDrawing}
+        onMouseUp={handleFinishDrawing}
+        onTouchEnd={handleFinishDrawing}
         ref={canvasRef}
       />
       <div className="ink-signature-background">

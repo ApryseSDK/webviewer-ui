@@ -88,13 +88,13 @@ const SignatureModal = () => {
           <div className="header">
             <TabList>
               <Tab>
-                <span>Draw</span>
+                <span>{t('action.draw')}</span>
               </Tab>
               <Tab>
-                <span>Type</span>
+                <span>{t('action.type')}</span>
               </Tab>
               <Tab>
-                <span>Upload</span>
+                <span>{t('action.upload')}</span>
               </Tab>
             </TabList>
             <ActionButton
@@ -144,7 +144,7 @@ const SignatureModal = () => {
                 onChange={toggleSaveSignature}
               />
               <label htmlFor="default-signature">
-                {t('action.saveSignature')}
+                {t('option.signatureModal.saveSignature')}
               </label>
             </div>
           )}

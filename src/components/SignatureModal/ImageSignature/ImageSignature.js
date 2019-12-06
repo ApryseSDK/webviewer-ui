@@ -115,8 +115,8 @@ const ImageSignature = ({
           onDrop={handleFileDrop}
           onDragExit={handleDragExit}
         >
-          <div className="image-signature-dnd">Drag & Drop your image here</div>
-          <div className="image-signature-separator">or</div>
+          <div className="image-signature-dnd">{t('option.signatureModal.dragAndDrop')}</div>
+          <div className="image-signature-separator">{t('option.signatureModal.or')}</div>
           <div className="image-signature-upload">
             <input
               ref={fileInputRef}
@@ -126,7 +126,7 @@ const ImageSignature = ({
               onChange={handleFileChange}
             />
             <button onClick={() => fileInputRef.current.click()}>
-              Pick Signature Image
+              {t('option.signatureModal.pickImage')}
             </button>
           </div>
           {isDragging && <div className="image-signature-background" />}

@@ -28,13 +28,15 @@
     "save": "Save",
     "create": "Create",
     "showMoreResults": "Show more results",
-    "saveSignature": "Save signature",
     "sign": "Sign",
     "style": "Style",
     "submit": "Submit",
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom out"
+    "zoomOut": "Zoom out",
+    "draw": "Draw",
+    "type": "Type",
+    "upload": "Upload"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",
@@ -157,6 +159,12 @@
     },
     "signatureOverlay": {
       "addSignature": "Add a signature"
+    },
+    "signatureModal": {
+      "saveSignature": "Save signature",
+      "dragAndDrop": "Drag & Drop your image here",
+      "or": "Or",
+      "pickImage": "Pick Signature Image"
     },
     "status": {
       "status": "Status"
