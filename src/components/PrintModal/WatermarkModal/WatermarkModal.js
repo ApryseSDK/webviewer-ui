@@ -154,7 +154,7 @@ class WatermarkModal extends React.PureComponent {
       fontStyles.push(core.getFontStyles().ITALIC);
     }
     if (value.isUnderlined) {
-      fontStyles.push(core.getFontStyles().UNDERLINED);
+      fontStyles.push(core.getFontStyles().UNDERLINE);
     }
     const watermarkOption = {
       fontSize: value.fontSize,
