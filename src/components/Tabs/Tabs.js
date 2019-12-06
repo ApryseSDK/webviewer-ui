@@ -1,57 +1,34 @@
-import React, { useState, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import actions from 'actions';
 import selectors from 'selectors';
-
-import './Tabs.scss';
 
 const TabsContext = React.createContext();
 
+// eslint-disable-next-line arrow-body-style
 export const Tabs = props => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   return (
-    <TabsContext.Provider
-      value={{
-        currentIndex,
-        setCurrentIndex,
-      }}
-    >
+    <TabsContext.Provider value={props.id}>
       {props.children}
     </TabsContext.Provider>
   );
 };
 
 Tabs.propTypes = {
+  id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export const TabList = ({ children }) => {
-  const { currentIndex } = useContext(TabsContext);
-
-  return (
-    <div className="tab-list">
-      {React.Children.map(children, (child, index) =>
-        React.cloneElement(child, {
-          index,
-          isSelected: currentIndex === index,
-        }),
-      )}
-    </div>
-  );
-};
-
-TabList.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export const Tab = ({ children, index, isSelected, dataElement }) => {
-  const isDisabled = useSelector(state =>
+export const Tab = ({ children, dataElement }) => {
+  const id = useContext(TabsContext);
+  const [isDisabled, isSelected] = useSelector(state => [
     selectors.isElementDisabled(state, dataElement),
-  );
-  const { setCurrentIndex } = useContext(TabsContext);
+    selectors.getCurrentTab(state, id) === dataElement,
+  ]);
+  const dispatch = useDispatch();
 
   let propsToInject = {
     className: classNames({
@@ -60,7 +37,7 @@ export const Tab = ({ children, index, isSelected, dataElement }) => {
     }),
     onClick: () => {
       children.props.onClick?.();
-      setCurrentIndex(index);
+      dispatch(actions.setCurrentTab(id, dataElement));
     },
   };
 
@@ -84,32 +61,15 @@ export const Tab = ({ children, index, isSelected, dataElement }) => {
 Tab.propTypes = {
   children: PropTypes.node.isRequired,
   index: PropTypes.number,
-  isSelected: PropTypes.bool,
   dataElement: PropTypes.string.isRequired,
 };
 
-export const TabPanels = ({ children }) => {
-  const { currentIndex } = useContext(TabsContext);
-
-  return (
-    <div className="tab-panels">
-      {React.Children.map(children, (child, index) =>
-        React.cloneElement(child, {
-          isSelected: currentIndex === index,
-        }),
-      )}
-    </div>
-  );
-};
-
-TabPanels.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export const TabPanel = ({ isSelected, children, dataElement }) => {
-  const isDisabled = useSelector(state =>
+export const TabPanel = ({ children, dataElement }) => {
+  const id = useContext(TabsContext);
+  const [isDisabled, isSelected] = useSelector(state => [
     selectors.isElementDisabled(state, dataElement),
-  );
+    selectors.getCurrentTab(state, id).includes(dataElement),
+  ]);
 
   return isDisabled ? null : (
     <div
@@ -126,6 +86,5 @@ export const TabPanel = ({ isSelected, children, dataElement }) => {
 
 TabPanel.propTypes = {
   children: PropTypes.node.isRequired,
-  isSelected: PropTypes.bool,
   dataElement: PropTypes.string.isRequired,
 };

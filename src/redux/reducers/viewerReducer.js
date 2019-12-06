@@ -216,6 +216,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
     case 'SET_SIGNATURE_FONTS':
       return { ...state, signatureFonts: payload.signatureFonts };
+    case 'SET_CURRENT_TAB':
+      return { ...state, tab: { ...state.tab, [payload.id]: payload.dataElement } };
     default:
       return state;
   }

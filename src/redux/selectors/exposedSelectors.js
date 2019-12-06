@@ -126,6 +126,8 @@ export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
 export const getSignatureFonts = state => state.viewer.signatureFonts;
 
+export const getCurrentTab = (state, id) => state.viewer.tab[id];
+
 export const getPopupItems = (state, popupDataElement) =>
   state.viewer[popupDataElement] || [];
 

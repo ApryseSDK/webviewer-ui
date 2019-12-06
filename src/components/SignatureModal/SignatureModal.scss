@@ -8,7 +8,7 @@
   .container {
     @extend %modal-shared-container-style;
     border-radius: 4px;
-    box-shadow: 0 2px 16px 0 $signature-modal-shared-color; 
+    box-shadow: 0 2px 16px 0 $signature-modal-shared-color;
     width: 600px;
 
     @include mobile {
@@ -20,17 +20,21 @@
       display: flex;
       justify-content: space-between;
 
-      .Button {
-        padding: 0px 12px;
-        border-bottom: 3px solid transparent;
-        
-        &.selected {
-          border-bottom: 3px solid $pdftron-blue;
-        }
-        
-        &:hover {
-          color: $pdftron-blue;
-          background: transparent;
+      .tab-list {
+        display: flex;
+
+        .Button {
+          padding: 0px 12px;
+          border-bottom: 3px solid transparent;
+
+          &.selected {
+            border-bottom: 3px solid $pdftron-blue;
+          }
+
+          &:hover {
+            color: $pdftron-blue;
+            background: transparent;
+          }
         }
       }
 
@@ -41,7 +45,7 @@
           background: transparent;
 
           svg {
-            color: $pdftron-blue;  
+            color: $pdftron-blue;
           }
         }
       }
@@ -56,10 +60,10 @@
         position: relative;
         margin-left: 8px;
         user-select: none;
-        
+
         input {
           display: none;
-          
+
           & + label:before {
             cursor: pointer;
             content: '';
@@ -82,16 +86,11 @@
             position: absolute;
             left: 4px;
             top: 9px;
-            background: #FFFFFF;
+            background: #ffffff;
             width: 2px;
             height: 2px;
-            box-shadow: 
-              2px 0 0 #FFFFFF,
-              4px 0 0 #FFFFFF,
-              4px -2px 0 #FFFFFF,
-              4px -4px 0 #FFFFFF,
-              4px -6px 0 #FFFFFF,
-              4px -8px 0 #FFFFFF;
+            box-shadow: 2px 0 0 #ffffff, 4px 0 0 #ffffff, 4px -2px 0 #ffffff,
+              4px -4px 0 #ffffff, 4px -6px 0 #ffffff, 4px -8px 0 #ffffff;
             transform: rotate(45deg);
           }
         }
@@ -106,7 +105,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
+        color: #ffffff;
         font-weight: 600;
         padding: 6px 18px;
         margin-right: 8px;
@@ -117,8 +116,8 @@
         cursor: pointer;
 
         &:hover {
-          background: #17324C;
-          border: 1px solid #17324C;
+          background: #17324c;
+          border: 1px solid #17324c;
         }
       }
     }

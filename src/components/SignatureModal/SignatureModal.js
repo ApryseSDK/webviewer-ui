@@ -85,9 +85,9 @@ const SignatureModal = () => {
   return isDisabled ? null : (
     <div className={modalClass} onMouseDown={closeModal}>
       <div className="container" onMouseDown={e => e.stopPropagation()}>
-        <Tabs>
+        <Tabs id="signatureModal">
           <div className="header">
-            <TabList>
+            <div className="tab-list">
               <Tab dataElement="inkSignaturePanelButton">
                 <Button label={t('action.draw')} />
               </Tab>
@@ -97,7 +97,7 @@ const SignatureModal = () => {
               <Tab dataElement="imageSignaturePanelButton">
                 <Button label={t('action.upload')} />
               </Tab>
-            </TabList>
+            </div>
             <ActionButton
               dataElement="signatureModalCloseButton"
               title="action.close"
@@ -106,26 +106,24 @@ const SignatureModal = () => {
             />
           </div>
 
-          <TabPanels>
-            <TabPanel dataElement="inkSignaturePanel">
-              <InkSignature
-                isModalOpen={isOpen}
-                _setSaveSignature={_setSaveSignature}
-              />
-            </TabPanel>
-            <TabPanel dataElement="textSignaturePanel">
-              <TextSignature
-                isModalOpen={isOpen}
-                _setSaveSignature={_setSaveSignature}
-              />
-            </TabPanel>
-            <TabPanel dataElement="imageSignaturePanel">
-              <ImageSignature
-                isModalOpen={isOpen}
-                _setSaveSignature={_setSaveSignature}
-              />
-            </TabPanel>
-          </TabPanels>
+          <TabPanel dataElement="inkSignaturePanel">
+            <InkSignature
+              isModalOpen={isOpen}
+              _setSaveSignature={_setSaveSignature}
+            />
+          </TabPanel>
+          <TabPanel dataElement="textSignaturePanel">
+            <TextSignature
+              isModalOpen={isOpen}
+              _setSaveSignature={_setSaveSignature}
+            />
+          </TabPanel>
+          <TabPanel dataElement="imageSignaturePanel">
+            <ImageSignature
+              isModalOpen={isOpen}
+              _setSaveSignature={_setSaveSignature}
+            />
+          </TabPanel>
         </Tabs>
 
         <div
