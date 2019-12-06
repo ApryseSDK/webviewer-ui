@@ -3,7 +3,7 @@ import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 import { workerTypes } from 'constants/types';
-import { PRIORITY_ONE, PRIORITY_THREE } from 'constants/actionPriority';
+import { PRIORITY_ONE } from 'constants/actionPriority';
 
 let onFirstLoad = true;
 
