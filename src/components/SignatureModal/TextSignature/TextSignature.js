@@ -99,7 +99,7 @@ const Canvas = React.forwardRef(
     const canvasRef = useRef();
 
     useEffect(() => {
-      // the panel have display: none when it's not selected, which may affect the canvas size
+      // the panel has display: none when it's not selected, which will affect the canvas size
       // so we resize the canvas whenever this panel is selected
       const canvas = canvasRef.current;
 
@@ -108,11 +108,12 @@ const Canvas = React.forwardRef(
         canvas.width = width;
         canvas.height = height;
 
-        // TODO: add documentation here
+        // when a canvas's width and height are both 0, changing the value of ctx.font won't actually apply the font
+        // so here we set the font and then redraw the text every time the tab is selected, since this is when a canvas's size can change
         setFont();
         drawTextSignature();
       }
-    }, [drawTextSignature, isTabPanelSelected, setFont]);
+    }, [isTabPanelSelected, drawTextSignature, setFont]);
 
     useEffect(() => setFont(), [font, setFont]);
 

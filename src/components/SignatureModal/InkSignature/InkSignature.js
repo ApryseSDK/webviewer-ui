@@ -19,8 +19,7 @@ const InkSignature = ({
   isTabPanelSelected,
 }) => {
   const canvasRef = useRef();
-  // TODO: add a documentation here
-  const freeHandPathRef = useRef();
+  const freeHandPathsRef = useRef();
   const [canClear, setCanClear] = useState(false);
   const [t] = useTranslation();
 
@@ -47,14 +46,14 @@ const InkSignature = ({
 
   useEffect(() => {
     if (isModalOpen && isTabPanelSelected) {
-      // the panel have display: none when it's not selected, which may affect the canvas size
+      // the panel has display: none when it's not selected, which may affect the canvas size
       // so we resize the canvas whenever this panel is selected
       setSignatureCanvasSize();
 
       const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.setSignature(freeHandPathRef.current);
-      setCanClear(!!freeHandPathRef.current);
-      _setSaveSignature(!!freeHandPathRef.current);
+      signatureTool.setSignature(freeHandPathsRef.current);
+      setCanClear(!!freeHandPathsRef.current);
+      _setSaveSignature(!!freeHandPathsRef.current);
     }
   }, [
     isTabPanelSelected,
@@ -86,7 +85,7 @@ const InkSignature = ({
     signatureTool.clearSignatureCanvas();
     setCanClear(false);
     _setSaveSignature(false);
-    freeHandPathRef.current = null;
+    freeHandPathsRef.current = null;
   }, [_setSaveSignature]);
 
   const handleFinishDrawing = () => {
@@ -96,8 +95,25 @@ const InkSignature = ({
       setCanClear(true);
       _setSaveSignature(true);
 
-      freeHandPathRef.current = signatureTool.annot.getPaths();
+      // need to deep copy the paths because it will be modified
+      // when the annotation is added to the document
+      // we want to keep the unmodified paths so that users can keep drawing on the canvas
+      freeHandPathsRef.current = deepCopy(signatureTool.annot.getPaths());
     }
+  };
+
+  const deepCopy = paths => {
+    const pathsCopy = [];
+    for (let i = 0; i < paths.length; ++i) {
+      for (let j = 0; j < paths[i].length; ++j) {
+        if (!pathsCopy[i]) {
+          pathsCopy[i] = [];
+        }
+        pathsCopy[i][j] = new Annotations.Point(paths[i][j].x, paths[i][j].y);
+      }
+    }
+
+    return pathsCopy;
   };
 
   return (
