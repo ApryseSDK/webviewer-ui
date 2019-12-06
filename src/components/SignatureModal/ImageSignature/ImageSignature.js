@@ -99,7 +99,7 @@ const ImageSignature = ({
     <div className="image-signature">
       {imageSrc ? (
         <div className="image-signature-image-container">
-          <img src={imageSrc} style={{ width: '100%', height: '100%' }} />
+          <img src={imageSrc} />
           <ActionButton
             dataElement="imageSignatureDeleteButton"
             img="ic_delete_black_24px"
@@ -115,8 +115,12 @@ const ImageSignature = ({
           onDrop={handleFileDrop}
           onDragExit={handleDragExit}
         >
-          <div className="image-signature-dnd">{t('option.signatureModal.dragAndDrop')}</div>
-          <div className="image-signature-separator">{t('option.signatureModal.or')}</div>
+          <div className="image-signature-dnd">
+            {t('option.signatureModal.dragAndDrop')}
+          </div>
+          <div className="image-signature-separator">
+            {t('option.signatureModal.or')}
+          </div>
           <div className="image-signature-upload">
             <input
               ref={fileInputRef}
