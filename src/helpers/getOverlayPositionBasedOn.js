@@ -13,8 +13,6 @@ export default (element, overlay, align = 'left') => {
   const { top: buttonTop, bottom: buttonBottom, left: buttonLeft, right: buttonRight, width: buttonWidth } = button.getBoundingClientRect();
   const { width: overlayWidth } = overlay.current.getBoundingClientRect();
 
-  console.log(button, buttonTop, buttonBottom, buttonLeft, buttonRight, buttonWidth, overlayWidth);
-
   if (align === 'left') {
     if (buttonLeft + overlayWidth > window.innerWidth) {
       const rightMargin = 16;

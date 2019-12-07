@@ -39,6 +39,7 @@ class ToolsOverlay extends React.PureComponent {
       // siblingWidth: 0
     };
     this.itemsContainer = React.createRef();
+    this.toolsContainer = React.createRef();
   }
 
   componentDidMount() {
@@ -54,6 +55,14 @@ class ToolsOverlay extends React.PureComponent {
     if (this.itemsContainer.current) {
       this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
+  }
+
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick, false);
   }
 
   componentDidUpdate(prevProps) {
@@ -95,10 +104,12 @@ class ToolsOverlay extends React.PureComponent {
       '[data-element="toolStylePopup"]',
     );
     const header = document.querySelector('[data-element="header"]');
+    const toolsHeader = document.querySelector('[data-element="toolsHeader"]');
     const clickedToolStylePopup = toolStylePopup?.contains(e.target);
     const clickedHeader = header?.contains(e.target);
+    const clickedToolsHeader = toolsHeader?.contains(e.target);
 
-    if (isDesktop() && !clickedToolStylePopup && !clickedHeader) {
+    if (isDesktop() && !clickedToolStylePopup && !clickedHeader && !clickedToolsHeader) {
       this.props.closeElements(['toolsOverlay']);
     }
   };
@@ -154,7 +165,10 @@ class ToolsOverlay extends React.PureComponent {
         style={{ left, right, top }}
         data-element="toolsOverlay"
       >
-        <div className="ToolsContainer">
+        <div
+          ref={this.toolsContainer}
+          className="ToolsContainer"
+        >
           <div
             className="Items-Container"
             ref={this.itemsContainer}
