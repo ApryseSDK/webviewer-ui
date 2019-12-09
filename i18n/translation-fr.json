@@ -144,7 +144,7 @@
     },
     "redaction": {
       "markForRedaction": "Repérer les biffures",
-      "warningPopupMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",	
+      "warningPopupMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",
       "warningPopupTitle": "Appliquer les Biffures"
     },
     "searchPanel": {
