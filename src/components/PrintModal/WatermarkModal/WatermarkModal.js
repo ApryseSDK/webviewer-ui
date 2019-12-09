@@ -10,6 +10,7 @@ import './WatermarkModal.scss';
 import ActionButton from 'components/ActionButton';
 
 /**
+ * @ignore
  * TODO refactor this component so that the Print Modal passes in the form fields and it will store the previous form field settings
  */
 
@@ -47,6 +48,7 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.opacity]: 100,
 };
 /**
+ * @ignore
  * Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
  */
 const WATERMARK_API_LOCATIONS = {
@@ -95,6 +97,7 @@ class WatermarkModal extends React.PureComponent {
         locationSettings: this.state.previousLocationSettings,
       }, async () => {
       /**
+       * @ignore
        * Store the pre-existing watermark (if any) before we overwrite it
        */
         this.preExistingWatermark = await core.getWatermark();
