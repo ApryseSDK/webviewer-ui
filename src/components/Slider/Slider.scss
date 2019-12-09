@@ -10,5 +10,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-left: -5px;
+
+    * {
+      stroke: var(--text-color);
+      fill: var(--text-color);
+    }
   }
 }

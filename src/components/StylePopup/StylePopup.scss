@@ -4,44 +4,8 @@
 .StylePopup {
   display: flex;
   flex-direction: column;
-  // width: 256px;
-  border-radius: 4px;
-  overflow: auto;
-  z-index: 80;
-  user-select: none;
+  margin: 0 12px;
 
-  &:empty {
-    box-shadow: none;
-  }
-
-  @include mobile {
-    width: 100%;
-    border-radius: 0;
-  }
-
-  & > * {
-    margin: 0;
-    padding: 0;
-    font-size: 14px;
-    color: rgba(0, 0, 0, .54)
-  }
-
-  .colors-container {
-    border-collapse: separate;
-
-    .inner-wrapper {
-      margin: 16px;
-
-      @include mobile {
-        margin-top: 12px;
-      }
-
-      &:empty {
-        margin: 0;
-      }
-    }
-  }
-
-  .sliders-container {
-  }
+  // .sliders-container {
+  // }
 }
