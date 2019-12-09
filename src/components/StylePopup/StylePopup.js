@@ -113,9 +113,7 @@ class StylePopup extends React.PureComponent {
           className="sliders-container"
           onMouseDown={e => e.preventDefault()}
         >
-          <div className="sliders">
-            {!this.props.hideSlider && this.renderSliders()}
-          </div>
+          {!this.props.hideSlider && this.renderSliders()}
         </div>
         {Scale && Precision && (
           <MeasurementOption

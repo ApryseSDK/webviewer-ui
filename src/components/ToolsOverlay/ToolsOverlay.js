@@ -189,20 +189,6 @@ class ToolsOverlay extends React.PureComponent {
           {isStylingOpen &&
             <React.Fragment>
               <div className="divider-horizontal" />
-                {/* <div
-                  className="grid-container"
-                  style={{ width: `${this.state.siblingWidth}px` }}
-                  data-element="stylePopup"
-                >
-                  <div className="cell-123">1</div>
-                  <div className="cell-123">2</div>
-                  <div className="cell-123">3</div>
-                  <div className="cell-123">4</div>
-                  <div className="cell-123">5</div>
-                  <div className="cell-123">6</div>
-                  <div className="cell-123">7</div>
-                  <div className="cell-123">8</div>
-              </div> */}
               <ToolStylePopup siblingWidth={this.state.siblingWidth} />
             </React.Fragment>
           }
