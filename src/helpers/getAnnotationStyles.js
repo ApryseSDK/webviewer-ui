@@ -3,6 +3,7 @@ import core from 'core';
 /**
  * We can just pass object down as a prop, but many properties of that object won't be used by the child component,
  * so here we select properties that will be used.
+ * @ignore
  * @param annotation is an annotation created by a tool
  * @return current style of that object.
  */

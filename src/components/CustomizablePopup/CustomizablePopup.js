@@ -12,14 +12,10 @@ import CustomElement from 'components/CustomElement';
 import selectors from 'selectors';
 
 const propTypes = {
-  /**
-   * The data element of the popup component.
-   * Used to grab button props from redux and use those props to override the existing ones, if there're any
-   */
+  // The data element of the popup component.
+  // Used to grab button props from redux and use those props to override the existing ones, if there're any
   dataElement: PropTypes.string.isRequired,
-  /**
-   * An object that maps an item's dataElement to a functional React component
-   */
+  // An object that maps an item's dataElement to a functional React component
   children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
