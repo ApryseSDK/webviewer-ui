@@ -144,6 +144,8 @@
     },
     "redaction": {
       "markForRedaction": "Repérer les biffures",
+      "warningPopupMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",	
+      "warningPopupTitle": "Appliquer les Biffures"
     },
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",
@@ -192,22 +194,6 @@
       "text": "Texte",
       "colors": "Couleurs",
       "resetAllSettings": "Réinitialiser tous les réglages"
-    },
-    "thumbnailPanel": {
-      "delete": "Supprimer",
-      "rotateClockwise": "Tourner horaire",
-      "rotateCounterClockwise": "Tourner antihoraire"
-    }
-  },
-  "warning": {
-    "deletePage" :{
-      "deleteTitle": "Supprimer la page",
-      "deleteMessage": "Voulez-vous vraiment supprimer les pages sélectionnées? Cela ne peut pas être annulé?",
-      "deleteLastPageMessage": "Il en résulterait aucune page restante. Veuillez laisser au moins une page"
-    },
-    "redaction":{
-      "applyTile": "Appliquer les Biffures",
-      "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait."
     }
   },
   "shortcut": {
