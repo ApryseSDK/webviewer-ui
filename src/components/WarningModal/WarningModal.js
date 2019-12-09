@@ -31,11 +31,7 @@ class WarningModal extends React.PureComponent {
     const { isOpen, closeElements } = this.props;
 
     if (!prevProps.isOpen && isOpen) {
-      // TODO want to do make something like'closeOtherElements', but that for latter
-      const popupElementsToClose = getPopupElements().filter(
-        ele => ele !== 'warningModal' && ele !== 'leftPanel',
-      );
-      closeElements(popupElementsToClose);
+      closeElements(getPopupElements());
     }
   }
 

@@ -144,8 +144,6 @@
     },
     "redaction": {
       "markForRedaction": "Zum Schwärzen markieren",
-      "warningPopupMessage": "Diese Aktion wird dauerhaft die markierten Elemente zur Überarbeitung löschen. Dies kann nicht rückgängig gemacht werden.",
-      "warningPopupTitle": "Schwärzung anwenden"
     },
     "searchPanel": {
       "caseSensitive": "Groß-/Klein- schreibung beachten",
@@ -194,6 +192,17 @@
       "text": "Text",
       "colors": "Farben",
       "resetAllSettings": "Alle Einstellungen zurücksetzen"
+    }
+  },
+  "warning": {
+    "deletePage" :{
+      "deleteTitle": "Delete Page",
+      "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
+      "deleteLastPageMessage": "This would result in no pages remaining. Please leave at least one page"
+    },
+    "redaction":{
+      "applyMessage": "Diese Aktion wird dauerhaft die markierten Elemente zur Überarbeitung löschen. Dies kann nicht rückgängig gemacht werden.",
+      "applyTile": "Schwärzung anwenden"
     }
   },
   "shortcut": {

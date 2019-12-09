@@ -35,8 +35,8 @@ const ThumbnailControls = ({
   };
 
   const handleDelete = () => {
-    let message = t('option.thumbnailPanel.deleteWarningMessage');
-    const title = t('option.thumbnailPanel.deleteWarningTitle');
+    let message = t('warning.deletePage.deleteMessage');
+    const title = t('warning.deletePage.deleteTitle');
     const confirmBtnText = t('action.ok');
 
     let warning = {
@@ -47,7 +47,7 @@ const ThumbnailControls = ({
     };
 
     if (core.getDocumentViewer().getPageCount() === 1) {
-      message = t('option.thumbnailPanel.deleteLastPageError');
+      message = t('warning.deletePage.deleteLastPageMessage');
 
       warning = {
         message,

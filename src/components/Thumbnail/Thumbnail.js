@@ -71,7 +71,10 @@ class Thumbnail extends React.PureComponent {
 
     if (removed.length > 0 && index + 1 > newPageCount) {
       // don't load thumbnail if it's going to be removed
-    } else if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
+      return;
+    }
+
+    if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
       const { thumbContainer } = this;
       const { current } = thumbContainer;
 
