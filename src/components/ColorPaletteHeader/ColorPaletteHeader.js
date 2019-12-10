@@ -7,6 +7,7 @@ import Tooltip from 'components/Tooltip';
 
 import getBrightness from 'helpers/getBrightness';
 import { getDataWithKey } from 'constants/map';
+import classNames from 'classnames';
 import actions from 'actions';
 
 import './ColorPaletteHeader.scss';
@@ -113,20 +114,43 @@ class ColorPaletteHeader extends React.PureComponent {
     }
 
     return (
-      <div className="stylePopup-title">
-        <div className="palette-title">
-          {t(`option.annotationColor.${colorPalette}`)}
+      <div>
+        <div className="pallette-options">
+          <div
+            className={classNames({
+              'pallete-options-button': true,
+              active: colorPalette === 'StrokeColor',
+            })}
+            onClick={() => this.setColorPalette('StrokeColor')}
+          >
+            {t(`option.annotationColor.StrokeColor`)}
+          </div>
+          <div className="pallete-options-divider"/>
+          <div
+            className={classNames({
+              'pallete-options-button': true,
+              active: colorPalette === 'FillColor',
+            })}
+            onClick={() => this.setColorPalette('FillColor')}
+          >
+            {t(`option.annotationColor.FillColor`)}
+          </div>
         </div>
-        <div className="palette">
-          {availablePalettes.includes('TextColor') &&
-            this.renderTextColorIcon()
-          }
-          {availablePalettes.includes('StrokeColor') &&
-            this.renderBorderColorIcon()
-          }
-          {availablePalettes.includes('FillColor') &&
-            this.renderFillColorIcon()
-          }
+        <div className="stylePopup-title">
+          <div className="palette-title">
+            {t(`option.annotationColor.${colorPalette}`)}
+          </div>
+          <div className="palette">
+            {availablePalettes.includes('TextColor') &&
+              this.renderTextColorIcon()
+            }
+            {availablePalettes.includes('StrokeColor') &&
+              this.renderBorderColorIcon()
+            }
+            {availablePalettes.includes('FillColor') &&
+              this.renderFillColorIcon()
+            }
+          </div>
         </div>
       </div>
     );

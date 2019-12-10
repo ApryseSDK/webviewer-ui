@@ -43,7 +43,7 @@
     background: var(--tools-divider-color);
   }
 
-  &>.ToolsContainer {
+  .ToolsContainer {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -52,8 +52,8 @@
     background: var(--tools-overlay-background);
     box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
 
-    &>.Items-Container {
-      display: flex;
+    .Items-Container {
+      display: inline-flex;
       margin: 8px 0;
       align-items: center;
 
@@ -63,10 +63,10 @@
     }
   }
 
-  &>.Close-Container {
+  .Close-Container {
     margin-left: 2px;
 
-    &>.Close-Container2 {
+    .Close-Container2 {
       padding: 1px;
       background: var(--tools-overlay-background);
       border: 1px solid var(--tools-overlay-border);
@@ -78,34 +78,6 @@
     .Close-Icon {
       width: 16px;
       height: 16px;
-    }
-  }
-
-
-
-
-  @include tablet-and-mobile {
-    left: 0 !important;
-    right: 0 !important;
-    top: 0;
-    width: 100%;
-    border: none;
-  }
-
-  & > * {
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  .spacer {
-    @include tablet-and-mobile {
-      flex: 1;
-      height: 100%;
     }
   }
 }

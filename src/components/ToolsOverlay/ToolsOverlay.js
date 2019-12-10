@@ -52,17 +52,10 @@ class ToolsOverlay extends React.PureComponent {
       this.setOverlayPosition();
     }
 
+    console.log('didMount');
     if (this.itemsContainer.current) {
       this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
-  }
-
-  componentWillMount() {
-    document.addEventListener('mousedown', this.handleClick, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClick, false);
   }
 
   componentDidUpdate(prevProps) {
@@ -86,6 +79,7 @@ class ToolsOverlay extends React.PureComponent {
       this.setOverlayPosition();
     }
 
+    console.log('didUpdate');
     if (this.itemsContainer.current) {
       this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
@@ -170,20 +164,24 @@ class ToolsOverlay extends React.PureComponent {
           className="ToolsContainer"
         >
           <div
-            className="Items-Container"
-            ref={this.itemsContainer}
+
           >
-            {toolNames.map((toolName, i) => (
-              <ToolButton key={`${toolName}-${i}`} toolName={toolName} />
-            ))}
-            <div className="divider" />
             <div
-              className="Button ToolButton StyleButton"
-              onClick={this.handleStyleClick}
+              className="Items-Container"
+              ref={this.itemsContainer}
             >
-              <Icon
-                glyph="icon-menu-add-style-line"
-              />
+              {toolNames.map((toolName, i) => (
+                <ToolButton key={`${toolName}-${i}`} toolName={toolName} />
+              ))}
+              <div className="divider" />
+              <div
+                className="Button ToolButton StyleButton"
+                onClick={this.handleStyleClick}
+              >
+                <Icon
+                  glyph="icon-menu-add-style-line"
+                />
+              </div>
             </div>
           </div>
           {isStylingOpen &&

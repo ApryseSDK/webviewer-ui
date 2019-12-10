@@ -12,9 +12,14 @@
     align-items: center;
     margin-left: -5px;
 
-    * {
-      stroke: var(--text-color);
-      fill: var(--text-color);
+    svg {
+      circle {
+        fill: var(--text-color);
+      }
+
+      line:nth-child(1) {
+        stroke: var(--text-color);
+      }
     }
   }
 }
