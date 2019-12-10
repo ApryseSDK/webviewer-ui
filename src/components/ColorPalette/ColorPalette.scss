@@ -10,6 +10,10 @@
     width: 18px;
     height: 18px;
     border-radius: 10000000px;
-    background: black;
+    // background: black;
+
+    &.transparent {
+      border: 2px solid #8c8c8c;
+    }
   }
 }
