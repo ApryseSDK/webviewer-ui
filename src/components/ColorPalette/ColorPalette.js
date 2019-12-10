@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Icon from 'components/Icon';
 
@@ -32,28 +33,6 @@ class ColorPalette extends React.PureComponent {
     onStyleChange(property, color);
   }
 
-  renderTransparencyCell = () => {
-    const { property } = this.props;
-
-    if (property === 'TextColor' || property === 'StrokeColor') {
-      return null;
-    }
-
-    return (
-      <div className="cell transparent" onClick={this.setColor}>
-        <svg width="100%" height="100%">
-          <line x1="15%" y1="85%" x2="85%" y2="15%" strokeWidth="2" stroke="#d0021b" strokeLinecap="round" />
-        </svg>
-      </div>
-    );
-  }
-
-  renderColorCell = (bg, key) => (
-    <div className="cell" key={key} style={{ backgroundColor: bg }} onClick={this.setColor}>
-      {this.renderCheckMark(bg)}
-    </div>
-  )
-
   renderCheckMark = bg => {
     const { color } = this.props;
     const isColorPicked = color.toHexString() === bg;
@@ -66,12 +45,41 @@ class ColorPalette extends React.PureComponent {
   }
 
   render() {
+    const { property, color } = this.props;
+
+    const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
+
+    console.log(color.toHexString());
+
     return (
       <div className="ColorPalette" data-element="colorPalette">
-        {this.renderTransparencyCell()}
+        {allowTransparent &&
+          <div className="cell-outer">
+            <div
+              className={classNames({
+                cell: true,
+                transparent: true,
+                active: color.toHexString() === null,
+              })}
+              onClick={this.setColor}
+            >
+              <svg width="100%" height="100%">
+                <line x1="15%" y1="85%" x2="85%" y2="15%" strokeWidth="2" stroke="#d0021b" strokeLinecap="round" />
+              </svg>
+            </div>
+          </div>}
         {this.palette.map((row, i) =>
           row.map((bg, j) =>
-            this.renderColorCell(bg, `${i}${j}`),
+            <div key={`${i}${j}`} className="cell-outer">
+              <div
+                className={classNames({
+                  cell: true,
+                  active: color.toHexString() === bg,
+                })}
+                style={{ backgroundColor: bg }}
+                onClick={this.setColor}
+              />
+            </div>,
           ),
         )}
       </div>

@@ -136,22 +136,6 @@ class ColorPaletteHeader extends React.PureComponent {
             {t(`option.annotationColor.FillColor`)}
           </div>
         </div>
-        <div className="stylePopup-title">
-          <div className="palette-title">
-            {t(`option.annotationColor.${colorPalette}`)}
-          </div>
-          <div className="palette">
-            {availablePalettes.includes('TextColor') &&
-              this.renderTextColorIcon()
-            }
-            {availablePalettes.includes('StrokeColor') &&
-              this.renderBorderColorIcon()
-            }
-            {availablePalettes.includes('FillColor') &&
-              this.renderFillColorIcon()
-            }
-          </div>
-        </div>
       </div>
     );
   }

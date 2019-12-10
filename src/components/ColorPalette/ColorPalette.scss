@@ -5,15 +5,27 @@
   flex-wrap: wrap;
   margin: 0 3px;
 
-  .cell {
-    margin: 11px;
-    width: 18px;
-    height: 18px;
-    border-radius: 10000000px;
-    // background: black;
+  .cell-outer {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    &.transparent {
-      border: 2px solid #8c8c8c;
+    .cell {
+      width: 18px;
+      height: 18px;
+      border-radius: 10000000px;
+
+      &.transparent {
+        border: 2px solid #8c8c8c;
+      }
+
+      &.active {
+        width: 22px;
+        height: 22px;
+      }
     }
   }
+
 }
