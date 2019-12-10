@@ -61,7 +61,10 @@ const TextSignature = ({
         value={value}
         onChange={handleInputChange}
       />
-      <div className="text-signature-container">
+      <div
+        className="text-signature-container"
+        style={{ overflowY: fonts.length > 1 ? 'scroll' : 'hidden' }}
+      >
         {fonts.map((font, index) => (
           <div
             key={font}
