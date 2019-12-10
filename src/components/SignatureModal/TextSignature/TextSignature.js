@@ -63,27 +63,29 @@ const TextSignature = ({
         value={value}
         onChange={handleInputChange}
       />
-      <div className="text-signature-container">
-        {fonts.map((font, index) => (
-          <div
-            key={font}
-            className={classNames({
-              'text-signature-canvas-container': true,
-              active: index === activeIndex,
-            })}
-          >
-            <div className="text-signature-background" />
-            <Canvas
-              ref={el => {
-                canvasesRef.current[index] = el;
-              }}
-              text={value}
-              font={font}
-              onSelect={() => setActiveIndex(index)}
-              isTabPanelSelected={isTabPanelSelected}
-            />
-          </div>
-        ))}
+      <div className="text-signature-wrapper">
+        <div className="text-signature-container">
+          {fonts.map((font, index) => (
+            <div
+              key={font}
+              className={classNames({
+                'text-signature-canvas-container': true,
+                active: index === activeIndex,
+              })}
+            >
+              <div className="text-signature-background" />
+              <Canvas
+                ref={el => {
+                  canvasesRef.current[index] = el;
+                }}
+                text={value}
+                font={font}
+                onSelect={() => setActiveIndex(index)}
+                isTabPanelSelected={isTabPanelSelected}
+              />
+            </div>
+          ))}
+        </div>
       </div>
       <FontHandler fonts={fonts} />
     </div>
