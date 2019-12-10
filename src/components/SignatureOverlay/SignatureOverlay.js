@@ -148,6 +148,7 @@ class SignatureOverlay extends React.PureComponent {
   };
 
   onAnnotationChanged = async (annotations, action) => {
+    console.log('%c onAnnotationChanged ', 'background: red; color: white;');
     if (
       action === 'modify' &&
       annotations.length === 1 &&
@@ -186,6 +187,8 @@ class SignatureOverlay extends React.PureComponent {
   };
 
   setSignature = index => {
+    console.log('%c setSignature ', 'background: red; color: white;');
+
     this.currentSignatureIndex = index;
 
     const { annotation } = this.state.defaultSignatures[

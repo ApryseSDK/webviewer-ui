@@ -4,6 +4,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 export default store => () => {
+  console.log('%c onLocationSelected ', 'background: red; color: white;');
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
   if (!signatureTool.isEmptySignature()) {

@@ -1,0 +1,23 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+$signature-modal-shared-color: #E1E1E3;
+
+.StampModal {
+  @extend %modal;
+  font-size: 0.9em;
+
+  background: none;
+  .container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    box-shadow: 0 2px 16px 0 #e1e1e3;
+    background: white;
+
+    canvas {
+      border:1px solid #d3d3d3;
+    }
+  }
+
+}

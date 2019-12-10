@@ -2,6 +2,8 @@ import React from 'react';
 
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import SignatureToolButton from 'components/SignatureToolButton';
+// import StampOverlay from 'components/StampOverlay';
+import StampToolButton from 'components/StampToolButton';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
@@ -39,7 +41,24 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: ['tablet', 'mobile'] },
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: ['tablet', 'mobile'] },
         { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: ['tablet', 'mobile'] },
+        // { type: 'toolGroupButton', dataElement: 'stampButton', toolName: 'AnnotationCreateRubberStamp', element: 'stampOverlay', className: 'stampHeader', toolGroup: 'stampTools', title: 'component.stampToolsButton', hidden: ['tablet', 'mobile'] },
+        // {
+        //   type: 'toggleElementButton',
+        //   toolName: 'AnnotationCreateRubberStamp',
+        //   dataElement: 'stampButton',
+        //   className: 'stampHeader',
+        //   element: 'stampOverlay',
+        //   img: 'ic_annotation_stamp_black_24px',
+        //   title: 'component.stampToolsButton',
+        //   hidden: ['tablet', 'mobile'],
+        // },
         { type: 'toolButton', toolName: 'AnnotationEraserTool', hidden: ['tablet', 'mobile'] },
+        {
+          type: 'customElement',
+          render: () => <StampToolButton toolGroup="stampTools"/>,
+          dataElement: 'foobar',
+          hidden: ['tablet', 'mobile'],
+        },
         {
           type: 'customElement',
           render: () => <SignatureToolButton />,
@@ -70,6 +89,16 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton' },
+        // { type: 'toolGroupButton', dataElement: 'stampButton', toolName: 'AnnotationCreateRubberStamp', element: 'stampOverlay', className: 'stampHeader', toolGroup: 'stampTools', title: 'component.stampToolsButton' },
+        // {
+        //   type: 'toggleElementButton',
+        //   toolName: 'AnnotationCreateRubberStamp',
+        //   className: 'stampHeader',
+        //   dataElement: 'stampButton',
+        //   element: 'stampOverlay',
+        //   img: 'ic_annotation_stamp_black_24px',
+        //   title: 'component.stamp',
+        // },
         {
           type: 'customElement',
           render: () => <SignatureToolButton />,
@@ -142,12 +171,16 @@ export default {
       AnnotationCreatePolyline: { dataElement: 'polylineToolButton', title: 'annotation.polyline', img: 'ic_annotation_polyline_black_24px', group: 'shapeTools', showColor: 'active' },
       AnnotationCreatePolygon: { dataElement: 'polygonToolButton', title: 'annotation.polygon', img: 'ic_annotation_polygon_black_24px', group: 'shapeTools', showColor: 'active' },
       AnnotationCreatePolygonCloud: { dataElement: 'cloudToolButton', title: 'annotation.polygonCloud', img: 'ic_annotation_cloud_black_24px', group: 'shapeTools', showColor: 'active' },
+
+      AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'stampTools', showColor: 'active' },
+      AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'ic_annotation_stamp_black_24px', group: 'stampTools', showColor: 'active' },
+
       AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'ic_annotation_add_redact_black_24px', showColor: 'never' },
       AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.signature', img: 'ic_annotation_signature_black_24px', showColor: 'active' },
       AnnotationCreateFreeText: { dataElement: 'freeTextToolButton', title: 'annotation.freetext', img: 'ic_annotation_freetext_black_24px', showColor: 'active' },
       AnnotationCreateSticky: { dataElement: 'stickyToolButton', title: 'annotation.stickyNote', img: 'ic_annotation_sticky_note_black_24px', showColor: 'active' },
       AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'ic_annotation_callout_black_24px', group: 'miscTools', showColor: 'active' },
-      AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
+      // AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
       AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
       TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
