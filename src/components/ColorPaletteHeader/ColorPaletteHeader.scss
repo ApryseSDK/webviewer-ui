@@ -8,10 +8,11 @@
   cursor: pointer;
 
   .pallete-options-button {
-    // width: 50%;
     flex: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 24px;
 
     &.active {
       background: #dfe2ed;
