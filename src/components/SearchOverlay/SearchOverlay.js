@@ -201,7 +201,7 @@ class SearchOverlay extends React.PureComponent {
       this.setState({ noResultSingleSearch: false });
       core.clearSearchResults();
     }
-    
+
     resetSearch();
     const handleSearchResult = result => {
       const foundResult = result.resultCode === window.XODText.ResultCode.e_found;
@@ -376,7 +376,7 @@ class SearchOverlay extends React.PureComponent {
             <div className="search-option">
               <Input id="case-sensitive-option" type="checkbox" ref={this.caseSensitiveInput} onChange={this.onChangeCaseSensitive} label={t('option.searchPanel.caseSensitive')} />
             </div>
-            <div className="search-option">              
+            <div className="search-option">
               <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
             </div>
             <div className="search-option">
