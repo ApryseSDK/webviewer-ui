@@ -64,7 +64,9 @@ class SearchOverlay extends React.PureComponent {
     this.executeDebouncedSingleSearch = debounce(this.executeSingleSearch, 300);
     this.executeDebouncedFullSearch = debounce(this.executeFullSearch, 300);
     this.state = {
+      foundSingleSearchResult: false,
       noResultSingleSearch: false,
+      currentSearchTerm: '',
     };
   }
 
@@ -192,24 +194,29 @@ class SearchOverlay extends React.PureComponent {
     const { searchValue, setActiveResult, setIsSearching, addResult, resetSearch } = this.props;
     const searchMode = isSearchUp ? this.getSearchMode() | core.getSearchMode().e_search_up : this.getSearchMode();
     const isFullSearch = false;
+
+    if (this.state.currentSearchTerm !== searchValue) {
+      this.setState({ foundSingleSearchResult: false, noResultSingleSearch: false, currentSearchTerm: searchValue });
+    }
+    
     resetSearch();
     const handleSearchResult = result => {
       const foundResult = result.resultCode === window.XODText.ResultCode.e_found;
       const isSearchDone = result.resultCode === window.XODText.ResultCode.e_done;
 
       if (foundResult) {
-        this.setState({ noResultSingleSearch: false });
+        this.setState({ foundSingleSearchResult: true });
         addResult(result);
         core.displaySearchResult(result);
         setActiveResult(result);
         this.runSearchListeners();
-      } else {
-        this.setState({ noResultSingleSearch: true });
-        core.clearSearchResults();
       }
 
       if (isSearchDone) {
         core.getDocumentViewer().trigger('endOfDocumentResult', true);
+        if (!this.state.foundSingleSearchResult) {
+          this.setState({ foundSingleSearchResult: false,  noResultSingleSearch: true });
+        }
       }
       setIsSearching(false);
     };
