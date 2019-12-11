@@ -170,13 +170,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
 };
 
 const getDocOptions = (state, dispatch, streaming) => {
-  const {
-    id: docId,
-    // eslint-disable-next-line no-unused-vars
-    officeType,
-    pdfType,
-    password,
-  } = state.document;
+  const { id: docId, pdfType, password } = state.document;
   const engineType = getEngineType(state);
 
   return new Promise(resolve => {
