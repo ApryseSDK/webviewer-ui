@@ -2,6 +2,7 @@
   "action": {
     "apply": "Toepassen",
     "applyAll": "Alles toepassen",
+    "calibrate": "Ijken",
     "cancel": "Annuleren",
     "clear": "Legen",
     "close": "Sluiten",
@@ -33,8 +34,7 @@
     "submit": "Verzenden",
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom uit",
-    "calibrate": "Ijken"
+    "zoomOut": "Zoom uit"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -82,7 +82,10 @@
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "measurementToolsButton": "Meetinstrumenten",
-    "calibration": "ijking"
+    "calibration": "ijking",
+    "newBookmark": "Nieuwe bladwijzer",
+    "bookmarksPanel": "bladwijzers",
+    "bookmarkPage": "Pagina"
   },
   "message": {
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
@@ -143,13 +146,12 @@
       "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
     "redaction": {
-      "markForRedaction": "Markeren voor redactie",
-      "warningPopupMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
-      "warningPopupTitle": "Redactiewijziging Toepassen"
+      "markForRedaction": "Markeren voor redactie"
     },
     "searchPanel": {
       "caseSensitive": "Hoofdlettergevoelig",
-      "wholeWordOnly": "Hele woorden"
+      "wholeWordOnly": "Hele woorden",
+      "wildcard": "wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
@@ -194,6 +196,22 @@
       "text": "Tekst",
       "colors": "kleuren",
       "resetAllSettings": "Reset alle instellingen"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Met de klok mee",
+      "rotateCounterClockwise": "Tegen de klok in",
+      "delete": "Delete"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "Pagina verwijderen",
+      "deleteLastPageMessage": "Hierdoor zouden er geen pagina's meer overblijven. Laat minstens één pagina achter",
+      "deleteMessage": "Weet u zeker dat u de geselecteerde pagina ('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt"
+    },
+    "redaction": {
+      "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden.",
+      "applyTile": "Redactie toepassen"
     }
   },
   "shortcut": {

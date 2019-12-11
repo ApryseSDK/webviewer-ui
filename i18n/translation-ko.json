@@ -2,6 +2,7 @@
   "action": {
     "apply": "적용",
     "applyAll": "모두 적용",
+    "calibrate": "교정",
     "cancel": "취소",
     "clear": "지우기",
     "close": "닫기",
@@ -33,8 +34,7 @@
     "submit": "제출",
     "zoom": "확대/축소",
     "zoomIn": "확대",
-    "zoomOut": "축소",
-    "calibrate": "교정"
+    "zoomOut": "축소"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -82,7 +82,10 @@
     "redaction": "개정",
     "viewControlsOverlay": "컨트롤 보기",
     "measurementToolsButton": "측정 도구",
-    "calibration": "구경 측정"
+    "calibration": "구경 측정",
+    "bookmarkPage": "페이지",
+    "bookmarksPanel": "북마크",
+    "newBookmark": "새로운 북마크"
   },
   "message": {
     "badDocument": "문서를 로드하지 못했습니다. 문서가 손상되었거나 유효하지 않습니다.",
@@ -143,13 +146,12 @@
       "addWatermarkSettings": "워터 마크 설정 추가"
     },
     "redaction": {
-      "markForRedaction": "개정 표시",
-      "warningPopupMessage": "이 작업은 개정을 위해 선택된 모든 항목을 영구적으로 삭제합니다. 이 작업은 취소할 수 없습니다.",
-      "warningPopupTitle": "개정 적용"
+      "markForRedaction": "개정 표시"
     },
     "searchPanel": {
       "caseSensitive": "대/소문자 구분",
-      "wholeWordOnly": "단어 단위로"
+      "wholeWordOnly": "단어 단위로",
+      "wildcard": "와일드 카드"
     },
     "signatureOverlay": {
       "addSignature": "서명 추가"
@@ -194,6 +196,22 @@
       "text": "본문",
       "colors": "그림 물감",
       "resetAllSettings": "모든 설정 초기화"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "시계 방향",
+      "delete": "지우다",
+      "rotateCounterClockwise": "시계 반대 방향"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "그러면 페이지가 남아 있지 않습니다. 한 페이지 이상 남겨주세요",
+      "deleteTitle": "페이지 삭제",
+      "deleteMessage": "선택한 페이지를 삭제 하시겠습니까? 취소 할 수 없습니다"
+    },
+    "redaction": {
+      "applyTile": "수정 적용",
+      "applyMessage": "이 작업은 편집을 위해 선택된 모든 항목을 영구적으로 제거합니다. 취소 할 수 없습니다."
     }
   },
   "shortcut": {

@@ -2,6 +2,7 @@
   "action": {
     "apply": "Применить",
     "applyAll": "Применить все",
+    "calibrate": "калибровать",
     "cancel": "Отменить",
     "clear": "Очистить",
     "close": "Закрыть",
@@ -33,8 +34,7 @@
     "submit": "Отправить",
     "zoom": "Увеличить",
     "zoomIn": "Увеличить",
-    "zoomOut": "Уменьшить",
-    "calibrate": "калибровать"
+    "zoomOut": "Уменьшить"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -82,7 +82,10 @@
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
     "measurementToolsButton": "Инструменты для замерения",
-    "calibration": "калибровка"
+    "calibration": "калибровка",
+    "bookmarksPanel": "закладки",
+    "newBookmark": "Новая закладка",
+    "bookmarkPage": "страница"
   },
   "message": {
     "badDocument": "Произошла ошибка при загрузке документа. Документ содержит ошибки или недостоверный.",
@@ -143,13 +146,12 @@
       "addWatermarkSettings": "Добавить настройки водяного знака"
     },
     "redaction": {
-      "markForRedaction": "Пометить для редактирования",
-      "warningPopupMessage": "Редакция удалит все выделенные элементы. Редакция необратима.",
-      "warningPopupTitle": "Применить редакцию"
+      "markForRedaction": "Пометить для редактирования"
     },
     "searchPanel": {
       "caseSensitive": "С учетом регистра",
-      "wholeWordOnly": "Всё слово"
+      "wholeWordOnly": "Всё слово",
+      "wildcard": "Wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"
@@ -194,6 +196,22 @@
       "text": "Текст",
       "colors": "Цвета",
       "resetAllSettings": "Сбросить все настройки"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "по часовой стрелке",
+      "rotateCounterClockwise": "Против часовой стрелки",
+      "delete": "удалять"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "Удалить страницу",
+      "deleteLastPageMessage": "Это приведет к тому, что не останется ни одной страницы. Пожалуйста, оставьте хотя бы одну страницу",
+      "deleteMessage": "Вы уверены, что хотите удалить выбранные страницы? Это не может быть отменено"
+    },
+    "redaction": {
+      "applyMessage": "Это действие навсегда удалит все элементы, выбранные для редактирования. Это не может быть отменено.",
+      "applyTile": "Применить редактирование"
     }
   },
   "shortcut": {
