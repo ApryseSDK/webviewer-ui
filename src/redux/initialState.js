@@ -155,6 +155,7 @@ export default {
       AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'ic_annotation_eraser_black_24px', showColor: 'never' },
       CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'miscTools' },
     },
+    customElementOverrides: {},
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
