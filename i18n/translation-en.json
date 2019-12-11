@@ -146,9 +146,7 @@
       "addWatermarkSettings": "Add Watermark Settings"
     },
     "redaction": {
-      "markForRedaction": "Mark for redaction",
-      "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
-      "warningPopupTitle": "Apply Redaction"
+      "markForRedaction": "Mark for redaction"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",
@@ -198,6 +196,22 @@
       "text": "Text",
       "colors": "Colors",
       "resetAllSettings": "Reset All Settings"
+    },
+    "thumbnailPanel": {
+      "delete": "Delete",
+      "rotateClockwise": "Clockwise",
+      "rotateCounterClockwise": "Counter-clockwise"
+    }
+  },
+  "warning": {
+    "deletePage" :{
+      "deleteTitle": "Delete Page",
+      "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
+      "deleteLastPageMessage": "This would result in no pages remaining. Please leave at least one page"
+    },
+    "redaction":{
+      "applyTile": "Apply Redaction",
+      "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
   "shortcut": {
