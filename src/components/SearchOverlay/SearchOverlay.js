@@ -63,6 +63,8 @@ class SearchOverlay extends React.PureComponent {
     this.wildcardInput = React.createRef();
     this.executeDebouncedSingleSearch = debounce(this.executeSingleSearch, 300);
     this.executeDebouncedFullSearch = debounce(this.executeFullSearch, 300);
+    this.currentSingleSearchTerm = '';
+    this.foundSingleSearchResult = false;
     this.state = {
       noResultSingleSearch: false,
     };
@@ -192,24 +194,32 @@ class SearchOverlay extends React.PureComponent {
     const { searchValue, setActiveResult, setIsSearching, addResult, resetSearch } = this.props;
     const searchMode = isSearchUp ? this.getSearchMode() | core.getSearchMode().e_search_up : this.getSearchMode();
     const isFullSearch = false;
+
+    if (this.currentSingleSearchTerm !== searchValue) {
+      this.currentSingleSearchTerm = searchValue;
+      this.foundSingleSearchResult = false;
+      this.setState({ noResultSingleSearch: false });
+      core.clearSearchResults();
+    }
+
     resetSearch();
     const handleSearchResult = result => {
       const foundResult = result.resultCode === window.XODText.ResultCode.e_found;
       const isSearchDone = result.resultCode === window.XODText.ResultCode.e_done;
 
       if (foundResult) {
-        this.setState({ noResultSingleSearch: false });
+        this.foundSingleSearchResult = true;
         addResult(result);
         core.displaySearchResult(result);
         setActiveResult(result);
         this.runSearchListeners();
-      } else {
-        this.setState({ noResultSingleSearch: true });
-        core.clearSearchResults();
       }
 
       if (isSearchDone) {
         core.getDocumentViewer().trigger('endOfDocumentResult', true);
+        if (!this.foundSingleSearchResult) {
+          this.setState({ noResultSingleSearch: true });
+        }
       }
       setIsSearching(false);
     };
@@ -366,7 +376,7 @@ class SearchOverlay extends React.PureComponent {
             <div className="search-option">
               <Input id="case-sensitive-option" type="checkbox" ref={this.caseSensitiveInput} onChange={this.onChangeCaseSensitive} label={t('option.searchPanel.caseSensitive')} />
             </div>
-            <div className="search-option">              
+            <div className="search-option">
               <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
             </div>
             <div className="search-option">
