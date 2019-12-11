@@ -63,10 +63,10 @@ class SearchOverlay extends React.PureComponent {
     this.wildcardInput = React.createRef();
     this.executeDebouncedSingleSearch = debounce(this.executeSingleSearch, 300);
     this.executeDebouncedFullSearch = debounce(this.executeFullSearch, 300);
+    this.currentSingleSearchTerm = '';
+    this.foundSingleSearchResult = false;
     this.state = {
-      foundSingleSearchResult: false,
       noResultSingleSearch: false,
-      currentSearchTerm: '',
     };
   }
 
@@ -195,8 +195,11 @@ class SearchOverlay extends React.PureComponent {
     const searchMode = isSearchUp ? this.getSearchMode() | core.getSearchMode().e_search_up : this.getSearchMode();
     const isFullSearch = false;
 
-    if (this.state.currentSearchTerm !== searchValue) {
-      this.setState({ foundSingleSearchResult: false, noResultSingleSearch: false, currentSearchTerm: searchValue });
+    if (this.currentSingleSearchTerm !== searchValue) {
+      this.currentSingleSearchTerm = searchValue;
+      this.foundSingleSearchResult = false;
+      this.setState({ noResultSingleSearch: false });
+      core.clearSearchResults();
     }
     
     resetSearch();
@@ -205,7 +208,7 @@ class SearchOverlay extends React.PureComponent {
       const isSearchDone = result.resultCode === window.XODText.ResultCode.e_done;
 
       if (foundResult) {
-        this.setState({ foundSingleSearchResult: true });
+        this.foundSingleSearchResult = true;
         addResult(result);
         core.displaySearchResult(result);
         setActiveResult(result);
@@ -214,8 +217,8 @@ class SearchOverlay extends React.PureComponent {
 
       if (isSearchDone) {
         core.getDocumentViewer().trigger('endOfDocumentResult', true);
-        if (!this.state.foundSingleSearchResult) {
-          this.setState({ foundSingleSearchResult: false,  noResultSingleSearch: true });
+        if (!this.foundSingleSearchResult) {
+          this.setState({ noResultSingleSearch: true });
         }
       }
       setIsSearching(false);
