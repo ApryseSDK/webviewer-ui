@@ -96,9 +96,13 @@ const NoteContent = ({ annotation }) => {
         return '(no name)';
       }
 
-      return <span dangerouslySetInnerHTML={{ __html: getText(name) }} />;
+      return (
+        <span
+          dangerouslySetInnerHTML={{ __html: getText(name, searchInput) }}
+        />
+      );
     },
-    [getText],
+    [searchInput],
   );
 
   const renderContents = useCallback(
@@ -106,36 +110,44 @@ const NoteContent = ({ annotation }) => {
       contents = escapeHtml(contents);
 
       let text;
-      const transformedContents = Autolinker.link(contents, { stripPrefix: false });
-      const isContentsLinkable = transformedContents.indexOf('<a') !== -1;
-      if (isContentsLinkable) {
+      const transformedContents = Autolinker.link(contents, {
+        stripPrefix: false,
+      });
+      if (transformedContents.includes('<a')) {
         // if searchInput is 't', replace <a ...>text</a> with
         // <a ...><span class="highlight">t</span>ext</a>
-        text = transformedContents.replace(/>(.+)</i, (_, p1) => `>${getText(p1)}<`);
+        text = transformedContents.replace(
+          />(.+)</i,
+          (_, p1) => `>${getText(p1, searchInput)}<`,
+        );
       } else {
-        text = getText(contents);
+        text = getText(contents, searchInput);
       }
 
       return (
         <span className="contents" dangerouslySetInnerHTML={{ __html: text }} />
       );
     },
-    [getText],
+    [searchInput],
   );
 
-  const getText = useCallback(
-    text => {
-      if (searchInput.trim()) {
-        return text.replace(
+  const getText = (text, searchInput) => {
+    if (searchInput.trim()) {
+      try {
+        text = text.replace(
           new RegExp(`(${searchInput})`, 'gi'),
           '<span class="highlight">$1</span>',
         );
+      } catch (e) {
+        // this condition is usually met when a search input contains symbols like *?!
+        text = text
+          .split(searchInput)
+          .join(`<span class="highlight">${searchInput}</span>`);
       }
+    }
 
-      return text;
-    },
-    [searchInput],
-  );
+    return text;
+  };
 
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
@@ -217,7 +229,7 @@ const NoteContent = ({ annotation }) => {
         </div>
       </div>
     ),
-    [annotation, contents, handleContainerClick, header, isEditing, renderContents, textAreaValue],
+    [header, handleContainerClick, isEditing, textAreaValue, annotation, contents, renderContents],
   );
 };
 
