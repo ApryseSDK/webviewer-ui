@@ -30,18 +30,8 @@ const propTypes = {
 };
 
 const NoteContent = ({ annotation }) => {
-  const [
-    sortStrategy,
-    noteDateFormat,
-    iconColor,
-    isNoteEditingTriggeredByAnnotationPopup,
-  ] = useSelector(
-    state => [
-      selectors.getSortStrategy(state),
-      selectors.getNoteDateFormat(state),
-      selectors.getIconColor(state, mapAnnotationToKey(annotation)),
-      selectors.getIsNoteEditing(state),
-    ],
+  const [isNoteEditingTriggeredByAnnotationPopup] = useSelector(
+    state => [selectors.getIsNoteEditing(state)],
     shallowEqual,
   );
   const { isSelected, searchInput, resize, isContentEditable } = useContext(
@@ -51,7 +41,6 @@ const NoteContent = ({ annotation }) => {
   const [textAreaValue, setTextAreaValue] = useState(annotation.getContents());
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const isReply = annotation.isReply();
 
   useDidUpdate(() => {
     if (!isEditing) {
@@ -87,23 +76,6 @@ const NoteContent = ({ annotation }) => {
     [isSelected],
   );
 
-  const renderAuthorName = useCallback(
-    annotation => {
-      const name = core.getDisplayAuthor(annotation);
-
-      if (!name) {
-        return '(no name)';
-      }
-
-      return (
-        <span
-          dangerouslySetInnerHTML={{ __html: getText(name, searchInput) }}
-        />
-      );
-    },
-    [searchInput],
-  );
-
   const renderContents = useCallback(
     contents => {
       contents = escapeHtml(contents);
@@ -117,10 +89,10 @@ const NoteContent = ({ annotation }) => {
         // <a ...><span class="highlight">t</span>ext</a>
         text = transformedContents.replace(
           />(.+)</i,
-          (_, p1) => `>${getText(p1, searchInput)}<`,
+          (_, p1) => `>${highlightSearchInput(p1, searchInput)}<`,
         );
       } else {
-        text = getText(contents, searchInput);
+        text = highlightSearchInput(contents, searchInput);
       }
 
       return (
@@ -129,78 +101,6 @@ const NoteContent = ({ annotation }) => {
     },
     [searchInput],
   );
-
-  const getText = (text, searchInput) => {
-    if (searchInput.trim()) {
-      try {
-        text = text.replace(
-          new RegExp(`(${searchInput})`, 'gi'),
-          '<span class="highlight">$1</span>',
-        );
-      } catch (e) {
-        // this condition is usually met when a search input contains symbols like *?!
-        text = text
-          .split(searchInput)
-          .join(`<span class="highlight">${searchInput}</span>`);
-      }
-    }
-
-    return text;
-  };
-
-  const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
-  const color = annotation[iconColor]?.toHexString?.();
-  const numberOfReplies = annotation.getReplies().length;
-  const header = useMemo(() => {
-    if (isReply) {
-      return (
-        <div className="title">
-          {renderAuthorName(annotation)}
-          <span className="spacer" />
-          <span className="time">
-            {` ${dayjs(annotation.DateCreated).format(noteDateFormat)}`}
-          </span>
-          {isSelected && (
-            <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
-          )}
-        </div>
-      );
-    }
-
-    return (
-      <div className="title">
-        <div className="type">
-          {icon ? (
-            <Icon className="icon" glyph={icon} color={color} />
-          ) : (
-            annotation.Subject
-          )}
-        </div>
-        {renderAuthorName(annotation)}
-        {(sortStrategy !== 'time' || isSelected || numberOfReplies > 0) && (
-          <span className="spacer" />
-        )}
-        <div className="time">
-          {(sortStrategy !== 'time' || isSelected) &&
-            dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
-          {numberOfReplies > 0 && ` (${numberOfReplies})`}
-        </div>
-        {isSelected && (
-          <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
-        )}
-      </div>
-    );
-  }, [
-    annotation,
-    color,
-    icon,
-    isReply,
-    isSelected,
-    noteDateFormat,
-    numberOfReplies,
-    renderAuthorName,
-    sortStrategy,
-  ]);
 
   const annotationState = annotation.getStatus();
   const contents = annotation.getContents();
@@ -212,7 +112,10 @@ const NoteContent = ({ annotation }) => {
         // to prevent textarea from blurring out during editing when clicking on the note content
         onMouseDown={e => e.preventDefault()}
       >
-        {header}
+        <NoteContentHeader
+          annotation={annotation}
+          setIsEditing={setIsEditing}
+        />
         {annotationState && annotationState !== 'None' && (
           <div className="status">
             {t('option.status.status')}: {annotationState}
@@ -235,7 +138,6 @@ const NoteContent = ({ annotation }) => {
       </div>
     ),
     [
-      header,
       annotationState,
       t,
       handleContainerClick,
@@ -251,3 +153,100 @@ const NoteContent = ({ annotation }) => {
 NoteContent.propTypes = propTypes;
 
 export default NoteContent;
+
+const NoteContentHeader = ({ annotation, setIsEditing }) => {
+  const [sortStrategy, noteDateFormat, iconColor] = useSelector(
+    state => [
+      selectors.getSortStrategy(state),
+      selectors.getNoteDateFormat(state),
+      selectors.getIconColor(state, mapAnnotationToKey(annotation)),
+    ],
+    shallowEqual,
+  );
+  const { isSelected, searchInput } = useContext(NoteContext);
+
+  const renderAuthorName = useCallback(
+    annotation => {
+      const name = core.getDisplayAuthor(annotation);
+
+      return name ? (
+        <span
+          dangerouslySetInnerHTML={{
+            __html: highlightSearchInput(name, searchInput),
+          }}
+        />
+      ) : (
+        '(no name)'
+      );
+    },
+    [searchInput],
+  );
+
+  const isReply = annotation.isReply();
+  const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
+  const color = annotation[iconColor]?.toHexString?.();
+  const numberOfReplies = annotation.getReplies().length;
+
+  return useMemo(
+    () => (
+      <div className="title">
+        {isReply ? null : (
+          <div className="type">
+            {icon ? (
+              <Icon className="icon" glyph={icon} color={color} />
+            ) : (
+              annotation.Subject
+            )}
+          </div>
+        )}
+        {renderAuthorName(annotation)}
+        {(sortStrategy !== 'time' || isSelected || numberOfReplies > 0) && (
+          <span className="spacer" />
+        )}
+        <div className="time">
+          {(sortStrategy !== 'time' || isSelected) &&
+            dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
+          {numberOfReplies > 0 && ` (${numberOfReplies})`}
+        </div>
+        {isSelected && (
+          <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
+        )}
+      </div>
+    ),
+    [
+      annotation,
+      color,
+      icon,
+      isReply,
+      isSelected,
+      noteDateFormat,
+      numberOfReplies,
+      renderAuthorName,
+      setIsEditing,
+      sortStrategy,
+    ],
+  );
+};
+
+NoteContentHeader.propTypes = {
+  annotation: PropTypes.object.isRequired,
+  setIsEditing: PropTypes.func.isRequired,
+};
+
+const highlightSearchInput = (text, searchInput) => {
+  if (searchInput.trim()) {
+    try {
+      text = text.replace(
+        new RegExp(`(${searchInput})`, 'gi'),
+        '<span class="highlight">$1</span>',
+      );
+    } catch (e) {
+      // this condition is usually met when a search input contains symbols like *?!
+      text = text
+        .split(searchInput)
+        .join(`<span class="highlight">${searchInput}</span>`);
+    }
+  }
+
+  return text;
+};
