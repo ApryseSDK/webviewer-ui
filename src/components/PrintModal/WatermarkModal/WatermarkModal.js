@@ -290,21 +290,21 @@ class WatermarkModal extends React.PureComponent {
     const currLocation = this.getCurrentSelectedLocation();
     const formInfo = this.state.locationSettings[currLocation];
     return (
-      <div className={'Modal Watermark'} data-element="watermarkModal" onMouseDown={this.closeModal}>
-        <div className="form-container" data-element="formContainer" onMouseDown={e => e.stopPropagation()}>
+      <div className={'Modal Watermark'} id="watermarkModal" onMouseDown={this.closeModal}>
+        <div className="form-container" id="formContainer" onMouseDown={e => e.stopPropagation()}>
           <div className="header-container" onMouseDown={e => e.stopPropagation()}>
             <div className="header">{t('option.print.addWatermarkSettings')}</div>
             <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} />
           </div>
 
           <div className="form-content-container">
-            <form data-element="form">
+            <form id="form">
               <div className="form-field">
                 <label>
                   {t(`option.watermark.location`)}
                 </label>
                 <select
-                  data-element="location"
+                  id="location"
                   value={WATERMARK_LOCATIONS[currLocation]}
                   onChange={event => { this.onLocationChanged(event.target.value); }}
                 >
@@ -322,7 +322,7 @@ class WatermarkModal extends React.PureComponent {
                 </label>
                 <input
                   className="text-input"
-                  data-element="textInput"
+                  id="textInput"
                   value={formInfo[FORM_FIELD_KEYS.text]}
                   onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
                   type="text"
@@ -334,7 +334,7 @@ class WatermarkModal extends React.PureComponent {
                   {t(`option.watermark.font`)}
                 </label>
                 <select
-                  data-element="fonts"
+                  id="fonts"
                   value={formInfo[FORM_FIELD_KEYS.font]}
                   onChange={event => this.handleInputChange(FORM_FIELD_KEYS.font, event.target.value)}
                 >
@@ -346,14 +346,14 @@ class WatermarkModal extends React.PureComponent {
                   {t(`option.watermark.size`)}
                 </label>
                 <select
-                  data-element="fontSize"
+                  id="fontSize"
                   value={formInfo[FORM_FIELD_KEYS.fontSize]}
                   onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}
                 >
                   { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
                 </select>
               </div>
-              <div className="form-field opacity-slider" data-element="opacitySlider">
+              <div className="form-field opacity-slider" id="opacitySlider">
                 <Slider
                   property={'opacity'} // arbitrary property name. this property isn't used in this file
                   displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
@@ -372,7 +372,7 @@ class WatermarkModal extends React.PureComponent {
                 <div className="style-container">
                   {/* use Button class so that it looks consistent with the other form fields below */}
                   <div
-                    data-element="currentColorCell"
+                    id="currentColorCell"
                     className="Button"
                     style={{ backgroundColor: formInfo[FORM_FIELD_KEYS.color].toHexString() }}
                     onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
@@ -402,9 +402,9 @@ class WatermarkModal extends React.PureComponent {
                 </div>
 
                 {
-                  this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} data-element="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
+                  this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} id="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
                     <ColorPalette
-                      data-element="colorPalette"
+                      id="colorPalette"
                       color={formInfo[FORM_FIELD_KEYS.color]}
                       property={'TextColor'} // arbitrary property name. this property isn't used in this file
                       onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
@@ -421,10 +421,10 @@ class WatermarkModal extends React.PureComponent {
           </div>
 
           <div className="button-container">
-            <a className="reset button" data-element="reset" onClick={this.resetForm}>{t(`option.watermark.resetAllSettings`)}</a>
+            <a className="reset button" id="reset" onClick={this.resetForm}>{t(`option.watermark.resetAllSettings`)}</a>
             <div className="action-button-container">
-              <button className="cancel button" data-element="cancel" onClick={this.closeModal}>{t(`action.cancel`)}</button>
-              <button className="ok button" data-element="submit" onClick={this.onOkPressed}>{t(`action.ok`)}</button>
+              <button className="cancel button" id="cancel" onClick={this.closeModal}>{t(`action.cancel`)}</button>
+              <button className="ok button" id="submit" onClick={this.onOkPressed}>{t(`action.ok`)}</button>
             </div>
           </div>
         </div>
