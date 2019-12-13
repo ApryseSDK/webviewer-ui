@@ -36,7 +36,7 @@ class ToolsOverlay extends React.PureComponent {
       right: 'auto',
       top: 'auto',
       isStylingOpen: false,
-      // siblingWidth: 0
+      siblingWidth: 0,
     };
     this.itemsContainer = React.createRef();
     this.toolsContainer = React.createRef();
@@ -52,7 +52,6 @@ class ToolsOverlay extends React.PureComponent {
       this.setOverlayPosition();
     }
 
-    console.log('didMount');
     if (this.itemsContainer.current) {
       this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
@@ -79,7 +78,6 @@ class ToolsOverlay extends React.PureComponent {
       this.setOverlayPosition();
     }
 
-    console.log('didUpdate');
     if (this.itemsContainer.current) {
       this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
@@ -130,7 +128,6 @@ class ToolsOverlay extends React.PureComponent {
   };
 
   handleStyleClick = () => {
-    // this.props.toggleElement('toolStylePopup');
     this.setState({ isStylingOpen: !this.state.isStylingOpen });
   }
 
@@ -163,9 +160,7 @@ class ToolsOverlay extends React.PureComponent {
           ref={this.toolsContainer}
           className="ToolsContainer"
         >
-          <div
-
-          >
+          <div>
             <div
               className="Items-Container"
               ref={this.itemsContainer}
@@ -195,7 +190,7 @@ class ToolsOverlay extends React.PureComponent {
           className="Close-Container"
         >
           <div
-            className="Close-Container2"
+            className="Close-Button"
             onClick={this.handleCloseClick}
           >
             <Icon

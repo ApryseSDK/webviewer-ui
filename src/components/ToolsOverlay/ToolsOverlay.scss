@@ -1,23 +1,6 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
-.grid-container{
-  display: flex;
-  // position: absolute;
-  // top: 70px;
-  // width: 174px;
-  flex-wrap: wrap;
-
-  .cell-123 {
-    background: black;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    margin: 3px;
-  }
-}
-
-
 .ToolsOverlay {
   @extend %overlay;
 
@@ -66,7 +49,7 @@
   .Close-Container {
     margin-left: 2px;
 
-    .Close-Container2 {
+    .Close-Button {
       padding: 1px;
       background: var(--tools-overlay-background);
       border: 1px solid var(--tools-overlay-border);

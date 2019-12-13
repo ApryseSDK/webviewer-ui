@@ -49,8 +49,6 @@ class ColorPalette extends React.PureComponent {
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
 
-    console.log(color.toHexString());
-
     return (
       <div className="ColorPalette" data-element="colorPalette">
         {allowTransparent &&
