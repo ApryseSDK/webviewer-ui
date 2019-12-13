@@ -397,7 +397,6 @@ class WatermarkModal extends React.PureComponent {
                 {
                   this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} id="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
                     <ColorPalette
-                      id="colorPalette"
                       color={formInfo[FORM_FIELD_KEYS.color]}
                       property={'TextColor'} // arbitrary property name. this property isn't used in this file
                       onStyleChange = {(property, color) => { this.handleInputChange(FORM_FIELD_KEYS.color, color); this.setColorPaletteVisibility(false); }}
