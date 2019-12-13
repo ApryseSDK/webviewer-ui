@@ -10,11 +10,6 @@ import ActionButton from 'components/ActionButton';
 import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 
-/**
- * @ignore
- * TODO refactor this component so that the Print Modal passes in the form fields and it will store the previous form field settings
- */
-
 const DESIRED_WIDTH = 300;
 const DESIRED_HEIGHT = 300;
 
@@ -56,10 +51,8 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.isItalic]: false,
   [FORM_FIELD_KEYS.isUnderlined]: false,
 };
-/**
- * @ignore
- * Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
- */
+
+// Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
 const WATERMARK_API_LOCATIONS = {
   [WATERMARK_LOCATIONS.CENTER]: 'diagonal',
   [WATERMARK_LOCATIONS.TOP_LEFT]: 'headerLeft',
