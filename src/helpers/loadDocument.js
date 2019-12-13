@@ -170,7 +170,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
 };
 
 const getDocOptions = (state, dispatch, streaming) => {
-  const { id: docId, officeType, pdfType, password } = state.document;
+  const { id: docId, pdfType, password } = state.document;
   const engineType = getEngineType(state);
 
   return new Promise(resolve => {
@@ -179,8 +179,10 @@ const getDocOptions = (state, dispatch, streaming) => {
       resolve(docId);
     } else {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit, pageSizes } = state.advanced;
-
-      Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
+      // webviewer.js uses the backendType option for both pdfType and officeType, so here we just use pdfType since they are the same
+      // TODO: refactor webviewer.js so that it adds backendType instead of pdfType and officeType to the url
+      const backendType = pdfType;
+      getBackendPromise(backendType).then(backendType => {
         let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
         let attempt = 0;
         const getPassword = checkPassword => {
@@ -207,7 +209,7 @@ const getDocOptions = (state, dispatch, streaming) => {
         };
 
         const docName = getDocName(state);
-        const options = { docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit };
+        const options = { docName, backendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit };
         const { type, extension, workerTransportPromise } = getDocTypeData(options);
         if (workerTransportPromise) {
           workerTransportPromise.catch(workerError => {
@@ -219,7 +221,7 @@ const getDocOptions = (state, dispatch, streaming) => {
 
         dispatch(actions.setDocumentType(type));
 
-        resolve({ docId, pdfBackendType, officeBackendType, extension, getPassword, onError, streaming, type, workerHandlers, workerTransportPromise, forceClientSideInit, pageSizes });
+        resolve({ docId, backendType, extension, getPassword, onError, streaming, type, workerHandlers, workerTransportPromise, forceClientSideInit, pageSizes });
       });
     }
   });
@@ -292,7 +294,7 @@ export const isOfficeExtension = extension => supportedOfficeExtensions.indexOf(
 
 export const isPDFExtension = extension => supportedPDFExtensions.indexOf(extension) !== -1;
 
-const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise }) => {
+const getDocTypeData = ({ docName, backendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise }) => {
   const originalExtension = getDocumentExtension(docName);
 
   let type;
@@ -305,14 +307,14 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
     const usingOfficeWorker = supportedOfficeExtensions.indexOf(originalExtension) !== -1;
     if (usingOfficeWorker && !officeWorkerTransportPromise) {
       type = workerTypes.OFFICE;
-      workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(officeBackendType, workerHandlers);
+      workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(backendType, workerHandlers);
     } else if (!usingOfficeWorker && !pdfWorkerTransportPromise) {
       type = workerTypes.PDF;
       // if the extension isn't pdf or an image then assume it's a pdf
       if (supportedPDFExtensions.indexOf(originalExtension) === -1) {
         extension = 'pdf';
       }
-      workerTransportPromise = window.CoreControls.initPDFWorkerTransports(pdfBackendType, workerHandlers);
+      workerTransportPromise = window.CoreControls.initPDFWorkerTransports(backendType, workerHandlers);
     } else if (usingOfficeWorker) {
       type = workerTypes.OFFICE;
       workerTransportPromise = officeWorkerTransportPromise;

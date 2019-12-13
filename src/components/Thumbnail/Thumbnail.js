@@ -6,13 +6,14 @@ import core from 'core';
 import { isMobile } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
+import ThumbnailControls from 'components/ThumbnailControls';
 
 import './Thumbnail.scss';
 
 class Thumbnail extends React.PureComponent {
   static propTypes = {
     index: PropTypes.number.isRequired,
-    currentPage: PropTypes.number,
+    currentPage: PropTypes.number.isRequired,
     pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
     onLoad: PropTypes.func.isRequired,
@@ -57,7 +58,7 @@ class Thumbnail extends React.PureComponent {
 
   onLayoutChanged(changes) {
     const { contentChanged, moved, added, removed } = changes;
-    const { index } = this.props;
+    const { index, pageLabels } = this.props;
 
     const currentPage = index + 1;
     const currentPageStr = `${currentPage}`;
@@ -66,6 +67,12 @@ class Thumbnail extends React.PureComponent {
     const didPageChange = contentChanged.some(changedPage => currentPageStr === changedPage);
     const didPageMove = Object.keys(moved).some(movedPage => currentPageStr === movedPage);
     const isPageRemoved = removed.indexOf(currentPage) > -1;
+    const newPageCount = pageLabels.length - removed.length;
+
+    if (removed.length > 0 && index + 1 > newPageCount) {
+      // don't load thumbnail if it's going to be removed
+      return;
+    }
 
     if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
       const { thumbContainer } = this;
@@ -111,6 +118,7 @@ class Thumbnail extends React.PureComponent {
       <div className={`Thumbnail ${isActive ? 'active' : ''} `} onDragOver={this.onDragOver}>
         <div className="container" ref={this.thumbContainer} onClick={this.handleClick} onDragStart={this.onDragStart} draggable={isDraggable}></div>
         <div className="page-label">{pageLabel}</div>
+        {isActive && <ThumbnailControls index={index} />}
       </div>
     );
   }

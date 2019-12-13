@@ -138,22 +138,15 @@ const NotesPanel = ({ display }) => {
           const content = note.getContents();
           const authorName = core.getDisplayAuthor(note);
 
+          // didn't use regex here because the search input may form an invalid regex, e.g. *
           return (
-            isInputIn(content, searchInput) ||
-            isInputIn(authorName, searchInput)
+            content?.toLowerCase().includes(searchInput.toLowerCase()) ||
+            authorName?.toLowerCase().includes(searchInput.toLowerCase())
           );
         });
     }
 
     return shouldRender;
-  };
-
-  const isInputIn = (string, searchInput) => {
-    if (!string) {
-      return false;
-    }
-
-    return string.search(new RegExp(searchInput, 'i')) !== -1;
   };
 
   const handleInputChange = e => {

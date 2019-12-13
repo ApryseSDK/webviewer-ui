@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { List } from 'react-virtualized';
 import Measure from 'react-measure';
+import classNames from 'classnames';
+
 import Thumbnail from 'components/Thumbnail';
 
 import core from 'core';
@@ -20,6 +22,7 @@ class ThumbnailsPanel extends React.PureComponent {
     isThumbnailMergingEnabled: PropTypes.bool,
     isThumbnailReorderingEnabled: PropTypes.bool,
     dispatch: PropTypes.func,
+    isThumbnailControlDisabled: PropTypes.bool,
   }
 
   constructor() {
@@ -27,7 +30,6 @@ class ThumbnailsPanel extends React.PureComponent {
     this.pendingThumbs = [];
     this.thumbs = [];
     this.listRef = React.createRef();
-    this.thumbnailHeight = 180; // refer to Thumbnail.scss
     this.afterMovePageNumber = null;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
@@ -35,7 +37,7 @@ class ThumbnailsPanel extends React.PureComponent {
       height: 0,
       width: 0,
       draggingOverPageIndex: null,
-      isDraggingOverTopHalf: false,
+      isDraggingToPreviousPage: false,
     };
   }
 
@@ -67,9 +69,9 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onDragEnd = () => {
     const { currentPage } = this.props;
-    const { draggingOverPageIndex, isDraggingOverTopHalf } = this.state;
+    const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     if (draggingOverPageIndex !== null) {
-      const targetPageNumber = isDraggingOverTopHalf ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
+      const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
       let afterMovePageNumber = null;
 
       if (currentPage < targetPageNumber) {
@@ -99,6 +101,7 @@ class ThumbnailsPanel extends React.PureComponent {
     e.preventDefault();
     e.stopPropagation();
 
+    const { numberOfColumns } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
 
     if (!isThumbnailReorderingEnabled && !isThumbnailMergingEnabled) {
@@ -106,10 +109,17 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     const thumbnail = e.target.getBoundingClientRect();
+    let isDraggingToPreviousPage = false;
+    if (numberOfColumns > 1) {
+    // row with more than 1 thumbnail so user are dragging to the left and right
+      isDraggingToPreviousPage = !(e.pageX > (thumbnail.x + thumbnail.width / 2));
+    } else {
+      isDraggingToPreviousPage = !(e.pageY > (thumbnail.y + thumbnail.height / 2));
+    }
 
     this.setState({
       draggingOverPageIndex: index,
-      isDraggingOverTopHalf: !(e.pageY > (thumbnail.y + thumbnail.height / 2)),
+      isDraggingToPreviousPage,
     });
   }
 
@@ -127,12 +137,12 @@ class ThumbnailsPanel extends React.PureComponent {
   onDrop = e => {
     e.preventDefault();
     const { isThumbnailMergingEnabled, dispatch } = this.props;
-    const { draggingOverPageIndex, isDraggingOverTopHalf } = this.state;
+    const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     const { files } = e.dataTransfer;
 
     if (isThumbnailMergingEnabled && files.length) {
       const file = files[0];
-      const insertTo = isDraggingOverTopHalf ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
+      const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
 
       dispatch(actions.openElement('loadingModal'));
 
@@ -334,23 +344,27 @@ class ThumbnailsPanel extends React.PureComponent {
       numberOfColumns,
       canLoad,
       draggingOverPageIndex,
-      isDraggingOverTopHalf,
+      isDraggingToPreviousPage,
     } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
     const { thumbs } = this;
+    const className = classNames({
+      columnsOfThumbnails: (numberOfColumns > 1),
+      row: true,
+    });
 
     return (
-      <div className="row" key={key} style={style}>
+      <div className={className} key={key} style={style}>
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
             const thumbIndex = index * numberOfColumns + columnIndex;
             const updateHandler = thumbs && thumbs[thumbIndex] ? thumbs[thumbIndex].updateAnnotationHandler : null;
-            const showPlaceHolder = (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && draggingOverPageIndex === index;
+            const showPlaceHolder = (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && draggingOverPageIndex === thumbIndex;
 
             return (
               thumbIndex < this.props.totalPages
                 ? <div key={thumbIndex} onDragEnd={this.onDragEnd}>
-                  {showPlaceHolder && isDraggingOverTopHalf && <hr className="thumbnailPlaceholder" />}
+                  {showPlaceHolder && isDraggingToPreviousPage && <hr className="thumbnailPlaceholder" />}
                   <Thumbnail
                     isDraggable={isThumbnailReorderingEnabled}
                     index={thumbIndex}
@@ -362,7 +376,7 @@ class ThumbnailsPanel extends React.PureComponent {
                     onDragOver={this.onDragOver}
                     updateAnnotations={updateHandler}
                   />
-                  {showPlaceHolder && !isDraggingOverTopHalf && <hr className="thumbnailPlaceholder" />}
+                  {showPlaceHolder && !isDraggingToPreviousPage && <hr className="thumbnailPlaceholder" />}
                 </div>
                 : null
             );
@@ -373,8 +387,10 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, totalPages, display } = this.props;
+    const { isDisabled, totalPages, display, isThumbnailControlDisabled } = this.props;
     const { numberOfColumns, height, width } = this.state;
+    const thumbnailHeight = isThumbnailControlDisabled ? 180 : 200; // refer to Thumbnail.scss
+
     if (isDisabled) {
       return null;
     }
@@ -402,7 +418,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 ref={this.listRef}
                 height={height}
                 width={width}
-                rowHeight={this.thumbnailHeight}
+                rowHeight={thumbnailHeight}
                 // Round it to a whole number because React-Virtualized list library doesn't round it for us and throws errors when rendering non whole number rows
                 // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
                 rowCount={Math.ceil(totalPages / numberOfColumns)}
@@ -428,6 +444,7 @@ const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   isThumbnailMergingEnabled: selectors.getIsThumbnailMergingEnabled(state),
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),
+  isThumbnailControlDisabled: selectors.isElementDisabled(state, 'thumbnailControl'),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThumbnailsPanel);

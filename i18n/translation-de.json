@@ -2,6 +2,7 @@
   "action": {
     "apply": "Anwenden",
     "applyAll": "Alles anwenden",
+    "calibrate": "Kalibrieren",
     "cancel": "Abbrechen",
     "clear": "Löschen",
     "close": "Schliessen",
@@ -33,8 +34,7 @@
     "submit": "Abgeben",
     "zoom": "Zoom",
     "zoomIn": "Heranzoomen",
-    "zoomOut": "Rauszoomen",
-    "calibrate": "Kalibrieren"
+    "zoomOut": "Rauszoomen"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -82,7 +82,10 @@
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
     "measurementToolsButton": "Messwerkzeuge",
-    "calibration": "Kalibrierung"
+    "calibration": "Kalibrierung",
+    "newBookmark": "Neues Lesezeichen",
+    "bookmarkPage": "Seite",
+    "bookmarksPanel": "Lesezeichen"
   },
   "message": {
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
@@ -143,13 +146,12 @@
       "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"
     },
     "redaction": {
-      "markForRedaction": "Zum Schwärzen markieren",
-      "warningPopupMessage": "Diese Aktion wird dauerhaft die markierten Elemente zur Überarbeitung löschen. Dies kann nicht rückgängig gemacht werden.",
-      "warningPopupTitle": "Schwärzung anwenden"
+      "markForRedaction": "Zum Schwärzen markieren"
     },
     "searchPanel": {
       "caseSensitive": "Groß-/Klein- schreibung beachten",
-      "wholeWordOnly": "Ganzes Wort"
+      "wholeWordOnly": "Ganzes Wort",
+      "wildcard": "Platzhalter"
     },
     "signatureOverlay": {
       "addSignature": "Eine Unterschrift hinzufügen"
@@ -194,6 +196,22 @@
       "text": "Text",
       "colors": "Farben",
       "resetAllSettings": "Alle Einstellungen zurücksetzen"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Im Uhrzeigersinn",
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
+      "delete": "Löschen"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten verbleiben. Bitte hinterlassen Sie mindestens eine Seite",
+      "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden",
+      "deleteTitle": "Seite löschen"
+    },
+    "redaction": {
+      "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht ungeschehen gemacht werden.",
+      "applyTile": "Redaktion anwenden"
     }
   },
   "shortcut": {

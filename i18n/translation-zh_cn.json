@@ -2,6 +2,7 @@
   "action": {
     "apply": "应用",
     "applyAll": "全部申请",
+    "calibrate": "校准",
     "cancel": "取消",
     "clear": "清除",
     "close": "关闭",
@@ -33,8 +34,7 @@
     "submit": "提交",
     "zoom": "缩放",
     "zoomIn": "放大",
-    "zoomOut": "缩小",
-    "calibrate": "校准"
+    "zoomOut": "缩小"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -82,7 +82,10 @@
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
     "measurementToolsButton": "测量工具",
-    "calibration": "校准"
+    "calibration": "校准",
+    "bookmarksPanel": "书签",
+    "bookmarkPage": "页",
+    "newBookmark": "新书签"
   },
   "message": {
     "badDocument": "无法加载文档，此文档已损坏或无效。",
@@ -143,13 +146,12 @@
       "addWatermarkSettings": "添加水印设置"
     },
     "redaction": {
-      "markForRedaction": "标记为编辑",
-      "warningPopupMessage": "此操作将永久删除为编校选择的所有项目。它无法撤消。",
-      "warningPopupTitle": "应用编辑"
+      "markForRedaction": "标记为编辑"
     },
     "searchPanel": {
       "caseSensitive": "区分大小写",
-      "wholeWordOnly": "整个词语"
+      "wholeWordOnly": "整个词语",
+      "wildcard": "通配符"
     },
     "signatureOverlay": {
       "addSignature": "添加签名"
@@ -194,6 +196,22 @@
       "text": "文本",
       "colors": "颜色",
       "resetAllSettings": "重置所有设置"
+    },
+    "thumbnailPanel": {
+      "delete": "删除",
+      "rotateCounterClockwise": "逆时针方向",
+      "rotateClockwise": "顺时针"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteMessage": "您确定要删除所选页面吗？这是无法撤消的",
+      "deleteLastPageMessage": "这将导致没有剩余页面。请至少留一页",
+      "deleteTitle": "删除页面"
+    },
+    "redaction": {
+      "applyTile": "应用编辑",
+      "applyMessage": "此操作将永久删除所有要编辑的项目。无法撤消。"
     }
   },
   "shortcut": {
