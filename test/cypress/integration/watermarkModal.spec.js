@@ -76,21 +76,21 @@ const FONT_SIZE_DROPDOWN_INDEX = 11;
 const fillOutForm = () => {
   // fill out form arbitrarily
   // Note: type words in text field that don't have typos else picture diffing may cause problems
-  return cy.get('[data-element="watermarkModal"]').find('[data-element="form"]').within(() => {
-    cy.get('[data-element="textInput"]').as('textInput').type('Test');
+  return cy.get('#watermarkModal').find('#form').within(() => {
+    cy.get('#textInput').as('textInput').type('Test');
     cy.get('@textInput').blur();
-    cy.get('[data-element="fontSize"]').as('fontSize').find('option').eq(FONT_SIZE_DROPDOWN_INDEX).invoke('val').then((val) => {
+    cy.get('#fontSize').as('fontSize').find('option').eq(FONT_SIZE_DROPDOWN_INDEX).invoke('val').then((val) => {
       cy.get('@fontSize').last().select(val);
       cy.get('@fontSize').first().focus().blur();
     });
-    cy.get('[data-element="currentColorCell"]').click();
+    cy.get('#currentColorCell').click();
     cy.get('[data-element="colorPalette"]').find('[style="background-color: rgb(0, 0, 0);"]').click();
 
-    cy.get('[data-element="opacitySlider"]').as('opacitySlider').find('[data-element="slider"]').as('slider').trigger('mousedown');
+    cy.get('#opacitySlider').as('opacitySlider').find('[data-element="slider"]').as('slider').trigger('mousedown');
     cy.get('@slider').trigger('mousemove', { pageX: 5 });
     cy.get('@slider').trigger('mouseup');
 
-    cy.get('[data-element="location"]').as('location').first().find('option').eq(LOCATION_DROPDOWN_INDEX).invoke('val').then((val) => {
+    cy.get('#location').as('location').first().find('option').eq(LOCATION_DROPDOWN_INDEX).invoke('val').then((val) => {
       cy.get('@location').first().select(val);
       cy.get('@location').first().focus().blur();
     });
@@ -126,14 +126,14 @@ describe.skip('Tests for watermark modal', () => {
       cy.get('@menuButton').click();
       cy.get('@printButton').click();
       cy.get('@printModal').should('visible');
-      cy.get('@printModal').find('[data-element="applyWatermark"]').as('openWatermarkModal').click();
-      cy.get('[data-element="watermarkModal"]').as('watermarkModal').should('visible');
+      cy.get('@printModal').find('#applyWatermark').as('openWatermarkModal').click();
+      cy.get('#watermarkModal').as('watermarkModal').should('visible');
 
       cy.get('[data-element="watermarkModalCloseButton"]').as('watermarkModalCloseButton');
-      cy.get('@watermarkModal').find('[data-element="formContainer"]').as('formContainer');
-      cy.get('@watermarkModal').find('[data-element="submit"]').as('submit');
-      cy.get('@watermarkModal').find('[data-element="cancel"]').as('cancel');
-      cy.get('@watermarkModal').find('[data-element="reset"]').as('reset');
+      cy.get('@watermarkModal').find('#formContainer').as('formContainer');
+      cy.get('@watermarkModal').find('#submit').as('submit');
+      cy.get('@watermarkModal').find('#cancel').as('cancel');
+      cy.get('@watermarkModal').find('#reset').as('reset');
     });
 
     it('Should be able to open watermark modal from print modal', () => {
@@ -253,7 +253,7 @@ describe.skip('Tests for watermark modal', () => {
         });
     });
 
-    describe.skip('Tests for when print modal is already opened', () => {
+    describe('Tests for when print modal is already opened', () => {
       beforeEach(() => {
         cy.get('@menuButton').click();
         cy.get('@printButton').click();
@@ -265,7 +265,7 @@ describe.skip('Tests for watermark modal', () => {
       });
     });
 
-    describe.skip('Tests of when existings watermarks are programtically removed', () => {
+    describe('Tests of when existings watermarks are programtically removed', () => {
       beforeEach(() => {
         cy.window()
           .then(async window => {
@@ -277,7 +277,7 @@ describe.skip('Tests for watermark modal', () => {
             cy.get('@printButton').click();
             cy.get('@printModal').should('visible');
 
-            cy.get('@printModal').find('[data-element="applyWatermark"]').as('applyWatermark');
+            cy.get('@printModal').find('#applyWatermark').as('applyWatermark');
           });
       });
 
@@ -295,10 +295,10 @@ describe.skip('Tests for watermark modal', () => {
             // wait for changes to canvas
             cy.wait(CANVAS_TIMEOUT_MS);
 
-            cy.get('[data-element="watermarkModal"]').as('watermarkModal').find('[data-element="formContainer"]').as('formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_EXISTING_WATERMARK);
-            cy.get('@watermarkModal').find('[data-element="submit"]').click();
+            cy.get('#watermarkModal').as('watermarkModal').find('#formContainer').as('formContainer').matchImageSnapshot(ID.TEST_PERSIST_CHANGE_EXISTING_WATERMARK);
+            cy.get('@watermarkModal').find('#submit').click();
 
-            cy.get('[data-element="printModalCloseButton"]').as('printModalCloseButton').click()
+            cy.get('#printModalCloseButton').as('printModalCloseButton').click()
               .then(async () => {
                 window.docViewer.setWatermark(WATERMARK);
                 window.docViewer.refreshAll();

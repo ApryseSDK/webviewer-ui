@@ -26,8 +26,8 @@ const webViewerServerApply = (annotations, dispatch) =>
   });
 
 const webViewerApply = (annotations, dispatch) => {
-  const message = i18next.t('option.redaction.warningPopupMessage');
-  const title = i18next.t('option.redaction.warningPopupTitle');
+  const message = i18next.t('warning.redaction.applyMessage');
+  const title = i18next.t('warning.redaction.applyTile');
   const confirmBtnText = i18next.t('action.apply');
 
   const warning = {

@@ -1,3 +1,4 @@
+// https://websitesetup.org/web-safe-fonts-html-css/
 export const FONTS = [
   'Arial',
   'Roboto',

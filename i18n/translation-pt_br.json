@@ -2,6 +2,7 @@
   "action": {
     "apply": "Aplicar",
     "applyAll": "Aplicar todos",
+    "calibrate": "Calibrar",
     "cancel": "Cancelar",
     "clear": "Limpar",
     "close": "Fechar",
@@ -33,8 +34,7 @@
     "submit": "Enviar",
     "zoom": "Zoom",
     "zoomIn": "Aproximar",
-    "zoomOut": "Afastar",
-    "calibrate": "Calibrar"
+    "zoomOut": "Afastar"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -82,7 +82,10 @@
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
     "measurementToolsButton": "Ferramentas de medição",
-    "calibration": "Calibração"
+    "calibration": "Calibração",
+    "bookmarkPage": "Página",
+    "bookmarksPanel": "Favoritos",
+    "newBookmark": "Novo marcador"
   },
   "message": {
     "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
@@ -143,13 +146,12 @@
       "addWatermarkSettings": "Adicionar configurações de marca d'água"
     },
     "redaction": {
-      "markForRedaction": "Marcar para supressão",
-      "warningPopupMessage": "Todos os itens selecionados para supressão serão permanentemente removidos. Isso não pode ser desfeito.",
-      "warningPopupTitle": "Aplicar supressão"
+      "markForRedaction": "Marcar para supressão"
     },
     "searchPanel": {
       "caseSensitive": "Diferenciar maiúsculas e minúsculas",
-      "wholeWordOnly": "Palavra inteira"
+      "wholeWordOnly": "Palavra inteira",
+      "wildcard": "Curinga"
     },
     "signatureOverlay": {
       "addSignature": "Adicionar assinatura"
@@ -194,6 +196,22 @@
       "text": "Texto",
       "colors": "Cores",
       "resetAllSettings": "Redefinir todas as configurações"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Sentido horário",
+      "delete": "Excluir",
+      "rotateCounterClockwise": "Sentido anti-horário"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "Isso resultaria em nenhuma página restante. Deixe pelo menos uma página",
+      "deleteTitle": "Excluir página",
+      "deleteMessage": "Tem certeza de que deseja excluir as páginas selecionadas. Isso não pode ser desfeito"
+    },
+    "redaction": {
+      "applyMessage": "Esta ação removerá permanentemente todos os itens selecionados para edição. Não pode ser desfeito.",
+      "applyTile": "Aplicar redação"
     }
   },
   "shortcut": {

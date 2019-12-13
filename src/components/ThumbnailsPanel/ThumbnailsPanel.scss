@@ -14,8 +14,19 @@
     justify-content: center;
   }
 
-  .thumbnailPlaceholder{
+  .thumbnailPlaceholder {
     border-color: $gray87;
     margin: 0px;
+  }
+
+  .columnsOfThumbnails {
+    .Thumbnail {
+      display: inline-flex
+    }
+
+    .thumbnailPlaceholder {
+      height: 180px;
+      display: inline-flex;
+    }
   }
 }

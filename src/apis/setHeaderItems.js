@@ -56,7 +56,6 @@ WebViewer(...)
  * Callback that gets passed to {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems}.
  * @callback WebViewer.headerCallback
  * @param {Header} header Header instance with helper functions
- * @ignore
  */
 
 import actions from 'actions';
