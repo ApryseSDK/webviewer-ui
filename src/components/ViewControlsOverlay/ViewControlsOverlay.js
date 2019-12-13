@@ -18,6 +18,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './ViewControlsOverlay.scss';
+import Autolinker from 'autolinker';
 
 class ViewControlsOverlay extends React.PureComponent {
   static propTypes = {
@@ -35,6 +36,7 @@ class ViewControlsOverlay extends React.PureComponent {
   state = {
     left: 0,
     right: 'auto',
+    top: 'auto',
   };
 
   componentDidMount() {
@@ -77,6 +79,10 @@ class ViewControlsOverlay extends React.PureComponent {
     }
   }
 
+  handleCloseClick = () => {
+    this.props.closeElements(['viewControlsOverlay']);
+  };
+
   handleClick = (pageTransition, layout) => {
     const displayModeObject = displayModeObjects.find(
       obj => obj.pageTransition === pageTransition && obj.layout === layout,
@@ -87,7 +93,7 @@ class ViewControlsOverlay extends React.PureComponent {
 
   render() {
     const { isDisabled, displayMode, fitMode, totalPages, t } = this.props;
-    const { left, right } = this.state;
+    const { left, right, top } = this.state;
     const { pageTransition, layout } = displayModeObjects.find(
       obj => obj.displayMode === displayMode,
     );
@@ -97,8 +103,10 @@ class ViewControlsOverlay extends React.PureComponent {
       return null;
     }
 
+    console.log('toooop', top);
+
     return (
-      <div className={className} data-element="viewControlsOverlay" style={{ left, right }} ref={this.overlay}>
+      <div className={className} data-element="viewControlsOverlay" style={{ left, right, top }} ref={this.overlay}>
         <div className="ViewControlsContainer">
           {totalPages < 1000 &&
             <Element className="row" dataElement="pageTransitionButtons">

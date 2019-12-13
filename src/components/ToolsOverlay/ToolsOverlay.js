@@ -124,7 +124,7 @@ class ToolsOverlay extends React.PureComponent {
 
     core.setToolMode(defaultTool);
     setActiveToolGroup('');
-    closeElements(['toolStylePopup', 'toolsOverlay']);
+    closeElements(['toolsOverlay']);
   };
 
   handleStyleClick = () => {
@@ -133,6 +133,7 @@ class ToolsOverlay extends React.PureComponent {
 
   render() {
     const { left, right, top, isStylingOpen } = this.state;
+
     const {
       isDisabled,
       isOpen,
