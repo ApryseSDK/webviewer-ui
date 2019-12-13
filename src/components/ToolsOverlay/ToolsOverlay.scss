@@ -4,6 +4,8 @@
 .ToolsOverlay {
   @extend %overlay;
 
+  display: flex;
+  flex-direction: row;
   padding: 0px;
   flex-wrap: nowrap;
   border: 0px;

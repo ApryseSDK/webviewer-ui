@@ -3,19 +3,44 @@
 
 .ViewControlsOverlay {
   @extend %overlay;
-  
-  // For iOS 10
-  &.open {
-    display: block;
+
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
+  flex-wrap: nowrap;
+  border: 0px;
+  border-radius: 0px;
+  background: transparent;
+
+  .ViewControlsContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--tools-overlay-border);
+    border-radius: var(--header-items-border-radius);
+    background: var(--tools-overlay-background);
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
   }
 
-  flex-direction: column;
+  .Close-Container {
+    margin-left: 2px;
+
+    .Close-Button {
+      padding: 1px;
+      background: var(--tools-overlay-background);
+      border: 1px solid var(--tools-overlay-border);
+      border-radius: 100000px;
+      box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
+      cursor: pointer;
+    }
+
+    .Close-Icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
   top: 46px;
-
-  @include mobile {
-    left: 8px;
-    top: calc(#{$top-bar-height-m} + 3px);
-  }
 
   .row {
     display: flex;
@@ -26,13 +51,13 @@
       width: 130px;
       padding-left: 10px;
     }
-    
+
     &.hide-in-desktop {
       @include desktop {
         display: none;
       }
     }
-    
+
     &.hide-in-tablet {
       @include tablet {
         display: none;
