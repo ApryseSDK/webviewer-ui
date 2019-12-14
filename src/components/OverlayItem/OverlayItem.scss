@@ -1,23 +1,16 @@
 @import '../../constants/styles';
 
 .OverlayItem {
-  min-width: 146px;
-  min-height: 35px;
-  background-color: #FFFFFF;
-  background-color: var(--primary-color);
-  color: #333333;
-  color: var(--text-color);
   font-size: 16px;
-  font-weight: normal;
+  padding-left: 4px;
+  border-radius: var(--header-items-border-radius);
   cursor: pointer;
 
   &:hover {
-    background-color: #F6F6F6;
     background-color: var(--button-hover-color);
   }
 
   .ButtonText {
     line-height: 2.4;
-    margin: 0 19px;
   }
 }

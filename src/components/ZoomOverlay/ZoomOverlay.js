@@ -10,6 +10,7 @@ import selectors from 'selectors';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import { zoomTo } from 'helpers/zoom';
 
+import Icon from 'components/Icon';
 import OverlayItem from '../OverlayItem';
 import ToolButton from '../ToolButton';
 
@@ -63,7 +64,7 @@ class ZoomOverlay extends React.PureComponent {
 
   handleClickOutside = e => {
     const ToggleZoomButton = document.querySelector('[data-element="zoomOverlayButton"]');
-    const clickedToggleZoomButton = ToggleZoomButton?.contains(e.target);
+    const clickedToggleZoomButton = ToggleZoomButton ?.contains(e.target);
 
     if (!clickedToggleZoomButton) {
       this.props.closeElements('zoomOverlay');
@@ -100,24 +101,76 @@ class ZoomOverlay extends React.PureComponent {
         ref={this.dropdown}
         onClick={() => closeElements(['zoomOverlay'])}
       >
-        <OverlayItem
-          onClick={core.fitToWidth}
-          buttonName={t('action.fitToWidth')}
-        />
-        <OverlayItem
-          onClick={core.fitToPage}
-          buttonName={t('action.fitToPage')}
-        />
-        <div className="spacer" />
-        {zoomList.map((zoomValue, i) => (
-          <OverlayItem
-            key={i}
-            onClick={() => zoomTo(zoomValue)}
-            buttonName={`${zoomValue * 100}%`}
+        <div
+          className="ZoomContainer"
+        >
+          <div
+            className="ZoomItem"
+            onClick={core.fitToWidth}
+          >
+            <Icon
+              className="ZoomIcon"
+              glyph="icon-header-zoom-fit-to-width"
+            />
+            <div className="ZoomLabel">{t('action.fitToWidth')}</div>
+          </div>
+          <div
+            className="ZoomItem"
+            onClick={core.fitToPage}
+          >
+            <Icon
+              className="ZoomIcon"
+              glyph="icon-header-zoom-fit-to-page"
+            />
+            <div className="ZoomLabel">{t('action.fitToPage')}</div>
+          </div>
+          <div className="spacer" />
+          {zoomList.map((zoomValue, i) => (
+            <OverlayItem
+              key={i}
+              onClick={() => zoomTo(zoomValue)}
+              buttonName={`${zoomValue * 100}%`}
+            />
+          ))}
+          <div className="spacer" />
+          {/* <OverlayItem
+            onClick={core.fitToWidth}
+            buttonName={t('action.fitToWidth')}
           />
-        ))}
-        <div className="spacer" />
-        <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
+          <OverlayItem
+            onClick={core.fitToPage}
+            buttonName={t('action.fitToPage')}
+          />
+          <div className="spacer" />
+          {zoomList.map((zoomValue, i) => (
+            <OverlayItem
+              key={i}
+              onClick={() => zoomTo(zoomValue)}
+              buttonName={`${zoomValue * 100}%`}
+            />
+          ))}
+          <div className="spacer" /> */}
+          <div className="ZoomItem">
+            <Icon
+              className="ZoomIcon"
+              glyph="icon-header-zoom-marquee"
+            />
+            <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
+          </div>
+        </div>
+        <div
+          className="Close-Container"
+        >
+          <div
+            className="Close-Button"
+            onClick={this.handleCloseClick}
+          >
+            <Icon
+              className="Close-Icon"
+              glyph="icon-close"
+            />
+          </div>
+        </div>
       </div>
     );
   }

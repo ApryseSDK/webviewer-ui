@@ -1,32 +1,82 @@
 @import '../../constants/styles';
+@import '../../constants/overlay';
 
 .ZoomOverlay {
-  position: absolute;
-  top: 46px;
-  z-index: 100;
-  box-shadow: $md-shadow1;
+  @extend %overlay;
 
-  &.open {
-    display: visible;
-  };
-  &.closed {
-    display: none;
+  top: 46px;
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
+  flex-wrap: nowrap;
+  border: 0px;
+  border-radius: 0px;
+  background: transparent;
+
+  .ZoomContainer {
+    padding: 8px 6px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--tools-overlay-border);
+    border-radius: var(--header-items-border-radius);
+    background: var(--tools-overlay-background);
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
+
+    .ZoomItem {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 2px 0;
+      cursor: pointer;
+      border-radius: var(--header-items-border-radius);
+
+      &:hover {
+        background-color: var(--button-hover-color);
+      }
+
+      .ZoomIcon {
+        margin: 4px;
+      }
+
+      .ZoomLabel {
+        margin-left: 4px;
+      }
+    }
+  }
+
+  .Close-Container {
+    margin-left: 2px;
+
+    .Close-Button {
+      padding: 1px;
+      background: var(--tools-overlay-background);
+      border: 1px solid var(--tools-overlay-border);
+      border-radius: 100000px;
+      box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
+      cursor: pointer;
+    }
+
+    .Close-Icon {
+      width: 16px;
+      height: 16px;
+    }
   }
 
   .spacer {
+    margin: 6px 0;
     height: 1px;
-    background: #F0F0F0;
-    background: var(--button-active-color);
+    background: #dfe2ed;
   }
-  
+
   .ToolButton {
-    background-color: #FFFFFF;
-    background-color: var(--primary-color);
+    // background-color: #FFFFFF;
+    // background-color: var(--primary-color);
     height: 35px;
 
     &:hover {
-      background-color: #F6F6F6;
-      background-color: var(--button-hover-color);
+      // background-color: #F6F6F6;
+      // background-color: var(--button-hover-color);
     }
   }
 }
