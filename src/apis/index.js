@@ -117,6 +117,7 @@ import textPopup from './textPopup';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import unregisterTool from './unregisterTool';
+import updateElement from './updateElement';
 import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
@@ -125,7 +126,7 @@ import setMaxSignaturesCount from './setMaxSignaturesCount';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 
-export default store => {  
+export default store => {
   window.readerControl = {
     docViewer: window.docViewer,
     FitMode,
@@ -190,6 +191,7 @@ export default store => {
     toggleFullScreen,
     unregisterTool: unregisterTool(store),
     updateTool: updateTool(store),
+    updateElement: updateElement(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
 

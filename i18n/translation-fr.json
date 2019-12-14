@@ -2,6 +2,7 @@
   "action": {
     "apply": "Appliquer",
     "applyAll": "Appliquer toute",
+    "calibrate": "Étalonner",
     "cancel": "Annuler",
     "clear": "Effacer",
     "close": "Fermer",
@@ -33,8 +34,7 @@
     "submit": "Soumettre",
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
-    "zoomOut": "Dézoomer",
-    "calibrate": "Étalonner"
+    "zoomOut": "Dézoomer"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -82,7 +82,10 @@
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
     "measurementToolsButton": "Outils de mesure",
-    "calibration": "Étalonnage"
+    "calibration": "Étalonnage",
+    "bookmarkPage": "Page",
+    "bookmarksPanel": "Signets",
+    "newBookmark": "Nouveau signet"
   },
   "message": {
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
@@ -143,13 +146,12 @@
       "addWatermarkSettings": "Ajouter des paramètres de filigrane"
     },
     "redaction": {
-      "markForRedaction": "Repérer les biffures",
-      "warningPopupMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",
-      "warningPopupTitle": "Appliquer les Biffures"
+      "markForRedaction": "Repérer les biffures"
     },
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",
-      "wholeWordOnly": "Mot complet"
+      "wholeWordOnly": "Mot complet",
+      "wildcard": "Caractère générique"
     },
     "signatureOverlay": {
       "addSignature": "Ajouter une signature"
@@ -194,6 +196,22 @@
       "text": "Texte",
       "colors": "Couleurs",
       "resetAllSettings": "Réinitialiser tous les réglages"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Dans le sens horaire",
+      "delete": "Supprimer",
+      "rotateCounterClockwise": "Dans le sens antihoraire"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "Il en résulterait aucune page restante. Veuillez laisser au moins une page",
+      "deleteTitle": "Supprimer la page",
+      "deleteMessage": "Voulez-vous vraiment supprimer les pages sélectionnées? Cela ne peut pas être annulé"
+    },
+    "redaction": {
+      "applyTile": "Appliquer la rédaction",
+      "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait."
     }
   },
   "shortcut": {
