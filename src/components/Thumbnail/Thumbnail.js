@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import core from 'core';
 import { isMobile } from 'helpers/device';
@@ -16,6 +17,7 @@ class Thumbnail extends React.PureComponent {
     currentPage: PropTypes.number.isRequired,
     pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
+    isSelected: PropTypes.bool,
     onLoad: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
@@ -110,12 +112,18 @@ class Thumbnail extends React.PureComponent {
   }
 
   render() {
-    const { index, currentPage, pageLabels, isDraggable } = this.props;
+    const { index, currentPage, pageLabels, isDraggable, isSelected } = this.props;
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
 
+    const className = classNames({
+      active: isActive,
+      selected: isSelected,
+      Thumbnail: true,
+    });
+
     return (
-      <div className={`Thumbnail ${isActive ? 'active' : ''} `} onDragOver={this.onDragOver}>
+      <div className={className} onDragOver={this.onDragOver}>
         <div className="container" ref={this.thumbContainer} onClick={this.handleClick} onDragStart={this.onDragStart} draggable={isDraggable}></div>
         <div className="page-label">{pageLabel}</div>
         {isActive && <ThumbnailControls index={index} />}

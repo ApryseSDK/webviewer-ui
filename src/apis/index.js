@@ -42,6 +42,7 @@ import enableTextSelection from './enableTextSelection';
 import enableTool from './enableTool';
 import enableTools from './enableTools';
 import enableTouchScrollLock from './enableTouchScrollLock';
+import extractPages from './extractPages';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
@@ -50,6 +51,7 @@ import getCurrentPageNumber from './getCurrentPageNumber';
 import getFitMode from './getFitMode';
 import getLayoutMode from './getLayoutMode';
 import getPageCount from './getPageCount';
+import getSelectedPageNumbers from './getSelectedPageNumbers';
 import getSelectors from './getSelectors';
 import getShowSideWindow from './getShowSideWindow';
 import getSideWindowVisibility from './getSideWindowVisibility';
@@ -163,6 +165,7 @@ export default store => {
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
     exportBookmarks: exportBookmarks(store),
+    extractPages: extractPages(store),
     importBookmarks: importBookmarks(store),
     setFitMode,
     setHeaderItems: setHeaderItems(store),
@@ -219,6 +222,7 @@ export default store => {
     getAnnotationUser,
     getCurrentPageNumber: getCurrentPageNumber(store),
     getPageCount: getPageCount(store),
+    getSelectedPageNumbers: getSelectedPageNumbers(store),
     getShowSideWindow: getShowSideWindow(store),
     getSideWindowVisibility: getSideWindowVisibility(store),
     setNotesPanelSort: setNotesPanelSort(store),
