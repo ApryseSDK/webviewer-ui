@@ -14,7 +14,7 @@
   font-size: 14px;
 
   .ZoomContainer {
-    padding: 8px 6px;
+    padding: 6px 6px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -64,9 +64,13 @@
   }
 
   .spacer {
-    margin: 6px 0;
+    margin: 2px 0;
     height: 1px;
     background: #dfe2ed;
+
+    &.extraMarginTop {
+      margin-top: 6px;
+    }
   }
 
   .ToolButton {
