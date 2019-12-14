@@ -31,6 +31,7 @@ class ZoomOverlay extends React.PureComponent {
     this.state = {
       left: 0,
       right: 'auto',
+      top: 'auto',
     };
   }
 
@@ -47,13 +48,14 @@ class ZoomOverlay extends React.PureComponent {
         'menuOverlay',
         'toolStylePopup',
       ]);
-      const { left, right } = getOverlayPositionBasedOn(
+      const { left, right, top } = getOverlayPositionBasedOn(
         'zoomOverlayButton',
         this.dropdown,
       );
       this.setState({
         left: left - 20,
         right,
+        top,
       });
     }
   }
@@ -72,13 +74,14 @@ class ZoomOverlay extends React.PureComponent {
   };
 
   handleWindowResize = () => {
-    const { left, right } = getOverlayPositionBasedOn(
+    const { left, right, top } = getOverlayPositionBasedOn(
       'zoomOverlayButton',
       this.dropdown,
     );
     this.setState({
       left: left - 20,
       right,
+      top,
     });
   };
 
@@ -87,7 +90,7 @@ class ZoomOverlay extends React.PureComponent {
     const className = ['ZoomOverlay', isOpen ? 'open' : 'closed']
       .join(' ')
       .trim();
-    const { left, right } = this.state;
+    const { left, right, top } = this.state;
 
     if (isDisabled) {
       return null;
@@ -97,7 +100,7 @@ class ZoomOverlay extends React.PureComponent {
       <div
         className={className}
         data-element="zoomOverlay"
-        style={{ left, right }}
+        style={{ left, right, top }}
         ref={this.dropdown}
         onClick={() => closeElements(['zoomOverlay'])}
       >
@@ -133,23 +136,6 @@ class ZoomOverlay extends React.PureComponent {
             />
           ))}
           <div className="spacer" />
-          {/* <OverlayItem
-            onClick={core.fitToWidth}
-            buttonName={t('action.fitToWidth')}
-          />
-          <OverlayItem
-            onClick={core.fitToPage}
-            buttonName={t('action.fitToPage')}
-          />
-          <div className="spacer" />
-          {zoomList.map((zoomValue, i) => (
-            <OverlayItem
-              key={i}
-              onClick={() => zoomTo(zoomValue)}
-              buttonName={`${zoomValue * 100}%`}
-            />
-          ))}
-          <div className="spacer" /> */}
           <div className="ZoomItem">
             <Icon
               className="ZoomIcon"

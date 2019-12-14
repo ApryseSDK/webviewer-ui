@@ -1,16 +1,16 @@
 @import '../../constants/styles';
 
 .OverlayItem {
-  font-size: 16px;
+  margin: 2px 0px;
+  display: flex;
+  align-items: center;
+  height: 24px;
+  font-size: 14px;
   padding-left: 4px;
   border-radius: var(--header-items-border-radius);
   cursor: pointer;
 
   &:hover {
     background-color: var(--button-hover-color);
-  }
-
-  .ButtonText {
-    line-height: 2.4;
   }
 }

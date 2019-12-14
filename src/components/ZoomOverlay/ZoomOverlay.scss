@@ -4,7 +4,6 @@
 .ZoomOverlay {
   @extend %overlay;
 
-  top: 46px;
   display: flex;
   flex-direction: row;
   padding: 0px;
@@ -12,6 +11,7 @@
   border: 0px;
   border-radius: 0px;
   background: transparent;
+  font-size: 14px;
 
   .ZoomContainer {
     padding: 8px 6px;
@@ -70,13 +70,10 @@
   }
 
   .ToolButton {
-    // background-color: #FFFFFF;
-    // background-color: var(--primary-color);
-    height: 35px;
+    font-size: 14px;
+  }
 
-    &:hover {
-      // background-color: #F6F6F6;
-      // background-color: var(--button-hover-color);
-    }
+  .OverlayItem {
+    font-size: 14px;
   }
 }

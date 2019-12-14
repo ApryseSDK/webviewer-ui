@@ -56,7 +56,7 @@ const Button = ({
   } else if (img) {
     content = <img src={img} />;
   } else if (label) {
-    content = <p>{label}</p>;
+    content = <div>{label}</div>;
   }
 
 
