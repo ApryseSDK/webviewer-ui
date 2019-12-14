@@ -6,6 +6,7 @@ export default store => pageIndex => {
     core.getDocument().loadPageText(pageIndex, text => {
       const textContainer = document.createElement('div');
       const className = 'accessible-text';
+      // add a class so that it is easier to search for this node to remove duplicate
       textContainer.classList.add(className);
       textContainer.tabIndex = 0;
       textContainer.textContent = `Page ${pageIndex + 1}.\n${text}\nEnd of page ${pageIndex + 1}.`;
