@@ -15,7 +15,6 @@
 
   .ZoomContainer {
     padding: 6px 6px;
-    position: relative;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--tools-overlay-border);
@@ -28,6 +27,7 @@
       flex-direction: row;
       align-items: center;
       margin: 2px 0;
+      // padding-right: 4px;
       cursor: pointer;
       border-radius: var(--header-items-border-radius);
 
@@ -40,7 +40,7 @@
       }
 
       .ZoomLabel {
-        margin-left: 4px;
+        margin: 0 4px;
       }
     }
   }

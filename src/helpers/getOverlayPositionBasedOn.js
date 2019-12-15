@@ -15,7 +15,7 @@ export default (element, overlay, align = 'left') => {
 
   if (align === 'left') {
     if (buttonLeft + overlayWidth > window.innerWidth) {
-      const rightMargin = 16;
+      const rightMargin = 2;
       left = 'auto';
       right = rightMargin;
     } else {
@@ -24,7 +24,7 @@ export default (element, overlay, align = 'left') => {
     }
   } else if (align === 'center') {
     if (buttonLeft + (overlayWidth + buttonWidth) / 2 > window.innerWidth) {
-      const rightMargin = 16;
+      const rightMargin = 2;
       left = 'auto';
       right = rightMargin;
     } else {
@@ -32,7 +32,7 @@ export default (element, overlay, align = 'left') => {
       right = 'auto';
     }
   } else if (buttonRight - overlayWidth < 0) {
-    const leftMargin = 16;
+    const leftMargin = 2;
     right = 'auto';
     left = leftMargin;
   } else {

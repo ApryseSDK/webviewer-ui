@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
+import Icon from 'components/Icon';
 
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import print from 'helpers/print';
@@ -39,6 +40,7 @@ class MenuOverlay extends React.PureComponent {
     this.state = {
       left: 0,
       right: 'auto',
+      top: 'auto',
     };
   }
 
@@ -73,25 +75,72 @@ class MenuOverlay extends React.PureComponent {
   }
 
   render() {
-    const { left, right } = this.state;
+    const { left, right, top } = this.state;
     const { isDisabled, isDownloadable, isFullScreen, t } = this.props;
 
     if (isDisabled) {
       return null;
     }
 
+    console.log(left, right);
+
     const className = getClassName('Overlay MenuOverlay', this.props);
 
     return (
-      <div className={className} data-element="menuOverlay" style={{ left, right }} ref={this.overlay}>
-        <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
-        {!isIOS &&
-          <ActionButton dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
-        }
-        {isDownloadable &&
-          <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
-        }
-        <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} />
+      <div className={className} data-element="menuOverlay" style={{ left, right, top }} ref={this.overlay}>
+        <div className="MenuContainer">
+          <div
+            className="MenuItem"
+            onClick={() => {}}
+          >
+            <Icon
+              className="MenuIcon"
+              glyph="icon-header-full-screen"
+            />
+            <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+          </div>
+          <div
+            className="MenuItem"
+            onClick={() => {}}
+          >
+            <Icon
+              className="MenuIcon"
+              glyph="icon-header-download"
+            />
+            <div className="MenuLabel">{t('action.download')}</div>
+          </div>
+          <div
+            className="MenuItem"
+            onClick={() => {}}
+          >
+            <Icon
+              className="MenuIcon"
+              glyph="icon-header-print-line"
+            />
+            <div className="MenuLabel">{t('action.print')}</div>
+          </div>
+          {/* <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
+          {!isIOS &&
+            <ActionButton dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
+          }
+          {isDownloadable &&
+            <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
+          }
+          <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} /> */}
+        </div>
+        <div
+          className="Close-Container"
+        >
+          <div
+            className="Close-Button"
+            onClick={this.handleClickOutside}
+          >
+            <Icon
+              className="Close-Icon"
+              glyph="icon-close"
+            />
+          </div>
+        </div>
       </div>
     );
   }
