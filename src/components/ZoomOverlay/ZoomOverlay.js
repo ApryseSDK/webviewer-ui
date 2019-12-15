@@ -66,7 +66,7 @@ class ZoomOverlay extends React.PureComponent {
 
   handleClickOutside = e => {
     const ToggleZoomButton = document.querySelector('[data-element="zoomOverlayButton"]');
-    const clickedToggleZoomButton = ToggleZoomButton ?.contains(e.target);
+    const clickedToggleZoomButton = ToggleZoomButton?.contains(e.target);
 
     if (!clickedToggleZoomButton) {
       this.props.closeElements('zoomOverlay');
@@ -102,7 +102,6 @@ class ZoomOverlay extends React.PureComponent {
         data-element="zoomOverlay"
         style={{ left, right, top }}
         ref={this.dropdown}
-        onClick={() => closeElements(['zoomOverlay'])}
       >
         <div
           className="ZoomContainer"
@@ -149,7 +148,7 @@ class ZoomOverlay extends React.PureComponent {
         >
           <div
             className="Close-Button"
-            onClick={this.handleCloseClick}
+            onClick={this.handleClickOutside}
           >
             <Icon
               className="Close-Icon"
