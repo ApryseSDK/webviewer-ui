@@ -3,6 +3,7 @@
 
 .SearchOverlay {
   @extend %overlay;
+  right: 2px;
   top: 40px;
   display: flex;
   flex-direction: row;
