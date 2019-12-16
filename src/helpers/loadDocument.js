@@ -245,8 +245,6 @@ const getEngineType = state => {
     }
   }
 
-  console.log(fileExtension);
-
   if (fileExtension) {
     if (!window.CoreControls.SupportedFileFormats.SERVER.includes(fileExtension)) {
       console.error(`File extension ${fileExtension} from ${docName} is not supported. Please see https://www.pdftron.com/documentation/web/guides/file-format-support for a full list of file formats supported by WebViewer`);
