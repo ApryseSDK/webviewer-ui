@@ -103,70 +103,68 @@ class ViewControlsOverlay extends React.PureComponent {
       return null;
     }
 
-    console.log('toooop', top);
-
     return (
       <div className={className} data-element="viewControlsOverlay" style={{ left, right, top }} ref={this.overlay}>
         <div className="ViewControlsContainer">
+          <div className="type">{t('option.displayMode.pageTransition')}</div>
           {totalPages < 1000 &&
-            <Element className="row" dataElement="pageTransitionButtons">
-              <div className="type">{t('option.displayMode.pageTransition')}</div>
-              <Button
-                title="option.pageTransition.default"
-                dataElement="defaultPageTransitionButton"
-                img="ic_view_mode_single_black_24px"
-                onClick={() => this.handleClick('default', layout)}
-                isActive={pageTransition === 'default'}
-              />
+            <div className="row2">
               <Button
                 title="option.pageTransition.continuous"
                 dataElement="continuousPageTransitionButton"
-                img="ic_view_mode_continuous_black_24px"
+                img="icon-header-page-manipulation-page-transition-continuous-page-line"
                 onClick={() => this.handleClick('continuous', layout)}
                 isActive={pageTransition === 'continuous'}
               />
-            </Element>
+              <Button
+                title="option.pageTransition.default"
+                dataElement="defaultPageTransitionButton"
+                img="icon-header-page-manipulation-page-transition-page-by-page-line"
+                onClick={() => this.handleClick('default', layout)}
+                isActive={pageTransition === 'default'}
+              />
+            </div>
           }
-          <Element className="row" dataElement="layoutButtons">
-            <div className="type">{t('option.displayMode.layout')}</div>
+          <div className="type">{t('action.rotate')}</div>
+          <div className="row2">
+            <ActionButton
+              dataElement="rotateCounterClockwiseButton"
+              title="action.rotateCounterClockwise"
+              img="icon-header-page-manipulation-page-rotation-clockwise-line"
+              onClick={core.rotateCounterClockwise}
+            />
+            <ActionButton
+              dataElement="rotateClockwiseButton"
+              title="action.rotateClockwise"
+              img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
+              onClick={core.rotateClockwise}
+            />
+          </div>
+          <div className="type">{t('option.displayMode.layout')}</div>
+          <div className="row2">
             <Button
               title="option.layout.single"
               dataElement="singleLayoutButton"
-              img="ic_view_mode_single_black_24px"
+              img="icon-header-page-manipulation-page-layout-single-page-line"
               onClick={() => this.handleClick(pageTransition, 'single')}
               isActive={layout === 'single'}
             />
             <Button
               title="option.layout.double"
               dataElement="doubleLayoutButton"
-              img="ic_view_mode_facing_black_24px"
+              img="icon-header-page-manipulation-page-layout-double-page-line"
               onClick={() => this.handleClick(pageTransition, 'double')}
               isActive={layout === 'double'}
             />
             <Button
               title="option.layout.cover"
               dataElement="coverLayoutButton"
-              img="ic_view_mode_cover_black_24px"
+              img="icon-header-page-manipulation-page-layout-cover-line"
               onClick={() => this.handleClick(pageTransition, 'cover')}
               isActive={layout === 'cover'}
             />
-          </Element>
-          <Element className="row" dataElement="rotateButtons">
-            <div className="type">{t('action.rotate')}</div>
-            <ActionButton
-              dataElement="rotateCounterClockwiseButton"
-              title="action.rotateCounterClockwise"
-              img="ic_rotate_left_black_24px"
-              onClick={core.rotateCounterClockwise}
-            />
-            <ActionButton
-              dataElement="rotateClockwiseButton"
-              title="action.rotateClockwise"
-              img="ic_rotate_right_black_24px"
-              onClick={core.rotateClockwise}
-            />
-          </Element>
-          <Element
+          </div>
+          {/* <Element
             className="row hide-in-desktop hide-in-tablet"
             dataElement="fitButtons"
           >
@@ -203,7 +201,7 @@ class ViewControlsOverlay extends React.PureComponent {
               img="ic_zoom_out_black_24px"
               onClick={zoomOut}
             />
-          </Element>
+          </Element> */}
         </div>
         <div
           className="Close-Container"

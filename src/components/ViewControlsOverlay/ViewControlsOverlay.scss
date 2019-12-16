@@ -13,6 +13,7 @@
   background: transparent;
 
   .ViewControlsContainer {
+    padding: 8px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -20,6 +21,10 @@
     border-radius: var(--header-items-border-radius);
     background: var(--tools-overlay-background);
     box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
+
+    .row2 {
+      display: flex;
+    }
   }
 
   .Close-Container {

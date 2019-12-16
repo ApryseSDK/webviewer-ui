@@ -81,37 +81,38 @@ class MenuOverlay extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-
-    console.log(left, right);
-
     const className = getClassName('Overlay MenuOverlay', this.props);
 
     return (
       <div className={className} data-element="menuOverlay" style={{ left, right, top }} ref={this.overlay}>
         <div className="MenuContainer">
+          {!isIOS &&
+            <div
+              className="MenuItem"
+              onClick={toggleFullscreen}
+            >
+              <Icon
+                className="MenuIcon"
+                glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+              />
+              <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+            </div>
+          }
+          {isDownloadable &&
+            <div
+              className="MenuItem"
+              onClick={this.downloadDocument}
+            >
+              <Icon
+                className="MenuIcon"
+                glyph="icon-header-download"
+              />
+              <div className="MenuLabel">{t('action.download')}</div>
+            </div>
+          }
           <div
             className="MenuItem"
-            onClick={() => {}}
-          >
-            <Icon
-              className="MenuIcon"
-              glyph="icon-header-full-screen"
-            />
-            <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
-          </div>
-          <div
-            className="MenuItem"
-            onClick={() => {}}
-          >
-            <Icon
-              className="MenuIcon"
-              glyph="icon-header-download"
-            />
-            <div className="MenuLabel">{t('action.download')}</div>
-          </div>
-          <div
-            className="MenuItem"
-            onClick={() => {}}
+            onClick={this.handlePrintButtonClick}
           >
             <Icon
               className="MenuIcon"
@@ -120,12 +121,6 @@ class MenuOverlay extends React.PureComponent {
             <div className="MenuLabel">{t('action.print')}</div>
           </div>
           {/* <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
-          {!isIOS &&
-            <ActionButton dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
-          }
-          {isDownloadable &&
-            <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
-          }
           <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} /> */}
         </div>
         <div
