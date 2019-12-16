@@ -221,6 +221,14 @@ class MeasurementOverlay extends React.PureComponent {
     );
   };
 
+  onChangeLineLength = length => {
+    const { annotation } = this.state;
+    const factor = annotation.Measure.axis[0].factor;
+    const sizeInPt = length / factor;
+    annotation.setLength(sizeInPt);
+    this.forceUpdate();
+  }
+
   renderDeltas = () => {
     const { annotation } = this.state;
     const angle = this.getAngleInRadians(annotation.Start, annotation.End);
@@ -291,13 +299,38 @@ class MeasurementOverlay extends React.PureComponent {
         <div className="measurement__precision">
           {t('option.shared.precision')}: {annotation.Precision}
         </div>
-        {this.renderValue()}
+        {(key === 'distanceMeasurement') ? (
+          <LineMeasurementInput length={annotation.getContents()} unit={annotation.Scale[1][1]} t={t} onChange={this.onChangeLineLength}/>
+        ) : (
+          this.renderValue()
+        )}
         {key === 'distanceMeasurement' && this.renderDeltas()}
         {this.renderAngle()}
       </div>
     );
   }
 }
+
+function LineMeasurementInput(props) {
+  const lengthNum = props.length ? parseFloat(props.length) : 0.00;
+  const onChange = event => {
+    props.onChange(event.target.value);
+  };
+  const { t, unit } = props;
+
+  return (
+    <div className="measurement__value">
+      {t('option.measurementOverlay.distance')}: <input className="lineMeasurementInput" type="number" value={lengthNum} onChange={event => onChange(event)}/> {unit}
+    </div>
+  );
+}
+
+LineMeasurementInput.propTypes = {
+  length: PropTypes.string,
+  unit: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'measurementOverlay'),
