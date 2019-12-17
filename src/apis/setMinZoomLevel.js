@@ -1,6 +1,6 @@
 /**
  * Sets the minimum zoom level allowed by the UI. Default is 5%.
- * @method WebViewer#setMinZoomLevel
+ * @method WebViewerInstance#setMinZoomLevel
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
  * @example
 WebViewer(...)

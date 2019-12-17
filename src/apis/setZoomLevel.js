@@ -1,6 +1,6 @@
 /**
  * Sets zoom level.
- * @method WebViewer#setZoomLevel
+ * @method WebViewerInstance#setZoomLevel
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
  * @example
 WebViewer(...)
