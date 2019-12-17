@@ -15,20 +15,13 @@ const PrintHandler = () => {
     shallowEqual,
   );
 
-  let containerStyle;
+  let containerClass = 'PrintHandler';
   if (isIOS) {
-    // workaround for getting safari to print to the whole page
-    containerStyle = {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      position: 'absolute',
-    };
+    containerClass += ' ios-print';
   }
 
   return isDisabled ? null : (
-    <div className="PrintHandler" style={containerStyle}>
+    <div className={containerClass}>
       {isEmbedPrintSupported ? (
         <iframe id="print-handler" tabIndex={-1}></iframe>
       ) : (
