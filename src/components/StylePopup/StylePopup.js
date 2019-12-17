@@ -39,10 +39,11 @@ class StylePopup extends React.PureComponent {
       style: { Opacity, StrokeThickness, FontSize },
       onStyleChange,
       isFreeText,
+      currentPalette,
     } = this.props;
     const lineStart = circleRadius;
-    const sliderProps = [
-      {
+    const sliderProps = {
+      Opacity: {
         property: 'Opacity',
         displayProperty: 'opacity',
         value: Opacity,
@@ -50,7 +51,7 @@ class StylePopup extends React.PureComponent {
         getCirclePosition: lineLength => Opacity * lineLength + lineStart,
         convertRelativeCirclePositionToValue: circlePosition => circlePosition,
       },
-      {
+      StrokeThickness: {
         property: 'StrokeThickness',
         displayProperty: 'thickness',
         value: StrokeThickness,
@@ -63,7 +64,7 @@ class StylePopup extends React.PureComponent {
         convertRelativeCirclePositionToValue: circlePosition =>
           (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
       },
-      {
+      FontSize: {
         property: 'FontSize',
         displayProperty: 'text',
         value: FontSize,
@@ -73,16 +74,25 @@ class StylePopup extends React.PureComponent {
         convertRelativeCirclePositionToValue: circlePosition =>
           `${circlePosition * 40 + 5}pt`,
       },
-    ];
+    };
 
-    return [Opacity, StrokeThickness, FontSize].map((value, index) => {
+    let sliders = {};
+    if (currentPalette === 'TextColor') {
+      sliders = { FontSize };
+    } else if (currentPalette === 'StrokeColor') {
+      sliders = { Opacity, StrokeThickness };
+    } else if (currentPalette === 'FillColor') {
+      sliders = { Opacity };
+    }
+
+    return Object.keys(sliders).map(key => {
+      const value = sliders[key];
       if (value === null || value === undefined) {
         // we still want to render a slider if the value is 0
         return null;
       }
 
-      const props = sliderProps[index];
-      const key = props.property;
+      const props = sliderProps[key];
 
       return <Slider {...props} key={key} onStyleChange={onStyleChange} />;
     });
