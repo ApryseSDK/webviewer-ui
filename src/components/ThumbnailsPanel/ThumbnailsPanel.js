@@ -5,7 +5,7 @@ import { List } from 'react-virtualized';
 import Measure from 'react-measure';
 import classNames from 'classnames';
 
-import Thumbnail from 'components/Thumbnail';
+import Thumbnail, { THUMBNAIL_SIZE } from 'components/Thumbnail';
 
 import core from 'core';
 import selectors from 'selectors';
@@ -190,16 +190,16 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   getNumberOfColumns = () => {
-    const thumbnailContainerSize = 180;
     const desktopBreakPoint = 640;
     const { innerWidth } = window;
     let numberOfColumns;
 
     if (innerWidth >= desktopBreakPoint) {
       numberOfColumns = 1;
-    } else if (innerWidth >= 3 * thumbnailContainerSize) {
+    // TODO: use forwardRef to get the width of the thumbnail div instead of using the magic 20px
+    } else if (innerWidth >= 3 * (THUMBNAIL_SIZE + 20)) {
       numberOfColumns = 3;
-    } else if (innerWidth >= 2 * thumbnailContainerSize) {
+    } else if (innerWidth >= 2 * (THUMBNAIL_SIZE + 20)) {
       numberOfColumns = 2;
     } else {
       numberOfColumns = 1;
@@ -222,6 +222,8 @@ class ThumbnailsPanel extends React.PureComponent {
 
     const annotCanvas = thumbContainer.querySelector('.annotation-image') || document.createElement('canvas');
     annotCanvas.className = 'annotation-image';
+    annotCanvas.style.maxWidth = `${THUMBNAIL_SIZE}px`;
+    annotCanvas.style.maxHeight = `${THUMBNAIL_SIZE}px`;
     const ctx = annotCanvas.getContext('2d');
 
     let zoom = 1;
@@ -273,13 +275,13 @@ class ThumbnailsPanel extends React.PureComponent {
       ratio;
 
     if (pageWidth > pageHeight) {
-      ratio = pageWidth / 150;
-      width = 150;
+      ratio = pageWidth / THUMBNAIL_SIZE;
+      width = THUMBNAIL_SIZE;
       height = Math.round(pageHeight / ratio);
     } else {
-      ratio = pageHeight / 150;
+      ratio = pageHeight / THUMBNAIL_SIZE;
       width = Math.round(pageWidth / ratio); // Chrome has trouble displaying borders of non integer width canvases.
-      height = 150;
+      height = THUMBNAIL_SIZE;
     }
 
     return {
@@ -297,6 +299,9 @@ class ThumbnailsPanel extends React.PureComponent {
 
       const id = core.loadThumbnailAsync(pageIndex, thumb => {
         thumb.className = 'page-image';
+        thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
+        thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
+
         if (this.thumbs[pageIndex]) {
           this.thumbs[pageIndex].element.appendChild(thumb);
           this.thumbs[pageIndex].loaded = true;
@@ -361,25 +366,27 @@ class ThumbnailsPanel extends React.PureComponent {
             const updateHandler = thumbs && thumbs[thumbIndex] ? thumbs[thumbIndex].updateAnnotationHandler : null;
             const showPlaceHolder = (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && draggingOverPageIndex === thumbIndex;
 
-            return (
-              thumbIndex < this.props.totalPages
-                ? <div key={thumbIndex} onDragEnd={this.onDragEnd}>
-                  {showPlaceHolder && isDraggingToPreviousPage && <hr className="thumbnailPlaceholder" />}
-                  <Thumbnail
-                    isDraggable={isThumbnailReorderingEnabled}
-                    index={thumbIndex}
-                    canLoad={canLoad}
-                    onLoad={this.onLoad}
-                    onCancel={this.onCancel}
-                    onRemove={this.onRemove}
-                    onDragStart={this.onDragStart}
-                    onDragOver={this.onDragOver}
-                    updateAnnotations={updateHandler}
-                  />
-                  {showPlaceHolder && !isDraggingToPreviousPage && <hr className="thumbnailPlaceholder" />}
-                </div>
-                : null
-            );
+            return thumbIndex < this.props.totalPages ? (
+              <div key={thumbIndex} onDragEnd={this.onDragEnd}>
+                {showPlaceHolder && isDraggingToPreviousPage && (
+                  <hr className="thumbnailPlaceholder" />
+                )}
+                <Thumbnail
+                  isDraggable={isThumbnailReorderingEnabled}
+                  index={thumbIndex}
+                  canLoad={canLoad}
+                  onLoad={this.onLoad}
+                  onCancel={this.onCancel}
+                  onRemove={this.onRemove}
+                  onDragStart={this.onDragStart}
+                  onDragOver={this.onDragOver}
+                  updateAnnotations={updateHandler}
+                />
+                {showPlaceHolder && !isDraggingToPreviousPage && (
+                  <hr className="thumbnailPlaceholder" />
+                )}
+              </div>
+            ) : null;
           })
         }
       </div>
@@ -389,13 +396,9 @@ class ThumbnailsPanel extends React.PureComponent {
   render() {
     const { isDisabled, totalPages, display, isThumbnailControlDisabled } = this.props;
     const { numberOfColumns, height, width } = this.state;
-    const thumbnailHeight = isThumbnailControlDisabled ? 180 : 200; // refer to Thumbnail.scss
+    const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
-    if (isDisabled) {
-      return null;
-    }
-
-    return (
+    return isDisabled ? null : (
       <div
         className="Panel ThumbnailsPanel"
         style={{ display }}
