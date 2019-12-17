@@ -69,6 +69,7 @@
   "component": {
     "freehandToolsButton": "Freehand tools",
     "leftPanel": "Panel",
+    "toolsHeader": "Tools",
     "searchOverlay": "Search",
     "menuOverlay": "Menu",
     "miscToolsButton": "Misc tools",
