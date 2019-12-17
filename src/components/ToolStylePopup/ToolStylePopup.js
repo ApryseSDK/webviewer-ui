@@ -133,7 +133,7 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, activeToolName, activeToolStyle } = this.props;
+    const { isDisabled, activeToolName, activeToolStyle, siblingWidth } = this.props;
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const colorMapKey = mapToolNameToKey(activeToolName);
 
@@ -147,7 +147,7 @@ class ToolStylePopup extends React.PureComponent {
         className={classNames({
           ToolStylePopup: true,
         })}
-        style={{ width: this.props.siblingWidth }}
+        style={{ width: siblingWidth }}
         data-element="toolStylePopup"
         ref={this.popup}
         onClick={this.handleClick}

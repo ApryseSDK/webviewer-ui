@@ -2,6 +2,7 @@
 
 .AnnotationStylePopup {
   @extend %popup-mobile;
-  
+
+  max-width: 333px;
   margin: -5px;
 }

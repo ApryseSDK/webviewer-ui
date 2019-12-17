@@ -74,7 +74,7 @@ class ColorPalette extends React.PureComponent {
                   cell: true,
                   active: color.toHexString() === bg,
                 })}
-                style={{ backgroundColor: bg }}
+                style={{ backgroundColor: bg, border: '1px solid' }}
                 onClick={this.setColor}
               />
             </div>,
