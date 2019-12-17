@@ -9,9 +9,10 @@
 
   .pallete-options-button {
     flex: 1;
+    // Break ellipsis text overflow for some reason
     // display: flex;
-    justify-content: center;
-    align-items: center;
+    // justify-content: center;
+    // align-items: center;
     height: 24px;
 
     text-align: center;
