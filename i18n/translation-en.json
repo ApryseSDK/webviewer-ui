@@ -184,7 +184,7 @@
     },
     "slider": {
       "opacity": "Opacity",
-      "thickness": "Thickness",
+      "thickness": "Stroke",
       "text": "Text Size"
     },
     "shared": {
