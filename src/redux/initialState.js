@@ -78,7 +78,7 @@ export default {
           titile: 'action.close',
           img: 'icon-operation-undo',
           onClick: dispatch => {
-            console.log('undo');
+            core.undo();
           },
         },
         {
@@ -87,7 +87,7 @@ export default {
           titile: 'action.close',
           img: 'icon-operation-redo',
           onClick: dispatch => {
-            console.log('redo');
+            core.redo();
           },
         },
 
