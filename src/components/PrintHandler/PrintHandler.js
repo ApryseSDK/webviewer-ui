@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import selectors from 'selectors';
+import { isIOS } from 'helpers/device';
 
 import './PrintHandler.scss';
 
@@ -17,8 +18,13 @@ class PrintHandler extends React.PureComponent {
       return null;
     }
 
+    let className = 'PrintHandler';
+    if (isIOS) {
+      className += ' ios-print';
+    }
+
     return (
-      <div className="PrintHandler">
+      <div className={className}>
         {this.props.isEmbedPrintSupported
           ? <iframe id="print-handler"></iframe>
           : <div id="print-handler"></div>
