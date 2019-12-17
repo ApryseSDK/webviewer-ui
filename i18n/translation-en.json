@@ -113,9 +113,9 @@
   },
   "option": {
     "annotationColor": {
-      "StrokeColor": "Border color",
-      "FillColor": "Fill color",
-      "TextColor": "Text color"
+      "StrokeColor": "Stroke",
+      "FillColor": "Fill",
+      "TextColor": "Text"
     },
     "displayMode": {
       "layout": "Layout",
