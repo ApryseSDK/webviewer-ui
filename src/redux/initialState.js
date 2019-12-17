@@ -22,7 +22,7 @@ export default {
     headers: {
       default: [
         { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
-        { type: 'divider', hidden: ['tablet', 'mobile'] },
+        { type: 'divider' },
         { type: 'toggleElementButton', img: 'icon-header-page manipulation-line', element: 'viewControlsOverlay', dataElement: 'viewControlsButton', title: 'component.viewControlsOverlay' },
         {
           type: 'customElement',
@@ -34,7 +34,7 @@ export default {
             height: '100%',
           },
         },
-        { type: 'divider', hidden: ['tablet', 'mobile'] },
+        { type: 'divider' },
         { type: 'toolButton', toolName: 'Pan' },
         { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },
@@ -71,7 +71,7 @@ export default {
           dataElement: 'signatureToolButton',
         },
         { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
-        { type: 'divider', hidden: ['tablet', 'mobile'] },
+        { type: 'divider' },
         {
           type: 'actionButton',
           dataElement: 'undoButton',
