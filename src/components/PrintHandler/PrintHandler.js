@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
+import classNames from 'classnames';
 
 import selectors from 'selectors';
 import { isIOS } from 'helpers/device';
@@ -15,13 +16,11 @@ const PrintHandler = () => {
     shallowEqual,
   );
 
-  let containerClass = 'PrintHandler';
-  if (isIOS) {
-    containerClass += ' ios-print';
-  }
-
   return isDisabled ? null : (
-    <div className={containerClass}>
+    <div className={classNames({
+      PrintHandler,
+      'ios-print': isIOS,
+    })}>
       {isEmbedPrintSupported ? (
         <iframe id="print-handler" tabIndex={-1}></iframe>
       ) : (
