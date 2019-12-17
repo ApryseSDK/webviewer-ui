@@ -23,12 +23,14 @@
     display: block;
     height: 100%;
 
-    // hack for getting safari to print to the whole page
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    position: absolute;
+    /* workaround for getting safari to print to the whole page */
+    &.ios-print {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      position: absolute;
+    }
 
     img {
       display: block !important;
