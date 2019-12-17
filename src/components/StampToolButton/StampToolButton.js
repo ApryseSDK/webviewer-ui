@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 // import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
-
+import defaultTool from 'constants/defaultTool';
 import Button from 'components/Button';
 import ToolButton from 'components/ToolButton';
 import getClassName from 'helpers/getClassName';
@@ -60,16 +60,36 @@ class StampToolButton extends React.PureComponent {
   }
 
   handleClick() {
-    const { toggleElement, isActive, openElement } = this.props;
+    const {
+      setActiveToolGroup,
+      toggleElement,
+      isActive,
+      openElement,
+      toolGroup,
+    } = this.props;
     const { toolName } = this.state;
 
+    setActiveToolGroup(toolGroup);
     if (isActive) {
       toggleElement('stampOverlay');
     } else {
-      core.setToolMode(toolName);
+      // core.setToolMode(toolName);
+      this.setToolMode(toolName);
       openElement('stampOverlay');
     }
   }
+
+  setToolMode = toolName => {
+    const { toolGroup } = this.props;
+    console.log(toolGroup, toolName);
+
+    // This is based on the current design where click on misc tools shouldn't have any tool selected
+    if (toolGroup === 'miscTools') {
+      core.setToolMode(defaultTool);
+    } else {
+      core.setToolMode(toolName);
+    }
+  };
 
 
   render() {

@@ -63,12 +63,19 @@ class StampOverlay extends React.Component {
           getOverlayPositionBasedOn('foobar', this.overlay),
         );
       }
+
+
+
+    }
+
+    if (this.props.activeToolName === 'AnnotationCreateRubberStamp') {
+      this.props.openElement('stampModal');
     }
   }
 
   handleRubberStampClick() {
-    // core.setToolMode('AnnotationCreateRubberStamp');
-    this.props.openElement('stampModal');
+    core.setToolMode('AnnotationCreateRubberStamp');
+    // this.props.openElement('stampModal');
   }
 
   render() {
@@ -102,6 +109,7 @@ class StampOverlay extends React.Component {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'stampOverlay'),
   isOpen: selectors.isElementOpen(state, 'stampOverlay'),
+  activeToolName: selectors.getActiveToolName(state),
 });
 
 const mapDispatchToProps = dispatch => ({

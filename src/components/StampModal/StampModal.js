@@ -107,19 +107,25 @@ class StampModal extends React.PureComponent {
         onClick={this.closeModal}
       >
         <div className="container">
-          <ActionButton
-            dataElement="signatureModalCloseButton"
-            title="action.close"
-            img="ic_close_black_24px"
-            onClick={this.closeModal}
-          />
-          {
+          <div className="header">
+            <ActionButton
+              dataElement="signatureModalCloseButton"
+              title="action.close"
+              img="ic_close_black_24px"
+              onClick={this.closeModal}
+            />
+          </div>
+          {/* {
             defaultRubberStamps.map(({ imgSrc }, index) => (
               <div className="" key={index}>
                 <img src={imgSrc} />
               </div>
             ))
-          }
+          } */}
+          <div className="modal-body">
+            { canvases }
+          </div>
+
         </div>
       </div>
     );
@@ -169,7 +175,7 @@ class Canvas extends React.PureComponent {
     const { width, height, style } = this.props;
 
     return (
-      <canvas ref={ref => { this.canvas = ref; }}
+      <canvas className="column" ref={ref => { this.canvas = ref; }}
         style={style}
         width={width}
         height={height}
