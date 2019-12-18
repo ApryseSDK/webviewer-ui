@@ -2,7 +2,7 @@ import actions from 'actions';
 
 /**
  * Update an element in the viewer. Currently this API can only update elements that have a Button class name.
- * @method WebViewer#updateElement
+ * @method WebViewerInstance#updateElement
  * @param {string} dataElement the data element of the element that will be updated.
  * @param {object} props An object that is used to override an existing item's properties.
  * @example

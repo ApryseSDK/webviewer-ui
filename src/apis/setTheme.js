@@ -1,6 +1,6 @@
 /**
  * Sets the theme of Webviewer UI. Please note that this does not work in IE11.
- * @method WebViewer#setTheme
+ * @method WebViewerInstance#setTheme
  * @param {(string|object)} theme Either theme object or predefined string. Predefined strings are 'default' and 'dark'.
  * @param {string} [theme.primary=#FFFFFF] Background color for the header, modals, overlays, etc.
  * @param {string} [theme.secondary=#F5F5F5] ackground color for panels and the document container.
