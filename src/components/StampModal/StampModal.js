@@ -37,6 +37,13 @@ const typeEnum = {
 
 
 class StampModal extends React.PureComponent {
+  static propTypes = {
+    isOpen: PropTypes.bool,
+    // isDisabled: PropTypes.bool,
+    closeElement: PropTypes.func.isRequired,
+    // openElement: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -50,9 +57,7 @@ class StampModal extends React.PureComponent {
     // core.setToolMode(defaultTool);
   }
 
-  createDefaultRubberStamps() {
-
-  }
+  createDefaultRubberStamps() { }
 
   setRubberStamp(stampName, stampText) {
     var _canvas = document.createElement('canvas');
@@ -68,14 +73,13 @@ class StampModal extends React.PureComponent {
     annotation.Icon = stampName;
     annotation.MaintainAspectRatio = true;
 
-
     core.setToolMode('AnnotationCreateRubberStamp');
+    // this.props.closeElement('stampModal');
     this.stampTool.setRubberStamp(annotation);
     this.stampTool.showPreview();
   }
 
   render() {
-    var me = this;
     const { isOpen } = this.props;
     const { defaultRubberStamps } = this.state;
     const className = getClassName('Modal StampModal', this.props);

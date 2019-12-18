@@ -22,8 +22,7 @@ const SignatureToolButton = () => {
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
     const onSignatureSaved = () => setHasSavedSignature(true);
-    const onSignatureDeleted = () =>
-      setHasSavedSignature(!!signatureTool.getSavedSignatures().length);
+    const onSignatureDeleted = () => setHasSavedSignature(!!signatureTool.getSavedSignatures().length);
 
     signatureTool.on('signatureSaved', onSignatureSaved);
     signatureTool.on('signatureDeleted', onSignatureDeleted);
