@@ -143,6 +143,8 @@ export const getIsNoteEditing = state => state.viewer.isNoteEditing;
 
 export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
+export const getCustomElementOverrides = (state, dataElement) => state.viewer.customElementOverrides[dataElement] || {};
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 

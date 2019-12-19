@@ -109,6 +109,7 @@ import showWarningMessage from './showWarningMessage';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import unregisterTool from './unregisterTool';
+import updateElement from './updateElement';
 import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
@@ -233,6 +234,7 @@ export default store => {
     unregisterTool: unregisterTool(store),
     updateOutlines: updateOutlines(store), // undocumented
     updateTool: updateTool(store),
+    updateElement: updateElement(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
     getCustomData: () => getHashParams('custom', null), // undocumented

@@ -23,20 +23,24 @@ const propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const Button = ({
-  isActive,
-  mediaQueryClassName,
-  img,
-  label,
-  color,
-  dataElement,
-  onClick = () => {},
-  className,
-  title,
-}) => {
-  const [isElementDisabled] = useSelector(state => [
-    selectors.isElementDisabled(state, dataElement),
+const Button = props => {
+  const [isElementDisabled, customOverrides] = useSelector(state => [
+    selectors.isElementDisabled(state, props.dataElement),
+    selectors.getCustomElementOverrides(state, props.dataElement),
   ]);
+
+  props = { ...props, ...customOverrides };
+  const {
+    isActive,
+    mediaQueryClassName,
+    img,
+    label,
+    color,
+    dataElement,
+    onClick = () => {},
+    className,
+    title,
+  } = props;
 
   const buttonClass = classNames({
     Button: true,
@@ -59,11 +63,7 @@ const Button = ({
   }
 
   const children = (
-    <div
-      className={buttonClass}
-      data-element={dataElement}
-      onClick={onClick}
-    >
+    <div className={buttonClass} data-element={dataElement} onClick={onClick}>
       {content}
     </div>
   );
