@@ -190,6 +190,7 @@ export default {
     maxSignaturesCount: 2,
     leftPanelWidth: 300,
     isReplyDisabledFunc: null,
+    customMeasurementOverlay: [],
   },
   search: {
     listeners: [],

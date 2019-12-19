@@ -26,6 +26,7 @@ class MeasurementOverlay extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     activeToolName: PropTypes.string.isRequired,
     t: PropTypes.func.isRequired,
+    customMeasurementOverlay: PropTypes.array,
   };
 
   constructor(props) {
@@ -134,6 +135,8 @@ class MeasurementOverlay extends React.PureComponent {
     ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
       mapToolNameToKey(toolName),
     );
+
+  shouldShowCustomOverlay = annotation => !this.isMeasurementAnnotation(annotation) && this.props.customMeasurementOverlay.some(overlay => overlay.validate(annotation))
 
   shouldShowInfo = annotation => {
     const key = mapAnnotationToKey(annotation);
@@ -353,6 +356,9 @@ class MeasurementOverlay extends React.PureComponent {
       return null;
     }
 
+    if (this.shouldShowCustomOverlay(annotation)) {
+      return (<div></div>);
+    }
     return (
       <div className={className} data-element="measurementOverlay">
         {this.renderTitle()}
@@ -415,6 +421,7 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'measurementOverlay'),
   isDisabled: selectors.isElementDisabled(state, 'measurementOverlay'),
   activeToolName: selectors.getActiveToolName(state),
+  customMeasurementOverlay: selectors.getCustomMeasurementOverlay(state),
 });
 
 const mapDispatchToProps = {

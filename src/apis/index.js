@@ -122,6 +122,7 @@ import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
+import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 
 export default store => {  
   window.readerControl = {
@@ -189,6 +190,7 @@ export default store => {
     updateTool: updateTool(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
+    setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),

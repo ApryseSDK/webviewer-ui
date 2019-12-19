@@ -58,6 +58,7 @@ export default initialState => (state = initialState, action) => {
         openElements: { ...state.openElements, [payload.dataElement]: true },
       };
     case 'CLOSE_ELEMENT':
+      console.log('CLOSE ', payload);
       return {
         ...state,
         openElements: { ...state.openElements, [payload.dataElement]: false },
@@ -214,6 +215,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, leftPanelWidth: payload.width };
     case 'SET_MAX_SIGNATURES_COUNT':
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
+    case 'SET_CUSTOM_MEASUREMENT_OVERLAY':
+      return { ...state, customMeasurementOverlay: payload.customMeasurementOverlay };
     default:
       return state;
   }
