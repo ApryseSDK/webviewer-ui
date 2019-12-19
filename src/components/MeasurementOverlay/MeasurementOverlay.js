@@ -52,6 +52,14 @@ class MeasurementOverlay extends React.PureComponent {
     }
 
     if (prevProps.isOpen && !this.props.isOpen) {
+      const { annotation } = this.state;
+      const key = mapAnnotationToKey(annotation);
+
+      if (key === 'distanceMeasurement') {
+        const length = annotation.getLineLength();
+        this.ensureLineIsWithinBounds(length);
+      }
+
       this.setState({ annotation: null });
     }
   }
@@ -226,6 +234,61 @@ class MeasurementOverlay extends React.PureComponent {
     const factor = annotation.Measure.axis[0].factor;
     const sizeInPt = length / factor;
     annotation.setLength(sizeInPt);
+    this.forceLineRedraw();
+  }
+
+  onBlurValidateLineLength = length => {
+    const { annotation } = this.state;
+    const factor = annotation.Measure.axis[0].factor;
+    const lengthInPts = length / factor;
+    this.ensureLineIsWithinBounds(lengthInPts);
+  }
+
+  ensureLineIsWithinBounds = lengthInPts => {
+    const { annotation } = this.state;
+    const maxLengthInPts = this.getMaxLineLengthInPts();
+
+    if (lengthInPts > maxLengthInPts) {
+      annotation.setLength(maxLengthInPts);
+      this.forceLineRedraw();
+    }
+  }
+
+  getMaxLineLengthInPts = () => {
+    const { annotation } = this.state;
+    const currentPage = core.getCurrentPage();
+    const documentWidth = window.docViewer.getPageWidth(currentPage);
+    const documentHeight = window.docViewer.getPageHeight(currentPage);
+    const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
+    const angleInDegrees = annotation.getAngle() * (180 / Math.PI).toFixed(decimalPlaces);
+    const startPoint = annotation.getStartPoint();
+    const startX = startPoint.x;
+    const startY = startPoint.y;
+
+    let maxX;
+    let maxY;
+    if (Math.abs(angleInDegrees) < 90) {
+      maxX = documentWidth;
+    } else {
+      maxX = 0;
+    }
+
+    if (angleInDegrees > 0) {
+      maxY = documentHeight;
+    } else {
+      maxY = 0;
+    }
+
+    const maxLenX = Math.abs((maxX - startX) / Math.cos(annotation.getAngle()));
+    const maxLenY = Math.abs((maxY - startY) / Math.sin(annotation.getAngle()));
+
+    return Math.min(maxLenX, maxLenY);
+  }
+
+  forceLineRedraw = () => {
+    const { annotation } = this.state;
+    const annotationManager = core.getAnnotationManager();
+    annotationManager.redrawAnnotation(annotation);
     this.forceUpdate();
   }
 
@@ -300,7 +363,14 @@ class MeasurementOverlay extends React.PureComponent {
           {t('option.shared.precision')}: {annotation.Precision}
         </div>
         {(key === 'distanceMeasurement') ? (
-          <LineMeasurementInput length={annotation.getContents()} unit={annotation.Scale[1][1]} t={t} onChange={this.onChangeLineLength}/>
+          <LineMeasurementInput
+            ptsLength={annotation.getLineLength()}
+            unit={annotation.Scale[1][1]}
+            factor={annotation.Measure.axis[0].factor}
+            t={t}
+            onChange={this.onChangeLineLength}
+            onBlur={this.onBlurValidateLineLength}
+          />
         ) : (
           this.renderValue()
         )}
@@ -312,24 +382,33 @@ class MeasurementOverlay extends React.PureComponent {
 }
 
 function LineMeasurementInput(props) {
-  const lengthNum = props.length ? parseFloat(props.length) : 0.00;
+  const { t, unit, ptsLength, factor } = props;
+  const length = (ptsLength * factor).toFixed(2);
+
   const onChange = event => {
-    props.onChange(event.target.value);
+    const sanitizedValue = Math.abs(event.target.value);
+    props.onChange(sanitizedValue);
   };
-  const { t, unit } = props;
+
+  const onBlur = event => {
+    const sanitizedValue = Math.abs(event.target.value);
+    props.onBlur(sanitizedValue);
+  };
 
   return (
     <div className="measurement__value">
-      {t('option.measurementOverlay.distance')}: <input className="lineMeasurementInput" type="number" value={lengthNum} onChange={event => onChange(event)}/> {unit}
+      {t('option.measurementOverlay.distance')}: <input className="lineMeasurementInput" type="number" min="0" value={length} onChange={event => onChange(event)} onBlur={event => onBlur(event)}/> {unit}
     </div>
   );
 }
 
 LineMeasurementInput.propTypes = {
-  length: PropTypes.string,
   unit: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+  factor: PropTypes.number.isRequired,
+  ptsLength: PropTypes.number,
 };
 
 const mapStateToProps = state => ({
