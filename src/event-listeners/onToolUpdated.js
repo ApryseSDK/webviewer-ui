@@ -2,7 +2,7 @@ import core from 'core';
 import actions from 'actions';
 import localStorageManager from 'helpers/localStorageManager';
 
-export default dispatch => (e, tool) => {
+export default dispatch => tool => {
   const toolName = tool.name;
   const toolStyles = tool.defaults;
 

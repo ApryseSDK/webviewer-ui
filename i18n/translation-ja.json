@@ -2,6 +2,7 @@
   "action": {
     "apply": "適用",
     "applyAll": "すべて適用",
+    "calibrate": "調整する",
     "cancel": "キャンセル",
     "clear": "クリア",
     "close": "閉じる",
@@ -39,9 +40,11 @@
     "areaMeasurement": "面積測定",
     "arrow": "矢印",
     "callout": "コールアウト",
+    "crop": "切り抜きページ",
     "caret": "キャレット",
     "distanceMeasurement": "距離測定",
     "ellipse": "楕円",
+    "eraser": "消しゴム",
     "freehand": "フリーハンド",
     "freehand2": "フリーハンド",
     "freetext": "フリーテキスト",
@@ -51,7 +54,7 @@
     "line": "線",
     "perimeterMeasurement": "境界測定",
     "polygon": "ポリゴン",
-    "polygonCloud": "クラウド",
+    "polygonCloud": "曇り",
     "polyline": "ポリライン",
     "rectangle": "矩形",
     "redact": "改訂",
@@ -61,8 +64,7 @@
     "stickyNote": "コメント",
     "strikeout": "抹消線",
     "underline": "下線",
-    "custom": "カスタム",
-    "eraser": "消しゴム"
+    "custom": "カスタム"
   },
   "component": {
     "freehandToolsButton": "フリーハンド ツール",
@@ -71,14 +73,19 @@
     "menuOverlay": "メニュー",
     "miscToolsButton": "その他のツール",
     "notesPanel": "備考",
-    "outlinesPanel": "アウトライン",
+    "outlinesPanel": "概要",
+    "layersPanel": "レイヤー",
     "shapeToolsButton": "シェイプ ツール",
     "textToolsButton": "テキスト ツール",
     "thumbnailsPanel": "サムネイル",
     "toolsButton": "ツール",
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
-    "measurementToolsButton": "測定ツール"
+    "measurementToolsButton": "測定ツール",
+    "calibration": "較正",
+    "bookmarksPanel": "しおり",
+    "newBookmark": "新しいブックマーク",
+    "bookmarkPage": "ページ"
   },
   "message": {
     "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
@@ -93,13 +100,16 @@
     "notSupported": "このファイルの種類はサポートされていません。",
     "passwordRequired": "パスワードが必要です",
     "preparingToPrint": "印刷の準備をしています...",
+    "annotationReplyCount": "{{count}} 応答",
+    "annotationReplyCount_plural": "{{count}} 返信",
     "printTotalPageCount": "{{count}} ページ",
     "printTotalPageCount_plural": "{{count}} ページ",
     "processing": "処理中...",
     "searching": "検索中...",
     "searchPlaceholder": "コメントを検索...",
     "signHere": "ここに署名",
-    "insertTextHere": "ここにテキストを挿入"
+    "insertTextHere": "ここにテキストを挿入",
+    "enterMeasurement": "2点間の測定値を入力します"
   },
   "option": {
     "annotationColor": {
@@ -132,19 +142,31 @@
       "all": "すべて",
       "current": "現在の",
       "pages": "ページ",
-      "includeComments": "コメントを含める"
+      "includeComments": "コメントを含める",
+      "addWatermarkSettings": "透かし設定を追加"
     },
     "redaction": {
-      "markForRedaction": "改訂マーク",
-      "warningPopupMessage": "この操作を行うと、編集対象として選択されているすべてのアイテムが完全に削除されます。 元に戻すことはできません。",
-      "warningPopupTitle": "改定を適用"
+      "markForRedaction": "改訂マーク"
     },
     "searchPanel": {
       "caseSensitive": "大文字と小文字を区別",
-      "wholeWordOnly": "単語全体"
+      "wholeWordOnly": "単語全体",
+      "wildcard": "ワイルドカード"
     },
     "signatureOverlay": {
       "addSignature": "署名を追加"
+    },
+    "status": {
+      "status": "状態"
+    },
+    "state": {
+      "accepted": "受け入れられた",
+      "rejected": "拒否されました",
+      "completed": "完了しました",
+      "cancelled": "キャンセル",
+      "set": "ステータスを設定：",
+      "setBy": "によって設定されました",
+      "none": "無し"
     },
     "measurementOverlay": {
       "scale": "スケール比",
@@ -167,6 +189,29 @@
     "shared": {
       "page": "ページ",
       "precision": "精度"
+    },
+    "watermark": {
+      "size": "サイズ",
+      "location": "透かしを編集する場所を選択してください",
+      "text": "テキスト",
+      "colors": "色",
+      "resetAllSettings": "すべての設定をリセット"
+    },
+    "thumbnailPanel": {
+      "delete": "削除する",
+      "rotateClockwise": "時計回り",
+      "rotateCounterClockwise": "反時計回り"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "ページを削除",
+      "deleteMessage": "選択したページを削除してもよろしいですか？これは元に戻せません",
+      "deleteLastPageMessage": "これにより、ページが残りません。少なくとも1ページ残してください"
+    },
+    "redaction": {
+      "applyTile": "リダクションを適用",
+      "applyMessage": "この操作により、編集用に選択されたすべてのアイテムが完全に削除されます。元に戻すことはできません。"
     }
   },
   "shortcut": {
@@ -175,6 +220,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +237,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "パン",

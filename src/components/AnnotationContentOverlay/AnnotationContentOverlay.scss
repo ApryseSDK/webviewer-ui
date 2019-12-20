@@ -1,0 +1,21 @@
+@import '../../constants/styles';
+@import '../../constants//overlay';
+
+.AnnotationContentOverlay {
+  @extend %overlay;
+  @extend %word-wrap;
+  
+  display: flex;
+  flex-direction: column;
+  max-width: 215px;
+  font-size: 14px;
+  padding: 8px;
+
+  .author {
+    font-weight: bold;
+  }
+
+  .contents, .replies {
+    margin-top: 5px;
+  }
+}

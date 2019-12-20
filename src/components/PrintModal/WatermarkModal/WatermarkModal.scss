@@ -1,0 +1,174 @@
+@import '../../../constants/styles';
+@import '../../../constants/modal';
+@import '../../../constants/popup';
+
+@import './media-query';
+
+$color-widget-border: 1px solid #e1e1e3;
+$gap: 15px;
+
+.Watermark {
+  @extend %modal;
+  z-index: $modal-z-index + 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .StylePopup {
+    position: absolute;
+    margin-top: 50px;
+    border: $color-widget-border;
+    background-color: #fafafa;
+
+    @include ie11 {
+      margin-top: 0;
+    }
+
+    .ColorPalette {
+      padding: 10px;
+    }
+  }
+
+  .header-container {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .header {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    flex-direction: column;
+
+    @include portrait-mobile {
+      width: 100vw;
+      max-height: 100vh;
+      overflow:auto;
+    }
+    @include low-res-tablet-landscape-mobiles {
+      width: 100vw;
+      max-height: 100vh;
+      overflow:auto;
+    }
+    @include tablets-and-landscape-ipads {
+      width: 100vw;
+      max-height: 100vh;
+      overflow:auto;
+    }
+  }
+  
+  .form-content-container {
+    display: flex;
+    margin: $gap;
+    
+    justify-content: space-around;
+    align-items: center;
+
+    @include portrait-mobile {
+      flex-direction: column;
+      margin-left: $gap;
+    }
+    @include low-res-tablet-landscape-mobiles {
+      justify-content: space-evenly;
+    }
+    @include tablets-and-landscape-ipads {
+      justify-content: space-evenly;
+    }
+
+    & form {
+      margin-right: $gap;
+      width: 265px;
+      @include portrait-mobile {
+        width: auto;
+      }
+    }
+
+    & .canvas-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 300px;
+      height: 300px;
+      margin-top: 10px;
+    }
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    padding: $gap;
+  }
+  
+  .cell {
+    @extend %cell;
+    cursor: pointer;
+    width: 35px;
+    border: $color-widget-border;
+    position: relative;
+  }
+  
+  .button {
+    padding: 6px 18px;
+    border-radius: 4px 4px 4px 4px;
+    cursor: pointer;
+
+    &.reset {
+      color: $pdftronBlue;
+    }
+
+    &.ok {
+      font-weight: normal;
+      background: $pdftronBlue;
+      border: 1px solid $pdftronBlue;
+      color: white;
+    }
+
+    &.cancel {
+      font-weight: normal;
+      background: white;
+      border: 1px solid $pdftronBlue;
+      color: $pdftronBlue;
+      margin-right: 5px;
+    }
+  }
+    
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 $gap 0;
+
+    @include low-res-tablet-landscape-mobiles {
+      margin: 0 0 $gap+10 0;
+    }
+    @include tablets-and-landscape-ipads {
+      margin: 0 0 $gap+10 0;
+    }
+  
+    >label {
+      margin: 3px 0;
+    }
+
+    &.opacity-slider {
+      display: grid;
+      grid-column-gap: 2px;
+      grid-template-columns: auto auto 1fr;
+      align-items: center;
+
+      @include ie11 {
+        align-items: stretch;
+      }
+    }
+
+    &.separator {
+      border: 1px solid $color-widget-border;
+    }
+  }
+}

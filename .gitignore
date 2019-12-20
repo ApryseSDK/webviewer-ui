@@ -6,6 +6,7 @@ coverage
 annotations
 webviewer-ui.zip
 notes
+static/lib
 coverage
 build
 tests
@@ -13,3 +14,5 @@ lib
 jest.config.js
 .eslintignore
 keys
+test/cypress/screenshotsFolder
+test/cypress/snapshots/**/__diff_output__/*

@@ -1,65 +1,67 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-import getClassName from 'helpers/getClassName';
+import React, { useEffect } from 'react';
+import classNames from 'classnames';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './ProgressModal.scss';
 
-class ProgressModal extends React.PureComponent {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    closeElements: PropTypes.func.isRequired,
-    loadingProgress: PropTypes.number,
-    isUploading: PropTypes.bool,
-    uploadProgress: PropTypes.number,
-  }
+const ProgressModal = () => {
+  const [
+    isDisabled,
+    isOpen,
+    loadingProgress,
+    isUploading,
+    uploadProgress,
+  ] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, 'progressModal'),
+      selectors.isElementOpen(state, 'progressModal'),
+      selectors.getLoadingProgress(state),
+      selectors.isUploading(state),
+      selectors.getUploadProgress(state),
+    ],
+    shallowEqual,
+  );
+  const dispatch = useDispatch();
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['signatureModal', 'printModal', 'errorModal', 'loadingModal']);
+  useEffect(() => {
+    if (isOpen) {
+      dispatch(
+        actions.closeElements([
+          'signatureModal',
+          'printModal',
+          'errorModal',
+          'loadingModal',
+        ]),
+      );
     }
-  }
+  }, [dispatch, isOpen]);
 
-  render() {
-    const { isDisabled, loadingProgress, isUploading, uploadProgress } = this.props;
-    if (this.props.isDisabled) {
-      return null;
-    }
+  const progressToUse = isUploading ? uploadProgress : loadingProgress;
 
-    if (isDisabled) {
-      return null;
-    }
-
-    const progressToUse = isUploading ? uploadProgress : loadingProgress;
-    const className = getClassName('Modal ProgressModal', this.props);
-
-    return (
-      <div className={className} data-element="progressModal">
-        <div className="container">
-          <div className="progress-bar-wrapper">
-            <div className="progress-bar" style={{ transform: `translateX(${-(1 - progressToUse) * 100}%`, transition: progressToUse ? 'transform 0.5s ease' : 'none' }}>
-            </div>
-          </div>
+  return isDisabled ? null : (
+    <div
+      className={classNames({
+        Modal: true,
+        ProgressModal: true,
+        open: isOpen,
+        closed: !isOpen,
+      })}
+      data-element="progressModal"
+    >
+      <div className="container">
+        <div className="progress-bar-wrapper">
+          <div
+            className="progress-bar"
+            style={{
+              transform: `translateX(${-(1 - progressToUse) * 100}%)`,
+            }}
+          />
         </div>
       </div>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'progressModal'),
-  isOpen: selectors.isElementOpen(state, 'progressModal'),
-  loadingProgress: selectors.getLoadingProgress(state),
-  isUploading: selectors.isUploading(state),
-  uploadProgress: selectors.getUploadProgress(state),
-});
-
-const mapDispatchToProps = {
-  closeElements: actions.closeElements,
+    </div>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProgressModal);
+export default ProgressModal;

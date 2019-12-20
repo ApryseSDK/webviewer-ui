@@ -101,12 +101,12 @@ class StatefulButton extends React.PureComponent {
     return (
       <Button
         {...this.props}
-        title={title}
         className={className}
         isActive={isActive && isActive(this.props)}
         img={img}
         label={content}
         onClick={this.onClick}
+        title={title}
       />
     );
   }

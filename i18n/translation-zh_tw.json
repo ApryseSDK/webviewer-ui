@@ -2,6 +2,7 @@
   "action": {
     "apply": "套用",
     "applyAll": "全部套用",
+    "calibrate": "校準",
     "cancel": "取消",
     "clear": "清除",
     "close": "關閉",
@@ -39,9 +40,11 @@
     "areaMeasurement": "測量面積",
     "arrow": "箭頭",
     "callout": "圖說文字",
+    "crop": "裁剪頁面",
     "caret": "插入號",
     "distanceMeasurement": "測量距離",
     "ellipse": "橢圓",
+    "eraser": "橡皮",
     "freehand": "手繪",
     "freehand2": "手繪",
     "freetext": "任意文字",
@@ -61,8 +64,7 @@
     "stickyNote": "評論",
     "strikeout": "刪除線",
     "underline": "底線",
-    "custom": "自訂",
-    "eraser": "橡皮"
+    "custom": "自訂"
   },
   "component": {
     "freehandToolsButton": "手繪工具",
@@ -72,13 +74,18 @@
     "miscToolsButton": "其他工具",
     "notesPanel": "備忘稿",
     "outlinesPanel": "大綱",
+    "layersPanel": "圖層",
     "shapeToolsButton": "圖形工具",
     "textToolsButton": "文字工具",
     "thumbnailsPanel": "縮圖",
     "toolsButton": "工具",
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
-    "measurementToolsButton": "測量工具"
+    "measurementToolsButton": "測量工具",
+    "calibration": "校準",
+    "bookmarksPanel": "書籤",
+    "bookmarkPage": "頁",
+    "newBookmark": "新書籤"
   },
   "message": {
     "badDocument": "無法載入文件。此文件已損壞或無效。",
@@ -93,13 +100,16 @@
     "notSupported": "不支援該檔案類型。",
     "passwordRequired": "需要密碼",
     "preparingToPrint": "正在準備列印...",
+    "annotationReplyCount": "{{count}} 回复",
+    "annotationReplyCount_plural": "{{count}} 回复",
     "printTotalPageCount": "{{count}} 頁",
     "printTotalPageCount_plural": "{{count}} 頁",
     "processing": "正在處理...",
     "searching": "正在搜尋...",
     "searchPlaceholder": "搜尋評論...",
     "signHere": "在這裡簽名",
-    "insertTextHere": "在這裡插入文字"
+    "insertTextHere": "在這裡插入文字",
+    "enterMeasurement": "在兩點之間輸入測量值"
   },
   "option": {
     "annotationColor": {
@@ -132,19 +142,31 @@
       "all": "全部",
       "current": "目前",
       "pages": "頁面",
-      "includeComments": "包括評論"
+      "includeComments": "包括評論",
+      "addWatermarkSettings": "添加水印設置"
     },
     "redaction": {
-      "markForRedaction": "標示為修訂",
-      "warningPopupMessage": "此動作將永久移除已選取進行修訂的所有項目，且無法復原。",
-      "warningPopupTitle": "套用修訂"
+      "markForRedaction": "標示為修訂"
     },
     "searchPanel": {
       "caseSensitive": "區分大小寫",
-      "wholeWordOnly": "全字相符"
+      "wholeWordOnly": "全字相符",
+      "wildcard": "通配符"
     },
     "signatureOverlay": {
       "addSignature": "新增簽名"
+    },
+    "status": {
+      "status": "狀態"
+    },
+    "state": {
+      "accepted": "公認",
+      "rejected": "被拒絕",
+      "completed": "已完成",
+      "cancelled": "取消",
+      "set": "設定狀態：",
+      "setBy": "通過設置",
+      "none": "沒有"
     },
     "measurementOverlay": {
       "scale": "比例",
@@ -167,6 +189,29 @@
     "shared": {
       "page": "頁面",
       "precision": "精確度"
+    },
+    "watermark": {
+      "size": "尺寸",
+      "location": "選擇一個位置來編輯水印",
+      "text": "文本",
+      "colors": "顏色",
+      "resetAllSettings": "重置所有設置"
+    },
+    "thumbnailPanel": {
+      "delete": "刪除",
+      "rotateCounterClockwise": "逆時針方向",
+      "rotateClockwise": "順時針"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "這將導致沒有剩餘頁面。請至少留一頁",
+      "deleteMessage": "您確定要刪除所選頁面嗎？這是無法撤消的",
+      "deleteTitle": "刪除頁面"
+    },
+    "redaction": {
+      "applyTile": "應用編輯",
+      "applyMessage": "此操作將永久刪除所有要編輯的項目。無法撤消。"
     }
   },
   "shortcut": {
@@ -175,6 +220,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +237,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "移動瀏覽",

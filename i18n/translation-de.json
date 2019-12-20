@@ -2,6 +2,7 @@
   "action": {
     "apply": "Anwenden",
     "applyAll": "Alles anwenden",
+    "calibrate": "Kalibrieren",
     "cancel": "Abbrechen",
     "clear": "Löschen",
     "close": "Schliessen",
@@ -39,9 +40,11 @@
     "areaMeasurement": "Flächenmessung",
     "arrow": "Pfeil",
     "callout": "Callout",
+    "crop": "Seite zuschneiden",
     "caret": "Caret",
     "distanceMeasurement": "Abstandsmessung",
     "ellipse": "Ellipse",
+    "eraser": "Radiergummi",
     "freehand": "Freihandzeichnen",
     "freehand2": "Freihandzeichnen",
     "freetext": "Freitext",
@@ -61,8 +64,7 @@
     "stickyNote": "Kommentar",
     "strikeout": "Durchstreichen",
     "underline": "Unterstreichen",
-    "custom": "Angepasst",
-    "eraser": "Radiergummi"
+    "custom": "Angepasst"
   },
   "component": {
     "freehandToolsButton": "Freihand-Werkzeuge",
@@ -72,13 +74,18 @@
     "miscToolsButton": "Verschiedene Werkzeuge",
     "notesPanel": "Annotationen",
     "outlinesPanel": "Gliederung",
+    "layersPanel": "Schichten",
     "shapeToolsButton": "Formwerkzeuge",
     "textToolsButton": "Textwerkzeuge",
     "thumbnailsPanel": "Miniaturansicht",
     "toolsButton": "Werkzeuge",
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
-    "measurementToolsButton": "Messwerkzeuge"
+    "measurementToolsButton": "Messwerkzeuge",
+    "calibration": "Kalibrierung",
+    "newBookmark": "Neues Lesezeichen",
+    "bookmarkPage": "Seite",
+    "bookmarksPanel": "Lesezeichen"
   },
   "message": {
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
@@ -93,13 +100,16 @@
     "notSupported": "Dieser Dateityp ist nicht unterstützt.",
     "passwordRequired": "Passwort erforderlich",
     "preparingToPrint": "Druckvorbereitung...",
+    "annotationReplyCount": "{{count}} Antworten",
+    "annotationReplyCount_plural": "{{count}} Antworten",
     "printTotalPageCount": "{{count}} Seite",
     "printTotalPageCount_plural": "{{count}} Seiten",
     "processing": "Bearbeite...",
     "searching": "Suche...",
     "searchPlaceholder": "Suche Kommentare...",
     "signHere": "Hier unterschreiben",
-    "insertTextHere": "Hier Text eingeben"
+    "insertTextHere": "Hier Text eingeben",
+    "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein"
   },
   "option": {
     "annotationColor": {
@@ -132,19 +142,31 @@
       "all": "Alle",
       "current": "Aktuelle Seite",
       "pages": "Seiten",
-      "includeComments": "Kommentare einfügen"
+      "includeComments": "Kommentare einfügen",
+      "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"
     },
     "redaction": {
-      "markForRedaction": "Zum Schwärzen markieren",
-      "warningPopupMessage": "Diese Aktion wird dauerhaft die markierten Elemente zur Überarbeitung löschen. Dies kann nicht rückgängig gemacht werden.",
-      "warningPopupTitle": "Schwärzung anwenden"
+      "markForRedaction": "Zum Schwärzen markieren"
     },
     "searchPanel": {
       "caseSensitive": "Groß-/Klein- schreibung beachten",
-      "wholeWordOnly": "Ganzes Wort"
+      "wholeWordOnly": "Ganzes Wort",
+      "wildcard": "Platzhalter"
     },
     "signatureOverlay": {
       "addSignature": "Eine Unterschrift hinzufügen"
+    },
+    "status": {
+      "status": "Status"
+    },
+    "state": {
+      "accepted": "Akzeptiert",
+      "rejected": "Abgelehnt",
+      "completed": "Vollendet, fertiggestellt",
+      "cancelled": "Abgesagt",
+      "set": "Status setzen:",
+      "setBy": "eingestellt von",
+      "none": "Keiner"
     },
     "measurementOverlay": {
       "scale": "Maßstab",
@@ -167,6 +189,29 @@
     "shared": {
       "page": "Seite",
       "precision": "Genauigkeit"
+    },
+    "watermark": {
+      "size": "Größe",
+      "location": "Wählen Sie einen Ort zum Bearbeiten von Wasserzeichen",
+      "text": "Text",
+      "colors": "Farben",
+      "resetAllSettings": "Alle Einstellungen zurücksetzen"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Im Uhrzeigersinn",
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
+      "delete": "Löschen"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten verbleiben. Bitte hinterlassen Sie mindestens eine Seite",
+      "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden",
+      "deleteTitle": "Seite löschen"
+    },
+    "redaction": {
+      "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht ungeschehen gemacht werden.",
+      "applyTile": "Redaktion anwenden"
     }
   },
   "shortcut": {
@@ -175,6 +220,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +237,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "Hand",

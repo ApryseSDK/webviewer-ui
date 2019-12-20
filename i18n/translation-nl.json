@@ -2,6 +2,7 @@
   "action": {
     "apply": "Toepassen",
     "applyAll": "Alles toepassen",
+    "calibrate": "Ijken",
     "cancel": "Annuleren",
     "clear": "Legen",
     "close": "Sluiten",
@@ -39,9 +40,11 @@
     "areaMeasurement": "Oppervlaktemeting",
     "arrow": "Pijl",
     "callout": "Opmerking met pijl",
+    "crop": "Pagina bijsnijden",
     "caret": "Dakje",
     "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
+    "eraser": "Gom",
     "freehand": "Vrije hand",
     "freehand2": "Vrije hand",
     "freetext": "Tekst plaatsen",
@@ -61,8 +64,7 @@
     "stickyNote": "Commentaar",
     "strikeout": "Doorstrepen",
     "underline": "Onderstrepen",
-    "custom": "maatwerk",
-    "eraser": "Gom"
+    "custom": "maatwerk"
   },
   "component": {
     "freehandToolsButton": "Vrije hand tools",
@@ -72,13 +74,18 @@
     "miscToolsButton": "Diverse tools",
     "notesPanel": "Notities",
     "outlinesPanel": "Hoofdlijnen",
+    "layersPanel": "Lagen",
     "shapeToolsButton": "Vorm tools",
     "textToolsButton": "Tekst tools",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
-    "measurementToolsButton": "Meetinstrumenten"
+    "measurementToolsButton": "Meetinstrumenten",
+    "calibration": "ijking",
+    "newBookmark": "Nieuwe bladwijzer",
+    "bookmarksPanel": "bladwijzers",
+    "bookmarkPage": "Pagina"
   },
   "message": {
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
@@ -93,13 +100,16 @@
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
     "passwordRequired": "Wachtwoord vereist",
     "preparingToPrint": "Printen voorbereiden...",
+    "annotationReplyCount": "{{count}} Antwoord",
+    "annotationReplyCount_plural": "{{count}} Antwoorden",
     "printTotalPageCount": "{{count}} pagina",
     "printTotalPageCount_plural": "{{count}} pagina's",
     "processing": "Bezig...",
     "searching": "Zoeken...",
     "searchPlaceholder": "Zoek opmerkingen...",
     "signHere": "Teken hier",
-    "insertTextHere": "Vul hier tekst in"
+    "insertTextHere": "Vul hier tekst in",
+    "enterMeasurement": "Voer de meting tussen de twee punten in"
   },
   "option": {
     "annotationColor": {
@@ -132,19 +142,31 @@
       "all": "Alles",
       "current": "Huidige",
       "pages": "Pagina's",
-      "includeComments": "Inclusief commentaar"
+      "includeComments": "Inclusief commentaar",
+      "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
     "redaction": {
-      "markForRedaction": "Markeren voor redactie",
-      "warningPopupMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
-      "warningPopupTitle": "Redactiewijziging Toepassen"
+      "markForRedaction": "Markeren voor redactie"
     },
     "searchPanel": {
       "caseSensitive": "Hoofdlettergevoelig",
-      "wholeWordOnly": "Hele woorden"
+      "wholeWordOnly": "Hele woorden",
+      "wildcard": "wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
+    },
+    "status": {
+      "status": "staat"
+    },
+    "state": {
+      "accepted": "Geaccepteerd",
+      "rejected": "Afgekeurd",
+      "completed": "Voltooid",
+      "cancelled": "Geannuleerd",
+      "set": "Stel status in:",
+      "setBy": "ingesteld door",
+      "none": "Geen"
     },
     "measurementOverlay": {
       "scale": "Schaalverhouding",
@@ -167,6 +189,29 @@
     "shared": {
       "page": "Pagina",
       "precision": "precisie"
+    },
+    "watermark": {
+      "size": "Grootte",
+      "location": "Kies een locatie om watermerken te bewerken",
+      "text": "Tekst",
+      "colors": "kleuren",
+      "resetAllSettings": "Reset alle instellingen"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Met de klok mee",
+      "rotateCounterClockwise": "Tegen de klok in",
+      "delete": "Delete"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "Pagina verwijderen",
+      "deleteLastPageMessage": "Hierdoor zouden er geen pagina's meer overblijven. Laat minstens één pagina achter",
+      "deleteMessage": "Weet u zeker dat u de geselecteerde pagina ('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt"
+    },
+    "redaction": {
+      "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden.",
+      "applyTile": "Redactie toepassen"
     }
   },
   "shortcut": {
@@ -175,6 +220,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +237,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "Schuiven",

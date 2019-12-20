@@ -12,6 +12,7 @@ import {
   getDataWithKey,
 } from 'constants/map';
 import getClassName from 'helpers/getClassName';
+import parseMeasurementContents from 'helpers/parseMeasurementContents';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -77,7 +78,7 @@ class MeasurementOverlay extends React.PureComponent {
     }
   };
 
-  onAnnotationSelected = (e, annotations, action) => {
+  onAnnotationSelected = (annotations, action) => {
     const { openElement, closeElement } = this.props;
 
     if (
@@ -95,7 +96,7 @@ class MeasurementOverlay extends React.PureComponent {
     }
   };
 
-  onAnnotationChanged = (e, annotations, action) => {
+  onAnnotationChanged = (annotations, action) => {
     // measurement overlay will open and show the annotation information when we are creating an annotation using measurement tools
     // since by default we don't auto select an annotation after it's created, we close the overlay here to avoid the confusion
     // where no annotation is selected but measurement overlay shows the information about the annotation we were creating
@@ -112,9 +113,6 @@ class MeasurementOverlay extends React.PureComponent {
       annotations.length === 1 &&
       annotations[0] === this.state.annotation
     ) {
-      // a style change won't result in a adjustRect call,
-      // so we call it here manually to update the content of the annotation to display the correct measurement
-      this.state.annotation.adjustRect();
       this.forceUpdate();
     }
   };
@@ -195,6 +193,16 @@ class MeasurementOverlay extends React.PureComponent {
     );
   };
 
+  renderScaleRatio = () => {
+    const { annotation } = this.state;
+    const scale = annotation.Scale;
+    const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
+
+    return `${scale[0][0]} ${scale[0][1]} = ${scale[1][0].toFixed(
+      decimalPlaces,
+    )} ${scale[1][1]}`;
+  };
+
   renderValue = () => {
     const { annotation } = this.state;
     const { t } = this.props;
@@ -218,7 +226,7 @@ class MeasurementOverlay extends React.PureComponent {
     const angle = this.getAngleInRadians(annotation.Start, annotation.End);
     const unit = annotation.Scale[1][1];
     const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
-    const distance = parseFloat(annotation.getContents());
+    const distance = parseMeasurementContents(annotation.getContents());
     const deltaX = Math.abs(distance * Math.cos(angle)).toFixed(decimalPlaces);
     const deltaY = Math.abs(distance * Math.sin(angle)).toFixed(decimalPlaces);
 
@@ -278,7 +286,7 @@ class MeasurementOverlay extends React.PureComponent {
       <div className={className} data-element="measurementOverlay">
         {this.renderTitle()}
         <div className="measurement__scale">
-          {t('option.measurementOverlay.scale')}: {annotation.Measure.scale}
+          {t('option.measurementOverlay.scale')}: {this.renderScaleRatio()}
         </div>
         <div className="measurement__precision">
           {t('option.shared.precision')}: {annotation.Precision}

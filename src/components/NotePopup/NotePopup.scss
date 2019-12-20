@@ -46,5 +46,13 @@
     &:empty {
       padding: 0px;
     }
+
+    p[data-element='notePopupSetStatus'] {
+      border-bottom: 1px solid var(--border-color);
+      color: $gray54;
+      padding-bottom: 3px;
+      margin-block-start: 0.5em;
+      margin-block-end:0.3em;
+    }
   }
 }

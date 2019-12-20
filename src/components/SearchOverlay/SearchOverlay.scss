@@ -147,8 +147,22 @@
       
       &.visible {
         display: flex;
-        padding: 5px 0 0 20px;
+        flex-wrap: wrap;
       }
+      
+      .search-option {
+        padding: 5px 0 0 20px;
+        flex: 1 0 50%;
+      }
+    }
+
+
+    .no-result {
+      font-size: .8em;
+      color: var(--text-color);
+      padding-top: 10px;
+      margin-left: 0;
+      margin-right: auto;
     }
   }
 }

@@ -1,5 +1,6 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { isIOS, isAndroid } from 'helpers/device';
+import fireEvent from 'helpers/fireEvent';
 import selectors from 'selectors';
 import core from 'core';
 
@@ -79,6 +80,15 @@ export const enableElements = (dataElements, priority) => (
     payload: { dataElements: filteredDataElements, priority },
   });
 };
+export const setThumbnailMerging = (useThumbnailMerging = true) => ({
+  type: 'SET_THUMBNAIL_MERGING',
+  payload: { useThumbnailMerging },
+});
+
+export const setThumbnailReordering = (useThumbnailReordering = true) => ({
+  type: 'SET_THUMBNAIL_REORDERING',
+  payload: { useThumbnailReordering },
+});
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;
@@ -172,6 +182,13 @@ export const setHeaderItems = (header, headerItems) => ({
   type: 'SET_HEADER_ITEMS',
   payload: { header, headerItems },
 });
+export const setPopupItems = (dataElement, items) => ({
+  type: 'SET_POPUP_ITEMS',
+  payload: {
+    dataElement,
+    items,
+  },
+});
 export const setColorPalette = (colorMapKey, colorPalette) => ({
   type: 'SET_COLOR_PALETTE',
   payload: { colorMapKey, colorPalette },
@@ -187,6 +204,10 @@ export const setColorMap = colorMap => ({
 export const setLeftPanelWidth = width => ({
   type: 'SET_LEFT_PANEL_WIDTH',
   payload: { width },
+});
+export const disableReplyForAnnotations = func => ({
+  type: 'SET_REPLY_DISABLED_FUNC',
+  payload: { func },
 });
 
 // document
@@ -225,6 +246,48 @@ export const setTotalPages = totalPages => ({
 export const setOutlines = outlines => ({
   type: 'SET_OUTLINES',
   payload: { outlines },
+});
+export const setBookmarks = bookmarks => ({
+  type: 'SET_BOOKMARKS',
+  payload: { bookmarks },
+});
+export const addBookmark = (pageIndex, text) => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: 'ADD_BOOKMARK',
+    payload: { pageIndex, text },
+  });
+
+  const bookmarks = selectors.getBookmarks(getState());
+  fireEvent('userBookmarksChanged', bookmarks);
+};
+export const editBookmark = (pageIndex, text) => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: 'EDIT_BOOKMARK',
+    payload: { pageIndex, text },
+  });
+  const bookmarks = selectors.getBookmarks(getState());
+  fireEvent('userBookmarksChanged', bookmarks);
+};
+export const removeBookmark = pageIndex => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: 'REMOVE_BOOKMARK',
+    payload: { pageIndex },
+  });
+  const bookmarks = selectors.getBookmarks(getState());
+  fireEvent('userBookmarksChanged', bookmarks);
+};
+export const setLayers = layers => ({
+  type: 'SET_LAYERS',
+  payload: { layers },
 });
 export const setCheckPasswordFunction = func => ({
   type: 'SET_CHECKPASSWORD',
@@ -345,6 +408,10 @@ export const setCaseSensitive = isCaseSensitive => ({
 export const setWholeWord = isWholeWord => ({
   type: 'SET_WHOLE_WORD',
   payload: { isWholeWord },
+});
+export const setWildcard = isWildcard => ({
+  type: 'SET_WILD_CARD',
+  payload: { isWildcard }
 });
 export const setIsSearching = isSearching => ({
   type: 'SET_IS_SEARCHING',

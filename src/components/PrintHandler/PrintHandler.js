@@ -1,42 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
+import classNames from 'classnames';
 
 import selectors from 'selectors';
 import { isIOS } from 'helpers/device';
 
 import './PrintHandler.scss';
 
-class PrintHandler extends React.PureComponent {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    isEmbedPrintSupported: PropTypes.bool,
-  }
+const PrintHandler = () => {
+  const [isDisabled, isEmbedPrintSupported] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, 'printHandler'),
+      selectors.isEmbedPrintSupported(state),
+    ],
+    shallowEqual,
+  );
 
-  render() {
-    if (this.props.isDisabled) {
-      return null;
-    }
+  return isDisabled ? null : (
+    <div
+      className={classNames({
+        PrintHandler,
+        'ios-print': isIOS,
+      })}
+    >
+      {isEmbedPrintSupported ? (
+        <iframe id="print-handler" tabIndex={-1}></iframe>
+      ) : (
+        <div id="print-handler"></div>
+      )}
+    </div>
+  );
+};
 
-    let className = 'PrintHandler';
-    if (isIOS) {
-      className += ' ios-print';
-    }
-
-    return (
-      <div className={className}>
-        {this.props.isEmbedPrintSupported
-          ? <iframe id="print-handler"></iframe>
-          : <div id="print-handler"></div>
-        }
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'printHandler'),
-  isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
-});
-
-export default connect(mapStateToProps)(PrintHandler);
+export default PrintHandler;

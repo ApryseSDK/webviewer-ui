@@ -3,16 +3,17 @@ import React, { useEffect } from 'react';
 import { useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
-import ToolsOverlay from 'components/ToolsOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
-import CursorOverlay from 'components/CursorOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
+import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
+import ToolsOverlay from 'components/ToolsOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import SearchPanel from 'components/SearchPanel';
@@ -27,12 +28,14 @@ import ErrorModal from 'components/ErrorModal';
 import WarningModal from 'components/WarningModal';
 import PasswordModal from 'components/PasswordModal';
 import ProgressModal from 'components/ProgressModal';
+import CalibrationModal from 'components/CalibrationModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
 import defineReaderControlAPIs from 'src/apis';
+import fireEvent from 'helpers/fireEvent';
 
 import './App.scss';
 
@@ -45,25 +48,17 @@ const App = ({ removeEventHandlers }) => {
 
   useEffect(() => {
     defineReaderControlAPIs(store);
-    window.ControlUtils = {
-      byteRangeCheck: (complete) => {
-        complete(206);
-      },
-      // discussed with the team internally, this will be removed in the next major release
-      getCustomData: () => {
-        console.warn('ControlUtils.getCustomData is deprecated, use instance.getCustomData instead');
-        return window.readerControl.getCustomData();
-      },
-    };
-
-    $(document).trigger('viewerLoaded');
+    fireEvent('viewerLoaded');
 
     return removeEventHandlers;
-  }, [removeEventHandlers, store]);
+  // eslint-disable-next-line
+  }, []);
 
   return (
-    <>
+    <React.Fragment>
       <div className="App">
+        <Accessibility />
+
         <Header />
 
         <LeftPanel />
@@ -75,12 +70,12 @@ const App = ({ removeEventHandlers }) => {
         <ViewControlsOverlay />
         <RedactionOverlay />
         <MenuOverlay />
-        <ToolsOverlay />
         <SignatureOverlay />
-        <CursorOverlay />
         <PageNavOverlay />
         <ZoomOverlay />
         <MeasurementOverlay />
+        <AnnotationContentOverlay />
+        <ToolsOverlay />
 
         <AnnotationPopup />
         <TextPopup />
@@ -94,12 +89,13 @@ const App = ({ removeEventHandlers }) => {
         <WarningModal />
         <PasswordModal />
         <ProgressModal />
+        <CalibrationModal />
       </div>
 
       <PrintHandler />
       <FilePickerHandler />
       <CopyTextHandler />
-    </>
+    </React.Fragment>
   );
 };
 

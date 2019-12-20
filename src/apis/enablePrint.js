@@ -1,36 +1,22 @@
-/**
- * Enables print feature, affecting the Print button in menu overlay and shortcut to print (ctrl/cmd + p).
- * @method WebViewer#enablePrint
- * @example // 5.1 and after
-WebViewer(...)
-  .then(function(instance) {
-    instance.enablePrint();
-  });
- * @example // 4.0 ~ 5.0
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.enablePrint();
-});
- */
-
-import actions from 'actions';
-import { PRIORITY_ONE } from 'constants/actionPriority';
-
-import disablePrint from './disablePrint';
+import Feature from 'constants/feature';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import enableFeatures from './enableFeatures';
+import disableFeatures from './disableFeatures';
 
 export default store => (enable = true) => {
-  const elements = [
-    'printButton',
-    'printModal',
-  ];
-
   if (enable) {
-    store.dispatch(actions.enableElements(elements, PRIORITY_ONE));
+    warnDeprecatedAPI(
+      'enablePrint()',
+      'enableFeatures([instance.Feature.Print])',
+      '7.0',
+    );
+    enableFeatures(store)([Feature.Print]);
   } else {
-    console.warn('enablePrint(false) is deprecated, please use disablePrint() instead');
-    disablePrint(store)();
+    warnDeprecatedAPI(
+      'enablePrint(false)',
+      'disableFeatures([instance.Feature.Print])',
+      '7.0',
+    );
+    disableFeatures(store)([Feature.Print]);
   }
 };

@@ -1,0 +1,76 @@
+// https://gist.github.com/gokulkrishh/242e68d1ee94ad05f488
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@mixin desktop {
+  @media (min-width: 1281px) {
+    @content;
+  }
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+@mixin laptop {
+  @media (min-width: 1025px) and (max-width: 1280px) {
+  
+    @content;
+    
+  }
+}
+
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+@mixin tablets-and-portrait-ipads {
+  @media (min-width: 768px) and (max-width: 1024px) {
+  
+    @content;
+    
+  }
+}
+
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+@mixin tablets-and-landscape-ipads {
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+    @content;
+    
+  }
+}
+
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+@mixin low-res-tablet-landscape-mobiles {
+  @media (min-width: 481px) and (max-width: 767px) {
+  
+    @content;
+    
+  }
+}
+
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 315px to 479px
+*/
+@mixin portrait-mobile {
+  @media (min-width: 315px) and (max-width: 480px) {
+  
+    @content;
+    
+  }
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -6,13 +7,16 @@ import core from 'core';
 import { isMobile } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
+import ThumbnailControls from 'components/ThumbnailControls';
 
 import './Thumbnail.scss';
+
+export const THUMBNAIL_SIZE = 150;
 
 class Thumbnail extends React.PureComponent {
   static propTypes = {
     index: PropTypes.number.isRequired,
-    currentPage: PropTypes.number,
+    currentPage: PropTypes.number.isRequired,
     pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
     onLoad: PropTypes.func.isRequired,
@@ -20,7 +24,10 @@ class Thumbnail extends React.PureComponent {
     onRemove: PropTypes.func.isRequired,
     updateAnnotations: PropTypes.func,
     closeElement: PropTypes.func.isRequired,
-  }
+    onDragStart: PropTypes.func,
+    onDragOver: PropTypes.func,
+    isDraggable: PropTypes.bool,
+  };
 
   constructor(props) {
     super(props);
@@ -52,23 +59,40 @@ class Thumbnail extends React.PureComponent {
     onRemove(index);
   }
 
-  onLayoutChanged(e, changes) {
-    const { contentChanged } = changes;
-    const { index } = this.props;
+  onLayoutChanged(changes) {
+    const { contentChanged, moved, added, removed } = changes;
+    const { index, pageLabels } = this.props;
 
     const currentPage = index + 1;
-    const didLayoutChange = contentChanged.some(changedPage => `${currentPage}` === changedPage);
+    const currentPageStr = `${currentPage}`;
 
-    if (didLayoutChange) {
+    const isPageAdded = added.indexOf(currentPage) > -1;
+    const didPageChange = contentChanged.some(
+      changedPage => currentPageStr === changedPage,
+    );
+    const didPageMove = Object.keys(moved).some(
+      movedPage => currentPageStr === movedPage,
+    );
+    const isPageRemoved = removed.indexOf(currentPage) > -1;
+    const newPageCount = pageLabels.length - removed.length;
+
+    if (removed.length > 0 && index + 1 > newPageCount) {
+      // don't load thumbnail if it's going to be removed
+      return;
+    }
+
+    if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
       const { thumbContainer } = this;
       const { current } = thumbContainer;
 
       core.loadThumbnailAsync(index, thumb => {
         thumb.className = 'page-image';
+        thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
+        thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
         current.removeChild(current.querySelector('.page-image'));
         current.appendChild(thumb);
         if (this.props.updateAnnotations) {
-          this.props.updateAnnotations(index, thumb);
+          this.props.updateAnnotations(index);
         }
       });
     }
@@ -82,17 +106,44 @@ class Thumbnail extends React.PureComponent {
     if (isMobile()) {
       closeElement('leftPanel');
     }
-  }
+  };
+
+  onDragStart = e => {
+    const { index, onDragStart } = this.props;
+    onDragStart(e, index);
+  };
+
+  onDragOver = e => {
+    const { index, onDragOver } = this.props;
+    onDragOver(e, index);
+  };
 
   render() {
-    const { index, currentPage, pageLabels } = this.props;
+    const { index, currentPage, pageLabels, isDraggable } = this.props;
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
 
     return (
-      <div className={`Thumbnail ${isActive ? 'active' : ''}`}>
-        <div className="container" ref={this.thumbContainer} onClick={this.handleClick}></div>
+      <div
+        className={classNames({
+          Thumbnail: true,
+          active: isActive,
+        })}
+        onClick={this.handleClick}
+        onDragOver={this.onDragOver}
+      >
+        <div
+          className="container"
+          style={{
+            width: THUMBNAIL_SIZE,
+            height: THUMBNAIL_SIZE,
+          }}
+          ref={this.thumbContainer}
+          onDragStart={this.onDragStart}
+          draggable={isDraggable}
+        />
         <div className="page-label">{pageLabel}</div>
+        {isActive && <ThumbnailControls index={index} />}
       </div>
     );
   }

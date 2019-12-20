@@ -1,0 +1,39 @@
+@import '../../constants/panel';
+
+.BookmarksPanel {
+  padding: 0px 0px;
+
+  .bookmarks-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8em;
+    margin: 0px 16px;
+
+    .bookmarks-panel-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .bookmarks-panel-label {
+      margin-left: 8px;
+    }
+
+    .bookmarks-panel-button {
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      padding: 10px;
+      background: white;
+      cursor: pointer;
+    }
+  }
+
+  .bookmarks-panel-row {
+    margin: 0px 20px;
+
+    .bookmarks-panel-label {
+      margin-top: 16px;
+      font-weight: bold;
+    }
+  }
+}

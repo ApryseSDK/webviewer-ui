@@ -11,27 +11,20 @@ import './MeasurementOption.scss';
 
 class MeasurementOption extends React.Component {
   static propTypes = {
-    /**
-     * The current scale of a measurement tool that is consisted of two arrays
-     * The first array represents the document scale and the second array represents the world scale
-     * For example [[1, 'in'], [4, 'ft']] means 1 inch measured in the document is equal to 4 feet in the real world
-     */
+    // The current scale of a measurement tool that is consisted of two arrays
+    // The first array represents the document scale and the second array represents the world scale
+    // For example [[1, 'in'], [4, 'ft']] means 1 inch measured in the document is equal to 4 feet in the real world
     scale: PropTypes.arrayOf(PropTypes.array).isRequired,
-    /**
-     * The current precision of a measurement tool that is used to determine how many decimal places a calculated value should display
-     * Calculated value depends on what the measurement tool is. For example it is distance for distance measurement tool
-     */
+    // The current precision of a measurement tool that is used to determine how many decimal places a calculated value should display
+    // Calculated value depends on what the measurement tool is. For example it is distance for distance measurement tool
     precision: PropTypes.number.isRequired,
-    /**
-     * A prop that is passed down from translate HOC and is used to internationalize strings
-     */
+    // A prop that is passed down from translate HOC and is used to internationalize strings
     t: PropTypes.func.isRequired,
     measurementUnits: PropTypes.shape({
       from: PropTypes.array,
       to: PropTypes.array,
     }).isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    openMeasurementDropdown: PropTypes.number,
   };
 
   constructor(props) {
@@ -47,18 +40,20 @@ class MeasurementOption extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { scale, precision } = this.props;
+
     if (this.props.scale !== prevProps.scale) {
-      this.setState((state, props) => ({
-        currScaleFrom: props.scale[0][0],
-        currUnitFrom: props.scale[0][1],
-        currScaleTo: props.scale[1][0],
-        currUnitTo: props.scale[1][1],
-      }));
+      this.setState({
+        currScaleFrom: scale[0][0],
+        currUnitFrom: scale[0][1],
+        currScaleTo: scale[1][0],
+        currUnitTo: scale[1][1],
+      });
     }
     if (this.props.precision !== prevProps.precision) {
-      this.setState((state, props) => ({
-        currPrecision: props.precision,
-      }));
+      this.setState({
+        currPrecision: precision,
+      });
     }
   }
 
@@ -115,9 +110,7 @@ class MeasurementOption extends React.Component {
   };
 
   renderScaleInput = (type, val) => {
-    /**
-     * There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
-     */
+    // There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
     if (isFirefox) {
       return (
         <input

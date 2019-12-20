@@ -1,0 +1,38 @@
+.Layer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+
+  .layer-wrapper {
+    display: flex;
+    align-content: center;
+  }
+
+  .padding {
+    width: 20px;
+
+    .arrow {
+      transition: transform .1s ease;
+      
+      &.expanded {
+        transform: rotate(90deg);
+      }
+
+      &.collapsed {
+        transform: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  label {
+    margin-left: 20px;
+  }
+
+  .sub-layers {
+    margin-left: 20px;
+  }
+}

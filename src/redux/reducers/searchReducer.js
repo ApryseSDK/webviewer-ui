@@ -103,6 +103,12 @@ export default initialState => (state = initialState, action) => {
         isWholeWord: payload.isWholeWord,
       };
     }
+    case 'SET_WILD_CARD': {
+      return {
+        ...state,
+        isWildcard: payload.isWildcard
+      };
+    }
     case 'SET_IS_SEARCHING': {
       return {
         ...state,
@@ -122,6 +128,7 @@ export default initialState => (state = initialState, action) => {
         value: state.value,
         isCaseSensitive: state.isCaseSensitive,
         isWholeWord: state.isWholeWord,
+        isWildcard: state.isWildcard,
       };
     }
     default:

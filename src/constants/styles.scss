@@ -49,6 +49,19 @@ $mobile-width: 640px;
   }
 }
 
+.text-input {
+  border: 1px solid grey;
+  &::placeholder {
+    color:$gray12;
+  }
+  &::-webkit-input-placeholder {
+    color:$gray12;
+  }
+  &:-ms-input-placeholder {
+    color:$gray12;
+  }
+}
+
 @mixin desktop {
   @media (min-width: #{$tablet-width + 1px}) {
     @content;
@@ -95,4 +108,28 @@ $mobile-width: 640px;
   @include mobile {
     display: none;
   }
+}
+
+%cell {
+  flex: 1 0 28px;
+  height: 26px;
+  display: flex;
+  margin: 0 1px;
+
+  @include mobile {
+    height: 30px;
+    margin: 0 1.2px;
+  }
+}
+// https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+%word-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }

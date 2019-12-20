@@ -22,17 +22,21 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     isDisabled,
     isEditDisabled,
     isDeleteDisabled,
+    isStateDisabled,
   ] = useSelector(
     state => [
       selectors.getNotePopupId(state),
       selectors.isElementDisabled(state, 'notePopup'),
       selectors.isElementDisabled(state, 'notePopupEdit'),
       selectors.isElementDisabled(state, 'notePopupDelete'),
+      selectors.isElementDisabled(state, 'notePopupState'),
     ],
     shallowEqual,
   );
   const [canModify, setCanModify] = useState(core.canModify(annotation));
-  const [canModifyContents, setCanModifyContents] = useState(core.canModifyContents(annotation));
+  const [canModifyContents, setCanModifyContents] = useState(
+    core.canModifyContents(annotation),
+  );
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const isOpen = notePopupId === annotation.Id;
@@ -74,6 +78,14 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     core.deleteAnnotations([annotation]);
   };
 
+  const handleStateUpdate = state => {
+    const author = core.getCurrentUser();
+    const message = `${state} ${t('option.state.setBy')} ${author}`;
+    const stateModel = 'Review';
+    core.updateAnnotationState(annotation, state, stateModel, message);
+  };
+
+  const isReply = annotation.isReply();
   const isEditable = !isEditDisabled && canModifyContents;
   const isDeletable = !isDeleteDisabled && canModify;
 
@@ -96,6 +108,41 @@ const NotePopup = ({ annotation, setIsEditing }) => {
           {isDeletable && (
             <div data-element="notePopupDelete" onClick={handleDelete}>
               {t('action.delete')}
+            </div>
+          )}
+          {!isStateDisabled && !isReply && (
+            <div data-element="notePopupState">
+              <p data-element="notePopupSetStatus">{t('option.state.set')}</p>
+              <div
+                data-element="notePopupStateAccepted"
+                onClick={() => handleStateUpdate('Accepted')}
+              >
+                {t('option.state.accepted')}
+              </div>
+              <div
+                data-element="notePopupStateRejected"
+                onClick={() => handleStateUpdate('Rejected')}
+              >
+                {t('option.state.rejected')}
+              </div>
+              <div
+                data-element="notePopupStateCancelled"
+                onClick={() => handleStateUpdate('Cancelled')}
+              >
+                {t('option.state.cancelled')}
+              </div>
+              <div
+                data-element="notePopupStateCompleted"
+                onClick={() => handleStateUpdate('Completed')}
+              >
+                {t('option.state.completed')}
+              </div>
+              <div
+                data-element="notePopupStateNone"
+                onClick={() => handleStateUpdate('None')}
+              >
+                {t('option.state.none')}
+              </div>
             </div>
           )}
         </div>

@@ -5,9 +5,8 @@ import selectors from 'selectors';
 
 export default store => () => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
-  const hasSignature = signatureTool.freeHandAnnot && signatureTool.freeHandAnnot.getPaths().length;
 
-  if (hasSignature) {
+  if (!signatureTool.isEmptySignature()) {
     signatureTool.addSignature();
   } else {
     // this condition is usually met when we click on a signature widget but UI doesn't know which signature to draw
@@ -19,8 +18,7 @@ export default store => () => {
       if (isTabletOrMobile()) {
         store.dispatch(actions.setActiveHeaderGroup('tools'));
       }
-
-      document.querySelector('[data-element="signatureToolButton"]').click();
+      document.querySelector('[data-element="signatureToolButton"] .Button').click();
     } else {
       const defaultSignatures = document.querySelector('.default-signature');
       const isSignatureOverlayDisabled = selectors.isElementDisabled(store.getState(), 'signatureOverlay');

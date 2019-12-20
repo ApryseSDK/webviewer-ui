@@ -3,7 +3,8 @@ import { workerTypes } from 'constants/types';
 
 export default store => {
   const state = store.getState();
-  const { serverUrl, serverUrlHeaders } = state.advanced;
+  let { serverUrl } = state.advanced;
+  const { serverUrlHeaders } = state.advanced;
 
   if (!serverUrl) {
     return;
@@ -22,17 +23,30 @@ export default store => {
       return;
     }
 
-    const docIdQuery = {};
-    if (documentId) {
-      docIdQuery.did = documentId;
+    // make sure we are not getting cached responses
+    if (serverUrl.indexOf('?') === -1) {
+      serverUrl += `?_=${Date.now()}`;
+    } else {
+      serverUrl += `&_=${Date.now()}`;
     }
 
-    $.ajax({
-      url: serverUrl,
-      cache: false,
-      data: docIdQuery,
+    if (documentId) {
+      serverUrl += `&did=${documentId}`;
+    }
+
+    serverUrl = documentId ? `${serverUrl}?did=${documentId}` : serverUrl;
+
+    fetch(serverUrl, {
       headers: serverUrlHeaders,
-      success: data => {
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        }
+
+        return Promise.reject(response);
+      })
+      .then(data => {
         if (data !== null && data !== undefined) {
           window.readerControl.loadedFromServer = true;
           callback(data);
@@ -40,16 +54,14 @@ export default store => {
           window.readerControl.serverFailed = true;
           callback(originalData);
         }
-      },
-      error: (jqXHR, textStatus, errorThrown) => {
+      })
+      .catch(e => {
         window.readerControl.serverFailed = true;
         console.warn(
-          `Error ${jqXHR.status} ${errorThrown}: Annotations could not be loaded from the server.`,
+          `Error ${e.status}: Annotations could not be loaded from the server.`,
         );
         callback(originalData);
-      },
-      dataType: 'xml',
-    });
+      });
   };
 
   core.setInternalAnnotationsTransform(getAnnotsFromServer);
@@ -61,7 +73,7 @@ export default store => {
   core.addEventListener('documentLoaded', function() {
     if (window.docViewer.getDocument().getType() === workerTypes.OFFICE) {
       getAnnotsFromServer(null, function(data) {
-        window.docViewer.getAnnotationManager().importAnnotationsAsync(data);
+        window.docViewer.getAnnotationManager().importAnnotations(data);
       });
     }
   });

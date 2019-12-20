@@ -2,10 +2,11 @@
   "action": {
     "apply": "적용",
     "applyAll": "모두 적용",
+    "calibrate": "교정",
     "cancel": "취소",
     "clear": "지우기",
     "close": "닫기",
-    "comment": "코멘트",
+    "comment": "댓글",
     "copy": "복사",
     "delete": "삭제",
     "group": "그룹",
@@ -39,9 +40,11 @@
     "areaMeasurement": "면적 측정",
     "arrow": "화살표",
     "callout": "설명선",
+    "crop": "자르기 페이지",
     "caret": "캐럿",
     "distanceMeasurement": "거리 측정",
     "ellipse": "타원",
+    "eraser": "지우개",
     "freehand": "자유형",
     "freehand2": "자유형",
     "freetext": "자유 텍스트",
@@ -51,7 +54,7 @@
     "line": "선",
     "perimeterMeasurement": "둘레 측정",
     "polygon": "다각형",
-    "polygonCloud": "클라우드",
+    "polygonCloud": "구름",
     "polyline": "폴리라인",
     "rectangle": "직사각형",
     "redact": "개정",
@@ -61,8 +64,7 @@
     "stickyNote": "코멘트",
     "strikeout": "취소선",
     "underline": "밑줄",
-    "custom": "사용자 지정",
-    "eraser": "지우개"
+    "custom": "사용자 지정"
   },
   "component": {
     "freehandToolsButton": "자유형 도구",
@@ -72,13 +74,18 @@
     "miscToolsButton": "기타 도구",
     "notesPanel": "참고",
     "outlinesPanel": "개요",
+    "layersPanel": "레이어",
     "shapeToolsButton": "도형 도구",
     "textToolsButton": "텍스트 도구",
     "thumbnailsPanel": "축소판",
     "toolsButton": "도구",
     "redaction": "개정",
     "viewControlsOverlay": "컨트롤 보기",
-    "measurementToolsButton": "측정 도구"
+    "measurementToolsButton": "측정 도구",
+    "calibration": "구경 측정",
+    "bookmarkPage": "페이지",
+    "bookmarksPanel": "북마크",
+    "newBookmark": "새로운 북마크"
   },
   "message": {
     "badDocument": "문서를 로드하지 못했습니다. 문서가 손상되었거나 유효하지 않습니다.",
@@ -93,13 +100,16 @@
     "notSupported": "해당 파일 유형은 지원되지 않습니다.",
     "passwordRequired": "비밀번호가 필요합니다",
     "preparingToPrint": "인쇄 준비 중...",
+    "annotationReplyCount": "{{count}} 댓글",
+    "annotationReplyCount_plural": "{{count}} 답글",
     "printTotalPageCount": "{{count}} 페이지",
     "printTotalPageCount_plural": "{{count}} 페이지",
     "processing": "처리 중...",
     "searching": "검색 중...",
     "searchPlaceholder": "코멘트 검색...",
     "signHere": "여기에 서명하세요",
-    "insertTextHere": "여기에 텍스트를 삽입하세요"
+    "insertTextHere": "여기에 텍스트를 삽입하세요",
+    "enterMeasurement": "두 지점 사이에 측정 값을 입력하십시오"
   },
   "option": {
     "annotationColor": {
@@ -132,19 +142,31 @@
       "all": "모두",
       "current": "현재",
       "pages": "페이지",
-      "includeComments": "코멘트 포함"
+      "includeComments": "코멘트 포함",
+      "addWatermarkSettings": "워터 마크 설정 추가"
     },
     "redaction": {
-      "markForRedaction": "개정 표시",
-      "warningPopupMessage": "이 작업은 개정을 위해 선택된 모든 항목을 영구적으로 삭제합니다. 이 작업은 취소할 수 없습니다.",
-      "warningPopupTitle": "개정 적용"
+      "markForRedaction": "개정 표시"
     },
     "searchPanel": {
       "caseSensitive": "대/소문자 구분",
-      "wholeWordOnly": "단어 단위로"
+      "wholeWordOnly": "단어 단위로",
+      "wildcard": "와일드 카드"
     },
     "signatureOverlay": {
       "addSignature": "서명 추가"
+    },
+    "status": {
+      "status": "지위"
+    },
+    "state": {
+      "accepted": "받아 들여",
+      "rejected": "거부",
+      "completed": "완료",
+      "cancelled": "취소 된",
+      "set": "상태 설정 :",
+      "setBy": "에 의해 설정",
+      "none": "없음"
     },
     "measurementOverlay": {
       "scale": "배율",
@@ -167,6 +189,29 @@
     "shared": {
       "page": "페이지",
       "precision": "정밀도"
+    },
+    "watermark": {
+      "size": "크기",
+      "location": "워터 마크를 편집 할 위치를 선택하십시오",
+      "text": "본문",
+      "colors": "그림 물감",
+      "resetAllSettings": "모든 설정 초기화"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "시계 방향",
+      "delete": "지우다",
+      "rotateCounterClockwise": "시계 반대 방향"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "그러면 페이지가 남아 있지 않습니다. 한 페이지 이상 남겨주세요",
+      "deleteTitle": "페이지 삭제",
+      "deleteMessage": "선택한 페이지를 삭제 하시겠습니까? 취소 할 수 없습니다"
+    },
+    "redaction": {
+      "applyTile": "수정 적용",
+      "applyMessage": "이 작업은 편집을 위해 선택된 모든 항목을 영구적으로 제거합니다. 취소 할 수 없습니다."
     }
   },
   "shortcut": {
@@ -175,6 +220,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +237,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "이동",

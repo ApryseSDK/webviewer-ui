@@ -7,7 +7,7 @@ import { isIE } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
-import TouchEventManager from 'helpers/TouchEventManager';
+import touchEventManager from 'helpers/TouchEventManager';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -49,7 +49,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    TouchEventManager.initialize(this.document.current, this.container.current);
+    touchEventManager.initialize(this.document.current, this.container.current);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
@@ -62,18 +62,39 @@ class DocumentContainer extends React.PureComponent {
       window.addEventListener('resize', this.handleWindowResize);
     }
 
+    if (process.env.NODE_ENV === 'development') {
+      this.container.current.addEventListener('dragover', this.preventDefault);
+      this.container.current.addEventListener('drop', this.onDrop);
+    }
+
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
     window.addEventListener('keydown', this.onKeyDown);
   }
 
   componentWillUnmount() {
-    TouchEventManager.terminate();
+    touchEventManager.terminate();
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
 
+    if (process.env.NODE_ENV === 'development') {
+      this.container.current.addEventListener('dragover', this.preventDefault);
+      this.container.current.removeEventListener('drop', this.onDrop);
+    }
+
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
     window.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  preventDefault = e => e.preventDefault();
+
+  onDrop = e => {
+    e.preventDefault();
+
+    const { files } = e.dataTransfer;
+    if (files.length) {
+      window.readerControl.loadDocument(files[0]);
+    }
   }
 
   onKeyDown = e => {
@@ -154,7 +175,6 @@ class DocumentContainer extends React.PureComponent {
   handleScroll = () => {
     this.props.closeElements([
       'annotationPopup',
-      'contextMenuPopup',
       'textPopup',
     ]);
   }

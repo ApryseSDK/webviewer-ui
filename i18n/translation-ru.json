@@ -2,6 +2,7 @@
   "action": {
     "apply": "Применить",
     "applyAll": "Применить все",
+    "calibrate": "калибровать",
     "cancel": "Отменить",
     "clear": "Очистить",
     "close": "Закрыть",
@@ -39,9 +40,11 @@
     "areaMeasurement": "Площадь",
     "arrow": "Стрела",
     "callout": "Вызыв",
+    "crop": "Обрезать страницу",
     "caret": "Знак вставки",
     "distanceMeasurement": "Дистанция",
     "ellipse": "Эллипс",
+    "eraser": "ластик",
     "freehand": "От руки",
     "freehand2": "От руки",
     "freetext": "Текст",
@@ -61,8 +64,7 @@
     "stickyNote": "Комментировать",
     "strikeout": "Зачеркнуть",
     "underline": "Подчеркнуть",
-    "custom": "Свой стиль",
-    "eraser": "ластик"
+    "custom": "Свой стиль"
   },
   "component": {
     "freehandToolsButton": "Инструменты",
@@ -72,13 +74,18 @@
     "miscToolsButton": "Другие инструменты",
     "notesPanel": "Заметки",
     "outlinesPanel": "Контуры",
+    "layersPanel": "Слои",
     "shapeToolsButton": "Фигуры",
     "textToolsButton": "Инструменты для работы с текстом",
     "thumbnailsPanel": "Эскизы",
     "toolsButton": "Инструменты",
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
-    "measurementToolsButton": "Инструменты для замерения"
+    "measurementToolsButton": "Инструменты для замерения",
+    "calibration": "калибровка",
+    "bookmarksPanel": "закладки",
+    "newBookmark": "Новая закладка",
+    "bookmarkPage": "страница"
   },
   "message": {
     "badDocument": "Произошла ошибка при загрузке документа. Документ содержит ошибки или недостоверный.",
@@ -93,13 +100,16 @@
     "notSupported": "Расширение файла не поддерживается.",
     "passwordRequired": "Пароль необходим",
     "preparingToPrint": "Документ печатается...",
+    "annotationReplyCount": "{{count}} Ответить",
+    "annotationReplyCount_plural": "{{count}} Ответы",
     "printTotalPageCount": "{{count}} страница",
     "printTotalPageCount_plural": "{{count}} страниц",
     "processing": "Обработка документа...",
     "searching": "Поиск...",
     "searchPlaceholder": "Поиск комментарий...",
     "signHere": "Распишетесь здесь",
-    "insertTextHere": "Вставьте текст здесь"
+    "insertTextHere": "Вставьте текст здесь",
+    "enterMeasurement": "Введите измерение между двумя точками"
   },
   "option": {
     "annotationColor": {
@@ -132,19 +142,31 @@
       "all": "Все",
       "current": "Текущий",
       "pages": "Страницы",
-      "includeComments": "Приложить комментарии"
+      "includeComments": "Приложить комментарии",
+      "addWatermarkSettings": "Добавить настройки водяного знака"
     },
     "redaction": {
-      "markForRedaction": "Пометить для редактирования",
-      "warningPopupMessage": "Редакция удалит все выделенные элементы. Редакция необратима.",
-      "warningPopupTitle": "Применить редакцию"
+      "markForRedaction": "Пометить для редактирования"
     },
     "searchPanel": {
       "caseSensitive": "С учетом регистра",
-      "wholeWordOnly": "Всё слово"
+      "wholeWordOnly": "Всё слово",
+      "wildcard": "Wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"
+    },
+    "status": {
+      "status": "Статус"
+    },
+    "state": {
+      "accepted": "Принято",
+      "rejected": "Отклонено",
+      "completed": "Завершенный",
+      "cancelled": "отменен",
+      "set": "Установить статус:",
+      "setBy": "установить с помощью",
+      "none": "Никто"
     },
     "measurementOverlay": {
       "scale": "Масштаб",
@@ -167,6 +189,29 @@
     "shared": {
       "page": "Страница",
       "precision": "Точность"
+    },
+    "watermark": {
+      "size": "Размер",
+      "location": "Выберите место для редактирования водяных знаков",
+      "text": "Текст",
+      "colors": "Цвета",
+      "resetAllSettings": "Сбросить все настройки"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "по часовой стрелке",
+      "rotateCounterClockwise": "Против часовой стрелки",
+      "delete": "удалять"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "Удалить страницу",
+      "deleteLastPageMessage": "Это приведет к тому, что не останется ни одной страницы. Пожалуйста, оставьте хотя бы одну страницу",
+      "deleteMessage": "Вы уверены, что хотите удалить выбранные страницы? Это не может быть отменено"
+    },
+    "redaction": {
+      "applyMessage": "Это действие навсегда удалит все элементы, выбранные для редактирования. Это не может быть отменено.",
+      "applyTile": "Применить редактирование"
     }
   },
   "shortcut": {
@@ -175,6 +220,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +237,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "Панорамирование",

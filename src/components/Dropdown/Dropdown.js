@@ -30,7 +30,7 @@ class Dropdown extends React.PureComponent {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
 
-  handleDisplayItemChange = (e, item) => {
+  onClickDropdown = (e, item) => {
     e.stopPropagation();
 
     this.props.setSortStrategy(item);
@@ -44,7 +44,7 @@ class Dropdown extends React.PureComponent {
     const dropdownItems = items.filter(item => item !== sortStrategy);
 
     return dropdownItems.map(item =>
-      <div key={item} className="dropdown-item" onClick={e => this.handleDisplayItemChange(e, item)}>
+      <div key={item} className="dropdown-item" onClick={e => this.onClickDropdown(e, item)}>
         {this.getTranslatedContent(item)}
       </div>,
     );

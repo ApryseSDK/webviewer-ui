@@ -1,11 +1,11 @@
-import core from 'core';
-import { PRIORITY_ONE } from 'constants/actionPriority';
-import actions from 'actions';
-import selectors from 'selectors';
+import warnDeprecatedAPI from 'helpers/warnDeprecatedAPI';
+import disableTools from './disableTools';
 
 export default store => toolName => {
-  const dataElement = selectors.getToolButtonDataElement(store.getState(), toolName);
-
-  core.getTool(toolName).disabled = true;
-  store.dispatch(actions.disableElement(dataElement, PRIORITY_ONE));
+  warnDeprecatedAPI(
+    'disableTool(toolName)',
+    'disableTools([toolName])',
+    '7.0',
+  );
+  disableTools(store)([toolName]);
 };

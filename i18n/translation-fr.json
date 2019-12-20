@@ -2,12 +2,15 @@
   "action": {
     "apply": "Appliquer",
     "applyAll": "Appliquer toute",
+    "calibrate": "Étalonner",
     "cancel": "Annuler",
     "clear": "Effacer",
     "close": "Fermer",
     "comment": "Commenter",
     "copy": "Copier",
     "delete": "Supprimer",
+    "group": "Groupe",
+    "ungroup": "Dissocier",
     "download": "Télécharger",
     "edit": "Éditer",
     "enterFullscreen": "Plein écran",
@@ -31,17 +34,17 @@
     "submit": "Soumettre",
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
-    "zoomOut": "Dézoomer",
-    "group": "Groupe",
-    "ungroup": "Dissocier"
+    "zoomOut": "Dézoomer"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
     "arrow": "Flèche",
     "callout": "Faire appel à",
+    "crop": "Page de recadrage",
     "caret": "Caret",
     "distanceMeasurement": "Mesure de distance",
     "ellipse": "Ellipse",
+    "eraser": "La gomme",
     "freehand": "Stylo",
     "freehand2": "Stylo",
     "freetext": "Texte libre",
@@ -61,8 +64,7 @@
     "stickyNote": "Note collante",
     "strikeout": "Barré",
     "underline": "Soulignage",
-    "custom": "personnalisation",
-    "eraser": "La gomme"
+    "custom": "personnalisation"
   },
   "component": {
     "freehandToolsButton": "Outils de stylo",
@@ -72,13 +74,18 @@
     "miscToolsButton": "Outils divers",
     "notesPanel": "Remarques",
     "outlinesPanel": "Contour",
+    "layersPanel": "Couches",
     "shapeToolsButton": "Outils de forme",
     "textToolsButton": "Outils de texte",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
-    "measurementToolsButton": "Outils de mesure"
+    "measurementToolsButton": "Outils de mesure",
+    "calibration": "Étalonnage",
+    "bookmarkPage": "Page",
+    "bookmarksPanel": "Signets",
+    "newBookmark": "Nouveau signet"
   },
   "message": {
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
@@ -93,13 +100,16 @@
     "notSupported": "Ce type de fichier n'est pas pris en charge.",
     "passwordRequired": "Mot de passe requis",
     "preparingToPrint": "Préparation à l'impression...",
+    "annotationReplyCount": "{{count}} Répondre",
+    "annotationReplyCount_plural": "{{count}} réponses",
     "printTotalPageCount": "{{count}} page",
     "printTotalPageCount_plural": "{{count}} pages",
     "processing": "Traitement...",
     "searching": "Recherche...",
     "searchPlaceholder": "Rechercher des commentaires ici...",
     "signHere": "Signer ici",
-    "insertTextHere": "Insérer du texte ici"
+    "insertTextHere": "Insérer du texte ici",
+    "enterMeasurement": "Entrez la mesure entre les deux points"
   },
   "option": {
     "annotationColor": {
@@ -132,19 +142,31 @@
       "all": "Toutes",
       "current": "Actuelle",
       "pages": "Pages",
-      "includeComments": "Inclure les commentaires"
+      "includeComments": "Inclure les commentaires",
+      "addWatermarkSettings": "Ajouter des paramètres de filigrane"
     },
     "redaction": {
-      "markForRedaction": "Repérer les biffures",
-      "warningPopupMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait.",
-      "warningPopupTitle": "Appliquer les Biffures"
+      "markForRedaction": "Repérer les biffures"
     },
     "searchPanel": {
       "caseSensitive": "Sensible à la casse",
-      "wholeWordOnly": "Mot complet"
+      "wholeWordOnly": "Mot complet",
+      "wildcard": "Caractère générique"
     },
     "signatureOverlay": {
       "addSignature": "Ajouter une signature"
+    },
+    "status": {
+      "status": "Statut"
+    },
+    "state": {
+      "accepted": "Accepté",
+      "rejected": "Rejeté",
+      "completed": "Terminé",
+      "cancelled": "Annulé",
+      "set": "Définir le statut:",
+      "setBy": "fixé par",
+      "none": "Aucun"
     },
     "measurementOverlay": {
       "scale": "Ratio d'échelle",
@@ -167,6 +189,29 @@
     "shared": {
       "page": "Page",
       "precision": "Précision"
+    },
+    "watermark": {
+      "size": "Taille",
+      "location": "Choisissez un emplacement pour modifier les filigranes",
+      "text": "Texte",
+      "colors": "Couleurs",
+      "resetAllSettings": "Réinitialiser tous les réglages"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Dans le sens horaire",
+      "delete": "Supprimer",
+      "rotateCounterClockwise": "Dans le sens antihoraire"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "Il en résulterait aucune page restante. Veuillez laisser au moins une page",
+      "deleteTitle": "Supprimer la page",
+      "deleteMessage": "Voulez-vous vraiment supprimer les pages sélectionnées? Cela ne peut pas être annulé"
+    },
+    "redaction": {
+      "applyTile": "Appliquer la rédaction",
+      "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait."
     }
   },
   "shortcut": {
@@ -175,6 +220,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +237,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(E)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "Panoramique",

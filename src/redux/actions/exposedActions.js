@@ -12,8 +12,7 @@ export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   const isElementDisabled =
-    state.viewer.disabledElements[dataElement] &&
-    state.viewer.disabledElements[dataElement].disabled;
+    state.viewer.disabledElements[dataElement]?.disabled;
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
   const isElementOpen = isDataElementPanel(dataElement, state)
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
@@ -54,8 +53,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   const isElementDisabled =
-    state.viewer.disabledElements[dataElement] &&
-    state.viewer.disabledElements[dataElement].disabled;
+    state.viewer.disabledElements[dataElement]?.disabled;
   const isElementClosed = isDataElementPanel(dataElement, state)
     ? state.viewer.activeLeftPanel !== dataElement
     : !state.viewer.openElements[dataElement];
@@ -96,8 +94,7 @@ export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
   if (
-    state.viewer.disabledElements[dataElement] &&
-    state.viewer.disabledElements[dataElement].disabled
+    state.viewer.disabledElements[dataElement]?.disabled
   ) {
     return;
   }
@@ -135,6 +132,8 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       'thumbnailsPanel',
       'outlinesPanel',
       'notesPanel',
+      'layersPanel',
+      'bookmarksPanel',
     ].join(', ');
     console.warn(
       `${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`,
@@ -170,10 +169,6 @@ export const setPageLabels = pageLabels => dispatch => {
     payload: { pageLabels: pageLabels.map(String) },
   });
 };
-export const setCursorOverlay = (data = {}) => ({
-  type: 'SET_CURSOR_OVERLAY',
-  payload: { data },
-});
 export const setSwipeOrientation = swipeOrientation => ({
   type: 'SET_SWIPE_ORIENTATION',
   payload: { swipeOrientation },
@@ -202,7 +197,7 @@ export const setZoomList = zoomList => dispatch => {
       zoom => !filteredZoomList.includes(zoom),
     );
     console.warn(`
-      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI. 
+      ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI.
       Valid zoom levels should be in the range of ${minZoomLevel}-${maxZoomLevel}.
       You can use setMinZoomLevel or setMaxZoomLevel APIs to change the range.
       See https://www.pdftron.com/documentation/web/guides/ui/apis for more information.

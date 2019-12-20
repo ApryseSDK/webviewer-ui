@@ -1,8 +1,8 @@
 /**
  * Customize header. Refer to <a href='https://www.pdftron.com/documentation/web/guides/customizing-header' target='_blank'>Customizing header</a> for details.
- * @method WebViewer#setHeaderItems
- * @param {WebViewer~headerCallback} headerCallback Callback function to perform different operations on the header.
- * @example // 5.1 and after
+ * @method WebViewerInstance#setHeaderItems
+ * @param {WebViewerInstance.headerCallback} headerCallback Callback function to perform different operations on the header.
+ * @example
 // Adding save annotations button
 WebViewer(...)
   .then(function(instance) {
@@ -18,26 +18,7 @@ WebViewer(...)
       header.push(myCustomButton);
     });
   });
- * @example // 4.0 ~ 5.0
-// Adding save annotations button
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setHeaderItems(function(header) {
-    var myCustomButton = {
-      type: 'actionButton',
-      img: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>',
-      onClick: function() {
-        instance.saveAnnotations();
-      }
-    };
-
-    header.push(myCustomButton);
-  });
-});
- * @example // 5.1 and after
+ * @example
 // Removing existing buttons
 WebViewer(...)
   .then(function(instance) {
@@ -46,19 +27,7 @@ WebViewer(...)
       header.update(items);
     });
   });
- * @example // 4.0 ~ 5.0
-// Removing existing buttons
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setHeaderItems(function(header) {
-    var items = header.getItems().slice(9, -3);
-    header.update(items);
-  });
-});
- * @example // 5.1 and after
+ * @example
 // Appending logo and shifting existing buttons to the right
 WebViewer(...)
   .then(function(instance) {
@@ -82,38 +51,11 @@ WebViewer(...)
       });
     });
   });
- * @example // 4.0 ~ 5.0
-// Removing existing buttons
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setHeaderItems(function(header) {
-    header.delete(9);
-    header.unshift({
-      type: 'customElement',
-      render: function() {
-        var logo = document.createElement('img');
-        logo.src = 'https://www.pdftron.com/downloads/logo.svg';
-        logo.style.width = '200px';
-        logo.style.marginLeft = '10px';
-        logo.style.cursor = 'pointer';
-        logo.onclick = function() {
-          window.open('https://www.pdftron.com', '_blank');
-        }
-        return logo;
-      }
-    }, {
-      type: 'spacer'
-    });
-  });
-});
  */
 /**
  * Callback that gets passed to {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems}.
- * @callback WebViewer~headerCallback
- * @param {CoreControls.ReaderControl.Header} header Header instance with helper functions
+ * @callback WebViewerInstance.headerCallback
+ * @param {Header} header Header instance with helper functions
  */
 
 import actions from 'actions';
@@ -131,17 +73,15 @@ export default store => callback => {
 
 /**
  * A class which contains header APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access the header instance in {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems} as follows:
- * @name WebViewer.Header
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access the header instance in {@link WebViewerInstance#setHeaderItems setHeaderItems} as follows:
+ * @name Header
  * @class
- * @example var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-const viewerElement = document.getElementById('viewer');
-  var instance = viewer.getInstance();
-instance.setHeaderItems(header => {
-    // instance of Header is passed to the callback
-    // header.someMethod();
+ * @example
+WebViewer(...)
+  .then(function(instance) {
+    instance.setHeaderItems(function(header) {
+      // instance of Header is passed to the callback
+    });
   });
  */
 const Header = {
@@ -155,9 +95,9 @@ const Header = {
   },
   /**
    * Select a button from header to edit.
-   * @method WebViewer.Header#get
+   * @method Header#get
    * @param {string} dataElement data-element of the button.
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#insertBefore insertBefore}, {@link CoreControls.ReaderControl.Header#insertAfter insertAfter} and {@link CoreControls.ReaderControl.Header#delete delete} to perform an operation on the button.
+   * @returns {Header} Header object for chaining. You can call {@link Header#insertBefore insertBefore}, {@link Header#insertAfter insertAfter} and {@link Header#delete delete} to perform an operation on the button.
    */
   get(dataElement) {
     if (this.index !== -1) {
@@ -182,18 +122,18 @@ const Header = {
     return this;
   },
   /**
-   * Get all list of header items from a group selected from {@link CoreControls.ReaderControl.Header#getHeader getHeader}. By default, it returns the items from 'default' group.
-   * @method WebViewer.Header#getItems
-   * @returns {Array.<object>} List of header item objects. You can edit it using normal array operations and update the whole header by passing it to {@link CoreControls.ReaderControl.Header#update update}.
+   * Get all list of header items from a group selected from {@link Header#getHeader getHeader}. By default, it returns the items from 'default' group.
+   * @method Header#getItems
+   * @returns {Array.<object>} List of header item objects. You can edit it using normal array operations and update the whole header by passing it to {@link Header#update update}.
    */
   getItems() {
     return this.headers[this.headerGroup];
   },
   /**
    * Select a header group to edit.
-   * @method WebViewer.Header#getHeader
+   * @method Header#getHeader
    * @param {string} headerGroup Name of the header group. By default, 'default' and 'tools' are accepted.
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
+   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   getHeader(headerGroup) {
     const headerGroups = Object.keys(this.headers);
@@ -208,9 +148,9 @@ const Header = {
     return this;
   },
   /**
-   * Insert a button before the selected button from {@link CoreControls.ReaderControl.Header#get get}.
-   * @method WebViewer.Header#insertBefore
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
+   * Insert a button before the selected button from {@link Header#get get}.
+   * @method Header#insertBefore
+   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   insertBefore(newItem) {
     if (this.index === -1) {
@@ -222,9 +162,9 @@ const Header = {
     return this;
   },
   /**
-   * Insert a button after the selected button from {@link CoreControls.ReaderControl.Header#get get}.
-   * @method WebViewer.Header#insertAfter
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
+   * Insert a button after the selected button from {@link Header#get get}.
+   * @method Header#insertAfter
+   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   insertAfter(newItem) {
     if (this.index === -1) {
@@ -238,9 +178,9 @@ const Header = {
   },
   /**
    * Delete a button.
-   * @method WebViewer.Header#delete
-   * @param {(number|string)} [id] You can either pass an index or `data-element` of the button to delete. If you already selected a button from {@link CoreControls.ReaderControl.Header#get get}, passing null would delete the selected button.
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
+   * @method Header#delete
+   * @param {(number|string)} [id] You can either pass an index or `data-element` of the button to delete. If you already selected a button from {@link Header#get get}, passing null would delete the selected button.
+   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   delete(arg) {
     let index;
@@ -276,8 +216,8 @@ const Header = {
   },
   /**
    * Removes the first button in the header.
-   * @method WebViewer.Header#shift
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
+   * @method Header#shift
+   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   shift() {
     this.headers[this.headerGroup].shift();
@@ -286,9 +226,9 @@ const Header = {
   },
   /**
    * Adds a button (or buttons) to the beginning of the header.
-   * @method WebViewer.Header#unshift
+   * @method Header#unshift
    * @param {object|Array.<object>} obj Either one or array of header objects. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
+   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   unshift(...newItem) {
     this.headers[this.headerGroup].unshift(...newItem);
@@ -297,9 +237,9 @@ const Header = {
   },
   /**
    * Adds a button (or buttons) to the end of the header.
-   * @method WebViewer.Header#push
+   * @method Header#push
    * @param {object|Array.<object>} obj Either one or array of header objects. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
+   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   push(...newItem) {
     this.headers[this.headerGroup].push(...newItem);
@@ -308,8 +248,8 @@ const Header = {
   },
   /**
    * Removes the last button in the header.
-   * @method WebViewer.Header#pop
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
+   * @method Header#pop
+   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   pop() {
     this.headers[this.headerGroup].pop();
@@ -318,9 +258,9 @@ const Header = {
   },
   /**
    * Updates the header with new list of header items.
-   * @method WebViewer.Header#update
-   * @param {Array.<object>} headerObjects List of header objects to replace the exising header. You can use {@link CoreControls.ReaderControl.Header#getItems getItems} to refer to existing header objects.
-   * @returns {CoreControls.ReaderControl.Header} Header object for chaining. You can call {@link CoreControls.ReaderControl.Header#get get}, {@link CoreControls.ReaderControl.Header#getItems getItems}, {@link CoreControls.ReaderControl.Header#shift shift}, {@link CoreControls.ReaderControl.Header#unshift unshift}, {@link CoreControls.ReaderControl.Header#push push}, {@link CoreControls.ReaderControl.Header#pop pop} and {@link CoreControls.ReaderControl.Header#update update}.
+   * @method Header#update
+   * @param {Array.<object>} headerObjects List of header objects to replace the exising header. You can use {@link Header#getItems getItems} to refer to existing header objects.
+   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   update(arg) {
     if (Array.isArray(arg)) {

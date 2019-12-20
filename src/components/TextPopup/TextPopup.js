@@ -1,120 +1,135 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import onClickOutside from 'react-onclickoutside';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import classNames from 'classnames';
 
 import ActionButton from 'components/ActionButton';
+import CustomizablePopup from 'components/CustomizablePopup';
 
 import core from 'core';
 import { getTextPopupPositionBasedOn } from 'helpers/getPopupPosition';
-import getClassName from 'helpers/getClassName';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import copyText from 'helpers/copyText';
+import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './TextPopup.scss';
 
-class TextPopup extends React.PureComponent {
-  static propTypes = {
-    isAnnotationToolsEnabled: PropTypes.bool,
-    isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    dispatch: PropTypes.func.isRequired,
-    openElement: PropTypes.func.isRequired,
-    closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
-  }
+const TextPopup = () => {
+  const [isDisabled, isOpen] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, 'textPopup'),
+      selectors.isElementOpen(state, 'textPopup'),
+    ],
+    shallowEqual,
+  );
+  const dispatch = useDispatch();
+  const [position, setPosition] = useState({ left: 0, top: 0 });
+  const popupRef = useRef();
 
-  constructor() {
-    super();
-    this.popup = React.createRef();
-    this.state = {
-      left: 0,
-      top: 0,
+  useOnClickOutside(popupRef, () => {
+    dispatch(actions.closeElement('textPopup'));
+  });
+
+  useEffect(() => {
+    if (isOpen) {
+      dispatch(actions.closeElements(['annotationPopup', 'contextMenuPopup']));
+    }
+  }, [dispatch, isOpen]);
+
+  useEffect(() => {
+    const textSelectTool = core.getTool('TextSelect');
+    const onSelectionComplete = (startQuad, allQuads) => {
+      if (popupRef.current) {
+        setPosition(getTextPopupPositionBasedOn(allQuads, popupRef));
+        dispatch(actions.openElement('textPopup'));
+      }
     };
-  }
 
-  componentDidMount() {
-    this.highlightText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextHighlightAnnotation);
-    this.underlineText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextUnderlineAnnotation);
-    this.squigglyText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextSquigglyAnnotation);
-    this.strikeoutText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.TextStrikeoutAnnotation);
-    this.redactText = createTextAnnotationAndSelect.bind(this, this.props.dispatch, window.Annotations.RedactionAnnotation);
-    core.getTool('TextSelect').on('selectionComplete', this.onSelectionComplete);
-  }
+    textSelectTool.on('selectionComplete', onSelectionComplete);
+    return () => textSelectTool.on('selectionComplete', onSelectionComplete);
+  }, [dispatch]);
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['annotationPopup', 'contextMenuPopup']);
-    }
-  }
+  return isDisabled ? null : (
+    <div
+      className={classNames({
+        Popup: true,
+        TextPopup: true,
+        open: isOpen,
+        closed: !isOpen,
+      })}
+      data-element="textPopup"
+      ref={popupRef}
+      style={{ ...position }}
+      onClick={() => dispatch(actions.closeElement('textPopup'))}
+    >
+      <CustomizablePopup dataElement="textPopup">
+        <ActionButton
+          dataElement="copyTextButton"
+          title="action.copy"
+          img="ic_copy_black_24px"
+          onClick={copyText}
+        />
+        <ActionButton
+          dataElement="textHighlightToolButton"
+          title="annotation.highlight"
+          img="ic_annotation_highlight_black_24px"
+          onClick={() =>
+            createTextAnnotationAndSelect(
+              dispatch,
+              Annotations.TextHighlightAnnotation,
+            )
+          }
+        />
+        <ActionButton
+          dataElement="textUnderlineToolButton"
+          title="annotation.underline"
+          img="ic_annotation_underline_black_24px"
+          onClick={() =>
+            createTextAnnotationAndSelect(
+              dispatch,
+              Annotations.TextUnderlineAnnotation,
+            )
+          }
+        />
+        <ActionButton
+          dataElement="textSquigglyToolButton"
+          title="annotation.squiggly"
+          img="ic_annotation_squiggly_black_24px"
+          onClick={() =>
+            createTextAnnotationAndSelect(
+              dispatch,
+              Annotations.TextSquigglyAnnotation,
+            )
+          }
+        />
+        <ActionButton
+          title="annotation.strikeout"
+          img="ic_annotation_strikeout_black_24px"
+          onClick={() =>
+            createTextAnnotationAndSelect(
+              dispatch,
+              Annotations.TextStrikeoutAnnotation,
+            )
+          }
+          dataElement="textStrikeoutToolButton"
+        />
+        {core.isCreateRedactionEnabled() && (
+          <ActionButton
+            dataElement="textRedactToolButton"
+            title="option.redaction.markForRedaction"
+            img="ic_annotation_add_redact_black_24px"
+            onClick={() =>
+              createTextAnnotationAndSelect(
+                dispatch,
+                Annotations.RedactionAnnotation,
+              )
+            }
+          />
+        )}
+      </CustomizablePopup>
+    </div>
+  );
+};
 
-  componentWillUnmount() {
-    core.getTool('TextSelect').off('selectionComplete', this.onSelectionComplete);
-  }
-
-  handleClickOutside = () => {
-    this.props.closeElement('textPopup');
-  }
-
-  onSelectionComplete = (e, startQuad, allQuads) => {
-    const { isDisabled, openElement } = this.props;
-
-    if (!isDisabled) {
-      this.positionTextPopup(allQuads);
-      openElement('textPopup');
-    }
-  }
-
-  positionTextPopup = allQuads => {
-    const { left, top } = getTextPopupPositionBasedOn(allQuads, this.popup);
-
-    this.setState({ left, top });
-  }
-
-  onClickCopy = () => {
-    copyText();
-    this.props.closeElement('textPopup');
-  }
-
-  render() {
-    if (this.props.isDisabled) {
-      return null;
-    }
-
-    const { left, top } = this.state;
-    const className = getClassName('Popup TextPopup', this.props);
-    const isCreateRedactionEnabled = core.isCreateRedactionEnabled();
-
-    return (
-      <div className={className} data-element={'textPopup'} ref={this.popup} style={{ left, top }}>
-        <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={this.onClickCopy} />
-        {this.props.isAnnotationToolsEnabled &&
-          <>
-            <ActionButton dataElement="textHighlightToolButton" title="annotation.highlight" img="ic_annotation_highlight_black_24px" onClick={this.highlightText} />
-            <ActionButton dataElement="textUnderlineToolButton" title="annotation.underline" img="ic_annotation_underline_black_24px" onClick={this.underlineText} />
-            <ActionButton dataElement="textSquigglyToolButton" title="annotation.squiggly" img="ic_annotation_squiggly_black_24px" onClick={this.squigglyText} />
-            <ActionButton dataElement="textStrikeoutToolButton" title="annotation.strikeout" img="ic_annotation_strikeout_black_24px" onClick={this.strikeoutText} />
-            { isCreateRedactionEnabled && <ActionButton dataElement="textRedactToolButton" title="option.redaction.markForRedaction" img="ic_annotation_add_redact_black_24px" onClick={this.redactText} /> }
-          </>
-        }
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  isAnnotationToolsEnabled: !selectors.isElementDisabled(state, 'annotations') && !selectors.isDocumentReadOnly(state),
-  isDisabled: selectors.isElementDisabled(state, 'textPopup'),
-  isOpen: selectors.isElementOpen(state, 'textPopup'),
-});
-
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  openElement: dataElement => dispatch(actions.openElement(dataElement)),
-  closeElement: dataElement => dispatch(actions.closeElement(dataElement)),
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(TextPopup));
+export default TextPopup;

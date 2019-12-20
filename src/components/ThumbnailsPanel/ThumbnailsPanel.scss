@@ -1,14 +1,34 @@
 @import '../../constants/panel';
 
 .ThumbnailsPanel {
+  // !important is used otherwise it will be overriden by .LeftPanel.Panel in LeftPanel.scss
+  // we should fix this to not use !important after 6.0 release
+  overflow: hidden !important;
+  display: flex;
   padding: 8px 0px;
 
-  .thumbs {
-    display: flex;
-    justify-content: center;
+  .virtualized-thumbnails-container {
+    flex: 1;
   }
 
   .row {
     display: flex;
+    justify-content: center;
+  }
+
+  .thumbnailPlaceholder {
+    border-color: $gray87;
+    margin: 0px;
+  }
+
+  .columnsOfThumbnails {
+    .Thumbnail {
+      display: inline-flex
+    }
+
+    .thumbnailPlaceholder {
+      height: 180px;
+      display: inline-flex;
+    }
   }
 }

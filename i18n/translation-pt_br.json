@@ -2,10 +2,11 @@
   "action": {
     "apply": "Aplicar",
     "applyAll": "Aplicar todos",
+    "calibrate": "Calibrar",
     "cancel": "Cancelar",
     "clear": "Limpar",
     "close": "Fechar",
-    "comment": "Comentário",
+    "comment": "Novo comentário",
     "copy": "Copiar",
     "delete": "Apagar",
     "group": "Grupo",
@@ -39,9 +40,11 @@
     "areaMeasurement": "Medição de área",
     "arrow": "Seta",
     "callout": "Texto explicativo",
+    "crop": "Cortar página",
     "caret": "Cursor",
     "distanceMeasurement": "Medição de distância",
     "ellipse": "Elipse",
+    "eraser": "Apagador",
     "freehand": "Mão livre",
     "freehand2": "Mão livre",
     "freetext": "Texto livre",
@@ -61,8 +64,7 @@
     "stickyNote": "Comentário",
     "strikeout": "Riscar",
     "underline": "Sublinhar",
-    "custom": "Personalizado",
-    "eraser": "Apagador"
+    "custom": "Personalizado"
   },
   "component": {
     "freehandToolsButton": "Ferramentas mão livre",
@@ -71,14 +73,19 @@
     "menuOverlay": "Menu",
     "miscToolsButton": "Ferramentas diversas",
     "notesPanel": "Anotações",
-    "outlinesPanel": "Contorno",
+    "outlinesPanel": "Esquemas",
+    "layersPanel": "Camadas",
     "shapeToolsButton": "Ferramentas de forma",
     "textToolsButton": "Ferramentas de texto",
     "thumbnailsPanel": "Miniaturas",
     "toolsButton": "Ferramentas",
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
-    "measurementToolsButton": "Ferramentas de medição"
+    "measurementToolsButton": "Ferramentas de medição",
+    "calibration": "Calibração",
+    "bookmarkPage": "Página",
+    "bookmarksPanel": "Favoritos",
+    "newBookmark": "Novo marcador"
   },
   "message": {
     "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
@@ -93,13 +100,16 @@
     "notSupported": "Esse tipo de arquivo não é compatível.",
     "passwordRequired": "Senha obrigatória",
     "preparingToPrint": "Preparando impressão...",
+    "annotationReplyCount": "{{count}} Resposta",
+    "annotationReplyCount_plural": "{{count}} Respostas",
     "printTotalPageCount": "{{count}} página",
     "printTotalPageCount_plural": "{{count}} páginas",
     "processing": "Processando...",
     "searching": "Procurando...",
     "searchPlaceholder": "Buscar comentários...",
     "signHere": "Assine aqui",
-    "insertTextHere": "Insira texto aqui"
+    "insertTextHere": "Insira texto aqui",
+    "enterMeasurement": "Digite a medição entre os dois pontos"
   },
   "option": {
     "annotationColor": {
@@ -132,19 +142,31 @@
       "all": "Todas",
       "current": "Atual",
       "pages": "Páginas",
-      "includeComments": "Incluir comentários"
+      "includeComments": "Incluir comentários",
+      "addWatermarkSettings": "Adicionar configurações de marca d'água"
     },
     "redaction": {
-      "markForRedaction": "Marcar para supressão",
-      "warningPopupMessage": "Todos os itens selecionados para supressão serão permanentemente removidos. Isso não pode ser desfeito.",
-      "warningPopupTitle": "Aplicar supressão"
+      "markForRedaction": "Marcar para supressão"
     },
     "searchPanel": {
       "caseSensitive": "Diferenciar maiúsculas e minúsculas",
-      "wholeWordOnly": "Palavra inteira"
+      "wholeWordOnly": "Palavra inteira",
+      "wildcard": "Curinga"
     },
     "signatureOverlay": {
       "addSignature": "Adicionar assinatura"
+    },
+    "status": {
+      "status": "Status"
+    },
+    "state": {
+      "accepted": "Aceitaram",
+      "rejected": "Rejeitado",
+      "completed": "Concluído",
+      "cancelled": "Cancelado",
+      "set": "Definir status:",
+      "setBy": "definido pela",
+      "none": "Nenhum"
     },
     "measurementOverlay": {
       "scale": "Razão de escala",
@@ -167,6 +189,29 @@
     "shared": {
       "page": "Página",
       "precision": "Precisão"
+    },
+    "watermark": {
+      "size": "Tamanho",
+      "location": "Escolha um local para editar marcas d'água",
+      "text": "Texto",
+      "colors": "Cores",
+      "resetAllSettings": "Redefinir todas as configurações"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Sentido horário",
+      "delete": "Excluir",
+      "rotateCounterClockwise": "Sentido anti-horário"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "Isso resultaria em nenhuma página restante. Deixe pelo menos uma página",
+      "deleteTitle": "Excluir página",
+      "deleteMessage": "Tem certeza de que deseja excluir as páginas selecionadas. Isso não pode ser desfeito"
+    },
+    "redaction": {
+      "applyMessage": "Esta ação removerá permanentemente todos os itens selecionados para edição. Não pode ser desfeito.",
+      "applyTile": "Aplicar redação"
     }
   },
   "shortcut": {
@@ -175,6 +220,7 @@
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -191,8 +237,7 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
-    "eraser": "(AND)"
+    "zoomOut": "(Ctrl -)"
   },
   "tool": {
     "pan": "Pan",

@@ -12,11 +12,11 @@ import onStampAnnotationAdded from './onStampAnnotationAdded';
 import onSignatureAnnotationAdded from './onSignatureAnnotationAdded';
 import onAnnotationChanged from './onAnnotationChanged';
 import onStickyAnnotationAdded from './onStickyAnnotationAdded';
-import onKeyDown from './onKeyDown';
 import onFullScreenChange from './onFullScreenChange';
 import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
 import onLayoutChanged from './onLayoutChanged';
 import onLocationSelected from './onLocationSelected';
+import onPageComplete from './onPageComplete';
 
 export {
   onBeforeDocumentLoaded,
@@ -33,9 +33,9 @@ export {
   onSignatureAnnotationAdded,
   onAnnotationChanged,
   onStickyAnnotationAdded,
-  onKeyDown,
   onFullScreenChange,
   onUpdateAnnotationPermission,
   onLayoutChanged,
   onLocationSelected,
+  onPageComplete,
 };

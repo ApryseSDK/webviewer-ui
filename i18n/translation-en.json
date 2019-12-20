@@ -2,6 +2,7 @@
   "action": {
     "apply": "Apply",
     "applyAll": "Apply all",
+    "calibrate": "Calibrate",
     "cancel": "Cancel",
     "clear": "Clear",
     "close": "Close",
@@ -39,6 +40,7 @@
     "areaMeasurement": "Area measurement",
     "arrow": "Arrow",
     "callout": "Callout",
+    "crop": "Crop Page",
     "caret": "Caret",
     "distanceMeasurement": "Distance measurement",
     "ellipse": "Ellipse",
@@ -72,13 +74,18 @@
     "miscToolsButton": "Misc tools",
     "notesPanel": "Notes",
     "outlinesPanel": "Outlines",
+    "bookmarksPanel": "Bookmarks",
+    "newBookmark": "New Bookmark",
+    "bookmarkPage": "Page",
+    "layersPanel": "Layers",
     "shapeToolsButton": "Shape tools",
     "textToolsButton": "Text tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
     "redaction": "Redaction",
     "viewControlsOverlay": "View controls",
-    "measurementToolsButton": "Measurement tools"
+    "measurementToolsButton": "Measurement tools",
+    "calibration": "Calibration"
   },
   "message": {
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
@@ -93,13 +100,16 @@
     "notSupported": "That file type is not supported.",
     "passwordRequired": "Password required",
     "preparingToPrint": "Preparing to print...",
-    "printTotalPageCount": "{{count}} page",
-    "printTotalPageCount_plural": "{{count}} pages",
+    "annotationReplyCount": "{{count}} Reply",
+    "annotationReplyCount_plural" : "{{count}} Replies",
+    "printTotalPageCount": "Total: {{count}} page",
+    "printTotalPageCount_plural": "Total: {{count}} pages",
     "processing": "Processing...",
     "searching": "Searching...",
     "searchPlaceholder": "Search comments...",
     "signHere": "Sign here",
-    "insertTextHere": "Insert text here"
+    "insertTextHere": "Insert text here",
+    "enterMeasurement": "Enter measurement between the two points"
   },
   "option": {
     "annotationColor": {
@@ -132,19 +142,31 @@
       "all": "All",
       "current": "Current",
       "pages": "Pages",
-      "includeComments": "Include comments"
+      "includeComments": "Include comments",
+      "addWatermarkSettings": "Add Watermark Settings"
     },
     "redaction": {
-      "markForRedaction": "Mark for redaction",
-      "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
-      "warningPopupTitle": "Apply Redaction"
+      "markForRedaction": "Mark for redaction"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",
-      "wholeWordOnly": "Whole word"
+      "wholeWordOnly": "Whole word",
+      "wildcard": "Wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Add a signature"
+    },
+    "status": {
+      "status": "Status"
+    },
+    "state": {
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "set": "Set status:",
+      "setBy": "set by",
+      "none": "None"
     },
     "measurementOverlay": {
       "scale": "Scale Ratio",
@@ -167,6 +189,29 @@
     "shared": {
       "page": "Page",
       "precision": "Precision"
+    },
+    "watermark": {
+      "size": "Size",
+      "location": "Choose a location to edit watermarks",
+      "text": "Text",
+      "colors": "Colors",
+      "resetAllSettings": "Reset All Settings"
+    },
+    "thumbnailPanel": {
+      "delete": "Delete",
+      "rotateClockwise": "Clockwise",
+      "rotateCounterClockwise": "Counter-clockwise"
+    }
+  },
+  "warning": {
+    "deletePage" :{
+      "deleteTitle": "Delete Page",
+      "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
+      "deleteLastPageMessage": "This would result in no pages remaining. Please leave at least one page"
+    },
+    "redaction":{
+      "applyTile": "Apply Redaction",
+      "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
   "shortcut": {

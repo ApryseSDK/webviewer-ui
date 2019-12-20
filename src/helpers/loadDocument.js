@@ -1,9 +1,8 @@
 import core from 'core';
+import actions from 'actions';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { fireError } from 'helpers/fireEvent';
 import { engineTypes, workerTypes } from 'constants/types';
-import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
-import actions from 'actions';
 
 export default (state, dispatch, extraOptions) => {
   core.closeDocument(dispatch).then(() => {
@@ -15,13 +14,13 @@ export default (state, dispatch, extraOptions) => {
 
           if (partRetriever.on) {
             // If its a blackbox part retriever but the user uploaded a local file,
-          // we dont set this because we already show an upload modal
+            // we dont set this because we already show an upload modal
             if (!partRetriever._isBlackboxLocalFile) {
-              partRetriever.on('documentLoadingProgress', (e, loaded, total) => {
+              partRetriever.on('documentLoadingProgress', (loaded, total) => {
                 dispatch(actions.setDocumentLoadingProgress(loaded / total));
               });
             }
-            partRetriever.on('error', function(e, type, message) {
+            partRetriever.on('error', function(type, message) {
               fireError(message);
             });
           }
@@ -49,21 +48,21 @@ const checkByteRange = state => {
     if (engineType !== engineTypes.UNIVERSAL || state.document.isOffline || state.document.file || streaming) {
       resolve(streaming);
     } else {
-      $.ajax({
-        url: window.location.href,
-        cache: false,
-        headers: { 'Range': 'bytes=0-0' },
-        success: (data, textStatus, jqXHR) => {
-          if (jqXHR.status !== 206) {
-            streaming = true;
-            console.warn('HTTP range requests not supported. Switching to streaming mode.');
-          }
-          resolve(streaming);
+      // make sure we are not getting cached responses
+      const url = `${window.location.href.split('#')[0]}?_=${Date.now()}`;
+      fetch(url, {
+        headers: {
+          'Range': 'bytes=0-0',
         },
-        error: () => {
+      }).then(response => {
+        if (!response.ok || response.status !== 206) {
+          console.warn('HTTP range requests not supported. Switching to streaming mode.');
           streaming = true;
-          resolve(streaming);
-        },
+        }
+        resolve(streaming);
+      }).catch(() => {
+        streaming = true;
+        resolve(streaming);
       });
     }
   });
@@ -170,7 +169,7 @@ const getPartRetriever = (state, streaming, dispatch) => {
 };
 
 const getDocOptions = (state, dispatch, streaming) => {
-  const { id: docId, officeType, pdfType, password } = state.document;
+  const { id: docId, pdfType, password } = state.document;
   const engineType = getEngineType(state);
 
   return new Promise(resolve => {
@@ -179,8 +178,10 @@ const getDocOptions = (state, dispatch, streaming) => {
       resolve(docId);
     } else {
       const { pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit, pageSizes } = state.advanced;
-
-      Promise.all([getBackendPromise(pdfType), getBackendPromise(officeType)]).then(([pdfBackendType, officeBackendType]) => {
+      // webviewer.js uses the backendType option for both pdfType and officeType, so here we just use pdfType since they are the same
+      // TODO: refactor webviewer.js so that it adds backendType instead of pdfType and officeType to the url
+      const backendType = pdfType;
+      getBackendPromise(backendType).then(backendType => {
         let passwordChecked = false; // to prevent infinite loop when wrong password is passed as an argument
         let attempt = 0;
         const getPassword = checkPassword => {
@@ -207,7 +208,7 @@ const getDocOptions = (state, dispatch, streaming) => {
         };
 
         const docName = getDocName(state);
-        const options = { docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit };
+        const options = { docName, backendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise, forceClientSideInit };
         const { type, extension, workerTransportPromise } = getDocTypeData(options);
         if (workerTransportPromise) {
           workerTransportPromise.catch(workerError => {
@@ -219,7 +220,7 @@ const getDocOptions = (state, dispatch, streaming) => {
 
         dispatch(actions.setDocumentType(type));
 
-        resolve({ docId, pdfBackendType, officeBackendType, extension, getPassword, onError, streaming, type, workerHandlers, workerTransportPromise, forceClientSideInit, pageSizes });
+        resolve({ docId, backendType, extension, getPassword, onError, streaming, type, workerHandlers, workerTransportPromise, forceClientSideInit, pageSizes });
       });
     }
   });
@@ -245,12 +246,11 @@ const getEngineType = state => {
   }
 
   if (fileExtension) {
-    if (!supportedExtensions.includes(fileExtension)) {
+    if (!window.CoreControls.SupportedFileFormats.SERVER.includes(fileExtension)) {
       console.error(`File extension ${fileExtension} from ${docName} is not supported. Please see https://www.pdftron.com/documentation/web/guides/file-format-support for a full list of file formats supported by WebViewer`);
     } else if (
       engineType === engineTypes.PDFNETJS &&
-      !supportedClientOnlyExtensions.includes(fileExtension) &&
-      supportedBlackboxExtensions.includes(fileExtension)
+      !window.CoreControls.SupportedFileFormats.CLIENT.includes(fileExtension)
     ) {
       console.error(`File extension ${fileExtension} from ${docName} is only supported by using WebViewer with WebViewer Server. See https://www.pdftron.com/documentation/web/guides/file-format-support for a full list of file formats supported by WebViewer. Visit https://www.pdftron.com/documentation/web/guides/wv-server-deployment for more information about WebViewer Server`);
     }
@@ -272,7 +272,8 @@ export const getDocumentExtension = docName => {
 
 export const getDocName = state => {
   // if the filename is specified then use that for checking the extension instead of the doc path
-  let { path, filename, initialDoc, ext } = state.document;
+  const { initialDoc, ext, path } = state.document;
+  let { filename } = state.document;
   if (ext && !filename) {
     filename = createFakeFilename(path || initialDoc, ext);
   }
@@ -287,11 +288,7 @@ const createFakeFilename = (initialDoc, ext) => {
   return `${filename || initialDoc.replace(/^.*[\\\/]/, '')}.${ext.replace(/^\./, '')}`;
 };
 
-export const isOfficeExtension = extension => supportedOfficeExtensions.indexOf(extension) !== -1;
-
-export const isPDFExtension = extension => supportedPDFExtensions.indexOf(extension) !== -1;
-
-const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise }) => {
+const getDocTypeData = ({ docName, backendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise }) => {
   const originalExtension = getDocumentExtension(docName);
 
   let type;
@@ -301,17 +298,17 @@ const getDocTypeData = ({ docName, pdfBackendType, officeBackendType, engineType
   if (engineType === engineTypes.PDFTRON_SERVER) {
     type = workerTypes.BLACKBOX;
   } else {
-    const usingOfficeWorker = supportedOfficeExtensions.indexOf(originalExtension) !== -1;
+    const usingOfficeWorker = window.CoreControls.SupportedFileFormats.CLIENT_OFFICE.indexOf(originalExtension) !== -1;
     if (usingOfficeWorker && !officeWorkerTransportPromise) {
       type = workerTypes.OFFICE;
-      workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(officeBackendType, workerHandlers, window.sampleL);
+      workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(backendType, workerHandlers);
     } else if (!usingOfficeWorker && !pdfWorkerTransportPromise) {
       type = workerTypes.PDF;
       // if the extension isn't pdf or an image then assume it's a pdf
-      if (supportedPDFExtensions.indexOf(originalExtension) === -1) {
+      if (window.CoreControls.SupportedFileFormats.CLIENT_PDF.indexOf(originalExtension) === -1) {
         extension = 'pdf';
       }
-      workerTransportPromise = window.CoreControls.initPDFWorkerTransports(pdfBackendType, workerHandlers, window.sampleL);
+      workerTransportPromise = window.CoreControls.initPDFWorkerTransports(backendType, workerHandlers);
     } else if (usingOfficeWorker) {
       type = workerTypes.OFFICE;
       workerTransportPromise = officeWorkerTransportPromise;

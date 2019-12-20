@@ -1,4 +1,3 @@
-// import { hot } from 'react-hot-loader';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -43,28 +42,22 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
     const updatedReducer = require('reducers/rootReducer').default;
     store.replaceReducer(updatedReducer);
   });
+
+  module.hot.accept();
 }
 
 if (window.CanvasRenderingContext2D) {
   let fullAPIReady = Promise.resolve();
   const state = store.getState();
 
-  $.ajaxSetup({ cache: true });
-
   if (state.advanced.fullAPI) {
     window.CoreControls.enableFullPDF(true);
-    if (process.env.NODE_ENV === 'production') {
-      fullAPIReady = loadScript('../../core/pdf/PDFNet.js');
-    } else {
-      fullAPIReady = loadScript('../core/pdf/PDFNet.js');
-    }
+    fullAPIReady = loadScript('../core/pdf/PDFNet.js');
   }
 
   window.CoreControls.enableSubzero(state.advanced.subzero);
-  if (process.env.NODE_ENV === 'production') {
-    window.CoreControls.setWorkerPath('../../core');
-    window.CoreControls.setResourcesPath('../../core/assets');
-  }
+  window.CoreControls.setWorkerPath('../core');
+  window.CoreControls.setResourcesPath('../core/assets');
 
   try {
     if (state.advanced.useSharedWorker && window.parent.WebViewer) {
@@ -85,9 +78,9 @@ if (window.CanvasRenderingContext2D) {
   }
 
   const { preloadWorker } = state.advanced;
-  const { PDF, OFFICE, ALL } = workerTypes;
 
-  if (preloadWorker) {
+  function initTransports() {
+    const { PDF, OFFICE, ALL } = workerTypes;
     if (preloadWorker === PDF || preloadWorker === ALL) {
       getBackendPromise(state.document.pdfType).then(pdfType => {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
@@ -109,11 +102,16 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
+
   loadCustomCSS(state.advanced.customCSS);
 
   logDebugInfo(state.advanced);
 
   fullAPIReady.then(() => loadConfig()).then(() => {
+    if (preloadWorker) {
+      initTransports();
+    }
+
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
     window.docViewer = docViewer;
@@ -123,9 +121,9 @@ if (window.CanvasRenderingContext2D) {
     setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
+    addEventHandlers();
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
-    addEventHandlers();
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
 

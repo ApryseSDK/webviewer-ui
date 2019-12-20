@@ -1,12 +1,15 @@
 import i18next from 'i18next';
+
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
-import getHashParams from 'helpers/getHashParams';
+import Feature from 'constants/feature';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
+import annotationPopup from './annotationPopup';
 import closeDocument from './closeDocument';
 import closeElement from './closeElement';
 import closeElements from './closeElements';
+import contextMenuPopup from './contextMenuPopup';
 import disableAnnotations from './disableAnnotations';
 import disableDownload from './disableDownload';
 import disableElement from './disableElement';
@@ -56,6 +59,7 @@ import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
 import goToPrevPage from './goToPrevPage';
+import hotkeys from './hotkeys';
 import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
@@ -79,9 +83,10 @@ import setAdminUser from './setAdminUser';
 import setAnnotationUser from './setAnnotationUser';
 import setColorPalette from './setColorPalette';
 import setCurrentPageNumber from './setCurrentPageNumber';
-import setCursorOverlay from './setCursorOverlay';
 import setCustomNoteFilter from './setCustomNoteFilter';
 import setCustomPanel from './setCustomPanel';
+import exportBookmarks from './exportBookmarks';
+import importBookmarks from './importBookmarks';
 import setEngineType from './setEngineType';
 import setFitMode from './setFitMode';
 import setHeaderItems from './setHeaderItems';
@@ -106,6 +111,7 @@ import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
 import showErrorMessage from './showErrorMessage';
 import showWarningMessage from './showWarningMessage';
+import textPopup from './textPopup';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import unregisterTool from './unregisterTool';
@@ -115,26 +121,82 @@ import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
 import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
+import disableReplyForAnnotations from './disableReplyForAnnotations';
+import getCustomData from './getCustomData';
 
 export default store => {
   window.readerControl = {
     docViewer: window.docViewer,
     FitMode,
     LayoutMode,
-    loadedFromServer: false, // undocumented
-    serverFailed: false, // undocumented
-    i18n: i18next,
-    constants: getConstants(), // undocumented
+    Feature,
     addSearchListener: addSearchListener(store),
     addSortStrategy: addSortStrategy(store),
+    annotationPopup: annotationPopup(store),
     closeDocument: closeDocument(store),
-    closeElement: closeElement(store),
     closeElements: closeElements(store),
+    contextMenuPopup: contextMenuPopup(store),
+    disableElements: disableElements(store),
+    disableFeatures: disableFeatures(store),
+    disableTools: disableTools(store),
+    disableReplyForAnnotations: disableReplyForAnnotations(store),
+    downloadPdf: downloadPdf(store),
+    enableElements: enableElements(store),
+    enableTools: enableTools(store),
+    focusNote: focusNote(store),
+    getFitMode: getFitMode(store),
+    getLayoutMode: getLayoutMode(store),
+    getToolMode,
+    getZoomLevel,
+    hotkeys,
+    isElementDisabled: isElementDisabled(store),
+    isElementOpen: isElementOpen(store),
+    isToolDisabled: isToolDisabled(store),
+    loadDocument: loadDocument(store),
+    openElements: openElements(store),
+    print: print(store),
+    registerTool: registerTool(store),
+    removeSearchListener: removeSearchListener(store),
+    searchText: searchText(store),
+    searchTextFull: searchTextFull(store),
+    setActiveHeaderGroup: setActiveHeaderGroup(store),
+    setActiveLeftPanel: setActiveLeftPanel(store),
+    setCustomNoteFilter: setCustomNoteFilter(store),
+    setCustomPanel: setCustomPanel(store),
+    exportBookmarks: exportBookmarks(store),
+    importBookmarks: importBookmarks(store),
+    setFitMode,
+    setHeaderItems: setHeaderItems(store),
+    setIconColor: setIconColor(store),
+    setLanguage,
+    setLayoutMode,
+    setMaxZoomLevel: setMaxZoomLevel(store),
+    setMinZoomLevel: setMinZoomLevel(store),
+    setNoteDateFormat: setNoteDateFormat(store),
+    setMeasurementUnits: setMeasurementUnits(store),
+    setPageLabels: setPageLabels(store),
+    setPrintQuality: setPrintQuality(store),
+    setSortStrategy: setSortStrategy(store),
+    setSwipeOrientation,
+    setTheme,
+    setToolMode: setToolMode(store),
+    setZoomLevel,
+    setZoomList: setZoomList(store),
+    showErrorMessage: showErrorMessage(store),
+    textPopup: textPopup(store),
+    toggleElement: toggleElement(store),
+    toggleFullScreen,
+    unregisterTool: unregisterTool(store),
+    updateTool: updateTool(store),
+    updateElement: updateElement(store),
+    useEmbeddedPrint: useEmbeddedPrint(store),
+    setMaxSignaturesCount: setMaxSignaturesCount(store),
+
+    // undocumented and deprecated, to be removed in 7.0
+    closeElement: closeElement(store),
     disableAnnotations: disableAnnotations(store),
     disableDownload: disableDownload(store),
     disableElement: disableElement(store),
-    disableElements: disableElements(store),
-    disableFeatures: disableFeatures(store),
     disableFilePicker: disableFilePicker(store),
     disableLocalStorage,
     disableMeasurement: disableMeasurement(store),
@@ -142,15 +204,10 @@ export default store => {
     disablePrint: disablePrint(store),
     disableRedaction: disableRedaction(store),
     disableTextSelection: disableTextSelection(store),
-    disableTool: disableTool(store), // undocumented
-    disableTools: disableTools(store),
     disableTouchScrollLock,
-    downloadPdf: downloadPdf(store),
-    enableAllElements: enableAllElements(store), // undocumented
     enableAnnotations: enableAnnotations(store),
     enableDownload: enableDownload(store),
     enableElement: enableElement(store),
-    enableElements: enableElements(store),
     enableFeatures: enableFeatures(store),
     enableFilePicker: enableFilePicker(store),
     enableLocalStorage,
@@ -160,83 +217,45 @@ export default store => {
     enableRedaction: enableRedaction(store),
     enableTextSelection: enableTextSelection(store),
     enableTool: enableTool(store),
-    enableTools: enableTools(store),
     enableTouchScrollLock,
-    focusNote: focusNote(store),
     getAnnotationUser,
-    getBBAnnotManager: getBBAnnotManager(store),
     getCurrentPageNumber: getCurrentPageNumber(store),
-    getFitMode: getFitMode(store),
-    getLayoutMode: getLayoutMode(store),
     getPageCount: getPageCount(store),
     getShowSideWindow: getShowSideWindow(store),
     getSideWindowVisibility: getSideWindowVisibility(store),
-    getToolMode,
-    getZoomLevel: getZoomLevel(store),
+    setNotesPanelSort: setNotesPanelSort(store),
+    setShowSideWindow: setShowSideWindow(store),
+    setSideWindowVisibility: setSideWindowVisibility(store),
+    disableTool: disableTool(store),
+    enableAllElements: enableAllElements(store),
     goToFirstPage,
     goToLastPage: goToLastPage(store),
     goToNextPage: goToNextPage(store),
     goToPrevPage: goToPrevPage(store),
     isAdminUser,
-    isElementDisabled: isElementDisabled(store),
-    isElementOpen: isElementOpen(store),
     isMobileDevice,
     isReadOnly,
-    isToolDisabled,
-    loadDocument: loadDocument(store),
     openElement: openElement(store),
-    openElements: openElements(store),
-    print: print(store),
-    registerTool: registerTool(store),
-    removeSearchListener: removeSearchListener(store),
     rotateClockwise,
     rotateCounterClockwise,
     saveAnnotations: saveAnnotations(store),
-    searchText: searchText(store),
-    searchTextFull: searchTextFull(store),
-    selectors: getSelectors(store), // undocumented
-    setActiveHeaderGroup: setActiveHeaderGroup(store),
-    setActiveLeftPanel: setActiveLeftPanel(store),
     setAdminUser,
     setAnnotationUser,
-    setColorPalette: setColorPalette(store), // undocumented
     setCurrentPageNumber,
-    setCursorOverlay: setCursorOverlay(store),
-    setCustomNoteFilter: setCustomNoteFilter(store),
-    setCustomPanel: setCustomPanel(store),
-    setEngineType: setEngineType(store), // undocumented
-    setFitMode,
-    setHeaderItems: setHeaderItems(store),
-    setIconColor: setIconColor(store),
-    setLanguage,
-    setLayoutMode,
-    setMaxZoomLevel: setMaxZoomLevel(store),
-    setMinZoomLevel: setMinZoomLevel(store),
-    setNoteDateFormat: setNoteDateFormat(store),
-    setNotesPanelSort: setNotesPanelSort(store), // undocumented
-    setMeasurementUnits: setMeasurementUnits(store),
-    setPageLabels: setPageLabels(store),
-    setPrintQuality: setPrintQuality(store),
     setReadOnly,
-    setShowSideWindow: setShowSideWindow(store), // undocumented
-    setSideWindowVisibility: setSideWindowVisibility(store), // undocumented
     setSortNotesBy: setSortNotesBy(store),
-    setSortStrategy: setSortStrategy(store),
-    setSwipeOrientation,
-    setTheme,
-    setToolMode: setToolMode(store),
-    setZoomLevel,
-    setZoomList: setZoomList(store),
-    showErrorMessage: showErrorMessage(store),
-    showWarningMessage: showWarningMessage(store), // undocumented
-    toggleElement: toggleElement(store),
-    toggleFullScreen,
-    unregisterTool: unregisterTool(store),
-    updateOutlines: updateOutlines(store), // undocumented
-    updateTool: updateTool(store),
-    updateElement: updateElement(store),
-    useEmbeddedPrint: useEmbeddedPrint(store),
-    setMaxSignaturesCount: setMaxSignaturesCount(store),
-    getCustomData: () => getHashParams('custom', null), // undocumented
+    getCustomData,
+
+    // undocumented
+    loadedFromServer: false,
+    serverFailed: false,
+    i18n: i18next,
+    constants: getConstants(),
+    setColorPalette: setColorPalette(store),
+    setEngineType: setEngineType(store),
+    showWarningMessage: showWarningMessage(store),
+    updateOutlines: updateOutlines(store),
+    getBBAnnotManager: getBBAnnotManager(store),
+    selectors: getSelectors(store),
   };
 };

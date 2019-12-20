@@ -23,17 +23,6 @@ export default initialState => (state = initialState, action) => {
         disabledElements: { ...state.disabledElements, ...disabledElements },
       };
     }
-    case 'DISABLE_FEATURES': {
-      const disabledFeatures = {};
-      payload.forEach(feature => {
-        disabledFeatures[feature] = true;
-      });
-
-      return {
-        ...state,
-        disabledFeatures: { ...state.disabledFeatures, ...disabledFeatures },
-      };
-    }
     case 'ENABLE_ELEMENT':
       return {
         ...state,
@@ -63,17 +52,6 @@ export default initialState => (state = initialState, action) => {
         ...state,
         disabledElements: { ...initialState.disabledElements },
       };
-    case 'ENABLE_FEATURES': {
-      const disabledFeatures = {};
-      payload.forEach(feature => {
-        disabledFeatures[feature] = false;
-      });
-
-      return {
-        ...state,
-        disabledFeatures: { ...state.disabledFeatures, ...disabledFeatures },
-      };
-    }
     case 'OPEN_ELEMENT':
       return {
         ...state,
@@ -125,6 +103,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         headers: { ...state.headers, [payload.header]: payload.headerItems },
       };
+    case 'SET_POPUP_ITEMS':
+      return {
+        ...state,
+        [payload.dataElement]: payload.items,
+      };
     case 'REGISTER_TOOL':
       return {
         ...state,
@@ -165,6 +148,10 @@ export default initialState => (state = initialState, action) => {
         },
       };
     }
+    case 'SET_THUMBNAIL_MERGING':
+      return { ...state, isThumbnailMerging: payload.useThumbnailMerging };
+    case 'SET_THUMBNAIL_REORDERING':
+      return { ...state, isThumbnailReordering: payload.useThumbnailReordering };
     case 'SET_TOOL_BUTTON_OBJECTS':
       return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
     case 'SET_DOCUMENT_LOADED':
@@ -193,6 +180,13 @@ export default initialState => (state = initialState, action) => {
         },
       };
     }
+    case 'SET_REPLY_DISABLED_FUNC': {
+      const { func } = payload;
+      return {
+        ...state,
+        isReplyDisabledFunc: func,
+      };
+    }
     case 'SET_ICON_COLOR': {
       const { colorMapKey, color } = payload;
       return {
@@ -205,14 +199,6 @@ export default initialState => (state = initialState, action) => {
     }
     case 'SET_COLOR_MAP':
       return { ...state, colorMap: payload.colorMap };
-    case 'SET_CURSOR_OVERLAY': {
-      const { imgSrc, width, height } = payload.data;
-
-      return {
-        ...state,
-        cursorOverlay: { imgSrc, width, height },
-      };
-    }
     case 'SET_WARNING_MESSAGE':
       return { ...state, warning: payload };
     case 'SET_ERROR_MESSAGE':
@@ -224,7 +210,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_MEASUREMENT_UNITS': {
       return { ...state, measurementUnits: payload };
     }
-    case 'SET_LEFT_PANEL_WIDTH': 
+    case 'SET_LEFT_PANEL_WIDTH':
       return { ...state, leftPanelWidth: payload.width };
     case 'SET_MAX_SIGNATURES_COUNT':
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };

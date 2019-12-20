@@ -1,6 +1,14 @@
 version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1
+executors:
+  with-chrome:
+    docker:
+      # use custom cypress image that will use a newer version of chrome
+      # https://github.com/cypress-io/cypress-docker-images/tree/master/browsers
+      - image: 'cypress/browsers:node12.4.0-chrome76'
 jobs:
-  build:
+  run-lint:
     docker:
       - image: circleci/node:10-browsers
     steps:
@@ -11,6 +19,21 @@ jobs:
       - run:
           name: Lint
           command: npm run lint
-      - run:
-          name: Generate minified bundle
-          command: npm run build
+
+workflows:
+  version: 2
+  lint_and_test:
+    jobs:
+      - run-lint
+      # TODO uncomment when we can run tests locally as stated in https://trello.com/c/uq5eEsqH/454-allow-cypress-end-to-end-tests-to-be-ran-locally-on-machine
+      # - cypress/run:
+      #     post-steps:
+      #       # TODO make it download webviewer here once the newest version is rdy and published to npm repo
+      #       - store_artifacts:
+      #           path: ./test/cypress/snapshots
+      #     start: npm start
+      #     wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
+      #     command: npm run cy:run
+      #     executor: with-chrome
+      #     no-workspace: true
+      #     browser: chrome

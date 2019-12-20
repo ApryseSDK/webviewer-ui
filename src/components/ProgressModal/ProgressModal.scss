@@ -4,6 +4,15 @@
 .ProgressModal {
   @extend %modal;
   
+  &.open {
+    opacity: 1;
+    transition: opacity 1s 2s;
+  }
+
+  &.closed {
+    opacity: 0;
+  }
+
   .container {
     @extend %modal-shared-container-style;
     display: flex;
@@ -24,7 +33,6 @@
     position: relative;
     height: 10px;
     background: #00a5e4;
-    transition: transform 0.5s ease;
     overflow: hidden;
   }
 }

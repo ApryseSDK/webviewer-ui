@@ -5,19 +5,34 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 180px;
-  height: 180px;
+  height: calc(100% - 5px);
+  margin: 2.5px 0px;
   font-size: 12px;
   text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $gray10;
+  }
+
+  &.active {
+    background-color: lightgray;
+  }
 
   .container {
     position: relative;
     display: flex;
-    width: 150px;
-    height: 150px;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    margin: 13px 10px 5px 10px;
+
+    img.page-image {
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        /* only for XOD in IE*/
+        height: auto !important;
+        width: auto !important;
+      }
+    }
 
     .page-image {
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -25,9 +40,7 @@
         height: auto !important;
         width: auto !important;
       }
-      max-width: 148px;
-      max-height: 148px;
-      border: 1px solid transparent;
+      border: 1px solid $gray20;
     }
 
     .annotation-image {
@@ -35,19 +48,10 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      max-width: 148px;
-      max-height: 148px;
     }
   }
 
   .page-label {
-    padding: 5px 0;
-  }
-
-  &.active {
-    .page-image {
-      border: 1px solid $gray12;
-      border: 1px solid var(--border-color);
-    } 
+    margin-top: 5px;
   }
 }

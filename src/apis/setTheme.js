@@ -1,6 +1,6 @@
 /**
  * Sets the theme of Webviewer UI. Please note that this does not work in IE11.
- * @method WebViewer#setTheme
+ * @method WebViewerInstance#setTheme
  * @param {(string|object)} theme Either theme object or predefined string. Predefined strings are 'default' and 'dark'.
  * @param {string} [theme.primary=#FFFFFF] Background color for the header, modals, overlays, etc.
  * @param {string} [theme.secondary=#F5F5F5] ackground color for panels and the document container.
@@ -10,7 +10,7 @@
  * @param {string} [theme.text=#333333] Text color.
  * @param {string} [theme.icon=#757575] Icon color.
  * @param {string} [theme.iconActive=#757575] Icon color when button is active.
- * @example // 5.1 and after
+ * @example
 // Using an object
 WebViewer(...)
   .then(function(instance) {
@@ -25,39 +25,12 @@ WebViewer(...)
       iconActive: '#FFFFFF'
     });
   });
- * @example // 4.0 ~ 5.0
-// Using an object
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setTheme({
-    primary: '#2C2B3A',
-    secondary: '#4D4C5F',
-    border: '#555555',
-    buttonHover: '#686880',
-    buttonActive: '#686880',
-    text: '#FFFFFF',
-    icon: '#FFFFFF',
-    iconActive: '#FFFFFF'
-  });
-});
- * @example // 5.1 and after
+ * @example
 // Using predefined string
 WebViewer(...)
   .then(function(instance) {
     instance.setTheme('dark');
   });
- * @example // 4.0 ~ 5.0
-// Using predefined string
-var viewerElement = document.getElementById('viewer');
-var viewer = new PDFTron.WebViewer(...);
-
-viewerElement.addEventListener('ready', function() {
-  var instance = viewer.getInstance();
-  instance.setTheme('dark');
-});
  */
 
 export default theme => {

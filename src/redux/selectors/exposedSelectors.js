@@ -5,9 +5,6 @@ import { isChrome, isAndroid } from 'helpers/device';
 export const isElementDisabled = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.disabled;
 
-export const isFeatureDisabled = (state, feature) =>
-  state.viewer.disabledFeatures[feature];
-
 export const isElementOpen = (state, dataElement) =>
   state.viewer.openElements[dataElement] &&
   !state.viewer.disabledElements[dataElement]?.disabled;
@@ -18,26 +15,8 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
     .filter(({ group }) => group === toolGroup)
     .map(({ dataElement }) => dataElement);
 
-  const result = dataElements.every(dataElement => isElementDisabled(state, dataElement));
-
-  return result;
-};
-
-export const isElementActive = (state, tool) => {
-  const {
-    viewer: {
-      activeToolName,
-      headers: { tools = [] },
-    },
-  } = state;
-  const { element, dataElement } = tool;
-
-  return (
-    isElementOpen(state, element) ||
-    tools.some(
-      tool =>
-        tool.dataElement === dataElement && tool.toolName === activeToolName,
-    )
+  return dataElements.every(dataElement =>
+    isElementDisabled(state, dataElement),
   );
 };
 
@@ -50,15 +29,15 @@ export const getDisabledElementPriority = (state, dataElement) =>
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
 
 export const getToolButtonDataElements = (state, toolNames) =>
-  toolNames.map(
-    toolName => state.viewer.toolButtonObjects[toolName].dataElement,
-  );
+  toolNames
+    .map(toolName => state.viewer.toolButtonObjects[toolName]?.dataElement)
+    .filter(Boolean);
 
 export const getToolButtonObject = (state, toolName) =>
   state.viewer.toolButtonObjects[toolName];
 
 export const getToolButtonDataElement = (state, toolName) =>
-  state.viewer.toolButtonObjects[toolName].dataElement;
+  state.viewer.toolButtonObjects[toolName]?.dataElement;
 
 export const getToolNamesByGroup = (state, toolGroup) =>
   Object.keys(state.viewer.toolButtonObjects).filter(
@@ -135,6 +114,8 @@ export const getIconColor = (state, colorMapKey) =>
 
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 
+export const getIsReplyDisabled = state => state.viewer.isReplyDisabledFunc;
+
 export const getZoomList = state => state.viewer.zoomList;
 
 export const getMeasurementUnits = state => state.viewer.measurementUnits;
@@ -144,6 +125,13 @@ export const getIsNoteEditing = state => state.viewer.isNoteEditing;
 export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
 export const getCustomElementOverrides = (state, dataElement) => state.viewer.customElementOverrides[dataElement] || {};
+
+export const getPopupItems = (state, popupDataElement) =>
+  state.viewer[popupDataElement] || [];
+
+export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMerging;
+
+export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
@@ -156,6 +144,8 @@ export const getWarningConfirmBtnText = state =>
   state.viewer.warning?.confirmBtnText;
 
 export const getWarningCancelEvent = state => state.viewer.warning?.onCancel;
+
+export const isAccessibleMode = state => state.viewer.isAccessibleMode;
 
 // error message
 export const getErrorMessage = state => state.viewer.errorMessage || '';
@@ -184,6 +174,9 @@ export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;
+export const getBookmarks = state => state.document.bookmarks;
+
+export const getLayers = state => state.document.layers;
 
 export const getLoadingProgress = state =>
   (state.document.documentLoadingProgress +

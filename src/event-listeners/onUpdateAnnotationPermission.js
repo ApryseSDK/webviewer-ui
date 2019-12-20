@@ -1,27 +1,24 @@
 import core from 'core';
 import actions from 'actions';
-import getAnnotationRelatedElements from 'helpers/getAnnotationRelatedElements';
-import { getAnnotationCreateToolNames } from 'constants/map';
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_ONE } from 'constants/actionPriority';
+import enableTools from 'src/apis/enableTools';
+import disableTools from 'src/apis/disableTools';
 
-export default ({ dispatch, getState }) => () => {
+export default store => () => {
+  const { dispatch } = store;
   const isReadOnly = core.getIsReadOnly();
   const elements = [
     'annotationPopup',
-    ...getAnnotationRelatedElements(getState()),
+    'toolsButton',
   ];
 
   if (isReadOnly) {
-    getAnnotationCreateToolNames().forEach(toolName => {
-      core.getTool(toolName).disabled = true;
-    });
+    disableTools(store)();
     dispatch(actions.disableElements(elements, PRIORITY_ONE));
     core.setToolMode(defaultTool);
   } else {
-    getAnnotationCreateToolNames().forEach(toolName => {
-      core.getTool(toolName).disabled = false;
-    });
+    enableTools(store)();
     dispatch(actions.enableElements(elements, PRIORITY_ONE));
   }
 

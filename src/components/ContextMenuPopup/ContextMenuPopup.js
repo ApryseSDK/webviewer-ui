@@ -1,145 +1,138 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import onClickOutside from 'react-onclickoutside';
+import React, { useState, useEffect, useRef } from 'react';
+import classNames from 'classnames';
+import { useSelector, useDispatch, useStore, shallowEqual } from 'react-redux';
 
 import ActionButton from 'components/ActionButton';
+import CustomizablePopup from 'components/CustomizablePopup';
 
-import getClassName from 'helpers/getClassName';
+import useOnClickOutside from 'hooks/useOnClickOutside';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './ContextMenuPopup.scss';
 
-class ContextMenuPopup extends React.PureComponent {
-  static propTypes = {
-    isAnnotationToolsEnabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    isDisabled: PropTypes.bool,
-    dispatch: PropTypes.func.isRequired,
-    openElement: PropTypes.func.isRequired,
-    closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
-  }
+const ContextMenuPopup = () => {
+  const [isOpen, isDisabled] = useSelector(
+    state => [
+      selectors.isElementOpen(state, 'contextMenuPopup'),
+      selectors.isElementDisabled(state, 'contextMenuPopup'),
+    ],
+    shallowEqual,
+  );
+  const dispatch = useDispatch();
+  // this is hacky, hopefully we can remove this when tool group button is restructured
+  const store = useStore();
+  const [position, setPosition] = useState({ left: 0, top: 0 });
+  const popupRef = useRef();
 
-  constructor() {
-    super();
-    this.popup = React.createRef();
-    this.state = {
-      left: 0,
-      top: 0,
-    };
-  }
+  useOnClickOutside(popupRef, () => {
+    dispatch(actions.closeElement('contextMenuPopup'));
+  });
 
-  componentDidMount() {
-    document.addEventListener('contextmenu', this.onContextMenu);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['annotationPopup', 'textPopup']);
+  useEffect(() => {
+    if (isOpen) {
+      dispatch(actions.closeElements(['annotationPopup', 'textPopup']));
     }
-  }
+  }, [dispatch, isOpen]);
 
-  componentWillUnmount() {
-    document.removeEventListener('contextmenu', this.onContextMenu);
-  }
+  useEffect(() => {
+    const onContextMenu = e => {
+      const { tagName } = e.target;
+      const clickedOnInput = tagName === 'INPUT';
+      const clickedOnTextarea = tagName === 'TEXTAREA';
+      const clickedOnDocumentContainer = document
+        .querySelector('.DocumentContainer')
+        .contains(e.target);
 
-  onContextMenu = e => {
-    const { tagName } = e.target;
-    const clickedOnInput = tagName === 'INPUT';
-    const clickedOnTextarea = tagName === 'TEXTAREA';
-    const clickedOnDocumentContainer = document.querySelector('.DocumentContainer').contains(e.target);
+      if (
+        popupRef.current &&
+        clickedOnDocumentContainer &&
+        // when clicking on these two elements we want to display the default context menu
+        // so that users can use auto-correction, look up dictionary, etc...
+        !(clickedOnInput || clickedOnTextarea)
+      ) {
+        e.preventDefault();
 
-    if (clickedOnDocumentContainer && !(clickedOnInput || clickedOnTextarea)) {
-      e.preventDefault();
+        let { pageX: left, pageY: top } = e;
+        const { width, height } = popupRef.current.getBoundingClientRect();
+        const documentContainer = document.querySelector('.DocumentContainer');
+        const containerBox = documentContainer.getBoundingClientRect();
+        const horizontalGap = 2;
+        const verticalGap = 2;
 
-      const { left, top } = this.getPopupPosition(e);
-
-      this.setState({ left, top });
-      this.props.openElement('contextMenuPopup');
-    } else {
-      this.props.closeElement('contextMenuPopup');
-    }
-  }
-
-  getPopupPosition = e => {
-    let { pageX: left, pageY: top } = e;
-
-    if (this.popup.current) {
-      const { width, height } = this.popup.current.getBoundingClientRect();
-      const documentContainer = document.getElementsByClassName('DocumentContainer')[0];
-      const containerBox = documentContainer.getBoundingClientRect();
-      const horizontalGap = 2;
-      const verticalGap = 2;
-
-      if (left < containerBox.left) {
-        left = containerBox.left + horizontalGap;
-      }
-      if (left + width > containerBox.right) {
-        left = containerBox.right - width - horizontalGap;
-      }
-
-      if (top < containerBox.top) {
-        top = containerBox.top + verticalGap;
-      }
-      if (top + height > containerBox.bottom) {
-        top = containerBox.bottom - height - verticalGap;
-      }
-    }
-
-    return { left, top };
-  }
-
-  handleClickOutside = () => {
-    this.props.closeElement('contextMenuPopup');
-  }
-
-  handleClick = (toolName, group = '') => {
-    const { dispatch, closeElement } = this.props;
-    setToolModeAndGroup(dispatch, toolName, group);
-    closeElement('contextMenuPopup');
-  }
-
-
-  render() {
-    const { isDisabled, isAnnotationToolsEnabled } = this.props;
-
-    if (isDisabled) {
-      return null;
-    }
-
-    const { left, top } = this.state;
-    const className = getClassName('Popup ContextMenuPopup', this.props);
-
-    return (
-      <div className={className} ref={this.popup} data-element={'contextMenuPopup'} style={{ left, top }}>
-        <ActionButton dataElement="panToolButton" title="tool.pan" img="ic_pan_black_24px" onClick={() => this.handleClick('Pan')} />
-        {isAnnotationToolsEnabled &&
-          <>
-            <ActionButton dataElement="stickyToolButton" title="annotation.stickyNote" img="ic_annotation_sticky_note_black_24px" onClick={() => this.handleClick('AnnotationCreateSticky')} />
-            <ActionButton dataElement="highlightToolButton" title="annotation.highlight" img="ic_annotation_highlight_black_24px" onClick={() => this.handleClick('AnnotationCreateTextHighlight', 'textTools')} />
-            <ActionButton dataElement="freeHandToolButton" title="annotation.freehand" img="ic_annotation_freehand_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeHand', 'freeHandTools')} />
-            <ActionButton dataElement="freeTextToolButton" title="annotation.freetext" img="ic_annotation_freetext_black_24px" onClick={() => this.handleClick('AnnotationCreateFreeText')} />
-          </>
+        if (left < containerBox.left) {
+          left = containerBox.left + horizontalGap;
         }
-      </div>
-    );
-  }
-}
+        if (left + width > containerBox.right) {
+          left = containerBox.right - width - horizontalGap;
+        }
 
-const mapStateToProps = state => ({
-  isAnnotationToolsEnabled: !selectors.isElementDisabled(state, 'annotations') && !selectors.isDocumentReadOnly(state),
-  isOpen: selectors.isElementOpen(state, 'contextMenuPopup'),
-  isDisabled: selectors.isElementDisabled(state, 'contextMenuPopup'),
-});
+        if (top < containerBox.top) {
+          top = containerBox.top + verticalGap;
+        }
+        if (top + height > containerBox.bottom) {
+          top = containerBox.bottom - height - verticalGap;
+        }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  openElement: dataElement => dispatch(actions.openElement(dataElement)),
-  closeElement: dataElement => dispatch(actions.closeElement(dataElement)),
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
-});
+        setPosition({ left, top });
+        dispatch(actions.openElement('contextMenuPopup'));
+      }
+    };
 
-export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(ContextMenuPopup));
+    document.addEventListener('contextmenu', onContextMenu);
+    return () => document.removeEventListener('contextmenu', onContextMenu);
+  }, [dispatch]);
+
+  return isDisabled ? null : (
+    <div
+      className={classNames({
+        Popup: true,
+        ContextMenuPopup: true,
+        open: isOpen,
+        closed: !isOpen,
+      })}
+      ref={popupRef}
+      data-element="contextMenuPopup"
+      style={{ ...position }}
+      onClick={() => dispatch(actions.closeElement('contextMenuPopup'))}
+    >
+      <CustomizablePopup dataElement="contextMenuPopup">
+        <ActionButton
+          dataElement="panToolButton"
+          title="tool.pan"
+          img="ic_pan_black_24px"
+          onClick={() => setToolModeAndGroup(store, 'Pan')}
+        />
+        <ActionButton
+          dataElement="stickyToolButton"
+          title="annotation.stickyNote"
+          img="ic_annotation_sticky_note_black_24px"
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateSticky')}
+        />
+        <ActionButton
+          dataElement="highlightToolButton"
+          title="annotation.highlight"
+          img="ic_annotation_highlight_black_24px"
+          onClick={() =>
+            setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
+          }
+        />
+        <ActionButton
+          dataElement="freeHandToolButton"
+          title="annotation.freehand"
+          img="ic_annotation_freehand_black_24px"
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHand')}
+        />
+        <ActionButton
+          dataElement="freeTextToolButton"
+          title="annotation.freetext"
+          img="ic_annotation_freetext_black_24px"
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeText')}
+        />
+      </CustomizablePopup>
+    </div>
+  );
+};
+
+export default ContextMenuPopup;

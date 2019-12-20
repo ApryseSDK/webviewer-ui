@@ -43,7 +43,7 @@ class ViewControlsOverlay extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([
-        'groupOverlay',
+        'toolsOverlay',
         'searchOverlay',
         'menuOverlay',
         'toolsOverlay',
