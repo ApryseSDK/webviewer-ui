@@ -17,10 +17,12 @@ const PrintHandler = () => {
   );
 
   return isDisabled ? null : (
-    <div className={classNames({
-      PrintHandler,
-      'ios-print': isIOS,
-    })}>
+    <div
+      className={classNames({
+        PrintHandler,
+        'ios-print': isIOS,
+      })}
+    >
       {isEmbedPrintSupported ? (
         <iframe id="print-handler" tabIndex={-1}></iframe>
       ) : (
