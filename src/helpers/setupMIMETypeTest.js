@@ -1,10 +1,5 @@
 import { fireError } from 'helpers/fireEvent';
-import {
-  getDocName,
-  getDocumentExtension,
-  isOfficeExtension,
-  isPDFExtension,
-} from 'helpers/loadDocument';
+import { getDocName, getDocumentExtension } from 'helpers/loadDocument';
 
 export default store => {
   window.addEventListener(
@@ -73,11 +68,11 @@ const testMIMEType = fileExtensions => {
 const errorMissingWorkerFiles = docExtension => {
   let errorMessage;
 
-  if (isOfficeExtension(docExtension)) {
+  if (window.CoreControls.SupportedFileFormats.CLIENT_OFFICE.includes(docExtension)) {
     errorMessage =
       'Failed to find Office worker files. This project is not set up to work with Office files.';
   }
-  if (isPDFExtension(docExtension)) {
+  if (window.CoreControls.SupportedFileFormats.CLIENT_PDF.includes(docExtension)) {
     errorMessage =
       'Failed to find PDF worker files. This project is not set up to work with PDF files.';
   }

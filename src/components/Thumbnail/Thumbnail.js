@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -9,6 +10,8 @@ import selectors from 'selectors';
 import ThumbnailControls from 'components/ThumbnailControls';
 
 import './Thumbnail.scss';
+
+export const THUMBNAIL_SIZE = 150;
 
 class Thumbnail extends React.PureComponent {
   static propTypes = {
@@ -24,7 +27,7 @@ class Thumbnail extends React.PureComponent {
     onDragStart: PropTypes.func,
     onDragOver: PropTypes.func,
     isDraggable: PropTypes.bool,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -64,8 +67,12 @@ class Thumbnail extends React.PureComponent {
     const currentPageStr = `${currentPage}`;
 
     const isPageAdded = added.indexOf(currentPage) > -1;
-    const didPageChange = contentChanged.some(changedPage => currentPageStr === changedPage);
-    const didPageMove = Object.keys(moved).some(movedPage => currentPageStr === movedPage);
+    const didPageChange = contentChanged.some(
+      changedPage => currentPageStr === changedPage,
+    );
+    const didPageMove = Object.keys(moved).some(
+      movedPage => currentPageStr === movedPage,
+    );
     const isPageRemoved = removed.indexOf(currentPage) > -1;
     const newPageCount = pageLabels.length - removed.length;
 
@@ -80,6 +87,8 @@ class Thumbnail extends React.PureComponent {
 
       core.loadThumbnailAsync(index, thumb => {
         thumb.className = 'page-image';
+        thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
+        thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
         current.removeChild(current.querySelector('.page-image'));
         current.appendChild(thumb);
         if (this.props.updateAnnotations) {
@@ -97,17 +106,17 @@ class Thumbnail extends React.PureComponent {
     if (isMobile()) {
       closeElement('leftPanel');
     }
-  }
+  };
 
   onDragStart = e => {
     const { index, onDragStart } = this.props;
     onDragStart(e, index);
-  }
+  };
 
   onDragOver = e => {
     const { index, onDragOver } = this.props;
     onDragOver(e, index);
-  }
+  };
 
   render() {
     const { index, currentPage, pageLabels, isDraggable } = this.props;
@@ -115,8 +124,24 @@ class Thumbnail extends React.PureComponent {
     const pageLabel = pageLabels[index];
 
     return (
-      <div className={`Thumbnail ${isActive ? 'active' : ''} `} onDragOver={this.onDragOver}>
-        <div className="container" ref={this.thumbContainer} onClick={this.handleClick} onDragStart={this.onDragStart} draggable={isDraggable}></div>
+      <div
+        className={classNames({
+          Thumbnail: true,
+          active: isActive,
+        })}
+        onClick={this.handleClick}
+        onDragOver={this.onDragOver}
+      >
+        <div
+          className="container"
+          style={{
+            width: THUMBNAIL_SIZE,
+            height: THUMBNAIL_SIZE,
+          }}
+          ref={this.thumbContainer}
+          onDragStart={this.onDragStart}
+          draggable={isDraggable}
+        />
         <div className="page-label">{pageLabel}</div>
         {isActive && <ThumbnailControls index={index} />}
       </div>

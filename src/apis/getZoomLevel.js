@@ -1,6 +1,6 @@
 /**
  * Return the current zoom level
- * @method WebViewer#getZoomLevel
+ * @method WebViewerInstance#getZoomLevel
  * @return {number} Zoom level (0 ~ 1)
  * @example
 WebViewer(...)

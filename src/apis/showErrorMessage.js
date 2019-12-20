@@ -1,6 +1,6 @@
 /**
  * Displays the custom error message
- * @method WebViewer#showErrorMessage
+ * @method WebViewerInstance#showErrorMessage
  * @param {string} message An error message
  * @example
 WebViewer(...)

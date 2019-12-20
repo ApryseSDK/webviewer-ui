@@ -1,6 +1,6 @@
 /**
  * Searches the full document for the texts matching searchValue.
- * @method WebViewer#searchTextFull
+ * @method WebViewerInstance#searchTextFull
  * @param {string} searchValue The text value to look for.
  * @param {object} [options] Search options.
  * @param {boolean} [options.caseSensitive=false] Search with matching cases.

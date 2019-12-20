@@ -1,7 +1,9 @@
 @import '../../constants/panel';
 
 .ThumbnailsPanel {
-  overflow: hidden;
+  // !important is used otherwise it will be overriden by .LeftPanel.Panel in LeftPanel.scss
+  // we should fix this to not use !important after 6.0 release
+  overflow: hidden !important;
   display: flex;
   padding: 8px 0px;
 

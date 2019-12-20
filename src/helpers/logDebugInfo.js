@@ -14,14 +14,14 @@ export default ({ pdftronServer, fullAPI }) => {
     const [uiMajorVersion, uiMinorVersion] = uiVersion
       .split('.')
       .map(version => parseInt(version, 10));
-    
+
     if (console.table) {
       const versions = {
         'UI version': uiVersion,
         'Core version': coreVersion,
         'Build': coreBuild,
         'WebViewer Server': !!pdftronServer,
-        'Full API': !!fullAPI
+        'Full API': !!fullAPI,
       };
       console.table(versions);
     } else {
