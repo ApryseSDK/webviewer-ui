@@ -1,7 +1,7 @@
 /**
  * Sets the units that will be displayed in the measurement tools' styles popup
  * Valid units are: 'mm', 'cm', 'm', 'km', 'mi', 'yd', 'ft', 'in', 'pt'
- * @method WebViewer#setMeasurementUnits
+ * @method WebViewerInstance#setMeasurementUnits
  * @param {Object} units an object which contains the from units and to units
  * @example
 WebViewer(...)

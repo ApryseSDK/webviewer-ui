@@ -9,16 +9,23 @@ $signature-modal-shared-color: #E1E1E3;
 
   .container {
     @extend %modal-shared-container-style;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     border-radius: 4px;
     box-shadow: 0 2px 16px 0 $signature-modal-shared-color; 
-
-    width: 600px;
-    height: 350px;
 
     @include mobile {
       width: 100%;
     }
 
+    @include tablet-and-mobile {
+      @media (orientation: landscape) {
+        max-height: 100%;
+      }
+    }
+    
     .header {
       margin: 11px 11px 0px 24px;
       display: flex;
@@ -30,13 +37,11 @@ $signature-modal-shared-color: #E1E1E3;
       border-radius: 4px;
       border: 1px solid $signature-modal-shared-color;
       margin: 18px 24px 0px 24px;
-      width: 552px;
       height: 200px;
       display: flex;
 
       @include mobile {
         margin: 18px 12px 0px 12px;
-        width: calc(100% - 24px);
       }
 
       &-canvas {

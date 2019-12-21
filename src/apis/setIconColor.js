@@ -1,6 +1,6 @@
 /**
  * Sets the color palette that will be used as a tool button's icon color.
- * @method WebViewer#setIconColor
+ * @method WebViewerInstance#setIconColor
  * @param {string} toolName Name of the tool, either from <a href='https://www.pdftron.com/documentation/web/guides/annotations-and-tools/#list-of-tool-names' target='_blank'>tool names list</a> or the name you registered your custom tool with.
  * @param {string} colorPalette The palette which will be used as a tool button's icon color. One of 'text', 'border' and 'fill'.
  * @example

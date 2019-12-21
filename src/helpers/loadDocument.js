@@ -3,7 +3,6 @@ import actions from 'actions';
 import getBackendPromise from 'helpers/getBackendPromise';
 import { fireError } from 'helpers/fireEvent';
 import { engineTypes, workerTypes } from 'constants/types';
-import { supportedPDFExtensions, supportedOfficeExtensions, supportedBlackboxExtensions, supportedExtensions, supportedClientOnlyExtensions } from 'constants/supportedFiles';
 
 export default (state, dispatch, extraOptions) => {
   core.closeDocument(dispatch).then(() => {
@@ -247,12 +246,11 @@ const getEngineType = state => {
   }
 
   if (fileExtension) {
-    if (!supportedExtensions.includes(fileExtension)) {
+    if (!window.CoreControls.SupportedFileFormats.SERVER.includes(fileExtension)) {
       console.error(`File extension ${fileExtension} from ${docName} is not supported. Please see https://www.pdftron.com/documentation/web/guides/file-format-support for a full list of file formats supported by WebViewer`);
     } else if (
       engineType === engineTypes.PDFNETJS &&
-      !supportedClientOnlyExtensions.includes(fileExtension) &&
-      supportedBlackboxExtensions.includes(fileExtension)
+      !window.CoreControls.SupportedFileFormats.CLIENT.includes(fileExtension)
     ) {
       console.error(`File extension ${fileExtension} from ${docName} is only supported by using WebViewer with WebViewer Server. See https://www.pdftron.com/documentation/web/guides/file-format-support for a full list of file formats supported by WebViewer. Visit https://www.pdftron.com/documentation/web/guides/wv-server-deployment for more information about WebViewer Server`);
     }
@@ -290,10 +288,6 @@ const createFakeFilename = (initialDoc, ext) => {
   return `${filename || initialDoc.replace(/^.*[\\\/]/, '')}.${ext.replace(/^\./, '')}`;
 };
 
-export const isOfficeExtension = extension => supportedOfficeExtensions.indexOf(extension) !== -1;
-
-export const isPDFExtension = extension => supportedPDFExtensions.indexOf(extension) !== -1;
-
 const getDocTypeData = ({ docName, backendType, engineType, workerHandlers, pdfWorkerTransportPromise, officeWorkerTransportPromise }) => {
   const originalExtension = getDocumentExtension(docName);
 
@@ -304,14 +298,14 @@ const getDocTypeData = ({ docName, backendType, engineType, workerHandlers, pdfW
   if (engineType === engineTypes.PDFTRON_SERVER) {
     type = workerTypes.BLACKBOX;
   } else {
-    const usingOfficeWorker = supportedOfficeExtensions.indexOf(originalExtension) !== -1;
+    const usingOfficeWorker = window.CoreControls.SupportedFileFormats.CLIENT_OFFICE.indexOf(originalExtension) !== -1;
     if (usingOfficeWorker && !officeWorkerTransportPromise) {
       type = workerTypes.OFFICE;
       workerTransportPromise = window.CoreControls.initOfficeWorkerTransports(backendType, workerHandlers);
     } else if (!usingOfficeWorker && !pdfWorkerTransportPromise) {
       type = workerTypes.PDF;
       // if the extension isn't pdf or an image then assume it's a pdf
-      if (supportedPDFExtensions.indexOf(originalExtension) === -1) {
+      if (window.CoreControls.SupportedFileFormats.CLIENT_PDF.indexOf(originalExtension) === -1) {
         extension = 'pdf';
       }
       workerTransportPromise = window.CoreControls.initPDFWorkerTransports(backendType, workerHandlers);

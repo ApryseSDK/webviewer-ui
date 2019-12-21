@@ -5,10 +5,18 @@ import Button from 'components/Button';
 import selectors from 'selectors';
 import actions from 'actions';
 
-const mapStateToProps = (state, ownProps) => ({
-  className: ownProps.className || 'ToggleElementButton',
-  isActive: selectors.isElementOpen(state, ownProps.element),
-});
+const mapStateToProps = (state, ownProps) => {
+  let isActive = selectors.isElementOpen(state, ownProps.element);
+  if (ownProps.dataElement === 'redactionButton') {
+    const isToolActive = selectors.getActiveToolName(state);
+    isActive = isActive || isToolActive === 'AnnotationCreateRedaction';
+  }
+
+  return {
+    className: ownProps.className || 'ToggleElementButton',
+    isActive,
+  };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: () => {

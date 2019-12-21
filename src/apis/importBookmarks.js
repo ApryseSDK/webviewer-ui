@@ -1,6 +1,6 @@
 /**
  * Imports user bookmarks
- * @method WebViewer#importBookmarks
+ * @method WebViewerInstance#importBookmarks
  * @param {object} bookmarks A dictionary with page indices as keys and the bookmark text as the values. ex: {"0":"Bookmark 1","2":"Bookmark 2"}. Behaviour is undefined otherwise.
  * @example
 WebViewer(...)
