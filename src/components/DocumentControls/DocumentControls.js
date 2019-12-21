@@ -41,8 +41,9 @@ const DocumentControls = props => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const [selectedPageIndexes] = useSelector(state => [
+  const [selectedPageIndexes, isDisabled] = useSelector(state => [
     selectors.getSelectedThumbnailPageIndexes(state),
+    selectors.isElementDisabled(state, 'documentControl'),
   ]);
 
   const initalPagesString = getPageString(selectedPageIndexes, pageLabels);
@@ -133,8 +134,8 @@ const DocumentControls = props => {
 
   const icon = shouldShowControls ? 'ic_arrow_down_black_24px' : 'ic_arrow_up_black_24px';
 
-  return (
-    <div className={`documentControlsContainer`}>
+  return isDisabled ? null : (
+    <div className={`documentControlsContainer`} data-element={'documentControl'}>
       <Button
         className={`documentControlToggle ${shouldShowControls ? 'showing' : ''}`}
         img={icon}
@@ -170,6 +171,7 @@ const DocumentControls = props => {
 };
 
 DocumentControls.propTypes = {
+  isDisabled: PropTypes.bool,
   pageLabels: PropTypes.arrayOf(PropTypes.string),
   updateSelectedPage: PropTypes.func,
   toggleDocumentControl: PropTypes.func,

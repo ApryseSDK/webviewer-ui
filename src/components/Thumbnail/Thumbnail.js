@@ -20,6 +20,7 @@ class Thumbnail extends React.PureComponent {
     pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
     isSelected: PropTypes.bool,
+    isThumbnailSelectingEnabled: PropTypes.bool,
     onLoad: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
@@ -101,10 +102,9 @@ class Thumbnail extends React.PureComponent {
   }
 
   handleClick = e => {
+    const { index, closeElement, onClickCallback, isThumbnailSelectingEnabled } = this.props;
 
-    const { index, closeElement, onClickCallback } = this.props;
-
-    if (e.ctrlKey || e.metaKey) {
+    if (isThumbnailSelectingEnabled && (e.ctrlKey || e.metaKey)) {
       onClickCallback(e, index);
     } else {
       core.setCurrentPage(index + 1);
@@ -166,6 +166,7 @@ class Thumbnail extends React.PureComponent {
 const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   pageLabels: selectors.getPageLabels(state),
+  isThumbnailSelectingEnabled: selectors.getIsThumbnailSelecting(state),
 });
 
 const mapDispatchToProps = {

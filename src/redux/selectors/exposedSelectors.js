@@ -135,6 +135,8 @@ export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMer
 
 export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
 
+export const getIsThumbnailSelecting = state => state.viewer.isThumbnailSelecting;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 

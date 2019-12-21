@@ -173,6 +173,7 @@ export default {
     isFullScreen: false,
     isThumbnailMerging: false,
     isThumbnailReordering: false,
+    isThumbnailSelecting: false,
     doesAutoLoad: getHashParams('auto_load', true),
     isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
