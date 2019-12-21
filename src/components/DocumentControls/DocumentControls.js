@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import './DocumentControls.scss';
 import getPagesToPrint from 'helpers/getPagesToPrint';
 import { saveAs } from 'file-saver';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
+
+import core from 'core';
+import selectors from 'selectors';
+import actions from 'actions';
 
 function getPageString(selectedPageArray, pageLabels) {
   let pagesToPrint = '';
@@ -27,13 +32,18 @@ function getPageString(selectedPageArray, pageLabels) {
 
 const DocumentControls = props => {
   const {
-    deletePagesCallBack,
-    selectedPageIndexes,
     pageLabels,
     updateSelectedPage,
     toggleDocumentControl,
     shouldShowControls,
   } = props;
+
+  const [t] = useTranslation();
+  const dispatch = useDispatch();
+
+  const [selectedPageIndexes] = useSelector(state => [
+    selectors.getSelectedThumbnailPageIndexes(state),
+  ]);
 
   const initalPagesString = getPageString(selectedPageIndexes, pageLabels);
 
@@ -44,16 +54,42 @@ const DocumentControls = props => {
   useEffect(() => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
   }, [setPageString, selectedPageIndexes, shouldShowControls, pageLabels]);
-  const deletePages = () => {
-    deletePagesCallBack();
+
+  const onDeletePages = () => {
+    let message = t('warning.deletePage.deleteMessage');
+    const title = t('warning.deletePage.deleteTitle');
+    const confirmBtnText = t('action.ok');
+    const pageNumbersToDelete = selectedPageIndexes.map(p => p + 1);
+
+    let warning = {
+      message,
+      title,
+      confirmBtnText,
+      onConfirm: () => core.removePages([pageNumbersToDelete]).then(() => {
+        dispatch(actions.deletePageIndex(selectedPageIndexes));
+      }),
+    };
+
+    if (core.getDocumentViewer().getPageCount() === pageNumbersToDelete.length) {
+      message = t('warning.deletePage.deleteLastPageMessage');
+
+      warning = {
+        message,
+        title,
+        confirmBtnText,
+        onConfirm: () => Promise.resolve(),
+      };
+    }
+
+    dispatch(actions.showWarningMessage(warning));
   };
 
   const extractPages = () => {
     if (selectedPageIndexes.length === 0) {
       const warning = {
-        message: i18next.t('option.thumbnailPanel.extractZeroPageError'),
-        title: i18next.t('action.extract'),
-        confirmBtnText: i18next.t('action.ok'),
+        message: t('option.thumbnailPanel.extractZeroPageError'),
+        title: t('action.extract'),
+        confirmBtnText: t('action.ok'),
         onConfirm: () => Promise.resolve(),
         keepOpen: ['leftPanel'],
       };
@@ -118,7 +154,7 @@ const DocumentControls = props => {
           <div className="documentControlsButton">
             <Button
               img="ic_delete_black_24px"
-              onClick={deletePages}
+              onClick={onDeletePages}
               title="option.thumbnailPanel.delete"
             />
             <Button
@@ -134,8 +170,6 @@ const DocumentControls = props => {
 };
 
 DocumentControls.propTypes = {
-  deletePagesCallBack: PropTypes.func,
-  selectedPageIndexes: PropTypes.arrayOf(PropTypes.number),
   pageLabels: PropTypes.arrayOf(PropTypes.string),
   updateSelectedPage: PropTypes.func,
   toggleDocumentControl: PropTypes.func,

@@ -509,9 +509,6 @@ class ThumbnailsPanel extends React.PureComponent {
                 toggleDocumentControl={this.toggleDocumentControl}
                 shouldShowControls={shouldShowControls}
                 pageLabels={pageLabels}
-                selectedPageIndexes={selectedPageIndexes}
-                selectedPageCount={selectedPageIndexes.length}
-                deletePagesCallBack={this.onDeletePages}
                 updateSelectedPage={this.updateSelectedPage}
               />
             </div>
