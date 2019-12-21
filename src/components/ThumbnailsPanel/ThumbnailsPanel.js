@@ -185,6 +185,30 @@ class ThumbnailsPanel extends React.PureComponent {
     }
   }
 
+  onThumbnailClick = (e, index) => {
+    const { selectedPageIndexes, setSelectedPageThumbnails } = this.props;
+    let updatedSelectedPages = [...selectedPageIndexes];
+
+    if (selectedPageIndexes.indexOf(index) > -1) {
+      updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+    } else {
+      updatedSelectedPages.push(index);
+    }
+
+    setSelectedPageThumbnails(updatedSelectedPages);
+
+    this.setState({
+      isDocumentControlHidden: updatedSelectedPages.length === 0,
+    });
+
+    core.setCurrentPage(index + 1);
+  }
+
+  updateSelectedPage = selectedPageIndexes => {
+    this.props.setSelectedPageThumbnails(selectedPageIndexes);
+    this.setState({ selectedPageIndexes });
+  }
+
   onFinishedRendering = needsMoreRendering => {
     if (!needsMoreRendering) {
       this.setState({
@@ -419,6 +443,7 @@ class ThumbnailsPanel extends React.PureComponent {
                   onRemove={this.onRemove}
                   onDragStart={this.onDragStart}
                   onDragOver={this.onDragOver}
+                  onClickCallback={this.onThumbnailClick}
                   updateAnnotations={updateHandler}
                 />
                 {showPlaceHolder && !isDraggingToPreviousPage && (

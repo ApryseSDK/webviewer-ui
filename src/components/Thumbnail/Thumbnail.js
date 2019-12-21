@@ -27,6 +27,7 @@ class Thumbnail extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     onDragStart: PropTypes.func,
     onDragOver: PropTypes.func,
+    onClickCallback: PropTypes.func,
     isDraggable: PropTypes.bool,
   };
 
@@ -99,9 +100,15 @@ class Thumbnail extends React.PureComponent {
     }
   }
 
-  handleClick = () => {
-    const { index, closeElement } = this.props;
+  handleClick = e => {
 
+    const { index, closeElement, onClickCallback } = this.props;
+
+    if (e.ctrlKey || e.metaKey) {
+      onClickCallback(e, index);
+    } else {
+      core.setCurrentPage(index + 1);
+    }
     core.setCurrentPage(index + 1);
 
     if (isMobile()) {
@@ -124,12 +131,6 @@ class Thumbnail extends React.PureComponent {
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
 
-    const className = classNames({
-      active: isActive,
-      selected: isSelected,
-      Thumbnail: true,
-    });
-
     return (
       <div
         className={classNames({
@@ -146,11 +147,15 @@ class Thumbnail extends React.PureComponent {
             width: THUMBNAIL_SIZE,
             height: THUMBNAIL_SIZE,
           }}
-          ref={this.thumbContainer}
-          onClick={this.handleClick} 
-          onDragStart={this.onDragStart}
-          draggable={isDraggable}
-        />
+        >
+          <div
+            className="thumbnail"
+            ref={this.thumbContainer}
+            onClick={this.handleClick}
+            onDragStart={this.onDragStart}
+            draggable={isDraggable}
+          />
+        </div>
         <div className="page-label">{pageLabel}</div>
         {isActive && <ThumbnailControls index={index} />}
       </div>

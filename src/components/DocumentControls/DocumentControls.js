@@ -43,7 +43,7 @@ const DocumentControls = props => {
 
   useEffect(() => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
-  }, [setPageString, selectedPageIndexes, shouldShowControls]);
+  }, [setPageString, selectedPageIndexes, shouldShowControls, pageLabels]);
   const deletePages = () => {
     deletePagesCallBack();
   };
@@ -134,7 +134,7 @@ const DocumentControls = props => {
 };
 
 DocumentControls.propTypes = {
-  deletePagesCallBack: PropTypes.func.isRequired,
+  deletePagesCallBack: PropTypes.func,
   selectedPageIndexes: PropTypes.arrayOf(PropTypes.number),
   pageLabels: PropTypes.arrayOf(PropTypes.string),
   updateSelectedPage: PropTypes.func,
