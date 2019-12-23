@@ -33,8 +33,8 @@ const NOOP = () => {};
  * @property {string} Ctrl_P Print
  * @property {string} PageUp Go to the previous page
  * @property {string} PageDown Go to the next page
- * @property {string} Up Go to the previous page ()
- * @property {string} Down Go to the next page
+ * @property {string} Up Go to the previous page if not scrolling (refers to the ArrowUp key)
+ * @property {string} Down Go to the next page if not scrolling (refers to the ArrowDown key)
  * @property {string} Space Hold to switch to Pan mode and release to return to previous tool
  * @property {string} Escape Select the AnnotationEdit tool
  * @property {string} P Select the Pan tool
@@ -42,7 +42,7 @@ const NOOP = () => {};
  * @property {string} C Select the AnnotationCreateCallout tool
  * @property {string} E Select the AnnotationEraserTool tool
  * @property {string} F Select the AnnotationCreateFreeHand tool
- * @property {string} i Select the AnnotationCreateStamp tool
+ * @property {string} I Select the AnnotationCreateStamp tool
  * @property {string} L Select the AnnotationCreateLine tool
  * @property {string} N Select the AnnotationCreateSticky tool
  * @property {string} O Select the AnnotationCreateEllipse tool
@@ -254,9 +254,9 @@ WebViewer(...)
         }
       },
       up: e => {
+        // do not call preventDefault else it will prevent scrolling
         const scrollViewElement = core.getScrollViewElement();
         const { scrollTop } = scrollViewElement;
-
         const reachedTop = scrollTop === 0;
         const currPageNumber = core.getCurrentPage();
         if ((e.key === 'ArrowUp' || e.which === 38) && reachedTop && currPageNumber > 1) {
@@ -264,6 +264,7 @@ WebViewer(...)
         }
       },
       down: e => {
+        // do not call preventDefault else it will prevent scrolling
         const scrollViewElement = core.getScrollViewElement();
         const { scrollTop, clientHeight, scrollHeight } = scrollViewElement;
         const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
