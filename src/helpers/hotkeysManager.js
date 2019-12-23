@@ -15,9 +15,9 @@ import selectors from 'selectors';
 const NOOP = () => {};
 
 /**
- * Available hotkeys that can be passed to {@link WebViewerInstance.Hotkeys#on instance.hotkeys.on} or {@link WebViewerInstance.Hotkeys#off instance.hotkeys.off} as lowercase. Hotkeys that use the Ctrl key can also be activated by pressing the Command key. <br/><br/>
+ * Available hotkeys that can be passed to {@link WebViewer.Hotkeys#on instance.hotkeys.on} or {@link WebViewer.Hotkeys#off instance.hotkeys.off} as lowercase. Hotkeys that use the Ctrl key can also be activated by pressing the Command key. <br/><br/>
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> These strings are not static properties of this class. They are listed here only for the documentation purpose.
- * @name WebViewerInstance.Hotkeys.AvailableHotkeys
+ * @name WebViewer.Hotkeys.AvailableHotkeys
  * @enum {string}
  * @property {string} Ctrl_Shift_Equals Rotate the document clockwise (Ctrl+Shift+=).
  * @property {string} Ctrl_Shift_Minus Rotate the document counterclockwise (Ctrl+Shift+-)
@@ -33,6 +33,8 @@ const NOOP = () => {};
  * @property {string} Ctrl_P Print
  * @property {string} PageUp Go to the previous page
  * @property {string} PageDown Go to the next page
+ * @property {string} Up Go to the previous page ()
+ * @property {string} Down Go to the next page
  * @property {string} Space Hold to switch to Pan mode and release to return to previous tool
  * @property {string} Escape Select the AnnotationEdit tool
  * @property {string} P Select the Pan tool
@@ -40,7 +42,7 @@ const NOOP = () => {};
  * @property {string} C Select the AnnotationCreateCallout tool
  * @property {string} E Select the AnnotationEraserTool tool
  * @property {string} F Select the AnnotationCreateFreeHand tool
- * @property {string} I Select the AnnotationCreateStamp tool
+ * @property {string} i Select the AnnotationCreateStamp tool
  * @property {string} L Select the AnnotationCreateLine tool
  * @property {string} N Select the AnnotationCreateSticky tool
  * @property {string} O Select the AnnotationCreateEllipse tool
@@ -55,9 +57,9 @@ const NOOP = () => {};
 
 /**
  * A class which contains hotkeys APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewerInstance#hotkeys instance.hotkeys}
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewer#hotkeys instance.hotkeys}
  * @namespace Hotkeys
- * @memberof WebViewerInstance
+ * @memberof WebViewer
  */
 const HotkeysManager = {
   initialize(store) {
@@ -71,7 +73,7 @@ const HotkeysManager = {
   },
   /**
    * Add an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys#on
+   * @method WebViewer.Hotkeys#on
    * @param {string} key A keyboard key or a tool name. <br/>
    * If a hotkey is consisted of more than one key. Those keys should be connected using '+'.
    * @param {function|object} [handler] An optional argument <br/>
@@ -130,7 +132,7 @@ WebViewer(...)
   },
   /**
    * Remove an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys#off
+   * @method WebViewer.Hotkeys#off
    * @param {string} [key] An optional keyboard key or a tool name. If not passed, all handlers will be removed
    * @param {function} [handler] An optional function. If not passed, all handlers of the given key will be removed
    * @example
@@ -248,6 +250,25 @@ WebViewer(...)
 
         const currPageNumber = core.getCurrentPage();
         if (currPageNumber < core.getTotalPages()) {
+          core.setCurrentPage(currPageNumber + 1);
+        }
+      },
+      up: e => {
+        const scrollViewElement = core.getScrollViewElement();
+        const { scrollTop } = scrollViewElement;
+
+        const reachedTop = scrollTop === 0;
+        const currPageNumber = core.getCurrentPage();
+        if ((e.key === 'ArrowUp' || e.which === 38) && reachedTop && currPageNumber > 1) {
+          core.setCurrentPage(currPageNumber - 1);
+        }
+      },
+      down: e => {
+        const scrollViewElement = core.getScrollViewElement();
+        const { scrollTop, clientHeight, scrollHeight } = scrollViewElement;
+        const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
+        const currPageNumber = core.getCurrentPage();
+        if ((e.key === 'ArrowDown' || e.which === 40) && reachedBottom && currPageNumber < core.getTotalPages()) {
           core.setCurrentPage(currPageNumber + 1);
         }
       },
