@@ -8,8 +8,28 @@
   width: 232px;
   border-radius: 4px 0 0 4px;
   box-shadow: 0 2px 16px 0 #E1E1E3;
-  width: 394px;
+  width: 354px;
   padding: 16px 16px 16px;
+
+
+  .rubber-stamp {
+    float: left;
+    // background: #f8f8f8;
+    // border-radius: 4px 4px 4px 4px;
+    height: 48px;
+    width: 160px;
+    // margin-bottom: 8px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+  }
+  .rubber-stamp:hover {
+    // background: antiquewhite;
+    background: var(--button-hover-color);
+  }
 }
 
 

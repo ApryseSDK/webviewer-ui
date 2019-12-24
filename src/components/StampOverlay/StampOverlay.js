@@ -3,42 +3,19 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
-import { isDesktop } from 'helpers/device';
-import ToolButton from 'components/ToolButton';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import Button from 'components/Button';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 
-import defaultTool from 'constants/defaultTool';
-
 import './StampOverlay.scss';
-const typeEnum = {
-  'Approved': 'Approved',
-  'AsIs': 'As Is',
-  'Completed': 'Completed',
-  'Confidential': 'Confidential',
-  'Departmental': 'Departmental',
-  'Draft': 'Draft',
-  'Experimental': 'Experimental',
-  'Expired': 'Expired',
-  'Final': 'Final',
-  'ForComment': 'For Comment',
-  'ForPublicRelease': 'For Public Release',
-  'InformationOnly': 'Information Only',
-  'NotApproved': 'Not Approved',
-  'NotForPublicRelease': 'Not For Public Release',
-  'PreliminaryResults': 'Preliminary Results',
-  'Sold': 'Sold',
-  'TopSecret': 'Top Secret',
-  'Void': 'Void',
-};
 
+const canvasWidth = 160;
+const canvasHeight = 48;
+const padding = 16;
+const X = padding / 2, Y = padding / 2;
 
 
 class StampOverlay extends React.Component {
@@ -50,10 +27,9 @@ class StampOverlay extends React.Component {
     this.state = {
       left: 0,
       right: 'auto',
+      defaultAnnotations: [],
     };
     this.stampTool = core.getTool('AnnotationCreateRubberStamp');
-
-    // this.handleRubberStampClick = this.handleRubberStampClick.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -67,21 +43,8 @@ class StampOverlay extends React.Component {
         'toolStylePopup',
       ]);
       this.setOverlayPosition();
+      this.getDefaultRubberStamps();
     }
-
-    // if (
-    //   prevProps.isOpen &&
-    //   !this.props.isOpen &&
-    //   !this.props.isSignatureModalOpen &&
-    //   this.signatureTool.isEmptySignature()
-    // ) {
-    //   // location of signatureTool will be set when clicking on a signature widget
-    //   // we want to clear location when the overlay is closed without any default signatures selected
-    //   // to prevent signature from being drawn to the previous location
-    //   // however the overlay will be closed without any default signature selected if we clicked the "add signature" button(which opens the signature modal)
-    //   // we don't want to clear the location in the case because we still want the signature to be automatically added to the widget after the create button is hit in the modal
-    //   this.signatureTool.clearLocation();
-    // }
   }
 
   handleClickOutside = e => {
@@ -113,51 +76,64 @@ class StampOverlay extends React.Component {
       );
     }
   };
-  setRubberStamp(stampName, stampText) {
-    var _canvas = document.createElement('canvas');
-    var _ctx = _canvas.getContext('2d');
-    _ctx.font = 'italic 30px Verdana';
-
-    var getHeight = 38;
-    var width = _ctx.measureText(stampText).width;
-
-    const annotation = new Annotations.StampAnnotation();
-    annotation.Width = width;
-    annotation.Height = getHeight;
-    annotation.Icon = stampName;
-    annotation.MaintainAspectRatio = true;
-
+  setRubberStamp(annotation) {
     core.setToolMode('AnnotationCreateRubberStamp');
     this.props.closeElement('stampOverlay');
     this.stampTool.setRubberStamp(annotation);
     this.stampTool.showPreview();
   }
+
+  getDefaultRubberStamps = async () => {
+
+
+    const annotations = this.stampTool.getDefaultStampAnnotations();
+    const previews = await Promise.all(
+      annotations.map(annotation => {
+
+        var getWidth = canvasWidth - padding;
+        var getHeight = canvasHeight - padding;
+
+        var width = annotation.Width;
+        var calculatedWidth = getWidth;
+        if (width < getWidth) {
+          calculatedWidth = width;
+        }
+        annotation.X = X;
+        annotation.Y = Y;
+        annotation.Width = calculatedWidth;
+        annotation.Height = getHeight;
+        return this.stampTool.getPreview(annotation, { canvasWidth, canvasHeight })
+      }),
+    )
+
+    const defaultAnnotations = annotations.map((annotation, i) => ({
+      annotation,
+      imgSrc: previews[i],
+    }));
+
+    this.setState({ defaultAnnotations });
+  }
   render() {
-    const { left, right } = this.state;
+    const { left, right, defaultAnnotations } = this.state;
     const { isDisabled, isOpen } = this.props;
 
     if (isDisabled || !isOpen || !core.isCreateRedactionEnabled()) {
       return null;
     }
     var canvases = null;
+    var imgs = null;
     if (isOpen) {
-      canvases = Object.keys(typeEnum).map((key, index) => {
-        const style = {
-          // border: '1px solid #d3d3d3',
-        };
+      imgs = defaultAnnotations.map(({ imgSrc, annotation }, index) => {
         return (
-          <Canvas
-            code={key}
-            text={typeEnum[key]}
-            key={index}
-            width="160"
-            height="48"
-            style={style}
-            stampTool={this.stampTool}
-            onClick={() => this.setRubberStamp(key, typeEnum[key])}
-          />
+          <div key={index}
+            className="rubber-stamp"
+            onClick={() => this.setRubberStamp(annotation)}
+          >
+            {/* <div>{key}</div> */}
+            <img src={imgSrc} />
+          </div>
         );
-      });
+      })
     }
     const className = getClassName('Overlay StampOverlay', this.props);
     return (
@@ -170,75 +146,15 @@ class StampOverlay extends React.Component {
         <div className="default-signatures-container">
           <div className="modal-body">
             { canvases }
+            { imgs }
           </div>
         </div>
-
-        {/* <Button
-          img="ic_annotation_stamp_black_24px"
-          onClick={this.handleRubberStampClick}
-          title="annotation.rubberStamp"
-        /> */}
       </div>
     );
   }
 }
 
 
-
-
-
-class Canvas extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
-  componentDidMount() {
-    const canvas = this.canvas;
-    var _canvas = document.createElement('canvas');
-    var _ctx = _canvas.getContext('2d');
-    _ctx.font = 'bold italic 30px Verdana';
-    var stampText = this.props.text;
-    var X = 5;
-    var Y = 5;
-    var opacity = 1;
-    var getWidth = this.props.width - 10;
-    var getHeight = this.props.height - 10;
-
-    var width = _ctx.measureText(stampText).width;
-    var w = getWidth;
-    if (width < getWidth) {
-      w = width;
-    }
-
-    const ctx = canvas.getContext('2d');
-
-    const stampAnnot = new Annotations.StampAnnotation();
-    stampAnnot.PageNumber = 1;
-    stampAnnot.X = X;
-    stampAnnot.Y = Y;
-    stampAnnot.Width = w;
-    stampAnnot.Height = getHeight;
-    stampAnnot.Opacity = opacity;
-    stampAnnot.Icon = this.props.code;
-    stampAnnot.MaintainAspectRatio = true;
-    this.props.stampTool.getPreview(stampAnnot, ctx);
-  }
-
-  render() {
-    const { width, height, style } = this.props;
-
-    return (
-      <canvas className="column" ref={ref => { this.canvas = ref; }}
-        style={style}
-        width={width}
-        height={height}
-        onClick={this.props.onClick}
-      />
-    );
-  }
-}
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'stampOverlay'),
