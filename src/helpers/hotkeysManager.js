@@ -33,8 +33,8 @@ const NOOP = () => {};
  * @property {string} Ctrl_P Print
  * @property {string} PageUp Go to the previous page
  * @property {string} PageDown Go to the next page
- * @property {string} Up Go to the previous page if not scrolling (refers to the ArrowUp key)
- * @property {string} Down Go to the next page if not scrolling (refers to the ArrowDown key)
+ * @property {string} Up Go to the previous page in single layout mode (ArrowUp)
+ * @property {string} Down Go to the next page in single layout mode (ArrowDown)
  * @property {string} Space Hold to switch to Pan mode and release to return to previous tool
  * @property {string} Escape Select the AnnotationEdit tool
  * @property {string} P Select the Pan tool
@@ -253,23 +253,25 @@ WebViewer(...)
           core.setCurrentPage(currPageNumber + 1);
         }
       },
-      up: e => {
+      up: () => {
         // do not call preventDefault else it will prevent scrolling
         const scrollViewElement = core.getScrollViewElement();
-        const { scrollTop } = scrollViewElement;
-        const reachedTop = scrollTop === 0;
+        const { scrollHeight, clientHeight } = scrollViewElement;
+        const reachedTop = scrollViewElement.scrollTop === 0;
         const currPageNumber = core.getCurrentPage();
-        if ((e.key === 'ArrowUp' || e.which === 38) && reachedTop && currPageNumber > 1) {
+        if (reachedTop && currPageNumber > 1) {
           core.setCurrentPage(currPageNumber - 1);
+          // set the scrollbar to be at the bottom of the page
+          scrollViewElement.scrollTop = scrollHeight - clientHeight;
         }
       },
-      down: e => {
+      down: () => {
         // do not call preventDefault else it will prevent scrolling
         const scrollViewElement = core.getScrollViewElement();
         const { scrollTop, clientHeight, scrollHeight } = scrollViewElement;
         const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
         const currPageNumber = core.getCurrentPage();
-        if ((e.key === 'ArrowDown' || e.which === 40) && reachedBottom && currPageNumber < core.getTotalPages()) {
+        if (reachedBottom && currPageNumber < core.getTotalPages()) {
           core.setCurrentPage(currPageNumber + 1);
         }
       },
