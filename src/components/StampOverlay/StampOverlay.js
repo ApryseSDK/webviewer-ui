@@ -117,7 +117,7 @@ class StampOverlay extends React.Component {
     const { left, right, defaultAnnotations } = this.state;
     const { isDisabled, isOpen } = this.props;
 
-    if (isDisabled || !isOpen || !core.isCreateRedactionEnabled()) {
+    if (isDisabled || !isOpen) {
       return null;
     }
     var canvases = null;
