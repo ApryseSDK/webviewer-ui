@@ -1,13 +1,14 @@
 // https://websitesetup.org/web-safe-fonts-html-css/
 export const FONTS = [
   'Arial',
-  'Roboto',
+  'Times New Roman',
+  'Tahoma ',
+  'Trebuchet MS',
   'Courier',
   'Verdana',
   'Georgia',
   'Palatino',
   'Comic Sans MS',
-  'Candara',
   'Arial Black',
   'Impact',
 ];
