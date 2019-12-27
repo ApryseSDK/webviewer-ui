@@ -1,6 +1,6 @@
 /**
  * Load a document inside WebViewer UI.
- * @method WebViewer#loadDocument
+ * @method WebViewerInstance#loadDocument
  * @param {(string|File)} documentPath Path to the document OR <a href='https://developer.mozilla.org/en-US/docs/Web/API/File' target='_blank'>File object</a> if opening local file.
  * @param {object} options Additional options
  * @param {string} options.extension The extension of the file. If file is a blob/file object or a URL without an extension then this is necessary so that WebViewer knows what type of file to load.

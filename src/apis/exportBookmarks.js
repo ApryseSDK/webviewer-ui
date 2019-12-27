@@ -1,6 +1,6 @@
 /**
  * Returns a dictionary with page indices as keys and the bookmark text as the values
- * @method WebViewer#exportBookmarks
+ * @method WebViewerInstance#exportBookmarks
  * @return {Object} A dictionary with page indices as keys and the bookmark text as the values. ex: {"0":"Bookmark 1","2":"Bookmark 2"}
  * @example
 WebViewer(...)

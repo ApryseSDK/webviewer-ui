@@ -1,6 +1,6 @@
 /**
  * Print the current document.
- * @method WebViewer#print
+ * @method WebViewerInstance#print
  * @example
 WebViewer(...)
   .then(function(instance) {

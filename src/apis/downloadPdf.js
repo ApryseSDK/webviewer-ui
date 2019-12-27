@@ -1,6 +1,6 @@
 /**
  * Downloads the pdf document with or without annotations added by WebViewer UI.
- * @method WebViewer#downloadPdf
+ * @method WebViewerInstance#downloadPdf
  * @param {boolean} [includeAnnotations=true] Whether or not to include annotations added by WebViewer UI.
  * @example
 WebViewer(...)
