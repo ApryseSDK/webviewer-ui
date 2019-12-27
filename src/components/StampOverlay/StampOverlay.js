@@ -1,149 +1,147 @@
-/* eslint-disable */
-
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import onClickOutside from 'react-onclickoutside';
 import getClassName from 'helpers/getClassName';
-import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
+import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 
 import './StampOverlay.scss';
 
+const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const canvasWidth = 160;
 const canvasHeight = 48;
 const padding = 16;
-const X = padding / 2, Y = padding / 2;
+const X = padding / 2;
+const Y = padding / 2;
 
 
 class StampOverlay extends React.Component {
-  static propTypes = {};
+  static propTypes = {
+    activeToolName: PropTypes.string,
+    isDisabled: PropTypes.bool,
+    isOpen: PropTypes.bool,
+    toolButtonObjects: PropTypes.object.isRequired,
+    openElement: PropTypes.func.isRequired,
+    closeElement: PropTypes.func.isRequired,
+    closeElements: PropTypes.func.isRequired,
+  };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.overlay = React.createRef();
+
+    const { toolButtonObjects } = props;
+    const dataElement = toolButtonObjects[TOOL_NAME].dataElement;
     this.state = {
       left: 0,
       right: 'auto',
+      top: 0,
       defaultAnnotations: [],
+      dataElement,
     };
-    this.stampTool = core.getTool('AnnotationCreateRubberStamp');
+    this.stampTool = core.getTool(TOOL_NAME);
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([
-        'viewControlsOverlay',
-        'searchOverlay',
-        'menuOverlay',
-        'toolsOverlay',
-        'zoomOverlay',
-        'toolStylePopup',
-      ]);
-      this.setOverlayPosition();
-      this.getDefaultRubberStamps();
+    if (prevProps.activeToolName !== this.props.activeToolName) {
+      if (this.props.activeToolName === TOOL_NAME) {
+        this.props.openElement('stampOverlay');
+        this.setOverlayPosition();
+        this.getDefaultRubberStamps();
+      } else {
+        this.props.closeElement('stampOverlay');
+      }
     }
   }
 
   handleClickOutside = e => {
     const rubberStampToolButton =
-      e.target.getAttribute('data-element') === 'rubberStampToolButton';
+      e.target.getAttribute('data-element') === this.state.dataElement;
 
     if (!rubberStampToolButton) {
       this.props.closeElement('stampOverlay');
     }
-  };
+  }
+
   setOverlayPosition = () => {
     const rubberStampToolButton = document.querySelector(
-      '[data-element="rubberStampToolButton"]',
+      `[data-element="${this.state.dataElement}"]`,
     );
 
-    if (!rubberStampToolButton && this.overlay.current) {
-      // the button has been disabled using instance.disableElements
-      // but this component can still be opened by clicking on a signature widget
-      // in this case we just place it in the center
-      const { width } = this.overlay.current.getBoundingClientRect();
-      this.setState({ left: (window.innerWidth - width) / 2, right: 'auto' });
-    } else {
-      this.setState(
-        getOverlayPositionBasedOn(
-          'rubberStampToolButton',
-          this.overlay,
-          'center',
-        ),
-      );
+    if (rubberStampToolButton && this.overlay.current) {
+      const res = getToolStylePopupPositionBasedOn(rubberStampToolButton, this.overlay);
+      this.setState(res);
     }
-  };
+  }
+
   setRubberStamp(annotation) {
-    core.setToolMode('AnnotationCreateRubberStamp');
+    core.setToolMode(TOOL_NAME);
     this.props.closeElement('stampOverlay');
     this.stampTool.setRubberStamp(annotation);
     this.stampTool.showPreview();
   }
 
   getDefaultRubberStamps = async () => {
+    if (!this.state.defaultAnnotations.length) {
+      const annotations = this.stampTool.getDefaultStampAnnotations();
+      const previews = await Promise.all(
+        annotations.map(annotation => {
+          var getWidth = canvasWidth - padding;
+          var getHeight = canvasHeight - padding;
 
+          var width = annotation.Width;
+          var calculatedWidth = getWidth;
+          if (width < getWidth) {
+            calculatedWidth = width;
+          }
+          annotation.X = X;
+          annotation.Y = Y;
+          annotation.Width = calculatedWidth;
+          annotation.Height = getHeight;
+          return this.stampTool.getPreview(annotation, { canvasWidth, canvasHeight });
+        }),
+      );
 
-    const annotations = this.stampTool.getDefaultStampAnnotations();
-    const previews = await Promise.all(
-      annotations.map(annotation => {
+      const defaultAnnotations = annotations.map((annotation, i) => ({
+        annotation,
+        imgSrc: previews[i],
+      }));
 
-        var getWidth = canvasWidth - padding;
-        var getHeight = canvasHeight - padding;
-
-        var width = annotation.Width;
-        var calculatedWidth = getWidth;
-        if (width < getWidth) {
-          calculatedWidth = width;
-        }
-        annotation.X = X;
-        annotation.Y = Y;
-        annotation.Width = calculatedWidth;
-        annotation.Height = getHeight;
-        return this.stampTool.getPreview(annotation, { canvasWidth, canvasHeight })
-      }),
-    )
-
-    const defaultAnnotations = annotations.map((annotation, i) => ({
-      annotation,
-      imgSrc: previews[i],
-    }));
-
-    this.setState({ defaultAnnotations });
+      this.setState({ defaultAnnotations });
+    }
   }
-  render() {
-    const { left, right, defaultAnnotations } = this.state;
-    const { isDisabled, isOpen } = this.props;
 
-    if (isDisabled || !isOpen) {
+  render() {
+    const { left, top, defaultAnnotations } = this.state;
+    const { isDisabled, isOpen } = this.props;
+    if (isDisabled) {
       return null;
     }
+
     var canvases = null;
     var imgs = null;
     if (isOpen) {
-      imgs = defaultAnnotations.map(({ imgSrc, annotation }, index) => {
-        return (
-          <div key={index}
-            className="rubber-stamp"
-            onClick={() => this.setRubberStamp(annotation)}
-          >
-            {/* <div>{key}</div> */}
-            <img src={imgSrc} />
-          </div>
-        );
-      })
+      imgs = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
+        <div key={index}
+          className="rubber-stamp"
+          onClick={() => this.setRubberStamp(annotation)}
+        >
+          <img src={imgSrc} />
+        </div>,
+      );
     }
     const className = getClassName('Overlay StampOverlay', this.props);
     return (
       <div
         className={className}
         ref={this.overlay}
-        style={{ left, right }}
+        style={{ left, top }}
         data-element="stampOverlay"
       >
-        <div className="default-signatures-container">
+        <div className="default-stamp-container">
           <div className="modal-body">
             { canvases }
             { imgs }
@@ -155,10 +153,11 @@ class StampOverlay extends React.Component {
 }
 
 
-
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'stampOverlay'),
-  isOpen: selectors.isElementOpen(state, 'stampOverlay')
+  isOpen: selectors.isElementOpen(state, 'stampOverlay'),
+  activeToolName: selectors.getActiveToolName(state),
+  toolButtonObjects: selectors.getToolButtonObjects(state),
 });
 
 const mapDispatchToProps = {

@@ -2,8 +2,6 @@ import React from 'react';
 
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import SignatureToolButton from 'components/SignatureToolButton';
-// import StampOverlay from 'components/StampOverlay';
-import StampToolButton from 'components/StampToolButton';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
@@ -47,13 +45,6 @@ export default {
           render: () => <SignatureToolButton />,
           dataElement: 'signatureToolButton',
           hidden: ['tablet', 'mobile'],
-        },
-        {
-          type: 'customElement',
-          render: () => <StampToolButton />,
-          dataElement: 'rubberStampToolButton',
-          hidden: ['tablet', 'mobile'],
-          img: 'ic_annotation_stamp_black_24px',
         },
         { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction', hidden: ['tablet', 'mobile'] },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: ['tablet', 'mobile'] },
@@ -159,7 +150,7 @@ export default {
       AnnotationCreateSticky: { dataElement: 'stickyToolButton', title: 'annotation.stickyNote', img: 'ic_annotation_sticky_note_black_24px', showColor: 'active' },
       AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'ic_annotation_callout_black_24px', group: 'miscTools', showColor: 'active' },
       AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
-      AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'ic_annotation_stamp_black_24px', showColor: 'active' },
+      AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'ic_annotation_stamp_black_24px', group: 'miscTools', showColor: 'active' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
       AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
       TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
