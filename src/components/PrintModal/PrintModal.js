@@ -540,7 +540,7 @@ class PrintModal extends React.PureComponent {
             </div>
             {this.state.allowWatermarkModal && (
               <button
-                data-element="applyWatermark"
+                id="applyWatermark"
                 className="apply-watermark"
                 onClick={() => this.setWatermarkModalVisibility(true)}
               >

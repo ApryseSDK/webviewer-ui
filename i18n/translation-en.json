@@ -194,8 +194,9 @@
       "size": "Size",
       "location": "Choose a location to edit watermarks",
       "text": "Text",
-      "colors": "Colors",
-      "resetAllSettings": "Reset All Settings"
+      "style": "Style",
+      "resetAllSettings": "Reset All Settings",
+      "font": "Font"
     },
     "thumbnailPanel": {
       "delete": "Delete",
