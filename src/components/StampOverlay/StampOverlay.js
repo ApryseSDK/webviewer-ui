@@ -78,7 +78,6 @@ class StampOverlay extends React.Component {
 
   setRubberStamp(annotation) {
     core.setToolMode(TOOL_NAME);
-    console.log(annotation);
     this.props.closeElement('stampOverlay');
     this.stampTool.setRubberStamp(annotation);
     this.stampTool.showPreview();
