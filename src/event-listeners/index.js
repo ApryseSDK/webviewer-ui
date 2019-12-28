@@ -17,7 +17,6 @@ import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
 import onLayoutChanged from './onLayoutChanged';
 import onLocationSelected from './onLocationSelected';
 import onRubberStampAnnotationAdded from './onRubberStampAnnotationAdded';
-import onStampLocationSelected from './onStampLocationSelected';
 import onPageComplete from './onPageComplete';
 
 export {
@@ -40,6 +39,5 @@ export {
   onLayoutChanged,
   onLocationSelected,
   onRubberStampAnnotationAdded,
-  onStampLocationSelected,
   onPageComplete,
 };

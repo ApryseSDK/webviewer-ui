@@ -46,15 +46,14 @@ class StampOverlay extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.activeToolName !== this.props.activeToolName) {
-      if (this.props.activeToolName === TOOL_NAME) {
-        this.props.openElement('stampOverlay');
-        this.setOverlayPosition();
-        this.getDefaultRubberStamps();
-      } else {
-        this.props.closeElement('stampOverlay');
-      }
+    if (!prevProps.isOpen && !this.props.isOpen && this.props.activeToolName === TOOL_NAME) {
+      this.props.openElement('stampOverlay');
+      this.setOverlayPosition();
+      this.getDefaultRubberStamps();
     }
+    // else if () {
+    //   this.props.closeElement('stampOverlay');
+    // }
   }
 
   handleClickOutside = e => {
@@ -79,6 +78,7 @@ class StampOverlay extends React.Component {
 
   setRubberStamp(annotation) {
     core.setToolMode(TOOL_NAME);
+    console.log(annotation);
     this.props.closeElement('stampOverlay');
     this.stampTool.setRubberStamp(annotation);
     this.stampTool.showPreview();
@@ -101,6 +101,7 @@ class StampOverlay extends React.Component {
           annotation.Y = Y;
           annotation.Width = calculatedWidth;
           annotation.Height = getHeight;
+
           return this.stampTool.getPreview(annotation, { canvasWidth, canvasHeight });
         }),
       );
@@ -117,9 +118,7 @@ class StampOverlay extends React.Component {
   render() {
     const { left, top, defaultAnnotations } = this.state;
     const { isDisabled, isOpen } = this.props;
-    if (isDisabled) {
-      return null;
-    }
+    if (isDisabled) { return null; }
 
     var canvases = null;
     var imgs = null;
