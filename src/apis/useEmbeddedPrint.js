@@ -4,7 +4,6 @@
  * You may not want to use embedded printing if there are custom annotations in your document.
  * @method WebViewerInstance#useEmbeddedPrint
  * @param {boolean} use Whether or not to use embedded printing
- * @default true
  * @example
 WebViewer(...)
   .then(function(instance) {
