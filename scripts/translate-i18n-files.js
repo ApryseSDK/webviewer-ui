@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { Translate } = require('@google-cloud/translate');
+const { Translate } = require('@google-cloud/translate').v2;
 
 const translate = new Translate({
   keyFilename: path.join(__dirname, '../keys/translation.json'),
@@ -46,26 +46,30 @@ const addMissingKey = (
       Object.keys(baseTranslationData).map(
         key =>
           new Promise(async resolve => {
-            if (typeof baseTranslationData[key] === 'object') {
-              result[key] = {};
-              await addMissingKey(
-                baseTranslationData[key],
-                // translationData[key] may not exist when the base object is nested so we need to pass an empty object
-                // an empty object is okay since the translated values are added to result[key]
-                translationData[key] || {},
-                result[key],
-                languageCode,
-              );
-            } else if (translationData[key]) {
-              result[key] = translationData[key];
-            } else {
-              const [translated] = await translate.translate(
-                baseTranslationData[key],
-                mapI18nCodeToGoogleTranslationCode(languageCode),
-              );
-              result[key] = translated;
+            try {
+              if (typeof baseTranslationData[key] === 'object') {
+                result[key] = {};
+                await addMissingKey(
+                  baseTranslationData[key],
+                  // translationData[key] may not exist when the base object is nested so we need to pass an empty object
+                  // an empty object is okay since the translated values are added to result[key]
+                  translationData[key] || {},
+                  result[key],
+                  languageCode,
+                );
+              } else if (translationData[key]) {
+                result[key] = translationData[key];
+              } else {
+                const [translated] = await translate.translate(
+                  baseTranslationData[key],
+                  mapI18nCodeToGoogleTranslationCode(languageCode),
+                );
+                result[key] = translated;
+              }
+              resolve();
+            } catch (e) {
+              console.log(e);
             }
-            resolve();
           }),
       ),
     ).then(resolve);

@@ -6,7 +6,7 @@
   
   &.open {
     opacity: 1;
-    transition: opacity 2s 1s;
+    transition: opacity 1s 2s;
   }
 
   &.closed {
@@ -33,7 +33,6 @@
     position: relative;
     height: 10px;
     background: #00a5e4;
-    transition: transform 0.5s ease;
     overflow: hidden;
   }
 }

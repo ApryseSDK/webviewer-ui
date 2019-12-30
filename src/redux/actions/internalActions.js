@@ -80,6 +80,15 @@ export const enableElements = (dataElements, priority) => (
     payload: { dataElements: filteredDataElements, priority },
   });
 };
+export const setThumbnailMerging = (useThumbnailMerging = true) => ({
+  type: 'SET_THUMBNAIL_MERGING',
+  payload: { useThumbnailMerging },
+});
+
+export const setThumbnailReordering = (useThumbnailReordering = true) => ({
+  type: 'SET_THUMBNAIL_REORDERING',
+  payload: { useThumbnailReordering },
+});
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;
@@ -399,6 +408,10 @@ export const setCaseSensitive = isCaseSensitive => ({
 export const setWholeWord = isWholeWord => ({
   type: 'SET_WHOLE_WORD',
   payload: { isWholeWord },
+});
+export const setWildcard = isWildcard => ({
+  type: 'SET_WILD_CARD',
+  payload: { isWildcard }
 });
 export const setIsSearching = isSearching => ({
   type: 'SET_IS_SEARCHING',

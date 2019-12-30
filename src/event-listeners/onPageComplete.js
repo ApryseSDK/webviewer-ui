@@ -7,9 +7,16 @@ export default store => pageIndex => {
       const textContainer = document.createElement('div');
       textContainer.tabIndex = 0;
       textContainer.textContent = `Page ${pageIndex + 1}.\n${text}\nEnd of page ${pageIndex + 1}.`;
-      textContainer.style = 'height: 100%; font-size: 5px; overflow: auto; position: relative; z-index: -99999';
-      textContainer.id = `pageText${pageIndex}`;
-      document.getElementById(`pageContainer${pageIndex}`).appendChild(textContainer);
+      textContainer.style = 'font-size: 5px; overflow: auto; position: relative; z-index: -99999';
+      const id = `pageText${pageIndex}`;
+      textContainer.id = id;
+      // remove duplicate / pre-existing divs first before appending again
+      const pageContainerElement = document.getElementById(`pageContainer${pageIndex}`);
+      const existingTextContainer = pageContainerElement.querySelector(`#${id}`);
+      if (existingTextContainer) {
+        pageContainerElement.removeChild(existingTextContainer);
+      }
+      pageContainerElement.appendChild(textContainer);
     });
   }
 };

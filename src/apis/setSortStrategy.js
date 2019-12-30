@@ -1,6 +1,6 @@
 /**
  * Sets a sorting algorithm in NotesPanel.
- * @method WebViewer#setSortStrategy
+ * @method WebViewerInstance#setSortStrategy
  * @param {string} sortStrategy Name of the algorithm. By default, there are two algorithm options: position and time.
  * @example
 WebViewer(...)

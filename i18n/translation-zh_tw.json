@@ -2,6 +2,7 @@
   "action": {
     "apply": "套用",
     "applyAll": "全部套用",
+    "calibrate": "校準",
     "cancel": "取消",
     "clear": "清除",
     "close": "關閉",
@@ -33,8 +34,7 @@
     "submit": "提交",
     "zoom": "縮放",
     "zoomIn": "放大",
-    "zoomOut": "縮小",
-    "calibrate": "校準"
+    "zoomOut": "縮小"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -82,7 +82,10 @@
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
     "measurementToolsButton": "測量工具",
-    "calibration": "校準"
+    "calibration": "校準",
+    "bookmarksPanel": "書籤",
+    "bookmarkPage": "頁",
+    "newBookmark": "新書籤"
   },
   "message": {
     "badDocument": "無法載入文件。此文件已損壞或無效。",
@@ -143,13 +146,12 @@
       "addWatermarkSettings": "添加水印設置"
     },
     "redaction": {
-      "markForRedaction": "標示為修訂",
-      "warningPopupMessage": "此動作將永久移除已選取進行修訂的所有項目，且無法復原。",
-      "warningPopupTitle": "套用修訂"
+      "markForRedaction": "標示為修訂"
     },
     "searchPanel": {
       "caseSensitive": "區分大小寫",
-      "wholeWordOnly": "全字相符"
+      "wholeWordOnly": "全字相符",
+      "wildcard": "通配符"
     },
     "signatureOverlay": {
       "addSignature": "新增簽名"
@@ -194,6 +196,22 @@
       "text": "文本",
       "colors": "顏色",
       "resetAllSettings": "重置所有設置"
+    },
+    "thumbnailPanel": {
+      "delete": "刪除",
+      "rotateCounterClockwise": "逆時針方向",
+      "rotateClockwise": "順時針"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteLastPageMessage": "這將導致沒有剩餘頁面。請至少留一頁",
+      "deleteMessage": "您確定要刪除所選頁面嗎？這是無法撤消的",
+      "deleteTitle": "刪除頁面"
+    },
+    "redaction": {
+      "applyTile": "應用編輯",
+      "applyMessage": "此操作將永久刪除所有要編輯的項目。無法撤消。"
     }
   },
   "shortcut": {

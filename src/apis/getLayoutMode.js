@@ -1,7 +1,7 @@
 /**
- * Return the current layout mode of the WebViewer.
- * @method WebViewer#getLayoutMode
- * @return {WebViewer.LayoutMode} Current layout mode
+ * Return the current layout mode of the WebViewerInstance.
+ * @method WebViewerInstance#getLayoutMode
+ * @return {WebViewerInstance.LayoutMode} Current layout mode
  * @example
 WebViewer(...)
   .then(function(instance) {

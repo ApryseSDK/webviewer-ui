@@ -1,6 +1,6 @@
 /**
  * Sets page labels that will be displayed in UI. You may want to use this API if the document's page labels start with characters/numbers other than 1.
- * @method WebViewer#setPageLabels
+ * @method WebViewerInstance#setPageLabels
  * @param {Array.<string>} pageLabels Page labels that will be displayed in UI.
  * @example
 WebViewer(...)
