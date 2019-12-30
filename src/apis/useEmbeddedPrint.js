@@ -3,7 +3,8 @@
  * The printing process will be faster and the quality might be higher when using Chrome's native printing.
  * You may not want to use embedded printing if there are custom annotations in your document.
  * @method WebViewerInstance#useEmbeddedPrint
- * @param {boolean} [use=true] Whether or not to use embedded printing
+ * @param {boolean} use Whether or not to use embedded printing
+ * @default true
  * @example
 WebViewer(...)
   .then(function(instance) {
