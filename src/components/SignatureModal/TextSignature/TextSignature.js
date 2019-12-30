@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -7,6 +7,9 @@ import core from 'core';
 import selectors from 'selectors';
 
 import './TextSignature.scss';
+
+// TODO: Make canvas scrollable if the text is too long
+//       Auto focus the text input
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
@@ -99,50 +102,46 @@ const Canvas = React.forwardRef(
     const canvasRef = useRef();
 
     useEffect(() => {
-      // the panel has display: none when it's not selected, which will affect the canvas size
-      // so we resize the canvas whenever this panel is selected
-      const canvas = canvasRef.current;
-
-      if (isTabPanelSelected && canvas) {
+      const resizeCanvas = () => {
+        const canvas = canvasRef.current;
+        // the panel has display: none when it's not selected, which will affect the canvas size
+        // so we resize the canvas whenever this panel is selected
         const { width, height } = canvas.getBoundingClientRect();
         canvas.width = width;
         canvas.height = height;
+      };
 
-        // when a canvas's width and height are both 0, changing the value of ctx.font won't actually apply the font
-        // so here we set the font and then redraw the text every time the tab is selected, since this is when a canvas's size can change
+      const setFont = () => {
+        const canvas = canvasRef.current;
+        const multiplier = window.utils.getCanvasMultiplier();
+        const fontSize = `${100 * multiplier}px`;
+        const { width, height } = canvas.getBoundingClientRect();
+        canvas.width = width * multiplier;
+        canvas.height = height * multiplier;
+
+        const ctx = canvas.getContext('2d');
+
+        ctx.font = `${fontSize} ${font}`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+      };
+
+      const drawTextSignature = () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const { width, height } = canvas;
+
+        ctx.fillStyle = '#000';
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillText(text, width / 2, height / 2, width);
+      };
+
+      if (isTabPanelSelected && canvasRef.current) {
+        resizeCanvas();
         setFont();
         drawTextSignature();
       }
-    }, [isTabPanelSelected, drawTextSignature, setFont]);
-
-    useEffect(() => setFont(), [font, setFont]);
-
-    useEffect(() => drawTextSignature(), [text, drawTextSignature]);
-
-    const setFont = useCallback(() => {
-      const canvas = canvasRef.current;
-      const multiplier = window.utils.getCanvasMultiplier();
-      const fontSize = `${100 * multiplier}px`;
-      const { width, height } = canvas.getBoundingClientRect();
-      canvas.width = width * multiplier;
-      canvas.height = height * multiplier;
-
-      const ctx = canvas.getContext('2d');
-
-      ctx.font = `${fontSize} ${font}`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-    }, [font]);
-
-    const drawTextSignature = useCallback(() => {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      const { width, height } = canvas;
-
-      ctx.fillStyle = '#000';
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillText(text, width / 2, height / 2, width);
-    }, [text]);
+    }, [isTabPanelSelected, text, font]);
 
     const handleClick = () => {
       const signatureTool = core.getTool('AnnotationCreateSignature');
