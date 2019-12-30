@@ -4,12 +4,12 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import core from 'core';
+import { isIOS } from 'helpers/device';
 import selectors from 'selectors';
 
 import './TextSignature.scss';
 
 // TODO: Make canvas scrollable if the text is too long
-//       Auto focus the text input
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
@@ -25,6 +25,7 @@ const TextSignature = ({
   const fonts = useSelector(state => selectors.getSignatureFonts(state));
   const [value, setValue] = useState(core.getCurrentUser());
   const [activeIndex, setActiveIndex] = useState(0);
+  const inputRef = useRef();
   const canvasesRef = useRef([]);
 
   useEffect(() => {
@@ -51,6 +52,18 @@ const TextSignature = ({
     }
   }, [_setSaveSignature, isTabPanelSelected, activeIndex, value, isModalOpen]);
 
+  useEffect(() => {
+    if (isTabPanelSelected) {
+      inputRef.current?.focus();
+
+      if (isIOS) {
+        inputRef.current.setSelectionRange(0, 9999);
+      } else {
+        inputRef.current.select();
+      }
+    }
+  }, [isTabPanelSelected]);
+
   const handleInputChange = e => {
     const value = e.target.value;
     setValue(value);
@@ -60,6 +73,7 @@ const TextSignature = ({
     <div className="text-signature">
       <input
         className="text-signature-input"
+        ref={inputRef}
         type="text"
         value={value}
         onChange={handleInputChange}
