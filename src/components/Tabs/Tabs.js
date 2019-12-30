@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -9,13 +9,13 @@ import selectors from 'selectors';
 const TabsContext = React.createContext();
 
 // eslint-disable-next-line arrow-body-style
-export const Tabs = props => {
+export const Tabs = React.memo(props => {
   return (
     <TabsContext.Provider value={props.id}>
       {props.children}
     </TabsContext.Provider>
   );
-};
+});
 
 Tabs.propTypes = {
   id: PropTypes.string.isRequired,
@@ -27,7 +27,7 @@ export const Tab = ({ children, dataElement }) => {
   const [isDisabled, isSelected] = useSelector(state => [
     selectors.isElementDisabled(state, dataElement),
     selectors.getSelectedTab(state, id) === dataElement,
-  ]);
+  ], shallowEqual);
   const dispatch = useDispatch();
 
   let propsToInject = {
@@ -69,7 +69,7 @@ export const TabPanel = ({ children, dataElement }) => {
   const [isDisabled, isSelected] = useSelector(state => [
     selectors.isElementDisabled(state, dataElement),
     selectors.getSelectedTab(state, id).includes(dataElement),
-  ]);
+  ], shallowEqual);
 
   return isDisabled ? null : (
     <div

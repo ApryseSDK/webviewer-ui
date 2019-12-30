@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Measure from 'react-measure';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -22,16 +23,29 @@ const InkSignature = ({
   const freeHandPathsRef = useRef();
   const [canClear, setCanClear] = useState(false);
   const [t] = useTranslation();
+  const [dimension, setDimension] = useState({});
 
   useEffect(() => {
-    window.addEventListener('resize', setSignatureCanvasSize);
-    window.addEventListener('orientationchange', setSignatureCanvasSize);
+    const canvas = canvasRef.current;
 
-    return () => {
-      window.removeEventListener('resize', setSignatureCanvasSize);
-      window.removeEventListener('orientationchange', setSignatureCanvasSize);
-    };
-  }, [setSignatureCanvasSize]);
+    if (
+      dimension.height &&
+      dimension.width &&
+      isModalOpen &&
+      canvas
+    ) {
+      // since the canvas will be cleared when the size changes,
+      // we grab the image data before resizing and use it to redraw afterwards
+      const { width, height } = canvas.getBoundingClientRect();
+      const ctx = canvas.getContext('2d');
+      const imageData = ctx.getImageData(0, 0, width, height);
+
+      canvas.width = width;
+      canvas.height = height;
+
+      ctx.putImageData(imageData, 0, 0);
+    }
+  }, [dimension, isModalOpen]);
 
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -46,47 +60,21 @@ const InkSignature = ({
 
   useEffect(() => {
     if (isModalOpen && isTabPanelSelected) {
-      // the panel has display: none when it's not selected, which may affect the canvas size
-      // so we resize the canvas whenever this panel is selected
-      setSignatureCanvasSize();
-
       const signatureTool = core.getTool('AnnotationCreateSignature');
       signatureTool.setSignature(freeHandPathsRef.current);
       setCanClear(!!freeHandPathsRef.current);
       _setSaveSignature(!!freeHandPathsRef.current);
     }
-  }, [
-    isTabPanelSelected,
-    _setSaveSignature,
-    setSignatureCanvasSize,
-    isModalOpen,
-  ]);
+  }, [isTabPanelSelected, _setSaveSignature, isModalOpen]);
 
-  const setSignatureCanvasSize = useCallback(() => {
-    const canvas = canvasRef.current;
-
-    if (isModalOpen && isTabPanelSelected && canvas) {
-      // since the canvas will be cleared when the size changes,
-      // we grab the image data before resizing and use it to redraw afterwards
-      const { width, height } = canvas.getBoundingClientRect();
-      const ctx = canvasRef.current.getContext('2d');
-      const imageData = ctx.getImageData(0, 0, width, height);
-
-      canvas.width = width;
-      canvas.height = height;
-
-      ctx.putImageData(imageData, 0, 0);
-    }
-  }, [isModalOpen, isTabPanelSelected]);
-
-  const clearCanvas = useCallback(() => {
+  const clearCanvas = () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
     signatureTool.clearSignatureCanvas();
     setCanClear(false);
     _setSaveSignature(false);
     freeHandPathsRef.current = null;
-  }, [_setSaveSignature]);
+  };
 
   const handleFinishDrawing = () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -117,28 +105,32 @@ const InkSignature = ({
   };
 
   return (
-    <div className="ink-signature">
-      <canvas
-        width="100%"
-        height="100%"
-        className="ink-signature-canvas"
-        onMouseUp={handleFinishDrawing}
-        onTouchEnd={handleFinishDrawing}
-        ref={canvasRef}
-      />
-      <div className="ink-signature-background">
-        <div className="ink-signature-sign-here">{t('message.signHere')}</div>
-        <div
-          className={classNames({
-            'ink-signature-clear': true,
-            active: canClear,
-          })}
-          onClick={clearCanvas}
-        >
-          {t('action.clear')}
+    <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
+      {({ measureRef }) => (
+        <div className="ink-signature" ref={measureRef}>
+          <canvas
+            className="ink-signature-canvas"
+            onMouseUp={handleFinishDrawing}
+            onTouchEnd={handleFinishDrawing}
+            ref={canvasRef}
+          />
+          <div className="ink-signature-background">
+            <div className="ink-signature-sign-here">
+              {t('message.signHere')}
+            </div>
+            <div
+              className={classNames({
+                'ink-signature-clear': true,
+                active: canClear,
+              })}
+              onClick={clearCanvas}
+            >
+              {t('action.clear')}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </Measure>
   );
 };
 
