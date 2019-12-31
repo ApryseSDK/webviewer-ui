@@ -116,23 +116,19 @@ const Canvas = React.forwardRef(
     const canvasRef = useRef();
 
     useEffect(() => {
+      const multiplier = window.utils.getCanvasMultiplier();
+      const canvas = canvasRef.current;
+
       const resizeCanvas = () => {
-        const canvas = canvasRef.current;
         // the panel has display: none when it's not selected, which will affect the canvas size
         // so we resize the canvas whenever this panel is selected
         const { width, height } = canvas.getBoundingClientRect();
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = width * multiplier;
+        canvas.height = height * multiplier;
       };
 
       const setFont = () => {
-        const canvas = canvasRef.current;
-        const multiplier = window.utils.getCanvasMultiplier();
         const fontSize = `${100 * multiplier}px`;
-        const { width, height } = canvas.getBoundingClientRect();
-        canvas.width = width * multiplier;
-        canvas.height = height * multiplier;
-
         const ctx = canvas.getContext('2d');
 
         ctx.font = `${fontSize} ${font}`;
@@ -141,16 +137,15 @@ const Canvas = React.forwardRef(
       };
 
       const drawTextSignature = () => {
-        const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const { width, height } = canvas;
 
         ctx.fillStyle = '#000';
         ctx.clearRect(0, 0, width, height);
-        ctx.fillText(text, width / 2, height / 2, width);
+        ctx.fillText(text, width / 2, height / 2);
       };
 
-      if (isTabPanelSelected && canvasRef.current) {
+      if (isTabPanelSelected && canvas) {
         resizeCanvas();
         setFont();
         drawTextSignature();
