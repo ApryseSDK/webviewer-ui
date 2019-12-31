@@ -233,7 +233,7 @@ class MeasurementOverlay extends React.PureComponent {
     const { annotation } = this.state;
     const factor = annotation.Measure.axis[0].factor;
     const sizeInPt = length / factor;
-    annotation.setLength(sizeInPt);
+    annotation.setLineLength(sizeInPt);
     this.forceLineRedraw();
   }
 
@@ -249,7 +249,7 @@ class MeasurementOverlay extends React.PureComponent {
     const maxLengthInPts = this.getMaxLineLengthInPts();
 
     if (lengthInPts > maxLengthInPts) {
-      annotation.setLength(maxLengthInPts);
+      annotation.setLineLength(maxLengthInPts);
       this.forceLineRedraw();
     }
   }
