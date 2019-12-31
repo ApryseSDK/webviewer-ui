@@ -9,8 +9,6 @@ import selectors from 'selectors';
 
 import './TextSignature.scss';
 
-// TODO: Make canvas scrollable if the text is too long
-
 const propTypes = {
   isModalOpen: PropTypes.bool,
   _setSaveSignature: PropTypes.func.isRequired,
@@ -128,12 +126,18 @@ const Canvas = React.forwardRef(
       };
 
       const setFont = () => {
-        const fontSize = `${100 * multiplier}px`;
         const ctx = canvas.getContext('2d');
 
-        ctx.font = `${fontSize} ${font}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+
+        let fontSize = 100 * multiplier;
+        ctx.font = `${fontSize}px ${font}`;
+
+        while (ctx.measureText(text).width > canvas.width) {
+          fontSize--;
+          ctx.font = `${fontSize}px ${font}`;
+        }
       };
 
       const drawTextSignature = () => {
