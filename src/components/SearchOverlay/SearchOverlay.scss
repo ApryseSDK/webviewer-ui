@@ -148,13 +148,14 @@
       &.visible {
         display: flex;
         flex-wrap: wrap;
+      }
+      
+      .search-option {
         padding: 5px 0 0 20px;
+        flex: 1 0 50%;
       }
     }
 
-    .search-option {
-      width: 115px;
-    }
 
     .no-result {
       font-size: .8em;

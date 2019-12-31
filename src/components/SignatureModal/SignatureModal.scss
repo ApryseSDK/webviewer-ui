@@ -7,14 +7,23 @@
 
   .container {
     @extend %modal-shared-container-style;
-    border-radius: 4px;
-    box-shadow: 0 2px 16px 0 $signature-modal-shared-color;
     width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
+    box-shadow: 0 2px 16px 0 $signature-modal-shared-color; 
 
     @include mobile {
       width: 100%;
     }
 
+    @include tablet-and-mobile {
+      @media (orientation: landscape) {
+        max-height: 100%;
+      }
+    }
+    
     .header {
       margin: 11px 24px 16px 24px;
       display: flex;

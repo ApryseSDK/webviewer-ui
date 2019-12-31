@@ -116,6 +116,7 @@ import textPopup from './textPopup';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import unregisterTool from './unregisterTool';
+import updateElement from './updateElement';
 import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
@@ -189,6 +190,7 @@ export default store => {
     toggleFullScreen,
     unregisterTool: unregisterTool(store),
     updateTool: updateTool(store),
+    updateElement: updateElement(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
     setSignatureFonts: setSignatureFonts(store),
