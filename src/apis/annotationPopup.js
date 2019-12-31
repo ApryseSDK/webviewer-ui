@@ -1,7 +1,7 @@
 /**
  * An instance of Popup that can be used to edit items in the annotation popup component
- * @name WebViewer#annotationPopup
- * @implements {WebViewer.Popup}
+ * @name WebViewerInstance#annotationPopup
+ * @implements {WebViewerInstance.Popup}
  * @example
 WebViewer(...)
   .then(function (instance) {

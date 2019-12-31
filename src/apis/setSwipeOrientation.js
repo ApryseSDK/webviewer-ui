@@ -1,6 +1,6 @@
 /**
  * Sets the swipe orientation between pages of WebViewer UI on mobile devices. Default is horizontal.
- * @method WebViewer#setSwipeOrientation
+ * @method WebViewerInstance#setSwipeOrientation
  * @param {string} swipeOrientation The swipe orientation to navigate between pages. Available orientations are: horizontal, vertical and both.
  * @example
 WebViewer(...)

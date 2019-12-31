@@ -1,6 +1,6 @@
 /**
  * Return the current tool object.
- * @method WebViewer#getToolMode
+ * @method WebViewerInstance#getToolMode
  * @return {Tools.Tool} Instance of the current tool
  * @example
 WebViewer(...)

@@ -214,3 +214,7 @@ export const setMaxSignaturesCount = maxSignaturesCount => ({
   type: 'SET_MAX_SIGNATURES_COUNT',
   payload: { maxSignaturesCount },
 });
+export const setCustomElementOverrides = (dataElement, overrides) => ({
+  type: 'SET_CUSTOM_ELEMENT_OVERRIDES',
+  payload: { dataElement, overrides },
+});

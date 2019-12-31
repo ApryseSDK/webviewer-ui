@@ -49,7 +49,12 @@ class SignatureModal extends React.PureComponent {
       core.setToolMode('AnnotationCreateSignature');
       this.setState(this.initialState);
       this.signatureTool.clearSignatureCanvas();
-      this.props.closeElements(['printModal', 'loadingModal', 'progressModal', 'errorModal']);
+      this.props.closeElements([
+        'printModal',
+        'loadingModal',
+        'progressModal',
+        'errorModal',
+      ]);
     }
   }
 
@@ -86,15 +91,19 @@ class SignatureModal extends React.PureComponent {
   };
 
   onRotate = () => {
-    const imageData = this.canvas.current.toDataURL();
-    this.setSignatureCanvasSize();
-    this.redrawSignatureCanvas(imageData);
+    if (this.canvas.current) {
+      const imageData = this.canvas.current.toDataURL();
+      this.setSignatureCanvasSize();
+      this.redrawSignatureCanvas(imageData);
+    }
   };
 
   onResize = () => {
-    const imageData = this.canvas.current.toDataURL();
-    this.setSignatureCanvasSize();
-    this.redrawSignatureCanvas(imageData);
+    if (this.canvas.current) {
+      const imageData = this.canvas.current.toDataURL();
+      this.setSignatureCanvasSize();
+      this.redrawSignatureCanvas(imageData);
+    }
   };
 
   redrawSignatureCanvas = signatureData => {

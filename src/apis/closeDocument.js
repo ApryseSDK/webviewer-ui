@@ -1,6 +1,6 @@
 /**
  * Closes the document that's currently opened.
- * @method WebViewer#closeDocument
+ * @method WebViewerInstance#closeDocument
  * @return {Promise<void>} A promise resolved after document is closed.
  * @example
 WebViewer(...)

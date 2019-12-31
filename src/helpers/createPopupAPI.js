@@ -1,7 +1,7 @@
 /**
  * A class which contains popup APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> If you want to remove an item in a popup, use {@link WebViewer#disableElements disableElements}.
- * @interface WebViewer.Popup
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> If you want to remove an item in a popup, use {@link WebViewerInstance#disableElements disableElements}.
+ * @interface WebViewerInstance.Popup
  */
 import actions from 'actions';
 import selectors from 'selectors';
@@ -16,7 +16,7 @@ const PopupAPI = {
   },
   /**
    * Add an array of items after the item that has the given data element
-   * @method WebViewer.Popup#add
+   * @method WebViewerInstance.Popup#add
    * @param {Array.<object>} items Same as <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>header items</a>.
    * @param {string} [dataElement] An optional string. If not given, items will be added in the beginning.
    * @returns {object} The instance itself
@@ -45,21 +45,14 @@ WebViewer(...)
     return this;
   },
   /**
-   * Update one item or all the items in the popup
-   * @method WebViewer.Popup#update
-   * @param {string|Array.<object>} dataElement
-   * If a string is passed, the item that has the given data element will be updated based on the given props.
-   * If an array of object is passed, the items in the popup will become the array.
-   * @param {object} [props] An optional object that is used to override an existing item's properties. Only useful when the first argument is a string.
+   * Update all the items in the popup
+   * To update an individual item, use {@link WebViewerInstance#updateElement updateElement}
+   * @method WebViewerInstance.Popup#update
+   * @param {Array.<object>} items the items that will be rendered in the popup.
    * @returns {object} The instance itself
    * @example
 WebViewer(...)
   .then(function(instance) {
-    // use a new image for a button
-    instance.textPopup.update('copyTextButton', {
-      img: 'path/to/image',
-    });
-
     // replace existing items with a new array of items
     instance.contextMenuPopup.update([
       {
@@ -75,28 +68,14 @@ WebViewer(...)
     ]);
   });
    */
-  update(dataElement, props) {
-    let items;
-
-    if (Array.isArray(dataElement)) {
-      items = dataElement;
-    } else {
-      const index = this._getIndexByDataElement(dataElement);
-
-      items = this.getItems();
-      items[index] = {
-        ...items[index],
-        ...props,
-      };
-    }
-
+  update(items) {
     this.store.dispatch(actions.setPopupItems(this.popupDataElement, items));
 
     return this;
   },
   /**
    * Return the array of items in the popup
-   * @method WebViewer.Popup#getItems
+   * @method WebViewerInstance.Popup#getItems
    * @example
 WebViewer(...)
   .then(function(instance) {
