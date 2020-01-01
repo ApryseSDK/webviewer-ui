@@ -34,21 +34,21 @@ const TextSignature = ({
     }
   }, [activeIndex, fonts]);
 
-  useEffect(() => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
+  // useEffect(() => {
+  //   const signatureTool = core.getTool('AnnotationCreateSignature');
 
-    if (isModalOpen && isTabPanelSelected) {
-      _setSaveSignature(!!value);
+  //   if (isModalOpen && isTabPanelSelected) {
+  //     _setSaveSignature(!!value);
 
-      if (value) {
-        signatureTool.setSignature(
-          canvasesRef.current[activeIndex].toDataURL(),
-        );
-      } else {
-        signatureTool.setSignature(null);
-      }
-    }
-  }, [_setSaveSignature, isTabPanelSelected, activeIndex, value, isModalOpen]);
+  //     if (value) {
+  //       signatureTool.setSignature(
+  //         canvasesRef.current[activeIndex].toDataURL(),
+  //       );
+  //     } else {
+  //       signatureTool.setSignature(null);
+  //     }
+  //   }
+  // }, [_setSaveSignature, isTabPanelSelected, activeIndex, value, isModalOpen]);
 
   useEffect(() => {
     if (isTabPanelSelected) {
@@ -76,19 +76,19 @@ const TextSignature = ({
         value={value}
         onChange={handleInputChange}
       />
-      <div
-        className="text-signature-container"
-        style={{ overflowY: fonts.length > 1 ? 'scroll' : 'hidden' }}
-      >
+      <div className="text-signature-container">
         {fonts.map((font, index) => (
           <div
             key={font}
             className={classNames({
-              'text-signature-canvas-container': true,
+              'text-signature-text': true,
               active: index === activeIndex,
             })}
+            style={{ fontFamily: font, fontSize: 100 }}
           >
-            <div className="text-signature-background" />
+            {value}
+            {/* <span style={{ fontFamily: font }}>{value}</span> */}
+            {/* <div className="text-signature-background" />
             <Canvas
               ref={el => {
                 canvasesRef.current[index] = el;
@@ -97,7 +97,7 @@ const TextSignature = ({
               font={font}
               onSelect={() => setActiveIndex(index)}
               isTabPanelSelected={isTabPanelSelected}
-            />
+            /> */}
           </div>
         ))}
       </div>

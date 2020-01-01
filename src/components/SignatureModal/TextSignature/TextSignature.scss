@@ -23,14 +23,20 @@
     border-radius: 4px;
     display: flex;
     flex-wrap: wrap;
+    overflow: auto;
+    position: relative;
   }
 
-  &-canvas-container {
-    position: relative;
-    width: 100%;
+  &-text {
+    position: absolute;
+    min-width: 100%;
     height: 100%;
     border: 1px solid transparent;
     border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f8f8;
 
     &:hover {
       cursor: pointer;
@@ -48,12 +54,5 @@
       height: 100%;
       z-index: 1;
     }
-  }
-
-  &-background {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background: #f8f8f8;
   }
 }
