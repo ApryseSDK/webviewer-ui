@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -15,6 +15,8 @@ const propTypes = {
   isTabPanelSelected: PropTypes.bool,
 };
 
+const FONT_SIZE = 100;
+
 const TextSignature = ({
   isModalOpen,
   _setSaveSignature,
@@ -24,7 +26,8 @@ const TextSignature = ({
   const [value, setValue] = useState(core.getCurrentUser());
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef();
-  const canvasesRef = useRef([]);
+  const canvasRef = useRef();
+  const textDivsRef = useRef([]);
 
   useEffect(() => {
     // this can happen when an user added a new signature font, select it and then removed it
@@ -34,21 +37,59 @@ const TextSignature = ({
     }
   }, [activeIndex, fonts]);
 
-  // useEffect(() => {
-  //   const signatureTool = core.getTool('AnnotationCreateSignature');
+  const setSignature = useCallback(() => {
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+    const canvas = canvasRef.current;
+    _setSaveSignature(!!value);
 
-  //   if (isModalOpen && isTabPanelSelected) {
-  //     _setSaveSignature(!!value);
+    if (value) {
+      signatureTool.setSignature(canvas.toDataURL());
+    } else {
+      signatureTool.setSignature(null);
+    }
+  }, [_setSaveSignature, value]);
 
-  //     if (value) {
-  //       signatureTool.setSignature(
-  //         canvasesRef.current[activeIndex].toDataURL(),
-  //       );
-  //     } else {
-  //       signatureTool.setSignature(null);
-  //     }
-  //   }
-  // }, [_setSaveSignature, isTabPanelSelected, activeIndex, value, isModalOpen]);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const multiplier = window.utils.getCanvasMultiplier();
+
+    const resizeCanvas = () => {
+      const { width, height } = textDivsRef.current[
+        activeIndex
+      ].getBoundingClientRect();
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      canvas.width = width * multiplier;
+      canvas.height = height * multiplier;
+    };
+
+    const setFont = () => {
+      ctx.fillStyle = '#000';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = `${FONT_SIZE * multiplier}px ${fonts[activeIndex]}`;
+    };
+
+    const drawTextSignature = () => {
+      const { width, height } = canvas;
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillText(value, width / 2, height / 2);
+    };
+
+    if (isTabPanelSelected) {
+      resizeCanvas();
+      setFont();
+      drawTextSignature();
+      setSignature();
+    }
+  }, [activeIndex, isTabPanelSelected, value, fonts, setSignature]);
+
+  useEffect(() => {
+    if (isModalOpen && isTabPanelSelected) {
+      setSignature();
+    }
+  }, [isModalOpen, isTabPanelSelected, setSignature]);
 
   useEffect(() => {
     if (isTabPanelSelected) {
@@ -77,29 +118,25 @@ const TextSignature = ({
         onChange={handleInputChange}
       />
       <div className="text-signature-container">
-        {fonts.map((font, index) => (
-          <div
-            key={font}
-            className={classNames({
-              'text-signature-text': true,
-              active: index === activeIndex,
-            })}
-            style={{ fontFamily: font, fontSize: 100 }}
-          >
-            {value}
-            {/* <span style={{ fontFamily: font }}>{value}</span> */}
-            {/* <div className="text-signature-background" />
-            <Canvas
+        <div className="text-signature-inner-container">
+          {fonts.map((font, index) => (
+            <div
+              key={font}
               ref={el => {
-                canvasesRef.current[index] = el;
+                textDivsRef.current[index] = el;
               }}
-              text={value}
-              font={font}
-              onSelect={() => setActiveIndex(index)}
-              isTabPanelSelected={isTabPanelSelected}
-            /> */}
-          </div>
-        ))}
+              className={classNames({
+                'text-signature-text': true,
+                active: index === activeIndex,
+              })}
+              style={{ fontFamily: font, fontSize: FONT_SIZE }}
+              onClick={() => setActiveIndex(index)}
+            >
+              {value}
+            </div>
+          ))}
+        </div>
+        <canvas ref={canvasRef} />
       </div>
     </div>
   );
@@ -108,80 +145,3 @@ const TextSignature = ({
 TextSignature.propTypes = propTypes;
 
 export default TextSignature;
-
-const Canvas = React.forwardRef(
-  ({ text, font, onSelect, isTabPanelSelected }, forwardedRef) => {
-    const canvasRef = useRef();
-
-    useEffect(() => {
-      const multiplier = window.utils.getCanvasMultiplier();
-      const canvas = canvasRef.current;
-
-      const resizeCanvas = () => {
-        // the panel has display: none when it's not selected, which will affect the canvas size
-        // so we resize the canvas whenever this panel is selected
-        const { width, height } = canvas.getBoundingClientRect();
-        canvas.width = width * multiplier;
-        canvas.height = height * multiplier;
-      };
-
-      const setFont = () => {
-        const ctx = canvas.getContext('2d');
-
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-
-        let fontSize = 100 * multiplier;
-        ctx.font = `${fontSize}px ${font}`;
-
-        while (ctx.measureText(text).width > canvas.width) {
-          fontSize--;
-          ctx.font = `${fontSize}px ${font}`;
-        }
-      };
-
-      const drawTextSignature = () => {
-        const ctx = canvas.getContext('2d');
-        const { width, height } = canvas;
-
-        ctx.fillStyle = '#000';
-        ctx.clearRect(0, 0, width, height);
-        ctx.fillText(text, width / 2, height / 2);
-      };
-
-      if (isTabPanelSelected && canvas) {
-        resizeCanvas();
-        setFont();
-        drawTextSignature();
-      }
-    }, [isTabPanelSelected, text, font]);
-
-    const handleClick = () => {
-      const signatureTool = core.getTool('AnnotationCreateSignature');
-      if (text) {
-        signatureTool.setSignature(canvasRef.current.toDataURL());
-      } else {
-        signatureTool.annot = null;
-      }
-
-      onSelect();
-    };
-
-    return (
-      <canvas
-        ref={el => {
-          canvasRef.current = el;
-          forwardedRef(el);
-        }}
-        onClick={handleClick}
-      />
-    );
-  },
-);
-
-Canvas.propTypes = {
-  text: PropTypes.string.isRequired,
-  font: PropTypes.string.isRequired,
-  onSelect: PropTypes.func.isRequired,
-  isTabPanelSelected: PropTypes.bool,
-};
