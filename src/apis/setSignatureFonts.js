@@ -1,8 +1,7 @@
 /**
- * Set the fonts that are used when typing a signature in the signature dialog
- * @method WebViewer#setSignatureFonts
- * @param {Array.<string>|function} fonts An array of font families.
- * If a callback is used, an array of current font families will be passed to it as the first argument. The callback should return an array of font families that should be set.
+ * Set the fonts that are used when typing a signature in the signature dialog.
+ * @method WebViewerInstance#setSignatureFonts
+ * @param {Array.<string>|WebViewerInstance.setSignatureFontsCallback} fonts An array of font families.
  * @example // 6.1
 WebViewer(...)
   .then(function(instance) {
@@ -12,6 +11,12 @@ WebViewer(...)
       'sans-serif',
     ]);
   });
+ */
+
+/**
+ * @callback WebViewerInstance.setSignatureFontsCallback
+ * @param {Array.<string>} fonts current font families
+ * @returns {Array.<string>} fonts to set.
  */
 
 import selectors from 'selectors';
