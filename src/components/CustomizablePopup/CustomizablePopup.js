@@ -64,32 +64,36 @@ const CustomizablePopup = ({ dataElement, children }) => {
 
     // duplicate code in HeaderItems.js, must clean up after 6.0
     if (!component) {
+      const props = { ...item, mediaQueryClassName };
+
       if (type === 'toolButton') {
-        component = <ToolButton />;
+        component = <ToolButton {...props} />;
       }
 
       if (type === 'toolGroupButton') {
-        component = <ToolGroupButton />;
+        component = <ToolGroupButton {...props} />;
       }
 
       if (type === 'toggleElementButton') {
-        component = <ToggleElementButton />;
+        component = <ToggleElementButton {...props} />;
       }
 
       if (type === 'actionButton') {
-        component = <ActionButton />;
+        component = <ActionButton {...props} />;
       }
 
       if (type === 'statefulButton') {
-        component = <StatefulButton />;
+        component = <StatefulButton {...props} />;
       }
 
       if (type === 'customElement') {
-        component = <CustomElement />;
+        component = <CustomElement {...props} />;
       }
 
       if (type === 'spacer' || type === 'divider') {
-        component = <div className={`${type} ${mediaQueryClassName}`} />;
+        component = (
+          <div className={`${type} ${mediaQueryClassName}`} {...props} />
+        );
       }
     }
 
