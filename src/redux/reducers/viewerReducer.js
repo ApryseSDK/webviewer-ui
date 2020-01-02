@@ -58,7 +58,6 @@ export default initialState => (state = initialState, action) => {
         openElements: { ...state.openElements, [payload.dataElement]: true },
       };
     case 'CLOSE_ELEMENT':
-      console.log('CLOSE ', payload);
       return {
         ...state,
         openElements: { ...state.openElements, [payload.dataElement]: false },

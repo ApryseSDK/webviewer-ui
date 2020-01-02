@@ -17,6 +17,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './MeasurementOverlay.scss';
+import CustomMeasurementOverlay from './CustomMeasurementOverlay';
 
 class MeasurementOverlay extends React.PureComponent {
   static propTypes = {
@@ -93,7 +94,7 @@ class MeasurementOverlay extends React.PureComponent {
     if (
       action === 'selected' &&
       annotations.length === 1 &&
-      this.isMeasurementAnnotation(annotations[0])
+      (this.isMeasurementAnnotation(annotations[0]) || this.shouldShowCustomOverlay(annotations[0]))
     ) {
       this.setState({ annotation: annotations[0] });
       openElement('measurementOverlay');
@@ -357,7 +358,9 @@ class MeasurementOverlay extends React.PureComponent {
     }
 
     if (this.shouldShowCustomOverlay(annotation)) {
-      return (<div></div>);
+      // Get the props for this particular custom overlay
+      const customOverlayProps = this.props.customMeasurementOverlay.filter(customOverlay => customOverlay.validate(annotation))[0];
+      return (<CustomMeasurementOverlay annotation={annotation} {...customOverlayProps}/>);
     }
     return (
       <div className={className} data-element="measurementOverlay">
