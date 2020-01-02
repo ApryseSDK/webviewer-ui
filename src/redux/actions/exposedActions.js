@@ -214,6 +214,10 @@ export const setMaxSignaturesCount = maxSignaturesCount => ({
   type: 'SET_MAX_SIGNATURES_COUNT',
   payload: { maxSignaturesCount },
 });
+export const setSelectedTab = (id, dataElement) => ({
+  type: 'SET_SELECTED_TAB',
+  payload: { id, dataElement },
+});
 export const setCustomElementOverrides = (dataElement, overrides) => ({
   type: 'SET_CUSTOM_ELEMENT_OVERRIDES',
   payload: { dataElement, overrides },

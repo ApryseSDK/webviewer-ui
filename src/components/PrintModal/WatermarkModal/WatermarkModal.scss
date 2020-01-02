@@ -123,21 +123,21 @@ $gap: 15px;
     cursor: pointer;
 
     &.reset {
-      color: $pdftronBlue;
+      color: $pdftron-blue;
     }
 
     &.ok {
       font-weight: normal;
-      background: $pdftronBlue;
-      border: 1px solid $pdftronBlue;
+      background: $pdftron-blue;
+      border: 1px solid $pdftron-blue;
       color: white;
     }
 
     &.cancel {
       font-weight: normal;
       background: white;
-      border: 1px solid $pdftronBlue;
-      color: $pdftronBlue;
+      border: 1px solid $pdftron-blue;
+      color: $pdftron-blue;
       margin-right: 5px;
     }
   }

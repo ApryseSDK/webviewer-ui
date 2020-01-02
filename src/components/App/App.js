@@ -32,6 +32,7 @@ import CalibrationModal from 'components/CalibrationModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
+import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 
 import defineReaderControlAPIs from 'src/apis';
@@ -95,6 +96,7 @@ const App = ({ removeEventHandlers }) => {
       <PrintHandler />
       <FilePickerHandler />
       <CopyTextHandler />
+      <FontHandler />
     </React.Fragment>
   );
 };
