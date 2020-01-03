@@ -52,6 +52,7 @@ class PrintModal extends React.PureComponent {
       isWatermarkModalVisible: false,
       watermarkModalOption: null,
       existingWatermarks: null,
+      isProcessingPagesToPrint: false,
     };
   }
 
@@ -135,7 +136,7 @@ class PrintModal extends React.PureComponent {
       return;
     }
 
-    this.setState({ count: 0 });
+    this.setState({ count: 0, isProcessingPagesToPrint: true });
     this.setPrintQuality();
 
     if (this.state.allowWatermarkModal) {
@@ -149,9 +150,11 @@ class PrintModal extends React.PureComponent {
       .then(pages => {
         this.printPages(pages);
         this.resetPrintQuality();
+        this.setState({ isProcessingPagesToPrint: false });
       })
       .catch(e => {
         console.error(e);
+        this.setState({ isProcessingPagesToPrint: false });
       });
   };
 
@@ -435,14 +438,14 @@ class PrintModal extends React.PureComponent {
   };
 
   closePrintModal = () => {
-    this.setState({ count: -1 });
+    this.setState({ count: -1, isProcessingPagesToPrint: false });
     this.props.closeElement('printModal');
   };
 
   cancelPrint = () => {
     const doc = core.getDocument();
     this.pendingCanvases.forEach(id => doc.cancelLoadCanvas(id));
-    this.setState({ count: -1 });
+    this.setState({ count: -1, isProcessingPagesToPrint: false });
   };
 
   setWatermarkModalVisibility = visible => {
@@ -464,7 +467,7 @@ class PrintModal extends React.PureComponent {
       return null;
     }
 
-    const { count, pagesToPrint } = this.state;
+    const { count, pagesToPrint, isProcessingPagesToPrint } = this.state;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = (
       <input
@@ -472,6 +475,7 @@ class PrintModal extends React.PureComponent {
         type="text"
         placeholder={t('message.customPrintPlaceholder')}
         onFocus={this.onFocus}
+        disabled={this.state.isProcessingPagesToPrint}
       />
     );
     const isPrinting = count >= 0;
@@ -514,6 +518,7 @@ class PrintModal extends React.PureComponent {
                   type="radio"
                   label={t('option.print.all')}
                   defaultChecked
+                  disabled={isProcessingPagesToPrint}
                 />
                 <Input
                   ref={this.currentPage}
@@ -521,6 +526,7 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={t('option.print.current')}
+                  disabled={isProcessingPagesToPrint}
                 />
                 <Input
                   ref={this.customPages}
@@ -528,6 +534,7 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={customPagesLabelElement}
+                  disabled={isProcessingPagesToPrint}
                 />
                 <Input
                   ref={this.includeComments}
@@ -535,6 +542,7 @@ class PrintModal extends React.PureComponent {
                   name="comments"
                   type="checkbox"
                   label={t('option.print.includeComments')}
+                  disabled={isProcessingPagesToPrint}
                 />
               </form>
             </div>
@@ -542,7 +550,8 @@ class PrintModal extends React.PureComponent {
               <button
                 id="applyWatermark"
                 className="apply-watermark"
-                onClick={() => this.setWatermarkModalVisibility(true)}
+                disabled={isProcessingPagesToPrint}
+                onClick={() => !isProcessingPagesToPrint && this.setWatermarkModalVisibility(true)}
               >
                 {t('option.print.addWatermarkSettings')}
               </button>
