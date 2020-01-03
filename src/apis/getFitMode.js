@@ -1,7 +1,7 @@
 /**
  * Return the current fit mode of the WebViewerInstance.
  * @method WebViewerInstance#getFitMode
- * @return {WebViewerInstance.FitMode} Current fit mode
+ * @return {string} Current fit mode
  * @example
 WebViewer(...)
   .then(function(instance) {
