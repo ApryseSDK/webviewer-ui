@@ -79,14 +79,22 @@ class MeasurementOverlay extends React.PureComponent {
     if (this.state.annotation) {
       this.forceUpdate();
     } else if (
-      this.isMeasurementTool(activeToolName) &&
-      tool.annotation &&
-      this.shouldShowInfo(tool.annotation)
+      this.isMeasurementToolWithInfo(tool) ||
+      this.shouldShowCustomOverlay(tool.annotation)
     ) {
       openElement('measurementOverlay');
       this.setState({ annotation: tool.annotation });
     }
   };
+
+  isMeasurementToolWithInfo(tool) {
+    const { activeToolName } = this.props;
+    return (
+      this.isMeasurementTool(activeToolName) &&
+      tool.annotation &&
+      this.shouldShowInfo(tool.annotation)
+    );
+  }
 
   onAnnotationSelected = (annotations, action) => {
     const { openElement, closeElement } = this.props;
@@ -362,6 +370,7 @@ class MeasurementOverlay extends React.PureComponent {
       const customOverlayProps = this.props.customMeasurementOverlay.filter(customOverlay => customOverlay.validate(annotation))[0];
       return (<CustomMeasurementOverlay annotation={annotation} {...customOverlayProps}/>);
     }
+
     return (
       <div className={className} data-element="measurementOverlay">
         {this.renderTitle()}
