@@ -150,6 +150,7 @@ const Header = {
   /**
    * Insert a button before the selected button from {@link Header#get get}.
    * @method Header#insertBefore
+   * @param {object} obj A header object. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
    * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   insertBefore(newItem) {
@@ -164,6 +165,7 @@ const Header = {
   /**
    * Insert a button after the selected button from {@link Header#get get}.
    * @method Header#insertAfter
+   * @param {object} obj A header object. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
    * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   insertAfter(newItem) {

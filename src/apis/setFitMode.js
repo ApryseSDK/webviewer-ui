@@ -1,7 +1,8 @@
 /**
  * Sets the fit mode of the viewer.
  * @method WebViewerInstance#setFitMode
- * @param {WebViewerInstance.FitMode} fitMode Fit mode of WebViewer.
+ * @param {string} fitMode Fit mode of WebViewer.
+ * @see WebViewerInstance#FitMode
  * @example
 WebViewer(...)
   .then(function(instance) {

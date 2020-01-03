@@ -1,7 +1,8 @@
 /**
  * Enable certain features in the WebViewer UI.
  * @method WebViewerInstance#enableFeatures
- * @param {Array.<WebViewerInstance.Feature>} features Array of features to enable.
+ * @param {Array.<string>} features Array of features to enable.
+ * @see WebViewerInstance#Feature
  * @example
 WebViewer(...)
   .then(function(instance) {
