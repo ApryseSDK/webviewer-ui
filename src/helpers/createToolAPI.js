@@ -1,5 +1,5 @@
 import hotkeys from 'src/apis/hotkeys';
-import { PRIORITY_ONE } from 'constants/actionPriority';
+import { PRIORITY_THREE } from 'constants/actionPriority';
 import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -33,12 +33,12 @@ export default (enable, store) => (
       hotkeys.on(toolName);
     });
 
-    store.dispatch(actions.enableElements(dataElements, PRIORITY_ONE));
+    store.dispatch(actions.enableElements(dataElements, PRIORITY_THREE));
   } else {
     toolNameArray.forEach(toolName => {
       hotkeys.off(toolName);
     });
 
-    store.dispatch(actions.disableElements(dataElements, PRIORITY_ONE));
+    store.dispatch(actions.disableElements(dataElements, PRIORITY_THREE));
   }
 };
