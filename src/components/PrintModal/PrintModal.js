@@ -501,7 +501,10 @@ class PrintModal extends React.PureComponent {
                 dataElement="printModalCloseButton"
                 title="action.close"
                 img="ic_close_black_24px"
-                onClick={this.closePrintModal}
+                onClick={() => {
+                  this.cancelPrint();
+                  this.closePrintModal();
+                }}
               />
             </div>
             <div className="settings">
