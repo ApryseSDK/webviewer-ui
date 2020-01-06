@@ -59,5 +59,6 @@ const getEventToObjectMap = () => {
     fieldChanged: annotManager,
     notify: annotManager,
     setNoteText: annotManager,
+    fileAttachmentDataAvailable: window.docViewer,
   };
 };
