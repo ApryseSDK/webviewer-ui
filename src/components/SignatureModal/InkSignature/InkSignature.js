@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Measure from 'react-measure';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -26,28 +26,6 @@ const InkSignature = ({
   const [dimension, setDimension] = useState({});
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-
-    if (
-      dimension.height &&
-      dimension.width &&
-      isModalOpen &&
-      canvas
-    ) {
-      // since the canvas will be cleared when the size changes,
-      // we grab the image data before resizing and use it to redraw afterwards
-      const { width, height } = canvas.getBoundingClientRect();
-      const ctx = canvas.getContext('2d');
-      const imageData = ctx.getImageData(0, 0, width, height);
-
-      canvas.width = width;
-      canvas.height = height;
-
-      ctx.putImageData(imageData, 0, 0);
-    }
-  }, [dimension, isModalOpen]);
-
-  useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
     const canvas = canvasRef.current;
 
@@ -59,22 +37,48 @@ const InkSignature = ({
   }, []);
 
   useEffect(() => {
-    if (isModalOpen && isTabPanelSelected) {
+    const canvas = canvasRef.current;
+
+    if (dimension.height && dimension.width && canvas) {
+      // since the canvas will be cleared when the size changes,
+      // we grab the image data before resizing and use it to redraw afterwards
+      const { width, height } = canvas.getBoundingClientRect();
+      const ctx = canvas.getContext('2d');
+      // during testing we found sometimes width and height could be 0 while dimension.height and dimension.width are not
+      // as a result we do an extra check here
+      if (width && height) {
+        const imageData = ctx.getImageData(0, 0, width, height);
+
+        canvas.width = width;
+        canvas.height = height;
+
+        ctx.putImageData(imageData, 0, 0);
+      }
+    }
+  }, [dimension]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      clearCanvas();
+    }
+  }, [clearCanvas, isModalOpen]);
+
+  useEffect(() => {
+    if (isTabPanelSelected) {
       const signatureTool = core.getTool('AnnotationCreateSignature');
       signatureTool.setSignature(freeHandPathsRef.current);
       setCanClear(!!freeHandPathsRef.current);
       _setSaveSignature(!!freeHandPathsRef.current);
     }
-  }, [isTabPanelSelected, _setSaveSignature, isModalOpen]);
+  }, [isTabPanelSelected, _setSaveSignature]);
 
-  const clearCanvas = () => {
+  const clearCanvas = useCallback(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
-
     signatureTool.clearSignatureCanvas();
     setCanClear(false);
     _setSaveSignature(false);
     freeHandPathsRef.current = null;
-  };
+  }, [_setSaveSignature]);
 
   const handleFinishDrawing = () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
