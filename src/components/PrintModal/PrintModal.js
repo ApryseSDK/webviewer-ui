@@ -152,6 +152,7 @@ class PrintModal extends React.PureComponent {
       })
       .catch(e => {
         console.error(e);
+        this.setState({ count: -1 });
       });
   };
 
