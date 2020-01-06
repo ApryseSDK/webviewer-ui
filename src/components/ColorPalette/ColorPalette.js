@@ -25,12 +25,14 @@ class ColorPalette extends React.PureComponent {
     ];
   }
 
-  setColor = e => {
+  setColor = bg => {
     const { property, onStyleChange } = this.props;
-    const bg = e.target.style.backgroundColor; // rgb(r, g, b);
-    const rgba = bg ? bg.slice(bg.indexOf('(') + 1, -1).split(',') : [0, 0, 0, 0];
-    const color = new window.Annotations.Color(rgba[0], rgba[1], rgba[2], rgba[3]);
-    onStyleChange(property, color);
+    if (!bg) {
+      onStyleChange(property, new window.Annotations.Color(0, 0, 0, 0));
+    } else {
+      const color = new window.Annotations.Color(bg);
+      onStyleChange(property, color);
+    }
   }
 
   renderCheckMark = bg => {
@@ -52,14 +54,16 @@ class ColorPalette extends React.PureComponent {
     return (
       <div className="ColorPalette" data-element="colorPalette">
         {allowTransparent &&
-          <div className="cell-outer">
+          <div
+            className="cell-outer"
+            onClick={() => this.setColor(null)}
+          >
             <div
               className={classNames({
                 cell: true,
                 transparent: true,
                 active: color.toHexString() === null,
               })}
-              onClick={this.setColor}
             >
               <svg width="100%" height="100%">
                 <line x1="15%" y1="85%" x2="85%" y2="15%" strokeWidth="2" stroke="#d0021b" strokeLinecap="round" />
@@ -68,14 +72,17 @@ class ColorPalette extends React.PureComponent {
           </div>}
         {this.palette.map((row, i) =>
           row.map((bg, j) =>
-            <div key={`${i}${j}`} className="cell-outer">
+            <div
+              key={`${i}${j}`}
+              className="cell-outer"
+              onClick={() => this.setColor(bg)}
+            >
               <div
                 className={classNames({
                   cell: true,
                   active: color.toHexString() === bg,
                 })}
                 style={{ backgroundColor: bg, border: '1px solid' }}
-                onClick={this.setColor}
               />
             </div>,
           ),

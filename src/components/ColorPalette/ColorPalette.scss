@@ -6,11 +6,17 @@
   margin: 0 3px;
 
   .cell-outer {
+    cursor: pointer;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:hover {
+      background: var(--tools-active-color);
+      border-radius: var(--header-items-border-radius);
+    }
 
     .cell {
       width: 18px;
