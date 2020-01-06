@@ -63,7 +63,7 @@
       .thumbnail:before{
         content: "✓";
         color: white;
-        background: $pdftronBlue;
+        background: $pdftron-blue;
         width: $selected-icon-size;
         height: $selected-icon-size;
         border-bottom-right-radius: 5px;
@@ -73,11 +73,11 @@
     }
 
     .page-label {
-      color: $pdftronBlue !important;
+      color: $pdftron-blue !important;
     }
 
     canvas:first-of-type{
-      border: solid $pdftronBlue $selected-border-size !important;
+      border: solid $pdftron-blue $selected-border-size !important;
     }
   }
 }
