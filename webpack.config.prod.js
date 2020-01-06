@@ -22,8 +22,8 @@ module.exports = {
         to: '../build/i18n',
       },
       {
-        from: './assets/pdftron.ico',
-        to: '../build/assets/pdftron.ico',
+        from: './assets',
+        to: '../build/assets',
       },
     ]),
     new MiniCssExtractPlugin({
@@ -83,6 +83,21 @@ module.exports = {
       {
         test: /\.svg$/,
         use: ['svg-inline-loader'],
+      },
+      {
+        test: /\.woff(2)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              // this is used to overwrite the publicPath that is specified in the output object,
+              // to make the url of the fonts be relative to the minified style.css
+              publicPath: './assets/fonts',
+              outputPath: '/assets/fonts',
+            },
+          },
+        ],
       },
     ],
   },

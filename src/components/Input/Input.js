@@ -14,6 +14,7 @@ const propTypes = {
     PropTypes.object,
   ]).isRequired,
   checked: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 const Input = React.forwardRef((props, ref) => (
