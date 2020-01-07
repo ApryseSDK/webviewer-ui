@@ -13,7 +13,7 @@ import './StampOverlay.scss';
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const canvasWidth = 160;
 const canvasHeight = 48;
-const padding = 16;
+const padding = 10;
 const X = padding / 2;
 const Y = padding / 2;
 
