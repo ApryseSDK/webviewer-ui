@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from 'components/Button';
-import './DocumentControls.scss';
-import getPagesToPrint from 'helpers/getPagesToPrint';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 
+import Button from 'components/Button';
+import './DocumentControls.scss';
+import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -48,7 +48,6 @@ const DocumentControls = props => {
 
   const initalPagesString = getPageString(selectedPageIndexes, pageLabels);
 
-  // TODO figure out why the inital values is incorrect
   const [pageString, setPageString] = useState(initalPagesString);
   const [previousPageString, setPreviousPageString] = useState(initalPagesString);
 
@@ -66,8 +65,8 @@ const DocumentControls = props => {
       message,
       title,
       confirmBtnText,
-      onConfirm: () => core.removePages([pageNumbersToDelete]).then(() => {
-        dispatch(actions.deletePageIndex(selectedPageIndexes));
+      onConfirm: () => core.removePages(pageNumbersToDelete).then(() => {
+        updateSelectedPage([]);
       }),
     };
 
@@ -106,9 +105,7 @@ const DocumentControls = props => {
 
   const onBlur = e => {
     const selectedPagesString = e.target.value.replace(/ /g, '');
-
-    // TODO move "getPagesToPrint" to another API
-    const pages = !selectedPagesString ? [] : getPagesToPrint(selectedPagesString, pageLabels);
+    const pages = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels);
     const pageIndexes = pages.map(page => page - 1);
 
     if (pages.length || !selectedPagesString) {

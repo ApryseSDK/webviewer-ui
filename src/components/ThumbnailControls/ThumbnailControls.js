@@ -44,7 +44,7 @@ const ThumbnailControls = ({
       title,
       confirmBtnText,
       onConfirm: () => core.removePages([index + 1]).then(() => {
-        dispatch(actions.deletePageIndex(page - 1));
+        dispatch(actions.deletePageIndex(index));
       }),
     };
 
