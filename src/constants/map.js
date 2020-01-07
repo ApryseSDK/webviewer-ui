@@ -6,6 +6,7 @@ import i18next from 'i18next';
  * ideally, this map file should be the only place which provides information about annotations and tools
  * if you are tempted to create a new map file(which maps a tool/annotation to something else) under this constants folder
  * please make sure that it is not possible to implement that map here
+ * @ignore
  */
 const map = {
   signature: {

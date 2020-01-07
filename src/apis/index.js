@@ -100,6 +100,7 @@ import setNotesPanelSort from './setNotesPanelSort';
 import setPageLabels from './setPageLabels';
 import setPrintQuality from './setPrintQuality';
 import setReadOnly from './setReadOnly';
+import setSelectedTab from './setSelectedTab';
 import setShowSideWindow from './setShowSideWindow';
 import setSideWindowVisibility from './setSideWindowVisibility';
 import setSortNotesBy from './setSortNotesBy';
@@ -115,16 +116,18 @@ import textPopup from './textPopup';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import unregisterTool from './unregisterTool';
+import updateElement from './updateElement';
 import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
 import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
+import setSignatureFonts from './setSignatureFonts';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 
-export default store => {  
+export default store => {
   window.readerControl = {
     docViewer: window.docViewer,
     FitMode,
@@ -188,9 +191,12 @@ export default store => {
     toggleFullScreen,
     unregisterTool: unregisterTool(store),
     updateTool: updateTool(store),
+    updateElement: updateElement(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
+    setSignatureFonts: setSignatureFonts(store),
+    setSelectedTab: setSelectedTab(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),

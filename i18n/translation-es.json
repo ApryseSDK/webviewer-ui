@@ -2,6 +2,7 @@
   "action": {
     "apply": "Aplicar",
     "applyAll": "Aplicar todo",
+    "calibrate": "Calibrar",
     "cancel": "Cancelar",
     "clear": "Borrar",
     "close": "Cerrar",
@@ -33,8 +34,7 @@
     "submit": "Enviar",
     "zoom": "Zoom",
     "zoomIn": "Acercar zoom",
-    "zoomOut": "Alejar zoom",
-    "calibrate": "Calibrar"
+    "zoomOut": "Alejar zoom"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -82,7 +82,10 @@
     "redaction": "Modificación",
     "viewControlsOverlay": "Ver controles",
     "measurementToolsButton": "Herramientas de medición",
-    "calibration": "Calibración"
+    "calibration": "Calibración",
+    "newBookmark": "Nuevo marcador",
+    "bookmarksPanel": "Marcadores",
+    "bookmarkPage": "Página"
   },
   "message": {
     "badDocument": "Error al cargar el documento. El documento está dañado o no es válido.",
@@ -143,13 +146,12 @@
       "addWatermarkSettings": "Agregar configuraciones de marca de agua"
     },
     "redaction": {
-      "markForRedaction": "Marcar para modificación",
-      "warningPopupMessage": "Esta acción eliminará de forma permanente todos los elementos seleccionados para ser modificados. Esta operación no se puede deshacer.",
-      "warningPopupTitle": "Aplicar modificación"
+      "markForRedaction": "Marcar para modificación"
     },
     "searchPanel": {
       "caseSensitive": "Distinguir mayúsculas de minúsculas",
-      "wholeWordOnly": "Palabra completa"
+      "wholeWordOnly": "Palabra completa",
+      "wildcard": "Comodín"
     },
     "signatureOverlay": {
       "addSignature": "Añadir una firma"
@@ -194,6 +196,22 @@
       "text": "Texto",
       "colors": "Colores",
       "resetAllSettings": "Restablecer todos los ajustes"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Agujas del reloj",
+      "delete": "Borrar",
+      "rotateCounterClockwise": "Sinistrórsum"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "Eliminar página",
+      "deleteLastPageMessage": "Esto resultaría en que no quedan páginas. Por favor, deje al menos una página",
+      "deleteMessage": "¿Está seguro de que desea eliminar las páginas seleccionadas? Esto no se puede deshacer"
+    },
+    "redaction": {
+      "applyTile": "Aplicar redacción",
+      "applyMessage": "Esta acción eliminará permanentemente todos los elementos seleccionados para su redacción. No se puede deshacer."
     }
   },
   "shortcut": {

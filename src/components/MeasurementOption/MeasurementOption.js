@@ -11,20 +11,14 @@ import './MeasurementOption.scss';
 
 class MeasurementOption extends React.Component {
   static propTypes = {
-    /**
-     * The current scale of a measurement tool that is consisted of two arrays
-     * The first array represents the document scale and the second array represents the world scale
-     * For example [[1, 'in'], [4, 'ft']] means 1 inch measured in the document is equal to 4 feet in the real world
-     */
+    // The current scale of a measurement tool that is consisted of two arrays
+    // The first array represents the document scale and the second array represents the world scale
+    // For example [[1, 'in'], [4, 'ft']] means 1 inch measured in the document is equal to 4 feet in the real world
     scale: PropTypes.arrayOf(PropTypes.array).isRequired,
-    /**
-     * The current precision of a measurement tool that is used to determine how many decimal places a calculated value should display
-     * Calculated value depends on what the measurement tool is. For example it is distance for distance measurement tool
-     */
+    // The current precision of a measurement tool that is used to determine how many decimal places a calculated value should display
+    // Calculated value depends on what the measurement tool is. For example it is distance for distance measurement tool
     precision: PropTypes.number.isRequired,
-    /**
-     * A prop that is passed down from translate HOC and is used to internationalize strings
-     */
+    // A prop that is passed down from translate HOC and is used to internationalize strings
     t: PropTypes.func.isRequired,
     measurementUnits: PropTypes.shape({
       from: PropTypes.array,
@@ -116,9 +110,7 @@ class MeasurementOption extends React.Component {
   };
 
   renderScaleInput = (type, val) => {
-    /**
-     * There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
-     */
+    // There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
     if (isFirefox) {
       return (
         <input
@@ -126,9 +118,7 @@ class MeasurementOption extends React.Component {
           type="number"
           step="any"
           value={val}
-          onChange={e =>
-            this.onScaleChange(e.target.value, type)
-          }
+          onChange={e => this.onScaleChange(e.target.value, type)}
         />
       );
     }
@@ -139,9 +129,7 @@ class MeasurementOption extends React.Component {
           type="number"
           step="any"
           value={val}
-          onChange={e =>
-            this.onScaleChange(e.target.value, type)
-          }
+          onChange={e => this.onScaleChange(e.target.value, type)}
           onBlur={this.toggleEditing}
         />
       );
@@ -155,7 +143,7 @@ class MeasurementOption extends React.Component {
         readOnly
       />
     );
-  }
+  };
 
   render() {
     const { measurementUnits, t } = this.props;

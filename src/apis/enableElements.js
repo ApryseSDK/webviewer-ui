@@ -1,6 +1,6 @@
 /**
  * Remount the hidden elements in the DOM.
- * @method WebViewer#enableElements
+ * @method WebViewerInstance#enableElements
  * @param {string[]} dataElements Array of data-element attribute values for DOM elements. To find data-element of a DOM element, refer to <a href='https://www.pdftron.com/documentation/web/guides/hiding-elements/#finding-dataelement-attribute-values' target='_blank'>Finding data-element attribute values</a>.
  * @example
 WebViewer(...)

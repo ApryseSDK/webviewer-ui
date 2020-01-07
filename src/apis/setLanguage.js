@@ -1,6 +1,6 @@
 /**
  * Set the language of WebViewer UI.
- * @method WebViewer#setLanguage
+ * @method WebViewerInstance#setLanguage
  * @param {string} language The language WebViewer UI will use. By default, following languages are supported: en, zh_cn, fr.
  * @example
 WebViewer(...)

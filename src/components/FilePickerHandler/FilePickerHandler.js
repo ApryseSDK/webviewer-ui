@@ -1,7 +1,6 @@
 import React from 'react';
 import { useStore, useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-import { supportedClientOnlyExtensions } from 'constants/supportedFiles';
 import loadDocument from 'helpers/loadDocument';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -31,7 +30,9 @@ const FilePickerHandler = () => {
       <input
         id="file-picker"
         type="file"
-        accept={supportedClientOnlyExtensions.join(', ')}
+        accept={window.CoreControls.SupportedFileFormats.CLIENT.map(
+          format => `.${format}`,
+        ).join(', ')}
         onChange={openDocument}
       />
     </div>
