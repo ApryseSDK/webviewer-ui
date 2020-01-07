@@ -27,7 +27,7 @@
     outline: none;
     color: inherit;
     background-color: transparent;
-    font-size: 14px;
+    font-size: var(--font-size-small);
     font-weight: bold;
     width: 28px;
     text-align: right;
@@ -36,6 +36,7 @@
   .Icon{
     width: 12px;
     height: 16px;
+    color: var(--text-color);
   }
 }
 
@@ -44,6 +45,8 @@
   align-items: center;
   height: 100%;
   border-radius: 4px;
+  position: relative;
+  top: -1px;
 
   &:hover {
     background-color: #F6F6F6;
@@ -62,10 +65,8 @@
   align-items: center;
   margin-right:-8px;
   margin-bottom: -1px;
-  font-size: 14px;
+  font-size: var(--font-size-small);
   font-weight: bold;
-  // height: $button-height;
-  // line-height: $button-height;
   height: 100%;
   text-align: center;
   display: flex;

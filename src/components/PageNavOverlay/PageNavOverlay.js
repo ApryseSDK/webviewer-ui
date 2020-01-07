@@ -105,6 +105,7 @@ class PageNavOverlay extends React.PureComponent {
       <div className={className} data-element="pageNavOverlay">
         <div onClick={() => window.docViewer.setCurrentPage(Math.max(window.docViewer.getCurrentPage() - 1, 1))}>
           <Icon
+            className="arrow"
             glyph="icon-chevron-left"
           />
         </div>
@@ -119,6 +120,7 @@ class PageNavOverlay extends React.PureComponent {
         </div>
         <div onClick={() => window.docViewer.setCurrentPage(Math.min(window.docViewer.getCurrentPage() + 1, window.docViewer.getPageCount()))}>
           <Icon
+            className="arrow"
             glyph="icon-chevron-right"
           />
         </div>

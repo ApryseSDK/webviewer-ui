@@ -7,10 +7,14 @@
   padding: 10px;
   font-family: 'Carlito';
   font-weight: bold;
-  font-size: 14px;
+  font-size: var(--font-size-small);
   color: var(--text-color);
   display: flex;
   cursor: pointer;
+
+  .arrow {
+    margin: 0 8px;
+  }
 
   .Icon{
     width: 16px;
@@ -18,16 +22,8 @@
   }
 
   &>.formContainer {
-    display: flex;
-    align-items: center;
-  }
-
-  @include mobile {
-    bottom: 8px;
-    left: 8px;
-    padding: 8px;
-    font-size: 14px;
-    z-index: 50;
+    top: -1px;
+    position: relative;
   }
 
   &.open {
@@ -39,24 +35,11 @@
     padding: 0;
     border: none;
     text-align: right;
-    font-size: 14px;
+    font-size: var(--font-size-small);
     font-family: 'Carlito';
     font-weight: bold;
     background: transparent;
     color: var(--text-color);
     cursor: pointer;
-
-    @include mobile {
-      font-size: 14px;
-    }
   }
-
-  form {
-    height: 15px;
-
-    input[type=text] {
-      font-family: 'Carlito';
-    }
-  }
-
 }
