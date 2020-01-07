@@ -164,57 +164,6 @@ class ViewControlsOverlay extends React.PureComponent {
               isActive={layout === 'cover'}
             />
           </div>
-          {/* <Element
-            className="row hide-in-desktop hide-in-tablet"
-            dataElement="fitButtons"
-          >
-            <div className="type">{t('action.fit')}</div>
-            <Button
-              title="action.fitToWidth"
-              dataElement="fitToWidthButton"
-              img="ic_fit_width_black_24px"
-              onClick={core.fitToWidth}
-              isActive={fitMode === 'fitWidth'}
-            />
-            <Button
-              title="action.fitToPage"
-              dataElement="fitToPageButton"
-              img="ic_fit_page_black_24px"
-              onClick={core.fitToPage}
-              isActive={fitMode === 'fitPage'}
-            />
-          </Element>
-          <Element
-            className="row hide-in-desktop hide-in-tablet"
-            dataElement="zoomButtons"
-          >
-            <div className="type">{t('action.zoom')}</div>
-            <ActionButton
-              dataElement="zoomInButton"
-              title="action.zoomIn"
-              img="ic_zoom_in_black_24px"
-              onClick={zoomIn}
-            />
-            <ActionButton
-              dataElement="zoomOutButton"
-              title="action.zoomOut"
-              img="ic_zoom_out_black_24px"
-              onClick={zoomOut}
-            />
-          </Element> */}
-        </div>
-        <div
-          className="Close-Container"
-        >
-          <div
-            className="Close-Button"
-            onClick={this.handleCloseClick}
-          >
-            <Icon
-              className="Close-Icon"
-              glyph="icon-close"
-            />
-          </div>
         </div>
       </div>
     );

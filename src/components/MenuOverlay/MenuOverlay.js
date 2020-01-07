@@ -123,19 +123,6 @@ class MenuOverlay extends React.PureComponent {
           {/* <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
           <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} /> */}
         </div>
-        <div
-          className="Close-Container"
-        >
-          <div
-            className="Close-Button"
-            onClick={this.handleClickOutside}
-          >
-            <Icon
-              className="Close-Icon"
-              glyph="icon-close"
-            />
-          </div>
-        </div>
       </div>
     );
   }

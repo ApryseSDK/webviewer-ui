@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import onClickOutside from 'react-onclickoutside';
 
 import ToolButton from 'components/ToolButton';
 import ToolStylePopup from 'components/ToolStylePopup';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
-import { isDesktop } from 'helpers/device';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
 import Icon from 'components/Icon';
@@ -89,21 +87,6 @@ class ToolsOverlay extends React.PureComponent {
 
   handleWindowResize = () => {
     this.setOverlayPosition();
-  };
-
-  handleClickOutside = e => {
-    const toolStylePopup = document.querySelector(
-      '[data-element="toolStylePopup"]',
-    );
-    const header = document.querySelector('[data-element="header"]');
-    const toolsHeader = document.querySelector('[data-element="toolsHeader"]');
-    const clickedToolStylePopup = toolStylePopup?.contains(e.target);
-    const clickedHeader = header?.contains(e.target);
-    const clickedToolsHeader = toolsHeader?.contains(e.target);
-
-    if (isDesktop() && !clickedToolStylePopup && !clickedHeader && !clickedToolsHeader) {
-      this.props.closeElements(['toolsOverlay']);
-    }
   };
 
   setOverlayPosition = () => {
@@ -222,4 +205,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(onClickOutside(ToolsOverlay));
+)(ToolsOverlay);

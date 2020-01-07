@@ -143,19 +143,6 @@ class ZoomOverlay extends React.PureComponent {
             <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
           </div>
         </div>
-        <div
-          className="Close-Container"
-        >
-          <div
-            className="Close-Button"
-            onClick={this.handleClickOutside}
-          >
-            <Icon
-              className="Close-Icon"
-              glyph="icon-close"
-            />
-          </div>
-        </div>
       </div>
     );
   }
