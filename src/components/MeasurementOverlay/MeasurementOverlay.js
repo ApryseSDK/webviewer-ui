@@ -54,14 +54,6 @@ class MeasurementOverlay extends React.PureComponent {
     }
 
     if (prevProps.isOpen && !this.props.isOpen) {
-      const { annotation } = this.state;
-      const key = mapAnnotationToKey(annotation);
-
-      if (key === 'distanceMeasurement') {
-        const length = annotation.getLineLength();
-        this.ensureLineIsWithinBounds(length);
-      }
-
       this.setState({ annotation: null });
     }
   }
@@ -240,69 +232,6 @@ class MeasurementOverlay extends React.PureComponent {
       </div>
     );
   };
-
-  onChangeLineLength = length => {
-    const { annotation } = this.state;
-    const factor = annotation.Measure.axis[0].factor;
-    const sizeInPt = length / factor;
-    annotation.setLineLength(sizeInPt);
-    this.forceLineRedraw();
-  }
-
-  onBlurValidateLineLength = length => {
-    const { annotation } = this.state;
-    const factor = annotation.Measure.axis[0].factor;
-    const lengthInPts = length / factor;
-    this.ensureLineIsWithinBounds(lengthInPts);
-  }
-
-  ensureLineIsWithinBounds = lengthInPts => {
-    const { annotation } = this.state;
-    const maxLengthInPts = this.getMaxLineLengthInPts();
-
-    if (lengthInPts > maxLengthInPts) {
-      annotation.setLineLength(maxLengthInPts);
-      this.forceLineRedraw();
-    }
-  }
-
-  getMaxLineLengthInPts = () => {
-    const { annotation } = this.state;
-    const currentPage = core.getCurrentPage();
-    const documentWidth = window.docViewer.getPageWidth(currentPage);
-    const documentHeight = window.docViewer.getPageHeight(currentPage);
-    const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
-    const angleInDegrees = annotation.getAngle() * (180 / Math.PI).toFixed(decimalPlaces);
-    const startPoint = annotation.getStartPoint();
-    const startX = startPoint.x;
-    const startY = startPoint.y;
-
-    let maxX;
-    let maxY;
-    if (Math.abs(angleInDegrees) < 90) {
-      maxX = documentWidth;
-    } else {
-      maxX = 0;
-    }
-
-    if (angleInDegrees > 0) {
-      maxY = documentHeight;
-    } else {
-      maxY = 0;
-    }
-
-    const maxLenX = Math.abs((maxX - startX) / Math.cos(annotation.getAngle()));
-    const maxLenY = Math.abs((maxY - startY) / Math.sin(annotation.getAngle()));
-
-    return Math.min(maxLenX, maxLenY);
-  }
-
-  forceLineRedraw = () => {
-    const { annotation } = this.state;
-    const annotationManager = core.getAnnotationManager();
-    annotationManager.redrawAnnotation(annotation);
-    this.forceUpdate();
-  }
 
   renderDeltas = () => {
     const { annotation } = this.state;
