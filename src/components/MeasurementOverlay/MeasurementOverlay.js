@@ -274,7 +274,7 @@ class MeasurementOverlay extends React.PureComponent {
 
   render() {
     const { annotation } = this.state;
-    const { isDisabled, t } = this.props;
+    const { isDisabled, t, isOpen } = this.props;
     const className = getClassName('Overlay MeasurementOverlay', this.props);
     const key = mapAnnotationToKey(annotation);
 
@@ -291,13 +291,109 @@ class MeasurementOverlay extends React.PureComponent {
         <div className="measurement__precision">
           {t('option.shared.precision')}: {annotation.Precision}
         </div>
-        {this.renderValue()}
+        {(key === 'distanceMeasurement') ? (
+          <LineMeasurementInput
+            annotation={annotation}
+            isOpen={isOpen}
+            t={t}
+          />
+        ) : (
+          this.renderValue()
+        )}
         {key === 'distanceMeasurement' && this.renderDeltas()}
         {this.renderAngle()}
       </div>
     );
   }
 }
+
+function LineMeasurementInput(props) {
+  const { t, annotation, isOpen } = props;
+  const factor = annotation.Measure.axis[0].factor;
+  const unit = annotation.Scale[1][1];
+  const length = (annotation.getLineLength() * factor).toFixed(2);
+
+  const onChangeLineLength = event => {
+    const length = Math.abs(event.target.value);
+    const { annotation } = props;
+    const factor = annotation.Measure.axis[0].factor;
+    const sizeInPt = length / factor;
+    annotation.setLineLength(sizeInPt);
+    forceLineRedraw();
+  };
+
+  const onBlurValidateLineLength = event => {
+    const length = Math.abs(event.target.value);
+    const { annotation } = props;
+    const factor = annotation.Measure.axis[0].factor;
+    const lengthInPts = length / factor;
+    ensureLineIsWithinBounds(lengthInPts);
+  };
+
+  const ensureLineIsWithinBounds = lengthInPts => {
+    const { annotation } = props;
+    const maxLengthInPts = getMaxLineLengthInPts();
+
+    if (lengthInPts > maxLengthInPts) {
+      annotation.setLineLength(maxLengthInPts);
+      forceLineRedraw();
+    }
+  };
+
+  const forceLineRedraw = () => {
+    const { annotation } = props;
+    const annotationManager = core.getAnnotationManager();
+    annotationManager.redrawAnnotation(annotation);
+    annotationManager.trigger('annotationChanged', [[annotation], 'modify', {}]);
+  };
+
+  const getMaxLineLengthInPts = () => {
+    const { annotation } = props;
+    const currentPage = core.getCurrentPage();
+    const documentWidth = window.docViewer.getPageWidth(currentPage);
+    const documentHeight = window.docViewer.getPageHeight(currentPage);
+    // const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);// WILL NEED TO REDO THIS
+    const angleInDegrees = annotation.getAngle() * (180 / Math.PI).toFixed(2);
+    const startPoint = annotation.getStartPoint();
+    const startX = startPoint.x;
+    const startY = startPoint.y;
+
+    let maxX;
+    let maxY;
+    if (Math.abs(angleInDegrees) < 90) {
+      maxX = documentWidth;
+    } else {
+      maxX = 0;
+    }
+
+    if (angleInDegrees > 0) {
+      maxY = documentHeight;
+    } else {
+      maxY = 0;
+    }
+
+    const maxLenX = Math.abs((maxX - startX) / Math.cos(annotation.getAngle()));
+    const maxLenY = Math.abs((maxY - startY) / Math.sin(annotation.getAngle()));
+
+    return Math.min(maxLenX, maxLenY);
+  };
+
+  if (!isOpen) {
+    ensureLineIsWithinBounds(annotation.getLineLength());
+  }
+
+  return (
+    <div className="measurement__value">
+      {t('option.measurementOverlay.distance')}: <input className="lineMeasurementInput" type="number" min="0" value={length} onChange={event => onChangeLineLength(event)} onBlur={event => onBlurValidateLineLength(event)}/> {unit}
+    </div>
+  );
+}
+
+LineMeasurementInput.propTypes = {
+  annotation: PropTypes.object.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'measurementOverlay'),
