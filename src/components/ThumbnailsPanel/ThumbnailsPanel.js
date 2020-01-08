@@ -16,7 +16,6 @@ import './ThumbnailsPanel.scss';
 
 class ThumbnailsPanel extends React.PureComponent {
   static propTypes = {
-    pageLabels: PropTypes.array.isRequired,
     isDisabled: PropTypes.bool,
     totalPages: PropTypes.number,
     display: PropTypes.string.isRequired,
@@ -466,7 +465,7 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes, pageLabels } = this.props;
+    const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes } = this.props;
     const { numberOfColumns, height, width, documentControlHeight, isDocumentControlHidden } = this.state;
     const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
@@ -486,7 +485,6 @@ class ThumbnailsPanel extends React.PureComponent {
           <DocumentControls
             toggleDocumentControl={this.toggleDocumentControl}
             shouldShowControls={shouldShowControls}
-            pageLabels={pageLabels}
             updateSelectedPage={this.updateSelectedPage}
           />
         </div>
@@ -528,9 +526,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 rowRenderer={this.renderThumbnails}
                 overscanRowCount={10}
                 className={'thumbnailsList'}
-                style={{
-                  outline: 'none',
-                }}
+                style={{ outline: 'none' }}
               />
               {documentControl}
             </div>
@@ -551,7 +547,6 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'thumbnailsPanel'),
   totalPages: selectors.getTotalPages(state),
   currentPage: selectors.getCurrentPage(state),
-  pageLabels: selectors.getPageLabels(state),
   selectedPageIndexes: selectors.getSelectedThumbnailPageIndexes(state),
   isThumbnailMergingEnabled: selectors.getIsThumbnailMergingEnabled(state),
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),

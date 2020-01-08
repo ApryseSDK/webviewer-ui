@@ -8,19 +8,11 @@
 
   .virtualized-thumbnails-container {
     flex: 1;
-    .thumbnailsList > div{
-      overflow: visible !important;
-    }
   }
 
   .row {
     display: flex;
     justify-content: center;
-  }
-
-  .documentControlContainer{
-    bottom: 0px;
-    width: calc(100%);
   }
 
   .thumbnailPlaceholder {

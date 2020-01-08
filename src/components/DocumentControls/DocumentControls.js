@@ -32,7 +32,6 @@ function getPageString(selectedPageArray, pageLabels) {
 
 const DocumentControls = props => {
   const {
-    pageLabels,
     updateSelectedPage,
     toggleDocumentControl,
     shouldShowControls,
@@ -41,9 +40,10 @@ const DocumentControls = props => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const [selectedPageIndexes, isDisabled] = useSelector(state => [
+  const [selectedPageIndexes, isDisabled, pageLabels] = useSelector(state => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.isElementDisabled(state, 'documentControl'),
+    selectors.getPageLabels(state),
   ]);
 
   const initalPagesString = getPageString(selectedPageIndexes, pageLabels);

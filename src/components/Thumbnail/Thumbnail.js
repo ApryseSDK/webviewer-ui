@@ -166,7 +166,7 @@ class Thumbnail extends React.PureComponent {
 const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   pageLabels: selectors.getPageLabels(state),
-  isThumbnailSelectingEnabled: selectors.getIsThumbnailSelecting(state),
+  isThumbnailSelectingEnabled: selectors.getIsThumbnailSelectEnabled(state),
 });
 
 const mapDispatchToProps = {
