@@ -29,31 +29,26 @@ const InkSignature = ({
     const signatureTool = core.getTool('AnnotationCreateSignature');
     const canvas = canvasRef.current;
 
-    if (canvas) {
-      signatureTool.setSignatureCanvas(canvas);
-      const multiplier = window.utils.getCanvasMultiplier();
-      canvas.getContext('2d').scale(multiplier, multiplier);
-    }
+    signatureTool.setSignatureCanvas(canvas);
+    const multiplier = window.utils.getCanvasMultiplier();
+    canvas.getContext('2d').scale(multiplier, multiplier);
   }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
 
-    if (dimension.height && dimension.width && canvas) {
-      // since the canvas will be cleared when the size changes,
-      // we grab the image data before resizing and use it to redraw afterwards
+    if (dimension.height && dimension.width) {
       const { width, height } = canvas.getBoundingClientRect();
       const ctx = canvas.getContext('2d');
-      // during testing we found sometimes width and height could be 0 while dimension.height and dimension.width are not
-      // as a result we do an extra check here
-      if (width && height) {
-        const imageData = ctx.getImageData(0, 0, width, height);
 
-        canvas.width = width;
-        canvas.height = height;
+      // we resize the canvas when the bounding box of its parent element changes so that signatures can be drawn correctly
+      // since the canvas will be cleared when the size changes, we grab the image data before resizing and use it to redraw afterwards
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-        ctx.putImageData(imageData, 0, 0);
-      }
+      canvas.width = width;
+      canvas.height = height;
+
+      ctx.putImageData(imageData, 0, 0);
     }
   }, [dimension]);
 
