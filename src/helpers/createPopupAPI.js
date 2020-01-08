@@ -90,14 +90,12 @@ WebViewer(...)
     let index;
 
     if (typeof dataElement === 'undefined') {
-      index = 0;
+      index = -1;
     } else {
       const state = this.store.getState();
       index = selectors
         .getPopupItems(state, this.popupDataElement)
         .findIndex(obj => obj.dataElement === dataElement);
-
-      index = index || 0;
     }
 
     return index;
