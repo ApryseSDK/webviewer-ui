@@ -119,6 +119,8 @@ const ResizeBar = () => {
       onMouseDown={() => {
         isMouseDownRef.current = true;
       }}
-    />
+    >
+      <Icon glyph="icon-detach-toolbar" />
+    </div>
   );
 };

@@ -22,6 +22,10 @@
 }
 
 .resize-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: col-resize;
   right: 0px;
   // make sure the resize bar is always at the right of the native scrollbar

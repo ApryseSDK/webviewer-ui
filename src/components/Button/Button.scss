@@ -12,17 +12,8 @@
   cursor: pointer;
   border-radius: var(--header-items-border-radius);
 
-  @include mobile {
-    min-width: $button-width-m;
-    height: $button-height-m;
-  }
-
   img {
     width: 24px;
-
-    @include mobile {
-      width: 18px;
-    }
   }
 
   &:hover {
@@ -43,18 +34,4 @@
       color: var(--icon-active-color);
     }
   }
-
-  // &.down-arrow:after {
-  //   content: '';
-  //   width: 0;
-  //   height: 0;
-  //   border-left: 5px solid transparent;
-  //   border-right: 5px solid transparent;
-  //   border-top: 6px solid  #757575;
-  //   border-top: 6px solid var(--icon-color);
-
-  //   @include mobile {
-  //     font-size: 10px;
-  //   }
-  // }
 }
