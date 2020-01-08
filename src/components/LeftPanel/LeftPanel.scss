@@ -3,6 +3,7 @@
 
 .LeftPanel {
   @extend %left-panel;
+  background-color: var(--panel-background);
 
   .left-panel-header {
     display: flex;
@@ -12,13 +13,6 @@
     .close-btn {
       cursor: pointer;
       margin-right: 17px;
-    }
-
-    @include mobile {
-      margin: 0px;
-      padding: 13px 17px;
-      background-color: $white;
-      background-color: var(--primary-color);
     }
   }
 
@@ -31,11 +25,14 @@
   cursor: col-resize;
   right: 0px;
   // make sure the resize bar is always at the right of the native scrollbar
-  margin-right: -20px;
-  width: 20px;
+  margin-right: -14px;
+  width: 14px;
   height: 100%;
   margin-bottom: 0;
-  background-color: none;
+  background-color: var(--panel-background);
+  // backsground: red;
+  border-right: 1px solid var(--border);
+  border-left: 1px solid var(--border);
   position: absolute;
   z-index: 100;
 }

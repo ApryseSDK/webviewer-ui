@@ -158,7 +158,7 @@ class ToolsOverlay extends React.PureComponent {
                 onClick={this.handleStyleClick}
               >
                 <Icon
-                  glyph="icon-menu-add-style-line"
+                  glyph="icon - tools - more - vertical"
                 />
               </div>
             </div>

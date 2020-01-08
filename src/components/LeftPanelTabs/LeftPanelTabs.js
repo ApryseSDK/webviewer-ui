@@ -39,14 +39,14 @@ class LeftPanelTabs extends React.Component {
         <Button
           isActive={this.isActive('thumbnailsPanel')}
           dataElement="thumbnailsPanelButton"
-          img="ic_thumbnails_black_24px"
+          img="icon-panel-thumbnail-line"
           onClick={() => setActiveLeftPanel('thumbnailsPanel')}
           title="component.thumbnailsPanel"
         />
         <Button
           isActive={this.isActive('outlinesPanel')}
           dataElement="outlinesPanelButton"
-          img="ic_outline_black_24px"
+          img="icon-panel-outlines"
           onClick={() => setActiveLeftPanel('outlinesPanel')}
           title="component.outlinesPanel"
         />
