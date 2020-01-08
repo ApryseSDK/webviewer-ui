@@ -132,14 +132,14 @@ const DocumentControls = props => {
   const icon = shouldShowControls ? 'ic_arrow_down_black_24px' : 'ic_arrow_up_black_24px';
 
   return isDisabled ? null : (
-    <div className={`documentControlsContainer`} data-element={'documentControl'}>
+    <div className={'documentControlsContainer'} data-element={'documentControl'}>
       <Button
-        className={`documentControlToggle ${shouldShowControls ? 'showing' : ''}`}
+        className={'documentControlToggle'}
         img={icon}
         onClick={onToggleDocumentControl}
       />
       {shouldShowControls ?
-        <div className={`documentControls `}>
+        <div className={'documentControls'}>
           <div>
             <input
               onBlur={onBlur}

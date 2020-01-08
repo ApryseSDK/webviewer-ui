@@ -7,28 +7,27 @@
     left: 50%;
     width: 10px;
     padding: 5px 15px 0px;
-    border-radius: 10p;
     border-top-right-radius: 7px;
     border-top-left-radius: 7px;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
 
     transform: translateY(-100%)translateX(-50%);
     position: absolute;
-    p{
-      margin: 0px;
-    }
-  }
+}
 
-.documentControlsContainer{
-    width: 100%;
+.documentControlToggle:hover{
+    background: var(--icon-color);
+
+    .Icon{
+        color: var(--border-color);;
+    }
 }
 
 .documentControls {
     background-color: var(--border-color);
-    transition: height 0.5s;
-
     $page-input-border: 2px;
     $page-input-padding: 8px;
+
     .pagesInput{
         border-width: $page-input-border;
         width: calc(100% - #{($page-input-border + $page-input-padding) * 2});
