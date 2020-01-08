@@ -42,6 +42,7 @@ class ThumbnailsPanel extends React.PureComponent {
       canLoad: true,
       height: 0,
       width: 0,
+      documentControlHeight: 0,
       draggingOverPageIndex: null,
       isDraggingToPreviousPage: false,
     };
@@ -466,10 +467,32 @@ class ThumbnailsPanel extends React.PureComponent {
 
   render() {
     const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes, pageLabels } = this.props;
-    const { numberOfColumns, height, width, isDocumentControlHidden } = this.state;
+    const { numberOfColumns, height, width, documentControlHeight, isDocumentControlHidden } = this.state;
     const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
     const shouldShowControls = !isDocumentControlHidden || selectedPageIndexes.length > 0;
+
+    const documentControl =
+    <Measure
+      bounds
+      onResize={({ bounds }) => {
+        this.setState({
+          documentControlHeight: Math.ceil(bounds.height),
+        });
+      }}
+    >
+      {({ measureRef }) => (
+        <div ref={measureRef}>
+          <DocumentControls
+            toggleDocumentControl={this.toggleDocumentControl}
+            shouldShowControls={shouldShowControls}
+            pageLabels={pageLabels}
+            updateSelectedPage={this.updateSelectedPage}
+          />
+        </div>
+      )}
+    </Measure>;
+
     return isDisabled ? null : (
       <div
         className="Panel ThumbnailsPanel"
@@ -488,10 +511,15 @@ class ThumbnailsPanel extends React.PureComponent {
           }}
         >
           {({ measureRef }) => (
-            <div ref={measureRef} className="virtualized-thumbnails-container" >
+            <div ref={measureRef} className="virtualized-thumbnails-container"
+              style={{
+                // when 'shouldShowControls' is true but documentControlHeight isn't set yet, add a maxHeight to keep the height from re-measuring
+                maxHeight: shouldShowControls && !documentControlHeight ? height : null,
+              }}
+            >
               <List
                 ref={this.listRef}
-                height={!shouldShowControls ? height : height - 50}
+                height={shouldShowControls ? height - documentControlHeight : height}
                 width={width}
                 rowHeight={thumbnailHeight}
                 // Round it to a whole number because React-Virtualized list library doesn't round it for us and throws errors when rendering non whole number rows
@@ -499,18 +527,12 @@ class ThumbnailsPanel extends React.PureComponent {
                 rowCount={Math.ceil(totalPages / numberOfColumns)}
                 rowRenderer={this.renderThumbnails}
                 overscanRowCount={10}
-                className={'thumbnailsList '}
-                style={{ 
+                className={'thumbnailsList'}
+                style={{
                   outline: 'none',
-                  // paddingBottom: !shouldShowControls ? '0px' : '50px',
                 }}
               />
-              <DocumentControls
-                toggleDocumentControl={this.toggleDocumentControl}
-                shouldShowControls={shouldShowControls}
-                pageLabels={pageLabels}
-                updateSelectedPage={this.updateSelectedPage}
-              />
+              {documentControl}
             </div>
           )}
         </Measure>
