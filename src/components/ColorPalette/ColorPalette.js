@@ -16,7 +16,7 @@ class ColorPalette extends React.PureComponent {
     property: PropTypes.string.isRequired,
     color: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    overridePalette: PropTypes.oneOfType(PropTypes.object, PropTypes.array),
+    overridePalette: PropTypes.array,
   };
 
   defaultPalette = [

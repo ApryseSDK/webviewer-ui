@@ -15,9 +15,5 @@ WebViewer(...)
   });
  */
 export default store => (dataElement, overrides) => {
-  if (overrides !== null && typeof overrides !== 'object') {
-    return console.warn('The second argument to instance.updateElement needs to be an object.');
-  }
-
   store.dispatch(actions.setCustomElementOverrides(dataElement, overrides));
 };
