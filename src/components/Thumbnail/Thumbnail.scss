@@ -7,35 +7,20 @@
   align-items: center;
   width: 180px;
   height: 180px;
-  font-size: 12px;
+  font-size: var(--font-size-small);
   text-align: center;
 
   .container {
     position: relative;
     display: flex;
-    width: 150px;
-    height: 150px;
+    border: 2px solid var(--border);
     justify-content: center;
     align-items: center;
+
     cursor: pointer;
 
-    img.page-image {
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        /* only for XOD in IE*/
-        height: auto !important;
-        width: auto !important;
-      }
-    }
-
-    .page-image {
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        /* only for IE*/
-        height: auto !important;
-        width: auto !important;
-      }
-      max-width: 148px;
-      max-height: 148px;
-      border: 1px solid transparent;
+    &.active {
+      border: 2px solid #6077bf;
     }
 
     .annotation-image {
@@ -50,14 +35,5 @@
 
   .page-label {
     padding: 5px 0;
-  }
-
-  &.active {
-    background-color: lightgray;
-
-    .page-image {
-      border: 1px solid $gray12;
-      border: 1px solid var(--border-color);
-    } 
   }
 }
