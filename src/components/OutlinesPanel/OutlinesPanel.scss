@@ -7,8 +7,24 @@
     align-items: center;
 
     .msg {
+      font-size: 14px;
       width: 92px;
       text-align: center;
+    }
+
+    .empty-outlines-icon {
+      width: 65px;
+      height: 83px;
+
+      svg {
+        width: 65px;
+        height: 83px;
+      }
+
+      * {
+        fill: #dfe2ed;
+        color: #dfe2ed;
+      }
     }
   }
 }
