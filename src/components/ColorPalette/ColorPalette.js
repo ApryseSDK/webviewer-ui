@@ -19,39 +19,36 @@ class ColorPalette extends React.PureComponent {
     overridePalette: PropTypes.oneOfType(PropTypes.object, PropTypes.array),
   };
 
-  constructor(props) {
-    super(props);
-    this.defaultPalette = [
-      '#F1A099',
-      '#FFC67B',
-      '#FFE6A2',
-      '#80E5B1',
-      '#92E8E8',
-      '#A6A1E6',
-      '#E2A1E6',
-      '#E44234',
-      '#FF8D00',
-      '#FFCD45',
-      '#00CC63',
-      '#25D2D1',
-      '#4E7DE9',
-      '#C544CE',
-      '#88271F',
-      '#B54800',
-      '#F69A00',
-      '#007A3B',
-      '#167E7D',
-      '#2E4B8B',
-      '#76287B',
-      'transparency',
-      '#FFFFFF',
-      '#CDCDCD',
-      '#9C9C9C',
-      '#696969',
-      '#373737',
-      '#000000',
-    ];
-  }
+  defaultPalette = [
+    '#F1A099',
+    '#FFC67B',
+    '#FFE6A2',
+    '#80E5B1',
+    '#92E8E8',
+    '#A6A1E6',
+    '#E2A1E6',
+    '#E44234',
+    '#FF8D00',
+    '#FFCD45',
+    '#00CC63',
+    '#25D2D1',
+    '#4E7DE9',
+    '#C544CE',
+    '#88271F',
+    '#B54800',
+    '#F69A00',
+    '#007A3B',
+    '#167E7D',
+    '#2E4B8B',
+    '#76287B',
+    'transparency',
+    '#FFFFFF',
+    '#CDCDCD',
+    '#9C9C9C',
+    '#696969',
+    '#373737',
+    '#000000',
+  ];
 
   setColor = e => {
     const { property, onStyleChange } = this.props;
@@ -68,13 +65,13 @@ class ColorPalette extends React.PureComponent {
     onStyleChange(property, color);
   };
 
-  renderTransparencyCell = (bg, key) => {
+  renderTransparencyCell = bg => {
     const { property } = this.props;
     const shouldRenderDummyCell =
       property === 'TextColor' || property === 'StrokeColor';
 
     if (shouldRenderDummyCell) {
-      return <div className="dummy-cell" key={key}></div>;
+      return <div className="dummy-cell" />;
     }
 
     const diagonalLine = (
@@ -98,7 +95,6 @@ class ColorPalette extends React.PureComponent {
     return (
       <div
         className="cell"
-        key={key}
         onClick={this.setColor}
         style={{ backgroundColor: '#FFFFFF', border: '1px solid #e0e0e0' }}
       >
@@ -108,7 +104,7 @@ class ColorPalette extends React.PureComponent {
     );
   };
 
-  renderColorCell = (bg, key) => {
+  renderColorCell = bg => {
     let style = { backgroundColor: bg };
 
     if (bg === '#FFFFFF') {
@@ -118,7 +114,7 @@ class ColorPalette extends React.PureComponent {
     }
 
     return (
-      <div className="cell" key={key} style={style} onClick={this.setColor}>
+      <div className="cell" style={style} onClick={this.setColor}>
         {this.renderCheckMark(bg)}
       </div>
     );
@@ -145,29 +141,16 @@ class ColorPalette extends React.PureComponent {
 
   render() {
     const { overridePalette } = this.props;
-
-    let palette = this.defaultPalette;
-    if (Array.isArray(overridePalette) && overridePalette.length) {
-      palette = overridePalette;
-    }
-
-    const MAX = 7;
-    const twoDPalette = [];
-    for (let i = 0; i < palette.length; i += 7) {
-      twoDPalette.push(palette.slice(i, i + 7));
-    }
+    const palette = overridePalette || this.defaultPalette;
 
     return (
       <div className="ColorPalette" data-element={dataElement}>
-        {twoDPalette.map((row, i) => (
-          <div className="row" key={i}>
-            {row.map((bg, j) => {
-              if (bg === 'transparency') {
-                return this.renderTransparencyCell(bg, j);
-              }
-              return this.renderColorCell(bg, j);
-            })}
-          </div>
+        {palette.map((bg, i) => (
+          <React.Fragment key={i}>
+            {bg === 'transparency'
+              ? this.renderTransparencyCell(bg)
+              : this.renderColorCell(bg)}
+          </React.Fragment>
         ))}
       </div>
     );
