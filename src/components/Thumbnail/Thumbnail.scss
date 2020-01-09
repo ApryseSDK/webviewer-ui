@@ -10,6 +10,15 @@
   font-size: var(--font-size-small);
   text-align: center;
 
+  // canvas {
+  //   margin: 0;
+  //   padding: 0;
+  //   border: 0;
+  //   font-size: 100%;
+  //   font: inherit;
+  //   vertical-align: baseline;
+  // }
+
   .container {
     position: relative;
     display: flex;
@@ -28,8 +37,8 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      max-width: 148px;
-      max-height: 148px;
+      max-width: 150px;
+      max-height: 150px;
     }
   }
 
