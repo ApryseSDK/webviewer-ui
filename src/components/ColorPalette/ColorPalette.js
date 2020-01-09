@@ -128,7 +128,7 @@ class ColorPalette extends React.PureComponent {
     if (bg === 'transparency') {
       isColorPicked = hexColor === null;
     } else {
-      isColorPicked = hexColor === bg;
+      isColorPicked = hexColor.toLowerCase() === bg.toLowerCase();
     }
 
     return isColorPicked ? (
