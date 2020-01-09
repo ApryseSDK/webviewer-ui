@@ -51,12 +51,6 @@ const LeftPanel = () => {
       style={style}
     >
       <div className="left-panel-header">
-        <div
-          className="close-btn hide-in-desktop"
-          onClick={() => dispatch(actions.closeElement('leftPanel'))}
-        >
-          <Icon glyph="ic_close_black_24px" />
-        </div>
         <LeftPanelTabs />
       </div>
 
