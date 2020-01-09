@@ -1,14 +1,10 @@
 @import '../../constants/styles';
 
 .LeftPanelTabs {
-  flex: 1;
   display: flex;
-  // height: 30px;
+  flex: 1;
   border-radius: var(--header-items-border-radius);
-  border: 1px solid $gray12;
-  border: 1px solid var(--border-color);
-
-  overflow: hidden;
+  border: 1px solid var(--border);
 
   .Button {
     flex-grow: 1;
@@ -23,10 +19,6 @@
 
     &.active {
       background: var(--active-button-color);
-    }
-
-    &:hover {
-      cursor: pointer;
     }
   }
 }
