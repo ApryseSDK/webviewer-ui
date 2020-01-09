@@ -36,7 +36,7 @@ class OutlinesPanel extends React.PureComponent {
             <div>
               <Icon glyph="ic_overflow_black_24px" />
             </div>
-            <div>
+            <div className="msg">
               {t('message.noOutlines')}
             </div>
           </div>

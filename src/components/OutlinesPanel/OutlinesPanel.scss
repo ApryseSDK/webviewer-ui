@@ -5,6 +5,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    // @extend %center-of-panel;
+
+    .msg {
+      width: 92px;
+      text-align: center;
+    }
   }
 }
