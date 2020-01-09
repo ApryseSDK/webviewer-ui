@@ -2,6 +2,9 @@
 
 .OutlinesPanel {
   .no-outlines {
-    @extend %center-of-panel;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // @extend %center-of-panel;
   }
 }
