@@ -10,6 +10,8 @@ export default (dispatch, options) => {
   const downloadOptions = { downloadType: 'pdf' };
   let file;
 
+  dispatch(actions.openElement('loadingModal'));
+
   return core.exportAnnotations().then(xfdfString => {
     if (includeAnnotations) {
       downloadOptions.xfdfString = xfdfData || xfdfString;
@@ -21,8 +23,6 @@ export default (dispatch, options) => {
       }
       return name;
     };
-
-    dispatch(actions.openElement('loadingModal'));
 
     const name = filename || documentPath.split('/').slice(-1)[0];
     const downloadName = getDownloadFilename(name, '.pdf');
@@ -56,5 +56,7 @@ export default (dispatch, options) => {
         throw new Error(error.message);
       });
     }
+  }).catch(() => {
+    dispatch(actions.closeElement('loadingModal'));
   });
 };
