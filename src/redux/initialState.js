@@ -159,7 +159,9 @@ export default {
     tab: {
       signatureModal: 'inkSignaturePanelButton',
     },
-    customElementOverrides: {},
+    customElementOverrides: {
+      colorPalette: ['#000000', '#F1A099', '#FFC67B', 'transparency', '#FFE6A2', '#80E5B1', '#92E8E8', '#A6A1E6', '#E2A1E6', '#FFCD45'],
+    },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
