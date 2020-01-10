@@ -40,7 +40,8 @@
   @include closed(translateX(100%));
   width: $right-panel-width;
   right: 0;
-  padding: 8px;
+  padding: 16px;
+  padding-right: 28px;
   border-left: 1px solid $gray12;
   border-left: 1px solid var(--border-color);
   @include mobile {

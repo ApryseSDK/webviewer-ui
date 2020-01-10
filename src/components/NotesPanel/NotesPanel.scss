@@ -9,56 +9,57 @@
     @extend %center-of-panel;
   }
 
-  .header {
-    display: inline-flex;
-    flex-direction: column;
-    padding: 8px;
-    padding-right: 16px;
+  >.container {
+    // padding: 16px;
+    // padding-right: 28px;
 
-    .foo987 {
-      display: inline-flex;
-
-      input {
-        font-size: 13px;
-        width: 100%;
-        padding-left: 8px;
-        border: 1px solid #dfe2ed;
-        // border-radius: 4px;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-        color: var(--text-color);
-        padding-bottom: 4px;
-
-        &::placeholder {
-          color: #c3c6d4;
-        }
-      }
-
-      .werier {
-        cursor: pointer;
-        background: #6077bf;
-        border-radius: 4px;
-        height: 24px;
-        width: 40px;
+    .header {
+      .foo987 {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        left: -2px;
 
-        svg {
-          color: #fafafa;
+        input {
+          font-size: 13px;
+          width: 100%;
+          padding-left: 8px;
+          border: 1px solid #dfe2ed;
+          // border-radius: 4px;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          color: var(--text-color);
+          padding-bottom: 4px;
+
+          &::placeholder {
+            color: #c3c6d4;
+          }
+        }
+
+        .werier {
+          cursor: pointer;
+          background: #6077bf;
+          border-radius: 4px;
+          height: 24px;
+          width: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          left: -2px;
+
+          svg {
+            color: #fafafa;
+          }
         }
       }
-    }
 
-    .divider{
-      height: 1px;
-      width: 100%;
-      background: #dfe2ed;
-      margin: 16px 0px;
+      .divider{
+        height: 1px;
+        width: 100%;
+        background: #dfe2ed;
+        margin: 16px 0px;
+      }
     }
   }
+
 
   .virtualized-notes-container,
   .normal-notes-container {

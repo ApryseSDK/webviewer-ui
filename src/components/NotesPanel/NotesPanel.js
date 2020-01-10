@@ -247,24 +247,26 @@ const NotesPanel = () => {
         <div className="no-annotations">{t('message.noAnnotations')}</div>
       ) : (
         <React.Fragment>
-          <div className="header">
-            <div className="foo987">
-              <input
-                type="text"
-                placeholder={t('message.searchPlaceholder')}
-                onChange={handleInputChange}
-              />
-              <div
-                className="werier"
-                onClick={() => {}}
-              >
-                <Icon
-                  glyph="ic_search_black_24px"
+          <div className="container">
+            <div className="header">
+              <div className="foo987">
+                <input
+                  type="text"
+                  placeholder={t('message.searchPlaceholder')}
+                  onChange={handleInputChange}
                 />
+                <div
+                  className="werier"
+                  onClick={() => {}}
+                >
+                  <Icon
+                    glyph="ic_search_black_24px"
+                  />
+                </div>
               </div>
+              <div className="divider" />
+              {/* <Dropdown items={Object.keys(getSortStrategies())} /> */}
             </div>
-            <div className="divider" />
-            {/* <Dropdown items={Object.keys(getSortStrategies())} /> */}
           </div>
           {notesToRender.length === 0 ? (
             // <div className="no-results">{t('message.noResults')}</div>
