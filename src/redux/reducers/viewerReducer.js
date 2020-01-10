@@ -214,6 +214,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, leftPanelWidth: payload.width };
     case 'SET_MAX_SIGNATURES_COUNT':
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
+    case 'SET_CUSTOM_MEASUREMENT_OVERLAY':
+      return { ...state, customMeasurementOverlay: payload.customMeasurementOverlay };
     case 'SET_SIGNATURE_FONTS':
       return { ...state, signatureFonts: payload.signatureFonts };
     case 'SET_SELECTED_TAB':

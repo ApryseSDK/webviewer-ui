@@ -77,7 +77,7 @@ const shrinkContainerWidthBy = (panelWidth, container) => {
 
 export const getClassNameInIE = ({ isHeaderOpen, isSearchOverlayOpen }) => [
   'DocumentContainer',
-  isHeaderOpen ? 'full-height' : '',
+  isHeaderOpen ? '' : 'no-header',
   isSearchOverlayOpen ? 'search-overlay' : '',
 ].join(' ').trim();
 
