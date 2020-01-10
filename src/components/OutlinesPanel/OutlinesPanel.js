@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
 import Outline from 'components/Outline';
+import Icon from 'components/Icon';
 
 import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
-
-import Icon from 'components/Icon';
 
 import './OutlinesPanel.scss';
 
@@ -35,7 +34,7 @@ class OutlinesPanel extends React.PureComponent {
           <div className="no-outlines">
             <div>
               <Icon
-                className="empty-outlines-icon"
+                className="empty-icon"
                 glyph="illustration - empty state - outlines"
               />
             </div>

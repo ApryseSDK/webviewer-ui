@@ -52,7 +52,7 @@
 %left-panel {
   @extend %panel;
   @include closed(translateX(-100%));
-  width: 300px;
+  width: 293px;
   width: $left-panel-width;
   left: 0;
   border-right: 1px solid $gray12;

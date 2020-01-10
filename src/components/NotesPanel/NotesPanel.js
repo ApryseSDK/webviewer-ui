@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
+import Icon from 'components/Icon';
+
 import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
 
@@ -246,15 +248,36 @@ const NotesPanel = () => {
       ) : (
         <React.Fragment>
           <div className="header">
-            <input
-              type="text"
-              placeholder={t('message.searchPlaceholder')}
-              onChange={handleInputChange}
-            />
+            <div className="foo987">
+              <input
+                type="text"
+                placeholder={t('message.searchPlaceholder')}
+                onChange={handleInputChange}
+              />
+              <div
+                className="werier"
+                onClick={() => {}}
+              >
+                <Icon
+                  glyph="ic_search_black_24px"
+                />
+              </div>
+            </div>
             <Dropdown items={Object.keys(getSortStrategies())} />
           </div>
           {notesToRender.length === 0 ? (
-            <div className="no-results">{t('message.noResults')}</div>
+            // <div className="no-results">{t('message.noResults')}</div>
+            <div className="no-results">
+              <div>
+                <Icon
+                  className="empty-icon"
+                  glyph="illustration - empty state - outlines"
+                />
+              </div>
+              <div className="msg">
+                {t('message.noResults')}
+              </div>
+            </div>
           ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
             <NormalList
               ref={listRef}

@@ -107,7 +107,7 @@
     "printTotalPageCount_plural": "Total: {{count}} pages",
     "processing": "Processing...",
     "searching": "Searching...",
-    "searchPlaceholder": "Search comments...",
+    "searchPlaceholder": "Search comments",
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
     "enterMeasurement": "Enter measurement between the two points"
