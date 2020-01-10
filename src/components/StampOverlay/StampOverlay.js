@@ -12,7 +12,7 @@ import './StampOverlay.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const canvasWidth = 160;
-const canvasHeight = 48;
+const canvasHeight = 58;
 const padding = 10;
 const X = padding / 2;
 const Y = padding / 2;
@@ -51,9 +51,6 @@ class StampOverlay extends React.Component {
       this.setOverlayPosition();
       this.getDefaultRubberStamps();
     }
-    // else if () {
-    //   this.props.closeElement('stampOverlay');
-    // }
   }
 
   handleClickOutside = e => {
@@ -88,20 +85,11 @@ class StampOverlay extends React.Component {
       const annotations = this.stampTool.getDefaultStampAnnotations();
       const previews = await Promise.all(
         annotations.map(annotation => {
-          var getWidth = canvasWidth - padding;
-          var getHeight = canvasHeight - padding;
-
-          var width = annotation.Width;
-          var calculatedWidth = getWidth;
-          if (width < getWidth) {
-            calculatedWidth = width;
+          var options = {
+            'canvasWidth': canvasWidth,
+            'canvasHeight': canvasHeight,
           }
-          annotation.X = X;
-          annotation.Y = Y;
-          annotation.Width = calculatedWidth;
-          annotation.Height = getHeight;
-
-          return this.stampTool.getPreview(annotation, { canvasWidth, canvasHeight });
+          return this.stampTool.getPreview(annotation, options);
         }),
       );
 
