@@ -78,10 +78,11 @@ class ThumbnailsPanel extends React.PureComponent {
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     if (draggingOverPageIndex !== null) {
       const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
+      const pageNumberIncreased = currentPage < targetPageNumber;
       let afterMovePageNumber = null;
 
-      if (currentPage < targetPageNumber) {
-        // moving page down so target page number will decrease
+      if (pageNumberIncreased) {
+        // moving page down so destination page number will decrease by 1 since that page been moved
         afterMovePageNumber = targetPageNumber - 1;
       } else {
         // moving page up
@@ -93,20 +94,15 @@ class ThumbnailsPanel extends React.PureComponent {
         const currentPageIndex = currentPage - 1;
         const targetPageIndex = this.afterMovePageNumber - 1;
 
-        const isSelected = selectedPageIndexes.includes(currentPageIndex);
-        let updateSelectedPageIndexes = selectedPageIndexes;
-
-        if (isSelected) {
-          updateSelectedPageIndexes = selectedPageIndexes.filter(pageIndex => pageIndex !== currentPageIndex);
-        }
-
-        if (currentPageIndex > targetPageIndex) {
-          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p < currentPageIndex && p >= targetPageIndex ? p + 1 : p));
-        } else {
+        // update selected pages affected by the move, exclude the page that was moved
+        let updateSelectedPageIndexes = selectedPageIndexes.filter(pageIndex => pageIndex !== currentPageIndex);
+        if (pageNumberIncreased) {
           updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p > currentPageIndex && p <= targetPageIndex ? p - 1 : p));
+        } else {
+          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p < currentPageIndex && p >= targetPageIndex ? p + 1 : p));
         }
 
-        if (isSelected) {
+        if (selectedPageIndexes.includes(currentPageIndex)) {
           updateSelectedPageIndexes.push(targetPageIndex);
         }
 
