@@ -23,7 +23,7 @@ export default (enable, store) => (
 
   // for the tool names in the map, enable/disable other related buttons
   Object.keys(map).forEach(toolName => {
-    if (toolNameArray.includes(toolName)) {
+    if (toolNameArray.indexOf(toolName) !== -1) {
       dataElements.push(map[toolName]);
     }
   });

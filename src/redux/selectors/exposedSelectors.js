@@ -141,6 +141,8 @@ export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnail
 
 export const getIsThumbnailSelectEnabled = state => state.viewer.isThumbnailSelecting;
 
+export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 
