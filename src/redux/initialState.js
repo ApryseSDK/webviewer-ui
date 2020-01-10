@@ -196,6 +196,7 @@ export default {
     signatureFonts: ['GreatVibes-Regular'],
     leftPanelWidth: 300,
     isReplyDisabledFunc: null,
+    customMeasurementOverlay: [],
   },
   search: {
     listeners: [],

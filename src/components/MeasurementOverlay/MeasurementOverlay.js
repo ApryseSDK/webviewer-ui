@@ -17,6 +17,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './MeasurementOverlay.scss';
+import CustomMeasurementOverlay from './CustomMeasurementOverlay';
 
 class MeasurementOverlay extends React.PureComponent {
   static propTypes = {
@@ -26,6 +27,7 @@ class MeasurementOverlay extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     activeToolName: PropTypes.string.isRequired,
     t: PropTypes.func.isRequired,
+    customMeasurementOverlay: PropTypes.array,
   };
 
   constructor(props) {
@@ -69,14 +71,22 @@ class MeasurementOverlay extends React.PureComponent {
     if (this.state.annotation) {
       this.forceUpdate();
     } else if (
-      this.isMeasurementTool(activeToolName) &&
-      tool.annotation &&
-      this.shouldShowInfo(tool.annotation)
+      this.isMeasurementToolWithInfo(tool) ||
+      this.shouldShowCustomOverlay(tool.annotation)
     ) {
       openElement('measurementOverlay');
       this.setState({ annotation: tool.annotation });
     }
   };
+
+  isMeasurementToolWithInfo(tool) {
+    const { activeToolName } = this.props;
+    return (
+      this.isMeasurementTool(activeToolName) &&
+      tool.annotation &&
+      this.shouldShowInfo(tool.annotation)
+    );
+  }
 
   onAnnotationSelected = (annotations, action) => {
     const { openElement, closeElement } = this.props;
@@ -84,7 +94,7 @@ class MeasurementOverlay extends React.PureComponent {
     if (
       action === 'selected' &&
       annotations.length === 1 &&
-      this.isMeasurementAnnotation(annotations[0])
+      (this.isMeasurementAnnotation(annotations[0]) || this.shouldShowCustomOverlay(annotations[0]))
     ) {
       this.setState({ annotation: annotations[0] });
       openElement('measurementOverlay');
@@ -126,6 +136,8 @@ class MeasurementOverlay extends React.PureComponent {
     ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
       mapToolNameToKey(toolName),
     );
+
+  shouldShowCustomOverlay = annotation => !this.isMeasurementAnnotation(annotation) && this.props.customMeasurementOverlay.some(overlay => overlay.validate(annotation))
 
   shouldShowInfo = annotation => {
     const key = mapAnnotationToKey(annotation);
@@ -282,6 +294,12 @@ class MeasurementOverlay extends React.PureComponent {
       return null;
     }
 
+    if (this.shouldShowCustomOverlay(annotation)) {
+      // Get the props for this particular custom overlay
+      const customOverlayProps = this.props.customMeasurementOverlay.filter(customOverlay => customOverlay.validate(annotation))[0];
+      return (<CustomMeasurementOverlay annotation={annotation} {...customOverlayProps}/>);
+    }
+
     return (
       <div className={className} data-element="measurementOverlay">
         {this.renderTitle()}
@@ -399,6 +417,7 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'measurementOverlay'),
   isDisabled: selectors.isElementDisabled(state, 'measurementOverlay'),
   activeToolName: selectors.getActiveToolName(state),
+  customMeasurementOverlay: selectors.getCustomMeasurementOverlay(state),
 });
 
 const mapDispatchToProps = {
