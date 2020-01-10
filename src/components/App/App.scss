@@ -53,7 +53,8 @@ html, body , #app {
   margin: 0;
   padding: 0;
   background: $gray4;
-  background: var(--secondary-color);
+  // background: var(--secondary-color);
+  background-color: var(--document-background-color);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
 

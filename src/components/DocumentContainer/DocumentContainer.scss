@@ -8,7 +8,6 @@
   overflow: auto;
   transition: all .3s ease;
   user-select: none;
-  background-color: var(--document-background-color);
 
   @include mobile {
     width: 100%;
