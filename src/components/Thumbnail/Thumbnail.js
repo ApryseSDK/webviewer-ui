@@ -28,7 +28,8 @@ class Thumbnail extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     onDragStart: PropTypes.func,
     onDragOver: PropTypes.func,
-    onClickCallback: PropTypes.func,
+    setSelectedPageThumbnails: PropTypes.func,
+    selectedPageIndexes: PropTypes.arrayOf(PropTypes.number),
     isDraggable: PropTypes.bool,
   };
 
@@ -102,18 +103,22 @@ class Thumbnail extends React.PureComponent {
   }
 
   handleClick = e => {
-    const { index, closeElement, onClickCallback, isThumbnailSelectingEnabled } = this.props;
+    const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailSelectingEnabled } = this.props;
 
     if (isThumbnailSelectingEnabled && (e.ctrlKey || e.metaKey)) {
-      onClickCallback(e, index);
-    } else {
-      core.setCurrentPage(index + 1);
-    }
-    core.setCurrentPage(index + 1);
+      let updatedSelectedPages = [...selectedPageIndexes];
+      if (selectedPageIndexes.indexOf(index) > -1) {
+        updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+      } else {
+        updatedSelectedPages.push(index);
+      }
 
-    if (isMobile()) {
+      setSelectedPageThumbnails(updatedSelectedPages);
+    } else if (isMobile()) {
       closeElement('leftPanel');
     }
+
+    core.setCurrentPage(index + 1);
   };
 
   onDragStart = e => {
@@ -166,11 +171,13 @@ class Thumbnail extends React.PureComponent {
 const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   pageLabels: selectors.getPageLabels(state),
+  selectedPageIndexes: selectors.getSelectedThumbnailPageIndexes(state),
   isThumbnailSelectingEnabled: selectors.getIsThumbnailSelectEnabled(state),
 });
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
+  setSelectedPageThumbnails: actions.setSelectedPageThumbnails,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Thumbnail);

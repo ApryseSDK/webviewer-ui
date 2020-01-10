@@ -185,25 +185,6 @@ class ThumbnailsPanel extends React.PureComponent {
     }
   }
 
-  onThumbnailClick = (e, index) => {
-    const { selectedPageIndexes, setSelectedPageThumbnails } = this.props;
-    let updatedSelectedPages = [...selectedPageIndexes];
-
-    if (selectedPageIndexes.indexOf(index) > -1) {
-      updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
-    } else {
-      updatedSelectedPages.push(index);
-    }
-
-    setSelectedPageThumbnails(updatedSelectedPages);
-
-    this.setState({
-      isDocumentControlHidden: updatedSelectedPages.length === 0,
-    });
-
-    core.setCurrentPage(index + 1);
-  }
-
   updateSelectedPage = selectedPageIndexes => {
     this.props.setSelectedPageThumbnails(selectedPageIndexes);
     this.setState({ selectedPageIndexes });
@@ -322,11 +303,6 @@ class ThumbnailsPanel extends React.PureComponent {
     core.drawAnnotations(options);
   }
 
-  updateSelectedPage = selectedPageIndexes => {
-    this.props.setSelectedPageThumbnails(selectedPageIndexes);
-    this.setState({ selectedPageIndexes });
-  }
-
   getThumbnailSize = (pageWidth, pageHeight) => {
     let width; let height; let
       ratio;
@@ -415,10 +391,10 @@ class ThumbnailsPanel extends React.PureComponent {
       row: true,
     });
 
-    const selectedPagesHash = selectedPageIndexes.reduce((curr, val) => {
-      curr[val] = true;
-      return curr;
-    }, {});
+    const selectedPagesMap = new Map();
+    selectedPageIndexes.forEach(pageIndex => {
+      selectedPagesMap.set(pageIndex, true);
+    });
 
     return (
       <div className={className} key={key} style={style}>
@@ -435,7 +411,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 )}
                 <Thumbnail
                   isDraggable={isThumbnailReorderingEnabled}
-                  isSelected={selectedPagesHash[index]}
+                  isSelected={selectedPagesMap.has(thumbIndex)}
                   index={thumbIndex}
                   canLoad={canLoad}
                   onLoad={this.onLoad}
@@ -443,7 +419,6 @@ class ThumbnailsPanel extends React.PureComponent {
                   onRemove={this.onRemove}
                   onDragStart={this.onDragStart}
                   onDragOver={this.onDragOver}
-                  onClickCallback={this.onThumbnailClick}
                   updateAnnotations={updateHandler}
                 />
                 {showPlaceHolder && !isDraggingToPreviousPage && (

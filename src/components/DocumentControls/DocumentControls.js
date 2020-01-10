@@ -94,11 +94,11 @@ const DocumentControls = props => {
         keepOpen: ['leftPanel'],
       };
 
-      window.readerControl.showWarningMessage(warning);
+      dispatch(actions.showWarningMessage(warning));
       return;
     }
 
-    window.readerControl.extractPages(selectedPageIndexes.map(index => index + 1)).then(file => {
+    core.extractPagesWithAnnotations(selectedPageIndexes.map(index => index + 1)).then(file => {
       saveAs(file, 'extractedDocument.pdf');
     });
   };
