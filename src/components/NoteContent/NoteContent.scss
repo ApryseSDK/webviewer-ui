@@ -10,27 +10,27 @@
     color: #808080;
     color: var(--text-color);
     margin-bottom: 3px;
-  
+
     .type {
-      display: flex;
-      align-items: center;
-      height: 20px;
-      padding-right: 10px;
-      font-weight: bold;
-  
+      // display: flex;
+      // align-items: center;
+      // height: 20px;
+      // padding-right: 10px;
+      // font-weight: bold;
+
       .icon {
-        width: 20px;
-        height: 20px;
+        width: 27px;
+        height: 27px;
       }
     }
-  
+
     .author {
       opacity: 0.8;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-    
+
     .time {
       opacity: 0.8;
     }
@@ -56,12 +56,12 @@
     padding-top: 3px;
     cursor: auto;
     white-space: pre-wrap;
-  
+
     .edit-content {
       display: flex;
       flex-direction: column;
       margin: 0;
-  
+
       textarea {
         width: 100%;
         resize: none;
@@ -70,20 +70,20 @@
         border: 1px solid $gray12;
         font-size: 12px;
       }
-  
+
       .buttons  {
         @extend %textarea-buttons;
         margin-top: 5px;
       }
     }
-  
+
     .contents {
       color: var(--text-color);
       margin-right: 5px;
       padding: 0;
       word-wrap: break-word;
       user-select: text;
-  
+
       .highlight {
         background: #fffc95;
         color: #333333;

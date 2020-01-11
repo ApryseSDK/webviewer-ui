@@ -65,12 +65,16 @@ const Note = ({ annotation }) => {
   return (
     <div ref={containerRef} className={noteClass} onMouseDown={handleNoteClick}>
       <NoteContent annotation={annotation} />
-      <div className={repliesClass}>
-        {replies.map(reply => (
-          <NoteContent key={reply.Id} annotation={reply} />
-        ))}
-        <ReplyArea annotation={annotation} />
-      </div>
+      {isSelected &&
+        <React.Fragment>
+          <div className="divider" />
+          <div className={repliesClass}>
+            {replies.map(reply => (
+              <NoteContent key={reply.Id} annotation={reply} />
+            ))}
+            <ReplyArea annotation={annotation} />
+          </div>
+        </React.Fragment>}
     </div>
   );
 };
@@ -144,8 +148,8 @@ const ReplyArea = ({ annotation }) => {
     isReadOnly ||
     isReplyDisabled ||
     isReplyDisabledForAnnotation ||
-    (isNoteEditingTriggeredByAnnotationPopup && isContentEditable); 
-    
+    (isNoteEditingTriggeredByAnnotationPopup && isContentEditable);
+
   return ifReplyNotAllowed ? null : (
     <div
       className="reply-container"

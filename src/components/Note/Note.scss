@@ -2,26 +2,37 @@
 @import '../../constants/note';
 
 .Note {
-  width: 100%;
-  margin-top: -1px;
-  padding: 10px;
-  border: 1px solid #c3c6d4;
+  // border: 1px solid #c3c6d4;
   font-size: 13px;
   // background: white;
   // background: var(--primary-color);
   border-radius: 4px;
+  box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
+  margin: 0px 1px;
+  margin-bottom: 8px;
+
+  .NoteContent {
+    padding: 7px 0px;
+    padding-right: 12px;
+    padding-left: 7px;
+  }
 
   &.expanded {
-    margin: 10px 0;
+    // margin: 10px 0;
+  }
+
+  .divider{
+    height: 1px;
+    width: 100%;
+    background: #dfe2ed;
+    margin: 4px 0px;
   }
 
   .replies {
     margin: 15px 0 0;
     transition: all 1s ease;
 
-    .NoteContent {
-      padding: 5px 0px;
-    }
+
 
     &.hidden {
       display: none;

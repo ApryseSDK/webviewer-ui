@@ -97,7 +97,8 @@ const NoteContent = ({ annotation }) => {
         return '(no name)';
       }
 
-      return <span dangerouslySetInnerHTML={{ __html: getText(name) }} />;
+      // return <span dangerouslySetInnerHTML={{ __html: getText(name) }} />;
+      return <div>{getText(name)}</div>;
     },
     [getText],
   );
@@ -146,20 +147,19 @@ const NoteContent = ({ annotation }) => {
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
   const numberOfReplies = annotation.getReplies().length;
+
+  const foo = () =>
+    <React.Fragment>
+      {renderAuthorName(annotation)}
+      <span className="time">
+        {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
+      </span>
+      <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
+    </React.Fragment>;
+
   const header = useMemo(() => {
     if (isReply) {
-      return (
-        <div className="title">
-          {renderAuthorName(annotation)}
-          <span className="spacer" />
-          <span className="time">
-            {` ${dayjs(annotation.DateCreated).format(noteDateFormat)}`}
-          </span>
-          {isSelected && (
-            <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
-          )}
-        </div>
-      );
+      return foo();
     }
 
     return (
@@ -171,18 +171,7 @@ const NoteContent = ({ annotation }) => {
             annotation.Subject
           )}
         </div>
-        {renderAuthorName(annotation)}
-        {(sortStrategy !== 'time' || isSelected || numberOfReplies > 0) && (
-          <span className="spacer" />
-        )}
-        <div className="time">
-          {(sortStrategy !== 'time' || isSelected) &&
-            dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
-          {numberOfReplies > 0 && ` (${numberOfReplies})`}
-        </div>
-        {isSelected && (
-          <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
-        )}
+        {foo()}
       </div>
     );
   }, [

@@ -265,7 +265,7 @@ const NotesPanel = () => {
                 </div>
               </div>
               <div className="divider" />
-              {/* <Dropdown items={Object.keys(getSortStrategies())} /> */}
+              <Dropdown items={Object.keys(getSortStrategies())} />
             </div>
           </div>
           {notesToRender.length === 0 ? (
