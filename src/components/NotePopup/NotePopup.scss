@@ -8,16 +8,15 @@
 
   .overflow {
     .Icon {
-      width: 20px;
-      height: 20px;
-      opacity: 0.5;  
+      width: 18px;
+      height: 18px;
     }
-    
+
     &:hover {
       opacity: 1;
     }
   }
-  
+
   .options {
     flex-direction: column;
     right: 0;
@@ -29,11 +28,11 @@
     z-index: 80;
     display: flex;
     position: absolute;
-    
+
     div {
       width: 100%;
       padding: 3px;
-  
+
       &:hover {
         color: $gray87;
       }

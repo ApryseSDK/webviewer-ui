@@ -96,7 +96,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
       onMouseDown={e => e.stopPropagation()}
     >
       <div className="overflow" onClick={togglePopup}>
-        <Icon glyph="ic_overflow_black_24px" />
+        <Icon glyph="icon-tools-more" />
       </div>
       {isOpen && (
         <div className="options" onClick={closePopup}>
