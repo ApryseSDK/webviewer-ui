@@ -97,8 +97,7 @@ const NoteContent = ({ annotation }) => {
         return '(no name)';
       }
 
-      // return <span dangerouslySetInnerHTML={{ __html: getText(name) }} />;
-      return <div>{getText(name)}</div>;
+      return <div class="author-name">{getText(name)}</div>;
     },
     [getText],
   );
@@ -123,9 +122,7 @@ const NoteContent = ({ annotation }) => {
         text = getText(contents);
       }
 
-      return (
-        <span className="contents" dangerouslySetInnerHTML={{ __html: text }} />
-      );
+      return text;
     },
     [getText],
   );
@@ -147,31 +144,29 @@ const NoteContent = ({ annotation }) => {
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
   const numberOfReplies = annotation.getReplies().length;
+  const contents = annotation.getContents();
 
-  const foo = () =>
+  const foo =
     <React.Fragment>
-      {renderAuthorName(annotation)}
-      <span className="time">
-        {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
-      </span>
+      <div>
+        {renderAuthorName(annotation)}
+        <span className="time">
+          {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
+        </span>
+        {contents && (
+          <div className="container">{renderContents(contents)}</div>
+        )}
+      </div>
       <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
     </React.Fragment>;
 
   const header = useMemo(() => {
-    if (isReply) {
-      return foo();
-    }
-
     return (
       <div className="title">
         <div className="type">
-          {icon ? (
-            <Icon className="icon" glyph={icon} color={color} />
-          ) : (
-            annotation.Subject
-          )}
+          {!isReply && <Icon className="icon" glyph={icon} color={color} />}
         </div>
-        {foo()}
+        {foo}
       </div>
     );
   }, [
@@ -187,7 +182,7 @@ const NoteContent = ({ annotation }) => {
   ]);
 
   const annotationState = annotation.getStatus();
-  const contents = annotation.getContents();
+  const contents2 = annotation.getContents();
 
   return useMemo(
     () => (
@@ -202,7 +197,7 @@ const NoteContent = ({ annotation }) => {
             {t('option.status.status')}: {annotationState}
           </div>
         )}
-        <div className="content-container" onMouseDown={handleContainerClick}>
+        {/* <div className="content-container" onMouseDown={handleContainerClick}>
           {isEditing ? (
             <ContentArea
               textAreaValue={textAreaValue}
@@ -211,11 +206,11 @@ const NoteContent = ({ annotation }) => {
               setIsEditing={setIsEditing}
             />
           ) : (
-            contents && (
+            contents2 && (
               <div className="container">{renderContents(contents)}</div>
             )
           )}
-        </div>
+        </div> */}
       </div>
     ),
     [

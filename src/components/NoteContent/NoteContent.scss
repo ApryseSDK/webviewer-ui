@@ -12,6 +12,9 @@
     margin-bottom: 3px;
 
     .type {
+      margin-bottom: auto;
+      width: 27px;
+      margin-right: 3px;
       // display: flex;
       // align-items: center;
       // height: 20px;
@@ -33,6 +36,12 @@
 
     .time {
       opacity: 0.8;
+      font-size: 10px;
+    }
+
+    .author-name {
+      font-size: 13px;
+      font-weight: bold;
     }
 
     .spacer {
@@ -43,6 +52,10 @@
       background: #808080;
       background: var(--text-color);
       opacity: 0.5;
+    }
+
+    .container {
+      font-size: 13px;
     }
   }
 
