@@ -1,10 +1,10 @@
 import actions from 'actions';
 
 /**
- * Update an element in the viewer. Currently this API can only update elements that have a Button class name.
+ * Update an element in the viewer.
  * @method WebViewerInstance#updateElement
- * @param {string} dataElement the data element of the element that will be updated.
- * @param {object} props An object that is used to override an existing item's properties.
+ * @param {string} dataElement the data element of the element that will be updated. Valid values are 'colorPalette', and HTML elements that have 'Button' in the class name.
+ * @param {*} props An object or an array that is used to override an existing item's properties.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -12,6 +12,8 @@ WebViewer(...)
       img: 'path/to/image',
       title: 'new_tooltip',
     })
+
+    instance.updateElement('colorPalette', ['#FFFFFF', 'transparency', '#000000'])
   });
  */
 export default store => (dataElement, overrides) => {
