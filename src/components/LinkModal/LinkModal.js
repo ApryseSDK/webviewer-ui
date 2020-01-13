@@ -1,0 +1,244 @@
+import React, { useState, useEffect } from 'react';
+import classNames from 'classnames';
+import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
+import defaultTool from 'constants/defaultTool';
+import core from 'core';
+import ActionButton from 'components/ActionButton';
+import { Tabs, Tab, TabPanel } from 'components/Tabs';
+import Button from 'components/Button';
+import actions from 'actions';
+import selectors from 'selectors';
+
+import './LinkModal.scss';
+
+const LinkModal = () => {
+  const [isDisabled, isOpen, totalPages, currentPage, tabSelected] = useSelector(state => [
+    selectors.isElementDisabled(state, 'linkModal'),
+    selectors.isElementOpen(state, 'linkModal'),
+    selectors.getTotalPages(state),
+    selectors.getCurrentPage(state),
+    selectors.getSelectedTab(state, 'linkModal'),
+  ]);
+  const [t] = useTranslation();
+  const dispatch = useDispatch();
+
+  const urlInput = React.createRef();
+  const pageNumberInput = React.createRef();
+
+  const [dropdownNumbers, setDropdownNumbers] = useState([]);
+  const [url, setURL] = useState('');
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const closeModal = () => {
+    dispatch(actions.closeElement('linkModal'));
+    setURL('');
+    setPageNumber(1);
+    core.setToolMode(defaultTool);
+  };
+
+  const createLink = () => {
+    const linksResults = [];
+
+    const quads = core.getSelectedTextQuads();
+    const selectedAnnotations = core.getSelectedAnnotations();
+
+    const currPageQuads = quads[currentPage - 1];
+
+    if (currPageQuads) {
+      const selectedText = core.getSelectedText();
+      currPageQuads.forEach(quad => {
+        const link = new Annotations.Link();
+        link.PageNumber = currentPage;
+        link.StrokeColor = new Annotations.Color(0, 165, 228);
+        link.StrokeStyle = 'underline';
+        link.StrokeThickness = 2;
+        link.Author = core.getCurrentUser();
+        link.Subject = 'Link';
+        link.X = Math.min(quad.x1, quad.x3);
+        link.Y = Math.min(quad.y1, quad.y3);
+        link.Width = Math.abs(quad.x1 - quad.x3);
+        link.Height = Math.abs(quad.y1 - quad.y3);
+        linksResults.push(link);
+      });
+      createHighlightAnnot(linksResults[0], currPageQuads, selectedText);
+    }
+
+    if (selectedAnnotations && selectedAnnotations.length === 1) {
+      const link = new Annotations.Link();
+      link.PageNumber = currentPage;
+      link.StrokeColor = new Annotations.Color(0, 165, 228);
+      link.StrokeStyle = 'underline';
+      link.StrokeThickness = 2;
+      link.Author = core.getCurrentUser();
+      link.Subject = 'Link';
+      link.X = selectedAnnotations[0].X;
+      link.Y = selectedAnnotations[0].Y;
+      link.Width = selectedAnnotations[0].Width;
+      link.Height = selectedAnnotations[0].Height;
+      linksResults.push(link);
+    }
+
+    return linksResults;
+  };
+
+  const createHighlightAnnot = async(linkAnnot, quads, text) => {
+    const highlight = new Annotations.TextHighlightAnnotation();
+    highlight.PageNumber = linkAnnot.PageNumber;
+    highlight.X = linkAnnot.X;
+    highlight.Y = linkAnnot.Y;
+    highlight.Width = linkAnnot.Width;
+    highlight.Height = linkAnnot.Height;
+    highlight.StrokeColor = new Annotations.Color(0, 0, 0, 0);
+    highlight.Quads = quads;
+    highlight.Author = core.getCurrentUser();
+    highlight.setContents(text);
+    await core.addAnnotations([highlight]);
+    await core.drawAnnotationsFromList([highlight]);
+  };
+
+  const addURLLink = () => {
+    const links = createLink();
+
+    const action = new window.Actions.URI({ uri: url });
+    links.forEach(async link => {
+      link.addAction('U', action);
+      await core.addAnnotations([link]);
+      await core.drawAnnotationsFromList([link]);
+    });
+
+    closeModal();
+  };
+
+  const addPageLink = () => {
+    const links = createLink();
+
+    const Dest = window.Actions.GoTo.Dest;
+    const options = { dest: new Dest({ page: pageNumber }) };
+    const action = new window.Actions.GoTo(options);
+
+    links.forEach(async link => {
+      link.addAction('U', action);
+      await core.addAnnotations([link]);
+      await core.drawAnnotationsFromList([link]);
+    });
+
+    closeModal();
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      //  prepopulate page numbers for the dropdown
+      const numbers = [];
+      for (let i = 1; i <= totalPages; i++) {
+        numbers.push(
+          <option key={i} value={i}>
+            {i}
+          </option>,
+        );
+      }
+      setDropdownNumbers(numbers);
+
+      //  prepopulate URL if URL is selected
+      const selectedText = core.getSelectedText();
+      if (selectedText) {
+        const urlRegex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+        const urls = selectedText.match(urlRegex);
+        if (urls && urls.length > 0) {
+          setURL(urls[0]);
+        }
+      }
+    }
+  }, [totalPages, isOpen]);
+
+  useEffect(() => {
+    if (tabSelected === 'PageNumberPanelButton' && isOpen) {
+      pageNumberInput.current.focus();
+    } else if (tabSelected === 'URLPanelButton' && isOpen) {
+      urlInput.current.focus();
+    }
+  }, [tabSelected, isOpen]);
+
+  const modalClass = classNames({
+    Modal: true,
+    LinkModal: true,
+    open: isOpen,
+    closed: !isOpen,
+  });
+
+  return isDisabled ? null : (
+    <div
+      className={modalClass}
+      data-element="linkModal"
+      onMouseDown={closeModal}
+    >
+      <div className="container" onMouseDown={e => e.stopPropagation()}>
+        <Tabs id="linkModal">
+          <div className="header">
+            <div className="tab-list">
+              <Tab dataElement="URLPanelButton">
+                <Button label={t('link.URL')} />
+              </Tab>
+              <Tab dataElement="PageNumberPanelButton">
+                <Button label={t('link.Page')} />
+              </Tab>
+            </div>
+            <ActionButton
+              dataElement="linkModalCloseButton"
+              title="action.close"
+              img="ic_close_black_24px"
+              onClick={closeModal}
+            />
+          </div>
+
+          <TabPanel dataElement="URLPanel">
+            <form onSubmit={addURLLink}>
+              <div className="enter">
+                <div>{t('link.EnterURL')}</div>
+                <input
+                  className="urlInput"
+                  type="url"
+                  ref={urlInput}
+                  value={url}
+                  onChange={e => setURL(e.target.value)}
+                />
+              </div>
+              <div className="buttons">
+                <Button
+                  dataElement="linkSubmitButton"
+                  label={t('action.link')}
+                  onClick={addURLLink}
+                />
+              </div>
+            </form>
+          </TabPanel>
+          <TabPanel dataElement="PageNumberPanel">
+            <form onSubmit={addPageLink}>
+              <div className="enter">
+                <div>{t('link.EnterPage')}</div>
+                <select
+                  className="pageNumberSelect"
+                  ref={pageNumberInput}
+                  value={pageNumber}
+                  onChange={e => setPageNumber(e.target.value)}
+                >
+                  {dropdownNumbers}
+                </select>
+              </div>
+              <div className="buttons">
+                <Button
+                  dataElement="linkSubmitButton"
+                  label={t('action.link')}
+                  onClick={addPageLink}
+                />
+              </div>
+            </form>
+          </TabPanel>
+        </Tabs>
+      </div>
+    </div>
+  );
+};
+
+export default LinkModal;

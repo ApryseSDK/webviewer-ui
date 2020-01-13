@@ -29,6 +29,7 @@ import WarningModal from 'components/WarningModal';
 import PasswordModal from 'components/PasswordModal';
 import ProgressModal from 'components/ProgressModal';
 import CalibrationModal from 'components/CalibrationModal';
+import LinkModal from 'components/LinkModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
@@ -91,6 +92,7 @@ const App = ({ removeEventHandlers }) => {
         <PasswordModal />
         <ProgressModal />
         <CalibrationModal />
+        <LinkModal />
       </div>
 
       <PrintHandler />
