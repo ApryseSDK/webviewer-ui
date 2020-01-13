@@ -76,19 +76,6 @@ const NoteContent = ({ annotation }) => {
     }
   }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
-  const handleContainerClick = useCallback(
-    e => {
-      if (isSelected) {
-        // stop bubbling up otherwise the note will be closed due to annotation deselection
-        // when the note is selected, we only want it to be closed when the note content header is clicked
-        // because users may try to select text or click any links in contents and we don't want the note to collapse
-        // when they are doing that
-        e.stopPropagation();
-      }
-    },
-    [isSelected],
-  );
-
   const renderAuthorName = useCallback(
     annotation => {
       const name = core.getDisplayAuthor(annotation);
@@ -97,7 +84,7 @@ const NoteContent = ({ annotation }) => {
         return '(no name)';
       }
 
-      return <div class="author-name">{getText(name)}</div>;
+      return <div className="author-name">{getText(name)}</div>;
     },
     [getText],
   );
@@ -160,26 +147,14 @@ const NoteContent = ({ annotation }) => {
       <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
     </React.Fragment>;
 
-  const header = useMemo(() => {
-    return (
-      <div className="title">
-        <div className="type">
-          {!isReply && <Icon className="icon" glyph={icon} color={color} />}
-        </div>
-        {foo}
+  const header = useMemo(() => (
+    <div className="title">
+      <div className="type">
+        {!isReply && <Icon className="icon" glyph={icon} color={color} />}
       </div>
-    );
-  }, [
-    annotation,
-    color,
-    icon,
-    isReply,
-    isSelected,
-    noteDateFormat,
-    numberOfReplies,
-    renderAuthorName,
-    sortStrategy,
-  ]);
+      {foo}
+    </div>
+  ), [color, foo, icon, isReply]);
 
   const annotationState = annotation.getStatus();
   const contents2 = annotation.getContents();
@@ -213,17 +188,7 @@ const NoteContent = ({ annotation }) => {
         </div> */}
       </div>
     ),
-    [
-      t,
-      annotation,
-      annotationState,
-      contents,
-      handleContainerClick,
-      header,
-      isEditing,
-      renderContents,
-      textAreaValue,
-    ],
+    [t, annotationState, header],
   );
 };
 

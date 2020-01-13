@@ -67,7 +67,7 @@ const Note = ({ annotation }) => {
       <NoteContent annotation={annotation} />
       {isSelected &&
         <React.Fragment>
-          <div className="divider" />
+          {replies.length > 0 && <div className="divider" />}
           <div className={repliesClass}>
             {replies.map(reply => (
               <NoteContent key={reply.Id} annotation={reply} />
