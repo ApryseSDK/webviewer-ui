@@ -150,9 +150,9 @@ const NoteContent = ({ annotation }) => {
     <React.Fragment>
       <div>
         {renderAuthorName(annotation)}
-        <span className="time">
+        <div className="time">
           {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
-        </span>
+        </div>
         {contents && (
           <div className="container">{renderContents(contents)}</div>
         )}

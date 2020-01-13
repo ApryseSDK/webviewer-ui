@@ -9,17 +9,11 @@
     flex: 1;
     color: #808080;
     color: var(--text-color);
-    margin-bottom: 3px;
 
     .type {
       margin-bottom: auto;
       width: 27px;
       margin-right: 3px;
-      // display: flex;
-      // align-items: center;
-      // height: 20px;
-      // padding-right: 10px;
-      // font-weight: bold;
 
       .icon {
         width: 27px;
@@ -55,6 +49,7 @@
     }
 
     .container {
+      margin-top: 7px;
       font-size: 13px;
     }
   }
