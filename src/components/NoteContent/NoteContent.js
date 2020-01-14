@@ -130,34 +130,36 @@ const NoteContent = ({ annotation }) => {
 
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
-  const numberOfReplies = annotation.getReplies().length;
   const contents = annotation.getContents();
-
-  const foo =
-    <React.Fragment>
-      <div>
-        {renderAuthorName(annotation)}
-        <div className="time">
-          {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
-        </div>
-        {contents && (
-          <div className="container">{renderContents(contents)}</div>
-        )}
-      </div>
-      <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
-    </React.Fragment>;
 
   const header = useMemo(() => (
     <div className="title">
       <div className="type">
         {!isReply && <Icon className="icon" glyph={icon} color={color} />}
       </div>
-      {foo}
+      <div>
+        {renderAuthorName(annotation)}
+        <div className="time">
+          {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
+        </div>
+        {isEditing ? (
+          <ContentArea
+            textAreaValue={textAreaValue}
+            onTextAreaValueChange={setTextAreaValue}
+            annotation={annotation}
+            setIsEditing={setIsEditing}
+          />
+        ) : (
+          contents && (
+            <div className="container">{renderContents(contents)}</div>
+          )
+        )}
+      </div>
+      <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
     </div>
-  ), [color, foo, icon, isReply]);
+  ), [annotation, color, contents, icon, isEditing, isReply, noteDateFormat, renderAuthorName, renderContents, textAreaValue]);
 
   const annotationState = annotation.getStatus();
-  const contents2 = annotation.getContents();
 
   return useMemo(
     () => (
@@ -172,20 +174,6 @@ const NoteContent = ({ annotation }) => {
             {t('option.status.status')}: {annotationState}
           </div>
         )}
-        {/* <div className="content-container" onMouseDown={handleContainerClick}>
-          {isEditing ? (
-            <ContentArea
-              textAreaValue={textAreaValue}
-              onTextAreaValueChange={setTextAreaValue}
-              annotation={annotation}
-              setIsEditing={setIsEditing}
-            />
-          ) : (
-            contents2 && (
-              <div className="container">{renderContents(contents)}</div>
-            )
-          )}
-        </div> */}
       </div>
     ),
     [t, annotationState, header],
