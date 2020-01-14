@@ -11,6 +11,16 @@
   margin: 0px 1px;
   margin-bottom: 8px;
 
+  .weriuweior {
+    display: flex;
+  }
+
+  .asdf3e43 {
+    // margin-bottom: auto;
+    width: 27px;
+    margin-right: 3px;
+  }
+
   .NoteContent {
     padding-top: 9px;
     padding-right: 12px;
@@ -39,9 +49,9 @@
     }
 
     .reply-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      // margin: 15px 0 0;
 
       textarea {
         width: 100%;

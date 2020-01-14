@@ -72,7 +72,10 @@ const Note = ({ annotation }) => {
             {replies.map(reply => (
               <NoteContent key={reply.Id} annotation={reply} />
             ))}
-            <ReplyArea annotation={annotation} />
+            <div className="weriuweior">
+              <div className="asdf3e43" />
+              <ReplyArea annotation={annotation} />
+            </div>
           </div>
         </React.Fragment>}
     </div>
