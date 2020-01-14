@@ -11,7 +11,51 @@
   margin: 0px 1px;
 
   padding-bottom: 12px;
+  padding-right: 12px;
   margin-bottom: 8px;
+
+  .input-container {
+    display: flex;
+
+    textarea {
+      font-size: 13px;
+      width: 100%;
+      padding-left: 8px;
+      border: 1px solid #dfe2ed;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      color: var(--text-color);
+      padding-bottom: 4px;
+      resize: none;
+      overflow: hidden;
+
+      // width: 100%;
+      // resize: none;
+      // overflow: hidden;
+      box-sizing: border-box;
+
+      &::placeholder {
+        color: #c3c6d4;
+      }
+    }
+
+    .input-button {
+      cursor: pointer;
+      background: #6077bf;
+      border-radius: 4px;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      // left: -2px;
+
+      svg {
+        color: #fafafa;
+      }
+    }
+  }
+
 
   .weriuweior {
     display: flex;

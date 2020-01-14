@@ -153,9 +153,39 @@ const ReplyArea = ({ annotation }) => {
     isReplyDisabledForAnnotation ||
     (isNoteEditingTriggeredByAnnotationPopup && isContentEditable);
 
+  // return ifReplyNotAllowed ? null : (
+  //   <div
+  //     className="reply-container"
+  //     // stop bubbling up otherwise the note will be closed
+  //     // due to annotation deselection
+  //     onMouseDown={e => e.stopPropagation()}
+  //   >
+  //     <AutoResizeTextarea
+  //       ref={el => {
+  //         textareaRef.current = el;
+  //       }}
+  //       value={value}
+  //       onChange={value => setValue(value)}
+  //       onSubmit={e => postReply(e)}
+  //       onBlur={() => setIsFocused(false)}
+  //       onFocus={() => setIsFocused(true)}
+  //       placeholder={`${t('action.reply')}...`}
+  //     />
+
+  //     {isFocused && (
+  //       <div className="buttons">
+  //         <button className={replyBtnClass} onMouseDown={postReply}>
+  //           {t('action.reply')}
+  //         </button>
+  //         <button onMouseDown={handleCancelClick}>{t('action.cancel')}</button>
+  //       </div>
+  //     )}
+  //   </div>
+  // );
+
   return ifReplyNotAllowed ? null : (
     <div
-      className="reply-container"
+      className="input-container"
       // stop bubbling up otherwise the note will be closed
       // due to annotation deselection
       onMouseDown={e => e.stopPropagation()}
@@ -171,15 +201,12 @@ const ReplyArea = ({ annotation }) => {
         onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}
       />
+      <div
+        className="input-button"
+        onClick={() => {}}
+      >
 
-      {isFocused && (
-        <div className="buttons">
-          <button className={replyBtnClass} onMouseDown={postReply}>
-            {t('action.reply')}
-          </button>
-          <button onMouseDown={handleCancelClick}>{t('action.cancel')}</button>
-        </div>
-      )}
+      </div>
     </div>
   );
 };

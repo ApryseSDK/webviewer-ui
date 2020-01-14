@@ -14,7 +14,7 @@
     // padding-right: 28px;
 
     .header {
-      .foo987 {
+      .input-container {
         display: flex;
 
         input {
@@ -22,7 +22,6 @@
           width: 100%;
           padding-left: 8px;
           border: 1px solid #dfe2ed;
-          // border-radius: 4px;
           border-top-left-radius: 4px;
           border-bottom-left-radius: 4px;
           color: var(--text-color);
@@ -33,7 +32,7 @@
           }
         }
 
-        .werier {
+        .input-button {
           cursor: pointer;
           background: #6077bf;
           border-radius: 4px;

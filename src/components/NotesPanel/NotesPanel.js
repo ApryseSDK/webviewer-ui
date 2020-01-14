@@ -249,14 +249,14 @@ const NotesPanel = () => {
         <React.Fragment>
           <div className="container">
             <div className="header">
-              <div className="foo987">
+              <div className="input-container">
                 <input
                   type="text"
                   placeholder={t('message.searchPlaceholder')}
                   onChange={handleInputChange}
                 />
                 <div
-                  className="werier"
+                  className="input-button"
                   onClick={() => {}}
                 >
                   <Icon
