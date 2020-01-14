@@ -37,8 +37,9 @@ class Thumbnail extends React.PureComponent {
 
   componentDidMount() {
     const { onLoad, index } = this.props;
+    const id = this.loadThumbnailAsync();
+    onLoad(index, this.thumbContainer.current, id);
 
-    onLoad(index, this.thumbContainer.current);
     core.addEventListener('layoutChanged', this.onLayoutChangedHandler);
   }
 
@@ -82,20 +83,31 @@ class Thumbnail extends React.PureComponent {
     }
 
     if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
-      const { thumbContainer } = this;
-      const { current } = thumbContainer;
-
-      core.loadThumbnailAsync(index, thumb => {
-        thumb.className = 'page-image';
-        thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
-        thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
-        current.removeChild(current.querySelector('.page-image'));
-        current.appendChild(thumb);
-        if (this.props.updateAnnotations) {
-          this.props.updateAnnotations(index);
-        }
-      });
+      this.loadThumbnailAsync();
     }
+  }
+
+  loadThumbnailAsync = () => {
+    const { index } = this.props;
+    const { thumbContainer } = this;
+    const { current } = thumbContainer;
+
+    const id = core.loadThumbnailAsync(index, thumb => {
+      thumb.className = 'page-image';
+      thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
+      thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
+
+      const childElement = current.querySelector('.page-image');
+      if (childElement) {
+        current.removeChild(childElement);
+      }
+      current.appendChild(thumb);
+      if (this.props.updateAnnotations) {
+        this.props.updateAnnotations(index);
+      }
+    });
+
+    return id;
   }
 
   handleClick = () => {

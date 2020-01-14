@@ -38,6 +38,8 @@ class ThumbnailsPanel extends React.PureComponent {
       width: 0,
       draggingOverPageIndex: null,
       isDraggingToPreviousPage: false,
+      thumbnailStart: 0,
+      thumbnailEnd: 0,
     };
   }
 
@@ -290,26 +292,12 @@ class ThumbnailsPanel extends React.PureComponent {
     };
   }
 
-  onLoad = (pageIndex, element) => {
+  onLoad = (pageIndex, element, id) => {
     if (!this.thumbIsLoaded(pageIndex) && !this.thumbIsPending(pageIndex)) {
       this.thumbs[pageIndex] = {
         element,
         loaded: false,
       };
-
-      const id = core.loadThumbnailAsync(pageIndex, thumb => {
-        thumb.className = 'page-image';
-        thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
-        thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
-
-        if (this.thumbs[pageIndex]) {
-          this.thumbs[pageIndex].element.appendChild(thumb);
-          this.thumbs[pageIndex].loaded = true;
-          this.thumbs[pageIndex].updateAnnotationHandler = this.updateAnnotations.bind(this);
-          this.removeFromPendingThumbs(pageIndex);
-          this.updateAnnotations(pageIndex);
-        }
-      });
 
       this.pendingThumbs.push({
         pageIndex,
@@ -330,8 +318,9 @@ class ThumbnailsPanel extends React.PureComponent {
   thumbIsPending = pageIndex => this.getPendingThumbIndex(pageIndex) !== -1
 
   onCancel = pageIndex => {
+    const { thumbnailStart, thumbnailEnd } = this.state;
     const index = this.getPendingThumbIndex(pageIndex);
-    if (index !== -1) {
+    if (index !== -1 && (pageIndex > thumbnailEnd || pageIndex < thumbnailStart)) {
       core.cancelLoadThumbnail(this.pendingThumbs[index].id);
       this.pendingThumbs.splice(index, 1);
     }
@@ -343,6 +332,13 @@ class ThumbnailsPanel extends React.PureComponent {
     this.onCancel(pageIndex);
     this.thumbs[pageIndex] = null;
   }
+
+  onThumbnailRendered = ({ overscanStartIndex, overscanStopIndex }) => {
+    this.setState({
+      thumbnailStart: overscanStartIndex,
+      thumbnailEnd: overscanStopIndex,
+    });
+  };
 
   renderThumbnails = ({ index, key, style }) => {
     const {
@@ -426,6 +422,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
                 rowCount={Math.ceil(totalPages / numberOfColumns)}
                 rowRenderer={this.renderThumbnails}
+                onRowsRendered={this.onThumbnailRendered}
                 overscanRowCount={10}
                 style={{ outline: 'none' }}
               />
