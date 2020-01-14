@@ -205,7 +205,7 @@ const ReplyArea = ({ annotation }) => {
         className="input-button"
         onClick={() => {}}
       >
-
+Post
       </div>
     </div>
   );
