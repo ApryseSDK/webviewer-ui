@@ -64,7 +64,31 @@
     "stickyNote": "コメント",
     "strikeout": "抹消線",
     "underline": "下線",
-    "custom": "カスタム"
+    "custom": "カスタム",
+    "rubberStamp": "ゴム印"
+  },
+  "rubberStamp": {
+    "Approved": "承認済み",
+    "AsIs": "そのまま",
+    "Completed": "完了しました",
+    "Confidential": "機密",
+    "Departmental": "部門別",
+    "Draft": "ドラフト",
+    "Experimental": "実験的",
+    "Expired": "期限切れ",
+    "Final": "最後の",
+    "ForComment": "コメント用",
+    "ForPublicRelease": "公開リリース",
+    "InformationOnly": "情報のみ",
+    "NotApproved": "未承認",
+    "NotForPublicRelease": "非公開リリース",
+    "PreliminaryResults": "予備結果",
+    "Sold": "販売済み",
+    "TopSecret": "トップシークレット",
+    "Void": "ボイド",
+    "SHSignHere": "ここに署名",
+    "SHWitness": "証人",
+    "SHInitialHere": "初期"
   },
   "component": {
     "freehandToolsButton": "フリーハンド ツール",

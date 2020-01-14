@@ -64,7 +64,31 @@
     "stickyNote": "Comentario",
     "strikeout": "Tachado",
     "underline": "Subrayado",
-    "custom": "Personalizado"
+    "custom": "Personalizado",
+    "rubberStamp": "Sello de goma"
+  },
+  "rubberStamp": {
+    "Approved": "Aprobada",
+    "AsIs": "Como es",
+    "Completed": "Terminada",
+    "Confidential": "Confidencial",
+    "Departmental": "Departamental",
+    "Draft": "Sequía",
+    "Experimental": "Experimental",
+    "Expired": "Caducada",
+    "Final": "Final",
+    "ForComment": "Para comentarios",
+    "ForPublicRelease": "Para lanzamiento público",
+    "InformationOnly": "Sólo información",
+    "NotApproved": "No aprovado",
+    "NotForPublicRelease": "No para lanzamiento público",
+    "PreliminaryResults": "Resultados preliminares",
+    "Sold": "Vendida",
+    "TopSecret": "Ultra secreto",
+    "Void": "Vacía",
+    "SHSignHere": "Firma aqui",
+    "SHWitness": "Testigo",
+    "SHInitialHere": "Iniciales aqui"
   },
   "component": {
     "freehandToolsButton": "Herramientas a mano alzada",

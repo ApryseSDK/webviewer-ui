@@ -314,6 +314,7 @@ WebViewer(...)
             'signatureModal',
             'printModal',
             'searchOverlay',
+            'stampOverlay',
           ]),
         );
       },
@@ -346,6 +347,9 @@ WebViewer(...)
       }),
       r: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateRectangle');
+      }),
+      q: this.createToolHotkeyHandler(() => {
+        setToolModeAndGroup(store, 'AnnotationCreateRubberStamp');
       }),
       t: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateFreeText');
@@ -430,6 +434,7 @@ WebViewer(...)
       AnnotationCreateTextHighlight: 'h',
       AnnotationCreateTextStrikeout: 'k',
       AnnotationCreateTextUnderline: 'u',
+      AnnotationCreateRubberStamp: 'q',
     };
 
     return map[toolName];
