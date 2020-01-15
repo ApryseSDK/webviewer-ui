@@ -2,6 +2,7 @@
 
 .NotesPanel {
   @extend %right-panel;
+  position: static;
 
   overflow: hidden !important;
 

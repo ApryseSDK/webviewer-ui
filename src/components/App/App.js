@@ -73,11 +73,11 @@ const App = ({ removeEventHandlers }) => {
         <LeftPanel />
         <SearchPanel />
 
-        {/* <div> */}
+        <div className="container123">
           {/* <div className=""> */}
-            <DocumentContainer />
-          {/* </div> */}
+          <DocumentContainer />
           <NotesPanel />
+        </div>
         {/* </div> */}
         <SearchOverlay />
         <ViewControlsOverlay />

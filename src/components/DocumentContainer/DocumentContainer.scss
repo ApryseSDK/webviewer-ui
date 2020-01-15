@@ -11,9 +11,9 @@
   transition: all .3s ease;
   user-select: none;
 
-  &.right-panel {
-    width: calc(100% - #{$right-panel-width});
-  }
+  // &.right-panel {
+  //   width: calc(100% - #{$right-panel-width});
+  // }
 
   &.left-panel {
     width: calc(100% - #{$left-panel-width});
