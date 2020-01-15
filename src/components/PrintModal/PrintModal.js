@@ -406,6 +406,7 @@ class PrintModal extends React.PureComponent {
 
     contentElement.className = 'note__content';
     if (contentText) {
+      contentElement.style.whiteSpace = 'pre-wrap';
       contentElement.innerHTML = `${contentText}`;
     }
     return contentElement;
