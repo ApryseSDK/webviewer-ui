@@ -12,10 +12,11 @@ export default (dispatch, src, options = {}) => {
   options.password = transformPasswordOption(options.password, dispatch);
   options.xodOptions = extractXodOptions(options);
 
+  dispatch(actions.closeElement('passwordModal'));
   core.loadDocument(src, options).catch(fireError);
-
   dispatch(actions.openElement('progressModal'));
 };
+
 
 /**
  * Default options are some of the options used to initialize WebViewer, and will be preserved on loadDocument calls.
