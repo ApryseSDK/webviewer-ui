@@ -1,4 +1,3 @@
-import { workerTypes } from 'constants/types';
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
@@ -79,8 +78,6 @@ export const isFullScreen = state => state.viewer.isFullScreen;
 
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
 
-export const isDocumentLoaded = state => state.viewer.isDocumentLoaded;
-
 export const isDocumentReadOnly = state => state.viewer.isReadOnly;
 
 export const getCustomPanels = state => state.viewer.customPanels;
@@ -154,22 +151,6 @@ export const isAccessibleMode = state => state.viewer.isAccessibleMode;
 export const getErrorMessage = state => state.viewer.errorMessage || '';
 
 // document
-export const getDocument = state => state.document;
-
-export const getDocumentId = state => state.document.id;
-
-export const getDocumentPath = state =>
-  state.document.path || state.document.initialDoc;
-
-export const getDocumentFile = state => state.document.file;
-
-export const hasPath = state =>
-  !!(state.document.initialDoc || state.advanced.externalPath);
-
-export const getDocumentType = state => state.document.type;
-
-export const getCheckPasswordFunction = state => state.document.checkPassword;
-
 export const getPasswordAttempts = state => state.document.passwordAttempts;
 
 export const getPrintQuality = state => state.document.printQuality;
@@ -177,6 +158,7 @@ export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;
+
 export const getBookmarks = state => state.document.bookmarks;
 
 export const getLayers = state => state.document.layers;
@@ -187,8 +169,6 @@ export const getLoadingProgress = state => state.document.loadingProgress;
 export const getUserName = state => state.user.name;
 
 // advanced
-export const getAdvanced = state => state.advanced;
-
 export const getServerUrl = state => state.advanced.serverUrl;
 
 // search

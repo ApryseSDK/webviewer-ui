@@ -17,6 +17,7 @@ const FilePickerHandler = () => {
 
   const openDocument = e => {
     const file = e.target.files[0];
+    // TODO: fix this
     if (file) {
       dispatch(actions.setDocumentFile(file));
       dispatch(actions.openElement('progressModal'));

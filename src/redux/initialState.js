@@ -5,7 +5,6 @@ import SignatureToolButton from 'components/SignatureToolButton';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
-import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
 import { zoomIn, zoomOut } from 'helpers/zoom';
 import defaultTool from 'constants/defaultTool';
 import { copyMapWithDataProperties } from 'constants/map';
@@ -177,7 +176,6 @@ export default {
     isThumbnailMerging: false,
     isThumbnailReordering: false,
     doesAutoLoad: getHashParams('auto_load', true),
-    isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
     useEmbeddedPrint: false,
@@ -216,23 +214,12 @@ export default {
     isProgrammaticSearchFull: false,
   },
   document: {
-    id: getHashParams('did', null),
-    initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
-    path: null,
-    ext: getHashParams('extension', null),
-    filename: getHashParams('filename', null),
-    file: null,
-    type: null,
-    pdfDoc: null,
     pdfType: getHashParams('pdf', 'auto'),
     officeType: getHashParams('office', 'auto'),
-    isOffline: getHashParams('startOffline', false),
     totalPages: 0,
     outlines: [],
     bookmarks: {},
     layers: [],
-    checkPassword: null,
-    password: '',
     printQuality: 1,
     passwordAttempts: -1,
     loadingProgress: 0,
@@ -242,31 +229,15 @@ export default {
     isAdmin: getHashParams('admin', false),
   },
   advanced: {
-    azureWorkaround: getHashParams('azureWorkaround', false),
     customCSS: getHashParams('css', null),
-    customHeaders: { },
     defaultDisabledElements: getHashParams('disabledElements', ''),
-    externalPath: getHashParams('p', ''),
-    engineType: documentTypeParamToEngineType(getHashParams('preloadWorker'), getHashParams('pdftronServer', '')),
     fullAPI: getHashParams('pdfnet', false),
-    pdftronServer: getHashParams('pdftronServer', ''),
-    singleServerMode: getHashParams('singleServerMode', false),
-    forceClientSideInit: getHashParams('forceClientSideInit', false),
-    disableWebsockets: getHashParams('disableWebsockets', false),
     preloadWorker: getHashParams('preloadWorker', false),
     serverUrl: getHashParams('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
-    cacheKey: JSON.parse(getHashParams('cacheKey', null)),
-    pageSizes: null,
-    streaming: getHashParams('streaming', false),
-    subzero: getHashParams('subzero', false),
-    useDownloader: getHashParams('useDownloader', true),
     useSharedWorker: getHashParams('useSharedWorker', false),
     disableI18n: getHashParams('disableI18n', false),
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null,
-    decrypt: null,
-    decryptOptions: { },
-    withCredentials: false,
   },
 };

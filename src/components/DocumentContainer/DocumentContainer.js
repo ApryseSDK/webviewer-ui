@@ -17,12 +17,9 @@ import './DocumentContainer.scss';
 
 class DocumentContainer extends React.PureComponent {
   static propTypes = {
-    document: PropTypes.object.isRequired,
-    advanced: PropTypes.object.isRequired,
     isLeftPanelOpen: PropTypes.bool,
     isRightPanelOpen: PropTypes.bool,
     isSearchOverlayOpen: PropTypes.bool,
-    hasPath: PropTypes.bool,
     doesDocumentAutoLoad: PropTypes.bool,
     zoom: PropTypes.number.isRequired,
     currentPage: PropTypes.number,
@@ -89,6 +86,8 @@ class DocumentContainer extends React.PureComponent {
 
     if ((initialDoc && doesAutoLoad) || startOffline) {
       const options = {
+        extension: getHashParams('extension', null),
+        filename: getHashParams('filename', null),
         externalPath: getHashParams('p', ''),
         documentId: getHashParams('did', null),
       };
@@ -209,12 +208,9 @@ class DocumentContainer extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  document: selectors.getDocument(state),
-  advanced: selectors.getAdvanced(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
-  hasPath: selectors.hasPath(state),
   doesDocumentAutoLoad: selectors.doesDocumentAutoLoad(state),
   zoom: selectors.getZoom(state),
   currentPage: selectors.getCurrentPage(state),

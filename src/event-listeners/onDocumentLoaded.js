@@ -8,7 +8,6 @@ import { PRIORITY_ONE } from 'constants/actionPriority';
 let onFirstLoad = true;
 
 export default dispatch => () => {
-  dispatch(actions.setDocumentLoaded(true));
   dispatch(actions.openElement('pageNavOverlay'));
   dispatch(actions.setLoadingProgress(1));
 
