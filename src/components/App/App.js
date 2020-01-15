@@ -42,7 +42,7 @@ import fireEvent from 'helpers/fireEvent';
 import './App.scss';
 
 const propTypes = {
-  removeEventHandlers: PropTypes.func.isRequired
+  removeEventHandlers: PropTypes.func.isRequired,
 };
 
 const App = ({ removeEventHandlers }) => {
@@ -72,10 +72,13 @@ const App = ({ removeEventHandlers }) => {
 
         <LeftPanel />
         <SearchPanel />
-        <NotesPanel />
 
-        <DocumentContainer />
-
+        {/* <div> */}
+          {/* <div className=""> */}
+            <DocumentContainer />
+          {/* </div> */}
+          <NotesPanel />
+        {/* </div> */}
         <SearchOverlay />
         <ViewControlsOverlay />
         <RedactionOverlay />

@@ -247,7 +247,7 @@ const NotesPanel = () => {
         <div className="no-annotations">{t('message.noAnnotations')}</div>
       ) : (
         <React.Fragment>
-          <div className="container">
+          {/* <div className="container">
             <div className="header">
               <div className="input-container">
                 <input
@@ -267,7 +267,7 @@ const NotesPanel = () => {
               <div className="divider" />
               <Dropdown items={Object.keys(getSortStrategies())} />
             </div>
-          </div>
+          </div> */}
           {notesToRender.length === 0 ? (
             // <div className="no-results">{t('message.noResults')}</div>
             <div className="no-results">
