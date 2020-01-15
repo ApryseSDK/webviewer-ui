@@ -95,10 +95,7 @@ export const getDisabledCustomPanelTabs = state =>
     return disabledTabs;
   }, []);
 
-export const isEmbedPrintSupported = state => {
-  const isPDF = getDocumentType(state) === workerTypes.PDF;
-  return isPDF && (isChrome && !isAndroid) && state.viewer.useEmbeddedPrint;
-};
+export const isEmbedPrintSupported = state => isChrome && !isAndroid && state.viewer.useEmbeddedPrint;
 
 export const getColorMap = state => state.viewer.colorMap;
 

@@ -5,8 +5,15 @@ import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 
-export default (dispatch, options) => {
-  const { documentPath = 'document', filename, includeAnnotations = true, xfdfData, externalURL } = options;
+export default (
+  dispatch,
+  {
+    filename = core.getDocument()?.getFilename() || 'document',
+    includeAnnotations = true,
+    xfdfData,
+    externalURL,
+  } = {},
+) => {
   const downloadOptions = { downloadType: 'pdf' };
   let file;
 
@@ -18,15 +25,13 @@ export default (dispatch, options) => {
     }
 
     const getDownloadFilename = (name, extension) => {
-      if (name && name.slice(-extension.length).toLowerCase() !== extension) {
+      if (name.slice(-extension.length).toLowerCase() !== extension) {
         name += extension;
       }
       return name;
     };
 
-    const name = filename || documentPath.split('/').slice(-1)[0];
-    const downloadName = getDownloadFilename(name, '.pdf');
-
+    const downloadName = getDownloadFilename(filename, '.pdf');
     const doc = core.getDocument();
 
     if (externalURL) {
