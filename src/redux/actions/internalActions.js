@@ -210,10 +210,6 @@ export const disableReplyForAnnotations = func => ({
 });
 
 // document
-export const setDocumentFile = documentFile => ({
-  type: 'SET_DOCUMENT_FILE',
-  payload: { documentFile },
-});
 export const setTotalPages = totalPages => ({
   type: 'SET_TOTAL_PAGES',
   payload: { totalPages },
