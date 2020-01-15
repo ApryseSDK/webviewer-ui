@@ -184,14 +184,7 @@ export const getBookmarks = state => state.document.bookmarks;
 
 export const getLayers = state => state.document.layers;
 
-export const getLoadingProgress = state =>
-  (state.document.documentLoadingProgress +
-    state.document.workerLoadingProgress) /
-  2;
-
-export const getUploadProgress = state => state.document.uploadProgress;
-
-export const isUploading = state => state.document.isUploading;
+export const getLoadingProgress = state => state.document.loadingProgress;
 
 // user
 export const getUserName = state => state.user.name;

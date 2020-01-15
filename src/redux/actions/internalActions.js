@@ -302,15 +302,14 @@ export const setPrintQuality = quality => ({
   type: 'SET_PRINT_QUALITY',
   payload: { quality },
 });
-export const setDocumentLoadingProgress = documentLoadingProgress => ({
-  type: 'SET_DOCUMENT_LOADING_PROGRESS',
-  payload: { documentLoadingProgress },
+export const setLoadingProgress = percent => ({
+  type: 'SET_LOADING_PROGRESS',
+  payload: { progress: percent },
 });
-export const setWorkerLoadingProgress = workerLoadingProgress => ({
-  type: 'SET_WORKER_LOADING_PROGRESS',
-  payload: { workerLoadingProgress },
+export const resetLoadingProgress = () => ({
+  type: 'SET_LOADING_PROGRESS',
+  payload: { progress: 0 },
 });
-export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
 export const setPassword = password => ({
   type: 'SET_PASSWORD',
   payload: { password },
@@ -323,15 +322,6 @@ export const setPageSizes = pageSizes => ({
   type: 'SET_PAGE_SIZES',
   payload: { pageSizes },
 });
-export const setIsUploading = isUploading => ({
-  type: 'SET_IS_UPLOADING',
-  payload: { isUploading },
-});
-export const setUploadProgress = progress => ({
-  type: 'SET_UPLOAD_PROGRESS',
-  payload: { progress },
-});
-export const resetUploadProgress = () => setUploadProgress(0);
 
 // user
 export const setUserName = userName => ({
