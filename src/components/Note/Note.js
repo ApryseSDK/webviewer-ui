@@ -63,7 +63,11 @@ const Note = ({ annotation }) => {
     .sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
   return (
-    <div ref={containerRef} className={noteClass} onMouseDown={handleNoteClick}>
+    <div
+      ref={containerRef}
+      className={noteClass}
+      onMouseDown={handleNoteClick}
+    >
       <NoteContent annotation={annotation} />
       {isSelected &&
         <React.Fragment>
@@ -203,7 +207,7 @@ const ReplyArea = ({ annotation }) => {
       />
       <div
         className="input-button"
-        onClick={() => {}}
+        onClick={e => postReply(e)}
       >
         Post
       </div>

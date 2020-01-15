@@ -5,12 +5,22 @@
   padding-top: 9px;
   padding-left: 7px;
 
+  .title2 {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .title {
     position: relative;
     display: flex;
     align-items: center;
     flex: 1;
     color: var(--text-color);
+
+    .author-and-date {
+      flex: 1;
+      min-width: 0;
+    }
 
     .type {
       margin-bottom: auto;
@@ -53,6 +63,8 @@
     .container {
       margin-top: 7px;
       font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

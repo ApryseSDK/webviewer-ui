@@ -2,10 +2,7 @@
 @import '../../constants/note';
 
 .Note {
-  // border: 1px solid #c3c6d4;
   font-size: 13px;
-  // background: white;
-  // background: var(--primary-color);
   border-radius: 4px;
   box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
   margin: 0px 1px;
@@ -26,14 +23,11 @@
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
       color: var(--text-color);
+      padding-top: 4px;
       padding-bottom: 4px;
       resize: none;
       overflow: hidden;
       padding-right: 56px;
-
-      // width: 100%;
-      // resize: none;
-      // overflow: hidden;
       box-sizing: border-box;
 
       &::placeholder {
@@ -52,7 +46,6 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      // left: -2px;
       color: #fafafa;
       font-size: 13px;
       position: absolute;

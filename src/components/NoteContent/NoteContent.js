@@ -137,8 +137,11 @@ const NoteContent = ({ annotation }) => {
       <div className="type">
         {!isReply && <Icon className="icon" glyph={icon} color={color} />}
       </div>
-      <div>
-        {renderAuthorName(annotation)}
+      <div className="author-and-date">
+        <div className="title2">
+          {renderAuthorName(annotation)}
+          <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
+        </div>
         <div className="time">
           {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
         </div>
@@ -155,7 +158,7 @@ const NoteContent = ({ annotation }) => {
           )
         )}
       </div>
-      <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
+
     </div>
   ), [annotation, color, contents, icon, isEditing, isReply, noteDateFormat, renderAuthorName, renderContents, textAreaValue]);
 
