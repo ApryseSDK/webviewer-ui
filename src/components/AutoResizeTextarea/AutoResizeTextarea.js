@@ -37,7 +37,7 @@ const AutoResizeTextarea = React.forwardRef(
     const { resize } = useContext(NoteContext);
     const prevHeightRef = useRef();
     const textareaRef = useRef();
-    const TEXTAREA_HEIGHT = '17px';
+    const TEXTAREA_HEIGHT = '28px';
 
     useLayoutEffect(() => {
       // for auto-resize the height of the textarea

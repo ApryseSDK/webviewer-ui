@@ -199,13 +199,13 @@ const ReplyArea = ({ annotation }) => {
         onSubmit={e => postReply(e)}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
-        placeholder={`${t('action.reply')}...`}
+        placeholder={`${t('action.reply')}`}
       />
       <div
         className="input-button"
         onClick={() => {}}
       >
-Post
+        Post
       </div>
     </div>
   );
