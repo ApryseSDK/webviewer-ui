@@ -11,11 +11,14 @@ const ResizeBar = ({ onResize, minWidth, left }) => {
     // this listener is throttled because the notes panel listens to the panel width
     // change in order to rerender to have the correct width and we don't want
     // it to rerender too often
-    const dragMouseMove = _.throttle(({ clientX }) => {
+
+    // Removed throttle for now. It was causing jitterness when resizing.
+    // Maybe throttle is necessary because other components listening to the width would re-render too often?
+    const dragMouseMove = ({ clientX }) => {
       if (isMouseDownRef.current && clientX < 900) {
         onResize(Math.max(minWidth, left ? window.innerWidth - clientX : clientX));
       }
-    }, 200);
+    };
 
     document.addEventListener('mousemove', dragMouseMove);
     return () => document.removeEventListener('mousemove', dragMouseMove);
