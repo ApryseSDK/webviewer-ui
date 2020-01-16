@@ -38,31 +38,17 @@
   @extend %panel;
   @include closed(translateX(100%));
   width: $right-panel-width;
-  right: 0;
   padding-top: 16px;
   padding-left: 16px;
   padding-bottom: 0px;
   border-left: 1px solid $gray12;
   border-left: 1px solid var(--border-color);
-  @include mobile {
-    width: 100%;
-    border-left: none;
-  }
 }
 
 %left-panel {
   @extend %panel;
-  @include closed(translateX(-100%));
-  width: 293px;
-  // width: $left-panel-width;
-  left: 0;
   border-right: 1px solid $gray12;
   border-right: 1px solid var(--border-color);
-  @include mobile {
-    z-index: 100; // Need to be above search overlay
-    width: 100%;
-    border-right: none;
-  }
 }
 
 %sub-panel {

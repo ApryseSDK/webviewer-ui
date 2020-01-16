@@ -28,7 +28,7 @@ const LeftPanel = () => {
     shallowEqual,
   );
   const dispatch = useDispatch();
-  const [width, setWidth] = useState(219);
+  const [width, setWidth] = useState(293);
 
   useEffect(() => {
     if (isOpen && isTabletOrMobile()) {
@@ -89,7 +89,7 @@ const ResizeBar = ({ onResize }) => {
     const dragMouseMove = _.throttle(({ clientX }) => {
       if (isMouseDownRef.current && clientX < 900) {
         // document.body.style.setProperty('--left-panel-width', `${clientX}px`);
-        onResize(Math.max(219, clientX));
+        onResize(Math.max(293, clientX));
       }
     }, 50);
 
