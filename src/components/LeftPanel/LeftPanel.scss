@@ -4,6 +4,8 @@
 .LeftPanel {
   @extend %left-panel;
   background-color: var(--panel-background);
+  position: static;
+  visibility: visible !important;
 
   .left-panel-header {
     display: flex;

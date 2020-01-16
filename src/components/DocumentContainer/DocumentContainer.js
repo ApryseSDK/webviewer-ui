@@ -185,8 +185,8 @@ class DocumentContainer extends React.PureComponent {
 
     return classNames({
       DocumentContainer: true,
-      'left-panel': isLeftPanelOpen,
-      'right-panel': isRightPanelOpen,
+      // 'left-panel': isLeftPanelOpen,
+      // 'right-panel': isRightPanelOpen,
       'no-header': !isHeaderOpen,
       'search-overlay': isSearchOverlayOpen,
     });

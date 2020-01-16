@@ -25,45 +25,6 @@
     }
   }
 
-
-  // .items {
-  //   flex-grow: 1;
-  //   position: relative;
-
-  //   .display-item {
-  //     height: 24px;
-  //     flex-grow: 1;
-  //     display: flex;
-  //     justify-content: flex-end;
-  //     align-items: center;
-  //   }
-
-  //   .dropdown-items {
-  //     position: absolute;
-  //     top: 27px;
-  //     width: 100%;
-
-  //     &.show {
-  //       flex-grow: 1;
-  //       display: flex;
-  //       flex-direction: column;
-  //       align-items: flex-end;
-  //     }
-
-  //     &.hide {
-  //       display: none;
-  //     }
-
-  //     .dropdown-item {
-  //       margin: 5px 0;
-  //     }
-  //   }
-
-  //   &:hover {
-  //     cursor: pointer;
-  //   }
-  // }
-
   &:after {
     display: flex;
     align-items: center;
