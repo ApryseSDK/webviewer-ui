@@ -57,14 +57,20 @@ class Dropdown extends React.PureComponent {
       return null;
     }
 
+    // return (
+    //   <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
+    //     <div className="items">
+    //       <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>
+    //       <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
+    //         {this.renderDropdownItems()}
+    //       </div>
+    //     </div>
+    //   </div>
+    // );
+
     return (
       <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
-        <div className="items">
-          <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>
-          <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
-            {this.renderDropdownItems()}
-          </div>
-        </div>
+        aksdjflksdj
       </div>
     );
   }

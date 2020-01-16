@@ -2,11 +2,10 @@
 
 .Dropdown {
   display: flex;
-  font-size: 14px;
-  user-select: none;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  z-index: 80;
+  font-size: 13px;
+  // user-select: none;
+  // justify-content: space-between;
+  // z-index: 80;
 
   .items {
     flex-grow: 1;
@@ -47,9 +46,6 @@
   }
 
   &:after {
-    width: 24px;
-    height: 24px;
-
     display: flex;
     align-items: center;
 
