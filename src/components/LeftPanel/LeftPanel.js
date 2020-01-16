@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-import Resizeable from 're-resizable';
-
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
 import OutlinesPanel from 'components/OutlinesPanel';
@@ -12,29 +10,19 @@ import LayersPanel from 'components/LayersPanel';
 import CustomElement from 'components/CustomElement';
 import Icon from 'components/Icon';
 
-import { isTabletOrMobile, isIE, isIE11 } from 'helpers/device';
-import actions from 'actions';
 import selectors from 'selectors';
 
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
-  const [isOpen, activePanel, customPanels] = useSelector(
+  const [activePanel, customPanels] = useSelector(
     state => [
-      selectors.isElementOpen(state, 'leftPanel'),
       selectors.getActiveLeftPanel(state),
       selectors.getCustomPanels(state),
     ],
     shallowEqual,
   );
-  const dispatch = useDispatch();
   const [width, setWidth] = useState(293);
-
-  useEffect(() => {
-    if (isOpen && isTabletOrMobile()) {
-      dispatch(actions.closeElement('searchPanel'));
-    }
-  }, [dispatch, isOpen]);
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 

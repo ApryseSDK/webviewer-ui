@@ -24,20 +24,17 @@ const NotesPanel = () => {
   const [
     sortStrategy,
     isOpen,
-    isDisabled,
     pageLabels,
     customNoteFilter,
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
       selectors.isElementOpen(state, 'notesPanel'),
-      selectors.isElementDisabled(state, 'notesPanel'),
       selectors.getPageLabels(state),
       selectors.getCustomNoteFilter(state),
     ],
     shallowEqual,
   );
-  // debugger;
   const dispatch = useDispatch();
   const [notes, setNotes] = useState([]);
   // the object will be in a shape of { [note.Id]: true }
