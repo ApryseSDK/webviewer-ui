@@ -70,7 +70,10 @@ class Dropdown extends React.PureComponent {
 
     return (
       <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
-        aksdjflksdj
+        <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>
+        <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
+          {this.renderDropdownItems()}
+        </div>
       </div>
     );
   }

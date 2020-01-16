@@ -270,7 +270,7 @@ const NotesPanel = () => {
               <div className="divider" />
               <div className="dropdown-container">
                 <div className="kewjrlkwejrlkw">
-                  {`Sort by:`}
+                  <div className="header123">{`Sort by:`}</div>
                   <Dropdown items={Object.keys(getSortStrategies())} />
                 </div>
               </div>
