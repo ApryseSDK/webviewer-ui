@@ -30,22 +30,3 @@
     overflow: hidden;
   }
 }
-
-.resize-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: col-resize;
-  right: 0px;
-  // make sure the resize bar is always at the right of the native scrollbar
-  margin-right: -14px;
-  width: 14px;
-  height: 100%;
-  margin-bottom: 0;
-  background-color: var(--panel-background);
-  // backsground: red;
-  border-right: 1px solid var(--border);
-  border-left: 1px solid var(--border);
-  z-index: 100;
-}

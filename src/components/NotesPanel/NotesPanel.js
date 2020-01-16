@@ -12,6 +12,7 @@ import Icon from 'components/Icon';
 
 import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
+import ResizeBar from 'components/ResizeBar';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
@@ -37,6 +38,8 @@ const NotesPanel = () => {
   );
   const dispatch = useDispatch();
   const [notes, setNotes] = useState([]);
+  const [width, setWidth] = useState(219);
+
   // the object will be in a shape of { [note.Id]: true }
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
   const [selectedNoteIds, setSelectedNoteIds] = useState({});
@@ -234,79 +237,89 @@ const NotesPanel = () => {
 
   return (
     <div
-      className={classNames({
-        Panel: true,
-        NotesPanel: true,
-        open: isOpen,
-        closed: !isOpen,
-      })}
-      data-element="notesPanel"
-      onMouseDown={core.deselectAllAnnotations}
+      className="notes-panel-container"
     >
-      {notes.length === 0 ? (
-        <div className="no-annotations">{t('message.noAnnotations')}</div>
-      ) : (
-        <React.Fragment>
-          <div className="container">
-            <div className="header">
-              <div className="input-container">
-                <input
-                  type="text"
-                  placeholder={t('message.searchPlaceholder')}
-                  onChange={handleInputChange}
-                />
-                <div
-                  className="input-button"
-                  onClick={() => {}}
-                >
+      <ResizeBar
+        minWidth={219}
+        onResize={_width => {
+          setWidth(_width);
+        }}
+        left
+      />
+      <div
+        className={classNames({
+          Panel: true,
+          NotesPanel: true,
+        })}
+        data-element="notesPanel"
+        onMouseDown={core.deselectAllAnnotations}
+        style={{ width: `${width}px` }}
+      >
+        {notes.length === 0 ? (
+          <div className="no-annotations">{t('message.noAnnotations')}</div>
+        ) : (
+          <React.Fragment>
+            <div className="container">
+              <div className="header">
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder={t('message.searchPlaceholder')}
+                    onChange={handleInputChange}
+                  />
+                  <div
+                    className="input-button"
+                    onClick={() => {}}
+                  >
+                    <Icon
+                      glyph="ic_search_black_24px"
+                    />
+                  </div>
+                </div>
+                <div className="divider" />
+                <div className="dropdown-container">
+                  <div className="kewjrlkwejrlkw">
+                    <div className="header123">{`Sort by:`}</div>
+                    <Dropdown items={Object.keys(getSortStrategies())} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            {notesToRender.length === 0 ? (
+            // <div className="no-results">{t('message.noResults')}</div>
+              <div className="no-results">
+                <div>
                   <Icon
-                    glyph="ic_search_black_24px"
+                    className="empty-icon"
+                    glyph="illustration - empty state - outlines"
                   />
                 </div>
-              </div>
-              <div className="divider" />
-              <div className="dropdown-container">
-                <div className="kewjrlkwejrlkw">
-                  <div className="header123">{`Sort by:`}</div>
-                  <Dropdown items={Object.keys(getSortStrategies())} />
+                <div className="msg">
+                  {t('message.noResults')}
                 </div>
               </div>
-            </div>
-          </div>
-          {notesToRender.length === 0 ? (
-            // <div className="no-results">{t('message.noResults')}</div>
-            <div className="no-results">
-              <div>
-                <Icon
-                  className="empty-icon"
-                  glyph="illustration - empty state - outlines"
-                />
-              </div>
-              <div className="msg">
-                {t('message.noResults')}
-              </div>
-            </div>
-          ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
-            <NormalList
-              ref={listRef}
-              notes={notesToRender}
-              onScroll={handleScroll}
-              initialScrollTop={scrollTopRef.current}
-            >
-              {renderChild}
-            </NormalList>
-          ) : (
-            <VirtualizedList
-              ref={listRef}
-              notes={notesToRender}
-              onScroll={handleScroll}
-              initialScrollTop={scrollTopRef.current}
-            >
-              {renderChild}
-            </VirtualizedList>
-          )}
-        </React.Fragment>
-      )}
+            ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
+              <NormalList
+                ref={listRef}
+                notes={notesToRender}
+                onScroll={handleScroll}
+                initialScrollTop={scrollTopRef.current}
+              >
+                {renderChild}
+              </NormalList>
+            ) : (
+              <VirtualizedList
+                ref={listRef}
+                notes={notesToRender}
+                onScroll={handleScroll}
+                initialScrollTop={scrollTopRef.current}
+              >
+                {renderChild}
+              </VirtualizedList>
+            )}
+          </React.Fragment>
+        )}
+      </div>
     </div>
   );
 };

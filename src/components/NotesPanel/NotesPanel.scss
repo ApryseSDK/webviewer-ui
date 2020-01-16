@@ -1,5 +1,10 @@
 @import '../../constants/panel';
 
+.notes-panel-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .NotesPanel {
   @extend %right-panel;
   position: static;

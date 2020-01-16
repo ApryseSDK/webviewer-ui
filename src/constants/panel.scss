@@ -36,19 +36,13 @@
 
 %right-panel {
   @extend %panel;
-  @include closed(translateX(100%));
-  width: $right-panel-width;
   padding-top: 16px;
   padding-left: 16px;
   padding-bottom: 0px;
-  border-left: 1px solid $gray12;
-  border-left: 1px solid var(--border-color);
 }
 
 %left-panel {
   @extend %panel;
-  border-right: 1px solid $gray12;
-  border-right: 1px solid var(--border-color);
 }
 
 %sub-panel {

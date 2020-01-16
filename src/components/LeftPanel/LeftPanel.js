@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
@@ -8,7 +8,7 @@ import OutlinesPanel from 'components/OutlinesPanel';
 import BookmarksPanel from 'components/BookmarksPanel';
 import LayersPanel from 'components/LayersPanel';
 import CustomElement from 'components/CustomElement';
-import Icon from 'components/Icon';
+import ResizeBar from 'components/ResizeBar';
 
 import selectors from 'selectors';
 
@@ -56,6 +56,7 @@ const LeftPanel = () => {
         ))}
       </div>
       <ResizeBar
+        minWidth={293}
         onResize={_width => {
           setWidth(_width);
         }}
@@ -65,42 +66,3 @@ const LeftPanel = () => {
 };
 
 export default LeftPanel;
-
-const ResizeBar = ({ onResize }) => {
-  const isMouseDownRef = useRef(false);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // this listener is throttled because the notes panel listens to the panel width
-    // change in order to rerender to have the correct width and we don't want
-    // it to rerender too often
-    const dragMouseMove = _.throttle(({ clientX }) => {
-      if (isMouseDownRef.current && clientX < 900) {
-        onResize(Math.max(293, clientX));
-      }
-    }, 50);
-
-    document.addEventListener('mousemove', dragMouseMove);
-    return () => document.removeEventListener('mousemove', dragMouseMove);
-  }, [dispatch, onResize]);
-
-  useEffect(() => {
-    const finishDrag = () => {
-      isMouseDownRef.current = false;
-    };
-
-    document.addEventListener('mouseup', finishDrag);
-    return () => document.removeEventListener('mouseup', finishDrag);
-  }, []);
-
-  return (
-    <div
-      className="resize-bar"
-      onMouseDown={() => {
-        isMouseDownRef.current = true;
-      }}
-    >
-      <Icon glyph="icon-detach-toolbar" />
-    </div>
-  );
-};
