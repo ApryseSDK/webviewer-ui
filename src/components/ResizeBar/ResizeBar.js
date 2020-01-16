@@ -6,7 +6,6 @@ import './ResizeBar.scss';
 
 const ResizeBar = ({ onResize, minWidth, left }) => {
   const isMouseDownRef = useRef(false);
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     // this listener is throttled because the notes panel listens to the panel width
