@@ -14,7 +14,6 @@ const ResizeBar = ({ onResize, minWidth, left }) => {
     // it to rerender too often
     const dragMouseMove = _.throttle(({ clientX }) => {
       if (isMouseDownRef.current && clientX < 900) {
-        // debugger;
         onResize(Math.max(minWidth, left ? window.innerWidth - clientX : clientX));
       }
     }, 50);
