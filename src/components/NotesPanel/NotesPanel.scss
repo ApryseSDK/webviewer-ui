@@ -12,6 +12,8 @@
   }
 
   >.container {
+    padding-right: 28px;
+
     .header {
       .input-container {
         display: flex;
@@ -65,6 +67,7 @@
   .virtualized-notes-container,
   .normal-notes-container {
     flex: 1;
+    padding-right: 28px;
   }
 
   .normal-notes-container {
