@@ -88,7 +88,6 @@ const ResizeBar = ({ onResize }) => {
     // it to rerender too often
     const dragMouseMove = _.throttle(({ clientX }) => {
       if (isMouseDownRef.current && clientX < 900) {
-        // document.body.style.setProperty('--left-panel-width', `${clientX}px`);
         onResize(Math.max(293, clientX));
       }
     }, 50);
