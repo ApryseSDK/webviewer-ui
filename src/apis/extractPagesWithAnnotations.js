@@ -13,4 +13,4 @@ WebViewer(...)
 
 import extractPagesWithAnnotations from '../helpers/extractPagesWithAnnotations';
 
-export default pages => core.extractPagesWithAnnotations(pages);
+export default pages => extractPagesWithAnnotations(pages);

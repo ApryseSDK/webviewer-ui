@@ -1,6 +1,6 @@
 @import '../../constants/styles';
 
-.documentControlToggle{
+.documentControlToggle {
   padding: 5px 7px 0px;
   height: 20px;
 
@@ -15,11 +15,11 @@
   position: absolute;
 }
 
-.documentControlToggle:hover{
+.documentControlToggle:hover {
   background: #515151;
   background: var(--icon-color);
 
-  .Icon{
+  .Icon {
     color: #f4f4f4;
     color: var(--border-color);;
   }
@@ -31,23 +31,23 @@
   $page-input-border: 2px;
   $page-input-padding: 8px;
 
-  .pagesInput{
+  .pagesInput {
     border-width: $page-input-border;
     width: calc(100% - #{($page-input-border + $page-input-padding) * 2});
     padding: 2px $page-input-padding;
   }
 
-  .documentControlsButton{
+  .documentControlsButton {
     display: flex;
 
-    .Button{
+    .Button {
       display: inline-flex;
       height: 100%;
       padding: 0px;
       min-width: $icon-width;
       flex-grow: 1;
 
-      &:hover{
+      &:hover {
         background-color: #515151;
         background-color: var(--icon-color);
 

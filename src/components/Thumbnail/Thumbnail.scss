@@ -59,8 +59,8 @@
     $selected-icon-size: 16px;
     $selected-border-size: 3px;
 
-    .container{
-      :first-child:before{
+    .container {
+      :first-child:before {
         content: "✓";
         color: white;
         background: $pdftron-blue;
@@ -76,7 +76,7 @@
       color: $pdftron-blue !important;
     }
 
-    canvas:first-of-type{
+    canvas:first-of-type {
       border: solid $pdftron-blue $selected-border-size !important;
     }
   }
