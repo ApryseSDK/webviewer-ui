@@ -1,11 +1,11 @@
 /**
  * Get the currently selected pages
- * @method WebViewer#getSelectedThumbnailPageIndexes
+ * @method WebViewerInstance#getSelectedThumbnailPageIndexes
  * @return {Array<number>} an arry of select page numbers
  * @example // 6.0 and after
 WebViewer(...)
   .then(function(instance) {
-    instance.getSelectedThumbnailPageIndexes();
+    instance.getSelectedPageNumbers();
   });
  */
 import selectors from 'selectors';

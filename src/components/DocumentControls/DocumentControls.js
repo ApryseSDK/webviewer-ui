@@ -8,6 +8,8 @@ import Button from 'components/Button';
 import './DocumentControls.scss';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import core from 'core';
+import extractPagesWithAnnotations from '../../helpers/extractPagesWithAnnotations';
+
 import selectors from 'selectors';
 import actions from 'actions';
 
@@ -32,7 +34,6 @@ function getPageString(selectedPageArray, pageLabels) {
 
 const DocumentControls = props => {
   const {
-    updateSelectedPage,
     toggleDocumentControl,
     shouldShowControls,
   } = props;
@@ -46,10 +47,10 @@ const DocumentControls = props => {
     selectors.getPageLabels(state),
   ]);
 
-  const initalPagesString = getPageString(selectedPageIndexes, pageLabels);
+  const initialPagesString = getPageString(selectedPageIndexes, pageLabels);
 
-  const [pageString, setPageString] = useState(initalPagesString);
-  const [previousPageString, setPreviousPageString] = useState(initalPagesString);
+  const [pageString, setPageString] = useState(initialPagesString);
+  const [previousPageString, setPreviousPageString] = useState(initialPagesString);
 
   useEffect(() => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
@@ -66,7 +67,7 @@ const DocumentControls = props => {
       title,
       confirmBtnText,
       onConfirm: () => core.removePages(pageNumbersToDelete).then(() => {
-        updateSelectedPage([]);
+        dispatch(actions.setSelectedPageThumbnails([]));
       }),
     };
 
@@ -98,7 +99,7 @@ const DocumentControls = props => {
       return;
     }
 
-    core.extractPagesWithAnnotations(selectedPageIndexes.map(index => index + 1)).then(file => {
+    extractPagesWithAnnotations(selectedPageIndexes.map(index => index + 1)).then(file => {
       saveAs(file, 'extractedDocument.pdf');
     });
   };
@@ -109,7 +110,7 @@ const DocumentControls = props => {
     const pageIndexes = pages.map(page => page - 1);
 
     if (pages.length || !selectedPagesString) {
-      updateSelectedPage(pageIndexes);
+      dispatch(actions.setSelectedPageThumbnails(pageIndexes));
 
       const updatedString = getPageString(selectedPageIndexes, pageLabels);
 
@@ -125,7 +126,7 @@ const DocumentControls = props => {
   };
 
   const onToggleDocumentControl = () => {
-    updateSelectedPage([]);
+    dispatch(actions.setSelectedPageThumbnails([]));
     toggleDocumentControl(!shouldShowControls);
   };
 
@@ -145,7 +146,7 @@ const DocumentControls = props => {
               onBlur={onBlur}
               onChange={pageStringUpdate}
               value={pageString}
-              placeholder={'Enter pages to select i.e. 2, 5-9'}
+              placeholder={t('option.documentControls.placeholder')}
               className="pagesInput" type="text"
             />
           </div>
@@ -170,7 +171,6 @@ const DocumentControls = props => {
 DocumentControls.propTypes = {
   isDisabled: PropTypes.bool,
   pageLabels: PropTypes.arrayOf(PropTypes.string),
-  updateSelectedPage: PropTypes.func,
   toggleDocumentControl: PropTypes.func,
   shouldShowControls: PropTypes.bool,
 };

@@ -20,7 +20,7 @@ class Thumbnail extends React.PureComponent {
     pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
     isSelected: PropTypes.bool,
-    isThumbnailSelectingEnabled: PropTypes.bool,
+    isThumbnailMultiselectEnabled: PropTypes.bool,
     onLoad: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
@@ -103,9 +103,9 @@ class Thumbnail extends React.PureComponent {
   }
 
   handleClick = e => {
-    const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailSelectingEnabled } = this.props;
+    const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled } = this.props;
 
-    if (isThumbnailSelectingEnabled && (e.ctrlKey || e.metaKey)) {
+    if (isThumbnailMultiselectEnabled && (e.ctrlKey || e.metaKey)) {
       let updatedSelectedPages = [...selectedPageIndexes];
       if (selectedPageIndexes.indexOf(index) > -1) {
         updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
@@ -150,17 +150,12 @@ class Thumbnail extends React.PureComponent {
           className="container"
           style={{
             width: THUMBNAIL_SIZE,
-            height: THUMBNAIL_SIZE,
+            height: THUMBNAIL_SIZE,        
           }}
-        >
-          <div
-            className="thumbnail"
-            ref={this.thumbContainer}
-            onClick={this.handleClick}
-            onDragStart={this.onDragStart}
-            draggable={isDraggable}
+          ref={this.thumbContainer}
+          onDragStart={this.onDragStart}
+          draggable={isDraggable}
           />
-        </div>
         <div className="page-label">{pageLabel}</div>
         {isActive && <ThumbnailControls index={index} />}
       </div>
@@ -172,7 +167,7 @@ const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   pageLabels: selectors.getPageLabels(state),
   selectedPageIndexes: selectors.getSelectedThumbnailPageIndexes(state),
-  isThumbnailSelectingEnabled: selectors.getIsThumbnailSelectEnabled(state),
+  isThumbnailMultiselectEnabled: selectors.getIsThumbnailMultiselectEnabled(state),
 });
 
 const mapDispatchToProps = {

@@ -139,7 +139,7 @@ export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMer
 
 export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
 
-export const getIsThumbnailSelectEnabled = state => state.viewer.isThumbnailSelecting;
+export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
 
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
 

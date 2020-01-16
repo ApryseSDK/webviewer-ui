@@ -108,7 +108,6 @@ import redo from './redo';
 import updateAnnotationState from './updateAnnotationState';
 import getFontStyles from './getFontStyles';
 import mergeDocument from './mergeDocument';
-import extractPagesWithAnnotations from './extractPagesWithAnnotations';
 
 export default {
   setToolMode,
@@ -222,5 +221,4 @@ export default {
   updateAnnotationState,
   getFontStyles,
   mergeDocument,
-  extractPagesWithAnnotations,
 };

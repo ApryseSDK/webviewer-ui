@@ -34,7 +34,6 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs = [];
     this.listRef = React.createRef();
     this.afterMovePageNumber = null;
-    this.selectedPageIndexes = [];
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       isDocumentControlHidden: true,
@@ -179,11 +178,6 @@ class ThumbnailsPanel extends React.PureComponent {
 
       this.setState({ draggingOverPageIndex: null });
     }
-  }
-
-  updateSelectedPage = selectedPageIndexes => {
-    this.props.setSelectedPageThumbnails(selectedPageIndexes);
-    this.setState({ selectedPageIndexes });
   }
 
   onFinishedRendering = needsMoreRendering => {
@@ -387,11 +381,6 @@ class ThumbnailsPanel extends React.PureComponent {
       row: true,
     });
 
-    const selectedPagesMap = new Map();
-    selectedPageIndexes.forEach(pageIndex => {
-      selectedPagesMap.set(pageIndex, true);
-    });
-
     return (
       <div className={className} key={key} style={style}>
         {
@@ -407,7 +396,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 )}
                 <Thumbnail
                   isDraggable={isThumbnailReorderingEnabled}
-                  isSelected={selectedPagesMap.has(thumbIndex)}
+                  isSelected={selectedPageIndexes.includes(thumbIndex)}
                   index={thumbIndex}
                   canLoad={canLoad}
                   onLoad={this.onLoad}
@@ -441,26 +430,6 @@ class ThumbnailsPanel extends React.PureComponent {
     const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
     const shouldShowControls = !isDocumentControlHidden || selectedPageIndexes.length > 0;
-
-    const documentControl =
-    <Measure
-      bounds
-      onResize={({ bounds }) => {
-        this.setState({
-          documentControlHeight: Math.ceil(bounds.height),
-        });
-      }}
-    >
-      {({ measureRef }) => (
-        <div ref={measureRef}>
-          <DocumentControls
-            toggleDocumentControl={this.toggleDocumentControl}
-            shouldShowControls={shouldShowControls}
-            updateSelectedPage={this.updateSelectedPage}
-          />
-        </div>
-      )}
-    </Measure>;
 
     return isDisabled ? null : (
       <div
@@ -499,7 +468,23 @@ class ThumbnailsPanel extends React.PureComponent {
                 className={'thumbnailsList'}
                 style={{ outline: 'none' }}
               />
-              {documentControl}
+                <Measure
+                  bounds
+                  onResize={({ bounds }) => {
+                    this.setState({
+                      documentControlHeight: Math.ceil(bounds.height),
+                    });
+                  }}
+                >
+                  {({ measureRef: innerMeasureRef }) => (
+                    <div ref={innerMeasureRef}>
+                      <DocumentControls
+                        toggleDocumentControl={this.toggleDocumentControl}
+                        shouldShowControls={shouldShowControls}
+                      />
+                    </div>
+                  )}
+                </Measure>
             </div>
           )}
         </Measure>
