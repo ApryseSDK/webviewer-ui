@@ -1,6 +1,6 @@
 /**
  * Get the currently selected pages
- * @method WebViewerInstance#getSelectedThumbnailPageIndexes
+ * @method WebViewerInstance#getSelectedPageNumbers
  * @return {Array<number>} an arry of select page numbers
  * @example // 6.0 and after
 WebViewer(...)
