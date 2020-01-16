@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-import Resizeable from 're-resizable';
+// import Resizeable from 're-resizable';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
