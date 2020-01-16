@@ -26,6 +26,7 @@
     "i18next": "^17.0.12",
     "i18next-xhr-backend": "^3.1.2",
     "node-sass": "^4.5.3",
+    "re-resizable": "^6.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-hot-loader": "^4.12.11",

@@ -1,6 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+
+import Resizeable from 're-resizable';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
@@ -17,17 +19,16 @@ import selectors from 'selectors';
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
-  const [isDisabled, isOpen, activePanel, customPanels, leftPanelWidth] = useSelector(
+  const [isOpen, activePanel, customPanels] = useSelector(
     state => [
-      selectors.isElementDisabled(state, 'leftPanel'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.getActiveLeftPanel(state),
       selectors.getCustomPanels(state),
-      selectors.getLeftPanelWidth(state),
     ],
     shallowEqual,
   );
   const dispatch = useDispatch();
+  const [width, setWidth] = useState(219);
 
   useEffect(() => {
     if (isOpen && isTabletOrMobile()) {
@@ -36,47 +37,48 @@ const LeftPanel = () => {
   }, [dispatch, isOpen]);
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
-  // IE11 will use javascript for controlling width, other broswers will use CSS variables
-  const style = isIE11 && leftPanelWidth ? { width: leftPanelWidth } : { };
 
-  return isDisabled ? null : (
+  return (
     <div
       className={classNames({
         Panel: true,
         LeftPanel: true,
-        open: isOpen,
-        closed: !isOpen,
       })}
       data-element="leftPanel"
-      style={style}
+      style={{ width: `${width}px` }}
     >
-      <div className="left-panel-header">
-        <LeftPanelTabs />
+      <div className="left-panel-container">
+        <div className="left-panel-header">
+          <LeftPanelTabs />
+        </div>
+
+        <ThumbnailsPanel display={getDisplay('thumbnailsPanel')} />
+        <OutlinesPanel display={getDisplay('outlinesPanel')} />
+        <BookmarksPanel display={getDisplay('bookmarksPanel')} />
+        <LayersPanel display={getDisplay('layersPanel')} />
+
+        {customPanels.map(({ panel }, index) => (
+          <CustomElement
+            key={panel.dataElement || index}
+            className={`Panel ${panel.dataElement}`}
+            display={getDisplay(panel.dataElement)}
+            dataElement={panel.dataElement}
+            render={panel.render}
+          />
+        ))}
       </div>
-
-      <ResizeBar />
-
-      <ThumbnailsPanel display={getDisplay('thumbnailsPanel')} />
-      <OutlinesPanel display={getDisplay('outlinesPanel')} />
-      <BookmarksPanel display={getDisplay('bookmarksPanel')} />
-      <LayersPanel display={getDisplay('layersPanel')} />
-
-      {customPanels.map(({ panel }, index) => (
-        <CustomElement
-          key={panel.dataElement || index}
-          className={`Panel ${panel.dataElement}`}
-          display={getDisplay(panel.dataElement)}
-          dataElement={panel.dataElement}
-          render={panel.render}
-        />
-      ))}
+      {/* <ResizeBar
+        onResize={_width => {
+          setWidth(_width);
+        }}
+      /> */}
     </div>
   );
 };
 
 export default LeftPanel;
 
-const ResizeBar = () => {
+const ResizeBar = ({ onResize }) => {
   const isMouseDownRef = useRef(false);
   const dispatch = useDispatch();
 
@@ -85,18 +87,15 @@ const ResizeBar = () => {
     // change in order to rerender to have the correct width and we don't want
     // it to rerender too often
     const dragMouseMove = _.throttle(({ clientX }) => {
-      if (isMouseDownRef.current && clientX > 215 && clientX < 900) {
-        // we are using css variables to make the panel resizable but IE11 doesn't support it
-        if (isIE) {
-          dispatch(actions.setLeftPanelWidth(clientX));
-        }
-        document.body.style.setProperty('--left-panel-width', `${clientX}px`);
+      if (isMouseDownRef.current && clientX < 900) {
+        // document.body.style.setProperty('--left-panel-width', `${clientX}px`);
+        onResize(Math.max(219, clientX));
       }
     }, 50);
 
     document.addEventListener('mousemove', dragMouseMove);
     return () => document.removeEventListener('mousemove', dragMouseMove);
-  }, [dispatch]);
+  }, [dispatch, onResize]);
 
   useEffect(() => {
     const finishDrag = () => {

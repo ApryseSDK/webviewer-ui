@@ -4,26 +4,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  // justify-content: center;
   flex: 1;
   width: 100%;
   overflow: auto;
   transition: all .3s ease;
   user-select: none;
-
-  // &.right-panel {
-  //   width: calc(100% - #{$right-panel-width});
-  // }
-
-  &.left-panel {
-    width: calc(100% - #{$left-panel-width});
-    margin-left: $left-panel-width;
-  }
-
-  &.left-panel.right-panel {
-    width: calc(100% - #{$right-panel-width} - #{$left-panel-width});
-    margin-left: $left-panel-width;
-  }
 
   &.no-header {
     height: 100%;

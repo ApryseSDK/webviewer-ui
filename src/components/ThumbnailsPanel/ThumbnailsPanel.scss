@@ -3,6 +3,7 @@
 .ThumbnailsPanel {
   display: flex;
   padding: 8px 0px;
+  height: 100%;
 
   .virtualized-thumbnails-container {
     flex: 1;

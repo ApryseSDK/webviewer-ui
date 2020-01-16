@@ -7,6 +7,18 @@
   position: static;
   visibility: visible !important;
 
+  // transition: all .3s ease;
+
+  display: flex;
+  flex-direction: row;
+
+  .left-panel-container{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+  }
+
   .left-panel-header {
     display: flex;
     align-items: center;
@@ -15,6 +27,7 @@
 
   .Panel {
     @extend %sub-panel;
+    overflow: hidden;
   }
 }
 
@@ -34,6 +47,5 @@
   // backsground: red;
   border-right: 1px solid var(--border);
   border-left: 1px solid var(--border);
-  position: absolute;
   z-index: 100;
 }
