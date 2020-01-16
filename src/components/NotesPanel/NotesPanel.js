@@ -37,6 +37,7 @@ const NotesPanel = () => {
     ],
     shallowEqual,
   );
+  // debugger;
   const dispatch = useDispatch();
   const [notes, setNotes] = useState([]);
   // the object will be in a shape of { [note.Id]: true }
@@ -64,6 +65,18 @@ const NotesPanel = () => {
 
   useEffect(() => {
     const _setNotes = () => {
+      // const annots =
+      //   core
+      //     .getAnnotationsList()
+      //     .filter(
+      //       annot =>
+      //         annot.Listable &&
+      //       !annot.isReply() &&
+      //       !annot.Hidden &&
+      //       !annot.isGrouped(),
+      //     );
+      // console.log('annots', annots);
+
       setNotes(
         core
           .getAnnotationsList()
@@ -79,6 +92,8 @@ const NotesPanel = () => {
 
     core.addEventListener('annotationChanged', _setNotes);
     core.addEventListener('annotationHidden', _setNotes);
+
+    _setNotes();
 
     return () => {
       core.removeEventListener('annotationChanged', _setNotes);
@@ -232,7 +247,7 @@ const NotesPanel = () => {
     );
   }
 
-  return isDisabled ? null : (
+  return (
     <div
       className={classNames({
         Panel: true,

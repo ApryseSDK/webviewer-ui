@@ -46,9 +46,11 @@ const propTypes = {
 };
 
 const App = ({ removeEventHandlers }) => {
-  const [isToolsOverlayOpen] = useSelector(
+  const [isToolsOverlayOpen, isNotesOpen, isNotesDisabled] = useSelector(
     state => [
       selectors.isElementOpen(state, 'toolsOverlay'),
+      selectors.isElementOpen(state, 'notesPanel'),
+      selectors.isElementDisabled(state, 'notesPanel'),
     ],
   );
 
@@ -74,11 +76,9 @@ const App = ({ removeEventHandlers }) => {
         <SearchPanel />
 
         <div className="container123">
-          {/* <div className=""> */}
           <DocumentContainer />
-          <NotesPanel />
+          {isNotesOpen && !isNotesDisabled && <NotesPanel />}
         </div>
-        {/* </div> */}
         <SearchOverlay />
         <ViewControlsOverlay />
         <RedactionOverlay />
