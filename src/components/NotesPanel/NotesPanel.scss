@@ -15,6 +15,11 @@
     padding-right: 28px;
 
     .header {
+      .dropdown-container{
+        display: flex;
+        justify-content: flex-end;
+      }
+
       .input-container {
         display: flex;
         position: relative;
