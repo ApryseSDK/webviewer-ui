@@ -17,11 +17,11 @@ class Layer extends React.PureComponent {
     isExpanded: false,
   };
 
-  unCheckChildren = (layer) => {
+  unCheckChildren = layer => {
     // new references for redux state
-    const newLayer = {...layer};
+    const newLayer = { ...layer };
     layer.children && layer.children.forEach((childLayer, i) => {
-      let newChildLayer = {...childLayer};
+      let newChildLayer = { ...childLayer };
       newChildLayer.visible = false;
       newChildLayer = this.unCheckChildren(newChildLayer);
       newLayer.children[i] = newChildLayer;
@@ -36,7 +36,7 @@ class Layer extends React.PureComponent {
       window.alert('This layer has been disabled because its parent layer is disabled.');
     } else {
       // new references for redux state
-      let newLayer = {...layer};
+      let newLayer = { ...layer };
       newLayer.visible = e.target.checked;
       if (e.target.checked === false) {
         newLayer = this.unCheckChildren(newLayer);
@@ -86,11 +86,11 @@ class Layer extends React.PureComponent {
                 key={i}
                 layer={subLayer}
                 parentLayer={layer}
-                updateLayer={(modifiedSubLayer) => {
+                updateLayer={modifiedSubLayer => {
                   // new references for redux state
                   const children = [...layer.children];
                   children[i] = modifiedSubLayer;
-                  const newLayer = {...layer};
+                  const newLayer = { ...layer };
                   newLayer.children = children;
 
                   updateLayer(newLayer);

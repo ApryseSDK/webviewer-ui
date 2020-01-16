@@ -152,6 +152,7 @@ class PrintModal extends React.PureComponent {
       })
       .catch(e => {
         console.error(e);
+        this.setState({ count: -1 });
       });
   };
 
@@ -405,6 +406,8 @@ class PrintModal extends React.PureComponent {
 
     contentElement.className = 'note__content';
     if (contentText) {
+      // ensure that new lines are preserved and rendered properly
+      contentElement.style.whiteSpace = 'pre-wrap';
       contentElement.innerHTML = `${contentText}`;
     }
     return contentElement;
@@ -465,6 +468,7 @@ class PrintModal extends React.PureComponent {
     }
 
     const { count, pagesToPrint } = this.state;
+    const isPrinting = count >= 0;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = (
       <input
@@ -472,9 +476,9 @@ class PrintModal extends React.PureComponent {
         type="text"
         placeholder={t('message.customPrintPlaceholder')}
         onFocus={this.onFocus}
+        disabled={isPrinting}
       />
     );
-    const isPrinting = count >= 0;
 
     return (
       <React.Fragment>
@@ -488,7 +492,10 @@ class PrintModal extends React.PureComponent {
         <div
           className={className}
           data-element="printModal"
-          onClick={this.closePrintModal}
+          onClick={() => {
+            this.cancelPrint();
+            this.closePrintModal();
+          }}
         >
           <div className="container" onClick={e => e.stopPropagation()}>
             <div className="header-container">
@@ -497,7 +504,10 @@ class PrintModal extends React.PureComponent {
                 dataElement="printModalCloseButton"
                 title="action.close"
                 img="ic_close_black_24px"
-                onClick={this.closePrintModal}
+                onClick={() => {
+                  this.cancelPrint();
+                  this.closePrintModal();
+                }}
               />
             </div>
             <div className="settings">
@@ -514,6 +524,7 @@ class PrintModal extends React.PureComponent {
                   type="radio"
                   label={t('option.print.all')}
                   defaultChecked
+                  disabled={isPrinting}
                 />
                 <Input
                   ref={this.currentPage}
@@ -521,6 +532,7 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={t('option.print.current')}
+                  disabled={isPrinting}
                 />
                 <Input
                   ref={this.customPages}
@@ -528,6 +540,7 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={customPagesLabelElement}
+                  disabled={isPrinting}
                 />
                 <Input
                   ref={this.includeComments}
@@ -535,6 +548,7 @@ class PrintModal extends React.PureComponent {
                   name="comments"
                   type="checkbox"
                   label={t('option.print.includeComments')}
+                  disabled={isPrinting}
                 />
               </form>
             </div>
@@ -542,7 +556,12 @@ class PrintModal extends React.PureComponent {
               <button
                 id="applyWatermark"
                 className="apply-watermark"
-                onClick={() => this.setWatermarkModalVisibility(true)}
+                disabled={isPrinting}
+                onClick={() => {
+                  if (!isPrinting) {
+                    this.setWatermarkModalVisibility(true);
+                  }
+                }}
               >
                 {t('option.print.addWatermarkSettings')}
               </button>

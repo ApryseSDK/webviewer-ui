@@ -157,6 +157,9 @@ export default {
       AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'ic_annotation_eraser_black_24px', showColor: 'never' },
       CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'miscTools' },
     },
+    tab: {
+      signatureModal: 'inkSignaturePanelButton',
+    },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
@@ -191,8 +194,10 @@ export default {
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi'],
     },
     maxSignaturesCount: 2,
+    signatureFonts: ['GreatVibes-Regular'],
     leftPanelWidth: 300,
     isReplyDisabledFunc: null,
+    customMeasurementOverlay: [],
   },
   search: {
     listeners: [],

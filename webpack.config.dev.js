@@ -69,6 +69,17 @@ module.exports = {
         test: /\.svg$/,
         use: ['svg-inline-loader'],
       },
+      {
+        test: /\.woff(2)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {

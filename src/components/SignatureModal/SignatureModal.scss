@@ -1,8 +1,6 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
 
-$signature-modal-shared-color: #E1E1E3;
-
 .SignatureModal {
   @extend %modal;
   font-size: 0.9em;
@@ -27,56 +25,37 @@ $signature-modal-shared-color: #E1E1E3;
     }
     
     .header {
-      margin: 11px 11px 0px 24px;
+      margin: 11px 24px 16px 24px;
       display: flex;
-      justify-content: flex-end;
-    }
-    
-    .signature {
-      position: relative;
-      border-radius: 4px;
-      border: 1px solid $signature-modal-shared-color;
-      margin: 18px 24px 0px 24px;
-      height: 200px;
-      display: flex;
+      justify-content: space-between;
 
-      @include mobile {
-        margin: 18px 12px 0px 12px;
-      }
-
-      &-canvas {
-        z-index: 1;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        cursor: crosshair;
-      }
-
-      &-background {
-        position: relative;
+      .tab-list {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #F8F8F8;
-        flex-grow: 1;
+
+        .Button {
+          padding: 0px 12px;
+          border-bottom: 3px solid transparent;
+
+          &.selected {
+            border-bottom: 3px solid $pdftron-blue;
+          }
+
+          &:hover {
+            color: $pdftron-blue;
+            background: transparent;
+          }
+        }
       }
 
-      &-sign-here {
-        color: $signature-modal-shared-color;
-        font-size: 16px;
-      }
+      .ActionButton {
+        margin-right: -13px;
 
-      &-clear {
-        z-index: 2;
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        color: #757575;
-        font-weight: 600;
-        cursor: pointer;
+        &:hover {
+          background: transparent;
 
-        &.active {
-          color: #00A4E4;
+          svg {
+            color: $pdftron-blue;
+          }
         }
       }
     }
@@ -88,8 +67,6 @@ $signature-modal-shared-color: #E1E1E3;
 
       .signature-save {
         position: relative;
-        display: flex;
-        align-items: center;
         margin-left: 8px;
         user-select: none;
 
@@ -109,7 +86,7 @@ $signature-modal-shared-color: #E1E1E3;
           }
 
           &:checked + label:before {
-            background: #00A4E4;
+            background: $pdftron-blue;
             border: 1px solid transparent;
           }
 
@@ -118,18 +95,18 @@ $signature-modal-shared-color: #E1E1E3;
             position: absolute;
             left: 4px;
             top: 9px;
-            background: white;
+            background: #ffffff;
             width: 2px;
             height: 2px;
-            box-shadow: 
-              2px 0 0 white,
-              4px 0 0 white,
-              4px -2px 0 white,
-              4px -4px 0 white,
-              4px -6px 0 white,
-              4px -8px 0 white;
+            box-shadow: 2px 0 0 #ffffff, 4px 0 0 #ffffff, 4px -2px 0 #ffffff,
+              4px -4px 0 #ffffff, 4px -6px 0 #ffffff, 4px -8px 0 #ffffff;
             transform: rotate(45deg);
           }
+        }
+
+        label {
+          display: flex;
+          align-items: center;
         }
       }
 
@@ -137,19 +114,19 @@ $signature-modal-shared-color: #E1E1E3;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #FFFFFF;
+        color: #ffffff;
         font-weight: 600;
         padding: 6px 18px;
         margin-right: 8px;
-        background: #00A4E4;
+        background: $pdftron-blue;
         border-radius: 4px 4px 4px 4px;
-        border: 1px solid #00A4E4;
+        border: 1px solid $pdftron-blue;
         height: 32px;
         cursor: pointer;
 
         &:hover {
-          background: #17324C;
-          border: 1px solid #17324C;
+          background: #17324c;
+          border: 1px solid #17324c;
         }
       }
     }

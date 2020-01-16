@@ -107,11 +107,7 @@ class SignatureOverlay extends React.PureComponent {
       this.setState({ left: (window.innerWidth - width) / 2, right: 'auto' });
     } else {
       this.setState(
-        getOverlayPositionBasedOn(
-          'signatureToolButton',
-          this.overlay,
-          'center',
-        ),
+        getOverlayPositionBasedOn('signatureToolButton', this.overlay, 'center'),
       );
     }
   };
@@ -139,11 +135,22 @@ class SignatureOverlay extends React.PureComponent {
   };
 
   onSignatureDeleted = async () => {
-    const savedSignatures = await this.getSignatureDataToStore(
-      this.signatureTool.getSavedSignatures(),
-    );
+    let savedSignatures = this.signatureTool.getSavedSignatures();
+
+    // the saved signatures will have a different style than what we've saved in this component
+    // if a user changes the styles of a signature after it's added to the document
+    // here to sync up the styles we grab a saved signature in this component and use its styles to override the signatures saved in the tool
+    if (this.state.defaultSignatures.length) {
+      savedSignatures = savedSignatures.map(annotation =>
+        Object.assign(
+          annotation,
+          getAnnotationStyles(this.state.defaultSignatures[0].annotation),
+        ),
+      );
+    }
+
     this.setState({
-      defaultSignatures: savedSignatures,
+      defaultSignatures: await this.getSignatureDataToStore(savedSignatures),
     });
   };
 

@@ -53,7 +53,9 @@ class DocumentContainer extends React.PureComponent {
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
-    const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
+    const {
+      hasPath, doesDocumentAutoLoad, document, advanced, dispatch,
+    } = this.props;
     if ((hasPath && doesDocumentAutoLoad) || document.isOffline) {
       loadDocument({ document, advanced }, dispatch);
     }
@@ -165,7 +167,9 @@ class DocumentContainer extends React.PureComponent {
   }
 
   getClassName = props => {
-    const { isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen } = props;
+    const {
+      isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen,
+    } = props;
 
     return [
       'DocumentContainer',

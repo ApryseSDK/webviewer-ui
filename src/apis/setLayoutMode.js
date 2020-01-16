@@ -1,7 +1,8 @@
 /**
  * Sets the layout mode of the viewer.
  * @method WebViewerInstance#setLayoutMode
- * @param {WebViewerInstance.LayoutMode} layoutMode Layout mode of WebViewerInstance.
+ * @param {string} layoutMode Layout mode of WebViewerInstance.
+ * @see WebViewerInstance#LayoutMode
  * @example
 WebViewer(...)
   .then(function(instance) {
