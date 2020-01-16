@@ -15,7 +15,7 @@ const ResizeBar = ({ onResize, minWidth, left }) => {
       if (isMouseDownRef.current && clientX < 900) {
         onResize(Math.max(minWidth, left ? window.innerWidth - clientX : clientX));
       }
-    }, 50);
+    }, 200);
 
     document.addEventListener('mousemove', dragMouseMove);
     return () => document.removeEventListener('mousemove', dragMouseMove);

@@ -40,7 +40,9 @@ const LeftPanel = () => {
           <LeftPanelTabs />
         </div>
 
-        <ThumbnailsPanel display={getDisplay('thumbnailsPanel')} />
+        <ThumbnailsPanel
+          display={getDisplay('thumbnailsPanel')}
+        />
         <OutlinesPanel display={getDisplay('outlinesPanel')} />
         <BookmarksPanel display={getDisplay('bookmarksPanel')} />
         <LayersPanel display={getDisplay('layersPanel')} />

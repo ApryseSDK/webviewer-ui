@@ -24,7 +24,6 @@ class ThumbnailsPanel extends React.PureComponent {
     this.listRef = React.createRef();
     this.thumbnailHeight = 180; // refer to Thumbnail.scss
     this.state = {
-      numberOfColumns: this.getNumberOfColumns(),
       canLoad: true,
       height: 0,
       width: 0,
@@ -81,28 +80,8 @@ class ThumbnailsPanel extends React.PureComponent {
     this.listRef.current?.scrollToRow(pageNumber - 1);
   }
 
-  onWindowResize = () => {
-    this.setState({
-      numberOfColumns: this.getNumberOfColumns(),
-    });
-  }
-
   getNumberOfColumns = () => {
-    const thumbnailContainerSize = 180;
-    const desktopBreakPoint = 640;
-    const { innerWidth } = window;
-    let numberOfColumns;
-
-    if (innerWidth >= desktopBreakPoint) {
-      numberOfColumns = 1;
-    } else if (innerWidth >= 3 * thumbnailContainerSize) {
-      numberOfColumns = 3;
-    } else if (innerWidth >= 2 * thumbnailContainerSize) {
-      numberOfColumns = 2;
-    } else {
-      numberOfColumns = 1;
-    }
-
+    const numberOfColumns = Math.min(3, Math.max(1, Math.floor(this.state.width / 160)));
     return numberOfColumns;
   }
 
@@ -238,7 +217,8 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   renderThumbnails = ({ index, key, style }) => {
-    const { numberOfColumns, canLoad } = this.state;
+    const { canLoad } = this.state;
+    const numberOfColumns = this.getNumberOfColumns();
     const { thumbs } = this;
 
     return (
@@ -261,7 +241,8 @@ class ThumbnailsPanel extends React.PureComponent {
 
   render() {
     const { isDisabled, totalPages, display } = this.props;
-    const { numberOfColumns, height, width } = this.state;
+    const { height, width } = this.state;
+    const numberOfColumns = this.getNumberOfColumns();
     if (isDisabled) {
       return null;
     }
@@ -288,9 +269,9 @@ class ThumbnailsPanel extends React.PureComponent {
                 height={height}
                 width={width}
                 rowHeight={this.thumbnailHeight}
-                rowCount={totalPages / numberOfColumns}
+                rowCount={Math.ceil(totalPages / numberOfColumns)}
                 rowRenderer={this.renderThumbnails}
-                overscanRowCount={10}
+                overscanRowCount={1000}
                 style={{ outline: 'none' }}
               />
             </div>
