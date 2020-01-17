@@ -62,7 +62,7 @@ const LinkModal = () => {
         link.Height = Math.abs(quad.y1 - quad.y3);
         linksResults.push(link);
       });
-      createHighlightAnnot(linksResults[0], currPageQuads, selectedText);
+      createHighlightAnnot(linksResults, currPageQuads, selectedText);
     }
 
     if (selectedAnnotations && selectedAnnotations.length === 1) {
@@ -78,12 +78,14 @@ const LinkModal = () => {
       link.Width = selectedAnnotations[0].Width;
       link.Height = selectedAnnotations[0].Height;
       linksResults.push(link);
+      selectedAnnotations[0].associateLink([link.Id]);
     }
 
     return linksResults;
   };
 
-  const createHighlightAnnot = async(linkAnnot, quads, text) => {
+  const createHighlightAnnot = async(linkAnnotArray, quads, text) => {
+    const linkAnnot = linkAnnotArray[0];
     const highlight = new Annotations.TextHighlightAnnotation();
     highlight.PageNumber = linkAnnot.PageNumber;
     highlight.X = linkAnnot.X;
@@ -94,6 +96,13 @@ const LinkModal = () => {
     highlight.Quads = quads;
     highlight.Author = core.getCurrentUser();
     highlight.setContents(text);
+
+    let linkAnnotIdArray = [];
+    linkAnnotArray.forEach(link => {
+      linkAnnotIdArray.push(link.Id);
+    });
+    highlight.associateLink(linkAnnotIdArray);
+
     await core.addAnnotations([highlight]);
     await core.drawAnnotationsFromList([highlight]);
   };
