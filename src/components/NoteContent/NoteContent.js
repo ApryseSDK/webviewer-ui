@@ -138,7 +138,7 @@ const NoteContent = ({ annotation }) => {
         {!isReply && <Icon className="icon" glyph={icon} color={color} />}
       </div>
       <div className="author-and-date">
-        <div className="title2">
+        <div className="author-and-overflow">
           {renderAuthorName(annotation)}
           <NotePopup annotation={annotation} setIsEditing={setIsEditing} />
         </div>
