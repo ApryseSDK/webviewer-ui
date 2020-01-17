@@ -15,7 +15,7 @@ const ResizeBar = ({ onResize, minWidth, left }) => {
     // Removed throttle for now. It was causing jitterness when resizing.
     // Maybe throttle is necessary because other components listening to the width would re-render too often?
     const dragMouseMove = ({ clientX }) => {
-      if (isMouseDownRef.current && clientX < 900) {
+      if (isMouseDownRef.current) {
         onResize(Math.max(minWidth, left ? window.innerWidth - clientX : clientX));
       }
     };
