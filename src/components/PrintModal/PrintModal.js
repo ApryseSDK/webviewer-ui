@@ -35,6 +35,7 @@ class PrintModal extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     colorMap: PropTypes.object.isRequired,
     layoutMode: PropTypes.string.isRequired,
+    isApplyWatermarkDisabled: PropTypes.bool,
   };
 
   constructor() {
@@ -458,7 +459,7 @@ class PrintModal extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t } = this.props;
+    const { isDisabled, t, isApplyWatermarkDisabled } = this.props;
 
     if (isDisabled) {
       return null;
@@ -538,7 +539,7 @@ class PrintModal extends React.PureComponent {
                 />
               </form>
             </div>
-            {this.state.allowWatermarkModal && (
+            {!isApplyWatermarkDisabled && (
               <button
                 data-element="applyWatermark"
                 className="apply-watermark"
@@ -579,6 +580,7 @@ class PrintModal extends React.PureComponent {
 const mapStateToProps = state => ({
   isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
   isDisabled: selectors.isElementDisabled(state, 'printModal'),
+  isApplyWatermarkDisabled: selectors.isElementDisabled(state, 'applyWatermark'),
   isOpen: selectors.isElementOpen(state, 'printModal'),
   currentPage: selectors.getCurrentPage(state),
   printQuality: selectors.getPrintQuality(state),
