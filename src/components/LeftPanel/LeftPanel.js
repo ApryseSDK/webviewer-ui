@@ -12,6 +12,8 @@ import ResizeBar from 'components/ResizeBar';
 
 import selectors from 'selectors';
 
+import core from 'core';
+
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
@@ -61,6 +63,7 @@ const LeftPanel = () => {
         minWidth={293}
         onResize={_width => {
           setWidth(_width);
+          {/* core.scrollViewUpdated(); */}
         }}
       />
     </div>

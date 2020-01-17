@@ -13,6 +13,8 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import Measure from 'react-measure';
+
 import './DocumentContainer.scss';
 
 class DocumentContainer extends React.PureComponent {
@@ -169,10 +171,6 @@ class DocumentContainer extends React.PureComponent {
     core.zoomToMouse(newZoomFactor);
   }
 
-  onTransitionEnd = () => {
-    core.scrollViewUpdated();
-  }
-
   handleScroll = () => {
     this.props.closeElements([
       'annotationPopup',
@@ -181,12 +179,10 @@ class DocumentContainer extends React.PureComponent {
   }
 
   getClassName = props => {
-    const { isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen } = props;
+    const { isHeaderOpen, isSearchOverlayOpen } = props;
 
     return classNames({
       DocumentContainer: true,
-      // 'left-panel': isLeftPanelOpen,
-      // 'right-panel': isRightPanelOpen,
       'no-header': !isHeaderOpen,
       'search-overlay': isSearchOverlayOpen,
     });
@@ -202,9 +198,25 @@ class DocumentContainer extends React.PureComponent {
     }
 
     return (
-      <div className={className} ref={this.container} data-element="documentContainer" onScroll={this.handleScroll} onTransitionEnd={this.onTransitionEnd}>
-        <div className="document" ref={this.document}></div>
-      </div>
+      <Measure
+        onResize={() => {
+          core.scrollViewUpdated();
+        }}
+      >
+        {({ measureRef }) => (
+          <div
+            className={className}
+            ref={el => {
+              this.container.current = el;
+              measureRef(el);
+            }}
+            data-element="documentContainer"
+            onScroll={this.handleScroll}
+          >
+            <div className="document" ref={this.document}></div>
+          </div>
+        )}
+      </Measure>
     );
   }
 }
