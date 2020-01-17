@@ -133,10 +133,8 @@ const NoteContent = ({ annotation }) => {
   const contents = annotation.getContents();
 
   const header = useMemo(() => (
-    <div className="title">
-      <div className="type">
-        {!isReply && <Icon className="icon" glyph={icon} color={color} />}
-      </div>
+    <React.Fragment>
+      {!isReply && <Icon className="type-icon" glyph={icon} color={color} />}
       <div className="author-and-date">
         <div className="author-and-overflow">
           {renderAuthorName(annotation)}
@@ -158,8 +156,7 @@ const NoteContent = ({ annotation }) => {
           )
         )}
       </div>
-
-    </div>
+    </React.Fragment>
   ), [annotation, color, contents, icon, isEditing, isReply, noteDateFormat, renderAuthorName, renderContents, textAreaValue]);
 
   const annotationState = annotation.getStatus();

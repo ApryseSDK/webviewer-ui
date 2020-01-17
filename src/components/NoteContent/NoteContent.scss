@@ -5,69 +5,66 @@
   padding-top: 9px;
   padding-left: 6px;
   padding-right: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  color: var(--text-color);
 
   .author-and-overflow {
     display: flex;
     justify-content: space-between;
   }
 
-  .title {
-    position: relative;
-    display: flex;
-    align-items: center;
+  .author-and-date {
     flex: 1;
-    color: var(--text-color);
-
-    .author-and-date {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .type {
-      margin-bottom: auto;
-      width: 31px;
-      margin-right: 3px;
-
-      .icon {
-        width: 31px;
-        height: 31px;
-      }
-    }
-
-    .author {
-      opacity: 0.8;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .time {
-      opacity: 0.8;
-      font-size: 10px;
-    }
-
-    .author-name {
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .spacer {
-      opacity: 0.8;
-      height: 1px;
-      width: 7px;
-      margin: 0 5px;
-      background: #808080;
-      background: var(--text-color);
-      opacity: 0.5;
-    }
-
-    .container {
-      margin-top: 7px;
-      font-size: 13px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    min-width: 0;
   }
+
+
+  .type-icon {
+    width: 31px;
+    height: 31px;
+    margin-bottom: auto;
+    width: 31px;
+    margin-right: 3px;
+  }
+
+  .author {
+    opacity: 0.8;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .time {
+    opacity: 0.8;
+    font-size: 10px;
+  }
+
+  .author-name {
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  .spacer {
+    opacity: 0.8;
+    height: 1px;
+    width: 7px;
+    margin: 0 5px;
+    background: #808080;
+    background: var(--text-color);
+    opacity: 0.5;
+  }
+
+  .container {
+    margin-top: 7px;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 
   .status {
     margin-left: 30px;
