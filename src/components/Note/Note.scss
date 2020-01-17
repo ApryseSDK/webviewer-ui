@@ -56,17 +56,11 @@
     }
   }
 
-  .weriuweior {
+  .reply-area-container {
     display: flex;
-    padding-left: 7px;
     padding-right: 12px;
+    padding-left: 40px;
     margin-top: 12px;
-  }
-
-  .asdf3e43 {
-    // margin-bottom: auto;
-    width: 27px;
-    margin-right: 3px;
   }
 
   &.expanded {
@@ -82,8 +76,6 @@
 
   .replies {
     transition: all 1s ease;
-
-
 
     &.hidden {
       display: none;

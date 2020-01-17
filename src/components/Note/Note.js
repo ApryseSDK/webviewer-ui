@@ -76,8 +76,7 @@ const Note = ({ annotation }) => {
             {replies.map(reply => (
               <NoteContent key={reply.Id} annotation={reply} />
             ))}
-            <div className="weriuweior">
-              <div className="asdf3e43" />
+            <div className="reply-area-container">
               <ReplyArea annotation={annotation} />
             </div>
           </div>
