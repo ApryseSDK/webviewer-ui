@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import Icon from 'components/Icon';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -59,7 +60,10 @@ class Dropdown extends React.PureComponent {
 
     return (
       <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
-        <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>
+        <div className="display-item">
+          {this.getTranslatedContent(sortStrategy)}
+          <Icon className="DownArrow" glyph="icon-chevron-down" />
+        </div>
         <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
           {this.renderDropdownItems()}
         </div>

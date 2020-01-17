@@ -10,31 +10,72 @@
 
   border-radius: 4px;
   height: 28px;
-  width: 95.62px;
-  border: 1px solid rgb(223, 226, 237);
-  padding: 0 8px;
+  width: 96px;
+  border: 1px solid	#DFE2ED;
+  padding-left: 8px;
+  padding-right: 4px;
   position: relative;
+  background: #fafafa;
+
   cursor: pointer;
 
+  .DownArrow {
+    width: 12px;
+    height: 16px;
+    margin-top: 2px;
+  }
+
+  .display-item {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .dropdown-items {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 30px;
+    left: 0px;
+
+    border-radius: 4px;
+    width: 94px;
+    box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
+
+    background: var(--secondary-color);
+    overflow:hidden;
+
+    .dropdown-item {
+      height: 28px;
+      padding-left: 8px;
+      padding-right: 4px;
+      align-items: center;
+      display: flex;
+
+
+      // TODO: Don't know the colour
+      // &:hover {
+      //   background-color: rgb(195, 198, 212);
+      // }
+    }
 
     &.hide {
       display: none;
     }
   }
 
-  &:after {
-    display: flex;
-    align-items: center;
+  // &:after {
+  //   display: flex;
+  //   align-items: center;
 
-    content: '\25BE';
-    color: #757575;
-    color: var(--icon-color);
-  }
+  //   content: '\25BE';
+  //   color: #757575;
+  //   color: var(--icon-color);
+  // }
 
-  &:hover:after {
-    cursor: pointer;
-  }
+  // &:hover:after {
+  //   cursor: pointer;
+  // }
 }
