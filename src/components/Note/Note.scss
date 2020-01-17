@@ -60,7 +60,6 @@
   .reply-area-container {
     display: flex;
     padding-right: 12px;
-    padding-left: 40px;
     margin-top: 12px;
   }
 
@@ -76,6 +75,7 @@
   }
 
   .replies {
+    margin-left: 40px;
     transition: all 1s ease;
 
     &.hidden {
