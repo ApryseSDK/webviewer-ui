@@ -23,14 +23,16 @@ const propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+const NOOP = () => {};
+
 const Button = props => {
   const [isElementDisabled, customOverrides] = useSelector(state => [
     selectors.isElementDisabled(state, props.dataElement),
     selectors.getCustomElementOverrides(state, props.dataElement),
   ]);
 
-  props = { ...props, ...customOverrides };
   const {
+    disable = true,
     isActive,
     mediaQueryClassName,
     img,
@@ -40,18 +42,12 @@ const Button = props => {
     onClick = () => {},
     className,
     title,
-  } = props;
+  } = { ...props, ...customOverrides };
 
-  const buttonClass = classNames({
-    Button: true,
-    active: isActive,
-    [mediaQueryClassName]: mediaQueryClassName,
-    [className]: className,
-  });
-  const isBase64 = img && img.trim().indexOf('data:') === 0;
+  const isBase64 = img?.trim().startsWith('data:');
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
-    img && !isBase64 && (img.indexOf('.') === -1 || img.indexOf('<svg') === 0);
+    img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
 
   let content;
   if (isGlyph) {
@@ -63,7 +59,17 @@ const Button = props => {
   }
 
   const children = (
-    <div className={buttonClass} data-element={dataElement} onClick={onClick}>
+    <div
+      className={classNames({
+        Button: true,
+        active: isActive,
+        disable,
+        [mediaQueryClassName]: mediaQueryClassName,
+        [className]: className,
+      })}
+      data-element={dataElement}
+      onClick={disable ? NOOP : onClick}
+    >
       {content}
     </div>
   );
