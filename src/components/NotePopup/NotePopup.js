@@ -29,7 +29,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
       selectors.isElementDisabled(state, 'notePopup'),
       selectors.isElementDisabled(state, 'notePopupEdit'),
       selectors.isElementDisabled(state, 'notePopupDelete'),
-      selectors.isElementDisabled(state, 'notePopupState'),
+      true, // selectors.isElementDisabled(state, 'notePopupState'),
     ],
     shallowEqual,
   );
@@ -101,12 +101,12 @@ const NotePopup = ({ annotation, setIsEditing }) => {
       {isOpen && (
         <div className="options" onClick={closePopup}>
           {isEditable && (
-            <div data-element="notePopupEdit" onClick={handleEdit}>
+            <div className="option" data-element="notePopupEdit" onClick={handleEdit}>
               {t('action.edit')}
             </div>
           )}
           {isDeletable && (
-            <div data-element="notePopupDelete" onClick={handleDelete}>
+            <div className="option" data-element="notePopupDelete" onClick={handleDelete}>
               {t('action.delete')}
             </div>
           )}

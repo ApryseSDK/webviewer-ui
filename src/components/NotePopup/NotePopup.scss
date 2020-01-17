@@ -7,6 +7,7 @@
   user-select: none;
   margin-bottom: auto;
 
+
   .overflow {
     .Icon {
       width: 18px;
@@ -19,40 +20,33 @@
   }
 
   .options {
-    flex-direction: column;
-    right: 0;
-    // top: 100%;
-    padding: 5px;
-    background: white;
-    background: var(--primary-color);
-    box-shadow: 1px 2px 10px 1px rgba(0,0,0,.14);
-    z-index: 80;
     display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
+    z-index: 80;
     position: absolute;
+    border-radius: 4px;
+    background: var(--secondary-color);
 
-    div {
-      width: 100%;
-      padding: 3px;
-
-      &:hover {
-        color: $gray87;
-      }
-
-      @include tablet-and-mobile {
-        padding: 7px 5px;
-      }
+    .option {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 28px;
+      padding-left: 8px;
+      padding-right: 17px;
     }
 
-    &:empty {
-      padding: 0px;
-    }
+    // &:empty {
+    //   padding: 0px;
+    // }
 
-    p[data-element='notePopupSetStatus'] {
-      border-bottom: 1px solid var(--border-color);
-      color: $gray54;
-      padding-bottom: 3px;
-      margin-block-start: 0.5em;
-      margin-block-end:0.3em;
-    }
+    // p[data-element='notePopupSetStatus'] {
+    //   border-bottom: 1px solid var(--border-color);
+    //   color: $gray54;
+    //   padding-bottom: 3px;
+    //   margin-block-start: 0.5em;
+    //   margin-block-end:0.3em;
+    // }
   }
 }

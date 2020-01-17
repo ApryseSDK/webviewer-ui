@@ -19,13 +19,13 @@
 
   cursor: pointer;
 
-  .DownArrow {
+  .down-arrow {
     width: 12px;
     height: 16px;
     margin-top: 2px;
   }
 
-  .display-item {
+  .picked-option {
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -38,14 +38,14 @@
     flex-direction: column;
     position: absolute;
     top: 30px;
-    left: 0px;
+    right: 0px;
 
     border-radius: 4px;
     width: 94px;
     box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
 
     background: var(--secondary-color);
-    overflow:hidden;
+    overflow:hidden; // necessary so that children respect border-radius on hover
 
     .dropdown-item {
       height: 28px;
@@ -53,7 +53,6 @@
       padding-right: 4px;
       align-items: center;
       display: flex;
-
 
       // TODO: Don't know the colour
       // &:hover {
@@ -65,17 +64,4 @@
       display: none;
     }
   }
-
-  // &:after {
-  //   display: flex;
-  //   align-items: center;
-
-  //   content: '\25BE';
-  //   color: #757575;
-  //   color: var(--icon-color);
-  // }
-
-  // &:hover:after {
-  //   cursor: pointer;
-  // }
 }
