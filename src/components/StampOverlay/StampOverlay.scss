@@ -3,7 +3,6 @@
 
 .StampOverlay {
   @extend %overlay;
-
   top: 46px;
   width: 232px;
   border-radius: 4px 0 0 4px;
@@ -11,14 +10,10 @@
   width: 354px;
   padding: 16px 16px 16px;
 
-
   .rubber-stamp {
     float: left;
-    // background: #f8f8f8;
-    // border-radius: 4px 4px 4px 4px;
     height: 48px;
     width: 160px;
-    // margin-bottom: 8px;
 
     img {
       width: 100%;
@@ -27,7 +22,7 @@
     }
   }
   .rubber-stamp:hover {
-    // background: antiquewhite;
+    background: #f6f6f6;
     background: var(--button-hover-color);
   }
 }
@@ -42,7 +37,7 @@
     padding: 10px;
   }
   .column:hover {
-    // background: antiquewhite;
+    background: #f6f6f6;
     background: var(--button-hover-color);
   }
 }

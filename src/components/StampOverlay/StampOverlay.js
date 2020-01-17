@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import onClickOutside from 'react-onclickoutside';
-import getClassName from 'helpers/getClassName';
+import classNames from 'classnames';
 import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -47,8 +47,8 @@ class StampOverlay extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // if langauge changes while overlay is open we wanted update it
-    var isLanChanged = this.state.language && this.props.i18n.language !== this.state.language;
+    // if language changes while overlay is open we wanted update it
+    const isLanChanged = this.state.language && this.props.i18n.language !== this.state.language;
 
     if (!prevProps.isOpen && !this.props.isOpen && this.props.activeToolName === TOOL_NAME) {
       this.props.openElement('stampOverlay');
@@ -82,7 +82,7 @@ class StampOverlay extends React.Component {
   setRubberStamp(annotation) {
     core.setToolMode(TOOL_NAME);
     this.props.closeElement('stampOverlay');
-    var text = this.props.t(`rubberStamp.${annotation['Icon']}`);
+    const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
     this.stampTool.setRubberStamp(annotation, text);
     this.stampTool.showPreview();
   }
@@ -92,9 +92,9 @@ class StampOverlay extends React.Component {
       const annotations = this.stampTool.getDefaultStampAnnotations();
       const previews = await Promise.all(
         annotations.map(annotation => {
-          var text = this.props.t(`rubberStamp.${annotation['Icon']}`);
+          const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
 
-          var options = {
+          const options = {
             canvasWidth,
             canvasHeight,
             text,
@@ -120,7 +120,7 @@ class StampOverlay extends React.Component {
       return null;
     }
 
-    var imgs = null;
+    let imgs = null;
     if (isOpen) {
       imgs = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
         <div key={index}
@@ -131,7 +131,13 @@ class StampOverlay extends React.Component {
         </div>,
       );
     }
-    const className = getClassName('Overlay StampOverlay', this.props);
+    const className = classNames({
+      'Overlay': true,
+      'StampOverlay': true,
+      'open': isOpen,
+      'closed': !isOpen,
+    });
+
     return (
       <div
         className={className}
