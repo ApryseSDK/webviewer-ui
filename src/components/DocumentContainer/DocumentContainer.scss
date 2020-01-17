@@ -15,6 +15,9 @@
   }
 
   .document {
+    margin: auto; // vertical centering when content is smaller than document container
+                  // can't use 'justify-content: center;' due to losing access to content when overflowing
+                  // see: https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container
     -webkit-tap-highlight-color: transparent;
 
     .pageSection {
