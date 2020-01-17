@@ -61,6 +61,7 @@
     display: flex;
     padding-right: 12px;
     margin-top: 12px;
+    margin-left: 40px;
   }
 
   &.expanded {
@@ -75,7 +76,6 @@
   }
 
   .replies {
-    margin-left: 40px;
     transition: all 1s ease;
 
     &.hidden {

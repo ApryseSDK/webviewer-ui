@@ -3,12 +3,13 @@
 
 .NoteContent {
   padding-top: 9px;
-  padding-left: 6px;
   padding-right: 12px;
+  padding-left: 40px;
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
   flex: 1;
   color: var(--text-color);
 
@@ -22,11 +23,13 @@
     min-width: 0;
   }
 
-
   .type-icon {
+    position: absolute;
+    left: 6px;
+    top: 9px;
     width: 31px;
     height: 31px;
-    margin-bottom: auto;
+    // margin-bottom: auto;
     width: 31px;
     margin-right: 3px;
   }
