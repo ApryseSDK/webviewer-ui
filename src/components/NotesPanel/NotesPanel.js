@@ -38,7 +38,7 @@ const NotesPanel = () => {
   );
   const dispatch = useDispatch();
   const [notes, setNotes] = useState([]);
-  const [width, setWidth] = useState(219);
+  const [width, setWidth] = useState(293);
 
   // the object will be in a shape of { [note.Id]: true }
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
@@ -240,7 +240,7 @@ const NotesPanel = () => {
       className="notes-panel-container"
     >
       <ResizeBar
-        minWidth={219}
+        minWidth={293}
         onResize={_width => {
           setWidth(_width);
         }}

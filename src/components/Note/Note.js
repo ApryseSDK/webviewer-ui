@@ -68,13 +68,17 @@ const Note = ({ annotation }) => {
       className={noteClass}
       onMouseDown={handleNoteClick}
     >
-      <NoteContent annotation={annotation} />
+      <NoteContent annotation={annotation} isSelected={isSelected} />
       {isSelected &&
         <React.Fragment>
           {replies.length > 0 && <div className="divider" />}
           <div className={repliesClass}>
             {replies.map(reply => (
-              <NoteContent key={reply.Id} annotation={reply} />
+              <NoteContent
+                key={reply.Id}
+                annotation={reply}
+                isSelected={isSelected}
+              />
             ))}
             <div className="reply-area-container">
               <ReplyArea annotation={annotation} />

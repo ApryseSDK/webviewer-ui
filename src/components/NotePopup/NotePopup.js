@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 
 import Icon from 'components/Icon';
@@ -40,6 +41,11 @@ const NotePopup = ({ annotation, setIsEditing }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const isOpen = notePopupId === annotation.Id;
+  const popupRef = useRef();
+
+  useOnClickOutside(popupRef, () => {
+    closePopup();
+  });
 
   useEffect(() => {
     const onUpdateAnnotationPermission = () => {
@@ -99,7 +105,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
         <Icon glyph="icon-tools-more" />
       </div>
       {isOpen && (
-        <div className="options" onClick={closePopup}>
+        <div ref={popupRef} className="options" onClick={closePopup}>
           {isEditable && (
             <div className="option" data-element="notePopupEdit" onClick={handleEdit}>
               {t('action.edit')}
