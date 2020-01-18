@@ -210,13 +210,11 @@ const LinkModal = () => {
                   onChange={e => setURL(e.target.value)}
                 />
               </div>
-              <div className="buttons">
                 <Button
                   dataElement="linkSubmitButton"
                   label={t('action.link')}
                   onClick={addURLLink}
                 />
-              </div>
             </form>
           </TabPanel>
           <TabPanel dataElement="PageNumberPanel">
@@ -232,13 +230,11 @@ const LinkModal = () => {
                   {setDropdownNumbers()}
                 </select>
               </div>
-              <div className="buttons">
                 <Button
                   dataElement="linkSubmitButton"
                   label={t('action.link')}
                   onClick={addPageLink}
                 />
-              </div>
             </form>
           </TabPanel>
         </Tabs>
