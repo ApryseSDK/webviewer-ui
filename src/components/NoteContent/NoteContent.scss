@@ -95,7 +95,6 @@
       padding-bottom: 4px;
       resize: none;
       overflow: hidden;
-      // padding-right: 56px;
       box-sizing: border-box;
 
       &::placeholder {
@@ -104,6 +103,14 @@
     }
 
     .buttons  {
+      display: flex;
+      flex-direction: row;
+      margin-top: 4px;
+
+      > div {
+        margin-right: 4px;
+      }
+
       .btn1234 {
         cursor: pointer;
         flex-shrink: 0;
@@ -117,9 +124,6 @@
         position: relative;
         color: #fafafa;
         font-size: 13px;
-        // position: absolute;
-        // bottom: 2px;
-        // right: 2px;
 
         svg {
           color: #fafafa;
