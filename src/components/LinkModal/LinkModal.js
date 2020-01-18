@@ -200,7 +200,6 @@ const LinkModal = () => {
 
           <TabPanel dataElement="URLPanel">
             <form onSubmit={addURLLink}>
-              <div className="enter">
                 <div>{t('link.EnterURL')}</div>
                 <input
                   className="urlInput"
@@ -209,7 +208,6 @@ const LinkModal = () => {
                   value={url}
                   onChange={e => setURL(e.target.value)}
                 />
-              </div>
                 <Button
                   dataElement="linkSubmitButton"
                   label={t('action.link')}
@@ -219,7 +217,6 @@ const LinkModal = () => {
           </TabPanel>
           <TabPanel dataElement="PageNumberPanel">
             <form onSubmit={addPageLink}>
-              <div className="enter">
                 <div>{t('link.EnterPage')}</div>
                 <select
                   className="pageNumberSelect"
@@ -229,7 +226,6 @@ const LinkModal = () => {
                 >
                   {setDropdownNumbers()}
                 </select>
-              </div>
                 <Button
                   dataElement="linkSubmitButton"
                   label={t('action.link')}
