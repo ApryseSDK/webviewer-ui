@@ -146,7 +146,7 @@ const NoteContent = ({ annotation }) => {
         <div className="date-and-time">
           {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
         </div>
-        {isEditing ? (
+        {isEditing || true ? (
           <ContentArea
             textAreaValue={textAreaValue}
             onTextAreaValueChange={setTextAreaValue}
@@ -239,7 +239,7 @@ const ContentArea = ({
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
       />
-      <span className="buttons">
+      <div className="buttons">
         <button className={saveBtnClass} onMouseDown={setContents}>
           {t('action.save')}
         </button>
@@ -251,7 +251,7 @@ const ContentArea = ({
         >
           {t('action.cancel')}
         </button>
-      </span>
+      </div>
     </div>
   );
 };
