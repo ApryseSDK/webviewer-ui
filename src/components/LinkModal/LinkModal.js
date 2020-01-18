@@ -97,10 +97,7 @@ const LinkModal = () => {
     highlight.Author = core.getCurrentUser();
     highlight.setContents(text);
 
-    let linkAnnotIdArray = [];
-    linkAnnotArray.forEach(link => {
-      linkAnnotIdArray.push(link.Id);
-    });
+    let linkAnnotIdArray = linkAnnotArray.map(link => link.Id);
     highlight.associateLink(linkAnnotIdArray);
 
     await core.addAnnotations([highlight]);
