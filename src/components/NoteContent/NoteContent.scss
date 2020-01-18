@@ -103,10 +103,28 @@
       }
     }
 
-
     .buttons  {
-      @extend %textarea-buttons;
-      margin-top: 5px;
+      .btn1234 {
+        cursor: pointer;
+        flex-shrink: 0;
+        background: #6077bf;
+        border-radius: 4px;
+        width: 52px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: #fafafa;
+        font-size: 13px;
+        // position: absolute;
+        // bottom: 2px;
+        // right: 2px;
+
+        svg {
+          color: #fafafa;
+        }
+      }
     }
   }
 

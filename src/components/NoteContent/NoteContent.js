@@ -240,17 +240,21 @@ const ContentArea = ({
         placeholder={`${t('action.comment')}...`}
       />
       <div className="buttons">
-        <button className={saveBtnClass} onMouseDown={setContents}>
+        <div
+          className="btn1234"
+          onMouseDown={setContents}
+        >
           {t('action.save')}
-        </button>
-        <button
+        </div>
+        <div
+          className="btn1234"
           onMouseDown={() => {
             setIsEditing(false);
             onTextAreaValueChange(contents);
           }}
         >
           {t('action.cancel')}
-        </button>
+        </div>
       </div>
     </div>
   );
