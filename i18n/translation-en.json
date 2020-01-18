@@ -258,9 +258,9 @@
     "Link": "Link URL or Page"
   },
   "link": {
-    "URL": "URL",
-    "Page": "Page",
-    "EnterURL": "Enter URL you would like to link to",
-    "EnterPage": "Select the page number you would like to link to"
+    "url": "URL",
+    "page": "Page",
+    "enterurl": "Enter URL you would like to link to",
+    "enterpage": "Select the page number you would like to link to"
   }
 }

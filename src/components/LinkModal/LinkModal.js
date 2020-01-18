@@ -184,10 +184,10 @@ const LinkModal = () => {
           <div className="header">
             <div className="tab-list">
               <Tab dataElement="URLPanelButton">
-                <Button label={t('link.URL')} />
+                <Button label={t('link.url')} />
               </Tab>
               <Tab dataElement="PageNumberPanelButton">
-                <Button label={t('link.Page')} />
+                <Button label={t('link.page')} />
               </Tab>
             </div>
             <ActionButton
@@ -200,7 +200,7 @@ const LinkModal = () => {
 
           <TabPanel dataElement="URLPanel">
             <form onSubmit={addURLLink}>
-                <div>{t('link.EnterURL')}</div>
+                <div>{t('link.enterurl')}</div>
                 <input
                   className="urlInput"
                   type="url"
@@ -217,7 +217,7 @@ const LinkModal = () => {
           </TabPanel>
           <TabPanel dataElement="PageNumberPanel">
             <form onSubmit={addPageLink}>
-                <div>{t('link.EnterPage')}</div>
+                <div>{t('link.enterpage')}</div>
                 <select
                   className="pageNumberSelect"
                   ref={pageNumberInput}
