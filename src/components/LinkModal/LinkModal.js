@@ -37,6 +37,21 @@ const LinkModal = () => {
     core.setToolMode(defaultTool);
   };
 
+  const newLink = (x, y, width, height) => {
+    const link = new Annotations.Link();
+    link.PageNumber = currentPage;
+    link.StrokeColor = new Annotations.Color(0, 165, 228);
+    link.StrokeStyle = 'underline';
+    link.StrokeThickness = 2;
+    link.Author = core.getCurrentUser();
+    link.Subject = 'Link';
+    link.X = x;
+    link.Y = y;
+    link.Width = width;
+    link.Height = height;
+    return link;
+  }
+
   const createLink = () => {
     const linksResults = [];
 
@@ -48,34 +63,15 @@ const LinkModal = () => {
     if (currPageQuads) {
       const selectedText = core.getSelectedText();
       currPageQuads.forEach(quad => {
-        const link = new Annotations.Link();
-        link.PageNumber = currentPage;
-        link.StrokeColor = new Annotations.Color(0, 165, 228);
-        link.StrokeStyle = 'underline';
-        link.StrokeThickness = 2;
-        link.Author = core.getCurrentUser();
-        link.Subject = 'Link';
-        link.X = Math.min(quad.x1, quad.x3);
-        link.Y = Math.min(quad.y1, quad.y3);
-        link.Width = Math.abs(quad.x1 - quad.x3);
-        link.Height = Math.abs(quad.y1 - quad.y3);
-        linksResults.push(link);
+        linksResults.push(newLink(Math.min(quad.x1, quad.x3), Math.min(quad.y1, quad.y3),
+        Math.abs(quad.x1 - quad.x3), Math.abs(quad.y1 - quad.y3)));
       });
       createHighlightAnnot(linksResults, currPageQuads, selectedText);
     }
 
     if (selectedAnnotations && selectedAnnotations.length === 1) {
-      const link = new Annotations.Link();
-      link.PageNumber = currentPage;
-      link.StrokeColor = new Annotations.Color(0, 165, 228);
-      link.StrokeStyle = 'underline';
-      link.StrokeThickness = 2;
-      link.Author = core.getCurrentUser();
-      link.Subject = 'Link';
-      link.X = selectedAnnotations[0].X;
-      link.Y = selectedAnnotations[0].Y;
-      link.Width = selectedAnnotations[0].Width;
-      link.Height = selectedAnnotations[0].Height;
+      const link = newLink(selectedAnnotations[0].X, selectedAnnotations[0].Y, 
+      selectedAnnotations[0].Width, selectedAnnotations[0].Height);
       linksResults.push(link);
       selectedAnnotations[0].associateLink([link.Id]);
     }
