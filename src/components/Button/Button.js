@@ -32,14 +32,14 @@ const Button = props => {
   ]);
 
   const {
-    disable = true,
+    disable,
     isActive,
     mediaQueryClassName,
     img,
     label,
     color,
     dataElement,
-    onClick = () => {},
+    onClick = NOOP,
     className,
     title,
   } = { ...props, ...customOverrides };
@@ -48,15 +48,6 @@ const Button = props => {
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
     img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
-
-  let content;
-  if (isGlyph) {
-    content = <Icon glyph={img} color={color} />;
-  } else if (img) {
-    content = <img src={img} />;
-  } else if (label) {
-    content = <p>{label}</p>;
-  }
 
   const children = (
     <div
@@ -70,7 +61,9 @@ const Button = props => {
       data-element={dataElement}
       onClick={disable ? NOOP : onClick}
     >
-      {content}
+      {isGlyph && <Icon glyph={img} color={color} />}
+      {img && !isGlyph && <img src={img} />}
+      {label && <p>{label}</p>}
     </div>
   );
 

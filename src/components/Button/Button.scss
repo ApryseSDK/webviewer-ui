@@ -9,7 +9,6 @@
   height: $button-height;
   padding: 6px;
   font-size: 16px;
-  cursor: pointer;
 
   @include mobile {
     min-width: $button-width-m;
@@ -24,15 +23,8 @@
     }
   }
 
-  &.disable {
-    color: red;
-
-    .Icon {
-      color: red;
-    }
-  }
-
   &:hover:not(.disable) {
+    cursor: pointer;
     background: #F6F6F6;
     background: var(--button-hover-color);
 
