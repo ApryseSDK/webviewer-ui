@@ -27,7 +27,6 @@ const LinkModal = () => {
   const urlInput = React.createRef();
   const pageNumberInput = React.createRef();
 
-  const [dropdownNumbers, setDropdownNumbers] = useState([]);
   const [url, setURL] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -135,17 +134,6 @@ const LinkModal = () => {
 
   useEffect(() => {
     if (isOpen) {
-      //  prepopulate page numbers for the dropdown
-      const numbers = [];
-      for (let i = 1; i <= totalPages; i++) {
-        numbers.push(
-          <option key={i} value={i}>
-            {i}
-          </option>,
-        );
-      }
-      setDropdownNumbers(numbers);
-
       //  prepopulate URL if URL is selected
       const selectedText = core.getSelectedText();
       if (selectedText) {
@@ -165,6 +153,18 @@ const LinkModal = () => {
       urlInput.current.focus();
     }
   }, [tabSelected, isOpen]);
+
+  const setDropdownNumbers = () => {
+      const numbers = [];
+      for (let i = 1; i <= totalPages; i++) {
+        numbers.push(
+          <option key={i} value={i}>
+            {i}
+          </option>,
+        );
+      }
+      return numbers;
+  }
 
   const modalClass = classNames({
     Modal: true,
@@ -229,7 +229,7 @@ const LinkModal = () => {
                   value={pageNumber}
                   onChange={e => setPageNumber(e.target.value)}
                 >
-                  {dropdownNumbers}
+                  {setDropdownNumbers()}
                 </select>
               </div>
               <div className="buttons">
