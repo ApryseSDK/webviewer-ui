@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -11,7 +11,6 @@ import selectors from 'selectors';
 import './Button.scss';
 
 const propTypes = {
-  disable: PropTypes.bool,
   isActive: PropTypes.bool,
   mediaQueryClassName: PropTypes.string,
   img: PropTypes.string,
@@ -24,10 +23,10 @@ const propTypes = {
 };
 
 const Button = props => {
-  const [isElementDisabled, customOverrides] = useSelector(state => [
+  const [isElementDisabled, customOverrides = {}] = useSelector(state => [
     selectors.isElementDisabled(state, props.dataElement),
     selectors.getCustomElementOverrides(state, props.dataElement),
-  ]);
+  ], shallowEqual);
 
   props = { ...props, ...customOverrides };
   const {
