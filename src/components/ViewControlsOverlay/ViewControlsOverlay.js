@@ -20,6 +20,8 @@ import selectors from "selectors";
 import "./ViewControlsOverlay.scss";
 import Autolinker from "autolinker";
 
+import classNames from 'classnames';
+
 class ViewControlsOverlay extends React.PureComponent {
   static propTypes = {
     totalPages: PropTypes.number.isRequired,
@@ -93,7 +95,7 @@ class ViewControlsOverlay extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, displayMode, fitMode, totalPages, t } = this.props;
+    const { isDisabled, displayMode, totalPages, t } = this.props;
     const { left, right, top } = this.state;
     const { pageTransition, layout } = displayModeObjects.find(
       obj => obj.displayMode === displayMode
@@ -103,6 +105,10 @@ class ViewControlsOverlay extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
+
+    // const rowClass = classNames({
+    //   active: isActive,
+    // });
 
     return (
       <div
@@ -159,7 +165,7 @@ class ViewControlsOverlay extends React.PureComponent {
           </div>
           <div className="divider" />
           <div className="type">{t("option.displayMode.layout")}</div>
-          <div className="row">
+          <div className={`row ${layout === "single" ? 'active' : ''}`}>
             <Button
               title="option.layout.single"
               dataElement="singleLayoutButton"
