@@ -22,9 +22,9 @@
     "print": "Print",
     "ok": "OK",
     "reply": "Reply",
-    "rotate": "Rotate",
-    "rotateClockwise": "Clockwise",
-    "rotateCounterClockwise": "Counter-clockwise",
+    "rotate": "Page Orientation",
+    "rotateClockwise": "Rotate Clockwise",
+    "rotateCounterClockwise": "Rotate Counterclockwise",
     "save": "Save",
     "create": "Create",
     "showMoreResults": "Show more results",
@@ -119,13 +119,13 @@
       "TextColor": "Text"
     },
     "displayMode": {
-      "layout": "Layout",
-      "pageTransition": "Page transition"
+      "layout": "Page Layout",
+      "pageTransition": "Page Transition"
     },
     "layout": {
-      "cover": "Cover",
-      "double": "Double",
-      "single": "Single"
+      "cover": "Cover Facing Page",
+      "double": "Double Page",
+      "single": "Single Page"
     },
     "notesPanel": {
       "orderPosition": "Position",
@@ -136,8 +136,8 @@
       }
     },
     "pageTransition": {
-      "continuous": "Continuous",
-      "default": "Page by page"
+      "continuous": "Continuous Page",
+      "default": "Page by Page"
     },
     "print": {
       "all": "All",
