@@ -256,7 +256,6 @@ class ThumbnailsPanel extends React.PureComponent {
         <Measure
           bounds
           onResize={({ bounds }) => {
-            console.log('wkejrlkwejrlkwerjwlekjr');
             this.setState({
               height: bounds.height,
               width: bounds.width,

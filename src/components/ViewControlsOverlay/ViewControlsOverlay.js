@@ -1,26 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { withTranslation } from "react-i18next";
-import onClickOutside from "react-onclickoutside";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
+import onClickOutside from 'react-onclickoutside';
 
-import Button from "components/Button";
-import ActionButton from "components/ActionButton";
-import Element from "components/Element";
-import Icon from "components/Icon";
+import Button from 'components/Button';
+import ActionButton from 'components/ActionButton';
 
-import core from "core";
-import getOverlayPositionBasedOn from "helpers/getOverlayPositionBasedOn";
-import getClassName from "helpers/getClassName";
-import { zoomIn, zoomOut } from "helpers/zoom";
-import displayModeObjects from "constants/displayModeObjects";
-import actions from "actions";
-import selectors from "selectors";
+import core from 'core';
+import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
+import getClassName from 'helpers/getClassName';
+import displayModeObjects from 'constants/displayModeObjects';
+import actions from 'actions';
+import selectors from 'selectors';
 
-import "./ViewControlsOverlay.scss";
-import Autolinker from "autolinker";
-
-import classNames from 'classnames';
+import './ViewControlsOverlay.scss';
 
 class ViewControlsOverlay extends React.PureComponent {
   static propTypes = {
@@ -30,65 +24,65 @@ class ViewControlsOverlay extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     closeElements: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired
+    t: PropTypes.func.isRequired,
   };
 
   overlay = React.createRef();
 
   state = {
     left: 0,
-    right: "auto",
-    top: "auto"
+    right: 'auto',
+    top: 'auto',
   };
 
   componentDidMount() {
-    window.addEventListener("resize", this.handleWindowResize);
+    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([
-        "toolsOverlay",
-        "searchOverlay",
-        "menuOverlay",
-        "toolsOverlay",
-        "toolStylePopup",
-        "signatureOverlay",
-        "zoomOverlay",
-        "redactionOverlay"
+        'toolsOverlay',
+        'searchOverlay',
+        'menuOverlay',
+        'toolsOverlay',
+        'toolStylePopup',
+        'signatureOverlay',
+        'zoomOverlay',
+        'redactionOverlay',
       ]);
       this.setState(
-        getOverlayPositionBasedOn("viewControlsButton", this.overlay)
+        getOverlayPositionBasedOn('viewControlsButton', this.overlay),
       );
     }
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleWindowResize);
+    window.removeEventListener('resize', this.handleWindowResize);
   }
 
   handleWindowResize = () => {
     this.setState(
-      getOverlayPositionBasedOn("viewControlsButton", this.overlay)
+      getOverlayPositionBasedOn('viewControlsButton', this.overlay),
     );
   };
 
   handleClickOutside = e => {
     const clickedViewControlsButton =
-      e.target.getAttribute("data-element") === "viewControlsButton";
+      e.target.getAttribute('data-element') === 'viewControlsButton';
 
     if (!clickedViewControlsButton) {
-      this.props.closeElements(["viewControlsOverlay"]);
+      this.props.closeElements(['viewControlsOverlay']);
     }
   };
 
   handleCloseClick = () => {
-    this.props.closeElements(["viewControlsOverlay"]);
+    this.props.closeElements(['viewControlsOverlay']);
   };
 
   handleClick = (pageTransition, layout) => {
     const displayModeObject = displayModeObjects.find(
-      obj => obj.pageTransition === pageTransition && obj.layout === layout
+      obj => obj.pageTransition === pageTransition && obj.layout === layout,
     );
 
     core.setDisplayMode(displayModeObject.displayMode);
@@ -98,9 +92,9 @@ class ViewControlsOverlay extends React.PureComponent {
     const { isDisabled, displayMode, totalPages, t } = this.props;
     const { left, right, top } = this.state;
     const { pageTransition, layout } = displayModeObjects.find(
-      obj => obj.displayMode === displayMode
+      obj => obj.displayMode === displayMode,
     );
-    const className = getClassName("Overlay ViewControlsOverlay", this.props);
+    const className = getClassName('Overlay ViewControlsOverlay', this.props);
 
     if (isDisabled) {
       return null;
@@ -118,7 +112,7 @@ class ViewControlsOverlay extends React.PureComponent {
         ref={this.overlay}
       >
         <div className="ViewControlsContainer">
-          <div className="type">{t("option.displayMode.pageTransition")}</div>
+          <div className="type">{t('option.displayMode.pageTransition')}</div>
           {totalPages < 1000 && (
             <React.Fragment>
               <div className="row">
@@ -126,25 +120,25 @@ class ViewControlsOverlay extends React.PureComponent {
                   title="option.pageTransition.continuous"
                   dataElement="continuousPageTransitionButton"
                   img="icon-header-page-manipulation-page-transition-continuous-page-line"
-                  onClick={() => this.handleClick("continuous", layout)}
-                  isActive={pageTransition === "continuous"}
+                  onClick={() => this.handleClick('continuous', layout)}
+                  isActive={pageTransition === 'continuous'}
                 />
-                <div className="title">{t("option.pageTransition.continuous")}</div>
+                <div className="title">{t('option.pageTransition.continuous')}</div>
               </div>
               <div className="row">
                 <Button
                   title="option.pageTransition.default"
                   dataElement="defaultPageTransitionButton"
                   img="icon-header-page-manipulation-page-transition-page-by-page-line"
-                  onClick={() => this.handleClick("default", layout)}
-                  isActive={pageTransition === "default"}
+                  onClick={() => this.handleClick('default', layout)}
+                  isActive={pageTransition === 'default'}
                 />
-                <div className="title">{t("option.pageTransition.default")}</div>
+                <div className="title">{t('option.pageTransition.default')}</div>
               </div>
               <div className="divider" />
             </React.Fragment>
           )}
-          <div className="type">{t("action.rotate")}</div>
+          <div className="type">{t('action.rotate')}</div>
           <div className="row">
             <ActionButton
               dataElement="rotateClockwiseButton"
@@ -152,7 +146,7 @@ class ViewControlsOverlay extends React.PureComponent {
               img="icon-header-page-manipulation-page-rotation-clockwise-line"
               onClick={core.rotateClockwise}
             />
-            <div className="title">{t("action.rotateClockwise")}</div>
+            <div className="title">{t('action.rotateClockwise')}</div>
           </div>
           <div className="row">
             <ActionButton
@@ -161,39 +155,39 @@ class ViewControlsOverlay extends React.PureComponent {
               img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
               onClick={core.rotateCounterClockwise}
             />
-            <div className="title">{t("action.rotateCounterClockwise")}</div>
+            <div className="title">{t('action.rotateCounterClockwise')}</div>
           </div>
           <div className="divider" />
-          <div className="type">{t("option.displayMode.layout")}</div>
-          <div className={`row ${layout === "single" ? 'active' : ''}`}>
+          <div className="type">{t('option.displayMode.layout')}</div>
+          <div className={`row ${layout === 'single' ? 'active' : ''}`}>
             <Button
               title="option.layout.single"
               dataElement="singleLayoutButton"
               img="icon-header-page-manipulation-page-layout-single-page-line"
-              onClick={() => this.handleClick(pageTransition, "single")}
-              isActive={layout === "single"}
+              onClick={() => this.handleClick(pageTransition, 'single')}
+              isActive={layout === 'single'}
             />
-            <div className="title">{t("option.layout.single")}</div>
+            <div className="title">{t('option.layout.single')}</div>
           </div>
           <div className="row">
             <Button
               title="option.layout.double"
               dataElement="doubleLayoutButton"
               img="icon-header-page-manipulation-page-layout-double-page-line"
-              onClick={() => this.handleClick(pageTransition, "double")}
-              isActive={layout === "double"}
+              onClick={() => this.handleClick(pageTransition, 'double')}
+              isActive={layout === 'double'}
             />
-            <div className="title">{t("option.layout.double")}</div>
+            <div className="title">{t('option.layout.double')}</div>
           </div>
           <div className="row">
             <Button
               title="option.layout.cover"
               dataElement="coverLayoutButton"
               img="icon-header-page-manipulation-page-layout-cover-line"
-              onClick={() => this.handleClick(pageTransition, "cover")}
-              isActive={layout === "cover"}
+              onClick={() => this.handleClick(pageTransition, 'cover')}
+              isActive={layout === 'cover'}
             />
-            <div className="title">{t("option.layout.cover")}</div>
+            <div className="title">{t('option.layout.cover')}</div>
           </div>
         </div>
       </div>
@@ -205,15 +199,15 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
   displayMode: selectors.getDisplayMode(state),
   fitMode: selectors.getFitMode(state),
-  isDisabled: selectors.isElementDisabled(state, "viewControlsOverlay"),
-  isOpen: selectors.isElementOpen(state, "viewControlsOverlay")
+  isDisabled: selectors.isElementDisabled(state, 'viewControlsOverlay'),
+  isOpen: selectors.isElementOpen(state, 'viewControlsOverlay'),
 });
 
 const mapDispatchToProps = {
-  closeElements: actions.closeElements
+  closeElements: actions.closeElements,
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(withTranslation()(onClickOutside(ViewControlsOverlay)));
