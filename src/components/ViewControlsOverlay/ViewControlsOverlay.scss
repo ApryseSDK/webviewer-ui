@@ -15,8 +15,6 @@
   .ViewControlsContainer {
     padding-top: 8px;
     padding-bottom: 8px;
-    // padding-left: 12px;
-    // padding-right: 18px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -40,8 +38,9 @@
       align-items: center;
       padding-left: 12px;
       padding-right: 18px;
+      cursor: pointer;
 
-      &.active {
+      &:hover {
         background: #767f9b33;
       }
 

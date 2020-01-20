@@ -216,17 +216,6 @@ class DocumentContainer extends React.PureComponent {
         )}
       </Measure>
     );
-
-    // return (
-    //   <div
-    //     className={className}
-    //     ref={this.container}
-    //     data-element="documentContainer"
-    //     onScroll={this.handleScroll}
-    //   >
-    //     <div className="document" ref={this.document}></div>
-    //   </div>
-    // );
   }
 }
 
