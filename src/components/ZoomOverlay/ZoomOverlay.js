@@ -127,13 +127,13 @@ class ZoomOverlay extends React.PureComponent {
             <div className="ZoomLabel">{t('action.fitToPage')}</div>
           </div>
           <div className="spacer extraMarginTop" />
-          {/* {zoomList.map((zoomValue, i) => (
+          {zoomList.map((zoomValue, i) => (
             <OverlayItem
               key={i}
               onClick={() => zoomTo(zoomValue)}
               buttonName={`${zoomValue * 100}%`}
             />
-          ))} */}
+          ))}
           <div className="spacer" />
           <div className="ZoomItem">
             <Icon
