@@ -244,7 +244,7 @@ const NotesPanel = () => {
         onResize={_width => {
           setWidth(_width);
         }}
-        left
+        leftDirection
       />
       <div
         className={classNames({

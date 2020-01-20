@@ -5,9 +5,6 @@
   @extend %left-panel;
   background-color: var(--panel-background);
   position: static;
-  visibility: visible !important;
-
-  // transition: all .3s ease;
 
   display: flex;
   flex-direction: row;
