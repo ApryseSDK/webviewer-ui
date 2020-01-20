@@ -99,6 +99,10 @@ export const setThumbnailReordering = (useThumbnailReordering = true) => ({
   type: 'SET_THUMBNAIL_REORDERING',
   payload: { useThumbnailReordering },
 });
+export const setThumbnailMultiselect = (useThumbnailMultiselect = true) => ({
+  type: 'SET_THUMBNAIL_SELECTING',
+  payload: { useThumbnailMultiselect },
+});
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;

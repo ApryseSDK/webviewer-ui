@@ -87,6 +87,8 @@ export const getCustomPanels = state => state.viewer.customPanels;
 
 export const getPageLabels = state => state.viewer.pageLabels;
 
+export const getSelectedThumbnailPageIndexes = state => state.viewer.selectedThumbnailPageIndexes;
+
 export const getDisabledCustomPanelTabs = state =>
   state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
     if (state.viewer.disabledElements[tab.dataElement]?.disabled) {
@@ -136,6 +138,8 @@ export const getPopupItems = (state, popupDataElement) =>
 export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMerging;
 
 export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
+
+export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
 
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
 

@@ -124,6 +124,11 @@ export default (enable, store) => features => {
         store.dispatch(actions.setThumbnailReordering(enable));
       },
     },
+    [Feature.ThumbnailMultiselect]: {
+      fn: () => {
+        store.dispatch(actions.setThumbnailMultiselect(enable));
+      },
+    },
   };
 
   if (!Array.isArray(features)) {

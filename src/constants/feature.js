@@ -37,4 +37,5 @@ export default {
   Copy: 'Copy',
   ThumbnailMerging: 'ThumbnailMerging',
   ThumbnailReordering: 'ThumbnailReordering',
+  ThumbnailMultiselect: 'ThumbnailMultiselect',
 };

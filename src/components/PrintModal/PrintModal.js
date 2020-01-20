@@ -9,7 +9,7 @@ import ActionButton from 'components/ActionButton';
 import WatermarkModal from 'components/PrintModal/WatermarkModal';
 
 import core from 'core';
-import getPagesToPrint from 'helpers/getPagesToPrint';
+import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import getClassName from 'helpers/getClassName';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
@@ -118,7 +118,7 @@ class PrintModal extends React.PureComponent {
       }
     } else if (this.customPages.current.checked) {
       const customInput = this.customInput.current.value.replace(/\s+/g, '');
-      pagesToPrint = getPagesToPrint(customInput, pageLabels);
+      pagesToPrint = getPageArrayFromString(customInput, pageLabels);
     }
 
     this.setState({ pagesToPrint });
