@@ -1,5 +1,15 @@
 @import '../../constants/styles';
 
+.measurement-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+  user-select: none;
+}
+
 .DocumentContainer {
   display: flex;
   flex-direction: column;
@@ -7,12 +17,7 @@
   flex: 1;
   width: 100%;
   overflow: auto;
-  transition: all .3s ease;
   user-select: none;
-
-  &.no-header {
-    height: 100%;
-  }
 
   .document {
     margin: auto; // vertical centering when content is smaller than document container

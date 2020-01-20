@@ -179,11 +179,10 @@ class DocumentContainer extends React.PureComponent {
   }
 
   getClassName = props => {
-    const { isHeaderOpen, isSearchOverlayOpen } = props;
+    const { isSearchOverlayOpen } = props;
 
     return classNames({
       DocumentContainer: true,
-      'no-header': !isHeaderOpen,
       'search-overlay': isSearchOverlayOpen,
     });
   }
@@ -204,16 +203,15 @@ class DocumentContainer extends React.PureComponent {
         }}
       >
         {({ measureRef }) => (
-          <div
-            className={className}
-            ref={el => {
-              this.container.current = el;
-              measureRef(el);
-            }}
-            data-element="documentContainer"
-            onScroll={this.handleScroll}
-          >
-            <div className="document" ref={this.document}></div>
+          <div className="measurement-container" ref={measureRef}>
+            <div
+              className={className}
+              ref={this.container}
+              data-element="documentContainer"
+              onScroll={this.handleScroll}
+            >
+              <div className="document" ref={this.document}></div>
+            </div>
           </div>
         )}
       </Measure>
