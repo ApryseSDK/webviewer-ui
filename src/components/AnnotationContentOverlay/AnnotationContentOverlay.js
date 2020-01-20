@@ -29,7 +29,7 @@ const AnnotationContentOverlay = () => {
       if (annotation) {
         // if hovered annot is grouped, pick the "primary" annot
         // do this as this is what Adobe does
-        const groupedAnnots = core?.getAnnotationManager()?.getGroupAnnotations(annotation);
+        const groupedAnnots = core.getAnnotationManager().getGroupAnnotations(annotation);
         const ungroupedAnnots = groupedAnnots.filter(annot => !annot.isGrouped());
         annotation = ungroupedAnnots.length > 0 ? ungroupedAnnots[0] : annotation;
       }
