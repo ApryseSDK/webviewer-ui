@@ -51,7 +51,7 @@ import getCurrentPageNumber from './getCurrentPageNumber';
 import getFitMode from './getFitMode';
 import getLayoutMode from './getLayoutMode';
 import getPageCount from './getPageCount';
-import getSelectedPageNumbers from './getSelectedPageNumbers';
+import getSelectedThumbnailPageNumbers from './getSelectedThumbnailPageNumbers';
 import getSelectors from './getSelectors';
 import getShowSideWindow from './getShowSideWindow';
 import getSideWindowVisibility from './getSideWindowVisibility';
@@ -200,6 +200,7 @@ export default store => {
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
+    getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),
@@ -230,7 +231,6 @@ export default store => {
     getAnnotationUser,
     getCurrentPageNumber: getCurrentPageNumber(store),
     getPageCount: getPageCount(store),
-    getSelectedPageNumbers: getSelectedPageNumbers(store),
     getShowSideWindow: getShowSideWindow(store),
     getSideWindowVisibility: getSideWindowVisibility(store),
     setNotesPanelSort: setNotesPanelSort(store),
