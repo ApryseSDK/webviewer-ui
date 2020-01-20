@@ -23,6 +23,18 @@
     }
   }
 
+  &.disable {
+    color: $gray20;
+
+    .Icon {
+      color: $gray20;
+    }
+
+    &.down-arrow:after {
+      border-top: 6px solid $gray20;
+    }
+  }
+
   &:hover:not(.disable) {
     cursor: pointer;
     background: #F6F6F6;
