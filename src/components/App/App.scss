@@ -55,12 +55,11 @@ html, body , #app {
   margin: 0;
   padding: 0;
   background: $gray4;
-  // background: var(--secondary-color);
   background-color: var(--document-background-color);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
 
-  .container123 {
+  >.content {
     display: flex;
     flex-direction: row;
     flex: 1;

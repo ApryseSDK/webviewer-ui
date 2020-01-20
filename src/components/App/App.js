@@ -77,7 +77,7 @@ const App = ({ removeEventHandlers }) => {
 
         {/* <SearchPanel /> */}
 
-        <div className="container123">
+        <div className="content">
           {isLeftPanelOpen && !isLeftPanelDisabled && <LeftPanel />}
           <DocumentContainer />
           {isNotesOpen && !isNotesDisabled && <NotesPanel />}
