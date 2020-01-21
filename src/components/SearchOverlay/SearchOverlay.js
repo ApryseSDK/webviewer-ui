@@ -230,12 +230,6 @@ class SearchOverlay extends React.PureComponent {
     });
   }
 
-  onTransitionEnd = () => {
-    if (this.props.isOpen) {
-      this.searchTextInput.current.focus();
-    }
-  }
-
   onChange = e => {
     const { isSearchPanelOpen, setSearchValue } = this.props;
     const searchValue = e.target.value;
@@ -327,45 +321,41 @@ class SearchOverlay extends React.PureComponent {
       return null;
     }
 
-    const className = getClassName(`Overlay SearchOverlay ${isSearchPanelOpen ? 'transformed' : ''}`, this.props);
-
     return (
-      <div className={className} data-element="searchOverlay" onTransitionEnd={this.onTransitionEnd}>
-        <div
-          className="SearchContainer"
-        >
-          <div className="wrapper">
-            <div className="main">
-              <div className="input-wrapper">
-                <input ref={this.searchTextInput} type="text" autoComplete="off" onChange={this.onChange} onKeyDown={this.onKeyDown} value={searchValue} />
-              </div>
-              <div className="number-of-results">
-                {isSearchPanelOpen &&
-                  <div>{`${activeResultIndex + 1} / ${results.length}`}</div>
-                }
-              </div>
-              <div className="button previous" onClick={this.onClickPrevious}>
-                <Icon glyph="ic_chevron_left_black_24px" />
-              </div>
-              <div className="button next" onClick={this.onClickNext}>
-                <Icon glyph="ic_chevron_right_black_24px" />
-              </div>
-              <Tooltip content="action.showMoreResults">
-                <div className={`advanced ${isSearchPanelOpen || isSearchPanelDisabled ? 'hidden' : ''}`} onClick={this.onClickOverflow}>
-                  <Icon glyph="ic_overflow_black_24px" />
-                </div>
-              </Tooltip>
+      <div
+        className="SearchOverlay"
+      >
+        <div className="wrapper">
+          <div className="main">
+            <div className="input-wrapper">
+              <input ref={this.searchTextInput} type="text" autoComplete="off" onChange={this.onChange} onKeyDown={this.onKeyDown} value={searchValue} />
             </div>
-            <div className={`options ${isSearchPanelOpen ? 'visible' : ''}`}>
-              <Input id="case-sensitive-option" type="checkbox" ref={this.caseSensitiveInput} onChange={this.onChangeCaseSensitive} label={t('option.searchPanel.caseSensitive')} />
-              <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
+            <div className="number-of-results">
+              {isSearchPanelOpen &&
+                <div>{`${activeResultIndex + 1} / ${results.length}`}</div>
+              }
             </div>
-            {!isSearchPanelOpen &&
-            this.state.noResultSingleSearch &&
-            searchValue !== '' && (
-              <div className="no-result">{t('message.noResults')}</div>
-            )}
+            <div className="button previous" onClick={this.onClickPrevious}>
+              <Icon glyph="ic_chevron_left_black_24px" />
+            </div>
+            <div className="button next" onClick={this.onClickNext}>
+              <Icon glyph="ic_chevron_right_black_24px" />
+            </div>
+            <Tooltip content="action.showMoreResults">
+              <div className={`advanced ${isSearchPanelOpen || isSearchPanelDisabled ? 'hidden' : ''}`} onClick={this.onClickOverflow}>
+                <Icon glyph="ic_overflow_black_24px" />
+              </div>
+            </Tooltip>
           </div>
+          <div className={`options ${isSearchPanelOpen ? 'visible' : ''}`}>
+            <Input id="case-sensitive-option" type="checkbox" ref={this.caseSensitiveInput} onChange={this.onChangeCaseSensitive} label={t('option.searchPanel.caseSensitive')} />
+            <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
+          </div>
+          {!isSearchPanelOpen &&
+          this.state.noResultSingleSearch &&
+          searchValue !== '' && (
+            <div className="no-result">{t('message.noResults')}</div>
+          )}
         </div>
       </div>
     );
