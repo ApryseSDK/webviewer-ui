@@ -259,29 +259,27 @@ const NotesPanel = () => {
           <div className="no-annotations">{t('message.noAnnotations')}</div>
         ) : (
           <React.Fragment>
-            <div className="container">
-              <div className="header">
-                <div className="input-container">
-                  <input
-                    type="text"
-                    placeholder={t('message.searchPlaceholder')}
-                    onChange={handleInputChange}
+            <div className="header">
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder={t('message.searchPlaceholder')}
+                  onChange={handleInputChange}
+                />
+                <div
+                  className="input-button"
+                  onClick={() => {}}
+                >
+                  <Icon
+                    glyph="ic_search_black_24px"
                   />
-                  <div
-                    className="input-button"
-                    onClick={() => {}}
-                  >
-                    <Icon
-                      glyph="ic_search_black_24px"
-                    />
-                  </div>
                 </div>
-                <div className="divider" />
-                <div className="sort-row">
-                  <div className="sort-container">
-                    <div className="header">{`Sort by:`}</div>
-                    <Dropdown items={Object.keys(getSortStrategies())} />
-                  </div>
+              </div>
+              <div className="divider" />
+              <div className="sort-row">
+                <div className="sort-container">
+                  <div className="label">{`Sort by:`}</div>
+                  <Dropdown items={Object.keys(getSortStrategies())} />
                 </div>
               </div>
             </div>

@@ -17,74 +17,73 @@
     @extend %center-of-panel;
   }
 
-  >.container {
+  >.header {
     padding-right: 18px;
 
-    .header {
-      .sort-row {
+    .sort-row {
+      display: flex;
+      justify-content: flex-end;
+
+      .sort-container {
+        font-size: 13px;
         display: flex;
+        flex-direction: row;
+        align-items: center;
         justify-content: flex-end;
 
-        .sort-container {
-          font-size: 13px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: flex-end;
-
-          .header {
-            margin-right: 8px;
-          }
+        .label {
+          margin-right: 8px;
         }
-      }
-
-      .input-container {
-        display: flex;
-        position: relative;
-        flex: 1;
-
-        input {
-          font-size: 13px;
-          width: 100%;
-          padding-left: 8px;
-          border: 1px solid #dfe2ed;
-          border-top-left-radius: 4px;
-          border-bottom-left-radius: 4px;
-          color: var(--text-color);
-          padding-bottom: 4px;
-          padding-right: 42px;
-
-          &::placeholder {
-            color: #c3c6d4;
-          }
-        }
-
-        .input-button {
-          cursor: pointer;
-          background: #6077bf;
-          border-radius: 4px;
-          height: 24px;
-          width: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: absolute;
-          bottom: 0px;
-          right: 0px;
-
-          svg {
-            color: #fafafa;
-          }
-        }
-      }
-
-      .divider{
-        height: 1px;
-        width: 100%;
-        background: #dfe2ed;
-        margin: 16px 0px;
       }
     }
+
+    .input-container {
+      display: flex;
+      position: relative;
+      flex: 1;
+
+      input {
+        font-size: 13px;
+        width: 100%;
+        padding-left: 8px;
+        border: 1px solid #dfe2ed;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        color: var(--text-color);
+        padding-bottom: 4px;
+        padding-right: 42px;
+
+        &::placeholder {
+          color: #c3c6d4;
+        }
+      }
+
+      .input-button {
+        cursor: pointer;
+        background: #6077bf;
+        border-radius: 4px;
+        height: 100%;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+
+        svg {
+          color: #fafafa;
+        }
+      }
+    }
+
+    .divider{
+      height: 1px;
+      width: 100%;
+      background: #dfe2ed;
+      margin: 16px 0px;
+    }
+
   }
 
 

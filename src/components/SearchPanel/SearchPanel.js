@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import SearchResult from 'components/SearchResult';
 import ListSeparator from 'components/ListSeparator';
-import Button from 'components/Button';
+import Icon from 'components/Icon';
 import ResizeBar from 'components/ResizeBar';
 
 import core from 'core';
@@ -99,12 +99,22 @@ class SearchPanel extends React.PureComponent {
           className={className}
           data-element="searchPanel"
         >
-          <Button
-            className="close-btn hide-in-desktop hide-in-tablet"
-            dataElement="searchPanelCloseButton"
-            img="ic_close_black_24px"
-            onClick={this.onClickClose}
-          />
+          <div className="header">
+            <div className="input-container">
+              <input
+                type="text"
+                onChange={() => {}}
+              />
+              <div
+                className="input-button"
+                onClick={() => {}}
+              >
+                <Icon
+                  glyph="ic_search_black_24px"
+                />
+              </div>
+            </div>
+          </div>
           <div className="results">
             {isSearching && <div className="info">{t('message.searching')}</div>}
             {noResult && <div className="info">{t('message.noResults')}</div>}
