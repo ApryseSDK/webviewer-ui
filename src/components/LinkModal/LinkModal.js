@@ -98,8 +98,7 @@ const LinkModal = () => {
     let linkAnnotIdArray = linkAnnotArray.map(link => link.Id);
     highlight.associateLink(linkAnnotIdArray);
 
-    await core.addAnnotations([highlight]);
-    await core.drawAnnotationsFromList([highlight]);
+    core.addAnnotations([highlight]);
   };
 
   const addURLLink = () => {
@@ -108,8 +107,8 @@ const LinkModal = () => {
     const action = new window.Actions.URI({ uri: url });
     links.forEach(async link => {
       link.addAction('U', action);
-      await core.addAnnotations([link]);
-      await core.drawAnnotationsFromList([link]);
+      core.addAnnotations([link]);
+      core.drawAnnotations(link.PageNumber, null, true);
     });
 
     closeModal();
@@ -124,8 +123,8 @@ const LinkModal = () => {
 
     links.forEach(async link => {
       link.addAction('U', action);
-      await core.addAnnotations([link]);
-      await core.drawAnnotationsFromList([link]);
+      core.addAnnotations([link]);
+      core.drawAnnotations(link.PageNumber, null, true);
     });
 
     closeModal();
