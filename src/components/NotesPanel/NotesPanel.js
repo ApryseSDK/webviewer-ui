@@ -286,7 +286,6 @@ const NotesPanel = () => {
               </div>
             </div>
             {notesToRender.length === 0 ? (
-            // <div className="no-results">{t('message.noResults')}</div>
               <div className="no-results">
                 <div>
                   <Icon
