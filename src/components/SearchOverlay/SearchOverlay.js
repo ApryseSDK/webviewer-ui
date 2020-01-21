@@ -452,23 +452,24 @@ class SearchOverlay extends React.PureComponent {
             label={t('option.searchPanel.wholeWordOnly')}
           />
         </div>
-
-        <div className="button previous" onClick={this.onClickPrevious}>
-          <Icon glyph="ic_chevron_left_black_24px" />
-        </div>
-        <div className="button next" onClick={this.onClickNext}>
-          <Icon glyph="ic_chevron_right_black_24px" />
-        </div>
-        <Tooltip content="action.showMoreResults">
-          <div
-            className={`advanced ${
-              isSearchPanelOpen || isSearchPanelDisabled ? 'hidden' : ''
-            }`}
-            onClick={this.onClickOverflow}
-          >
-            <Icon glyph="ic_overflow_black_24px" />
+        <div className="divider" />
+        <div className="footer">
+          asdfsdaf
+          <div className="buttons">
+            <div className="previous button" onClick={this.onClickPrevious}>
+              <Icon
+                className="arrow"
+                glyph="icon-chevron-left"
+              />
+            </div>
+            <div className="next button" onClick={this.onClickNext}>
+              <Icon
+                className="arrow"
+                glyph="icon-chevron-right"
+              />
+            </div>
           </div>
-        </Tooltip>
+        </div>
       </div>
     );
   }

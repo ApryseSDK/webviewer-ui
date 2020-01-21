@@ -13,8 +13,7 @@
   background: transparent;
   font-size: 14px;
   visibility: visible !important;
-
-
+  padding-right: 18px;
 
   .input-container {
     display: flex;
@@ -57,129 +56,98 @@
     }
   }
 
+  .divider{
+    height: 1px;
+    width: 100%;
+    background: #dfe2ed;
+    margin: 16px 0px;
+  }
+
   .options {
     display: flex;
     flex-direction: row;
     margin-left: 18px;
+    margin-top: 5px;
 
     label.Input {
       display: flex;
       align-items: center;
+      font-size: 14px;
 
       &:before {
+        // width: 16px;
+        // height: 16px;
         border: 1px solid #c3c6d4;
+        border-radius: 2px;
+        background: none;
       }
+    }
+
+    label:nth-child(4) {
+      margin-left: 20px;
     }
   }
 
-  .wrapper {
+  .footer {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+    justify-content: space-between;
 
-    .main {
+    .buttons {
       display: flex;
-      width: 100%;
+      flex-direction: row;
 
-      .input-wrapper {
-        flex: 1;
+      .button {
+        width: 28px;
+        height: 28px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 8px;
+        cursor: pointer;
 
-        input[type='text'] {
-          width: 100%;
-          // height: 30px;
-          height: 28px;
-          padding: 0 5px;
-          border: 1px solid $gray12;
-          border-top-left-radius: 5px;
-          border-bottom-left-radius: 5px;
-          border-top-right-radius: 0px;
-          border-bottom-right-radius: 0px;
-          border-right: none;
-          box-sizing: border-box;
-          font-size: 1em;
+        &.previous {
+          background: #6077bf;
+          svg {
+            color: #dfe2ed;
+          }
+        }
 
-          &:focus {
-            outline: none;
+        &.next {
+          border: 1px solid #6077bf;
+          svg {
+            color: #6077bf;
           }
         }
       }
 
-      .number-of-results {
-        display: flex;
-        align-items: center;
-        // height: 30px;
-        font-size: 12px;
-        color: $gray20;
-        border: 1px solid $gray12;
-        border-left: none;
-        background: white;
-
-        div {
-          padding-right: 5px;
-        }
-      }
-
-      .button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 30px;
+      .previous-button {
+        width: 28px;
         height: 28px;
-        border: 1px solid $gray12;
-        border: 1px solid var(--border-color);
-        border-left: 0;
-        background: $gray4;
-        background: var(--secondary-color);
-        cursor: pointer;
-
-        &.next {
-          border-top-right-radius: 5px;
-          border-bottom-right-radius: 5px;
-        }
-      }
-
-      .advanced {
+        border-radius: 4px;
+        background: #6077bf;
         display: flex;
-        justify-content: flex-end;
         align-items: center;
-        width: 32px;
-        transition: all .2s ease;
+        justify-content: center;
+      }
 
-        &.hidden {
-          width: 0;
-          opacity: 0;
-          z-index: -1;
-        }
+      .next-button {
+        width: 28px;
+        height: 28px;
+        border-radius: 4px;
+        border: 1px solid #6077bf;
+        align-items: center;
+        justify-content: center;
+      }
 
-        &:hover {
-          cursor: pointer;
-        }
 
-        .Icon {
-          transform: rotate(90deg);
-          transition: opacity .2s ease;
-        }
+
+      .arrow {
+        width: 20px;
+        height: 20px;
       }
     }
 
-    .options {
-      display: none;
-      width: 100%;
-      user-select: none;
-
-      &.visible {
-        display: flex;
-        padding: 5px 0 0 20px;
-      }
-    }
-
-    .no-result {
-      font-size: .8em;
-      color: var(--text-color);
-      padding-top: 10px;
-      margin-left: 0;
-      margin-right: auto;
-    }
   }
+
 }

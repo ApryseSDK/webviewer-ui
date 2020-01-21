@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import SearchResult from 'components/SearchResult';
 import ListSeparator from 'components/ListSeparator';
-import Icon from 'components/Icon';
 import ResizeBar from 'components/ResizeBar';
 import SearchOverlay from 'components/SearchOverlay';
 
@@ -101,22 +100,6 @@ class SearchPanel extends React.PureComponent {
           data-element="searchPanel"
         >
           <SearchOverlay />
-          {/* <div className="header">
-            <div className="input-container">
-              <input
-                type="text"
-                onChange={() => {}}
-              />
-              <div
-                className="input-button"
-                onClick={() => {}}
-              >
-                <Icon
-                  glyph="ic_search_black_24px"
-                />
-              </div>
-            </div>
-          </div> */}
           <div className="results">
             {isSearching && <div className="info">{t('message.searching')}</div>}
             {noResult && <div className="info">{t('message.noResults')}</div>}
