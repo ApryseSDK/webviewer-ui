@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import './StyleOption.scss';
 
 function StyleOption(props) {
-  const [style, setStyle] = useState(props.initialStyle);
+  const initialStyle = props.initialStyle ? props.initialStyle : 'regular';
+  const [style, setStyle] = useState(initialStyle);
   const styleOptions = ['regular', 'cloudy'];
 
   const onChange = value => {
@@ -37,7 +38,7 @@ function StyleOption(props) {
 
 StyleOption.propTypes = {
   onStyleChange: PropTypes.func.isRequired,
-  initialStyle: PropTypes.string.isRequired,
+  initialStyle: PropTypes.string,
 };
 
 export default StyleOption;
