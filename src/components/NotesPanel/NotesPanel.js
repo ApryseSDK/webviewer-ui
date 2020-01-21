@@ -238,6 +238,7 @@ const NotesPanel = () => {
   return (
     <div
       className="notes-panel-container"
+      style={{ width: `${width}px` }}
     >
       <ResizeBar
         minWidth={215}
@@ -253,7 +254,6 @@ const NotesPanel = () => {
         })}
         data-element="notesPanel"
         onMouseDown={core.deselectAllAnnotations}
-        style={{ width: `${width}px` }}
       >
         {notes.length === 0 ? (
           <div className="no-annotations">{t('message.noAnnotations')}</div>

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import SearchResult from 'components/SearchResult';
 import ListSeparator from 'components/ListSeparator';
 import Button from 'components/Button';
+import ResizeBar from 'components/ResizeBar';
 
 import core from 'core';
 import { isMobile, isTabletOrMobile } from 'helpers/device';
@@ -26,6 +27,10 @@ class SearchPanel extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   };
+
+  state = {
+    width: 293,
+  }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
@@ -79,30 +84,45 @@ class SearchPanel extends React.PureComponent {
     const className = getClassName('Panel SearchPanel', this.props);
 
     return (
-      <div className={className} data-element="searchPanel">
-        <Button
-          className="close-btn hide-in-desktop hide-in-tablet"
-          dataElement="searchPanelCloseButton"
-          img="ic_close_black_24px"
-          onClick={this.onClickClose}
+      <div
+        className="search-panel-container"
+        style={{ width: `${this.state.width}px` }}
+      >
+        <ResizeBar
+          minWidth={215}
+          onResize={_width => {
+            this.setState({ width: _width });
+          }}
+          leftDirection
         />
-        <div className="results">
-          {isSearching && <div className="info">{t('message.searching')}</div>}
-          {noResult && <div className="info">{t('message.noResults')}</div>}
-          {results.map((result, i) => {
-            const prevResult = i === 0 ? results[0] : results[i - 1];
+        <div
+          className={className}
+          data-element="searchPanel"
+        >
+          <Button
+            className="close-btn hide-in-desktop hide-in-tablet"
+            dataElement="searchPanelCloseButton"
+            img="ic_close_black_24px"
+            onClick={this.onClickClose}
+          />
+          <div className="results">
+            {isSearching && <div className="info">{t('message.searching')}</div>}
+            {noResult && <div className="info">{t('message.noResults')}</div>}
+            {results.map((result, i) => {
+              const prevResult = i === 0 ? results[0] : results[i - 1];
 
-            return (
-              <React.Fragment key={i}>
-                {this.renderListSeparator(prevResult, result)}
-                <SearchResult
-                  result={result}
-                  index={i}
-                  onClickResult={this.onClickResult}
-                />
-              </React.Fragment>
-            );
-          })}
+              return (
+                <React.Fragment key={i}>
+                  {this.renderListSeparator(prevResult, result)}
+                  <SearchResult
+                    result={result}
+                    index={i}
+                    onClickResult={this.onClickResult}
+                  />
+                </React.Fragment>
+              );
+            })}
+          </div>
         </div>
       </div>
     );

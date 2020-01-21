@@ -1,12 +1,18 @@
 @import '../../constants/styles';
 @import '../../constants/panel';
 
+.search-panel-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .SearchPanel {
   @extend %right-panel;
   position: static;
   visibility: visible !important;
   overflow: hidden !important;
   padding-right: 8px;
+  flex: 1;
 
   .results {
     flex: 1;

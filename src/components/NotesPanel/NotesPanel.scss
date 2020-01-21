@@ -9,9 +9,9 @@
   @extend %right-panel;
   position: static;
   visibility: visible !important;
-
   overflow: hidden !important;
   padding-right: 8px;
+  flex: 1;
 
   .no-annotations {
     @extend %center-of-panel;
