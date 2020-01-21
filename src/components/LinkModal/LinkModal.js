@@ -37,9 +37,9 @@ const LinkModal = () => {
     core.setToolMode(defaultTool);
   };
 
-  const newLink = (x, y, width, height) => {
+  const newLink = (x, y, width, height, linkPageNumber = currentPage) => {
     const link = new Annotations.Link();
-    link.PageNumber = currentPage;
+    link.PageNumber = linkPageNumber;
     link.StrokeColor = new Annotations.Color(0, 165, 228);
     link.StrokeStyle = 'underline';
     link.StrokeThickness = 2;
@@ -58,15 +58,18 @@ const LinkModal = () => {
     const quads = core.getSelectedTextQuads();
     const selectedAnnotations = core.getSelectedAnnotations();
 
-    const currPageQuads = quads[currentPage - 1];
-
-    if (currPageQuads) {
+    if (quads) {
       const selectedText = core.getSelectedText();
-      currPageQuads.forEach(quad => {
-        linksResults.push(newLink(Math.min(quad.x1, quad.x3), Math.min(quad.y1, quad.y3),
-        Math.abs(quad.x1 - quad.x3), Math.abs(quad.y1 - quad.y3)));
-      });
-      createHighlightAnnot(linksResults, currPageQuads, selectedText);
+      debugger;
+      for (let currPageNumber in quads) {
+        let currPageLinks = [];
+        quads[currPageNumber].forEach(quad => {
+          currPageLinks.push(newLink(Math.min(quad.x1, quad.x3), Math.min(quad.y1, quad.y3),
+          Math.abs(quad.x1 - quad.x3), Math.abs(quad.y1 - quad.y3), parseInt(currPageNumber) + 1));
+        });
+        createHighlightAnnot(currPageLinks, quads[currPageNumber], selectedText);
+        linksResults.push(...currPageLinks);
+      };
     }
 
     if (selectedAnnotations && selectedAnnotations.length === 1) {
