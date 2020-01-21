@@ -131,10 +131,20 @@ const NoteContent = ({ annotation }) => {
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
   const contents = annotation.getContents();
+  const numberOfReplies = annotation.getReplies().length;
+  const formatNumberOfReplies = Math.min(numberOfReplies, 9);
 
   const header = useMemo(() => (
     <React.Fragment>
-      {!isReply && <Icon className="type-icon" glyph={icon} color={color} />}
+      {!isReply &&
+        <div className="type-icon-container">
+          {numberOfReplies > 0 &&
+            <div className="num-replies-container">
+              <div className="num-replies">{formatNumberOfReplies}</div>
+            </div>}
+          <Icon className="type-icon" glyph={icon} color={color} />
+        </div>
+      }
       <div className="author-and-date">
         <div className="author-and-overflow">
           {renderAuthorName(annotation)}
@@ -160,7 +170,7 @@ const NoteContent = ({ annotation }) => {
         )}
       </div>
     </React.Fragment>
-  ), [annotation, color, contents, icon, isEditing, isReply, noteDateFormat, renderAuthorName, renderContents, textAreaValue]);
+  ), [annotation, color, contents, formatNumberOfReplies, icon, isEditing, isReply, noteDateFormat, numberOfReplies, renderAuthorName, renderContents, textAreaValue]);
 
   const annotationState = annotation.getStatus();
 

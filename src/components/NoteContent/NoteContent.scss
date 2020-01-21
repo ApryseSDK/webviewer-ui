@@ -4,7 +4,7 @@
 .NoteContent {
   padding-top: 9px;
   padding-right: 12px;
-  padding-left: 40px;
+  padding-left: 42px;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -21,17 +21,40 @@
   .author-and-date {
     flex: 1;
     min-width: 0;
+
   }
 
-  .type-icon {
+  .num-replies-container {
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    background: var(--secondary-color);
+    padding: 2px;
+    border-radius: 10000px;
+    .num-replies {
+      border-radius: 10000px;
+      width: 13px;
+      height: 13px;
+      background: #8b92ab;
+      color: white;
+      font-size: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+
+
+  .type-icon-container {
     position: absolute;
     left: 6px;
     top: 9px;
+  }
+
+  .type-icon {
     width: 31px;
     height: 31px;
-    // margin-bottom: auto;
-    width: 31px;
-    margin-right: 3px;
   }
 
   .author {
