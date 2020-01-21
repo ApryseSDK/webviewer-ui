@@ -150,12 +150,14 @@ class Thumbnail extends React.PureComponent {
           className="container"
           style={{
             width: THUMBNAIL_SIZE,
-            height: THUMBNAIL_SIZE,        
+            height: THUMBNAIL_SIZE,
           }}
-          ref={this.thumbContainer}
+
           onDragStart={this.onDragStart}
           draggable={isDraggable}
-          />
+        >
+          <div ref={this.thumbContainer} className="thumbnail" />
+        </div>
         <div className="page-label">{pageLabel}</div>
         {isActive && <ThumbnailControls index={index} />}
       </div>
