@@ -44,7 +44,7 @@ const loadConfig = () =>
                 }
 
                 if (!data.split('\n').includes(e.origin)) {
-                  console.warn(`Config file requested to be loaded by origin ${e.origin}. Please include this origin inside lib/ui/configorigin.txt to allow it to request config files.`)
+                  console.warn(`Config file requested to be loaded by origin ${e.origin}. Please include this origin inside lib/ui/configorigin.txt to allow it to request config files.`);
                   return;
                 }
               }
