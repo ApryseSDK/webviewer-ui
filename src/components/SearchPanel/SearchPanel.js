@@ -7,6 +7,7 @@ import SearchResult from 'components/SearchResult';
 import ListSeparator from 'components/ListSeparator';
 import Icon from 'components/Icon';
 import ResizeBar from 'components/ResizeBar';
+import SearchOverlay from 'components/SearchOverlay';
 
 import core from 'core';
 import { isMobile, isTabletOrMobile } from 'helpers/device';
@@ -99,6 +100,7 @@ class SearchPanel extends React.PureComponent {
           className={className}
           data-element="searchPanel"
         >
+          <SearchOverlay />
           <div className="header">
             <div className="input-container">
               <input

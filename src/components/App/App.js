@@ -82,7 +82,6 @@ const App = ({ removeEventHandlers }) => {
           {isSearchPanelOpen && !isSearchPanelDisabled && <SearchPanel />}
           {isNotesOpen && !isNotesDisabled && <NotesPanel />}
         </div>
-        <SearchOverlay />
         <ViewControlsOverlay />
         <RedactionOverlay />
         <MenuOverlay />
