@@ -60,7 +60,6 @@ const LinkModal = () => {
 
     if (quads) {
       const selectedText = core.getSelectedText();
-      debugger;
       for (let currPageNumber in quads) {
         let currPageLinks = [];
         quads[currPageNumber].forEach(quad => {
@@ -108,9 +107,14 @@ const LinkModal = () => {
     links.forEach(async link => {
       link.addAction('U', action);
       core.addAnnotations([link]);
-      core.drawAnnotations(link.PageNumber, null, true);
     });
 
+    let pageNumbersToDraw = links.map(link => link.PageNumber);
+    pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
+    pageNumbersToDraw.forEach(pageNumberToDraw => {
+      core.drawAnnotations(pageNumberToDraw, null, true);
+    });
+    
     closeModal();
   };
 
@@ -124,7 +128,12 @@ const LinkModal = () => {
     links.forEach(async link => {
       link.addAction('U', action);
       core.addAnnotations([link]);
-      core.drawAnnotations(link.PageNumber, null, true);
+    });
+
+    let pageNumbersToDraw = links.map(link => link.PageNumber);
+    pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
+    pageNumbersToDraw.forEach(pageNumberToDraw => {
+      core.drawAnnotations(pageNumberToDraw, null, true);
     });
 
     closeModal();
