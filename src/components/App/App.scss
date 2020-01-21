@@ -33,6 +33,20 @@
   --font-size-small: 13px;
 }
 
+*::-webkit-scrollbar {
+  width: 2px;
+}
+
+*::-webkit-scrollbar-track {
+  width: 10px;
+  background: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #dfe2ed;
+  // outline: 1px solid slategrey;
+}
+
 html, body , #app {
   width: 100%;
   min-width: 300px;

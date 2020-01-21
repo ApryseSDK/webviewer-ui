@@ -11,13 +11,14 @@
   visibility: visible !important;
 
   overflow: hidden !important;
+  padding-right: 8px;
 
   .no-annotations {
     @extend %center-of-panel;
   }
 
   >.container {
-    padding-right: 28px;
+    padding-right: 18px;
 
     .header {
       .dropdown-container{
@@ -89,7 +90,7 @@
   .virtualized-notes-container,
   .normal-notes-container {
     flex: 1;
-    padding-right: 28px;
+    padding-right: 18px;
   }
 
   .normal-notes-container {
