@@ -307,6 +307,7 @@ class PrintModal extends React.PureComponent {
           annotation.Listable &&
           annotation.PageNumber === pageNumber &&
           !annotation.isReply() &&
+          !annotation.isGrouped() &&
           annotation.Printable,
       );
 
