@@ -46,13 +46,16 @@ const propTypes = {
 };
 
 const App = ({ removeEventHandlers }) => {
-  const [isToolsOverlayOpen, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled] = useSelector(
+  const [isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled] = useSelector(
     state => [
       selectors.isElementOpen(state, 'toolsOverlay'),
+      selectors.isElementDisabled(state, 'toolsOverlay'),
       selectors.isElementOpen(state, 'notesPanel'),
       selectors.isElementDisabled(state, 'notesPanel'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementDisabled(state, 'leftPanel'),
+      selectors.isElementOpen(state, 'searchPanel'),
+      selectors.isElementDisabled(state, 'searchPanel'),
     ],
   );
 
@@ -73,13 +76,10 @@ const App = ({ removeEventHandlers }) => {
 
         <Header />
         <ToolsHeader />
-
-
-        {/* <SearchPanel /> */}
-
         <div className="content">
           {isLeftPanelOpen && !isLeftPanelDisabled && <LeftPanel />}
           <DocumentContainer />
+          {isSearchPanelOpen && !isSearchPanelDisabled && <SearchPanel />}
           {isNotesOpen && !isNotesDisabled && <NotesPanel />}
         </div>
         <SearchOverlay />
@@ -90,7 +90,7 @@ const App = ({ removeEventHandlers }) => {
         <ZoomOverlay />
         <MeasurementOverlay />
         <AnnotationContentOverlay />
-        {isToolsOverlayOpen && <ToolsOverlay />}
+        {isToolsOverlayOpen && !isToolsOverlayDisabled && <ToolsOverlay />}
 
         <AnnotationPopup />
         <TextPopup />

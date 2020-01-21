@@ -6,8 +6,6 @@ import SignatureToolButton from 'components/SignatureToolButton';
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
-import { zoomIn, zoomOut } from 'helpers/zoom';
-import defaultTool from 'constants/defaultTool';
 import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
 import PageNavOverlay from '../components/PageNavOverlay/PageNavOverlay';
@@ -40,7 +38,8 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },
         { type: 'spacer' },
         { type: 'toggleElementButton', dataElement: 'toggleToolsButton', element: 'toolsHeader', img: 'icon-header-annotations-line', title: 'component.toolsHeader' },
-        { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchOverlay', img: 'ic_search_black_24px', title: 'component.searchOverlay' },
+        // { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchOverlay', img: 'ic_search_black_24px', title: 'component.searchOverlay' },
+        { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'ic_search_black_24px', title: 'component.searchPanel' },
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
         {
@@ -77,7 +76,7 @@ export default {
           dataElement: 'undoButton',
           titile: 'action.close',
           img: 'icon-operation-undo',
-          onClick: dispatch => {
+          onClick: () => {
             core.undo();
           },
         },
@@ -86,13 +85,10 @@ export default {
           dataElement: 'redoButton',
           titile: 'action.close',
           img: 'icon-operation-redo',
-          onClick: dispatch => {
+          onClick: () => {
             core.redo();
           },
         },
-
-        // { type: 'toolButton', toolName: 'UndoTool' },
-        // { type: 'toolButton', toolName: 'RedoTool' },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer' },
         {
@@ -102,9 +98,6 @@ export default {
           img: 'ic_close_black_24px',
           style: { position: 'absolute', right: 0 },
           onClick: dispatch => {
-            // dispatch(actions.setActiveHeaderGroup('default'));
-            // core.setToolMode(defaultTool);
-            // dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'redactionOverlay']));
             dispatch(actions.closeElements(['toolsHeader']));
           },
         },

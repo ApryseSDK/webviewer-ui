@@ -21,17 +21,18 @@
     padding-right: 18px;
 
     .header {
-      .dropdown-container{
+      .sort-row {
         display: flex;
         justify-content: flex-end;
 
-        .kewjrlkwejrlkw {
+        .sort-container {
           font-size: 13px;
           display: flex;
           flex-direction: row;
           align-items: center;
+          justify-content: flex-end;
 
-          .header123 {
+          .header {
             margin-right: 8px;
           }
         }

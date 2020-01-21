@@ -3,6 +3,10 @@
 
 .SearchPanel {
   @extend %right-panel;
+  position: static;
+  visibility: visible !important;
+  overflow: hidden !important;
+  padding-right: 8px;
 
   .results {
     flex: 1;
@@ -20,12 +24,5 @@
   .info {
     padding: 15px 0;
     font-size: 0.8em;
-  }
-
-  .close-btn {
-    @include mobile {
-      display: flex;
-      align-self: flex-end;
-    }
   }
 }
