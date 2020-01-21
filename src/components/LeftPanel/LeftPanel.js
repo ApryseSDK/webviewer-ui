@@ -58,7 +58,7 @@ const LeftPanel = () => {
         ))}
       </div>
       <ResizeBar
-        minWidth={293}
+        minWidth={215}
         onResize={_width => {
           setWidth(_width);
         }}

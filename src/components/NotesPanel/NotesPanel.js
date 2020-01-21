@@ -240,7 +240,7 @@ const NotesPanel = () => {
       className="notes-panel-container"
     >
       <ResizeBar
-        minWidth={293}
+        minWidth={215}
         onResize={_width => {
           setWidth(_width);
         }}
