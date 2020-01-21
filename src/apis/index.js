@@ -44,6 +44,7 @@ import enableTools from './enableTools';
 import enableTouchScrollLock from './enableTouchScrollLock';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
+import getBBAnnotManager from './getBBAnnotManager';
 import getCurrentPageNumber from './getCurrentPageNumber';
 import getFitMode from './getFitMode';
 import getLayoutMode from './getLayoutMode';
@@ -256,6 +257,7 @@ export default store => {
     setColorPalette: setColorPalette(store),
     showWarningMessage: showWarningMessage(store),
     updateOutlines: updateOutlines(store),
+    getBBAnnotManager,
     selectors: getSelectors(store),
   };
 };
