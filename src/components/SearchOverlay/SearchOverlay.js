@@ -410,18 +410,13 @@ class SearchOverlay extends React.PureComponent {
     const {
       isDisabled,
       t,
-      isSearchPanelOpen,
-      isSearchPanelDisabled,
       results,
       searchValue,
-      activeResultIndex,
     } = this.props;
 
     if (isDisabled) {
       return null;
     }
-
-    console.log('results', results);
 
     return (
       <div className="SearchOverlay">
