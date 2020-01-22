@@ -1,0 +1,61 @@
+@import '../../constants/styles';
+
+.documentControlToggle {
+  padding: 5px 7px 0px;
+  height: 20px;
+
+  left: 50%;
+  width: 10px;
+  padding: 5px 15px 0px;
+  border-top-right-radius: 7px;
+  border-top-left-radius: 7px;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  transform: translateY(-100%)translateX(-50%);
+  position: absolute;
+}
+
+.documentControlToggle:hover {
+  background: #515151;
+  background: var(--icon-color);
+
+  .Icon {
+    color: #f4f4f4;
+    color: var(--border-color);;
+  }
+}
+
+.documentControls {
+  background-color: #f4f4f4;
+  background-color: var(--border-color);
+  $page-input-border: 2px;
+  $page-input-padding: 8px;
+
+  .pagesInput {
+    border-width: $page-input-border;
+    width: calc(100% - #{($page-input-border + $page-input-padding) * 2});
+    padding: 2px $page-input-padding;
+  }
+
+  .documentControlsButton {
+    display: flex;
+
+    .Button {
+      display: inline-flex;
+      height: 100%;
+      padding: 0px;
+      min-width: $icon-width;
+      flex-grow: 1;
+
+      &:hover {
+        background-color: #515151;
+        background-color: var(--icon-color);
+
+        .Icon {
+          color: #f4f4f4;
+          color: var(--border-color);
+        }
+      }
+    }  
+  }  
+} 

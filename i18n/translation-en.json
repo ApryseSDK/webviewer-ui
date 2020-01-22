@@ -13,6 +13,7 @@
     "ungroup": "Ungroup",
     "download": "Download",
     "edit": "Edit",
+    "extract": "Extract",
     "enterFullscreen": "Full screen",
     "exitFullscreen": "Exit full screen",
     "fit": "Fit",
@@ -28,13 +29,15 @@
     "save": "Save",
     "create": "Create",
     "showMoreResults": "Show more results",
-    "saveSignature": "Save signature",
     "sign": "Sign",
     "style": "Style",
     "submit": "Submit",
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom out"
+    "zoomOut": "Zoom out",
+    "draw": "Draw",
+    "type": "Type",
+    "upload": "Upload"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",
@@ -110,6 +113,7 @@
     "searchPlaceholder": "Search comments",
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
+    "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
     "enterMeasurement": "Enter measurement between the two points"
   },
   "option": {
@@ -121,6 +125,9 @@
     "displayMode": {
       "layout": "Page Layout",
       "pageTransition": "Page Transition"
+    },
+    "documentControls": {
+      "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
     "layout": {
       "cover": "Cover Facing Page",
@@ -147,16 +154,21 @@
       "addWatermarkSettings": "Add Watermark Settings"
     },
     "redaction": {
-      "markForRedaction": "Mark for redaction",
-      "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
-      "warningPopupTitle": "Apply Redaction"
+      "markForRedaction": "Mark for redaction"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",
-      "wholeWordOnly": "Whole word"
+      "wholeWordOnly": "Whole word",
+      "wildcard": "Wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Add a signature"
+    },
+    "signatureModal": {
+      "saveSignature": "Save signature",
+      "dragAndDrop": "Drag & Drop your image here",
+      "or": "Or",
+      "pickImage": "Pick Signature Image"
     },
     "status": {
       "status": "Status"
@@ -196,8 +208,25 @@
       "size": "Size",
       "location": "Choose a location to edit watermarks",
       "text": "Text",
-      "colors": "Colors",
-      "resetAllSettings": "Reset All Settings"
+      "style": "Style",
+      "resetAllSettings": "Reset All Settings",
+      "font": "Font"
+    },
+    "thumbnailPanel": {
+      "delete": "Delete",
+      "rotateClockwise": "Clockwise",
+      "rotateCounterClockwise": "Counter-clockwise"
+    }
+  },
+  "warning": {
+    "deletePage" :{
+      "deleteTitle": "Delete Page",
+      "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
+      "deleteLastPageMessage": "This would result in no pages remaining. Please leave at least one page"
+    },
+    "redaction":{
+      "applyTile": "Apply Redaction",
+      "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
   "shortcut": {

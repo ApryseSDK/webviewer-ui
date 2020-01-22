@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useImperativeHandle } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -6,6 +6,8 @@ import Measure from 'react-measure';
 import { CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
 import { useTranslation } from 'react-i18next';
 
+import VirtualizedList from 'components/NotesPanel/VirtualizedList';
+import NormalList from 'components/NotesPanel/NormalList';
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
 import Icon from 'components/Icon';
@@ -144,22 +146,15 @@ const NotesPanel = () => {
           const content = note.getContents();
           const authorName = core.getDisplayAuthor(note);
 
+          // didn't use regex here because the search input may form an invalid regex, e.g. *
           return (
-            isInputIn(content, searchInput) ||
-            isInputIn(authorName, searchInput)
+            content?.toLowerCase().includes(searchInput.toLowerCase()) ||
+            authorName?.toLowerCase().includes(searchInput.toLowerCase())
           );
         });
     }
 
     return shouldRender;
-  };
-
-  const isInputIn = (string, searchInput) => {
-    if (!string) {
-      return false;
-    }
-
-    return string.search(new RegExp(searchInput, 'i')) !== -1;
   };
 
   const handleInputChange = e => {
@@ -322,133 +317,3 @@ const NotesPanel = () => {
 };
 
 export default NotesPanel;
-
-const listPropTypes = {
-  notes: PropTypes.array.isRequired,
-  children: PropTypes.func.isRequired,
-  onScroll: PropTypes.func.isRequired,
-  initialScrollTop: PropTypes.number.isRequired,
-};
-
-const cache = new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
-
-const VirtualizedList = React.forwardRef(
-  ({ notes, children, onScroll, initialScrollTop }, forwardedRef) => {
-    const listRef = useRef();
-    const [dimension, setDimension] = useState({ width: 0, height: 0 });
-
-    useImperativeHandle(forwardedRef, () => ({
-      scrollToPosition: scrollTop => {
-        listRef.current.scrollToPosition(scrollTop);
-      },
-      scrollToRow: index => {
-        listRef.current.scrollToRow(index);
-      },
-    }));
-
-    useEffect(() => {
-      listRef.current.scrollToPosition(initialScrollTop);
-    }, [initialScrollTop]);
-
-    const _resize = index => {
-      cache.clear(index);
-      listRef.current?.recomputeRowHeights(index);
-    };
-
-    const handleScroll = ({ scrollTop }) => {
-      onScroll(scrollTop);
-    };
-
-    /* eslint-disable react/prop-types */
-    const rowRenderer = ({ index, key, parent, style }) => {
-      const currNote = notes[index];
-
-      return (
-        <CellMeasurer
-          key={`${key}${currNote.Id}`}
-          cache={cache}
-          columnIndex={0}
-          parent={parent}
-          rowIndex={index}
-        >
-          <div style={style}>
-            {children(notes, index, () => _resize(index))}
-          </div>
-        </CellMeasurer>
-      );
-    };
-
-    return (
-      <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
-        {({ measureRef }) => (
-          <div ref={measureRef} className="virtualized-notes-container">
-            <List
-              deferredMeasurementCache={cache}
-              style={{ outline: 'none' }}
-              height={dimension.height}
-              width={dimension.width}
-              overscanRowCount={10}
-              ref={listRef}
-              rowCount={notes.length}
-              rowHeight={cache.rowHeight}
-              rowRenderer={rowRenderer}
-              onScroll={handleScroll}
-            />
-          </div>
-        )}
-      </Measure>
-    );
-  },
-);
-
-VirtualizedList.propTypes = listPropTypes;
-
-const NormalList = React.forwardRef(
-  ({ notes, children, onScroll, initialScrollTop }, forwardedRef) => {
-    const listRef = useRef();
-
-    useImperativeHandle(forwardedRef, () => ({
-      scrollToPosition: scrollTop => {
-        listRef.current.scrollTop = scrollTop;
-      },
-      scrollToRow: index => {
-        const parent = listRef.current;
-        const child = parent.children[index];
-
-        const parentRect = parent.getBoundingClientRect();
-        const childRect = child.getBoundingClientRect();
-
-        const isViewable =
-          childRect.top >= parentRect.top &&
-          childRect.top <= parentRect.top + parent.clientHeight;
-        if (!isViewable) {
-          parent.scrollTop = childRect.top + parent.scrollTop - parentRect.top;
-        }
-      },
-    }));
-
-    useEffect(() => {
-      listRef.current.scrollTop = initialScrollTop;
-    }, [initialScrollTop]);
-
-    const handleScroll = e => {
-      onScroll(e.target.scrollTop);
-    };
-
-    return (
-      <div
-        ref={listRef}
-        className="normal-notes-container"
-        onScroll={handleScroll}
-      >
-        {notes.map((currNote, index) => (
-          <React.Fragment key={`${index}${currNote.Id}`}>
-            {children(notes, index)}
-          </React.Fragment>
-        ))}
-      </div>
-    );
-  },
-);
-
-NormalList.propTypes = listPropTypes;

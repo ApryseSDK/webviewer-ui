@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -11,7 +11,6 @@ import selectors from 'selectors';
 import './Button.scss';
 
 const propTypes = {
-  disable: PropTypes.bool,
   isActive: PropTypes.bool,
   mediaQueryClassName: PropTypes.string,
   img: PropTypes.string,
@@ -23,21 +22,24 @@ const propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const Button = ({
-  isActive,
-  mediaQueryClassName,
-  img,
-  label,
-  color,
-  dataElement,
-  onClick = () => {},
-  className,
-  title,
-  style = {},
-}) => {
-  const [isElementDisabled] = useSelector(state => [
-    selectors.isElementDisabled(state, dataElement),
-  ]);
+const Button = props => {
+  const [isElementDisabled, customOverrides = {}] = useSelector(state => [
+    selectors.isElementDisabled(state, props.dataElement),
+    selectors.getCustomElementOverrides(state, props.dataElement),
+  ], shallowEqual);
+
+  props = { ...props, ...customOverrides };
+  const {
+    isActive,
+    mediaQueryClassName,
+    img,
+    label,
+    color,
+    dataElement,
+    onClick = () => {},
+    className,
+    title,
+  } = props;
 
   const buttonClass = classNames({
     Button: true,
@@ -65,7 +67,6 @@ const Button = ({
       className={buttonClass}
       data-element={dataElement}
       onClick={onClick}
-      style={style}
     >
       {content}
     </div>

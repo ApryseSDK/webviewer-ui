@@ -23,6 +23,7 @@ class SearchOverlay extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isSearchPanelOpen: PropTypes.bool,
     isSearchPanelDisabled: PropTypes.bool,
+    isWildCardSearchDisabled: PropTypes.bool,
     searchValue: PropTypes.string,
     isCaseSensitive: PropTypes.bool,
     isWholeWord: PropTypes.bool,
@@ -48,6 +49,7 @@ class SearchOverlay extends React.PureComponent {
     addResult: PropTypes.func.isRequired,
     setCaseSensitive: PropTypes.func.isRequired,
     setWholeWord: PropTypes.func.isRequired,
+    setWildcard: PropTypes.func.isRequired,
     setNoResult: PropTypes.func.isRequired,
     setIsProgrammaticSearch: PropTypes.func.isRequired,
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
@@ -59,8 +61,11 @@ class SearchOverlay extends React.PureComponent {
     this.searchTextInput = React.createRef();
     this.wholeWordInput = React.createRef();
     this.caseSensitiveInput = React.createRef();
+    this.wildcardInput = React.createRef();
     this.executeDebouncedSingleSearch = debounce(this.executeSingleSearch, 300);
     this.executeDebouncedFullSearch = debounce(this.executeFullSearch, 300);
+    this.currentSingleSearchTerm = '';
+    this.foundSingleSearchResult = false;
     this.state = {
       noResultSingleSearch: false,
     };
@@ -79,6 +84,7 @@ class SearchOverlay extends React.PureComponent {
       this.props.openElements(['searchOverlay', 'searchPanel']);
       this.caseSensitiveInput.current.checked = this.props.isCaseSensitive;
       this.wholeWordInput.current.checked = this.props.isWholeWord;
+      this.wildcardInput.current.checked = this.props.isWildcard;
       this.clearSearchResults();
       this.executeFullSearch();
       this.props.setIsProgrammaticSearchFull(false);
@@ -237,6 +243,14 @@ class SearchOverlay extends React.PureComponent {
       ? this.getSearchMode() | core.getSearchMode().e_search_up
       : this.getSearchMode();
     const isFullSearch = false;
+
+    if (this.currentSingleSearchTerm !== searchValue) {
+      this.currentSingleSearchTerm = searchValue;
+      this.foundSingleSearchResult = false;
+      this.setState({ noResultSingleSearch: false });
+      core.clearSearchResults();
+    }
+
     resetSearch();
     const handleSearchResult = result => {
       const foundResult =
@@ -245,18 +259,18 @@ class SearchOverlay extends React.PureComponent {
         result.resultCode === window.XODText.ResultCode.e_done;
 
       if (foundResult) {
-        this.setState({ noResultSingleSearch: false });
+        this.foundSingleSearchResult = true;
         addResult(result);
         core.displaySearchResult(result);
         setActiveResult(result);
         this.runSearchListeners();
-      } else {
-        this.setState({ noResultSingleSearch: true });
-        core.clearSearchResults();
       }
 
       if (isSearchDone) {
         core.getDocumentViewer().trigger('endOfDocumentResult', true);
+        if (!this.foundSingleSearchResult) {
+          this.setState({ noResultSingleSearch: true });
+        }
       }
       setIsSearching(false);
     };
@@ -406,12 +420,22 @@ class SearchOverlay extends React.PureComponent {
     this.executeDebouncedFullSearch();
   };
 
+  onChangeWildcard = e => {
+    this.props.setWildcard(e.target.checked);
+    this.clearSearchResults();
+    this.executeDebouncedFullSearch();
+  }
+
   render() {
     const {
       isDisabled,
       t,
+      isSearchPanelOpen,
+      isSearchPanelDisabled,
       results,
       searchValue,
+      activeResultIndex,
+      isWildCardSearchDisabled,
     } = this.props;
 
     if (isDisabled) {
@@ -448,6 +472,10 @@ class SearchOverlay extends React.PureComponent {
             onChange={this.onChangeWholeWord}
             label={t('option.searchPanel.wholeWordOnly')}
           />
+          {!isWildCardSearchDisabled &&
+          <div className="search-option" data-element="wildCardSearchOption">
+            <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
+          </div>}
         </div>
         <div className="divider" />
         <div className="footer">
@@ -475,6 +503,7 @@ class SearchOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
   isSearchPanelDisabled: selectors.isElementDisabled(state, 'searchPanel'),
+  isWildCardSearchDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
   searchValue: selectors.getSearchValue(state),
   isCaseSensitive: selectors.isCaseSensitive(state),
   isWholeWord: selectors.isWholeWord(state),
@@ -505,6 +534,7 @@ const mapDispatchToProps = {
   addResult: actions.addResult,
   setCaseSensitive: actions.setCaseSensitive,
   setWholeWord: actions.setWholeWord,
+  setWildcard: actions.setWildcard,
   setNoResult: actions.setNoResult,
   setIsProgrammaticSearch: actions.setIsProgrammaticSearch,
   setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull,

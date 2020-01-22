@@ -168,6 +168,14 @@ export const setPageLabels = pageLabels => dispatch => {
     payload: { pageLabels: pageLabels.map(String) },
   });
 };
+export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) => ({
+  type: 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES',
+  payload: { selectedThumbnailPageIndexes },
+});
+export const deletePageIndex = pageIndexDeleted => ({
+  type: 'REMOVE_PAGE_INDEX',
+  payload: { pageIndexDeleted },
+});
 export const setSwipeOrientation = swipeOrientation => ({
   type: 'SET_SWIPE_ORIENTATION',
   payload: { swipeOrientation },
@@ -212,4 +220,16 @@ export const useEmbeddedPrint = (useEmbeddedPrint = true) => ({
 export const setMaxSignaturesCount = maxSignaturesCount => ({
   type: 'SET_MAX_SIGNATURES_COUNT',
   payload: { maxSignaturesCount },
+});
+export const setCustomMeasurementOverlay = customMeasurementOverlay => ({
+  type: 'SET_CUSTOM_MEASUREMENT_OVERLAY',
+  payload: { customMeasurementOverlay },
+});
+export const setSelectedTab = (id, dataElement) => ({
+  type: 'SET_SELECTED_TAB',
+  payload: { id, dataElement },
+});
+export const setCustomElementOverrides = (dataElement, overrides) => ({
+  type: 'SET_CUSTOM_ELEMENT_OVERRIDES',
+  payload: { dataElement, overrides },
 });

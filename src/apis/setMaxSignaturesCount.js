@@ -1,6 +1,6 @@
 /**
  * Set the number of signatures that can be stored in the WebViewer (default is 2)
- * @method WebViewer#setMaxSignaturesCount
+ * @method WebViewerInstance#setMaxSignaturesCount
  * @param {number} [maxSignaturesCount=2] Number of signature webViewer can store
  * @example
 WebViewer(...)

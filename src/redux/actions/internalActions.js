@@ -5,6 +5,16 @@ import selectors from 'selectors';
 import core from 'core';
 
 // viewer
+/**
+ * Remove an element from DOM
+ * @ignore
+ * @param {string} dataElement the value of the data-element attribute of the element
+ * @param {number} priority a value that indicates how specific this element is disabled.
+ * If a element is disabled with priority 3, then calling enableElement with priority 2 won't enable it back because the element is disabled in a more specific manner.
+ * This priority argument is used by external APIs such as instance.disableElements and instance.disableFeatures(...)
+ * For example, instance.disableElements has priority 3 and instance.enableFeatures has priority 1.
+ * So calling instance.enableFeatures([instance.Feature.NotesPanel]) won't enable the notes panel if it's disabled by instance.disableElements(['notesPanel'])
+ */
 export const disableElement = (dataElement, priority) => (
   dispatch,
   getState,
@@ -80,6 +90,19 @@ export const enableElements = (dataElements, priority) => (
     payload: { dataElements: filteredDataElements, priority },
   });
 };
+export const setThumbnailMerging = (useThumbnailMerging = true) => ({
+  type: 'SET_THUMBNAIL_MERGING',
+  payload: { useThumbnailMerging },
+});
+
+export const setThumbnailReordering = (useThumbnailReordering = true) => ({
+  type: 'SET_THUMBNAIL_REORDERING',
+  payload: { useThumbnailReordering },
+});
+export const setThumbnailMultiselect = (useThumbnailMultiselect = true) => ({
+  type: 'SET_THUMBNAIL_MULTISELECT',
+  payload: { useThumbnailMultiselect },
+});
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;
@@ -242,10 +265,7 @@ export const setBookmarks = bookmarks => ({
   type: 'SET_BOOKMARKS',
   payload: { bookmarks },
 });
-export const addBookmark = (pageIndex, text) => (
-  dispatch,
-  getState,
-) => {
+export const addBookmark = (pageIndex, text) => (dispatch, getState) => {
   dispatch({
     type: 'ADD_BOOKMARK',
     payload: { pageIndex, text },
@@ -254,10 +274,7 @@ export const addBookmark = (pageIndex, text) => (
   const bookmarks = selectors.getBookmarks(getState());
   fireEvent('userBookmarksChanged', bookmarks);
 };
-export const editBookmark = (pageIndex, text) => (
-  dispatch,
-  getState,
-) => {
+export const editBookmark = (pageIndex, text) => (dispatch, getState) => {
   dispatch({
     type: 'EDIT_BOOKMARK',
     payload: { pageIndex, text },
@@ -265,10 +282,7 @@ export const editBookmark = (pageIndex, text) => (
   const bookmarks = selectors.getBookmarks(getState());
   fireEvent('userBookmarksChanged', bookmarks);
 };
-export const removeBookmark = pageIndex => (
-  dispatch,
-  getState,
-) => {
+export const removeBookmark = pageIndex => (dispatch, getState) => {
   dispatch({
     type: 'REMOVE_BOOKMARK',
     payload: { pageIndex },
@@ -399,6 +413,10 @@ export const setCaseSensitive = isCaseSensitive => ({
 export const setWholeWord = isWholeWord => ({
   type: 'SET_WHOLE_WORD',
   payload: { isWholeWord },
+});
+export const setWildcard = isWildcard => ({
+  type: 'SET_WILD_CARD',
+  payload: { isWildcard },
 });
 export const setIsSearching = isSearching => ({
   type: 'SET_IS_SEARCHING',

@@ -1,7 +1,8 @@
 /**
  * An instance of Popup that can be used to edit items in the text popup component
- * @name WebViewer#textPopup
- * @implements {WebViewer.Popup}
+ * @name WebViewerInstance#textPopup
+ * @implements {WebViewerInstance.Popup}
+ * @type {WebViewerInstance.Popup}
  * @example
 WebViewer(...)
   .then(function (instance) {

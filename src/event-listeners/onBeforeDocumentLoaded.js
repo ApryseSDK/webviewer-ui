@@ -11,8 +11,8 @@ export default dispatch => () => {
   const totalPages = core.getTotalPages();
 
   if (isIOS) {
-    window.CoreControls.SetCachingLevel(8); // 32MB
-    window.CoreControls.SetPreRenderLevel(2); // so that we can enable high res thumb
+    // enough so that we can enable high res thumb
+    window.CoreControls.SetPreRenderLevel(2);
   }
 
   if (totalPages >= 500) {

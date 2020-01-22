@@ -1,18 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import Icon from 'components/Icon';
 
 import getBrightness from 'helpers/getBrightness';
+import selectors from 'selectors';
 
 import './ColorPalette.scss';
+
+const dataElement = 'colorPalette';
 
 class ColorPalette extends React.PureComponent {
   static propTypes = {
     property: PropTypes.string.isRequired,
     color: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
+    overridePalette: PropTypes.array,
   }
 
   constructor(props) {
@@ -37,19 +42,29 @@ class ColorPalette extends React.PureComponent {
 
   renderCheckMark = bg => {
     const { color } = this.props;
-    const isColorPicked = color.toHexString() === bg;
+    const hexColor = color.toHexString();
 
-    if (!isColorPicked) {
-      return null;
+    let isColorPicked;
+    if (hexColor === null) {
+      isColorPicked = bg === 'transparency';
+    } else {
+      isColorPicked = hexColor.toLowerCase() === bg.toLowerCase();
     }
 
-    return <Icon className={`check-mark ${getBrightness(color)}`} glyph="ic_check_black_24px" />;
-  }
+    return isColorPicked ? (
+      <Icon
+        className={`check-mark ${getBrightness(color)}`}
+        glyph="ic_check_black_24px"
+      />
+    ) : null;
+  };
 
   render() {
-    const { property, color } = this.props;
+    const { property, color, overridePalette } = this.props;
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
+
+    const palette = overridePalette || this.palette;
 
     return (
       <div className="ColorPalette" data-element="colorPalette">
@@ -70,7 +85,7 @@ class ColorPalette extends React.PureComponent {
               </svg>
             </div>
           </div>}
-        {this.palette.map((row, i) =>
+        {palette.map((row, i) =>
           row.map((bg, j) =>
             <div
               key={`${i}${j}`}
@@ -92,4 +107,8 @@ class ColorPalette extends React.PureComponent {
   }
 }
 
-export default ColorPalette;
+const mapStateToProps = state => ({
+  overridePalette: selectors.getCustomElementOverrides(state, dataElement),
+});
+
+export default connect(mapStateToProps)(ColorPalette);

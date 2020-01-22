@@ -1,8 +1,6 @@
 /**
  * Contains string enums for all layouts for WebViewer. They are used to dictate how pages are placed within the viewer.
- * @enum {string}
- * @name LayoutMode
- * @memberof WebViewer
+ * @name WebViewerInstance#LayoutMode
  * @property {string} Single Only the current page will be visible.
  * @property {string} Continuous All pages are visible in one column.
  * @property {string} Facing Up to two pages will be visible.

@@ -9,6 +9,8 @@ $right-panel-width: 293px;
 $left-panel-width: 219px;
 $left-panel-width: var(--left-panel-width);
 
+// Font
+$font-family: sans-serif;
 
 // Mobile dimensions
 $top-bar-height-m: 42px;
@@ -24,7 +26,7 @@ $gray12: #e0e0e0;
 $gray10: #e6e6e6;
 $gray4: #f5f5f5;
 $white: #fff;
-$pdftronBlue: #00a5e4; //confirm that this is what we want
+$pdftron-blue: #00A5E4; //confirm that this is what we want
 
 // Light theme
 $line-color: $gray10;
@@ -36,6 +38,8 @@ $md-shadow1: 0 0 2px 0 rgba(0,0,0,0.14), 0 2px 2px 0 rgba(0,0,0,0.12), 0 1px 3px
 // Screens
 $tablet-width: 900px;
 $mobile-width: 640px;
+
+$signature-modal-shared-color: #E1E1E3;
 
 %open {
   &.open {
@@ -111,16 +115,17 @@ $mobile-width: 640px;
 }
 
 %cell {
-  flex: 1 0 28px;
+  width: 30px;
   height: 26px;
   display: flex;
-  margin: 0 1px;
+  margin: 1px;
 
   @include mobile {
     height: 30px;
-    margin: 0 1.2px;
+    width: 13.5%;
   }
 }
+
 // https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
 %word-wrap {
   overflow-wrap: break-word;

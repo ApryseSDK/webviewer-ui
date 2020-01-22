@@ -17,6 +17,9 @@
   .results {
     overflow-y: auto;
     padding-right: 18px;
+    &.wild-card-visible {
+      margin-top: 110px !important;
+    }
   }
 
   .loader-wrapper {

@@ -4,6 +4,7 @@ import packageConfig from '../../package.json';
 export default ({ pdftronServer, fullAPI }) => {
   // log UI and Core versions and warn/error if necessary
   const coreVersion = window.CoreControls.DocumentViewer.prototype.version;
+  const coreBuild = window.CoreControls.DocumentViewer.prototype.build;
   const uiVersion = packageConfig.version;
   if (coreVersion && uiVersion) {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
@@ -14,9 +15,20 @@ export default ({ pdftronServer, fullAPI }) => {
       .split('.')
       .map(version => parseInt(version, 10));
 
-    console.log(
-      `[WebViewer] UI version: ${uiVersion}, Core version: ${coreVersion} WebViewer Server: ${!!pdftronServer} Full API: ${!!fullAPI}`,
-    );
+    if (console.table) {
+      const versions = {
+        'UI version': uiVersion,
+        'Core version': coreVersion,
+        'Build': coreBuild,
+        'WebViewer Server': !!pdftronServer,
+        'Full API': !!fullAPI,
+      };
+      console.table(versions);
+    } else {
+      console.log(
+        `[WebViewer] UI version: ${uiVersion}, Core version: ${coreVersion}, Build: ${coreBuild}, WebViewer Server: ${!!pdftronServer}, Full API: ${!!fullAPI}`,
+      );
+    }
 
     if (coreMajorVersion < uiMajorVersion) {
       console.error(

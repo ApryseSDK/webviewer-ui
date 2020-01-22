@@ -1,7 +1,7 @@
 /**
  * Return the current tool object.
- * @method WebViewer#getToolMode
- * @return {Tools} Instance of the current tool
+ * @method WebViewerInstance#getToolMode
+ * @return {Tools.Tool} Instance of the current tool
  * @example
 WebViewer(...)
   .then(function(instance) {

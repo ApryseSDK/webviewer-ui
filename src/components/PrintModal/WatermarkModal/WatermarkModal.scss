@@ -30,6 +30,10 @@ $gap: 15px;
     }
   }
 
+  .style-container {
+    display: flex;
+  }
+
   .header-container {
     display: flex;
     align-content: center;
@@ -106,13 +110,11 @@ $gap: 15px;
     justify-content: space-between;
     padding: $gap;
   }
-  
-  .cell {
-    @extend %cell;
-    cursor: pointer;
-    width: 35px;
-    border: $color-widget-border;
-    position: relative;
+  // override Button style so it looks better on watermark modal
+  .Button {
+    padding: 15px;
+    height: 0;
+    min-width: 35px;
   }
   
   .button {
@@ -121,21 +123,21 @@ $gap: 15px;
     cursor: pointer;
 
     &.reset {
-      color: $pdftronBlue;
+      color: $pdftron-blue;
     }
 
     &.ok {
       font-weight: normal;
-      background: $pdftronBlue;
-      border: 1px solid $pdftronBlue;
+      background: $pdftron-blue;
+      border: 1px solid $pdftron-blue;
       color: white;
     }
 
     &.cancel {
       font-weight: normal;
       background: white;
-      border: 1px solid $pdftronBlue;
-      color: $pdftronBlue;
+      border: 1px solid $pdftron-blue;
+      color: $pdftron-blue;
       margin-right: 5px;
     }
   }

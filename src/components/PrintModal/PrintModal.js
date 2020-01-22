@@ -9,7 +9,7 @@ import ActionButton from 'components/ActionButton';
 import WatermarkModal from 'components/PrintModal/WatermarkModal';
 
 import core from 'core';
-import getPagesToPrint from 'helpers/getPagesToPrint';
+import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import getClassName from 'helpers/getClassName';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
@@ -35,6 +35,7 @@ class PrintModal extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     colorMap: PropTypes.object.isRequired,
     layoutMode: PropTypes.string.isRequired,
+    isApplyWatermarkDisabled: PropTypes.bool,
   };
 
   constructor() {
@@ -117,7 +118,7 @@ class PrintModal extends React.PureComponent {
       }
     } else if (this.customPages.current.checked) {
       const customInput = this.customInput.current.value.replace(/\s+/g, '');
-      pagesToPrint = getPagesToPrint(customInput, pageLabels);
+      pagesToPrint = getPageArrayFromString(customInput, pageLabels);
     }
 
     this.setState({ pagesToPrint });
@@ -152,6 +153,7 @@ class PrintModal extends React.PureComponent {
       })
       .catch(e => {
         console.error(e);
+        this.setState({ count: -1 });
       });
   };
 
@@ -305,6 +307,7 @@ class PrintModal extends React.PureComponent {
           annotation.Listable &&
           annotation.PageNumber === pageNumber &&
           !annotation.isReply() &&
+          !annotation.isGrouped() &&
           annotation.Printable,
       );
 
@@ -392,7 +395,7 @@ class PrintModal extends React.PureComponent {
 
     info.className = 'note__info';
     info.innerHTML = `
-      Author: ${annotation.Author || ''} &nbsp;&nbsp;
+      Author: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
       Subject: ${annotation.Subject} &nbsp;&nbsp;
       Date: ${dayjs(annotation.DateCreated).format('D/MM/YYYY h:mm:ss A')}
     `;
@@ -405,6 +408,8 @@ class PrintModal extends React.PureComponent {
 
     contentElement.className = 'note__content';
     if (contentText) {
+      // ensure that new lines are preserved and rendered properly
+      contentElement.style.whiteSpace = 'pre-wrap';
       contentElement.innerHTML = `${contentText}`;
     }
     return contentElement;
@@ -458,13 +463,14 @@ class PrintModal extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t } = this.props;
+    const { isDisabled, t, isApplyWatermarkDisabled } = this.props;
 
     if (isDisabled) {
       return null;
     }
 
     const { count, pagesToPrint } = this.state;
+    const isPrinting = count >= 0;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = (
       <input
@@ -472,9 +478,9 @@ class PrintModal extends React.PureComponent {
         type="text"
         placeholder={t('message.customPrintPlaceholder')}
         onFocus={this.onFocus}
+        disabled={isPrinting}
       />
     );
-    const isPrinting = count >= 0;
 
     return (
       <React.Fragment>
@@ -488,7 +494,10 @@ class PrintModal extends React.PureComponent {
         <div
           className={className}
           data-element="printModal"
-          onClick={this.closePrintModal}
+          onClick={() => {
+            this.cancelPrint();
+            this.closePrintModal();
+          }}
         >
           <div className="container" onClick={e => e.stopPropagation()}>
             <div className="header-container">
@@ -497,7 +506,10 @@ class PrintModal extends React.PureComponent {
                 dataElement="printModalCloseButton"
                 title="action.close"
                 img="ic_close_black_24px"
-                onClick={this.closePrintModal}
+                onClick={() => {
+                  this.cancelPrint();
+                  this.closePrintModal();
+                }}
               />
             </div>
             <div className="settings">
@@ -514,6 +526,7 @@ class PrintModal extends React.PureComponent {
                   type="radio"
                   label={t('option.print.all')}
                   defaultChecked
+                  disabled={isPrinting}
                 />
                 <Input
                   ref={this.currentPage}
@@ -521,6 +534,7 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={t('option.print.current')}
+                  disabled={isPrinting}
                 />
                 <Input
                   ref={this.customPages}
@@ -528,6 +542,7 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={customPagesLabelElement}
+                  disabled={isPrinting}
                 />
                 <Input
                   ref={this.includeComments}
@@ -535,14 +550,20 @@ class PrintModal extends React.PureComponent {
                   name="comments"
                   type="checkbox"
                   label={t('option.print.includeComments')}
+                  disabled={isPrinting}
                 />
               </form>
             </div>
-            {this.state.allowWatermarkModal && (
+            {!isApplyWatermarkDisabled && (
               <button
                 data-element="applyWatermark"
                 className="apply-watermark"
-                onClick={() => this.setWatermarkModalVisibility(true)}
+                disabled={isPrinting}
+                onClick={() => {
+                  if (!isPrinting) {
+                    this.setWatermarkModalVisibility(true);
+                  }
+                }}
               >
                 {t('option.print.addWatermarkSettings')}
               </button>
@@ -579,6 +600,7 @@ class PrintModal extends React.PureComponent {
 const mapStateToProps = state => ({
   isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
   isDisabled: selectors.isElementDisabled(state, 'printModal'),
+  isApplyWatermarkDisabled: selectors.isElementDisabled(state, 'applyWatermark'),
   isOpen: selectors.isElementOpen(state, 'printModal'),
   currentPage: selectors.getCurrentPage(state),
   printQuality: selectors.getPrintQuality(state),

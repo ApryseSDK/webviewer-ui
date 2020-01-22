@@ -28,3 +28,13 @@
   font-weight: bold;
   font-style: italic;
 }
+@font-face {
+  font-family: "GreatVibes-Regular";
+  src:
+    // App.scss imports this file so the url should be relative to App.scss
+    // https://github.com/webpack-contrib/sass-loader#problems-with-url
+    url("../../../assets/fonts/GreatVibes-Regular.woff2") format("woff2"),
+    url("../../../assets/fonts/GreatVibes-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}

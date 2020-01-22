@@ -56,7 +56,9 @@ class DocumentContainer extends React.PureComponent {
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
-    const { hasPath, doesDocumentAutoLoad, document, advanced, dispatch } = this.props;
+    const {
+      hasPath, doesDocumentAutoLoad, document, advanced, dispatch,
+    } = this.props;
     if ((hasPath && doesDocumentAutoLoad) || document.isOffline) {
       loadDocument({ document, advanced }, dispatch);
     }
@@ -71,7 +73,6 @@ class DocumentContainer extends React.PureComponent {
     }
 
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
-    window.addEventListener('keydown', this.onKeyDown);
   }
 
   componentWillUnmount() {
@@ -86,7 +87,6 @@ class DocumentContainer extends React.PureComponent {
     }
 
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
-    window.removeEventListener('keydown', this.onKeyDown);
   }
 
   preventDefault = e => e.preventDefault();
@@ -97,19 +97,6 @@ class DocumentContainer extends React.PureComponent {
     const { files } = e.dataTransfer;
     if (files.length) {
       window.readerControl.loadDocument(files[0]);
-    }
-  }
-
-  onKeyDown = e => {
-    const { currentPage, totalPages } = this.props;
-    const { scrollTop, clientHeight, scrollHeight } = this.container.current;
-    const reachedTop = scrollTop === 0;
-    const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
-
-    if ((e.key === 'ArrowUp' || e.which === 38) && reachedTop && currentPage > 1) {
-      this.pageUp();
-    } else if ((e.key === 'ArrowDown' || e.which === 40) && reachedBottom && currentPage < totalPages) {
-      this.pageDown();
     }
   }
 
@@ -179,7 +166,9 @@ class DocumentContainer extends React.PureComponent {
   }
 
   getClassName = props => {
-    const { isSearchOverlayOpen } = props;
+    const {
+      isSearchOverlayOpen,
+    } = props;
 
     return classNames({
       DocumentContainer: true,
