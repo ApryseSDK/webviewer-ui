@@ -72,7 +72,8 @@
     label.Input {
       display: flex;
       align-items: center;
-      font-size: 14px;
+      font-size: 13px;
+      margin-right: 10px;
 
       &:before {
         // width: 16px;
@@ -84,7 +85,7 @@
     }
 
     label:nth-child(4) {
-      margin-left: 20px;
+      margin-left: 10px;
     }
   }
 
