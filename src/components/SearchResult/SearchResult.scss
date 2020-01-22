@@ -1,19 +1,20 @@
 @import '../../constants/styles';
 
 .SearchResult {
-  margin-top: -1px;
-  padding: 0.625rem;
-  box-sizing: border-box;
-  font-size: 0.9375rem;
   cursor: pointer;
-  background: white;
-  background: var(--primary-color);
-  border: 1px solid $gray12;
-  border: 1px solid var(--border-color);
-  overflow-wrap: break-word;
+  font-size: 13px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 12px;
+  margin-left: 2px;
+  margin-bottom: 8px;
+
   &.selected {
-    background: $gray10;
-    color: #333333;
+    border: 1px solid #6077bf;
+    box-shadow: none;
 
     .search-value {
       background: #fbcd9f;
@@ -21,7 +22,6 @@
   }
 
   .search-value {
-    background: #fffc95;
-    color: #333333;
+    background: #face0080;
   }
 }
