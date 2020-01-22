@@ -13,6 +13,7 @@
     "ungroup": "Ungroup",
     "download": "Download",
     "edit": "Edit",
+    "extract": "Extract",
     "enterFullscreen": "Full screen",
     "exitFullscreen": "Exit full screen",
     "fit": "Fit",
@@ -123,6 +124,9 @@
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Page transition"
+    },
+    "documentControls": {
+      "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
     "layout": {
       "cover": "Cover",

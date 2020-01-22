@@ -152,6 +152,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isThumbnailMerging: payload.useThumbnailMerging };
     case 'SET_THUMBNAIL_REORDERING':
       return { ...state, isThumbnailReordering: payload.useThumbnailReordering };
+    case 'SET_THUMBNAIL_MULTISELECT':
+      return { ...state, isThumbnailMultiselect: payload.useThumbnailMultiselect };
     case 'SET_TOOL_BUTTON_OBJECTS':
       return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
     case 'SET_DOCUMENT_LOADED':
@@ -167,6 +169,12 @@ export default initialState => (state = initialState, action) => {
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
     case 'SET_PAGE_LABELS':
       return { ...state, pageLabels: [...payload.pageLabels] };
+    case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':
+      return { ...state, selectedThumbnailPageIndexes: payload.selectedThumbnailPageIndexes };
+    case 'REMOVE_PAGE_INDEX':
+      return { ...state,
+        selectedThumbnailPageIndexes: state.selectedThumbnailPageIndexes.filter(p => p !== payload.pageIndexDeleted).map(p => (p < payload.pageIndexDeleted ? p : p - 1)),
+      };
     case 'SET_COLOR_PALETTE': {
       const { colorMapKey, colorPalette } = payload;
       return {

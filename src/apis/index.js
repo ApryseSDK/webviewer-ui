@@ -42,6 +42,7 @@ import enableTextSelection from './enableTextSelection';
 import enableTool from './enableTool';
 import enableTools from './enableTools';
 import enableTouchScrollLock from './enableTouchScrollLock';
+import extractPagesWithAnnotations from './extractPagesWithAnnotations';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
@@ -50,6 +51,7 @@ import getCurrentPageNumber from './getCurrentPageNumber';
 import getFitMode from './getFitMode';
 import getLayoutMode from './getLayoutMode';
 import getPageCount from './getPageCount';
+import getSelectedThumbnailPageNumbers from './getSelectedThumbnailPageNumbers';
 import getSelectors from './getSelectors';
 import getShowSideWindow from './getShowSideWindow';
 import getSideWindowVisibility from './getSideWindowVisibility';
@@ -167,6 +169,7 @@ export default store => {
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
     exportBookmarks: exportBookmarks(store),
+    extractPagesWithAnnotations,
     importBookmarks: importBookmarks(store),
     setFitMode,
     setHeaderItems: setHeaderItems(store),
@@ -197,6 +200,7 @@ export default store => {
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
+    getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),

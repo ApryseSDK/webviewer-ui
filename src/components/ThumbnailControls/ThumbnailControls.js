@@ -43,7 +43,9 @@ const ThumbnailControls = ({
       message,
       title,
       confirmBtnText,
-      onConfirm: () => core.removePages([index + 1]),
+      onConfirm: () => core.removePages([index + 1]).then(() => {
+        dispatch(actions.deletePageIndex(index));
+      }),
     };
 
     if (core.getDocumentViewer().getPageCount() === 1) {

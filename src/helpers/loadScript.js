@@ -29,14 +29,32 @@ const loadConfig = () =>
       // resolve immediately if we are developing the UI on its own
       resolve();
     } else {
-      window.addEventListener('message', function loadConfig(e) {
+      window.addEventListener('message', async function loadConfig(e) {
         if (e.data.type === 'responseConfig') {
-          loadScript(e.data.value, 'Config script could not be loaded').then(
-            () => {
+          const { value } = e.data;
+
+          try {
+            if (value) {
+              if (e.origin !== window.location.origin) {
+                const response = await fetch('configorigin.txt');
+
+                let data = '';
+                if (response.status === 200) {
+                  data = await response.text();
+                }
+
+                if (!data.split('\n').includes(e.origin)) {
+                  console.warn(`Config file requested to be loaded by origin ${e.origin}. Please include this origin inside lib/ui/configorigin.txt to allow it to request config files.`);
+                  return;
+                }
+              }
+
+              await loadScript(e.data.value, 'Config script could not be loaded');
               window.removeEventListener('message', loadConfig);
-              resolve();
-            },
-          );
+            }
+          } finally {
+            resolve();
+          }
         }
       });
 
