@@ -19,8 +19,7 @@
       width: 100%;
       padding-left: 8px;
       border: 1px solid #dfe2ed;
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
+      border-radius: 4px;
       color: var(--text-color);
       padding-top: 4px;
       padding-bottom: 4px;
@@ -28,6 +27,11 @@
       overflow: hidden;
       padding-right: 56px;
       box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border: 1px solid #6077bf;
+      }
 
       &::placeholder {
         color: #c3c6d4;
