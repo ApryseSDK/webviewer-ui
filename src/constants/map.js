@@ -38,7 +38,12 @@ const map = {
     iconColor: 'TextColor',
     currentPalette: 'TextColor',
     availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreateFreeText'],
+    toolNames: [
+      'AnnotationCreateFreeText',
+      'AnnotationCreateFreeText2',
+      'AnnotationCreateFreeText3',
+      'AnnotationCreateFreeText4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===

@@ -103,6 +103,7 @@ class ToolGroupButton extends React.PureComponent {
       title,
     } = this.props;
 
+
     const { toolName } = this.state;
     const img = this.props.img
       ? this.props.img

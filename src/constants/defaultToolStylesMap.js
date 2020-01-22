@@ -14,6 +14,18 @@ export default {
   AnnotationCreateFreeHand4: {
     StrokeColor: { R: 51, G: 187, B: 230, A: 1 },
   },
+  AnnotationCreateFreeText: {
+    TextColor: { R: 67, G: 85, B: 219, A: 1 },
+  },
+  AnnotationCreateFreeText2: {
+    TextColor: { R: 230, G: 38, B: 31, A: 1 },
+  },
+  AnnotationCreateFreeText3: {
+    TextColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateFreeText4: {
+    TextColor: { R: 51, G: 187, B: 230, A: 1 },
+  },
   AnnotationCreateTextHighlight: {
     StrokeColor: { R: 255, G: 230, B: 162, A: 1 },
   },
@@ -34,9 +46,6 @@ export default {
   },
   AnnotationCreateTextStrikeout: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
-  },
-  AnnotationCreateFreeText: {
-    TextColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateSticky: {
     StrokeColor: { R: 255, G: 230, B: 162, A: 1 },
