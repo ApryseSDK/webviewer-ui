@@ -60,7 +60,7 @@
     $selected-border-size: 3px;
 
     .container {
-      :first-child:before {
+      .thumbnail::before {
         content: "✓";
         color: white;
         background: $pdftron-blue;
