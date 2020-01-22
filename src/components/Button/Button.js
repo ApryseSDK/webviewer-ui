@@ -25,10 +25,13 @@ const propTypes = {
 const NOOP = () => {};
 
 const Button = props => {
-  const [isElementDisabled, customOverrides = {}] = useSelector(state => [
-    selectors.isElementDisabled(state, props.dataElement),
-    selectors.getCustomElementOverrides(state, props.dataElement),
-  ], shallowEqual);
+  const [removeElement, customOverrides = {}] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, props.dataElement),
+      selectors.getCustomElementOverrides(state, props.dataElement),
+    ],
+    shallowEqual,
+  );
 
   const {
     disable,
@@ -47,6 +50,7 @@ const Button = props => {
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
     img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
+  const shouldRenderTooltip = title && !disable;
 
   const children = (
     <div
@@ -66,7 +70,7 @@ const Button = props => {
     </div>
   );
 
-  return isElementDisabled ? null : title ? (
+  return removeElement ? null : shouldRenderTooltip ? (
     <Tooltip content={title}>{children}</Tooltip>
   ) : (
     children
