@@ -30,7 +30,9 @@ class SearchPanel extends React.PureComponent {
 
   state = {
     width: 293,
-  }
+  };
+
+  // this.document = React.createRef();
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
@@ -95,13 +97,12 @@ class SearchPanel extends React.PureComponent {
           }}
           leftDirection
         />
-        <div
-          className={className}
-          data-element="searchPanel"
-        >
+        <div className={className} data-element="searchPanel">
           <SearchOverlay />
           <div className="results">
-            {isSearching && <div className="info">{t('message.searching')}</div>}
+            {isSearching && (
+              <div className="info">{t('message.searching')}</div>
+            )}
             {noResult && <div className="info">{t('message.noResults')}</div>}
             {results.map((result, i) => {
               const prevResult = i === 0 ? results[0] : results[i - 1];
