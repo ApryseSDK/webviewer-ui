@@ -421,6 +421,8 @@ class SearchOverlay extends React.PureComponent {
       return null;
     }
 
+    console.log('results', results);
+
     return (
       <div className="SearchOverlay">
         <div className="input-container">
@@ -454,7 +456,7 @@ class SearchOverlay extends React.PureComponent {
         </div>
         <div className="divider" />
         <div className="footer">
-          asdfsdaf
+          {results.length} results found
           <div className="buttons">
             <div className="previous button" onClick={this.onClickPrevious}>
               <Icon

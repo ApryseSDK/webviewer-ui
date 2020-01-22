@@ -76,8 +76,6 @@
       margin-right: 10px;
 
       &:before {
-        // width: 16px;
-        // height: 16px;
         border: 1px solid #c3c6d4;
         border-radius: 2px;
         background: none;
@@ -91,7 +89,9 @@
 
   .footer {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    color: #c3c6d4;
 
     .buttons {
       display: flex;
