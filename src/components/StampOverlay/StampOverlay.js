@@ -22,6 +22,7 @@ class StampOverlay extends React.Component {
     activeToolName: PropTypes.string,
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
+    isActive: PropTypes.bool,
     t: PropTypes.func.isRequired,
     i18n: PropTypes.any,
     toolButtonObjects: PropTypes.object.isRequired,
@@ -29,6 +30,7 @@ class StampOverlay extends React.Component {
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
     dataElement: PropTypes.string.isRequired,
+    toggleElement: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -67,6 +69,10 @@ class StampOverlay extends React.Component {
     const clickedToolStylePopup = toolStylePopup?.contains(e.target);
     const clickedHeader = header?.contains(e.target);
     const rubberStampToolButton = e.target.getAttribute('data-element') === this.props.dataElement;
+
+    if (this.props.isActive) {
+      this.props.toggleElement('stampOverlay');
+    }
 
     if (!rubberStampToolButton) {
       this.props.closeElement('stampOverlay');
@@ -175,6 +181,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'stampOverlay'),
   isOpen: selectors.isElementOpen(state, 'stampOverlay'),
   activeToolName: selectors.getActiveToolName(state),
+  isActive: selectors.getActiveToolName(state) === TOOL_NAME,
   toolButtonObjects: selectors.getToolButtonObjects(state),
   dataElement: selectors.getToolButtonObjects(state)[TOOL_NAME].dataElement,
 });
@@ -183,6 +190,7 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements,
   closeElement: actions.closeElement,
   openElement: actions.openElement,
+  toggleElement: actions.toggleElement,
 };
 
 export default connect(
