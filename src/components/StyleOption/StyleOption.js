@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import './StyleOption.scss';
 
 function StyleOption(props) {
-  const initialStyle = props.initialStyle ? props.initialStyle : 'regular';
-  const [style, setStyle] = useState(initialStyle);
+  const style = props.initialStyle ? props.initialStyle : 'regular';
   const styleOptions = ['regular', 'cloudy'];
 
   const onChange = value => {
-    setStyle(value);
     props.onStyleChange('Style', value);
   };
 
