@@ -43,7 +43,7 @@ const ToolButton = ({ toolName, ...restProps }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (typeof customOverrides === 'undefined') {
+    if (typeof customOverrides?.disable === 'undefined') {
       return;
     }
 
