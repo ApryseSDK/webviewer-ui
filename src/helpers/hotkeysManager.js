@@ -356,7 +356,7 @@ WebViewer(...)
       }),
       s: this.createToolHotkeyHandler(() => {
         const sigToolButton = document.querySelector(
-          '[data-element="signatureToolButton"]',
+          '[data-element="signatureToolButton"] .Button',
         );
 
         sigToolButton?.click();

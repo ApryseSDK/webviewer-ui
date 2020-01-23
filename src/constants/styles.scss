@@ -115,16 +115,17 @@ $signature-modal-shared-color: #E1E1E3;
 }
 
 %cell {
-  flex: 1 0 28px;
+  width: 30px;
   height: 26px;
   display: flex;
-  margin: 0 1px;
+  margin: 1px;
 
   @include mobile {
     height: 30px;
-    margin: 0 1.2px;
+    width: 13.5%;
   }
 }
+
 // https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
 %word-wrap {
   overflow-wrap: break-word;
