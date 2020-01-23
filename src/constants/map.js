@@ -217,7 +217,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateSticky'],
+    toolNames: [
+      'AnnotationCreateSticky',
+      'AnnotationCreateSticky2',
+      'AnnotationCreateSticky3',
+      'AnnotationCreateSticky4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.StickyAnnotation,
   },

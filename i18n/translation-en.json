@@ -84,6 +84,8 @@
     "layersPanel": "Layers",
     "shapeToolsButton": "Shape tools",
     "textToolsButton": "Text tools",
+    "freeTextToolsButton": "Free Text tools",
+    "stickyToolsButton": "Comments tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
     "redaction": "Redaction",
