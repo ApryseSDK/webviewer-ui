@@ -64,7 +64,31 @@
     "stickyNote": "Note collante",
     "strikeout": "Barré",
     "underline": "Soulignage",
-    "custom": "personnalisation"
+    "custom": "personnalisation",
+    "rubberStamp": "Rubber Stamp"
+  },
+  "rubberStamp": {
+    "Approved": "Approuvée",
+    "AsIs": "Comme Si",
+    "Completed": "Terminé",
+    "Confidential": "Confidentielle",
+    "Departmental": "Départementale",
+    "Draft": "Brouillon",
+    "Experimental": "Expérimentale",
+    "Expired": "Expiré",
+    "Final": "Finale",
+    "ForComment": "Pour commentaire",
+    "ForPublicRelease": "Pour diffusion publique",
+    "InformationOnly": "Information seulement",
+    "NotApproved": "Non approuvé",
+    "NotForPublicRelease": "Pas pour diffusion publique",
+    "PreliminaryResults": "Résultats préliminaires",
+    "Sold": "Vendue",
+    "TopSecret": "Top Secret",
+    "Void": "Néant",
+    "SHSignHere": "Signez ici",
+    "SHWitness": "Témoin",
+    "SHInitialHere": "Initiale"
   },
   "component": {
     "freehandToolsButton": "Outils de stylo",
