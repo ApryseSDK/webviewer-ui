@@ -39,16 +39,16 @@ export default {
     StrokeColor: { R: 163, G: 224, B: 72, A: 1 },
   },
   AnnotationCreateTextHighlight: {
-    StrokeColor: { R: 255, G: 230, B: 162, A: 1 },
+    StrokeColor: { R: 247, G: 208, B: 56, A: 1 },
   },
   AnnotationCreateTextHighlight2: {
-    StrokeColor: { R: 146, G: 232, B: 232, A: 1 },
+    StrokeColor: { R: 163, G: 224, B: 72, A: 1 },
   },
   AnnotationCreateTextHighlight3: {
-    StrokeColor: { R: 128, G: 229, B: 177, A: 1 },
+    StrokeColor: { R: 51, G: 187, B: 230, A: 1 },
   },
   AnnotationCreateTextHighlight4: {
-    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+    StrokeColor: { R: 210, G: 59, B: 231, A: 1 },
   },
   AnnotationCreateTextUnderline: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
