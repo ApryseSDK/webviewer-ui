@@ -125,14 +125,12 @@ class StylePopup extends React.PureComponent {
       <div className="Popup StylePopup" data-element="stylePopup">
         {currentPalette && (
           <div className="colors-container">
-            <div className="inner-wrapper">
-              <ColorPaletteHeader
-                colorPalette={currentPalette}
-                colorMapKey={colorMapKey}
-                style={style}
-              />
-              {this.renderColorPalette()}
-            </div>
+            <ColorPaletteHeader
+              colorPalette={currentPalette}
+              colorMapKey={colorMapKey}
+              style={style}
+            />
+            {this.renderColorPalette()}
           </div>
         )}
         {!this.props.hideSlider && this.renderSliders()}

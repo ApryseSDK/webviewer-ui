@@ -115,23 +115,21 @@ class ColorPaletteHeader extends React.PureComponent {
     }
 
     return (
-      <div>
-        <div className="palette-options">
-          {availablePalettes.map((pallette, i) =>
-            <React.Fragment key={i}>
-              <div
-                className={classNames({
-                  'palette-options-button': true,
-                  active: colorPalette === pallette,
-                })}
-                onClick={() => this.setColorPalette(pallette)}
-              >
-                {t(`option.annotationColor.${pallette}`)}
-              </div>
-              {i < availablePalettes.length - 1 && <div className="palette-options-divider" />}
-            </React.Fragment>,
-          )}
-        </div>
+      <div className="palette-options">
+        {availablePalettes.map((pallette, i) =>
+          <React.Fragment key={i}>
+            <div
+              className={classNames({
+                'palette-options-button': true,
+                active: colorPalette === pallette,
+              })}
+              onClick={() => this.setColorPalette(pallette)}
+            >
+              {t(`option.annotationColor.${pallette}`)}
+            </div>
+            {i < availablePalettes.length - 1 && <div className="palette-options-divider" />}
+          </React.Fragment>,
+        )}
       </div>
     );
   }

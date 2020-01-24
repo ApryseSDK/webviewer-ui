@@ -6,7 +6,7 @@
     cursor: pointer;
   }
 
-  .slider-container {
+  .slider-svg-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -19,8 +19,8 @@
 
       line:nth-child(1) {
         stroke: #6077bf;
-
       }
+
       line:nth-child(2) {
         stroke: #dfe2ed;
       }
