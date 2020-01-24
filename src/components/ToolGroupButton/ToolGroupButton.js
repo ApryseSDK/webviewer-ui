@@ -127,7 +127,7 @@ class ToolGroupButton extends React.PureComponent {
           img={img}
           color={color}
         />
-        {showDownArrow && <Icon className="DownArrow" glyph="icon-chevron-down" />}
+        {showDownArrow && <Icon className="down-arrow " glyph="icon-chevron-down" />}
       </div>
 
     );

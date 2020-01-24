@@ -9,6 +9,7 @@ import MeasurementOption from 'components/MeasurementOption';
 
 import { circleRadius } from 'constants/slider';
 import selectors from 'selectors';
+import pickBy from 'lodash/pickBy';
 
 import './StylePopup.scss';
 
@@ -85,17 +86,35 @@ class StylePopup extends React.PureComponent {
       sliders = { Opacity };
     }
 
-    return Object.keys(sliders).map(key => {
-      const value = sliders[key];
-      if (value === null || value === undefined) {
-        // we still want to render a slider if the value is 0
-        return null;
-      }
+    sliders = pickBy(sliders, slider => slider !== null && slider !== undefined);
+
+    const sliderComponents = Object.keys(sliders).map(key => {
+      // const value = sliders[key];
+      // if (value === null || value === undefined) {
+      //   // we still want to render a slider if the value is 0
+      //   return null;
+      // }
 
       const props = sliderProps[key];
 
       return <Slider {...props} key={key} onStyleChange={onStyleChange} />;
     });
+
+    // sliderComponents = pickBy(sliderComponents, element => element !== null);
+    // debugger;
+
+    return (
+      <React.Fragment>
+        {sliderComponents.length > 0 && (
+          <div
+            className="sliders-container"
+            onMouseDown={e => e.preventDefault()}
+          >
+            {sliderComponents}
+          </div>
+        )}
+      </React.Fragment>
+    );
   };
 
   render() {
@@ -103,10 +122,7 @@ class StylePopup extends React.PureComponent {
     const { Scale, Precision } = style;
 
     return (
-      <div
-        className="Popup StylePopup"
-        data-element="stylePopup"
-      >
+      <div className="Popup StylePopup" data-element="stylePopup">
         {currentPalette && (
           <div className="colors-container">
             <div className="inner-wrapper">
@@ -119,12 +135,7 @@ class StylePopup extends React.PureComponent {
             </div>
           </div>
         )}
-        <div
-          className="sliders-container"
-          onMouseDown={e => e.preventDefault()}
-        >
-          {!this.props.hideSlider && this.renderSliders()}
-        </div>
+        {!this.props.hideSlider && this.renderSliders()}
         {Scale && Precision && (
           <MeasurementOption
             scale={Scale}

@@ -74,6 +74,7 @@ class ToolsOverlay extends React.PureComponent {
 
     if (clickedOnAnotherToolGroupButton) {
       this.setOverlayPosition();
+      this.setState({ isStylingOpen: false });
     }
 
     if (this.itemsContainer.current) {
@@ -113,10 +114,14 @@ class ToolsOverlay extends React.PureComponent {
   handleStyleClick = toolName => {
     if (toolName === this.state.toolNameThatOpenedStyling) {
       this.setState({ isStylingOpen: false, toolNameThatOpenedStyling: null });
+      // } else if () {
     } else {
-      this.setState({ isStylingOpen: true, toolNameThatOpenedStyling: toolName });
+      this.setState({
+        isStylingOpen: true,
+        toolNameThatOpenedStyling: toolName,
+      });
     }
-  }
+  };
 
   render() {
     const { left, right, top, isStylingOpen } = this.state;
@@ -144,47 +149,36 @@ class ToolsOverlay extends React.PureComponent {
         style={{ left, right, top }}
         data-element="toolsOverlay"
       >
-        <div
-          ref={this.toolsContainer}
-          className="ToolsContainer"
-        >
-          <div>
-            <div
-              className="Items-Container"
-              ref={this.itemsContainer}
-            >
-              {toolNames.map((toolName, i) => (
-                <ToolButton key={`${toolName}-${i}`} toolName={toolName} handleStyleClick={this.handleStyleClick} />
-              ))}
-              <div className="divider" />
-              <div
+        <div ref={this.toolsContainer} className="tools-container">
+          <div className="tool-buttons-container" ref={this.itemsContainer}>
+            {toolNames.map((toolName, i) => (
+              <ToolButton
+                key={`${toolName}-${i}`}
+                toolName={toolName}
+                handleStyleClick={this.handleStyleClick}
+              />
+            ))}
+            {/* <div className="divider" /> */}
+            {/* <div
                 className="Button ToolButton StyleButton"
                 onClick={this.handleStyleClick}
               >
                 <Icon
-                  glyph="icon - tools - more - vertical"
+                  glyph="icon-menu-add"
                 />
-              </div>
-            </div>
+              </div> */}
           </div>
-          {isStylingOpen &&
+
+          {isStylingOpen && (
             <React.Fragment>
-              <div className="divider-horizontal" />
+              {/* <div className="divider-horizontal" /> */}
               <ToolStylePopup siblingWidth={this.state.siblingWidth} />
             </React.Fragment>
-          }
+          )}
         </div>
-        <div
-          className="Close-Container"
-        >
-          <div
-            className="Close-Button"
-            onClick={this.handleCloseClick}
-          >
-            <Icon
-              className="Close-Icon"
-              glyph="icon-close"
-            />
+        <div className="Close-Container">
+          <div className="Close-Button" onClick={this.handleCloseClick}>
+            <Icon className="Close-Icon" glyph="icon-close" />
           </div>
         </div>
       </div>
@@ -206,7 +200,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ToolsOverlay);
+export default connect(mapStateToProps, mapDispatchToProps)(ToolsOverlay);

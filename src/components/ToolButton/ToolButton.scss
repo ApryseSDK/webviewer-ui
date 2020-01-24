@@ -4,13 +4,36 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 4px;
 
-  .ToolButton {
+
+
+  .styling-down-arrow-container {
+    // padding: 0 4px;
+    display: flex;
+    justify-content: center;
+    width: 32px;
+    padding-bottom: 4px;
+    // padding-top: -4px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--button-hover-color);
+    }
+
+    .styling-down-arrow {
+      width: 12px;
+      height: 12px;
+      margin-top: -2px;
+    }
+  }
+
+
+  .tool-button {
     min-width: 32px;
     min-height: 32px;
     height: 100%;
-    margin: 0 4px;
-    padding: 0;
 
     &.active {
       background: var(--tools-active-color);

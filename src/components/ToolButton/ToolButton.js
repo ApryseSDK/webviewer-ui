@@ -56,7 +56,7 @@ const ToolButton = ({ toolName, handleStyleClick, ...restProps }) => {
     <div className="tool-button-container">
       <Button
         className={classNames({
-          ToolButton: true,
+          'tool-button': true,
           hasStyles: toolStylesExist(toolName),
         })}
         onClick={handleClick}
@@ -67,12 +67,14 @@ const ToolButton = ({ toolName, handleStyleClick, ...restProps }) => {
       />
       {handleStyleClick &&
         <div
+          className="styling-down-arrow-container"
           onClick={() => {
             handleClick();
             handleStyleClick(toolName);
           }}
         >
           <Icon
+            className="styling-down-arrow"
             glyph="icon-chevron-down-bold"
           />
         </div>}
