@@ -20,7 +20,7 @@ const propTypes = {
   group: PropTypes.string,
 };
 
-const ToolButton = ({ toolName, handleStyleClick, ...restProps }) => {
+const ToolButton = ({ toolName, handleStyleClick, isStylingOpen, ...restProps }) => {
   const [
     isActive,
     iconColor,
@@ -53,14 +53,19 @@ const ToolButton = ({ toolName, handleStyleClick, ...restProps }) => {
   }
 
   return (
-    <div className="tool-button-container">
+    <div
+      className={classNames({
+        'tool-button-container': true,
+        active: isStylingOpen && isActive,
+      })}
+    >
       <Button
         className={classNames({
           'tool-button': true,
           hasStyles: toolStylesExist(toolName),
         })}
         onClick={handleClick}
-        isActive={isActive}
+        isActive={!isStylingOpen && isActive}
         color={color}
         {...restProps}
         {...restObjectData}

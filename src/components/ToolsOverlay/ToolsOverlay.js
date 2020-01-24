@@ -156,6 +156,7 @@ class ToolsOverlay extends React.PureComponent {
                 key={`${toolName}-${i}`}
                 toolName={toolName}
                 handleStyleClick={this.handleStyleClick}
+                isStylingOpen={isStylingOpen}
               />
             ))}
             {/* <div className="divider" /> */}

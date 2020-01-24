@@ -11,7 +11,7 @@
   &>.Container {
     display: flex;
     background-color: var(--zoom-background);
-    border-radius: var(--header-items-border-radius);
+    border-radius: 4px;
   }
 }
 

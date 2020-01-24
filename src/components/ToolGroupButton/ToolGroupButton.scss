@@ -1,9 +1,5 @@
 .ToolGroupButton {
-  // background: green;
-  // border-radius: var(--header-items-border-radius);
-
   margin: 0 2px;
-
   display: flex;
   align-items: center;
 
@@ -14,10 +10,9 @@
     margin-right: 4px;
   }
 
-
   &:hover {
     background: var(--button-hover-color);;
-    border-radius: var(--header-items-border-radius);
+    border-radius: 4px;
   }
 }
 

@@ -7,21 +7,16 @@
   align-items: center;
   font-size: 16px;
   cursor: pointer;
-  border-radius: var(--header-items-border-radius);
+  border-radius: 4px;
 
   img {
     width: 24px;
   }
 
   &:hover {
-    background: #F6F6F6;
     background: var(--button-hover-color);
 
     @media (hover: none) {
-      background: transparent;
-    }
-
-    @include mobile {
       background: transparent;
     }
   }

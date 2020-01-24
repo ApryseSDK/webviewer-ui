@@ -4,9 +4,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 4px;
   margin: 0 4px;
 
+  &.active {
+    background: #767f9b33;
+    .styling-down-arrow-container{
+      svg {
+        color: #767f9b;
+      }
+    }
 
+    div:hover {
+      background: none;
+    }
+  }
 
   .styling-down-arrow-container {
     display: flex;
@@ -27,14 +39,13 @@
     }
   }
 
-
   .tool-button {
     min-width: 32px;
     min-height: 32px;
     height: 100%;
 
     &.active {
-      background: var(--tools-active-color);
+      background: #767f9b33;
     }
   }
 }
