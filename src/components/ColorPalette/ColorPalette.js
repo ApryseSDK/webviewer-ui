@@ -22,11 +22,15 @@ class ColorPalette extends React.PureComponent {
 
   constructor(props) {
     super(props);
+    // this.palette = [
+    //   ['#F1A099', '#FFC67B', '#FFE6A2', '#80E5B1', '#92E8E8', '#A6A1E6', '#E2A1E6'],
+    //   ['#E44234', '#FF8D00', '#FFCD45', '#00CC63', '#25D2D1', '#4E7DE9', '#C544CE'],
+    //   ['#88271F', '#B54800', '#F69A00', '#007A3B', '#167E7D', '#2E4B8B', '#76287B'],
+    //   ['#FFFFFF', '#CDCDCD', '#9C9C9C', '#696969', '#373737', '#000000'],
+    // ];
     this.palette = [
-      ['#F1A099', '#FFC67B', '#FFE6A2', '#80E5B1', '#92E8E8', '#A6A1E6', '#E2A1E6'],
-      ['#E44234', '#FF8D00', '#FFCD45', '#00CC63', '#25D2D1', '#4E7DE9', '#C544CE'],
-      ['#88271F', '#B54800', '#F69A00', '#007A3B', '#167E7D', '#2E4B8B', '#76287B'],
-      ['#FFFFFF', '#CDCDCD', '#9C9C9C', '#696969', '#373737', '#000000'],
+      ['#000000', '#ffffff', '#e6261f', '#eb7532', '#f7d038', '#a3e048'],
+      ['#33bbe6', '#4355db', '#d23be7'],
     ];
   }
 
@@ -81,7 +85,7 @@ class ColorPalette extends React.PureComponent {
               })}
             >
               <svg width="100%" height="100%">
-                <line x1="15%" y1="85%" x2="85%" y2="15%" strokeWidth="2" stroke="#d0021b" strokeLinecap="round" />
+                <line x1="15%" y1="85%" x2="85%" y2="15%" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </div>
           </div>}
@@ -95,7 +99,7 @@ class ColorPalette extends React.PureComponent {
               <div
                 className={classNames({
                   cell: true,
-                  active: color.toHexString() === bg,
+                  active: color.toHexString() === bg.toLowerCase(),
                 })}
                 style={{ backgroundColor: bg, border: '1px solid' }}
               />

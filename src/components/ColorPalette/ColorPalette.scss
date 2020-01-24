@@ -24,7 +24,11 @@
       border-radius: 10000000px;
 
       &.transparent {
-        border: 2px solid #8c8c8c;
+        border: 2px solid #c3c6d4;
+
+        line {
+          stroke: #c3c6d4;
+        }
       }
 
       &.active {
