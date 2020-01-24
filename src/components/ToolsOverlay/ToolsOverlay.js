@@ -110,8 +110,12 @@ class ToolsOverlay extends React.PureComponent {
     closeElements(['toolsOverlay']);
   };
 
-  handleStyleClick = () => {
-    this.setState({ isStylingOpen: !this.state.isStylingOpen });
+  handleStyleClick = toolName => {
+    if (toolName === this.state.toolNameThatOpenedStyling) {
+      this.setState({ isStylingOpen: false, toolNameThatOpenedStyling: null });
+    } else {
+      this.setState({ isStylingOpen: true, toolNameThatOpenedStyling: toolName });
+    }
   }
 
   render() {
@@ -150,7 +154,7 @@ class ToolsOverlay extends React.PureComponent {
               ref={this.itemsContainer}
             >
               {toolNames.map((toolName, i) => (
-                <ToolButton key={`${toolName}-${i}`} toolName={toolName} />
+                <ToolButton key={`${toolName}-${i}`} toolName={toolName} handleStyleClick={this.handleStyleClick} />
               ))}
               <div className="divider" />
               <div

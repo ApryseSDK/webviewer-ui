@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 
 import core from 'core';
 import toolStylesExist from 'helpers/toolStylesExist';
@@ -19,7 +20,7 @@ const propTypes = {
   group: PropTypes.string,
 };
 
-const ToolButton = ({ toolName, ...restProps }) => {
+const ToolButton = ({ toolName, handleStyleClick, ...restProps }) => {
   const [
     isActive,
     iconColor,
@@ -52,17 +53,30 @@ const ToolButton = ({ toolName, ...restProps }) => {
   }
 
   return (
-    <Button
-      className={classNames({
-        ToolButton: true,
-        hasStyles: toolStylesExist(toolName),
-      })}
-      onClick={handleClick}
-      isActive={isActive}
-      color={color}
-      {...restProps}
-      {...restObjectData}
-    />
+    <div className="tool-button-container">
+      <Button
+        className={classNames({
+          ToolButton: true,
+          hasStyles: toolStylesExist(toolName),
+        })}
+        onClick={handleClick}
+        isActive={isActive}
+        color={color}
+        {...restProps}
+        {...restObjectData}
+      />
+      {handleStyleClick &&
+        <div
+          onClick={() => {
+            handleClick();
+            handleStyleClick(toolName);
+          }}
+        >
+          <Icon
+            glyph="icon-chevron-down-bold"
+          />
+        </div>}
+    </div>
   );
 };
 

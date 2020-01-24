@@ -1,13 +1,19 @@
 @import '../../constants/styles';
 
-.ToolButton {
-  min-width: 32px;
-  min-height: 32px;
-  height: 100%;
-  margin: 0 4px;
-  padding: 0;
+.tool-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  &.active {
-    background: var(--tools-active-color);
+  .ToolButton {
+    min-width: 32px;
+    min-height: 32px;
+    height: 100%;
+    margin: 0 4px;
+    padding: 0;
+
+    &.active {
+      background: var(--tools-active-color);
+    }
   }
 }
