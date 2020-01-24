@@ -87,38 +87,44 @@ class MenuOverlay extends React.PureComponent {
       <div className={className} data-element="menuOverlay" style={{ left, right, top }} ref={this.overlay}>
         <div className="MenuContainer">
           {!isIOS &&
-            <div
-              className="MenuItem"
-              onClick={toggleFullscreen}
-            >
-              <Icon
-                className="MenuIcon"
-                glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
-              />
-              <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+            <div className="row">
+              <div
+                className="MenuItem"
+                onClick={toggleFullscreen}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+                />
+                <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+              </div>
             </div>
           }
           {isDownloadable &&
+            <div className="row">
+              <div
+                className="MenuItem"
+                onClick={this.downloadDocument}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph="icon-header-download"
+                />
+                <div className="MenuLabel">{t('action.download')}</div>
+              </div>
+            </div>
+          }
+          <div className="row">
             <div
               className="MenuItem"
-              onClick={this.downloadDocument}
+              onClick={this.handlePrintButtonClick}
             >
               <Icon
                 className="MenuIcon"
-                glyph="icon-header-download"
+                glyph="icon-header-print-line"
               />
-              <div className="MenuLabel">{t('action.download')}</div>
+              <div className="MenuLabel">{t('action.print')}</div>
             </div>
-          }
-          <div
-            className="MenuItem"
-            onClick={this.handlePrintButtonClick}
-          >
-            <Icon
-              className="MenuIcon"
-              glyph="icon-header-print-line"
-            />
-            <div className="MenuLabel">{t('action.print')}</div>
           </div>
           {/* <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
           <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} /> */}

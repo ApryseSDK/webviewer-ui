@@ -7,7 +7,6 @@ import Icon from 'components/Icon';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
-import defaultTool from 'constants/defaultTool';
 import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -101,6 +100,7 @@ class ToolGroupButton extends React.PureComponent {
       allButtonsInGroupDisabled,
       iconColor,
       title,
+      showDownArrow = true,
     } = this.props;
 
 
@@ -113,12 +113,6 @@ class ToolGroupButton extends React.PureComponent {
         ? getToolStyles(toolName)[iconColor] &&
           getToolStyles(toolName)[iconColor].toHexString()
         : '';
-    // If it's a misc tool group button or customized tool group button we don't want to have the down arrow
-    // const showDownArrow = this.props.img === undefined;
-    const showDownArrow = true;
-    // const className = ['ToolGroupButton']
-    //   .join(' ')
-    //   .trim();
 
     return allButtonsInGroupDisabled ? null : (
       <div

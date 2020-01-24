@@ -68,7 +68,7 @@ export default {
           render: () => <SignatureToolButton />,
           dataElement: 'signatureToolButton',
         },
-        { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
+        { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', showDownArrow: false },
         { type: 'divider' },
         {
           type: 'actionButton',
