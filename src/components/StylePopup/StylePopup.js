@@ -86,22 +86,14 @@ class StylePopup extends React.PureComponent {
       sliders = { Opacity };
     }
 
+    // we still want to render a slider if the value is 0
     sliders = pickBy(sliders, slider => slider !== null && slider !== undefined);
 
     const sliderComponents = Object.keys(sliders).map(key => {
-      // const value = sliders[key];
-      // if (value === null || value === undefined) {
-      //   // we still want to render a slider if the value is 0
-      //   return null;
-      // }
-
       const props = sliderProps[key];
 
       return <Slider {...props} key={key} onStyleChange={onStyleChange} />;
     });
-
-    // sliderComponents = pickBy(sliderComponents, element => element !== null);
-    // debugger;
 
     return (
       <React.Fragment>
