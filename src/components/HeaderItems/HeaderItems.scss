@@ -4,25 +4,10 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: 100%;
   position: relative;
 
-  & .Button {
-    min-width: 32px;
-    height: 100%;
-    margin: 0 4px;
-    padding: 0;
-  }
-
-  & > * {
-    padding: 0;
-    & > * {
-      padding: 0;
-    }
-  }
-
-  span {
-    display: flex;
+  .Button {
+    margin: 0 2px;
   }
 
   .spacer {
@@ -33,7 +18,7 @@
   .divider {
     width: 1px;
     height: 20px;
-    margin: 0 10px;
+    margin: 0 8px;
     background: var(--icon-color);
   }
 }
