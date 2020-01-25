@@ -13,17 +13,17 @@ import './ToggleZoomOverlay.scss';
 
 const ToggleZoomOverlay = () => {
   const [isActive] = useSelector(
-    state => [
-      selectors.isElementOpen(state, 'zoomOverlay'),
-    ],
+    state => [selectors.isElementOpen(state, 'zoomOverlay')],
     shallowEqual,
   );
   const dispatch = useDispatch();
   const [value, setValue] = useState('100');
 
   useEffect(() => {
-    const onDocumentLoaded = () => setValue(Math.ceil(core.getZoom() * 100).toString());
-    const onZoomUpdated = () => setValue(Math.ceil(core.getZoom() * 100).toString());
+    const onDocumentLoaded = () =>
+      setValue(Math.ceil(core.getZoom() * 100).toString());
+    const onZoomUpdated = () =>
+      setValue(Math.ceil(core.getZoom() * 100).toString());
 
     core.addEventListener('documentLoaded', onDocumentLoaded);
     core.addEventListener('zoomUpdated', onZoomUpdated);
@@ -69,42 +69,49 @@ const ToggleZoomOverlay = () => {
   };
 
   return (
-    <div className="asdf123">
-      <div className="Container">
-        <div className="ToggleZoomOverlay">
-          <div className={classNames({
+    <div className="Container">
+      <div className="ToggleZoomOverlay">
+        <div
+          className={classNames({
             OverlayContainer: true,
-            'active': isActive,
+            active: isActive,
           })}
+        >
+          <div
+            className="OverlayText"
+            onClick={() => dispatch(actions.toggleElement('zoomOverlay'))}
           >
-            <div className="OverlayText" onClick={() => dispatch(actions.toggleElement('zoomOverlay'))}>
-              <input
-                type="text"
-                className="textarea"
-                value={value}
-                onChange={onChange}
-                onKeyPress={onKeyPress}
-                onBlur={onBlur}
-                tabIndex={-1}
-              />
-              <span>%</span>
-            </div>
-            <ToggleElementButton className="OverlayButton" img="icon-chevron-down" element="zoomOverlay" dataElement="zoomOverlay"/>
+            <input
+              type="text"
+              className="textarea"
+              value={value}
+              onChange={onChange}
+              onKeyPress={onKeyPress}
+              onBlur={onBlur}
+              tabIndex={-1}
+            />
+            <span>%</span>
           </div>
+          <ToggleElementButton
+            className="OverlayButton"
+            img="icon-chevron-down"
+            element="zoomOverlay"
+            dataElement="zoomOverlay"
+          />
         </div>
-        <ActionButton
-          img="icon-header-zoom-out-line"
-          onClick={zoomOut}
-          title="action.zoomOut"
-          dataElement="zoomOutButton"
-        />
-        <ActionButton
-          img="icon-header-zoom-in-line"
-          onClick={zoomIn}
-          title="action.zoomIn"
-          dataElement="zoomInButton"
-        />
       </div>
+      <ActionButton
+        img="icon-header-zoom-out-line"
+        onClick={zoomOut}
+        title="action.zoomOut"
+        dataElement="zoomOutButton"
+      />
+      <ActionButton
+        img="icon-header-zoom-in-line"
+        onClick={zoomIn}
+        title="action.zoomIn"
+        dataElement="zoomInButton"
+      />
     </div>
   );
 };
