@@ -71,6 +71,7 @@ import drawAnnotationsFromList from './drawAnnotationsFromList';
 import setInternalAnnotationsTransform from './setInternalAnnotationsTransform';
 import setPagesUpdatedInternalAnnotationsTransform from './setPagesUpdatedInternalAnnotationsTransform';
 import loadAsync from './loadAsync';
+import loadDocument from './loadDocument';
 import loadThumbnailAsync from './loadThumbnailAsync';
 import getSelectedTextQuads from './getSelectedTextQuads';
 import getDisplayModeObject from './getDisplayModeObject';
@@ -184,6 +185,7 @@ export default {
   setPagesUpdatedInternalAnnotationsTransform,
   loadThumbnailAsync,
   loadAsync,
+  loadDocument,
   getSelectedTextQuads,
   getDisplayModeObject,
   getScrollViewElement,

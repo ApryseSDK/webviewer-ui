@@ -46,7 +46,6 @@ import extractPagesWithAnnotations from './extractPagesWithAnnotations';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
-import getConstants from './getConstants';
 import getCurrentPageNumber from './getCurrentPageNumber';
 import getFitMode from './getFitMode';
 import getLayoutMode from './getLayoutMode';
@@ -89,7 +88,6 @@ import setCustomNoteFilter from './setCustomNoteFilter';
 import setCustomPanel from './setCustomPanel';
 import exportBookmarks from './exportBookmarks';
 import importBookmarks from './importBookmarks';
-import setEngineType from './setEngineType';
 import setFitMode from './setFitMode';
 import setHeaderItems from './setHeaderItems';
 import setIconColor from './setIconColor';
@@ -260,12 +258,10 @@ export default store => {
     loadedFromServer: false,
     serverFailed: false,
     i18n: i18next,
-    constants: getConstants(),
     setColorPalette: setColorPalette(store),
-    setEngineType: setEngineType(store),
     showWarningMessage: showWarningMessage(store),
     updateOutlines: updateOutlines(store),
-    getBBAnnotManager: getBBAnnotManager(store),
+    getBBAnnotManager,
     selectors: getSelectors(store),
   };
 };

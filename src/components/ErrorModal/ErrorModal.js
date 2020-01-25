@@ -9,12 +9,11 @@ import selectors from 'selectors';
 import './ErrorModal.scss';
 
 const ErrorModal = () => {
-  const [message, isDisabled, isOpen, documentPath] = useSelector(
+  const [message, isDisabled, isOpen] = useSelector(
     state => [
       selectors.getErrorMessage(state),
       selectors.isElementDisabled(state, 'errorModal'),
       selectors.isElementOpen(state, 'errorModal'),
-      selectors.getDocumentPath(state),
     ],
     shallowEqual,
   );
@@ -36,12 +35,6 @@ const ErrorModal = () => {
 
   useEffect(() => {
     const onError = error => {
-      if (documentPath.indexOf('file:///') > -1) {
-        console.error(
-          `WebViewer doesn't have access to file URLs because of browser security restrictions. Please see https://www.pdftron.com/documentation/web/guides/basics/troubleshooting-document-loading#not-allowed-to-load-local-resource:-file:`,
-        );
-      }
-
       error = error.detail || error.message;
       let errorMessage;
 
@@ -63,7 +56,7 @@ const ErrorModal = () => {
 
     window.addEventListener('loaderror', onError);
     return () => window.removeEventListener('loaderror', onError);
-  }, [dispatch, documentPath, t]);
+  }, [dispatch, t]);
 
   return isDisabled ? null : (
     <div

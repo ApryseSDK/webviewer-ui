@@ -22,7 +22,6 @@ import './PrintModal.scss';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
-    isEmbedPrintSupported: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     currentPage: PropTypes.number,
@@ -598,7 +597,6 @@ class PrintModal extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
   isDisabled: selectors.isElementDisabled(state, 'printModal'),
   isApplyWatermarkDisabled: selectors.isElementDisabled(state, 'applyWatermark'),
   isOpen: selectors.isElementOpen(state, 'printModal'),

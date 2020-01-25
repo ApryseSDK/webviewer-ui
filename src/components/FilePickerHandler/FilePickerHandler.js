@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore, useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import loadDocument from 'helpers/loadDocument';
 import actions from 'actions';
@@ -13,15 +13,13 @@ const FilePickerHandler = () => {
     shallowEqual,
   );
   const dispatch = useDispatch();
-  const store = useStore();
 
   const openDocument = e => {
     const file = e.target.files[0];
     if (file) {
-      dispatch(actions.setDocumentFile(file));
       dispatch(actions.openElement('progressModal'));
       dispatch(actions.closeElement('menuOverlay'));
-      loadDocument(store.getState(), dispatch);
+      loadDocument(dispatch, file);
     }
   };
 
