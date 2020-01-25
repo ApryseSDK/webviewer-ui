@@ -4,7 +4,7 @@ import onClickOutside from 'react-onclickoutside';
 import { connect } from 'react-redux';
 
 import StylePopup from 'components/StylePopup';
-
+import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
@@ -106,29 +106,12 @@ class ToolStylePopup extends React.PureComponent {
       return;
     }
 
-    const { left, top } = this.getToolStylePopupPositionBasedOn(
+    const { left, top } = getToolStylePopupPositionBasedOn(
       toolButton,
       this.popup,
     );
 
     this.setState({ left, top });
-  };
-
-  getToolStylePopupPositionBasedOn = (toolButton, popup) => {
-    const buttonRect = toolButton.getBoundingClientRect();
-    const popupRect = popup.current.getBoundingClientRect();
-    const buttonCenter = (buttonRect.left + buttonRect.right) / 2;
-    const popupTop = buttonRect.bottom + 1;
-    let popupLeft = buttonCenter - popupRect.width / 2;
-    const popupRight = buttonCenter + popupRect.width / 2;
-
-    popupLeft =
-      popupRight > window.innerWidth
-        ? window.innerWidth - popupRect.width - 12
-        : popupLeft;
-    popupLeft = popupLeft < 0 ? 0 : popupLeft;
-
-    return { left: popupLeft, top: popupTop };
   };
 
   render() {
