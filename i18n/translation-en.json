@@ -37,7 +37,8 @@
     "zoomOut": "Zoom out",
     "draw": "Draw",
     "type": "Type",
-    "upload": "Upload"
+    "upload": "Upload",
+    "link": "Link"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",
@@ -139,7 +140,8 @@
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
     "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
-    "enterMeasurement": "Enter measurement between the two points"
+    "enterMeasurement": "Enter measurement between the two points",
+    "linkURLorPage": "Link URL or a Page"
   },
   "option": {
     "annotationColor": {
@@ -282,6 +284,13 @@
   "tool": {
     "pan": "Pan",
     "select": "Select",
-    "Marquee": "Marquee Zoom"
+    "Marquee": "Marquee Zoom",
+    "Link": "Link URL or Page"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Page",
+    "enterurl": "Enter URL you would like to link to",
+    "enterpage": "Select the page number you would like to link to"
   }
 }

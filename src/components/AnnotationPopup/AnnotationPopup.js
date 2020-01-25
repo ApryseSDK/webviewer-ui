@@ -292,6 +292,14 @@ const AnnotationPopup = () => {
               }}
             />
           )}
+          {!(['CropPage', 'AnnotationCreateSignature', 'AnnotationCreateRedaction'].includes(firstAnnotation.ToolName)) && (<ActionButton
+            title="tool.Link"
+            img="icon-tool-link"
+            onClick={() =>
+              dispatch(actions.openElement('linkModal'))
+            }
+            dataElement="linkButton"
+          />)}
         </CustomizablePopup>
       )}
     </div>

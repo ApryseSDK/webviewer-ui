@@ -105,6 +105,7 @@ export default {
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'calibrateButton' },
+      { dataElement: 'linkButton' },
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
@@ -113,6 +114,7 @@ export default {
       { dataElement: 'textSquigglyToolButton' },
       { dataElement: 'textStrikeoutToolButton' },
       { dataElement: 'textRedactToolButton' },
+      { dataElement: 'linkButton' },
     ],
     contextMenuPopup: [
       { dataElement: 'panToolButton' },
@@ -159,6 +161,7 @@ export default {
     },
     tab: {
       signatureModal: 'inkSignaturePanelButton',
+      linkModal: 'URLPanelButton',
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
