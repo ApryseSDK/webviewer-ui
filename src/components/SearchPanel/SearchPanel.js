@@ -102,7 +102,7 @@ class SearchPanel extends React.PureComponent {
         />
         <div className={className} data-element="searchPanel">
           <SearchOverlay />
-          <div className={`results ${isWildCardSearchDisabled ? '' : 'wild-card-visible'}`}>
+          <div className={`results`}>
             {isSearching && (
               <div className="info">{t('message.searching')}</div>
             )}
