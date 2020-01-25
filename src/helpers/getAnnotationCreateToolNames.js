@@ -11,9 +11,6 @@ export default () => {
     if (isAnnotationTool) {
       toolNames.push(tool.name);
     }
-
-    // TODO: remove this after this PR is in https://github.com/XodoDocs/webviewer/pull/597
-    toolNames.push('AnnotationCreateRubberStamp');
   });
 
   return toolNames;

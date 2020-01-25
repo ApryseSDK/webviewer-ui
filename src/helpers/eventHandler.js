@@ -45,8 +45,7 @@ export default store => {
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
-      // TODO: remove the optional chaining after this PR is in https://github.com/XodoDocs/webviewer/pull/597
-      core.getTool('AnnotationCreateRubberStamp')?.on('annotationAdded', onRubberStampAnnotationAdded);
+      core.getTool('AnnotationCreateRubberStamp').on('annotationAdded', onRubberStampAnnotationAdded);
       hotkeysManager.initialize(store);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
