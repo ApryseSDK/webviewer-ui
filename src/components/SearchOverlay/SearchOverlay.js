@@ -453,7 +453,7 @@ class SearchOverlay extends React.PureComponent {
             onKeyDown={this.onKeyDown}
             value={searchValue}
           />
-          <div className="input-button" onClick={() => {}}>
+          <div className="input-button" onClick={() => { }}>
             <Icon glyph="ic_search_black_24px" />
           </div>
         </div>
@@ -473,9 +473,13 @@ class SearchOverlay extends React.PureComponent {
             label={t('option.searchPanel.wholeWordOnly')}
           />
           {!isWildCardSearchDisabled &&
-          <div className="search-option" data-element="wildCardSearchOption">
-            <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
-          </div>}
+            <Input
+              id="wild-card-option"
+              type="checkbox"
+              ref={this.wildcardInput}
+              onChange={this.onChangeWildcard}
+              label={t('option.searchPanel.wildcard')}
+            />}
         </div>
         <div className="divider" />
         <div className="footer">
