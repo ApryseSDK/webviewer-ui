@@ -8,12 +8,10 @@
   min-width: $button-width;
   height: $button-height;
   padding: 6px;
-  // margin: 0 2px;
   font-size: 16px;
   cursor: pointer;
 
   @include mobile {
-    // margin: 0 1px;
     min-width: $button-width-m;
     height: $button-height-m;
   }
@@ -26,7 +24,20 @@
     }
   }
 
-  &:hover {
+  &.disable {
+    cursor: not-allowed;
+    color: $gray20;
+
+    .Icon {
+      color: $gray20;
+    }
+
+    &.down-arrow:after {
+      border-top: 6px solid $gray20;
+    }
+  }
+
+  &:hover:not(.disable) {
     background: #F6F6F6;
     background: var(--button-hover-color);
 

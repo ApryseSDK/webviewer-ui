@@ -6,6 +6,7 @@ import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
+import StyleOption from 'components/StyleOption';
 
 import { circleRadius } from 'constants/slider';
 import selectors from 'selectors';
@@ -90,7 +91,7 @@ class StylePopup extends React.PureComponent {
 
   render() {
     const { currentPalette, style, colorMapKey, onStyleChange } = this.props;
-    const { Scale, Precision } = style;
+    const { Scale, Precision, Style } = style;
 
     return (
       <div
@@ -124,6 +125,7 @@ class StylePopup extends React.PureComponent {
             onStyleChange={onStyleChange}
           />
         )}
+        { colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} initialStyle={Style}/>}
       </div>
     );
   }

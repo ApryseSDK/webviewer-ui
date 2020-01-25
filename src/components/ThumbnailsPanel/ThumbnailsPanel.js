@@ -6,6 +6,7 @@ import Measure from 'react-measure';
 import classNames from 'classnames';
 
 import Thumbnail, { THUMBNAIL_SIZE } from 'components/Thumbnail';
+import DocumentControls from 'components/DocumentControls';
 
 import core from 'core';
 import selectors from 'selectors';
@@ -18,6 +19,8 @@ class ThumbnailsPanel extends React.PureComponent {
     isDisabled: PropTypes.bool,
     totalPages: PropTypes.number,
     display: PropTypes.string.isRequired,
+    selectedPageIndexes: PropTypes.arrayOf(PropTypes.number),
+    setSelectedPageThumbnails: PropTypes.func.isRequired,
     currentPage: PropTypes.number,
     isThumbnailMergingEnabled: PropTypes.bool,
     isThumbnailReorderingEnabled: PropTypes.bool,
@@ -33,9 +36,11 @@ class ThumbnailsPanel extends React.PureComponent {
     this.afterMovePageNumber = null;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
+      isDocumentControlHidden: true,
       canLoad: true,
       height: 0,
       width: 0,
+      documentControlHeight: 0,
       draggingOverPageIndex: null,
       isDraggingToPreviousPage: false,
     };
@@ -68,14 +73,15 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   onDragEnd = () => {
-    const { currentPage } = this.props;
+    const { currentPage, selectedPageIndexes, setSelectedPageThumbnails } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     if (draggingOverPageIndex !== null) {
       const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
+      const pageNumberIncreased = currentPage < targetPageNumber;
       let afterMovePageNumber = null;
 
-      if (currentPage < targetPageNumber) {
-        // moving page down so target page number will decrease
+      if (pageNumberIncreased) {
+        // moving page down so destination page number will decrease by 1 since that page been moved
         afterMovePageNumber = targetPageNumber - 1;
       } else {
         // moving page up
@@ -83,7 +89,24 @@ class ThumbnailsPanel extends React.PureComponent {
       }
 
       this.afterMovePageNumber = afterMovePageNumber;
-      core.movePages([currentPage], targetPageNumber);
+      core.movePages([currentPage], targetPageNumber).then(() => {
+        const currentPageIndex = currentPage - 1;
+        const targetPageIndex = this.afterMovePageNumber - 1;
+
+        // update selected pages affected by the move, exclude the page that was moved
+        let updateSelectedPageIndexes = selectedPageIndexes.filter(pageIndex => pageIndex !== currentPageIndex);
+        if (pageNumberIncreased) {
+          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p > currentPageIndex && p <= targetPageIndex ? p - 1 : p));
+        } else {
+          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p < currentPageIndex && p >= targetPageIndex ? p + 1 : p));
+        }
+
+        if (selectedPageIndexes.includes(currentPageIndex)) {
+          updateSelectedPageIndexes.push(targetPageIndex);
+        }
+
+        setSelectedPageThumbnails(updateSelectedPageIndexes);
+      });
     }
 
     this.setState({ draggingOverPageIndex: null });
@@ -351,7 +374,7 @@ class ThumbnailsPanel extends React.PureComponent {
       draggingOverPageIndex,
       isDraggingToPreviousPage,
     } = this.state;
-    const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
+    const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled, selectedPageIndexes } = this.props;
     const { thumbs } = this;
     const className = classNames({
       columnsOfThumbnails: (numberOfColumns > 1),
@@ -373,6 +396,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 )}
                 <Thumbnail
                   isDraggable={isThumbnailReorderingEnabled}
+                  isSelected={selectedPageIndexes.includes(thumbIndex)}
                   index={thumbIndex}
                   canLoad={canLoad}
                   onLoad={this.onLoad}
@@ -393,10 +417,19 @@ class ThumbnailsPanel extends React.PureComponent {
     );
   }
 
+  toggleDocumentControl = shouldShowControls => {
+    this.props.setSelectedPageThumbnails([]);
+    this.setState({
+      isDocumentControlHidden: !shouldShowControls,
+    });
+  }
+
   render() {
-    const { isDisabled, totalPages, display, isThumbnailControlDisabled } = this.props;
-    const { numberOfColumns, height, width } = this.state;
+    const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes } = this.props;
+    const { numberOfColumns, height, width, documentControlHeight, isDocumentControlHidden } = this.state;
     const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
+
+    const shouldShowControls = !isDocumentControlHidden || selectedPageIndexes.length > 0;
 
     return isDisabled ? null : (
       <div
@@ -416,10 +449,15 @@ class ThumbnailsPanel extends React.PureComponent {
           }}
         >
           {({ measureRef }) => (
-            <div ref={measureRef} className="virtualized-thumbnails-container" >
+            <div ref={measureRef} className="virtualized-thumbnails-container"
+              style={{
+                // when 'shouldShowControls' is true but documentControlHeight isn't set yet, add a maxHeight to keep the height from re-measuring
+                maxHeight: shouldShowControls && !documentControlHeight ? height : null,
+              }}
+            >
               <List
                 ref={this.listRef}
-                height={height}
+                height={shouldShowControls ? height - documentControlHeight : height}
                 width={width}
                 rowHeight={thumbnailHeight}
                 // Round it to a whole number because React-Virtualized list library doesn't round it for us and throws errors when rendering non whole number rows
@@ -427,8 +465,26 @@ class ThumbnailsPanel extends React.PureComponent {
                 rowCount={Math.ceil(totalPages / numberOfColumns)}
                 rowRenderer={this.renderThumbnails}
                 overscanRowCount={10}
+                className={'thumbnailsList'}
                 style={{ outline: 'none' }}
               />
+                <Measure
+                  bounds
+                  onResize={({ bounds }) => {
+                    this.setState({
+                      documentControlHeight: Math.ceil(bounds.height),
+                    });
+                  }}
+                >
+                  {({ measureRef: innerMeasureRef }) => (
+                    <div ref={innerMeasureRef}>
+                      <DocumentControls
+                        toggleDocumentControl={this.toggleDocumentControl}
+                        shouldShowControls={shouldShowControls}
+                      />
+                    </div>
+                  )}
+                </Measure>
             </div>
           )}
         </Measure>
@@ -439,12 +495,15 @@ class ThumbnailsPanel extends React.PureComponent {
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
+  setSelectedPageThumbnails: pages => dispatch(actions.setSelectedPageThumbnails(pages)),
+  showWarningMessage: warning => dispatch(actions.showWarningMessage(warning)),
 });
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'thumbnailsPanel'),
   totalPages: selectors.getTotalPages(state),
   currentPage: selectors.getCurrentPage(state),
+  selectedPageIndexes: selectors.getSelectedThumbnailPageIndexes(state),
   isThumbnailMergingEnabled: selectors.getIsThumbnailMergingEnabled(state),
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),
   isThumbnailControlDisabled: selectors.isElementDisabled(state, 'thumbnailControl'),

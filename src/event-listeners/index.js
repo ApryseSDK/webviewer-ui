@@ -16,6 +16,7 @@ import onFullScreenChange from './onFullScreenChange';
 import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
 import onLayoutChanged from './onLayoutChanged';
 import onLocationSelected from './onLocationSelected';
+import onRubberStampAnnotationAdded from './onRubberStampAnnotationAdded';
 import onPageComplete from './onPageComplete';
 
 export {
@@ -37,5 +38,6 @@ export {
   onUpdateAnnotationPermission,
   onLayoutChanged,
   onLocationSelected,
+  onRubberStampAnnotationAdded,
   onPageComplete,
 };
