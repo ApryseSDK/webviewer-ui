@@ -1,7 +1,8 @@
 @import '../../constants/styles';
 
-.Container {
+.zoom-overlay {
   display: flex;
+  align-items: center;
   background-color: var(--zoom-background);
   border-radius: 4px;
   height: 28px;

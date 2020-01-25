@@ -69,7 +69,7 @@ const ToggleZoomOverlay = () => {
   };
 
   return (
-    <div className="Container">
+    <div className="zoom-overlay">
       <div className="ToggleZoomOverlay">
         <div
           className={classNames({
