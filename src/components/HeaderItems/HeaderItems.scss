@@ -5,9 +5,14 @@
   align-items: center;
   width: 100%;
   position: relative;
+  padding: 0 4px;
+
+  .tool-button-container {
+    margin: 0;
+  }
 
   .Button {
-    margin: 0 2px;
+    margin: 0 6px;
   }
 
   .spacer {
@@ -18,7 +23,7 @@
   .divider {
     width: 1px;
     height: 20px;
-    margin: 0 8px;
+    margin: 0 4px;
     background: var(--icon-color);
   }
 }
