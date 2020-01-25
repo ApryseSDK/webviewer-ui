@@ -20,7 +20,12 @@ const propTypes = {
   group: PropTypes.string,
 };
 
-const ToolButton = ({ toolName, handleStyleClick, isStylingOpen, ...restProps }) => {
+const ToolButton = ({
+  toolName,
+  handleStyleClick,
+  isStylingOpen,
+  ...restProps
+}) => {
   const [
     isActive,
     iconColor,
@@ -52,25 +57,29 @@ const ToolButton = ({ toolName, handleStyleClick, isStylingOpen, ...restProps })
     color = toolStyles[iconColor]?.toHexString?.();
   }
 
-  return (
-    <div
+  const ButtonComponent = (
+    <Button
       className={classNames({
-        'tool-button-container': true,
-        active: isStylingOpen && isActive,
+        'tool-button': true,
+        hasStyles: toolStylesExist(toolName),
       })}
-    >
-      <Button
+      onClick={handleClick}
+      isActive={!isStylingOpen && isActive}
+      color={color}
+      {...restProps}
+      {...restObjectData}
+    />
+  );
+
+  if (handleStyleClick) {
+    return (
+      <div
         className={classNames({
-          'tool-button': true,
-          hasStyles: toolStylesExist(toolName),
+          'tool-button-container': true,
+          active: isStylingOpen && isActive,
         })}
-        onClick={handleClick}
-        isActive={!isStylingOpen && isActive}
-        color={color}
-        {...restProps}
-        {...restObjectData}
-      />
-      {handleStyleClick &&
+      >
+        {ButtonComponent}
         <div
           className="styling-down-arrow-container"
           onClick={() => {
@@ -78,13 +87,12 @@ const ToolButton = ({ toolName, handleStyleClick, isStylingOpen, ...restProps })
             handleStyleClick(toolName);
           }}
         >
-          <Icon
-            className="styling-down-arrow"
-            glyph="icon-chevron-down-bold"
-          />
-        </div>}
-    </div>
-  );
+          <Icon className="styling-down-arrow" glyph="icon-chevron-down-bold" />
+        </div>
+      </div>
+    );
+  }
+  return ButtonComponent;
 };
 
 ToolButton.propTypes = propTypes;
