@@ -1,9 +1,36 @@
+import React from 'react';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 
 import selectors from 'selectors';
 import actions from 'actions';
+
+import './ToggleElementButton.scss';
+
+const ToggleElementButton = ({
+  onClick,
+  showDownArrow = false,
+  dataElement,
+  isElementDisabled,
+  ...restProps
+}) => {
+  if (isElementDisabled) {
+    return null;
+  }
+
+  return (
+    <div
+      className="toggle-element-button"
+      data-element={dataElement}
+      onClick={onClick}
+    >
+      <Button {...restProps} />
+      {showDownArrow && <Icon className="down-arrow " glyph="icon-chevron-down" />}
+    </div>
+  );
+};
 
 const mapStateToProps = (state, ownProps) => {
   let isActive = selectors.isElementOpen(state, ownProps.element);
@@ -13,7 +40,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   return {
-    className: ownProps.className || 'ToggleElementButton',
+    isElementDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
     isActive,
   };
 };
@@ -30,4 +57,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Button);
+export default connect(mapStateToProps, mapDispatchToProps)(ToggleElementButton);

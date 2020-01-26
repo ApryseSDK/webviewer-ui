@@ -7,7 +7,7 @@
   position: relative;
   padding: 0 4px;
 
-  .Button {
+  > .Button, > .toggle-element-button {
     margin: 0 6px;
   }
 
