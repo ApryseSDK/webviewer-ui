@@ -1,0 +1,17 @@
+.toggle-element-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .down-arrow {
+      margin-left: -4px;
+      width: 12px;
+      height: 16px;
+      margin-right: 4px;
+    }
+
+    &:hover {
+      background: var(--button-hover-color);;
+      border-radius: 4px;
+    }
+  }
