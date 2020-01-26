@@ -17,13 +17,11 @@
 }
 
 .HeaderItems {
-  & .ToolGroupButton {
-    padding: 4px 0;
-    & .Button {
-      margin: 0;
+  .ToolGroupButton {
+    .Button {
+      // Avoid hover on button because it would cover the down-arrow in a tool group button
       &:hover {
         background: transparent;
-        border-radius: 0;
       }
     }
   }
