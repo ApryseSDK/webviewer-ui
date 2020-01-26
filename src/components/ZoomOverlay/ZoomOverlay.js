@@ -53,7 +53,7 @@ class ZoomOverlay extends React.PureComponent {
         this.dropdown,
       );
       this.setState({
-        left: left - 20,
+        left,
         right,
         top,
       });
@@ -79,7 +79,7 @@ class ZoomOverlay extends React.PureComponent {
       this.dropdown,
     );
     this.setState({
-      left: left - 20,
+      left,
       right,
       top,
     });
@@ -142,6 +142,16 @@ class ZoomOverlay extends React.PureComponent {
             />
             <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
           </div>
+          {/* <div
+            className="ZoomItem"
+            onClick={core.fitToPage}
+          >
+            <Icon
+              className="ZoomIcon"
+              glyph="icon-header-zoom-marquee"
+            />
+            <div className="ZoomLabel">{t('tool.Marquee')}</div>
+          </div> */}
         </div>
       </div>
     );
