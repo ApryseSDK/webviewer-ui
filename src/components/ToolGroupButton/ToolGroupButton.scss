@@ -2,27 +2,41 @@
   margin: 0 2px;
   display: flex;
   align-items: center;
+  height: 32px;
+  cursor: pointer;
 
-  .down-arrow {
+  .down-arrow-container {
     margin-left: -4px;
-    width: 12px;
-    height: 16px;
+    height: 100%;
     margin-right: 4px;
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+
+    .down-arrow {
+      width: 12px;
+      height: 16px;
+      margin-top: -2px;
+      // color: var(--icon-active-color);
+    }
+  }
+
+  &.active{
+    .down-arrow-container {
+      background: #767f9b33
+    }
+    .down-arrow {
+      color: var(--icon-active-color);
+    }
   }
 
   &:hover {
     background: var(--button-hover-color);
     border-radius: 4px;
   }
-}
 
-.HeaderItems {
-  .ToolGroupButton {
-    .Button {
-      // Avoid hover on button because it would cover the down-arrow in a tool group button
-      &:hover {
-        background: transparent;
-      }
-    }
+  .Button:hover {
+    background: none;
   }
 }

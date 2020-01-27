@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -14,6 +15,7 @@ const ToggleElementButton = ({
   showDownArrow = false,
   dataElement,
   isElementDisabled,
+  isActive,
   ...restProps
 }) => {
   if (isElementDisabled) {
@@ -22,12 +24,19 @@ const ToggleElementButton = ({
 
   return (
     <div
-      className="toggle-element-button"
+      className={classNames({
+        'toggle-element-button': true,
+        active: isActive,
+      })}
       data-element={dataElement}
       onClick={onClick}
     >
-      <Button {...restProps} />
-      {showDownArrow && <Icon className="down-arrow " glyph="icon-chevron-down" />}
+      <Button isActive={isActive} {...restProps} />
+      {showDownArrow && (
+        <div className="down-arrow-container">
+          <Icon className="down-arrow " glyph="icon-chevron-down" />
+        </div>
+      )}
     </div>
   );
 };
@@ -57,4 +66,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToggleElementButton);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ToggleElementButton);

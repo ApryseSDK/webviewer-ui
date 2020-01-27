@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
+
 
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -103,7 +105,6 @@ class ToolGroupButton extends React.PureComponent {
       showDownArrow = true,
     } = this.props;
 
-
     const { toolName } = this.state;
     const img = this.props.img
       ? this.props.img
@@ -116,7 +117,10 @@ class ToolGroupButton extends React.PureComponent {
 
     return allButtonsInGroupDisabled ? null : (
       <div
-        className="ToolGroupButton"
+        className={classNames({
+          ToolGroupButton: true,
+          active: isActive,
+        })}
         data-element={dataElement}
         onClick={this.onClick}
       >
@@ -127,9 +131,12 @@ class ToolGroupButton extends React.PureComponent {
           img={img}
           color={color}
         />
-        {showDownArrow && <Icon className="down-arrow " glyph="icon-chevron-down" />}
+        {showDownArrow && (
+          <div className="down-arrow-container">
+            <Icon className="down-arrow " glyph="icon-chevron-down" />
+          </div>
+        )}
       </div>
-
     );
   }
 }
@@ -156,7 +163,4 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ToolGroupButton);
+export default connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
