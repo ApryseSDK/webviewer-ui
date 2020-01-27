@@ -52,7 +52,7 @@ const NotesPanel = () => {
   // when the number of notesToRender goes over/below the threshold, we will unmount the current list and mount the other one
   // this will result in losing the scroll position and we will use this ref to recover
   const scrollTopRef = useRef(0);
-  const VIRTUALIZATION_THRESHOLD = 300;
+  const VIRTUALIZATION_THRESHOLD = 100;
 
   useEffect(() => {
     const onDocumentUnloaded = () => {
@@ -208,12 +208,15 @@ const NotesPanel = () => {
     };
 
     return (
-      <React.Fragment>
+      // unfortunately we need to use an actual div instead of React.Fragment here so that we can pass the correct index to scrollToRow
+      // if this is a fragment then the listSeparator is rendered as a separate child, which means
+      // singleSelectedNoteIndex might not be the index of the selected note among all the child elements of the notes panel
+      <div className="note-wrapper">
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
           <Note annotation={currNote} />
         </NoteContext.Provider>
-      </React.Fragment>
+      </div>
     );
   };
 

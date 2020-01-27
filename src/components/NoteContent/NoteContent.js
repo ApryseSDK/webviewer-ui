@@ -1,19 +1,17 @@
 import React, {
   useState,
-  useRef,
   useEffect,
   useContext,
   useMemo,
   useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
 
-import AutoResizeTextarea from 'components/AutoResizeTextarea';
+import ContentArea from 'components/NoteContent/ContentArea';
 import NotePopup from 'components/NotePopup';
 import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
@@ -32,18 +30,8 @@ const propTypes = {
 };
 
 const NoteContent = ({ annotation }) => {
-  const [
-    sortStrategy,
-    noteDateFormat,
-    iconColor,
-    isNoteEditingTriggeredByAnnotationPopup,
-  ] = useSelector(
-    state => [
-      selectors.getSortStrategy(state),
-      selectors.getNoteDateFormat(state),
-      selectors.getIconColor(state, mapAnnotationToKey(annotation)),
-      selectors.getIsNoteEditing(state),
-    ],
+  const [isNoteEditingTriggeredByAnnotationPopup] = useSelector(
+    state => [selectors.getIsNoteEditing(state)],
     shallowEqual,
   );
   const { isSelected, searchInput, resize, isContentEditable } = useContext(
@@ -53,7 +41,6 @@ const NoteContent = ({ annotation }) => {
   const [textAreaValue, setTextAreaValue] = useState(annotation.getContents());
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const isReply = annotation.isReply();
 
   useDidUpdate(() => {
     if (!isEditing) {
@@ -97,30 +84,15 @@ const NoteContent = ({ annotation }) => {
       const transformedContents = Autolinker.link(contents, {
         stripPrefix: false,
       });
-      const isContentsLinkable = transformedContents.indexOf('<a') !== -1;
-      if (isContentsLinkable) {
+      if (transformedContents.includes('<a')) {
         // if searchInput is 't', replace <a ...>text</a> with
         // <a ...><span class="highlight">t</span>ext</a>
         text = transformedContents.replace(
           />(.+)</i,
-          (_, p1) => `>${getText(p1)}<`,
+          (_, p1) => `>${highlightSearchInput(p1, searchInput)}<`,
         );
       } else {
-        text = getText(contents);
-      }
-
-      return text;
-    },
-    [getText],
-  );
-
-  const getText = useCallback(
-    text => {
-      if (searchInput.trim()) {
-        return text.replace(
-          new RegExp(`(${searchInput})`, 'gi'),
-          '<span class="highlight">$1</span>',
-        );
+        text = highlightSearchInput(contents, searchInput);
       }
 
       return text;
@@ -181,7 +153,10 @@ const NoteContent = ({ annotation }) => {
         // to prevent textarea from blurring out during editing when clicking on the note content
         onMouseDown={e => e.preventDefault()}
       >
-        {header}
+        <NoteContentHeader
+          annotation={annotation}
+          setIsEditing={setIsEditing}
+        />
         {annotationState && annotationState !== 'None' && (
           <div className="status">
             {t('option.status.status')}: {annotationState}
@@ -197,45 +172,38 @@ NoteContent.propTypes = propTypes;
 
 export default NoteContent;
 
-// a component that contains the content textarea, the save button and the cancel button
-const ContentArea = ({
-  annotation,
-  setIsEditing,
-  textAreaValue,
-  onTextAreaValueChange,
-}) => {
-  const contents = annotation.getContents();
-  const [t] = useTranslation();
-  const textareaRef = useRef();
+const NoteContentHeader = ({ annotation, setIsEditing }) => {
+  const [sortStrategy, noteDateFormat, iconColor] = useSelector(
+    state => [
+      selectors.getSortStrategy(state),
+      selectors.getNoteDateFormat(state),
+      selectors.getIconColor(state, mapAnnotationToKey(annotation)),
+    ],
+    shallowEqual,
+  );
+  const { isSelected, searchInput } = useContext(NoteContext);
 
-  useEffect(() => {
-    // on initial mount, focus the last character of the textarea
-    if (textareaRef.current) {
-      textareaRef.current.focus();
+  const renderAuthorName = useCallback(
+    annotation => {
+      const name = core.getDisplayAuthor(annotation);
 
-      const textLength = textareaRef.current.value.length;
-      textareaRef.current.setSelectionRange(textLength, textLength);
-    }
-  }, []);
+      return name ? (
+        <span
+          dangerouslySetInnerHTML={{
+            __html: highlightSearchInput(name, searchInput),
+          }}
+        />
+      ) : (
+        '(no name)'
+      );
+    },
+    [searchInput],
+  );
 
-  const setContents = e => {
-    // prevent the textarea from blurring out which will unmount these two buttons
-    e.preventDefault();
-
-    const hasEdited = textAreaValue !== contents;
-    if (hasEdited) {
-      core.setNoteContents(annotation, textAreaValue);
-      if (annotation instanceof window.Annotations.FreeTextAnnotation) {
-        core.drawAnnotationsFromList([annotation]);
-      }
-
-      setIsEditing(false);
-    }
-  };
-
-  const saveBtnClass = classNames({
-    disabled: textAreaValue === contents,
-  });
+  const isReply = annotation.isReply();
+  const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
+  const color = annotation[iconColor]?.toHexString?.();
+  const numberOfReplies = annotation.getReplies().length;
 
   return (
     <div className="edit-content">
@@ -270,9 +238,25 @@ const ContentArea = ({
   );
 };
 
-ContentArea.propTypes = {
+NoteContentHeader.propTypes = {
   annotation: PropTypes.object.isRequired,
   setIsEditing: PropTypes.func.isRequired,
-  textAreaValue: PropTypes.string,
-  onTextAreaValueChange: PropTypes.func.isRequired,
+};
+
+const highlightSearchInput = (text, searchInput) => {
+  if (searchInput.trim()) {
+    try {
+      text = text.replace(
+        new RegExp(`(${searchInput})`, 'gi'),
+        '<span class="highlight">$1</span>',
+      );
+    } catch (e) {
+      // this condition is usually met when a search input contains symbols like *?!
+      text = text
+        .split(searchInput)
+        .join(`<span class="highlight">${searchInput}</span>`);
+    }
+  }
+
+  return text;
 };

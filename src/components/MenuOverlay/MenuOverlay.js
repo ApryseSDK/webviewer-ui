@@ -7,6 +7,7 @@ import onClickOutside from 'react-onclickoutside';
 import ActionButton from 'components/ActionButton';
 import Icon from 'components/Icon';
 
+import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import print from 'helpers/print';
 import getClassName from 'helpers/getClassName';
@@ -22,9 +23,6 @@ import './MenuOverlay.scss';
 
 class MenuOverlay extends React.PureComponent {
   static propTypes = {
-    documentPath: PropTypes.string,
-    documentFilename: PropTypes.string,
-    isDownloadable: PropTypes.bool,
     isEmbedPrintSupported: PropTypes.bool,
     isFullScreen: PropTypes.bool,
     isDisabled: PropTypes.bool,
@@ -41,7 +39,12 @@ class MenuOverlay extends React.PureComponent {
       left: 0,
       right: 'auto',
       top: 'auto',
+      documentType: null,
     };
+  }
+
+  componentDidMount() {
+    core.addEventListener('documentLoaded', this.onDocumentLoaded);
   }
 
   componentDidUpdate(prevProps) {
@@ -49,6 +52,16 @@ class MenuOverlay extends React.PureComponent {
       this.props.closeElements(['groupOverlay', 'viewControlsOverlay', 'searchOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
       this.setState(getOverlayPositionBasedOn('menuButton', this.overlay));
     }
+  }
+
+  componentWillUnmount() {
+    core.removeEventListener('documentLoaded', this.onDocumentLoaded);
+  }
+
+  onDocumentLoaded = () => {
+    this.setState({
+      documentType: core.getDocument().getType(),
+    });
   }
 
   handlePrintButtonClick = () => {
@@ -66,17 +79,12 @@ class MenuOverlay extends React.PureComponent {
   }
 
   downloadDocument = () => {
-    const { dispatch, documentPath, documentFilename } = this.props;
-
-    downloadPdf(dispatch, {
-      documentPath,
-      filename: documentFilename,
-    });
+    downloadPdf(this.props.dispatch);
   }
 
   render() {
-    const { left, right, top } = this.state;
-    const { isDisabled, isDownloadable, isFullScreen, t } = this.props;
+    const { left, right, top, documentType } = this.state;
+    const { isDisabled, isFullScreen, t } = this.props;
 
     if (isDisabled) {
       return null;
@@ -99,7 +107,7 @@ class MenuOverlay extends React.PureComponent {
             </div>
           </div>
         }
-        {isDownloadable &&
+        {documentType !== workerTypes.XOD &&
           <div className="row">
             <div
               className="MenuItem"
@@ -133,9 +141,6 @@ class MenuOverlay extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  documentPath: selectors.getDocumentPath(state),
-  documentFilename: state.document.filename,
-  isDownloadable: selectors.getDocumentType(state) !== workerTypes.XOD,
   isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
   isFullScreen: selectors.isFullScreen(state),
   isDisabled: selectors.isElementDisabled(state, 'menuOverlay'),

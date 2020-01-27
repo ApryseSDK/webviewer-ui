@@ -156,8 +156,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isThumbnailMultiselect: payload.useThumbnailMultiselect };
     case 'SET_TOOL_BUTTON_OBJECTS':
       return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
-    case 'SET_DOCUMENT_LOADED':
-      return { ...state, isDocumentLoaded: payload.isDocumentLoaded };
     case 'SET_READ_ONLY':
       return { ...state, isReadOnly: payload.isReadOnly };
     case 'SET_CUSTOM_PANEL':

@@ -6,6 +6,8 @@ import SignatureToolButton from 'components/SignatureToolButton';
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
+import { zoomIn, zoomOut } from 'helpers/zoom';
+import defaultTool from 'constants/defaultTool';
 import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
 import PageNavOverlay from '../components/PageNavOverlay/PageNavOverlay';
@@ -34,6 +36,7 @@ export default {
         },
         { type: 'divider' },
         { type: 'toolButton', toolName: 'Pan' },
+        // For mobile
         // { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },
         { type: 'spacer' },
@@ -111,6 +114,7 @@ export default {
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'calibrateButton' },
+      { dataElement: 'linkButton' },
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
@@ -119,6 +123,7 @@ export default {
       { dataElement: 'textSquigglyToolButton' },
       { dataElement: 'textStrikeoutToolButton' },
       { dataElement: 'textRedactToolButton' },
+      { dataElement: 'linkButton' },
     ],
     contextMenuPopup: [
       { dataElement: 'panToolButton' },
@@ -165,8 +170,10 @@ export default {
 
       AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'ic_annotation_callout_black_24px', group: 'miscTools', showColor: 'active' },
       AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
-      Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
-      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
+      AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'ic_annotation_stamp_black_24px', group: 'miscTools', showColor: 'active' },
+      Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
+      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
+      // For mobile
       // TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
       AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'icon-operation-eraser', showColor: 'never' },
@@ -174,6 +181,7 @@ export default {
     },
     tab: {
       signatureModal: 'inkSignaturePanelButton',
+      linkModal: 'URLPanelButton',
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
@@ -194,7 +202,6 @@ export default {
     isThumbnailReordering: false,
     isThumbnailMultiselect: false,
     doesAutoLoad: getHashParams('auto_load', true),
-    isDocumentLoaded: false,
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
     useEmbeddedPrint: false,
@@ -234,60 +241,30 @@ export default {
     isProgrammaticSearchFull: false,
   },
   document: {
-    id: getHashParams('did', null),
-    initialDoc: getHashParams('initialDoc', getHashParams('d', '')),
-    path: null,
-    ext: getHashParams('extension', null),
-    filename: getHashParams('filename', null),
-    file: null,
-    type: null,
-    pdfDoc: null,
     pdfType: getHashParams('pdf', 'auto'),
     officeType: getHashParams('office', 'auto'),
-    isOffline: getHashParams('startOffline', false),
     totalPages: 0,
     outlines: [],
     bookmarks: {},
     layers: [],
-    checkPassword: null,
-    password: '',
     printQuality: 1,
     passwordAttempts: -1,
-    documentLoadingProgress: 0,
-    workerLoadingProgress: 0,
-    isUploading: false,
-    uploadProgress: 0,
+    loadingProgress: 0,
   },
   user: {
     name: getHashParams('user', 'Guest'),
     isAdmin: getHashParams('admin', false),
   },
   advanced: {
-    azureWorkaround: getHashParams('azureWorkaround', false),
     customCSS: getHashParams('css', null),
-    customHeaders: { },
     defaultDisabledElements: getHashParams('disabledElements', ''),
-    externalPath: getHashParams('p', ''),
-    engineType: documentTypeParamToEngineType(getHashParams('preloadWorker'), getHashParams('pdftronServer', '')),
     fullAPI: getHashParams('pdfnet', false),
-    pdftronServer: getHashParams('pdftronServer', ''),
-    singleServerMode: getHashParams('singleServerMode', false),
-    forceClientSideInit: getHashParams('forceClientSideInit', false),
-    disableWebsockets: getHashParams('disableWebsockets', false),
     preloadWorker: getHashParams('preloadWorker', false),
     serverUrl: getHashParams('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
-    cacheKey: JSON.parse(getHashParams('cacheKey', null)),
-    pageSizes: null,
-    streaming: getHashParams('streaming', false),
-    subzero: getHashParams('subzero', false),
-    useDownloader: getHashParams('useDownloader', true),
     useSharedWorker: getHashParams('useSharedWorker', false),
     disableI18n: getHashParams('disableI18n', false),
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null,
-    decrypt: null,
-    decryptOptions: { },
-    withCredentials: false,
   },
 };

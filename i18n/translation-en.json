@@ -37,7 +37,8 @@
     "zoomOut": "Zoom out",
     "draw": "Draw",
     "type": "Type",
-    "upload": "Upload"
+    "upload": "Upload",
+    "link": "Link"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",
@@ -67,7 +68,33 @@
     "stickyNote": "Comment",
     "strikeout": "Strikeout",
     "underline": "Underline",
-    "custom": "Custom"
+    "custom": "Custom",
+    "rubberStamp": "Rubber Stamp"
+  },
+  "rubberStamp": {
+    "Approved": "Approved",
+    "AsIs": "As Is",
+    "Completed": "Completed",
+    "Confidential": "Confidential",
+    "Departmental": "Departmental",
+    "Draft": "Draft",
+    "Experimental": "Experimental",
+    "Expired": "Expired",
+    "Final": "Final",
+    "ForComment": "For Comment",
+    "ForPublicRelease": "For Public Release",
+    "InformationOnly": "Information Only",
+    "NotApproved": "Not Approved",
+    "NotForPublicRelease": "Not For Public Release",
+    "PreliminaryResults": "Preliminary Results",
+    "Sold": "Sold",
+    "TopSecret": "Top Secret",
+    "Void": "Void",
+    "SHSignHere": "Sign Here",
+    "SHWitness": "Witness",
+    "SHInitialHere": "Initial Here",
+    "SHAccepted": "Accepted",
+    "SBRejected": "Rejected"
   },
   "component": {
     "freehandToolsButton": "Freehand tools",
@@ -116,7 +143,8 @@
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
     "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
-    "enterMeasurement": "Enter measurement between the two points"
+    "enterMeasurement": "Enter measurement between the two points",
+    "linkURLorPage": "Link URL or a Page"
   },
   "option": {
     "annotationColor": {
@@ -127,6 +155,9 @@
     "displayMode": {
       "layout": "Page Layout",
       "pageTransition": "Page Transition"
+    },
+    "documentControls": {
+      "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
     "documentControls": {
       "placeholder": "Enter pages to select i.e. 2, 5-9"
@@ -259,6 +290,13 @@
   "tool": {
     "pan": "Pan",
     "select": "Select",
-    "Marquee": "Marquee Zoom"
+    "Marquee": "Marquee Zoom",
+    "Link": "Link URL or Page"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Page",
+    "enterurl": "Enter URL you would like to link to",
+    "enterpage": "Select the page number you would like to link to"
   }
 }

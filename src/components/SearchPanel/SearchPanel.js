@@ -33,8 +33,6 @@ class SearchPanel extends React.PureComponent {
     width: 293,
   };
 
-  // this.document = React.createRef();
-
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       if (isTabletOrMobile()) {
@@ -85,8 +83,6 @@ class SearchPanel extends React.PureComponent {
     }
 
     const className = getClassName('Panel SearchPanel', this.props);
-
-    console.log('isWildCardSearchDisabled', isWildCardSearchDisabled);
 
     return (
       <div

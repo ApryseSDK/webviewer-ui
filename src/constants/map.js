@@ -231,7 +231,10 @@ const map = {
     iconColor: null,
     currentPalette: null,
     availablePalettes: [],
-    toolNames: ['AnnotationCreateStamp'],
+    toolNames: [
+      'AnnotationCreateStamp',
+      'AnnotationCreateRubberStamp',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.StampAnnotation,
   },

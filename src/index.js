@@ -15,7 +15,6 @@ import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript, { loadConfig } from 'helpers/loadScript';
 import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServer';
-import setupMIMETypeTest from 'helpers/setupMIMETypeTest';
 import eventHandler from 'helpers/eventHandler';
 import setupI18n from 'helpers/setupI18n';
 import setAutoSwitch from 'helpers/setAutoSwitch';
@@ -116,7 +115,6 @@ if (window.CanvasRenderingContext2D) {
     window.docViewer = docViewer;
     setupDocViewer();
     setupI18n(state);
-    setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
     addEventHandlers();

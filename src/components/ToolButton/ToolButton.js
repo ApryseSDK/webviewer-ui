@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
@@ -9,6 +9,7 @@ import Icon from 'components/Icon';
 import core from 'core';
 import toolStylesExist from 'helpers/toolStylesExist';
 import getToolStyles from 'helpers/getToolStyles';
+import hotkeysManager from 'helpers/hotkeysManager';
 import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -34,16 +35,30 @@ const ToolButton = ({
     // eslint-disable-next-line
     activeToolStyles,
     { group = '', showColor, ...restObjectData },
+    customOverrides,
   ] = useSelector(
     state => [
       selectors.getActiveToolName(state) === toolName,
       selectors.getIconColor(state, mapToolNameToKey(toolName)),
       selectors.getActiveToolStyles(state),
       selectors.getToolButtonObject(state, toolName),
+      selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
     ],
     shallowEqual,
   );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (typeof customOverrides?.disable === 'undefined') {
+      return;
+    }
+
+    if (customOverrides.disable) {
+      hotkeysManager.off(toolName);
+    } else {
+      hotkeysManager.on(toolName);
+    }
+  }, [customOverrides, toolName]);
 
   const handleClick = () => {
     core.setToolMode(toolName);

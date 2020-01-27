@@ -22,6 +22,7 @@ export default store => {
   const onFullScreenChange = eventListeners.onFullScreenChange(store);
   const onLayoutChanged = eventListeners.onLayoutChanged(dispatch);
   const onLocationSelected = eventListeners.onLocationSelected(store);
+  const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(dispatch);
   const onPageComplete = eventListeners.onPageComplete(store);
 
   return {
@@ -44,6 +45,7 @@ export default store => {
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
+      core.getTool('AnnotationCreateRubberStamp').on('annotationAdded', onRubberStampAnnotationAdded);
       hotkeysManager.initialize(store);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
@@ -68,6 +70,7 @@ export default store => {
       core.getTool('AnnotationCreateStamp').off('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').off('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').off('locationSelected', onLocationSelected);
+      core.getTool('AnnotationCreateRubberStamp').off('annotationAdded', onRubberStampAnnotationAdded);
       hotkeysManager.off();
       document.removeEventListener('fullscreenchange', onFullScreenChange);
       document.removeEventListener('mozfullscreenchange', onFullScreenChange);
