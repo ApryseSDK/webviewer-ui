@@ -7,7 +7,6 @@ import Icon from 'components/Icon';
 import selectors from 'selectors';
 import actions from 'actions';
 
-<<<<<<< HEAD
 import './ToggleElementButton.scss';
 
 const ToggleElementButton = ({
@@ -33,8 +32,6 @@ const ToggleElementButton = ({
   );
 };
 
-=======
->>>>>>> 8c5d6d44ea5ab1ca6758128fe6c8512f7969699e
 const mapStateToProps = (state, ownProps) => {
   let isActive = selectors.isElementOpen(state, ownProps.element);
   if (ownProps.dataElement === 'redactionButton') {
@@ -43,11 +40,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   return {
-<<<<<<< HEAD
     isElementDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
-=======
-    className: ownProps.className || 'ToggleElementButton',
->>>>>>> 8c5d6d44ea5ab1ca6758128fe6c8512f7969699e
     isActive,
   };
 };
