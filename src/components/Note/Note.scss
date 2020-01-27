@@ -10,10 +10,14 @@
   margin-left: 2px;
   cursor: pointer;
 
-  .input-container {
+  .reply-area-container {
     display: flex;
     position: relative;
     flex: 1;
+    display: flex;
+    margin-right: 12px;
+    margin-top: 12px;
+    margin-left: 40px;
 
     textarea {
       font-size: 13px;
@@ -39,7 +43,7 @@
       }
     }
 
-    .input-button {
+    .reply-button {
       flex-shrink: 0;
       background: #6077bf;
       border-radius: 4px;
@@ -59,13 +63,6 @@
         color: #fafafa;
       }
     }
-  }
-
-  .reply-area-container {
-    display: flex;
-    padding-right: 12px;
-    margin-top: 12px;
-    margin-left: 40px;
   }
 
   .divider{

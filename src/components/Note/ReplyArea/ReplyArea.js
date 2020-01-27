@@ -75,7 +75,7 @@ const ReplyArea = ({ annotation }) => {
 
   return ifReplyNotAllowed ? null : (
     <div
-      className="input-container"
+      className="reply-area-container"
       // stop bubbling up otherwise the note will be closed
       // due to annotation deselection
       onMouseDown={e => e.stopPropagation()}
@@ -92,7 +92,7 @@ const ReplyArea = ({ annotation }) => {
         placeholder={`${t('action.reply')}...`}
       />
       <div
-        className="input-button"
+        className="reply-button"
         onClick={e => postReply(e)}
       >
         Post

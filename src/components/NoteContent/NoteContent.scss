@@ -125,7 +125,7 @@
       }
     }
 
-    .buttons  {
+    .edit-buttons {
       display: flex;
       flex-direction: row;
       margin-top: 4px;
@@ -134,7 +134,7 @@
         margin-right: 4px;
       }
 
-      .btn1234 {
+      .edit-button {
         cursor: pointer;
         flex-shrink: 0;
         background: #6077bf;
