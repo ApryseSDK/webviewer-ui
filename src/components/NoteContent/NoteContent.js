@@ -7,8 +7,7 @@ import React, {
   useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
@@ -21,8 +20,6 @@ import Icon from 'components/Icon';
 import core from 'core';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import escapeHtml from 'helpers/escapeHtml';
-import useDidUpdate from 'hooks/useDidUpdate';
-import actions from 'actions';
 import selectors from 'selectors';
 
 import './NoteContent.scss';
@@ -31,50 +28,23 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-const NoteContent = ({ annotation }) => {
+const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
   const [
-    sortStrategy,
     noteDateFormat,
     iconColor,
-    isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector(
     state => [
-      selectors.getSortStrategy(state),
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
-      selectors.getIsNoteEditing(state),
     ],
     shallowEqual,
   );
-  const { isSelected, searchInput, resize, isContentEditable } = useContext(
+  const { searchInput } = useContext(
     NoteContext,
   );
-  const [isEditing, setIsEditing] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState(annotation.getContents());
   const [t] = useTranslation();
-  const dispatch = useDispatch();
   const isReply = annotation.isReply();
-
-  useDidUpdate(() => {
-    if (!isEditing) {
-      dispatch(actions.finishNoteEditing());
-    }
-
-    resize();
-  }, [isEditing]);
-
-  useEffect(() => {
-    // when the comment button in the annotation popup is clicked,
-    // this effect will run and we set isEditing to true so that
-    // the textarea will be rendered and focused after it is mounted
-    if (
-      isNoteEditingTriggeredByAnnotationPopup &&
-      isSelected &&
-      isContentEditable
-    ) {
-      setIsEditing(true);
-    }
-  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
   const renderAuthorName = useCallback(
     annotation => {
@@ -170,7 +140,7 @@ const NoteContent = ({ annotation }) => {
         )}
       </div>
     </React.Fragment>
-  ), [annotation, color, contents, formatNumberOfReplies, icon, isEditing, isReply, noteDateFormat, numberOfReplies, renderAuthorName, renderContents, textAreaValue]);
+  ), [annotation, color, contents, formatNumberOfReplies, icon, isEditing, isReply, noteDateFormat, numberOfReplies, renderAuthorName, renderContents, setIsEditing, textAreaValue]);
 
   const annotationState = annotation.getStatus();
 
@@ -218,19 +188,12 @@ const ContentArea = ({
     }
   }, []);
 
-  const setContents = e => {
-    // prevent the textarea from blurring out which will unmount these two buttons
-    e.preventDefault();
-
-    const hasEdited = textAreaValue !== contents;
-    if (hasEdited) {
-      core.setNoteContents(annotation, textAreaValue);
-      if (annotation instanceof window.Annotations.FreeTextAnnotation) {
-        core.drawAnnotationsFromList([annotation]);
-      }
-
-      setIsEditing(false);
+  const setContents = () => {
+    core.setNoteContents(annotation, textAreaValue);
+    if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+      core.drawAnnotationsFromList([annotation]);
     }
+    setIsEditing(false);
   };
 
   return (
@@ -245,15 +208,15 @@ const ContentArea = ({
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
       />
-      <div className="buttons">
+      <div className="edit-buttons">
         <div
-          className="btn1234"
+          className="edit-button"
           onMouseDown={setContents}
         >
           {t('action.save')}
         </div>
         <div
-          className="btn1234"
+          className="edit-button"
           onMouseDown={() => {
             setIsEditing(false);
             onTextAreaValueChange(contents);

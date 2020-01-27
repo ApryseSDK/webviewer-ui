@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -75,7 +74,7 @@ const ReplyArea = ({ annotation }) => {
 
   return ifReplyNotAllowed ? null : (
     <div
-      className="input-container"
+      className="reply-area-container"
       // stop bubbling up otherwise the note will be closed
       // due to annotation deselection
       onMouseDown={e => e.stopPropagation()}
@@ -92,7 +91,7 @@ const ReplyArea = ({ annotation }) => {
         placeholder={`${t('action.reply')}...`}
       />
       <div
-        className="input-button"
+        className="reply-button"
         onClick={e => postReply(e)}
       >
         Post

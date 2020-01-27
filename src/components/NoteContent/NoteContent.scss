@@ -21,7 +21,6 @@
   .author-and-date {
     flex: 1;
     min-width: 0;
-
   }
 
   .num-replies-container {
@@ -43,8 +42,6 @@
       justify-content: center;
     }
   }
-
-
 
   .type-icon-container {
     position: absolute;
@@ -91,14 +88,6 @@
     text-overflow: ellipsis;
   }
 
-
-  .status {
-    margin-left: 30px;
-    color: $gray54;
-    margin-bottom: 5px;
-  }
-
-
   .edit-content {
     margin-top: 7px;
     display: flex;
@@ -120,12 +109,17 @@
       overflow: hidden;
       box-sizing: border-box;
 
+      &:focus {
+        outline: none;
+        border: 1px solid #6077bf;
+      }
+
       &::placeholder {
         color: #c3c6d4;
       }
     }
 
-    .buttons  {
+    .edit-buttons {
       display: flex;
       flex-direction: row;
       margin-top: 4px;
@@ -134,7 +128,7 @@
         margin-right: 4px;
       }
 
-      .btn1234 {
+      .edit-button {
         cursor: pointer;
         flex-shrink: 0;
         background: #6077bf;
