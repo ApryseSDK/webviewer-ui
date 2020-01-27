@@ -159,20 +159,10 @@ class ToolsOverlay extends React.PureComponent {
                 isStylingOpen={isStylingOpen}
               />
             ))}
-            {/* <div className="divider" /> */}
-            {/* <div
-                className="Button ToolButton StyleButton"
-                onClick={this.handleStyleClick}
-              >
-                <Icon
-                  glyph="icon-menu-add"
-                />
-              </div> */}
           </div>
 
           {isStylingOpen && (
             <React.Fragment>
-              {/* <div className="divider-horizontal" /> */}
               <ToolStylePopup siblingWidth={this.state.siblingWidth} />
             </React.Fragment>
           )}
