@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -8,21 +8,6 @@ import ReplyArea from 'components/Note/ReplyArea';
 
 import core from 'core';
 
-// import React, { useState, useEffect, useRef, useContext } from 'react';
-// import PropTypes from 'prop-types';
-// import classNames from 'classnames';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-
-// import NoteContext from 'components/Note/Context';
-import AutoResizeTextarea from 'components/AutoResizeTextarea';
-
-// import core from 'core';
-import useDidUpdate from 'hooks/useDidUpdate';
-import actions from 'actions';
-import selectors from 'selectors';
-
-
 import './Note.scss';
 
 const propTypes = {
@@ -30,15 +15,6 @@ const propTypes = {
 };
 
 const Note = ({ annotation }) => {
-  const [
-    isNoteEditing,
-  ] = useSelector(
-    state => [
-      selectors.getIsNoteEditing(state),
-    ],
-    shallowEqual,
-  );
-
   const { isSelected, resize } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
@@ -58,14 +34,10 @@ const Note = ({ annotation }) => {
     // due to annotation deselection
     e.stopPropagation();
 
-    if (!isNoteEditing) {
-      if (isSelected) {
-        core.deselectAnnotation(annotation);
-      } else {
-        core.deselectAllAnnotations();
-        core.selectAnnotation(annotation);
-        core.jumpToAnnotation(annotation);
-      }
+    if (!isSelected) {
+      core.deselectAllAnnotations();
+      core.selectAnnotation(annotation);
+      core.jumpToAnnotation(annotation);
     }
   };
 
@@ -84,13 +56,9 @@ const Note = ({ annotation }) => {
     .sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
   return (
-    <div
-      ref={containerRef}
-      className={noteClass}
-      onMouseDown={handleNoteClick}
-    >
+    <div ref={containerRef} className={noteClass} onMouseDown={handleNoteClick}>
       <NoteContent annotation={annotation} isSelected={isSelected} />
-      {isSelected &&
+      {isSelected && (
         <React.Fragment>
           {replies.length > 0 && <div className="divider" />}
           <div className={repliesClass}>
@@ -103,7 +71,8 @@ const Note = ({ annotation }) => {
             ))}
             <ReplyArea annotation={annotation} />
           </div>
-        </React.Fragment>}
+        </React.Fragment>
+      )}
     </div>
   );
 };

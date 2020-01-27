@@ -17,7 +17,6 @@ class HeaderItems extends React.PureComponent {
 
   render() {
     const { items } = this.props;
-    console.log(items);
     return (
       <div className="HeaderItems">
         {items.map((item, i) => {
