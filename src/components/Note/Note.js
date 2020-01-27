@@ -29,6 +29,15 @@ const propTypes = {
 };
 
 const Note = ({ annotation }) => {
+  const [
+    isNoteEditing,
+  ] = useSelector(
+    state => [
+      selectors.getIsNoteEditing(state),
+    ],
+    shallowEqual,
+  );
+
   const { isSelected, resize } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
@@ -48,12 +57,14 @@ const Note = ({ annotation }) => {
     // due to annotation deselection
     e.stopPropagation();
 
-    if (isSelected) {
-      core.deselectAnnotation(annotation);
-    } else {
-      core.deselectAllAnnotations();
-      core.selectAnnotation(annotation);
-      core.jumpToAnnotation(annotation);
+    if (!isNoteEditing) {
+      if (isSelected) {
+        core.deselectAnnotation(annotation);
+      } else {
+        core.deselectAllAnnotations();
+        core.selectAnnotation(annotation);
+        core.jumpToAnnotation(annotation);
+      }
     }
   };
 
