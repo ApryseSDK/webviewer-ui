@@ -5,9 +5,6 @@ import SignatureToolButton from 'components/SignatureToolButton';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
-import documentTypeParamToEngineType from 'helpers/documentTypeParamToEngineType';
-import { zoomIn, zoomOut } from 'helpers/zoom';
-import defaultTool from 'constants/defaultTool';
 import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
 import PageNavOverlay from '../components/PageNavOverlay/PageNavOverlay';
@@ -171,8 +168,8 @@ export default {
       AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'ic_annotation_callout_black_24px', group: 'miscTools', showColor: 'active' },
       AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
       AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'ic_annotation_stamp_black_24px', group: 'miscTools', showColor: 'active' },
-      Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
-      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
+      Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
+      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
       // For mobile
       // TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },

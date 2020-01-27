@@ -1,12 +1,26 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import ReplyArea from 'components/Note/ReplyArea';
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 
 import core from 'core';
+
+// import React, { useState, useEffect, useRef, useContext } from 'react';
+// import PropTypes from 'prop-types';
+// import classNames from 'classnames';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
+// import NoteContext from 'components/Note/Context';
+import AutoResizeTextarea from 'components/AutoResizeTextarea';
+
+// import core from 'core';
+import useDidUpdate from 'hooks/useDidUpdate';
+import actions from 'actions';
+import selectors from 'selectors';
+
 
 import './Note.scss';
 

@@ -6,7 +6,6 @@ import core from 'core';
 import { workerTypes } from 'constants/types';
 import { isIOS } from 'helpers/device';
 import selectors from 'selectors';
-import { isIOS } from 'helpers/device';
 
 import './PrintHandler.scss';
 
