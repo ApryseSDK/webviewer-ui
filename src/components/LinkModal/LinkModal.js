@@ -71,11 +71,23 @@ const LinkModal = () => {
       };
     }
 
-    if (selectedAnnotations && selectedAnnotations.length === 1) {
-      const link = newLink(selectedAnnotations[0].X, selectedAnnotations[0].Y, 
-      selectedAnnotations[0].Width, selectedAnnotations[0].Height);
-      linksResults.push(link);
-      selectedAnnotations[0].associateLink([link.Id]);
+    if (selectedAnnotations) {
+      selectedAnnotations.forEach(annot => {
+
+        const associatedLinks = annot.getAssociatedLinks();
+        if (associatedLinks.length >  0) {
+          const linksToDelete = [];
+          associatedLinks.forEach(linkId => {
+            linksToDelete.push(core.getAnnotationById(linkId));
+          });
+          core.deleteAnnotations(linksToDelete);
+          annot.unassociateLinks();
+        }
+        
+        const link = newLink(annot.X, annot.Y, annot.Width, annot.Height);
+        linksResults.push(link);
+        annot.associateLink([link.Id]);
+      });
     }
 
     return linksResults;
