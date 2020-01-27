@@ -67,15 +67,6 @@ const ReplyArea = ({ annotation }) => {
     }
   };
 
-  const handleCancelClick = () => {
-    setValue('');
-    textareaRef.current.blur();
-  };
-
-  const replyBtnClass = classNames({
-    disabled: !value,
-  });
-
   const ifReplyNotAllowed =
     isReadOnly ||
     isReplyDisabled ||
@@ -84,7 +75,7 @@ const ReplyArea = ({ annotation }) => {
 
   return ifReplyNotAllowed ? null : (
     <div
-      className="reply-container"
+      className="input-container"
       // stop bubbling up otherwise the note will be closed
       // due to annotation deselection
       onMouseDown={e => e.stopPropagation()}
@@ -100,15 +91,12 @@ const ReplyArea = ({ annotation }) => {
         onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}
       />
-
-      {isFocused && (
-        <div className="buttons">
-          <button className={replyBtnClass} onMouseDown={postReply}>
-            {t('action.reply')}
-          </button>
-          <button onMouseDown={handleCancelClick}>{t('action.cancel')}</button>
-        </div>
-      )}
+      <div
+        className="input-button"
+        onClick={e => postReply(e)}
+      >
+        Post
+      </div>
     </div>
   );
 };

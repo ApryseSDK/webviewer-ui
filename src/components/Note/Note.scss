@@ -8,6 +8,7 @@
   padding-bottom: 12px;
   margin-bottom: 8px;
   margin-left: 2px;
+  cursor: pointer;
 
   .input-container {
     display: flex;
@@ -39,7 +40,6 @@
     }
 
     .input-button {
-      cursor: pointer;
       flex-shrink: 0;
       background: #6077bf;
       border-radius: 4px;
@@ -68,54 +68,11 @@
     margin-left: 40px;
   }
 
-  &.expanded {
-    // margin: 10px 0;
-  }
-
   .divider{
     height: 1px;
     width: 100%;
     background: #dfe2ed;
     margin-top: 12px;
     margin-bottom: 5px;
-  }
-
-  .replies {
-    transition: all 1s ease;
-
-    &.hidden {
-      display: none;
-    }
-
-    .reply-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-
-      textarea {
-        width: 100%;
-        resize: none;
-        overflow: hidden;
-        box-sizing: border-box;
-        border: 1px solid rgba(0, 0, 0, .12);
-        border-radius: 4px;
-        font-size: 12px;
-      }
-
-      .buttons {
-        @extend %textarea-buttons;
-        margin-top: 9px;
-        display: flex;
-        align-items: flex-start;
-
-        &:hover {
-          cursor: auto;
-        }
-      }
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
   }
 }
