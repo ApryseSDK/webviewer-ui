@@ -81,7 +81,7 @@ const LinkModal = () => {
             linksToDelete.push(core.getAnnotationById(linkId));
           });
           core.deleteAnnotations(linksToDelete);
-          annot.deleteAssociatedLinks();
+          annot.unnassociateLinks();
         }
         
         const link = newLink(annot.X, annot.Y, annot.Width, annot.Height);
