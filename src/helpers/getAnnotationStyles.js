@@ -18,6 +18,7 @@ export default annotation => {
     'FontSize',
     'Precision',
     'Scale',
+    'Style',
   ];
   const style = {};
 

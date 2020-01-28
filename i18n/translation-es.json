@@ -13,6 +13,7 @@
     "ungroup": "Desagrupar",
     "download": "Descargar",
     "edit": "Editar",
+    "extract": "Extraer",
     "enterFullscreen": "Pantalla completa",
     "exitFullscreen": "Salir de pantalla completa",
     "fit": "Ajustar",
@@ -28,13 +29,16 @@
     "save": "Guardar",
     "create": "Crear",
     "showMoreResults": "Mostrar más resultados",
-    "saveSignature": "Guardar firma",
     "sign": "Firmar",
     "style": "Estilo",
     "submit": "Enviar",
     "zoom": "Zoom",
     "zoomIn": "Acercar zoom",
-    "zoomOut": "Alejar zoom"
+    "zoomOut": "Alejar zoom",
+    "draw": "Dibujar",
+    "type": "Tipo",
+    "upload": "Subir",
+    "link": "Enlace"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -88,7 +92,9 @@
     "Void": "Vacía",
     "SHSignHere": "Firma aqui",
     "SHWitness": "Testigo",
-    "SHInitialHere": "Iniciales aqui"
+    "SHInitialHere": "Iniciales aqui",
+    "SHAccepted": "Aceptado",
+    "SBRejected": "Rechazado"
   },
   "component": {
     "freehandToolsButton": "Herramientas a mano alzada",
@@ -98,6 +104,9 @@
     "miscToolsButton": "Herramientas varias",
     "notesPanel": "Notas",
     "outlinesPanel": "Esquemas",
+    "bookmarksPanel": "Marcadores",
+    "newBookmark": "Nuevo marcador",
+    "bookmarkPage": "Página",
     "layersPanel": "Capas",
     "shapeToolsButton": "Herramientas de forma",
     "textToolsButton": "Herramientas de texto",
@@ -106,10 +115,7 @@
     "redaction": "Modificación",
     "viewControlsOverlay": "Ver controles",
     "measurementToolsButton": "Herramientas de medición",
-    "calibration": "Calibración",
-    "newBookmark": "Nuevo marcador",
-    "bookmarksPanel": "Marcadores",
-    "bookmarkPage": "Página"
+    "calibration": "Calibración"
   },
   "message": {
     "badDocument": "Error al cargar el documento. El documento está dañado o no es válido.",
@@ -133,7 +139,9 @@
     "searchPlaceholder": "Buscar comentarios...",
     "signHere": "Firma aquí",
     "insertTextHere": "Inserta el texto aquí",
-    "enterMeasurement": "Ingrese la medición entre los dos puntos"
+    "imageSignatureAcceptedFileTypes": "Solo se aceptan {{acceptFileTypes}}",
+    "enterMeasurement": "Ingrese la medición entre los dos puntos",
+    "linkURLorPage": "URL de enlace o una página"
   },
   "option": {
     "annotationColor": {
@@ -144,6 +152,9 @@
     "displayMode": {
       "layout": "Diseño",
       "pageTransition": "Transición de página"
+    },
+    "documentControls": {
+      "placeholder": "Ingrese las páginas para seleccionar, es decir, 2, 5-9"
     },
     "layout": {
       "cover": "Portada",
@@ -180,6 +191,12 @@
     "signatureOverlay": {
       "addSignature": "Añadir una firma"
     },
+    "signatureModal": {
+      "saveSignature": "Guardar firma",
+      "dragAndDrop": "Arrastra y suelta tu imagen aquí",
+      "or": "O",
+      "pickImage": "Elegir imagen de firma"
+    },
     "status": {
       "status": "Estado"
     },
@@ -205,6 +222,11 @@
     "measurementOption": {
       "scale": "Escala"
     },
+    "styleOption": {
+      "style": "Estilo",
+      "regular": "Regular",
+      "cloudy": "Nublado"
+    },
     "slider": {
       "opacity": "Opacidad",
       "thickness": "Grosor",
@@ -218,20 +240,21 @@
       "size": "Talla",
       "location": "Elija una ubicación para editar marcas de agua",
       "text": "Texto",
-      "colors": "Colores",
-      "resetAllSettings": "Restablecer todos los ajustes"
+      "style": "Estilo",
+      "resetAllSettings": "Restablecer todos los ajustes",
+      "font": "Hacen"
     },
     "thumbnailPanel": {
-      "rotateClockwise": "Agujas del reloj",
       "delete": "Borrar",
+      "rotateClockwise": "Agujas del reloj",
       "rotateCounterClockwise": "Sinistrórsum"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Eliminar página",
-      "deleteLastPageMessage": "Esto resultaría en que no quedan páginas. Por favor, deje al menos una página",
-      "deleteMessage": "¿Está seguro de que desea eliminar las páginas seleccionadas? Esto no se puede deshacer"
+      "deleteMessage": "¿Está seguro de que desea eliminar las páginas seleccionadas? Esto no se puede deshacer",
+      "deleteLastPageMessage": "Esto resultaría en que no quedan páginas. Por favor, deje al menos una página"
     },
     "redaction": {
       "applyTile": "Aplicar redacción",
@@ -266,6 +289,13 @@
   "tool": {
     "pan": "Panorámica",
     "select": "Seleccionar",
-    "Marquee": "Zoom de selección"
+    "Marquee": "Zoom de selección",
+    "Link": "URL de enlace o página"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Página",
+    "enterurl": "Ingrese la URL a la que desea vincular",
+    "enterpage": "Seleccione el número de página que desea vincular"
   }
 }

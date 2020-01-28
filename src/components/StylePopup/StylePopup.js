@@ -125,7 +125,7 @@ class StylePopup extends React.PureComponent {
             onStyleChange={onStyleChange}
           />
         )}
-        { colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} initialStyle={Style}/>}
+        { colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
       </div>
     );
   }
