@@ -75,6 +75,7 @@ const TouchEventManager = {
         const docX = clientX - this.document.offsetLeft + this.container.scrollLeft;
         const docY = clientY - this.document.offsetTop + this.container.scrollTop;
         this.touch = {
+          previousPinchScale: 0,
           marginLeft: this.document.offsetLeft,
           marginTop: parseFloat(window.getComputedStyle(this.document).marginTop),
           clientX,
@@ -243,6 +244,15 @@ const TouchEventManager = {
         break;
       }
       case 'pinch': {
+        // sometimes handleTouchEnd will be called twice with the same value of this.touch.scale
+        // depending on how fast two fingers are away of the screen
+        // as a result the document will be zoomed in twice, and we do this cehck to prevent that from happening
+        if (this.touch.previousPinchScale === this.touch.scale) {
+          return;
+        }
+
+        this.touch.previousPinchScale = this.touch.scale;
+
         if (isIOS) {
           this.document.style.zoom = 1;
           this.document.style.margin = 'auto';
