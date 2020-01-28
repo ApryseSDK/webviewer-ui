@@ -52,7 +52,6 @@ const Button = props => {
     img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
   const shouldRenderTooltip = title && !disable;
 
-
   const children = (
     <div
       className={classNames({

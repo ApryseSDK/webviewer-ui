@@ -61,8 +61,15 @@ const ToolButton = ({
   }, [customOverrides, toolName]);
 
   const handleClick = () => {
-    core.setToolMode(toolName);
-    dispatch(actions.setActiveToolGroup(group));
+    if (isActive) {
+      if (toolStylesExist(toolName)) {
+        dispatch(actions.toggleElement('toolStylePopup'));
+      }
+    } else {
+      core.setToolMode(toolName);
+      dispatch(actions.setActiveToolGroup(group));
+      dispatch(actions.closeElement('toolStylePopup'));
+    }
   };
 
   const toolStyles = getToolStyles(toolName);

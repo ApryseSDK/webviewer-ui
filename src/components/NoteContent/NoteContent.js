@@ -233,6 +233,10 @@ const ContentArea = ({
     }
   };
 
+  const saveBtnClass = classNames({
+    disabled: textAreaValue === contents,
+  });
+
   return (
     <div className="edit-content">
       <AutoResizeTextarea
@@ -245,15 +249,15 @@ const ContentArea = ({
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
       />
-      <div className="edit-buttons">
+      <div className="buttons">
         <div
-          className="edit-button"
+          className="btn1234"
           onMouseDown={setContents}
         >
           {t('action.save')}
         </div>
         <div
-          className="edit-button"
+          className="btn1234"
           onMouseDown={() => {
             setIsEditing(false);
             onTextAreaValueChange(contents);

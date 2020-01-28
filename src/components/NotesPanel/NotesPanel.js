@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import Measure from 'react-measure';
-import { CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
 import { useTranslation } from 'react-i18next';
 
 import VirtualizedList from 'components/NotesPanel/VirtualizedList';
