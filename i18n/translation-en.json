@@ -166,6 +166,9 @@
     "documentControls": {
       "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
+    "documentControls": {
+      "placeholder": "Enter pages to select i.e. 2, 5-9"
+    },
     "layout": {
       "cover": "Cover Facing Page",
       "double": "Double Page",

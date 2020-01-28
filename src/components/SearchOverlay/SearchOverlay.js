@@ -438,6 +438,12 @@ class SearchOverlay extends React.PureComponent {
     this.executeDebouncedFullSearch();
   }
 
+  onChangeWildcard = e => {
+    this.props.setWildcard(e.target.checked);
+    this.clearSearchResults();
+    this.executeDebouncedFullSearch();
+  }
+
   render() {
     const {
       isDisabled,
