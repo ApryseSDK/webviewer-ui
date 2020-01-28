@@ -6,6 +6,7 @@ import classNames from 'classnames';
 
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
@@ -82,13 +83,13 @@ class ToolGroupButton extends React.PureComponent {
     } = this.props;
     const { toolName } = this.state;
 
-    setActiveToolGroup(toolGroup);
-    closeElement('toolStylePopup');
-
     if (isActive) {
-      toggleElement('toolsOverlay');
+      core.setToolMode(defaultTool);
+      setActiveToolGroup('');
+      closeElement('toolsOverlay');
     } else {
       core.setToolMode(toolName);
+      setActiveToolGroup(toolGroup);
       openElement('toolsOverlay');
     }
   };
