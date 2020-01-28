@@ -222,6 +222,11 @@
     "measurementOption": {
       "scale": "Schaal"
     },
+    "styleOption": {
+      "style": "Stijl",
+      "regular": "regelmatig",
+      "cloudy": "Bewolkt"
+    },
     "slider": {
       "opacity": "Dekking",
       "thickness": "Randdikte",

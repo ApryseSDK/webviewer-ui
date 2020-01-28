@@ -13,6 +13,7 @@
     "ungroup": "取消组合",
     "download": "下载",
     "edit": "编辑",
+    "extract": "提取",
     "enterFullscreen": "全屏",
     "exitFullscreen": "退出全屏",
     "fit": "文档尺寸",
@@ -35,10 +36,9 @@
     "zoomIn": "放大",
     "zoomOut": "缩小",
     "draw": "画",
-    "link": "链接",
-    "extract": "提取",
     "type": "类型",
-    "upload": "上载"
+    "upload": "上载",
+    "link": "链接"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -72,29 +72,29 @@
     "rubberStamp": "橡皮图章"
   },
   "rubberStamp": {
-    "ForPublicRelease": "公开发行",
+    "Approved": "已批准",
+    "AsIs": "照原样",
+    "Completed": "已完成",
     "Confidential": "机密",
     "Departmental": "部门的",
     "Draft": "草案",
     "Experimental": "实验性",
-    "InformationOnly": "仅供参考",
-    "Approved": "已批准",
-    "Completed": "已完成",
-    "NotApproved": "不批准",
-    "Final": "最后",
     "Expired": "已过期",
-    "SBRejected": "拒绝",
-    "AsIs": "照原样",
+    "Final": "最后",
     "ForComment": "征求意见",
+    "ForPublicRelease": "公开发行",
+    "InformationOnly": "仅供参考",
+    "NotApproved": "不批准",
+    "NotForPublicRelease": "不公开发布",
     "PreliminaryResults": "初步结果",
     "Sold": "已售出",
-    "SHInitialHere": "最初在这里",
+    "TopSecret": "最高机密",
     "Void": "空洞",
-    "SHWitness": "见证人",
-    "SHAccepted": "公认",
     "SHSignHere": "在这里签名",
-    "NotForPublicRelease": "不公开发布",
-    "TopSecret": "最高机密"
+    "SHWitness": "见证人",
+    "SHInitialHere": "最初在这里",
+    "SHAccepted": "公认",
+    "SBRejected": "拒绝"
   },
   "component": {
     "freehandToolsButton": "手绘工具",
@@ -139,9 +139,9 @@
     "searchPlaceholder": "在此处搜索注释…",
     "signHere": "在此处签名",
     "insertTextHere": "在这里插入文字",
+    "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在两点之间输入测量值",
-    "linkURLorPage": "链接网址或页面",
-    "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}"
+    "linkURLorPage": "链接网址或页面"
   },
   "option": {
     "annotationColor": {
@@ -193,9 +193,9 @@
     },
     "signatureModal": {
       "saveSignature": "保存签名",
-      "pickImage": "选择签名图像",
+      "dragAndDrop": "将图片拖放到此处",
       "or": "要么",
-      "dragAndDrop": "将图片拖放到此处"
+      "pickImage": "选择签名图像"
     },
     "status": {
       "status": "状态"
@@ -222,6 +222,11 @@
     "measurementOption": {
       "scale": "比例"
     },
+    "styleOption": {
+      "style": "样式",
+      "regular": "定期",
+      "cloudy": "多云的"
+    },
     "slider": {
       "opacity": "不透明度",
       "thickness": "厚度",
@@ -235,8 +240,8 @@
       "size": "尺寸",
       "location": "选择一个位置来编辑水印",
       "text": "文本",
-      "resetAllSettings": "重置所有设置",
       "style": "样式",
+      "resetAllSettings": "重置所有设置",
       "font": "字形"
     },
     "thumbnailPanel": {
@@ -288,9 +293,9 @@
     "Link": "链接网址或页面"
   },
   "link": {
+    "url": "网址",
     "page": "页",
     "enterurl": "输入您想要链接的URL",
-    "enterpage": "选择您要链接的页码",
-    "url": "网址"
+    "enterpage": "选择您要链接的页码"
   }
 }

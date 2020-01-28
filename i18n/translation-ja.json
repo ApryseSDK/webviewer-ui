@@ -222,6 +222,11 @@
     "measurementOption": {
       "scale": "スケール"
     },
+    "styleOption": {
+      "style": "スタイル",
+      "regular": "レギュラー",
+      "cloudy": "曇り"
+    },
     "slider": {
       "opacity": "不透明度",
       "thickness": "厚さ",
