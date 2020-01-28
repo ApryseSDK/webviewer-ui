@@ -13,6 +13,7 @@
     "ungroup": "Gruppierung aufheben",
     "download": "Download",
     "edit": "Bearbeiten",
+    "extract": "Extrakt",
     "enterFullscreen": "Vollbildansicht",
     "exitFullscreen": "Vollbildansicht beenden",
     "fit": "Anpassen",
@@ -28,13 +29,16 @@
     "save": "Speichern",
     "create": "Erzeugen",
     "showMoreResults": "Mehr Ergebnisse anzeigen",
-    "saveSignature": "Unterschrift speichern",
     "sign": "Unterschrift",
     "style": "Stil",
     "submit": "Abgeben",
     "zoom": "Zoom",
     "zoomIn": "Heranzoomen",
-    "zoomOut": "Rauszoomen"
+    "zoomOut": "Rauszoomen",
+    "draw": "Zeichnen",
+    "type": "Art",
+    "upload": "Hochladen",
+    "link": "Verknüpfung"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -64,7 +68,33 @@
     "stickyNote": "Kommentar",
     "strikeout": "Durchstreichen",
     "underline": "Unterstreichen",
-    "custom": "Angepasst"
+    "custom": "Angepasst",
+    "rubberStamp": "Stempel"
+  },
+  "rubberStamp": {
+    "Approved": "Genehmigt",
+    "AsIs": "Wie es ist",
+    "Completed": "Abgeschlossen",
+    "Confidential": "Geheim",
+    "Departmental": "Abteilung",
+    "Draft": "Entwurf",
+    "Experimental": "Experimental",
+    "Expired": "Abgelaufen",
+    "Final": "Finale",
+    "ForComment": "Für Kommentar",
+    "ForPublicRelease": "Zur öffentlichen Veröffentlichung",
+    "InformationOnly": "Nur Informationen",
+    "NotApproved": "Nicht bestätigt",
+    "NotForPublicRelease": "Nicht zur Veröffentlichung",
+    "PreliminaryResults": "Vorläufige Ergebnisse",
+    "Sold": "Verkauft",
+    "TopSecret": "Streng geheim",
+    "Void": "Leere",
+    "SHSignHere": "Hier unterschreiben",
+    "SHWitness": "Zeuge",
+    "SHInitialHere": "Hier anfangen",
+    "SHAccepted": "Akzeptiert",
+    "SBRejected": "Abgelehnt"
   },
   "component": {
     "freehandToolsButton": "Freihand-Werkzeuge",
@@ -74,6 +104,9 @@
     "miscToolsButton": "Verschiedene Werkzeuge",
     "notesPanel": "Annotationen",
     "outlinesPanel": "Gliederung",
+    "bookmarksPanel": "Lesezeichen",
+    "newBookmark": "Neues Lesezeichen",
+    "bookmarkPage": "Seite",
     "layersPanel": "Schichten",
     "shapeToolsButton": "Formwerkzeuge",
     "textToolsButton": "Textwerkzeuge",
@@ -82,10 +115,7 @@
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
     "measurementToolsButton": "Messwerkzeuge",
-    "calibration": "Kalibrierung",
-    "newBookmark": "Neues Lesezeichen",
-    "bookmarkPage": "Seite",
-    "bookmarksPanel": "Lesezeichen"
+    "calibration": "Kalibrierung"
   },
   "message": {
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
@@ -109,7 +139,9 @@
     "searchPlaceholder": "Suche Kommentare...",
     "signHere": "Hier unterschreiben",
     "insertTextHere": "Hier Text eingeben",
-    "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein"
+    "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
+    "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein",
+    "linkURLorPage": "Link URL oder eine Seite"
   },
   "option": {
     "annotationColor": {
@@ -120,6 +152,9 @@
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Seitenübergang"
+    },
+    "documentControls": {
+      "placeholder": "Geben Sie die gewünschten Seiten ein, z. B. 2, 5-9"
     },
     "layout": {
       "cover": "Deckblatt",
@@ -155,6 +190,12 @@
     },
     "signatureOverlay": {
       "addSignature": "Eine Unterschrift hinzufügen"
+    },
+    "signatureModal": {
+      "saveSignature": "Unterschrift speichern",
+      "dragAndDrop": "Ziehen Sie Ihr Bild per Drag & Drop hierher",
+      "or": "Oder",
+      "pickImage": "Wählen Sie das Signaturbild"
     },
     "status": {
       "status": "Status"
@@ -194,24 +235,25 @@
       "size": "Größe",
       "location": "Wählen Sie einen Ort zum Bearbeiten von Wasserzeichen",
       "text": "Text",
-      "colors": "Farben",
-      "resetAllSettings": "Alle Einstellungen zurücksetzen"
+      "style": "Stil",
+      "resetAllSettings": "Alle Einstellungen zurücksetzen",
+      "font": "Schriftart"
     },
     "thumbnailPanel": {
+      "delete": "Löschen",
       "rotateClockwise": "Im Uhrzeigersinn",
-      "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
-      "delete": "Löschen"
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
     }
   },
   "warning": {
     "deletePage": {
-      "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten verbleiben. Bitte hinterlassen Sie mindestens eine Seite",
+      "deleteTitle": "Seite löschen",
       "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden",
-      "deleteTitle": "Seite löschen"
+      "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten verbleiben. Bitte hinterlassen Sie mindestens eine Seite"
     },
     "redaction": {
-      "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht ungeschehen gemacht werden.",
-      "applyTile": "Redaktion anwenden"
+      "applyTile": "Redaktion anwenden",
+      "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht ungeschehen gemacht werden."
     }
   },
   "shortcut": {
@@ -242,6 +284,13 @@
   "tool": {
     "pan": "Hand",
     "select": "Auswählen",
-    "Marquee": "Auswahl Zoom"
+    "Marquee": "Auswahl Zoom",
+    "Link": "Link URL oder Seite"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Seite",
+    "enterurl": "Geben Sie die URL ein, zu der Sie einen Link erstellen möchten",
+    "enterpage": "Wählen Sie die Seitennummer aus, zu der Sie einen Link erstellen möchten"
   }
 }
