@@ -18,7 +18,7 @@ function StyleOption(props) {
         <div className="styles-layout">
           <select
             className="styles-input"
-            value={style}
+            defaultValue={style}
             onChange={e => onChange(e.target.value)}
           >
             {styleOptions.map(option => (
