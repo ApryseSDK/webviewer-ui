@@ -28,13 +28,17 @@
     "save": "Сохранить",
     "create": "Создать",
     "showMoreResults": "Показать больше",
-    "saveSignature": "Сохранить подпись",
     "sign": "Добавить подпись",
     "style": "Стиль",
     "submit": "Отправить",
     "zoom": "Увеличить",
     "zoomIn": "Увеличить",
-    "zoomOut": "Уменьшить"
+    "zoomOut": "Уменьшить",
+    "extract": "экстракт",
+    "draw": "Привлечь",
+    "type": "Тип",
+    "link": "Ссылка на сайт",
+    "upload": "Загрузить"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -64,7 +68,33 @@
     "stickyNote": "Комментировать",
     "strikeout": "Зачеркнуть",
     "underline": "Подчеркнуть",
-    "custom": "Свой стиль"
+    "custom": "Свой стиль",
+    "rubberStamp": "Штамп"
+  },
+  "rubberStamp": {
+    "Completed": "Завершенный",
+    "PreliminaryResults": "Предварительные результаты",
+    "Approved": "Одобренный",
+    "AsIs": "Как есть",
+    "Experimental": "экспериментальный",
+    "TopSecret": "Совершенно секретно",
+    "Departmental": "ведомственный",
+    "NotForPublicRelease": "Не для публичного выпуска",
+    "Draft": "Черновой вариант",
+    "SHAccepted": "Принятый",
+    "ForComment": "Для комментариев",
+    "SHInitialHere": "Здесь",
+    "NotApproved": "Не одобрено",
+    "Sold": "Продано",
+    "ForPublicRelease": "Для публичного выпуска",
+    "Expired": "Истекший",
+    "Final": "окончательный",
+    "InformationOnly": "Только информация",
+    "SHSignHere": "Подпишите здесь",
+    "SBRejected": "Отклонено",
+    "Void": "пустота",
+    "Confidential": "конфиденциальный",
+    "SHWitness": "свидетель"
   },
   "component": {
     "freehandToolsButton": "Инструменты",
@@ -74,6 +104,9 @@
     "miscToolsButton": "Другие инструменты",
     "notesPanel": "Заметки",
     "outlinesPanel": "Контуры",
+    "bookmarksPanel": "закладки",
+    "newBookmark": "Новая закладка",
+    "bookmarkPage": "страница",
     "layersPanel": "Слои",
     "shapeToolsButton": "Фигуры",
     "textToolsButton": "Инструменты для работы с текстом",
@@ -82,10 +115,7 @@
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
     "measurementToolsButton": "Инструменты для замерения",
-    "calibration": "калибровка",
-    "bookmarksPanel": "закладки",
-    "newBookmark": "Новая закладка",
-    "bookmarkPage": "страница"
+    "calibration": "калибровка"
   },
   "message": {
     "badDocument": "Произошла ошибка при загрузке документа. Документ содержит ошибки или недостоверный.",
@@ -109,7 +139,9 @@
     "searchPlaceholder": "Поиск комментарий...",
     "signHere": "Распишетесь здесь",
     "insertTextHere": "Вставьте текст здесь",
-    "enterMeasurement": "Введите измерение между двумя точками"
+    "enterMeasurement": "Введите измерение между двумя точками",
+    "linkURLorPage": "Ссылка URL или страница",
+    "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются"
   },
   "option": {
     "annotationColor": {
@@ -120,6 +152,9 @@
     "displayMode": {
       "layout": "Расположение",
       "pageTransition": "Переход страниц"
+    },
+    "documentControls": {
+      "placeholder": "Введите страницы для выбора, то есть 2, 5-9"
     },
     "layout": {
       "cover": "Полный",
@@ -155,6 +190,12 @@
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"
+    },
+    "signatureModal": {
+      "pickImage": "Выберите Подпись Изображение",
+      "dragAndDrop": "Перетащите изображение сюда",
+      "or": "Или",
+      "saveSignature": "Сохранить подпись"
     },
     "status": {
       "status": "Статус"
@@ -194,24 +235,25 @@
       "size": "Размер",
       "location": "Выберите место для редактирования водяных знаков",
       "text": "Текст",
-      "colors": "Цвета",
-      "resetAllSettings": "Сбросить все настройки"
+      "resetAllSettings": "Сбросить все настройки",
+      "font": "шрифт",
+      "style": "Стиль"
     },
     "thumbnailPanel": {
+      "delete": "удалять",
       "rotateClockwise": "по часовой стрелке",
-      "rotateCounterClockwise": "Против часовой стрелки",
-      "delete": "удалять"
+      "rotateCounterClockwise": "Против часовой стрелки"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Удалить страницу",
-      "deleteLastPageMessage": "Это приведет к тому, что не останется ни одной страницы. Пожалуйста, оставьте хотя бы одну страницу",
-      "deleteMessage": "Вы уверены, что хотите удалить выбранные страницы? Это не может быть отменено"
+      "deleteMessage": "Вы уверены, что хотите удалить выбранные страницы? Это не может быть отменено",
+      "deleteLastPageMessage": "Это приведет к тому, что не останется ни одной страницы. Пожалуйста, оставьте хотя бы одну страницу"
     },
     "redaction": {
-      "applyMessage": "Это действие навсегда удалит все элементы, выбранные для редактирования. Это не может быть отменено.",
-      "applyTile": "Применить редактирование"
+      "applyTile": "Применить редактирование",
+      "applyMessage": "Это действие навсегда удалит все элементы, выбранные для редактирования. Это не может быть отменено."
     }
   },
   "shortcut": {
@@ -242,6 +284,13 @@
   "tool": {
     "pan": "Панорамирование",
     "select": "Выделить",
-    "Marquee": "Увеличить выделение"
+    "Marquee": "Увеличить выделение",
+    "Link": "Ссылка URL или Страница"
+  },
+  "link": {
+    "enterpage": "Выберите номер страницы, на которую вы хотите сослаться",
+    "page": "страница",
+    "url": "URL",
+    "enterurl": "Введите URL, на который вы хотите сослаться"
   }
 }

@@ -13,6 +13,7 @@
     "ungroup": "Desagrupar",
     "download": "Download",
     "edit": "Editar",
+    "extract": "Extrair",
     "enterFullscreen": "Tela cheia",
     "exitFullscreen": "Sair da tela cheia",
     "fit": "Ajustar",
@@ -28,13 +29,16 @@
     "save": "Salvar",
     "create": "Criar",
     "showMoreResults": "Mostrar mais resultados",
-    "saveSignature": "Salvar assinatura",
     "sign": "Assinar",
     "style": "Estilo",
     "submit": "Enviar",
     "zoom": "Zoom",
     "zoomIn": "Aproximar",
-    "zoomOut": "Afastar"
+    "zoomOut": "Afastar",
+    "draw": "Desenhar",
+    "type": "Tipo",
+    "upload": "Envio",
+    "link": "Ligação"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -64,7 +68,33 @@
     "stickyNote": "Comentário",
     "strikeout": "Riscar",
     "underline": "Sublinhar",
-    "custom": "Personalizado"
+    "custom": "Personalizado",
+    "rubberStamp": "Carimbo de borracha"
+  },
+  "rubberStamp": {
+    "Approved": "Aprovado",
+    "AsIs": "Como é",
+    "Completed": "Concluído",
+    "Confidential": "Confidencial",
+    "Departmental": "Departamental",
+    "Draft": "Esboço, projeto",
+    "Experimental": "Experimental",
+    "Expired": "Expirado",
+    "Final": "Final",
+    "ForComment": "Para Comentário",
+    "ForPublicRelease": "Para divulgação pública",
+    "InformationOnly": "Apenas informação",
+    "NotApproved": "Não aprovado",
+    "NotForPublicRelease": "Não para divulgação pública",
+    "PreliminaryResults": "Resultados preliminares",
+    "Sold": "Vendido",
+    "TopSecret": "Ultra secreto",
+    "Void": "Vazio",
+    "SHSignHere": "Assine aqui",
+    "SHWitness": "Testemunha",
+    "SHInitialHere": "Inicial aqui",
+    "SHAccepted": "Aceitaram",
+    "SBRejected": "Rejeitado"
   },
   "component": {
     "freehandToolsButton": "Ferramentas mão livre",
@@ -74,6 +104,9 @@
     "miscToolsButton": "Ferramentas diversas",
     "notesPanel": "Anotações",
     "outlinesPanel": "Esquemas",
+    "bookmarksPanel": "Favoritos",
+    "newBookmark": "Novo marcador",
+    "bookmarkPage": "Página",
     "layersPanel": "Camadas",
     "shapeToolsButton": "Ferramentas de forma",
     "textToolsButton": "Ferramentas de texto",
@@ -82,10 +115,7 @@
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
     "measurementToolsButton": "Ferramentas de medição",
-    "calibration": "Calibração",
-    "bookmarkPage": "Página",
-    "bookmarksPanel": "Favoritos",
-    "newBookmark": "Novo marcador"
+    "calibration": "Calibração"
   },
   "message": {
     "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
@@ -109,7 +139,9 @@
     "searchPlaceholder": "Buscar comentários...",
     "signHere": "Assine aqui",
     "insertTextHere": "Insira texto aqui",
-    "enterMeasurement": "Digite a medição entre os dois pontos"
+    "imageSignatureAcceptedFileTypes": "Somente {{acceptFileTypes}} são aceitos",
+    "enterMeasurement": "Digite a medição entre os dois pontos",
+    "linkURLorPage": "URL do link ou uma página"
   },
   "option": {
     "annotationColor": {
@@ -120,6 +152,9 @@
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Transição de página"
+    },
+    "documentControls": {
+      "placeholder": "Insira as páginas para selecionar, ou seja, 2, 5-9"
     },
     "layout": {
       "cover": "Capa",
@@ -155,6 +190,12 @@
     },
     "signatureOverlay": {
       "addSignature": "Adicionar assinatura"
+    },
+    "signatureModal": {
+      "saveSignature": "Salvar assinatura",
+      "dragAndDrop": "Arraste e solte sua imagem aqui",
+      "or": "Ou",
+      "pickImage": "Escolher imagem da assinatura"
     },
     "status": {
       "status": "Status"
@@ -194,24 +235,25 @@
       "size": "Tamanho",
       "location": "Escolha um local para editar marcas d'água",
       "text": "Texto",
-      "colors": "Cores",
-      "resetAllSettings": "Redefinir todas as configurações"
+      "style": "Estilo",
+      "resetAllSettings": "Redefinir todas as configurações",
+      "font": "fonte"
     },
     "thumbnailPanel": {
-      "rotateClockwise": "Sentido horário",
       "delete": "Excluir",
+      "rotateClockwise": "Sentido horário",
       "rotateCounterClockwise": "Sentido anti-horário"
     }
   },
   "warning": {
     "deletePage": {
-      "deleteLastPageMessage": "Isso resultaria em nenhuma página restante. Deixe pelo menos uma página",
       "deleteTitle": "Excluir página",
-      "deleteMessage": "Tem certeza de que deseja excluir as páginas selecionadas. Isso não pode ser desfeito"
+      "deleteMessage": "Tem certeza de que deseja excluir as páginas selecionadas. Isso não pode ser desfeito",
+      "deleteLastPageMessage": "Isso resultaria em nenhuma página restante. Deixe pelo menos uma página"
     },
     "redaction": {
-      "applyMessage": "Esta ação removerá permanentemente todos os itens selecionados para edição. Não pode ser desfeito.",
-      "applyTile": "Aplicar redação"
+      "applyTile": "Aplicar redação",
+      "applyMessage": "Esta ação removerá permanentemente todos os itens selecionados para edição. Não pode ser desfeito."
     }
   },
   "shortcut": {
@@ -242,6 +284,13 @@
   "tool": {
     "pan": "Pan",
     "select": "Selecionar",
-    "Marquee": "Zoom Marquee"
+    "Marquee": "Zoom Marquee",
+    "Link": "URL ou página do link"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Página",
+    "enterurl": "Digite o URL para o qual você deseja vincular",
+    "enterpage": "Selecione o número da página que você deseja vincular"
   }
 }
