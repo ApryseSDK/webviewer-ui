@@ -222,6 +222,11 @@
     "measurementOption": {
       "scale": "Escala"
     },
+    "styleOption": {
+      "style": "Estilo",
+      "regular": "Regular",
+      "cloudy": "Nublado"
+    },
     "slider": {
       "opacity": "Opacidade",
       "thickness": "Espessura",

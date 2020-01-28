@@ -222,6 +222,11 @@
     "measurementOption": {
       "scale": "Maßstab"
     },
+    "styleOption": {
+      "style": "Stil",
+      "regular": "Regulär",
+      "cloudy": "Wolkig"
+    },
     "slider": {
       "opacity": "Deckkraft",
       "thickness": "Dicke",

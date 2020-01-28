@@ -222,6 +222,11 @@
     "measurementOption": {
       "scale": "배율"
     },
+    "styleOption": {
+      "style": "스타일",
+      "regular": "정규병",
+      "cloudy": "흐림"
+    },
     "slider": {
       "opacity": "불투명도",
       "thickness": "두께",

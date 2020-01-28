@@ -13,6 +13,7 @@
     "ungroup": "Ungroup",
     "download": "Скачать",
     "edit": "Редактировать",
+    "extract": "экстракт",
     "enterFullscreen": "Полный экран",
     "exitFullscreen": "Выйте из полного экрана",
     "fit": "Уместить",
@@ -34,11 +35,10 @@
     "zoom": "Увеличить",
     "zoomIn": "Увеличить",
     "zoomOut": "Уменьшить",
-    "extract": "экстракт",
     "draw": "Привлечь",
     "type": "Тип",
-    "link": "Ссылка на сайт",
-    "upload": "Загрузить"
+    "upload": "Загрузить",
+    "link": "Ссылка на сайт"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -72,29 +72,29 @@
     "rubberStamp": "Штамп"
   },
   "rubberStamp": {
-    "Completed": "Завершенный",
-    "PreliminaryResults": "Предварительные результаты",
     "Approved": "Одобренный",
     "AsIs": "Как есть",
-    "Experimental": "экспериментальный",
-    "TopSecret": "Совершенно секретно",
+    "Completed": "Завершенный",
+    "Confidential": "конфиденциальный",
     "Departmental": "ведомственный",
-    "NotForPublicRelease": "Не для публичного выпуска",
     "Draft": "Черновой вариант",
-    "SHAccepted": "Принятый",
-    "ForComment": "Для комментариев",
-    "SHInitialHere": "Здесь",
-    "NotApproved": "Не одобрено",
-    "Sold": "Продано",
-    "ForPublicRelease": "Для публичного выпуска",
+    "Experimental": "экспериментальный",
     "Expired": "Истекший",
     "Final": "окончательный",
+    "ForComment": "Для комментариев",
+    "ForPublicRelease": "Для публичного выпуска",
     "InformationOnly": "Только информация",
-    "SHSignHere": "Подпишите здесь",
-    "SBRejected": "Отклонено",
+    "NotApproved": "Не одобрено",
+    "NotForPublicRelease": "Не для публичного выпуска",
+    "PreliminaryResults": "Предварительные результаты",
+    "Sold": "Продано",
+    "TopSecret": "Совершенно секретно",
     "Void": "пустота",
-    "Confidential": "конфиденциальный",
-    "SHWitness": "свидетель"
+    "SHSignHere": "Подпишите здесь",
+    "SHWitness": "свидетель",
+    "SHInitialHere": "Здесь",
+    "SHAccepted": "Принятый",
+    "SBRejected": "Отклонено"
   },
   "component": {
     "freehandToolsButton": "Инструменты",
@@ -139,9 +139,9 @@
     "searchPlaceholder": "Поиск комментарий...",
     "signHere": "Распишетесь здесь",
     "insertTextHere": "Вставьте текст здесь",
+    "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",
     "enterMeasurement": "Введите измерение между двумя точками",
-    "linkURLorPage": "Ссылка URL или страница",
-    "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются"
+    "linkURLorPage": "Ссылка URL или страница"
   },
   "option": {
     "annotationColor": {
@@ -192,10 +192,10 @@
       "addSignature": "Добавить подпись"
     },
     "signatureModal": {
-      "pickImage": "Выберите Подпись Изображение",
+      "saveSignature": "Сохранить подпись",
       "dragAndDrop": "Перетащите изображение сюда",
       "or": "Или",
-      "saveSignature": "Сохранить подпись"
+      "pickImage": "Выберите Подпись Изображение"
     },
     "status": {
       "status": "Статус"
@@ -222,6 +222,11 @@
     "measurementOption": {
       "scale": "Масштаб"
     },
+    "styleOption": {
+      "style": "Стиль",
+      "regular": "регулярное",
+      "cloudy": "облачный"
+    },
     "slider": {
       "opacity": "Прозрачность",
       "thickness": "Тонкость",
@@ -235,9 +240,9 @@
       "size": "Размер",
       "location": "Выберите место для редактирования водяных знаков",
       "text": "Текст",
+      "style": "Стиль",
       "resetAllSettings": "Сбросить все настройки",
-      "font": "шрифт",
-      "style": "Стиль"
+      "font": "шрифт"
     },
     "thumbnailPanel": {
       "delete": "удалять",
@@ -288,9 +293,9 @@
     "Link": "Ссылка URL или Страница"
   },
   "link": {
-    "enterpage": "Выберите номер страницы, на которую вы хотите сослаться",
-    "page": "страница",
     "url": "URL",
-    "enterurl": "Введите URL, на который вы хотите сослаться"
+    "page": "страница",
+    "enterurl": "Введите URL, на который вы хотите сослаться",
+    "enterpage": "Выберите номер страницы, на которую вы хотите сослаться"
   }
 }
