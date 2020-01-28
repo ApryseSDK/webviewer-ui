@@ -235,6 +235,11 @@
     "measurementOption": {
       "scale": "Scale"
     },
+    "styleOption": {
+      "style": "Style",
+      "regular": "Regular",
+      "cloudy": "Cloudy"
+    },
     "slider": {
       "opacity": "Opacity",
       "thickness": "Stroke",

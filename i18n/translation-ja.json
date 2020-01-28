@@ -13,6 +13,7 @@
     "ungroup": "グループ解除",
     "download": "ダウンロード",
     "edit": "編集",
+    "extract": "エキス",
     "enterFullscreen": "全画面表示",
     "exitFullscreen": "全画面表示を終了",
     "fit": "フィット",
@@ -28,13 +29,16 @@
     "save": "保存",
     "create": "作成",
     "showMoreResults": "より多くの結果を表示",
-    "saveSignature": "署名の保存",
     "sign": "署名",
     "style": "スタイル",
     "submit": "送信",
     "zoom": "ズーム",
     "zoomIn": "ズームイン",
-    "zoomOut": "ズームアウト"
+    "zoomOut": "ズームアウト",
+    "draw": "ドロー",
+    "type": "タイプ",
+    "upload": "アップロードする",
+    "link": "リンク"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -88,7 +92,9 @@
     "Void": "ボイド",
     "SHSignHere": "ここに署名",
     "SHWitness": "証人",
-    "SHInitialHere": "初期"
+    "SHInitialHere": "初期",
+    "SHAccepted": "受け入れられた",
+    "SBRejected": "拒否されました"
   },
   "component": {
     "freehandToolsButton": "フリーハンド ツール",
@@ -98,6 +104,9 @@
     "miscToolsButton": "その他のツール",
     "notesPanel": "備考",
     "outlinesPanel": "概要",
+    "bookmarksPanel": "しおり",
+    "newBookmark": "新しいブックマーク",
+    "bookmarkPage": "ページ",
     "layersPanel": "レイヤー",
     "shapeToolsButton": "シェイプ ツール",
     "textToolsButton": "テキスト ツール",
@@ -106,10 +115,7 @@
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
     "measurementToolsButton": "測定ツール",
-    "calibration": "較正",
-    "bookmarksPanel": "しおり",
-    "newBookmark": "新しいブックマーク",
-    "bookmarkPage": "ページ"
+    "calibration": "較正"
   },
   "message": {
     "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
@@ -133,7 +139,9 @@
     "searchPlaceholder": "コメントを検索...",
     "signHere": "ここに署名",
     "insertTextHere": "ここにテキストを挿入",
-    "enterMeasurement": "2点間の測定値を入力します"
+    "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが受け入れられます",
+    "enterMeasurement": "2点間の測定値を入力します",
+    "linkURLorPage": "リンクURLまたはページ"
   },
   "option": {
     "annotationColor": {
@@ -144,6 +152,9 @@
     "displayMode": {
       "layout": "レイアウト",
       "pageTransition": "ページ遷移"
+    },
+    "documentControls": {
+      "placeholder": "ページを入力して選択します（例：2、5-9）"
     },
     "layout": {
       "cover": "カバー",
@@ -180,6 +191,12 @@
     "signatureOverlay": {
       "addSignature": "署名を追加"
     },
+    "signatureModal": {
+      "saveSignature": "署名を保存",
+      "dragAndDrop": "ここに画像をドラッグアンドドロップします",
+      "or": "または",
+      "pickImage": "署名画像を選択"
+    },
     "status": {
       "status": "状態"
     },
@@ -205,6 +222,11 @@
     "measurementOption": {
       "scale": "スケール"
     },
+    "styleOption": {
+      "style": "スタイル",
+      "regular": "レギュラー",
+      "cloudy": "曇り"
+    },
     "slider": {
       "opacity": "不透明度",
       "thickness": "厚さ",
@@ -218,8 +240,9 @@
       "size": "サイズ",
       "location": "透かしを編集する場所を選択してください",
       "text": "テキスト",
-      "colors": "色",
-      "resetAllSettings": "すべての設定をリセット"
+      "style": "スタイル",
+      "resetAllSettings": "すべての設定をリセット",
+      "font": "フォント"
     },
     "thumbnailPanel": {
       "delete": "削除する",
@@ -266,6 +289,13 @@
   "tool": {
     "pan": "パン",
     "select": "選択",
-    "Marquee": "マーキーズーム"
+    "Marquee": "マーキーズーム",
+    "Link": "リンクURLまたはページ"
+  },
+  "link": {
+    "url": "URL",
+    "page": "ページ",
+    "enterurl": "リンクするURLを入力してください",
+    "enterpage": "リンクするページ番号を選択します"
   }
 }

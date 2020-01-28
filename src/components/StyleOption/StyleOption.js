@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import './StyleOption.scss';
 
 function StyleOption(props) {
-  const style = props.initialStyle ? props.initialStyle : 'regular';
+  const style = props.borderStyle ? props.borderStyle : 'regular';
   const styleOptions = ['regular', 'cloudy'];
+  const [t] = useTranslation();
 
   const onChange = value => {
     props.onStyleChange('Style', value);
@@ -14,7 +16,7 @@ function StyleOption(props) {
   return (
     <div className="StyleOption">
       <div className="styles-container">
-        <div className="styles-title">Style</div>
+        <div className="styles-title">{t('option.styleOption.style')}</div>
         <div className="styles-layout">
           <select
             className="styles-input"
@@ -23,7 +25,7 @@ function StyleOption(props) {
           >
             {styleOptions.map(option => (
               <option key={option} value={option}>
-                {option}
+                {t(`option.styleOption.${option}`)}
               </option>
             ))}
           </select>
@@ -36,7 +38,7 @@ function StyleOption(props) {
 
 StyleOption.propTypes = {
   onStyleChange: PropTypes.func.isRequired,
-  initialStyle: PropTypes.string,
+  borderStyle: PropTypes.string,
 };
 
 export default StyleOption;

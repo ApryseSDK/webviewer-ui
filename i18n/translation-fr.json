@@ -13,6 +13,7 @@
     "ungroup": "Dissocier",
     "download": "Télécharger",
     "edit": "Éditer",
+    "extract": "Extrait",
     "enterFullscreen": "Plein écran",
     "exitFullscreen": "Quitter le plein écran",
     "fit": "Fit",
@@ -28,13 +29,16 @@
     "save": "Enregistrer",
     "create": "Créer",
     "showMoreResults": "Montrer plus de résultats",
-    "saveSignature": "Enregistrer la signature",
     "sign": "Signer",
     "style": "Style",
     "submit": "Soumettre",
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
-    "zoomOut": "Dézoomer"
+    "zoomOut": "Dézoomer",
+    "draw": "Dessiner",
+    "type": "Type",
+    "upload": "Télécharger",
+    "link": "Lien"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -88,7 +92,9 @@
     "Void": "Néant",
     "SHSignHere": "Signez ici",
     "SHWitness": "Témoin",
-    "SHInitialHere": "Initiale"
+    "SHInitialHere": "Initiale",
+    "SHAccepted": "Accepté",
+    "SBRejected": "Rejeté"
   },
   "component": {
     "freehandToolsButton": "Outils de stylo",
@@ -98,6 +104,9 @@
     "miscToolsButton": "Outils divers",
     "notesPanel": "Remarques",
     "outlinesPanel": "Contour",
+    "bookmarksPanel": "Signets",
+    "newBookmark": "Nouveau signet",
+    "bookmarkPage": "Page",
     "layersPanel": "Couches",
     "shapeToolsButton": "Outils de forme",
     "textToolsButton": "Outils de texte",
@@ -106,10 +115,7 @@
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
     "measurementToolsButton": "Outils de mesure",
-    "calibration": "Étalonnage",
-    "bookmarkPage": "Page",
-    "bookmarksPanel": "Signets",
-    "newBookmark": "Nouveau signet"
+    "calibration": "Étalonnage"
   },
   "message": {
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
@@ -133,7 +139,9 @@
     "searchPlaceholder": "Rechercher des commentaires ici...",
     "signHere": "Signer ici",
     "insertTextHere": "Insérer du texte ici",
-    "enterMeasurement": "Entrez la mesure entre les deux points"
+    "imageSignatureAcceptedFileTypes": "Seuls {{acceptedFileTypes}} sont acceptés",
+    "enterMeasurement": "Entrez la mesure entre les deux points",
+    "linkURLorPage": "Lien URL ou une page"
   },
   "option": {
     "annotationColor": {
@@ -144,6 +152,9 @@
     "displayMode": {
       "layout": "Disposition",
       "pageTransition": "Transition de page"
+    },
+    "documentControls": {
+      "placeholder": "Entrez les pages à sélectionner, c'est-à-dire 2, 5-9"
     },
     "layout": {
       "cover": "Couverture",
@@ -180,6 +191,12 @@
     "signatureOverlay": {
       "addSignature": "Ajouter une signature"
     },
+    "signatureModal": {
+      "saveSignature": "Enregistrer la signature",
+      "dragAndDrop": "Faites glisser et déposez votre image ici",
+      "or": "Ou",
+      "pickImage": "Choisir l'image de signature"
+    },
     "status": {
       "status": "Statut"
     },
@@ -205,6 +222,11 @@
     "measurementOption": {
       "scale": "Échelle"
     },
+    "styleOption": {
+      "style": "Style",
+      "regular": "Ordinaire",
+      "cloudy": "Nuageux"
+    },
     "slider": {
       "opacity": "Opacité",
       "thickness": "Épaisseur",
@@ -218,20 +240,21 @@
       "size": "Taille",
       "location": "Choisissez un emplacement pour modifier les filigranes",
       "text": "Texte",
-      "colors": "Couleurs",
-      "resetAllSettings": "Réinitialiser tous les réglages"
+      "style": "Style",
+      "resetAllSettings": "Réinitialiser tous les réglages",
+      "font": "Font"
     },
     "thumbnailPanel": {
-      "rotateClockwise": "Dans le sens horaire",
       "delete": "Supprimer",
+      "rotateClockwise": "Dans le sens horaire",
       "rotateCounterClockwise": "Dans le sens antihoraire"
     }
   },
   "warning": {
     "deletePage": {
-      "deleteLastPageMessage": "Il en résulterait aucune page restante. Veuillez laisser au moins une page",
       "deleteTitle": "Supprimer la page",
-      "deleteMessage": "Voulez-vous vraiment supprimer les pages sélectionnées? Cela ne peut pas être annulé"
+      "deleteMessage": "Voulez-vous vraiment supprimer les pages sélectionnées? Cela ne peut pas être annulé",
+      "deleteLastPageMessage": "Il en résulterait aucune page restante. Veuillez laisser au moins une page"
     },
     "redaction": {
       "applyTile": "Appliquer la rédaction",
@@ -266,6 +289,13 @@
   "tool": {
     "pan": "Panoramique",
     "select": "Sélection",
-    "Marquee": "Marquee Zoom"
+    "Marquee": "Marquee Zoom",
+    "Link": "URL de lien ou page"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Page",
+    "enterurl": "Entrez l'URL à laquelle vous souhaitez créer un lien",
+    "enterpage": "Sélectionnez le numéro de page auquel vous souhaitez lier"
   }
 }
