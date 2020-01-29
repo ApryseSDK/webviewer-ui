@@ -40,17 +40,9 @@
   &:hover:not(.disable) {
     background: #F6F6F6;
     background: var(--button-hover-color);
-
-    @media (hover: none) {
-      background: transparent;
-    }
-
-    @include mobile {
-      background: transparent;
-    }
   }
 
-  &.active {
+  &.active:not(.disable) {
     background: #F0F0F0;
     background: var(--button-active-color);
 
