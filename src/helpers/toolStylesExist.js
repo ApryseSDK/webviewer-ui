@@ -11,6 +11,7 @@ export default toolName => {
   let hasStyles;
 
   if (tool?.defaults) {
+    console.log(toolName, tool.defaults);
     hasStyles = Object.keys(tool.defaults).length > 0;
   } else {
     hasStyles = false;

@@ -78,7 +78,8 @@ class StylePopup extends React.PureComponent {
       },
     };
 
-    let sliders = {};
+    // default sliders
+    let sliders = { Opacity, StrokeThickness, FontSize };
     if (currentPalette === 'TextColor') {
       sliders = { Opacity, FontSize };
     } else if (currentPalette === 'StrokeColor') {
