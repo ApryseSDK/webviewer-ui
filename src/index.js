@@ -29,8 +29,11 @@ import getHashParams from 'helpers/getHashParams';
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
-  const { createLogger } = require('redux-logger');
-  middleware.push(createLogger({ collapsed: true }));
+  const isSpamDisabled = localStorage.getItem('spamDisabled') === 'true';
+  if (!isSpamDisabled) {
+    const { createLogger } = require('redux-logger');
+    middleware.push(createLogger({ collapsed: true }));
+  }
 }
 
 const store = createStore(rootReducer, applyMiddleware(...middleware));
@@ -43,6 +46,18 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
   });
 
   module.hot.accept();
+}
+
+if (process.env.NODE_ENV === 'development') {
+  window.disableSpam = () => {
+    localStorage.setItem('spamDisabled', 'true');
+    location.reload();
+  }
+
+  window.enableSpam = () => {
+    localStorage.setItem('spamDisabled', 'false');
+    location.reload();
+  }
 }
 
 if (window.CanvasRenderingContext2D) {
