@@ -73,17 +73,11 @@ export const enableElements = (dataElements, priority) => (
   dispatch,
   getState,
 ) => {
-  let filteredDataElements = getFilteredDataElements(
+  const filteredDataElements = getFilteredDataElements(
     getState(),
     dataElements,
     priority,
   );
-
-  if (!core.isCreateRedactionEnabled()) {
-    filteredDataElements = filteredDataElements.filter(
-      ele => ele !== 'redactionButton',
-    );
-  }
 
   dispatch({
     type: 'ENABLE_ELEMENTS',

@@ -8,6 +8,6 @@
  * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#event:annotationChanged__anchor
  * @fires notify on DocumentViewer if requires delete notification
  */
-export default annotations => {
-  window.docViewer.getAnnotationManager().deleteAnnotations(annotations);
+export default (...args) => {
+  window.docViewer.getAnnotationManager().deleteAnnotations(...args);
 };
