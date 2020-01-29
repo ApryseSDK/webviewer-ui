@@ -1,5 +1,6 @@
 .ToolGroupButton {
-  margin: 0 2px;
+  margin-left: 6px;
+  margin-right: 6px;
   display: flex;
   align-items: center;
   height: 32px;
@@ -8,7 +9,7 @@
   .down-arrow-container {
     margin-left: -4px;
     height: 100%;
-    margin-right: 4px;
+    // margin-right: 4px;
     height: 100%;
     border-radius: 4px;
     display: flex;
@@ -37,5 +38,9 @@
 
   .Button:hover {
     background: none;
+  }
+
+  .Button {
+    margin: 0;
   }
 }
