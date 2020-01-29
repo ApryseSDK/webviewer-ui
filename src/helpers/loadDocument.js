@@ -33,7 +33,6 @@ const getDefaultOptions = () => ({
   disableWebsockets: getHashParams('disableWebsockets', false),
   cacheKey: JSON.parse(getHashParams('cacheKey', null)),
   streaming: getHashParams('streaming', false),
-  subzero: getHashParams('subzero', false),
   useDownloader: getHashParams('useDownloader', true),
 });
 
