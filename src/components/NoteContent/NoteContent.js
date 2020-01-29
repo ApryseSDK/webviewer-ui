@@ -33,13 +33,11 @@ const propTypes = {
 
 const NoteContent = ({ annotation }) => {
   const [
-    sortStrategy,
     noteDateFormat,
     iconColor,
     isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector(
     state => [
-      selectors.getSortStrategy(state),
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
       selectors.getIsNoteEditing(state),
