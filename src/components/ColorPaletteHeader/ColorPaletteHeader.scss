@@ -10,8 +10,7 @@
   cursor: pointer;
 
   .palette-options-button {
-    flex: 1;
-    // Break ellipsis text overflow for some reason
+    // flex breaks ellipsis text overflow for some reason
     // display: flex;
     // justify-content: center;
     // align-items: center;
@@ -22,6 +21,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    flex-grow: 1;
 
     &.active {
       background: #dfe2ed;
