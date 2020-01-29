@@ -34,7 +34,7 @@
     flex-direction: column;
     border: 1px solid var(--tools-overlay-border);
     border-radius: 4px;
-    background: var(--tools-overlay-background);
+    background: var(--light-background);
     box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
     padding: 0px 4px;
     padding-top: 8px;
@@ -51,7 +51,7 @@
 
     .Close-Button {
       padding: 1px;
-      background: var(--tools-overlay-background);
+      background: var(--light-background);
       border: 1px solid var(--tools-overlay-border);
       border-radius: 100000px;
       box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);

@@ -35,7 +35,7 @@
 
       &:focus {
         outline: none;
-        border: 1px solid #6077bf;
+        border: 1px solid var(--focus-border);
       }
 
       &::placeholder {
@@ -45,7 +45,7 @@
 
     .reply-button {
       flex-shrink: 0;
-      background: #6077bf;
+      background: var(--button-fill);
       border-radius: 4px;
       width: 52px;
       height: 24px;

@@ -3,13 +3,10 @@
 .Header {
   display: flex;
   align-items: center;
-  z-index: 9;
   width: 100%;
   min-width: 300px;
   height: $top-bar-height;
-  background: var(--header-background);
-
-  transition: all .3s ease;
+  background: var(--light-background);
   padding: 2px 0px;
 
   border-bottom: solid 1px var(--border);
@@ -18,15 +15,6 @@
     padding-top: 1px; // top lowered 1px due to the border on the header above.
     padding-bottom: 2px;
     height: 35px;
-    background: var(--tools-header-background);
-  }
-
-  &.closed {
-    transform: translateY(-100%);
-    margin-bottom: -$top-bar-height;
-  }
-
-  @include mobile {
-    height: $top-bar-height-m;
+    background: var(--dark-background);
   }
 }

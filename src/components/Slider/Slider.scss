@@ -20,11 +20,11 @@
 
     svg {
       circle {
-        fill: #6077bf;
+        fill: var(--slider-color);
       }
 
       line:nth-child(1) {
-        stroke: #6077bf;
+        stroke: var(--slider-color);
       }
 
       line:nth-child(2) {

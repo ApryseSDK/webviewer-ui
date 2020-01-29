@@ -80,13 +80,17 @@ const NoteContent = ({ annotation }) => {
     annotation => {
       const name = core.getDisplayAuthor(annotation);
 
-      if (!name) {
-        return '(no name)';
-      }
-
-      return <div className="author-name">{getText(name)}</div>;
+      return name ? (
+        <span
+          dangerouslySetInnerHTML={{
+            __html: highlightSearchInput(name, searchInput),
+          }}
+        />
+      ) : (
+        '(no name)'
+      );
     },
-    [getText],
+    [searchInput],
   );
 
   const renderContents = useCallback(
@@ -97,33 +101,20 @@ const NoteContent = ({ annotation }) => {
       const transformedContents = Autolinker.link(contents, {
         stripPrefix: false,
       });
-      const isContentsLinkable = transformedContents.indexOf('<a') !== -1;
-      if (isContentsLinkable) {
+      if (transformedContents.includes('<a')) {
         // if searchInput is 't', replace <a ...>text</a> with
         // <a ...><span class="highlight">t</span>ext</a>
         text = transformedContents.replace(
           />(.+)</i,
-          (_, p1) => `>${getText(p1)}<`,
+          (_, p1) => `>${highlightSearchInput(p1, searchInput)}<`,
         );
       } else {
-        text = getText(contents);
+        text = highlightSearchInput(contents, searchInput);
       }
 
-      return text;
-    },
-    [getText],
-  );
-
-  const getText = useCallback(
-    text => {
-      if (searchInput.trim()) {
-        return text.replace(
-          new RegExp(`(${searchInput})`, 'gi'),
-          '<span class="highlight">$1</span>',
-        );
-      }
-
-      return text;
+      return (
+        <span className="contents" dangerouslySetInnerHTML={{ __html: text }} />
+      );
     },
     [searchInput],
   );
@@ -271,4 +262,22 @@ ContentArea.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,
   onTextAreaValueChange: PropTypes.func.isRequired,
+};
+
+const highlightSearchInput = (text, searchInput) => {
+  if (searchInput.trim()) {
+    try {
+      text = text.replace(
+        new RegExp(`(${searchInput})`, 'gi'),
+        '<span class="highlight">$1</span>',
+      );
+    } catch (e) {
+      // this condition is usually met when a search input contains symbols like *?!
+      text = text
+        .split(searchInput)
+        .join(`<span class="highlight">${searchInput}</span>`);
+    }
+  }
+
+  return text;
 };

@@ -13,7 +13,7 @@
   margin-bottom: 8px;
 
   &.selected {
-    border: 1px solid #6077bf;
+    border: 1px solid var(--focus-border);
     box-shadow: none;
 
     .search-value {

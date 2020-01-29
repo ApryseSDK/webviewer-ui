@@ -9,13 +9,31 @@
   --button-hover-color: #F6F6F6;
 
 
+  --white: #fafafa;
+  --white-2: #f0f0f0;
+  --blue-gray-1: #dfe2ed;
+  --blue-gray-2: #c3c6d4;
+  --blue-gray-3: #8b92ab;
+  --blue-gray-4: #767f9b;
+  --blue-gray-5: #6077bf;
+  --blue-gray-6: #455893;
+
+  --light-background: var(--white);
+  --dark-background: var(--blue-gray-1);
+  --border-1: var(--blue-gray-1);
+  --button-fill2: var(--blue-gray-1);
+
+  
+  --slider-color: var(--blue-gray-5);
+  --button-fill: var(--blue-gray-5);
+  --button-fill: var(--blue-gray-5);
+  --focus-border: var(--blue-gray-5);
+  // --focus-border: var(--blue-gray-5);
+
   // for new webui
   --tools-active-color: #767f9b26;
-  --tools-overlay-background: #fafafa;
   --tools-overlay-border: #a7b4cc;
   --panel-background: #fafafa;
-  --header-background: #fafafa;
-  --tools-header-background: #dfe2ed;
   --border: #dfe2ed;
   --active-button-color: #dfe2ed;
 

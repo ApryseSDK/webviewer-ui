@@ -55,7 +55,7 @@
 
         &:focus {
           outline: none;
-          border: 1px solid #6077bf;
+          border: 1px solid var(--focus-border);
         }
 
 
@@ -66,7 +66,7 @@
 
       .input-button {
         cursor: pointer;
-        background: #6077bf;
+        background: var(--button-fill);
         border-radius: 4px;
         height: 100%;
         width: 40px;
