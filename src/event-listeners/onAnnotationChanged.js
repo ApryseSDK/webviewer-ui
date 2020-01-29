@@ -8,6 +8,6 @@ export default () => (annotations, action) => {
 
 const deleteReplies = annotations => {
   annotations.forEach(annotation => {
-    core.deleteAnnotations(annotation.getReplies());
+    core.deleteAnnotations(annotation.getReplies(), false, true);
   });
 };
