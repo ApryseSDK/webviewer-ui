@@ -11,12 +11,15 @@
   text-align: center;
   cursor: pointer;
 
-  &:hover {
-    background-color: $gray10;
-  }
+  // &:hover {
+  //   background-color: $gray10;
+  // }
 
   &.active {
-    background-color: lightgray;
+    // background-color: lightgray;
+    .page-image {
+
+    }
   }
 
   .container {
