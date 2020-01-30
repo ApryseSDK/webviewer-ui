@@ -421,7 +421,7 @@ class ThumbnailsPanel extends React.PureComponent {
   render() {
     const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes } = this.props;
     const { numberOfColumns, height, width, documentControlHeight, isDocumentControlHidden } = this.state;
-    const thumbnailHeight = isThumbnailControlDisabled ? 180 : 210;
+    const thumbnailHeight = isThumbnailControlDisabled ? 195 : 225;
 
     const shouldShowControls = !isDocumentControlHidden || selectedPageIndexes.length > 0;
 
@@ -462,23 +462,23 @@ class ThumbnailsPanel extends React.PureComponent {
                 className={'thumbnailsList'}
                 style={{ outline: 'none' }}
               />
-                <Measure
-                  bounds
-                  onResize={({ bounds }) => {
-                    this.setState({
-                      documentControlHeight: Math.ceil(bounds.height),
-                    });
-                  }}
-                >
-                  {({ measureRef: innerMeasureRef }) => (
-                    <div ref={innerMeasureRef}>
-                      <DocumentControls
-                        toggleDocumentControl={this.toggleDocumentControl}
-                        shouldShowControls={shouldShowControls}
-                      />
-                    </div>
-                  )}
-                </Measure>
+              <Measure
+                bounds
+                onResize={({ bounds }) => {
+                  this.setState({
+                    documentControlHeight: Math.ceil(bounds.height),
+                  });
+                }}
+              >
+                {({ measureRef: innerMeasureRef }) => (
+                  <div ref={innerMeasureRef}>
+                    <DocumentControls
+                      toggleDocumentControl={this.toggleDocumentControl}
+                      shouldShowControls={shouldShowControls}
+                    />
+                  </div>
+                )}
+              </Measure>
             </div>
           )}
         </Measure>
