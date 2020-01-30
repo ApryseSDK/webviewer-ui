@@ -119,7 +119,7 @@ class ToolGroupButton extends React.PureComponent {
     return allButtonsInGroupDisabled ? null : (
       <div
         className={classNames({
-          ToolGroupButton: true,
+          'tool-group-button': true,
           active: isActive,
         })}
         data-element={dataElement}
