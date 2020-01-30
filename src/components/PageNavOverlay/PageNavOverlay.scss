@@ -2,32 +2,39 @@
 @import '../../constants/overlay';
 
 .PageNavOverlay {
-  bottom: 10px;
-  left: 10px;
-  padding: 10px;
+  // // bottom: 10px;
+  // // left: 10px;
+  // padding: 10px;
+  height: 32px;
   font-family: 'Carlito';
   font-weight: bold;
   font-size: var(--font-size-small);
   color: var(--text-color);
   display: flex;
+  align-items: center;
   cursor: pointer;
 
-  .arrow {
-    margin: 0 8px;
+  .down-arrow-container {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    margin-left: 8px;
+
+    &:hover {
+      background: #767f9b33;
+    }
+
+    .down-arrow {
+      width: 16px;
+      height: 16px;
+    }
   }
 
-  .Icon{
-    width: 16px;
-    height: 16px;
-  }
-
-  &>.formContainer {
+  .formContainer {
     top: -1px;
     position: relative;
-  }
-
-  &.open {
-    transition: opacity .3s ease, transform .3s ease, font-size .3s ease, padding .3s ease;
   }
 
   input {

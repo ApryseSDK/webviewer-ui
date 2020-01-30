@@ -18,6 +18,8 @@
   &:hover {
     background: var(--button-hover-color);
 
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover
+    // useful for mobile?
     @media (hover: none) {
       background: transparent;
     }

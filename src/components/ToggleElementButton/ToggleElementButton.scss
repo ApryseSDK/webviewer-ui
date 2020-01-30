@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     height: 32px;
+    border-radius: 4px;
     cursor: pointer;
 
     .down-arrow-container {
@@ -20,7 +21,6 @@
       }
     }
 
-
     &.active{
       .down-arrow-container {
         background: #767f9b33
@@ -29,10 +29,9 @@
         color: var(--icon-active-color);
       }
     }
-
+  
     &:hover {
-      background: var(--button-hover-color);;
-      border-radius: 4px;
+      background: var(--button-hover-color);
     }
 
     .Button:hover {

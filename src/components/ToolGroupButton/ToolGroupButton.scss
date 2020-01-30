@@ -4,11 +4,11 @@
   display: flex;
   align-items: center;
   height: 32px;
+  border-radius: 4px;
   cursor: pointer;
 
   .down-arrow-container {
     margin-left: -4px;
-    height: 100%;
     height: 100%;
     border-radius: 4px;
     display: flex;
@@ -24,32 +24,17 @@
   &.active{
     .down-arrow-container {
       background: #767f9b33
-      // background: green
     }
     .down-arrow {
       color: var(--icon-active-color);
     }
-
-    // div:hover {
-    //   background: none;
-    // }
   }
 
   &:hover {
     background: var(--button-hover-color);
-    border-radius: 4px;
-
-    // .down-arrow-container.active{
-    //   // background: #767f9b33;
-    //   // background: green;
-    // }
   }
 
   .Button:hover {
     background: none;
-  }
-
-  .Button {
-    margin: 0;
   }
 }
