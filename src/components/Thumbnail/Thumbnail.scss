@@ -5,21 +5,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 5px);
-  margin: 2.5px 0px;
+  // height: calc(100% - 5px);
+  // margin: 2.5px 0px;
   font-size: 12px;
   text-align: center;
   cursor: pointer;
 
-  // &:hover {
-  //   background-color: $gray10;
-  // }
-
   &.active {
-    // background-color: lightgray;
-    .page-image {
-
+    .container {
+      .page-image {
+        border: 2px solid #6077bf;
+      }
     }
+
   }
 
   .container {
@@ -27,7 +25,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 13px 10px 5px 10px;
+    // margin: 13px 10px 5px 10px;
 
     cursor: pointer;
 
@@ -37,7 +35,7 @@
         height: auto !important;
         width: auto !important;
       }
-      border: 1px solid $gray20;
+      border: 2px solid var(--border);
     }
 
     .annotation-image {

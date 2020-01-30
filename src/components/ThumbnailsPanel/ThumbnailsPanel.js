@@ -421,7 +421,7 @@ class ThumbnailsPanel extends React.PureComponent {
   render() {
     const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes } = this.props;
     const { numberOfColumns, height, width, documentControlHeight, isDocumentControlHidden } = this.state;
-    const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
+    const thumbnailHeight = isThumbnailControlDisabled ? 180 : 210;
 
     const shouldShowControls = !isDocumentControlHidden || selectedPageIndexes.length > 0;
 
