@@ -64,7 +64,7 @@ class StylePopup extends React.PureComponent {
             ? (StrokeThickness / 20) * lineLength + lineStart
             : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
         convertRelativeCirclePositionToValue: circlePosition =>
-          (isFreeText ? circlePosition * 20 : circlePosition * 20),
+          (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
       },
       FontSize: {
         property: 'FontSize',
