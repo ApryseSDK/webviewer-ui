@@ -1,4 +1,6 @@
 .StyleOption {     
+  .styles-container {
+    margin-top: 2px;
     .styles-input {
       background: #ffffff;
       border-radius: 4px;
@@ -11,12 +13,13 @@
   
     .styles-title { 
       margin-left: 12px;
-      margin-top: 2px;
+      
     }
   
     .styles-layout {
       display: flex;
       margin-left: 11px;
-      margin-top: 5px;
+      margin-top: 7px;
     }
+  }
 }
