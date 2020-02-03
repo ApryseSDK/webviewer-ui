@@ -220,8 +220,6 @@ export default {
     isProgrammaticSearchFull: false,
   },
   document: {
-    pdfType: getHashParams('pdf', 'auto'),
-    officeType: getHashParams('office', 'auto'),
     totalPages: 0,
     outlines: [],
     bookmarks: {},
