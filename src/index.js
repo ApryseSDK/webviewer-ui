@@ -96,7 +96,7 @@ if (window.CanvasRenderingContext2D) {
   function initTransports() {
     const { PDF, OFFICE, ALL } = workerTypes;
     if (preloadWorker === PDF || preloadWorker === ALL) {
-      getBackendPromise(state.document.pdfType).then(pdfType => {
+      getBackendPromise(getHashParams('pdf', 'auto')).then(pdfType => {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
@@ -106,7 +106,7 @@ if (window.CanvasRenderingContext2D) {
     }
 
     if (preloadWorker === OFFICE || preloadWorker === ALL) {
-      getBackendPromise(state.document.officeType).then(officeType => {
+      getBackendPromise(gethashParams('office', 'auto')).then(officeType => {
         window.CoreControls.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
