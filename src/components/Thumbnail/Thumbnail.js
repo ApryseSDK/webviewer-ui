@@ -90,10 +90,15 @@ class Thumbnail extends React.PureComponent {
       const { current } = thumbContainer;
 
       core.loadThumbnailAsync(index, thumb => {
+        const currentThumbnail = current?.querySelector('.page-image');
+        if (currentThumbnail) {
+          current.removeChild(currentThumbnail);
+        }
+
         thumb.className = 'page-image';
         thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
         thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
-        current.removeChild(current.querySelector('.page-image'));
+
         current.appendChild(thumb);
         if (this.props.updateAnnotations) {
           this.props.updateAnnotations(index);
