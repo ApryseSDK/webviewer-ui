@@ -19,7 +19,7 @@ app.use(
       aggregateTimeout: 300,
       poll: true,
     },
-  })
+  }),
 );
 app.use(hotMiddleware(compiler));
 
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 
 app.get('/sample-url', (req, res) => {
   res.redirect(
-    `/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1`
+    `/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1`,
   );
 });
 
@@ -47,7 +47,7 @@ app.listen(3000, '0.0.0.0', err => {
     // eslint-disable-next-line
     console.info(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
     opn(
-      'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
+      'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1',
     );
   }
 });
