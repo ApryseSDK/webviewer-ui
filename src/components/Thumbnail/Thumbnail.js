@@ -65,7 +65,12 @@ class Thumbnail extends React.PureComponent {
 
       core.loadThumbnailAsync(index, thumb => {
         thumb.className = 'page-image';
-        current.removeChild(current.querySelector('.page-image'));
+
+        const currentThumbnail = current?.querySelector('.page-image');
+        if (currentThumbnail) {
+          current.removeChild(currentThumbnail);
+        }
+
         current.appendChild(thumb);
         if (this.props.updateAnnotations) {
           this.props.updateAnnotations(index, thumb);
