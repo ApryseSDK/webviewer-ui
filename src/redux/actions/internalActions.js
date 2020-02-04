@@ -103,6 +103,10 @@ export const setThumbnailMultiselect = (useThumbnailMultiselect = true) => ({
   type: 'SET_THUMBNAIL_MULTISELECT',
   payload: { useThumbnailMultiselect },
 });
+export const setAllowPageNavigation = (allowPageNavigation = true) => ({
+  type: 'SET_ALLOW_PAGE_NAVIGATION',
+  payload: { allowPageNavigation },
+});
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;

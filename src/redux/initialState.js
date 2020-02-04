@@ -180,6 +180,7 @@ export default {
     isThumbnailMerging: false,
     isThumbnailReordering: false,
     isThumbnailMultiselect: false,
+    allowPageNavigation: true,
     doesAutoLoad: getHashParams('auto_load', true),
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
