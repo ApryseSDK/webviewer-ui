@@ -1,4 +1,3 @@
-import { setAllowMouseWheelToNavigatePages } from 'components/DocumentContainer';
 import core from 'core';
 import hotkeys from 'src/apis/hotkeys';
 import localStorageManager from 'helpers/localStorageManager';
