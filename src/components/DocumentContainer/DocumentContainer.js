@@ -15,6 +15,11 @@ import selectors from 'selectors';
 
 import './DocumentContainer.scss';
 
+let allowMouseWheelToNavigatePages = true;
+export const setAllowMouseWheelToNavigatePages = allow => {
+  allowMouseWheelToNavigatePages = allow;
+};
+
 class DocumentContainer extends React.PureComponent {
   static propTypes = {
     isLeftPanelOpen: PropTypes.bool,
@@ -115,7 +120,7 @@ class DocumentContainer extends React.PureComponent {
     if (e.metaKey || e.ctrlKey) {
       e.preventDefault();
       this.wheelToZoom(e);
-    } else if (!core.isContinuousDisplayMode()) {
+    } else if (!core.isContinuousDisplayMode() && allowMouseWheelToNavigatePages) {
       this.wheelToNavigatePages(e);
     }
   }
