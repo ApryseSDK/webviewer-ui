@@ -132,11 +132,18 @@ export default (enable, store) => features => {
     },
     [Feature.PageNavigation]: {
       fn: () => {
-        const { up: arrowUpHandler, down: arrowDownHandler } = hotkeysManager.keyHandlerMap;
+        const {
+          up: arrowUpHandler,
+          down: arrowDownHandler,
+          pageup,
+          pagedown,
+        } = hotkeysManager.keyHandlerMap;
 
         if (enable) {
           hotkeysManager.on('up', arrowUpHandler);
           hotkeysManager.on('down', arrowDownHandler);
+          hotkeysManager.on('pageup', pageup);
+          hotkeysManager.on('pagedown', pagedown);
         } else {
           // TODO: doing this will also remove handlers that users registered to 'up' and 'down' and we need to address this issue.
           // it doesn't seem like we can fix the issue now by doing hotkeysManager.off('down', arrowDownHandler) because hotkeysManager.on will create a new function reference
@@ -144,6 +151,8 @@ export default (enable, store) => features => {
           // to fix this issue we may need to breaking the instance.hotkeys.on API.
           hotkeysManager.off('up');
           hotkeysManager.off('down');
+          hotkeysManager.off('pageup');
+          hotkeysManager.off('pagedown');
           core.setDisplayMode('Single');
         }
 
