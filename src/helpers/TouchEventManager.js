@@ -8,6 +8,7 @@ const TouchEventManager = {
   initialize(document, container) {
     this.document = document;
     this.container = container;
+    this.allowSwipe = true;
     this.allowHorizontalSwipe = true;
     this.allowVerticalSwipe = false;
     this.verticalMomentum = 0;
@@ -189,6 +190,7 @@ const TouchEventManager = {
       }
       case 'swipe': {
         if (
+          !this.allowSwipe ||
           this.isUsingAnnotationTools() ||
           core.getSelectedText().length ||
           core.getSelectedAnnotations().length
