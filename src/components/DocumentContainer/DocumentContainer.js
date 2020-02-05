@@ -33,6 +33,7 @@ class DocumentContainer extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     displayMode: PropTypes.string.isRequired,
     leftPanelWidth: PropTypes.number,
+    allowPageNavigation: PropTypes.bool.isRequired,
   }
 
   constructor(props) {
@@ -118,7 +119,7 @@ class DocumentContainer extends React.PureComponent {
     if (e.metaKey || e.ctrlKey) {
       e.preventDefault();
       this.wheelToZoom(e);
-    } else if (!core.isContinuousDisplayMode()) {
+    } else if (!core.isContinuousDisplayMode() && this.props.allowPageNavigation) {
       this.wheelToNavigatePages(e);
     }
   }
@@ -230,6 +231,7 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
   // using leftPanelWidth to trigger render
   leftPanelWidth: selectors.getLeftPanelWidth(state),
+  allowPageNavigation: selectors.getAllowPageNavigation(state),
 });
 
 const mapDispatchToProps = dispatch => ({

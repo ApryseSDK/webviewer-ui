@@ -294,9 +294,23 @@ const AnnotationPopup = () => {
           )}
           {!(['CropPage', 'AnnotationCreateSignature', 'AnnotationCreateRedaction'].includes(firstAnnotation.ToolName)) && (<ActionButton
             title="tool.Link"
-            img="icon-tool-link"
-            onClick={() =>
-              dispatch(actions.openElement('linkModal'))
+            img={firstAnnotation.getAssociatedLinks().length > 0 ? "icon-tool-unlink" : "icon-tool-link"}
+            onClick={
+              firstAnnotation.getAssociatedLinks().length > 0 
+              ? () => { 
+                const annotManager = core.getAnnotationManager();
+                selectedAnnotations.forEach(annot => {
+                  annot.getAssociatedLinks().forEach(annotId => {
+                    const linkAnnot = annotManager.getAnnotationById(annotId);
+                    annotManager.deleteAnnotation(linkAnnot, null, true);
+                  });
+                  annot.unassociateLinks();
+                  if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {
+                    annotManager.deleteAnnotation(annot);
+                  }
+                });
+              }
+              : () => dispatch(actions.openElement('linkModal'))
             }
             dataElement="linkButton"
           />)}

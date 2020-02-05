@@ -102,6 +102,7 @@ const LinkModal = () => {
     highlight.Width = linkAnnot.Width;
     highlight.Height = linkAnnot.Height;
     highlight.StrokeColor = new Annotations.Color(0, 0, 0, 0);
+    highlight.Opacity = 0;
     highlight.Quads = quads;
     highlight.Author = core.getCurrentUser();
     highlight.setContents(text);

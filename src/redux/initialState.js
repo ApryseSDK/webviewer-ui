@@ -198,6 +198,7 @@ export default {
     isThumbnailMerging: false,
     isThumbnailReordering: false,
     isThumbnailMultiselect: false,
+    allowPageNavigation: true,
     doesAutoLoad: getHashParams('auto_load', true),
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],
@@ -238,8 +239,6 @@ export default {
     isProgrammaticSearchFull: false,
   },
   document: {
-    pdfType: getHashParams('pdf', 'auto'),
-    officeType: getHashParams('office', 'auto'),
     totalPages: 0,
     outlines: [],
     bookmarks: {},

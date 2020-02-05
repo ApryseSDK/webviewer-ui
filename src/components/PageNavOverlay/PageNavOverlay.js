@@ -20,7 +20,8 @@ class PageNavOverlay extends React.PureComponent {
     isOpen: PropTypes.bool,
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
-    pageLabels: PropTypes.array.isRequired
+    pageLabels: PropTypes.array.isRequired,
+    allowPageNavigation: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -105,7 +106,7 @@ class PageNavOverlay extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, currentPage, totalPages } = this.props;
+    const { isDisabled, isLeftPanelOpen, isLeftPanelDisabled, currentPage, totalPages, allowPageNavigation } = this.props;
     if (isDisabled) {
       return null;
     }
@@ -132,6 +133,7 @@ class PageNavOverlay extends React.PureComponent {
               value={this.state.input}
               onChange={this.onChange}
               tabIndex={-1}
+              disabled={!allowPageNavigation}
             />
             {this.state.isCustomPageLabels
               ? ` (${currentPage}/${totalPages})`
@@ -161,7 +163,8 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'pageNavOverlay'),
   currentPage: selectors.getCurrentPage(state),
   totalPages: selectors.getTotalPages(state),
-  pageLabels: selectors.getPageLabels(state)
+  pageLabels: selectors.getPageLabels(state),
+  allowPageNavigation: selectors.getAllowPageNavigation(state),
 });
 
 export default connect(mapStateToProps)(PageNavOverlay);

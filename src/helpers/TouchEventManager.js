@@ -5,10 +5,10 @@ import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
 const TouchEventManager = {
-  initialize(document, container, toolButtonObjects) {
+  initialize(document, container) {
     this.document = document;
     this.container = container;
-    this.toolButtonObjects = toolButtonObjects;
+    this.allowSwipe = true;
     this.allowHorizontalSwipe = true;
     this.allowVerticalSwipe = false;
     this.verticalMomentum = 0;
@@ -18,6 +18,7 @@ const TouchEventManager = {
     this.enableTouchScrollLock = true;
     this.startingScrollLeft = null;
     this.startingScrollTop = null;
+    this.useNativeScroll = false;
     this.touch = {
       clientX: 0,
       clientY: 0,
@@ -112,13 +113,18 @@ const TouchEventManager = {
     return !doesPagesFitOnScreen && this.enableTouchScrollLock && this.touch.touchMoveCount < 6 && !alreadyLocked;
   },
   handleTouchMove(e) {
-    e.preventDefault();
-
     switch (e.touches.length) {
       case 1: {
         const t = e.touches[0];
         this.touch.horizontalDistance = this.touch.clientX - t.clientX;
         this.touch.verticalDistance = this.touch.clientY - t.clientY;
+
+        if (this.useNativeScroll) {
+          return;
+        }
+
+        e.preventDefault();
+
         if (this.canLockScrolling()) {
           this.verticalLock = this.isScrollingVertically();
           this.horziontalLock = this.isScrollingHorziontally();
@@ -146,6 +152,8 @@ const TouchEventManager = {
         break;
       }
       case 2: {
+        e.preventDefault();
+
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         this.touch.scale = this.getDistance(t1, t2) / this.touch.distance;
@@ -182,6 +190,7 @@ const TouchEventManager = {
       }
       case 'swipe': {
         if (
+          !this.allowSwipe ||
           this.isUsingAnnotationTools() ||
           core.getSelectedText().length ||
           core.getSelectedAnnotations().length
@@ -211,7 +220,7 @@ const TouchEventManager = {
           core.setCurrentPage(Math.max(1, currentPage - numberOfPagesToNavigate));
         } else if (shouldGoToNextPage) {
           core.setCurrentPage(Math.min(totalPages, currentPage + numberOfPagesToNavigate));
-        } else {
+        } else if (!this.useNativeScroll) {
           const millisecondsToSeconds = 1000;
           const touchDuration = (Date.now() - this.touch.touchStartTimeStamp) / millisecondsToSeconds;
 

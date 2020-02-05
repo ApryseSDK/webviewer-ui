@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import core from 'core';
+import { isMobileDevice } from 'helpers/device';
 import selectors from 'selectors';
 
 import './AnnotationContentOverlay.scss';
@@ -34,8 +35,8 @@ const AnnotationContentOverlay = () => {
         annotation = ungroupedAnnots.length > 0 ? ungroupedAnnots[0] : annotation;
       }
 
-      setAnnotation(annotation);
-      if (annotation) {
+      if (!(annotation instanceof Annotations.FreeTextAnnotation)) {
+        setAnnotation(annotation);
         setOverlayPosition({
           left: e.clientX + 20,
           top: e.clientY + 20,
@@ -51,7 +52,7 @@ const AnnotationContentOverlay = () => {
   const contents = annotation?.getContents();
   const numberOfReplies = annotation?.getReplies().length;
 
-  return isDisabled || !contents ? null : (
+  return isDisabled || isMobileDevice || !contents ? null : (
     <div
       className="Overlay AnnotationContentOverlay"
       data-element="annotationContentOverlay"

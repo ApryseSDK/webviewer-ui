@@ -120,6 +120,7 @@ import updateElement from './updateElement';
 import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
+import useNativeScroll from './useNativeScroll';
 import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
 import setSignatureFonts from './setSignatureFonts';
@@ -255,6 +256,7 @@ export default store => {
     getCustomData,
 
     // undocumented
+    useNativeScroll,
     loadedFromServer: false,
     serverFailed: false,
     i18n: i18next,
