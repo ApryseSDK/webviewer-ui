@@ -8,6 +8,7 @@ import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'help
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import touchEventManager from 'helpers/TouchEventManager';
+import getHashParams from 'helpers/getHashParams';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -16,12 +17,9 @@ import './DocumentContainer.scss';
 
 class DocumentContainer extends React.PureComponent {
   static propTypes = {
-    document: PropTypes.object.isRequired,
-    advanced: PropTypes.object.isRequired,
     isLeftPanelOpen: PropTypes.bool,
     isRightPanelOpen: PropTypes.bool,
     isSearchOverlayOpen: PropTypes.bool,
-    hasPath: PropTypes.bool,
     doesDocumentAutoLoad: PropTypes.bool,
     zoom: PropTypes.number.isRequired,
     currentPage: PropTypes.number,
@@ -53,12 +51,7 @@ class DocumentContainer extends React.PureComponent {
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
-    const {
-      hasPath, doesDocumentAutoLoad, document, advanced, dispatch,
-    } = this.props;
-    if ((hasPath && doesDocumentAutoLoad) || document.isOffline) {
-      loadDocument({ document, advanced }, dispatch);
-    }
+    this.loadInitialDocument();
 
     if (isIE) {
       window.addEventListener('resize', this.handleWindowResize);
@@ -86,6 +79,23 @@ class DocumentContainer extends React.PureComponent {
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
   }
 
+  loadInitialDocument = () => {
+    const doesAutoLoad = getHashParams('auto_load', true);
+    const initialDoc = getHashParams('d', '');
+    const startOffline = getHashParams('startOffline', false);
+
+    if ((initialDoc && doesAutoLoad) || startOffline) {
+      const options = {
+        extension: getHashParams('extension', null),
+        filename: getHashParams('filename', null),
+        externalPath: getHashParams('p', ''),
+        documentId: getHashParams('did', null),
+      };
+
+      loadDocument(this.props.dispatch, initialDoc, options);
+    }
+  }
+
   preventDefault = e => e.preventDefault();
 
   onDrop = e => {
@@ -93,7 +103,7 @@ class DocumentContainer extends React.PureComponent {
 
     const { files } = e.dataTransfer;
     if (files.length) {
-      window.readerControl.loadDocument(files[0]);
+      loadDocument(this.props.dispatch, files[0]);
     }
   }
 
@@ -198,12 +208,9 @@ class DocumentContainer extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  document: selectors.getDocument(state),
-  advanced: selectors.getAdvanced(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
-  hasPath: selectors.hasPath(state),
   doesDocumentAutoLoad: selectors.doesDocumentAutoLoad(state),
   zoom: selectors.getZoom(state),
   currentPage: selectors.getCurrentPage(state),

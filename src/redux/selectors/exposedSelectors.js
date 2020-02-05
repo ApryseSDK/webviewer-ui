@@ -1,4 +1,3 @@
-import { workerTypes } from 'constants/types';
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
@@ -79,13 +78,13 @@ export const isFullScreen = state => state.viewer.isFullScreen;
 
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
 
-export const isDocumentLoaded = state => state.viewer.isDocumentLoaded;
-
 export const isDocumentReadOnly = state => state.viewer.isReadOnly;
 
 export const getCustomPanels = state => state.viewer.customPanels;
 
 export const getPageLabels = state => state.viewer.pageLabels;
+
+export const getSelectedThumbnailPageIndexes = state => state.viewer.selectedThumbnailPageIndexes;
 
 export const getDisabledCustomPanelTabs = state =>
   state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
@@ -95,10 +94,7 @@ export const getDisabledCustomPanelTabs = state =>
     return disabledTabs;
   }, []);
 
-export const isEmbedPrintSupported = state => {
-  const isPDF = getDocumentType(state) === workerTypes.PDF;
-  return isPDF && (isChrome && !isAndroid) && state.viewer.useEmbeddedPrint;
-};
+export const isEmbedPrintSupported = state => isChrome && !isAndroid && state.viewer.useEmbeddedPrint;
 
 export const getColorMap = state => state.viewer.colorMap;
 
@@ -128,7 +124,7 @@ export const getSignatureFonts = state => state.viewer.signatureFonts;
 
 export const getSelectedTab = (state, id) => state.viewer.tab[id];
 
-export const getCustomElementOverrides = (state, dataElement) => state.viewer.customElementOverrides[dataElement] || {};
+export const getCustomElementOverrides = (state, dataElement) => state.viewer.customElementOverrides[dataElement];
 
 export const getPopupItems = (state, popupDataElement) =>
   state.viewer[popupDataElement] || [];
@@ -136,6 +132,8 @@ export const getPopupItems = (state, popupDataElement) =>
 export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMerging;
 
 export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
+
+export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
 
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
 
@@ -157,22 +155,6 @@ export const isAccessibleMode = state => state.viewer.isAccessibleMode;
 export const getErrorMessage = state => state.viewer.errorMessage || '';
 
 // document
-export const getDocument = state => state.document;
-
-export const getDocumentId = state => state.document.id;
-
-export const getDocumentPath = state =>
-  state.document.path || state.document.initialDoc;
-
-export const getDocumentFile = state => state.document.file;
-
-export const hasPath = state =>
-  !!(state.document.initialDoc || state.advanced.externalPath);
-
-export const getDocumentType = state => state.document.type;
-
-export const getCheckPasswordFunction = state => state.document.checkPassword;
-
 export const getPasswordAttempts = state => state.document.passwordAttempts;
 
 export const getPrintQuality = state => state.document.printQuality;
@@ -180,25 +162,17 @@ export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;
+
 export const getBookmarks = state => state.document.bookmarks;
 
 export const getLayers = state => state.document.layers;
 
-export const getLoadingProgress = state =>
-  (state.document.documentLoadingProgress +
-    state.document.workerLoadingProgress) /
-  2;
-
-export const getUploadProgress = state => state.document.uploadProgress;
-
-export const isUploading = state => state.document.isUploading;
+export const getLoadingProgress = state => state.document.loadingProgress;
 
 // user
 export const getUserName = state => state.user.name;
 
 // advanced
-export const getAdvanced = state => state.advanced;
-
 export const getServerUrl = state => state.advanced.serverUrl;
 
 // search

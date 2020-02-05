@@ -9,7 +9,7 @@ import ActionButton from 'components/ActionButton';
 import WatermarkModal from 'components/PrintModal/WatermarkModal';
 
 import core from 'core';
-import getPagesToPrint from 'helpers/getPagesToPrint';
+import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import getClassName from 'helpers/getClassName';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
@@ -22,7 +22,6 @@ import './PrintModal.scss';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
-    isEmbedPrintSupported: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     currentPage: PropTypes.number,
@@ -35,6 +34,7 @@ class PrintModal extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     colorMap: PropTypes.object.isRequired,
     layoutMode: PropTypes.string.isRequired,
+    isApplyWatermarkDisabled: PropTypes.bool,
   };
 
   constructor() {
@@ -117,7 +117,7 @@ class PrintModal extends React.PureComponent {
       }
     } else if (this.customPages.current.checked) {
       const customInput = this.customInput.current.value.replace(/\s+/g, '');
-      pagesToPrint = getPagesToPrint(customInput, pageLabels);
+      pagesToPrint = getPageArrayFromString(customInput, pageLabels);
     }
 
     this.setState({ pagesToPrint });
@@ -306,6 +306,7 @@ class PrintModal extends React.PureComponent {
           annotation.Listable &&
           annotation.PageNumber === pageNumber &&
           !annotation.isReply() &&
+          !annotation.isGrouped() &&
           annotation.Printable,
       );
 
@@ -461,7 +462,7 @@ class PrintModal extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t } = this.props;
+    const { isDisabled, t, isApplyWatermarkDisabled } = this.props;
 
     if (isDisabled) {
       return null;
@@ -552,9 +553,9 @@ class PrintModal extends React.PureComponent {
                 />
               </form>
             </div>
-            {this.state.allowWatermarkModal && (
+            {!isApplyWatermarkDisabled && (
               <button
-                id="applyWatermark"
+                data-element="applyWatermark"
                 className="apply-watermark"
                 disabled={isPrinting}
                 onClick={() => {
@@ -596,8 +597,8 @@ class PrintModal extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
   isDisabled: selectors.isElementDisabled(state, 'printModal'),
+  isApplyWatermarkDisabled: selectors.isElementDisabled(state, 'applyWatermark'),
   isOpen: selectors.isElementOpen(state, 'printModal'),
   currentPage: selectors.getCurrentPage(state),
   printQuality: selectors.getPrintQuality(state),

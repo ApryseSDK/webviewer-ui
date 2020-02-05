@@ -74,6 +74,7 @@ export default store => {
         'bookmarksPanel',
         'bookmarksPanelButton',
         'thumbnailControl',
+        'documentControl',
       ],
       PRIORITY_ONE,
     ),
