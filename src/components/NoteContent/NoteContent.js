@@ -167,8 +167,6 @@ const NoteContent = ({ annotation }) => {
     () => (
       <div
         className="NoteContent"
-        // to prevent textarea from blurring out during editing when clicking on the note content
-        onMouseDown={e => e.preventDefault()}
       >
         {header}
         {annotationState && annotationState !== 'None' && (
