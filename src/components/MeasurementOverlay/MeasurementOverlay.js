@@ -128,12 +128,12 @@ class MeasurementOverlay extends React.PureComponent {
   };
 
   isMeasurementAnnotation = annotation =>
-    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement', 'rectangularAreaMeasurement'].includes(
       mapAnnotationToKey(annotation),
     );
 
   isMeasurementTool = toolName =>
-    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement', 'rectangularAreaMeasurement'].includes(
       mapToolNameToKey(toolName),
     );
 
@@ -143,7 +143,7 @@ class MeasurementOverlay extends React.PureComponent {
     const key = mapAnnotationToKey(annotation);
 
     let showInfo;
-    if (key === 'perimeterMeasurement' || key === 'areaMeasurement') {
+    if (key === 'perimeterMeasurement' || key === 'areaMeasurement' || key === 'rectangularAreaMeasurement') {
       // for polyline and polygon, there's no useful information we can show if it has no vertices or only one vertex.
       showInfo = annotation.getPath().length > 1;
     } else if (key === 'distanceMeasurement') {
@@ -195,6 +195,7 @@ class MeasurementOverlay extends React.PureComponent {
       distanceMeasurement: t('option.measurementOverlay.distanceMeasurement'),
       perimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
       areaMeasurement: t('option.measurementOverlay.areaMeasurement'),
+      rectangularAreaMeasurement: t('option.measurementOverlay.areaMeasurement'),
     };
 
     return (
@@ -224,6 +225,7 @@ class MeasurementOverlay extends React.PureComponent {
       distanceMeasurement: t('option.measurementOverlay.distance'),
       perimeterMeasurement: t('option.measurementOverlay.perimeter'),
       areaMeasurement: t('option.measurementOverlay.area'),
+      rectangularAreaMeasurement: t('option.measurementOverlay.area'),
     };
 
     return (
@@ -266,6 +268,7 @@ class MeasurementOverlay extends React.PureComponent {
       distanceMeasurement: ({ Start, End }) => [Start, End],
       perimeterMeasurement: getIPathAnnotationPts,
       areaMeasurement: getIPathAnnotationPts,
+      rectangularAreaMeasurement: getIPathAnnotationPts,
     };
     const pts = keyPtMap[key](annotation).filter(pt => !!pt);
 
