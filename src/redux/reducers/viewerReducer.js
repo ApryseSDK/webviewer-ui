@@ -154,6 +154,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isThumbnailReordering: payload.useThumbnailReordering };
     case 'SET_THUMBNAIL_MULTISELECT':
       return { ...state, isThumbnailMultiselect: payload.useThumbnailMultiselect };
+    case 'SET_ALLOW_PAGE_NAVIGATION':
+      return { ...state, allowPageNavigation: payload.allowPageNavigation };
     case 'SET_TOOL_BUTTON_OBJECTS':
       return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
     case 'SET_READ_ONLY':
