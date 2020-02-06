@@ -130,7 +130,6 @@ class ToolStylePopup extends React.PureComponent {
       siblingWidth = 300;
     }
 
-
     return (
       <div
         className={classNames({
