@@ -201,10 +201,10 @@
       "status": "Status"
     },
     "state": {
-      "accepted": "Akzeptiert",
+      "accepted": "Angenommen",
       "rejected": "Abgelehnt",
-      "completed": "Vollendet, fertiggestellt",
-      "cancelled": "Abgesagt",
+      "completed": "Abgeschlossen",
+      "cancelled": "Abgebrochen",
       "set": "Status setzen:",
       "setBy": "eingestellt von",
       "none": "Keiner"
