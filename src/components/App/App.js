@@ -11,7 +11,6 @@ import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import RedactionOverlay from 'components/RedactionOverlay';
-import StampOverlay from 'components/StampOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
@@ -88,7 +87,6 @@ const App = ({ removeEventHandlers }) => {
         </div>
         <ViewControlsOverlay />
         <RedactionOverlay />
-        <StampOverlay />
         <MenuOverlay />
         <SignatureOverlay />
         <ZoomOverlay />

@@ -7,6 +7,7 @@ import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
+import StampOverlay from 'components/StampOverlay';
 
 import { circleRadius } from 'constants/slider';
 import selectors from 'selectors';
@@ -112,8 +113,17 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { currentPalette, style, colorMapKey, onStyleChange } = this.props;
+    const { currentPalette, style, colorMapKey, onStyleChange, toolName } = this.props;
     const { Scale, Precision, Style } = style;
+
+    if (toolName === 'AnnotationCreateRubberStamp') {
+      return (
+        <div className="Popup StylePopup" data-element="stylePopup">
+          {!this.props.hideSlider && this.renderSliders()}
+          <StampOverlay />
+        </div>
+      );
+    }
 
     return (
       <div className="Popup StylePopup" data-element="stylePopup">

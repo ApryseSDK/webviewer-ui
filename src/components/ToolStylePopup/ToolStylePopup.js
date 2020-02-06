@@ -125,7 +125,7 @@ class ToolStylePopup extends React.PureComponent {
     }
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
 
-    return (
+return (
       <div
         className={classNames({
           ToolStylePopup: true,
@@ -137,6 +137,7 @@ class ToolStylePopup extends React.PureComponent {
       >
         <StylePopup
           key={activeToolName}
+          toolName={activeToolName}
           colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}

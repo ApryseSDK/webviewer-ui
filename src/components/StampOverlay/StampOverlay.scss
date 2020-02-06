@@ -2,42 +2,25 @@
 @import '../../constants/overlay';
 
 .StampOverlay {
-  @extend %overlay;
-  top: 46px;
-  width: 232px;
-  border-radius: 4px 0 0 4px;
-  box-shadow: 0 2px 16px 0 #E1E1E3;
-  width: 354px;
-  padding: 16px 16px 16px;
-
-  .rubber-stamp {
-    float: left;
-    height: 48px;
-    width: 160px;
-
-    img {
-      width: 100%;
-      height: 100%;
+  .default-stamp-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 300px;
+    overflow-y: scroll;
+  
+    .rubber-stamp {
+      flex-basis: 50%;
       cursor: pointer;
+  
+      &:hover {
+        background: green;      
+      }
+  
+      img {
+        width: 100%;
+      }
     }
-  }
-  .rubber-stamp:hover {
-    background: #f6f6f6;
-    background: var(--button-hover-color);
-  }
-}
-
-
-
-.default-stamp-container {
-  display: flex;
-  flex-direction: column;
-
-  .column {
-    padding: 10px;
-  }
-  .column:hover {
-    background: #f6f6f6;
-    background: var(--button-hover-color);
   }
 }
