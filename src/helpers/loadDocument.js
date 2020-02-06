@@ -35,7 +35,7 @@ const getDefaultOptions = () => ({
   cacheKey: JSON.parse(getHashParams('cacheKey', null)),
   streaming: getHashParams('streaming', false),
   useDownloader: getHashParams('useDownloader', true),
-  backendType: getHashParams('pdf', 'auto'),
+  backendType: getHashParams('pdf', null),
 });
 
 /**
