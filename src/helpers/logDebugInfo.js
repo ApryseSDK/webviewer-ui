@@ -1,11 +1,15 @@
+import getHashParams from 'helpers/getHashParams';
 import packageConfig from '../../package.json';
 
 /* eslint-disable no-console */
-export default ({ pdftronServer, fullAPI }) => {
+export default () => {
   // log UI and Core versions and warn/error if necessary
   const coreVersion = window.CoreControls.DocumentViewer.prototype.version;
   const coreBuild = window.CoreControls.DocumentViewer.prototype.build;
   const uiVersion = packageConfig.version;
+  const pdftronServer = !!getHashParams('pdftronServer', null);
+  const fullAPI = !!getHashParams('pdfnet', false);
+
   if (coreVersion && uiVersion) {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
     const [coreMajorVersion, coreMinorVersion] = coreVersion
@@ -20,13 +24,13 @@ export default ({ pdftronServer, fullAPI }) => {
         'UI version': uiVersion,
         'Core version': coreVersion,
         'Build': coreBuild,
-        'WebViewer Server': !!pdftronServer,
-        'Full API': !!fullAPI,
+        'WebViewer Server': pdftronServer,
+        'Full API': fullAPI,
       };
       console.table(versions);
     } else {
       console.log(
-        `[WebViewer] UI version: ${uiVersion}, Core version: ${coreVersion}, Build: ${coreBuild}, WebViewer Server: ${!!pdftronServer}, Full API: ${!!fullAPI}`,
+        `[WebViewer] UI version: ${uiVersion}, Core version: ${coreVersion}, Build: ${coreBuild}, WebViewer Server: ${pdftronServer}, Full API: ${fullAPI}`,
       );
     }
 
