@@ -120,6 +120,11 @@
       overflow: hidden;
       box-sizing: border-box;
 
+      &:focus {
+        outline: none;
+        border: 1px solid var(--focus-border);
+      }
+
       &::placeholder {
         color: #c3c6d4;
       }
@@ -156,6 +161,7 @@
   }
 
   .contents {
+    white-space: pre;
     color: var(--text-color);
     margin-right: 5px;
     padding: 0;
