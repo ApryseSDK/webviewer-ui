@@ -116,7 +116,8 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, activeToolName, activeToolStyle, siblingWidth } = this.props;
+    const { isDisabled, activeToolName, activeToolStyle } = this.props;
+    let { siblingWidth } = this.props;
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const colorMapKey = mapToolNameToKey(activeToolName);
 
@@ -125,7 +126,12 @@ class ToolStylePopup extends React.PureComponent {
     }
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
 
-return (
+    if (activeToolName === 'AnnotationCreateRubberStamp') {
+      siblingWidth = 300;
+    }
+
+
+    return (
       <div
         className={classNames({
           ToolStylePopup: true,

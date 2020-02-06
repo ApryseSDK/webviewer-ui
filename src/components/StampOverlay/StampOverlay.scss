@@ -2,20 +2,26 @@
 @import '../../constants/overlay';
 
 .StampOverlay {
+  margin-left: 8px;
+  margin-right: 6px;
+  margin-bottom: 8px;
+  // min-width: 300px;
   .default-stamp-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
     height: 300px;
     overflow-y: scroll;
+    padding-right: 14px;
+    
   
     .rubber-stamp {
+      border-radius: 4px;
       flex-basis: 50%;
       cursor: pointer;
   
       &:hover {
-        background: green;      
+        background: var(--tools-active-color);
       }
   
       img {

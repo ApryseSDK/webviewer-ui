@@ -7,7 +7,9 @@
   }
 
   .slider-property {
-    margin-top: 8px;
+    &:nth-child(n+2) {
+      margin-top: 8px;
+    }
     margin-bottom: 4px;
   }
 
