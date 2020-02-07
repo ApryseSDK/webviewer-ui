@@ -36,11 +36,13 @@ const SignatureToolButton = () => {
   }, []);
 
   const handleClick = () => {
-    if (hasSavedSignature) {
-      dispatch(actions.toggleElement('signatureOverlay'));
-    } else {
-      dispatch(actions.openElement('signatureModal'));
-    }
+    // if (hasSavedSignature) {
+    //   dispatch(actions.toggleElement('signatureOverlay'));
+    // } else {
+    //   dispatch(actions.openElement('signatureModal'));
+    // }
+
+    dispatch(actions.toggleElement('signatureOverlay'));
   };
 
   const buttonClass = classNames({
@@ -53,6 +55,7 @@ const SignatureToolButton = () => {
         'tool-group-button': true,
         active: isSignatureModalOpen || isSignatureOverlayOpen,
       })}
+      data-element="signatureToolButton"
       onClick={handleClick}
     >
       <Button

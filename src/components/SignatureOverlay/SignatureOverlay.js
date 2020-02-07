@@ -82,10 +82,11 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   handleClickOutside = e => {
-    const clickedSignatureButton =
+    const ToggleSignatureButton =
       e.target.getAttribute('data-element') === 'signatureToolButton';
+    const clickedToggleSignatureButton = ToggleSignatureButton?.contains(e.target);
 
-    if (!clickedSignatureButton) {
+    if (!clickedToggleSignatureButton) {
       this.props.closeElement('signatureOverlay');
     }
   };
@@ -95,21 +96,21 @@ class SignatureOverlay extends React.PureComponent {
   };
 
   setOverlayPosition = () => {
-    const signatureToolButton = document.querySelector(
-      '[data-element="signatureToolButton"]',
-    );
+    // const signatureToolButton = document.querySelector(
+    //   '[data-element="signatureToolButton"]',
+    // );
 
-    if (!signatureToolButton && this.overlay.current) {
-      // the button has been disabled using instance.disableElements
-      // but this component can still be opened by clicking on a signature widget
-      // in this case we just place it in the center
-      const { width } = this.overlay.current.getBoundingClientRect();
-      this.setState({ left: (window.innerWidth - width) / 2, right: 'auto' });
-    } else {
-      this.setState(
-        getOverlayPositionBasedOn('signatureToolButton', this.overlay, 'center'),
-      );
-    }
+    // if (!signatureToolButton && this.overlay.current) {
+    //   // the button has been disabled using instance.disableElements
+    //   // but this component can still be opened by clicking on a signature widget
+    //   // in this case we just place it in the center
+    //   const { width } = this.overlay.current.getBoundingClientRect();
+    //   this.setState({ left: (window.innerWidth - width) / 2, right: 'auto' });
+    // } else {
+    this.setState(
+      getOverlayPositionBasedOn('signatureToolButton', this.overlay),
+    );
+    // }
   };
 
   onSignatureSaved = async annotations => {
@@ -232,7 +233,7 @@ class SignatureOverlay extends React.PureComponent {
   };
 
   render() {
-    const { left, right, defaultSignatures } = this.state;
+    const { left, right, top, defaultSignatures } = this.state;
     const { t, isDisabled, maxSignaturesCount } = this.props;
     const className = getClassName('Overlay SignatureOverlay', this.props);
 
@@ -241,7 +242,11 @@ class SignatureOverlay extends React.PureComponent {
     }
 
     return (
-      <div className={className} ref={this.overlay} style={{ left, right }}>
+      <div 
+        className={className}
+        ref={this.overlay}
+        style={{ left, right, top }}
+      >
         <div className="default-signatures-container">
           {defaultSignatures.map(({ imgSrc }, index) => (
             <div className="default-signature" key={index}>
