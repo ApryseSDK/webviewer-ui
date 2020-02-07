@@ -82,7 +82,7 @@
     "Expired": "Abgelaufen",
     "Final": "Finale",
     "ForComment": "Für Kommentar",
-    "ForPublicRelease": "Zur öffentlichen Veröffentlichung",
+    "ForPublicRelease": "Zur Veröffentlichung",
     "InformationOnly": "Nur Informationen",
     "NotApproved": "Nicht bestätigt",
     "NotForPublicRelease": "Nicht zur Veröffentlichung",
@@ -120,8 +120,8 @@
   "message": {
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
     "customPrintPlaceholder": "z.B. 3, 4-10",
-    "encryptedAttemptsExceeded": "Fehler beim Laden des verlüsselten Dokuments. Zu viele Versuche.",
-    "encryptedUserCancelled": "Fehler beim Laden des verlüsselten Dokuments. Passworteingabe wurde abgebrochen.",
+    "encryptedAttemptsExceeded": "Fehler beim Laden des verschlüsselten Dokuments. Zu viele Versuche.",
+    "encryptedUserCancelled": "Fehler beim Laden des verschlüsselten Dokuments. Passworteingabe wurde abgebrochen.",
     "enterPassword": "Dieses Dokument ist durch ein Passwort geschützt. Bitte geben Sie ein Passwort ein",
     "incorrectPassword": "Falsches Passwort, Verbleibende Versuche: {{ remainingAttempts }}",
     "noAnnotations": "Dieses Dokument hat keine Annotationen.",
@@ -257,7 +257,7 @@
       "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten verbleiben. Bitte hinterlassen Sie mindestens eine Seite"
     },
     "redaction": {
-      "applyTile": "Redaktion anwenden",
+      "applyTile": "Schwärzung anwenden",
       "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht ungeschehen gemacht werden."
     }
   },
