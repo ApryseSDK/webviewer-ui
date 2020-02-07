@@ -55,8 +55,7 @@ const ContentArea = ({
         }}
         value={textAreaValue}
         onChange={onTextAreaValueChange}
-        onBlur={() => setIsEditing(false)}
-        onSubmit={setContents}
+        onSubmiqwewqt={setContents}
         placeholder={`${t('action.comment')}...`}
       />
       <span className="buttons">

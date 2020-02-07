@@ -258,17 +258,9 @@ const NotesPanel = () => {
               <div className="input-container">
                 <input
                   type="text"
-                  placeholder={t('message.searchPlaceholder')}
+                  placeholder={t('message.searchCommentsPlaceholder')}
                   onChange={handleInputChange}
                 />
-                <div
-                  className="input-button"
-                  onClick={() => {}}
-                >
-                  <Icon
-                    glyph="ic_search_black_24px"
-                  />
-                </div>
               </div>
               <div className="divider" />
               <div className="sort-row">
