@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Button from 'components/Button';
+import Icon from 'components/Icon';
+import '../ToolGroupButton/ToolGroupButton.scss';
 
 import core from 'core';
 import actions from 'actions';
@@ -46,13 +48,21 @@ const SignatureToolButton = () => {
   });
 
   return (
-    <Button
-      className={buttonClass}
-      isActive={isSignatureModalOpen || isSignatureOverlayOpen}
-      img="icon-tool-signature"
+    <div
+      className={classNames({
+        'tool-group-button': true,
+        active: isSignatureModalOpen || isSignatureOverlayOpen,
+      })}
       onClick={handleClick}
-      title="annotation.signature"
-    />
+    >
+      <Button
+        img="icon-tool-signature"
+        title="annotation.signature"
+      />
+      <div className="down-arrow-container">
+        <Icon className="down-arrow" glyph="icon-chevron-down" />
+      </div>
+    </div>
   );
 };
 
