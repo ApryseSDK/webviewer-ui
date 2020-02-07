@@ -79,7 +79,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
   };
 
   const handleStateUpdate = state => {
-    const author = core.getDisplayAuthor(annotation);
+    const author = core.getCurrentUser();
     const stateMessage = t(`option.state.${state.toLowerCase()}`);
     const message = `${stateMessage} ${t('option.state.setBy')} ${author}`;
     const stateModel = 'Review';
