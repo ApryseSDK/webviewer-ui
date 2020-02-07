@@ -19,7 +19,6 @@ import './SearchPanel.scss';
 class SearchPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
-    isWildCardSearchDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     results: PropTypes.arrayOf(PropTypes.object),
     isSearching: PropTypes.bool,
@@ -76,7 +75,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t, results, isSearching, noResult, isWildCardSearchDisabled } = this.props;
+    const { isDisabled, t, results, isSearching, noResult } = this.props;
 
     if (isDisabled) {
       return null;
@@ -126,7 +125,6 @@ class SearchPanel extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'searchPanel'),
-  isWildCardSearchDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
   isOpen: selectors.isElementOpen(state, 'searchPanel'),
   results: selectors.getResults(state),
   isSearching: selectors.isSearching(state),
