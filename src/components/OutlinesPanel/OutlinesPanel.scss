@@ -1,6 +1,9 @@
 @import '../../constants/panel';
 
 .OutlinesPanel {
+  overflow-y: scroll;
+  margin-left: 16px;
+
   .no-outlines {
     display: flex;
     flex-direction: column;
