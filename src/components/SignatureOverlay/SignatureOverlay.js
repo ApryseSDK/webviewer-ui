@@ -82,8 +82,7 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   handleClickOutside = e => {
-    const ToggleSignatureButton =
-      e.target.getAttribute('data-element') === 'signatureToolButton';
+    const ToggleSignatureButton = document.querySelector('[data-element="signatureToolButton"]');
     const clickedToggleSignatureButton = ToggleSignatureButton?.contains(e.target);
 
     if (!clickedToggleSignatureButton) {
