@@ -19,11 +19,9 @@
   .default-signature {
     display: flex;
     align-items: center;
-    margin-top: 8px;
+    margin-bottom: 16px;
+    
 
-    &:first-of-type {
-      margin-top: 16px;
-    }
 
     .signature-image {
       display: flex;
@@ -54,7 +52,6 @@
     align-items: center;
     height: 32px;
     width: 200px;
-    margin-top: 16px;
     border-radius: 4px 4px 4px 4px;
     border: 1px solid #00A4E4;
     font-size: 16px;
@@ -74,4 +71,3 @@
     }
   }
 }
-
