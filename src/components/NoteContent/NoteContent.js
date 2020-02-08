@@ -171,7 +171,7 @@ const NoteContent = ({ annotation }) => {
         {header}
         {annotationState && annotationState !== 'None' && (
           <div className="status">
-            {t('option.status.status')}: {annotationState}
+            {t('option.status.status')}: {t(`option.state.${annotationState.toLowerCase()}`)}
           </div>
         )}
       </div>

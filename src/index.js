@@ -52,12 +52,12 @@ if (process.env.NODE_ENV === 'development') {
   window.disableSpam = () => {
     localStorage.setItem('spamDisabled', 'true');
     location.reload();
-  }
+  };
 
   window.enableSpam = () => {
     localStorage.setItem('spamDisabled', 'false');
     location.reload();
-  }
+  };
 }
 
 if (window.CanvasRenderingContext2D) {
@@ -119,7 +119,7 @@ if (window.CanvasRenderingContext2D) {
 
   loadCustomCSS(state.advanced.customCSS);
 
-  logDebugInfo(state.advanced);
+  logDebugInfo();
 
   fullAPIReady.then(() => loadConfig()).then(() => {
     if (preloadWorker) {
