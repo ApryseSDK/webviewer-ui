@@ -23,6 +23,9 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateSticky2 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky2');
   toolModeMap.AnnotationCreateSticky3 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky3');
   toolModeMap.AnnotationCreateSticky4 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky4');
+  toolModeMap.AnnotationCreateSignature2 = new window.Tools.SignatureCreateTool(docViewer, 'AnnotationCreateSignature2');
+  toolModeMap.AnnotationCreateSignature3 = new window.Tools.SignatureCreateTool(docViewer, 'AnnotationCreateSignature3');
+  toolModeMap.AnnotationCreateSignature4 = new window.Tools.SignatureCreateTool(docViewer, 'AnnotationCreateSignature4');
 };
 
 export default setupDocViewer;

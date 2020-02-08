@@ -14,7 +14,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateSignature'],
+    toolNames: [
+      'AnnotationCreateSignature',
+      'AnnotationCreateSignature2',
+      'AnnotationCreateSignature3',
+      'AnnotationCreateSignature4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.FreeHandAnnotation &&
       annotation.Subject === i18next.t('annotation.signature'),
