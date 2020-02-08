@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
+import Icon from 'components/Icon';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
@@ -14,6 +15,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './SignatureOverlay.scss';
+import '../ToolsOverlay/ToolsOverlay.scss';
 
 class SignatureOverlay extends React.PureComponent {
   static propTypes = {
@@ -233,44 +235,55 @@ class SignatureOverlay extends React.PureComponent {
 
   render() {
     const { left, right, top, defaultSignatures } = this.state;
-    const { t, isDisabled, maxSignaturesCount } = this.props;
-    const className = getClassName('Overlay SignatureOverlay', this.props);
+    const { t, isDisabled, maxSignaturesCount, isOpen } = this.props;
+    // const className = getClassName('Overlay SignatureOverlay', this.props);
+
+    const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
     if (isDisabled) {
       return null;
     }
 
     return (
-      <div 
+      <div
         className={className}
         ref={this.overlay}
         style={{ left, right, top }}
       >
-        <div className="default-signatures-container">
-          {defaultSignatures.map(({ imgSrc }, index) => (
-            <div className="default-signature" key={index}>
-              <div
-                className="signature-image"
-                onClick={() => this.setSignature(index)}
-              >
-                <img src={imgSrc} />
+        <div
+          className="tools-container"
+        >
+          <div className="default-signatures-container">
+            {defaultSignatures.map(({ imgSrc }, index) => (
+              <div className="default-signature" key={index}>
+                <div
+                  className="signature-image"
+                  onClick={() => this.setSignature(index)}
+                >
+                  <img src={imgSrc} />
+                </div>
+                <ActionButton
+                  dataElement="defaultSignatureDeleteButton"
+                  img="ic_delete_black_24px"
+                  onClick={() => this.deleteDefaultSignature(index)}
+                />
               </div>
-              <ActionButton
-                dataElement="defaultSignatureDeleteButton"
-                img="ic_delete_black_24px"
-                onClick={() => this.deleteDefaultSignature(index)}
-              />
+            ))}
+            <div
+              className={`add-signature${
+                defaultSignatures.length >= maxSignaturesCount
+                  ? ' disabled'
+                  : ' enabled'
+              }`}
+              onClick={this.openSignatureModal}
+            >
+              {t('option.signatureOverlay.addSignature')}
             </div>
-          ))}
-          <div
-            className={`add-signature${
-              defaultSignatures.length >= maxSignaturesCount
-                ? ' disabled'
-                : ' enabled'
-            }`}
-            onClick={this.openSignatureModal}
-          >
-            {t('option.signatureOverlay.addSignature')}
+          </div>
+        </div>
+        <div className="Close-Container">
+          <div className="Close-Button" onClick={() => this.props.closeElement('signatureOverlay')}>
+            <Icon className="Close-Icon" glyph="icon-close" />
           </div>
         </div>
       </div>
