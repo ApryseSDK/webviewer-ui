@@ -11,10 +11,6 @@ export const enableAllElements = () => ({
 export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  if (dataElement === 'signatureOverlay') {
-    console.trace();
-  }
-
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
@@ -55,10 +51,6 @@ export const openElements = dataElements => dispatch => {
 };
 export const closeElement = dataElement => (dispatch, getState) => {
   const state = getState();
-
-  if (dataElement === 'signatureOverlay') {
-    console.trace();
-  }
 
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;
