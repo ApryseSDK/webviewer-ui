@@ -86,14 +86,14 @@ class SignatureOverlay extends React.PureComponent {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  handleClickOutside = e => {
-    const ToggleSignatureButton = document.querySelector('[data-element="signatureToolButton"]');
-    const clickedToggleSignatureButton = ToggleSignatureButton?.contains(e.target);
+  // handleClickOutside = e => {
+  //   const ToggleSignatureButton = document.querySelector('[data-element="signatureToolButton"]');
+  //   const clickedToggleSignatureButton = ToggleSignatureButton?.contains(e.target);
 
-    if (!clickedToggleSignatureButton) {
-      this.props.closeElement('signatureOverlay');
-    }
-  };
+  //   if (!clickedToggleSignatureButton) {
+  //     this.props.closeElement('signatureOverlay');
+  //   }
+  // };
 
   handleWindowResize = () => {
     this.setOverlayPosition();
@@ -206,13 +206,18 @@ class SignatureOverlay extends React.PureComponent {
 
     core.setToolMode('AnnotationCreateSignature');
     this.signatureTool.setSignature(annotation);
-    this.props.closeElement('signatureOverlay');
+    // this.props.closeElement('signatureOverlay');
 
-    if (this.signatureTool.hasLocation()) {
-      this.signatureTool.addSignature();
-    } else {
-      this.signatureTool.showPreview();
-    }
+    // if (this.signatureTool.hasLocation()) {
+    //   this.signatureTool.addSignature();
+    // } else {
+    //   this.signatureTool.showPreview();
+    // }
+
+
+    // TODO: What is hasLocation
+    this.signatureTool.showPreview();
+    this.forceUpdate();
   };
 
   deleteDefaultSignature = index => {
@@ -262,12 +267,16 @@ class SignatureOverlay extends React.PureComponent {
                 key={index}
                 className={classNames({
                   "tool-button-container": true,
-                  active: true,
+                  active: false,
                 })}
               >
                 <Button
+                  className={classNames({
+                    "tool-button": true,
+                  })}
                   img={imgSrc}
-                  isActive={true}
+                  isActive={this.currentSignatureIndex === index}
+                  onClick={() => this.setSignature(index)}
                 />
                 <div
                   className="styling-down-arrow-container"
@@ -334,4 +343,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(onClickOutside(SignatureOverlay)));
+)(withTranslation()(SignatureOverlay));
