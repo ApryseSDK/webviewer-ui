@@ -127,7 +127,7 @@ class ToolStylePopup extends React.PureComponent {
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
 
     if (activeToolName === 'AnnotationCreateRubberStamp') {
-      siblingWidth = 300;
+      siblingWidth = 250;
     }
 
     return (
