@@ -215,7 +215,7 @@ export default {
       from: ['in', 'mm', 'cm', 'pt'],
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi'],
     },
-    maxSignaturesCount: 4,
+    maxSignaturesCount: 2,
     signatureFonts: ['GreatVibes-Regular'],
     leftPanelWidth: 300,
     isReplyDisabledFunc: null,

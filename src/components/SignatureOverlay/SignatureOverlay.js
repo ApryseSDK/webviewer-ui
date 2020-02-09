@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
-import Button from "components/Button";
-import classNames from "classnames";
 import Icon from 'components/Icon';
 
 import core from 'core';
@@ -18,7 +16,6 @@ import selectors from 'selectors';
 
 import './SignatureOverlay.scss';
 import '../ToolsOverlay/ToolsOverlay.scss';
-import '../ToolButton/ToolButton.scss';
 
 class SignatureOverlay extends React.PureComponent {
   static propTypes = {
@@ -256,45 +253,21 @@ class SignatureOverlay extends React.PureComponent {
         <div
           className="tools-container"
         >
-          <div className="tool-buttons-container">
+          <div className="default-signatures-container">
             {defaultSignatures.map(({ imgSrc }, index) => (
-              <div
-                key={index}
-                className={classNames({
-                  "tool-button-container": true,
-                  active: true,
-                })}
-              >
-                <Button
-                  img={imgSrc}
-                  isActive={true}
-                />
+              <div className="default-signature" key={index}>
                 <div
-                  className="styling-down-arrow-container"
-                  onClick={() => {
-
-                  }}
+                  className="signature-image"
+                  onClick={() => this.setSignature(index)}
                 >
-                  <Icon
-                    className="styling-down-arrow"
-                    glyph="icon-chevron-down-bold"
-                  />
+                  <img src={imgSrc} />
                 </div>
+                <ActionButton
+                  dataElement="defaultSignatureDeleteButton"
+                  img="ic_delete_black_24px"
+                  onClick={() => this.deleteDefaultSignature(index)}
+                />
               </div>
-
-              // <div className="default-signature" key={index}>
-              //   <div
-              //     className="signature-image"
-              //     onClick={() => this.setSignature(index)}
-              //   >
-              //     <img src={imgSrc} />
-              //   </div>
-              //   <ActionButton
-              //     dataElement="defaultSignatureDeleteButton"
-              //     img="ic_delete_black_24px"
-              //     onClick={() => this.deleteDefaultSignature(index)}
-              //   />
-              // </div>
             ))}
             <div
               className={`add-signature${
