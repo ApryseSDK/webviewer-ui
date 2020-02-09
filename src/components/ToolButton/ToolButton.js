@@ -101,7 +101,7 @@ const ToolButton = ({
       <div
         className={classNames({
           "tool-button-container": true,
-          active: isStylingOpen && isActive
+          active: isStylingOpen && isActive,
         })}
       >
         {ButtonComponent}
