@@ -62,12 +62,13 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'component.freeTextToolsButton' },
         { type: 'toolGroupButton', toolGroup: 'stickyTools', dataElement: 'stickyToolGroupButton', title: 'component.stickyToolsButton' },
+        { type: 'toolGroupButton', toolGroup: 'signatureTools', dataElement: 'signatureToolGroupButton', title: 'component.stickyToolsButton' },
         { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
-        {
-          type: 'customElement',
-          render: () => <SignatureToolButton />,
-          dataElement: 'signatureToolButton',
-        },
+        // {
+        //   type: 'customElement',
+        //   render: () => <SignatureToolButton />,
+        //   dataElement: 'signatureToolButton',
+        // },
         { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
         { type: 'divider' },
         {
@@ -155,6 +156,11 @@ export default {
       AnnotationCreateSticky3: { dataElement: 'sitckyToolButton3', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
       AnnotationCreateSticky4: { dataElement: 'sitckyToolButton4', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
 
+      AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.stickyNote', img: 'icon-tool-signature', group: 'signatureTools', showColor: 'always' },
+      AnnotationCreateSignature2: { dataElement: 'signatureToolButton2', title: 'annotation.stickyNote', img: 'icon-tool-signature', group: 'signatureTools', showColor: 'always' },
+      AnnotationCreateSignature3: { dataElement: 'signatureToolButton3', title: 'annotation.stickyNote', img: 'icon-tool-signature', group: 'signatureTools', showColor: 'always' },
+      AnnotationCreateSignature4: { dataElement: 'signatureToolButton4', title: 'annotation.stickyNote', img: 'icon-tool-signature', group: 'signatureTools', showColor: 'always' },
+
       AnnotationCreateRectangle: { dataElement: 'rectangleToolButton', title: 'annotation.rectangle', img: 'icon-tool-shape-rectangle', group: 'shapeTools', showColor: 'active' },
       AnnotationCreateEllipse: { dataElement: 'ellipseToolButton', title: 'annotation.ellipse', img: 'ic_annotation_circle_black_24px', group: 'shapeTools', showColor: 'active' },
       AnnotationCreateLine: { dataElement: 'lineToolButton', title: 'annotation.line', img: 'ic_annotation_line_black_24px', group: 'shapeTools', showColor: 'active' },
@@ -163,7 +169,7 @@ export default {
       AnnotationCreatePolygon: { dataElement: 'polygonToolButton', title: 'annotation.polygon', img: 'ic_annotation_polygon_black_24px', group: 'shapeTools', showColor: 'active' },
       AnnotationCreatePolygonCloud: { dataElement: 'cloudToolButton', title: 'annotation.polygonCloud', img: 'ic_annotation_cloud_black_24px', group: 'shapeTools', showColor: 'active' },
       AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'ic_annotation_add_redact_black_24px', showColor: 'never' },
-      AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.signature', img: 'ic_annotation_signature_black_24px', showColor: 'active' },
+      // AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.signature', img: 'ic_annotation_signature_black_24px', showColor: 'active' },
 
       AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'ic_annotation_callout_black_24px', group: 'miscTools', showColor: 'active' },
       AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
