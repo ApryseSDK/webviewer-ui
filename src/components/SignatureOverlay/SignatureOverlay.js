@@ -8,7 +8,6 @@ import ActionButton from 'components/ActionButton';
 import Button from "components/Button";
 import classNames from "classnames";
 import Icon from 'components/Icon';
-import ToolStylePopup from 'components/ToolStylePopup';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
@@ -37,9 +36,8 @@ class SignatureOverlay extends React.PureComponent {
     super(props);
     this.signatureTool = core.getTool('AnnotationCreateSignature');
     this.overlay = React.createRef();
+    this.currentSignatureIndex = -1;
     this.state = {
-      currentSignatureIndex: -1,
-      isStylingOpen: false,
       defaultSignatures: [],
       left: 0,
       right: 'auto',
@@ -200,11 +198,11 @@ class SignatureOverlay extends React.PureComponent {
   };
 
   setSignature = index => {
-    this.setState({
-      currentSignatureIndex: index,
-    });
+    this.currentSignatureIndex = index;
 
-    const { annotation } = this.state.defaultSignatures[index];
+    const { annotation } = this.state.defaultSignatures[
+      this.currentSignatureIndex
+    ];
 
     core.setToolMode('AnnotationCreateSignature');
     this.signatureTool.setSignature(annotation);
@@ -219,6 +217,18 @@ class SignatureOverlay extends React.PureComponent {
 
     // TODO: What is hasLocation
     this.signatureTool.showPreview();
+    this.forceUpdate();
+  };
+
+  deleteDefaultSignature = index => {
+    this.signatureTool.deleteSavedSignature(index);
+
+    const isDeletingCurrentSignature = this.currentSignatureIndex === index;
+    if (isDeletingCurrentSignature) {
+      this.signatureTool.annot = null;
+      this.signatureTool.hidePreview();
+      this.currentSignatureIndex = -1;
+    }
   };
 
   openSignatureModal = () => {
@@ -231,22 +241,16 @@ class SignatureOverlay extends React.PureComponent {
     }
   };
 
-  handleStyleClick = () => {
-    console.log('handleStyleClick');
-    this.setState({ isStylingOpen: !this.state.isStylingOpen });
-  };
-
   render() {
-    const { left, right, top, defaultSignatures, isStylingOpen, currentSignatureIndex } = this.state;
+    const { left, right, top, defaultSignatures } = this.state;
     const { t, isDisabled, maxSignaturesCount, isOpen } = this.props;
+    // const className = getClassName('Overlay SignatureOverlay', this.props);
 
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
     if (isDisabled) {
       return null;
     }
-
-    console.log(left, right, top);
 
     return (
       <div
@@ -263,7 +267,7 @@ class SignatureOverlay extends React.PureComponent {
                 key={index}
                 className={classNames({
                   "tool-button-container": true,
-                  active: isStylingOpen && currentSignatureIndex === index,
+                  active: false,
                 })}
               >
                 <Button
@@ -271,12 +275,14 @@ class SignatureOverlay extends React.PureComponent {
                     "tool-button": true,
                   })}
                   img={imgSrc}
-                  isActive={!isStylingOpen && currentSignatureIndex === index}
+                  isActive={this.currentSignatureIndex === index}
                   onClick={() => this.setSignature(index)}
                 />
                 <div
                   className="styling-down-arrow-container"
-                  onClick={() => this.handleStyleClick()}
+                  onClick={() => {
+
+                  }}
                 >
                   <Icon
                     className="styling-down-arrow"
@@ -284,10 +290,21 @@ class SignatureOverlay extends React.PureComponent {
                   />
                 </div>
               </div>
+
+              // <div className="default-signature" key={index}>
+              //   <div
+              //     className="signature-image"
+              //     onClick={() => this.setSignature(index)}
+              //   >
+              //     <img src={imgSrc} />
+              //   </div>
+              //   <ActionButton
+              //     dataElement="defaultSignatureDeleteButton"
+              //     img="ic_delete_black_24px"
+              //     onClick={() => this.deleteDefaultSignature(index)}
+              //   />
+              // </div>
             ))}
-            {isStylingOpen && (
-              <ToolStylePopup />
-            )}
             <div
               className={`add-signature${
                 defaultSignatures.length >= maxSignaturesCount

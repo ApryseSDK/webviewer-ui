@@ -125,8 +125,6 @@ class StylePopup extends React.PureComponent {
       );
     }
 
-    console.log('currentPalette', currentPalette, colorMapKey);
-
     return (
       <div className="Popup StylePopup" data-element="stylePopup">
         {currentPalette && (

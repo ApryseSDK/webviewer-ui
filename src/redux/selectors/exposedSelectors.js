@@ -20,7 +20,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
 };
 
 export const getActiveHeaderItems = state =>
-  state.viewer.headers['default'];
+  state.viewer.headers[state.viewer.activeHeaderGroup];
 
 export const getToolsHeaderItems = state =>
   state.viewer.headers['tools'];
