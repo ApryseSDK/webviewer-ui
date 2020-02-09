@@ -45,10 +45,6 @@ const SignatureToolButton = () => {
     dispatch(actions.toggleElement('signatureOverlay'));
   };
 
-  const buttonClass = classNames({
-    'down-arrow': hasSavedSignature,
-  });
-
   return (
     <div
       className={classNames({
