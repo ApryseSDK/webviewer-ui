@@ -125,15 +125,6 @@ class StylePopup extends React.PureComponent {
       );
     }
 
-    console.log('toolName', toolName);
-    if (toolName.includes('AnnotationCreateSignature')) {
-      return (
-        <div>
-          jsldfkjsdlkfjklsdf
-        </div>
-      )
-    }
-
     return (
       <div className="Popup StylePopup" data-element="stylePopup">
         {currentPalette && (
