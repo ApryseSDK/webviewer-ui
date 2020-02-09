@@ -2,18 +2,6 @@
 // following are the tools that we want to change the default styles due to design
 // we could change the default styles in core but we don't want the legacy UI to be affected, so we do it here
 export default {
-  AnnotationCreateSignature: {
-    StrokeColor: { R: 67, G: 85, B: 219, A: 1 },
-  },
-  AnnotationCreateSignature2: {
-    StrokeColor: { R: 230, G: 38, B: 31, A: 1 },
-  },
-  AnnotationCreateSignature3: {
-    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
-  },
-  AnnotationCreateSignature4: {
-    StrokeColor: { R: 51, G: 187, B: 230, A: 1 },
-  },
   AnnotationCreateFreeHand: {
     StrokeColor: { R: 67, G: 85, B: 219, A: 1 },
   },
