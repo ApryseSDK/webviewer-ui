@@ -4,10 +4,13 @@ input[type='checkbox'].Input,
 input[type='radio'].Input {
   display: none;
 
-  &:checked + label:after {
-    background: $gray20;
-  }
+  // &:checked + label:after {
+  //   background: $gray20;
+  // }
 }
+
+
+
 
 label.Input {
   position: relative;
@@ -16,6 +19,22 @@ label.Input {
   padding: 5px;
   font-size: 0.8em;
   cursor: pointer;
+
+  .icon-container {
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    svg {
+      color: white;
+    }
+
+    .Icon {
+      height: 14px;
+      width: 14px;
+    }
+  }  
+  
 
   &:before {
     content: '';
@@ -27,8 +46,15 @@ label.Input {
     height: 15px;
     padding: 2px;
     box-sizing: border-box;
-    border: 1px solid $gray12;
+    border: 1px solid #c3c6d4;
+    border-radius: 2px;
     background: white;
+
+
+  }
+
+  &:checked {
+    background: blue;
   }
 
   &:after {
@@ -42,5 +68,12 @@ label.Input {
     box-sizing: border-box;
     background: transparent;
     transition: all 0.2s ease;
+  }
+}
+
+input[type=checkbox]:checked + label {
+  &:before{
+    background: #6077bf;
+    border: 1px solid #6077bf;
   }
 }

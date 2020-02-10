@@ -454,6 +454,8 @@ class SearchOverlay extends React.PureComponent {
       searchValue,
       activeResultIndex,
       isWildCardSearchDisabled,
+      isCaseSensitive,
+      isWholeWord,
     } = this.props;
 
     if (isDisabled) {
@@ -479,6 +481,7 @@ class SearchOverlay extends React.PureComponent {
             type="checkbox"
             ref={this.caseSensitiveInput}
             onChange={this.onChangeCaseSensitive}
+            checked={isCaseSensitive}
             label={t('option.searchPanel.caseSensitive')}
           />
           <Input
@@ -486,6 +489,7 @@ class SearchOverlay extends React.PureComponent {
             type="checkbox"
             ref={this.wholeWordInput}
             onChange={this.onChangeWholeWord}
+            checked={isWholeWord}
             label={t('option.searchPanel.wholeWordOnly')}
           />
           {!isWildCardSearchDisabled &&
