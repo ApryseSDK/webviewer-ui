@@ -57,10 +57,9 @@ const SignatureModal = () => {
     core.setToolMode(defaultTool);
   };
 
-  const toggleSaveSignature = () => {
-    debugger;
-    _setSaveSignature(!saveSignature);
-  };
+  // const toggleSaveSignature = () => {
+  //   _setSaveSignature(!saveSignature);
+  // };
 
   const createSignature = () => {
     if (!signatureTool.isEmptySignature()) {
@@ -110,7 +109,9 @@ const SignatureModal = () => {
               onClick={closeModal}
             />
           </div>
-
+          <div
+            className="divider-horizontal"
+          />
           <TabPanel dataElement="inkSignaturePanel">
             <InkSignature
               isModalOpen={isOpen}
@@ -130,28 +131,12 @@ const SignatureModal = () => {
             />
           </TabPanel>
         </Tabs>
-
         <div
           className="footer"
-          style={{
-            justifyContent: isSaveSignatureDisabled
-              ? 'flex-end'
-              : 'space-between',
-          }}
         >
-          {!isSaveSignatureDisabled && (
-            <div className="signature-save" data-element="saveSignatureButton">
-              <input
-                id="default-signature"
-                type="checkbox"
-                checked={saveSignature}
-                onChange={toggleSaveSignature}
-              />
-              <label htmlFor="default-signature">
-                {t('option.signatureModal.saveSignature')}
-              </label>
-            </div>
-          )}
+          <div className="signature-clear" onClick={() => {}}>
+            {t('action.clear')}
+          </div>
           <div className="signature-create" onClick={createSignature}>
             {t('action.create')}
           </div>

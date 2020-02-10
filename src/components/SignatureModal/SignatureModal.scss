@@ -27,6 +27,13 @@
       }
     }
     
+    .divider-horizontal {
+      width: auto;
+      height: 1px;
+      margin-bottom: 16px;
+      background: var(--tools-divider-color);
+    }
+
     .header {
       margin: 11px 24px 16px 24px;
       display: flex;
@@ -67,6 +74,7 @@
       display: flex;
       margin-top: 12px;
       align-items: center;
+      justify-content: space-between;
 
       .signature-save {
         position: relative;
@@ -113,10 +121,20 @@
         }
       }
 
+      .signature-clear {
+        color: #6077bf;
+        padding: 0 16px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;    
+        cursor: pointer;    
+      }
+
       .signature-create {
         background: var(--button-fill);
         border-radius: 4px;
-        width: 63px;
+        padding: 0 8px;
         height: 32px;
         display: flex;
         align-items: center;
