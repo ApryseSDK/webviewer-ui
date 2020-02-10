@@ -322,7 +322,7 @@ class MeasurementOverlay extends React.PureComponent {
           this.renderValue()
         )}
         {key === 'distanceMeasurement' && this.renderDeltas()}
-        {this.renderAngle()}
+        {key !== 'rectangularAreaMeasurement' && this.renderAngle()}
       </div>
     );
   }

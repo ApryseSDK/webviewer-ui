@@ -67,7 +67,7 @@ const map = {
       annotation.Measure,
   },
   rectangularAreaMeasurement: {
-    icon: 'ic_annotation_square_black_24px',
+    icon: 'ic_annotation_rectangular_area_black_24px',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
