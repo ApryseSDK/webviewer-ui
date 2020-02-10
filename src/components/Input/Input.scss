@@ -3,14 +3,7 @@
 input[type='checkbox'].Input,
 input[type='radio'].Input {
   display: none;
-
-  // &:checked + label:after {
-  //   background: $gray20;
-  // }
 }
-
-
-
 
 label.Input {
   position: relative;
@@ -49,13 +42,8 @@ label.Input {
     border: 1px solid #c3c6d4;
     border-radius: 2px;
     background: white;
-
-
   }
 
-  &:checked {
-    background: blue;
-  }
 
   &:after {
     content: '';
