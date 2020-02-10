@@ -52,7 +52,7 @@ const InkSignature = ({
       const signatureTool = core.getTool('AnnotationCreateSignature');
       signatureTool.setSignature(freeHandPathsRef.current);
       setCanClear(!!freeHandPathsRef.current);
-      _setSaveSignature(!!freeHandPathsRef.current);
+      // _setSaveSignature(!!freeHandPathsRef.current);
     }
   }, [isTabPanelSelected, _setSaveSignature]);
 
@@ -60,7 +60,7 @@ const InkSignature = ({
     const signatureTool = core.getTool('AnnotationCreateSignature');
     signatureTool.clearSignatureCanvas();
     setCanClear(false);
-    _setSaveSignature(false);
+    // _setSaveSignature(false);
     freeHandPathsRef.current = null;
   }, [_setSaveSignature]);
 

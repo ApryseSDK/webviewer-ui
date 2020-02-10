@@ -30,7 +30,7 @@ const ImageSignature = ({
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
     if (isModalOpen && isTabPanelSelected) {
-      _setSaveSignature(!!imageSrc);
+      // _setSaveSignature(!!imageSrc);
       signatureTool.setSignature(imageSrc);
     }
   }, [imageSrc, isTabPanelSelected, _setSaveSignature, isModalOpen]);
@@ -115,12 +115,6 @@ const ImageSignature = ({
           onDrop={handleFileDrop}
           onDragExit={handleDragExit}
         >
-          <div className="image-signature-dnd">
-            {t('option.signatureModal.dragAndDrop')}
-          </div>
-          <div className="image-signature-separator">
-            {t('option.signatureModal.or')}
-          </div>
           <div className="image-signature-upload">
             <input
               ref={fileInputRef}
@@ -129,9 +123,12 @@ const ImageSignature = ({
               accept={acceptedFileTypes.map(type => `.${type}`).join(',')}
               onChange={handleFileChange}
             />
-            <button onClick={() => fileInputRef.current.click()}>
+            <div 
+              onClick={() => fileInputRef.current.click()}
+              className="pick-image-button"
+            >
               {t('option.signatureModal.pickImage')}
-            </button>
+            </div>
           </div>
           {isDragging && <div className="image-signature-background" />}
           {errorMessage && (

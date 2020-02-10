@@ -24,7 +24,7 @@ const SignatureModal = () => {
     selectors.isElementOpen(state, 'signatureModal'),
   ]);
   const dispatch = useDispatch();
-  const [saveSignature, setSaveSignature] = useState(false);
+  const [saveSignature, setSaveSignature] = useState(true);
   const [t] = useTranslation();
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
@@ -58,6 +58,7 @@ const SignatureModal = () => {
   };
 
   const toggleSaveSignature = () => {
+    debugger;
     _setSaveSignature(!saveSignature);
   };
 

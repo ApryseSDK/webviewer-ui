@@ -1,13 +1,11 @@
 @import '../../../constants/styles';
 
 .image-signature {
-  margin: 0px 24px;
-  width: 552px;
-  height: 200px;
-  border: 1px solid $signature-modal-shared-color;
+  height: 104px;
+  border: 1px solid #dfe2ed;
   position: relative;
   border-radius: 4px;
-  overflow: hidden;
+  background: #f0f0f0;
 
   &-image-container {
     width: 100%;
@@ -44,6 +42,19 @@
   &-upload {
     input[type="file"] {
       display: none;
+    }
+
+    .pick-image-button {
+      font-size: 13px;
+      font-weight: bold;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid #6077bf;
+      color: #6077bf;
+      display: flex;
+      align-items: center;
+      padding: 0 11px;
+      cursor: pointer;
     }
 
     button {
@@ -86,4 +97,3 @@
     margin: 0px 5px 5px 0px;
   }
 }
-

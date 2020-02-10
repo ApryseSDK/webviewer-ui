@@ -5,14 +5,17 @@
   @extend %modal;
   font-size: 0.9em;
 
+
   .container {
     @extend %modal-shared-container-style;
-    width: 600px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-radius: 4px;
     box-shadow: 0 2px 16px 0 $signature-modal-shared-color; 
+    padding: 8px 8px;
+    background: #fafafa;
 
     @include mobile {
       width: 100%;
@@ -62,7 +65,7 @@
 
     .footer {
       display: flex;
-      margin: 20px 16px;
+      margin-top: 12px;
       align-items: center;
 
       .signature-save {
@@ -111,17 +114,17 @@
       }
 
       .signature-create {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #ffffff;
-        font-weight: 600;
-        padding: 6px 18px;
-        margin-right: 8px;
-        background: $pdftron-blue;
-        border-radius: 4px 4px 4px 4px;
-        border: 1px solid $pdftron-blue;
+        background: var(--button-fill);
+        border-radius: 4px;
+        width: 63px;
         height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: #fafafa;
+        font-size: 13px;
+        font-weight: bold;
         cursor: pointer;
 
         &:hover {
