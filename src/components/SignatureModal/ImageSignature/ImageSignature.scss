@@ -38,6 +38,12 @@
     position: absolute;
   }
 
+
+  &-dnd,&-separator {
+    font-size: 13px;
+    color: #c3c6d4;
+  }
+
   &-upload {
     input[type="file"] {
       display: none;

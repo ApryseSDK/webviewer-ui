@@ -115,6 +115,12 @@ const ImageSignature = ({
           onDrop={handleFileDrop}
           onDragExit={handleDragExit}
         >
+          <div className="image-signature-dnd">
+            {t('option.signatureModal.dragAndDrop')}
+          </div>
+          <div className="image-signature-separator">
+            {t('option.signatureModal.or')}
+          </div>
           <div className="image-signature-upload">
             <input
               ref={fileInputRef}
