@@ -15,58 +15,53 @@
 .default-signatures-container {
   display: flex;
   flex-direction: column;
+  // width: 162px;
 
-  .default-signature {
+  .row {
     display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    
-
-
-    .signature-image {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #F8F8F8;
-      border-radius: 4px 4px 4px 4px;
-      height: 48px;
-      flex: 1;
-      cursor: pointer;
-
-      img {
-        max-height: 100%;
-        max-width: 100%;
-        width: auto;
-        height: auto;
-      }
-    }
-  }
-
-  .add-signature {
-    background: var(--button-fill);
-    border-radius: 4px;
-    padding: 0 8px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    color: #fafafa;
-    font-size: 13px;
-    font-weight: bold;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 4px;
+    margin-bottom: 10px;
     cursor: pointer;
 
-    &.disabled {
-      border: 1px solid #E1E1E3;
-      // color: #E1E1E3;
-      background: #E1E1E3;
-      cursor: default;
+
+
+    .content {
+      padding: 7px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #767f9b;
+      font-size: 13px;
+      cursor: pointer;
+      // background: blue;
+
+      img {
+        // max-height: 100%;
+        max-width: 120px;
+        // width: auto;
+        // height: auto;
+      }      
+  
+      // &.disabled {
+      //   background: #E1E1E3;
+      //   cursor: default;
+      // }
+  
+      // &.enabled:hover {
+      //   background: #17324C;
+      //   border: 1px solid #17324C;
+      //   color: #FFFFFF;
+      // }
     }
 
-    // &.enabled:hover {
-    //   background: #17324C;
-    //   border: 1px solid #17324C;
-    //   color: #FFFFFF;
-    // }
+    .icon {
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      // background: green;
+    }    
   }
+
 }

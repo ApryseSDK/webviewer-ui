@@ -203,7 +203,7 @@
       "wildcard": "Wildcard"
     },
     "signatureOverlay": {
-      "addSignature": "Add a signature"
+      "addSignature": "Add New Signature"
     },
     "signatureModal": {
       "saveSignature": "Save signature",
