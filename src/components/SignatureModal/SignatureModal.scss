@@ -8,7 +8,7 @@
 
   .container {
     @extend %modal-shared-container-style;
-    width: 300px;
+    width: 304px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,7 +40,7 @@
       width: auto;
       height: 1px;
       margin: 8px 0;
-      background: var(--tools-divider-color);
+      background: #dfe2ed;
     }
 
 
