@@ -27,6 +27,15 @@
       }
     }
     
+    .tab-panel {
+      margin: 8px 0;
+      height: 104px;
+
+      >div {
+        height: 100%;
+      }
+    }
+
     .divider-horizontal {
       width: auto;
       height: 1px;
