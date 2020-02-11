@@ -3,8 +3,7 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import Button from 'components/Button';
-import ActionButton from 'components/ActionButton';
+import ToolStylePopup from 'components/ToolStylePopup';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
 import TextSignature from 'components/SignatureModal/TextSignature';
