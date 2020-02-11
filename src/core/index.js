@@ -5,6 +5,9 @@ import setDisplayMode from './setDisplayMode';
 import getDisplayMode from './getDisplayMode';
 import rotateClockwise from './rotateClockwise';
 import rotateCounterClockwise from './rotateCounterClockwise';
+import rotatePages from './rotatePages';
+import movePages from './movePages';
+import removePages from './removePages';
 import getFitMode from './getFitMode';
 import fitToPage from './fitToPage';
 import fitToWidth from './fitToWidth';
@@ -68,6 +71,7 @@ import drawAnnotationsFromList from './drawAnnotationsFromList';
 import setInternalAnnotationsTransform from './setInternalAnnotationsTransform';
 import setPagesUpdatedInternalAnnotationsTransform from './setPagesUpdatedInternalAnnotationsTransform';
 import loadAsync from './loadAsync';
+import loadDocument from './loadDocument';
 import loadThumbnailAsync from './loadThumbnailAsync';
 import getSelectedTextQuads from './getSelectedTextQuads';
 import getDisplayModeObject from './getDisplayModeObject';
@@ -103,6 +107,8 @@ import getNumberOfGroups from './getNumberOfGroups';
 import undo from './undo';
 import redo from './redo';
 import updateAnnotationState from './updateAnnotationState';
+import getFontStyles from './getFontStyles';
+import mergeDocument from './mergeDocument';
 
 export default {
   setToolMode,
@@ -112,6 +118,9 @@ export default {
   getDisplayMode,
   rotateClockwise,
   rotateCounterClockwise,
+  rotatePages,
+  movePages,
+  removePages,
   getFitMode,
   fitToPage,
   fitToWidth,
@@ -176,6 +185,7 @@ export default {
   setPagesUpdatedInternalAnnotationsTransform,
   loadThumbnailAsync,
   loadAsync,
+  loadDocument,
   getSelectedTextQuads,
   getDisplayModeObject,
   getScrollViewElement,
@@ -211,4 +221,6 @@ export default {
   undo,
   redo,
   updateAnnotationState,
+  getFontStyles,
+  mergeDocument,
 };

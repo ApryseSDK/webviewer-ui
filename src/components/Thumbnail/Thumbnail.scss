@@ -5,19 +5,26 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 180px;
-  height: 180px;
+  height: calc(100% - 5px);
+  margin: 2.5px 0px;
   font-size: 12px;
   text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $gray10;
+  }
+
+  &.active {
+    background-color: lightgray;
+  }
 
   .container {
     position: relative;
     display: flex;
-    width: 150px;
-    height: 150px;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    margin: 13px 10px 5px 10px;
 
     img.page-image {
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -33,9 +40,7 @@
         height: auto !important;
         width: auto !important;
       }
-      max-width: 148px;
-      max-height: 148px;
-      border: 1px solid transparent;
+      border: 1px solid $gray20;
     }
 
     .annotation-image {
@@ -43,21 +48,36 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      max-width: 148px;
-      max-height: 148px;
     }
   }
 
   .page-label {
-    padding: 5px 0;
+    margin-top: 5px;
   }
 
-  &.active {
-    background-color: lightgray;
+  &.selected {
+    $selected-icon-size: 16px;
+    $selected-border-size: 3px;
 
-    .page-image {
-      border: 1px solid $gray12;
-      border: 1px solid var(--border-color);
-    } 
+    .container {
+      .thumbnail::before {
+        content: "✓";
+        color: white;
+        background: $pdftron-blue;
+        width: $selected-icon-size;
+        height: $selected-icon-size;
+        border-bottom-right-radius: 5px;
+        position: absolute;
+        z-index: 10;
+      }
+    }
+
+    .page-label {
+      color: $pdftron-blue !important;
+    }
+
+    canvas:first-of-type {
+      border: solid $pdftron-blue $selected-border-size !important;
+    }
   }
 }

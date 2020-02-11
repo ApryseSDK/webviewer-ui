@@ -15,9 +15,9 @@ import selectors from 'selectors';
 const NOOP = () => {};
 
 /**
- * Available hotkeys that can be passed to {@link WebViewer.Hotkeys#on instance.hotkeys.on} or {@link WebViewer.Hotkeys#off instance.hotkeys.off} as lowercase. Hotkeys that use the Ctrl key can also be activated by pressing the Command key. <br/><br/>
+ * Available hotkeys that can be passed to {@link WebViewerInstance.Hotkeys#on instance.hotkeys.on} or {@link WebViewerInstance.Hotkeys#off instance.hotkeys.off} as lowercase. Hotkeys that use the Ctrl key can also be activated by pressing the Command key. <br/><br/>
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> These strings are not static properties of this class. They are listed here only for the documentation purpose.
- * @name WebViewer.Hotkeys.AvailableHotkeys
+ * @name WebViewerInstance.Hotkeys.AvailableHotkeys
  * @enum {string}
  * @property {string} Ctrl_Shift_Equals Rotate the document clockwise (Ctrl+Shift+=).
  * @property {string} Ctrl_Shift_Minus Rotate the document counterclockwise (Ctrl+Shift+-)
@@ -33,6 +33,8 @@ const NOOP = () => {};
  * @property {string} Ctrl_P Print
  * @property {string} PageUp Go to the previous page
  * @property {string} PageDown Go to the next page
+ * @property {string} Up Go to the previous page in single layout mode (ArrowUp)
+ * @property {string} Down Go to the next page in single layout mode (ArrowDown)
  * @property {string} Space Hold to switch to Pan mode and release to return to previous tool
  * @property {string} Escape Select the AnnotationEdit tool
  * @property {string} P Select the Pan tool
@@ -55,9 +57,9 @@ const NOOP = () => {};
 
 /**
  * A class which contains hotkeys APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewer#hotkeys instance.hotkeys}
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewerInstance#hotkeys instance.hotkeys}
  * @namespace Hotkeys
- * @memberof WebViewer
+ * @memberof WebViewerInstance
  */
 const HotkeysManager = {
   initialize(store) {
@@ -71,7 +73,7 @@ const HotkeysManager = {
   },
   /**
    * Add an event handler for the given hotkey
-   * @method WebViewer.Hotkeys#on
+   * @method WebViewerInstance.Hotkeys#on
    * @param {string} key A keyboard key or a tool name. <br/>
    * If a hotkey is consisted of more than one key. Those keys should be connected using '+'.
    * @param {function|object} [handler] An optional argument <br/>
@@ -130,7 +132,7 @@ WebViewer(...)
   },
   /**
    * Remove an event handler for the given hotkey
-   * @method WebViewer.Hotkeys#off
+   * @method WebViewerInstance.Hotkeys#off
    * @param {string} [key] An optional keyboard key or a tool name. If not passed, all handlers will be removed
    * @param {function} [handler] An optional function. If not passed, all handlers of the given key will be removed
    * @example
@@ -251,6 +253,28 @@ WebViewer(...)
           core.setCurrentPage(currPageNumber + 1);
         }
       },
+      up: () => {
+        // do not call preventDefault else it will prevent scrolling
+        const scrollViewElement = core.getScrollViewElement();
+        const { scrollHeight, clientHeight } = scrollViewElement;
+        const reachedTop = scrollViewElement.scrollTop === 0;
+        const currPageNumber = core.getCurrentPage();
+        if (reachedTop && currPageNumber > 1) {
+          core.setCurrentPage(currPageNumber - 1);
+          // set the scrollbar to be at the bottom of the page
+          scrollViewElement.scrollTop = scrollHeight - clientHeight;
+        }
+      },
+      down: () => {
+        // do not call preventDefault else it will prevent scrolling
+        const scrollViewElement = core.getScrollViewElement();
+        const { scrollTop, clientHeight, scrollHeight } = scrollViewElement;
+        const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
+        const currPageNumber = core.getCurrentPage();
+        if (reachedBottom && currPageNumber < core.getTotalPages()) {
+          core.setCurrentPage(currPageNumber + 1);
+        }
+      },
       space: {
         keyup: this.createToolHotkeyHandler(e => {
           e.preventDefault();
@@ -290,6 +314,7 @@ WebViewer(...)
             'signatureModal',
             'printModal',
             'searchOverlay',
+            'stampOverlay',
           ]),
         );
       },
@@ -323,12 +348,15 @@ WebViewer(...)
       r: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateRectangle');
       }),
+      q: this.createToolHotkeyHandler(() => {
+        setToolModeAndGroup(store, 'AnnotationCreateRubberStamp');
+      }),
       t: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateFreeText');
       }),
       s: this.createToolHotkeyHandler(() => {
         const sigToolButton = document.querySelector(
-          '[data-element="signatureToolButton"]',
+          '[data-element="signatureToolButton"] .Button',
         );
 
         sigToolButton?.click();
@@ -406,6 +434,7 @@ WebViewer(...)
       AnnotationCreateTextHighlight: 'h',
       AnnotationCreateTextStrikeout: 'k',
       AnnotationCreateTextUnderline: 'u',
+      AnnotationCreateRubberStamp: 'q',
     };
 
     return map[toolName];

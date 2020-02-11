@@ -2,6 +2,7 @@
   "action": {
     "apply": "Toepassen",
     "applyAll": "Alles toepassen",
+    "calibrate": "Ijken",
     "cancel": "Annuleren",
     "clear": "Legen",
     "close": "Sluiten",
@@ -12,6 +13,7 @@
     "ungroup": "Ungroup",
     "download": "Download bestand",
     "edit": "Titel aanpassen",
+    "extract": "Extract",
     "enterFullscreen": "Document in volledig scherm",
     "exitFullscreen": "Document normaal weergeven",
     "fit": "Zoomen",
@@ -27,14 +29,16 @@
     "save": "Bewaren",
     "create": "creëren",
     "showMoreResults": "Toon meer resultaten",
-    "saveSignature": "Sla handtekening op",
     "sign": "Ondertekenen",
     "style": "Opmaak",
     "submit": "Verzenden",
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom uit",
-    "calibrate": "Ijken"
+    "draw": "Trek",
+    "type": "Type",
+    "upload": "Uploaden",
+    "link": "Koppeling"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -64,7 +68,33 @@
     "stickyNote": "Commentaar",
     "strikeout": "Doorstrepen",
     "underline": "Onderstrepen",
-    "custom": "maatwerk"
+    "custom": "maatwerk",
+    "rubberStamp": "Rubberen stempel"
+  },
+  "rubberStamp": {
+    "Approved": "Goedgekeurd",
+    "AsIs": "Zoals het is",
+    "Completed": "Voltooid",
+    "Confidential": "Vertrouwelijk",
+    "Departmental": "departementale",
+    "Draft": "Droogte",
+    "Experimental": "experimenteel",
+    "Expired": "Niet meer geldig",
+    "Final": "Laatste",
+    "ForComment": "Voor commentaar",
+    "ForPublicRelease": "Voor openbare uitgave",
+    "InformationOnly": "Alleen informatie",
+    "NotApproved": "Niet goedgekeurd",
+    "NotForPublicRelease": "Niet voor openbare uitgave",
+    "PreliminaryResults": "Voorlopige resultaten",
+    "Sold": "Verkocht",
+    "TopSecret": "Zeer geheim",
+    "Void": "leegte",
+    "SHSignHere": "Teken hier",
+    "SHWitness": "Getuige",
+    "SHInitialHere": "Eerste hier",
+    "SHAccepted": "Geaccepteerd",
+    "SBRejected": "Afgekeurd"
   },
   "component": {
     "freehandToolsButton": "Vrije hand tools",
@@ -74,6 +104,9 @@
     "miscToolsButton": "Diverse tools",
     "notesPanel": "Notities",
     "outlinesPanel": "Hoofdlijnen",
+    "bookmarksPanel": "bladwijzers",
+    "newBookmark": "Nieuwe bladwijzer",
+    "bookmarkPage": "Pagina",
     "layersPanel": "Lagen",
     "shapeToolsButton": "Vorm tools",
     "textToolsButton": "Tekst tools",
@@ -106,7 +139,9 @@
     "searchPlaceholder": "Zoek opmerkingen...",
     "signHere": "Teken hier",
     "insertTextHere": "Vul hier tekst in",
-    "enterMeasurement": "Voer de meting tussen de twee punten in"
+    "imageSignatureAcceptedFileTypes": "Alleen {{AcceptFileTypes}} worden geaccepteerd",
+    "enterMeasurement": "Voer de meting tussen de twee punten in",
+    "linkURLorPage": "Link-URL of een pagina"
   },
   "option": {
     "annotationColor": {
@@ -117,6 +152,9 @@
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Pagina overgang"
+    },
+    "documentControls": {
+      "placeholder": "Voer pagina's in om te selecteren, d.w.z. 2, 5-9"
     },
     "layout": {
       "cover": "Blad",
@@ -143,16 +181,21 @@
       "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
     "redaction": {
-      "markForRedaction": "Markeren voor redactie",
-      "warningPopupMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd permanent verwijderd. Het kan niet ongedaan gemaakt worden.",
-      "warningPopupTitle": "Redactiewijziging Toepassen"
+      "markForRedaction": "Markeren voor redactie"
     },
     "searchPanel": {
       "caseSensitive": "Hoofdlettergevoelig",
-      "wholeWordOnly": "Hele woorden"
+      "wholeWordOnly": "Hele woorden",
+      "wildcard": "wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
+    },
+    "signatureModal": {
+      "saveSignature": "Bewaar handtekening",
+      "dragAndDrop": "Sleep je afbeelding hiernaartoe",
+      "or": "Of",
+      "pickImage": "Kies handtekening afbeelding"
     },
     "status": {
       "status": "staat"
@@ -179,6 +222,11 @@
     "measurementOption": {
       "scale": "Schaal"
     },
+    "styleOption": {
+      "style": "Stijl",
+      "regular": "regelmatig",
+      "cloudy": "Bewolkt"
+    },
     "slider": {
       "opacity": "Dekking",
       "thickness": "Randdikte",
@@ -192,8 +240,25 @@
       "size": "Grootte",
       "location": "Kies een locatie om watermerken te bewerken",
       "text": "Tekst",
-      "colors": "kleuren",
-      "resetAllSettings": "Reset alle instellingen"
+      "style": "Stijl",
+      "resetAllSettings": "Reset alle instellingen",
+      "font": "doopvont"
+    },
+    "thumbnailPanel": {
+      "delete": "Delete",
+      "rotateClockwise": "Met de klok mee",
+      "rotateCounterClockwise": "Tegen de klok in"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "Pagina verwijderen",
+      "deleteMessage": "Weet u zeker dat u de geselecteerde pagina ('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt",
+      "deleteLastPageMessage": "Hierdoor zouden er geen pagina's meer overblijven. Laat minstens één pagina achter"
+    },
+    "redaction": {
+      "applyTile": "Redactie toepassen",
+      "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden."
     }
   },
   "shortcut": {
@@ -224,6 +289,13 @@
   "tool": {
     "pan": "Schuiven",
     "select": "Selecteren",
-    "Marquee": "Selectie zoom"
+    "Marquee": "Selectie zoom",
+    "Link": "Link URL of pagina"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Bladzijde",
+    "enterurl": "Voer de URL in waarnaar u wilt linken",
+    "enterpage": "Selecteer het paginanummer waarnaar u wilt linken"
   }
 }

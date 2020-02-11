@@ -3,22 +3,19 @@ import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 import { workerTypes } from 'constants/types';
-import { PRIORITY_ONE, PRIORITY_THREE } from 'constants/actionPriority';
+import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
 
 let onFirstLoad = true;
 
 export default dispatch => () => {
-  dispatch(actions.setDocumentLoaded(true));
   dispatch(actions.openElement('pageNavOverlay'));
-  dispatch(actions.setDocumentLoadingProgress(1));
-  dispatch(actions.setWorkerLoadingProgress(1));
+  dispatch(actions.setLoadingProgress(1));
+
   // set timeout so that progress modal can show progress bar properly
   setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
     dispatch(actions.resetLoadingProgress());
-    dispatch(actions.resetUploadProgress());
-    dispatch(actions.setIsUploading(false));
-  }, 300);
+  }, 0);
 
   if (onFirstLoad) {
     onFirstLoad = false;
@@ -27,9 +24,9 @@ export default dispatch => () => {
     // if redaction is already enabled for some reason (i.e. calling readerControl.enableRedaction() before loading a doc), keep it enabled
 
     if (core.isCreateRedactionEnabled()) {
-      dispatch(actions.enableElement('redactionButton', PRIORITY_ONE));
+      dispatch(actions.enableElement('redactionButton', PRIORITY_TWO));
     } else {
-      dispatch(actions.disableElement('redactionButton', PRIORITY_ONE));
+      dispatch(actions.disableElement('redactionButton', PRIORITY_TWO));
     }
   }
 
@@ -56,9 +53,9 @@ export default dispatch => () => {
   }
 
   if (doc.getType() === workerTypes.PDF) {
-    dispatch(actions.enableElement('cropToolButton', PRIORITY_THREE));
+    dispatch(actions.enableElement('cropToolButton', PRIORITY_ONE));
   } else {
-    dispatch(actions.disableElement('cropToolButton', PRIORITY_THREE));
+    dispatch(actions.disableElement('cropToolButton', PRIORITY_ONE));
   }
 
   window.readerControl.loadedFromServer = false;

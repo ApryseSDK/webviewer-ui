@@ -148,10 +148,16 @@ export default initialState => (state = initialState, action) => {
         },
       };
     }
+    case 'SET_THUMBNAIL_MERGING':
+      return { ...state, isThumbnailMerging: payload.useThumbnailMerging };
+    case 'SET_THUMBNAIL_REORDERING':
+      return { ...state, isThumbnailReordering: payload.useThumbnailReordering };
+    case 'SET_THUMBNAIL_MULTISELECT':
+      return { ...state, isThumbnailMultiselect: payload.useThumbnailMultiselect };
+    case 'SET_ALLOW_PAGE_NAVIGATION':
+      return { ...state, allowPageNavigation: payload.allowPageNavigation };
     case 'SET_TOOL_BUTTON_OBJECTS':
       return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
-    case 'SET_DOCUMENT_LOADED':
-      return { ...state, isDocumentLoaded: payload.isDocumentLoaded };
     case 'SET_READ_ONLY':
       return { ...state, isReadOnly: payload.isReadOnly };
     case 'SET_CUSTOM_PANEL':
@@ -163,6 +169,12 @@ export default initialState => (state = initialState, action) => {
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
     case 'SET_PAGE_LABELS':
       return { ...state, pageLabels: [...payload.pageLabels] };
+    case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':
+      return { ...state, selectedThumbnailPageIndexes: payload.selectedThumbnailPageIndexes };
+    case 'REMOVE_PAGE_INDEX':
+      return { ...state,
+        selectedThumbnailPageIndexes: state.selectedThumbnailPageIndexes.filter(p => p !== payload.pageIndexDeleted).map(p => (p < payload.pageIndexDeleted ? p : p - 1)),
+      };
     case 'SET_COLOR_PALETTE': {
       const { colorMapKey, colorPalette } = payload;
       return {
@@ -212,6 +224,14 @@ export default initialState => (state = initialState, action) => {
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
     case 'SET_USER_DATA':
       return { ...state, userData: payload.userData };
+    case 'SET_CUSTOM_MEASUREMENT_OVERLAY':
+      return { ...state, customMeasurementOverlay: payload.customMeasurementOverlay };
+    case 'SET_SIGNATURE_FONTS':
+      return { ...state, signatureFonts: payload.signatureFonts };
+    case 'SET_SELECTED_TAB':
+      return { ...state, tab: { ...state.tab, [payload.id]: payload.dataElement } };
+    case 'SET_CUSTOM_ELEMENT_OVERRIDES':
+      return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
     default:
       return state;
   }

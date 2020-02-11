@@ -2,6 +2,7 @@
   "action": {
     "apply": "適用",
     "applyAll": "すべて適用",
+    "calibrate": "調整する",
     "cancel": "キャンセル",
     "clear": "クリア",
     "close": "閉じる",
@@ -12,6 +13,7 @@
     "ungroup": "グループ解除",
     "download": "ダウンロード",
     "edit": "編集",
+    "extract": "エキス",
     "enterFullscreen": "全画面表示",
     "exitFullscreen": "全画面表示を終了",
     "fit": "フィット",
@@ -27,14 +29,16 @@
     "save": "保存",
     "create": "作成",
     "showMoreResults": "より多くの結果を表示",
-    "saveSignature": "署名の保存",
     "sign": "署名",
     "style": "スタイル",
     "submit": "送信",
     "zoom": "ズーム",
     "zoomIn": "ズームイン",
     "zoomOut": "ズームアウト",
-    "calibrate": "調整する"
+    "draw": "ドロー",
+    "type": "タイプ",
+    "upload": "アップロードする",
+    "link": "リンク"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -64,7 +68,33 @@
     "stickyNote": "コメント",
     "strikeout": "抹消線",
     "underline": "下線",
-    "custom": "カスタム"
+    "custom": "カスタム",
+    "rubberStamp": "ゴム印"
+  },
+  "rubberStamp": {
+    "Approved": "承認済み",
+    "AsIs": "そのまま",
+    "Completed": "完了しました",
+    "Confidential": "機密",
+    "Departmental": "部門別",
+    "Draft": "ドラフト",
+    "Experimental": "実験的",
+    "Expired": "期限切れ",
+    "Final": "最後の",
+    "ForComment": "コメント用",
+    "ForPublicRelease": "公開リリース",
+    "InformationOnly": "情報のみ",
+    "NotApproved": "未承認",
+    "NotForPublicRelease": "非公開リリース",
+    "PreliminaryResults": "予備結果",
+    "Sold": "販売済み",
+    "TopSecret": "トップシークレット",
+    "Void": "ボイド",
+    "SHSignHere": "ここに署名",
+    "SHWitness": "証人",
+    "SHInitialHere": "初期",
+    "SHAccepted": "受け入れられた",
+    "SBRejected": "拒否されました"
   },
   "component": {
     "freehandToolsButton": "フリーハンド ツール",
@@ -74,6 +104,9 @@
     "miscToolsButton": "その他のツール",
     "notesPanel": "備考",
     "outlinesPanel": "概要",
+    "bookmarksPanel": "しおり",
+    "newBookmark": "新しいブックマーク",
+    "bookmarkPage": "ページ",
     "layersPanel": "レイヤー",
     "shapeToolsButton": "シェイプ ツール",
     "textToolsButton": "テキスト ツール",
@@ -106,7 +139,9 @@
     "searchPlaceholder": "コメントを検索...",
     "signHere": "ここに署名",
     "insertTextHere": "ここにテキストを挿入",
-    "enterMeasurement": "2点間の測定値を入力します"
+    "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが受け入れられます",
+    "enterMeasurement": "2点間の測定値を入力します",
+    "linkURLorPage": "リンクURLまたはページ"
   },
   "option": {
     "annotationColor": {
@@ -117,6 +152,9 @@
     "displayMode": {
       "layout": "レイアウト",
       "pageTransition": "ページ遷移"
+    },
+    "documentControls": {
+      "placeholder": "ページを入力して選択します（例：2、5-9）"
     },
     "layout": {
       "cover": "カバー",
@@ -143,16 +181,21 @@
       "addWatermarkSettings": "透かし設定を追加"
     },
     "redaction": {
-      "markForRedaction": "改訂マーク",
-      "warningPopupMessage": "この操作を行うと、編集対象として選択されているすべてのアイテムが完全に削除されます。 元に戻すことはできません。",
-      "warningPopupTitle": "改定を適用"
+      "markForRedaction": "改訂マーク"
     },
     "searchPanel": {
       "caseSensitive": "大文字と小文字を区別",
-      "wholeWordOnly": "単語全体"
+      "wholeWordOnly": "単語全体",
+      "wildcard": "ワイルドカード"
     },
     "signatureOverlay": {
       "addSignature": "署名を追加"
+    },
+    "signatureModal": {
+      "saveSignature": "署名を保存",
+      "dragAndDrop": "ここに画像をドラッグアンドドロップします",
+      "or": "または",
+      "pickImage": "署名画像を選択"
     },
     "status": {
       "status": "状態"
@@ -179,6 +222,11 @@
     "measurementOption": {
       "scale": "スケール"
     },
+    "styleOption": {
+      "style": "スタイル",
+      "regular": "レギュラー",
+      "cloudy": "曇り"
+    },
     "slider": {
       "opacity": "不透明度",
       "thickness": "厚さ",
@@ -192,8 +240,25 @@
       "size": "サイズ",
       "location": "透かしを編集する場所を選択してください",
       "text": "テキスト",
-      "colors": "色",
-      "resetAllSettings": "すべての設定をリセット"
+      "style": "スタイル",
+      "resetAllSettings": "すべての設定をリセット",
+      "font": "フォント"
+    },
+    "thumbnailPanel": {
+      "delete": "削除する",
+      "rotateClockwise": "時計回り",
+      "rotateCounterClockwise": "反時計回り"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "ページを削除",
+      "deleteMessage": "選択したページを削除してもよろしいですか？これは元に戻せません",
+      "deleteLastPageMessage": "これにより、ページが残りません。少なくとも1ページ残してください"
+    },
+    "redaction": {
+      "applyTile": "リダクションを適用",
+      "applyMessage": "この操作により、編集用に選択されたすべてのアイテムが完全に削除されます。元に戻すことはできません。"
     }
   },
   "shortcut": {
@@ -224,6 +289,13 @@
   "tool": {
     "pan": "パン",
     "select": "選択",
-    "Marquee": "マーキーズーム"
+    "Marquee": "マーキーズーム",
+    "Link": "リンクURLまたはページ"
+  },
+  "link": {
+    "url": "URL",
+    "page": "ページ",
+    "enterurl": "リンクするURLを入力してください",
+    "enterpage": "リンクするページ番号を選択します"
   }
 }

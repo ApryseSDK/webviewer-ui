@@ -13,6 +13,7 @@
     "ungroup": "Ungroup",
     "download": "Download",
     "edit": "Edit",
+    "extract": "Extract",
     "enterFullscreen": "Full screen",
     "exitFullscreen": "Exit full screen",
     "fit": "Fit",
@@ -28,13 +29,16 @@
     "save": "Save",
     "create": "Create",
     "showMoreResults": "Show more results",
-    "saveSignature": "Save signature",
     "sign": "Sign",
     "style": "Style",
     "submit": "Submit",
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
-    "zoomOut": "Zoom out"
+    "zoomOut": "Zoom out",
+    "draw": "Draw",
+    "type": "Type",
+    "upload": "Upload",
+    "link": "Link"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",
@@ -64,7 +68,33 @@
     "stickyNote": "Comment",
     "strikeout": "Strikeout",
     "underline": "Underline",
-    "custom": "Custom"
+    "custom": "Custom",
+    "rubberStamp": "Rubber Stamp"
+  },
+  "rubberStamp": {
+    "Approved": "Approved",
+    "AsIs": "As Is",
+    "Completed": "Completed",
+    "Confidential": "Confidential",
+    "Departmental": "Departmental",
+    "Draft": "Draft",
+    "Experimental": "Experimental",
+    "Expired": "Expired",
+    "Final": "Final",
+    "ForComment": "For Comment",
+    "ForPublicRelease": "For Public Release",
+    "InformationOnly": "Information Only",
+    "NotApproved": "Not Approved",
+    "NotForPublicRelease": "Not For Public Release",
+    "PreliminaryResults": "Preliminary Results",
+    "Sold": "Sold",
+    "TopSecret": "Top Secret",
+    "Void": "Void",
+    "SHSignHere": "Sign Here",
+    "SHWitness": "Witness",
+    "SHInitialHere": "Initial Here",
+    "SHAccepted": "Accepted",
+    "SBRejected": "Rejected"
   },
   "component": {
     "freehandToolsButton": "Freehand tools",
@@ -109,7 +139,9 @@
     "searchPlaceholder": "Search comments...",
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
-    "enterMeasurement": "Enter measurement between the two points"
+    "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
+    "enterMeasurement": "Enter measurement between the two points",
+    "linkURLorPage": "Link URL or a Page"
   },
   "option": {
     "annotationColor": {
@@ -120,6 +152,9 @@
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Page transition"
+    },
+    "documentControls": {
+      "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
     "layout": {
       "cover": "Cover",
@@ -146,16 +181,21 @@
       "addWatermarkSettings": "Add Watermark Settings"
     },
     "redaction": {
-      "markForRedaction": "Mark for redaction",
-      "warningPopupMessage": "This action will permanently remove all items selected for redaction. It cannot be undone.",
-      "warningPopupTitle": "Apply Redaction"
+      "markForRedaction": "Mark for redaction"
     },
     "searchPanel": {
       "caseSensitive": "Case sensitive",
-      "wholeWordOnly": "Whole word"
+      "wholeWordOnly": "Whole word",
+      "wildcard": "Wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Add a signature"
+    },
+    "signatureModal": {
+      "saveSignature": "Save signature",
+      "dragAndDrop": "Drag & Drop your image here",
+      "or": "Or",
+      "pickImage": "Pick Signature Image"
     },
     "status": {
       "status": "Status"
@@ -182,6 +222,11 @@
     "measurementOption": {
       "scale": "Scale"
     },
+    "styleOption": {
+      "style": "Style",
+      "regular": "Regular",
+      "cloudy": "Cloudy"
+    },
     "slider": {
       "opacity": "Opacity",
       "thickness": "Thickness",
@@ -195,8 +240,25 @@
       "size": "Size",
       "location": "Choose a location to edit watermarks",
       "text": "Text",
-      "colors": "Colors",
-      "resetAllSettings": "Reset All Settings"
+      "style": "Style",
+      "resetAllSettings": "Reset All Settings",
+      "font": "Font"
+    },
+    "thumbnailPanel": {
+      "delete": "Delete",
+      "rotateClockwise": "Clockwise",
+      "rotateCounterClockwise": "Counter-clockwise"
+    }
+  },
+  "warning": {
+    "deletePage" :{
+      "deleteTitle": "Delete Page",
+      "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
+      "deleteLastPageMessage": "This would result in no pages remaining. Please leave at least one page"
+    },
+    "redaction":{
+      "applyTile": "Apply Redaction",
+      "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
   "shortcut": {
@@ -227,6 +289,13 @@
   "tool": {
     "pan": "Pan",
     "select": "Select",
-    "Marquee": "Marquee Zoom"
+    "Marquee": "Marquee Zoom",
+    "Link": "Link URL or Page"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Page",
+    "enterurl": "Enter URL you would like to link to",
+    "enterpage": "Select the page number you would like to link to"
   }
 }

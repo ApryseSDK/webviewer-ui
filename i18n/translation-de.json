@@ -2,6 +2,7 @@
   "action": {
     "apply": "Anwenden",
     "applyAll": "Alles anwenden",
+    "calibrate": "Kalibrieren",
     "cancel": "Abbrechen",
     "clear": "Löschen",
     "close": "Schliessen",
@@ -12,6 +13,7 @@
     "ungroup": "Gruppierung aufheben",
     "download": "Download",
     "edit": "Bearbeiten",
+    "extract": "Extrakt",
     "enterFullscreen": "Vollbildansicht",
     "exitFullscreen": "Vollbildansicht beenden",
     "fit": "Anpassen",
@@ -27,14 +29,16 @@
     "save": "Speichern",
     "create": "Erzeugen",
     "showMoreResults": "Mehr Ergebnisse anzeigen",
-    "saveSignature": "Unterschrift speichern",
     "sign": "Unterschrift",
     "style": "Stil",
     "submit": "Abgeben",
     "zoom": "Zoom",
     "zoomIn": "Heranzoomen",
     "zoomOut": "Rauszoomen",
-    "calibrate": "Kalibrieren"
+    "draw": "Zeichnen",
+    "type": "Art",
+    "upload": "Hochladen",
+    "link": "Verknüpfung"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -64,7 +68,33 @@
     "stickyNote": "Kommentar",
     "strikeout": "Durchstreichen",
     "underline": "Unterstreichen",
-    "custom": "Angepasst"
+    "custom": "Angepasst",
+    "rubberStamp": "Stempel"
+  },
+  "rubberStamp": {
+    "Approved": "Genehmigt",
+    "AsIs": "Wie es ist",
+    "Completed": "Abgeschlossen",
+    "Confidential": "Geheim",
+    "Departmental": "Abteilung",
+    "Draft": "Entwurf",
+    "Experimental": "Experimental",
+    "Expired": "Abgelaufen",
+    "Final": "Finale",
+    "ForComment": "Für Kommentar",
+    "ForPublicRelease": "Zur Veröffentlichung",
+    "InformationOnly": "Nur Informationen",
+    "NotApproved": "Nicht bestätigt",
+    "NotForPublicRelease": "Nicht zur Veröffentlichung",
+    "PreliminaryResults": "Vorläufige Ergebnisse",
+    "Sold": "Verkauft",
+    "TopSecret": "Streng geheim",
+    "Void": "Leere",
+    "SHSignHere": "Hier unterschreiben",
+    "SHWitness": "Zeuge",
+    "SHInitialHere": "Hier anfangen",
+    "SHAccepted": "Akzeptiert",
+    "SBRejected": "Abgelehnt"
   },
   "component": {
     "freehandToolsButton": "Freihand-Werkzeuge",
@@ -74,6 +104,9 @@
     "miscToolsButton": "Verschiedene Werkzeuge",
     "notesPanel": "Annotationen",
     "outlinesPanel": "Gliederung",
+    "bookmarksPanel": "Lesezeichen",
+    "newBookmark": "Neues Lesezeichen",
+    "bookmarkPage": "Seite",
     "layersPanel": "Schichten",
     "shapeToolsButton": "Formwerkzeuge",
     "textToolsButton": "Textwerkzeuge",
@@ -87,8 +120,8 @@
   "message": {
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
     "customPrintPlaceholder": "z.B. 3, 4-10",
-    "encryptedAttemptsExceeded": "Fehler beim Laden des verlüsselten Dokuments. Zu viele Versuche.",
-    "encryptedUserCancelled": "Fehler beim Laden des verlüsselten Dokuments. Passworteingabe wurde abgebrochen.",
+    "encryptedAttemptsExceeded": "Fehler beim Laden des verschlüsselten Dokuments. Zu viele Versuche.",
+    "encryptedUserCancelled": "Fehler beim Laden des verschlüsselten Dokuments. Passworteingabe wurde abgebrochen.",
     "enterPassword": "Dieses Dokument ist durch ein Passwort geschützt. Bitte geben Sie ein Passwort ein",
     "incorrectPassword": "Falsches Passwort, Verbleibende Versuche: {{ remainingAttempts }}",
     "noAnnotations": "Dieses Dokument hat keine Annotationen.",
@@ -106,7 +139,9 @@
     "searchPlaceholder": "Suche Kommentare...",
     "signHere": "Hier unterschreiben",
     "insertTextHere": "Hier Text eingeben",
-    "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein"
+    "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
+    "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein",
+    "linkURLorPage": "Link URL oder eine Seite"
   },
   "option": {
     "annotationColor": {
@@ -117,6 +152,9 @@
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Seitenübergang"
+    },
+    "documentControls": {
+      "placeholder": "Geben Sie die gewünschten Seiten ein, z. B. 2, 5-9"
     },
     "layout": {
       "cover": "Deckblatt",
@@ -143,25 +181,30 @@
       "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"
     },
     "redaction": {
-      "markForRedaction": "Zum Schwärzen markieren",
-      "warningPopupMessage": "Diese Aktion wird dauerhaft die markierten Elemente zur Überarbeitung löschen. Dies kann nicht rückgängig gemacht werden.",
-      "warningPopupTitle": "Schwärzung anwenden"
+      "markForRedaction": "Zum Schwärzen markieren"
     },
     "searchPanel": {
       "caseSensitive": "Groß-/Klein- schreibung beachten",
-      "wholeWordOnly": "Ganzes Wort"
+      "wholeWordOnly": "Ganzes Wort",
+      "wildcard": "Platzhalter"
     },
     "signatureOverlay": {
       "addSignature": "Eine Unterschrift hinzufügen"
+    },
+    "signatureModal": {
+      "saveSignature": "Unterschrift speichern",
+      "dragAndDrop": "Ziehen Sie Ihr Bild per Drag & Drop hierher",
+      "or": "Oder",
+      "pickImage": "Wählen Sie das Signaturbild"
     },
     "status": {
       "status": "Status"
     },
     "state": {
-      "accepted": "Akzeptiert",
+      "accepted": "Angenommen",
       "rejected": "Abgelehnt",
-      "completed": "Vollendet, fertiggestellt",
-      "cancelled": "Abgesagt",
+      "completed": "Abgeschlossen",
+      "cancelled": "Abgebrochen",
       "set": "Status setzen:",
       "setBy": "eingestellt von",
       "none": "Keiner"
@@ -179,6 +222,11 @@
     "measurementOption": {
       "scale": "Maßstab"
     },
+    "styleOption": {
+      "style": "Stil",
+      "regular": "Regulär",
+      "cloudy": "Wolkig"
+    },
     "slider": {
       "opacity": "Deckkraft",
       "thickness": "Dicke",
@@ -192,8 +240,25 @@
       "size": "Größe",
       "location": "Wählen Sie einen Ort zum Bearbeiten von Wasserzeichen",
       "text": "Text",
-      "colors": "Farben",
-      "resetAllSettings": "Alle Einstellungen zurücksetzen"
+      "style": "Stil",
+      "resetAllSettings": "Alle Einstellungen zurücksetzen",
+      "font": "Schriftart"
+    },
+    "thumbnailPanel": {
+      "delete": "Löschen",
+      "rotateClockwise": "Im Uhrzeigersinn",
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "Seite löschen",
+      "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden",
+      "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten verbleiben. Bitte hinterlassen Sie mindestens eine Seite"
+    },
+    "redaction": {
+      "applyTile": "Schwärzung anwenden",
+      "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht ungeschehen gemacht werden."
     }
   },
   "shortcut": {
@@ -224,6 +289,13 @@
   "tool": {
     "pan": "Hand",
     "select": "Auswählen",
-    "Marquee": "Auswahl Zoom"
+    "Marquee": "Auswahl Zoom",
+    "Link": "Link URL oder Seite"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Seite",
+    "enterurl": "Geben Sie die URL ein, zu der Sie einen Link erstellen möchten",
+    "enterpage": "Wählen Sie die Seitennummer aus, zu der Sie einen Link erstellen möchten"
   }
 }

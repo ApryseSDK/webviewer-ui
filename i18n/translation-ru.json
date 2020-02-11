@@ -2,6 +2,7 @@
   "action": {
     "apply": "Применить",
     "applyAll": "Применить все",
+    "calibrate": "калибровать",
     "cancel": "Отменить",
     "clear": "Очистить",
     "close": "Закрыть",
@@ -12,6 +13,7 @@
     "ungroup": "Ungroup",
     "download": "Скачать",
     "edit": "Редактировать",
+    "extract": "экстракт",
     "enterFullscreen": "Полный экран",
     "exitFullscreen": "Выйте из полного экрана",
     "fit": "Уместить",
@@ -27,14 +29,16 @@
     "save": "Сохранить",
     "create": "Создать",
     "showMoreResults": "Показать больше",
-    "saveSignature": "Сохранить подпись",
     "sign": "Добавить подпись",
     "style": "Стиль",
     "submit": "Отправить",
     "zoom": "Увеличить",
     "zoomIn": "Увеличить",
     "zoomOut": "Уменьшить",
-    "calibrate": "калибровать"
+    "draw": "Привлечь",
+    "type": "Тип",
+    "upload": "Загрузить",
+    "link": "Ссылка на сайт"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -64,7 +68,33 @@
     "stickyNote": "Комментировать",
     "strikeout": "Зачеркнуть",
     "underline": "Подчеркнуть",
-    "custom": "Свой стиль"
+    "custom": "Свой стиль",
+    "rubberStamp": "Штамп"
+  },
+  "rubberStamp": {
+    "Approved": "Одобренный",
+    "AsIs": "Как есть",
+    "Completed": "Завершенный",
+    "Confidential": "конфиденциальный",
+    "Departmental": "ведомственный",
+    "Draft": "Черновой вариант",
+    "Experimental": "экспериментальный",
+    "Expired": "Истекший",
+    "Final": "окончательный",
+    "ForComment": "Для комментариев",
+    "ForPublicRelease": "Для публичного выпуска",
+    "InformationOnly": "Только информация",
+    "NotApproved": "Не одобрено",
+    "NotForPublicRelease": "Не для публичного выпуска",
+    "PreliminaryResults": "Предварительные результаты",
+    "Sold": "Продано",
+    "TopSecret": "Совершенно секретно",
+    "Void": "пустота",
+    "SHSignHere": "Подпишите здесь",
+    "SHWitness": "свидетель",
+    "SHInitialHere": "Здесь",
+    "SHAccepted": "Принятый",
+    "SBRejected": "Отклонено"
   },
   "component": {
     "freehandToolsButton": "Инструменты",
@@ -74,6 +104,9 @@
     "miscToolsButton": "Другие инструменты",
     "notesPanel": "Заметки",
     "outlinesPanel": "Контуры",
+    "bookmarksPanel": "закладки",
+    "newBookmark": "Новая закладка",
+    "bookmarkPage": "страница",
     "layersPanel": "Слои",
     "shapeToolsButton": "Фигуры",
     "textToolsButton": "Инструменты для работы с текстом",
@@ -106,7 +139,9 @@
     "searchPlaceholder": "Поиск комментарий...",
     "signHere": "Распишетесь здесь",
     "insertTextHere": "Вставьте текст здесь",
-    "enterMeasurement": "Введите измерение между двумя точками"
+    "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",
+    "enterMeasurement": "Введите измерение между двумя точками",
+    "linkURLorPage": "Ссылка URL или страница"
   },
   "option": {
     "annotationColor": {
@@ -117,6 +152,9 @@
     "displayMode": {
       "layout": "Расположение",
       "pageTransition": "Переход страниц"
+    },
+    "documentControls": {
+      "placeholder": "Введите страницы для выбора, то есть 2, 5-9"
     },
     "layout": {
       "cover": "Полный",
@@ -143,16 +181,21 @@
       "addWatermarkSettings": "Добавить настройки водяного знака"
     },
     "redaction": {
-      "markForRedaction": "Пометить для редактирования",
-      "warningPopupMessage": "Редакция удалит все выделенные элементы. Редакция необратима.",
-      "warningPopupTitle": "Применить редакцию"
+      "markForRedaction": "Пометить для редактирования"
     },
     "searchPanel": {
       "caseSensitive": "С учетом регистра",
-      "wholeWordOnly": "Всё слово"
+      "wholeWordOnly": "Всё слово",
+      "wildcard": "Wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"
+    },
+    "signatureModal": {
+      "saveSignature": "Сохранить подпись",
+      "dragAndDrop": "Перетащите изображение сюда",
+      "or": "Или",
+      "pickImage": "Выберите Подпись Изображение"
     },
     "status": {
       "status": "Статус"
@@ -160,11 +203,11 @@
     "state": {
       "accepted": "Принято",
       "rejected": "Отклонено",
-      "completed": "Завершенный",
-      "cancelled": "отменен",
-      "set": "Установить статус:",
-      "setBy": "установить с помощью",
-      "none": "Никто"
+      "completed": "Завершенно",
+      "cancelled": "Отменено",
+      "set": "Поставить статус:",
+      "setBy": "статус поставлен",
+      "none": "Пустой"
     },
     "measurementOverlay": {
       "scale": "Масштаб",
@@ -179,6 +222,11 @@
     "measurementOption": {
       "scale": "Масштаб"
     },
+    "styleOption": {
+      "style": "Стиль",
+      "regular": "регулярное",
+      "cloudy": "облачный"
+    },
     "slider": {
       "opacity": "Прозрачность",
       "thickness": "Тонкость",
@@ -192,8 +240,25 @@
       "size": "Размер",
       "location": "Выберите место для редактирования водяных знаков",
       "text": "Текст",
-      "colors": "Цвета",
-      "resetAllSettings": "Сбросить все настройки"
+      "style": "Стиль",
+      "resetAllSettings": "Сбросить все настройки",
+      "font": "шрифт"
+    },
+    "thumbnailPanel": {
+      "delete": "удалять",
+      "rotateClockwise": "по часовой стрелке",
+      "rotateCounterClockwise": "Против часовой стрелки"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "Удалить страницу",
+      "deleteMessage": "Вы уверены, что хотите удалить выбранные страницы? Это не может быть отменено",
+      "deleteLastPageMessage": "Это приведет к тому, что не останется ни одной страницы. Пожалуйста, оставьте хотя бы одну страницу"
+    },
+    "redaction": {
+      "applyTile": "Применить редактирование",
+      "applyMessage": "Это действие навсегда удалит все элементы, выбранные для редактирования. Это не может быть отменено."
     }
   },
   "shortcut": {
@@ -224,6 +289,13 @@
   "tool": {
     "pan": "Панорамирование",
     "select": "Выделить",
-    "Marquee": "Увеличить выделение"
+    "Marquee": "Увеличить выделение",
+    "Link": "Ссылка URL или Страница"
+  },
+  "link": {
+    "url": "URL",
+    "page": "страница",
+    "enterurl": "Введите URL, на который вы хотите сослаться",
+    "enterpage": "Выберите номер страницы, на которую вы хотите сослаться"
   }
 }

@@ -5,6 +5,16 @@ import selectors from 'selectors';
 import core from 'core';
 
 // viewer
+/**
+ * Remove an element from DOM
+ * @ignore
+ * @param {string} dataElement the value of the data-element attribute of the element
+ * @param {number} priority a value that indicates how specific this element is disabled.
+ * If a element is disabled with priority 3, then calling enableElement with priority 2 won't enable it back because the element is disabled in a more specific manner.
+ * This priority argument is used by external APIs such as instance.disableElements and instance.disableFeatures(...)
+ * For example, instance.disableElements has priority 3 and instance.enableFeatures has priority 1.
+ * So calling instance.enableFeatures([instance.Feature.NotesPanel]) won't enable the notes panel if it's disabled by instance.disableElements(['notesPanel'])
+ */
 export const disableElement = (dataElement, priority) => (
   dispatch,
   getState,
@@ -80,6 +90,23 @@ export const enableElements = (dataElements, priority) => (
     payload: { dataElements: filteredDataElements, priority },
   });
 };
+export const setThumbnailMerging = (useThumbnailMerging = true) => ({
+  type: 'SET_THUMBNAIL_MERGING',
+  payload: { useThumbnailMerging },
+});
+
+export const setThumbnailReordering = (useThumbnailReordering = true) => ({
+  type: 'SET_THUMBNAIL_REORDERING',
+  payload: { useThumbnailReordering },
+});
+export const setThumbnailMultiselect = (useThumbnailMultiselect = true) => ({
+  type: 'SET_THUMBNAIL_MULTISELECT',
+  payload: { useThumbnailMultiselect },
+});
+export const setAllowPageNavigation = (allowPageNavigation = true) => ({
+  type: 'SET_ALLOW_PAGE_NAVIGATION',
+  payload: { allowPageNavigation },
+});
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;
@@ -142,10 +169,6 @@ export const setFullScreen = isFullScreen => ({
   type: 'SET_FULL_SCREEN',
   payload: { isFullScreen },
 });
-export const setDocumentLoaded = isDocumentLoaded => ({
-  type: 'SET_DOCUMENT_LOADED',
-  payload: { isDocumentLoaded },
-});
 export const setReadOnly = isReadOnly => ({
   type: 'SET_READ_ONLY',
   payload: { isReadOnly },
@@ -162,13 +185,6 @@ export const setToolButtonObjects = toolButtonObjects => ({
   type: 'SET_TOOL_BUTTON_OBJECTS',
   payload: { toolButtonObjects },
 });
-export const setIsNoteEditing = isNoteEditing => (dispatch, getState) => {
-  const state = getState();
-
-  if (state.viewer.isNoteEditing !== isNoteEditing) {
-    dispatch({ type: 'SET_IS_NOTE_EDITING', payload: { isNoteEditing } });
-  }
-};
 export const setHeaderItems = (header, headerItems) => ({
   type: 'SET_HEADER_ITEMS',
   payload: { header, headerItems },
@@ -202,34 +218,6 @@ export const disableReplyForAnnotations = func => ({
 });
 
 // document
-export const setDocumentId = documentId => ({
-  type: 'SET_DOCUMENT_ID',
-  payload: { documentId },
-});
-export const setDocumentPath = documentPath => ({
-  type: 'SET_DOCUMENT_PATH',
-  payload: { documentPath },
-});
-export const setDocumentFile = documentFile => ({
-  type: 'SET_DOCUMENT_FILE',
-  payload: { documentFile },
-});
-export const setDocumentType = type => ({
-  type: 'SET_DOCUMENT_TYPE',
-  payload: { type },
-});
-export const setPDFDoc = pdfDoc => ({
-  type: 'SET_PDF_DOC',
-  payload: { pdfDoc },
-});
-export const setFilename = filename => ({
-  type: 'SET_FILENAME',
-  payload: { filename },
-});
-export const setExtension = extension => ({
-  type: 'SET_EXTENSION',
-  payload: { extension },
-});
 export const setTotalPages = totalPages => ({
   type: 'SET_TOTAL_PAGES',
   payload: { totalPages },
@@ -242,10 +230,7 @@ export const setBookmarks = bookmarks => ({
   type: 'SET_BOOKMARKS',
   payload: { bookmarks },
 });
-export const addBookmark = (pageIndex, text) => (
-  dispatch,
-  getState,
-) => {
+export const addBookmark = (pageIndex, text) => (dispatch, getState) => {
   dispatch({
     type: 'ADD_BOOKMARK',
     payload: { pageIndex, text },
@@ -254,10 +239,7 @@ export const addBookmark = (pageIndex, text) => (
   const bookmarks = selectors.getBookmarks(getState());
   fireEvent('userBookmarksChanged', bookmarks);
 };
-export const editBookmark = (pageIndex, text) => (
-  dispatch,
-  getState,
-) => {
+export const editBookmark = (pageIndex, text) => (dispatch, getState) => {
   dispatch({
     type: 'EDIT_BOOKMARK',
     payload: { pageIndex, text },
@@ -265,10 +247,7 @@ export const editBookmark = (pageIndex, text) => (
   const bookmarks = selectors.getBookmarks(getState());
   fireEvent('userBookmarksChanged', bookmarks);
 };
-export const removeBookmark = pageIndex => (
-  dispatch,
-  getState,
-) => {
+export const removeBookmark = pageIndex => (dispatch, getState) => {
   dispatch({
     type: 'REMOVE_BOOKMARK',
     payload: { pageIndex },
@@ -280,10 +259,6 @@ export const setLayers = layers => ({
   type: 'SET_LAYERS',
   payload: { layers },
 });
-export const setCheckPasswordFunction = func => ({
-  type: 'SET_CHECKPASSWORD',
-  payload: { func },
-});
 export const setPasswordAttempts = attempt => ({
   type: 'SET_PASSWORD_ATTEMPTS',
   payload: { attempt },
@@ -292,36 +267,14 @@ export const setPrintQuality = quality => ({
   type: 'SET_PRINT_QUALITY',
   payload: { quality },
 });
-export const setDocumentLoadingProgress = documentLoadingProgress => ({
-  type: 'SET_DOCUMENT_LOADING_PROGRESS',
-  payload: { documentLoadingProgress },
+export const setLoadingProgress = percent => ({
+  type: 'SET_LOADING_PROGRESS',
+  payload: { progress: percent },
 });
-export const setWorkerLoadingProgress = workerLoadingProgress => ({
-  type: 'SET_WORKER_LOADING_PROGRESS',
-  payload: { workerLoadingProgress },
+export const resetLoadingProgress = () => ({
+  type: 'SET_LOADING_PROGRESS',
+  payload: { progress: 0 },
 });
-export const resetLoadingProgress = () => ({ type: 'RESET_LOADING_PROGRESS' });
-export const setPassword = password => ({
-  type: 'SET_PASSWORD',
-  payload: { password },
-});
-export const setCacheKey = cacheKey => ({
-  type: 'SET_CACHE_KEY',
-  payload: { cacheKey },
-});
-export const setPageSizes = pageSizes => ({
-  type: 'SET_PAGE_SIZES',
-  payload: { pageSizes },
-});
-export const setIsUploading = isUploading => ({
-  type: 'SET_IS_UPLOADING',
-  payload: { isUploading },
-});
-export const setUploadProgress = progress => ({
-  type: 'SET_UPLOAD_PROGRESS',
-  payload: { progress },
-});
-export const resetUploadProgress = () => setUploadProgress(0);
 
 // user
 export const setUserName = userName => ({
@@ -331,32 +284,6 @@ export const setUserName = userName => ({
 export const setAdminUser = isAdminUser => ({
   type: 'SET_ADMIN_USER',
   payload: { isAdminUser },
-});
-
-// advanced
-export const setStreaming = streaming => ({
-  type: 'SET_STREAMING',
-  payload: { streaming },
-});
-export const setDecryptFunction = decryptFunction => ({
-  type: 'SET_DECRYPT_FUNCTION',
-  payload: { decryptFunction },
-});
-export const setDecryptOptions = decryptOptions => ({
-  type: 'SET_DECRYPT_OPTIONS',
-  payload: { decryptOptions },
-});
-export const setEngineType = type => ({
-  type: 'SET_ENGINE_TYPE',
-  payload: { type },
-});
-export const setCustomHeaders = customHeaders => ({
-  type: 'SET_CUSTOM_HEADERS',
-  payload: { customHeaders },
-});
-export const setWithCredentials = withCredentials => ({
-  type: 'SET_WITH_CREDENTIALS',
-  payload: { withCredentials },
 });
 
 // search
@@ -399,6 +326,10 @@ export const setCaseSensitive = isCaseSensitive => ({
 export const setWholeWord = isWholeWord => ({
   type: 'SET_WHOLE_WORD',
   payload: { isWholeWord },
+});
+export const setWildcard = isWildcard => ({
+  type: 'SET_WILD_CARD',
+  payload: { isWildcard },
 });
 export const setIsSearching = isSearching => ({
   type: 'SET_IS_SEARCHING',
