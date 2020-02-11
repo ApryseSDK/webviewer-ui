@@ -30,7 +30,7 @@
     .divider-horizontal {
       width: auto;
       height: 1px;
-      margin-bottom: 16px;
+      margin: 8px 0;
       background: var(--tools-divider-color);
     }
 
@@ -43,6 +43,7 @@
         border: 1px solid #dfe2ed;
         height: 28px;
         color: #6077bf;
+        margin: 8px 0;
         cursor: pointer;
 
         .tab-options-button {
@@ -95,7 +96,7 @@
 
     .footer {
       display: flex;
-      margin-top: 12px;
+      margin-top: 4px;
       align-items: center;
       justify-content: space-between;
 

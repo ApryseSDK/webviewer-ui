@@ -123,7 +123,7 @@ const ImageSignature = ({
               accept={acceptedFileTypes.map(type => `.${type}`).join(',')}
               onChange={handleFileChange}
             />
-            <div 
+            <div
               onClick={() => fileInputRef.current.click()}
               className="pick-image-button"
             >
