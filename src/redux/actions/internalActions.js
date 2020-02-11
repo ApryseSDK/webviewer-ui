@@ -108,6 +108,10 @@ export const setAllowPageNavigation = (allowPageNavigation = true) => ({
   payload: { allowPageNavigation },
 });
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
+  if (toolObject.name === 'AnnotationCreateTextUnderline') {
+    console.trace();
+  }
+
   const state = getState();
   let name;
 

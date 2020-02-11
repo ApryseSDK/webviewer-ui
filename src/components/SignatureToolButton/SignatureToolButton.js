@@ -4,6 +4,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import defaultTool from 'constants/defaultTool';
 import '../ToolGroupButton/ToolGroupButton.scss';
 
 import core from 'core';
@@ -11,8 +12,9 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 const SignatureToolButton = () => {
-  const [isSignatureModalOpen, isSignatureOverlayOpen] = useSelector(
+  const [isActive, isSignatureModalOpen, isSignatureOverlayOpen] = useSelector(
     state => [
+      selectors.getActiveToolName(state) === 'AnnotationCreateSignature',
       selectors.isElementOpen(state, 'signatureModal'),
       selectors.isElementOpen(state, 'signatureOverlay'),
     ],
@@ -36,20 +38,21 @@ const SignatureToolButton = () => {
   }, []);
 
   const handleClick = () => {
-    // if (hasSavedSignature) {
-    //   dispatch(actions.toggleElement('signatureOverlay'));
-    // } else {
-    //   dispatch(actions.openElement('signatureModal'));
-    // }
-
-    dispatch(actions.toggleElement('signatureOverlay'));
+    if (isActive) {
+      core.setToolMode(defaultTool);
+      dispatch(actions.closeElement('signatureOverlay'));
+    } else {
+      core.setToolMode('AnnotationCreateSignature');
+      dispatch(actions.setActiveToolGroup(''));
+      dispatch(actions.openElement('signatureOverlay'));
+    }
   };
 
   return (
     <div
       className={classNames({
         'tool-group-button': true,
-        active: isSignatureModalOpen || isSignatureOverlayOpen,
+        active: isActive,
       })}
       data-element="signatureToolButton"
       onClick={handleClick}
