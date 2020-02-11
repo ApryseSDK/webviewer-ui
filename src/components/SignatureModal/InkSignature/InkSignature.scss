@@ -25,13 +25,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #F8F8F8;
+    background: #f0f0f0;
     flex-grow: 1;
   }
 
   &-sign-here {
-    color: $signature-modal-shared-color;
-    font-size: 16px;
+    color: #c3c6d4;
+    font-size: 13px;
   }
 
   &-clear {
