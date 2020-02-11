@@ -96,8 +96,11 @@ html, body , #app {
     overflow: auto;
   }
 
-  div {
+  *, *:before, *:after {
     box-sizing: border-box;
+  }
+
+  div {
     -webkit-tap-highlight-color: transparent;
   }
 
