@@ -43,26 +43,30 @@
   }
 
   .add-signature {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: var(--button-fill);
+    border-radius: 4px;
+    padding: 0 8px;
     height: 32px;
-    border-radius: 4px 4px 4px 4px;
-    border: 1px solid #00A4E4;
-    font-size: 16px;
-    color: #00A4E4; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #fafafa;
+    font-size: 13px;
+    font-weight: bold;
     cursor: pointer;
 
     &.disabled {
       border: 1px solid #E1E1E3;
-      color: #E1E1E3;
+      // color: #E1E1E3;
+      background: #E1E1E3;
       cursor: default;
     }
 
-    &.enabled:hover {
-      background: #17324C;
-      border: 1px solid #17324C;
-      color: #FFFFFF;
-    }
+    // &.enabled:hover {
+    //   background: #17324C;
+    //   border: 1px solid #17324C;
+    //   color: #FFFFFF;
+    // }
   }
 }
