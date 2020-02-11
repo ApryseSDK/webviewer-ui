@@ -19,7 +19,7 @@
   .default-signature {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     
 
 
@@ -30,19 +30,15 @@
       background: #F8F8F8;
       border-radius: 4px 4px 4px 4px;
       height: 48px;
-      width: 160px;
+      flex: 1;
+      cursor: pointer;
 
       img {
         max-height: 100%;
         max-width: 100%;
         width: auto;
         height: auto;
-        cursor: pointer;
       }
-    }
-  
-    .ActionButton:hover {
-      background: $white;
     }
   }
 
@@ -51,7 +47,6 @@
     justify-content: center;
     align-items: center;
     height: 32px;
-    width: 200px;
     border-radius: 4px 4px 4px 4px;
     border: 1px solid #00A4E4;
     font-size: 16px;
