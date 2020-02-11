@@ -1,11 +1,14 @@
 @import '../../../constants/styles';
 
 .ink-signature {
+  width: 280px;
+  height: 104px;  
   position: relative;
   border-radius: 4px;
   border: 1px solid $signature-modal-shared-color;
   display: flex;
   overflow: hidden;
+  margin: 8px 0;
 
   @include mobile {
     margin: 18px 12px 0px 12px;

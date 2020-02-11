@@ -19,6 +19,7 @@ const ImageSignature = ({
   isModalOpen,
   _setSaveSignature,
   isTabPanelSelected,
+  createSignature,
 }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -96,53 +97,60 @@ const ImageSignature = ({
   };
 
   return (
-    <div className="image-signature">
-      {imageSrc ? (
-        <div className="image-signature-image-container">
-          <img src={imageSrc} />
-          <ActionButton
-            dataElement="imageSignatureDeleteButton"
-            img="ic_delete_black_24px"
-            onClick={() => setImageSrc(null)}
-          />
-        </div>
-      ) : (
-        <div
-          className="image-signature-upload-container"
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-          onDragOver={handleDragOver}
-          onDrop={handleFileDrop}
-          onDragExit={handleDragExit}
-        >
-          <div className="image-signature-dnd">
-            {t('option.signatureModal.dragAndDrop')}
+    <React.Fragment>
+      <div className="image-signature">
+        {imageSrc ? (
+          <div className="image-signature-image-container">
+            <img src={imageSrc} />
           </div>
-          <div className="image-signature-separator">
-            {t('option.signatureModal.or')}
-          </div>
-          <div className="image-signature-upload">
-            <input
-              ref={fileInputRef}
-              id="upload"
-              type="file"
-              accept={acceptedFileTypes.map(type => `.${type}`).join(',')}
-              onChange={handleFileChange}
-            />
-            <div
-              onClick={() => fileInputRef.current.click()}
-              className="pick-image-button"
-            >
-              {t('option.signatureModal.pickImage')}
+        ) : (
+          <div
+            className="image-signature-upload-container"
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleFileDrop}
+            onDragExit={handleDragExit}
+          >
+            <div className="image-signature-dnd">
+              {t('option.signatureModal.dragAndDrop')}
             </div>
+            <div className="image-signature-separator">
+              {t('option.signatureModal.or')}
+            </div>
+            <div className="image-signature-upload">
+              <input
+                ref={fileInputRef}
+                id="upload"
+                type="file"
+                accept={acceptedFileTypes.map(type => `.${type}`).join(',')}
+                onChange={handleFileChange}
+              />
+              <div
+                onClick={() => fileInputRef.current.click()}
+                className="pick-image-button"
+              >
+                {t('option.signatureModal.pickImage')}
+              </div>
+            </div>
+            {isDragging && <div className="image-signature-background" />}
+            {errorMessage && (
+              <div className="image-signature-error">{errorMessage}</div>
+            )}
           </div>
-          {isDragging && <div className="image-signature-background" />}
-          {errorMessage && (
-            <div className="image-signature-error">{errorMessage}</div>
-          )}
+        )}
+      </div>
+      <div
+        className="footer"
+      >
+        <div className="signature-clear" onClick={() => setImageSrc(null)}>
+          {t('action.clear')}
         </div>
-      )}
-    </div>
+        <div className="signature-create" onClick={createSignature}>
+          {t('action.create')}
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 

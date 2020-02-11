@@ -118,22 +118,25 @@ const SignatureModal = () => {
             <InkSignature
               isModalOpen={isOpen}
               _setSaveSignature={_setSaveSignature}
+              createSignature={createSignature}
             />
           </TabPanel>
           <TabPanel dataElement="textSignaturePanel">
             <TextSignature
               isModalOpen={isOpen}
               _setSaveSignature={_setSaveSignature}
+              createSignature={createSignature}
             />
           </TabPanel>
           <TabPanel dataElement="imageSignaturePanel">
             <ImageSignature
               isModalOpen={isOpen}
               _setSaveSignature={_setSaveSignature}
+              createSignature={createSignature}
             />
           </TabPanel>
         </Tabs>
-        <div
+        {/* <div
           className="footer"
         >
           <div className="signature-clear" onClick={() => {}}>
@@ -142,7 +145,7 @@ const SignatureModal = () => {
           <div className="signature-create" onClick={createSignature}>
             {t('action.create')}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

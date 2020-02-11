@@ -1,10 +1,13 @@
 @import '../../../constants/styles';
 
 .image-signature {
+  width: 280px;
+  height: 104px;
   border: 1px solid #dfe2ed;
   position: relative;
   border-radius: 4px;
   background: #f0f0f0;
+  margin: 8px 0;
 
   &-image-container {
     width: 100%;

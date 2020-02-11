@@ -18,6 +18,7 @@ const InkSignature = ({
   isModalOpen,
   _setSaveSignature,
   isTabPanelSelected,
+  createSignature,
 }) => {
   const canvasRef = useRef();
   const freeHandPathsRef = useRef();
@@ -93,32 +94,35 @@ const InkSignature = ({
   };
 
   return (
-    <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
-      {({ measureRef }) => (
-        <div className="ink-signature" ref={measureRef}>
-          <canvas
-            className="ink-signature-canvas"
-            onMouseUp={handleFinishDrawing}
-            onTouchEnd={handleFinishDrawing}
-            ref={canvasRef}
-          />
-          <div className="ink-signature-background">
-            <div className="ink-signature-sign-here">
-              {t('message.signHere')}
-            </div>
-            <div
-              className={classNames({
-                'ink-signature-clear': true,
-                active: canClear,
-              })}
-              onClick={clearCanvas}
-            >
-              {t('action.clear')}
+    <React.Fragment>
+      <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
+        {({ measureRef }) => (
+          <div className="ink-signature" ref={measureRef}>
+            <canvas
+              className="ink-signature-canvas"
+              onMouseUp={handleFinishDrawing}
+              onTouchEnd={handleFinishDrawing}
+              ref={canvasRef}
+            />
+            <div className="ink-signature-background">
+              <div className="ink-signature-sign-here">
+                {t('message.signHere')}
+              </div>
             </div>
           </div>
+        )}
+      </Measure>
+      <div
+        className="footer"
+      >
+        <div className="signature-clear" onClick={clearCanvas}>
+          {t('action.clear')}
         </div>
-      )}
-    </Measure>
+        <div className="signature-create" onClick={createSignature}>
+          {t('action.create')}
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 

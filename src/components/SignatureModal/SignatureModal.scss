@@ -8,7 +8,7 @@
 
   .container {
     @extend %modal-shared-container-style;
-    width: 304px;
+    // width: 304px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,14 +27,9 @@
       }
     }
     
-    .tab-panel {
-      margin: 8px 0;
-      height: 104px;
-
-      >div {
-        height: 100%;
-      }
-    }
+    // .tab-panel {
+    //   margin: 8px 0;
+    // }
 
     .divider-horizontal {
       width: auto;
@@ -66,7 +61,7 @@
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
-          flex-grow: 1;
+          flex: 1;
       
           &.active {
             background: #dfe2ed;
