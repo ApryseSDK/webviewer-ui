@@ -57,10 +57,6 @@ const SignatureModal = () => {
     core.setToolMode(defaultTool);
   };
 
-  // const toggleSaveSignature = () => {
-  //   _setSaveSignature(!saveSignature);
-  // };
-
   const createSignature = () => {
     if (!signatureTool.isEmptySignature()) {
       if (saveSignature) {
@@ -90,25 +86,31 @@ const SignatureModal = () => {
     >
       <div className="container" onMouseDown={e => e.stopPropagation()}>
         <Tabs id="signatureModal">
-          <div className="header">
-            <div className="tab-list">
-              <Tab dataElement="inkSignaturePanelButton">
-                <Button label={t('action.draw')} />
-              </Tab>
-              <Tab dataElement="textSignaturePanelButton">
-                <Button label={t('action.type')} />
-              </Tab>
-              <Tab dataElement="imageSignaturePanelButton">
-                <Button label={t('action.upload')} />
-              </Tab>
-            </div>
-            <ActionButton
-              dataElement="signatureModalCloseButton"
-              title="action.close"
-              img="ic_close_black_24px"
-              onClick={closeModal}
-            />
+          <div className="tab-list">
+            <Tab dataElement="inkSignaturePanelButton">
+              <div className="tab-options-button">
+                {t('action.draw')}
+              </div>
+            </Tab>
+            <div className="tab-options-divider" />
+            <Tab dataElement="textSignaturePanelButton">
+              <div className="tab-options-button">
+                {t('action.type')}
+              </div>
+            </Tab>
+            <div className="tab-options-divider" />
+            <Tab dataElement="imageSignaturePanelButton">
+              <div className="tab-options-button">
+                {t('action.upload')}
+              </div>
+            </Tab>
           </div>
+          {/* <ActionButton
+            dataElement="signatureModalCloseButton"
+            title="action.close"
+            img="ic_close_black_24px"
+            onClick={closeModal}
+          /> */}
           <div
             className="divider-horizontal"
           />

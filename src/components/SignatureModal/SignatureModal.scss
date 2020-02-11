@@ -34,26 +34,49 @@
       background: var(--tools-divider-color);
     }
 
-    .header {
-      margin: 11px 24px 16px 24px;
-      display: flex;
-      justify-content: space-between;
+
 
       .tab-list {
         display: flex;
+        margin-bottom: 16px;
+        border-radius: 4px;
+        border: 1px solid #dfe2ed;
+        height: 28px;
+        color: #6077bf;
+        cursor: pointer;
 
-        .Button {
-          margin: 0px 12px;
-          border-bottom: 3px solid transparent;
+        .tab-options-button {
+          // flex breaks ellipsis text overflow for some reason
+          // display: flex;
+          // justify-content: center;
+          // align-items: center;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 24px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          flex-grow: 1;
+      
+          &.active {
+            background: #dfe2ed;
+          }
+        }
+      
+        .tab-options-divider {
+          width: 1px;
+          background: #abb0c4;
+        }        
 
+        div {
           &.selected {
-            border-bottom: 3px solid $pdftron-blue;
+            background: #dfe2ed;
           }
 
-          &:hover {
-            color: $pdftron-blue;
-            background: transparent;
-          }
+          // &:hover {
+          //   color: $pdftron-blue;
+          //   background: transparent;
+          // }
         }
       }
 
@@ -68,7 +91,7 @@
           }
         }
       }
-    }
+    
 
     .footer {
       display: flex;
