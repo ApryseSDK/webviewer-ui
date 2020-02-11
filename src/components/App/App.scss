@@ -52,6 +52,10 @@
 
 *::-webkit-scrollbar {
   width: 2px;
+
+  &:horizontal {
+    height: 2px;
+  }
 }
 
 *::-webkit-scrollbar-track {

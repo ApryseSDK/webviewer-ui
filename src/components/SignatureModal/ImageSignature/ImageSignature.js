@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import core from 'core';
-import ActionButton from 'components/ActionButton';
 
 import './ImageSignature.scss';
 
