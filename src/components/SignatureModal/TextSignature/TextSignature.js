@@ -121,27 +121,25 @@ const TextSignature = ({
           value={value}
           onChange={handleInputChange}
         />
-        <div className="text-signature-container">
-          <div className="text-signature-inner-container">
-            {fonts.map((font, index) => (
-              <div
-                key={font}
-                ref={el => {
-                  textDivsRef.current[index] = el;
-                }}
-                className={classNames({
-                  'text-signature-text': true,
-                  active: index === activeIndex,
-                })}
-                style={{ fontFamily: font, fontSize: FONT_SIZE }}
-                onClick={() => setActiveIndex(index)}
-              >
-                {value}
-              </div>
-            ))}
+        {/* <div className="text-signature-container"> */}
+        {fonts.map((font, index) => (
+          <div
+            key={font}
+            ref={el => {
+              textDivsRef.current[index] = el;
+            }}
+            className={classNames({
+              'text-signature-text': true,
+              active: index === activeIndex,
+            })}
+            style={{ fontFamily: font, fontSize: FONT_SIZE }}
+            onClick={() => setActiveIndex(index)}
+          >
+            {value}
           </div>
-          <canvas ref={canvasRef} />
-        </div>
+        ))}
+        <canvas ref={canvasRef} />
+        {/* </div> */}
       </div>
       <div
         className="footer"
