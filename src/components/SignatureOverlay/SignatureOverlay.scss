@@ -15,52 +15,39 @@
 .default-signatures-container {
   display: flex;
   flex-direction: column;
-  // width: 162px;
 
   .row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
     cursor: pointer;
 
-
+    &.disabled {
+      color: #E1E1E3;
+      .Icon {
+        color: #E1E1E3;
+      }      
+    }
 
     .content {
       padding: 7px 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #767f9b;
       font-size: 13px;
       cursor: pointer;
-      // background: blue;
 
       img {
-        // max-height: 100%;
         max-width: 120px;
-        // width: auto;
-        // height: auto;
       }      
-  
-      // &.disabled {
-      //   background: #E1E1E3;
-      //   cursor: default;
-      // }
-  
-      // &.enabled:hover {
-      //   background: #17324C;
-      //   border: 1px solid #17324C;
-      //   color: #FFFFFF;
-      // }
     }
 
     .icon {
       display: flex;
       align-items: center;
       padding: 0 6px;
-      // background: green;
     }    
   }
 

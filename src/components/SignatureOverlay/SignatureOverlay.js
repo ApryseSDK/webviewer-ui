@@ -255,7 +255,11 @@ class SignatureOverlay extends React.PureComponent {
         >
           <div className="default-signatures-container">
             <div
-              className="row"
+              className={`row${
+                defaultSignatures.length >= maxSignaturesCount
+                  ? ' disabled'
+                  : ' enabled'
+              }`}
               onClick={this.openSignatureModal}
             >
               <div
