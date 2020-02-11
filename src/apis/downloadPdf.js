@@ -28,7 +28,7 @@ WebViewer(...)
       });
 
       // download pdf without links
-      const xfdfString = annotManager.exportAnnotations({ links: false });
+      const xfdfString = await annotManager.exportAnnotations({ links: false });
       instance.downloadPdf({
         xfdfString: xfdfString,
       });
