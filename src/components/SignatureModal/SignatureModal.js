@@ -27,6 +27,18 @@ const SignatureModal = () => {
     selectors.getSelectedTab(state, 'signatureModal'),
   ]);
 
+  // Hack to close modal if hotkey to open other tool is used.
+  useEffect(() => {
+    if (activeToolName !== 'AnnotationCreateSignature') {
+      dispatch(
+        actions.closeElements([
+          'signatureModal',
+          'signatureOverlay',
+        ]),
+      );
+    }
+  }, [dispatch, activeToolName]);
+
   const dispatch = useDispatch();
   const [saveSignature, setSaveSignature] = useState(true);
   const [t] = useTranslation();

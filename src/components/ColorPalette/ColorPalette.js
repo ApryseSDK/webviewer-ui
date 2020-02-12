@@ -93,7 +93,7 @@ class ColorPalette extends React.PureComponent {
               <div
                 className={classNames({
                   cell: true,
-                  active: color.toHexString()?.toLowerCase() === bg?.toLowerCase(),
+                  active: color?.toHexString()?.toLowerCase() === bg?.toLowerCase(),
                   border: bg.toLowerCase() === '#ffffff',
                 })}
                 style={{ backgroundColor: bg }}
