@@ -18,7 +18,7 @@ import selectors from 'selectors';
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
-  const [isDisabled, isSaveSignatureDisabled, isOpen, activeToolName, activeToolStyle, selectedTab] = useSelector(state => [
+  const [isDisabled, isSaveSignatureDisabled, isOpen, activeToolName, activeToolStyles, selectedTab] = useSelector(state => [
     selectors.isElementDisabled(state, 'signatureModal'),
     selectors.isElementDisabled(state, 'saveSignatureButton'),
     selectors.isElementOpen(state, 'signatureModal'),
@@ -86,7 +86,7 @@ const SignatureModal = () => {
   if (selectedTab !== 'inkSignaturePanelButton') {
     colorMapKey = 'stamp';
   }
-  console.log('colorMapKey', colorMapKey, activeToolStyle);
+  console.log('colorMapKey', colorMapKey, activeToolStyles);
 
   return isDisabled ? null : (
     <div
@@ -121,16 +121,17 @@ const SignatureModal = () => {
             img="ic_close_black_24px"
             onClick={closeModal}
           /> */}
-          {/* <StylePopup
-            colorMapKey={colorMapKey}
-            onStyleChange={(property, value) => {
-              setToolStyles(activeToolName, property, value);
-            }}
-            style={activeToolStyle}
-          /> */}
-          <div
+          {/* {(selectedTab === 'inkSignaturePanelButton') &&
+            <StylePopup
+              colorMapKey={colorMapKey}
+              onStyleChange={(property, value) => {
+                setToolStyles(activeToolName, property, value);
+              }}
+              style={activeToolStyles}
+            />} */}
+          {/* <div
             className="divider-horizontal"
-          />
+          /> */}
           <TabPanel dataElement="inkSignaturePanel">
             <InkSignature
               isModalOpen={isOpen}

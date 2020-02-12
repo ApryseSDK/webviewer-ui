@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useSelector } from "react-redux";
 import Measure from 'react-measure';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import StylePopup from 'components/StylePopup';
+import selectors from "selectors";
+import setToolStyles from 'helpers/setToolStyles';
 
 import core from 'core';
 
@@ -26,6 +30,17 @@ const InkSignature = ({
   const [t] = useTranslation();
   const [dimension, setDimension] = useState({});
 
+  const [
+    activeToolName,
+    activeToolStyles,
+  ] = useSelector(
+    state => [
+      selectors.getActiveToolName(state),
+      selectors.getActiveToolStyles(state),
+    ],
+    useSelector,
+  );
+
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
     const canvas = canvasRef.current;
@@ -38,6 +53,7 @@ const InkSignature = ({
   useEffect(() => {
     if (dimension.height && dimension.width) {
       const signatureTool = core.getTool('AnnotationCreateSignature');
+      // debugger;
       signatureTool.resizeCanvas();
     }
   }, [dimension]);
@@ -95,6 +111,17 @@ const InkSignature = ({
 
   return (
     <React.Fragment>
+      <StylePopup
+        colorMapKey={"signature"}
+        onStyleChange={(property, value) => {
+          setToolStyles('AnnotationCreateSignature', property, value);
+          clearCanvas();
+        }}
+        style={activeToolStyles}
+      />
+      <div
+        className="divider-horizontal"
+      />
       <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
         {({ measureRef }) => (
           <div className="ink-signature" ref={measureRef}>
