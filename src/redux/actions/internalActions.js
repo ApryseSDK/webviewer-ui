@@ -108,10 +108,6 @@ export const setAllowPageNavigation = (allowPageNavigation = true) => ({
   payload: { allowPageNavigation },
 });
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
-  if (toolObject.name === 'AnnotationCreateTextUnderline') {
-    console.trace();
-  }
-
   const state = getState();
   let name;
 
@@ -136,6 +132,7 @@ export const setActiveToolStyles = (toolStyles = {}) => ({
   type: 'SET_ACTIVE_TOOL_STYLES',
   payload: { toolStyles },
 });
+
 export const setActiveToolGroup = toolGroup => ({
   type: 'SET_ACTIVE_TOOL_GROUP',
   payload: { toolGroup },

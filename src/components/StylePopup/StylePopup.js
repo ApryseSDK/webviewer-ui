@@ -27,6 +27,7 @@ class StylePopup extends React.PureComponent {
 
   renderColorPalette = () => {
     const { style, onStyleChange, currentPalette } = this.props;
+    console.log(style, currentPalette);
 
     return (
       <ColorPalette

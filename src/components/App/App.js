@@ -49,7 +49,7 @@ const propTypes = {
 };
 
 const App = ({ removeEventHandlers }) => {
-  const [isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled] = useSelector(
+  const [isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled, isSignatureModalOpen, isSignatureModalDisabled] = useSelector(
     state => [
       selectors.isElementOpen(state, 'toolsOverlay'),
       selectors.isElementDisabled(state, 'toolsOverlay'),
@@ -59,6 +59,8 @@ const App = ({ removeEventHandlers }) => {
       selectors.isElementDisabled(state, 'leftPanel'),
       selectors.isElementOpen(state, 'searchPanel'),
       selectors.isElementDisabled(state, 'searchPanel'),
+      selectors.isElementOpen(state, 'signatureModal'),
+      selectors.isElementDisabled(state, 'signatureModal'),
     ],
   );
 
@@ -98,7 +100,7 @@ const App = ({ removeEventHandlers }) => {
         <TextPopup />
         <ContextMenuPopup />
 
-        <SignatureModal />
+        {isSignatureModalOpen && !isSignatureModalDisabled && <SignatureModal />}
         <PrintModal />
         <LoadingModal />
         <ErrorModal />

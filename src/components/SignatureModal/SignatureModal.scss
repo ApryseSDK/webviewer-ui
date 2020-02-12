@@ -8,10 +8,10 @@
 
   .container {
     @extend %modal-shared-container-style;
-    // width: 304px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     border-radius: 4px;
     box-shadow: 0 2px 16px 0 $signature-modal-shared-color; 
     padding: 8px 8px;
@@ -27,18 +27,12 @@
       }
     }
     
-    // .tab-panel {
-    //   margin: 8px 0;
-    // }
-
     .divider-horizontal {
-      width: auto;
+      width: 100%;
       height: 1px;
-      margin: 8px 0;
+      margin-bottom: 8px;
       background: #dfe2ed;
     }
-
-
 
       .tab-list {
         display: flex;
@@ -48,6 +42,7 @@
         height: 28px;
         color: #6077bf;
         margin: 8px 0;
+        width: 100%;
         cursor: pointer;
 
         .tab-options-button {
@@ -100,7 +95,7 @@
 
     .footer {
       display: flex;
-      padding-top: 4px;
+      padding-top: 12px;
       align-items: center;
       justify-content: space-between;
 

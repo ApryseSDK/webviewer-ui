@@ -3,11 +3,12 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import ToolStylePopup from 'components/ToolStylePopup';
+import StylePopup from 'components/StylePopup';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
 import TextSignature from 'components/SignatureModal/TextSignature';
 import ImageSignature from 'components/SignatureModal/ImageSignature';
+import setToolStyles from 'helpers/setToolStyles';
 
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
@@ -17,11 +18,15 @@ import selectors from 'selectors';
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
-  const [isDisabled, isSaveSignatureDisabled, isOpen] = useSelector(state => [
+  const [isDisabled, isSaveSignatureDisabled, isOpen, activeToolName, activeToolStyle, selectedTab] = useSelector(state => [
     selectors.isElementDisabled(state, 'signatureModal'),
     selectors.isElementDisabled(state, 'saveSignatureButton'),
     selectors.isElementOpen(state, 'signatureModal'),
+    selectors.getActiveToolName(state),
+    selectors.getActiveToolStyles(state),
+    selectors.getSelectedTab(state, 'signatureModal'),
   ]);
+
   const dispatch = useDispatch();
   const [saveSignature, setSaveSignature] = useState(true);
   const [t] = useTranslation();
@@ -38,7 +43,6 @@ const SignatureModal = () => {
 
   useEffect(() => {
     if (isOpen) {
-      core.setToolMode('AnnotationCreateSignature');
       dispatch(
         actions.closeElements([
           'printModal',
@@ -48,7 +52,7 @@ const SignatureModal = () => {
         ]),
       );
     }
-  }, [_setSaveSignature, dispatch, isOpen]);
+  }, [dispatch, isOpen]);
 
   const closeModal = () => {
     signatureTool.clearLocation();
@@ -76,6 +80,13 @@ const SignatureModal = () => {
     open: isOpen,
     closed: !isOpen,
   });
+
+  let colorMapKey = 'signature';
+
+  if (selectedTab !== 'inkSignaturePanelButton') {
+    colorMapKey = 'stamp';
+  }
+  console.log('colorMapKey', colorMapKey, activeToolStyle);
 
   return isDisabled ? null : (
     <div
@@ -109,6 +120,13 @@ const SignatureModal = () => {
             title="action.close"
             img="ic_close_black_24px"
             onClick={closeModal}
+          /> */}
+          {/* <StylePopup
+            colorMapKey={colorMapKey}
+            onStyleChange={(property, value) => {
+              setToolStyles(activeToolName, property, value);
+            }}
+            style={activeToolStyle}
           /> */}
           <div
             className="divider-horizontal"

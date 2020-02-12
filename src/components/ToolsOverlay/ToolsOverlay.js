@@ -161,7 +161,7 @@ class ToolsOverlay extends React.PureComponent {
             ))}
           </div>
           {isStylingOpen && (
-            <ToolStylePopup siblingWidth={this.state.siblingWidth} />
+            <ToolStylePopup />
           )}
         </div>
         <div className="Close-Container">

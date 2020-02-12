@@ -31,6 +31,7 @@
   .tools-container {
     position: relative;
     display: flex;
+    align-items: center;
     flex-direction: column;
     // border: 1px solid var(--tools-overlay-border);
     border-radius: 4px;
@@ -39,6 +40,7 @@
     padding: 0px 4px;
     padding-top: 4px;
     padding-bottom: 4px;
+    
 
     .tool-buttons-container {
       display: inline-flex;
