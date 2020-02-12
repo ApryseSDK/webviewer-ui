@@ -3,12 +3,10 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import StylePopup from 'components/StylePopup';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
 import TextSignature from 'components/SignatureModal/TextSignature';
 import ImageSignature from 'components/SignatureModal/ImageSignature';
-import setToolStyles from 'helpers/setToolStyles';
 
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
