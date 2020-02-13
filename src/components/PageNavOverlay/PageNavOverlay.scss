@@ -35,18 +35,22 @@
   .formContainer {
     top: -1px;
     position: relative;
+
+    input {
+      width: 8px;
+      padding: 0;
+      border: none;
+      text-align: right;
+      font-size: var(--font-size-small);
+      font-family: 'Carlito';
+      font-weight: bold;
+      background: transparent;
+      color: var(--text-color);
+      cursor: pointer;
+      outline: none;
+      border-bottom: 1px solid var(--text-color);
+    }    
   }
 
-  input {
-    width: 8px;
-    padding: 0;
-    border: none;
-    text-align: right;
-    font-size: var(--font-size-small);
-    font-family: 'Carlito';
-    font-weight: bold;
-    background: transparent;
-    color: var(--text-color);
-    cursor: pointer;
-  }
+
 }

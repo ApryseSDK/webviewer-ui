@@ -68,7 +68,7 @@ const ToggleZoomOverlay = () => {
     }
   };
 
-  const inputWidth = (value.length + 1) * 8
+  const inputWidth = (value.length + 1) * 8;
 
   return (
     <div className="zoom-overlay">

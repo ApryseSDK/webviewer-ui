@@ -50,22 +50,22 @@ class PageNavOverlay extends React.PureComponent {
       });
     }
 
-    if (
-      prevProps.totalPages !== this.props.totalPages &&
-      !this.props.isDisabled
-    ) {
-      this.setInputWidth();
-    }
+    // if (
+    //   prevProps.totalPages !== this.props.totalPages &&
+    //   !this.props.isDisabled
+    // ) {
+    //   this.setInputWidth();
+    // }
 
-    if (prevProps.isDisabled && !this.props.isDisabled) {
-      this.setInputWidth();
-    }
+    // if (prevProps.isDisabled && !this.props.isDisabled) {
+    //   this.setInputWidth();
+    // }
   }
 
-  setInputWidth = () => {
-    this.textInput.current.style.width = `${this.props.totalPages.toString()
-      .length * 8}px`;
-  };
+  // setInputWidth = () => {
+  //   this.textInput.current.style.width = `${this.props.totalPages.toString()
+  //     .length * 8}px`;
+  // };
 
   onClick = () => {
     if (isIOS) {
@@ -113,6 +113,8 @@ class PageNavOverlay extends React.PureComponent {
 
     const className = getClassName(`Overlay PageNavOverlay`, this.props);
 
+    const inputWidth = (this.state.input.length) * 8;
+
     return (
       <div className={className} data-element="pageNavOverlay">
         <div
@@ -134,6 +136,7 @@ class PageNavOverlay extends React.PureComponent {
               onChange={this.onChange}
               tabIndex={-1}
               disabled={!allowPageNavigation}
+              style={{ width: inputWidth }}
             />
             {this.state.isCustomPageLabels
               ? ` (${currentPage}/${totalPages})`
