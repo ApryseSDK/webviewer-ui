@@ -20,11 +20,12 @@
   }
 
   .divider-horizontal {
-    width: auto;
+    width: 100%;
     height: 1px;
     margin-right: 4px;
     margin-left: 4px;
     margin-bottom: 8px;
+    margin-top: 8px;
     background: var(--tools-divider-color);
   }
 
