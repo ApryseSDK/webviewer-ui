@@ -18,7 +18,6 @@ const ToggleZoomOverlay = () => {
   );
   const dispatch = useDispatch();
   const [value, setValue] = useState('100');
-  const [inputWidth, setInputWidth] = useState(28);
 
   useEffect(() => {
     const onDocumentLoaded = () =>
@@ -52,9 +51,7 @@ const ToggleZoomOverlay = () => {
   const onChange = e => {
     const re = /^(\d){0,4}$/;
     if (re.test(e.target.value) || e.target.value === '') {
-      setValue(e.target.value);
-      console.log(e.target.value, e.target.value.length, (e.target.value.length + 1) * 8);
-      setInputWidth((e.target.value.length + 1) * 8);      
+      setValue(e.target.value);   
     }
   };
 
@@ -70,6 +67,8 @@ const ToggleZoomOverlay = () => {
       zoomTo(e.target.value / 100);
     }
   };
+
+  const inputWidth = (value.length + 1) * 8
 
   return (
     <div className="zoom-overlay">
