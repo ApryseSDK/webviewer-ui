@@ -31,7 +31,7 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-const NoteContent = ({ annotation }) => {
+const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
   const [
     noteDateFormat,
     iconColor,
@@ -47,7 +47,7 @@ const NoteContent = ({ annotation }) => {
   const { isSelected, searchInput, resize, isContentEditable } = useContext(
     NoteContext,
   );
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState(annotation.getContents());
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -123,7 +123,7 @@ const NoteContent = ({ annotation }) => {
   const numberOfReplies = annotation.getReplies().length;
   const formatNumberOfReplies = Math.min(numberOfReplies, 9);
 
-  const header = useMemo(() => (
+  const header = (
     <React.Fragment>
       {!isReply &&
         <div className="type-icon-container">
@@ -159,7 +159,7 @@ const NoteContent = ({ annotation }) => {
         )}
       </div>
     </React.Fragment>
-  ), [annotation, color, contents, formatNumberOfReplies, icon, isEditing, isReply, noteDateFormat, numberOfReplies, renderAuthorName, renderContents, textAreaValue]);
+  );
 
   const annotationState = annotation.getStatus();
 
