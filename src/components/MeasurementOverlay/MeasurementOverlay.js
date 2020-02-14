@@ -18,6 +18,7 @@ import selectors from 'selectors';
 
 import './MeasurementOverlay.scss';
 import CustomMeasurementOverlay from './CustomMeasurementOverlay';
+import EllipseMeasurementOverlay from './EllipseMeasurementOverlay';
 
 class MeasurementOverlay extends React.PureComponent {
   static propTypes = {
@@ -128,12 +129,12 @@ class MeasurementOverlay extends React.PureComponent {
   };
 
   isMeasurementAnnotation = annotation =>
-    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement', 'ellipseMeasurement'].includes(
       mapAnnotationToKey(annotation),
     );
 
   isMeasurementTool = toolName =>
-    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement', 'ellipseMeasurement'].includes(
       mapToolNameToKey(toolName),
     );
 
@@ -146,7 +147,7 @@ class MeasurementOverlay extends React.PureComponent {
     if (key === 'perimeterMeasurement' || key === 'areaMeasurement') {
       // for polyline and polygon, there's no useful information we can show if it has no vertices or only one vertex.
       showInfo = annotation.getPath().length > 1;
-    } else if (key === 'distanceMeasurement') {
+    } else if (key === 'distanceMeasurement' || key === 'ellipseMeasurement') {
       showInfo = true;
     }
 
@@ -298,6 +299,10 @@ class MeasurementOverlay extends React.PureComponent {
       // Get the props for this particular custom overlay
       const customOverlayProps = this.props.customMeasurementOverlay.filter(customOverlay => customOverlay.validate(annotation))[0];
       return (<CustomMeasurementOverlay annotation={annotation} {...customOverlayProps}/>);
+    }
+
+    if (key === 'ellipseMeasurement') {
+      return (<EllipseMeasurementOverlay annotation={annotation}/>);
     }
 
     return (
