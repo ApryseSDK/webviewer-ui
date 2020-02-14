@@ -64,7 +64,8 @@ const NotePopup = ({ annotation, setIsEditing }) => {
       );
   }, [annotation]);
 
-  const togglePopup = () => {
+  const togglePopup = (e) => {
+    e.stopPropagation();
     if (isOpen) {
       closePopup();
     } else {
@@ -100,9 +101,9 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     <div
       className="NotePopup"
       data-element="notePopup"
-      onClick={e => e.stopPropagation()}
+      onClick={togglePopup}
     >
-      <div className="overflow" onClick={togglePopup}>
+      <div className="overflow">
         <Icon glyph="icon-tools-more" />
       </div>
       {isOpen && (

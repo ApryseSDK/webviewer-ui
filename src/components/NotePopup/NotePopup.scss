@@ -5,8 +5,10 @@
   display: flex;
   justify-content: flex-end;
   user-select: none;
-  margin-bottom: auto;
-  padding-left: 10px;
+  padding: 8px 10px;
+  position: absolute;
+  right: -10px;
+  top: -8px;
 
   .overflow {
     .Icon {
