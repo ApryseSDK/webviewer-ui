@@ -56,7 +56,7 @@ const Note = ({ annotation }) => {
     .sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
   return (
-    <div ref={containerRef} className={noteClass} onMouseDown={handleNoteClick}>
+    <div ref={containerRef} className={noteClass} onClick={handleNoteClick}>
       <NoteContent annotation={annotation} isSelected={isSelected} />
       {isSelected && (
         <React.Fragment>

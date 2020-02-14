@@ -220,6 +220,7 @@ const ContentArea = ({
     }
   };
 
+  // onBlur={() => setIsEditing(false)}
   return (
     <div className="edit-content">
       <AutoResizeTextarea
@@ -228,25 +229,29 @@ const ContentArea = ({
         }}
         value={textAreaValue}
         onChange={onTextAreaValueChange}
-        onBlur={() => setIsEditing(false)}
+
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
       />
       <div className="edit-buttons">
         <div
-          className="edit-button"
-          onMouseDown={setContents}
-        >
-          {t('action.save')}
-        </div>
-        <div
-          className="edit-button"
-          onMouseDown={() => {
+          className="cancel-button"
+          onClick={e => {
+            e.stopPropagation();
             setIsEditing(false);
             onTextAreaValueChange(contents);
           }}
         >
           {t('action.cancel')}
+        </div>
+        <div
+          className="save-button"
+          onClick={e => {
+            e.stopPropagation();
+            setContents();
+          }}
+        >
+          {t('action.save')}
         </div>
       </div>
     </div>

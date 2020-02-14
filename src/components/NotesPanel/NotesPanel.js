@@ -248,7 +248,7 @@ const NotesPanel = () => {
           NotesPanel: true,
         })}
         data-element="notesPanel"
-        onMouseDown={core.deselectAllAnnotations}
+        onClick={core.deselectAllAnnotations}
       >
         {notes.length === 0 ? (
           <div className="no-annotations">{t('message.noAnnotations')}</div>

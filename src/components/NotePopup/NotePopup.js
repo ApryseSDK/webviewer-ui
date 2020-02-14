@@ -100,7 +100,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     <div
       className="NotePopup"
       data-element="notePopup"
-      onMouseDown={e => e.stopPropagation()}
+      onClick={e => e.stopPropagation()}
     >
       <div className="overflow" onClick={togglePopup}>
         <Icon glyph="icon-tools-more" />
