@@ -11,6 +11,10 @@ export const enableAllElements = () => ({
 export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
+  // if (dataElement === 'menuOverlay') {
+  //   debugger;
+  // }
+
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];

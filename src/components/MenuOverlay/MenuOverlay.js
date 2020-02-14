@@ -71,8 +71,10 @@ class MenuOverlay extends React.PureComponent {
   }
 
   handleClickOutside = e => {
-    const clickedMenuButton = e.target.getAttribute('data-element') === 'menuButton';
-
+    const menuButton = document.querySelector(
+      '[data-element="menuButton"]',
+    );
+    const clickedMenuButton = menuButton?.contains(e.target);
     if (!clickedMenuButton) {
       this.props.closeElements(['menuOverlay']);
     }
