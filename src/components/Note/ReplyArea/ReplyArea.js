@@ -48,6 +48,11 @@ const ReplyArea = ({ annotation }) => {
   }, [isFocused]);
 
   useEffect(() => {
+    // on initial mount, focus
+    textareaRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
     if (
       isNoteEditingTriggeredByAnnotationPopup &&
       isSelected &&
