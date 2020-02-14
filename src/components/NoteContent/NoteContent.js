@@ -123,7 +123,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
   const numberOfReplies = annotation.getReplies().length;
   const formatNumberOfReplies = Math.min(numberOfReplies, 9);
 
-  const header = (
+  const header = useMemo(() => (
     <React.Fragment>
       {!isReply &&
         <div className="type-icon-container">
@@ -159,7 +159,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
         )}
       </div>
     </React.Fragment>
-  );
+  ), [annotation, color, contents, formatNumberOfReplies, icon, isEditing, setIsEditing, isReply, noteDateFormat, numberOfReplies, renderAuthorName, renderContents, textAreaValue]);
 
   const annotationState = annotation.getStatus();
 
