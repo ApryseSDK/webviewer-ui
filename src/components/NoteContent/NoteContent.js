@@ -209,15 +209,15 @@ const ContentArea = ({
     // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
 
-    const hasEdited = textAreaValue !== contents;
-    if (hasEdited) {
-      core.setNoteContents(annotation, textAreaValue);
-      if (annotation instanceof window.Annotations.FreeTextAnnotation) {
-        core.drawAnnotationsFromList([annotation]);
-      }
-
-      setIsEditing(false);
+    // const hasEdited = textAreaValue !== contents;
+    // if (hasEdited) {
+    core.setNoteContents(annotation, textAreaValue);
+    if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+      core.drawAnnotationsFromList([annotation]);
     }
+
+    setIsEditing(false);
+    // }
   };
 
   // onBlur={() => setIsEditing(false)}
@@ -248,7 +248,7 @@ const ContentArea = ({
           className="save-button"
           onClick={e => {
             e.stopPropagation();
-            setContents();
+            setContents(e);
           }}
         >
           {t('action.save')}
