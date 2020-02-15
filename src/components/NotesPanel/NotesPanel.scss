@@ -3,6 +3,13 @@
 .notes-panel-container {
   display: flex;
   flex-direction: row;
+
+  @include mobile {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 }
 
 .NotesPanel {

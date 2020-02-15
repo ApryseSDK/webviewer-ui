@@ -8,6 +8,13 @@
   display: flex;
   flex-direction: row;
 
+  @include mobile {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
   .left-panel-container{
     display: flex;
     flex-direction: column;

@@ -13,12 +13,12 @@ $popup-icon-width: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  background: $white;
-  background: var(--primary-color);
-  box-shadow: 1px 1px 10px #aaa;
+  // padding: 5px;
+  // border-radius: 5px;
+  // box-sizing: border-box;
+  // background: $white;
+  // background: var(--primary-color);
+  // box-shadow: 1px 1px 10px #aaa;
 
   .buttons {
     display: flex;
@@ -87,5 +87,3 @@ $popup-icon-width: 18px;
     transform: translateY(100%);
   }
 }
-
-
