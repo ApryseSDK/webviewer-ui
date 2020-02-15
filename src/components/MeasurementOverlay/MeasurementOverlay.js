@@ -302,7 +302,7 @@ class MeasurementOverlay extends React.PureComponent {
     }
 
     if (key === 'ellipseMeasurement') {
-      return (<EllipseMeasurementOverlay annotation={annotation}/>);
+      return (<EllipseMeasurementOverlay annotation={annotation} isOpen={isOpen}/>);
     }
 
     return (
