@@ -69,7 +69,7 @@ if (window.CanvasRenderingContext2D) {
     fullAPIReady = loadScript('../core/pdf/PDFNet.js');
   }
 
-  if (state.advanced.disableLogs) {
+  if (getHashParams('disableLogs', false)) {
     window.CoreControls.disableLogs(true);
   }
 
