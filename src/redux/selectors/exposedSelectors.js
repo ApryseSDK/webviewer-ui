@@ -206,5 +206,7 @@ export const isNoResult = state => state.search.noResult;
 
 export const isProgrammaticSearch = state => state.search.isProgrammaticSearch;
 
+export const isLogsDisabled = state => state.advanced.disableLogs;
+
 export const isProgrammaticSearchFull = state =>
   state.search.isProgrammaticSearchFull;
