@@ -2,17 +2,30 @@
 @import '../../constants/panel';
 
 .search-panel-container {
+  z-index: 65;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--panel-background);
   display: flex;
   flex-direction: row;
+
+  @include mobile {
+    position: fixed;
+    top: 0;
+    right: 0;  
+    height: 100%;
+    width: 100%;
+  }  
 }
 
 .SearchPanel {
-  @extend %right-panel;
-  position: static;
-  visibility: visible !important;
-  overflow: hidden !important;
+  padding-top: 16px;
+  padding-left: 16px;
+  padding-bottom: 0px;  
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   padding-right: 8px;
-  flex: 1;
 
   .results {
     overflow-y: auto;

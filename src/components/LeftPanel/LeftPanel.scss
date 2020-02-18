@@ -2,23 +2,24 @@
 @import '../../constants/panel';
 
 .LeftPanel {
-  @extend %left-panel;
+  z-index: 65;
+  display: flex;
+  flex-direction: column;
   background-color: var(--panel-background);
-  position: static;
   display: flex;
   flex-direction: row;
 
   @include mobile {
-    width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;  
   }
 
   .left-panel-container{
     display: flex;
     flex-direction: column;
-    flex: 1;
     width: 100%;
     padding-right: 8px;
   }

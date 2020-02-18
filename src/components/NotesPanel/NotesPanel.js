@@ -17,6 +17,7 @@ import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 
 import './NotesPanel.scss';
 
@@ -36,6 +37,16 @@ const NotesPanel = () => {
     shallowEqual,
   );
   const dispatch = useDispatch();
+
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+
   const [notes, setNotes] = useState([]);
   const [width, setWidth] = useState(293);
 
@@ -230,18 +241,24 @@ const NotesPanel = () => {
     );
   }
 
+  let style = {};
+  if (!isMobile) {
+    style = { width: `${width}px` };
+  }
+
   return (
     <div
       className="notes-panel-container"
-      style={{ width: `${width}px` }}
+      style={style}
     >
-      <ResizeBar
-        minWidth={215}
-        onResize={_width => {
-          setWidth(_width);
-        }}
-        leftDirection
-      />
+      {!isMobile &&
+        <ResizeBar
+          minWidth={215}
+          onResize={_width => {
+            setWidth(_width);
+          }}
+          leftDirection
+        />}
       <div
         className={classNames({
           Panel: true,

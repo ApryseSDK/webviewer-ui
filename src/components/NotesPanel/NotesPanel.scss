@@ -1,24 +1,30 @@
 @import '../../constants/panel';
 
 .notes-panel-container {
+  z-index: 65;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--panel-background);
   display: flex;
   flex-direction: row;
 
   @include mobile {
-    width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
-    right: 0;
+    right: 0;  
+    height: 100%;
+    width: 100%;
   }
 }
 
 .NotesPanel {
-  @extend %right-panel;
-  position: static;
-  visibility: visible !important;
-  overflow: hidden !important;
+  padding-top: 16px;
+  padding-left: 16px;
+  padding-bottom: 0px;  
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   padding-right: 8px;
-  flex: 1;
 
   .no-annotations {
     @extend %center-of-panel;
