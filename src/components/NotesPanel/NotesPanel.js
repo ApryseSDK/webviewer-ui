@@ -270,10 +270,17 @@ const NotesPanel = () => {
         <div
           className="close-container"
         >
-          <Icon
-            glyph="ic_close_black_24px"
-            className="close-icon"
-          />
+          <div
+            className="close-icon-container"
+            onClick={() => {
+              dispatch(actions.closeElements(['notesPanel']));
+            }}
+          >
+            <Icon
+              glyph="ic_close_black_24px"
+              className="close-icon"
+            />
+          </div>
         </div>
         {notes.length === 0 ? (
           <div className="no-annotations">{t('message.noAnnotations')}</div>
