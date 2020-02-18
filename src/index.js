@@ -69,6 +69,10 @@ if (window.CanvasRenderingContext2D) {
     fullAPIReady = loadScript('../core/pdf/PDFNet.js');
   }
 
+  if (getHashParams('disableLogs', false)) {
+    window.CoreControls.disableLogs(true);
+  }
+
   window.CoreControls.enableSubzero(getHashParams('subzero', false));
   window.CoreControls.setWorkerPath('../core');
   window.CoreControls.setResourcesPath('../core/assets');

@@ -243,6 +243,6 @@ export default {
     useSharedWorker: getHashParams('useSharedWorker', false),
     disableI18n: getHashParams('disableI18n', false),
     pdfWorkerTransportPromise: null,
-    officeWorkerTransportPromise: null,
+    officeWorkerTransportPromise: null
   },
 };
