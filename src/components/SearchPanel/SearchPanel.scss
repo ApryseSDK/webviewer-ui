@@ -49,6 +49,8 @@
   .results {
     overflow-y: auto;
     padding-right: 18px;
+    flex: 1;
+    
     &.wild-card-visible {
       margin-top: 110px !important;
     }
