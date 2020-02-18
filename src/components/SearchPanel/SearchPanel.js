@@ -9,7 +9,7 @@ import ResizeBar from 'components/ResizeBar';
 import SearchOverlay from 'components/SearchOverlay';
 
 import core from 'core';
-import { isMobile, isTabletOrMobile } from 'helpers/device';
+// import { isMobile, isTabletOrMobile } from 'helpers/device';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -35,9 +35,9 @@ class SearchPanel extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      if (isTabletOrMobile()) {
-        this.props.closeElements(['leftPanel']);
-      }
+      // if (isTabletOrMobile()) {
+      //   this.props.closeElements(['leftPanel']);
+      // }
 
       this.props.closeElements(['notesPanel']);
     }
@@ -49,9 +49,9 @@ class SearchPanel extends React.PureComponent {
     setActiveResultIndex(resultIndex);
     core.setActiveSearchResult(result);
 
-    if (isMobile()) {
-      closeElements('searchPanel');
-    }
+    // if (isMobile()) {
+    //   closeElements('searchPanel');
+    // }
   };
 
   onClickClose = () => {
@@ -76,7 +76,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t, results, isSearching, noResult } = this.props;
+    const { isDisabled, t, results, isSearching, noResult, isMobile } = this.props;
 
     if (isDisabled) {
       return null;
