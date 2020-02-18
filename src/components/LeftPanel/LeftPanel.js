@@ -11,10 +11,19 @@ import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
 
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
   const [activePanel, customPanels] = useSelector(
     state => [
       selectors.getActiveLeftPanel(state),
@@ -26,6 +35,11 @@ const LeftPanel = () => {
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
+  let style = {};
+  if (!isMobile) {
+    style = { width: `${width}px` };
+  }
+
   return (
     <div
       className={classNames({
@@ -33,7 +47,7 @@ const LeftPanel = () => {
         LeftPanel: true,
       })}
       data-element="leftPanel"
-      style={{ width: `${width}px` }}
+      style={style}
     >
       <div className="left-panel-container">
         <div className="left-panel-header">
@@ -57,12 +71,13 @@ const LeftPanel = () => {
           />
         ))}
       </div>
-      <ResizeBar
-        minWidth={215}
-        onResize={_width => {
-          setWidth(_width);
-        }}
-      />
+      {!isMobile &&
+        <ResizeBar
+          minWidth={215}
+          onResize={_width => {
+            setWidth(_width);
+          }}
+        />}
     </div>
   );
 };
