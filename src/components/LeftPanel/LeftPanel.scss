@@ -22,6 +22,9 @@
     flex-direction: column;
     width: 100%;
     padding-right: 8px;
+    // Needed
+    overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
+
 
     .close-container {
       display: flex;
