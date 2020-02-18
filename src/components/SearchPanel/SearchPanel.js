@@ -13,6 +13,7 @@ import { isMobile, isTabletOrMobile } from 'helpers/device';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 
 import './SearchPanel.scss';
 
@@ -83,18 +84,24 @@ class SearchPanel extends React.PureComponent {
 
     const className = getClassName('Panel SearchPanel', this.props);
 
+    let style = {};
+    if (!isMobile) {
+      style = { width: `${this.state.width}px` };
+    }
+
     return (
       <div
         className="search-panel-container"
-        style={{ width: `${this.state.width}px` }}
+        style={style}
       >
-        <ResizeBar
-          minWidth={215}
-          onResize={_width => {
-            this.setState({ width: _width });
-          }}
-          leftDirection
-        />
+        {!isMobile &&
+          <ResizeBar
+            minWidth={215}
+            onResize={_width => {
+              this.setState({ width: _width });
+            }}
+            leftDirection
+          />}
         <div className={className} data-element="searchPanel">
           <SearchOverlay />
           <div className={`results`}>
@@ -123,6 +130,8 @@ class SearchPanel extends React.PureComponent {
   }
 }
 
+
+
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'searchPanel'),
   isOpen: selectors.isElementOpen(state, 'searchPanel'),
@@ -136,7 +145,22 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements,
 };
 
-export default connect(
+const ConnectedSearchPanel = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(withTranslation()(SearchPanel));
+
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedSearchPanel {...props} isMobile={isMobile} />
+  );
+};
