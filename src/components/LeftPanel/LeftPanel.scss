@@ -22,12 +22,30 @@
     flex-direction: column;
     width: 100%;
     padding-right: 8px;
+
+    .close-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 64px;
+      width: 100%;
+      padding-right: 2px;
+  
+      .close-icon-container {
+        cursor: pointer;
+        .close-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }    
   }
 
   .left-panel-header {
     display: flex;
     align-items: center;
     margin: 16px;
+    margin-top: 0px;
     margin-right: 8px;
   }
 

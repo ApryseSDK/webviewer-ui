@@ -7,6 +7,7 @@ import SearchResult from 'components/SearchResult';
 import ListSeparator from 'components/ListSeparator';
 import ResizeBar from 'components/ResizeBar';
 import SearchOverlay from 'components/SearchOverlay';
+import Icon from 'components/Icon';
 
 import core from 'core';
 // import { isMobile, isTabletOrMobile } from 'helpers/device';
@@ -76,7 +77,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t, results, isSearching, noResult, isMobile } = this.props;
+    const { isDisabled, t, results, isSearching, noResult, isMobile, closeElements } = this.props;
 
     if (isDisabled) {
       return null;
@@ -103,6 +104,21 @@ class SearchPanel extends React.PureComponent {
             leftDirection
           />}
         <div className={className} data-element="searchPanel">
+          <div
+            className="close-container"
+          >
+            <div
+              className="close-icon-container"
+              onClick={() => {
+                closeElements(['searchPanel']);
+              }}
+            >
+              <Icon
+                glyph="ic_close_black_24px"
+                className="close-icon"
+              />
+            </div>
+          </div>
           <SearchOverlay />
           <div className={`results`}>
             {isSearching && (

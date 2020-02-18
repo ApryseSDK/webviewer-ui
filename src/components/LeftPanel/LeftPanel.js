@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
@@ -9,8 +9,10 @@ import BookmarksPanel from 'components/BookmarksPanel';
 import LayersPanel from 'components/LayersPanel';
 import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
+import Icon from 'components/Icon';
 
 import selectors from 'selectors';
+import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 
 import './LeftPanel.scss';
@@ -32,6 +34,7 @@ const LeftPanel = () => {
     shallowEqual,
   );
   const [width, setWidth] = useState(293);
+  const dispatch = useDispatch();
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
@@ -50,6 +53,21 @@ const LeftPanel = () => {
       style={style}
     >
       <div className="left-panel-container">
+        <div
+          className="close-container"
+        >
+          <div
+            className="close-icon-container"
+            onClick={() => {
+              dispatch(actions.closeElements(['leftPanel']));
+            }}
+          >
+            <Icon
+              glyph="ic_close_black_24px"
+              className="close-icon"
+            />
+          </div>
+        </div>
         <div className="left-panel-header">
           <LeftPanelTabs />
         </div>

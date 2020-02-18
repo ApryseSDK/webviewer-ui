@@ -19,13 +19,32 @@
 }
 
 .SearchPanel {
-  padding-top: 16px;
+  padding-top: 0px;
   padding-left: 16px;
   padding-bottom: 0px;  
   display: flex;
   flex-direction: column;
   width: 100%;
   padding-right: 8px;
+  // Needed
+  overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width  
+
+  .close-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 64px;
+    width: 100%;
+    padding-right: 12px;
+
+    .close-icon-container {
+      cursor: pointer;
+      .close-icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
 
   .results {
     overflow-y: auto;
