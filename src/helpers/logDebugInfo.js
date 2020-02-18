@@ -13,7 +13,7 @@ export default () => {
 
   if (disableLogs) {
     return;
-  };
+  }
 
   if (coreVersion && uiVersion) {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
