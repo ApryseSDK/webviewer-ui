@@ -76,7 +76,7 @@ const map = {
       annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.IT === 'PolygonDimension' &&
       annotation.Measure &&
-      annotation.getCustomData('trn-area-measure-type') === 'rectangle',
+      annotation.isRectangularPolygon(),
   },
   areaMeasurement: {
     icon: 'ic_annotation_area_black_24px',
