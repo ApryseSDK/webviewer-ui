@@ -343,8 +343,7 @@ class ThumbnailsPanel extends React.PureComponent {
   onCancel = pageIndex => {
     const { thumbnailStart, thumbnailEnd } = this.state;
     const index = this.getPendingThumbIndex(pageIndex);
-    if (index !== -1 && (pageIndex > thumbnailEnd || pageIndex < thumbnailStart)
-    ) {
+    if (index !== -1 && (pageIndex > thumbnailEnd || pageIndex < thumbnailStart)) {
       core.cancelLoadThumbnail(this.pendingThumbs[index].id);
       this.pendingThumbs.splice(index, 1);
     }
