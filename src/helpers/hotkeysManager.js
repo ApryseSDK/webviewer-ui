@@ -314,6 +314,7 @@ WebViewer(...)
             'signatureModal',
             'printModal',
             'searchOverlay',
+            'stampOverlay',
           ]),
         );
       },
@@ -347,12 +348,15 @@ WebViewer(...)
       r: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateRectangle');
       }),
+      q: this.createToolHotkeyHandler(() => {
+        setToolModeAndGroup(store, 'AnnotationCreateRubberStamp');
+      }),
       t: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateFreeText');
       }),
       s: this.createToolHotkeyHandler(() => {
         const sigToolButton = document.querySelector(
-          '[data-element="signatureToolButton"]',
+          '[data-element="signatureToolButton"] .Button',
         );
 
         sigToolButton?.click();
@@ -430,6 +434,7 @@ WebViewer(...)
       AnnotationCreateTextHighlight: 'h',
       AnnotationCreateTextStrikeout: 'k',
       AnnotationCreateTextUnderline: 'u',
+      AnnotationCreateRubberStamp: 'q',
     };
 
     return map[toolName];

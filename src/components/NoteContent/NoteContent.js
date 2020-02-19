@@ -118,7 +118,7 @@ const NoteContent = ({ annotation }) => {
         />
         {annotationState && annotationState !== 'None' && (
           <div className="status">
-            {t('option.status.status')}: {annotationState}
+            {t('option.status.status')}: {t(`option.state.${annotationState.toLowerCase()}`)}
           </div>
         )}
         <div className="content-container" onMouseDown={handleContainerClick}>

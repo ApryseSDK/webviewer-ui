@@ -13,6 +13,7 @@
     "ungroup": "그룹 해제",
     "download": "다운로드",
     "edit": "편집",
+    "extract": "추출물",
     "enterFullscreen": "전체 화면",
     "exitFullscreen": "전체 화면 끝내기",
     "fit": "맞추기",
@@ -28,13 +29,16 @@
     "save": "저장",
     "create": "생성",
     "showMoreResults": "더 많은 결과 표시",
-    "saveSignature": "서명 저장",
     "sign": "서명",
     "style": "스타일",
     "submit": "제출",
     "zoom": "확대/축소",
     "zoomIn": "확대",
-    "zoomOut": "축소"
+    "zoomOut": "축소",
+    "draw": "무승부",
+    "type": "유형",
+    "upload": "업로드",
+    "link": "링크"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -64,7 +68,33 @@
     "stickyNote": "코멘트",
     "strikeout": "취소선",
     "underline": "밑줄",
-    "custom": "사용자 지정"
+    "custom": "사용자 지정",
+    "rubberStamp": "고무 도장"
+  },
+  "rubberStamp": {
+    "Approved": "승인",
+    "AsIs": "그대로",
+    "Completed": "완료",
+    "Confidential": "기밀",
+    "Departmental": "성의",
+    "Draft": "초안",
+    "Experimental": "실험적",
+    "Expired": "만료",
+    "Final": "결정적인",
+    "ForComment": "댓글",
+    "ForPublicRelease": "공개용",
+    "InformationOnly": "정보 만",
+    "NotApproved": "승인이 거절 됨",
+    "NotForPublicRelease": "공개용이 아님",
+    "PreliminaryResults": "예비 결과",
+    "Sold": "판매",
+    "TopSecret": "기밀",
+    "Void": "빈",
+    "SHSignHere": "여기에 서명",
+    "SHWitness": "증거",
+    "SHInitialHere": "이니셜",
+    "SHAccepted": "받아 들여",
+    "SBRejected": "거부"
   },
   "component": {
     "freehandToolsButton": "자유형 도구",
@@ -74,6 +104,9 @@
     "miscToolsButton": "기타 도구",
     "notesPanel": "참고",
     "outlinesPanel": "개요",
+    "bookmarksPanel": "북마크",
+    "newBookmark": "새로운 북마크",
+    "bookmarkPage": "페이지",
     "layersPanel": "레이어",
     "shapeToolsButton": "도형 도구",
     "textToolsButton": "텍스트 도구",
@@ -82,10 +115,7 @@
     "redaction": "개정",
     "viewControlsOverlay": "컨트롤 보기",
     "measurementToolsButton": "측정 도구",
-    "calibration": "구경 측정",
-    "bookmarkPage": "페이지",
-    "bookmarksPanel": "북마크",
-    "newBookmark": "새로운 북마크"
+    "calibration": "구경 측정"
   },
   "message": {
     "badDocument": "문서를 로드하지 못했습니다. 문서가 손상되었거나 유효하지 않습니다.",
@@ -109,7 +139,9 @@
     "searchPlaceholder": "코멘트 검색...",
     "signHere": "여기에 서명하세요",
     "insertTextHere": "여기에 텍스트를 삽입하세요",
-    "enterMeasurement": "두 지점 사이에 측정 값을 입력하십시오"
+    "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}} 만 허용됩니다",
+    "enterMeasurement": "두 지점 사이에 측정 값을 입력하십시오",
+    "linkURLorPage": "링크 URL 또는 페이지"
   },
   "option": {
     "annotationColor": {
@@ -120,6 +152,9 @@
     "displayMode": {
       "layout": "레이아웃",
       "pageTransition": "페이지 전환"
+    },
+    "documentControls": {
+      "placeholder": "선택할 페이지를 입력하십시오 (예 : 2, 5-9)."
     },
     "layout": {
       "cover": "커버",
@@ -156,6 +191,12 @@
     "signatureOverlay": {
       "addSignature": "서명 추가"
     },
+    "signatureModal": {
+      "saveSignature": "서명 저장",
+      "dragAndDrop": "여기에 이미지를 드래그 앤 드롭",
+      "or": "또는",
+      "pickImage": "서명 이미지 선택"
+    },
     "status": {
       "status": "지위"
     },
@@ -181,6 +222,11 @@
     "measurementOption": {
       "scale": "배율"
     },
+    "styleOption": {
+      "style": "스타일",
+      "regular": "정규병",
+      "cloudy": "흐림"
+    },
     "slider": {
       "opacity": "불투명도",
       "thickness": "두께",
@@ -194,20 +240,21 @@
       "size": "크기",
       "location": "워터 마크를 편집 할 위치를 선택하십시오",
       "text": "본문",
-      "colors": "그림 물감",
-      "resetAllSettings": "모든 설정 초기화"
+      "style": "스타일",
+      "resetAllSettings": "모든 설정 초기화",
+      "font": "글꼴"
     },
     "thumbnailPanel": {
-      "rotateClockwise": "시계 방향",
       "delete": "지우다",
+      "rotateClockwise": "시계 방향",
       "rotateCounterClockwise": "시계 반대 방향"
     }
   },
   "warning": {
     "deletePage": {
-      "deleteLastPageMessage": "그러면 페이지가 남아 있지 않습니다. 한 페이지 이상 남겨주세요",
       "deleteTitle": "페이지 삭제",
-      "deleteMessage": "선택한 페이지를 삭제 하시겠습니까? 취소 할 수 없습니다"
+      "deleteMessage": "선택한 페이지를 삭제 하시겠습니까? 취소 할 수 없습니다",
+      "deleteLastPageMessage": "그러면 페이지가 남아 있지 않습니다. 한 페이지 이상 남겨주세요"
     },
     "redaction": {
       "applyTile": "수정 적용",
@@ -242,6 +289,13 @@
   "tool": {
     "pan": "이동",
     "select": "선택",
-    "Marquee": "선택 윤곽 확대/축소"
+    "Marquee": "선택 윤곽 확대/축소",
+    "Link": "링크 URL 또는 페이지"
+  },
+  "link": {
+    "url": "URL",
+    "page": "페이지",
+    "enterurl": "연결할 URL을 입력하십시오",
+    "enterpage": "연결하려는 페이지 번호를 선택하십시오"
   }
 }

@@ -7,19 +7,11 @@ import selectors from 'selectors';
 import './ProgressModal.scss';
 
 const ProgressModal = () => {
-  const [
-    isDisabled,
-    isOpen,
-    loadingProgress,
-    isUploading,
-    uploadProgress,
-  ] = useSelector(
+  const [isDisabled, isOpen, loadingProgress] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'progressModal'),
       selectors.isElementOpen(state, 'progressModal'),
       selectors.getLoadingProgress(state),
-      selectors.isUploading(state),
-      selectors.getUploadProgress(state),
     ],
     shallowEqual,
   );
@@ -33,12 +25,11 @@ const ProgressModal = () => {
           'printModal',
           'errorModal',
           'loadingModal',
+          'passwordModal',
         ]),
       );
     }
   }, [dispatch, isOpen]);
-
-  const progressToUse = isUploading ? uploadProgress : loadingProgress;
 
   return isDisabled ? null : (
     <div
@@ -55,7 +46,7 @@ const ProgressModal = () => {
           <div
             className="progress-bar"
             style={{
-              transform: `translateX(${-(1 - progressToUse) * 100}%)`,
+              transform: `translateX(${-(1 - loadingProgress) * 100}%)`,
             }}
           />
         </div>

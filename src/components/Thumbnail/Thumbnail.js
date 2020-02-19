@@ -19,6 +19,8 @@ class Thumbnail extends React.PureComponent {
     currentPage: PropTypes.number.isRequired,
     pageLabels: PropTypes.array.isRequired,
     canLoad: PropTypes.bool.isRequired,
+    isSelected: PropTypes.bool,
+    isThumbnailMultiselectEnabled: PropTypes.bool,
     onLoad: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
@@ -26,6 +28,8 @@ class Thumbnail extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     onDragStart: PropTypes.func,
     onDragOver: PropTypes.func,
+    setSelectedPageThumbnails: PropTypes.func,
+    selectedPageIndexes: PropTypes.arrayOf(PropTypes.number),
     isDraggable: PropTypes.bool,
   };
 
@@ -83,41 +87,44 @@ class Thumbnail extends React.PureComponent {
     }
 
     if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
-      this.loadThumbnailAsync();
+      const { thumbContainer } = this;
+      const { current } = thumbContainer;
+
+      core.loadThumbnailAsync(index, thumb => {
+        const currentThumbnail = current?.querySelector('.page-image');
+        if (currentThumbnail) {
+          current.removeChild(currentThumbnail);
+        }
+
+        thumb.className = 'page-image';
+        thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
+        thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
+
+        current.appendChild(thumb);
+        if (this.props.updateAnnotations) {
+          this.props.updateAnnotations(index);
+        }
+      });
     }
   }
 
-  loadThumbnailAsync = () => {
-    const { index } = this.props;
-    const { thumbContainer } = this;
-    const { current } = thumbContainer;
+  handleClick = e => {
+    const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled } = this.props;
 
-    const id = core.loadThumbnailAsync(index, thumb => {
-      thumb.className = 'page-image';
-      thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
-      thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
-
-      const childElement = current.querySelector('.page-image');
-      if (childElement) {
-        current.removeChild(childElement);
+    if (isThumbnailMultiselectEnabled && (e.ctrlKey || e.metaKey)) {
+      let updatedSelectedPages = [...selectedPageIndexes];
+      if (selectedPageIndexes.indexOf(index) > -1) {
+        updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+      } else {
+        updatedSelectedPages.push(index);
       }
-      current.appendChild(thumb);
-      if (this.props.updateAnnotations) {
-        this.props.updateAnnotations(index);
-      }
-    });
 
-    return id;
-  }
-
-  handleClick = () => {
-    const { index, closeElement } = this.props;
-
-    core.setCurrentPage(index + 1);
-
-    if (isMobile()) {
+      setSelectedPageThumbnails(updatedSelectedPages);
+    } else if (isMobile()) {
       closeElement('leftPanel');
     }
+
+    core.setCurrentPage(index + 1);
   };
 
   onDragStart = e => {
@@ -131,7 +138,7 @@ class Thumbnail extends React.PureComponent {
   };
 
   render() {
-    const { index, currentPage, pageLabels, isDraggable } = this.props;
+    const { index, currentPage, pageLabels, isDraggable, isSelected } = this.props;
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
 
@@ -140,6 +147,7 @@ class Thumbnail extends React.PureComponent {
         className={classNames({
           Thumbnail: true,
           active: isActive,
+          selected: isSelected,
         })}
         onClick={this.handleClick}
         onDragOver={this.onDragOver}
@@ -150,10 +158,12 @@ class Thumbnail extends React.PureComponent {
             width: THUMBNAIL_SIZE,
             height: THUMBNAIL_SIZE,
           }}
-          ref={this.thumbContainer}
+
           onDragStart={this.onDragStart}
           draggable={isDraggable}
-        />
+        >
+          <div ref={this.thumbContainer} className="thumbnail" />
+        </div>
         <div className="page-label">{pageLabel}</div>
         {isActive && <ThumbnailControls index={index} />}
       </div>
@@ -164,10 +174,13 @@ class Thumbnail extends React.PureComponent {
 const mapStateToProps = state => ({
   currentPage: selectors.getCurrentPage(state),
   pageLabels: selectors.getPageLabels(state),
+  selectedPageIndexes: selectors.getSelectedThumbnailPageIndexes(state),
+  isThumbnailMultiselectEnabled: selectors.getIsThumbnailMultiselectEnabled(state),
 });
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
+  setSelectedPageThumbnails: actions.setSelectedPageThumbnails,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Thumbnail);

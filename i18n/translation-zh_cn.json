@@ -13,6 +13,7 @@
     "ungroup": "取消组合",
     "download": "下载",
     "edit": "编辑",
+    "extract": "提取",
     "enterFullscreen": "全屏",
     "exitFullscreen": "退出全屏",
     "fit": "文档尺寸",
@@ -28,13 +29,16 @@
     "save": "保存",
     "create": "创建",
     "showMoreResults": "显示更多结果",
-    "saveSignature": "保存签名",
     "sign": "签名",
     "style": "样式",
     "submit": "提交",
     "zoom": "缩放",
     "zoomIn": "放大",
-    "zoomOut": "缩小"
+    "zoomOut": "缩小",
+    "draw": "画",
+    "type": "类型",
+    "upload": "上载",
+    "link": "链接"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -64,7 +68,33 @@
     "stickyNote": "注释",
     "strikeout": "删除线",
     "underline": "下划线",
-    "custom": "自定义"
+    "custom": "自定义",
+    "rubberStamp": "橡皮图章"
+  },
+  "rubberStamp": {
+    "Approved": "已批准",
+    "AsIs": "照原样",
+    "Completed": "已完成",
+    "Confidential": "机密",
+    "Departmental": "部门的",
+    "Draft": "草案",
+    "Experimental": "实验性",
+    "Expired": "已过期",
+    "Final": "最后",
+    "ForComment": "征求意见",
+    "ForPublicRelease": "公开发行",
+    "InformationOnly": "仅供参考",
+    "NotApproved": "不批准",
+    "NotForPublicRelease": "不公开发布",
+    "PreliminaryResults": "初步结果",
+    "Sold": "已售出",
+    "TopSecret": "最高机密",
+    "Void": "空洞",
+    "SHSignHere": "在这里签名",
+    "SHWitness": "见证人",
+    "SHInitialHere": "最初在这里",
+    "SHAccepted": "公认",
+    "SBRejected": "拒绝"
   },
   "component": {
     "freehandToolsButton": "手绘工具",
@@ -74,6 +104,9 @@
     "miscToolsButton": "其他工具",
     "notesPanel": "备注",
     "outlinesPanel": "大纲",
+    "bookmarksPanel": "书签",
+    "newBookmark": "新书签",
+    "bookmarkPage": "页",
     "layersPanel": "图层",
     "shapeToolsButton": "形状工具",
     "textToolsButton": "文本工具",
@@ -82,10 +115,7 @@
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
     "measurementToolsButton": "测量工具",
-    "calibration": "校准",
-    "bookmarksPanel": "书签",
-    "bookmarkPage": "页",
-    "newBookmark": "新书签"
+    "calibration": "校准"
   },
   "message": {
     "badDocument": "无法加载文档，此文档已损坏或无效。",
@@ -109,7 +139,9 @@
     "searchPlaceholder": "在此处搜索注释…",
     "signHere": "在此处签名",
     "insertTextHere": "在这里插入文字",
-    "enterMeasurement": "在两点之间输入测量值"
+    "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
+    "enterMeasurement": "在两点之间输入测量值",
+    "linkURLorPage": "链接网址或页面"
   },
   "option": {
     "annotationColor": {
@@ -120,6 +152,9 @@
     "displayMode": {
       "layout": "布局",
       "pageTransition": "页面转换"
+    },
+    "documentControls": {
+      "placeholder": "输入页面以选择2、5-9"
     },
     "layout": {
       "cover": "封面",
@@ -156,6 +191,12 @@
     "signatureOverlay": {
       "addSignature": "添加签名"
     },
+    "signatureModal": {
+      "saveSignature": "保存签名",
+      "dragAndDrop": "将图片拖放到此处",
+      "or": "要么",
+      "pickImage": "选择签名图像"
+    },
     "status": {
       "status": "状态"
     },
@@ -181,6 +222,11 @@
     "measurementOption": {
       "scale": "比例"
     },
+    "styleOption": {
+      "style": "样式",
+      "regular": "定期",
+      "cloudy": "多云的"
+    },
     "slider": {
       "opacity": "不透明度",
       "thickness": "厚度",
@@ -194,20 +240,21 @@
       "size": "尺寸",
       "location": "选择一个位置来编辑水印",
       "text": "文本",
-      "colors": "颜色",
-      "resetAllSettings": "重置所有设置"
+      "style": "样式",
+      "resetAllSettings": "重置所有设置",
+      "font": "字形"
     },
     "thumbnailPanel": {
       "delete": "删除",
-      "rotateCounterClockwise": "逆时针方向",
-      "rotateClockwise": "顺时针"
+      "rotateClockwise": "顺时针",
+      "rotateCounterClockwise": "逆时针方向"
     }
   },
   "warning": {
     "deletePage": {
+      "deleteTitle": "删除页面",
       "deleteMessage": "您确定要删除所选页面吗？这是无法撤消的",
-      "deleteLastPageMessage": "这将导致没有剩余页面。请至少留一页",
-      "deleteTitle": "删除页面"
+      "deleteLastPageMessage": "这将导致没有剩余页面。请至少留一页"
     },
     "redaction": {
       "applyTile": "应用编辑",
@@ -242,6 +289,13 @@
   "tool": {
     "pan": "移动",
     "select": "选择",
-    "Marquee": "选框缩放"
+    "Marquee": "选框缩放",
+    "Link": "链接网址或页面"
+  },
+  "link": {
+    "url": "网址",
+    "page": "页",
+    "enterurl": "输入您想要链接的URL",
+    "enterpage": "选择您要链接的页码"
   }
 }
