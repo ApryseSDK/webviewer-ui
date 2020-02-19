@@ -13,6 +13,8 @@ import getClassName from 'helpers/getClassName';
 import displayModeObjects from 'constants/displayModeObjects';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
+import classNames from 'classnames';
 
 import './ViewControlsOverlay.scss';
 
@@ -88,26 +90,31 @@ class ViewControlsOverlay extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, displayMode, totalPages, t } = this.props;
+    const { isDisabled, displayMode, totalPages, t, isMobile } = this.props;
     const { left, right, top } = this.state;
     const { pageTransition, layout } = displayModeObjects.find(
       obj => obj.displayMode === displayMode,
     );
-    const className = getClassName('Overlay ViewControlsOverlay', this.props);
+    // const className = getClassName('Overlay ViewControlsOverlay', this.props);
 
     if (isDisabled) {
       return null;
     }
 
-    // const rowClass = classNames({
-    //   active: isActive,
-    // });
+    let style = {};
+    if (!isMobile) {
+      style = { left, right, top };
+    }
 
     return (
       <div
-        className={className}
+        className={classNames({
+          Overlay: true,
+          ViewControlsOverlay: true,
+          mobile: isMobile,
+        })}
         data-element="viewControlsOverlay"
-        style={{ left, right, top }}
+        style={style}
         ref={this.overlay}
       >
         <div className="ViewControlsContainer">
@@ -220,7 +227,21 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements,
 };
 
-export default connect(
+const ConnectedViewControlsOverlay = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(withTranslation()(onClickOutside(ViewControlsOverlay)));
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedViewControlsOverlay {...props} isMobile={isMobile} />
+  );
+};

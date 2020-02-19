@@ -166,7 +166,6 @@ const ConnectedSearchPanel = connect(
   mapDispatchToProps,
 )(withTranslation()(SearchPanel));
 
-
 export default props => {
   const isMobile = useMedia(
     // Media queries
