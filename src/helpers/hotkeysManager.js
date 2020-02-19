@@ -10,6 +10,7 @@ import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect
 import { isMobile } from 'helpers/device';
 import isFocusingElement from 'helpers/isFocusingElement';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
+import setCurrentPage from 'helpers/setCurrentPage';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -241,37 +242,20 @@ WebViewer(...)
       pageup: e => {
         e.preventDefault();
 
-        const currPageNumber = core.getCurrentPage();
-        const pageDecrease = getNumberOfPagesToNavigate(core.getDisplayMode());
-        const nextPageNumber = currPageNumber - pageDecrease < 1 ? 1 : currPageNumber - pageDecrease;
-
-        if (nextPageNumber !== currPageNumber) {
-          core.setCurrentPage(nextPageNumber);
-        }
+        setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
       },
       pagedown: e => {
         e.preventDefault();
 
-        const currPageNumber = core.getCurrentPage();
-        const totalPageNumber = core.getTotalPages();
-        const pageIncrease = getNumberOfPagesToNavigate(core.getDisplayMode());
-        const nextPageNumber = currPageNumber + pageIncrease > totalPageNumber ? totalPageNumber : currPageNumber + pageIncrease;
-
-        if (nextPageNumber !== currPageNumber) {
-          core.setCurrentPage(nextPageNumber);
-        }
+        setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
       },
       up: () => {
         // do not call preventDefault else it will prevent scrolling
         const scrollViewElement = core.getScrollViewElement();
         const { scrollHeight, clientHeight } = scrollViewElement;
         const reachedTop = scrollViewElement.scrollTop === 0;
-        const currPageNumber = core.getCurrentPage();
-        if (reachedTop && currPageNumber > 1) {
-          const pageDecrease = getNumberOfPagesToNavigate(core.getDisplayMode());
-          const nextPageNumber = currPageNumber - pageDecrease < 1 ? 1 : currPageNumber - pageDecrease;
-
-          core.setCurrentPage(nextPageNumber);
+        if (reachedTop) {
+          setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
           // set the scrollbar to be at the bottom of the page
           scrollViewElement.scrollTop = scrollHeight - clientHeight;
         }
@@ -281,13 +265,8 @@ WebViewer(...)
         const scrollViewElement = core.getScrollViewElement();
         const { scrollTop, clientHeight, scrollHeight } = scrollViewElement;
         const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
-        const currPageNumber = core.getCurrentPage();
-        const totalPageNumber = core.getTotalPages();
-        if (reachedBottom && currPageNumber < totalPageNumber) {
-          const pageIncrease = getNumberOfPagesToNavigate(core.getDisplayMode());
-          const nextPageNumber = currPageNumber + pageIncrease > totalPageNumber ? totalPageNumber : currPageNumber + pageIncrease;
-
-          core.setCurrentPage(nextPageNumber);
+        if (reachedBottom) {
+          setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
         }
       },
       space: {

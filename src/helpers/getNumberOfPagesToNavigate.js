@@ -1,4 +1,6 @@
-export default displayMode => {
+import core from 'core';
+
+export default () => {
   const mapDisplayModeToNumberOfPages = {
     Single: 1,
     Continuous: 1,
@@ -8,5 +10,5 @@ export default displayMode => {
     Cover: 2,
   };
 
-  return mapDisplayModeToNumberOfPages[displayMode];
+  return mapDisplayModeToNumberOfPages[core.getDisplayMode()];
 };
