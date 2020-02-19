@@ -9,6 +9,8 @@ import print from 'helpers/print';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import { isMobile } from 'helpers/device';
 import isFocusingElement from 'helpers/isFocusingElement';
+import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
+import LayoutMode from 'constants/layoutMode';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -241,16 +243,23 @@ WebViewer(...)
         e.preventDefault();
 
         const currPageNumber = core.getCurrentPage();
-        if (currPageNumber > 1) {
-          core.setCurrentPage(currPageNumber - 1);
+        const pageDecrease = getNumberOfPagesToNavigate(core.getDisplayMode());
+        const nextPageNumber = currPageNumber - pageDecrease < 1 ? 1 : currPageNumber - pageDecrease;
+
+        if (nextPageNumber !== currPageNumber) {
+          core.setCurrentPage(nextPageNumber);
         }
       },
       pagedown: e => {
         e.preventDefault();
 
         const currPageNumber = core.getCurrentPage();
-        if (currPageNumber < core.getTotalPages()) {
-          core.setCurrentPage(currPageNumber + 1);
+        const totalPageNumber = core.getTotalPages();
+        const pageIncrease = getNumberOfPagesToNavigate(core.getDisplayMode());
+        const nextPageNumber = currPageNumber + pageIncrease > totalPageNumber ? totalPageNumber : currPageNumber + pageIncrease;
+
+        if (nextPageNumber !== currPageNumber) {
+          core.setCurrentPage(nextPageNumber);
         }
       },
       up: () => {
@@ -259,8 +268,11 @@ WebViewer(...)
         const { scrollHeight, clientHeight } = scrollViewElement;
         const reachedTop = scrollViewElement.scrollTop === 0;
         const currPageNumber = core.getCurrentPage();
-        if (reachedTop && currPageNumber > 1) {
-          core.setCurrentPage(currPageNumber - 1);
+        if (!this.isContinuous() && reachedTop && currPageNumber > 1) {
+          const pageDecrease = getNumberOfPagesToNavigate(core.getDisplayMode());
+          const nextPageNumber = currPageNumber - pageDecrease < 1 ? 1 : currPageNumber - pageDecrease;
+
+          core.setCurrentPage(nextPageNumber);
           // set the scrollbar to be at the bottom of the page
           scrollViewElement.scrollTop = scrollHeight - clientHeight;
         }
@@ -271,8 +283,12 @@ WebViewer(...)
         const { scrollTop, clientHeight, scrollHeight } = scrollViewElement;
         const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
         const currPageNumber = core.getCurrentPage();
-        if (reachedBottom && currPageNumber < core.getTotalPages()) {
-          core.setCurrentPage(currPageNumber + 1);
+        const totalPageNumber = core.getTotalPages();
+        if (!this.isContinuous() && reachedBottom && currPageNumber < totalPageNumber) {
+          const pageIncrease = getNumberOfPagesToNavigate(core.getDisplayMode());
+          const nextPageNumber = currPageNumber + pageIncrease > totalPageNumber ? totalPageNumber : currPageNumber + pageIncrease;
+
+          core.setCurrentPage(nextPageNumber);
         }
       },
       space: {
@@ -438,6 +454,19 @@ WebViewer(...)
     };
 
     return map[toolName];
+  },
+  isContinuous() {
+    let isContinuous = false;
+
+    switch (core.getDisplayMode()) {
+      case LayoutMode.Cover:
+      case LayoutMode.Continuous:
+      case LayoutMode.FacingContinuous:
+        isContinuous = true;
+        break;
+    }
+
+    return isContinuous;
   },
 };
 
