@@ -268,7 +268,7 @@ WebViewer(...)
         const { scrollHeight, clientHeight } = scrollViewElement;
         const reachedTop = scrollViewElement.scrollTop === 0;
         const currPageNumber = core.getCurrentPage();
-        if (!this.isContinuous() && reachedTop && currPageNumber > 1) {
+        if (reachedTop && currPageNumber > 1) {
           const pageDecrease = getNumberOfPagesToNavigate(core.getDisplayMode());
           const nextPageNumber = currPageNumber - pageDecrease < 1 ? 1 : currPageNumber - pageDecrease;
 
@@ -284,7 +284,7 @@ WebViewer(...)
         const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
         const currPageNumber = core.getCurrentPage();
         const totalPageNumber = core.getTotalPages();
-        if (!this.isContinuous() && reachedBottom && currPageNumber < totalPageNumber) {
+        if (reachedBottom && currPageNumber < totalPageNumber) {
           const pageIncrease = getNumberOfPagesToNavigate(core.getDisplayMode());
           const nextPageNumber = currPageNumber + pageIncrease > totalPageNumber ? totalPageNumber : currPageNumber + pageIncrease;
 
@@ -454,19 +454,6 @@ WebViewer(...)
     };
 
     return map[toolName];
-  },
-  isContinuous() {
-    let isContinuous = false;
-
-    switch (core.getDisplayMode()) {
-      case LayoutMode.Cover:
-      case LayoutMode.Continuous:
-      case LayoutMode.FacingContinuous:
-        isContinuous = true;
-        break;
-    }
-
-    return isContinuous;
   },
 };
 
