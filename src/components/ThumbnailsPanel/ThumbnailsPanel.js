@@ -343,7 +343,8 @@ class ThumbnailsPanel extends React.PureComponent {
   onCancel = pageIndex => {
     const { thumbnailStart, thumbnailEnd } = this.state;
     const index = this.getPendingThumbIndex(pageIndex);
-    if (index !== -1 && (pageIndex > thumbnailEnd || pageIndex < thumbnailStart)) {
+    if (index !== -1 && (pageIndex > thumbnailEnd || pageIndex < thumbnailStart)
+    ) {
       core.cancelLoadThumbnail(this.pendingThumbs[index].id);
       this.pendingThumbs.splice(index, 1);
     }
@@ -356,7 +357,7 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs[pageIndex] = null;
   }
 
-  onThumbnailRendered = ({ overscanStartIndex, overscanStopIndex }) => {
+  onThumbnailsRendered = ({ overscanStartIndex, overscanStopIndex }) => {
     this.setState({
       thumbnailStart: overscanStartIndex,
       thumbnailEnd: overscanStopIndex,
@@ -460,7 +461,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
                 rowCount={Math.ceil(totalPages / numberOfColumns)}
                 rowRenderer={this.renderThumbnails}
-                onRowsRendered={this.onThumbnailRendered}
+                onRowsRendered={this.onThumbnailsRendered}
                 overscanRowCount={10}
                 className={'thumbnailsList'}
                 style={{ outline: 'none' }}
