@@ -10,7 +10,6 @@ import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect
 import { isMobile } from 'helpers/device';
 import isFocusingElement from 'helpers/isFocusingElement';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
-import LayoutMode from 'constants/layoutMode';
 import actions from 'actions';
 import selectors from 'selectors';
 
