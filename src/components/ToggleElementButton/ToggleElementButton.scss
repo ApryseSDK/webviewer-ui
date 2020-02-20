@@ -1,3 +1,5 @@
+@import '../../constants/styles.scss';
+
 .toggle-element-button {
     display: flex;
     align-items: center;
@@ -6,10 +8,13 @@
     cursor: pointer;
 
     .down-arrow-container {
+      @include mobile {
+        display: none;
+      }
+
+      height: 100%;
       margin-left: -4px;
-      height: 100%;
       margin-right: 4px;
-      height: 100%;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -37,4 +42,6 @@
     .Button:hover {
       background: none;
     }
+
+
   }

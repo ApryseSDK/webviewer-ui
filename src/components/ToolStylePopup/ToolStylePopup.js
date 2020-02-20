@@ -127,10 +127,6 @@ class ToolStylePopup extends React.PureComponent {
     }
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
 
-    // if (activeToolName === 'AnnotationCreateRubberStamp') {
-    //   siblingWidth = 250;
-    // }
-
     return (
       <div
         className={classNames({
@@ -142,6 +138,7 @@ class ToolStylePopup extends React.PureComponent {
         ref={this.popup}
         onClick={this.handleClick}
       >
+        {isMobile && <div className="swipe-indicator" />}
         <StylePopup
           key={activeToolName}
           toolName={activeToolName}

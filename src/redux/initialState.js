@@ -31,8 +31,8 @@ export default {
             height: '100%',
           },
         },
-        { type: 'divider' },
-        { type: 'toolButton', toolName: 'Pan' },
+        { type: 'divider', hidden: ['mobile'] },
+        { type: 'toolButton', toolName: 'Pan', hidden: ['mobile'] },
         // For mobile
         // { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },

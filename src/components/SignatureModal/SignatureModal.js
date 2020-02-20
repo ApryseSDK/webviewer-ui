@@ -91,20 +91,16 @@ const SignatureModal = () => {
     closed: !isOpen,
   });
 
-  let colorMapKey = 'signature';
-
-  if (selectedTab !== 'inkSignaturePanelButton') {
-    colorMapKey = 'stamp';
-  }
-  console.log('colorMapKey', colorMapKey, activeToolStyles);
-
   return isDisabled ? null : (
     <div
       className={modalClass}
       data-element="signatureModal"
       onMouseDown={closeModal}
     >
-      <div className="container" onMouseDown={e => e.stopPropagation()}>
+      <div
+        className="container"
+        onMouseDown={e => e.stopPropagation()}
+      >
         <Tabs id="signatureModal">
           <div className="tab-list">
             <Tab dataElement="inkSignaturePanelButton">
