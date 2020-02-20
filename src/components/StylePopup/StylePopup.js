@@ -12,6 +12,7 @@ import StampOverlay from 'components/StampOverlay';
 import { circleRadius } from 'constants/slider';
 import selectors from 'selectors';
 import pickBy from 'lodash/pickBy';
+import useMedia from 'hooks/useMedia';
 
 import './StylePopup.scss';
 
@@ -27,7 +28,6 @@ class StylePopup extends React.PureComponent {
 
   renderColorPalette = () => {
     const { style, onStyleChange, currentPalette } = this.props;
-    console.log(style, currentPalette);
 
     return (
       <ColorPalette
@@ -156,4 +156,22 @@ const mapStateToProps = (state, { colorMapKey }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
 });
 
-export default connect(mapStateToProps)(StylePopup);
+// export default connect(mapStateToProps)(StylePopup);
+
+const ConnectedStylePopup = connect(
+  mapStateToProps,
+)(StylePopup);
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedStylePopup {...props} isMobile={isMobile} />
+  );
+};
