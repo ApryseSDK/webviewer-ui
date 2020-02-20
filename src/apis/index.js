@@ -127,6 +127,8 @@ import setSignatureFonts from './setSignatureFonts';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
+import selectThumbnailPageNumbers from './selectThumbnailPageNumbers';
+import unselectThumbnailPageNumbers from './unselectThumbnailPageNumbers';
 
 export default store => {
   window.readerControl = {
@@ -200,6 +202,8 @@ export default store => {
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
     getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
+    selectThumbnailPageNumbers: selectThumbnailPageNumbers(store),
+    unselectThumbnailPageNumbers: unselectThumbnailPageNumbers(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),
