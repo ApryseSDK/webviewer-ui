@@ -9,6 +9,10 @@
 
   > .Button, > .toggle-element-button {
     margin: 0 6px;
+
+    @include mobile {
+      margin: 0 8px;
+    }
   }
 
   .spacer {
