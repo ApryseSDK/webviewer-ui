@@ -102,7 +102,7 @@ class Thumbnail extends React.PureComponent {
       thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
       thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
 
-      const childElement = current.querySelector('.page-image');
+      const childElement = current?.querySelector('.page-image');
       if (childElement) {
         current.removeChild(childElement);
       }
