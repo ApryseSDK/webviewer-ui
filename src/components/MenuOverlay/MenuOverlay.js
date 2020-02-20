@@ -173,8 +173,6 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
-// export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(MenuOverlay)));
-
 const ConnectedMenuOverlay = connect(
   mapStateToProps,
   mapDispatchToProps,

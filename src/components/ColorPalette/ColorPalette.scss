@@ -18,6 +18,12 @@
       border-radius: 4px;
     }
 
+    @include mobile {
+      width: 36px;
+      height: 36px;
+      margin: 0 16px;
+    }
+
     .cell {
       width: 18px;
       height: 18px;
@@ -38,6 +44,16 @@
 
       &.border{
         border: 1px solid #dfe2ed;
+      }
+
+      @include mobile {
+        width: 24px;
+        height: 24px;
+
+        &.active {
+          width: 29px;
+          height: 29px;
+        }
       }
     }
   }

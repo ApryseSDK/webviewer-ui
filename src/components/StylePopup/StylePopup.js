@@ -13,6 +13,7 @@ import { circleRadius } from 'constants/slider';
 import selectors from 'selectors';
 import pickBy from 'lodash/pickBy';
 import useMedia from 'hooks/useMedia';
+import classNames from 'classnames';
 
 import './StylePopup.scss';
 
@@ -114,12 +115,18 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { currentPalette, style, colorMapKey, onStyleChange, toolName } = this.props;
+    const { currentPalette, style, colorMapKey, onStyleChange, toolName, isMobile } = this.props;
     const { Scale, Precision, Style } = style;
+
+    const className = classNames({
+      Popup: true,
+      StylePopup: true,
+      mobile: isMobile,
+    });
 
     if (toolName === 'AnnotationCreateRubberStamp') {
       return (
-        <div className="Popup StylePopup" data-element="stylePopup">
+        <div className={className} data-element="stylePopup">
           {!this.props.hideSlider && this.renderSliders()}
           <StampOverlay />
         </div>
@@ -127,7 +134,7 @@ class StylePopup extends React.PureComponent {
     }
 
     return (
-      <div className="Popup StylePopup" data-element="stylePopup">
+      <div className={className} data-element="stylePopup">
         {currentPalette && (
           <div className="colors-container">
             <ColorPaletteHeader
