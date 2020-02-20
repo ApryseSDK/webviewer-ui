@@ -1,16 +1,11 @@
 @import '../../constants/styles';
 
 .Icon{
-  width: $icon-width;
-  height: $icon-height;
+  width: 24px;
+  height: 24px;
   pointer-events: none;
   color:  #8c8c8c;
   color: var(--icon-color);
-
-  @include mobile {
-    width: 18px;
-    height: 18px;
-  }
 
   path:not([fill=none]),
   polygon#Triangle {

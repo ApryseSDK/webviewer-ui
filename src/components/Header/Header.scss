@@ -7,7 +7,6 @@
   min-width: 300px;
   height: $top-bar-height;
   background: var(--light-background);
-  padding: 2px 0px;
 
   border-bottom: solid 1px var(--border);
 
@@ -17,4 +16,8 @@
     height: 35px;
     background: var(--dark-background);
   }
+
+  @include mobile {
+    height: 52px;
+  }   
 }
