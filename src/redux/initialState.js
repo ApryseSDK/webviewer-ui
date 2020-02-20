@@ -45,11 +45,11 @@ export default {
           type: 'customElement',
           render: () => <PageNavOverlay />,
           dataElement: 'pageNavOverlay',
-          style: {
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          },
+          // style: {
+          //   position: 'absolute',
+          //   left: '50%',
+          //   transform: 'translateX(-50%)',
+          // },
         },
       ],
       // second header

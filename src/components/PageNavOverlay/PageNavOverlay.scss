@@ -11,6 +11,27 @@
   align-items: center;
   cursor: pointer;
 
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0px;
+  z-index: 55;
+
+  @include mobile {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;  
+    top: auto;  
+    transform: translateX(-50%);
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--light-background);
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);    
+    // height: 32px;
+    font-size: 16px;
+  }
+
   .down-arrow-container {
     height: 100%;
     border-radius: 4px;
@@ -26,6 +47,11 @@
     .down-arrow {
       width: 16px;
       height: 16px;
+
+      @include mobile {
+        width: 24px;
+        height: 24px;
+      }      
     }
   }
 
@@ -46,6 +72,10 @@
       cursor: pointer;
       outline: none;
       border-bottom: 1px solid var(--text-color);
+
+      @include mobile {
+        font-size: 16px;
+      }
     }    
   }
 
