@@ -12,6 +12,7 @@ import { isMobile } from 'helpers/device';
 import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 
 import './ToolStylePopup.scss';
 
@@ -116,7 +117,7 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, activeToolName, activeToolStyle } = this.props;
+    const { isDisabled, activeToolName, activeToolStyle, isMobile } = this.props;
     let { siblingWidth } = this.props;
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const colorMapKey = mapToolNameToKey(activeToolName);
@@ -134,6 +135,7 @@ class ToolStylePopup extends React.PureComponent {
       <div
         className={classNames({
           ToolStylePopup: true,
+          mobile: isMobile,
         })}
         style={{ width: siblingWidth }}
         data-element="toolStylePopup"
@@ -167,7 +169,21 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements,
 };
 
-export default connect(
+const ConnectedToolStylePopup = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(onClickOutside(ToolStylePopup));
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedToolStylePopup {...props} isMobile={isMobile} />
+  );
+}

@@ -14,32 +14,36 @@
   }
 
   &.mobile {
-    margin: 0;
-    position: fixed;
-    width: 100%;
-    max-width: initial;
-    left: 0;
-    bottom: 0;
-
-    border-radius: 0px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border: 0px;
-    box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
-
-    padding: 28px 24px;
-
-    .swipe-indicator {
-      background: #dfe2ed;
-      border-radius: 2px;
-      height: 4px;
-      width: 38px;
-      position: absolute;
-      top: 12px;
-      margin-left: auto;
-      margin-right: auto;
-      left: 0;
-      right: 0;
-    }
+    max-width: 340px;
   }
+
+  // &.mobile {
+  //   margin: 0;
+  //   position: fixed;
+  //   width: 100%;
+  //   max-width: initial;
+  //   left: 0;
+  //   bottom: 0;
+
+  //   border-radius: 0px;
+  //   border-top-left-radius: 4px;
+  //   border-top-right-radius: 4px;
+  //   border: 0px;
+  //   box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
+
+  //   padding: 28px 24px;
+
+  //   .swipe-indicator {
+  //     background: #dfe2ed;
+  //     border-radius: 2px;
+  //     height: 4px;
+  //     width: 38px;
+  //     position: absolute;
+  //     top: 12px;
+  //     margin-left: auto;
+  //     margin-right: auto;
+  //     left: 0;
+  //     right: 0;
+  //   }
+  // }
 }
