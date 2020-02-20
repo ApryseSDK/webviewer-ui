@@ -43,8 +43,6 @@ class ThumbnailsPanel extends React.PureComponent {
       documentControlHeight: 0,
       draggingOverPageIndex: null,
       isDraggingToPreviousPage: false,
-      thumbnailStart: 0,
-      thumbnailEnd: 0,
     };
   }
 
@@ -341,9 +339,8 @@ class ThumbnailsPanel extends React.PureComponent {
   thumbIsPending = pageIndex => this.getPendingThumbIndex(pageIndex) !== -1
 
   onCancel = pageIndex => {
-    const { thumbnailStart, thumbnailEnd } = this.state;
     const index = this.getPendingThumbIndex(pageIndex);
-    if (index !== -1 && (pageIndex > thumbnailEnd || pageIndex < thumbnailStart)) {
+    if (index !== -1) {
       core.cancelLoadThumbnail(this.pendingThumbs[index].id);
       this.pendingThumbs.splice(index, 1);
     }
@@ -355,13 +352,6 @@ class ThumbnailsPanel extends React.PureComponent {
     this.onCancel(pageIndex);
     this.thumbs[pageIndex] = null;
   }
-
-  onThumbnailsRendered = ({ overscanStartIndex, overscanStopIndex }) => {
-    this.setState({
-      thumbnailStart: overscanStartIndex,
-      thumbnailEnd: overscanStopIndex,
-    });
-  };
 
   renderThumbnails = ({ index, key, style }) => {
     const {
@@ -460,28 +450,27 @@ class ThumbnailsPanel extends React.PureComponent {
                 // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
                 rowCount={Math.ceil(totalPages / numberOfColumns)}
                 rowRenderer={this.renderThumbnails}
-                onRowsRendered={this.onThumbnailsRendered}
                 overscanRowCount={10}
                 className={'thumbnailsList'}
                 style={{ outline: 'none' }}
               />
-                <Measure
-                  bounds
-                  onResize={({ bounds }) => {
-                    this.setState({
-                      documentControlHeight: Math.ceil(bounds.height),
-                    });
-                  }}
-                >
-                  {({ measureRef: innerMeasureRef }) => (
-                    <div ref={innerMeasureRef}>
-                      <DocumentControls
-                        toggleDocumentControl={this.toggleDocumentControl}
-                        shouldShowControls={shouldShowControls}
-                      />
-                    </div>
-                  )}
-                </Measure>
+              <Measure
+                bounds
+                onResize={({ bounds }) => {
+                  this.setState({
+                    documentControlHeight: Math.ceil(bounds.height),
+                  });
+                }}
+              >
+                {({ measureRef: innerMeasureRef }) => (
+                  <div ref={innerMeasureRef}>
+                    <DocumentControls
+                      toggleDocumentControl={this.toggleDocumentControl}
+                      shouldShowControls={shouldShowControls}
+                    />
+                  </div>
+                )}
+              </Measure>
             </div>
           )}
         </Measure>
