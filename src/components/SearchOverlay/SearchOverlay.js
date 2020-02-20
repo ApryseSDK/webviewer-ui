@@ -114,9 +114,8 @@ class SearchOverlay extends React.PureComponent {
   }
 
   searchFailed = error => {
-    const { setIsSearching, setNoResult, setSearchError } = this.props;
+    const { setIsSearching, setSearchError } = this.props;
     setIsSearching(false);
-    setNoResult(true);
     if (error && error.message) {
       setSearchError(error.message);
     }
