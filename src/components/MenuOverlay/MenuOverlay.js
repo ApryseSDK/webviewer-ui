@@ -18,6 +18,8 @@ import { isIOS } from 'helpers/device';
 import { workerTypes } from 'constants/types';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
+import classNames from 'classnames';
 
 import './MenuOverlay.scss';
 
@@ -86,15 +88,32 @@ class MenuOverlay extends React.PureComponent {
 
   render() {
     const { left, right, top, documentType } = this.state;
-    const { isDisabled, isFullScreen, t } = this.props;
+    const { isDisabled, isFullScreen, t, isMobile, isOpen } = this.props;
 
     if (isDisabled) {
       return null;
     }
-    const className = getClassName('Overlay MenuOverlay', this.props);
+
+    let style = {};
+    if (!isMobile) {
+      style = { left, right, top };
+    }
+
+    // const className = getClassName('Overlay MenuOverlay', this.props);
 
     return (
-      <div className={className} data-element="menuOverlay" style={{ left, right, top }} ref={this.overlay}>
+      <div
+        className={classNames({
+          Overlay: true,
+          MenuOverlay: true,
+          mobile: isMobile,
+          closed: !isOpen,
+        })}
+        data-element="menuOverlay"
+        style={style}
+        ref={this.overlay}
+      >
+        {isMobile && <div className="swipe-indicator" />}
         {!isIOS &&
           <div className="row">
             <div
@@ -154,4 +173,23 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(MenuOverlay)));
+// export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(MenuOverlay)));
+
+const ConnectedMenuOverlay = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(onClickOutside(MenuOverlay)));
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedMenuOverlay {...props} isMobile={isMobile} />
+  );
+};

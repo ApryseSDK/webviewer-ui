@@ -22,19 +22,6 @@
   background: var(--light-background);
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
 
-  .swipe-indicator {
-    background: #dfe2ed;
-    border-radius: 2px;
-    height: 4px;
-    width: 38px;
-    position: absolute;
-    top: 12px;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-  }
-
   .type {
     margin-top: 2px;
     margin-bottom: 8px;
@@ -90,10 +77,21 @@
     padding-top: 30px;
     padding-bottom: 30px;
 
+    .swipe-indicator {
+      background: #dfe2ed;
+      border-radius: 2px;
+      height: 4px;
+      width: 38px;
+      position: absolute;
+      top: 12px;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+    }
+
     .type, .row {
       padding: 0 24px;
     }
   }
-
-
 }
