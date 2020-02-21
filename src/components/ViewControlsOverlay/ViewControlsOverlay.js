@@ -70,7 +70,7 @@ class ViewControlsOverlay extends React.PureComponent {
 
   handleClickOutside = e => {
     const viewControlsButton = document.querySelector('[data-element="viewControlsButton"]');
-    const clickedViewControlsButtonOrChild = viewControlsButton === e.target || viewControlsButton.contains(e.target);
+    const clickedViewControlsButtonOrChild = viewControlsButton === e.target || viewControlsButton?.contains(e.target);
     if (!clickedViewControlsButtonOrChild) {
       this.props.closeElements(['viewControlsOverlay']);
     }
