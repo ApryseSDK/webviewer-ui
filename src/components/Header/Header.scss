@@ -10,11 +10,13 @@
 
   border-bottom: solid 1px var(--border);
 
-  &.Dark {
-    padding-top: 1px; // top lowered 1px due to the border on the header above.
-    padding-bottom: 2px;
-    height: 35px;
-    background: var(--dark-background);
+  @include desktop {
+    &.Dark {
+      padding-top: 1px; // top lowered 1px due to the border on the header above.
+      padding-bottom: 2px;
+      height: 35px;
+      background: var(--dark-background);
+    }
   }
 
   @include mobile {
