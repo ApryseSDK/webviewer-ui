@@ -33,6 +33,12 @@
       line:nth-child(2) {
         stroke: #dfe2ed;
       }
+
+      @include mobile {
+        line {
+          stroke-width: 4;
+        }
+      }
     }
   }
 }
