@@ -53,7 +53,7 @@ const LeftPanel = () => {
       style={style}
     >
       <div className="left-panel-container">
-        <div
+        {isMobile && <div
           className="close-container"
         >
           <div
@@ -67,7 +67,7 @@ const LeftPanel = () => {
               className="close-icon"
             />
           </div>
-        </div>
+        </div>}
         <div className="left-panel-header">
           <LeftPanelTabs />
         </div>
