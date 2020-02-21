@@ -31,4 +31,4 @@ export default (queries, values, defaultValue) => {
   );
 
   return value;
-}
+};
