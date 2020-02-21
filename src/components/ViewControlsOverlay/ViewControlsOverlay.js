@@ -47,7 +47,6 @@ class ViewControlsOverlay extends React.PureComponent {
         'toolsOverlay',
         'searchOverlay',
         'menuOverlay',
-        'toolsOverlay',
         'toolStylePopup',
         'signatureOverlay',
         'zoomOverlay',

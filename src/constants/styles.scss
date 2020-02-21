@@ -78,6 +78,12 @@ $signature-modal-shared-color: #E1E1E3;
   }
 }
 
+@mixin tablet-and-desktop {
+  @media (min-width: #{$mobile-width + 1px}) {
+    @content;
+  }
+}
+
 @mixin mobile {
   @media (max-width: #{$mobile-width}) {
     @content;

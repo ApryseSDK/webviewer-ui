@@ -5,6 +5,10 @@
   @extend %modal;
   font-size: 0.9em;
 
+  @include mobile {
+    background: none;
+  }
+
 
   .container {
     @extend %modal-shared-container-style;
@@ -19,6 +23,30 @@
 
     @include mobile {
       width: 100%;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      padding-top: 24px;
+      padding-bottom: 16px; 
+      padding-left: 24px;
+      padding-right: 24px;  
+
+      .swipe-indicator {
+        background: #dfe2ed;
+        border-radius: 2px;
+        height: 4px;
+        width: 38px;
+        position: absolute;
+        top: 12px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+    
+        @include tablet-and-desktop {
+          display: none;
+        }
+      }      
     }
 
     @include tablet-and-mobile {
@@ -159,7 +187,13 @@
         display: flex;
         align-items: center;
         justify-content: center;    
-        cursor: pointer;    
+        cursor: pointer;   
+        
+        // @include mobile {
+        //   height: 40px;
+        //   width: 128px;          
+        //   justify-content: flex-start;
+        // }
       }
 
       .signature-create {
@@ -175,6 +209,11 @@
         font-size: 13px;
         font-weight: bold;
         cursor: pointer;
+
+        @include mobile {
+          height: 40px;
+          width: 128px;
+        }        
       }
     }
   }

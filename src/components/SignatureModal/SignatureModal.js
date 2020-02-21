@@ -101,6 +101,7 @@ const SignatureModal = () => {
         className="container"
         onMouseDown={e => e.stopPropagation()}
       >
+        <div className="swipe-indicator" />
         <Tabs id="signatureModal">
           <div className="tab-list">
             <Tab dataElement="inkSignaturePanelButton">
