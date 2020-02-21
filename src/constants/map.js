@@ -77,6 +77,17 @@ const map = {
       annotation.IT === 'PolygonDimension' &&
       annotation.Measure,
   },
+  ellipseMeasurement: {
+    icon: 'ic_annotation_circle_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: ['AnnotationCreateEllipseMeasurement'],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.EllipseAnnotation &&
+      annotation.IT === 'EllipseDimension' &&
+      annotation.Measure,
+  },
   callout: {
     icon: 'ic_annotation_callout_black_24px',
     iconColor: 'TextColor',
