@@ -8,17 +8,23 @@
   height: 28px;
   margin: 0 2px;
 
-  .Button{
+  .Button {
     margin: 0px 1px;
+    height: 100%;
   }
+
+  .toggle-element-button {
+    height: 100%;  
+  }
+
 }
 
-.ToggleZoomOverlay{
+.ToggleZoomOverlay {
   margin-right: -1px;
   height: 100%;
   color: var(--text-color);
 
-  .textarea{
+  .textarea{ 
     resize: none;
     border: none;
     outline: none;
@@ -30,31 +36,35 @@
     text-align: right;
   }
 
-  .Icon{
+  .Icon {
     width: 12px;
     height: 16px;
     color: var(--text-color);
   }
 }
 
-.OverlayContainer{
+.OverlayContainer {
   display: flex;
   align-items: center;
   height: 100%;
   border-radius: 4px;
   position: relative;
-  top: -1px;
 
   &:hover {
     background-color: var(--button-hover-color);
   }
-  &.active{
-    background-color: var(--button-active-color);
-  }
+  &.active {
+    background-color: var(--button-hover-color);
+  } 
+
+  .toggle-element-button {
+    margin: 0px 7px;
+    width: 20px;
+  }  
 }
 
 
-.OverlayText{
+.OverlayText {
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -69,7 +79,7 @@
   background-color: inherit;
   &:hover + .OverlayButton {
     background-color:inherit;
-  }
+  } 
 }
 
 input[type=number]::-webkit-inner-spin-button,

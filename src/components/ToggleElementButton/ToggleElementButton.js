@@ -7,6 +7,7 @@ import Icon from 'components/Icon';
 
 import selectors from 'selectors';
 import actions from 'actions';
+import useMedia from 'hooks/useMedia';
 
 import './ToggleElementButton.scss';
 
@@ -61,14 +62,28 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       dispatch(actions.closeElement('notesPanel'));
     } else if (ownProps.element === 'notesPanel') {
       dispatch(actions.closeElement('searchPanel'));
-    } else if (ownProps.element === 'toolsHeader') {
+    } else if (ownProps.element === 'toolsHeader' && ownProps.isMobile) {
       dispatch(actions.closeElement('header'));
     }
     dispatch(actions.toggleElement(ownProps.element));
   },
 });
 
-export default connect(
+const ConnectedToggleElementButton = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(ToggleElementButton);
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedToggleElementButton {...props} isMobile={isMobile} />
+  );
+};

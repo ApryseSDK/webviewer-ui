@@ -163,8 +163,6 @@ const mapStateToProps = (state, { colorMapKey }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
 });
 
-// export default connect(mapStateToProps)(StylePopup);
-
 const ConnectedStylePopup = connect(
   mapStateToProps,
 )(StylePopup);
