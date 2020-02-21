@@ -125,13 +125,16 @@ class ToolGroupButton extends React.PureComponent {
         data-element={dataElement}
         onClick={this.onClick}
       >
-        <Button
-          title={title}
-          mediaQueryClassName={mediaQueryClassName}
-          isActive={isActive}
-          img={img}
-          color={color}
-        />
+        <div>
+          <Button
+            title={title}
+            mediaQueryClassName={mediaQueryClassName}
+            isActive={isActive}
+            img={img}
+            color={color}
+          />
+          <div className="arrow-up" />
+        </div>
         {showDownArrow && (
           <div className="down-arrow-container">
             <Icon className="down-arrow" glyph="icon-chevron-down" />

@@ -24,6 +24,20 @@
   }
 
   &.active{
+    .arrow-up {
+      width: 0; 
+      height: 0; 
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      
+      border-bottom: 10px solid #dfe2ed;
+      position: absolute;
+      bottom: 0px;
+
+      transform: translateX(50%);
+
+    }
+
     .down-arrow-container {
       background: #767f9b33
     }
