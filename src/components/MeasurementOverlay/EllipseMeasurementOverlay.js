@@ -18,11 +18,16 @@ function EllipseMeasurementOverlay(props) {
   const renderScaleRatio = () => `${scale[0][0]} ${scale[0][1]} = ${scale[1][0]} ${scale[1][1]}`;
 
   const computeRadius = () => {
-    const decimalPlaces = 2;
+    const decimalPlaces = getNumberOfDecimalPlaces(annotation);
     const factor = annotation.Measure.axis[0].factor;
     const radiusInPts = (annotation.Width / 2).toFixed(decimalPlaces);
     return (radiusInPts * factor).toFixed(decimalPlaces);
   };
+
+  const getNumberOfDecimalPlaces = annotation =>
+    (annotation.Precision === 1
+      ? 0
+      : annotation.Precision.toString().split('.')[1].length);
 
   const onChangeRadiusLength = event => {
     const radius = Math.abs(event.target.value);

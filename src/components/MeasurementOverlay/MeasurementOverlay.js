@@ -72,7 +72,7 @@ class MeasurementOverlay extends React.PureComponent {
     if (this.state.annotation) {
       this.forceUpdate();
     } else if (
-      this.isMeasurementToolWithInfo(tool) ||
+      this.isMeasurementToolWithInfo(tool) && !this.isSmallAnnotation(tool.annotation) ||
       this.shouldShowCustomOverlay(tool.annotation)
     ) {
       openElement('measurementOverlay');
@@ -87,6 +87,15 @@ class MeasurementOverlay extends React.PureComponent {
       tool.annotation &&
       this.shouldShowInfo(tool.annotation)
     );
+  }
+
+  // This helps ensure we don't show an overlay for small annotations
+  isSmallAnnotation = annotation => {
+    const w = annotation.getWidth();
+    const h = annotation.getHeight();
+    const minSize = (annotation.getRectPadding() + 1) * 2;
+
+    return w <= minSize && h <= minSize;
   }
 
   onAnnotationSelected = (annotations, action) => {
