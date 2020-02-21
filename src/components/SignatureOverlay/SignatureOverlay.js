@@ -12,6 +12,7 @@ import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import actions from 'actions';
+import useMedia from 'hooks/useMedia';
 import selectors from 'selectors';
 
 import './SignatureOverlay.scss';
@@ -235,8 +236,7 @@ class SignatureOverlay extends React.PureComponent {
 
   render() {
     const { left, right, top, defaultSignatures } = this.state;
-    const { t, isDisabled, maxSignaturesCount, isOpen } = this.props;
-    // const className = getClassName('Overlay SignatureOverlay', this.props);
+    const { t, isDisabled, maxSignaturesCount, isOpen, isMobile } = this.props;
 
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
@@ -294,11 +294,11 @@ class SignatureOverlay extends React.PureComponent {
             ))}
           </div>
         </div>
-        <div className="Close-Container">
+        {!isMobile && <div className="Close-Container">
           <div className="Close-Button" onClick={() => this.props.closeElement('signatureOverlay')}>
             <Icon className="Close-Icon" glyph="icon-close" />
           </div>
-        </div>
+        </div>}
       </div>
     );
   }
@@ -317,7 +317,22 @@ const mapDispatchToProps = {
   openElement: actions.openElement,
 };
 
-export default connect(
+const ConnectedSignatureOverlay = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(withTranslation()(onClickOutside(SignatureOverlay)));
+
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedSignatureOverlay {...props} isMobile={isMobile} />
+  );
+};

@@ -44,6 +44,10 @@
 
     &:hover {
       background: var(--button-hover-color);
+
+      @media (hover: none) {
+        background: transparent;
+      }      
     }
 
     .styling-down-arrow {
