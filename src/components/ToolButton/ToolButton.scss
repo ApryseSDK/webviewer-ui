@@ -20,6 +20,10 @@
       }
     }
 
+    .Icon {
+      color: var(--icon-active-color);
+    }
+
     div:hover {
       background: none;
     }
