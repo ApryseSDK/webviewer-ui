@@ -11,6 +11,7 @@ import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
 import Icon from 'components/Icon';
 import actions from 'actions';
+import useMedia from 'hooks/useMedia';
 import selectors from 'selectors';
 
 import './ToolsOverlay.scss';
@@ -131,6 +132,7 @@ class ToolsOverlay extends React.PureComponent {
       isOpen,
       toolButtonObjects,
       activeToolGroup,
+      isMobile,
     } = this.props;
 
     if (isDisabled || !activeToolGroup) {
@@ -142,11 +144,19 @@ class ToolsOverlay extends React.PureComponent {
     );
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
+    let style = { left, right, top };
+    if (isMobile) {
+      style = {
+        left: 0,
+        top: 52,
+      };
+    }
+
     return (
       <div
         className={className}
         ref={this.overlay}
-        style={{ left, right, top }}
+        style={style}
         data-element="toolsOverlay"
       >
         <div ref={this.toolsContainer} className="tools-container">
@@ -166,11 +176,11 @@ class ToolsOverlay extends React.PureComponent {
             </React.Fragment>
           )}
         </div>
-        <div className="Close-Container">
+        {!isMobile && <div className="Close-Container">
           <div className="Close-Button" onClick={this.handleCloseClick}>
             <Icon className="Close-Icon" glyph="icon-close" />
           </div>
-        </div>
+        </div>}
       </div>
     );
   }
@@ -190,4 +200,18 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolsOverlay);
+const ConnectedToolsOverlay = connect(mapStateToProps, mapDispatchToProps)(ToolsOverlay);
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedToolsOverlay {...props} isMobile={isMobile} />
+  );
+};

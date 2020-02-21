@@ -8,6 +8,10 @@
   margin: 0 4px;
   margin-top: 4px;
 
+  @include mobile {
+    margin: 0px;
+  }     
+
   &.active {
     background: #767f9b33;
     .styling-down-arrow-container{

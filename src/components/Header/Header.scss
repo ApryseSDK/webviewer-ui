@@ -5,7 +5,7 @@
   align-items: center;
   width: 100%;
   min-width: 300px;
-  height: $top-bar-height;
+  height: 36px;
   background: var(--light-background);
 
   border-bottom: solid 1px var(--border);
@@ -21,5 +21,9 @@
 
   @include mobile {
     height: 52px;
+
+    // &.Dark {
+    //   height: 51px;
+    // }
   }   
 }

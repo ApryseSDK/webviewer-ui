@@ -41,13 +41,29 @@
     padding: 0px 4px;
     padding-top: 4px;
     padding-bottom: 4px;
-    
 
+    @include mobile {
+      box-shadow: none;
+      width: 100vw;
+      padding: 0px;
+      // height: 52px;
+      padding-top: 5px;
+      padding-bottom: 2px;
+      background: #dfe2ed;
+      border-radius: 0px 0px 28px 28px;
+    }      
+  
     .tool-buttons-container {
       display: inline-flex;
       align-items: flex-start;
       justify-content: center;
       margin-top: 4px;
+
+      @include mobile {
+        box-shadow: none;
+        width: 100vw;
+        margin-top: 0px;
+      }
     }
   }
 
