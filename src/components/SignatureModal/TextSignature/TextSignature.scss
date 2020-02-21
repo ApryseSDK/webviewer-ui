@@ -2,10 +2,17 @@
 
 $border-radius: 4px;
 
-.text-signature {
-  // margin: 8px 0;
-  min-width: 280px;
+.text-signature {  
+  display: flex;
+  flex-direction: column;
 
+  width: 340px;
+  height: 140px;
+
+  @include mobile {
+    width: 100%;
+    height: 162px; 
+  }
   canvas {
     display: none;
   }
@@ -18,29 +25,20 @@ $border-radius: 4px;
     padding: 5px;
     width: 100%;
   }
-
-  &-container {
-    position: relative;
-    margin-top: 10px;
-    flex: 1;
-    border: 1px solid $signature-modal-shared-color;
-    border-radius: $border-radius;
-    overflow: auto;
-    height: 104px;
-  }
-
   
   &-text {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 104px;
+    // height: 104px;
     background: #f8f8f8;
     white-space: nowrap;
     border: 1px solid $signature-modal-shared-color;
     border-radius: 4px;
     padding: 0 8px;
     margin-top: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
 
     &:hover {
       cursor: pointer;
