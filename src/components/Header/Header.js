@@ -17,10 +17,10 @@ class Header extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, activeHeaderItems } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen } = this.props;
     const className = getClassName('Header', this.props);
 
-    if (isDisabled) {
+    if (isDisabled || !isOpen) {
       return null;
     }
 
