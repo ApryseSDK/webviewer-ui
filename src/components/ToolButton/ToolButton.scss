@@ -9,7 +9,7 @@
   margin-top: 4px;
 
   @include mobile {
-    margin: 0px;
+    margin: 0 12px;
   }     
 
   &.active {
@@ -32,6 +32,11 @@
     padding-bottom: 8px;
     border-radius: 4px;
     cursor: pointer;
+
+    @include mobile {
+      margin-top: -2px;
+      padding-bottom: 5px;
+    }         
 
     &:hover {
       background: var(--button-hover-color);
