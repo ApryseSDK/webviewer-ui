@@ -66,6 +66,18 @@ const map = {
       annotation.IT === 'PolyLineDimension' &&
       annotation.Measure,
   },
+  rectangularAreaMeasurement: {
+    icon: 'ic_annotation_rectangular_area_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: [Tools.ToolNames.RECTANGULAR_AREA_MEASUREMENT],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.PolygonAnnotation &&
+      annotation.IT === 'PolygonDimension' &&
+      annotation.Measure &&
+      annotation.isRectangularPolygon(),
+  },
   areaMeasurement: {
     icon: 'ic_annotation_area_black_24px',
     iconColor: 'StrokeColor',
