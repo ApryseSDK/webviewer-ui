@@ -289,7 +289,7 @@ class MeasurementOverlay extends React.PureComponent {
     }
 
     return (
-      angle !== undefined && key !== 'rectangularAreaMeasurement' && (
+      angle !== undefined && (
         <div className="measurement__angle">
           {this.props.t('option.measurementOverlay.angle')}: {angle}&deg;
         </div>
