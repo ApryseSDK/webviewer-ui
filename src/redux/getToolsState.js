@@ -19,7 +19,7 @@ const getTools = () => {
     {
       type: 'customElement',
       render: () => <SignatureToolButton />,
-      dataElement: 'signatureToolButton',
+      // dataElement: 'signatureToolButton',
     },
     { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
     { type: 'divider' },
@@ -67,7 +67,7 @@ const getTools = () => {
       {
         type: 'customElement',
         render: () => <SignatureToolButton />,
-        dataElement: 'signatureToolButton',
+        // dataElement: 'signatureToolButton',
       },
 
       { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton' },

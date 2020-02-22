@@ -245,11 +245,24 @@ class SignatureOverlay extends React.PureComponent {
     }
 
     let style = { left, right, top };
+    let arrowStyle = {};
     if (isMobile) {
       style = {
         left: 0,
         top: 52,
       };
+
+      const signatureToolButton = document.querySelector(
+        '[data-element="signatureToolButton"]',
+      );
+      if (signatureToolButton) {
+        const { left: buttonLeft } = signatureToolButton.getBoundingClientRect();
+        arrowStyle = {
+          left: buttonLeft,
+          // right: 'auto',
+          top: -10,
+        };
+      }
     }
 
     return (
@@ -258,6 +271,10 @@ class SignatureOverlay extends React.PureComponent {
         ref={this.overlay}
         style={style}
       >
+        <div
+          className="arrow-up"
+          style={arrowStyle}
+        />
         <div
           className="tools-container"
         >

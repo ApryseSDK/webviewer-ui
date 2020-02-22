@@ -145,10 +145,23 @@ class ToolsOverlay extends React.PureComponent {
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
     let style = { left, right, top };
+    let arrowStyle = {};
     if (isMobile) {
       style = {
         left: 0,
         top: 52,
+      };
+
+      const { activeToolGroup, activeHeaderItems } = this.props;
+      const element = activeHeaderItems.find(
+        item => item.toolGroup === activeToolGroup,
+      );
+      const button = document.querySelector(`[data-element=${element.dataElement}]`);
+      const { left: buttonLeft } = button.getBoundingClientRect();
+      arrowStyle = {
+        left: buttonLeft,
+        right: 'auto',
+        top: -10,
       };
     }
 
@@ -159,6 +172,10 @@ class ToolsOverlay extends React.PureComponent {
         style={style}
         data-element="toolsOverlay"
       >
+        <div
+          className="arrow-up"
+          style={arrowStyle}
+        />
         <div ref={this.toolsContainer} className="tools-container">
           <div className="tool-buttons-container" ref={this.itemsContainer}>
             {toolNames.map((toolName, i) => (

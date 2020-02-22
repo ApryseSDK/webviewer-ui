@@ -12,6 +12,20 @@
   border-radius: 0px;
   background: transparent;
 
+  @include mobile {
+    .arrow-up {
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+
+      border-bottom: 10px solid #dfe2ed;
+      position: absolute;
+
+      transform: translateX(50%);
+    }
+  }
+
   .divider {
     width: 1px;
     height: 24px;

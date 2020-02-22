@@ -24,19 +24,19 @@
   }
 
   &.active{
-    @include mobile {
-      .arrow-up {
-        width: 0; 
-        height: 0; 
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        
-        border-bottom: 10px solid #dfe2ed;
-        position: absolute;
+    // @include mobile {
+    //   .arrow-up {
+    //     width: 0;
+    //     height: 0;
+    //     border-left: 8px solid transparent;
+    //     border-right: 8px solid transparent;
 
-        transform: translateX(50%);
-      }
-    }
+    //     border-bottom: 10px solid #dfe2ed;
+    //     position: absolute;
+
+    //     transform: translateX(50%);
+    //   }
+    // }
 
     // hack
     &.signature {
