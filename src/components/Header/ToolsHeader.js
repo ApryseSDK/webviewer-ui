@@ -24,7 +24,7 @@ class ToolsHeader extends React.PureComponent {
 
     return (
       <div
-        className="Header Dark"
+        className="Header Tools"
         data-element="toolsHeader"
       >
         <HeaderItems items={activeHeaderItems} />

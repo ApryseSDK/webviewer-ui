@@ -62,9 +62,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       dispatch(actions.closeElement('notesPanel'));
     } else if (ownProps.element === 'notesPanel') {
       dispatch(actions.closeElement('searchPanel'));
-    } else if (ownProps.element === 'toolsHeader' && ownProps.isMobile) {
-      dispatch(actions.closeElement('header'));
     }
+    // } else if (ownProps.element === 'toolsHeader' && ownProps.isMobile) {
+    //   dispatch(actions.closeElement('header'));
+    // }
     dispatch(actions.toggleElement(ownProps.element));
   },
 });

@@ -10,20 +10,22 @@
 
   border-bottom: solid 1px var(--border);
 
-  @include desktop {
-    &.Dark {
+  &.Tools {
+    @include tablet-and-desktop {
       padding-top: 1px; // top lowered 1px due to the border on the header above.
       padding-bottom: 2px;
       height: 35px;
       background: var(--dark-background);
     }
+
+    @include mobile {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
   }
 
   @include mobile {
     height: 52px;
-
-    // &.Dark {
-    //   height: 51px;
-    // }
-  }   
+  }
 }
