@@ -2,6 +2,12 @@
 // following are the tools that we want to change the default styles due to design
 // we could change the default styles in core but we don't want the legacy UI to be affected, so we do it here
 export default {
+  AnnotationCreateRectangle: {
+    StrokeColor: { R: 230, G: 38, B: 31, A: 1 },
+  },
+  AnnotationCreateEllipse: {
+    StrokeColor: { R: 67, G: 85, B: 219, A: 1 },
+  },
   AnnotationCreateFreeHand: {
     StrokeColor: { R: 67, G: 85, B: 219, A: 1 },
   },
