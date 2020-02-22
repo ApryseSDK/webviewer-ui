@@ -44,6 +44,7 @@ const Button = props => {
     onClick = NOOP,
     className,
     title,
+    style,
   } = { ...props, ...customOverrides };
 
   const isBase64 = img?.trim().startsWith('data:');
@@ -61,6 +62,7 @@ const Button = props => {
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
       })}
+      style={style}
       data-element={dataElement}
       onClick={disable ? NOOP : onClick}
     >

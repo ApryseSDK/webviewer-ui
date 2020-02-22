@@ -14,8 +14,9 @@ export default {
   viewer: {
     disabledElements: {},
     openElements: {
-      header: true,
-      toolsHeader: window.matchMedia('(min-width: 641px)').matches,
+      header: false,
+      // toolsHeader: window.matchMedia('(min-width: 641px)').matches,
+      toolsHeader: true,
       // toolsHeader: false,
     },
     headers: {
