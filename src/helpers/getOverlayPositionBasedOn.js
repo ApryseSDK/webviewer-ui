@@ -14,17 +14,13 @@ export default (element, overlay, align = 'left') => {
   const { width: overlayWidth } = overlay.current.getBoundingClientRect();
 
   if (align === 'left') {
-    // if (buttonLeft + overlayWidth > window.innerWidth) {
-    //   const rightMargin = 2;
-    //   left = 'auto';
-    //   right = rightMargin;
-    // } else {
-    //   left = buttonLeft;
-    //   right = 'auto';
-    // }
-    return {
-      left: buttonLeft,
-      right: 'auto',
+    if (buttonLeft + overlayWidth > window.innerWidth) {
+      const rightMargin = 2;
+      left = 'auto';
+      right = rightMargin;
+    } else {
+      left = buttonLeft;
+      right = 'auto';
     }
   } else if (align === 'center') {
     if (buttonLeft + (overlayWidth + buttonWidth) / 2 > window.innerWidth) {
