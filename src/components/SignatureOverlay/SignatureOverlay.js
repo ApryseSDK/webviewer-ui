@@ -244,11 +244,19 @@ class SignatureOverlay extends React.PureComponent {
       return null;
     }
 
+    let style = { left, right, top };
+    if (isMobile) {
+      style = {
+        left: 0,
+        top: 52,
+      };
+    }
+
     return (
       <div
         className={className}
         ref={this.overlay}
-        style={{ left, right, top }}
+        style={style}
       >
         <div
           className="tools-container"

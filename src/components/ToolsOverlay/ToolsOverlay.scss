@@ -46,13 +46,13 @@
       box-shadow: none;
       width: 100vw;
       padding: 0px;
-      // height: 52px;
+      min-height: 52px;
       padding-top: 5px;
       padding-bottom: 2px;
       background: #dfe2ed;
       border-radius: 0px 0px 28px 28px;
-    }      
-  
+    }
+
     .tool-buttons-container {
       display: inline-flex;
       align-items: flex-start;

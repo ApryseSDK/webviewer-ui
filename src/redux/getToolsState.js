@@ -51,6 +51,7 @@ const getTools = () => {
       style: { position: 'absolute', right: 0 },
       onClick: dispatch => {
         dispatch(actions.closeElements(['toolsHeader', 'toolsOverlay']));
+        dispatch(actions.setActiveToolGroup(''));
       },
     },
   ];
@@ -81,6 +82,7 @@ const getTools = () => {
         style: { position: 'absolute', right: 0 },
         onClick: dispatch => {
           dispatch(actions.closeElements(['toolsHeader', 'toolsOverlay']));
+          dispatch(actions.setActiveToolGroup(''));
         },
       },
     ];
