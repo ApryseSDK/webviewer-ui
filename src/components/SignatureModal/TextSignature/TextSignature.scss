@@ -25,18 +25,18 @@ $border-radius: 4px;
     border: 1px solid $signature-modal-shared-color;
     border-radius: $border-radius;
     overflow: auto;
-  }
-
-  &-inner-container {
-    position: absolute;
-    height: 100%;
-    min-width: 100%;
 
     canvas {
       position: absolute;
       visibility: hidden;
       z-index: -1;
     }
+  }
+
+  &-inner-container {
+    position: absolute;
+    height: 100%;
+    min-width: 100%;
   }
   
   &-text {

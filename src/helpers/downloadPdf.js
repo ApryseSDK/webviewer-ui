@@ -9,11 +9,12 @@ export default (dispatch, options = {}) => {
   const {
     filename = core.getDocument()?.getFilename() || 'document',
     includeAnnotations = true,
-    xfdfData,
     externalURL,
   } = options;
-  const downloadOptions = { downloadType: 'pdf' };
-  let file;
+
+  if (!options.downloadType) {
+    options.downloadType = 'pdf';
+  }
 
   dispatch(actions.openElement('loadingModal'));
 
@@ -21,7 +22,7 @@ export default (dispatch, options = {}) => {
     .exportAnnotations()
     .then(xfdfString => {
       if (includeAnnotations) {
-        downloadOptions.xfdfString = xfdfData || xfdfString;
+        options.xfdfString = options.xfdfString || xfdfString;
       }
 
       const getDownloadFilename = (name, extension) => {
@@ -47,9 +48,11 @@ export default (dispatch, options = {}) => {
         dispatch(actions.closeElement('loadingModal'));
         fireEvent('finishedSavingPDF');
       } else {
-        return doc.getFileData(downloadOptions).then(
+        return doc.getFileData(options).then(
           data => {
             const arr = new Uint8Array(data);
+            let file;
+
             if (isIE) {
               file = new Blob([arr], { type: 'application/pdf' });
             } else {
@@ -63,7 +66,7 @@ export default (dispatch, options = {}) => {
           error => {
             dispatch(actions.closeElement('loadingModal'));
             throw new Error(error.message);
-          }
+          },
         );
       }
     })

@@ -217,7 +217,8 @@
       "area": "Area",
       "distanceMeasurement": "Distance Measurement",
       "perimeterMeasurement": "Perimeter Measurement",
-      "areaMeasurement": "Area Measurement"
+      "areaMeasurement": "Area Measurement",
+      "radius": "Radius"
     },
     "measurementOption": {
       "scale": "Scale"
