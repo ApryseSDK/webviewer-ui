@@ -38,6 +38,13 @@
       }
     }
 
+    // hack
+    &.signature {
+      svg {
+        color: #767f9b;
+      }
+    }
+
     .down-arrow-container {
       background: #767f9b33
     }

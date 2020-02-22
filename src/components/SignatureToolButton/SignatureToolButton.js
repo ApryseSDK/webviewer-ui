@@ -53,14 +53,18 @@ const SignatureToolButton = () => {
       className={classNames({
         'tool-group-button': true,
         active: isActive,
+        signature: true,
       })}
       data-element="signatureToolButton"
       onClick={handleClick}
     >
-      <Button
-        img="icon-tool-signature"
-        title="annotation.signature"
-      />
+      <div>
+        <Button
+          img="icon-tool-signature"
+          title="annotation.signature"
+        />
+        <div className="arrow-up" />
+      </div>
       <div className="down-arrow-container">
         <Icon className="down-arrow" glyph="icon-chevron-down" />
       </div>
