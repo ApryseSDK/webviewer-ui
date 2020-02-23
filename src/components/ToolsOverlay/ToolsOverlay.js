@@ -57,6 +57,10 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props.activeToolName === 'AnnotationCreateRubberStamp') {
+      this.setState({ isStylingOpen: true });
+    }
+
     const clickedOnAnotherToolGroupButton =
       prevProps.activeToolGroup !== this.props.activeToolGroup;
 
@@ -113,15 +117,16 @@ class ToolsOverlay extends React.PureComponent {
   };
 
   handleStyleClick = toolName => {
-    if (toolName === this.state.toolNameThatOpenedStyling) {
-      this.setState({ isStylingOpen: false, toolNameThatOpenedStyling: null });
-      // } else if () {
-    } else {
-      this.setState({
-        isStylingOpen: true,
-        toolNameThatOpenedStyling: toolName,
-      });
-    }
+    // if (toolName === this.state.toolNameThatOpenedStyling) {
+    //   this.setState({ isStylingOpen: false, toolNameThatOpenedStyling: null });
+    //   // } else if () {
+    // } else {
+    //   this.setState({
+    //     isStylingOpen: true,
+    //     toolNameThatOpenedStyling: toolName,
+    //   });
+    // }
+    this.setState({ isStylingOpen: !this.state.isStylingOpen });
   };
 
   render() {
@@ -209,6 +214,7 @@ const mapStateToProps = state => ({
   toolButtonObjects: selectors.getToolButtonObjects(state),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
+  activeToolName: selectors.getActiveToolName(state),
 });
 
 const mapDispatchToProps = {
