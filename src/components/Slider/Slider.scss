@@ -23,7 +23,7 @@
     height: 18px;
 
     .slider-value {
-      width: 41px;
+      min-width: 41px;
       // flex: 8;
       display: flex;
       justify-content: flex-end;
