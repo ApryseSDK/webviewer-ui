@@ -212,7 +212,7 @@ const AnnotationPopup = () => {
             <ActionButton
               dataElement="annotationCommentButton"
               title="action.comment"
-              img="ic_comment_black_24px"
+              img="icon-header-chat-line"
               onClick={commentOnAnnotation}
             />
           )}
@@ -224,7 +224,7 @@ const AnnotationPopup = () => {
             <ActionButton
               dataElement="annotationStyleEditButton"
               title="action.style"
-              img="ic_palette_black_24px"
+              img="icon-menu-add-style-line"
               onClick={() => setIsStylePopupOpen(true)}
             />
           )}
@@ -272,7 +272,7 @@ const AnnotationPopup = () => {
             <ActionButton
               dataElement="annotationDeleteButton"
               title="action.delete"
-              img="ic_delete_black_24px"
+              img="icon-delete-line"
               onClick={() => {
                 core.deleteAnnotations(core.getSelectedAnnotations());
                 dispatch(actions.closeElement('annotationPopup'));
@@ -296,8 +296,8 @@ const AnnotationPopup = () => {
             title="tool.Link"
             img={firstAnnotation.getAssociatedLinks().length > 0 ? "icon-tool-unlink" : "icon-tool-link"}
             onClick={
-              firstAnnotation.getAssociatedLinks().length > 0 
-              ? () => { 
+              firstAnnotation.getAssociatedLinks().length > 0
+              ? () => {
                 const annotManager = core.getAnnotationManager();
                 selectedAnnotations.forEach(annot => {
                   annot.getAssociatedLinks().forEach(annotId => {

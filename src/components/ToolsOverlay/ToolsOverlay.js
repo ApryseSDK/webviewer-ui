@@ -117,16 +117,20 @@ class ToolsOverlay extends React.PureComponent {
   };
 
   handleStyleClick = toolName => {
-    // if (toolName === this.state.toolNameThatOpenedStyling) {
-    //   this.setState({ isStylingOpen: false, toolNameThatOpenedStyling: null });
-    //   // } else if () {
-    // } else {
-    //   this.setState({
-    //     isStylingOpen: true,
-    //     toolNameThatOpenedStyling: toolName,
-    //   });
-    // }
-    this.setState({ isStylingOpen: !this.state.isStylingOpen });
+    // debugger;
+    if (toolName === this.props.activeToolName) {
+      this.setState({ isStylingOpen: !this.state.isStylingOpen, toolNameThatOpenedStyling: null });
+    } else if (toolName === this.state.toolNameThatOpenedStyling) {
+      this.setState({ isStylingOpen: false, toolNameThatOpenedStyling: null });
+      // } else if () {
+    } else {
+      this.setState({
+        isStylingOpen: true,
+        // isStylingOpen: !this.state.isStylingOpen,
+        toolNameThatOpenedStyling: toolName,
+      });
+    }
+    // this.setState({ isStylingOpen: !this.state.isStylingOpen });
   };
 
   render() {
