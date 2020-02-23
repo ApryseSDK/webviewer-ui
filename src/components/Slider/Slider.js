@@ -123,7 +123,7 @@ class Slider extends React.PureComponent {
             <line x1={circleCenter} y1="50%" x2={this.lineLength + circleRadius} y2="50%" strokeWidth="2" stroke="#e0e0e0" strokeLinecap="round" />
             <circle cx={circleCenter} cy="50%" r={circleRadius} fill="#00a5e4" />
           </svg>
-          {displayValue}
+          <div className="slider-value">{displayValue}</div>
         </div>
       </div>
     );
