@@ -137,10 +137,11 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
       <div className="author-and-date">
         <div className="author-and-overflow">
           {renderAuthorName(annotation)}
-          <NotePopup
-            annotation={annotation}
-            setIsEditing={setIsEditing}
-          />
+          {!isEditing &&
+            <NotePopup
+              annotation={annotation}
+              setIsEditing={setIsEditing}
+            />}
         </div>
         <div className="date-and-time">
           {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
