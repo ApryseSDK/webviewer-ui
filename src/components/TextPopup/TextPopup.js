@@ -73,7 +73,7 @@ const TextPopup = () => {
         <ActionButton
           dataElement="textHighlightToolButton"
           title="annotation.highlight"
-          img="ic_annotation_highlight_black_24px"
+          img="icon-tool-highlight"
           onClick={() =>
             createTextAnnotationAndSelect(
               dispatch,
