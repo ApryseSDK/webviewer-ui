@@ -54,7 +54,7 @@
   }
 
   .down-arrow-container {
-    @include mobile {
+    @include tablet-and-mobile {
       display: none;
     }
   }
