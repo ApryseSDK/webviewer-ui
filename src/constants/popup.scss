@@ -37,9 +37,9 @@ $popup-icon-width: 18px;
       width: $popup-icon-width;
       height: $popup-icon-height;
 
-      @include mobile {
-        width: $popup-icon-width;
-        height: $popup-icon-height;
+      @include tablet-and-mobile {
+        width: 24px;
+        height: 24px;
       }
     }
   }

@@ -11,8 +11,19 @@
     margin: 0 6px;
 
     @include tablet-and-mobile {
-      margin: 0 8px;
+      margin: 0 6px;
+      &[data-element="textSelectButton"]  {
+        margin: 0 2px;
+        .Icon {
+          width: 20px;
+          height: 20px;
+        }
+      }        
     }
+
+    @include tablet {
+      margin: 0 10px;       
+    }    
   }
 
   .spacer {

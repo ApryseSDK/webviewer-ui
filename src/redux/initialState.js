@@ -37,7 +37,7 @@ export default {
         { type: 'divider', hidden: ['mobile', 'tablet'] },
         { type: 'toolButton', toolName: 'Pan', hidden: ['mobile', 'tablet'] },
         // For mobile
-        // { type: 'toolButton', toolName: 'TextSelect' },
+        { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },
         { type: 'spacer' },
         { type: 'toggleElementButton', dataElement: 'toggleToolsButton', element: 'toolsHeader', img: 'icon-header-annotations-line', title: 'component.toolsHeader' },

@@ -85,7 +85,7 @@ const getTools = () => {
         dispatch(actions.setActiveToolGroup(''));
       },
     },
-  ]; 
+  ];
 
   const mobileState = [
     { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton' },
@@ -169,7 +169,7 @@ const getToolButtonObjects = () => {
     Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
     AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
     // For mobile
-    // TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
+    TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
     MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
     AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'icon-operation-eraser', showColor: 'never' },
     CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'miscTools' },
@@ -215,7 +215,7 @@ const getToolButtonObjects = () => {
     Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
     AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
     // For mobile
-    // TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
+    TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
     MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
     AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'icon-operation-eraser', showColor: 'never' },
     CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'miscTools' },
@@ -263,7 +263,7 @@ const getToolButtonObjects = () => {
     Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
     AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
     // For mobile
-    // TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
+    TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
     MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
     AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'icon-operation-eraser', showColor: 'never' },
     CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'miscTools' },
