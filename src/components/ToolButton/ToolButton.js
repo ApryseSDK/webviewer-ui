@@ -86,10 +86,10 @@ const ToolButton = ({
     <Button
       className={classNames({
         "tool-button": true,
-        hasStyles: toolStylesExist(toolName)
+        hasStyles: toolStylesExist(toolName),
       })}
       onClick={handleClick}
-      isActive={!isStylingOpen && isActive}
+      isActive={isActive}
       color={color}
       {...restProps}
       {...restObjectData}

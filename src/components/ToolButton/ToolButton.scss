@@ -8,12 +8,6 @@
   margin: 0 4px;
   margin-top: 4px;
 
-  div[data-element="sitckyToolButton"] {
-    path:last-of-type {
-      color: #c3c6d4 !important;
-    }
-  }  
-
   @include mobile {
     margin: 0 12px;
   }     
@@ -63,13 +57,16 @@
     }
   }
 
-  .tool-button {
-    min-width: 32px;
-    min-height: 32px;
-    height: 100%;
+  // needed because of stacking transparency
+  &:not(.active) {
+    .tool-button {
+      min-width: 32px;
+      min-height: 32px;
+      height: 100%;
 
-    &.active {
-      background: #767f9b33;
+      &.active {
+        background: #767f9b33;
+      }
     }
   }
 }
