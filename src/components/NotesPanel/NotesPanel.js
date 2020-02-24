@@ -46,6 +46,14 @@ const NotesPanel = () => {
     false,
   );
 
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
 
   const [notes, setNotes] = useState([]);
   const [width, setWidth] = useState(293);
@@ -251,7 +259,7 @@ const NotesPanel = () => {
       className="notes-panel-container"
       style={style}
     >
-      {!isMobile &&
+      {!isTabletAndMobile &&
         <ResizeBar
           minWidth={215}
           onResize={_width => {

@@ -77,7 +77,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t, results, isSearching, noResult, isMobile, closeElements } = this.props;
+    const { isDisabled, t, results, isSearching, noResult, isMobile, isTabletAndMobile, closeElements } = this.props;
 
     if (isDisabled) {
       return null;
@@ -95,7 +95,7 @@ class SearchPanel extends React.PureComponent {
         className="search-panel-container"
         style={style}
       >
-        {!isMobile &&
+        {!isTabletAndMobile &&
           <ResizeBar
             minWidth={215}
             onResize={_width => {
@@ -146,8 +146,6 @@ class SearchPanel extends React.PureComponent {
   }
 }
 
-
-
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'searchPanel'),
   isOpen: selectors.isElementOpen(state, 'searchPanel'),
@@ -175,7 +173,16 @@ export default props => {
     false,
   );
 
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+
   return (
-    <ConnectedSearchPanel {...props} isMobile={isMobile} />
+    <ConnectedSearchPanel {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
   );
 };

@@ -26,6 +26,14 @@ const LeftPanel = () => {
     false,
   );
 
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
   const [activePanel, customPanels] = useSelector(
     state => [
       selectors.getActiveLeftPanel(state),
@@ -33,7 +41,7 @@ const LeftPanel = () => {
     ],
     shallowEqual,
   );
-  const [width, setWidth] = useState(293);
+  const [width, setWidth] = useState(218);
   const dispatch = useDispatch();
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
@@ -89,7 +97,7 @@ const LeftPanel = () => {
           />
         ))}
       </div>
-      {!isMobile &&
+      {!isTabletAndMobile &&
         <ResizeBar
           minWidth={215}
           onResize={_width => {
