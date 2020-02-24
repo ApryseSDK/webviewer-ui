@@ -70,4 +70,4 @@ Webviewer(...)
  */
 export default store => noteTransformFunction => {
   store.dispatch(actions.setNoteTransformFunction(noteTransformFunction));
-}
+};
