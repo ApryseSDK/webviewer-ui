@@ -262,7 +262,8 @@ const map = {
     currentPalette: null,
     availablePalettes: [],
     toolNames: ['AnnotationEraserTool'],
-    annotationCheck: null,
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.FreeHandAnnotation,
   },
 };
 
