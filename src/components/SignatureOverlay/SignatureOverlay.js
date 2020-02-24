@@ -236,7 +236,7 @@ class SignatureOverlay extends React.PureComponent {
 
   render() {
     const { left, right, top, defaultSignatures } = this.state;
-    const { t, isDisabled, maxSignaturesCount, isOpen, isMobile } = this.props;
+    const { t, isDisabled, maxSignaturesCount, isOpen, isMobile, isTabletAndMobile } = this.props;
 
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
@@ -319,7 +319,7 @@ class SignatureOverlay extends React.PureComponent {
             ))}
           </div>
         </div>
-        {!isMobile && <div className="Close-Container">
+        {!isTabletAndMobile && <div className="Close-Container">
           <div className="Close-Button" onClick={() => this.props.closeElement('signatureOverlay')}>
             <Icon className="Close-Icon" glyph="icon-close" />
           </div>
@@ -357,7 +357,16 @@ export default props => {
     false,
   );
 
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+
   return (
-    <ConnectedSignatureOverlay {...props} isMobile={isMobile} />
+    <ConnectedSignatureOverlay {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
   );
 };

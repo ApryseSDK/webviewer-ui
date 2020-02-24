@@ -53,7 +53,7 @@ class ViewControlsOverlay extends React.PureComponent {
         'redactionOverlay',
       ]);
       this.setState(
-        getOverlayPositionBasedOn('viewControlsButton', this.overlay),
+        getOverlayPositionBasedOn('viewControlsButton', this.overlay, this.props.isTabletOrMobile),
       );
     }
   }
@@ -64,7 +64,7 @@ class ViewControlsOverlay extends React.PureComponent {
 
   handleWindowResize = () => {
     this.setState(
-      getOverlayPositionBasedOn('viewControlsButton', this.overlay),
+      getOverlayPositionBasedOn('viewControlsButton', this.overlay, this.props.isTabletOrMobile),
     );
   };
 
@@ -240,7 +240,15 @@ export default props => {
     false,
   );
 
+  const isTabletOrMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );  
+
   return (
-    <ConnectedViewControlsOverlay {...props} isMobile={isMobile} />
+    <ConnectedViewControlsOverlay {...props} isMobile={isMobile} isTabletOrMobile={isTabletOrMobile} />
   );
 };
