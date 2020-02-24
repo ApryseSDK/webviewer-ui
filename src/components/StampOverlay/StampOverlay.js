@@ -8,6 +8,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
+import useMedia from 'hooks/useMedia';
 
 import './StampOverlay.scss';
 
@@ -70,7 +71,9 @@ class StampOverlay extends React.Component {
 
   setRubberStamp(annotation) {
     core.setToolMode(TOOL_NAME);
-    this.props.closeElement('stampOverlay');
+    if (this.props.isMobile) {
+      this.props.closeElement('toolsOverlay');
+    }
     const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
     this.stampTool.setRubberStamp(annotation, text);
     this.stampTool.showPreview();
@@ -108,7 +111,9 @@ class StampOverlay extends React.Component {
     const rubberStamps = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
       <div key={index}
         className="rubber-stamp"
-        onClick={() => this.setRubberStamp(annotation)}
+        onClick={() => {
+          this.setRubberStamp(annotation)
+        }}
       >
         <img src={imgSrc} />
       </div>,
@@ -147,7 +152,22 @@ const mapDispatchToProps = {
   toggleElement: actions.toggleElement,
 };
 
-export default connect(
+const ConnectedStampOverlay = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(withTranslation()(StampOverlay));
+
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedStampOverlay {...props} isMobile={isMobile} />
+  );
+};
