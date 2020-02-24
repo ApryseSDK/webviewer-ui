@@ -8,7 +8,7 @@
   margin: 0 4px;
   margin-top: 4px;
 
-  @include mobile {
+  @include tablet-and-mobile {
     margin: 0 12px;
   }     
 
