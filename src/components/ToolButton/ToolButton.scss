@@ -8,6 +8,12 @@
   margin: 0 4px;
   margin-top: 4px;
 
+  div[data-element="sitckyToolButton"] {
+    path:last-of-type {
+      color: #c3c6d4 !important;
+    }
+  }  
+
   @include mobile {
     margin: 0 12px;
   }     
