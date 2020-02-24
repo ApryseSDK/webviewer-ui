@@ -266,7 +266,8 @@ const map = {
     currentPalette: null,
     availablePalettes: [],
     toolNames: ['AnnotationEraserTool'],
-    annotationCheck: null,
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.FreeHandAnnotation,
   },
   cropPage: {
     icon: 'ic_crop_black_24px',
