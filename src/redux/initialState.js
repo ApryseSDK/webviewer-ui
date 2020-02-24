@@ -204,6 +204,7 @@ export default {
     leftPanelWidth: 300,
     isReplyDisabledFunc: null,
     customMeasurementOverlay: [],
+    noteTransformFunction: null,
   },
   search: {
     listeners: [],

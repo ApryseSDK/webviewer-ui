@@ -210,3 +210,5 @@ export const isProgrammaticSearch = state => state.search.isProgrammaticSearch;
 
 export const isProgrammaticSearchFull = state =>
   state.search.isProgrammaticSearchFull;
+
+export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
