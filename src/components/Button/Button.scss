@@ -43,8 +43,10 @@
     .Icon {
       color: var(--icon-active-color);
       // hack for one svg
-      polygon {
-        fill: #767f9b;
+      @include tablet-and-mobile {
+        polygon {
+          fill: #767f9b;
+        }
       }
     }
   }

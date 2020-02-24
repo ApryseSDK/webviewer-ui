@@ -28,14 +28,14 @@ export default {
           type: 'customElement',
           render: () => <ToggleZoomOverlay />,
           dataElement: 'zoomOverlayButton',
-          hidden: ['mobile'],
+          hidden: ['mobile', 'tablet'],
           element: 'zoomOverlay',
           style: {
             height: '100%',
           },
         },
-        { type: 'divider', hidden: ['mobile'] },
-        { type: 'toolButton', toolName: 'Pan', hidden: ['mobile'] },
+        { type: 'divider', hidden: ['mobile', 'tablet'] },
+        { type: 'toolButton', toolName: 'Pan', hidden: ['mobile', 'tablet'] },
         // For mobile
         // { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },

@@ -4,7 +4,8 @@ import SignatureToolButton from 'components/SignatureToolButton';
 import actions from 'actions';
 
 const getTools = () => {
-  const isMobile = !window.matchMedia('(min-width: 641px)').matches;
+  // const isMobile = !window.matchMedia('(min-width: 641px)').matches;
+  const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
   let state = [
     { type: 'spacer' },
@@ -92,7 +93,8 @@ const getTools = () => {
 };
 
 const getToolButtonObjects = () => {
-  const isMobile = !window.matchMedia('(min-width: 641px)').matches;
+  // const isMobile = !window.matchMedia('(min-width: 641px)').matches;
+  const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
   let state = {
     AnnotationCreateDistanceMeasurement: { dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'measurementTools', showColor: 'active' },

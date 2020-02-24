@@ -11,21 +11,21 @@
   border-bottom: solid 1px var(--border);
 
   &.Tools {
-    @include tablet-and-desktop {
+    @include desktop {
       padding-top: 1px; // top lowered 1px due to the border on the header above.
       padding-bottom: 2px;
       height: 35px;
       background: var(--dark-background);
     }
 
-    @include mobile {
+    @include tablet-and-mobile {
       position: fixed;
       top: 0;
       left: 0;
     }
   }
 
-  @include mobile {
+  @include tablet-and-mobile {
     height: 52px;
   }
 }

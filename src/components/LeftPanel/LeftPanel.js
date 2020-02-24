@@ -61,21 +61,22 @@ const LeftPanel = () => {
       style={style}
     >
       <div className="left-panel-container">
-        {isMobile && <div
-          className="close-container"
-        >
+        {isMobile &&
           <div
-            className="close-icon-container"
-            onClick={() => {
-              dispatch(actions.closeElements(['leftPanel']));
-            }}
+            className="close-container"
           >
-            <Icon
-              glyph="ic_close_black_24px"
-              className="close-icon"
-            />
-          </div>
-        </div>}
+            <div
+              className="close-icon-container"
+              onClick={() => {
+                dispatch(actions.closeElements(['leftPanel']));
+              }}
+            >
+              <Icon
+                glyph="ic_close_black_24px"
+                className="close-icon"
+              />
+            </div>
+          </div>}
         <div className="left-panel-header">
           <LeftPanelTabs />
         </div>

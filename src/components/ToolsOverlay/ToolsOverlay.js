@@ -142,6 +142,7 @@ class ToolsOverlay extends React.PureComponent {
       toolButtonObjects,
       activeToolGroup,
       isMobile,
+      isTabletAndMobile,
     } = this.props;
 
     if (isDisabled || !activeToolGroup) {
@@ -155,7 +156,7 @@ class ToolsOverlay extends React.PureComponent {
 
     let style = { left, right, top };
     let arrowStyle = {};
-    if (isMobile) {
+    if (isTabletAndMobile) {
       style = {
         left: 0,
         top: 52,
@@ -202,7 +203,7 @@ class ToolsOverlay extends React.PureComponent {
             </React.Fragment>
           )}
         </div>
-        {!isMobile && <div className="Close-Container">
+        {!isTabletAndMobile && <div className="Close-Container">
           <div className="Close-Button" onClick={this.handleCloseClick}>
             <Icon className="Close-Icon" glyph="icon-close" />
           </div>
@@ -238,7 +239,15 @@ export default props => {
     false,
   );
 
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
   return (
-    <ConnectedToolsOverlay {...props} isMobile={isMobile} />
+    <ConnectedToolsOverlay {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
   );
 };
