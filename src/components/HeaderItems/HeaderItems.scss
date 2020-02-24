@@ -10,7 +10,7 @@
   > .Button, > .toggle-element-button {
     margin: 0 6px;
 
-    @include mobile {
+    @include tablet-and-mobile {
       margin: 0 8px;
     }
   }
