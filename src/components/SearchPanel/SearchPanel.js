@@ -45,14 +45,14 @@ class SearchPanel extends React.PureComponent {
   }
 
   onClickResult = (resultIndex, result) => {
-    const { setActiveResultIndex, closeElements } = this.props;
+    const { setActiveResultIndex, closeElements, isMobile } = this.props;
 
     setActiveResultIndex(resultIndex);
     core.setActiveSearchResult(result);
 
-    // if (isMobile()) {
-    //   closeElements('searchPanel');
-    // }
+    if (isMobile) {
+      closeElements('searchPanel');
+    }
   };
 
   onClickClose = () => {
