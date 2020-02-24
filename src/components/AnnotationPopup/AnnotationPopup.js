@@ -224,7 +224,7 @@ const AnnotationPopup = () => {
             <ActionButton
               dataElement="annotationStyleEditButton"
               title="action.style"
-              img="icon-menu-add-style-line"
+              img="icon-menu-style-line"
               onClick={() => setIsStylePopupOpen(true)}
             />
           )}
