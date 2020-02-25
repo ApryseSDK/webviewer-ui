@@ -275,9 +275,9 @@ const map = {
   },
   fileattachment: {
     icon: 'ic_placeholder_black_24px',
-    iconColor: null,
-    currentPalette: null,
-    availablePalettes: [],
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: ['AnnotationCreateFileAttachment'],
     annotationCheck: annotation => annotation instanceof window.Annotations.FileAttachmentAnnotation,
   },
