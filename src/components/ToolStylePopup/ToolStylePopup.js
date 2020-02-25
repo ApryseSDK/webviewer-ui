@@ -104,14 +104,15 @@ class ToolStylePopup extends React.PureComponent {
     const { toolButtonObjects, activeToolName, toolButtonDataElement } = this.props;
 
     const toolButton = document.querySelector(`[data-element="${toolButtonDataElement}"]`);
-    console.log(toolButton, this.popup);
 
-    const { left, top } = getToolStylePopupPositionBasedOn(
-      toolButton,
-      this.popup,
-    );
+    if (toolButton) {
+      const { left, top } = getToolStylePopupPositionBasedOn(
+        toolButton,
+        this.popup,
+      );
 
-    this.setState({ left: left + 10, top: top + 23 });
+      this.setState({ left: left + 10, top: top + 23 });
+    }
   };
 
   render() {
@@ -140,15 +141,17 @@ class ToolStylePopup extends React.PureComponent {
         style={style}
       >
         {isMobile && <div className="swipe-indicator" />}
-        <StylePopup
-          key={activeToolName}
-          toolName={activeToolName}
-          colorMapKey={colorMapKey}
-          style={activeToolStyle}
-          isFreeText={isFreeText}
-          hideSlider={hideSlider}
-          onStyleChange={this.handleStyleChange}
-        />
+        {activeToolName !== 'CropPage'
+          &&
+            <StylePopup
+              key={activeToolName}
+              toolName={activeToolName}
+              colorMapKey={colorMapKey}
+              style={activeToolStyle}
+              isFreeText={isFreeText}
+              hideSlider={hideSlider}
+              onStyleChange={this.handleStyleChange}
+            />}
         {isTablet &&
           <div className="Close-Container">
             <div className="Close-Button" onClick={

@@ -1,6 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useStore, useSelector } from 'react-redux';
+import { useStore, useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 
@@ -42,11 +42,17 @@ import ZoomOverlay from 'components/ZoomOverlay';
 import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
 
+import actions from 'actions';
+
 import './App.scss';
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
 };
+
+const mobileListener = window.matchMedia('(max-width: 640px)');
+const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
+const desktopListener = window.matchMedia('(min-width: 902px)');
 
 const App = ({ removeEventHandlers }) => {
   const [isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled, isSignatureModalOpen, isSignatureModalDisabled] = useSelector(
@@ -65,11 +71,25 @@ const App = ({ removeEventHandlers }) => {
   );
 
   const store = useStore();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
+    mobileListener.addListener(() => {
+      // console.log('in mobile');
+      dispatch(actions.setToolButtonObjects());
+    });
+    
+    tabletListener.addListener(() => {
+      dispatch(actions.setToolButtonObjects());
+    });
+    
+    desktopListener.addListener(() => {
+      dispatch(actions.setToolButtonObjects());
+    });
+    
     return removeEventHandlers;
     // eslint-disable-next-line
   }, []);
