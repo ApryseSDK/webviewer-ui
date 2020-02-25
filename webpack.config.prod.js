@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: './src/index.build.html',
+        from: './src/index.core.html',
         to: '../build/index.html',
       },
       {
@@ -24,6 +24,10 @@ module.exports = {
       {
         from: './assets',
         to: '../build/assets',
+      },
+      {
+        from: './src/configorigin.txt',
+        to: '../build/configorigin.txt',
       },
     ]),
     new MiniCssExtractPlugin({

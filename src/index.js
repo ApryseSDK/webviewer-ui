@@ -15,9 +15,7 @@ import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript, { loadConfig } from 'helpers/loadScript';
 import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServer';
-import setupMIMETypeTest from 'helpers/setupMIMETypeTest';
 import eventHandler from 'helpers/eventHandler';
-import setupPDFTron from 'helpers/setupPDFTron';
 import setupI18n from 'helpers/setupI18n';
 import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
@@ -26,12 +24,16 @@ import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
+import getHashParams from 'helpers/getHashParams';
 
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
-  const { createLogger } = require('redux-logger');
-  middleware.push(createLogger({ collapsed: true }));
+  const isSpamDisabled = localStorage.getItem('spamDisabled') === 'true';
+  if (!isSpamDisabled) {
+    const { createLogger } = require('redux-logger');
+    middleware.push(createLogger({ collapsed: true }));
+  }
 }
 
 const store = createStore(rootReducer, applyMiddleware(...middleware));
@@ -46,6 +48,18 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept();
 }
 
+if (process.env.NODE_ENV === 'development') {
+  window.disableSpam = () => {
+    localStorage.setItem('spamDisabled', 'true');
+    location.reload();
+  };
+
+  window.enableSpam = () => {
+    localStorage.setItem('spamDisabled', 'false');
+    location.reload();
+  };
+}
+
 if (window.CanvasRenderingContext2D) {
   let fullAPIReady = Promise.resolve();
   const state = store.getState();
@@ -55,7 +69,11 @@ if (window.CanvasRenderingContext2D) {
     fullAPIReady = loadScript('../core/pdf/PDFNet.js');
   }
 
-  window.CoreControls.enableSubzero(state.advanced.subzero);
+  if (getHashParams('disableLogs', false)) {
+    window.CoreControls.disableLogs(true);
+  }
+
+  window.CoreControls.enableSubzero(getHashParams('subzero', false));
   window.CoreControls.setWorkerPath('../core');
   window.CoreControls.setResourcesPath('../core/assets');
 
@@ -82,20 +100,20 @@ if (window.CanvasRenderingContext2D) {
   function initTransports() {
     const { PDF, OFFICE, ALL } = workerTypes;
     if (preloadWorker === PDF || preloadWorker === ALL) {
-      getBackendPromise(state.document.pdfType).then(pdfType => {
+      getBackendPromise(getHashParams('pdf', 'auto')).then(pdfType => {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
-            store.dispatch(actions.setWorkerLoadingProgress(percent));
+            store.dispatch(actions.setLoadingProgress(percent));
           },
         }, window.sampleL);
       });
     }
 
     if (preloadWorker === OFFICE || preloadWorker === ALL) {
-      getBackendPromise(state.document.officeType).then(officeType => {
+      getBackendPromise(gethashParams('office', 'auto')).then(officeType => {
         window.CoreControls.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
-            store.dispatch(actions.setWorkerLoadingProgress(percent));
+            store.dispatch(actions.setLoadingProgress(percent));
           },
         }, window.sampleL);
       });
@@ -105,7 +123,7 @@ if (window.CanvasRenderingContext2D) {
 
   loadCustomCSS(state.advanced.customCSS);
 
-  logDebugInfo(state.advanced);
+  logDebugInfo();
 
   fullAPIReady.then(() => loadConfig()).then(() => {
     if (preloadWorker) {
@@ -115,10 +133,8 @@ if (window.CanvasRenderingContext2D) {
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
     window.docViewer = docViewer;
-    setupPDFTron();
     setupDocViewer();
     setupI18n(state);
-    setupMIMETypeTest(store);
     setUserPermission(state);
     setAutoSwitch();
     addEventHandlers();

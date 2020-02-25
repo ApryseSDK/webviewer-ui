@@ -21,42 +21,7 @@ WebViewer(...)
  */
 
 import loadDocument from 'helpers/loadDocument';
-import actions from 'actions';
 
-export default store => (documentPath, options = {}) => {
-  const {
-    documentId = null,
-    streaming = false,
-    filename = null,
-    extension = null,
-    decrypt = null,
-    decryptOptions = {},
-    customHeaders = {},
-    withCredentials = false,
-    cacheKey = null,
-    password = '',
-    pageSizes = null,
-    ...extraOptions
-  } = options;
-
-  store.dispatch(actions.setDocumentId(documentId));
-  store.dispatch(actions.setStreaming(streaming));
-  store.dispatch(actions.setDecryptFunction(decrypt));
-  store.dispatch(actions.setDecryptOptions(decryptOptions));
-  store.dispatch(actions.setFilename(filename));
-  store.dispatch(actions.setExtension(extension));
-  store.dispatch(actions.setCustomHeaders(customHeaders));
-  store.dispatch(actions.setWithCredentials(withCredentials));
-  store.dispatch(actions.setPassword(password));
-  store.dispatch(actions.setCacheKey(cacheKey));
-  store.dispatch(actions.setPageSizes(pageSizes));
-
-  if (window.CoreControls.isFullPDFEnabled() && documentPath instanceof window.PDFNet.PDFDoc) {
-    store.dispatch(actions.setPDFDoc(documentPath));
-  } else if (typeof documentPath === 'object') {
-    store.dispatch(actions.setDocumentFile(documentPath));
-  } else {
-    store.dispatch(actions.setDocumentPath(documentPath));
-  }
-  loadDocument(store.getState(), store.dispatch, extraOptions);
+export default store => (src, options) => {
+  loadDocument(store.dispatch, src, options);
 };

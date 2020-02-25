@@ -9,12 +9,16 @@ import selectors from 'selectors';
 
 import './PasswordModal.scss';
 
+let checkPassword = () => {};
+export const setCheckPasswordFunction = fn => {
+  checkPassword = fn;
+};
+
 const PasswordModal = () => {
-  const [isOpen, attempt, checkPassword] = useSelector(
+  const [isOpen, attempt] = useSelector(
     state => [
       selectors.isElementOpen(state, 'passwordModal'),
       selectors.getPasswordAttempts(state),
-      selectors.getCheckPasswordFunction(state),
     ],
     shallowEqual,
   );
@@ -27,9 +31,7 @@ const PasswordModal = () => {
 
   useEffect(() => {
     if (isOpen) {
-      dispatch(
-        actions.closeElement('progressModal'),
-      );
+      dispatch(actions.closeElement('progressModal'));
       passwordInput.current?.focus();
     } else {
       // when a user enters the correct password or calls core.closeDocument
@@ -48,10 +50,10 @@ const PasswordModal = () => {
   const renderContent = () => {
     const userExceedsMaxAttempts = attempt === maxAttempts;
     if (userExceedsMaxAttempts) {
-      return (<p>{t('message.encryptedAttemptsExceeded')}</p>);
+      return <p>{t('message.encryptedAttemptsExceeded')}</p>;
     }
     if (userCancelled) {
-      return (<p>{t('message.encryptedUserCancelled')}</p>);
+      return <p>{t('message.encryptedUserCancelled')}</p>;
     }
 
     return renderEnterPasswordContent();
@@ -74,13 +76,13 @@ const PasswordModal = () => {
               onChange={e => setPassword(e.target.value)}
             />
           </div>
-          {wrongPassword &&
+          {wrongPassword && (
             <div className="incorrect-password">
               {t('message.incorrectPassword', {
                 remainingAttempts: maxAttempts - attempt,
               })}
             </div>
-          }
+          )}
           <div className="buttons">
             <Button
               dataElement="passwordSubmitButton"
@@ -99,16 +101,16 @@ const PasswordModal = () => {
   };
 
   return (
-    <div className={classNames({
-      Modal: true,
-      PasswordModal: true,
-      open: isOpen,
-      closed: !isOpen,
-    })} data-element="passwordModal"
+    <div
+      className={classNames({
+        Modal: true,
+        PasswordModal: true,
+        open: isOpen,
+        closed: !isOpen,
+      })}
+      data-element="passwordModal"
     >
-      <div className="container">
-        {renderContent()}
-      </div>
+      <div className="container">{renderContent()}</div>
     </div>
   );
 };

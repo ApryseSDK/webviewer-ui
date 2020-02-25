@@ -23,6 +23,7 @@ class SearchOverlay extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isSearchPanelOpen: PropTypes.bool,
     isSearchPanelDisabled: PropTypes.bool,
+    isWildCardSearchDisabled: PropTypes.bool,
     searchValue: PropTypes.string,
     isCaseSensitive: PropTypes.bool,
     isWholeWord: PropTypes.bool,
@@ -53,6 +54,7 @@ class SearchOverlay extends React.PureComponent {
     setIsProgrammaticSearch: PropTypes.func.isRequired,
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
+    setSearchError: PropTypes.func.isRequired,
   }
 
   constructor() {
@@ -100,6 +102,22 @@ class SearchOverlay extends React.PureComponent {
     if (searchOverlayClosed) {
       this.props.closeElement('searchPanel');
       this.clearSearchResults();
+    }
+  }
+
+  componentDidMount() {
+    core.addEventListener('searchFailed', this.searchFailed);
+  }
+
+  componentWillUnmount() {
+    core.removeEventListener('searchFailed', this.searchFailed);
+  }
+
+  searchFailed = error => {
+    const { setIsSearching, setSearchError } = this.props;
+    setIsSearching(false);
+    if (error && error.message) {
+      setSearchError(error.message);
     }
   }
 
@@ -340,7 +358,16 @@ class SearchOverlay extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, t, isSearchPanelOpen, isSearchPanelDisabled, results, searchValue, activeResultIndex } = this.props;
+    const {
+      isDisabled,
+      t,
+      isSearchPanelOpen,
+      isSearchPanelDisabled,
+      results,
+      searchValue,
+      activeResultIndex,
+      isWildCardSearchDisabled,
+    } = this.props;
 
     if (isDisabled) {
       return null;
@@ -379,9 +406,10 @@ class SearchOverlay extends React.PureComponent {
             <div className="search-option">
               <Input id="whole-word-option" type="checkbox" ref={this.wholeWordInput} onChange={this.onChangeWholeWord} label={t('option.searchPanel.wholeWordOnly')} />
             </div>
-            <div className="search-option">
+            { !isWildCardSearchDisabled &&
+            <div className="search-option" data-element="wildCardSearchOption">
               <Input id="wild-card-option" type="checkbox" ref={this.wildcardInput} onChange={this.onChangeWildcard} label={t('option.searchPanel.wildcard')} />
-            </div>
+            </div>}
           </div>
           {!isSearchPanelOpen &&
             this.state.noResultSingleSearch &&
@@ -397,6 +425,7 @@ class SearchOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
   isSearchPanelDisabled: selectors.isElementDisabled(state, 'searchPanel'),
+  isWildCardSearchDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
   searchValue: selectors.getSearchValue(state),
   isCaseSensitive: selectors.isCaseSensitive(state),
   isWholeWord: selectors.isWholeWord(state),
@@ -429,6 +458,7 @@ const mapDispatchToProps = {
   setWholeWord: actions.setWholeWord,
   setWildcard: actions.setWildcard,
   setNoResult: actions.setNoResult,
+  setSearchError: actions.setSearchError,
   setIsProgrammaticSearch: actions.setIsProgrammaticSearch,
   setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull,
 };

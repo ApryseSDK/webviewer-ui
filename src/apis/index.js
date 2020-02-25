@@ -42,14 +42,15 @@ import enableTextSelection from './enableTextSelection';
 import enableTool from './enableTool';
 import enableTools from './enableTools';
 import enableTouchScrollLock from './enableTouchScrollLock';
+import extractPagesWithAnnotations from './extractPagesWithAnnotations';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
-import getConstants from './getConstants';
 import getCurrentPageNumber from './getCurrentPageNumber';
 import getFitMode from './getFitMode';
 import getLayoutMode from './getLayoutMode';
 import getPageCount from './getPageCount';
+import getSelectedThumbnailPageNumbers from './getSelectedThumbnailPageNumbers';
 import getSelectors from './getSelectors';
 import getShowSideWindow from './getShowSideWindow';
 import getSideWindowVisibility from './getSideWindowVisibility';
@@ -87,7 +88,6 @@ import setCustomNoteFilter from './setCustomNoteFilter';
 import setCustomPanel from './setCustomPanel';
 import exportBookmarks from './exportBookmarks';
 import importBookmarks from './importBookmarks';
-import setEngineType from './setEngineType';
 import setFitMode from './setFitMode';
 import setHeaderItems from './setHeaderItems';
 import setIconColor from './setIconColor';
@@ -120,11 +120,13 @@ import updateElement from './updateElement';
 import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
+import useNativeScroll from './useNativeScroll';
 import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
 import setSignatureFonts from './setSignatureFonts';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
+import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 
 export default store => {
   window.readerControl = {
@@ -166,6 +168,7 @@ export default store => {
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
     exportBookmarks: exportBookmarks(store),
+    extractPagesWithAnnotations,
     importBookmarks: importBookmarks(store),
     setFitMode,
     setHeaderItems: setHeaderItems(store),
@@ -193,8 +196,10 @@ export default store => {
     updateElement: updateElement(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
+    setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
+    getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),
@@ -251,15 +256,14 @@ export default store => {
     getCustomData,
 
     // undocumented
+    useNativeScroll,
     loadedFromServer: false,
     serverFailed: false,
     i18n: i18next,
-    constants: getConstants(),
     setColorPalette: setColorPalette(store),
-    setEngineType: setEngineType(store),
     showWarningMessage: showWarningMessage(store),
     updateOutlines: updateOutlines(store),
-    getBBAnnotManager: getBBAnnotManager(store),
+    getBBAnnotManager,
     selectors: getSelectors(store),
   };
 };

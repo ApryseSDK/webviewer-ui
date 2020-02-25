@@ -18,6 +18,7 @@ import './SearchPanel.scss';
 class SearchPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
+    isWildCardSearchDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     results: PropTypes.arrayOf(PropTypes.object),
     isSearching: PropTypes.bool,
@@ -25,6 +26,7 @@ class SearchPanel extends React.PureComponent {
     setActiveResultIndex: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
   };
 
   componentDidUpdate(prevProps) {
@@ -66,7 +68,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t, results, isSearching, noResult } = this.props;
+    const { isDisabled, t, results, isSearching, noResult, isWildCardSearchDisabled, errorMessage } = this.props;
 
     if (isDisabled) {
       return null;
@@ -82,9 +84,10 @@ class SearchPanel extends React.PureComponent {
           img="ic_close_black_24px"
           onClick={this.onClickClose}
         />
-        <div className="results">
+        <div className={`results ${isWildCardSearchDisabled ? '' : 'wild-card-visible'}`}>
           {isSearching && <div className="info">{t('message.searching')}</div>}
           {noResult && <div className="info">{t('message.noResults')}</div>}
+          {errorMessage && <div className="warn">{errorMessage}</div>}
           {results.map((result, i) => {
             const prevResult = i === 0 ? results[0] : results[i - 1];
 
@@ -107,10 +110,12 @@ class SearchPanel extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'searchPanel'),
+  isWildCardSearchDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
   isOpen: selectors.isElementOpen(state, 'searchPanel'),
   results: selectors.getResults(state),
   isSearching: selectors.isSearching(state),
   noResult: selectors.isNoResult(state),
+  errorMessage: selectors.getSearchErrorMessage(state),
 });
 
 const mapDispatchToProps = {
