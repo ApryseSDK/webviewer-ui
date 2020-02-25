@@ -1,12 +1,12 @@
 /**
  * Unselect selected thumbnails
- * @method WebViewer#unselelctThumbnailPageNumbers
+ * @method WebViewerInstance#unselelctThumbnailPages
  * @param {Array<number>} pageNumbers array of page numbers to unselect
  * @example // 6.1 and after
 WebViewer(...)
   .then(function(instance) {
     const pageNumbersToUnselect = [1, 2];
-    instance.unselelctThumbnailPageNumbers(pageNumbersToUnselect);
+    instance.unselelctThumbnailPages(pageNumbersToUnselect);
   });
  */
 import selectors from 'selectors';
@@ -16,7 +16,7 @@ export default store => pageNumbers => {
   const selectedIndex = selectors.getSelectedThumbnailPageIndexes(store.getState());
 
   if (!pageNumbers || !Array.isArray(pageNumbers)) {
-    console.warn(`Invalid input, 'unselectThumbnailPageNumbers' expect an array of numbers`);
+    console.warn(`Invalid input, 'unselelctThumbnailPages' expect an array of numbers`);
     return;
   }
 

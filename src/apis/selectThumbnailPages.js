@@ -1,6 +1,6 @@
 /**
  * Select thumbnails in the thumbnail panel. This requires the "ThumbnailMultiselect" feature to be enabled
- * @method WebViewer#selectThumbnailPageNumbers
+ * @method WebViewerInstance#selectThumbnailPages
  * @param {Array<number>} pageNumbers array of page numbers to select
  * @example // 6.1 and after
 WebViewer(...)
@@ -8,7 +8,7 @@ WebViewer(...)
     instance.enableFeatures(['ThumbnailMultiselect']);
 
     const pageNumbersToSelect = [1, 2, 3];
-    instance.selectThumbnailPageNumbers(pageNumbersToSelect);
+    instance.selectThumbnailPages(pageNumbersToSelect);
   });
  */
 import selectors from 'selectors';
@@ -28,7 +28,7 @@ export default store => pageNumbers => {
   }
 
   if (!pageNumbers || !Array.isArray(pageNumbers)) {
-    console.warn(`Invalid input, 'selectThumbnailPageNumbers' expect an array of numbers`);
+    console.warn(`Invalid input, 'selectThumbnailPages' expect an array of numbers`);
     return;
   }
 
