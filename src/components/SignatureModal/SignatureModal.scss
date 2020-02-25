@@ -46,7 +46,7 @@
         @include tablet-and-desktop {
           display: none;
         }
-      }      
+      }     
     }
 
     @include tablet-and-mobile {
@@ -54,6 +54,11 @@
         max-height: 100%;
       }
     }
+
+    .StylePopup {
+      border-radius: 0px;
+      box-shadow: none;
+    }    
     
     .divider-horizontal {
       width: 100%;

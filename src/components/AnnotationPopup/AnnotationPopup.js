@@ -225,7 +225,10 @@ const AnnotationPopup = () => {
               dataElement="annotationStyleEditButton"
               title="action.style"
               img="icon-menu-style-line"
-              onClick={() => setIsStylePopupOpen(true)}
+              onClick={() => {
+                setIsStylePopupOpen(true);
+                dispatch(actions.closeElements(['toolsOverlay']));
+              }}
             />
           )}
           {firstAnnotation.ToolName === 'CropPage' && (
