@@ -45,7 +45,7 @@ class Thumbnail extends React.PureComponent {
 
     this.loadThumbnailTimeout = setTimeout(() => {
       // wrap loadThumbnailAsync inside a setTimeout so that we are not calling it a lot of times when users scroll the panel frantically
-      // this is a workaround for WVS where proper cancelLoadThumbnail hasn't been implmented, and too many requests to the server will add a lot of overhead to it
+      // this is a workaround for WVS where proper cancelLoadThumbnail hasn't been implemented, and too many requests to the server will add a lot of overhead to it
       this.loadThumbnailTimeout = null;
       const id = this.loadThumbnailAsync();
       onLoad(index, this.thumbContainer.current, id);
