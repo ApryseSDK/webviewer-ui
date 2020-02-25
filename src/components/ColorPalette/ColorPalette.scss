@@ -18,7 +18,7 @@
       border-radius: 4px;
     }
 
-    @include mobile {
+    @include tablet-and-mobile {
       width: 36px;
       height: 36px;
       margin: 0 13px;
@@ -46,7 +46,7 @@
         border: 1px solid #dfe2ed;
       }
 
-      @include mobile {
+      @include tablet-and-mobile  {
         width: 24px;
         height: 24px;
 
