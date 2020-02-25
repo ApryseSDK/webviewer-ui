@@ -3,10 +3,10 @@
 .ToolStylePopup {
   background: var(--light-background);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  // align-items: center;
+  // justify-content: center;
 
-  &.mobile {
+  @include mobile {
     margin: 0;
     position: fixed;
     width: 100%;
@@ -34,5 +34,10 @@
       left: 0;
       right: 0;
     }
+  }
+
+  @include tablet {
+    background: none;
+    position: absolute;
   }
 }

@@ -2,8 +2,8 @@
 @import '../../constants/popup.scss';
 
 .StylePopup {
-  margin-top: 4px;
-  margin-bottom: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   display: flex;
   flex-direction: column;
   background: var(--light-background);
@@ -13,8 +13,14 @@
     margin: 8px 12px;
   }
 
-  &.mobile {
+  @include mobile {
     max-width: 340px;
+  }
+
+  @include tablet {
+    border-radius: 4px;
+    box-shadow: 0 0 3px 0 #c3c6d4;
+    padding: 4px;
   }
 
   // &.mobile {

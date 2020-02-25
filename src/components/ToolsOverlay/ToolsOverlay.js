@@ -111,8 +111,8 @@ class ToolsOverlay extends React.PureComponent {
   handleCloseClick = () => {
     const { setActiveToolGroup, closeElements } = this.props;
 
-    core.setToolMode(defaultTool);
-    setActiveToolGroup('');
+    // core.setToolMode(defaultTool);
+    // setActiveToolGroup('');
     closeElements(['toolsOverlay']);
   };
 
@@ -199,15 +199,18 @@ class ToolsOverlay extends React.PureComponent {
           </div>
           {isStylingOpen && (
             <React.Fragment>
-              <ToolStylePopup />
+              <ToolStylePopup
+                handleCloseClick={() => this.setState({ isStylingOpen: false })}
+              />
             </React.Fragment>
           )}
         </div>
-        {!isTabletAndMobile && <div className="Close-Container">
-          <div className="Close-Button" onClick={this.handleCloseClick}>
-            <Icon className="Close-Icon" glyph="icon-close" />
-          </div>
-        </div>}
+        {!isTabletAndMobile &&
+          <div className="Close-Container">
+            <div className="Close-Button" onClick={this.handleCloseClick}>
+              <Icon className="Close-Icon" glyph="icon-close" />
+            </div>
+          </div>}
       </div>
     );
   }

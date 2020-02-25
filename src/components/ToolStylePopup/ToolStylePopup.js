@@ -13,6 +13,7 @@ import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
+import Icon from 'components/Icon';
 
 import './ToolStylePopup.scss';
 
@@ -117,8 +118,7 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, activeToolName, activeToolStyle, isMobile } = this.props;
-    let { siblingWidth } = this.props;
+    const { isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isOpen, handleCloseClick } = this.props;
     const isFreeText = activeToolName === 'AnnotationCreateFreeText';
     const colorMapKey = mapToolNameToKey(activeToolName);
 
@@ -127,16 +127,15 @@ class ToolStylePopup extends React.PureComponent {
     }
     const hideSlider = activeToolName === 'AnnotationCreateRedaction';
 
+    console.log('activeToolName', activeToolName);
+
     return (
       <div
         className={classNames({
           ToolStylePopup: true,
-          mobile: isMobile,
         })}
-        style={{ width: siblingWidth }}
         data-element="toolStylePopup"
         ref={this.popup}
-        onClick={this.handleClick}
       >
         {isMobile && <div className="swipe-indicator" />}
         <StylePopup
@@ -148,6 +147,16 @@ class ToolStylePopup extends React.PureComponent {
           hideSlider={hideSlider}
           onStyleChange={this.handleStyleChange}
         />
+        {isTablet &&
+          <div className="Close-Container">
+            <div className="Close-Button" onClick={
+              () => {
+                handleCloseClick();
+              }}
+            >
+              <Icon className="Close-Icon" glyph="icon-close" />
+            </div>
+          </div>}
       </div>
     );
   }
@@ -180,7 +189,17 @@ export default props => {
     false,
   );
 
+  const isTablet = useMedia(
+    // Media queries
+    ['(min-width: 641px) and (max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+
+
   return (
-    <ConnectedToolStylePopup {...props} isMobile={isMobile} />
+    <ConnectedToolStylePopup {...props} isMobile={isMobile} isTablet={isTablet} />
   );
 }
