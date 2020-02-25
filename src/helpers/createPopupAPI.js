@@ -69,6 +69,9 @@ WebViewer(...)
   });
    */
   update(items) {
+    if (!items) {
+      items = [];
+    }
     this.store.dispatch(actions.setPopupItems(this.popupDataElement, items));
 
     return this;
@@ -80,7 +83,7 @@ WebViewer(...)
    * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.annotationPopup.delete('annotationCommentButton');
+    instance.annotationPopup.getItems();
   });
    */
   getItems() {

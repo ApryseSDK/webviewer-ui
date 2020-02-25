@@ -20,6 +20,10 @@ $popup-icon-width: 18px;
   background: var(--primary-color);
   box-shadow: 1px 1px 10px #aaa;
 
+  &:empty {
+    padding: 0;
+  }
+
   .buttons {
     display: flex;
   }
