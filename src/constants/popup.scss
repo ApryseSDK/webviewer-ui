@@ -28,9 +28,11 @@ $popup-icon-width: 18px;
     width: $popup-button-width;
     height: $popup-button-height;
 
-    @include mobile {
+    @include tablet-and-mobile {
       width: $popup-button-width;
       height: $popup-button-height;
+
+      margin: 4px;
     }
 
     .Icon {

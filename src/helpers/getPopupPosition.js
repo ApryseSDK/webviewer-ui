@@ -3,7 +3,7 @@ import core from 'core';
 export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
   const { left, top } = calcAnnotationPopupPosition(getAnnotationPosition(annotation), getPopupDimensions(popup));
 
-  return { left, top };
+  return { left: Math.max(left, 4), top };
 };
 
 export const getTextPopupPositionBasedOn = (allQuads, popup) => {

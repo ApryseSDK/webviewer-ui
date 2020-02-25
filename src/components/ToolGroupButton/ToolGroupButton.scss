@@ -1,13 +1,16 @@
 @import '../../constants/styles';
 
 .tool-group-button {
-  margin-left: 7px;
-  margin-right: 7px;
+  margin: 0 7px;
   display: flex;
   align-items: center;
   height: 32px;
   border-radius: 4px;
   cursor: pointer;
+
+  @include tablet {
+    margin: 0 12px;
+  }
 
   .down-arrow-container {
     margin-left: -4px;
