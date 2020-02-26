@@ -69,7 +69,8 @@
     "strikeout": "抹消線",
     "underline": "下線",
     "custom": "カスタム",
-    "rubberStamp": "ゴム印"
+    "rubberStamp": "ゴム印",
+    "fileattachment": "添付ファイル"
   },
   "rubberStamp": {
     "Approved": "承認済み",
@@ -217,7 +218,8 @@
       "area": "領域",
       "distanceMeasurement": "距離測定",
       "perimeterMeasurement": "境界測定",
-      "areaMeasurement": "面積測定"
+      "areaMeasurement": "面積測定",
+      "radius": "半径"
     },
     "measurementOption": {
       "scale": "スケール"

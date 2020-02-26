@@ -69,7 +69,8 @@
     "strikeout": "Зачеркнуть",
     "underline": "Подчеркнуть",
     "custom": "Свой стиль",
-    "rubberStamp": "Штамп"
+    "rubberStamp": "Штамп",
+    "fileattachment": "Файл вложения"
   },
   "rubberStamp": {
     "Approved": "Одобренный",
@@ -217,7 +218,8 @@
       "area": "Площадь",
       "distanceMeasurement": "Замерение дистанции",
       "perimeterMeasurement": "Замерение периметера",
-      "areaMeasurement": "Замерение площади"
+      "areaMeasurement": "Замерение площади",
+      "radius": "Радиус"
     },
     "measurementOption": {
       "scale": "Масштаб"

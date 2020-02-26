@@ -69,7 +69,8 @@
     "strikeout": "Doorstrepen",
     "underline": "Onderstrepen",
     "custom": "maatwerk",
-    "rubberStamp": "Rubberen stempel"
+    "rubberStamp": "Rubberen stempel",
+    "fileattachment": "Bestandsbijlage"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",
@@ -217,7 +218,8 @@
       "area": "Gebied",
       "distanceMeasurement": "Afstands meting",
       "perimeterMeasurement": "Perimeter meting",
-      "areaMeasurement": "Gebieds meting"
+      "areaMeasurement": "Gebieds meting",
+      "radius": "Straal"
     },
     "measurementOption": {
       "scale": "Schaal"
