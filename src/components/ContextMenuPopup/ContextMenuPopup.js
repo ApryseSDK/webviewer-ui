@@ -74,7 +74,7 @@ const ContextMenuPopup = () => {
         if (top + height > containerBox.bottom) {
           top = containerBox.bottom - height - verticalGap;
         }
-        if (popupItems && popupItems.length > 0) {
+        if (popupItems.length > 0) {
           setPosition({ left, top });
           dispatch(actions.openElement('contextMenuPopup'));
         }

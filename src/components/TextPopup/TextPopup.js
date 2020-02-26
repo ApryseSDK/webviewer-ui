@@ -40,7 +40,7 @@ const TextPopup = () => {
   useEffect(() => {
     const textSelectTool = core.getTool('TextSelect');
     const onSelectionComplete = (startQuad, allQuads) => {
-      if (popupRef.current && popupItems && popupItems.length > 0) {
+      if (popupRef.current && popupItems.length > 0) {
         setPosition(getTextPopupPositionBasedOn(allQuads, popupRef));
         dispatch(actions.openElement('textPopup'));
       }
