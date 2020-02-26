@@ -13,6 +13,7 @@ import core from 'core';
 import actions from 'actions';
 
 export default store => toolName => {
+  console.log('aksdfjklsdfj');
   const state = store.getState();
   const group = state.viewer.toolButtonObjects[toolName].group;
 

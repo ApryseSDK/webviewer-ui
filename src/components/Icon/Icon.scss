@@ -6,8 +6,8 @@
   pointer-events: none;
   color: var(--icon-color);
 
-  path:not([fill=none]),
-  polygon#Triangle {
+  path:not([fill=none]), 
+  rect:not([fill=none]) {
     fill: currentColor;
   }
 }

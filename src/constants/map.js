@@ -150,7 +150,7 @@ const map = {
       annotation instanceof window.Annotations.TextHighlightAnnotation,
   },
   underline: {
-    icon: 'ic_annotation_underline_black_24px',
+    icon: 'icon-tool-text-manipulation-underline',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -159,7 +159,7 @@ const map = {
       annotation instanceof window.Annotations.TextUnderlineAnnotation,
   },
   squiggly: {
-    icon: 'ic_annotation_squiggly_black_24px',
+    icon: 'icon-tool-text-manipulation-squiggly',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -168,7 +168,7 @@ const map = {
       annotation instanceof window.Annotations.TextSquigglyAnnotation,
   },
   strikeout: {
-    icon: 'ic_annotation_strikeout_black_24px',
+    icon: 'icon-tool-text-manipulation-strikethrough',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],

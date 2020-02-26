@@ -84,7 +84,7 @@ const TextPopup = () => {
         <ActionButton
           dataElement="textUnderlineToolButton"
           title="annotation.underline"
-          img="ic_annotation_underline_black_24px"
+          img="icon-tool-text-manipulation-underline"
           onClick={() =>
             createTextAnnotationAndSelect(
               dispatch,
@@ -95,7 +95,7 @@ const TextPopup = () => {
         <ActionButton
           dataElement="textSquigglyToolButton"
           title="annotation.squiggly"
-          img="ic_annotation_squiggly_black_24px"
+          img="icon-tool-text-manipulation-squiggly"
           onClick={() =>
             createTextAnnotationAndSelect(
               dispatch,
@@ -105,7 +105,7 @@ const TextPopup = () => {
         />
         <ActionButton
           title="annotation.strikeout"
-          img="ic_annotation_strikeout_black_24px"
+          img="icon-tool-text-manipulation-strikethrough"
           onClick={() =>
             createTextAnnotationAndSelect(
               dispatch,

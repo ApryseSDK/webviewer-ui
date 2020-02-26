@@ -80,19 +80,22 @@ class ToolGroupButton extends React.PureComponent {
       toggleElement,
       openElement,
       toolGroup,
+      isToolsOverlayOpen,
     } = this.props;
     const { toolName } = this.state;
 
-    console.log('onclick', isActive);
-    toggleElement('toolsOverlay');
-    if (isActive) {
+    console.log('onclick', isActive, isToolsOverlayOpen);
+    // toggleElement('toolsOverlay');
+    if (isActive && !isToolsOverlayOpen) {
+      openElement('toolsOverlay');
+    } else if (isActive) {
       // core.setToolMode(defaultTool);
       // setActiveToolGroup('');
-      // closeElement('toolsOverlay');
+      closeElement('toolsOverlay');
     } else {
       core.setToolMode(toolName);
       setActiveToolGroup(toolGroup);
-      // openElement('toolsOverlay');
+      openElement('toolsOverlay');
     }
   };
 
@@ -148,6 +151,7 @@ class ToolGroupButton extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  isToolsOverlayOpen: selectors.isElementOpen(state, 'toolsOverlay'),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
