@@ -48,7 +48,7 @@ WebViewer(...)
    * Update all the items in the popup.
    * To update an individual item, use {@link WebViewerInstance#updateElement updateElement}
    * @method WebViewerInstance.Popup#update
-   * @param {Array.<object>} items the items that will be rendered in the popup
+   * @param {Array.<object>} [items] the items that will be rendered in the popup
    * @returns {this} The instance itself
    * @example
 WebViewer(...)
