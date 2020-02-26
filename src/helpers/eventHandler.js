@@ -24,6 +24,8 @@ export default store => {
   const onLocationSelected = eventListeners.onLocationSelected(store);
   const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(dispatch);
   const onPageComplete = eventListeners.onPageComplete(store);
+  const onFileAttachmentAnnotationAdded = eventListeners.onFileAttachmentAnnotationAdded(dispatch);
+  const onFileAttachmentDataAvailable = eventListeners.onFileAttachmentDataAvailable(dispatch);
 
   return {
     addEventHandlers: () => {
@@ -41,11 +43,13 @@ export default store => {
       core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.addEventListener('annotationChanged', onAnnotationChanged);
       core.addEventListener('pageComplete', onPageComplete);
+      core.addEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
       core.getTool('AnnotationCreateStamp').on('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
       core.getTool('AnnotationCreateRubberStamp').on('annotationAdded', onRubberStampAnnotationAdded);
+      core.getTool('AnnotationCreateFileAttachment').on('annotationAdded', onFileAttachmentAnnotationAdded);
       hotkeysManager.initialize(store);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
@@ -67,10 +71,12 @@ export default store => {
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('pageComplete', onPageComplete);
+      core.removeEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
       core.getTool('AnnotationCreateStamp').off('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').off('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').off('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateRubberStamp').off('annotationAdded', onRubberStampAnnotationAdded);
+      core.getTool('AnnotationCreateFileAttachment').off('annotationAdded', onFileAttachmentAnnotationAdded);
       hotkeysManager.off();
       document.removeEventListener('fullscreenchange', onFullScreenChange);
       document.removeEventListener('mozfullscreenchange', onFullScreenChange);
