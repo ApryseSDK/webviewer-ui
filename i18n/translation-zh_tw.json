@@ -13,6 +13,7 @@
     "ungroup": "取消組合",
     "download": "下載",
     "edit": "編輯",
+    "extract": "提取",
     "enterFullscreen": "全螢幕",
     "exitFullscreen": "退出全螢幕",
     "fit": "符合",
@@ -28,13 +29,16 @@
     "save": "儲存",
     "create": "建立",
     "showMoreResults": "顯示更多結果",
-    "saveSignature": "儲存簽名",
     "sign": "簽署",
     "style": "樣式",
     "submit": "提交",
     "zoom": "縮放",
     "zoomIn": "放大",
-    "zoomOut": "縮小"
+    "zoomOut": "縮小",
+    "draw": "畫",
+    "type": "類型",
+    "upload": "上載",
+    "link": "鏈接"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -64,7 +68,33 @@
     "stickyNote": "評論",
     "strikeout": "刪除線",
     "underline": "底線",
-    "custom": "自訂"
+    "custom": "自訂",
+    "rubberStamp": "橡皮圖章"
+  },
+  "rubberStamp": {
+    "Approved": "已批准",
+    "AsIs": "照原樣",
+    "Completed": "已完成",
+    "Confidential": "機密",
+    "Departmental": "部門的",
+    "Draft": "草案",
+    "Experimental": "實驗性",
+    "Expired": "已過期",
+    "Final": "最後",
+    "ForComment": "徵求意見",
+    "ForPublicRelease": "公開發行",
+    "InformationOnly": "僅供參考",
+    "NotApproved": "不批准",
+    "NotForPublicRelease": "不公開發布",
+    "PreliminaryResults": "初步結果",
+    "Sold": "已售出",
+    "TopSecret": "最高機密",
+    "Void": "空洞",
+    "SHSignHere": "在這裡簽名",
+    "SHWitness": "見證人",
+    "SHInitialHere": "最初在這裡",
+    "SHAccepted": "公認",
+    "SBRejected": "拒絕"
   },
   "component": {
     "freehandToolsButton": "手繪工具",
@@ -74,6 +104,9 @@
     "miscToolsButton": "其他工具",
     "notesPanel": "備忘稿",
     "outlinesPanel": "大綱",
+    "bookmarksPanel": "書籤",
+    "newBookmark": "新書籤",
+    "bookmarkPage": "頁",
     "layersPanel": "圖層",
     "shapeToolsButton": "圖形工具",
     "textToolsButton": "文字工具",
@@ -82,10 +115,7 @@
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
     "measurementToolsButton": "測量工具",
-    "calibration": "校準",
-    "bookmarksPanel": "書籤",
-    "bookmarkPage": "頁",
-    "newBookmark": "新書籤"
+    "calibration": "校準"
   },
   "message": {
     "badDocument": "無法載入文件。此文件已損壞或無效。",
@@ -109,7 +139,9 @@
     "searchPlaceholder": "搜尋評論...",
     "signHere": "在這裡簽名",
     "insertTextHere": "在這裡插入文字",
-    "enterMeasurement": "在兩點之間輸入測量值"
+    "imageSignatureAcceptedFileTypes": "僅接受{{acceptedFileTypes}}",
+    "enterMeasurement": "在兩點之間輸入測量值",
+    "linkURLorPage": "鏈接網址或頁面"
   },
   "option": {
     "annotationColor": {
@@ -120,6 +152,9 @@
     "displayMode": {
       "layout": "版面",
       "pageTransition": "頁面切換"
+    },
+    "documentControls": {
+      "placeholder": "輸入頁面以選擇2、5-9"
     },
     "layout": {
       "cover": "封面",
@@ -156,6 +191,12 @@
     "signatureOverlay": {
       "addSignature": "新增簽名"
     },
+    "signatureModal": {
+      "saveSignature": "保存簽名",
+      "dragAndDrop": "將圖片拖放到此處",
+      "or": "要么",
+      "pickImage": "選擇簽名圖像"
+    },
     "status": {
       "status": "狀態"
     },
@@ -181,6 +222,11 @@
     "measurementOption": {
       "scale": "比例"
     },
+    "styleOption": {
+      "regular": "定期",
+      "style": "樣式",
+      "cloudy": "多雲的"
+    },
     "slider": {
       "opacity": "不透明度",
       "thickness": "厚度",
@@ -194,20 +240,21 @@
       "size": "尺寸",
       "location": "選擇一個位置來編輯水印",
       "text": "文本",
-      "colors": "顏色",
-      "resetAllSettings": "重置所有設置"
+      "style": "樣式",
+      "resetAllSettings": "重置所有設置",
+      "font": "字形"
     },
     "thumbnailPanel": {
       "delete": "刪除",
-      "rotateCounterClockwise": "逆時針方向",
-      "rotateClockwise": "順時針"
+      "rotateClockwise": "順時針",
+      "rotateCounterClockwise": "逆時針方向"
     }
   },
   "warning": {
     "deletePage": {
-      "deleteLastPageMessage": "這將導致沒有剩餘頁面。請至少留一頁",
+      "deleteTitle": "刪除頁面",
       "deleteMessage": "您確定要刪除所選頁面嗎？這是無法撤消的",
-      "deleteTitle": "刪除頁面"
+      "deleteLastPageMessage": "這將導致沒有剩餘頁面。請至少留一頁"
     },
     "redaction": {
       "applyTile": "應用編輯",
@@ -242,6 +289,13 @@
   "tool": {
     "pan": "移動瀏覽",
     "select": "選取",
-    "Marquee": "跑馬燈縮放"
+    "Marquee": "跑馬燈縮放",
+    "Link": "鏈接網址或頁面"
+  },
+  "link": {
+    "url": "網址",
+    "page": "頁",
+    "enterurl": "輸入您想要鏈接的URL",
+    "enterpage": "選擇您要鏈接的頁碼"
   }
 }

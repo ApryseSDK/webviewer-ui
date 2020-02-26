@@ -154,10 +154,10 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isThumbnailReordering: payload.useThumbnailReordering };
     case 'SET_THUMBNAIL_MULTISELECT':
       return { ...state, isThumbnailMultiselect: payload.useThumbnailMultiselect };
+    case 'SET_ALLOW_PAGE_NAVIGATION':
+      return { ...state, allowPageNavigation: payload.allowPageNavigation };
     case 'SET_TOOL_BUTTON_OBJECTS':
       return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
-    case 'SET_DOCUMENT_LOADED':
-      return { ...state, isDocumentLoaded: payload.isDocumentLoaded };
     case 'SET_READ_ONLY':
       return { ...state, isReadOnly: payload.isReadOnly };
     case 'SET_CUSTOM_PANEL':
@@ -230,6 +230,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, tab: { ...state.tab, [payload.id]: payload.dataElement } };
     case 'SET_CUSTOM_ELEMENT_OVERRIDES':
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
+    case 'SET_NOTE_TRANSFORM_FUNCTION':
+      return { ...state, noteTransformFunction: payload.noteTransformFunction }
     default:
       return state;
   }

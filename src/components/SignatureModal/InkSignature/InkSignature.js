@@ -35,20 +35,9 @@ const InkSignature = ({
   }, []);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-
     if (dimension.height && dimension.width) {
-      const { width, height } = canvas.getBoundingClientRect();
-      const ctx = canvas.getContext('2d');
-
-      // we resize the canvas when the bounding box of its parent element changes so that signatures can be drawn correctly
-      // since the canvas will be cleared when the size changes, we grab the image data before resizing and use it to redraw afterwards
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-      canvas.width = width;
-      canvas.height = height;
-
-      ctx.putImageData(imageData, 0, 0);
+      const signatureTool = core.getTool('AnnotationCreateSignature');
+      signatureTool.resizeCanvas();
     }
   }, [dimension]);
 

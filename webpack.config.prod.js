@@ -25,6 +25,10 @@ module.exports = {
         from: './assets',
         to: '../build/assets',
       },
+      {
+        from: './src/configorigin.txt',
+        to: '../build/configorigin.txt',
+      },
     ]),
     new MiniCssExtractPlugin({
       filename: 'style.css',

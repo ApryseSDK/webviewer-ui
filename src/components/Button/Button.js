@@ -22,52 +22,55 @@ const propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const Button = props => {
-  const [isElementDisabled, customOverrides = {}] = useSelector(state => [
-    selectors.isElementDisabled(state, props.dataElement),
-    selectors.getCustomElementOverrides(state, props.dataElement),
-  ], shallowEqual);
+const NOOP = () => {};
 
-  props = { ...props, ...customOverrides };
+const Button = props => {
+  const [removeElement, customOverrides = {}] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, props.dataElement),
+      selectors.getCustomElementOverrides(state, props.dataElement),
+    ],
+    shallowEqual,
+  );
+
   const {
+    disable,
     isActive,
     mediaQueryClassName,
     img,
     label,
     color,
     dataElement,
-    onClick = () => {},
+    onClick = NOOP,
     className,
     title,
-  } = props;
+  } = { ...props, ...customOverrides };
 
-  const buttonClass = classNames({
-    Button: true,
-    active: isActive,
-    [mediaQueryClassName]: mediaQueryClassName,
-    [className]: className,
-  });
-  const isBase64 = img && img.trim().indexOf('data:') === 0;
+  const isBase64 = img?.trim().startsWith('data:');
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
-    img && !isBase64 && (img.indexOf('.') === -1 || img.indexOf('<svg') === 0);
-
-  let content;
-  if (isGlyph) {
-    content = <Icon glyph={img} color={color} />;
-  } else if (img) {
-    content = <img src={img} />;
-  } else if (label) {
-    content = <p>{label}</p>;
-  }
+    img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
+  const shouldRenderTooltip = title && !disable;
 
   const children = (
-    <div className={buttonClass} data-element={dataElement} onClick={onClick}>
-      {content}
+    <div
+      className={classNames({
+        Button: true,
+        active: isActive,
+        disable,
+        [mediaQueryClassName]: mediaQueryClassName,
+        [className]: className,
+      })}
+      data-element={dataElement}
+      onClick={disable ? NOOP : onClick}
+    >
+      {isGlyph && <Icon glyph={img} color={color} />}
+      {img && !isGlyph && <img src={img} />}
+      {label && <p>{label}</p>}
     </div>
   );
 
-  return isElementDisabled ? null : title ? (
+  return removeElement ? null : shouldRenderTooltip ? (
     <Tooltip content={title}>{children}</Tooltip>
   ) : (
     children

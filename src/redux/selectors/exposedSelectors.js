@@ -1,4 +1,3 @@
-import { workerTypes } from 'constants/types';
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
@@ -79,8 +78,6 @@ export const isFullScreen = state => state.viewer.isFullScreen;
 
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
 
-export const isDocumentLoaded = state => state.viewer.isDocumentLoaded;
-
 export const isDocumentReadOnly = state => state.viewer.isReadOnly;
 
 export const getCustomPanels = state => state.viewer.customPanels;
@@ -97,10 +94,7 @@ export const getDisabledCustomPanelTabs = state =>
     return disabledTabs;
   }, []);
 
-export const isEmbedPrintSupported = state => {
-  const isPDF = getDocumentType(state) === workerTypes.PDF;
-  return isPDF && (isChrome && !isAndroid) && state.viewer.useEmbeddedPrint;
-};
+export const isEmbedPrintSupported = state => isChrome && !isAndroid && state.viewer.useEmbeddedPrint;
 
 export const getColorMap = state => state.viewer.colorMap;
 
@@ -141,6 +135,8 @@ export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnail
 
 export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
 
+export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
+
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
 
 // warning message
@@ -161,22 +157,6 @@ export const isAccessibleMode = state => state.viewer.isAccessibleMode;
 export const getErrorMessage = state => state.viewer.errorMessage || '';
 
 // document
-export const getDocument = state => state.document;
-
-export const getDocumentId = state => state.document.id;
-
-export const getDocumentPath = state =>
-  state.document.path || state.document.initialDoc;
-
-export const getDocumentFile = state => state.document.file;
-
-export const hasPath = state =>
-  !!(state.document.initialDoc || state.advanced.externalPath);
-
-export const getDocumentType = state => state.document.type;
-
-export const getCheckPasswordFunction = state => state.document.checkPassword;
-
 export const getPasswordAttempts = state => state.document.passwordAttempts;
 
 export const getPrintQuality = state => state.document.printQuality;
@@ -184,25 +164,17 @@ export const getPrintQuality = state => state.document.printQuality;
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;
+
 export const getBookmarks = state => state.document.bookmarks;
 
 export const getLayers = state => state.document.layers;
 
-export const getLoadingProgress = state =>
-  (state.document.documentLoadingProgress +
-    state.document.workerLoadingProgress) /
-  2;
-
-export const getUploadProgress = state => state.document.uploadProgress;
-
-export const isUploading = state => state.document.isUploading;
+export const getLoadingProgress = state => state.document.loadingProgress;
 
 // user
 export const getUserName = state => state.user.name;
 
 // advanced
-export const getAdvanced = state => state.advanced;
-
 export const getServerUrl = state => state.advanced.serverUrl;
 
 // search
@@ -232,7 +204,11 @@ export const isSearching = state => state.search.isSearching;
 
 export const isNoResult = state => state.search.noResult;
 
+export const getSearchErrorMessage = state => state.search.errorMessage;
+
 export const isProgrammaticSearch = state => state.search.isProgrammaticSearch;
 
 export const isProgrammaticSearchFull = state =>
   state.search.isProgrammaticSearchFull;
+
+export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;

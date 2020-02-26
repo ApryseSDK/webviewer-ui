@@ -26,6 +26,7 @@ class SearchPanel extends React.PureComponent {
     setActiveResultIndex: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
   };
 
   componentDidUpdate(prevProps) {
@@ -67,7 +68,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t, results, isSearching, noResult, isWildCardSearchDisabled } = this.props;
+    const { isDisabled, t, results, isSearching, noResult, isWildCardSearchDisabled, errorMessage } = this.props;
 
     if (isDisabled) {
       return null;
@@ -86,6 +87,7 @@ class SearchPanel extends React.PureComponent {
         <div className={`results ${isWildCardSearchDisabled ? '' : 'wild-card-visible'}`}>
           {isSearching && <div className="info">{t('message.searching')}</div>}
           {noResult && <div className="info">{t('message.noResults')}</div>}
+          {errorMessage && <div className="warn">{errorMessage}</div>}
           {results.map((result, i) => {
             const prevResult = i === 0 ? results[0] : results[i - 1];
 
@@ -113,6 +115,7 @@ const mapStateToProps = state => ({
   results: selectors.getResults(state),
   isSearching: selectors.isSearching(state),
   noResult: selectors.isNoResult(state),
+  errorMessage: selectors.getSearchErrorMessage(state),
 });
 
 const mapDispatchToProps = {

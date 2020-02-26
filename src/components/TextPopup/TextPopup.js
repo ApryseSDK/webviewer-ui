@@ -114,6 +114,14 @@ const TextPopup = () => {
           }
           dataElement="textStrikeoutToolButton"
         />
+        <ActionButton
+          title="tool.Link"
+          img="icon-tool-link"
+          onClick={() =>
+            dispatch(actions.openElement('linkModal'))
+          }
+          dataElement="linkButton"
+        />
         {core.isCreateRedactionEnabled() && (
           <ActionButton
             dataElement="textRedactToolButton"

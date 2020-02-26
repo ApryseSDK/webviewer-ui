@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 
-import selectors from 'selectors';
+import core from 'core';
+import { workerTypes } from 'constants/types';
 import { isIOS } from 'helpers/device';
+import selectors from 'selectors';
 
 import './PrintHandler.scss';
 
@@ -15,6 +17,17 @@ const PrintHandler = () => {
     ],
     shallowEqual,
   );
+  const [documentType, setDocumentType] = useState('');
+
+  useEffect(() => {
+    const onDocumentLoaded = () => {
+      const type = core.getDocument().getType();
+      setDocumentType(type);
+    };
+
+    core.addEventListener('documentLoaded', onDocumentLoaded);
+    return () => core.removeEventListener('documentLoaded', onDocumentLoaded);
+  });
 
   return isDisabled ? null : (
     <div
@@ -23,7 +36,7 @@ const PrintHandler = () => {
         'ios-print': isIOS,
       })}
     >
-      {isEmbedPrintSupported ? (
+      {isEmbedPrintSupported && documentType === workerTypes.PDF ? (
         <iframe id="print-handler" tabIndex={-1}></iframe>
       ) : (
         <div id="print-handler"></div>

@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 
 import actions from 'actions';
+import { workerTypes } from 'constants/types';
 import core from 'core';
 
 export default (dispatch, isEmbedPrintSupported) => {
@@ -8,6 +9,7 @@ export default (dispatch, isEmbedPrintSupported) => {
     return;
   }
 
+  const documentType = core.getDocument().getType();
   const bbURLPromise = core.getPrintablePDF();
 
   if (bbURLPromise) {
@@ -16,7 +18,7 @@ export default (dispatch, isEmbedPrintSupported) => {
     bbURLPromise.then(result => {
       printPage.location.href = result.url;
     });
-  } else if (isEmbedPrintSupported) {
+  } else if (isEmbedPrintSupported && documentType === workerTypes.PDF) {
     dispatch(actions.openElement('loadingModal'));
     printPdf().then(() => {
       dispatch(actions.closeElement('loadingModal'));
