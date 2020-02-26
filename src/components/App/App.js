@@ -78,18 +78,17 @@ const App = ({ removeEventHandlers }) => {
     fireEvent('viewerLoaded');
 
     mobileListener.addListener(() => {
-      // console.log('in mobile');
-      dispatch(actions.setToolButtonObjects());
+      dispatch(actions.setMobileToolsHeader());
     });
-    
+
     tabletListener.addListener(() => {
-      dispatch(actions.setToolButtonObjects());
+      dispatch(actions.setTabletToolsHeader());
     });
-    
+
     desktopListener.addListener(() => {
-      dispatch(actions.setToolButtonObjects());
+      dispatch(actions.setDesktopToolsHeader());
     });
-    
+
     return removeEventHandlers;
     // eslint-disable-next-line
   }, []);

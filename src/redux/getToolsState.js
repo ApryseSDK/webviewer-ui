@@ -303,7 +303,13 @@ const getToolButtonObjects = () => {
   return desktopState;
 };
 
+const getToolsState = () => ({
+  tools: getTools(),
+  toolButtonObjects: getToolButtonObjects(),
+});
+
 export {
   getTools,
   getToolButtonObjects,
+  getToolsState,
 };

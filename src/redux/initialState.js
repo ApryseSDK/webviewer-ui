@@ -8,16 +8,17 @@ import getHashParams from 'helpers/getHashParams';
 import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
 import PageNavOverlay from '../components/PageNavOverlay/PageNavOverlay';
-import { getTools, getToolButtonObjects } from './getToolsState';
+import { getToolsState } from './getToolsState';
+
+const { tools, toolButtonObjects } = getToolsState();
 
 export default {
   viewer: {
     disabledElements: {},
     openElements: {
       header: true,
-      toolsHeader: window.matchMedia('(min-width: 641px)').matches,
-      // toolsHeader: true,
-      // toolsHeader: false,
+      // toolsHeader: window.matchMedia('(min-width: 641px)').matches,
+      toolsHeader: false,
     },
     headers: {
       default: [
@@ -51,7 +52,7 @@ export default {
         },
       ],
       // second header
-      tools: getTools(),
+      tools,
     },
     annotationPopup: [
       { dataElement: 'annotationCommentButton' },
@@ -80,7 +81,7 @@ export default {
       { dataElement: 'freeHandToolButton' },
       { dataElement: 'freeTextToolButton' },
     ],
-    toolButtonObjects: getToolButtonObjects(),
+    toolButtonObjects,
     tab: {
       signatureModal: 'inkSignaturePanelButton',
       linkModal: 'URLPanelButton',

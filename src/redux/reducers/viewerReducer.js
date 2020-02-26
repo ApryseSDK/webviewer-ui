@@ -103,10 +103,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         headers: { ...state.headers, [payload.header]: payload.headerItems },
       };
-    case 'SET_TOOLS':
+    case 'SET_TOOLS_HEADER':
       return {
         ...state,
         headers: { ...state.headers, tools: payload.tools },
+        toolButtonObjects: payload.toolButtonObjects,
       };
     case 'SET_POPUP_ITEMS':
       return {

@@ -3,6 +3,12 @@ import { isIOS, isAndroid } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import selectors from 'selectors';
 import core from 'core';
+import {
+  // getMobileToolsState,
+  // getTabletToolsState,
+  // getDesktopToolsState,
+  getToolsState,
+} from '../getToolsState';
 
 // viewer
 /**
@@ -182,6 +188,41 @@ export const unregisterTool = toolName => ({
   type: 'UNREGISTER_TOOL',
   payload: { toolName },
 });
+
+
+export const setMobileToolsHeader = () => dispatch => {
+  const { tools, toolButtonObjects } = getToolsState();
+  dispatch({
+    type: 'SET_TOOLS_HEADER',
+    payload: {
+      tools,
+      toolButtonObjects,
+    },
+  });
+};
+
+export const setTabletToolsHeader = () => dispatch => {
+  const { tools, toolButtonObjects } = getToolsState();
+  dispatch({
+    type: 'SET_TOOLS_HEADER',
+    payload: {
+      tools,
+      toolButtonObjects,
+    },
+  });
+};
+
+export const setDesktopToolsHeader = () => dispatch => {
+  const { tools, toolButtonObjects } = getToolsState();
+  dispatch({
+    type: 'SET_TOOLS_HEADER',
+    payload: {
+      tools,
+      toolButtonObjects,
+    },
+  });
+};
+
 export const setToolButtonObjects = toolButtonObjects => ({
   type: 'SET_TOOL_BUTTON_OBJECTS',
   payload: { toolButtonObjects },

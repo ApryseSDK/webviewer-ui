@@ -4,7 +4,7 @@
   background: var(--light-background);
   display: flex;
   // align-items: center;
-  // justify-content: center;
+  justify-content: center;
 
   @include mobile {
     margin: 0;
