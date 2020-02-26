@@ -88,6 +88,8 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    // core.setToolMode(defaultTool);
+    // this.props.setActiveToolGroup('');
     window.removeEventListener('resize', this.handleWindowResize);
   }
 

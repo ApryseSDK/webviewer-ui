@@ -2,11 +2,9 @@ import React from 'react';
 import core from 'core';
 import SignatureToolButton from 'components/SignatureToolButton';
 import actions from 'actions';
+import defaultTool from 'constants/defaultTool';
 
 const getTools = () => {
-  // const isMobile = !window.matchMedia('(min-width: 641px)').matches;
-  const isMobile = window.matchMedia('(max-width: 900px)').matches;
-
   const desktopState = [
     { type: 'spacer' },
     { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton' },
@@ -52,6 +50,7 @@ const getTools = () => {
       style: { position: 'absolute', right: 0 },
       onClick: dispatch => {
         dispatch(actions.closeElements(['toolsHeader', 'toolsOverlay']));
+        core.setToolMode(defaultTool);
         dispatch(actions.setActiveToolGroup(''));
       },
     },
@@ -104,6 +103,7 @@ const getTools = () => {
       style: { position: 'absolute', right: 0 },
       onClick: dispatch => {
         dispatch(actions.closeElements(['toolsHeader', 'toolsOverlay']));
+        core.setToolMode(defaultTool);
         dispatch(actions.setActiveToolGroup(''));
       },
     },
@@ -134,6 +134,7 @@ const getTools = () => {
       style: { position: 'absolute', right: 0 },
       onClick: dispatch => {
         dispatch(actions.closeElements(['toolsHeader', 'toolsOverlay']));
+        core.setToolMode(defaultTool);
         dispatch(actions.setActiveToolGroup(''));
       },
     },

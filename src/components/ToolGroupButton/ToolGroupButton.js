@@ -84,8 +84,8 @@ class ToolGroupButton extends React.PureComponent {
     const { toolName } = this.state;
 
     if (isActive) {
-      core.setToolMode(defaultTool);
-      setActiveToolGroup('');
+      // core.setToolMode(defaultTool);
+      // setActiveToolGroup('');
       closeElement('toolsOverlay');
     } else {
       core.setToolMode(toolName);
