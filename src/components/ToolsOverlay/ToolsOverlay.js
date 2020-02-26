@@ -13,6 +13,7 @@ import Icon from 'components/Icon';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 import selectors from 'selectors';
+import { Swipeable } from 'react-swipeable';
 
 import './ToolsOverlay.scss';
 
@@ -145,6 +146,7 @@ class ToolsOverlay extends React.PureComponent {
       activeToolGroup,
       isMobile,
       isTabletAndMobile,
+      closeElements,
     } = this.props;
 
     if (isDisabled || !activeToolGroup) {
@@ -200,11 +202,15 @@ class ToolsOverlay extends React.PureComponent {
             ))}
           </div>
           {isStylingOpen && (
-            <React.Fragment>
+            <Swipeable
+              onSwipedUp={() => this.setState({ isStylingOpen: false })}
+              onSwipedDown={() => this.setState({ isStylingOpen: false })}
+              preventDefaultTouchmoveEvent
+            >
               <ToolStylePopup
                 handleCloseClick={() => this.setState({ isStylingOpen: false })}
               />
-            </React.Fragment>
+            </Swipeable>
           )}
         </div>
         {!isTabletAndMobile &&
