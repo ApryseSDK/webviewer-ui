@@ -474,6 +474,9 @@ class SearchOverlay extends React.PureComponent {
             value={searchValue}
             placeholder={t('message.searchDocumentPlaceholder')}
           />
+          <div className="input-button" onClick={() => { }}>
+            <Icon glyph="icon-header-search" />
+          </div>
         </div>
         <div className="options">
           <Input
