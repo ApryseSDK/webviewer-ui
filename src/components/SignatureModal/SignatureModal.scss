@@ -49,12 +49,6 @@
       }     
     }
 
-    @include tablet-and-mobile {
-      @media (orientation: landscape) {
-        max-height: 100%;
-      }
-    }
-
     .StylePopup {
       border-radius: 0px;
       box-shadow: none;

@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import core from 'core';
+import defaultTool from 'constants/defaultTool';
+import actions from 'actions';
 
 import HeaderItems from 'components/HeaderItems';
 
@@ -13,6 +16,11 @@ class ToolsHeader extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     activeHeaderItems: PropTypes.array.isRequired,
+  }
+
+  componentWillUnmount() {
+    core.setToolMode(defaultTool);
+    this.props.setActiveToolGroup('');
   }
 
   render() {
@@ -39,4 +47,8 @@ const mapStateToProps = state => ({
   activeHeaderItems: selectors.getToolsHeaderItems(state),
 });
 
-export default connect(mapStateToProps)(ToolsHeader);
+const mapDispatchToProps = {
+  setActiveToolGroup: actions.setActiveToolGroup,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToolsHeader);

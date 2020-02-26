@@ -83,14 +83,16 @@ class ToolGroupButton extends React.PureComponent {
     } = this.props;
     const { toolName } = this.state;
 
+    console.log('onclick', isActive);
+    toggleElement('toolsOverlay');
     if (isActive) {
       // core.setToolMode(defaultTool);
       // setActiveToolGroup('');
-      closeElement('toolsOverlay');
+      // closeElement('toolsOverlay');
     } else {
       core.setToolMode(toolName);
       setActiveToolGroup(toolGroup);
-      openElement('toolsOverlay');
+      // openElement('toolsOverlay');
     }
   };
 

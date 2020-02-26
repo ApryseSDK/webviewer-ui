@@ -55,8 +55,10 @@ const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900
 const desktopListener = window.matchMedia('(min-width: 902px)');
 
 const App = ({ removeEventHandlers }) => {
-  const [isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled, isSignatureModalOpen, isSignatureModalDisabled] = useSelector(
+  const [isToolsHeaderOpen, isToolsHeaderDisabled, isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled, isSignatureModalOpen, isSignatureModalDisabled] = useSelector(
     state => [
+      selectors.isElementOpen(state, 'toolsHeader'),
+      selectors.isElementDisabled(state, 'toolsHeader'),
       selectors.isElementOpen(state, 'toolsOverlay'),
       selectors.isElementDisabled(state, 'toolsOverlay'),
       selectors.isElementOpen(state, 'notesPanel'),
@@ -99,7 +101,7 @@ const App = ({ removeEventHandlers }) => {
         <Accessibility />
 
         <Header />
-        <ToolsHeader />
+        {isToolsHeaderOpen && !isToolsHeaderDisabled && <ToolsHeader />}
         <div className="content">
           {isLeftPanelOpen && !isLeftPanelDisabled && <LeftPanel />}
           <DocumentContainer />
