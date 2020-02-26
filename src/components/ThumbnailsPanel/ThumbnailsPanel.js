@@ -89,13 +89,9 @@ class ThumbnailsPanel extends React.PureComponent {
       const pageNumberIncreased = currentPage < targetPageNumber;
 
       let pagesToMove = [currentPage];
-      const pagesMoved = e.dataTransfer.getData(pagesList);
-
-
-      // if (this.groupDrag) {
-      if (pagesMoved.spilt(',').length > 1) {
-        pagesToMove = selectedPageIndexes.map(i => i + 1);
-      }
+    if (this.groupDrag) {
+      pagesToMove = selectedPageIndexes.map(i => i + 1);
+    }
 
       const afterMovePageNumber = targetPageNumber - pagesToMove.filter(p => p < targetPageNumber).length;
 
@@ -217,7 +213,6 @@ class ThumbnailsPanel extends React.PureComponent {
       });
     } else if (isThumbnailMergingEnabled && files.length) {
       const file = files[0];
-
       dispatch(actions.openElement('loadingModal'));
 
       core.mergeDocument(file, insertTo).then(() => {
