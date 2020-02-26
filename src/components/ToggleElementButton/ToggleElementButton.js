@@ -58,12 +58,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: () => {
     // hack
-    if (ownProps.element === 'searchPanel') {
-      dispatch(actions.closeElement('notesPanel'));
-    } else if (ownProps.element === 'notesPanel') {
-      dispatch(actions.closeElement('searchPanel'));
-    }
-    // } else if (ownProps.element === 'toolsHeader' && ownProps.isMobile) {
+    // if (ownProps.element === 'toolsHeader') {
     //   dispatch(actions.closeElement('header'));
     // }
     dispatch(actions.toggleElement(ownProps.element));
