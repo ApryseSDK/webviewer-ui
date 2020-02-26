@@ -9,6 +9,7 @@ import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import touchEventManager from 'helpers/TouchEventManager';
 import getHashParams from 'helpers/getHashParams';
+import setCurrentPage from 'helpers/setCurrentPage';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -135,19 +136,17 @@ class DocumentContainer extends React.PureComponent {
   }
 
   pageUp = () => {
-    const { currentPage, displayMode } = this.props;
+    const { currentPage } = this.props;
     const { scrollHeight, clientHeight } = this.container.current;
-    const newPage = currentPage - getNumberOfPagesToNavigate(displayMode);
 
-    core.setCurrentPage(Math.max(newPage, 1));
+    setCurrentPage(currentPage - getNumberOfPagesToNavigate());
     this.container.current.scrollTop = scrollHeight - clientHeight;
   }
 
   pageDown = () => {
-    const { currentPage, displayMode, totalPages } = this.props;
-    const newPage = currentPage + getNumberOfPagesToNavigate(displayMode);
+    const { currentPage } = this.props;
 
-    core.setCurrentPage(Math.min(newPage, totalPages));
+    setCurrentPage(currentPage + getNumberOfPagesToNavigate());
   }
 
   wheelToZoom = e => {
@@ -202,7 +201,7 @@ class DocumentContainer extends React.PureComponent {
 
     return (
       <div className={className} ref={this.container} data-element="documentContainer" onScroll={this.handleScroll} onTransitionEnd={this.onTransitionEnd}>
-        <div className="document" ref={this.document}></div>
+        <div className="document" ref={this.document} tabIndex="-1"></div>
       </div>
     );
   }
