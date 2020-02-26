@@ -204,7 +204,11 @@ export const isSearching = state => state.search.isSearching;
 
 export const isNoResult = state => state.search.noResult;
 
+export const getSearchErrorMessage = state => state.search.errorMessage;
+
 export const isProgrammaticSearch = state => state.search.isProgrammaticSearch;
 
 export const isProgrammaticSearchFull = state =>
   state.search.isProgrammaticSearchFull;
+
+export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;

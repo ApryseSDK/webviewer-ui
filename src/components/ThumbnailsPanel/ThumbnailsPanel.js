@@ -313,26 +313,12 @@ class ThumbnailsPanel extends React.PureComponent {
     };
   }
 
-  onLoad = (pageIndex, element) => {
+  onLoad = (pageIndex, element, id) => {
     if (!this.thumbIsLoaded(pageIndex) && !this.thumbIsPending(pageIndex)) {
       this.thumbs[pageIndex] = {
         element,
         loaded: false,
       };
-
-      const id = core.loadThumbnailAsync(pageIndex, thumb => {
-        thumb.className = 'page-image';
-        thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
-        thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
-
-        if (this.thumbs[pageIndex]) {
-          this.thumbs[pageIndex].element.appendChild(thumb);
-          this.thumbs[pageIndex].loaded = true;
-          this.thumbs[pageIndex].updateAnnotationHandler = this.updateAnnotations.bind(this);
-          this.removeFromPendingThumbs(pageIndex);
-          this.updateAnnotations(pageIndex);
-        }
-      });
 
       this.pendingThumbs.push({
         pageIndex,
@@ -468,23 +454,23 @@ class ThumbnailsPanel extends React.PureComponent {
                 className={'thumbnailsList'}
                 style={{ outline: 'none' }}
               />
-                <Measure
-                  bounds
-                  onResize={({ bounds }) => {
-                    this.setState({
-                      documentControlHeight: Math.ceil(bounds.height),
-                    });
-                  }}
-                >
-                  {({ measureRef: innerMeasureRef }) => (
-                    <div ref={innerMeasureRef}>
-                      <DocumentControls
-                        toggleDocumentControl={this.toggleDocumentControl}
-                        shouldShowControls={shouldShowControls}
-                      />
-                    </div>
-                  )}
-                </Measure>
+              <Measure
+                bounds
+                onResize={({ bounds }) => {
+                  this.setState({
+                    documentControlHeight: Math.ceil(bounds.height),
+                  });
+                }}
+              >
+                {({ measureRef: innerMeasureRef }) => (
+                  <div ref={innerMeasureRef}>
+                    <DocumentControls
+                      toggleDocumentControl={this.toggleDocumentControl}
+                      shouldShowControls={shouldShowControls}
+                    />
+                  </div>
+                )}
+              </Measure>
             </div>
           )}
         </Measure>

@@ -127,6 +127,9 @@ import setSignatureFonts from './setSignatureFonts';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
+import setNoteTransformFunction from './setNoteTransformFunction';
+import selectThumbnailPages from './selectThumbnailPages';
+import unselectThumbnailPages from './unselectThumbnailPages';
 
 export default store => {
   window.readerControl = {
@@ -184,6 +187,7 @@ export default store => {
     setSortStrategy: setSortStrategy(store),
     setSwipeOrientation,
     setTheme,
+    dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setToolMode: setToolMode(store),
     setZoomLevel,
     setZoomList: setZoomList(store),
@@ -200,6 +204,8 @@ export default store => {
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
     getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
+    selectThumbnailPages: selectThumbnailPages(store),
+    unselectThumbnailPages: unselectThumbnailPages(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),

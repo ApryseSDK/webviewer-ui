@@ -230,6 +230,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, tab: { ...state.tab, [payload.id]: payload.dataElement } };
     case 'SET_CUSTOM_ELEMENT_OVERRIDES':
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
+    case 'SET_NOTE_TRANSFORM_FUNCTION':
+      return { ...state, noteTransformFunction: payload.noteTransformFunction }
     default:
       return state;
   }

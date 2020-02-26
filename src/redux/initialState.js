@@ -126,6 +126,7 @@ export default {
       AnnotationCreateDistanceMeasurement: { dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'measurementTools', showColor: 'active' },
       AnnotationCreatePerimeterMeasurement: { dataElement: 'perimeterMeasurementToolButton', title: 'annotation.perimeterMeasurement', img: 'ic_annotation_perimeter_black_24px', group: 'measurementTools', showColor: 'active' },
       AnnotationCreateAreaMeasurement: { dataElement: 'areaMeasurementToolButton', title: 'annotation.areaMeasurement', img: 'ic_annotation_area_black_24px', group: 'measurementTools', showColor: 'active' },
+      AnnotationCreateEllipseMeasurement: { dataElement: 'ellipseMeasurementToolButton', title: 'annotation.ellipseMeasurement', img: 'ic_annotation_circle_black_24px', group: 'measurementTools', showColor: 'active' },
       AnnotationCreateFreeHand: { dataElement: 'freeHandToolButton', title: 'annotation.freehand', img: 'ic_annotation_freehand_black_24px', group: 'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand2: { dataElement: 'freeHandToolButton2', title: 'annotation.freehand2', img: 'ic_annotation_freehand_black_24px', group: 'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand3: { dataElement: 'freeHandToolButton3', title: 'annotation.freehand2', img: 'ic_annotation_freehand_black_24px', group: 'freeHandTools', showColor: 'always' },
@@ -150,8 +151,9 @@ export default {
       AnnotationCreateSticky: { dataElement: 'stickyToolButton', title: 'annotation.stickyNote', img: 'ic_annotation_sticky_note_black_24px', showColor: 'active' },
       AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'ic_annotation_callout_black_24px', group: 'miscTools', showColor: 'active' },
       AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'ic_annotation_image_black_24px', group: 'miscTools', showColor: 'active' },
-      AnnotationCreateFileAttachment: { dataElement: 'fileAttachmentToolButton', title: 'annotation.fileattachment', img: 'ic_fileattachment_24px', group: 'miscTools', showColor: 'active' },
       AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'ic_annotation_stamp_black_24px', group: 'miscTools', showColor: 'active' },
+      AnnotationCreateFileAttachment: { dataElement: 'fileAttachmentToolButton', title: 'annotation.fileattachment', img: 'ic_fileattachment_24px', group: 'miscTools', showColor: 'active' },
+      [Tools.ToolNames.RECTANGULAR_AREA_MEASUREMENT]: { dataElement: 'rectangularAreaMeasurementToolButton', title: 'annotation.areaMeasurement', img: 'ic_annotation_rectangular_area_black_24px', group: 'measurementTools', showColor: 'active' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'ic_pan_black_24px', showColor: 'never' },
       AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'ic_select_black_24px', showColor: 'never' },
       TextSelect: { dataElement: 'textSelectButton', img: 'textselect_cursor', showColor: 'never' },
@@ -203,6 +205,7 @@ export default {
     leftPanelWidth: 300,
     isReplyDisabledFunc: null,
     customMeasurementOverlay: [],
+    noteTransformFunction: null,
   },
   search: {
     listeners: [],
@@ -244,6 +247,6 @@ export default {
     useSharedWorker: getHashParams('useSharedWorker', false),
     disableI18n: getHashParams('disableI18n', false),
     pdfWorkerTransportPromise: null,
-    officeWorkerTransportPromise: null,
+    officeWorkerTransportPromise: null
   },
 };

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "components/*": ["src/components/*"],
+      "constants/*": ["src/constants/*"],
+      "helpers/*": ["src/helpers/*"],
+      "hooks/*": ["src/hooks/*"],
+      "actions/*": ["src/redux/actions/*"],
+      "reducers/*": ["src/redux/reducers/*"],
+      "selectors/*": ["src/redux/selectors/*"],
+      "core/*": ["src/core/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
