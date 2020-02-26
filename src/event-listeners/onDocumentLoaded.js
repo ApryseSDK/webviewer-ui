@@ -15,7 +15,7 @@ export default dispatch => () => {
   setTimeout(() => {
     dispatch(actions.closeElement('progressModal'));
     dispatch(actions.resetLoadingProgress());
-  }, 0);
+  }, 300);
 
   if (onFirstLoad) {
     onFirstLoad = false;
