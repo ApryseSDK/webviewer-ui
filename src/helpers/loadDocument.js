@@ -8,7 +8,7 @@ import actions from 'actions';
 export default (dispatch, src, options = {}) => {
   options = { ...getDefaultOptions(), ...options };
   options.docId = options.documentId || null;
-  options.onProgress = percent => dispatch(actions.setLoadingProgress(percent));
+  options.onLoadingProgress = percent => dispatch(actions.setLoadingProgress(percent));
   options.password = transformPasswordOption(options.password, dispatch);
   options.xodOptions = extractXodOptions(options);
   options.onError = fireError;
