@@ -86,7 +86,7 @@ class ZoomOverlay extends React.PureComponent {
   };
 
   render() {
-    const { isOpen, isDisabled, t, zoomList } = this.props;
+    const { isOpen, isDisabled, t, zoomList, closeElements } = this.props;
     const className = ['ZoomOverlay', isOpen ? 'open' : 'closed']
       .join(' ')
       .trim();
@@ -102,6 +102,7 @@ class ZoomOverlay extends React.PureComponent {
         data-element="zoomOverlay"
         style={{ left, right, top }}
         ref={this.dropdown}
+        onClick={() => closeElements(['zoomOverlay'])}
       >
         <div
           className="ZoomContainer"
@@ -142,16 +143,6 @@ class ZoomOverlay extends React.PureComponent {
             />
             <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
           </div>
-          {/* <div
-            className="ZoomItem"
-            onClick={core.fitToPage}
-          >
-            <Icon
-              className="ZoomIcon"
-              glyph="icon-header-zoom-marquee"
-            />
-            <div className="ZoomLabel">{t('tool.Marquee')}</div>
-          </div> */}
         </div>
       </div>
     );
