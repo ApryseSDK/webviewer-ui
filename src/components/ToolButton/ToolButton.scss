@@ -13,15 +13,15 @@
   }     
 
   &.active {
-    background: #767f9b33;
-    .styling-down-arrow-container{
-      svg {
-        color: #767f9b;
-      }
-    }
+    background: var(--active-button1);;
+    // .styling-down-arrow-container{
+    //   svg {
+    //     color: #767f9b;
+    //   }
+    // }
 
     .Icon {
-      color: var(--icon-active-color);
+      color: var(--selected-icon-color);
     }
 
     div:hover {
@@ -43,7 +43,7 @@
     }         
 
     &:hover {
-      background: var(--button-hover-color);
+      background: var(--button-hover1);
 
       @media (hover: none) {
         background: transparent;
@@ -65,7 +65,7 @@
       height: 100%;
 
       &.active {
-        background: #767f9b33;
+        background: var(--active-button1);
       }
     }
   }

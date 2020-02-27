@@ -28,7 +28,7 @@
 
     &.active{
       .down-arrow-container {
-        background: var(--active-button1)
+        background: var(--active-button1);
       }
       .down-arrow {
         color: var(--selected-icon-color);

@@ -118,14 +118,14 @@
         &.previous {
           background: var(--primary-button);
           svg {
-            color: var(--blue-gray-1);
+            color: var(--primary-button-text);
           }
         }
 
         &.next {
-          border: 1px solid #6077bf;
+          border: 1px solid var(--primary-button);
           svg {
-            color: #6077bf;
+            color: var(--primary-button);
           }
         }
       }

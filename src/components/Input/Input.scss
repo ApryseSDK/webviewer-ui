@@ -39,7 +39,7 @@ label.Input {
     height: 15px;
     padding: 2px;
     box-sizing: border-box;
-    border: 1px solid #c3c6d4;
+    border: 1px solid var(--border);
     border-radius: 2px;
     background: white;
   }
@@ -61,7 +61,7 @@ label.Input {
 
 input[type=checkbox]:checked + label {
   &:before{
-    background: #6077bf;
-    border: 1px solid #6077bf;
+    background: var(--primary-button);
+    border: 1px solid var(--primary-button);
   }
 }
