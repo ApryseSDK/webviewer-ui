@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import StylePopup from 'components/StylePopup';
 import selectors from "selectors";
 import setToolStyles from 'helpers/setToolStyles';
+import { useSwipeable, Swipeable } from 'react-swipeable';
 
 import core from 'core';
 
@@ -125,17 +126,21 @@ const InkSignature = ({
       <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
         {({ measureRef }) => (
           <div className="ink-signature" ref={measureRef}>
-            <canvas
-              className="ink-signature-canvas"
-              onMouseUp={handleFinishDrawing}
-              onTouchEnd={handleFinishDrawing}
-              ref={canvasRef}
-            />
-            <div className="ink-signature-background">
-              <div className="ink-signature-sign-here">
-                {t('message.signHere')}
+            <Swipeable
+              onSwiping={({ event }) => event.stopPropagation()}
+            >
+              <canvas
+                className="ink-signature-canvas"
+                onMouseUp={handleFinishDrawing}
+                onTouchEnd={handleFinishDrawing}
+                ref={canvasRef}
+              />
+              <div className="ink-signature-background">
+                <div className="ink-signature-sign-here">
+                  {t('message.signHere')}
+                </div>
               </div>
-            </div>
+            </Swipeable>
           </div>
         )}
       </Measure>

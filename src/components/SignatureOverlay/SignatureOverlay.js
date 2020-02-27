@@ -279,27 +279,28 @@ class SignatureOverlay extends React.PureComponent {
           className="tools-container"
         >
           <div className="default-signatures-container">
-            <div
-              className={`row${
-                defaultSignatures.length >= maxSignaturesCount
-                  ? ' disabled'
-                  : ' enabled'
-              }`}
-              onClick={this.openSignatureModal}
-            >
+            {defaultSignatures.length < maxSignaturesCount &&
               <div
-                className={`content${
+                className={`row${
                   defaultSignatures.length >= maxSignaturesCount
                     ? ' disabled'
                     : ' enabled'
                 }`}
+                onClick={this.openSignatureModal}
               >
-                {t('option.signatureOverlay.addSignature')}
-              </div>
-              <div className="icon">
-                <Icon glyph="icon-menu-add" />
-              </div>
-            </div>
+                <div
+                  className={`content${
+                    defaultSignatures.length < maxSignaturesCount
+                      ? ' disabled'
+                      : ' enabled'
+                  }`}
+                >
+                  {t('option.signatureOverlay.addSignature')}
+                </div>
+                <div className="icon">
+                  <Icon glyph="icon-menu-add" />
+                </div>
+              </div>}
             {defaultSignatures.map(({ imgSrc }, index) => (
               <div className="row" key={index}>
                 <div

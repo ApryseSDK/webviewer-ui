@@ -12,6 +12,7 @@ import core from 'core';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
+import { Swipeable } from 'react-swipeable';
 
 import './SignatureModal.scss';
 
@@ -92,87 +93,93 @@ const SignatureModal = () => {
   });
 
   return isDisabled ? null : (
-    <div
-      className={modalClass}
-      data-element="signatureModal"
-      onMouseDown={closeModal}
+    <Swipeable
+      onSwipedUp={closeModal}
+      onSwipedDown={closeModal}
+      preventDefaultTouchmoveEvent
     >
       <div
-        className="container"
-        onMouseDown={e => e.stopPropagation()}
+        className={modalClass}
+        data-element="signatureModal"
+        onMouseDown={closeModal}
       >
-        <div className="swipe-indicator" />
-        <Tabs id="signatureModal">
-          <div className="tab-list">
-            <Tab dataElement="inkSignaturePanelButton">
-              <div className="tab-options-button">
-                {t('action.draw')}
-              </div>
-            </Tab>
-            <div className="tab-options-divider" />
-            <Tab dataElement="textSignaturePanelButton">
-              <div className="tab-options-button">
-                {t('action.type')}
-              </div>
-            </Tab>
-            <div className="tab-options-divider" />
-            <Tab dataElement="imageSignaturePanelButton">
-              <div className="tab-options-button">
-                {t('action.upload')}
-              </div>
-            </Tab>
-          </div>
-          {/* <ActionButton
-            dataElement="signatureModalCloseButton"
-            title="action.close"
-            img="ic_close_black_24px"
-            onClick={closeModal}
-          /> */}
-          {/* {(selectedTab === 'inkSignaturePanelButton') &&
-            <StylePopup
-              colorMapKey={colorMapKey}
-              onStyleChange={(property, value) => {
-                setToolStyles(activeToolName, property, value);
-              }}
-              style={activeToolStyles}
-            />} */}
-          {/* <div
-            className="divider-horizontal"
-          /> */}
-          <TabPanel dataElement="inkSignaturePanel">
-            <InkSignature
-              isModalOpen={isOpen}
-              _setSaveSignature={_setSaveSignature}
-              createSignature={createSignature}
-            />
-          </TabPanel>
-          <TabPanel dataElement="textSignaturePanel">
-            <TextSignature
-              isModalOpen={isOpen}
-              _setSaveSignature={_setSaveSignature}
-              createSignature={createSignature}
-            />
-          </TabPanel>
-          <TabPanel dataElement="imageSignaturePanel">
-            <ImageSignature
-              isModalOpen={isOpen}
-              _setSaveSignature={_setSaveSignature}
-              createSignature={createSignature}
-            />
-          </TabPanel>
-        </Tabs>
-        {/* <div
-          className="footer"
+        <div
+          className="container"
+          onMouseDown={e => e.stopPropagation()}
         >
-          <div className="signature-clear" onClick={() => {}}>
-            {t('action.clear')}
-          </div>
-          <div className="signature-create" onClick={createSignature}>
-            {t('action.create')}
-          </div>
-        </div> */}
+          <div className="swipe-indicator" />
+          <Tabs id="signatureModal">
+            <div className="tab-list">
+              <Tab dataElement="inkSignaturePanelButton">
+                <div className="tab-options-button">
+                  {t('action.draw')}
+                </div>
+              </Tab>
+              <div className="tab-options-divider" />
+              <Tab dataElement="textSignaturePanelButton">
+                <div className="tab-options-button">
+                  {t('action.type')}
+                </div>
+              </Tab>
+              <div className="tab-options-divider" />
+              <Tab dataElement="imageSignaturePanelButton">
+                <div className="tab-options-button">
+                  {t('action.upload')}
+                </div>
+              </Tab>
+            </div>
+            {/* <ActionButton
+              dataElement="signatureModalCloseButton"
+              title="action.close"
+              img="ic_close_black_24px"
+              onClick={closeModal}
+            /> */}
+            {/* {(selectedTab === 'inkSignaturePanelButton') &&
+              <StylePopup
+                colorMapKey={colorMapKey}
+                onStyleChange={(property, value) => {
+                  setToolStyles(activeToolName, property, value);
+                }}
+                style={activeToolStyles}
+              />} */}
+            {/* <div
+              className="divider-horizontal"
+            /> */}
+            <TabPanel dataElement="inkSignaturePanel">
+              <InkSignature
+                isModalOpen={isOpen}
+                _setSaveSignature={_setSaveSignature}
+                createSignature={createSignature}
+              />
+            </TabPanel>
+            <TabPanel dataElement="textSignaturePanel">
+              <TextSignature
+                isModalOpen={isOpen}
+                _setSaveSignature={_setSaveSignature}
+                createSignature={createSignature}
+              />
+            </TabPanel>
+            <TabPanel dataElement="imageSignaturePanel">
+              <ImageSignature
+                isModalOpen={isOpen}
+                _setSaveSignature={_setSaveSignature}
+                createSignature={createSignature}
+              />
+            </TabPanel>
+          </Tabs>
+          {/* <div
+            className="footer"
+          >
+            <div className="signature-clear" onClick={() => {}}>
+              {t('action.clear')}
+            </div>
+            <div className="signature-create" onClick={createSignature}>
+              {t('action.create')}
+            </div>
+          </div> */}
+        </div>
       </div>
-    </div>
+    </Swipeable>
   );
 };
 

@@ -96,6 +96,8 @@ const ToolButton = ({
     />
   );
 
+ 
+
   if (handleStyleClick) {
     return (
       <div
