@@ -7,12 +7,13 @@ import classNames from 'classnames';
 
 import Thumbnail, { THUMBNAIL_SIZE } from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
+import {extractPagesToMerge, mergeExternalWebViewerDocument, mergeDocument} from 'helpers/pageManipulation';
 
 import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 
-import extractPagesWithAnnotations from '../../helpers/extractPagesWithAnnotations';
+
 
 import './ThumbnailsPanel.scss';
 
@@ -89,9 +90,9 @@ class ThumbnailsPanel extends React.PureComponent {
       const pageNumberIncreased = currentPage < targetPageNumber;
 
       let pagesToMove = [currentPage];
-    if (this.groupDrag) {
-      pagesToMove = selectedPageIndexes.map(i => i + 1);
-    }
+      if (this.groupDrag) {
+        pagesToMove = selectedPageIndexes.map(i => i + 1);
+      }
 
       const afterMovePageNumber = targetPageNumber - pagesToMove.filter(p => p < targetPageNumber).length;
 
@@ -170,7 +171,7 @@ class ThumbnailsPanel extends React.PureComponent {
       e.dataTransfer.setDragImage(mulitDragIcon, 10, 10);
     }
 
-    window.extractedDataPromise = extractPagesWithAnnotations(pagesToMove);
+    extractPagesToMerge(pagesToMove);
     if (currentPage !== (index + 1)) {
       core.setCurrentPage(index + 1);
     }
@@ -178,7 +179,7 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onDrop = e => {
     e.preventDefault();
-    const { isThumbnailMergingEnabled, dispatch } = this.props;
+    const { isThumbnailMergingEnabled, dispatch, mergeExternalWebViewerDocument, mergeDocument } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     const { files } = e.dataTransfer;
     const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
@@ -193,35 +194,10 @@ class ThumbnailsPanel extends React.PureComponent {
     if (isThumbnailMergingEnabled 
       && dataTransferwebViewerFrameID 
       && window.frameElement.id !== dataTransferwebViewerFrameID) {
-      // moving pages between viewers
-      const otherWebViewerIframe = window.parent.document.querySelector(`#${dataTransferwebViewerFrameID}`);
-      const extractedDataPromise = otherWebViewerIframe ? otherWebViewerIframe.contentWindow.extractedDataPromise : null;
-      if (!extractedDataPromise) {
-        return;
-      }
-      dispatch(actions.openElement('loadingModal'));
-      extractedDataPromise.then(files => {
-        core.mergeDocument(files, insertTo).then(() => {
-          window.parent.document.querySelector(`#${dataTransferwebViewerFrameID}`).contentWindow.extractedDataPromise = null;
-          dispatch(actions.closeElement('loadingModal'));
-          core.setCurrentPage(insertTo);
-        }).catch(() => {
-          dispatch(actions.closeElement('loadingModal'));
-        });
-
-        this.setState({ draggingOverPageIndex: null });
-      });
+      mergeExternalWebViewerDocument(dataTransferwebViewerFrameID, insertTo);
+      this.setState({ draggingOverPageIndex: null });
     } else if (isThumbnailMergingEnabled && files.length) {
-      const file = files[0];
-      dispatch(actions.openElement('loadingModal'));
-
-      core.mergeDocument(file, insertTo).then(() => {
-        dispatch(actions.closeElement('loadingModal'));
-        core.setCurrentPage(insertTo);
-      }).catch(() => {
-        dispatch(actions.closeElement('loadingModal'));
-      });
-
+      mergeDocument(files[0], insertTo);
       this.setState({ draggingOverPageIndex: null });
     }
   }
@@ -529,6 +505,9 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
   setSelectedPageThumbnails: pages => dispatch(actions.setSelectedPageThumbnails(pages)),
   showWarningMessage: warning => dispatch(actions.showWarningMessage(warning)),
+
+  mergeDocument: (file, mergeToPage) => dispatch(mergeDocument(file, mergeToPage)),
+  mergeExternalWebViewerDocument: (viewerID, mergeToPage) => dispatch(mergeExternalWebViewerDocument(viewerID, mergeToPage)),
 });
 
 const mapStateToProps = state => ({
