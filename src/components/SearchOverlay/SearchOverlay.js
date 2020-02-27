@@ -325,17 +325,31 @@ class SearchOverlay extends React.PureComponent {
 
     setSearchValue(searchValue);
 
+    // if (searchValue.trim()) {
+    //   if (isSearchPanelOpen) {
+    //     this.clearSearchResults();
+    //     this.executeDebouncedFullSearch();
+    //   } else {
+    //     this.executeDebouncedSingleSearch();
+    //   }
+    // } else {
+    //   this.clearSearchResults();
+    // }
+  };
+
+  search = () => {
+    const { searchValue, isSearchPanelOpen } = this.props;
+
     if (searchValue.trim()) {
+      this.searchTextInput.current.blur();
       if (isSearchPanelOpen) {
         this.clearSearchResults();
         this.executeDebouncedFullSearch();
       } else {
         this.executeDebouncedSingleSearch();
       }
-    } else {
-      this.clearSearchResults();
     }
-  };
+  }
 
   onKeyDown = e => {
     const shouldOpenSearchPanel =
@@ -350,7 +364,8 @@ class SearchOverlay extends React.PureComponent {
       this.onClickOverflow(e);
     } else if (e.which === 13) {
       // Enter
-      this.onClickNext(e);
+      // this.onClickNext(e);
+      this.search();
     }
   };
 
@@ -474,7 +489,7 @@ class SearchOverlay extends React.PureComponent {
             value={searchValue}
             placeholder={t('message.searchDocumentPlaceholder')}
           />
-          <div className="input-button" onClick={() => { }}>
+          <div className="input-button" onClick={this.search}>
             <Icon glyph="icon-header-search" />
           </div>
         </div>
