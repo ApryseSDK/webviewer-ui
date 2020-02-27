@@ -11,16 +11,16 @@
   border: 0px;
   border-radius: 0px;
   background: transparent;
-  background: var(--light-background);
 
   padding-top: 8px;
   padding-bottom: 8px;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--tools-overlay-border);
+  // border: 1px solid var(--tools-overlay-border);
   border-radius: 4px;
-  background: var(--light-background);
-  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
+  background: var(--gray-0);
+  // box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
+  box-shadow: 0px 0px 3px 0px var(--box-shadow);
 
   .type {
     margin-top: 2px;
@@ -44,7 +44,7 @@
     }
 
     &:hover {
-      background: #767f9b33;
+      background: var(--button-hover1);
     }
 
     .title {
@@ -71,7 +71,7 @@
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border: 0px;
-    box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
+    box-shadow: 0px 0px 3px 0px var(--box-shadow);
 
     padding-top: 30px;
     padding-bottom: 30px;

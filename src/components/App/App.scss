@@ -2,13 +2,6 @@
 @import '../../constants/font.scss';
 
 :root {
-  --primary-color: #FFFFFF;
-  --secondary-color: #F5F5F5;
-  --border-color: #E0E0E0;
-  --left-panel-width: 219px;
-  --button-hover-color: #F6F6F6;
-
-
 
   --blue-1: #E7EDF3;
   --blue-2: #DDE6EE;
@@ -32,8 +25,56 @@
   --gray-12: #000000;
 
 
+
+  --text-color: var(--gray-8);
+  --faded-text: var(--gray-6);
+  --placeholder-text: var(--gray-5);
+
+  --icon-color: var(--gray-6);
+  --selected-icon-color: var(--gray-8);
+
+  --button-hover1: var(--blue-1);
+  --button-hover2: var(--blue-3);
+  --active-button1: var(--blue-2);
+  --active-button2: var(--blue-4);
+
+  --active-button-color: var(--active-button1);
+
+  --primary-button: var(--blue-5); 
+  --primary-button-text: var(--gray-1); 
+  --primary-button-hover: var(--blue-6); 
+
+  --secondary-button: var(--blue-5); 
+  --secondary-button-text: var(--blue-5);
+  --secondary-button-hover: var(--blue-6); 
+
+  --color-palette-border: var(--gray-5);
+
+  --box-shadow: var(--gray-6);
+
+  --divider: var(--gray-5);
+  --border: var(--gray-5);
+  --panel-background: var(--gray-1);
+  --focus-border: var(--blue-5);
+
+
+
   
-  --white: #fafafa;
+  --primary-color: #FFFFFF;
+  --secondary-color: #F5F5F5;
+  --border-color: #E0E0E0;
+  --left-panel-width: 219px;
+  --button-hover-color: #F6F6F6;
+
+
+
+
+
+
+
+
+  
+  --white--xx: #fafafa;
   --white-2: #f0f0f0;
   --blue-gray-1: #dfe2ed;
   --blue-gray-2: #c3c6d4;
@@ -42,27 +83,24 @@
   --blue-gray-5: #6077bf;
   --blue-gray-6: #455893;
 
-  --light-background: var(--white);
+  --light-background: var(--white--xx);
   --dark-background: var(--blue-gray-1);
   --border-1: var(--blue-gray-1);
-  --button-fill2: var(--blue-gray-1);
+  --primary-button2: var(--blue-gray-1);
 
   
   --slider-color: var(--blue-gray-5);
-  --button-fill: var(--blue-gray-5);
-  --button-fill: var(--blue-gray-5);
-  --focus-border: var(--blue-gray-5);
+  
   // --focus-border: var(--blue-gray-5);
 
   // for new webui
   --tools-active-color: #767f9b26;
   --tools-overlay-border: #a7b4cc;
-  --panel-background: #f7f7f7;
-  --border: #dfe2ed;
-  --active-button-color: #dfe2ed;
+  
+
 
   --button-active-color: #F0F0F0;
-  --text-color: #767f9b;
+  
   --header-border-color: #bdbdbd;
   --document-background-color: #f0f0f0;
   --zoom-background: #eeeeee;
@@ -70,7 +108,7 @@
   --tools-divider-color: #dfe2ed;
   --icon-active-color: #767e9a;
   // --icon-color: #abb0c4;
-  --icon-color: #c3c6d4;
+  // --icon-color: #c3c6d4;
 
   --font-size-small: 13px;
 }

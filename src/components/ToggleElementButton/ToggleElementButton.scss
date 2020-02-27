@@ -28,15 +28,15 @@
 
     &.active{
       .down-arrow-container {
-        background: #767f9b33
+        background: var(--active-button1)
       }
       .down-arrow {
-        color: var(--icon-active-color);
+        color: var(--selected-icon-color);
       }
     }
   
     &:hover {
-      background: var(--button-hover-color);
+      background: var(--button-hover1);
     }
 
     .Button:hover {

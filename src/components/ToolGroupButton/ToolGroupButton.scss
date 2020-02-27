@@ -27,32 +27,18 @@
   }
 
   &.active{
-    // @include mobile {
-    //   .arrow-up {
-    //     width: 0;
-    //     height: 0;
-    //     border-left: 8px solid transparent;
-    //     border-right: 8px solid transparent;
-
-    //     border-bottom: 10px solid #dfe2ed;
-    //     position: absolute;
-
-    //     transform: translateX(50%);
-    //   }
-    // }
-
     // hack
     &.signature {
       svg {
-        color: #767f9b;
+        color: var(--selected-icon-color);
       }
     }
 
     .down-arrow-container {
-      background: #767f9b33
+      background: var(--active-button2)
     }
     .down-arrow {
-      color: var(--icon-active-color);
+      color: var(--selected-icon-color);
     }
   }
 
@@ -63,7 +49,7 @@
   }
 
   &:hover {
-    background: var(--button-hover-color);
+    background: var(--button-hover2);
   }
 
   .Button:hover {

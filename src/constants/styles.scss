@@ -53,19 +53,6 @@ $signature-modal-shared-color: #E1E1E3;
   }
 }
 
-.text-input {
-  border: 1px solid grey;
-  &::placeholder {
-    color:$gray12;
-  }
-  &::-webkit-input-placeholder {
-    color:$gray12;
-  }
-  &:-ms-input-placeholder {
-    color:$gray12;
-  }
-}
-
 @mixin desktop {
   @media (min-width: #{$tablet-width + 1px}) {
     @content;

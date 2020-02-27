@@ -25,7 +25,7 @@
       font-size: 13px;
       width: 100%;
       padding-left: 8px;
-      border: 1px solid var(--blue-gray-1);
+      border: 1px solid var(--border);
       border-radius: 4px;
       color: var(--text-color);
       padding-bottom: 6px;
@@ -38,13 +38,13 @@
       }
 
       &::placeholder {
-        color: #c3c6d4;
+        color: var(--placeholder-text);
       }
     }
 
     .input-button {
       cursor: pointer;
-      background: var(--button-fill);
+      background: var(--primary-button);
       border-radius: 4px;
       height: 100%;
       width: 40px;
@@ -61,7 +61,7 @@
       }
 
       svg {
-        color: #fafafa;
+        color: var(--primary-button-text);
       }
     }
   }
@@ -69,7 +69,7 @@
   .divider{
     height: 1px;
     width: 100%;
-    background: var(--blue-gray-1);
+    background: var(--divider);
     margin: 16px 0px;
   }
 
@@ -99,7 +99,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #c3c6d4;
+    color: var(--faded-text);
 
     .buttons {
       display: flex;
@@ -116,7 +116,7 @@
         cursor: pointer;
 
         &.previous {
-          background: var(--button-fill);
+          background: var(--primary-button);
           svg {
             color: var(--blue-gray-1);
           }

@@ -11,11 +11,11 @@
   border-radius: 4px;
   height: 28px;
   width: 96px;
-  border: 1px solid	#DFE2ED;
+  border: 1px solid	var(--border);
   padding-left: 8px;
   padding-right: 4px;
   position: relative;
-  background: #fafafa;
+  background: var(--gray-0);
 
   cursor: pointer;
 

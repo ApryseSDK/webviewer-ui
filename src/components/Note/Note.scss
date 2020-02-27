@@ -4,11 +4,11 @@
 .Note {
   font-size: 13px;
   border-radius: 4px;
-  box-shadow: 0px 0px 3px 0px rgb(195, 198, 212);
+  box-shadow: 0px 0px 3px 0px rgb(173, 181, 189);
   padding-bottom: 12px;
   margin-bottom: 8px;
   margin-left: 2px;
-  background: #fafafa;
+  background: var(--gray-0);
   cursor: pointer;
 
   .reply-area-container {
@@ -40,19 +40,19 @@
       }
 
       &::placeholder {
-        color: #c3c6d4;
+        color: var(--placeholder-text);
       }
     }
 
     .reply-button {
-      background: var(--button-fill);
+      background: var(--primary-button);
       border-radius: 4px;
       height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      color: #fafafa;
+      color: var(--primary-button-text);
       font-size: 13px;
       position: absolute;
       bottom: 2px;
@@ -64,7 +64,7 @@
   .divider{
     height: 1px;
     width: 100%;
-    background: #dfe2ed;
+    background: var(--divider);
     margin-top: 12px;
     margin-bottom: 5px;
   }

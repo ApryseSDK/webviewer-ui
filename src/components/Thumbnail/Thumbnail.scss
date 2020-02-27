@@ -14,7 +14,8 @@
   &.active {
     .container {
       .page-image {
-        border: 2px solid #6077bf;
+        border: 2px solid var(--blue-5);
+        box-shadow: none;
       }
     }
 
@@ -35,7 +36,7 @@
         height: auto !important;
         width: auto !important;
       }
-      border: 2px solid var(--border);
+      box-shadow: 0px 0px 3px 0px rgb(173, 181, 189);
     }
 
     .annotation-image {

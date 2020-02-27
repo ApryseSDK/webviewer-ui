@@ -12,7 +12,7 @@
   height: 32px;
 
   &:hover {
-    background: var(--button-hover-color);
+    background: var(--button-hover1);
 
     // https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover
     // useful for mobile?
@@ -21,77 +21,23 @@
     }
   }
 
-  // &[data-element="sitckyToolButton"], &[data-element="highlightToolButton"]  {
-    // hack for svgs
-    // path:nth-of-type(2) {
-    //   color: #c3c6d4 !important;
-    // }
-
-    // rect {
-    //   fill: currentColor;
-    // }
-  // }    
-
-  // hack for svgs
-  // &.active {
-  //   svg {
-  //     color: #767f9b;
-  //   }
-  // }
-
-  // svg hacks
-  // &[data-element*="highlightToolButton"]  {
-  //   path:nth-of-type(2) {
-  //     color: #c3c6d4;
-  //   }
-
-  //   &.active {
-  //     path:nth-of-type(2) {
-  //       color: #767f9b;
-  //     }
-  //   }
-  // }
-
-  // &[data-element="underlineToolButton"]  {
-  //   path:nth-of-type(1) {
-  //     color: #c3c6d4;
-  //   }
-
-  //   &.active {
-  //     path:nth-of-type(1) {
-  //       color: #767f9b;
-  //     }
-  //   }
-  // }
-
-
-  // path:nth-of-type(2) {
-  //   color: #c3c6d4;
-  // }
-
-  // &.active {
-  //   path:nth-of-type(2) {
-  //     color: #767f9b;
-  //   }
-  // }
-
   path:last-child:nth-child(4) {
-    color: #c3c6d4;
+    color: var(--icon-color);
   }
 
   &.active {
     path:last-child:nth-child(4) {
-      color: #767f9b;
+      color: var(--selected-icon-color);
     }
   }  
 
   &.active {
     .Icon {
-      color: var(--icon-active-color);
+      color: var(--selected-icon-color);
       // hack for one clip art svg
       @include tablet-and-mobile {
         polygon {
-          fill: #767f9b;
+          fill: var(--selected-icon-color);
         }
       }
     }
