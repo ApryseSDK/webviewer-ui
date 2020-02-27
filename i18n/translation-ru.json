@@ -187,7 +187,7 @@
     "searchPanel": {
       "caseSensitive": "С учетом регистра",
       "wholeWordOnly": "Всё слово",
-      "wildcard": "Wildcard"
+      "wildcard": "Поиск по шаблону"
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"
