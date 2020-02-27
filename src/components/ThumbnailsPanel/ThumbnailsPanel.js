@@ -13,12 +13,10 @@ import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 
-
-
 import './ThumbnailsPanel.scss';
 
-const webViewerFrameID = 'webViewerFrameID';
-const pagesList = 'pagesMoved';
+const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrameKey';
+const dataTransferPagesMovedKey = 'pagesMoved';
 
 const mulitDragIcon = new Image();
 mulitDragIcon.src = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfkAhUALw/epSIFAAAAmElEQVQoz9XRMQ4BARCF4W9RqBSiUbmBkJDt1iH0otBoxIG0tnII6s0qKHEAUaDRySokErF7AP90k/8lk3mBuoGKbxJXXWuRPVvZz9xFTqaW0kAmj1CobeZRkk8AMoqED38hVBw0UFYrEmJNHIWG+ULLGBerohsm4pz9u4CAkqeRWPbVyV3VXGohff+8rO+s90knbjo2IrsX+0Eq0fh+JkoAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDItMjFUMDA6NDc6MTUrMDA6MDDO6yaXAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTAyLTIxVDAwOjQ3OjE1KzAwOjAwv7aeKwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=`;
@@ -43,7 +41,7 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs = [];
     this.listRef = React.createRef();
     this.afterMovePageNumber = null;
-    this.groupDrag = false;
+    this.isDraggingGroup = false;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       isDocumentControlHidden: true,
@@ -89,20 +87,20 @@ class ThumbnailsPanel extends React.PureComponent {
       const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
       const pageNumberIncreased = currentPage < targetPageNumber;
 
-      let pagesToMove = [currentPage];
+      let pageNumbersToMove = [currentPage];
       if (this.groupDrag) {
-        pagesToMove = selectedPageIndexes.map(i => i + 1);
+        pageNumbersToMove = selectedPageIndexes.map(i => i + 1);
       }
 
-      const afterMovePageNumber = targetPageNumber - pagesToMove.filter(p => p < targetPageNumber).length;
+      const afterMovePageNumber = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
 
       this.afterMovePageNumber = afterMovePageNumber;
-      core.movePages(pagesToMove, targetPageNumber).then(() => {
+      core.movePages(pageNumbersToMove, targetPageNumber).then(() => {
         const currentPageIndex = currentPage - 1;
         const targetPageIndex = this.afterMovePageNumber - 1;
 
         // update selected pages affected by the move, exclude the page that was moved
-        let updateSelectedPageIndexes = selectedPageIndexes.filter(pageIndex => !pagesToMove.includes(pageIndex + 1));
+        let updateSelectedPageIndexes = selectedPageIndexes.filter(pageIndex => !pageNumbersToMove.includes(pageIndex + 1));
         if (pageNumberIncreased) {
           updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p > currentPageIndex && p <= targetPageIndex ? p - 1 : p));
         } else {
@@ -110,7 +108,7 @@ class ThumbnailsPanel extends React.PureComponent {
         }
 
         if (selectedPageIndexes.includes(currentPageIndex)) {
-          updateSelectedPageIndexes.push(...pagesToMove.map((val, index) => targetPageIndex + index));
+          updateSelectedPageIndexes.push(...pageNumbersToMove.map((val, index) => targetPageIndex + index));
         }
 
         setSelectedPageThumbnails(updateSelectedPageIndexes);
@@ -164,8 +162,8 @@ class ThumbnailsPanel extends React.PureComponent {
 
     e.dataTransfer.dropEffect = 'move';
     e.dataTransfer.effectAllowed = 'all';
-    e.dataTransfer.setData(webViewerFrameID, window.frameElement.id);
-    e.dataTransfer.setData(pagesList, pagesToMove.map(i => i + i).join(','));
+    e.dataTransfer.setData(dataTransferWebViewerFrameKey, window.frameElement.id);
+    e.dataTransfer.setData(dataTransferPagesMovedKey, pagesToMove.map(i => i + i).join(','));
 
     if (moveSelectedImages) {
       e.dataTransfer.setDragImage(mulitDragIcon, 10, 10);
@@ -179,25 +177,36 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onDrop = e => {
     e.preventDefault();
-    const { isThumbnailMergingEnabled, dispatch, mergeExternalWebViewerDocument, mergeDocument } = this.props;
+    const { isThumbnailMergingEnabled, mergeExternalWebViewerDocument, mergeDocument, selectedPageIndexes, setSelectedPageThumbnails } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
+
     const { files } = e.dataTransfer;
     const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
+    const externalPageWebViewerFrameId = e.dataTransfer.getData(dataTransferWebViewerFrameKey);
+    const pageMoved = e.dataTransfer.getData(dataTransferPagesMovedKey);
 
-    const dataTransferwebViewerFrameID = e.dataTransfer.getData(webViewerFrameID);
-
-    this.groupDrag = false;
+    this.isDraggingGroup = false;
     if (e.ctrlKey || e.metaKey) {
-      this.groupDrag = true;
+      this.isDraggingGroup = true;
     }
 
     if (isThumbnailMergingEnabled 
-      && dataTransferwebViewerFrameID 
-      && window.frameElement.id !== dataTransferwebViewerFrameID) {
-      mergeExternalWebViewerDocument(dataTransferwebViewerFrameID, insertTo);
+      && externalPageWebViewerFrameId 
+      && window.frameElement.id !== externalPageWebViewerFrameId) {
+      mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo).then(pagesInserted => {
+        if(pagesInserted) {
+          let updatedSelectedIndex = selectedPageIndexes.map(i => (i >= insertTo - 1) ? i + pagesInserted : i);
+          setSelectedPageThumbnails(updatedSelectedIndex);
+        }  
+      });
       this.setState({ draggingOverPageIndex: null });
     } else if (isThumbnailMergingEnabled && files.length) {
-      mergeDocument(files[0], insertTo);
+      mergeDocument(files[0], insertTo).then(pagesInserted => {
+        if(pagesInserted) {
+          let updatedSelectedIndex = selectedPageIndexes.map(i => (i >= insertTo - 1) ? i + pagesInserted : i);
+          setSelectedPageThumbnails(updatedSelectedIndex);
+        } 
+      });
       this.setState({ draggingOverPageIndex: null });
     }
   }
