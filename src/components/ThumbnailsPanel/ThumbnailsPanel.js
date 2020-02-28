@@ -88,7 +88,8 @@ class ThumbnailsPanel extends React.PureComponent {
       const pageNumberIncreased = currentPage < targetPageNumber;
 
       let pageNumbersToMove = [currentPage];
-      if (this.groupDrag) {
+      if (this.isDraggingGroup) {
+
         pageNumbersToMove = selectedPageIndexes.map(i => i + 1);
       }
 
