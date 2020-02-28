@@ -17,7 +17,7 @@ import actions from 'actions';
 import './ThumbnailsPanel.scss';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
-const dataTransferPageCopiedKey = 'pagesMoved';
+const dataTransferPagesCopiedKey = 'pagesMoved';
 const dataTransferDocumentKey = 'documentMoved';
 
 class ThumbnailsPanel extends React.PureComponent {
@@ -40,7 +40,6 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs = [];
     this.listRef = React.createRef();
     this.afterMovePageNumber = null;
-    this.isDraggingGroup = false;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       isDocumentControlHidden: true,
@@ -154,8 +153,8 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onDragStart = (e, index) => {
     const { currentPage, selectedPageIndexes, isThumbnailMergingEnabled } = this.props;
-    const moveSelectedImages = (e.ctrlKey || e.metaKey);
-    const pagesToMove = moveSelectedImages ? selectedPageIndexes.map(index => index + 1) : [index + 1];
+    const moveMultiplePages = (e.ctrlKey || e.metaKey);
+    const pagesToMove = moveMultiplePages ? selectedPageIndexes.map(index => index + 1) : [index + 1];
 
     // need to set 'text' to empty for drag to work in FireFox and mobile
     e.dataTransfer.setData('text', '');
@@ -163,10 +162,10 @@ class ThumbnailsPanel extends React.PureComponent {
     e.dataTransfer.dropEffect = 'move';
     e.dataTransfer.effectAllowed = 'all';
     e.dataTransfer.setData(dataTransferWebViewerFrameKey, window.frameElement.id);
-    e.dataTransfer.setData(dataTransferPageCopiedKey, pagesToMove.map(i => i + i).join(','));
+    e.dataTransfer.setData(dataTransferPagesCopiedKey, pagesToMove.map(i => i + i).join(','));
     e.dataTransfer.setData(dataTransferDocumentKey, core.getDocument()?.getFilename());
 
-    if (moveSelectedImages) {
+    if (moveMultiplePages) {
        // can't set to null so set to new instance of an image
        e.dataTransfer.setDragImage(new Image(), 0, 0);
     }
@@ -188,13 +187,8 @@ class ThumbnailsPanel extends React.PureComponent {
     const { files } = e.dataTransfer;
     const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
     const externalPageWebViewerFrameId = e.dataTransfer.getData(dataTransferWebViewerFrameKey);
-    const pageMoved = e.dataTransfer.getData(dataTransferPageCopiedKey) || "";
-    const externalFileName = e.dataTransfer.getData(dataTransferDocumentKey);
+    const pageMoved = e.dataTransfer.getData(dataTransferPagesCopiedKey) || "";    const externalFileName = e.dataTransfer.getData(dataTransferDocumentKey);
 
-    this.isDraggingGroup = false;
-    if (e.ctrlKey || e.metaKey) {
-      this.isDraggingGroup = true;
-    }
 
     if (isThumbnailMergingEnabled 
       && externalPageWebViewerFrameId 
