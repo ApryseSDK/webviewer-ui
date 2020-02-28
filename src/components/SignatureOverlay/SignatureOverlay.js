@@ -47,6 +47,10 @@ class SignatureOverlay extends React.PureComponent {
     this.signatureTool.on('signatureDeleted', this.onSignatureDeleted);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
     window.addEventListener('resize', this.handleWindowResize);
+
+    if (this.props.isOpen) {
+      this.setOverlayPosition();
+    }
   }
 
   componentDidUpdate(prevProps) {

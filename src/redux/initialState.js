@@ -19,6 +19,7 @@ export default {
       header: true,
       // toolsHeader: window.matchMedia('(min-width: 641px)').matches,
       toolsHeader: false,
+      // toolsOverlay: false,
     },
     headers: {
       default: [

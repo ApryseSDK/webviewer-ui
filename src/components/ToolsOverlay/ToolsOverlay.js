@@ -43,6 +43,7 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentDidMount() {
+    // this.setArrowStyle();
     window.addEventListener('resize', this.handleWindowResize);
 
     // this component can be opened before mounting to the DOM if users call the setToolMode API
@@ -58,6 +59,7 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
+    // this.setArrowStyle();
     if (this.props.activeToolName === 'AnnotationCreateRubberStamp') {
       this.setState({ isStylingOpen: true });
     }
@@ -94,8 +96,32 @@ class ToolsOverlay extends React.PureComponent {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
+  // setArrowStyle = () => {
+  //   const { activeToolGroup, activeHeaderItems, isTabletAndMobile } = this.props;
+  //   if (isTabletAndMobile) {
+  //     const element = activeHeaderItems.find(
+  //       item => item.toolGroup === activeToolGroup,
+  //     );
+
+  //     if (!element) {
+  //       return null;
+  //     }
+  //     const button = document.querySelector(`[data-element=${element.dataElement}]`);
+  //     const { left: buttonLeft } = button.getBoundingClientRect();
+  //     const arrowStyle = {
+  //       left: buttonLeft,
+  //       right: 'auto',
+  //       top: -10,
+  //     };
+
+  //     this.setState({ arrowStyle });
+  //   }
+  // }
+
   handleWindowResize = () => {
     this.setOverlayPosition();
+    // this.setArrowStyle();
+
   };
 
   setOverlayPosition = () => {
@@ -108,6 +134,7 @@ class ToolsOverlay extends React.PureComponent {
       this.setState(
         getOverlayPositionBasedOn(element.dataElement, this.overlay),
       );
+      this.forceUpdate();
     }
   };
 
@@ -160,10 +187,11 @@ class ToolsOverlay extends React.PureComponent {
 
     let style = { left, right, top };
     let arrowStyle = {};
+
     if (isTabletAndMobile) {
       style = {
-        left: 0,
-        top: 52,
+        // left: 0,
+        // top: 52,
       };
 
       const { activeToolGroup, activeHeaderItems } = this.props;

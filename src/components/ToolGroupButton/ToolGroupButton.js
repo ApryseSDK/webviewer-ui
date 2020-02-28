@@ -109,6 +109,7 @@ class ToolGroupButton extends React.PureComponent {
       iconColor,
       title,
       showDownArrow = true,
+      isToolsOverlayOpen,
     } = this.props;
 
     const { toolName } = this.state;
@@ -125,7 +126,7 @@ class ToolGroupButton extends React.PureComponent {
       <div
         className={classNames({
           'tool-group-button': true,
-          active: isActive,
+          active: isActive && isToolsOverlayOpen,
         })}
         data-element={dataElement}
         onClick={this.onClick}
@@ -138,7 +139,6 @@ class ToolGroupButton extends React.PureComponent {
             img={img}
             color={color}
           />
-          <div className="arrow-up" />
         </div>
         {showDownArrow && (
           <div className="down-arrow-container">

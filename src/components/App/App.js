@@ -12,7 +12,6 @@ import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
-import SignatureOverlay from 'components/SignatureOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
@@ -188,11 +187,10 @@ const App = ({ removeEventHandlers }) => {
         <ViewControlsOverlay />
         <RedactionOverlay />
         <MenuOverlay />
-        <SignatureOverlay />
+        
         <ZoomOverlay />
         <MeasurementOverlay />
         <AnnotationContentOverlay />
-        {isToolsOverlayOpen && !isToolsOverlayDisabled && <ToolsOverlay />}
 
         <AnnotationPopup />
         <TextPopup />

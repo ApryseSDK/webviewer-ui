@@ -2,6 +2,9 @@
 
 .notes-panel-container {
   z-index: 65;
+  @include mobile {
+    z-index: 95;
+  }
   display: flex;
   background-color: var(--panel-background);
   display: flex;

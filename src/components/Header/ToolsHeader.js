@@ -6,6 +6,8 @@ import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 
 import HeaderItems from 'components/HeaderItems';
+import ToolsOverlay from 'components/ToolsOverlay';
+import SignatureOverlay from 'components/SignatureOverlay';
 
 import selectors from 'selectors';
 
@@ -24,18 +26,23 @@ class ToolsHeader extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen, isToolsOverlayOpen, isToolsOverlayDisabled, isSignatureOverlayOpen, isSignatureOverlayDisabled } = this.props;
 
     if (isDisabled || !isOpen) {
       return null;
     }
+    console.log('isToolsOverlayOpen', isToolsOverlayOpen);
 
     return (
-      <div
-        className="Header Tools"
-        data-element="toolsHeader"
-      >
-        <HeaderItems items={activeHeaderItems} />
+      <div>
+        <div
+          className="Header Tools"
+          data-element="toolsHeader"
+        >
+          <HeaderItems items={activeHeaderItems} />
+        </div>
+        {isToolsOverlayOpen && !isToolsOverlayDisabled && <ToolsOverlay />}
+        {isSignatureOverlayOpen && !isSignatureOverlayDisabled && <SignatureOverlay />}
       </div>
     );
   }
@@ -45,6 +52,10 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'toolsHeader'),
   isOpen: selectors.isElementOpen(state, 'toolsHeader'),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
+  isToolsOverlayOpen: selectors.isElementOpen(state, 'toolsOverlay'),
+  isToolsOverlayDisabled: selectors.isElementDisabled(state, 'toolsOverlay'),
+  isSignatureOverlayOpen: selectors.isElementOpen(state, 'signatureOverlay'),
+  isSignatureOverlayDisabled: selectors.isElementDisabled(state, 'signatureOverlay'),
 });
 
 const mapDispatchToProps = {
