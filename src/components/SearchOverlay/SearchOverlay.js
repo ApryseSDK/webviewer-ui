@@ -523,13 +523,13 @@ class SearchOverlay extends React.PureComponent {
         <div className="footer">
           {results.length} results found
           <div className="buttons">
-            <div className="previous button" onClick={this.onClickPrevious}>
+            <div className="button" onClick={this.onClickPrevious}>
               <Icon
                 className="arrow"
                 glyph="icon-chevron-left"
               />
             </div>
-            <div className="next button" onClick={this.onClickNext}>
+            <div className="button" onClick={this.onClickNext}>
               <Icon
                 className="arrow"
                 glyph="icon-chevron-right"

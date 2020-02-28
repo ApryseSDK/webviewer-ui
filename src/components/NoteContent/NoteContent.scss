@@ -144,6 +144,11 @@
         color: var(--primary-button-text);
         font-size: 13px;
         padding: 0 13px;
+  
+        &:hover {
+          background: var(--primary-button-hover);
+          color: var(--primary-button-text);
+        }             
       }
 
       .cancel-button {
@@ -154,6 +159,10 @@
         align-items: center;
         justify-content: center;    
         cursor: pointer;  
+
+        &:hover {
+          color: var(--secondary-button-hover);     
+        }        
       }      
     }
   }

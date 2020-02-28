@@ -63,6 +63,10 @@
       svg {
         color: var(--primary-button-text);
       }
+
+      &:hover {
+        background: var(--primary-button-hover);
+      }      
     }
   }
 
@@ -115,18 +119,31 @@
         margin-left: 8px;
         cursor: pointer;
 
-        &.previous {
-          background: var(--primary-button);
-          svg {
-            color: var(--primary-button-text);
-          }
+        // &.previous {
+        //   background: var(--primary-button);
+        //   svg {
+        //     color: var(--primary-button-text);
+        //   }
+        // }
+
+        // &.next {
+        //   border: 1px solid var(--primary-button);
+        //   svg {
+        //     color: var(--primary-button);
+        //   }
+        // }
+
+        border: 1px solid var(--primary-button);
+        svg {
+          color: var(--primary-button);
         }
 
-        &.next {
-          border: 1px solid var(--primary-button);
+        &:hover {
+          background: var(--primary-button-hover);
+          border: 1px solid var(--primary-button-hover);
           svg {
-            color: var(--primary-button);
-          }
+            color: var(--primary-button-text);
+          }          
         }
       }
 

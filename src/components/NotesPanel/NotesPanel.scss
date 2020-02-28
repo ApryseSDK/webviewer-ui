@@ -116,6 +116,10 @@
         svg {
           color: var(--primary-button-text);
         }
+
+        &:hover {
+          background: var(--primary-button-hover);
+        }
       }
     }
 

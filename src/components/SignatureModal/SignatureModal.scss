@@ -179,13 +179,11 @@
         display: flex;
         align-items: center;
         justify-content: center;    
-        cursor: pointer;   
+        cursor: pointer;  
         
-        // @include mobile {
-        //   height: 40px;
-        //   width: 128px;          
-        //   justify-content: flex-start;
-        // }
+        &:hover {
+          color: var(--secondary-button-hover);     
+        }
       }
 
       .signature-create {
@@ -205,6 +203,10 @@
         @include mobile {
           height: 40px;
           width: 128px;
+        }    
+        
+        &:hover {
+          background: var(--primary-button-hover);
         }        
       }
     }
