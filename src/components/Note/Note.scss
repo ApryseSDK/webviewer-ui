@@ -58,6 +58,10 @@
       bottom: 2px;
       right: 2px;
       padding: 0 13px;
+
+      &:hover {
+        background: var(--primary-button-hover);
+      }
     }
   }
 

@@ -99,6 +99,7 @@ class SignatureOverlay extends React.PureComponent {
 
   handleWindowResize = () => {
     this.setOverlayPosition();
+    this.forceUpdate();
   };
 
   setOverlayPosition = () => {
@@ -250,10 +251,10 @@ class SignatureOverlay extends React.PureComponent {
 
     let style = { left, right, top };
     let arrowStyle = {};
-    if (isMobile) {
+    if (isTabletAndMobile) {
       style = {
-        left: 0,
-        top: 52,
+        // left: 0,
+        // top: 52,
       };
 
       const signatureToolButton = document.querySelector(
@@ -263,7 +264,7 @@ class SignatureOverlay extends React.PureComponent {
         const { left: buttonLeft } = signatureToolButton.getBoundingClientRect();
         arrowStyle = {
           left: buttonLeft,
-          // right: 'auto',
+          right: 'auto',
           top: -10,
         };
       }

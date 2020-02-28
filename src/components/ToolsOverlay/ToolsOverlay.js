@@ -120,8 +120,7 @@ class ToolsOverlay extends React.PureComponent {
 
   handleWindowResize = () => {
     this.setOverlayPosition();
-    // this.setArrowStyle();
-
+    this.forceUpdate();
   };
 
   setOverlayPosition = () => {
@@ -134,7 +133,6 @@ class ToolsOverlay extends React.PureComponent {
       this.setState(
         getOverlayPositionBasedOn(element.dataElement, this.overlay),
       );
-      this.forceUpdate();
     }
   };
 

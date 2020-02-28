@@ -30,6 +30,7 @@
       padding-bottom: 16px; 
       padding-left: 24px;
       padding-right: 24px;  
+      box-shadow: 0px 0px 3px 0px var(--box-shadow);
 
       .swipe-indicator {
         background: var(--divider);
@@ -93,18 +94,19 @@
         white-space: nowrap;
         flex: 1;
   
+        &.selected {
+          background: var(--active-button1);
+        }
+
+        &:hover {
+          background: var(--button-hover1);
+        }
       }
     
       .tab-options-divider {
         width: 1px;
         background: var(--divider);
       }        
-
-      div {
-        &.selected {
-          background: var(--active-button1);
-        }
-      }
     }
 
     .ActionButton {
