@@ -28,7 +28,7 @@
     z-index: 80;
     position: absolute;
     border-radius: 4px;
-    background: var(--secondary-color);
+    background: var(--gray-0);
 
     .option {
       display: flex;
@@ -37,6 +37,10 @@
       height: 28px;
       padding-left: 8px;
       padding-right: 17px;
+
+      &:hover {
+        background-color: var(--button-hover1);
+      }      
     }
   }
 }
