@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
@@ -63,7 +64,9 @@ const LeftPanel = () => {
 
       <ResizeBar />
 
-      <NotesPanel display={getDisplay('notesPanel')} />
+      <ErrorBoundary>
+        <NotesPanel display={getDisplay('notesPanel')} />
+      </ErrorBoundary>
       <ThumbnailsPanel display={getDisplay('thumbnailsPanel')} />
       <OutlinesPanel display={getDisplay('outlinesPanel')} />
       <BookmarksPanel display={getDisplay('bookmarksPanel')} />
@@ -124,3 +127,23 @@ const ResizeBar = () => {
     />
   );
 };
+
+class ErrorBoundary extends React.Component {
+  static propTypes = {
+    children: PropTypes.element,
+  }
+
+  static getDerivedStateFromError(error) {
+    console.error(error);
+    return { hasError: true };
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  render() {
+    return this.state.hasError ? null : this.props.children;
+  }
+}
