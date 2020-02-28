@@ -19,7 +19,7 @@
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
 
-      border-bottom: 10px solid #dfe2ed;
+      border-bottom: 10px solid var(--gray-3);
       position: absolute;
 
       transform: translateX(50%);
@@ -30,7 +30,7 @@
     width: 1px;
     height: 24px;
     margin: 0 4px;
-    background: var(--tools-divider-color);
+    background: var(--divider);
   }
 
   .divider-horizontal {
@@ -40,7 +40,7 @@
     margin-left: 4px;
     margin-bottom: 8px;
     margin-top: 8px;
-    background: var(--tools-divider-color);
+    background: var(--divider);
   }
 
   .tools-container {
@@ -50,7 +50,7 @@
     flex-direction: column;
     // border: 1px solid var(--tools-overlay-border);
     border-radius: 4px;
-    background: var(--light-background);
+    background: var(--gray-0);
     box-shadow: 0px 0px 3px 0px var(--box-shadow);
     padding: 0px 4px;
     padding-top: 4px;
@@ -63,7 +63,7 @@
       min-height: 52px;
       padding-top: 5px;
       padding-bottom: 2px;
-      background: #dfe2ed;
+      background: var(--gray-3);
       border-radius: 0px 0px 28px 28px;
     }
 
@@ -86,8 +86,7 @@
 
     .Close-Button {
       padding: 1px;
-      background: var(--light-background);
-      // border: 1px solid var(--tools-overlay-border);
+      background: var(--gray-0);
       border-radius: 100000px;
       box-shadow: 0px 0px 3px 0px var(--box-shadow);
       cursor: pointer;

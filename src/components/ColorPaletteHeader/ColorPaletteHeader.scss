@@ -6,7 +6,7 @@
   margin-bottom: 8px;
   margin-top: 4px;
   border-radius: 4px;
-  border: 1px solid #dfe2ed;
+  border: 1px solid var(--border);
   cursor: pointer;
 
   .palette-options-button {
@@ -24,12 +24,12 @@
     flex-grow: 1;
 
     &.active {
-      background: #dfe2ed;
+      background: var(--active-button1)
     }
   }
 
   .palette-options-divider {
     width: 1px;
-    background: #dfe2ed;
+    background: var(--divider);
   }
 }

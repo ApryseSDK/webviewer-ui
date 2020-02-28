@@ -12,13 +12,17 @@
     margin: 0 12px;
   }     
 
+  .Button {
+    &:hover {
+      background: var(--tools-overlay-button-hover);   
+    }
+    &.active {
+      background: var(--tools-overlay-button-active);
+    }
+  }
+
   &.active {
-    background: var(--active-button1);;
-    // .styling-down-arrow-container{
-    //   svg {
-    //     color: #767f9b;
-    //   }
-    // }
+    background: var(--tools-overlay-button-active);
 
     .Icon {
       color: var(--selected-icon-color);
@@ -43,30 +47,13 @@
     }         
 
     &:hover {
-      background: var(--button-hover1);
-
-      @media (hover: none) {
-        background: transparent;
-      }      
+      background: var(--tools-overlay-button-hover);    
     }
 
     .styling-down-arrow {
       width: 12px;
       height: 12px;
       margin-top: -2px;
-    }
-  }
-
-  // needed because of stacking transparency
-  &:not(.active) {
-    .tool-button {
-      min-width: 32px;
-      min-height: 32px;
-      height: 100%;
-
-      &.active {
-        background: var(--active-button1);
-      }
     }
   }
 }

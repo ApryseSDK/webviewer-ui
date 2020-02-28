@@ -11,16 +11,6 @@
   width: 32px;
   height: 32px;
 
-  &:hover {
-    background: var(--button-hover1);
-
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover
-    // useful for mobile?
-    @media (hover: none) {
-      background: transparent;
-    }
-  }
-
   &.active {
     path:last-child:nth-child(4) {
       color: var(--selected-icon-color);

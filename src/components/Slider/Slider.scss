@@ -31,15 +31,15 @@
 
     svg {
       circle {
-        fill: var(--slider-color);
+        fill: var(--blue-5);
       }
 
       line:nth-child(1) {
-        stroke: var(--slider-color);
+        stroke: var(--blue-5);
       }
 
       line:nth-child(2) {
-        stroke: #dfe2ed;
+        stroke: var(--gray-4);
       }
 
       @include mobile {

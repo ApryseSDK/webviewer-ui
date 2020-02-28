@@ -38,7 +38,14 @@
   --active-button1: var(--blue-2);
   --active-button2: var(--blue-4);
 
-  --active-button-color: var(--active-button1);
+
+  // ---- swap ----
+  --tools-button-hover: var(--button-hover2);
+  --tools-button-active: var(--active-button2);
+
+  --tools-overlay-button-hover: var(--button-hover1);
+  --tools-overlay-button-active: var(--active-button1);
+  // ---- swap ----
 
   --primary-button: var(--blue-5); 
   --primary-button-text: var(--gray-1); 
@@ -127,7 +134,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #dfe2ed;
+  background-color: var(--border);
 }
 
 html, body , #app {

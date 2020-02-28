@@ -1,7 +1,7 @@
 @import '../../constants/styles';
 
 .tool-group-button {
-  margin: 0 7px;
+  margin: 0 6px;
   display: flex;
   align-items: center;
   height: 32px;
@@ -14,6 +14,7 @@
 
   .down-arrow-container {
     margin-left: -4px;
+    margin-right: 2px;
     height: 100%;
     border-radius: 4px;
     display: flex;
@@ -27,6 +28,9 @@
   }
 
   &.active{
+    .Button {
+      background: none;
+    }
     // hack
     &.signature {
       svg {
@@ -34,9 +38,6 @@
       }
     }
 
-    .down-arrow-container {
-      background: var(--active-button2)
-    }
     .down-arrow {
       color: var(--selected-icon-color);
     }
@@ -46,13 +47,5 @@
     @include tablet-and-mobile {
       display: none;
     }
-  }
-
-  &:hover {
-    background: var(--button-hover2);
-  }
-
-  .Button:hover {
-    background: none;
   }
 }
