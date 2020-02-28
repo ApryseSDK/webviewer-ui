@@ -26,6 +26,10 @@
     &.active {
       background: var(--active-button1)
     }
+
+    &:hover {
+      background: var(--button-hover1);
+    }
   }
 
   .palette-options-divider {
