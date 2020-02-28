@@ -67,7 +67,7 @@ const setColors = (toh, toa, th, ta) => {
   root.style.setProperty('--tools-button-active', ta);
 };
 
-const run = () => {
+const updateColors = () => {
   if (window.matchMedia('(max-width: 640px)').matches) {
     setColors(buttonHover2, actionButton2, buttonHover1, actionButton1);
   } else if (window.matchMedia('(max-width: 900px)').matches) {
@@ -76,7 +76,7 @@ const run = () => {
     setColors(buttonHover1, actionButton1, buttonHover2, actionButton2);
   }
 };
-run();
+updateColors();
 
 const App = ({ removeEventHandlers }) => {
   const [isToolsHeaderOpen, isToolsHeaderDisabled, isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled, isSignatureModalOpen, isSignatureModalDisabled] = useSelector(
@@ -103,9 +103,6 @@ const App = ({ removeEventHandlers }) => {
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
-
-
-    const root = document.documentElement;
     mobileListener.addListener(() => {
       dispatch(actions.setMobileToolsHeader());
 
@@ -124,7 +121,7 @@ const App = ({ removeEventHandlers }) => {
       // const toolsButtonActive = getComputedStyle(root).getPropertyValue('--tools-button-active');
 
       // console.log('mobile', toolsOverlayButtonHover, toolsOverlayButtonActive, toolsButtonhover, toolsButtonActive);
-      run();
+      updateColors();
     });
 
     tabletListener.addListener(() => {
@@ -146,7 +143,7 @@ const App = ({ removeEventHandlers }) => {
       // const toolsButtonActive = getComputedStyle(root).getPropertyValue('--tools-button-active');
 
       // console.log('tablet', toolsOverlayButtonHover, toolsOverlayButtonActive, toolsButtonhover, toolsButtonActive);      
-      run();
+      updateColors();
     });
 
     desktopListener.addListener(() => {
@@ -168,7 +165,7 @@ const App = ({ removeEventHandlers }) => {
       // const toolsButtonActive = getComputedStyle(root).getPropertyValue('--tools-button-active');
 
       // console.log('desktop', toolsOverlayButtonHover, toolsOverlayButtonActive, toolsButtonhover, toolsButtonActive);      
-      run();
+      updateColors();
     });
 
     return removeEventHandlers;

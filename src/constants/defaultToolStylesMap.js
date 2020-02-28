@@ -59,6 +59,9 @@ export default {
   AnnotationCreateTextUnderline: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
+  AnnotationCreateTextUnderline2: {
+    StrokeColor: { R: 67, G: 85, B: 219, A: 1 },
+  },
   AnnotationCreateTextSquiggly: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },

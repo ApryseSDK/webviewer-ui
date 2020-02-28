@@ -23,6 +23,7 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateSticky2 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky2');
   toolModeMap.AnnotationCreateSticky3 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky3');
   toolModeMap.AnnotationCreateSticky4 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky4');
+  toolModeMap.AnnotationCreateTextUnderline2 = new window.Tools.TextUnderlineCreateTool(docViewer, 'AnnotationCreateTextUnderline2');
 };
 
 export default setupDocViewer;

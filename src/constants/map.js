@@ -154,7 +154,7 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateTextUnderline'],
+    toolNames: ['AnnotationCreateTextUnderline', 'AnnotationCreateTextUnderline2'],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.TextUnderlineAnnotation,
   },
