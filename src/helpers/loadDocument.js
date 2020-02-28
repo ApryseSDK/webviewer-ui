@@ -36,7 +36,7 @@ const getDefaultOptions = () => ({
   streaming: getHashParams('streaming', false),
   useDownloader: getHashParams('useDownloader', true),
   backendType: getHashParams('pdf', null),
-  loadAsPDF: getHashParams('loadAsPDF', null),
+  loadAsPDF: getHashParams('loadAsPDF', false),
 });
 
 /**
