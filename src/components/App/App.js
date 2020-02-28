@@ -52,7 +52,31 @@ const propTypes = {
 
 const mobileListener = window.matchMedia('(max-width: 640px)');
 const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
-const desktopListener = window.matchMedia('(min-width: 902px)');
+const desktopListener = window.matchMedia('(min-width: 901px)');
+
+const root = document.documentElement;
+const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
+const actionButton1 = getComputedStyle(root).getPropertyValue('--active-button1');
+const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
+const actionButton2 = getComputedStyle(root).getPropertyValue('--active-button2');
+
+const setColors = (toh, toa, th, ta) => {
+  root.style.setProperty('--tools-overlay-button-hover', toh);
+  root.style.setProperty('--tools-overlay-button-active', toa);
+  root.style.setProperty('--tools-button-hover', th);
+  root.style.setProperty('--tools-button-active', ta);
+};
+
+const run = () => {
+  if (window.matchMedia('(max-width: 640px)').matches) {
+    setColors(buttonHover2, actionButton2, buttonHover1, actionButton1);
+  } else if (window.matchMedia('(max-width: 900px)').matches) {
+    setColors(buttonHover2, actionButton2, buttonHover1, actionButton1);
+  } else {
+    setColors(buttonHover1, actionButton1, buttonHover2, actionButton2);
+  }
+};
+run();
 
 const App = ({ removeEventHandlers }) => {
   const [isToolsHeaderOpen, isToolsHeaderDisabled, isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled, isSignatureModalOpen, isSignatureModalDisabled] = useSelector(
@@ -79,16 +103,72 @@ const App = ({ removeEventHandlers }) => {
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
+
+
+    const root = document.documentElement;
     mobileListener.addListener(() => {
       dispatch(actions.setMobileToolsHeader());
+
+      // const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
+      // const actionButton1 = getComputedStyle(root).getPropertyValue('--active-button1');
+      // const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
+      // const actionButton2 = getComputedStyle(root).getPropertyValue('--active-button2');
+      // root.style.setProperty('--tools-overlay-button-hover', buttonHover2);
+      // root.style.setProperty('--tools-overlay-button-active', actionButton2);
+      // root.style.setProperty('--tools-button-hover', buttonHover1);
+      // root.style.setProperty('--tools-button-active', actionButton1);
+
+      // const toolsOverlayButtonHover = getComputedStyle(root).getPropertyValue('--tools-overlay-button-hover');
+      // const toolsOverlayButtonActive = getComputedStyle(root).getPropertyValue('--tools-overlay-button-active');
+      // const toolsButtonhover = getComputedStyle(root).getPropertyValue('--tools-button-hover');
+      // const toolsButtonActive = getComputedStyle(root).getPropertyValue('--tools-button-active');
+
+      // console.log('mobile', toolsOverlayButtonHover, toolsOverlayButtonActive, toolsButtonhover, toolsButtonActive);
+      run();
     });
 
     tabletListener.addListener(() => {
+      console.log('setTabletToolsHeader');
       dispatch(actions.setTabletToolsHeader());
+
+      // const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
+      // const actionButton1 = getComputedStyle(root).getPropertyValue('--active-button1');
+      // const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
+      // const actionButton2 = getComputedStyle(root).getPropertyValue('--active-button2');
+      // root.style.setProperty('--tools-overlay-button-hover', buttonHover2);
+      // root.style.setProperty('--tools-overlay-button-active', actionButton2);
+      // root.style.setProperty('--tools-button-hover', buttonHover1);
+      // root.style.setProperty('--tools-button-active', actionButton1);
+
+      // const toolsOverlayButtonHover = getComputedStyle(root).getPropertyValue('--tools-overlay-button-hover');
+      // const toolsOverlayButtonActive = getComputedStyle(root).getPropertyValue('--tools-overlay-button-active');
+      // const toolsButtonhover = getComputedStyle(root).getPropertyValue('--tools-button-hover');
+      // const toolsButtonActive = getComputedStyle(root).getPropertyValue('--tools-button-active');
+
+      // console.log('tablet', toolsOverlayButtonHover, toolsOverlayButtonActive, toolsButtonhover, toolsButtonActive);      
+      run();
     });
 
     desktopListener.addListener(() => {
+      console.log('setDesktopToolsHeader');
       dispatch(actions.setDesktopToolsHeader());
+
+      // const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
+      // const actionButton1 = getComputedStyle(root).getPropertyValue('--active-button1');
+      // const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
+      // const actionButton2 = getComputedStyle(root).getPropertyValue('--active-button2');
+      // root.style.setProperty('--tools-overlay-button-hover', buttonHover1);
+      // root.style.setProperty('--tools-overlay-button-active', actionButton1);
+      // root.style.setProperty('--tools-button-hover', buttonHover2);
+      // root.style.setProperty('--tools-button-active', actionButton2);
+
+      // const toolsOverlayButtonHover = getComputedStyle(root).getPropertyValue('--tools-overlay-button-hover');
+      // const toolsOverlayButtonActive = getComputedStyle(root).getPropertyValue('--tools-overlay-button-active');
+      // const toolsButtonhover = getComputedStyle(root).getPropertyValue('--tools-button-hover');
+      // const toolsButtonActive = getComputedStyle(root).getPropertyValue('--tools-button-active');
+
+      // console.log('desktop', toolsOverlayButtonHover, toolsOverlayButtonActive, toolsButtonhover, toolsButtonActive);      
+      run();
     });
 
     return removeEventHandlers;

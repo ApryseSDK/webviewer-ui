@@ -170,6 +170,10 @@ class ToolsOverlay extends React.PureComponent {
       const element = activeHeaderItems.find(
         item => item.toolGroup === activeToolGroup,
       );
+
+      if (!element) {
+        return null;
+      }
       const button = document.querySelector(`[data-element=${element.dataElement}]`);
       const { left: buttonLeft } = button.getBoundingClientRect();
       arrowStyle = {
