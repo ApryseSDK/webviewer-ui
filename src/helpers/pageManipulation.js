@@ -6,11 +6,12 @@ export const extractPagesToMerge = pageNumbers => {
   window.extractedDataPromise = extractPagesWithAnnotations(pageNumbers);
 };
 
-export const mergeDocument =  (srcToMerge, mergeToPage) => dispatch => {
+export const mergeDocument = (srcToMerge, mergeToPage) => dispatch => {
   dispatch(actions.openElement('loadingModal'));
 
   return new Promise((resolve, reject) => {
-    core.mergeDocument(srcToMerge, mergeToPage).then(pageInserted => {
+    core.mergeDocument(srcToMerge, mergeToPage)
+    .then(pageInserted => {
       dispatch(actions.closeElement('loadingModal'));
       core.setCurrentPage(mergeToPage);
       resolve(pageInserted);
@@ -21,28 +22,29 @@ export const mergeDocument =  (srcToMerge, mergeToPage) => dispatch => {
   });
 }
 
-export const mergeExternalWebViewerDocument =  (viewerID, mergeToPage) => dispatch => {
-  dispatch(actions.openElement('loadingModal'));
-
+export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => dispatch => {
   return new Promise((resolve, reject) => {
     const otherWebViewerIframe = window.parent.document.querySelector(`#${viewerID}`);
     if (!otherWebViewerIframe) {
       console.warn('Could not find other instance of WebViewer');
       reject();
     }
-  
+
     const extractedDataPromise = otherWebViewerIframe.contentWindow.extractedDataPromise;
     if (!extractedDataPromise) {
-      console.warn('Could not retreive information from other instance of WebViewer');
+      console.warn('Could not retreive data from other instance of WebViewer');
       reject();
     }
-  
+
+    dispatch(actions.openElement('loadingModal'));
     extractedDataPromise.then(docToMerge => {
       dispatch(mergeDocument(docToMerge, mergeToPage))
       .then(pageInserted => {
+        dispatch(actions.closeElement('loadingModal'));
         resolve(pageInserted)
       });
     }).catch(err => {
+      dispatch(actions.closeElement('loadingModal'));
       reject(err);
     });
   });
