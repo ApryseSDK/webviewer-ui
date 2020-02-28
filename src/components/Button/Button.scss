@@ -21,10 +21,6 @@
     }
   }
 
-  path:last-child:nth-child(4) {
-    color: var(--icon-color);
-  }
-
   &.active {
     path:last-child:nth-child(4) {
       color: var(--selected-icon-color);

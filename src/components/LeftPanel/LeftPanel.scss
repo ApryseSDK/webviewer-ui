@@ -8,6 +8,7 @@
   background-color: var(--panel-background);
   display: flex;
   flex-direction: row;
+  position: relative;
 
   @include mobile {
     position: fixed;
@@ -15,7 +16,10 @@
     right: 0;
     height: 100%;
     width: 100%; 
-    padding-top: 48px; 
+  }
+
+  @include tablet-and-mobile {
+    padding-top: 48px;
   }
 
   .left-panel-container{
@@ -23,6 +27,7 @@
     flex-direction: column;
     width: 100%;
     padding-right: 8px;
+    
     // Needed
     overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
 
