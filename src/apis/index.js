@@ -101,6 +101,7 @@ import setPageLabels from './setPageLabels';
 import setPrintQuality from './setPrintQuality';
 import setReadOnly from './setReadOnly';
 import setSelectedTab from './setSelectedTab';
+import setSelectedThumbnailPageNumbers from './setSelectedThumbnailPageNumbers';
 import setShowSideWindow from './setShowSideWindow';
 import setSideWindowVisibility from './setSideWindowVisibility';
 import setSortNotesBy from './setSortNotesBy';
@@ -199,6 +200,7 @@ export default store => {
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
+    setSelectedThumbnailPageNumbers: setSelectedThumbnailPageNumbers(store),
     getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
 
     // undocumented and deprecated, to be removed in 7.0
