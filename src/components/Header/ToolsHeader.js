@@ -42,7 +42,7 @@ class ToolsHeader extends React.PureComponent {
           <HeaderItems items={activeHeaderItems} />
         </div>
         {isToolsOverlayOpen && !isToolsOverlayDisabled && <ToolsOverlay />}
-        {isSignatureOverlayOpen && !isSignatureOverlayDisabled && <SignatureOverlay />}
+        {<SignatureOverlay />}
       </div>
     );
   }
