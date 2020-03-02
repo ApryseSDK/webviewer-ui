@@ -65,6 +65,7 @@ export default (enable, store) => features => {
         'annotationCommentButton',
         'notesPanelButton',
         'notesPanel',
+        'toggleNotesButton',
       ],
     },
     [Feature.Print]: {
