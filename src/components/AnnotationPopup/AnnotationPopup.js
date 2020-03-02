@@ -25,6 +25,7 @@ const AnnotationPopup = () => {
     // can probably use mutation observer
     isLeftPanelOpen,
     isRightPanelOpen,
+    popupItems,
   ] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'annotationPopup'),
@@ -33,6 +34,7 @@ const AnnotationPopup = () => {
       selectors.isElementDisabled(state, 'annotationStylePopup'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementOpen(state, 'searchPanel'),
+      selectors.getPopupItems(state, 'annotationPopup'),
     ],
     shallowEqual,
   );
@@ -61,11 +63,10 @@ const AnnotationPopup = () => {
     // calling this function will always rerender this component
     // because the position state always has a new object reference
     const setPopupPositionAndShow = () => {
-      if (popupRef.current) {
+      if (popupRef.current && popupItems.length > 0) {
         setPosition(
           getAnnotationPopupPositionBasedOn(firstAnnotation, popupRef),
         );
-
         dispatch(actions.openElement('annotationPopup'));
       }
     };
@@ -113,7 +114,7 @@ const AnnotationPopup = () => {
         onUpdateAnnotationPermission,
       );
     };
-  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen]);
+  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen, popupItems]);
 
   useEffect(() => {
     const closeAndReset = () => {

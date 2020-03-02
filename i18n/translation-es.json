@@ -69,7 +69,8 @@
     "strikeout": "Tachado",
     "underline": "Subrayado",
     "custom": "Personalizado",
-    "rubberStamp": "Sello de goma"
+    "rubberStamp": "Sello de goma",
+    "fileattachment": "Archivo adjunto"
   },
   "rubberStamp": {
     "Approved": "Aprobada",

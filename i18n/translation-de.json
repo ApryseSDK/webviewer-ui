@@ -69,7 +69,8 @@
     "strikeout": "Durchstreichen",
     "underline": "Unterstreichen",
     "custom": "Angepasst",
-    "rubberStamp": "Stempel"
+    "rubberStamp": "Stempel",
+    "fileattachment": "Dateianhang"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",
@@ -217,7 +218,8 @@
       "area": "Fläche",
       "distanceMeasurement": "Abstandsmessung",
       "perimeterMeasurement": "Umfangsmessung",
-      "areaMeasurement": "Flächenmessung"
+      "areaMeasurement": "Flächenmessung",
+      "radius": "Radius"
     },
     "measurementOption": {
       "scale": "Maßstab"

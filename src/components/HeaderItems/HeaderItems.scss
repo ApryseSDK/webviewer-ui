@@ -29,4 +29,8 @@
     background: $gray12;
     background: var(--border-color);
   }
+
+  @include mobile {
+    overflow-x: auto;
+  }
 }
