@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
 
-  width: 550px;
-  height: 198px;
+  width: 380px;
+  height: 168px;
 
   @include mobile {
     width: 100%;
@@ -26,7 +26,6 @@
   
   &-text {
     display: flex;
-    justify-content: center;
     align-items: center;
     background: #f8f8f8;
     white-space: nowrap;

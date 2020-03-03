@@ -113,7 +113,7 @@ class PageNavOverlay extends React.PureComponent {
 
     const className = getClassName(`Overlay PageNavOverlay`, this.props);
 
-    const inputWidth = (this.state.input.length) * 8;
+    const inputWidth = this.state.input ? (this.state.input.length) * 8 : 0;
 
     return (
       <div className={className} data-element="pageNavOverlay">

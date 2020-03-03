@@ -84,6 +84,14 @@
         margin-top: 0px;
       }
     }
+
+    @include desktop {
+      &.extra-margin {
+        .tool-button-container {
+          margin: 0 9px;
+        }
+      }
+    }
   }
 
   .Close-Container {

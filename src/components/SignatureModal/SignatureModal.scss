@@ -9,6 +9,26 @@
     background: none;
   }
 
+  .StylePopup {
+    max-width: 310px;
+    .ColorPalette {
+      .cell-outer {
+        width: 36px;
+        height: 36px;
+        margin: 0 13px;
+
+        .cell {
+          width: 24px;
+          height: 24px;
+  
+          &.active {
+            width: 28px;
+            height: 28px;
+          }         
+        }
+      }
+    }
+  }
 
   .container {
     @extend %modal-shared-container-style;

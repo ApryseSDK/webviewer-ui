@@ -1,8 +1,9 @@
 @import '../../../constants/styles';
 
 .image-signature {
-  width: 550px;
-  height: 198px;
+  width: 380px;
+  height: 168px;
+
 
   @include mobile {
     width: 100%;

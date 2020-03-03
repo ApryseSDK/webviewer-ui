@@ -14,6 +14,7 @@ import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
+import classNames from 'classnames';
 
 import './ToolsOverlay.scss';
 
@@ -220,7 +221,13 @@ class ToolsOverlay extends React.PureComponent {
           className="arrow-up"
           style={arrowStyle}
         />
-        <div ref={this.toolsContainer} className="tools-container">
+        <div
+          ref={this.toolsContainer}
+          className={classNames({
+            "tools-container": true,
+            "extra-margin": toolNames.length === 4,
+          })}
+        >
           <div className="tool-buttons-container" ref={this.itemsContainer}>
             {toolNames.map((toolName, i) => (
               <ToolButton

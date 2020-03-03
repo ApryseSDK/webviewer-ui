@@ -51,7 +51,7 @@ const ToggleZoomOverlay = () => {
   const onChange = e => {
     const re = /^(\d){0,4}$/;
     if (re.test(e.target.value) || e.target.value === '') {
-      setValue(e.target.value);   
+      setValue(e.target.value);
     }
   };
 
@@ -68,7 +68,7 @@ const ToggleZoomOverlay = () => {
     }
   };
 
-  const inputWidth = (value.length + 1) * 8;
+  const inputWidth = value ? (value.length + 1) * 8 : 0;
 
   return (
     <div className="zoom-overlay">
