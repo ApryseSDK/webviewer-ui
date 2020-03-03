@@ -111,7 +111,7 @@ class ToolStylePopup extends React.PureComponent {
         this.popup,
       );
 
-      this.setState({ left: left + 10, top: top + 23 });
+      this.setState({ left: left + 10, top: top + 26 });
     }
   };
 
