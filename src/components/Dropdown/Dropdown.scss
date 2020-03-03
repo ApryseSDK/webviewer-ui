@@ -10,6 +10,9 @@
   margin-bottom: 5px;
   z-index: 80;
 
+  border: 1px solid #e0e0e0;
+  background-color: white;
+
   .items {
     flex-grow: 1;
     position: relative;
@@ -18,7 +21,7 @@
       height: 24px;
       flex-grow: 1;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
     }
 
@@ -32,6 +35,9 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+
+        border: 1px solid #e0e0e0;
+        background-color: white;
       }
   
       &.hide {
@@ -40,6 +46,11 @@
 
       .dropdown-item {
         margin: 5px 0;
+        width: 100%;
+        text-align: center;
+        &:hover {
+          background-color: rgba(0,0,0,.078);
+        }
       }
     }
 
