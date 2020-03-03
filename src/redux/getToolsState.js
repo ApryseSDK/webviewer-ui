@@ -47,7 +47,7 @@ const getTools = () => {
       dataElement: 'closeToolsButton',
       titile: 'action.close',
       img: 'ic_close_black_24px',
-      style: { position: 'absolute', right: 0 },
+      style: { position: 'absolute', right: 4 },
       onClick: dispatch => {
         dispatch(actions.closeElements(['toolsHeader', 'toolsOverlay']));
         core.setToolMode(defaultTool);
