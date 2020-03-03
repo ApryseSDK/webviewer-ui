@@ -13,7 +13,6 @@ import './ToggleElementButton.scss';
 
 const ToggleElementButton = ({
   onClick,
-  showDownArrow = false,
   dataElement,
   isElementDisabled,
   isActive,
@@ -33,11 +32,6 @@ const ToggleElementButton = ({
       onClick={onClick}
     >
       <Button isActive={isActive} {...restProps} />
-      {showDownArrow && (
-        <div className="down-arrow-container">
-          <Icon className="down-arrow " glyph="icon-chevron-down" />
-        </div>
-      )}
     </div>
   );
 };

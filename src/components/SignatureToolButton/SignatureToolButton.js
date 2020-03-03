@@ -58,16 +58,10 @@ const SignatureToolButton = () => {
       data-element="signatureToolButton"
       onClick={handleClick}
     >
-      <div>
-        <Button
-          img="icon-tool-signature"
-          title="annotation.signature"
-        />
-        <div className="arrow-up" />
-      </div>
-      <div className="down-arrow-container">
-        <Icon className="down-arrow" glyph="icon-chevron-down" />
-      </div>
+      <Button
+        img="icon-tool-signature"
+        title="annotation.signature"
+      />
     </div>
   );
 };

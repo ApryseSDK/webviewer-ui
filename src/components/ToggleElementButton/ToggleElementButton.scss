@@ -7,34 +7,6 @@
     border-radius: 4px;
     cursor: pointer;
 
-    .down-arrow-container {
-      @include tablet-and-mobile {
-        display: none;
-      }
-
-      height: 100%;
-      margin-left: -4px;
-      margin-right: 4px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-
-      .down-arrow {
-        width: 12px;
-        height: 16px;
-        margin-top: -2px;
-      }
-    }
-
-    &.active{
-      .down-arrow-container {
-        background: var(--active-button1);
-      }
-      .down-arrow {
-        color: var(--selected-icon-color);
-      }
-    }
-  
     &:hover {
       background: var(--button-hover1);
     }
@@ -42,6 +14,4 @@
     .Button:hover {
       background: none;
     }
-
-
   }

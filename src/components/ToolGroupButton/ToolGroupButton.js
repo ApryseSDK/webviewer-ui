@@ -108,7 +108,6 @@ class ToolGroupButton extends React.PureComponent {
       allButtonsInGroupDisabled,
       iconColor,
       title,
-      showDownArrow = true,
       isToolsOverlayOpen,
     } = this.props;
 
@@ -131,20 +130,13 @@ class ToolGroupButton extends React.PureComponent {
         data-element={dataElement}
         onClick={this.onClick}
       >
-        <div>
-          <Button
-            title={title}
-            mediaQueryClassName={mediaQueryClassName}
-            isActive={isActive}
-            img={img}
-            color={color}
-          />
-        </div>
-        {showDownArrow && (
-          <div className="down-arrow-container">
-            <Icon className="down-arrow" glyph="icon-chevron-down" />
-          </div>
-        )}
+        <Button
+          title={title}
+          mediaQueryClassName={mediaQueryClassName}
+          isActive={isActive}
+          img={img}
+          color={color}
+        />
       </div>
     );
   }
