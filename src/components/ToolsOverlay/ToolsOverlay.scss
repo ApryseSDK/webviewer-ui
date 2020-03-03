@@ -12,6 +12,12 @@
   border-radius: 0px;
   background: transparent;
 
+  @include tablet {
+    .StylePopup {
+      background: var(--gray-0);
+    }
+  }
+
   @include tablet-and-mobile {
     position: relative;
     &.closed {
@@ -56,7 +62,7 @@
     // border: 1px solid var(--tools-overlay-border);
     border-radius: 4px;
     background: var(--gray-0);
-    box-shadow: 0px 0px 3px 0px var(--box-shadow);
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
     padding: 0px 4px;
     padding-top: 4px;
     padding-bottom: 4px;
@@ -101,7 +107,7 @@
       padding: 1px;
       background: var(--gray-0);
       border-radius: 100000px;
-      box-shadow: 0px 0px 3px 0px var(--box-shadow);
+      box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
       cursor: pointer;
     }
 

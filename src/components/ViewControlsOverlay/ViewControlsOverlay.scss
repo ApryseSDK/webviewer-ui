@@ -20,7 +20,7 @@
   border-radius: 4px;
   background: var(--gray-0);
   // box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.02);
-  box-shadow: 0px 0px 3px 0px var(--box-shadow);
+  box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
 
   .type {
     margin-top: 2px;
@@ -71,7 +71,7 @@
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border: 0px;
-    box-shadow: 0px 0px 3px 0px var(--box-shadow);
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
 
     padding-top: 30px;
     padding-bottom: 30px;

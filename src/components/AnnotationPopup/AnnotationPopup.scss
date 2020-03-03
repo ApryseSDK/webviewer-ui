@@ -3,9 +3,9 @@
 
 .AnnotationPopup {
   @extend %popup;
-  box-shadow: 0 0 3px 0 #c3c6d4;
-  background: var(--light-background);
-  border-radius: 4px;     
+  border-radius: 4px;
+  box-shadow: 0 0 3px 0 var(--document-box-shadow);
+  background: var(--gray-0);
 
   &:empty {
     padding: 0;
