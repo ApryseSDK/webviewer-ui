@@ -61,9 +61,9 @@ class ToolsOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     // this.setArrowStyle();
-    // if (this.props.activeToolName === 'AnnotationCreateRubberStamp') {
-    //   this.setState({ isStylingOpen: true });
-    // }
+    if (this.props.activeToolName === 'AnnotationCreateRubberStamp') {
+      this.setState({ isStylingOpen: true });
+    }
 
     const clickedOnAnotherToolGroupButton =
       prevProps.activeToolGroup !== this.props.activeToolGroup;

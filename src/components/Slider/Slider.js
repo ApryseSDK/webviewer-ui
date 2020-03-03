@@ -56,6 +56,7 @@ class Slider extends React.PureComponent {
 
   setLineLength = () => {
     this.lineLength = 0.94 * this.sliderSvg.current.getBoundingClientRect().width - 2 * circleRadius;
+    console.log('lineLength', this.lineLength);
   }
 
   onMouseDown = e => {
