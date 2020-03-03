@@ -96,8 +96,6 @@ const ToolButton = ({
     />
   );
 
- 
-
   if (handleStyleClick) {
     return (
       <div
@@ -107,7 +105,7 @@ const ToolButton = ({
         })}
       >
         {ButtonComponent}
-        {toolName !== 'AnnotationCreateRubberStamp' && toolStylesExist(toolName) && (
+        {toolStylesExist(toolName) && (
           <div
             className="styling-down-arrow-container"
             onClick={() => {

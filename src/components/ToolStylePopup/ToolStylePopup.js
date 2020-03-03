@@ -152,7 +152,7 @@ class ToolStylePopup extends React.PureComponent {
               hideSlider={hideSlider}
               onStyleChange={this.handleStyleChange}
             />}
-        {isTablet &&
+        {isTablet && activeToolName !== 'CropPage' &&
           <div className="Close-Container">
             <div className="Close-Button" onClick={
               () => {
