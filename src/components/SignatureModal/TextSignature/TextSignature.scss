@@ -34,6 +34,7 @@
     margin-top: 10px;
     overflow-y: auto;
     flex-grow: 1;
+    max-width: 380px;
 
     &:hover {
       cursor: pointer;
@@ -41,6 +42,11 @@
 
     &.active {
       border: 1px solid var(--focus-border);
+    }
+
+    .text-container {
+      // background: green;
+      margin: auto;
     }
   }
 }

@@ -135,7 +135,9 @@ const TextSignature = ({
             style={{ fontFamily: font, fontSize: FONT_SIZE }}
             onClick={() => setActiveIndex(index)}
           >
-            {value}
+            <div className="text-container">
+              {value}
+            </div>
           </div>
         ))}
         <canvas ref={canvasRef} />
