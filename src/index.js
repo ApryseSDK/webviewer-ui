@@ -131,7 +131,13 @@ if (window.CanvasRenderingContext2D) {
 
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
+
     window.docViewer = docViewer;
+    if (getHashParams('enableViewStateAnnotations', false)) {
+      const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
+      tool?.setSaveViewState(true);
+    }
+
     setupDocViewer();
     setupI18n(state);
     setUserPermission(state);
