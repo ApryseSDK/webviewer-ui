@@ -3,6 +3,7 @@ import actions from 'actions';
 import extractPagesWithAnnotations from './extractPagesWithAnnotations';
 
 export const extractPagesToMerge = pageNumbers => {
+  // extract pages and put the data on the iFrame window element for another instance of WebViewer to access
   window.extractedDataPromise = extractPagesWithAnnotations(pageNumbers);
 };
 
@@ -41,7 +42,7 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => dispatc
       dispatch(mergeDocument(docToMerge, mergeToPage))
       .then(pageInserted => {
         dispatch(actions.closeElement('loadingModal'));
-        resolve(pageInserted)
+        resolve(pageInserted);
       });
     }).catch(err => {
       dispatch(actions.closeElement('loadingModal'));

@@ -81,7 +81,7 @@ class ThumbnailsPanel extends React.PureComponent {
   onDragEnd = () => {
     const { currentPage, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailReorderingEnabled } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
-    if ( isThumbnailReorderingEnabled && draggingOverPageIndex !== null) {
+    if (isThumbnailReorderingEnabled && draggingOverPageIndex !== null) {
       const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
       const pageNumberIncreased = currentPage < targetPageNumber;
 
@@ -524,7 +524,6 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
   setSelectedPageThumbnails: pages => dispatch(actions.setSelectedPageThumbnails(pages)),
   showWarningMessage: warning => dispatch(actions.showWarningMessage(warning)),
-
   mergeDocument: (file, mergeToPage) => dispatch(mergeDocument(file, mergeToPage)),
   mergeExternalWebViewerDocument: (viewerID, mergeToPage) => dispatch(mergeExternalWebViewerDocument(viewerID, mergeToPage)),
 });
