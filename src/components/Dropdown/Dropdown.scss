@@ -48,10 +48,6 @@
         width: 100%;
         text-align: left;
         padding: 5px 5px;
-        text-overflow: ellipsis;
-        max-width: 100%;
-        white-space: nowrap;
-        overflow: hidden; 
         // need active so that it works on android mobile browser
         &:hover, &:active {
           background-color: rgba(0,0,0,.078);
