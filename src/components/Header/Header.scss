@@ -38,19 +38,17 @@
       left: 0;
     }
 
-    .Button {
+    .tool-group-button {
+      &:hover {
+        background: var(--tools-button-hover);     
+      }
+
       &.active {
         background: var(--tools-button-active);
       }
 
-      &:hover {
-        background: var(--tools-button-hover);
-      }
-    }
-
-    .tool-group-button {
-      &:hover {
-        background: var(--tools-button-hover);     
+      .Button:hover {
+        background: none;
       }
     }
   }
