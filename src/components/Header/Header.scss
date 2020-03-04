@@ -50,14 +50,7 @@
 
     .tool-group-button {
       &:hover {
-        background: var(--tools-button-hover);
-        .Button:hover {
-          background: none;
-        }        
-      }
-
-      .Button {
-        background: none;
+        background: var(--tools-button-hover);     
       }
     }
   }
