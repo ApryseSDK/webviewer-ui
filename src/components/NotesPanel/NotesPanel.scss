@@ -14,12 +14,14 @@
     display: flex;
     justify-content: space-between;
 
+    margin: 0 16px;
+
     input {
       width: 150px;
-      margin-left: 15px;
       outline: none;
       border: 1px solid $gray12;
       border-radius: 4px;
+      margin-right: 5px;
     }
   }
 

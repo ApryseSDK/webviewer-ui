@@ -48,57 +48,6 @@ const sortStrategies = {
       return latestActivityDate;
     },
   },
-  a: {
-    getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
-    shouldRenderSeparator: (prevNote, currNote) => dayjs(getLatestActivityDate(prevNote)).format('MMM D, YYYY') !== dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY'),
-    getSeparatorContent: (prevNote, currNote) => {
-      const today = dayjs(new Date()).format('MMM D, YYYY');
-      const yesterday = dayjs(new Date(new Date() - 86400000)).format('MMM D, YYYY');
-      const latestActivityDate = dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY');
-
-      if (latestActivityDate === today) {
-        return i18next.t('option.notesPanel.separator.today');
-      }
-      if (latestActivityDate === yesterday) {
-        return i18next.t('option.notesPanel.separator.yesterday');
-      }
-      return latestActivityDate;
-    },
-  },
-  b: {
-    getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
-    shouldRenderSeparator: (prevNote, currNote) => dayjs(getLatestActivityDate(prevNote)).format('MMM D, YYYY') !== dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY'),
-    getSeparatorContent: (prevNote, currNote) => {
-      const today = dayjs(new Date()).format('MMM D, YYYY');
-      const yesterday = dayjs(new Date(new Date() - 86400000)).format('MMM D, YYYY');
-      const latestActivityDate = dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY');
-
-      if (latestActivityDate === today) {
-        return i18next.t('option.notesPanel.separator.today');
-      }
-      if (latestActivityDate === yesterday) {
-        return i18next.t('option.notesPanel.separator.yesterday');
-      }
-      return latestActivityDate;
-    },
-  },
-  blahblahblahblahsadasfsafsafSAD: {
-    getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
-    shouldRenderSeparator: (prevNote, currNote) => dayjs(getLatestActivityDate(prevNote)).format('MMM D, YYYY') !== dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY'),
-    getSeparatorContent: (prevNote, currNote) => {
-      const today = dayjs(new Date()).format('MMM D, YYYY');
-      const yesterday = dayjs(new Date(new Date() - 86400000)).format('MMM D, YYYY');
-      const latestActivityDate = dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY');
-
-      if (latestActivityDate === today) {
-        return i18next.t('option.notesPanel.separator.today');
-      }
-      if (latestActivityDate === yesterday) {
-        return i18next.t('option.notesPanel.separator.yesterday');
-      }
-      return latestActivityDate;
-    },
-  },
 };
 
 export const getSortStrategies = () => sortStrategies;

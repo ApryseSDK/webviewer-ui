@@ -7,10 +7,9 @@
   font-size: 14px;
   user-select: none;
   justify-content: space-between;
-  margin-bottom: 5px;
   z-index: 80;
-
   border: 1px solid #e0e0e0;
+  border-radius: 4px;
   background-color: white;
 
   .items {
@@ -21,8 +20,14 @@
       height: 24px;
       flex-grow: 1;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
+
+      text-overflow: ellipsis;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 0 5px;
     }
 
     .dropdown-items {
@@ -45,10 +50,15 @@
       }
 
       .dropdown-item {
-        margin: 5px 0;
         width: 100%;
-        text-align: center;
-        &:hover {
+        text-align: left;
+        padding: 5px 5px;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden; 
+        // need active so that it works on android mobile browser
+        &:hover, &:active {
           background-color: rgba(0,0,0,.078);
         }
       }
@@ -57,18 +67,6 @@
     &:hover {
       cursor: pointer;
     }
-  }
-
-  &:after {
-    width: 24px;
-    height: 24px;
-
-    display: flex;
-    align-items: center;
-
-    content: '\25BE';
-    color: #757575;
-    color: var(--icon-color);
   }
 
   &:hover:after {
