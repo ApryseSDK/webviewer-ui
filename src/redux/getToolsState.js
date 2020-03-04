@@ -42,18 +42,6 @@ const getTools = () => {
     },
     { type: 'toolButton', toolName: 'AnnotationEraserTool' },
     { type: 'spacer' },
-    {
-      type: 'actionButton',
-      dataElement: 'closeToolsButton',
-      titile: 'action.close',
-      img: 'ic_close_black_24px',
-      style: { position: 'absolute', right: 4 },
-      onClick: dispatch => {
-        dispatch(actions.closeElements(['toolsHeader', 'toolsOverlay']));
-        core.setToolMode(defaultTool);
-        dispatch(actions.setActiveToolGroup(''));
-      },
-    },
   ];
 
   const tabletState = [

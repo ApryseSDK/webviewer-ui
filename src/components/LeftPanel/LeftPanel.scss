@@ -21,9 +21,9 @@
     width: 100%; 
   }
 
-  @include tablet-and-mobile {
-    padding-top: 48px;
-  }
+  // @include tablet-and-mobile {
+  //   padding-top: 48px;
+  // }
 
   .left-panel-container{
     display: flex;
@@ -35,36 +35,36 @@
     overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
 
 
-    .close-container {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      height: 48px;
-
-      @include mobile{
+    padding-top: 16px;
+    @include mobile {
+      padding-top: 0px;
+      .close-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
         height: 64px;
-      }
 
-      width: 100%;
-      padding-right: 12px;
-      position: absolute;
-      top: 0;
-  
-      .close-icon-container {
-        cursor: pointer;
-        .close-icon {
-          width: 24px;
-          height: 24px;
+
+        width: 100%;
+        padding-right: 5px;
+        top: 0;
+    
+        .close-icon-container {
+          cursor: pointer;
+          .close-icon {
+            width: 24px;
+            height: 24px;
+          }
         }
-      }
-    }    
+      }    
+    }
   }
 
   .left-panel-header {
     display: flex;
     align-items: center;
     margin: 16px;
-    margin-top: 16px;
+    margin-top: 0px;
     margin-right: 8px;
   }
 

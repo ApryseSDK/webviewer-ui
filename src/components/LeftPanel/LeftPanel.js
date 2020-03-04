@@ -61,7 +61,7 @@ const LeftPanel = () => {
       style={style}
     >
       <div className="left-panel-container">
-        {isTabletAndMobile &&
+        {isMobile &&
           <div
             className="close-container"
           >

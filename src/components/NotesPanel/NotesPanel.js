@@ -275,21 +275,22 @@ const NotesPanel = () => {
         data-element="notesPanel"
         onClick={core.deselectAllAnnotations}
       >
-        <div
-          className="close-container"
-        >
+        {isMobile &&
           <div
-            className="close-icon-container"
-            onClick={() => {
-              dispatch(actions.closeElements(['notesPanel']));
-            }}
+            className="close-container"
           >
-            <Icon
-              glyph="ic_close_black_24px"
-              className="close-icon"
-            />
-          </div>
-        </div>
+            <div
+              className="close-icon-container"
+              onClick={() => {
+                dispatch(actions.closeElements(['notesPanel']));
+              }}
+            >
+              <Icon
+                glyph="ic_close_black_24px"
+                className="close-icon"
+              />
+            </div>
+          </div>}
         {notes.length === 0 ? (
           <div className="no-annotations">{t('message.noAnnotations')}</div>
         ) : (

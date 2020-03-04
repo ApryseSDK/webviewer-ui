@@ -104,21 +104,22 @@ class SearchPanel extends React.PureComponent {
             leftDirection
           />}
         <div className={className} data-element="searchPanel">
-          <div
-            className="close-container"
-          >
+          {isMobile &&
             <div
-              className="close-icon-container"
-              onClick={() => {
-                closeElements(['searchPanel']);
-              }}
+              className="close-container"
             >
-              <Icon
-                glyph="ic_close_black_24px"
-                className="close-icon"
-              />
-            </div>
-          </div>
+              <div
+                className="close-icon-container"
+                onClick={() => {
+                  closeElements(['searchPanel']);
+                }}
+              >
+                <Icon
+                  glyph="ic_close_black_24px"
+                  className="close-icon"
+                />
+              </div>
+            </div>}
           <SearchOverlay />
           <div className={`results`}>
             {isSearching && (
