@@ -43,6 +43,9 @@ export default store => {
       core.addEventListener('pageComplete', onPageComplete);
       core.getTool('AnnotationCreateStamp').on('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
+      core.getTool('AnnotationCreateSticky2').on('annotationAdded', onStickyAnnotationAdded);
+      core.getTool('AnnotationCreateSticky3').on('annotationAdded', onStickyAnnotationAdded);
+      core.getTool('AnnotationCreateSticky4').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
       core.getTool('AnnotationCreateRubberStamp').on('annotationAdded', onRubberStampAnnotationAdded);
@@ -69,6 +72,9 @@ export default store => {
       core.removeEventListener('pageComplete', onPageComplete);
       core.getTool('AnnotationCreateStamp').off('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').off('annotationAdded', onStickyAnnotationAdded);
+      core.getTool('AnnotationCreateSticky2').off('annotationAdded', onStickyAnnotationAdded);
+      core.getTool('AnnotationCreateSticky3').off('annotationAdded', onStickyAnnotationAdded);
+      core.getTool('AnnotationCreateSticky4').off('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').off('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateRubberStamp').off('annotationAdded', onRubberStampAnnotationAdded);
       hotkeysManager.off();
