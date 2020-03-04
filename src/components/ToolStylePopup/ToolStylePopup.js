@@ -4,9 +4,9 @@ import onClickOutside from 'react-onclickoutside';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
+import core from 'core';
 import StylePopup from 'components/StylePopup';
 import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
-import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
 import { mapToolNameToKey } from 'constants/map';
@@ -97,6 +97,11 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   handleStyleChange = (property, value) => {
+    const { activeToolName } = this.props;
+    const tool = core.getTool(activeToolName);
+    if (typeof tool.complete === 'function') {
+      tool.complete();
+    }
     setToolStyles(this.props.activeToolName, property, value);
   };
 

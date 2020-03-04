@@ -48,7 +48,7 @@
       left: 0;
     }
 
-    .tool-group-button {
+    .Button,.tool-group-button {
       &:hover {
         background: var(--tools-button-hover);     
       }

@@ -92,8 +92,11 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    // core.setToolMode(defaultTool);
-    // this.props.setActiveToolGroup('');
+    const { activeToolGroup } = this.props;
+    if (activeToolGroup == 'miscTools') {
+      core.setToolMode(defaultTool);
+      this.props.setActiveToolGroup('');      
+    }
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
@@ -138,8 +141,8 @@ class ToolsOverlay extends React.PureComponent {
   };
 
   handleCloseClick = () => {
-    const { setActiveToolGroup, closeElements } = this.props;
-
+    const { setActiveToolGroup, closeElements, activeToolGroup } = this.props;
+    console.log('activeToolGroup', activeToolGroup);
     // core.setToolMode(defaultTool);
     // setActiveToolGroup('');
     closeElements(['toolsOverlay']);
