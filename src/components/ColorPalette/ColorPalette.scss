@@ -21,9 +21,9 @@
 
     .cell-outer {
       &.active {
-        border: 2px solid var(--gray-8);
-        width: 24px;
-        height: 24px;
+        border: 1px solid var(--gray-8);
+        width: 26px;
+        height: 26px;
         border-radius: 10000000px;
         display: flex;
         align-items: center;

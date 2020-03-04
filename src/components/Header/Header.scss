@@ -10,6 +10,16 @@
 
   border-bottom: solid 1px var(--gray-3);
 
+  // &:not(.Tools) {
+  //   .Button {
+  //     &:not(.active) {
+  //       .Icon {
+  //         color: var(--icon-color);
+  //       }
+  //     }
+  //   }
+  // }
+
   .Button {
     &:hover {
       background: var(--button-hover1);

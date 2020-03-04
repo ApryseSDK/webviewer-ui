@@ -125,7 +125,7 @@ class ToolGroupButton extends React.PureComponent {
       <div
         className={classNames({
           'tool-group-button': true,
-          active: isActive && isToolsOverlayOpen,
+          active: isActive,
         })}
         data-element={dataElement}
         onClick={this.onClick}

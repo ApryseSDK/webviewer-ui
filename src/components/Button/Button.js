@@ -38,6 +38,7 @@ const Button = props => {
     isActive,
     mediaQueryClassName,
     img,
+    activeImg,
     label,
     color,
     dataElement,
@@ -48,9 +49,15 @@ const Button = props => {
   } = { ...props, ...customOverrides };
 
   const isBase64 = img?.trim().startsWith('data:');
+
+  let imgToShow = img;
+  if (isActive && activeImg) {
+    imgToShow = activeImg;
+  }
+
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
-    img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
+    imgToShow && !isBase64 && (!imgToShow.includes('.') || imgToShow.startsWith('<svg'));
   const shouldRenderTooltip = title && !disable;
 
   const children = (
@@ -66,8 +73,8 @@ const Button = props => {
       data-element={dataElement}
       onClick={disable ? NOOP : onClick}
     >
-      {isGlyph && <Icon glyph={img} color={color} />}
-      {img && !isGlyph && <img src={img} />}
+      {isGlyph && <Icon glyph={imgToShow} color={color} />}
+      {imgToShow && !isGlyph && <img src={imgToShow} />}
       {label && <p>{label}</p>}
     </div>
   );

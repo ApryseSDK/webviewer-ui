@@ -11,9 +11,15 @@
   width: 32px;
   height: 32px;
 
+  // color for svgs
   &.active {
     path:last-child:nth-child(4) {
       color: var(--selected-icon-color);
+    }
+
+    // hack for pan tool and annot select tool
+    &[data-element="panToolButton"],&[data-element="selectToolButton"] {
+      background: var(--active-button1);
     }
   }  
 
