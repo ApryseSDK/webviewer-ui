@@ -78,11 +78,10 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   onDragEnd = () => {
-    const { currentPage, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailReorderingEnabled } = this.props;
+    const { currentPage, selectedPageIndexes, isThumbnailReorderingEnabled } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     if (isThumbnailReorderingEnabled && draggingOverPageIndex !== null) {
       const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
-      const pageNumberIncreased = currentPage < targetPageNumber;
 
       let pageNumbersToMove = [currentPage];
       if (this.isDraggingGroup) {
@@ -90,24 +89,7 @@ class ThumbnailsPanel extends React.PureComponent {
       }
 
       this.afterMovePageNumber = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
-      core.movePages(pageNumbersToMove, targetPageNumber).then(() => {
-        const currentPageIndex = currentPage - 1;
-        const targetPageIndex = this.afterMovePageNumber - 1;
-
-        // update selected pages affected by the move, exclude the page that was moved
-        let updateSelectedPageIndexes = selectedPageIndexes.filter(pageIndex => !pageNumbersToMove.includes(pageIndex + 1));
-        if (pageNumberIncreased) {
-          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p > currentPageIndex && p <= targetPageIndex ? p - 1 : p));
-        } else {
-          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p < currentPageIndex && p >= targetPageIndex ? p + 1 : p));
-        }
-
-        if (selectedPageIndexes.includes(currentPageIndex)) {
-          updateSelectedPageIndexes.push(...pageNumbersToMove.map((val, index) => targetPageIndex + index));
-        }
-
-        setSelectedPageThumbnails(updateSelectedPageIndexes);
-      });
+      core.movePages(pageNumbersToMove, targetPageNumber);
     }
 
     this.setState({ draggingOverPageIndex: null });
@@ -225,7 +207,7 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     if (changes.moved) {
-      updatedPagesIndexes = updatedPagesIndexes.map(pageIndex => changes.moved[pageIndex + 1] - 1 ? changes.moved[pageIndex + 1] - 1 : pageIndex);
+      updatedPagesIndexes = updatedPagesIndexes.map(pageIndex => changes.moved[pageIndex + 1]? changes.moved[pageIndex + 1] - 1 : pageIndex);
     }
 
     setSelectedPageThumbnails(updatedPagesIndexes);
