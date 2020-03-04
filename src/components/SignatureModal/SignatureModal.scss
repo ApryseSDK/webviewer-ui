@@ -10,21 +10,23 @@
   }
 
   .StylePopup {
-    max-width: 310px;
+    max-width: 318px;
     .ColorPalette {
-      .cell-outer {
+      .cell-container {
         width: 36px;
         height: 36px;
         margin: 0 13px;
 
-        .cell {
-          width: 24px;
-          height: 24px;
-  
+        .cell-outer {
           &.active {
-            width: 28px;
-            height: 28px;
-          }         
+            width: 32px;
+            height: 32px;
+          }  
+
+          .cell {
+            width: 24px;
+            height: 24px;
+          }
         }
       }
     }

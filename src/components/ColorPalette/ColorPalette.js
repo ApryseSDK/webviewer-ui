@@ -68,36 +68,53 @@ class ColorPalette extends React.PureComponent {
       <div className="ColorPalette" data-element="colorPalette">
         {allowTransparent &&
           <div
-            className="cell-outer"
+            className="cell-container"
             onClick={() => this.setColor(null)}
           >
             <div
               className={classNames({
-                cell: true,
-                transparent: true,
+                'cell-outer': true,
                 active: color.toHexString() === null,
               })}
             >
-              <svg width="100%" height="100%">
-                <line x1="15%" y1="85%" x2="85%" y2="15%" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+              <div
+                className={classNames({
+                  cell: true,
+                })}
+              >
+                <svg
+                  width="100%"
+                  height="100%"
+                  className={classNames({
+                    transparent: true,
+                  })}
+                >
+                  <line x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </div>
             </div>
           </div>}
         {palette.map((row, i) =>
           row.map((bg, j) =>
             <div
               key={`${i}${j}`}
-              className="cell-outer"
+              className="cell-container"
               onClick={() => this.setColor(bg)}
             >
               <div
                 className={classNames({
-                  cell: true,
+                  'cell-outer': true,
                   active: color?.toHexString()?.toLowerCase() === bg?.toLowerCase(),
-                  border: bg.toLowerCase() === '#ffffff',
                 })}
-                style={{ backgroundColor: bg }}
-              />
+              >
+                <div
+                  className={classNames({
+                    cell: true,
+                    border: bg.toLowerCase() === '#ffffff',
+                  })}
+                  style={{ backgroundColor: bg }}
+                />
+              </div>
             </div>,
           ),
         )}

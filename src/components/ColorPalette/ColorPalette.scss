@@ -4,7 +4,7 @@
   display: flex;
   flex-wrap: wrap;
 
-  .cell-outer {
+  .cell-container {
     cursor: pointer;
     width: 32px;
     height: 32px;
@@ -13,49 +13,51 @@
     justify-content: center;
     margin: 0 4px;
 
-    &:hover {
-      background: var(--button-hover1);
-      border-radius: 4px;
-    }
-
     @include tablet-and-mobile {
       width: 36px;
       height: 36px;
       margin: 0 13px;
     }
 
-    .cell {
-      width: 18px;
-      height: 18px;
-      border-radius: 10000000px;
-
-      &.transparent {
-        border: 2px solid #c3c6d4;
-
-        line {
-          stroke: #c3c6d4;
-        }
-      }
-
+    .cell-outer {
       &.active {
-        width: 22px;
-        height: 22px;
-      }
-
-      &.border{
-        border: 1px solid #dfe2ed;
-      }
-
-      @include tablet-and-mobile  {
+        border: 2px solid var(--gray-8);
         width: 24px;
         height: 24px;
+        border-radius: 10000000px;
+        display: flex;
+        align-items: center;
+        justify-content: center;     
+        
+        @include tablet-and-mobile  {
+          width: 34px;
+          height: 34px;
+        }        
+      }
+   
+      .cell {
+        width: 18px;
+        height: 18px;
+        border-radius: 10000000px;
 
-        &.active {
-          width: 28px;
-          height: 28px;
+        .transparent {
+          border: 2px solid var(--faded-text);
+          border-radius: 10000000px;
+
+          line {
+            stroke: var(--faded-text);
+          }
+        }
+
+        &.border{
+          border: 1px solid #dfe2ed;
+        }
+
+        @include tablet-and-mobile  {
+          width: 24px;
+          height: 24px;
         }
       }
     }
   }
-
 }

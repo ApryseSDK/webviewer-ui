@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Button from 'components/Button';
-import Icon from 'components/Icon';
 import defaultTool from 'constants/defaultTool';
 import '../ToolGroupButton/ToolGroupButton.scss';
 
