@@ -25,19 +25,26 @@ $popup-icon-width: 18px;
   }
 
   .Button {
-    width: $popup-button-width;
-    height: $popup-button-height;
+    // width: $popup-button-width;
+    // height: $popup-button-height;
+    margin: 4px;
 
-    @include tablet-and-mobile {
-      width: $popup-button-width;
-      height: $popup-button-height;
-
-      margin: 4px;
+    &:hover {
+      background: var(--popup-button-hover);
     }
 
+    // @include tablet-and-mobile {
+    //   width: $popup-button-width;
+    //   height: $popup-button-height;
+
+    //   margin: 4px;
+    // }
+
     .Icon {
-      width: $popup-icon-width;
-      height: $popup-icon-height;
+      width: 18px;
+      height: 18px;
+      // width: $popup-icon-width;
+      // height: $popup-icon-height;
 
       @include tablet-and-mobile {
         width: 24px;
