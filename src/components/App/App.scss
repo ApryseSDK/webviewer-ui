@@ -122,21 +122,44 @@
   --font-size-small: 13px;
 }
 
-*::-webkit-scrollbar {
-  width: 2px;
+* {
+  &::-webkit-scrollbar {
+    width: 2px;
 
-  &:horizontal {
-    height: 2px;
+    &:horizontal {
+      height: 2px;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 10px;
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border);
   }
 }
 
-*::-webkit-scrollbar-track {
-  width: 10px;
-  background: none;
-}
+.DocumentContainer {
+  border-right: 8px solid transparent;
 
-*::-webkit-scrollbar-thumb {
-  background-color: var(--border);
+  &::-webkit-scrollbar {
+    width: 5px;
+
+    &:horizontal {
+      height: 2px;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 10px;
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+  }
 }
 
 html, body , #app {
