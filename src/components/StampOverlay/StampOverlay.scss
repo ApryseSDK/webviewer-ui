@@ -30,12 +30,6 @@
 
 
 .default-stamp-container {
-  display: flex;
-  flex-direction: column;
-  // explictly set width else it won't look pretty in IE11
-  // https://stackoverflow.com/questions/42764591/flex-direction-column-makes-flex-items-overlap-ie11
-  width: 100%;
-
   .column {
     padding: 10px;
   }
