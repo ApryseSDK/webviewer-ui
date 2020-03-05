@@ -44,7 +44,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
     ],
     shallowEqual,
   );
-  
+
   const { isSelected, searchInput, resize, isContentEditable } = useContext(
     NoteContext,
   );
