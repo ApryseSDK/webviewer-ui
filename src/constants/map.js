@@ -136,7 +136,7 @@ const map = {
       annotation.Style === 'cloudy',
   },
   highlight: {
-    icon: 'icon-tool-highlight',
+    icon: 'icon-tool-text-manipulation-highlight',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
