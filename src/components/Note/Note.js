@@ -78,7 +78,6 @@ const Note = ({ annotation }) => {
               <NoteContent
                 key={reply.Id}
                 annotation={reply}
-                isSelected={isSelected}
                 setIsEditing={isEditing => setIsEditingMap(map => ({
                   ...map,
                   [i + 1]: isEditing,
