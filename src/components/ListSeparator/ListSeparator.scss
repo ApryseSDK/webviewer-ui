@@ -8,3 +8,10 @@
   font-weight: bold;
   user-select: none;
 }
+
+
+.note-wrapper:first-child {
+  .ListSeparator {
+    margin-top: 0px;
+  }
+}

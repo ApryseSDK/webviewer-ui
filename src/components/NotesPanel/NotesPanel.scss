@@ -63,6 +63,7 @@
     .sort-row {
       display: flex;
       justify-content: flex-end;
+      margin-bottom: 16px;
 
       .sort-container {
         font-size: 13px;
@@ -150,6 +151,12 @@
 
   .normal-notes-container {
     overflow: overlay;
+  }
+
+  .note-wrapper:first-child {
+    .ListSeparator {
+      margin-top: 0px;
+    }
   }
 
   .no-results {
