@@ -47,10 +47,9 @@ const ReplyArea = ({ annotation }) => {
     resize();
   }, [isFocused]);
 
-  useEffect(() => {
-    // on initial mount, focus
-    textareaRef.current?.focus();
-  }, []);
+  // useEffect(() => {
+  //   textareaRef.current?.focus();
+  // }, []);
 
   useEffect(() => {
     if (
@@ -88,6 +87,7 @@ const ReplyArea = ({ annotation }) => {
       <AutoResizeTextarea
         ref={el => {
           textareaRef.current = el;
+          textareaRef.current && textareaRef.current.focus();
         }}
         value={value}
         onChange={value => setValue(value)}

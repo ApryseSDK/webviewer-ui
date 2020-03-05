@@ -15,6 +15,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './AnnotationPopup.scss';
+import focusNote from '../../apis/focusNote';
 
 const AnnotationPopup = () => {
   const [
@@ -167,20 +168,24 @@ const AnnotationPopup = () => {
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
   const commentOnAnnotation = () => {
-    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
-      core
-        .getAnnotationManager()
-        .trigger('annotationDoubleClicked', firstAnnotation);
-    } else if (!isLeftPanelOpen) {
-      dispatch(actions.openElement('notesPanel'));
-      // wait for the notes panel to be fully opened before focusing
-      setTimeout(() => {
-        dispatch(actions.triggerNoteEditing());
-      }, 400);
-    } else {
-      dispatch(actions.setActiveLeftPanel('notesPanel'));
-      dispatch(actions.triggerNoteEditing());
-    }
+    // if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
+    //   core
+    //     .getAnnotationManager()
+    //     .trigger('annotationDoubleClicked', firstAnnotation);
+    // } else if (!isLeftPanelOpen) {
+    //   dispatch(actions.openElement('notesPanel'));
+    //   // wait for the notes panel to be fully opened before focusing
+    //   setTimeout(() => {
+    //     dispatch(actions.triggerNoteEditing());
+    //   }, 400);
+    // } else {
+    //   dispatch(actions.setActiveLeftPanel('notesPanel'));
+    //   dispatch(actions.triggerNoteEditing());
+    // }
+    // debugger;
+    console.log('asjdklfjsdlkfjsdklf');
+    // debugger;
+    window.readerControl.focusNote(firstAnnotation.Id);
 
     dispatch(actions.closeElement('annotationPopup'));
   };
