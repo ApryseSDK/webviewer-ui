@@ -10,7 +10,7 @@ import i18next from 'i18next';
  */
 const map = {
   signature: {
-    icon: 'ic_annotation_signature_black_24px',
+    icon: 'icon-tool-signature',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -20,7 +20,7 @@ const map = {
       annotation.Subject === i18next.t('annotation.signature'),
   },
   freeHand: {
-    icon: 'ic_annotation_freehand_black_24px',
+    icon: 'icon-tool-pen-line',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -34,7 +34,7 @@ const map = {
       annotation instanceof window.Annotations.FreeHandAnnotation,
   },
   freeText: {
-    icon: 'ic_annotation_freetext_black_24px',
+    icon: 'icon-tool-text-free-text',
     iconColor: 'TextColor',
     currentPalette: 'TextColor',
     availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -83,7 +83,7 @@ const map = {
       annotation.Measure,
   },
   callout: {
-    icon: 'ic_annotation_callout_black_24px',
+    icon: 'icon-tool-callout-line',
     iconColor: 'TextColor',
     currentPalette: 'TextColor',
     availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -94,7 +94,7 @@ const map = {
         window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout,
   },
   line: {
-    icon: 'ic_annotation_line_black_24px',
+    icon: 'icon-tool-shape-line',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -105,7 +105,7 @@ const map = {
       annotation.getEndStyle() === 'None',
   },
   arrow: {
-    icon: 'ic_annotation_arrow_black_24px',
+    icon: 'icon-tool-shape-arrow',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -116,7 +116,7 @@ const map = {
         annotation.getEndStyle() !== 'None'),
   },
   polygon: {
-    icon: 'ic_annotation_polygon_black_24px',
+    icon: 'icon-tool-shape-polygon',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
@@ -126,7 +126,7 @@ const map = {
       annotation.Style !== 'cloudy',
   },
   cloud: {
-    icon: 'ic_annotation_cloud_black_24px',
+    icon: 'icon-tool-shape-cloud',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
@@ -136,7 +136,7 @@ const map = {
       annotation.Style === 'cloudy',
   },
   highlight: {
-    icon: 'ic_annotation_highlight_black_24px',
+    icon: 'icon-tool-highlight',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -186,7 +186,7 @@ const map = {
       annotation instanceof window.Annotations.RedactionAnnotation,
   },
   rectangle: {
-    icon: 'ic_annotation_square_black_24px',
+    icon: 'icon-tool-shape-rectangle',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
@@ -195,7 +195,7 @@ const map = {
       annotation instanceof window.Annotations.RectangleAnnotation,
   },
   ellipse: {
-    icon: 'ic_annotation_circle_black_24px',
+    icon: 'icon-tool-shape-oval',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
@@ -204,7 +204,7 @@ const map = {
       annotation instanceof window.Annotations.EllipseAnnotation,
   },
   polyline: {
-    icon: 'ic_annotation_polyline_black_24px',
+    icon: 'icon-tool-shape-polyline',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -213,7 +213,7 @@ const map = {
       annotation instanceof window.Annotations.PolylineAnnotation,
   },
   stickyNote: {
-    icon: 'ic_annotation_sticky_note_black_24px',
+    icon: 'icon-tool-comment-line',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -227,7 +227,7 @@ const map = {
       annotation instanceof window.Annotations.StickyAnnotation,
   },
   stamp: {
-    icon: 'ic_annotation_stamp_black_24px',
+    icon: 'icon-tool-stamp-line',
     iconColor: null,
     currentPalette: null,
     availablePalettes: [],
