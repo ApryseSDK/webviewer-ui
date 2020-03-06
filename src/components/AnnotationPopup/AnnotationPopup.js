@@ -319,8 +319,8 @@ const AnnotationPopup = () => {
           {
             firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation &&
             (<ActionButton
-              title="blah"
-              img="icon-tool-unlink"
+              title="action.fileAttachmentDownload"
+              img="icon-download"
               onClick={
                 () => alert('blajh')
               }
