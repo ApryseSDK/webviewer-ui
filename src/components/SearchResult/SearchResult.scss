@@ -11,7 +11,7 @@
   padding-right: 12px;
   margin-left: 2px;
   margin-bottom: 8px;
-  background: #fafafa;
+  background: var(--gray-0);
 
   &.selected {
     border: 1px solid var(--focus-border);
