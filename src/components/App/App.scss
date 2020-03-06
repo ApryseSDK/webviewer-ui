@@ -126,7 +126,7 @@
 
 * {
   &::-webkit-scrollbar {
-    width: 2px;
+    width: 4px;
 
     &:horizontal {
       height: 2px;
@@ -143,26 +143,26 @@
   }
 }
 
-// .DocumentContainer {
-//   border-right: 8px solid transparent;
+.DocumentContainer {
+  border-right: 2px solid transparent;
 
-//   &::-webkit-scrollbar {
-//     width: 5px;
+  // &::-webkit-scrollbar {
+  //   width: 5px;
 
-//     &:horizontal {
-//       height: 2px;
-//     }
-//   }
+  //   &:horizontal {
+  //     height: 2px;
+  //   }
+  // }
 
-//   &::-webkit-scrollbar-track {
-//     width: 10px;
-//     background: none;
-//   }
+  // &::-webkit-scrollbar-track {
+  //   width: 10px;
+  //   background: none;
+  // }
 
-//   &::-webkit-scrollbar-thumb {
-//     background-color: var(--border);
-//   }
-// }
+  // &::-webkit-scrollbar-thumb {
+  //   background-color: var(--border);
+  // }
+}
 
 html, body , #app {
   width: 100%;
