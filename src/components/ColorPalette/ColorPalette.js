@@ -22,10 +22,41 @@ class ColorPalette extends React.PureComponent {
 
   constructor(props) {
     super(props);
+
     this.palette = [
-      ['#000000', '#ffffff', '#e6261f', '#eb7532', '#f7d038', '#a3e048'],
-      ['#33bbe6', '#4355db', '#d23be7'],
+      '#F1A099',
+      '#FFC67B',
+      '#FFE6A2',
+      '#80E5B1',
+      '#92E8E8',
+      '#A6A1E6',
+      '#E2A1E6',
+      '#E44234',
+      '#FF8D00',
+      '#FFCD45',
+      '#00CC63',
+      '#25D2D1',
+      '#4E7DE9',
+      '#C544CE',
+      '#88271F',
+      '#B54800',
+      '#F69A00',
+      '#007A3B',
+      '#167E7D',
+      '#2E4B8B',
+      '#76287B',
+      '#FFFFFF',
+      '#CDCDCD',
+      '#9C9C9C',
+      '#696969',
+      '#373737',
+      '#000000',
     ];
+
+    // this.palette = [
+    //   ['#000000', '#ffffff', '#e6261f', '#eb7532', '#f7d038', '#a3e048'],
+    //   ['#33bbe6', '#4355db', '#d23be7'],
+    // ];
   }
 
   setColor = bg => {
@@ -66,6 +97,28 @@ class ColorPalette extends React.PureComponent {
 
     return (
       <div className="ColorPalette" data-element="colorPalette">
+        {palette.map((bg, i) => (
+          <div
+            key={i}
+            className="cell-container"
+            onClick={() => this.setColor(bg)}
+          >
+            <div
+              className={classNames({
+                'cell-outer': true,
+                active: color?.toHexString()?.toLowerCase() === bg?.toLowerCase(),
+              })}
+            >
+              <div
+                className={classNames({
+                  cell: true,
+                  border: bg.toLowerCase() === '#ffffff',
+                })}
+                style={{ backgroundColor: bg }}
+              />
+            </div>
+          </div>
+        ))}
         {allowTransparent &&
           <div
             className="cell-container"
@@ -94,30 +147,6 @@ class ColorPalette extends React.PureComponent {
               </div>
             </div>
           </div>}
-        {palette.map((row, i) =>
-          row.map((bg, j) =>
-            <div
-              key={`${i}${j}`}
-              className="cell-container"
-              onClick={() => this.setColor(bg)}
-            >
-              <div
-                className={classNames({
-                  'cell-outer': true,
-                  active: color?.toHexString()?.toLowerCase() === bg?.toLowerCase(),
-                })}
-              >
-                <div
-                  className={classNames({
-                    cell: true,
-                    border: bg.toLowerCase() === '#ffffff',
-                  })}
-                  style={{ backgroundColor: bg }}
-                />
-              </div>
-            </div>,
-          ),
-        )}
       </div>
     );
   }

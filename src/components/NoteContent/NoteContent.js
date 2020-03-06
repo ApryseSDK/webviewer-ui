@@ -147,7 +147,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
         <div className="date-and-time">
           {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
         </div>
-        {isEditing ? (
+        {isEditing && isSelected ? (
           <ContentArea
             textAreaValue={textAreaValue}
             onTextAreaValueChange={setTextAreaValue}
