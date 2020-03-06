@@ -38,7 +38,8 @@
     "draw": "Zeichnen",
     "type": "Art",
     "upload": "Hochladen",
-    "link": "Verknüpfung"
+    "link": "Verknüpfung",
+    "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "Abstandsmessung",
     "ellipse": "Ellipse",
     "eraser": "Radiergummi",
+    "fileattachment": "Dateianhang",
     "freehand": "Freihandzeichnen",
     "freehand2": "Freihandzeichnen",
     "freetext": "Freitext",
@@ -69,8 +71,7 @@
     "strikeout": "Durchstreichen",
     "underline": "Unterstreichen",
     "custom": "Angepasst",
-    "rubberStamp": "Stempel",
-    "fileattachment": "Dateianhang"
+    "rubberStamp": "Stempel"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",

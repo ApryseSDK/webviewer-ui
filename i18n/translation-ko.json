@@ -38,7 +38,8 @@
     "draw": "무승부",
     "type": "유형",
     "upload": "업로드",
-    "link": "링크"
+    "link": "링크",
+    "fileAttachmentDownload": "첨부 파일 다운로드"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "거리 측정",
     "ellipse": "타원",
     "eraser": "지우개",
+    "fileattachment": "첨부 파일",
     "freehand": "자유형",
     "freehand2": "자유형",
     "freetext": "자유 텍스트",
@@ -69,8 +71,7 @@
     "strikeout": "취소선",
     "underline": "밑줄",
     "custom": "사용자 지정",
-    "rubberStamp": "고무 도장",
-    "fileattachment": "첨부 파일"
+    "rubberStamp": "고무 도장"
   },
   "rubberStamp": {
     "Approved": "승인",
