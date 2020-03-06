@@ -11,6 +11,7 @@ import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
 import useOnClickOutside from 'hooks/useOnClickOutside';
+import * as eventListeners from 'src/event-listeners';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -186,6 +187,17 @@ const AnnotationPopup = () => {
     dispatch(actions.closeElement('annotationPopup'));
   };
 
+  const downloadFileAttachment = annot => {
+    annot.getFileData().then(fileData => {
+      const fileMetadata = annot.getFileMetadata();
+      const fxn = eventListeners.onFileAttachmentDataAvailable();
+      fxn({
+        fileData,
+        ...fileMetadata,
+      });
+    });
+  };
+
   return (
     <div
       className={classNames({
@@ -322,7 +334,7 @@ const AnnotationPopup = () => {
               title="action.fileAttachmentDownload"
               img="icon-download"
               onClick={
-                () => alert('blajh')
+                () => downloadFileAttachment(firstAnnotation)
               }
               dataElement="fileAttachmentDownload"
             />)
