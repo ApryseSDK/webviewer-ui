@@ -38,7 +38,8 @@
     "draw": "Trek",
     "type": "Type",
     "upload": "Uploaden",
-    "link": "Koppeling"
+    "link": "Koppeling",
+    "fileAttachmentDownload": "Download bijgevoegd bestand"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
     "eraser": "Gom",
+    "fileattachment": "Bestandsbijlage",
     "freehand": "Vrije hand",
     "freehand2": "Vrije hand",
     "freetext": "Tekst plaatsen",
@@ -69,8 +71,7 @@
     "strikeout": "Doorstrepen",
     "underline": "Onderstrepen",
     "custom": "maatwerk",
-    "rubberStamp": "Rubberen stempel",
-    "fileattachment": "Bestandsbijlage"
+    "rubberStamp": "Rubberen stempel"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",
