@@ -11,7 +11,6 @@ import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
 import useOnClickOutside from 'hooks/useOnClickOutside';
-import * as eventListeners from 'src/event-listeners';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -188,14 +187,9 @@ const AnnotationPopup = () => {
   };
 
   const downloadFileAttachment = annot => {
-    annot.getFileData().then(fileData => {
-      const fileMetadata = annot.getFileMetadata();
-      const fxn = eventListeners.onFileAttachmentDataAvailable();
-      fxn({
-        fileData,
-        ...fileMetadata,
-      });
-    });
+    // no need to check that annot is of type file annot as the check is done in the JSX
+    // trigger the annotationDoubleClicked event so that it will download the file
+    core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
 
   return (
