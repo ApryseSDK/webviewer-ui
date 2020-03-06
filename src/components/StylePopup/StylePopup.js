@@ -63,10 +63,12 @@ class StylePopup extends React.PureComponent {
         displayValue: `${Math.round(StrokeThickness)}pt`,
         // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
         getCirclePosition: lineLength => {
-          return (((StrokeThickness) / 20) * lineLength + lineStart);
+          // return (((StrokeThickness) / 20) * lineLength + lineStart);
+          return (((StrokeThickness - 1) / 19) * lineLength + lineStart)
         },
         convertRelativeCirclePositionToValue: circlePosition => {
-          return circlePosition * 20;
+          console.log(circlePosition, circlePosition * 19 + 1)
+          return circlePosition * 19 + 1;
         },
       },
       FontSize: {

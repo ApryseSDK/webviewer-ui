@@ -52,11 +52,6 @@ class ColorPalette extends React.PureComponent {
       '#373737',
       '#000000',
     ];
-
-    // this.palette = [
-    //   ['#000000', '#ffffff', '#e6261f', '#eb7532', '#f7d038', '#a3e048'],
-    //   ['#33bbe6', '#4355db', '#d23be7'],
-    // ];
   }
 
   setColor = bg => {
@@ -68,25 +63,6 @@ class ColorPalette extends React.PureComponent {
       onStyleChange(property, color);
     }
   }
-
-  renderCheckMark = bg => {
-    const { color } = this.props;
-    const hexColor = color.toHexString();
-
-    let isColorPicked;
-    if (hexColor === null) {
-      isColorPicked = bg === 'transparency';
-    } else {
-      isColorPicked = hexColor.toLowerCase() === bg.toLowerCase();
-    }
-
-    return isColorPicked ? (
-      <Icon
-        className={`check-mark ${getBrightness(color)}`}
-        glyph="ic_check_black_24px"
-      />
-    ) : null;
-  };
 
   render() {
     const { property, color, overridePalette } = this.props;
@@ -135,6 +111,7 @@ class ColorPalette extends React.PureComponent {
                   cell: true,
                 })}
               >
+                {/* <div> */}
                 <svg
                   width="100%"
                   height="100%"
@@ -142,7 +119,7 @@ class ColorPalette extends React.PureComponent {
                     transparent: true,
                   })}
                 >
-                  <line x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
+                  <line stroke="#d82e28" x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </div>
             </div>
