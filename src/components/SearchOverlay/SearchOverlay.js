@@ -471,6 +471,7 @@ class SearchOverlay extends React.PureComponent {
       isWildCardSearchDisabled,
       isCaseSensitive,
       isWholeWord,
+      isSearching,
     } = this.props;
 
     if (isDisabled) {
@@ -521,7 +522,7 @@ class SearchOverlay extends React.PureComponent {
         </div>
         <div className="divider" />
         <div className="footer">
-          {results.length} results found
+          {<div>{results.length} results found</div>}
           <div className="buttons">
             <div className="button" onClick={this.onClickPrevious}>
               <Icon
@@ -543,6 +544,7 @@ class SearchOverlay extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  isSearching: selectors.isSearching(state),
   isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
   isSearchPanelDisabled: selectors.isElementDisabled(state, 'searchPanel'),
   isWildCardSearchDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),

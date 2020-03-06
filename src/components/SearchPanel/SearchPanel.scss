@@ -33,6 +33,12 @@
   overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width  
   
   padding-top: 16px;
+
+  .ListSeparator:first-child {
+    margin-top: 0px;
+  }
+
+
   @include mobile {
     padding-top: 0px;
     

@@ -104,10 +104,13 @@
     align-items: center;
     justify-content: space-between;
     color: var(--faded-text);
+    margin-bottom: 16px;
 
     .buttons {
       display: flex;
       flex-direction: row;
+      align-self: flex-end;
+      margin-left: auto;
 
       .button {
         width: 28px;
