@@ -105,6 +105,7 @@ export default {
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'calibrateButton' },
       { dataElement: 'linkButton' },
+      { dataElement: 'fileAttachmentDownload' },
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
