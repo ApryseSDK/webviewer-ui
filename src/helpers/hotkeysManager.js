@@ -9,6 +9,8 @@ import print from 'helpers/print';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import { isMobile } from 'helpers/device';
 import isFocusingElement from 'helpers/isFocusingElement';
+import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
+import setCurrentPage from 'helpers/setCurrentPage';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -240,27 +242,20 @@ WebViewer(...)
       pageup: e => {
         e.preventDefault();
 
-        const currPageNumber = core.getCurrentPage();
-        if (currPageNumber > 1) {
-          core.setCurrentPage(currPageNumber - 1);
-        }
+        setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
       },
       pagedown: e => {
         e.preventDefault();
 
-        const currPageNumber = core.getCurrentPage();
-        if (currPageNumber < core.getTotalPages()) {
-          core.setCurrentPage(currPageNumber + 1);
-        }
+        setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
       },
       up: () => {
         // do not call preventDefault else it will prevent scrolling
         const scrollViewElement = core.getScrollViewElement();
         const { scrollHeight, clientHeight } = scrollViewElement;
         const reachedTop = scrollViewElement.scrollTop === 0;
-        const currPageNumber = core.getCurrentPage();
-        if (reachedTop && currPageNumber > 1) {
-          core.setCurrentPage(currPageNumber - 1);
+        if (reachedTop) {
+          setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
           // set the scrollbar to be at the bottom of the page
           scrollViewElement.scrollTop = scrollHeight - clientHeight;
         }
@@ -270,9 +265,8 @@ WebViewer(...)
         const scrollViewElement = core.getScrollViewElement();
         const { scrollTop, clientHeight, scrollHeight } = scrollViewElement;
         const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
-        const currPageNumber = core.getCurrentPage();
-        if (reachedBottom && currPageNumber < core.getTotalPages()) {
-          core.setCurrentPage(currPageNumber + 1);
+        if (reachedBottom) {
+          setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
         }
       },
       space: {

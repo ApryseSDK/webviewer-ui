@@ -69,7 +69,8 @@
     "strikeout": "Riscar",
     "underline": "Sublinhar",
     "custom": "Personalizado",
-    "rubberStamp": "Carimbo de borracha"
+    "rubberStamp": "Carimbo de borracha",
+    "fileattachment": "Anexo de arquivo"
   },
   "rubberStamp": {
     "Approved": "Aprovado",
@@ -217,7 +218,8 @@
       "area": "Área",
       "distanceMeasurement": "Medição de distância",
       "perimeterMeasurement": "Medição de perímetro",
-      "areaMeasurement": "Medição de área"
+      "areaMeasurement": "Medição de área",
+      "radius": "Raio"
     },
     "measurementOption": {
       "scale": "Escala"

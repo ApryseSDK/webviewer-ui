@@ -69,7 +69,8 @@
     "strikeout": "취소선",
     "underline": "밑줄",
     "custom": "사용자 지정",
-    "rubberStamp": "고무 도장"
+    "rubberStamp": "고무 도장",
+    "fileattachment": "첨부 파일"
   },
   "rubberStamp": {
     "Approved": "승인",
@@ -217,7 +218,8 @@
       "area": "면적",
       "distanceMeasurement": "거리 측정",
       "perimeterMeasurement": "둘레 측정",
-      "areaMeasurement": "면적 측정"
+      "areaMeasurement": "면적 측정",
+      "radius": "반지름"
     },
     "measurementOption": {
       "scale": "배율"

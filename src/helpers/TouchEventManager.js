@@ -207,8 +207,7 @@ const TouchEventManager = {
 
         const currentPage = core.getCurrentPage();
         const totalPages = core.getTotalPages();
-        const displayMode = core.getDisplayMode();
-        const numberOfPagesToNavigate = getNumberOfPagesToNavigate(displayMode);
+        const numberOfPagesToNavigate = getNumberOfPagesToNavigate();
 
         const isFirstPage = currentPage === 1;
         const isLastPage = currentPage === totalPages;

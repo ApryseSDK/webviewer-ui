@@ -69,7 +69,8 @@
     "strikeout": "删除线",
     "underline": "下划线",
     "custom": "自定义",
-    "rubberStamp": "橡皮图章"
+    "rubberStamp": "橡皮图章",
+    "fileattachment": "文件附件"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -217,7 +218,8 @@
       "area": "面积",
       "distanceMeasurement": "距离测量",
       "perimeterMeasurement": "周长测量",
-      "areaMeasurement": "面积测量"
+      "areaMeasurement": "面积测量",
+      "radius": "半径"
     },
     "measurementOption": {
       "scale": "比例"

@@ -25,6 +25,13 @@
     padding: 15px 0;
     font-size: 0.8em;
   }
+  .warn {
+    padding: 15px 0;
+    font-size: 0.8em;
+  }
+  .warn::before {
+    content: "⚠️ ";
+  }
 
   .close-btn {
     @include mobile {

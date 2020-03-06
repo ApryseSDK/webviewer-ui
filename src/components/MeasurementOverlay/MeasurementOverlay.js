@@ -18,6 +18,7 @@ import selectors from 'selectors';
 
 import './MeasurementOverlay.scss';
 import CustomMeasurementOverlay from './CustomMeasurementOverlay';
+import EllipseMeasurementOverlay from './EllipseMeasurementOverlay';
 
 class MeasurementOverlay extends React.PureComponent {
   static propTypes = {
@@ -71,7 +72,7 @@ class MeasurementOverlay extends React.PureComponent {
     if (this.state.annotation) {
       this.forceUpdate();
     } else if (
-      this.isMeasurementToolWithInfo(tool) ||
+      this.isMeasurementToolWithInfo(tool) && !this.isSmallAnnotation(tool.annotation) ||
       this.shouldShowCustomOverlay(tool.annotation)
     ) {
       openElement('measurementOverlay');
@@ -86,6 +87,15 @@ class MeasurementOverlay extends React.PureComponent {
       tool.annotation &&
       this.shouldShowInfo(tool.annotation)
     );
+  }
+
+  // This helps ensure we don't show an overlay for small annotations
+  isSmallAnnotation = annotation => {
+    const w = annotation.getWidth();
+    const h = annotation.getHeight();
+    const minSize = (annotation.getRectPadding() + 1) * 2;
+
+    return w <= minSize && h <= minSize;
   }
 
   onAnnotationSelected = (annotations, action) => {
@@ -128,12 +138,12 @@ class MeasurementOverlay extends React.PureComponent {
   };
 
   isMeasurementAnnotation = annotation =>
-    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement', 'rectangularAreaMeasurement', 'ellipseMeasurement'].includes(
       mapAnnotationToKey(annotation),
     );
 
   isMeasurementTool = toolName =>
-    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement'].includes(
+    ['distanceMeasurement', 'perimeterMeasurement', 'areaMeasurement', 'rectangularAreaMeasurement', 'ellipseMeasurement'].includes(
       mapToolNameToKey(toolName),
     );
 
@@ -143,10 +153,10 @@ class MeasurementOverlay extends React.PureComponent {
     const key = mapAnnotationToKey(annotation);
 
     let showInfo;
-    if (key === 'perimeterMeasurement' || key === 'areaMeasurement') {
+    if (key === 'perimeterMeasurement' || key === 'areaMeasurement' || key === 'rectangularAreaMeasurement') {
       // for polyline and polygon, there's no useful information we can show if it has no vertices or only one vertex.
       showInfo = annotation.getPath().length > 1;
-    } else if (key === 'distanceMeasurement') {
+    } else if (key === 'distanceMeasurement' || key === 'ellipseMeasurement') {
       showInfo = true;
     }
 
@@ -195,6 +205,7 @@ class MeasurementOverlay extends React.PureComponent {
       distanceMeasurement: t('option.measurementOverlay.distanceMeasurement'),
       perimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
       areaMeasurement: t('option.measurementOverlay.areaMeasurement'),
+      rectangularAreaMeasurement: t('option.measurementOverlay.areaMeasurement'),
     };
 
     return (
@@ -224,6 +235,7 @@ class MeasurementOverlay extends React.PureComponent {
       distanceMeasurement: t('option.measurementOverlay.distance'),
       perimeterMeasurement: t('option.measurementOverlay.perimeter'),
       areaMeasurement: t('option.measurementOverlay.area'),
+      rectangularAreaMeasurement: t('option.measurementOverlay.area'),
     };
 
     return (
@@ -266,6 +278,7 @@ class MeasurementOverlay extends React.PureComponent {
       distanceMeasurement: ({ Start, End }) => [Start, End],
       perimeterMeasurement: getIPathAnnotationPts,
       areaMeasurement: getIPathAnnotationPts,
+      rectangularAreaMeasurement: getIPathAnnotationPts,
     };
     const pts = keyPtMap[key](annotation).filter(pt => !!pt);
 
@@ -300,6 +313,10 @@ class MeasurementOverlay extends React.PureComponent {
       return (<CustomMeasurementOverlay annotation={annotation} {...customOverlayProps}/>);
     }
 
+    if (key === 'ellipseMeasurement') {
+      return (<EllipseMeasurementOverlay annotation={annotation} isOpen={isOpen}/>);
+    }
+
     return (
       <div className={className} data-element="measurementOverlay">
         {this.renderTitle()}
@@ -319,7 +336,7 @@ class MeasurementOverlay extends React.PureComponent {
           this.renderValue()
         )}
         {key === 'distanceMeasurement' && this.renderDeltas()}
-        {this.renderAngle()}
+        {key !== 'rectangularAreaMeasurement' && this.renderAngle()}
       </div>
     );
   }

@@ -38,7 +38,6 @@ if (process.env.NODE_ENV === 'development') {
 
 const store = createStore(rootReducer, applyMiddleware(...middleware));
 
-
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
     const updatedReducer = require('reducers/rootReducer').default;
@@ -67,6 +66,10 @@ if (window.CanvasRenderingContext2D) {
   if (state.advanced.fullAPI) {
     window.CoreControls.enableFullPDF(true);
     fullAPIReady = loadScript('../core/pdf/PDFNet.js');
+  }
+
+  if (getHashParams('disableLogs', false)) {
+    window.CoreControls.disableLogs(true);
   }
 
   window.CoreControls.enableSubzero(getHashParams('subzero', false));
@@ -106,7 +109,7 @@ if (window.CanvasRenderingContext2D) {
     }
 
     if (preloadWorker === OFFICE || preloadWorker === ALL) {
-      getBackendPromise(gethashParams('office', 'auto')).then(officeType => {
+      getBackendPromise(getHashParams('office', 'auto')).then(officeType => {
         window.CoreControls.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
@@ -128,7 +131,13 @@ if (window.CanvasRenderingContext2D) {
 
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
+
     window.docViewer = docViewer;
+    if (getHashParams('enableViewStateAnnotations', false)) {
+      const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
+      tool?.setSaveViewState(true);
+    }
+
     setupDocViewer();
     setupI18n(state);
     setUserPermission(state);

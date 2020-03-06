@@ -69,7 +69,8 @@
     "strikeout": "Barré",
     "underline": "Soulignage",
     "custom": "personnalisation",
-    "rubberStamp": "Rubber Stamp"
+    "rubberStamp": "Rubber Stamp",
+    "fileattachment": "Pièce jointe"
   },
   "rubberStamp": {
     "Approved": "Approuvée",
@@ -217,7 +218,8 @@
       "area": "Surface",
       "distanceMeasurement": "Mesure de distance",
       "perimeterMeasurement": "Mesure du périmètre",
-      "areaMeasurement": "Mesure du surface"
+      "areaMeasurement": "Mesure du surface",
+      "radius": "Rayon"
     },
     "measurementOption": {
       "scale": "Échelle"

@@ -54,6 +54,7 @@ class SearchOverlay extends React.PureComponent {
     setIsProgrammaticSearch: PropTypes.func.isRequired,
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
+    setSearchError: PropTypes.func.isRequired,
   }
 
   constructor() {
@@ -101,6 +102,22 @@ class SearchOverlay extends React.PureComponent {
     if (searchOverlayClosed) {
       this.props.closeElement('searchPanel');
       this.clearSearchResults();
+    }
+  }
+
+  componentDidMount() {
+    core.addEventListener('searchFailed', this.searchFailed);
+  }
+
+  componentWillUnmount() {
+    core.removeEventListener('searchFailed', this.searchFailed);
+  }
+
+  searchFailed = error => {
+    const { setIsSearching, setSearchError } = this.props;
+    setIsSearching(false);
+    if (error && error.message) {
+      setSearchError(error.message);
     }
   }
 
@@ -441,6 +458,7 @@ const mapDispatchToProps = {
   setWholeWord: actions.setWholeWord,
   setWildcard: actions.setWildcard,
   setNoResult: actions.setNoResult,
+  setSearchError: actions.setSearchError,
   setIsProgrammaticSearch: actions.setIsProgrammaticSearch,
   setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull,
 };
