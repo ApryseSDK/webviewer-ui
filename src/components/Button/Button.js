@@ -51,9 +51,9 @@ const Button = props => {
   const isBase64 = img?.trim().startsWith('data:');
 
   let imgToShow = img;
-  if (isActive && activeImg) {
-    imgToShow = activeImg;
-  }
+  // if (isActive && activeImg) {
+  //   imgToShow = activeImg;
+  // }
 
   // if there is no file extension then assume that this is a glyph
   const isGlyph =

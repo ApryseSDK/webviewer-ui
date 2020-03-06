@@ -140,6 +140,9 @@
 
   &::-webkit-scrollbar-thumb {
     background-color: var(--border);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    background-clip: padding-box;    
   }
 }
 

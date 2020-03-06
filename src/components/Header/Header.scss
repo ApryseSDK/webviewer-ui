@@ -24,6 +24,14 @@
     &:hover {
       background: var(--button-hover1);
     }
+
+    &.active {
+      background: var(--active-button1);
+
+      .Icon {
+        color: var(--blue-6);
+      }
+    }
   }
 
   .toggle-element-button {
