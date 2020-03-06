@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MentionsInput, Mention } from 'react-mentions';
 
+import './MentionTextArea.scss';
+
 const propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
@@ -25,10 +27,10 @@ const MentionsTextarea = React.forwardRef(
     },
     forwardedRef,
   ) => {
-    const renderSuggestion = ({ name, email }, search, highlightedDisplay) => (
+    const renderSuggestion = (entry, search, highlightedDisplay) => (
       <React.Fragment>
         {highlightedDisplay}
-        <div className="email">{email}</div>
+        <div className="email">{entry.email}</div>
       </React.Fragment>
     );
 
@@ -47,8 +49,7 @@ const MentionsTextarea = React.forwardRef(
         >
           <Mention
             trigger="@"
-            // hack for now to bypass the data instanceof Array check in this library
-            data={JSON.parse(JSON.stringify(userData))}
+            data={userData.map(data => ({ ...data, display: data.value }))}
             displayTransform={(_, display) => `@${display}`}
             renderSuggestion={renderSuggestion}
             markup="@__display__"

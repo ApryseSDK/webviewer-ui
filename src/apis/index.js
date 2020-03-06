@@ -1,9 +1,10 @@
 import i18next from 'i18next';
 
+import core from 'core';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import Feature from 'constants/feature';
-import mentions from 'helpers/MentionsManager';
+import MentionsManager from 'helpers/MentionsManager';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
@@ -201,7 +202,7 @@ export default store => {
     updateElement: updateElement(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
-    mentions: mentions.initialize(store),
+    mentions: new MentionsManager(store, core.getAnnotationManager()),
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),

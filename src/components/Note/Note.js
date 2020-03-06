@@ -9,7 +9,6 @@ import NoteContent from 'components/NoteContent';
 import selectors from 'selectors';
 import core from 'core';
 
-import './MentionArea.scss';
 import './Note.scss';
 
 const propTypes = {
@@ -49,7 +48,7 @@ const Note = ({ annotation }) => {
         if (child) {
           child.parentNode.removeChild(child);
         }
-      })
+      });
 
       ids.current = [];
 
@@ -64,14 +63,14 @@ const Note = ({ annotation }) => {
         currId++;
         ids.current.push(id);
         element.setAttribute('data-webviewer-custom-element', id);
-        element.addEventListener('mousedown', (e) => {
+        element.addEventListener('mousedown', e => {
           e.stopPropagation();
         });
 
         return element;
-      })
+      });
     }
-  })
+  });
 
   const handleNoteClick = e => {
     // stop bubbling up otherwise the note will be closed
