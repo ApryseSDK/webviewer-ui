@@ -49,7 +49,7 @@ const MentionsTextarea = React.forwardRef(
         >
           <Mention
             trigger="@"
-            data={userData.map(data => ({ ...data, display: data.value }))}
+            data={[...userData.map(data => ({ ...data, display: data.value }))]}
             displayTransform={(_, display) => `@${display}`}
             renderSuggestion={renderSuggestion}
             markup="@__display__"
