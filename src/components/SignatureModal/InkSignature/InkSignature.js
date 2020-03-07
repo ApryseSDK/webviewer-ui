@@ -8,6 +8,7 @@ import StylePopup from 'components/StylePopup';
 import selectors from "selectors";
 import setToolStyles from 'helpers/setToolStyles';
 import { useSwipeable, Swipeable } from 'react-swipeable';
+import ColorPalette from 'components/ColorPalette';
 
 import core from 'core';
 
@@ -112,13 +113,19 @@ const InkSignature = ({
 
   return (
     <React.Fragment>
-      <StylePopup
+      {/* <StylePopup
         colorMapKey={"signature"}
         onStyleChange={(property, value) => {
           setToolStyles('AnnotationCreateSignature', property, value);
           clearCanvas();
         }}
         style={activeToolStyles}
+      /> */}
+      <ColorPalette
+        color={new window.Annotations.Color(0, 0, 0, 1)}
+        property="StrokeColor"
+        onStyleChange={() => {}}
+        overridePalette2={['#E44234', '#4E7DE9', '#000000']}
       />
       <div
         className="divider-horizontal"

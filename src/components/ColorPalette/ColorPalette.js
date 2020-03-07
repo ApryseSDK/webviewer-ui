@@ -52,6 +52,12 @@ class ColorPalette extends React.PureComponent {
       '#373737',
       '#000000',
     ];
+
+    // const sigPalette = [
+    //   '#E44234',
+    //   '#4E7DE9',
+    //   '#000000',
+    // ];
   }
 
   setColor = bg => {
@@ -65,11 +71,11 @@ class ColorPalette extends React.PureComponent {
   }
 
   render() {
-    const { property, color, overridePalette } = this.props;
+    const { property, color, overridePalette, overridePalette2 } = this.props;
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
 
-    const palette = overridePalette || this.palette;
+    const palette = overridePalette2 || overridePalette || this.palette;
 
     return (
       <div className="ColorPalette" data-element="colorPalette">
