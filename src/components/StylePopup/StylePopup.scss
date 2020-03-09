@@ -9,7 +9,9 @@
   max-width: 200px;
 
   .sliders-container {
-    margin: 8px 4px;
+    margin: 0px 12px;
+    margin-top: 8px;
+    // margin-left: 4px;
   }
 
   @include mobile {

@@ -71,9 +71,7 @@ class StampOverlay extends React.Component {
 
   setRubberStamp(annotation) {
     core.setToolMode(TOOL_NAME);
-    if (this.props.isMobile) {
-      this.props.closeElement('toolsOverlay');
-    }
+    this.props.closeElement('toolsOverlay');
     const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
     this.stampTool.setRubberStamp(annotation, text);
     this.stampTool.showPreview();
@@ -112,7 +110,7 @@ class StampOverlay extends React.Component {
       <div key={index}
         className="rubber-stamp"
         onClick={() => {
-          this.setRubberStamp(annotation)
+          this.setRubberStamp(annotation);
         }}
       >
         <img src={imgSrc} />

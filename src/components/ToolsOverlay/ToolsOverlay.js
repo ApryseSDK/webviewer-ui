@@ -92,11 +92,11 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { activeToolGroup } = this.props;
-    if (activeToolGroup == 'miscTools') {
-      core.setToolMode(defaultTool);
-      this.props.setActiveToolGroup('');      
-    }
+    // const { activeToolGroup } = this.props;
+    // if (activeToolGroup === 'miscTools') {
+    //   core.setToolMode(defaultTool);
+    //   this.props.setActiveToolGroup('');
+    // }
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
@@ -228,7 +228,7 @@ class ToolsOverlay extends React.PureComponent {
           ref={this.toolsContainer}
           className={classNames({
             "tools-container": true,
-            "extra-margin": toolNames.length === 4,
+            "extra-margin": toolNames.length <= 4,
           })}
         >
           <div className="tool-buttons-container" ref={this.itemsContainer}>

@@ -147,11 +147,16 @@ class StylePopup extends React.PureComponent {
         )}
         {!this.props.hideSlider && this.renderSliders()}
         {Scale && Precision && (
-          <MeasurementOption
-            scale={Scale}
-            precision={Precision}
-            onStyleChange={onStyleChange}
-          />
+          <React.Fragment>
+            <div
+              className="divider-horizontal"
+            />
+            <MeasurementOption
+              scale={Scale}
+              precision={Precision}
+              onStyleChange={onStyleChange}
+            />
+          </React.Fragment>
         )}
         {colorMapKey === 'rectangle' && false && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
       </div>
