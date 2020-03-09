@@ -88,7 +88,7 @@ class MenuOverlay extends React.PureComponent {
 
   render() {
     const { left, right, top, documentType } = this.state;
-    const { isDisabled, isFullScreen, t, isMobile, isOpen } = this.props;
+    const { isDisabled, isFullScreen, t, isMobile, isOpen, isFilePickerButtonDisabled } = this.props;
 
     if (isDisabled) {
       return null;
@@ -154,18 +154,19 @@ class MenuOverlay extends React.PureComponent {
             <div className="MenuLabel">{t('action.print')}</div>
           </div>
         </div>
-        <div className="row" dataElement="filePickerButton">
-          <div
-            className="MenuItem"
-            onClick={openFilePicker}
-          >
-            <Icon
-              className="MenuIcon"
-              glyph="icon-header-file-picker-line"
-            />
-            <div className="MenuLabel">{t('action.openFile')}</div>
-          </div>
-        </div>
+        {!isFilePickerButtonDisabled &&
+          <div className="row" dataElement="filePickerButton">
+            <div
+              className="MenuItem"
+              onClick={openFilePicker}
+            >
+              <Icon
+                className="MenuIcon"
+                glyph="icon-header-file-picker-line"
+              />
+              <div className="MenuLabel">{t('action.openFile')}</div>
+            </div>
+          </div>}
       </div>
     );
   }
@@ -175,6 +176,7 @@ const mapStateToProps = state => ({
   isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
   isFullScreen: selectors.isFullScreen(state),
   isDisabled: selectors.isElementDisabled(state, 'menuOverlay'),
+  isFilePickerButtonDisabled: selectors.isElementDisabled(state, 'filePickerButton'),
   isOpen: selectors.isElementOpen(state, 'menuOverlay'),
 });
 
