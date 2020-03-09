@@ -2,17 +2,18 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 /**
- * @typedef {Object} mentionData
+ * typedef {Object} mention
  * @property {string} email The email of the mentioned person. This is passed from setUserData.
  * @property {string} value The value(display name) of the mentioned person. This is passed from setUserData.
  * @property {string} type The type of the mentioned persion. This is passed from setUserData.
  * @property {string} id The id of the annotation.
- * @ignore
  */
 
 /**
- * The key is an email or 'content'
- * @typedef {Object.<string, mentionData|string>} mentionMap
+ * @typedef {Object} mentionData
+ * @property {mention} mentions an array of mentions that an annotation contains
+ * @property {string} contentWithoutMentions the content of an annotation, but without mentions
+ * @ignore
  */
 
 class MentionsManager {
@@ -28,24 +29,25 @@ class MentionsManager {
     /**
      * the key represents an annotation's id
      * the value is a mentionMap
-     * @type {Object.<string, mentionMap>}
+     * @type {Object.<string, mentionData>}
      * @example
      * {
-        'aidsfuha-32123123': {
-          'cahang@pdftron.com': {
-            email: 'cahang@pdftron.com',
-            value: 'Edmiz',
-            type: 'user',
-            id: 'aidsfuha-32123123',
-          },
-        }
+     *   'eb15d11a-ef1b-6d03-adba-e0eb64bbf6d2': {
+     *     mentions: [
+     *       {
+     *         email: 'cahang@pdftron.com',
+     *         value: 'Edmiz',
+     *         type: 'user',
+     *         id: 'aidsfuha-32123123',
+     *       },
+     *       ...
+     *     ],
+     *     contentWithoutMentions: '...'
+     *   }
      * }
      * @ignore
      */
-    this.mentions = {
-      // 'aidsfuha-32123123': {
-      // }
-    };
+    this.idMentionDataMap = {};
 
     annotManager.on('annotationChanged', (annotations, action, { imported }) => {
       if (imported || !annotations.length || !this.getUserData().length) {
@@ -63,13 +65,13 @@ class MentionsManager {
   }
 
   handleAnnotationsAdded(annotations) {
-    const newMentions = [];
+    let newMentions = [];
 
     annotations.forEach(annotation => {
-      const mentionMap = this.extractMentionMap(annotation);
+      const mentionData = this.extractMentionData(annotation);
 
-      this.mentions[annotation.Id] = mentionMap;
-      newMentions.push(...Object.values(mentionMap));
+      this.idMentionDataMap[annotation.Id] = mentionData;
+      newMentions = newMentions.concat(mentionData.mentions);
     });
 
     if (newMentions.length) {
@@ -79,37 +81,48 @@ class MentionsManager {
 
   handleAnnotationsModified(annotations) {
     const newMentions = [];
+    let modifiedMentions = [];
     const deletedMentions = [];
 
     annotations.forEach(annotation => {
-      const prevMentionMap = this.mentions[annotation.Id] || {};
-      const currMentionMap = this.extractMentionMap(annotation);
+      const prevMentionData = this.idMentionDataMap[annotation.Id] || {};
+      const currMentionData = this.extractMentionData(annotation);
+      const prevMentions = prevMentionData.mentions;
+      const currMentions = currMentionData.mentions;
 
-      this.mentions[annotation.Id] = currMentionMap;
+      this.idMentionDataMap[annotation.Id] = currMentionData;
 
-      Object.keys(currMentionMap).forEach(key => {
-        if (!prevMentionMap[key]) {
-          newMentions.push(currMentionMap[key]);
+      currMentions.forEach(currMention => {
+        const isNewMention = !prevMentions.find(prevMention =>
+          this.isSameMention(prevMention, currMention)
+        );
+        if (isNewMention) {
+          newMentions.push(currMention);
         }
       });
 
-      Object.keys(prevMentionMap).forEach(key => {
-        if (!currMentionMap[key]) {
-          deletedMentions.push(prevMentionMap[key]);
+      prevMentions.forEach(prevMention => {
+        const isDeletedMention = !currMentions.find(currMention =>
+          this.isSameMention(prevMention, currMention)
+        );
+        if (isDeletedMention) {
+          deletedMentions.push(prevMention);
         }
       });
 
-      // if (
-      //   deletedMentions.length === 0 &&
-      //   newMentions.length === 0 &&
-      //   prevMentionMap.content.length !== currMentionMap.content.length
-      // ) {
-      //   this.trigger('mentionChanged', [Object.values(currMentionMap), 'modify']);
-      // }
+      if (
+        prevMentionData.contentWithoutMentions &&
+        prevMentionData.contentWithoutMentions !== currMentionData.contentWithoutMentions
+      ) {
+        modifiedMentions = modifiedMentions.concat(currMentions);
+      }
     });
 
     if (newMentions.length) {
       this.trigger('mentionChanged', [newMentions, 'add']);
+    }
+    if (modifiedMentions.length) {
+      this.trigger('mentionChanged', [modifiedMentions, 'modify']);
     }
     if (deletedMentions.length) {
       this.trigger('mentionChanged', [deletedMentions, 'delete']);
@@ -117,12 +130,12 @@ class MentionsManager {
   }
 
   handleAnnotationsDeleted(annotations) {
-    const deletedMentions = [];
+    let deletedMentions = [];
 
     annotations.forEach(annotation => {
-      if (this.mentions[annotation.Id]) {
-        deletedMentions.push(...Object.values(this.mentions[annotation.Id]));
-        delete this.mentions[annotation.Id];
+      if (this.idMentionDataMap[annotation.Id]) {
+        deletedMentions = deletedMentions.concat(this.idMentionDataMap[annotation.Id].mentions);
+        delete this.idMentionDataMap[annotation.Id];
       }
     });
 
@@ -133,28 +146,45 @@ class MentionsManager {
 
   /**
    * @param {string} content
-   * @returns {mentionMap}
+   * @returns {mentionData}
    * @ignore
    */
-  extractMentionMap(annotation) {
+  extractMentionData(annotation) {
     const content = annotation.getContents();
     const userData = this.getUserData();
-    const result = {};
+    const result = {
+      mentions: [],
+      contentWithoutMentions: content,
+    };
+
+    if (!content) {
+      return result;
+    }
 
     userData.forEach(({ email, value, type }) => {
-      if (content?.includes(`@${value}`)) {
-        result[email] = {
+      if (content.includes(`@${value}`)) {
+        result.mentions.push({
           email,
           value,
           type,
           id: annotation.Id,
-        };
+        });
+
+        result.contentWithoutMentions = result.contentWithoutMentions.replace(`@${value}`, '');
       }
     });
 
-    result.content = annotation.getContents();
-
     return result;
+  }
+
+  isSameMention(prevMention, currMention) {
+    for (const key in prevMention) {
+      if (prevMention[key] !== currMention[key]) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   setUserData(userData) {
