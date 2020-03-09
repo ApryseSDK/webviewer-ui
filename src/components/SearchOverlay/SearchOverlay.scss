@@ -2,7 +2,6 @@
 @import '../../constants/overlay';
 
 .SearchOverlay {
-  @extend %overlay;
   position: static;
   display: flex;
   flex-direction: column;

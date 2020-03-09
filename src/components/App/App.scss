@@ -56,15 +56,17 @@
   --secondary-button-text: var(--blue-5);
   --secondary-button-hover: var(--blue-6); 
 
-  --color-palette-border: var(--gray-5);
-
+  
   --box-shadow: var(--gray-6);
   --document-box-shadow: var(--gray-7);
-
+  
+  --panel-background: var(--gray-1);
+  
   --divider: var(--gray-5);
   --border: var(--gray-5);
-  --panel-background: var(--gray-1);
   --focus-border: var(--blue-5);
+  --color-palette-border: var(--gray-8);
+
   --document-background-color: var(--gray-2);
 
 
@@ -95,17 +97,6 @@
 
 
   
-  --blue-gray-1: #dfe2ed;
-  --blue-gray-2: #c3c6d4;
-  --blue-gray-3: #8b92ab;
-  --blue-gray-4: #767f9b;
-  --blue-gray-5: #6077bf;
-  --blue-gray-6: #455893;
-
-
-  // for new webui
-  --tools-active-color: #767f9b26;
-  --tools-overlay-border: #a7b4cc;
   
 
 
@@ -113,14 +104,7 @@
   
   --header-border-color: #bdbdbd;
   
-  --zoom-background: #eeeeee;
-
-  --tools-divider-color: #dfe2ed;
   --icon-active-color: #767e9a;
-  // --icon-color: #abb0c4;
-  // --icon-color: #c3c6d4;
-
-  --font-size-small: 13px;
 }
 
 * {
@@ -147,23 +131,6 @@
 
 .DocumentContainer {
   border-right: 2px solid transparent;
-
-  // &::-webkit-scrollbar {
-  //   width: 5px;
-
-  //   &:horizontal {
-  //     height: 2px;
-  //   }
-  // }
-
-  // &::-webkit-scrollbar-track {
-  //   width: 10px;
-  //   background: none;
-  // }
-
-  // &::-webkit-scrollbar-thumb {
-  //   background-color: var(--border);
-  // }
 }
 
 html, body , #app {
@@ -181,6 +148,16 @@ html, body , #app {
 
 input, label, textarea, form, #app {
   font-size: 13px;
+}
+
+input {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+
+  &:focus {
+    outline: none;
+    border: 1px solid var(--focus-border);
+  }
 }
 
 .App {

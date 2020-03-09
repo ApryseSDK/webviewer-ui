@@ -21,7 +21,7 @@
 
     .cell-outer {
       &.active {
-        border: 1px solid var(--gray-8);
+        border: 1px solid var(--color-palette-border);
         width: 26px;
         height: 26px;
         border-radius: 10000000px;
@@ -43,10 +43,6 @@
         .transparent {
           border: 2px solid var(--faded-text);
           border-radius: 10000000px;
-
-          // line {
-          //   stroke: var(--faded-text);
-          // }
         }
 
         &.border{
