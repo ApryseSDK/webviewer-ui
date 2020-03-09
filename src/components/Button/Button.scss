@@ -25,12 +25,15 @@
   &.active {
     .Icon {
       color: var(--selected-icon-color);
-      // hack for one clip art svg
-      @include tablet-and-mobile {
+    }
+
+    // hack for one clip art svg
+    @include tablet-and-mobile {
+      &[data-element="stampToolButton"] {
         polygon {
           fill: var(--selected-icon-color);
         }
       }
-    }
+    }    
   }
 }
