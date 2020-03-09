@@ -3,7 +3,16 @@
 
 .SignatureModal {
   @extend %modal;
-  font-size: 0.9em;
+
+  .color-palette-container {
+    margin-bottom: 8px;
+  }
+
+  .tab-list { 
+    // hack for extra area in the tab list. 13px looks bad.
+    font-size: 14px;
+  }
+
 
   @include mobile {
     background: none;
@@ -220,7 +229,6 @@
         justify-content: center;
         position: relative;
         color: var(--primary-button-text);
-        font-size: 13px;
         font-weight: bold;
         cursor: pointer;
 

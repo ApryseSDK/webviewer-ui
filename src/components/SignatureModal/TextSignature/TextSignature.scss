@@ -3,9 +3,8 @@
 .text-signature {  
   display: flex;
   flex-direction: column;
-
-  width: 380px;
-  height: 168px;
+  width: 450px;
+  height: 220px;
 
   @include mobile {
     width: 100%;
@@ -34,7 +33,7 @@
     margin-top: 10px;
     overflow-y: auto;
     flex-grow: 1;
-    max-width: 380px;
+    max-width: 450px;
 
     &:hover {
       cursor: pointer;

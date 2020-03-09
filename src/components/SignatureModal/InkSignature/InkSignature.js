@@ -113,20 +113,19 @@ const InkSignature = ({
 
   return (
     <React.Fragment>
-      {/* <StylePopup
-        colorMapKey={"signature"}
-        onStyleChange={(property, value) => {
-          setToolStyles('AnnotationCreateSignature', property, value);
-          clearCanvas();
-        }}
-        style={activeToolStyles}
-      /> */}
-      <ColorPalette
-        color={new window.Annotations.Color(0, 0, 0, 1)}
-        property="StrokeColor"
-        onStyleChange={() => {}}
-        overridePalette2={['#E44234', '#4E7DE9', '#000000']}
-      />
+      <div
+        className="color-palette-container"
+      >
+        <ColorPalette
+          color={activeToolStyles['StrokeColor']}
+          property="StrokeColor"
+          onStyleChange={(property, value) => {
+            setToolStyles('AnnotationCreateSignature', property, value);
+            clearCanvas();
+          }}
+          overridePalette2={['#E44234', '#4E7DE9', '#000000']}
+        />
+      </div>
       <div
         className="divider-horizontal"
       />

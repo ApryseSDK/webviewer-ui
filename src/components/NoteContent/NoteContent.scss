@@ -71,7 +71,6 @@
   }
 
   .author-name {
-    font-size: 13px;
     font-weight: bold;
   }
 
@@ -86,7 +85,6 @@
 
   .container {
     margin-top: 7px;
-    font-size: 13px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -99,7 +97,6 @@
     flex: 1;
 
     textarea {
-      font-size: 13px;
       width: 100%;
       padding-left: 8px;
       border: 1px solid var(--border);
@@ -142,7 +139,6 @@
         justify-content: center;
         position: relative;
         color: var(--primary-button-text);
-        font-size: 13px;
         padding: 0 13px;
   
         &:hover {

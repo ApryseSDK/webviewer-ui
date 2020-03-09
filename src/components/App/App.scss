@@ -140,8 +140,8 @@
 
   &::-webkit-scrollbar-thumb {
     background-color: var(--border);
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
     background-clip: padding-box;    
   }
 }
@@ -178,6 +178,10 @@ html, body , #app {
   font-family: 'Carlito', sans-serif;
   color: #333;
   color: var(--text-color);
+}
+
+input, label, textarea, form, #app {
+  font-size: 13px;
 }
 
 .App {

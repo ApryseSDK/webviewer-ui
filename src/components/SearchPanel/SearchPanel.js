@@ -122,6 +122,7 @@ class SearchPanel extends React.PureComponent {
             </div>}
           <SearchOverlay />
           <div className={`results`}>
+            {noResult && <div className="info">{t('message.noResults')}</div>}
             {results.map((result, i) => {
               const prevResult = i === 0 ? results[0] : results[i - 1];
 

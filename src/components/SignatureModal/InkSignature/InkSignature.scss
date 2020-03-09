@@ -1,8 +1,9 @@
 @import '../../../constants/styles';
 
 .ink-signature {
-  width: 380px;
-  height: 130px;
+  width: 450px;
+  height: 171px;
+  position: relative;
 
   @include tablet {
     width: 400px;
@@ -45,6 +46,5 @@
 
   &-sign-here {
     color: var(--faded-text);
-    font-size: 13px;
   }
 }

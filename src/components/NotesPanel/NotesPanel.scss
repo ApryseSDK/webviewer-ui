@@ -66,7 +66,6 @@
       margin-bottom: 16px;
 
       .sort-container {
-        font-size: 13px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -84,7 +83,6 @@
       flex: 1;
 
       input {
-        font-size: 13px;
         width: 100%;
         padding-left: 8px;
         border: 1px solid var(--border);
@@ -93,6 +91,7 @@
         padding-bottom: 6px;
         padding-right: 42px;
         padding-top: 4px;
+        
 
         &:focus {
           outline: none;
