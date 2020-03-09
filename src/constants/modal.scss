@@ -18,8 +18,5 @@ $modal-z-index: 100;
 }
 
 %modal-shared-container-style {
-  background: $white;
-  background: var(--primary-color);
-  box-shadow: 1px 1px 5px black;
-  border-radius: 5px;
+  border-radius: 4px;
 }

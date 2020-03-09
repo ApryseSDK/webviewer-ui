@@ -25,8 +25,8 @@
   --gray-12: #000000;
 
   --text-color: var(--gray-8);
-  --faded-text: var(--gray-7); // old --gray-6
-  --placeholder-text: var(--gray-6); // old --gray-5
+  --faded-text: var(--gray-7);
+  --placeholder-text: var(--gray-6);
 
   --top-bar-icon-color: var(--gray-6);
   --icon-color: var(--gray-7);
@@ -69,6 +69,16 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
   
   --primary-color: #FFFFFF;
   --secondary-color: #F5F5F5;
@@ -85,8 +95,6 @@
 
 
   
-  --white--xx: #fafafa;
-  --white-2: #f0f0f0;
   --blue-gray-1: #dfe2ed;
   --blue-gray-2: #c3c6d4;
   --blue-gray-3: #8b92ab;
@@ -94,15 +102,6 @@
   --blue-gray-5: #6077bf;
   --blue-gray-6: #455893;
 
-  --light-background: var(--white--xx);
-  --dark-background: var(--blue-gray-1);
-  --border-1: var(--blue-gray-1);
-  --primary-button2: var(--blue-gray-1);
-
-  
-  --slider-color: var(--blue-gray-5);
-  
-  // --focus-border: var(--blue-gray-5);
 
   // for new webui
   --tools-active-color: #767f9b26;

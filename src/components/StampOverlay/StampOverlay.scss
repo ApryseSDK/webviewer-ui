@@ -28,9 +28,11 @@
       border-radius: 4px;
       flex-basis: 50%;
       cursor: pointer;
+      display: flex;
+      align-items: center;
   
       &:hover {
-        background: var(--tools-active-color);
+        background: var(--button-hover1);
       }
   
       img {
