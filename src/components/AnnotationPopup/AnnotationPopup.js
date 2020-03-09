@@ -182,9 +182,6 @@ const AnnotationPopup = () => {
     //   dispatch(actions.setActiveLeftPanel('notesPanel'));
     //   dispatch(actions.triggerNoteEditing());
     // }
-    // debugger;
-    console.log('asjdklfjsdlkfjsdklf');
-    // debugger;
     window.readerControl.focusNote(firstAnnotation.Id);
 
     dispatch(actions.closeElement('annotationPopup'));
