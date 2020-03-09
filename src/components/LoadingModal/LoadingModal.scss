@@ -14,7 +14,7 @@
 
   .inner-wrapper {
     margin: 10px;
-    border: 5px solid #dfe2ed;
+    border: 5px solid var(--border);
     border-top: 5px solid var(--blue-5);
     border-radius: 50%;
     width: 54px;
@@ -29,9 +29,5 @@
         transform: rotate(360deg);
       }
     }
-  }
-
-  .text {
-    color: #777;
   }
 }

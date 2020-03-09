@@ -4,9 +4,9 @@
     margin-bottom: 8px;
 
     .styles-input {
-      background: #ffffff;
+      background: var(--gray-0);
       border-radius: 4px;
-      border: 1px solid #dfe2ed;
+      border: 1px solid var(--border);
       height: 28px;
       width: 80px;
       text-transform: capitalize;
