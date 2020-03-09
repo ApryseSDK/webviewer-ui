@@ -77,10 +77,6 @@
       cursor: pointer;
 
       .tab-options-button {
-        // flex breaks ellipsis text overflow for some reason
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
         text-align: center;
         vertical-align: middle;
         line-height: 24px;
@@ -102,6 +98,12 @@
         width: 1px;
         background: var(--divider);
       }
+    }
+
+    .linkInput {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
     }
 
     input {
@@ -157,11 +159,12 @@
       color: var(--primary-button-text);
       font-weight: 600;
       padding: 6px 18px;
-      margin: 16px 0 16px;
+      margin-top: 8px;
+      margin-left: 5px;
       width: fit-content;
       background: var(--primary-button);
       border-radius: 4px;
-      height: 32px;
+      height: 30px;
       cursor: pointer;
 
       &:hover {

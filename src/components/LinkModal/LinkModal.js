@@ -20,7 +20,7 @@ const LinkModal = () => {
     isOpen,
     totalPages,
     currentPage,
-    tabSelected
+    tabSelected,
   ] = useSelector(state => [
     selectors.isElementDisabled(state, 'linkModal'),
     selectors.isElementOpen(state, 'linkModal'),
@@ -76,14 +76,14 @@ const LinkModal = () => {
               Math.min(quad.y1, quad.y3),
               Math.abs(quad.x1 - quad.x3),
               Math.abs(quad.y1 - quad.y3),
-              parseInt(currPageNumber) + 1
-            )
+              parseInt(currPageNumber) + 1,
+            ),
           );
         });
         createHighlightAnnot(
           currPageLinks,
           quads[currPageNumber],
-          selectedText
+          selectedText,
         );
         linksResults.push(...currPageLinks);
       }
@@ -197,7 +197,7 @@ const LinkModal = () => {
       numbers.push(
         <option key={i} value={i}>
           {i}
-        </option>
+        </option>,
       );
     }
     return numbers;
@@ -207,7 +207,7 @@ const LinkModal = () => {
     Modal: true,
     LinkModal: true,
     open: isOpen,
-    closed: !isOpen
+    closed: !isOpen,
   });
 
   return isDisabled ? null : (
@@ -236,36 +236,40 @@ const LinkModal = () => {
             <TabPanel dataElement="URLPanel">
               <form onSubmit={addURLLink}>
                 <div>{t('link.enterurl')}</div>
-                <input
-                  className="urlInput"
-                  type="url"
-                  ref={urlInput}
-                  value={url}
-                  onChange={e => setURL(e.target.value)}
-                />
-                <Button
-                  dataElement="linkSubmitButton"
-                  label={t('action.link')}
-                  onClick={addURLLink}
-                />
+                <div className="linkInput">
+                  <input
+                    className="urlInput"
+                    type="url"
+                    ref={urlInput}
+                    value={url}
+                    onChange={e => setURL(e.target.value)}
+                  />
+                  <Button
+                    dataElement="linkSubmitButton"
+                    label={t('action.link')}
+                    onClick={addURLLink}
+                  />
+                </div>
               </form>
             </TabPanel>
             <TabPanel dataElement="PageNumberPanel">
               <form onSubmit={addPageLink}>
                 <div>{t('link.enterpage')}</div>
-                <select
-                  className="pageNumberSelect"
-                  ref={pageNumberInput}
-                  value={pageNumber}
-                  onChange={e => setPageNumber(e.target.value)}
-                >
-                  {setDropdownNumbers()}
-                </select>
-                <Button
-                  dataElement="linkSubmitButton"
-                  label={t('action.link')}
-                  onClick={addPageLink}
-                />
+                <div className="linkInput">
+                  <select
+                    className="pageNumberSelect"
+                    ref={pageNumberInput}
+                    value={pageNumber}
+                    onChange={e => setPageNumber(e.target.value)}
+                  >
+                    {setDropdownNumbers()}
+                  </select>
+                  <Button
+                    dataElement="linkSubmitButton"
+                    label={t('action.link')}
+                    onClick={addPageLink}
+                  />
+                </div>
               </form>
             </TabPanel>
           </Tabs>
