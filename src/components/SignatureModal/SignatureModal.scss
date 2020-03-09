@@ -50,7 +50,7 @@
     border-radius: 4px;
     box-shadow: 0 2px 16px 0 $signature-modal-shared-color; 
     padding: 8px 8px;
-    background: var(--gray-0);
+    background: var(--component-background);
 
     @include mobile {
       width: 100%;

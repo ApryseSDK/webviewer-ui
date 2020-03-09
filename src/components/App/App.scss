@@ -173,7 +173,7 @@ input, label, textarea, form, #app {
 input, textarea, select {
   border: 1px solid var(--border);
   border-radius: 4px;
-  background: var(--gray-0);
+  background: var(--component-background);
   color: var(--text-color);
 
   &:focus {

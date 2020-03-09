@@ -5,7 +5,7 @@
   @extend %popup;
   border-radius: 4px;
   box-shadow: 0 0 3px 0 var(--document-box-shadow);
-  background: var(--gray-0);
+  background: var(--component-background);
 
   &:empty {
     padding: 0;
