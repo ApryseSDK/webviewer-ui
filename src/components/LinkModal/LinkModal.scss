@@ -86,11 +86,11 @@
         flex: 1;
 
         &.selected {
-          background: var(--button-active1);
+          background: var(--primary-hollow-button-active);
         }
 
         &:hover {
-          background: var(--button-hover1);
+          background: var(--primary-hollow-button-hover);
         }
       }
 
