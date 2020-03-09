@@ -57,6 +57,10 @@
     top: -1px;
     position: relative;
 
+    @include mobile {
+      font-size: 16px;
+    }    
+
     input {
       min-width: 8px;
       padding: 0;
@@ -69,6 +73,7 @@
       cursor: pointer;
       outline: none;
       border-bottom: 1px solid var(--text-color);
+      border-radius: 0px;
 
       @include mobile {
         font-size: 16px;

@@ -3,7 +3,7 @@
 
 .ToolsOverlay {
   @extend %overlay;
-
+  box-shadow: none;
   display: flex;
   flex-direction: row;
   padding: 0px;
