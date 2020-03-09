@@ -26,7 +26,7 @@ const LinkModal = () => {
     selectors.isElementOpen(state, 'linkModal'),
     selectors.getTotalPages(state),
     selectors.getCurrentPage(state),
-    selectors.getSelectedTab(state, 'linkModal')
+    selectors.getSelectedTab(state, 'linkModal'),
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
