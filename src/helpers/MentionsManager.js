@@ -7,6 +7,7 @@ import selectors from 'selectors';
  * @property {string} value The value(display name) of the mentioned person. This is passed from setUserData.
  * @property {string} type The type of the mentioned persion. This is passed from setUserData.
  * @property {string} id The id of the annotation.
+ * @ignore
  */
 
 /**
