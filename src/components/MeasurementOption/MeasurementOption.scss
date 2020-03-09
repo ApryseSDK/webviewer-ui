@@ -5,6 +5,10 @@
   height: 135px;
   background: white;
 
+  @include tablet {
+    margin-bottom: 5px;
+  }
+
   .textarea {
     resize: none;
     outline: none;
@@ -21,38 +25,73 @@
   .Scale {
     display: flex;
     flex-direction: column;
-    margin-top: -6px;
     border-top: 1px solid #dcdcdc;
-    padding-top: 10px;
+    padding-top: 5px;
   }
 
   .ScaleInput {
     border-radius: 4px;
     border: 1px solid rgb(189, 189, 189);
-    height: 25px;
-    width: 45px;
+    height: 28px;
+    width: 42px;
     margin-right: 5px;
+
+    @include mobile {
+      width: 79px;
+      height: 32px;
+    }
+  
+    @include tablet {
+      width: 79px;
+      height: 32px;
+      margin-right: 10px;
+    }
   }
 
   .ScaleEquals {
     margin-top: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 4px;
+    margin-right: 4px;
+
+    @include tablet {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
 
   .UnitInput {
     border-radius: 4px;
     border: 1px solid rgb(189, 189, 189);
-    height: 29px;
-    width: 45px;
+    height: 28px;
+    width: 40px;
+
+    @include mobile {
+      width: 64px;
+      height: 32px;
+    }
+  
+    @include tablet {
+      width: 48px;
+      height: 32px;
+    }
   }
 
   .PrecisionInput {
     border-radius: 4px;
     border: 1px solid rgb(189, 189, 189);
-    height: 29px;
-    width: 80px;
+    height: 28px;
+    width: 86px;
     margin-right: 5px;
+
+    @include mobile {
+      width: 151px;
+      height: 32px;
+    }
+  
+    @include tablet {
+      width: 86px;
+      height: 32px;
+    }
   }
   
   .Precision {
@@ -61,24 +100,24 @@
   }
   
   .LayoutTitle {
-    margin-left: 16px;
+    margin-left: 4px;
     margin-top: 6px;
   }
 
   .LayoutTitlePrecision {
-    margin-left: 16px;
+    margin-left: 4px;
     margin-top: 10px;
   }
   
   .Layout {
     display: flex;
-    margin-left: 16px;
+    margin-left: 4px;
     margin-top: 5px;
   }
 
   .LayoutPrecision {
     display: flex;
-    margin-left: 16px;
+    margin-left: 4px;
     margin-top: 5px;
   }
   

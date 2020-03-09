@@ -297,7 +297,7 @@ const AnnotationPopup = () => {
               }}
             />
           )}
-          {!(['CropPage', 'AnnotationCreateSignature', 'AnnotationCreateRedaction', 'AnnotationCreateSticky'].includes(firstAnnotation.ToolName)) && false && (<ActionButton
+          {!(['CropPage', 'AnnotationCreateSignature', 'AnnotationCreateRedaction', 'AnnotationCreateSticky'].includes(firstAnnotation.ToolName)) && (<ActionButton
             title="tool.Link"
             img={firstAnnotation.getAssociatedLinks().length > 0 ? "icon-tool-unlink" : "icon-tool-link"}
             onClick={
