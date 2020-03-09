@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'webviewer-ui.min.js',
-    chunkFilename: '[name].bundle.js',
+    chunkFilename: 'chunks/[name].chunk.js',
     publicPath: '/',
   },
   plugins: [
@@ -33,6 +33,7 @@ module.exports = {
     ]),
     new MiniCssExtractPlugin({
       filename: 'style.css',
+      chunkFilename: 'chunks/[name].chunk.css'
     }),
     // new BundleAnalyzerPlugin()
   ],

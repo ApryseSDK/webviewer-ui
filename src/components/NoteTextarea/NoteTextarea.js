@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import MentionsTextarea from 'components/NoteTextarea/MentionsTextarea';
 import AutoResizeTextarea from 'components/NoteTextarea/AutoResizeTextarea';
 import NoteContext from 'components/Note/Context';
 
@@ -23,9 +22,9 @@ const propTypes = {
   onSubmit: PropTypes.func,
 };
 
-// const MentionsTextarea = React.lazy(() =>
-//   import('components/NoteTextarea/MentionsTextarea'),
-// );
+const MentionsTextarea = React.lazy(() =>
+  import(/* webpackChunkName: 'mention' */'components/NoteTextarea/MentionsTextarea'),
+);
 
 const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   const userData = useSelector(selectors.getUserData, shallowEqual);
@@ -68,9 +67,9 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   };
 
   return userData?.length ? (
-    <MentionsTextarea {...textareaProps} userData={userData} />
-    // <React.Suspense fallback={<div>Loading...</div>}>
-    // </React.Suspense>
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <MentionsTextarea {...textareaProps} userData={userData} />
+    </React.Suspense>
   ) : (
     <AutoResizeTextarea {...textareaProps} />
   );

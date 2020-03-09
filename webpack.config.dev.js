@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'src'),
     filename: 'webviewer-ui.min.js',
-    chunkFilename: '[name].bundle.js',
+    chunkFilename: 'chunks/[name].chunk.js',
     publicPath: '/',
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],

@@ -111,7 +111,7 @@ class MentionsManager {
       });
 
       if (
-        prevMentionData.contentWithoutMentions &&
+        prevMentions.length &&
         prevMentionData.contentWithoutMentions !== currMentionData.contentWithoutMentions
       ) {
         modifiedMentions = modifiedMentions.concat(currMentions);
