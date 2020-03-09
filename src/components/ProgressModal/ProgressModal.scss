@@ -38,11 +38,11 @@
       stroke-width: 4;
 
       &.progress-ring__fill {
-        stroke: var(--gray-4);
+        stroke: var(--slider-background);
       }
 
       &.progress-ring__circle {
-        stroke: var(--blue-5);
+        stroke: var(--slider-filled);
       }
 
     }

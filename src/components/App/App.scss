@@ -120,18 +120,6 @@
   --border-color: #E0E0E0;
   --left-panel-width: 219px;
   --button-hover-color: #F6F6F6;
-  
-
-
-
-
-
-
-
-
-  
-  
-
 
   --button-active-color: #F0F0F0;
   
@@ -175,7 +163,6 @@ html, body , #app {
   padding: 0;
   overflow: hidden;
   font-family: 'Carlito', sans-serif;
-  color: #333;
   color: var(--text-color);
 }
 
@@ -203,7 +190,6 @@ input, textarea, select {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: $gray4;
   background-color: var(--document-background-color);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
