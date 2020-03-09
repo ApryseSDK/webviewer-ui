@@ -6,7 +6,7 @@
   width: 100%;
   min-width: 300px;
   height: 36px;
-  background: var(--gray-1);
+  background: var(--view-header-background);
 
   border-bottom: solid 1px var(--tools-header-background);
 
@@ -14,7 +14,7 @@
     .Button {
       &.active {
         .Icon {
-          color: var(--blue-6);
+          color: var(--top-header-icon-active-fill);
         }
       }
     }
@@ -30,13 +30,13 @@
     }
   }
 
-  .toggle-element-button {
-    &:hover {
-      .Button:hover {
-        background: none;
-      } 
-    }
-  }
+  // .toggle-element-button {
+  //   &:hover {
+  //     .Button:hover {
+  //       background: none;
+  //     } 
+  //   }
+  // }
 
   &.Tools {
     @include desktop {

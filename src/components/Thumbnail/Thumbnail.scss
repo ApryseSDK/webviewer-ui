@@ -11,7 +11,7 @@
   &.active {
     .container {
       .page-image {
-        border: 2px solid var(--blue-5);
+        border: 2px solid var(--focus-border);
         box-shadow: none;
         // so that thumbnail does not resize when putting a border on max-width max height canvas
         box-sizing: content-box;
