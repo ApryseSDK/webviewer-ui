@@ -18,7 +18,7 @@
 
     // hack for pan tool and annot select tool
     &[data-element="panToolButton"],&[data-element="selectToolButton"] {
-      background: var(--active-button1);
+      background: var(--button-active1);
     }
   }  
 

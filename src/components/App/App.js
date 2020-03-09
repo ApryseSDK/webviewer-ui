@@ -55,9 +55,9 @@ const desktopListener = window.matchMedia('(min-width: 901px)');
 
 const root = document.documentElement;
 const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
-const actionButton1 = getComputedStyle(root).getPropertyValue('--active-button1');
+const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
 const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
-const actionButton2 = getComputedStyle(root).getPropertyValue('--active-button2');
+const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
 
 const setColors = (toh, toa, th, ta) => {
   root.style.setProperty('--tools-overlay-button-hover', toh);
@@ -106,9 +106,9 @@ const App = ({ removeEventHandlers }) => {
       dispatch(actions.setMobileToolsHeader());
 
       // const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
-      // const actionButton1 = getComputedStyle(root).getPropertyValue('--active-button1');
+      // const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
       // const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
-      // const actionButton2 = getComputedStyle(root).getPropertyValue('--active-button2');
+      // const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
       // root.style.setProperty('--tools-overlay-button-hover', buttonHover2);
       // root.style.setProperty('--tools-overlay-button-active', actionButton2);
       // root.style.setProperty('--tools-button-hover', buttonHover1);
@@ -128,9 +128,9 @@ const App = ({ removeEventHandlers }) => {
       dispatch(actions.setTabletToolsHeader());
 
       // const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
-      // const actionButton1 = getComputedStyle(root).getPropertyValue('--active-button1');
+      // const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
       // const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
-      // const actionButton2 = getComputedStyle(root).getPropertyValue('--active-button2');
+      // const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
       // root.style.setProperty('--tools-overlay-button-hover', buttonHover2);
       // root.style.setProperty('--tools-overlay-button-active', actionButton2);
       // root.style.setProperty('--tools-button-hover', buttonHover1);
@@ -150,9 +150,9 @@ const App = ({ removeEventHandlers }) => {
       dispatch(actions.setDesktopToolsHeader());
 
       // const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
-      // const actionButton1 = getComputedStyle(root).getPropertyValue('--active-button1');
+      // const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
       // const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
-      // const actionButton2 = getComputedStyle(root).getPropertyValue('--active-button2');
+      // const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
       // root.style.setProperty('--tools-overlay-button-hover', buttonHover1);
       // root.style.setProperty('--tools-overlay-button-active', actionButton1);
       // root.style.setProperty('--tools-button-hover', buttonHover2);

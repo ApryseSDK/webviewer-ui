@@ -50,6 +50,7 @@
 
   --component-background: var(--gray-0);
   --faded-component-background: var(--gray-2);
+  --document-background-color: var(--gray-2);
   --view-header-background: var(--gray-1);
   --tools-header-background: var(--gray-3);
   --slider-filled: var(--blue-5);
@@ -67,19 +68,21 @@
 
   --button-hover1: var(--blue-1);
   --button-hover2: var(--blue-3);
-  --active-button1: var(--blue-2);
-  --active-button2: var(--blue-4);
+  --button-active1: var(--blue-2);
+  --button-active2: var(--blue-4);
 
+  --primary-hollow-button-hover: var(--button-hover1);
+  --primary-hollow-button-active: var(--button-active1);
 
   // ---- swap ----
   --tools-button-hover: var(--button-hover2);
-  --tools-button-active: var(--active-button2);
+  --tools-button-active: var(--button-active2);
 
   --tools-overlay-button-hover: var(--button-hover1);
-  --tools-overlay-button-active: var(--active-button1);
+  --tools-overlay-button-active: var(--button-active1);
   // ---- swap ----
 
-  --popup-button-hover: var(--button-hover1);
+  
 
   --primary-button: var(--blue-5); 
   --primary-button-text: var(--gray-1); 
@@ -100,7 +103,7 @@
   --focus-border: var(--blue-5);
   --color-palette-border: var(--gray-8);
 
-  --document-background-color: var(--gray-2);
+  
 
 
 
