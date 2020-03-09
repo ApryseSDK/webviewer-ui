@@ -4,7 +4,7 @@
 :root {
 
   // light mode
-  // --blue-1: #E7EDF3;
+  --blue-1: #E7EDF3;
   --blue-2: #DDE6EE;
   --blue-3: #CFD8E0;
   --blue-4: #C7D2DD;
@@ -50,9 +50,11 @@
 
   --component-background: var(--gray-0);
   --faded-component-background: var(--gray-2);
+  --view-header-background: var(--gray-1);
   --tools-header-background: var(--gray-3);
   --slider-filled: var(--blue-5);
   --slider-background: var(--gray-4);
+  --top-header-icon-active-fill: var(--blue-6);
 
   --text-color: var(--gray-8);
   --faded-text: var(--gray-7);
