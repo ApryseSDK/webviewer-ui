@@ -175,10 +175,11 @@ input, label, textarea, form, #app {
   font-size: 13px;
 }
 
-input, textarea {
+input, textarea, select {
   border: 1px solid var(--border);
   border-radius: 4px;
   background: var(--gray-0);
+  color: var(--text-color);
 
   &:focus {
     outline: none;
