@@ -30,7 +30,7 @@
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
 
-      border-bottom: 10px solid var(--gray-3);
+      border-bottom: 10px solid var(--tools-header-background);
       position: absolute;
 
       transform: translateX(50%);
@@ -73,7 +73,7 @@
       min-height: 52px;
       padding-top: 3px;
       padding-bottom: 3px;
-      background: var(--gray-3);
+      background: var(--tools-header-background);
       border-radius: 0px 0px 28px 28px;
     }
 

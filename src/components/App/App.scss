@@ -5,50 +5,55 @@
 
   // light mode
   // --blue-1: #E7EDF3;
-  // --blue-2: #DDE6EE;
-  // --blue-3: #CFD8E0;
-  // --blue-4: #C7D2DD;
-  // --blue-5: #3183C8;
-  // --blue-6: #1A4971;
+  --blue-2: #DDE6EE;
+  --blue-3: #CFD8E0;
+  --blue-4: #C7D2DD;
+  --blue-5: #3183C8;
+  --blue-6: #1A4971;
 
-  // --gray-0: #FFFFFF;
-  // --gray-1: #F8F9FA;
-  // --gray-2: #F1F3F5;
-  // --gray-3: #E7EBEE;
-  // --gray-4: #DEE2E6;
-  // --gray-5: #CFD4DA;
-  // --gray-6: #ADB5BD;
-  // --gray-7: #868E96;
-  // --gray-8: #485056;
-  // --gray-9: #343A40;
-  // --gray-10: #21242A;
-  // --gray-11: #101214;
-  // --gray-12: #000000;
+  --gray-0: #FFFFFF;
+  --gray-1: #F8F9FA;
+  --gray-2: #F1F3F5;
+  --gray-3: #E7EBEE;
+  --gray-4: #DEE2E6;
+  --gray-5: #CFD4DA;
+  --gray-6: #ADB5BD;
+  --gray-7: #868E96;
+  --gray-8: #485056;
+  --gray-9: #343A40;
+  --gray-10: #21242A;
+  --gray-11: #101214;
+  --gray-12: #000000;
 
   // dark mode
-  --blue-1: #192530;
-  --blue-2: #1B2B3A;
-  --blue-3: #334250;
-  --blue-4: #334758;
-  --blue-5: #1A4971;
-  --blue-6: #3183C8;
+  // --blue-1: #192530;
+  // --blue-2: #1B2B3A;
+  // --blue-3: #334250;
+  // --blue-4: #334758;
+  // --blue-5: #1A4971;
+  // --blue-6: #3183C8;
 
-  --gray-0: #000000;
-  --gray-1: #16181C;
-  --gray-2: #21242A;
-  --gray-3: #343A40;
-  --gray-4: #485056;
-  --gray-5: #868E96;
-  --gray-6: #ADB5BD;
-  --gray-7: #CFD4DA;
-  --gray-8: #DEE2E6;
-  --gray-9: #E7EBEE;
-  --gray-10: #F1F3F5;
-  --gray-11: #F8F9FA;
-  --gray-12: #FFFFFF;
+  // --gray-0: #000000;
+  // --gray-1: #16181C;
+  // --gray-2: #21242A;
+  // --gray-3: #343A40;
+  // --gray-4: #485056;
+  // --gray-5: #868E96;
+  // --gray-6: #ADB5BD;
+  // --gray-7: #CFD4DA;
+  // --gray-8: #DEE2E6;
+  // --gray-9: #E7EBEE;
+  // --gray-10: #F1F3F5;
+  // --gray-11: #F8F9FA;
+  // --gray-12: #FFFFFF;
 
 
   --component-background: var(--gray-0);
+  --faded-component-background: var(--gray-2);
+  --tools-header-background: var(--gray-3);
+  --slider-filled: var(--blue-5);
+  --slider-background: var(--gray-4);
+
   --text-color: var(--gray-8);
   --faded-text: var(--gray-7);
   --placeholder-text: var(--gray-6);
