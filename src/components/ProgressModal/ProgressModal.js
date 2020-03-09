@@ -55,9 +55,6 @@ const ProgressModal = () => {
         <svg className="progress-ring" width="54" height="54">
           <circle
             className="progress-ring__fill"
-            stroke="#dfe2ed"
-            strokeWidth="4"
-            fill="transparent"
             r="25"
             cx="27"
             cy="27"
@@ -65,9 +62,6 @@ const ProgressModal = () => {
           <circle
             ref={progressCircle}
             className="progress-ring__circle"
-            stroke="#6077bf"
-            strokeWidth="4"
-            fill="transparent"
             r="25"
             cx="27"
             cy="27"
