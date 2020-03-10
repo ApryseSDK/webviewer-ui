@@ -104,66 +104,16 @@ const App = ({ removeEventHandlers }) => {
 
     mobileListener.addListener(() => {
       dispatch(actions.setMobileToolsHeader());
-
-      // const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
-      // const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
-      // const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
-      // const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
-      // root.style.setProperty('--tools-overlay-button-hover', buttonHover2);
-      // root.style.setProperty('--tools-overlay-button-active', actionButton2);
-      // root.style.setProperty('--tools-button-hover', buttonHover1);
-      // root.style.setProperty('--tools-button-active', actionButton1);
-
-      // const toolsOverlayButtonHover = getComputedStyle(root).getPropertyValue('--tools-overlay-button-hover');
-      // const toolsOverlayButtonActive = getComputedStyle(root).getPropertyValue('--tools-overlay-button-active');
-      // const toolsButtonhover = getComputedStyle(root).getPropertyValue('--tools-button-hover');
-      // const toolsButtonActive = getComputedStyle(root).getPropertyValue('--tools-button-active');
-
-      // console.log('mobile', toolsOverlayButtonHover, toolsOverlayButtonActive, toolsButtonhover, toolsButtonActive);
       updateColors();
     });
 
     tabletListener.addListener(() => {
-      console.log('setTabletToolsHeader');
       dispatch(actions.setTabletToolsHeader());
-
-      // const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
-      // const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
-      // const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
-      // const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
-      // root.style.setProperty('--tools-overlay-button-hover', buttonHover2);
-      // root.style.setProperty('--tools-overlay-button-active', actionButton2);
-      // root.style.setProperty('--tools-button-hover', buttonHover1);
-      // root.style.setProperty('--tools-button-active', actionButton1);
-
-      // const toolsOverlayButtonHover = getComputedStyle(root).getPropertyValue('--tools-overlay-button-hover');
-      // const toolsOverlayButtonActive = getComputedStyle(root).getPropertyValue('--tools-overlay-button-active');
-      // const toolsButtonhover = getComputedStyle(root).getPropertyValue('--tools-button-hover');
-      // const toolsButtonActive = getComputedStyle(root).getPropertyValue('--tools-button-active');
-
-      // console.log('tablet', toolsOverlayButtonHover, toolsOverlayButtonActive, toolsButtonhover, toolsButtonActive);      
       updateColors();
     });
 
     desktopListener.addListener(() => {
-      console.log('setDesktopToolsHeader');
       dispatch(actions.setDesktopToolsHeader());
-
-      // const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
-      // const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
-      // const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
-      // const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
-      // root.style.setProperty('--tools-overlay-button-hover', buttonHover1);
-      // root.style.setProperty('--tools-overlay-button-active', actionButton1);
-      // root.style.setProperty('--tools-button-hover', buttonHover2);
-      // root.style.setProperty('--tools-button-active', actionButton2);
-
-      // const toolsOverlayButtonHover = getComputedStyle(root).getPropertyValue('--tools-overlay-button-hover');
-      // const toolsOverlayButtonActive = getComputedStyle(root).getPropertyValue('--tools-overlay-button-active');
-      // const toolsButtonhover = getComputedStyle(root).getPropertyValue('--tools-button-hover');
-      // const toolsButtonActive = getComputedStyle(root).getPropertyValue('--tools-button-active');
-
-      // console.log('desktop', toolsOverlayButtonHover, toolsOverlayButtonActive, toolsButtonhover, toolsButtonActive);      
       updateColors();
     });
 
