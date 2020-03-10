@@ -10,6 +10,13 @@
   width: 32px;
   height: 32px;
 
+  // hack for clip art svg
+  &[data-element="stampToolButton"] {
+    polygon {
+      fill: var(--icon-color);
+    }
+  }
+
   // color for svgs
   &.active {
     path:last-child:nth-child(4) {
@@ -27,13 +34,11 @@
       color: var(--selected-icon-color);
     }
 
-    // hack for one clip art svg
-    @include tablet-and-mobile {
-      &[data-element="stampToolButton"] {
-        polygon {
-          fill: var(--selected-icon-color);
-        }
+    // hack for clip art svg
+    &[data-element="stampToolButton"] {
+      polygon {
+        fill: var(--selected-icon-color);
       }
-    }    
+    }   
   }
 }

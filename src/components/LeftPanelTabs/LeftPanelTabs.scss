@@ -10,15 +10,17 @@
     flex-grow: 1;
     height: 26px;
     margin: 0;
+    border-radius: 0px;
 
     &:first-child {
-      border-bottom-right-radius: 0px;
-      border-top-right-radius: 0px;
+      border-bottom-left-radius: 2px;
+      border-top-left-radius: 2px;
     }
 
     &:last-child {
-      border-bottom-left-radius: 0px;
-      border-top-left-radius: 0px;
+
+      border-bottom-right-radius: 2px;
+      border-top-right-radius: 2px;
     }
 
 
