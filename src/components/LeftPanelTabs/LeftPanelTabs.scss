@@ -23,7 +23,6 @@
       border-top-right-radius: 4px;
     }
 
-
     .Icon {
       width: 19px;
       height: 19px;
@@ -37,4 +36,9 @@
       background: var(--popup-button-hover);
     }
   }
+
+  .divider {
+    width: 1px;
+    background: var(--divider);
+  }  
 }

@@ -9,12 +9,11 @@ import ActionButton from 'components/ActionButton';
 
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import getClassName from 'helpers/getClassName';
+import classNames from 'classnames';
 import displayModeObjects from 'constants/displayModeObjects';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
-import classNames from 'classnames';
 
 import './ViewControlsOverlay.scss';
 
@@ -122,7 +121,10 @@ class ViewControlsOverlay extends React.PureComponent {
         {totalPages < 1000 && (
           <React.Fragment>
             <div
-              className="row"
+              className={classNames({
+                row: true,
+                active: pageTransition === 'continuous',
+              })}
               onClick={() => this.handleClick('continuous', layout)}
             >
               <Button
@@ -134,7 +136,10 @@ class ViewControlsOverlay extends React.PureComponent {
               <div className="title">{t('option.pageTransition.continuous')}</div>
             </div>
             <div
-              className="row"
+              className={classNames({
+                row: true,
+                active: pageTransition === 'default',
+              })}
               onClick={() => this.handleClick('default', layout)}
             >
               <Button
@@ -174,7 +179,10 @@ class ViewControlsOverlay extends React.PureComponent {
         <div className="divider" />
         <div className="type">{t('option.displayMode.layout')}</div>
         <div
-          className="row"
+          className={classNames({
+            row: true,
+            active: layout === 'single',
+          })}
           onClick={() => this.handleClick(pageTransition, 'single')}
         >
           <Button
@@ -186,7 +194,10 @@ class ViewControlsOverlay extends React.PureComponent {
           <div className="title">{t('option.layout.single')}</div>
         </div>
         <div
-          className="row"
+          className={classNames({
+            row: true,
+            active: layout === 'double',
+          })}
           onClick={() => this.handleClick(pageTransition, 'double')}
         >
           <Button
@@ -198,7 +209,10 @@ class ViewControlsOverlay extends React.PureComponent {
           <div className="title">{t('option.layout.double')}</div>
         </div>
         <div
-          className="row"
+          className={classNames({
+            row: true,
+            active: layout === 'cover',
+          })}
           onClick={() => this.handleClick(pageTransition, 'cover')}
         >
           <Button
