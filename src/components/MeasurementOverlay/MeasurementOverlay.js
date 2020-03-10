@@ -336,7 +336,7 @@ class MeasurementOverlay extends React.PureComponent {
           this.renderValue()
         )}
         {key === 'distanceMeasurement' && this.renderDeltas()}
-        {key !== 'rectangularAreaMeasurement' && this.renderAngle()}
+        {(key !== 'rectangularAreaMeasurement' && key !== 'distanceMeasurement') && this.renderAngle()}
       </div>
     );
   }
@@ -347,6 +347,14 @@ function LineMeasurementInput(props) {
   const factor = annotation.Measure.axis[0].factor;
   const unit = annotation.Scale[1][1];
   const length = (annotation.getLineLength() * factor).toFixed(2);
+
+  const computeAngle = () => {
+    let angleInRadians = annotation.getAngle();
+    // Multiply by -1 to achieve 0-360 degrees counterclockwise
+    angleInRadians *= -1;
+    angleInRadians = angleInRadians < 0 ? angleInRadians + 2 * Math.PI : angleInRadians;
+    return ((angleInRadians / Math.PI) * 180).toFixed(2);
+  };
 
   const onChangeLineLength = event => {
     const length = Math.abs(event.target.value);
@@ -413,13 +421,32 @@ function LineMeasurementInput(props) {
     return Math.min(maxLenX, maxLenY);
   };
 
+  const onChangeAngle = event => {
+    const angle = event.target.value;
+    const angleInRadians = angle * (Math.PI / 180) * -1;
+    const lengthInPts = annotation.getLineLength();
+    const start = annotation.Start;
+    const endX = Math.cos(angleInRadians) * lengthInPts + start.x;
+    const endY = Math.sin(angleInRadians) * lengthInPts + start.y;
+    annotation.setEndPoint(endX, endY);
+    annotation.adjustRect();
+    forceLineRedraw();
+  };
+
   if (!isOpen) {
     ensureLineIsWithinBounds(annotation.getLineLength());
   }
 
+  const angle = computeAngle();
+
   return (
-    <div className="measurement__value">
-      {t('option.measurementOverlay.distance')}: <input className="lineMeasurementInput" type="number" min="0" value={length} onChange={event => onChangeLineLength(event)} onBlur={event => onBlurValidateLineLength(event)}/> {unit}
+    <div>
+      <div className="length_input">
+        {t('option.measurementOverlay.distance')}: <input className="lineMeasurementInput" type="number" min="0" value={length} onChange={event => onChangeLineLength(event)} onBlur={event => onBlurValidateLineLength(event)}/> {unit}
+      </div>
+      <div className="angle_input">
+        {t('option.measurementOverlay.angle')}: <input className="lineMeasurementInput" type="number" min="0" max="360" value={angle} onChange={event => onChangeAngle(event)}/> &deg;
+      </div>
     </div>
   );
 }
