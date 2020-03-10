@@ -115,7 +115,11 @@
     "redaction": "개정",
     "viewControlsOverlay": "컨트롤 보기",
     "measurementToolsButton": "측정 도구",
-    "calibration": "구경 측정"
+    "calibration": "구경 측정",
+    "searchPanel": "검색",
+    "stickyToolsButton": "주석 도구",
+    "freeTextToolsButton": "무료 텍스트 도구",
+    "toolsHeader": "도구"
   },
   "message": {
     "badDocument": "문서를 로드하지 못했습니다. 문서가 손상되었거나 유효하지 않습니다.",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} 페이지",
     "processing": "처리 중...",
     "searching": "검색 중...",
-    "searchPlaceholder": "코멘트 검색...",
     "signHere": "여기에 서명하세요",
     "insertTextHere": "여기에 텍스트를 삽입하세요",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}} 만 허용됩니다",
     "enterMeasurement": "두 지점 사이에 측정 값을 입력하십시오",
-    "linkURLorPage": "링크 URL 또는 페이지"
+    "linkURLorPage": "링크 URL 또는 페이지",
+    "searchDocumentPlaceholder": "문서 검색",
+    "searchCommentsPlaceholder": "의견 검색"
   },
   "option": {
     "annotationColor": {

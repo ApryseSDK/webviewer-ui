@@ -115,7 +115,11 @@
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "measurementToolsButton": "Meetinstrumenten",
-    "calibration": "ijking"
+    "calibration": "ijking",
+    "searchPanel": "Zoeken",
+    "toolsHeader": "Gereedschap",
+    "stickyToolsButton": "Tools voor opmerkingen",
+    "freeTextToolsButton": "Hulpmiddelen voor vrije tekst"
   },
   "message": {
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} pagina's",
     "processing": "Bezig...",
     "searching": "Zoeken...",
-    "searchPlaceholder": "Zoek opmerkingen...",
     "signHere": "Teken hier",
     "insertTextHere": "Vul hier tekst in",
     "imageSignatureAcceptedFileTypes": "Alleen {{AcceptFileTypes}} worden geaccepteerd",
     "enterMeasurement": "Voer de meting tussen de twee punten in",
-    "linkURLorPage": "Link-URL of een pagina"
+    "linkURLorPage": "Link-URL of een pagina",
+    "searchDocumentPlaceholder": "Document zoeken",
+    "searchCommentsPlaceholder": "Zoek opmerkingen"
   },
   "option": {
     "annotationColor": {

@@ -115,7 +115,11 @@
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
     "measurementToolsButton": "Messwerkzeuge",
-    "calibration": "Kalibrierung"
+    "calibration": "Kalibrierung",
+    "toolsHeader": "Werkzeuge",
+    "searchPanel": "Suche",
+    "stickyToolsButton": "Kommentare Tools",
+    "freeTextToolsButton": "Freitext-Tools"
   },
   "message": {
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} Seiten",
     "processing": "Bearbeite...",
     "searching": "Suche...",
-    "searchPlaceholder": "Suche Kommentare...",
     "signHere": "Hier unterschreiben",
     "insertTextHere": "Hier Text eingeben",
     "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
     "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein",
-    "linkURLorPage": "Link URL oder eine Seite"
+    "linkURLorPage": "Link URL oder eine Seite",
+    "searchCommentsPlaceholder": "Kommentare suchen",
+    "searchDocumentPlaceholder": "Dokument suchen"
   },
   "option": {
     "annotationColor": {

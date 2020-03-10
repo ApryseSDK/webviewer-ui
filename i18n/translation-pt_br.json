@@ -115,7 +115,11 @@
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
     "measurementToolsButton": "Ferramentas de medição",
-    "calibration": "Calibração"
+    "calibration": "Calibração",
+    "toolsHeader": "Ferramentas",
+    "searchPanel": "Procurar",
+    "freeTextToolsButton": "Ferramentas de texto livre",
+    "stickyToolsButton": "Ferramentas de comentários"
   },
   "message": {
     "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} páginas",
     "processing": "Processando...",
     "searching": "Procurando...",
-    "searchPlaceholder": "Buscar comentários...",
     "signHere": "Assine aqui",
     "insertTextHere": "Insira texto aqui",
     "imageSignatureAcceptedFileTypes": "Somente {{acceptFileTypes}} são aceitos",
     "enterMeasurement": "Digite a medição entre os dois pontos",
-    "linkURLorPage": "URL do link ou uma página"
+    "linkURLorPage": "URL do link ou uma página",
+    "searchDocumentPlaceholder": "Pesquisar documento",
+    "searchCommentsPlaceholder": "Pesquisar comentários"
   },
   "option": {
     "annotationColor": {

@@ -115,7 +115,11 @@
     "redaction": "Modificación",
     "viewControlsOverlay": "Ver controles",
     "measurementToolsButton": "Herramientas de medición",
-    "calibration": "Calibración"
+    "calibration": "Calibración",
+    "searchPanel": "Buscar",
+    "toolsHeader": "Herramientas",
+    "freeTextToolsButton": "Herramientas de texto gratis",
+    "stickyToolsButton": "Herramientas de comentarios"
   },
   "message": {
     "badDocument": "Error al cargar el documento. El documento está dañado o no es válido.",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} páginas",
     "processing": "Procesando...",
     "searching": "Buscando...",
-    "searchPlaceholder": "Buscar comentarios...",
     "signHere": "Firma aquí",
     "insertTextHere": "Inserta el texto aquí",
     "imageSignatureAcceptedFileTypes": "Solo se aceptan {{acceptFileTypes}}",
     "enterMeasurement": "Ingrese la medición entre los dos puntos",
-    "linkURLorPage": "URL de enlace o una página"
+    "linkURLorPage": "URL de enlace o una página",
+    "searchDocumentPlaceholder": "Buscar documento",
+    "searchCommentsPlaceholder": "Buscar comentarios"
   },
   "option": {
     "annotationColor": {
