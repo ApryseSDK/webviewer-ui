@@ -1,3 +1,14 @@
+import { parse } from 'css-variables-parser';
+import lightModeString from '!!raw-loader!../constants/light.scss';
+import darkModeString from '!!raw-loader!../constants/dark.scss';
+// import darkVariables from '!!raw-loader!../constants/dark.scss';
+
+
+// const variables = parse(lightModeString, {});
+// console.log(variables); // { 'color-primary': 'red' }
+
+
+
 /**
  * Sets the theme of Webviewer UI. Please note that this does not work in IE11.
  * @method WebViewerInstance#setTheme
@@ -45,35 +56,52 @@ export default theme => {
 };
 
 const setPresetTheme = theme => {
-  const themeToPresetThemeMap = {
-    default: {
-      primary: '#FFFFFF',
-      secondary: '#F5F5F5',
-      border: '#E0E0E0',
-      buttonHover: '#F6F6F6',
-      buttonActive: '#F0F0F0',
-      text: '#333333',
-      icon: '#757575',
-      iconActive: '#757575',
-    },
-    dark: {
-      primary: '#2C2B3A',
-      secondary: '#4D4C5F',
-      border: '#555555',
-      buttonHover: '#686880',
-      buttonActive: '#686880',
-      text: '#FFFFFF',
-      icon: '#FFFFFF',
-      iconActive: '#FFFFFF',
-    },
-  };
-  const presetTheme = themeToPresetThemeMap[theme];
-
-  if (presetTheme) {
-    setTheme(themeToPresetThemeMap[theme]);
+  const root = document.documentElement;
+  if (theme === 'light') {
+    const lightModeVariables = parse(lightModeString, {});
+    Object.keys(lightModeVariables).forEach(key => {
+      const lightModeVariable = lightModeVariables[key];
+      root.style.setProperty(`--${key}`, lightModeVariable);
+    });
+  } else if (theme === 'dark') {
+    const darkModeVariables = parse(darkModeString, {});
+    Object.keys(darkModeVariables).forEach(key => {
+      const darkModeVariable = darkModeVariables[key];
+      root.style.setProperty(`--${key}`, darkModeVariable);
+    });
   } else {
-    console.warn(`${theme} is not one of: default, dark`);
+    console.error(`${theme} is not one of: light, dark`);
   }
+
+  // const themeToPresetThemeMap = {
+  //   default: {
+  //     primary: '#FFFFFF',
+  //     secondary: '#F5F5F5',
+  //     border: '#E0E0E0',
+  //     buttonHover: '#F6F6F6',
+  //     buttonActive: '#F0F0F0',
+  //     text: '#333333',
+  //     icon: '#757575',
+  //     iconActive: '#757575',
+  //   },
+  //   dark: {
+  //     primary: '#2C2B3A',
+  //     secondary: '#4D4C5F',
+  //     border: '#555555',
+  //     buttonHover: '#686880',
+  //     buttonActive: '#686880',
+  //     text: '#FFFFFF',
+  //     icon: '#FFFFFF',
+  //     iconActive: '#FFFFFF',
+  //   },
+  // };
+  // const presetTheme = themeToPresetThemeMap[theme];
+
+  // if (presetTheme) {
+  //   setTheme(themeToPresetThemeMap[theme]);
+  // } else {
+  //   console.warn(`${theme} is not one of: default, dark`);
+  // }
 };
 
 const setTheme = theme => {

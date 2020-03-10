@@ -1,77 +1,71 @@
+:root {
+  --blue-1: #E7EDF3;
+  --blue-2: #DDE6EE;
+  --blue-3: #CFD8E0;
+  --blue-4: #C7D2DD;
+  --blue-5: #3183C8;
+  --blue-6: #1A4971;
 
-@mixin light-mode {
-  :root {
-    // light mode
-    --blue-1: #E7EDF3;
-    --blue-2: #DDE6EE;
-    --blue-3: #CFD8E0;
-    --blue-4: #C7D2DD;
-    --blue-5: #3183C8;
-    --blue-6: #1A4971;
+  --gray-0: #FFFFFF;
+  --gray-1: #F8F9FA;
+  --gray-2: #F1F3F5;
+  --gray-3: #E7EBEE;
+  --gray-4: #DEE2E6;
+  --gray-5: #CFD4DA;
+  --gray-6: #ADB5BD;
+  --gray-7: #868E96;
+  --gray-8: #485056;
+  --gray-9: #343A40;
+  --gray-10: #21242A;
+  --gray-11: #101214;
+  --gray-12: #000000;
 
-    --gray-0: #FFFFFF;
-    --gray-1: #F8F9FA;
-    --gray-2: #F1F3F5;
-    --gray-3: #E7EBEE;
-    --gray-4: #DEE2E6;
-    --gray-5: #CFD4DA;
-    --gray-6: #ADB5BD;
-    --gray-7: #868E96;
-    --gray-8: #485056;
-    --gray-9: #343A40;
-    --gray-10: #21242A;
-    --gray-11: #101214;
-    --gray-12: #000000;
+  --component-background: var(--gray-0);
+  --faded-component-background: var(--gray-2);
+  --document-background-color: var(--gray-2);
+  --view-header-background: var(--gray-1);
+  --panel-background: var(--gray-1);
+  --tools-header-background: var(--gray-3);
+  --slider-filled: var(--blue-5);
+  --slider-background: var(--gray-4);
+  --modal-negative-space: rgba(255, 255, 255, 0.8);
+  --top-header-icon-active-fill: var(--blue-6);
 
-    --component-background: var(--gray-0);
-    --faded-component-background: var(--gray-2);
-    --document-background-color: var(--gray-2);
-    --view-header-background: var(--gray-1);
-    --panel-background: var(--gray-1);
-    --tools-header-background: var(--gray-3);
-    --slider-filled: var(--blue-5);
-    --slider-background: var(--gray-4);
-    --modal-negative-space: rgba(255, 255, 255, 0.8);
-    --top-header-icon-active-fill: var(--blue-6);
+  --text-color: var(--gray-8);
+  --faded-text: var(--gray-7);
+  --placeholder-text: var(--gray-6);
 
-    --text-color: var(--gray-8);
-    --faded-text: var(--gray-7);
-    --placeholder-text: var(--gray-6);
+  --icon-color: var(--gray-7);
+  --selected-icon-color: var(--gray-8);
 
-    --icon-color: var(--gray-7);
-    --selected-icon-color: var(--gray-8);
+  --button-hover1: var(--blue-1);
+  --button-hover2: var(--blue-3);
+  --button-active1: var(--blue-2);
+  --button-active2: var(--blue-4);
 
-    --button-hover1: var(--blue-1);
-    --button-hover2: var(--blue-3);
-    --button-active1: var(--blue-2);
-    --button-active2: var(--blue-4);
+  --primary-hollow-button-hover: var(--button-hover1);
+  --primary-hollow-button-active: var(--button-active1);
 
-    --primary-hollow-button-hover: var(--button-hover1);
-    --primary-hollow-button-active: var(--button-active1);
+  --tools-button-hover: var(--button-hover2);
+  --tools-button-active: var(--button-active2);
 
-    // ---- swap ----
-    --tools-button-hover: var(--button-hover2);
-    --tools-button-active: var(--button-active2);
+  --tools-overlay-button-hover: var(--button-hover1);
+  --tools-overlay-button-active: var(--button-active1);
 
-    --tools-overlay-button-hover: var(--button-hover1);
-    --tools-overlay-button-active: var(--button-active1);
-    // ---- swap ----
+  --primary-button: var(--blue-5); 
+  --primary-button-text: var(--gray-1); 
+  --primary-button-hover: var(--blue-6); 
 
-    --primary-button: var(--blue-5); 
-    --primary-button-text: var(--gray-1); 
-    --primary-button-hover: var(--blue-6); 
+  --secondary-button-text: var(--blue-5);
+  --secondary-button-hover: var(--blue-6); 
 
-    --secondary-button-text: var(--blue-5);
-    --secondary-button-hover: var(--blue-6); 
-
-    --box-shadow: var(--gray-6);
-    --document-box-shadow: var(--gray-7);
-    
-    --panel-background: var(--gray-1);
-    
-    --divider: var(--gray-5);
-    --border: var(--gray-5);
-    --focus-border: var(--blue-5);
-    --color-palette-border: var(--gray-8);
-  }
+  --box-shadow: var(--gray-6);
+  --document-box-shadow: var(--gray-7);
+  
+  --panel-background: var(--gray-1);
+  
+  --divider: var(--gray-5);
+  --border: var(--gray-5);
+  --focus-border: var(--blue-5);
+  --color-palette-border: var(--gray-8);
 }
