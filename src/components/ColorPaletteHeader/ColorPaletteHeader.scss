@@ -23,6 +23,18 @@
     white-space: nowrap;
     // flex-grow: 1;
     flex: 1;
+    border-radius: 4px;
+
+    &:first-child {
+      border-bottom-right-radius: 0px;
+      border-top-right-radius: 0px;;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 0px;
+      border-top-left-radius: 0px;
+    }
+
 
     &.active {
       background: var(--primary-hollow-button-active)

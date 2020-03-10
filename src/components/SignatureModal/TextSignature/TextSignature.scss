@@ -26,7 +26,7 @@
   &-text {
     display: flex;
     align-items: center;
-    background: #f8f8f8;
+    background: var(--faded-component-background);
     white-space: nowrap;
     border-radius: 4px;
     padding: 0 8px;
