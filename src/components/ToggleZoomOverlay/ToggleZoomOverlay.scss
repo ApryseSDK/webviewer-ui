@@ -53,10 +53,10 @@
   position: relative;
 
   &:hover {
-    background-color: var(--primary-hollow-button-hover);
+    background-color: var(--view-header-button-hover);
   }
   &.active {
-    background-color: var(--primary-hollow-button-active);
+    background-color: var(--view-header-button-active);
   } 
 
   .toggle-element-button {

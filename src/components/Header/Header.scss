@@ -22,11 +22,11 @@
 
   .Button {
     &:hover {
-      background: var(--primary-hollow-button-hover);
+      background: var(--view-header-button-hover);
     }
 
     &.active {
-      background: var(--primary-hollow-button-active);
+      background: var(--view-header-button-active);
     }
   }
 
