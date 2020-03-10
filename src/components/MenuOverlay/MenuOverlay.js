@@ -114,6 +114,19 @@ class MenuOverlay extends React.PureComponent {
         ref={this.overlay}
       >
         {isMobile && <div className="swipe-indicator" />}
+        {!isFilePickerButtonDisabled &&
+          <div className="row" dataElement="filePickerButton">
+            <div
+              className="MenuItem"
+              onClick={openFilePicker}
+            >
+              <Icon
+                className="MenuIcon"
+                glyph="icon-header-file-picker-line"
+              />
+              <div className="MenuLabel">{t('action.openFile')}</div>
+            </div>
+          </div>}
         {!isIOS &&
           <div className="row">
             <div
@@ -154,19 +167,6 @@ class MenuOverlay extends React.PureComponent {
             <div className="MenuLabel">{t('action.print')}</div>
           </div>
         </div>
-        {!isFilePickerButtonDisabled &&
-          <div className="row" dataElement="filePickerButton">
-            <div
-              className="MenuItem"
-              onClick={openFilePicker}
-            >
-              <Icon
-                className="MenuIcon"
-                glyph="icon-header-file-picker-line"
-              />
-              <div className="MenuLabel">{t('action.openFile')}</div>
-            </div>
-          </div>}
       </div>
     );
   }

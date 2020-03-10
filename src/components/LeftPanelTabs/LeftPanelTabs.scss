@@ -30,11 +30,11 @@
     }
 
     &.active {
-      background: var(--primary-hollow-button-active);
+      background: var(--popup-button-active);
     }
 
     &:hover {
-      background: var(--primary-hollow-button-hover);
+      background: var(--popup-button-hover);
     }
   }
 }
