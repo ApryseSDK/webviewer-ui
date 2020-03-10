@@ -1,0 +1,73 @@
+
+@mixin dark-mode {
+  :root {
+    // dark mode
+    --blue-1: #192530;
+    --blue-2: #1B2B3A;
+    --blue-3: #334250;
+    --blue-4: #334758;
+    --blue-5: #1A4971;
+    --blue-6: #3183C8;
+
+    --gray-0: #000000;
+    --gray-1: #16181C;
+    --gray-2: #21242A;
+    --gray-3: #343A40;
+    --gray-4: #485056;
+    --gray-5: #868E96;
+    --gray-6: #ADB5BD;
+    --gray-7: #CFD4DA;
+    --gray-8: #DEE2E6;
+    --gray-9: #E7EBEE;
+    --gray-10: #F1F3F5;
+    --gray-11: #F8F9FA;
+    --gray-12: #FFFFFF;
+
+    --component-background: var(--gray-2);
+    --panel-background: var(--gray-3);
+    --faded-component-background: var(--gray-1);
+    --box-shadow: var(--gray-5);
+    --document-box-shadow: var(--gray-5);
+    --focus-border: var(--blue-6);
+    --view-header-background: var(--gray-3);
+    --tools-header-background: var(--gray-1);
+    --icon-color: var(--gray-6);
+    --faded-text: var(--gray-6);
+    --text-color: var(--gray-11);
+    --placeholder-text: var(--gray-5);
+    --slider-filled: var(--blue-6);
+    --slider-background: var(--gray-4);
+    --primary-button: var(--blue-6); 
+    --primary-button-text: var(--gray-11); 
+    --secondary-button-text: var(--blue-6);
+    --divider: var(--gray-5);
+    --border: var(--gray-5);
+
+
+    // ------- TODO
+    --selected-icon-color: var(--gray-8);
+    --top-header-icon-active-fill: var(--blue-6);
+    --document-background-color: var(--gray-2);
+    --modal-negative-space: rgba(255, 255, 255, 0.8);
+
+    --button-hover1: var(--blue-1);
+    --button-hover2: var(--blue-3);
+    --button-active1: var(--blue-2);
+    --button-active2: var(--blue-4);
+
+    --primary-hollow-button-hover: var(--button-hover1);
+    --primary-hollow-button-active: var(--button-active1);
+
+    // ---- swap ----
+    --tools-button-hover: var(--button-hover2);
+    --tools-button-active: var(--button-active2);
+
+    --tools-overlay-button-hover: var(--button-hover1);
+    --tools-overlay-button-active: var(--button-active1);
+    // ---- swap ----
+
+    --primary-button-hover: var(--blue-6); 
+    --secondary-button-hover: var(--blue-6); 
+    --color-palette-border: var(--gray-8);
+  }
+}

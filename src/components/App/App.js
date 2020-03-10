@@ -42,8 +42,18 @@ import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
 
 import actions from 'actions';
+// const { parse } = require('css-variables-parser');
 
 import './App.scss';
+
+import Appstyle from '!!raw-loader!./App.scss';
+
+import { parse } from 'css-variables-parser';
+
+const variables = parse(':root { --color-primary: red; --co33lor-primary: red; }', {});
+console.log(variables); // { 'color-primary': 'red' }
+
+
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
