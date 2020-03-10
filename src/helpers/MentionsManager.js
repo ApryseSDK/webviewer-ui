@@ -49,6 +49,7 @@ class MentionsManager {
      * @ignore
      */
     this.idMentionDataMap = {};
+    this.allowedTrailingCharacters = [' '];
 
     annotManager.on('annotationChanged', (annotations, action, { imported }) => {
       if (imported || !annotations.length || !this.getUserData().length) {
@@ -163,7 +164,7 @@ class MentionsManager {
     }
 
     userData.forEach(({ email, value, type }) => {
-      if (content.includes(`@${value}`)) {
+      if (this.includesMention(content, value)) {
         result.mentions.push({
           email,
           value,
@@ -176,6 +177,21 @@ class MentionsManager {
     });
 
     return result;
+  }
+
+  includesMention(content, value) {
+    value = `@${value}`;
+    const startIndex = content.indexOf(value);
+
+    if (startIndex === -1) {
+      return;
+    }
+
+    const nextChar = content[startIndex + value.length];
+    const isEndOfString = typeof nextChar === 'undefined';
+    const allowedChars = this.getAllowedTrailingCharacters();
+
+    return isEndOfString || allowedChars === '*' || allowedChars.includes(nextChar);
   }
 
   isSameMention(prevMention, currMention) {
@@ -194,6 +210,14 @@ class MentionsManager {
 
   getUserData() {
     return selectors.getUserData(this.store.getState());
+  }
+
+  setAllowedTrailingCharacters(chars) {
+    this.allowedTrailingCharacters = chars;
+  }
+
+  getAllowedTrailingCharacters() {
+    return this.allowedTrailingCharacters;
   }
 
   on(eventName, fn) {
