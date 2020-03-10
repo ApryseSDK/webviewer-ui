@@ -67,13 +67,13 @@ const setColors = (toh, toa, th, ta) => {
 };
 
 const updateColors = () => {
-  if (window.matchMedia('(max-width: 640px)').matches) {
-    setColors(buttonHover2, actionButton2, buttonHover1, actionButton1);
-  } else if (window.matchMedia('(max-width: 900px)').matches) {
-    setColors(buttonHover2, actionButton2, buttonHover1, actionButton1);
-  } else {
-    setColors(buttonHover1, actionButton1, buttonHover2, actionButton2);
-  }
+  // if (window.matchMedia('(max-width: 640px)').matches) {
+  //   setColors(buttonHover2, actionButton2, buttonHover1, actionButton1);
+  // } else if (window.matchMedia('(max-width: 900px)').matches) {
+  //   setColors(buttonHover2, actionButton2, buttonHover1, actionButton1);
+  // } else {
+  //   setColors(buttonHover1, actionButton1, buttonHover2, actionButton2);
+  // }
 };
 updateColors();
 

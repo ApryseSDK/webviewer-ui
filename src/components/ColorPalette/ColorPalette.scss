@@ -46,7 +46,7 @@
         }
 
         &.border{
-          border: 1px solid var(--border);
+          border: 1px solid var(--white-color-palette-border);
         }
 
         @include tablet-and-mobile  {
