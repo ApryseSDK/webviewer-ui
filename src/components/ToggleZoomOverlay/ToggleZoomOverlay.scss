@@ -3,7 +3,7 @@
 .zoom-overlay {
   display: flex;
   align-items: center;
-  background-color: var(--faded-component-background);
+  background-color: var(--toggle-zoom-overlay-background);
   border-radius: 4px;
   height: 28px;
   margin: 0 2px;
@@ -11,6 +11,10 @@
   .Button {
     margin: 0px 1px;
     height: 100%;
+
+    &:last-child {
+      margin-right: 0px;
+    }
   }
 
   .toggle-element-button {
