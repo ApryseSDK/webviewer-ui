@@ -48,7 +48,9 @@ const AutoResizeTextarea = React.forwardRef(
           textareaRef.current = el;
           forwardedRef(el);
         }}
-        onChange={onChange}
+        onChange={e => {
+          onChange(e.target.value);
+        }}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
         onBlur={onBlur}

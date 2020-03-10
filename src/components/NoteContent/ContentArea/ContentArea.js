@@ -34,12 +34,12 @@ const ContentArea = ({
 
     const hasEdited = textAreaValue !== contents;
     if (hasEdited) {
+      setIsEditing(false);
+
       core.setNoteContents(annotation, textAreaValue);
       if (annotation instanceof window.Annotations.FreeTextAnnotation) {
         core.drawAnnotationsFromList([annotation]);
       }
-
-      setIsEditing(false);
     }
   };
 

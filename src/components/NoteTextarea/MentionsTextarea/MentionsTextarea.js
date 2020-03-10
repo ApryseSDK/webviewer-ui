@@ -25,7 +25,7 @@ const MentionsTextarea = React.forwardRef(
       placeholder = '',
       userData,
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const renderSuggestion = (entry, search, highlightedDisplay) => (
       <React.Fragment>
@@ -40,7 +40,9 @@ const MentionsTextarea = React.forwardRef(
           className="mention"
           inputRef={forwardedRef}
           value={value}
-          onChange={onChange}
+          onChange={(fakeEvent, _, plainTextValue) => {
+            onChange(plainTextValue);
+          }}
           onKeyDown={onKeyDown}
           onBlur={onBlur}
           onFocus={onFocus}
@@ -52,12 +54,11 @@ const MentionsTextarea = React.forwardRef(
             data={[...userData.map(data => ({ ...data, display: data.value }))]}
             displayTransform={(_, display) => `@${display}`}
             renderSuggestion={renderSuggestion}
-            markup="@__display__"
           />
         </MentionsInput>
       </div>
     );
-  },
+  }
 );
 
 MentionsTextarea.propTypes = propTypes;

@@ -52,8 +52,8 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     }
   };
 
-  const handleChange = e => {
-    props.onChange(e.target.value);
+  const handleChange = value => {
+    props.onChange(value);
   };
 
   const textareaProps = {
