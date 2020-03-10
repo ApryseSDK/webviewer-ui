@@ -6,12 +6,4 @@
     height: 32px;
     border-radius: 4px;
     cursor: pointer;
-
-    &:hover {
-      background: var(--primary-hollow-button-hover);
-    }
-
-    .Button:hover {
-      background: none;
-    }
   }
