@@ -2,21 +2,33 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 /**
- * typedef {Object} mention
+ * typedef {Object} WebViewerInstance.MentionsManager.Mention
  * @property {string} email The email of the mentioned person. This is passed from setUserData.
  * @property {string} value The value(display name) of the mentioned person. This is passed from setUserData.
  * @property {string} type The type of the mentioned persion. This is passed from setUserData.
- * @property {string} id The id of the annotation.
- * @ignore
+ * @property {string} id The id of the annotation in which the contents contain the mentions.
  */
 
 /**
  * @typedef {Object} mentionData
- * @property {mention} mentions an array of mentions that an annotation contains
+ * @property {WebViewerInstance.MentionsManager.Mention} mentions an array of mentions that an annotation contains
  * @property {string} contentWithoutMentions the content of an annotation, but without mentions
  * @ignore
  */
 
+/**
+ * @typedef {Object} WebViewerInstance.MentionsManager.UserData
+ * @property {string} value The display name of the user, which will be displayed in the suggestion overlay.
+ * @property {string} [id] The unique id of the user. Default to `value`.
+ * @property {string} [email] The email of the user, which will be displayed under `value` in the suggestion overlay, if present.
+ */
+
+/**
+ * @class
+ * @name MentionsManager
+ * @memberof WebViewerInstance
+ * @extends EventHandler
+ */
 class MentionsManager {
   constructor(store, annotManager) {
     this.store = store;
@@ -204,18 +216,75 @@ class MentionsManager {
     return true;
   }
 
+  /**
+   * Sets the user data that will be displayed in the suggestions overlay when an @ is entered in the textarea.
+   * @method WebViewerInstance.MentionsManager#setUserData
+   * @param {WebViewerInstance.MentionsManager.UserData[]} userData An array of user data
+   * @example
+WebViewer(...)
+  .then(function(instance) {
+    instance.mentions.setUserData([
+      {
+        value: 'John Doe',
+      },
+      {
+        value: 'Jane Doe',
+        email: 'jDoe@gmail.com'
+      }
+    ]);
+  });
+   */
   setUserData(userData) {
     this.store.dispatch(actions.setUserData(userData));
   }
 
+  /**
+   * Gets the user data
+   * @method WebViewerInstance.MentionsManager#getUserData
+   * @returns {WebViewerInstance.MentionsManager.UserData[]} An array of user data
+   */
   getUserData() {
     return selectors.getUserData(this.store.getState());
   }
 
+  /**
+   * Sets the characters that can follow a mention, while not invalidating it
+   * By default, a mention can only be followed by a sapce, or is located at the end of the string
+   * @method WebViewerInstance.MentionsManager#setAllowedTrailingCharacters
+   * @param {string[]|'*'} chars An array of characters. If `*` is passed, then a mention can be followed by any characters
+   * @example
+WebViewer(...)
+  .then(function(instance) {
+    instance.mentions.setUserData([
+      {
+        value: 'John Doe',
+      },
+    ]);
+
+    // this is considered as a mention, because `@John Doe` is at the end of the string
+    'Hello, @John Doe'
+
+    // this is considered as a mention, because `@John Doe` is followed by a space
+    'Hello, @John Doe How are you?'
+
+    // this is NOT considered as a mention, because `@John Doe` is followed by a comma
+    '@John Doe, Hello!'
+
+    instance.mentions.setAllowedTrailingCharacters([' ', ',']);
+
+    // this is now considered as a mention, because comma is an allowed trailing character
+    '@John Doe, Hello!'
+  });
+   */
   setAllowedTrailingCharacters(chars) {
     this.allowedTrailingCharacters = chars;
   }
 
+  /**
+   * Gets the allowed trailing characters
+   * @method WebViewerInstance.MentionsManager#getAllowedTrailingCharacters
+   * @returns {string[]|'*'} An array of trailing characters, or '*'
+   */
   getAllowedTrailingCharacters() {
     return this.allowedTrailingCharacters;
   }
@@ -250,6 +319,18 @@ class MentionsManager {
     }
 
     return this;
+  }
+
+  one(eventName, fn) {
+    const origFn = fn;
+
+    fn = (...args) => {
+      this.off(eventName, fn);
+
+      origFn.apply(this, args);
+    };
+
+    return this.on(eventName, fn);
   }
 
   trigger(eventName, ...data) {
@@ -287,5 +368,14 @@ class MentionsManager {
     this.off(...args);
   }
 }
+
+/**
+ * Triggered when a mention or mentions have been changed (added, deleted, modified).
+ * Attach like instance.mentions.on('mentionChanged', callback)
+ * @name WebViewerInstance.MentionsManager#mentionChanged
+ * @event
+ * @param {WebViewerInstance.MentionsManager.Mention} mentions The mentions that were changed
+ * @param {'add'|'modify'|'delete'} action The action that occurred (add, delete, modify)
+ */
 
 export default MentionsManager;

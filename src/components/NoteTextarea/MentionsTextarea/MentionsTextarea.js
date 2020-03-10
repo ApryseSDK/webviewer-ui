@@ -34,6 +34,14 @@ const MentionsTextarea = React.forwardRef(
       </React.Fragment>
     );
 
+    const data = [
+      ...userData.map(data => ({
+        ...data,
+        display: data.value,
+        id: data.id || data.value,
+      })),
+    ];
+
     return (
       <div onMouseDown={e => e.stopPropagation()}>
         <MentionsInput
@@ -51,7 +59,7 @@ const MentionsTextarea = React.forwardRef(
         >
           <Mention
             trigger="@"
-            data={[...userData.map(data => ({ ...data, display: data.value }))]}
+            data={data}
             displayTransform={(_, display) => `@${display}`}
             renderSuggestion={renderSuggestion}
           />
