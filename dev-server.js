@@ -40,14 +40,29 @@ app.get('/sample-url', (req, res) => {
   );
 });
 
-app.listen(3000, '0.0.0.0', err => {
+app.listen(3300, '0.0.0.0', err => {
   if (err) {
     console.error(err);
   } else {
     // eslint-disable-next-line
-    console.info(`Listening at localhost:3000 (http://${ip.address()}:3000)`);
-    opn(
-      'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1',
-    );
+    console.info(`Listening at localhost:3300 (http://${ip.address()}:3300)`);
+
+    const searchParams = new URLSearchParams({
+      d: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+      a: 1,
+      config: 'http://localhost:3000/Webviewer/hive-config.js',
+      css: 'http://localhost:3000/Webviewer/dark-overrides.css',
+      disabledElements: [
+        'outlinesPanelButton',
+        'signatureToolButton',
+        'calloutToolButton',
+        'stampToolButton',
+        'pageNavOverlay',
+        'notePopupEdit',
+      ],
+      fullAPI: false,
+      enableMeasurement: true,
+    });
+    opn(`http://localhost:3300/#${searchParams}`);
   }
 });

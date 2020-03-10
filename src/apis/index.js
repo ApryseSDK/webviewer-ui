@@ -128,6 +128,9 @@ import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 
+import * as HiveApi from './hiveApi';
+import hiveApi from '../helpers/hiveApi';
+
 export default store => {
   window.readerControl = {
     docViewer: window.docViewer,
@@ -265,5 +268,9 @@ export default store => {
     updateOutlines: updateOutlines(store),
     getBBAnnotManager,
     selectors: getSelectors(store),
+
+    // Custom Hive API
+    hiveApi,
+    setAtMentions: HiveApi.setAtMentions(store),
   };
 };
