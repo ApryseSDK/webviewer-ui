@@ -7,8 +7,13 @@
   min-width: 300px;
   height: 36px;
   background: var(--view-header-background);
-  border-bottom: solid 1px var(--border);
+  // border-bottom: solid 1px var(--border);
+  border-bottom: solid 1px transparent;
   // box-sizing: content-box !important;
+
+  &.border {
+    border-bottom: solid 1px var(--border);
+  }
 
 
   &:not(.Tools) {

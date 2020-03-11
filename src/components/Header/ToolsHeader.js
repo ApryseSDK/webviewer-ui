@@ -31,7 +31,6 @@ class ToolsHeader extends React.PureComponent {
     if (isDisabled || !isOpen) {
       return null;
     }
-    console.log('isToolsOverlayOpen', isToolsOverlayOpen);
 
     return (
       <div>
