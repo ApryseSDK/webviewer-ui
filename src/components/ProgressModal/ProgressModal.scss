@@ -3,6 +3,7 @@
 
 .ProgressModal {
   @extend %modal;
+  background: var(--spinner-negative-space);
 
   &.open {
     opacity: 1;
