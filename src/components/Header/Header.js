@@ -26,14 +26,16 @@ class Header extends React.PureComponent {
     }
 
     return (
-      <div
-        className={classNames({
-          Header: true,
-          border: !isToolsHeaderOpen,
-        })}
-        data-element="header"
-      >
-        <HeaderItems items={activeHeaderItems} />
+      <div>
+        <div
+          className={classNames({
+            Header: true,
+          })}
+          data-element="header"
+        >
+          <HeaderItems items={activeHeaderItems} />
+        </div>
+        {!isToolsHeaderOpen && <div className="view-header-border" />}
       </div>
     );
   }
