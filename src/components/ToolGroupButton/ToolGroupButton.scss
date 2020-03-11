@@ -13,9 +13,6 @@
   }
 
   &.active{
-    .Button {
-      background: none;
-    }
     // hack
     &.signature {
       svg {

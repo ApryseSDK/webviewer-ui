@@ -23,6 +23,8 @@
   --component-background: var(--gray-2);
   --panel-background: var(--gray-3);
   --faded-component-background: var(--gray-1);
+  --signature-draw-background: var(--gray-3);
+  --toggle-zoom-overlay-background: var(--gray-4);
   --box-shadow: var(--gray-5);
   --document-box-shadow: var(--gray-5);
   --focus-border: var(--blue-6);
@@ -34,41 +36,48 @@
   --placeholder-text: var(--gray-5);
   --slider-filled: var(--blue-6);
   --slider-background: var(--gray-4);
+  --badge-fill: var(--gray-4);
+  --badge-text-color: var(--gray-12);
   --primary-button: var(--blue-6); 
   --primary-button-text: var(--gray-11); 
   --secondary-button-text: var(--blue-6);
   --divider: var(--gray-5);
   --border: var(--gray-5);
   --selected-icon-color: var(--gray-8);
-
-
-
-
-
-
-
-
-
   --top-header-icon-active-fill: var(--blue-6);
   --document-background-color: var(--gray-2);
-  --modal-negative-space: rgba(255, 255, 255, 0.8);
 
   --button-hover1: var(--blue-1);
-  --button-hover2: var(--blue-3);
   --button-active1: var(--blue-2);
+
+
+  --button-hover2: var(--blue-3);
   --button-active2: var(--blue-4);
 
+  
   --view-header-button-hover: var(--button-hover1);
   --view-header-button-active: var(--button-active1);
+
+
+  --popup-button-hover: var(--blue-3);
+  --popup-button-active: var(--blue-4);
+
 
   --tools-button-hover: var(--button-hover2);
   --tools-button-active: var(--button-active2);
 
-  --tools-overlay-button-hover: var(--button-hover1);
-  --tools-overlay-button-active: var(--button-active1);
+  --tools-overlay-button-hover: var(--button-hover2);
+  --tools-overlay-button-active: var(--button-active2);
 
 
-  --primary-button-hover: var(--blue-6); 
-  --secondary-button-hover: var(--blue-6); 
-  --color-palette-border: var(--gray-8);
+  --primary-button-hover: var(--blue-5); 
+
+
+  --secondary-button-hover: var(--blue-5); 
+
+  
+  --color-palette-border: var(--gray-7);
+
+  --modal-negative-space: rgba(0, 0, 0, 0.30);
+  --white-color-palette-border: transparent;
 }

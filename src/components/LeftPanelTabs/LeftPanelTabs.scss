@@ -27,12 +27,12 @@
       height: 19px;
     }
 
-    &.active {
-      background: var(--popup-button-active);
-    }
-
     &:hover {
       background: var(--popup-button-hover);
+    }
+
+    &.active {
+      background: var(--popup-button-active);
     }
   }
 

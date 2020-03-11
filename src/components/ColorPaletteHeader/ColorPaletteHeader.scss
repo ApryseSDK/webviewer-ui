@@ -35,13 +35,12 @@
       border-top-right-radius: 4px;
     }
 
+    &:hover {
+      background: var(--popup-button-hover);
+    }
 
     &.active {
       background: var(--popup-button-active)
-    }
-
-    &:hover {
-      background: var(--popup-button-hover);
     }
   }
 

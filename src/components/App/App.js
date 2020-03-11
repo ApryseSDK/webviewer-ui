@@ -54,10 +54,15 @@ const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900
 const desktopListener = window.matchMedia('(min-width: 901px)');
 
 const root = document.documentElement;
-const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
-const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
-const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
-const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
+// const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
+// const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
+// const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
+// const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
+
+// const th = getComputedStyle(root).getPropertyValue('--tools-button-hover');
+// const ta = getComputedStyle(root).getPropertyValue('--tools-button-active');
+// const toh = getComputedStyle(root).getPropertyValue('--tools-overlay-button-hover');
+// const toa = getComputedStyle(root).getPropertyValue('--tools-overlay-button-active');
 
 const setColors = (toh, toa, th, ta) => {
   root.style.setProperty('--tools-overlay-button-hover', toh);
@@ -137,7 +142,6 @@ const App = ({ removeEventHandlers }) => {
         <ViewControlsOverlay />
         <RedactionOverlay />
         <MenuOverlay />
-        
         <ZoomOverlay />
         <MeasurementOverlay />
         <AnnotationContentOverlay />

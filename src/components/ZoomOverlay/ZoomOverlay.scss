@@ -28,10 +28,6 @@
       padding-right: 19px;
       cursor: pointer;
 
-      div:hover {
-        background: none;
-      }
-
       &:hover {
         background: var(--popup-button-hover);
       }
@@ -61,10 +57,6 @@
   }
 
   .OverlayItem {
-    div:hover {
-      background: none;
-    }
-
     &:hover {
       background: var(--popup-button-hover);
     }    

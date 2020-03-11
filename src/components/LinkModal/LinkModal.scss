@@ -95,12 +95,12 @@
           border-top-right-radius: 4px;
         }
     
-        &.selected {
-          background: var(--popup-button-active);
-        }
-
         &:hover {
           background: var(--popup-button-hover);
+        }
+
+        &.selected {
+          background: var(--popup-button-active);
         }
       }
 

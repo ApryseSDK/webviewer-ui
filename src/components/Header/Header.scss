@@ -30,14 +30,6 @@
     }
   }
 
-  // .toggle-element-button {
-  //   &:hover {
-  //     .Button:hover {
-  //       background: none;
-  //     } 
-  //   }
-  // }
-
   &.Tools {
     @include desktop {
       padding-top: 1px; // top lowered 1px due to the border on the header above.
@@ -52,17 +44,13 @@
       left: 0;
     }
 
-    .Button,.tool-group-button {
+    .Button, .tool-group-button {
       &:hover {
         background: var(--tools-button-hover);     
       }
 
       &.active {
         background: var(--tools-button-active);
-      }
-
-      .Button:hover {
-        background: none;
       }
     }
   }

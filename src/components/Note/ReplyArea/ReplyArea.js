@@ -100,7 +100,7 @@ const ReplyArea = ({ annotation }) => {
         className="reply-button"
         onClick={e => postReply(e)}
       >
-        Post
+        {t('action.post')}
       </div>
     </div>
   );

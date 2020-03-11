@@ -522,7 +522,7 @@ class SearchOverlay extends React.PureComponent {
         </div>
         <div className="divider" />
         <div className="footer">
-          {<div>{results.length} results found</div>}
+          {<div>{results.length} {t('message.numResultsFound')}</div>}
           <div className="buttons">
             <div className="button" onClick={this.onClickPrevious}>
               <Icon

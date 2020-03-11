@@ -22,13 +22,16 @@
 
   --component-background: var(--gray-0);
   --faded-component-background: var(--gray-2);
+  --signature-draw-background: var(--gray-2);  
+  --toggle-zoom-overlay-background: var(--gray-2);
   --document-background-color: var(--gray-2);
   --view-header-background: var(--gray-1);
   --panel-background: var(--gray-1);
   --tools-header-background: var(--gray-3);
   --slider-filled: var(--blue-5);
   --slider-background: var(--gray-4);
-  --modal-negative-space: rgba(255, 255, 255, 0.8);
+  --badge-fill: var(--gray-8);
+  --badge-text-color: var(--gray-0);
   --top-header-icon-active-fill: var(--blue-6);
 
   --text-color: var(--gray-8);
@@ -45,6 +48,9 @@
 
   --view-header-button-hover: var(--button-hover1);
   --view-header-button-active: var(--button-active1);
+
+  --popup-button-hover: var(--blue-1);
+  --popup-button-active: var(--blue-2);
 
   --tools-button-hover: var(--button-hover2);
   --tools-button-active: var(--button-active2);
@@ -68,4 +74,8 @@
   --border: var(--gray-5);
   --focus-border: var(--blue-5);
   --color-palette-border: var(--gray-8);
+
+  --modal-negative-space: rgba(0, 0, 0, 0.3);  
+
+  --white-color-palette-border: var(--border);
 }
