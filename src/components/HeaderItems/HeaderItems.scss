@@ -29,6 +29,7 @@
     height: 20px;
     margin: 0 6px;
     background: var(--divider);
+    flex-shrink: 0;
 
     @include mobile {
       margin: 0 4px;

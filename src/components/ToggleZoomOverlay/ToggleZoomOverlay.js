@@ -8,10 +8,19 @@ import ActionButton from 'components/ActionButton';
 import { zoomTo, zoomIn, zoomOut } from 'helpers/zoom';
 import selectors from 'selectors';
 import actions from 'actions';
+import useMedia from 'hooks/useMedia';
 
 import './ToggleZoomOverlay.scss';
 
 const ToggleZoomOverlay = () => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
   const [isActive] = useSelector(
     state => [selectors.isElementOpen(state, 'zoomOverlay')],
     shallowEqual,
@@ -72,37 +81,38 @@ const ToggleZoomOverlay = () => {
 
   return (
     <div className="zoom-overlay">
-      <div className="ToggleZoomOverlay">
-        <div
-          className={classNames({
-            OverlayContainer: true,
-            active: isActive,
-          })}
-        >
+      {!isMobile &&
+        <div className="ToggleZoomOverlay">
           <div
-            className="OverlayText"
-            onClick={() => dispatch(actions.toggleElement('zoomOverlay'))}
+            className={classNames({
+              OverlayContainer: true,
+              active: isActive,
+            })}
           >
-            <input
-              type="text"
-              className="textarea"
-              value={value}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-              onBlur={onBlur}
-              tabIndex={-1}
-              style={{ width: inputWidth }}
+            <div
+              className="OverlayText"
+              onClick={() => dispatch(actions.toggleElement('zoomOverlay'))}
+            >
+              <input
+                type="text"
+                className="textarea"
+                value={value}
+                onChange={onChange}
+                onKeyPress={onKeyPress}
+                onBlur={onBlur}
+                tabIndex={-1}
+                style={{ width: inputWidth }}
+              />
+              <span>%</span>
+            </div>
+            <ToggleElementButton
+              className="OverlayButton"
+              img="icon-chevron-down"
+              element="zoomOverlay"
+              dataElement="zoomOverlay"
             />
-            <span>%</span>
           </div>
-          <ToggleElementButton
-            className="OverlayButton"
-            img="icon-chevron-down"
-            element="zoomOverlay"
-            dataElement="zoomOverlay"
-          />
-        </div>
-      </div>
+        </div>}
       <ActionButton
         img="icon-header-zoom-out-line"
         onClick={zoomOut}
