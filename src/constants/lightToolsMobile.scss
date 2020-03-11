@@ -1,7 +1,10 @@
 :root {
-  --tools-button-hover: var(--button-hover1);
-  --tools-button-active: var(--button-active1);
+  --tools-button-hover: var(--blue-1);
+  --tools-button-active: var(--blue2);
 
-  --tools-overlay-button-hover: var(--button-hover2);
-  --tools-overlay-button-active: var(--button-active2);
+  --tools-overlay-button-hover: var(--blue-3);
+  --tools-overlay-button-active: var(--blue-4);
+
+  --tools-header-background: var(--gray-0);
+  --tools-overlay-background: var(--gray-3);
 }

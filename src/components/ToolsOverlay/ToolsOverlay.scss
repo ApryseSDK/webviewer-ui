@@ -19,6 +19,7 @@
   }
 
   @include tablet-and-mobile {
+    border-bottom: solid 1px var(--border);
     position: relative;
     &.closed {
       position: absolute;
@@ -30,7 +31,7 @@
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
 
-      border-bottom: 10px solid var(--tools-header-background);
+      border-bottom: 10px solid var(--tools-overlay-background);
       position: absolute;
 
       transform: translateX(50%);
@@ -60,7 +61,7 @@
     align-items: center;
     flex-direction: column;
     border-radius: 4px;
-    background: var(--component-background);
+    background: var(--tools-overlay-background);
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
     padding: 0px 4px;
     padding-top: 4px;
@@ -73,8 +74,7 @@
       min-height: 52px;
       padding-top: 3px;
       padding-bottom: 3px;
-      background: var(--tools-header-background);
-      border-radius: 0px 0px 28px 28px;
+      border-radius: 0px;
     }
 
     .tool-buttons-container {
@@ -104,7 +104,7 @@
 
     .Close-Button {
       padding: 1px;
-      background: var(--component-background);
+      background: var(--tools-overlay-background);
       border-radius: 100000px;
       box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
       cursor: pointer;

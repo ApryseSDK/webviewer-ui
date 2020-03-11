@@ -113,7 +113,7 @@ class ToolGroupButton extends React.PureComponent {
     const { toolName } = this.state;
     const img = this.props.img
       ? this.props.img
-      : toolButtonObjects[toolName].img;
+      : toolButtonObjects[toolName]?.img;
     const color =
       isActive && !this.props.img && iconColor
         ? getToolStyles(toolName)[iconColor] &&

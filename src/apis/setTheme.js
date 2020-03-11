@@ -1,9 +1,7 @@
 import { parse } from 'css-variables-parser';
 import lightModeString from '!!raw-loader!../constants/light.scss';
-import lightToolsDesktopString from '!!raw-loader!../constants/lightToolsDesktop.scss';
 import lightToolsMobileString from '!!raw-loader!../constants/lightToolsMobile.scss';
 import darkModeString from '!!raw-loader!../constants/dark.scss';
-import darkToolsDesktopString from '!!raw-loader!../constants/darkToolsDesktop.scss';
 import darkToolsMobileString from '!!raw-loader!../constants/darkToolsMobile.scss';
 // import darkVariables from '!!raw-loader!../constants/dark.scss';
 
@@ -49,14 +47,7 @@ WebViewer(...)
  */
 
 export default theme => {
-  // const isPresetTheme = typeof theme === 'string';
-  // const isCustomizedTheme = typeof theme === 'object';
-
-  // if (isPresetTheme) {
-    setPresetTheme(theme);
-  // } else if (isCustomizedTheme) {
-  //   setTheme(theme);
-  // }
+  setPresetTheme(theme);
 };
 
 
@@ -74,21 +65,25 @@ const setVariables = (themeVarString = '') => {
 const updateToolColors = () => {
   if (window.matchMedia('(max-width: 640px)').matches) {
     if (chosenTheme === 'light') {
+      setVariables(lightModeString);
       setVariables(lightToolsMobileString);
     } else if (chosenTheme === 'dark') {
+      setVariables(darkModeString);
       setVariables(darkToolsMobileString);
     }
   } else if (window.matchMedia('(max-width: 900px)').matches) {
     if (chosenTheme === 'light') {
+      setVariables(lightModeString);
       setVariables(lightToolsMobileString);
     } else if (chosenTheme === 'dark') {
+      setVariables(darkModeString);
       setVariables(darkToolsMobileString);
     }
   } else {
     if (chosenTheme === 'light') {
-      setVariables(lightToolsDesktopString);
+      setVariables(lightModeString);
     } else if (chosenTheme === 'dark') {
-      setVariables(darkToolsDesktopString);
+      setVariables(darkModeString);
     }
   }
 };
@@ -122,29 +117,4 @@ const setPresetTheme = theme => {
     console.error(`${theme} is not one of: light, dark`);
   }
 };
-
-setPresetTheme('light');
-
-const setTheme = theme => {
-  const keyToCSSVarMap = {
-    primary: '--primary-color',
-    secondary: '--secondary-color',
-    border: '--border-color',
-    buttonHover: '--button-hover-color',
-    buttonActive: '--button-active-color',
-    text: '--text-color',
-    icon: '--icon-color',
-    iconActive: '--icon-active-color',
-  };
-
-  Object.keys(theme).forEach(key => {
-    const cssVar = keyToCSSVarMap[key];
-    if (cssVar) {
-      const color = theme[key];
-      document.body.style.setProperty(cssVar, color);
-    } else {
-      console.warn(`${key} is not valid, please make sure properties are a subset of:`);
-      console.warn(`primary, secondary, text, buttonHover, buttonActive and icon`);
-    }
-  });
-};
+// setPresetTheme('light');

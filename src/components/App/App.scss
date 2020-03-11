@@ -1,8 +1,7 @@
 @import '../../constants/styles';
 @import '../../constants/font.scss';
 @import '../../constants/light.scss';
-@import '../../constants/lightToolsDesktop.scss';
-// @import '../../constants/dark.scss';
+@import '../../constants/dark.scss';
 
 * {
   &::-webkit-scrollbar {
@@ -22,7 +21,7 @@
     background-color: var(--scrollbar-color);
     border-top: 2px solid transparent;
 
-    // breaks textSignature scroll
+    // breaks horizontal scroll
     // border-bottom: 2px solid transparent;
     // background-clip: padding-box;    
   }

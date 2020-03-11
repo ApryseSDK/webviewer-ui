@@ -25,9 +25,9 @@
   --signature-draw-background: var(--gray-2);  
   --toggle-zoom-overlay-background: var(--gray-2);
   --document-background-color: var(--gray-2);
-  --view-header-background: var(--gray-1);
+  
   --panel-background: var(--gray-1);
-  --tools-header-background: var(--gray-3);
+  
   --slider-filled: var(--blue-5);
   --slider-background: var(--gray-4);
   --badge-fill: var(--gray-8);
@@ -41,13 +41,8 @@
   --icon-color: var(--gray-7);
   --selected-icon-color: var(--gray-8);
 
-  --button-hover1: var(--blue-1);
-  --button-hover2: var(--blue-3);
-  --button-active1: var(--blue-2);
-  --button-active2: var(--blue-4);
-
-  --view-header-button-hover: var(--button-hover1);
-  --view-header-button-active: var(--button-active1);
+  --view-header-button-hover: var(--blue-1);
+  --view-header-button-active: var(--blue-2);
 
   --popup-button-hover: var(--blue-1);
   --popup-button-active: var(--blue-2);
@@ -77,4 +72,14 @@
   --list-separator-color: var(--gray-7);
   --scrollbar-color: var(--gray-5);
   --note-box-shadow: var(--box-shadow);
+
+  --tools-header-background: var(--gray-3);
+  --view-header-background: var(--gray-1);
+  --tools-overlay-background: var(--gray-0);
+
+  --tools-button-hover: var(--blue-3);
+  --tools-button-active: var(--blue-4);
+
+  --tools-overlay-button-hover: var(--blue-1);
+  --tools-overlay-button-active: var(--blue-2);
 }
