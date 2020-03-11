@@ -115,7 +115,11 @@
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
     "measurementToolsButton": "Инструменты для замерения",
-    "calibration": "калибровка"
+    "calibration": "калибровка",
+    "searchPanel": "Поиск",
+    "toolsHeader": "инструменты",
+    "stickyToolsButton": "Инструменты комментариев",
+    "freeTextToolsButton": "Бесплатные текстовые инструменты"
   },
   "message": {
     "badDocument": "Произошла ошибка при загрузке документа. Документ содержит ошибки или недостоверный.",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} страниц",
     "processing": "Обработка документа...",
     "searching": "Поиск...",
-    "searchPlaceholder": "Поиск комментарий...",
     "signHere": "Распишетесь здесь",
     "insertTextHere": "Вставьте текст здесь",
     "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",
     "enterMeasurement": "Введите измерение между двумя точками",
-    "linkURLorPage": "Ссылка URL или страница"
+    "linkURLorPage": "Ссылка URL или страница",
+    "searchCommentsPlaceholder": "Поиск комментариев",
+    "searchDocumentPlaceholder": "Искать документ"
   },
   "option": {
     "annotationColor": {

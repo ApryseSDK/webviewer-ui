@@ -115,7 +115,11 @@
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
     "measurementToolsButton": "測定ツール",
-    "calibration": "較正"
+    "calibration": "較正",
+    "searchPanel": "探す",
+    "stickyToolsButton": "コメントツール",
+    "freeTextToolsButton": "フリーテキストツール",
+    "toolsHeader": "道具"
   },
   "message": {
     "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} ページ",
     "processing": "処理中...",
     "searching": "検索中...",
-    "searchPlaceholder": "コメントを検索...",
     "signHere": "ここに署名",
     "insertTextHere": "ここにテキストを挿入",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが受け入れられます",
     "enterMeasurement": "2点間の測定値を入力します",
-    "linkURLorPage": "リンクURLまたはページ"
+    "linkURLorPage": "リンクURLまたはページ",
+    "searchCommentsPlaceholder": "コメントを検索",
+    "searchDocumentPlaceholder": "ドキュメントを検索"
   },
   "option": {
     "annotationColor": {

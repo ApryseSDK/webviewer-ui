@@ -115,7 +115,11 @@
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
     "measurementToolsButton": "測量工具",
-    "calibration": "校準"
+    "calibration": "校準",
+    "searchPanel": "搜索",
+    "freeTextToolsButton": "自由文本工具",
+    "toolsHeader": "工具類",
+    "stickyToolsButton": "評論工具"
   },
   "message": {
     "badDocument": "無法載入文件。此文件已損壞或無效。",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} 頁",
     "processing": "正在處理...",
     "searching": "正在搜尋...",
-    "searchPlaceholder": "搜尋評論...",
     "signHere": "在這裡簽名",
     "insertTextHere": "在這裡插入文字",
     "imageSignatureAcceptedFileTypes": "僅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在兩點之間輸入測量值",
-    "linkURLorPage": "鏈接網址或頁面"
+    "linkURLorPage": "鏈接網址或頁面",
+    "searchDocumentPlaceholder": "搜索文件",
+    "searchCommentsPlaceholder": "搜索評論"
   },
   "option": {
     "annotationColor": {
@@ -223,8 +228,8 @@
       "scale": "比例"
     },
     "styleOption": {
-      "regular": "定期",
       "style": "樣式",
+      "regular": "定期",
       "cloudy": "多雲的"
     },
     "slider": {

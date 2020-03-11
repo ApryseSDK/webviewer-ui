@@ -115,7 +115,11 @@
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
     "measurementToolsButton": "Outils de mesure",
-    "calibration": "Étalonnage"
+    "calibration": "Étalonnage",
+    "searchPanel": "Chercher",
+    "toolsHeader": "Outils",
+    "freeTextToolsButton": "Outils de texte gratuit",
+    "stickyToolsButton": "Outils de commentaires"
   },
   "message": {
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} pages",
     "processing": "Traitement...",
     "searching": "Recherche...",
-    "searchPlaceholder": "Rechercher des commentaires ici...",
     "signHere": "Signer ici",
     "insertTextHere": "Insérer du texte ici",
     "imageSignatureAcceptedFileTypes": "Seuls {{acceptedFileTypes}} sont acceptés",
     "enterMeasurement": "Entrez la mesure entre les deux points",
-    "linkURLorPage": "Lien URL ou une page"
+    "linkURLorPage": "Lien URL ou une page",
+    "searchDocumentPlaceholder": "Rechercher un document",
+    "searchCommentsPlaceholder": "Rechercher des commentaires"
   },
   "option": {
     "annotationColor": {

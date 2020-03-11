@@ -115,7 +115,11 @@
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
     "measurementToolsButton": "测量工具",
-    "calibration": "校准"
+    "calibration": "校准",
+    "searchPanel": "搜索",
+    "stickyToolsButton": "评论工具",
+    "toolsHeader": "工具类",
+    "freeTextToolsButton": "自由文本工具"
   },
   "message": {
     "badDocument": "无法加载文档，此文档已损坏或无效。",
@@ -136,12 +140,13 @@
     "printTotalPageCount_plural": "{{count}} 页",
     "processing": "正在处理…",
     "searching": "正在搜索…",
-    "searchPlaceholder": "在此处搜索注释…",
     "signHere": "在此处签名",
     "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在两点之间输入测量值",
-    "linkURLorPage": "链接网址或页面"
+    "linkURLorPage": "链接网址或页面",
+    "searchCommentsPlaceholder": "搜索评论",
+    "searchDocumentPlaceholder": "搜索文件"
   },
   "option": {
     "annotationColor": {
