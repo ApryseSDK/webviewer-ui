@@ -53,35 +53,6 @@ const mobileListener = window.matchMedia('(max-width: 640px)');
 const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
 const desktopListener = window.matchMedia('(min-width: 901px)');
 
-const root = document.documentElement;
-// const buttonHover1 = getComputedStyle(root).getPropertyValue('--button-hover1');
-// const actionButton1 = getComputedStyle(root).getPropertyValue('--button-active1');
-// const buttonHover2 = getComputedStyle(root).getPropertyValue('--button-hover2');
-// const actionButton2 = getComputedStyle(root).getPropertyValue('--button-active2');
-
-// const th = getComputedStyle(root).getPropertyValue('--tools-button-hover');
-// const ta = getComputedStyle(root).getPropertyValue('--tools-button-active');
-// const toh = getComputedStyle(root).getPropertyValue('--tools-overlay-button-hover');
-// const toa = getComputedStyle(root).getPropertyValue('--tools-overlay-button-active');
-
-const setColors = (toh, toa, th, ta) => {
-  root.style.setProperty('--tools-overlay-button-hover', toh);
-  root.style.setProperty('--tools-overlay-button-active', toa);
-  root.style.setProperty('--tools-button-hover', th);
-  root.style.setProperty('--tools-button-active', ta);
-};
-
-const updateColors = () => {
-  // if (window.matchMedia('(max-width: 640px)').matches) {
-  //   setColors(buttonHover2, actionButton2, buttonHover1, actionButton1);
-  // } else if (window.matchMedia('(max-width: 900px)').matches) {
-  //   setColors(buttonHover2, actionButton2, buttonHover1, actionButton1);
-  // } else {
-  //   setColors(buttonHover1, actionButton1, buttonHover2, actionButton2);
-  // }
-};
-updateColors();
-
 const App = ({ removeEventHandlers }) => {
   const [isToolsHeaderOpen, isToolsHeaderDisabled, isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled, isSignatureModalOpen, isSignatureModalDisabled] = useSelector(
     state => [
@@ -109,17 +80,14 @@ const App = ({ removeEventHandlers }) => {
 
     mobileListener.addListener(() => {
       dispatch(actions.setMobileToolsHeader());
-      updateColors();
     });
 
     tabletListener.addListener(() => {
       dispatch(actions.setTabletToolsHeader());
-      updateColors();
     });
 
     desktopListener.addListener(() => {
       dispatch(actions.setDesktopToolsHeader());
-      updateColors();
     });
 
     return removeEventHandlers;

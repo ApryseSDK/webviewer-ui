@@ -1,6 +1,10 @@
 import { parse } from 'css-variables-parser';
 import lightModeString from '!!raw-loader!../constants/light.scss';
+import lightToolsDesktopString from '!!raw-loader!../constants/lightToolsDesktop.scss';
+import lightToolsMobileString from '!!raw-loader!../constants/lightToolsMobile.scss';
 import darkModeString from '!!raw-loader!../constants/dark.scss';
+import darkToolsDesktopString from '!!raw-loader!../constants/darkToolsDesktop.scss';
+import darkToolsMobileString from '!!raw-loader!../constants/darkToolsMobile.scss';
 // import darkVariables from '!!raw-loader!../constants/dark.scss';
 
 
@@ -45,64 +49,81 @@ WebViewer(...)
  */
 
 export default theme => {
-  const isPresetTheme = typeof theme === 'string';
-  const isCustomizedTheme = typeof theme === 'object';
+  // const isPresetTheme = typeof theme === 'string';
+  // const isCustomizedTheme = typeof theme === 'object';
 
-  if (isPresetTheme) {
+  // if (isPresetTheme) {
     setPresetTheme(theme);
-  } else if (isCustomizedTheme) {
-    setTheme(theme);
+  // } else if (isCustomizedTheme) {
+  //   setTheme(theme);
+  // }
+};
+
+
+let chosenTheme = 'light';
+
+const setVariables = (themeVarString = '') => {
+  const root = document.documentElement;
+  const themeVariables = parse(themeVarString, {});
+  Object.keys(themeVariables).forEach(key => {
+    const themeVariable = themeVariables[key];
+    root.style.setProperty(`--${key}`, themeVariable);
+  });
+};
+
+const updateToolColors = () => {
+  if (window.matchMedia('(max-width: 640px)').matches) {
+    if (chosenTheme === 'light') {
+      setVariables(lightToolsMobileString);
+    } else if (chosenTheme === 'dark') {
+      setVariables(darkToolsMobileString);
+    }
+  } else if (window.matchMedia('(max-width: 900px)').matches) {
+    if (chosenTheme === 'light') {
+      setVariables(lightToolsMobileString);
+    } else if (chosenTheme === 'dark') {
+      setVariables(darkToolsMobileString);
+    }
+  } else {
+    if (chosenTheme === 'light') {
+      setVariables(lightToolsDesktopString);
+    } else if (chosenTheme === 'dark') {
+      setVariables(darkToolsDesktopString);
+    }
   }
 };
 
+const mobileListener = window.matchMedia('(max-width: 640px)');
+const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
+const desktopListener = window.matchMedia('(min-width: 901px)');
+
+mobileListener.addListener(() => {
+  updateToolColors();
+});
+
+tabletListener.addListener(() => {
+  updateToolColors();
+});
+
+desktopListener.addListener(() => {
+  updateToolColors();
+});
+
 const setPresetTheme = theme => {
-  const root = document.documentElement;
   if (theme === 'light') {
-    const lightModeVariables = parse(lightModeString, {});
-    Object.keys(lightModeVariables).forEach(key => {
-      const lightModeVariable = lightModeVariables[key];
-      root.style.setProperty(`--${key}`, lightModeVariable);
-    });
+    chosenTheme = 'light';
+    setVariables(lightModeString);
+    updateToolColors();
   } else if (theme === 'dark') {
-    const darkModeVariables = parse(darkModeString, {});
-    Object.keys(darkModeVariables).forEach(key => {
-      const darkModeVariable = darkModeVariables[key];
-      root.style.setProperty(`--${key}`, darkModeVariable);
-    });
+    chosenTheme = 'dark';
+    setVariables(darkModeString);
+    updateToolColors();
   } else {
     console.error(`${theme} is not one of: light, dark`);
   }
-
-  // const themeToPresetThemeMap = {
-  //   default: {
-  //     primary: '#FFFFFF',
-  //     secondary: '#F5F5F5',
-  //     border: '#E0E0E0',
-  //     buttonHover: '#F6F6F6',
-  //     buttonActive: '#F0F0F0',
-  //     text: '#333333',
-  //     icon: '#757575',
-  //     iconActive: '#757575',
-  //   },
-  //   dark: {
-  //     primary: '#2C2B3A',
-  //     secondary: '#4D4C5F',
-  //     border: '#555555',
-  //     buttonHover: '#686880',
-  //     buttonActive: '#686880',
-  //     text: '#FFFFFF',
-  //     icon: '#FFFFFF',
-  //     iconActive: '#FFFFFF',
-  //   },
-  // };
-  // const presetTheme = themeToPresetThemeMap[theme];
-
-  // if (presetTheme) {
-  //   setTheme(themeToPresetThemeMap[theme]);
-  // } else {
-  //   console.warn(`${theme} is not one of: default, dark`);
-  // }
 };
+
+setPresetTheme('light');
 
 const setTheme = theme => {
   const keyToCSSVarMap = {
