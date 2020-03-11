@@ -463,7 +463,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 rowRenderer={this.renderThumbnails}
                 overscanRowCount={10}
                 className={'thumbnailsList'}
-                style={{ outline: 'none' }}
+                style={{ overflow: 'overlay', outline: 'none' }}
               />
               <Measure
                 bounds
