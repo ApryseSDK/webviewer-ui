@@ -98,6 +98,7 @@ class MenuOverlay extends React.PureComponent {
     if (!isMobile) {
       style = { left, right, top };
     }
+    console.log('skldrtyeostiuwieruwtyweiur', style);
 
     // const className = getClassName('Overlay MenuOverlay', this.props);
 
