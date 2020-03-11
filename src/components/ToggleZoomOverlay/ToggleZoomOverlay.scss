@@ -60,7 +60,7 @@
   }
   
   // Avoids the child button chevron from overlapping the zoom text
-  .Button:hover {
+  .Button.active, .Button:hover {
     background: none;
   }
 
