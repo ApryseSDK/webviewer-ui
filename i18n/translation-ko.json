@@ -38,7 +38,8 @@
     "draw": "무승부",
     "type": "유형",
     "upload": "업로드",
-    "link": "링크"
+    "link": "링크",
+    "post": "우편"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -99,7 +100,9 @@
   "component": {
     "freehandToolsButton": "자유형 도구",
     "leftPanel": "패널",
+    "toolsHeader": "도구",
     "searchOverlay": "검색",
+    "searchPanel": "검색",
     "menuOverlay": "메뉴",
     "miscToolsButton": "기타 도구",
     "notesPanel": "참고",
@@ -110,16 +113,14 @@
     "layersPanel": "레이어",
     "shapeToolsButton": "도형 도구",
     "textToolsButton": "텍스트 도구",
+    "freeTextToolsButton": "무료 텍스트 도구",
+    "stickyToolsButton": "주석 도구",
     "thumbnailsPanel": "축소판",
     "toolsButton": "도구",
     "redaction": "개정",
     "viewControlsOverlay": "컨트롤 보기",
     "measurementToolsButton": "측정 도구",
-    "calibration": "구경 측정",
-    "searchPanel": "검색",
-    "stickyToolsButton": "주석 도구",
-    "freeTextToolsButton": "무료 텍스트 도구",
-    "toolsHeader": "도구"
+    "calibration": "구경 측정"
   },
   "message": {
     "badDocument": "문서를 로드하지 못했습니다. 문서가 손상되었거나 유효하지 않습니다.",
@@ -140,13 +141,14 @@
     "printTotalPageCount_plural": "{{count}} 페이지",
     "processing": "처리 중...",
     "searching": "검색 중...",
+    "searchCommentsPlaceholder": "의견 검색",
+    "searchDocumentPlaceholder": "문서 검색",
     "signHere": "여기에 서명하세요",
     "insertTextHere": "여기에 텍스트를 삽입하세요",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}} 만 허용됩니다",
     "enterMeasurement": "두 지점 사이에 측정 값을 입력하십시오",
     "linkURLorPage": "링크 URL 또는 페이지",
-    "searchDocumentPlaceholder": "문서 검색",
-    "searchCommentsPlaceholder": "의견 검색"
+    "numResultsFound": "찾은 결과"
   },
   "option": {
     "annotationColor": {

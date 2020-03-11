@@ -38,7 +38,8 @@
     "draw": "Desenhar",
     "type": "Tipo",
     "upload": "Envio",
-    "link": "Ligação"
+    "link": "Ligação",
+    "post": "Postar"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -99,7 +100,9 @@
   "component": {
     "freehandToolsButton": "Ferramentas mão livre",
     "leftPanel": "Painel",
+    "toolsHeader": "Ferramentas",
     "searchOverlay": "Procurar",
+    "searchPanel": "Procurar",
     "menuOverlay": "Menu",
     "miscToolsButton": "Ferramentas diversas",
     "notesPanel": "Anotações",
@@ -110,16 +113,14 @@
     "layersPanel": "Camadas",
     "shapeToolsButton": "Ferramentas de forma",
     "textToolsButton": "Ferramentas de texto",
+    "freeTextToolsButton": "Ferramentas de texto livre",
+    "stickyToolsButton": "Ferramentas de comentários",
     "thumbnailsPanel": "Miniaturas",
     "toolsButton": "Ferramentas",
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
     "measurementToolsButton": "Ferramentas de medição",
-    "calibration": "Calibração",
-    "toolsHeader": "Ferramentas",
-    "searchPanel": "Procurar",
-    "freeTextToolsButton": "Ferramentas de texto livre",
-    "stickyToolsButton": "Ferramentas de comentários"
+    "calibration": "Calibração"
   },
   "message": {
     "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
@@ -140,13 +141,14 @@
     "printTotalPageCount_plural": "{{count}} páginas",
     "processing": "Processando...",
     "searching": "Procurando...",
+    "searchCommentsPlaceholder": "Pesquisar comentários",
+    "searchDocumentPlaceholder": "Pesquisar documento",
     "signHere": "Assine aqui",
     "insertTextHere": "Insira texto aqui",
     "imageSignatureAcceptedFileTypes": "Somente {{acceptFileTypes}} são aceitos",
     "enterMeasurement": "Digite a medição entre os dois pontos",
     "linkURLorPage": "URL do link ou uma página",
-    "searchDocumentPlaceholder": "Pesquisar documento",
-    "searchCommentsPlaceholder": "Pesquisar comentários"
+    "numResultsFound": "resultados encontrados"
   },
   "option": {
     "annotationColor": {

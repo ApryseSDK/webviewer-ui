@@ -38,7 +38,8 @@
     "draw": "Dessiner",
     "type": "Type",
     "upload": "Télécharger",
-    "link": "Lien"
+    "link": "Lien",
+    "post": "Publier"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -99,7 +100,9 @@
   "component": {
     "freehandToolsButton": "Outils de stylo",
     "leftPanel": "Panneau de gauche",
+    "toolsHeader": "Outils",
     "searchOverlay": "Recherche",
+    "searchPanel": "Chercher",
     "menuOverlay": "Menu",
     "miscToolsButton": "Outils divers",
     "notesPanel": "Remarques",
@@ -110,16 +113,14 @@
     "layersPanel": "Couches",
     "shapeToolsButton": "Outils de forme",
     "textToolsButton": "Outils de texte",
+    "freeTextToolsButton": "Outils de texte gratuit",
+    "stickyToolsButton": "Outils de commentaires",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
     "measurementToolsButton": "Outils de mesure",
-    "calibration": "Étalonnage",
-    "searchPanel": "Chercher",
-    "toolsHeader": "Outils",
-    "freeTextToolsButton": "Outils de texte gratuit",
-    "stickyToolsButton": "Outils de commentaires"
+    "calibration": "Étalonnage"
   },
   "message": {
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
@@ -140,13 +141,14 @@
     "printTotalPageCount_plural": "{{count}} pages",
     "processing": "Traitement...",
     "searching": "Recherche...",
+    "searchCommentsPlaceholder": "Rechercher des commentaires",
+    "searchDocumentPlaceholder": "Rechercher un document",
     "signHere": "Signer ici",
     "insertTextHere": "Insérer du texte ici",
     "imageSignatureAcceptedFileTypes": "Seuls {{acceptedFileTypes}} sont acceptés",
     "enterMeasurement": "Entrez la mesure entre les deux points",
     "linkURLorPage": "Lien URL ou une page",
-    "searchDocumentPlaceholder": "Rechercher un document",
-    "searchCommentsPlaceholder": "Rechercher des commentaires"
+    "numResultsFound": "résultats trouvés"
   },
   "option": {
     "annotationColor": {

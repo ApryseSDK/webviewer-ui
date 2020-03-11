@@ -38,7 +38,8 @@
     "draw": "Trek",
     "type": "Type",
     "upload": "Uploaden",
-    "link": "Koppeling"
+    "link": "Koppeling",
+    "post": "Post"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -99,7 +100,9 @@
   "component": {
     "freehandToolsButton": "Vrije hand tools",
     "leftPanel": "Panel",
+    "toolsHeader": "Gereedschap",
     "searchOverlay": "Zoeken",
+    "searchPanel": "Zoeken",
     "menuOverlay": "Menu",
     "miscToolsButton": "Diverse tools",
     "notesPanel": "Notities",
@@ -110,16 +113,14 @@
     "layersPanel": "Lagen",
     "shapeToolsButton": "Vorm tools",
     "textToolsButton": "Tekst tools",
+    "freeTextToolsButton": "Hulpmiddelen voor vrije tekst",
+    "stickyToolsButton": "Tools voor opmerkingen",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "measurementToolsButton": "Meetinstrumenten",
-    "calibration": "ijking",
-    "searchPanel": "Zoeken",
-    "toolsHeader": "Gereedschap",
-    "stickyToolsButton": "Tools voor opmerkingen",
-    "freeTextToolsButton": "Hulpmiddelen voor vrije tekst"
+    "calibration": "ijking"
   },
   "message": {
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
@@ -140,13 +141,14 @@
     "printTotalPageCount_plural": "{{count}} pagina's",
     "processing": "Bezig...",
     "searching": "Zoeken...",
+    "searchCommentsPlaceholder": "Zoek opmerkingen",
+    "searchDocumentPlaceholder": "Document zoeken",
     "signHere": "Teken hier",
     "insertTextHere": "Vul hier tekst in",
     "imageSignatureAcceptedFileTypes": "Alleen {{AcceptFileTypes}} worden geaccepteerd",
     "enterMeasurement": "Voer de meting tussen de twee punten in",
     "linkURLorPage": "Link-URL of een pagina",
-    "searchDocumentPlaceholder": "Document zoeken",
-    "searchCommentsPlaceholder": "Zoek opmerkingen"
+    "numResultsFound": "gevonden resultaten"
   },
   "option": {
     "annotationColor": {

@@ -38,7 +38,8 @@
     "draw": "畫",
     "type": "類型",
     "upload": "上載",
-    "link": "鏈接"
+    "link": "鏈接",
+    "post": "發布"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -99,7 +100,9 @@
   "component": {
     "freehandToolsButton": "手繪工具",
     "leftPanel": "面板",
+    "toolsHeader": "工具類",
     "searchOverlay": "搜尋",
+    "searchPanel": "搜索",
     "menuOverlay": "功能表",
     "miscToolsButton": "其他工具",
     "notesPanel": "備忘稿",
@@ -110,16 +113,14 @@
     "layersPanel": "圖層",
     "shapeToolsButton": "圖形工具",
     "textToolsButton": "文字工具",
+    "freeTextToolsButton": "自由文本工具",
+    "stickyToolsButton": "評論工具",
     "thumbnailsPanel": "縮圖",
     "toolsButton": "工具",
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
     "measurementToolsButton": "測量工具",
-    "calibration": "校準",
-    "searchPanel": "搜索",
-    "freeTextToolsButton": "自由文本工具",
-    "toolsHeader": "工具類",
-    "stickyToolsButton": "評論工具"
+    "calibration": "校準"
   },
   "message": {
     "badDocument": "無法載入文件。此文件已損壞或無效。",
@@ -140,13 +141,14 @@
     "printTotalPageCount_plural": "{{count}} 頁",
     "processing": "正在處理...",
     "searching": "正在搜尋...",
+    "searchCommentsPlaceholder": "搜索評論",
+    "searchDocumentPlaceholder": "搜索文件",
     "signHere": "在這裡簽名",
     "insertTextHere": "在這裡插入文字",
     "imageSignatureAcceptedFileTypes": "僅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在兩點之間輸入測量值",
     "linkURLorPage": "鏈接網址或頁面",
-    "searchDocumentPlaceholder": "搜索文件",
-    "searchCommentsPlaceholder": "搜索評論"
+    "numResultsFound": "找到結果"
   },
   "option": {
     "annotationColor": {

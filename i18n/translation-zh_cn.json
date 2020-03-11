@@ -38,7 +38,8 @@
     "draw": "画",
     "type": "类型",
     "upload": "上载",
-    "link": "链接"
+    "link": "链接",
+    "post": "发布"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -99,7 +100,9 @@
   "component": {
     "freehandToolsButton": "手绘工具",
     "leftPanel": "面板",
+    "toolsHeader": "工具类",
     "searchOverlay": "搜索",
+    "searchPanel": "搜索",
     "menuOverlay": "菜单",
     "miscToolsButton": "其他工具",
     "notesPanel": "备注",
@@ -110,16 +113,14 @@
     "layersPanel": "图层",
     "shapeToolsButton": "形状工具",
     "textToolsButton": "文本工具",
+    "freeTextToolsButton": "自由文本工具",
+    "stickyToolsButton": "评论工具",
     "thumbnailsPanel": "缩略图",
     "toolsButton": "工具",
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
     "measurementToolsButton": "测量工具",
-    "calibration": "校准",
-    "searchPanel": "搜索",
-    "stickyToolsButton": "评论工具",
-    "toolsHeader": "工具类",
-    "freeTextToolsButton": "自由文本工具"
+    "calibration": "校准"
   },
   "message": {
     "badDocument": "无法加载文档，此文档已损坏或无效。",
@@ -140,13 +141,14 @@
     "printTotalPageCount_plural": "{{count}} 页",
     "processing": "正在处理…",
     "searching": "正在搜索…",
+    "searchCommentsPlaceholder": "搜索评论",
+    "searchDocumentPlaceholder": "搜索文件",
     "signHere": "在此处签名",
     "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在两点之间输入测量值",
     "linkURLorPage": "链接网址或页面",
-    "searchCommentsPlaceholder": "搜索评论",
-    "searchDocumentPlaceholder": "搜索文件"
+    "numResultsFound": "找到结果"
   },
   "option": {
     "annotationColor": {

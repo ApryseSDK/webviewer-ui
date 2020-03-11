@@ -38,7 +38,8 @@
     "draw": "Dibujar",
     "type": "Tipo",
     "upload": "Subir",
-    "link": "Enlace"
+    "link": "Enlace",
+    "post": "Enviar"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -99,7 +100,9 @@
   "component": {
     "freehandToolsButton": "Herramientas a mano alzada",
     "leftPanel": "Panel",
+    "toolsHeader": "Herramientas",
     "searchOverlay": "Buscar",
+    "searchPanel": "Buscar",
     "menuOverlay": "Menú",
     "miscToolsButton": "Herramientas varias",
     "notesPanel": "Notas",
@@ -110,16 +113,14 @@
     "layersPanel": "Capas",
     "shapeToolsButton": "Herramientas de forma",
     "textToolsButton": "Herramientas de texto",
+    "freeTextToolsButton": "Herramientas de texto gratis",
+    "stickyToolsButton": "Herramientas de comentarios",
     "thumbnailsPanel": "Miniaturas",
     "toolsButton": "Herramientas",
     "redaction": "Modificación",
     "viewControlsOverlay": "Ver controles",
     "measurementToolsButton": "Herramientas de medición",
-    "calibration": "Calibración",
-    "searchPanel": "Buscar",
-    "toolsHeader": "Herramientas",
-    "freeTextToolsButton": "Herramientas de texto gratis",
-    "stickyToolsButton": "Herramientas de comentarios"
+    "calibration": "Calibración"
   },
   "message": {
     "badDocument": "Error al cargar el documento. El documento está dañado o no es válido.",
@@ -140,13 +141,14 @@
     "printTotalPageCount_plural": "{{count}} páginas",
     "processing": "Procesando...",
     "searching": "Buscando...",
+    "searchCommentsPlaceholder": "Buscar comentarios",
+    "searchDocumentPlaceholder": "Buscar documento",
     "signHere": "Firma aquí",
     "insertTextHere": "Inserta el texto aquí",
     "imageSignatureAcceptedFileTypes": "Solo se aceptan {{acceptFileTypes}}",
     "enterMeasurement": "Ingrese la medición entre los dos puntos",
     "linkURLorPage": "URL de enlace o una página",
-    "searchDocumentPlaceholder": "Buscar documento",
-    "searchCommentsPlaceholder": "Buscar comentarios"
+    "numResultsFound": "resultados encontrados"
   },
   "option": {
     "annotationColor": {
