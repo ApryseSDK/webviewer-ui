@@ -12,6 +12,8 @@ import parseMeasurementContents from 'helpers/parseMeasurementContents';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import { Swipeable } from 'react-swipeable';
+
 import './CalibrationModal.scss';
 
 const numberRegex = /^\d*(\.\d*)?$/;
@@ -102,52 +104,57 @@ const CalibrationModal = () => {
     dispatch(actions.closeElements(['calibrationModal']));
   };
 
-  const handleCancel = () => {
+  const closeModal = () => {
     dispatch(actions.closeElements(['calibrationModal']));
   };
 
   return isDisabled || !annotation ? null : (
-    <div
-      className={classNames({
-        Modal: true,
-        CalibrationModal: true,
-        open: isOpen,
-        closed: !isOpen,
-      })}
+    <Swipeable
+      onSwipedUp={closeModal}
+      onSwipedDown={closeModal}
+      preventDefaultTouchmoveEvent
     >
-      <div className="container">
-        <div className="calibration__header">{t('component.calibration')}</div>
-        <div className="calibration__body">
-          <div>{t('message.enterMeasurement')}</div>
-          <div>
-            <input type="text" value={value} onChange={handleInputChange} />
-            <select
-              className="unitToInput"
-              value={unitTo}
-              onChange={handleSelectChange}
-            >
-              {units.to.map(unit => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
-            </select>
+      <div
+        className={classNames({
+          Modal: true,
+          CalibrationModal: true,
+          open: isOpen,
+          closed: !isOpen,
+        })}
+        onMouseDown={closeModal}
+      >
+        <div className="container" onMouseDown={e => e.stopPropagation()}>
+          <div className="swipe-indicator" />
+          <div className="calibration__header">
+            {t('component.calibration')}
+          </div>
+          <div className="calibration__body">
+            <div>{t('message.enterMeasurement')}</div>
+            <div className="calibration__input">
+              <input type="text" value={value} onChange={handleInputChange} />
+              <select
+                className="unitToInput"
+                value={unitTo}
+                onChange={handleSelectChange}
+              >
+                {units.to.map(unit => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="calibration__footer">
+            <Button
+              dataElement="passwordSubmitButton"
+              label={t('action.apply')}
+              onClick={handleApply}
+            />
           </div>
         </div>
-        <div className="calibration__footer">
-          <Button
-            dataElement="passwordSubmitButton"
-            label={t('action.apply')}
-            onClick={handleApply}
-          />
-          <Button
-            dataElement="passwordCancelButton"
-            label={t('action.cancel')}
-            onClick={handleCancel}
-          />
-        </div>
       </div>
-    </div>
+    </Swipeable>
   );
 };
 
