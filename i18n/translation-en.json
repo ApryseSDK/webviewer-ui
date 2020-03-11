@@ -39,7 +39,8 @@
     "draw": "Draw",
     "type": "Type",
     "upload": "Upload",
-    "link": "Link"
+    "link": "Link",
+    "viewMode": "View mode"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",

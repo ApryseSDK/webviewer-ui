@@ -19,6 +19,9 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
+export const getActiveTheme = state =>
+  state.viewer.activeTheme;
+
 export const getActiveHeaderItems = state =>
   state.viewer.headers[state.viewer.activeHeaderGroup];
 

@@ -1,14 +1,12 @@
+import actions from 'actions';
+import selectors from 'selectors';
+
 import { parse } from 'css-variables-parser';
+
 import lightModeString from '!!raw-loader!../constants/light.scss';
 import lightToolsMobileString from '!!raw-loader!../constants/lightToolsMobile.scss';
 import darkModeString from '!!raw-loader!../constants/dark.scss';
 import darkToolsMobileString from '!!raw-loader!../constants/darkToolsMobile.scss';
-// import darkVariables from '!!raw-loader!../constants/dark.scss';
-
-
-// const variables = parse(lightModeString, {});
-// console.log(variables); // { 'color-primary': 'red' }
-
 
 
 /**
@@ -46,12 +44,38 @@ WebViewer(...)
   });
  */
 
-export default theme => {
-  setPresetTheme(theme);
+const mobileListener = window.matchMedia('(max-width: 640px)');
+const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
+const desktopListener = window.matchMedia('(min-width: 901px)');
+
+export default store => {
+  mobileListener.addListener(() => {
+    updateColours(store);
+  });
+
+  tabletListener.addListener(() => {
+    updateColours(store);
+  });
+
+  desktopListener.addListener(() => {
+    updateColours(store);
+  });
+
+  let previousActiveTheme;
+  store.subscribe(() => {
+    const activeTheme = selectors.getActiveTheme(store.getState());
+    if (previousActiveTheme !== activeTheme) {
+      previousActiveTheme = activeTheme;
+      updateColours(store);
+    }
+  });
+  return theme => {
+    if (theme !== 'dark' && theme !== 'light') {
+      throw new Error(`${theme} is not one of: light, dark`);
+    }
+    store.dispatch(actions.setActiveTheme(theme));
+  };
 };
-
-
-let chosenTheme = 'light';
 
 const setVariables = (themeVarString = '') => {
   const root = document.documentElement;
@@ -62,59 +86,29 @@ const setVariables = (themeVarString = '') => {
   });
 };
 
-const updateToolColors = () => {
+const updateColours = store => {
+  const activeTheme = selectors.getActiveTheme(store.getState());
   if (window.matchMedia('(max-width: 640px)').matches) {
-    if (chosenTheme === 'light') {
+    if (activeTheme === 'light') {
       setVariables(lightModeString);
       setVariables(lightToolsMobileString);
-    } else if (chosenTheme === 'dark') {
+    } else if (activeTheme === 'dark') {
       setVariables(darkModeString);
       setVariables(darkToolsMobileString);
     }
   } else if (window.matchMedia('(max-width: 900px)').matches) {
-    if (chosenTheme === 'light') {
+    if (activeTheme === 'light') {
       setVariables(lightModeString);
       setVariables(lightToolsMobileString);
-    } else if (chosenTheme === 'dark') {
+    } else if (activeTheme === 'dark') {
       setVariables(darkModeString);
       setVariables(darkToolsMobileString);
     }
   } else {
-    if (chosenTheme === 'light') {
+    if (activeTheme === 'light') {
       setVariables(lightModeString);
-    } else if (chosenTheme === 'dark') {
+    } else if (activeTheme === 'dark') {
       setVariables(darkModeString);
     }
   }
 };
-
-const mobileListener = window.matchMedia('(max-width: 640px)');
-const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
-const desktopListener = window.matchMedia('(min-width: 901px)');
-
-mobileListener.addListener(() => {
-  updateToolColors();
-});
-
-tabletListener.addListener(() => {
-  updateToolColors();
-});
-
-desktopListener.addListener(() => {
-  updateToolColors();
-});
-
-const setPresetTheme = theme => {
-  if (theme === 'light') {
-    chosenTheme = 'light';
-    setVariables(lightModeString);
-    updateToolColors();
-  } else if (theme === 'dark') {
-    chosenTheme = 'dark';
-    setVariables(darkModeString);
-    updateToolColors();
-  } else {
-    console.error(`${theme} is not one of: light, dark`);
-  }
-};
-// setPresetTheme('light');

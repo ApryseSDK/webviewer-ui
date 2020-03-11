@@ -183,7 +183,7 @@ export default store => {
     setPrintQuality: setPrintQuality(store),
     setSortStrategy: setSortStrategy(store),
     setSwipeOrientation,
-    setTheme,
+    setTheme: setTheme(store),
     setToolMode: setToolMode(store),
     setZoomLevel,
     setZoomList: setZoomList(store),

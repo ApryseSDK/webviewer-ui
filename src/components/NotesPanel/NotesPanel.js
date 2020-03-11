@@ -125,7 +125,6 @@ const NotesPanel = () => {
 
   let singleSelectedNoteIndex = -1;
   useEffect(() => {
-    console.log('selectedNoteIds', selectedNoteIds);
     if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
       listRef.current?.scrollToRow(singleSelectedNoteIndex);
     }
