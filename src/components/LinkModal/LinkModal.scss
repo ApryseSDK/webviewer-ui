@@ -75,6 +75,11 @@
       width: 100%;
       cursor: pointer;
 
+      .divider {
+        width: 1px;
+        background: var(--divider);
+      }
+
       .tab-options-button {
         text-align: center;
         vertical-align: middle;

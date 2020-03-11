@@ -228,6 +228,7 @@ const LinkModal = () => {
               <Tab dataElement="URLPanelButton">
                 <div className="tab-options-button">{t('link.url')}</div>
               </Tab>
+              <div className="divider" />
               <Tab dataElement="PageNumberPanelButton">
                 <div className="tab-options-button">{t('link.page')}</div>
               </Tab>
