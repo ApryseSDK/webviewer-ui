@@ -27,6 +27,7 @@
     "rotateClockwise": "Im Uhrzeigersinn",
     "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
     "save": "Speichern",
+    "post": "Post",
     "create": "Erzeugen",
     "showMoreResults": "Mehr Ergebnisse anzeigen",
     "sign": "Unterschrift",
@@ -39,7 +40,8 @@
     "type": "Art",
     "upload": "Hochladen",
     "link": "Verknüpfung",
-    "post": "Post"
+    "lightMode": "Lichtmodus",
+    "darkMode": "Dunkler Modus"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -132,6 +134,7 @@
     "noAnnotations": "Dieses Dokument hat keine Annotationen.",
     "noOutlines": "Dieses Dokument enthält keine Gliederung.",
     "noResults": "Keine Ergebnisse gefunden.",
+    "numResultsFound": "gefundene Ergebnisse",
     "notSupported": "Dieser Dateityp ist nicht unterstützt.",
     "passwordRequired": "Passwort erforderlich",
     "preparingToPrint": "Druckvorbereitung...",
@@ -147,8 +150,7 @@
     "insertTextHere": "Hier Text eingeben",
     "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
     "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein",
-    "linkURLorPage": "Link URL oder eine Seite",
-    "numResultsFound": "gefundene Ergebnisse"
+    "linkURLorPage": "Link URL oder eine Seite"
   },
   "option": {
     "annotationColor": {

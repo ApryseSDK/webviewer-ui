@@ -27,6 +27,7 @@
     "rotateClockwise": "順時針",
     "rotateCounterClockwise": "逆時針",
     "save": "儲存",
+    "post": "發布",
     "create": "建立",
     "showMoreResults": "顯示更多結果",
     "sign": "簽署",
@@ -39,7 +40,8 @@
     "type": "類型",
     "upload": "上載",
     "link": "鏈接",
-    "post": "發布"
+    "darkMode": "暗模式",
+    "lightMode": "燈光模式"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -132,6 +134,7 @@
     "noAnnotations": "此文件沒有註釋。",
     "noOutlines": "此文件沒有大綱。",
     "noResults": "沒有找到結果。",
+    "numResultsFound": "找到結果",
     "notSupported": "不支援該檔案類型。",
     "passwordRequired": "需要密碼",
     "preparingToPrint": "正在準備列印...",
@@ -147,8 +150,7 @@
     "insertTextHere": "在這裡插入文字",
     "imageSignatureAcceptedFileTypes": "僅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在兩點之間輸入測量值",
-    "linkURLorPage": "鏈接網址或頁面",
-    "numResultsFound": "找到結果"
+    "linkURLorPage": "鏈接網址或頁面"
   },
   "option": {
     "annotationColor": {

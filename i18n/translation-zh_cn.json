@@ -27,6 +27,7 @@
     "rotateClockwise": "顺时针",
     "rotateCounterClockwise": "逆时针",
     "save": "保存",
+    "post": "发布",
     "create": "创建",
     "showMoreResults": "显示更多结果",
     "sign": "签名",
@@ -39,7 +40,8 @@
     "type": "类型",
     "upload": "上载",
     "link": "链接",
-    "post": "发布"
+    "darkMode": "暗模式",
+    "lightMode": "灯光模式"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -132,6 +134,7 @@
     "noAnnotations": "此文档没有注释。",
     "noOutlines": "此文档没有大纲。",
     "noResults": "未找到结果。",
+    "numResultsFound": "找到结果",
     "notSupported": "不支持该文件类型。",
     "passwordRequired": "需要输入密码",
     "preparingToPrint": "正在准备打印…",
@@ -147,8 +150,7 @@
     "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在两点之间输入测量值",
-    "linkURLorPage": "链接网址或页面",
-    "numResultsFound": "找到结果"
+    "linkURLorPage": "链接网址或页面"
   },
   "option": {
     "annotationColor": {
