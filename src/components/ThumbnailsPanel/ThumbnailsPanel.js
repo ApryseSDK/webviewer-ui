@@ -84,8 +84,7 @@ class ThumbnailsPanel extends React.PureComponent {
       const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
 
       let pageNumbersToMove = [currentPage];
-      // for PC "ctrlKey" is true for the "onDrop" event while for Mac, it true for "onDragEnd" 
-      if (this.isDraggingGroup || (e.ctrlKey || e.metaKey) ) {
+      if (this.isDraggingGroup) {
         pageNumbersToMove = selectedPageIndexes.map(i => i + 1);
       }
 
@@ -107,6 +106,9 @@ class ThumbnailsPanel extends React.PureComponent {
     // 'preventDefault' to prevent opening pdf dropped in and 'stopPropagation' to keep parent from opening pdf
     e.preventDefault();
     e.stopPropagation();
+
+    // for Mac "metaKey" is only true during onDragOver
+    this.isDraggingGroup = e.ctrlKey || e.metaKey;
 
     const { numberOfColumns } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
@@ -151,11 +153,6 @@ class ThumbnailsPanel extends React.PureComponent {
     const { isThumbnailMergingEnabled, dispatch } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     const { files } = e.dataTransfer;
-
-    this.isDraggingGroup = false;
-    if (e.ctrlKey || e.metaKey) {
-      this.isDraggingGroup = true;
-    }
 
     if (isThumbnailMergingEnabled && files.length) {
       const file = files[0];
