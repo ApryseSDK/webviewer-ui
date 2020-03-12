@@ -30,7 +30,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
       selectors.isElementDisabled(state, 'notePopup'),
       selectors.isElementDisabled(state, 'notePopupEdit'),
       selectors.isElementDisabled(state, 'notePopupDelete'),
-      true, // selectors.isElementDisabled(state, 'notePopupState'),
+      selectors.isElementDisabled(state, 'notePopupState'),
     ],
     shallowEqual,
   );

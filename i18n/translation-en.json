@@ -40,7 +40,8 @@
     "type": "Type",
     "upload": "Upload",
     "link": "Link",
-    "viewMode": "View mode"
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",

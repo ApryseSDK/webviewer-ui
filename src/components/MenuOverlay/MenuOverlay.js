@@ -175,7 +175,7 @@ class MenuOverlay extends React.PureComponent {
                 className="MenuIcon"
                 glyph="icon - header - mode - day"
               />
-              <div className="MenuLabel">{t('action.viewMode')}</div>
+              <div className="MenuLabel">{t('action.lightMode')}</div>
             </div>
           </div> :
           <div className="row">
@@ -187,7 +187,7 @@ class MenuOverlay extends React.PureComponent {
                 className="MenuIcon"
                 glyph="icon - header - mode - night"
               />
-              <div className="MenuLabel">{t('action.viewMode')}</div>
+              <div className="MenuLabel">{t('action.darkMode')}</div>
             </div>
           </div>}
       </div>
