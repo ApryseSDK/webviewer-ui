@@ -27,6 +27,7 @@
     "rotateClockwise": "По часовой",
     "rotateCounterClockwise": "Против часовой",
     "save": "Сохранить",
+    "post": "Почта",
     "create": "Создать",
     "showMoreResults": "Показать больше",
     "sign": "Добавить подпись",
@@ -39,7 +40,8 @@
     "type": "Тип",
     "upload": "Загрузить",
     "link": "Ссылка на сайт",
-    "post": "Почта"
+    "darkMode": "Темный режим",
+    "lightMode": "Легкий режим"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -132,6 +134,7 @@
     "noAnnotations": "Документ не имеет аннотаций.",
     "noOutlines": "Документ не имеет оглавления.",
     "noResults": "Поиск не вернул результатов.",
+    "numResultsFound": "найдены результаты",
     "notSupported": "Расширение файла не поддерживается.",
     "passwordRequired": "Пароль необходим",
     "preparingToPrint": "Документ печатается...",
@@ -147,8 +150,7 @@
     "insertTextHere": "Вставьте текст здесь",
     "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",
     "enterMeasurement": "Введите измерение между двумя точками",
-    "linkURLorPage": "Ссылка URL или страница",
-    "numResultsFound": "найдены результаты"
+    "linkURLorPage": "Ссылка URL или страница"
   },
   "option": {
     "annotationColor": {

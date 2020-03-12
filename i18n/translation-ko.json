@@ -27,6 +27,7 @@
     "rotateClockwise": "시계 방향으로",
     "rotateCounterClockwise": "시계 반대 방향으로",
     "save": "저장",
+    "post": "우편",
     "create": "생성",
     "showMoreResults": "더 많은 결과 표시",
     "sign": "서명",
@@ -39,7 +40,8 @@
     "type": "유형",
     "upload": "업로드",
     "link": "링크",
-    "post": "우편"
+    "lightMode": "라이트 모드",
+    "darkMode": "다크 모드"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -132,6 +134,7 @@
     "noAnnotations": "이 문서에는 주석이 없습니다.",
     "noOutlines": "이 문서에는 개요가 없습니다.",
     "noResults": "결과를 찾을 수 없습니다.",
+    "numResultsFound": "찾은 결과",
     "notSupported": "해당 파일 유형은 지원되지 않습니다.",
     "passwordRequired": "비밀번호가 필요합니다",
     "preparingToPrint": "인쇄 준비 중...",
@@ -147,8 +150,7 @@
     "insertTextHere": "여기에 텍스트를 삽입하세요",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}} 만 허용됩니다",
     "enterMeasurement": "두 지점 사이에 측정 값을 입력하십시오",
-    "linkURLorPage": "링크 URL 또는 페이지",
-    "numResultsFound": "찾은 결과"
+    "linkURLorPage": "링크 URL 또는 페이지"
   },
   "option": {
     "annotationColor": {

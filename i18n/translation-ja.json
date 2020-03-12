@@ -27,6 +27,7 @@
     "rotateClockwise": "時計回り",
     "rotateCounterClockwise": "反時計回り",
     "save": "保存",
+    "post": "役職",
     "create": "作成",
     "showMoreResults": "より多くの結果を表示",
     "sign": "署名",
@@ -39,7 +40,8 @@
     "type": "タイプ",
     "upload": "アップロードする",
     "link": "リンク",
-    "post": "役職"
+    "darkMode": "ダークモード",
+    "lightMode": "ライトモード"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -132,6 +134,7 @@
     "noAnnotations": "このドキュメントには注釈がありません。",
     "noOutlines": "このドキュメントには概要がありません。",
     "noResults": "結果が見つかりませんでした。",
+    "numResultsFound": "結果が見つかりました",
     "notSupported": "このファイルの種類はサポートされていません。",
     "passwordRequired": "パスワードが必要です",
     "preparingToPrint": "印刷の準備をしています...",
@@ -147,8 +150,7 @@
     "insertTextHere": "ここにテキストを挿入",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが受け入れられます",
     "enterMeasurement": "2点間の測定値を入力します",
-    "linkURLorPage": "リンクURLまたはページ",
-    "numResultsFound": "結果が見つかりました"
+    "linkURLorPage": "リンクURLまたはページ"
   },
   "option": {
     "annotationColor": {

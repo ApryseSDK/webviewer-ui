@@ -27,6 +27,7 @@
     "rotateClockwise": "Tourner horaire",
     "rotateCounterClockwise": "Tourner antihoraire",
     "save": "Enregistrer",
+    "post": "Publier",
     "create": "Créer",
     "showMoreResults": "Montrer plus de résultats",
     "sign": "Signer",
@@ -39,7 +40,8 @@
     "type": "Type",
     "upload": "Télécharger",
     "link": "Lien",
-    "post": "Publier"
+    "darkMode": "Mode sombre",
+    "lightMode": "Mode lumière"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -132,6 +134,7 @@
     "noAnnotations": "Ce document n'a pas d'annotations.",
     "noOutlines": "Ce document n'a pas de plan.",
     "noResults": "Aucun résultat trouvé.",
+    "numResultsFound": "résultats trouvés",
     "notSupported": "Ce type de fichier n'est pas pris en charge.",
     "passwordRequired": "Mot de passe requis",
     "preparingToPrint": "Préparation à l'impression...",
@@ -147,8 +150,7 @@
     "insertTextHere": "Insérer du texte ici",
     "imageSignatureAcceptedFileTypes": "Seuls {{acceptedFileTypes}} sont acceptés",
     "enterMeasurement": "Entrez la mesure entre les deux points",
-    "linkURLorPage": "Lien URL ou une page",
-    "numResultsFound": "résultats trouvés"
+    "linkURLorPage": "Lien URL ou une page"
   },
   "option": {
     "annotationColor": {

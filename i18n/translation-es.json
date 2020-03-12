@@ -27,6 +27,7 @@
     "rotateClockwise": "Sentido horario",
     "rotateCounterClockwise": "Sentido antihorario",
     "save": "Guardar",
+    "post": "Enviar",
     "create": "Crear",
     "showMoreResults": "Mostrar más resultados",
     "sign": "Firmar",
@@ -39,7 +40,8 @@
     "type": "Tipo",
     "upload": "Subir",
     "link": "Enlace",
-    "post": "Enviar"
+    "lightMode": "Modo de luz",
+    "darkMode": "Modo oscuro"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -132,6 +134,7 @@
     "noAnnotations": "Este documento no tiene anotaciones.",
     "noOutlines": "Este documento no tiene esquema.",
     "noResults": "No se han encontrado resultados.",
+    "numResultsFound": "resultados encontrados",
     "notSupported": "Ese tipo de archivo no es compatible.",
     "passwordRequired": "Se requiere contraseña",
     "preparingToPrint": "Preparando para imprimir...",
@@ -147,8 +150,7 @@
     "insertTextHere": "Inserta el texto aquí",
     "imageSignatureAcceptedFileTypes": "Solo se aceptan {{acceptFileTypes}}",
     "enterMeasurement": "Ingrese la medición entre los dos puntos",
-    "linkURLorPage": "URL de enlace o una página",
-    "numResultsFound": "resultados encontrados"
+    "linkURLorPage": "URL de enlace o una página"
   },
   "option": {
     "annotationColor": {
