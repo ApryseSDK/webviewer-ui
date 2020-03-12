@@ -77,14 +77,15 @@ class ThumbnailsPanel extends React.PureComponent {
     });
   }
 
-  onDragEnd = () => {
+  onDragEnd = e => {
     const { currentPage, selectedPageIndexes, isThumbnailReorderingEnabled } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     if (isThumbnailReorderingEnabled && draggingOverPageIndex !== null) {
       const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
 
       let pageNumbersToMove = [currentPage];
-      if (this.isDraggingGroup) {
+      // for PC "ctrlKey" is true for the "onDrop" event while for Mac, it true for "onDragEnd" 
+      if (this.isDraggingGroup || (e.ctrlKey || e.metaKey) ) {
         pageNumbersToMove = selectedPageIndexes.map(i => i + 1);
       }
 
