@@ -30,7 +30,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
       selectors.isElementDisabled(state, 'notePopup'),
       selectors.isElementDisabled(state, 'notePopupEdit'),
       selectors.isElementDisabled(state, 'notePopupDelete'),
-      selectors.isElementDisabled(state, 'notePopupState'),
+      true, // selectors.isElementDisabled(state, 'notePopupState'),
     ],
     shallowEqual,
   );
@@ -123,30 +123,35 @@ const NotePopup = ({ annotation, setIsEditing }) => {
               <p data-element="notePopupSetStatus">{t('option.state.set')}</p>
               <div
                 data-element="notePopupStateAccepted"
+                className="option"
                 onClick={() => handleStateUpdate('Accepted')}
               >
                 {t('option.state.accepted')}
               </div>
               <div
                 data-element="notePopupStateRejected"
+                className="option"
                 onClick={() => handleStateUpdate('Rejected')}
               >
                 {t('option.state.rejected')}
               </div>
               <div
                 data-element="notePopupStateCancelled"
+                className="option"
                 onClick={() => handleStateUpdate('Cancelled')}
               >
                 {t('option.state.cancelled')}
               </div>
               <div
                 data-element="notePopupStateCompleted"
+                className="option"
                 onClick={() => handleStateUpdate('Completed')}
               >
                 {t('option.state.completed')}
               </div>
               <div
                 data-element="notePopupStateNone"
+                className="option"
                 onClick={() => handleStateUpdate('None')}
               >
                 {t('option.state.none')}

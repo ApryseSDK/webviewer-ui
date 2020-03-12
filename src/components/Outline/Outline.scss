@@ -1,5 +1,6 @@
 .Outline {
-  color: #6077bf;
+  color: var(--outline-color);
+  cursor: pointer;
 
   &.visible {
     display: flex;
@@ -19,8 +20,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 5px;
+    margin: 10px 0px;
     margin-left: 0px;
+    border-radius: 4px;
     
     .arrow {
       transition: transform .1s ease;
@@ -39,10 +41,8 @@
       }
     }
 
-
     &:hover {
-      cursor: pointer;
-      opacity: 0.6;
+      background: var(--outline-hover);
     }
   }
 
@@ -51,11 +51,14 @@
     margin-right: 5px;
     
     .title {
-      margin: 10px 0;
+      margin: 4px 0;
+      display: inline-flex;
       cursor: pointer;
+      border-radius: 4px;
+      padding: 6px 6px;
 
       &:hover {
-        opacity: 0.6;
+        background: var(--outline-hover);
       }
     }
   }
