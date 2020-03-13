@@ -32,10 +32,11 @@ const Note = ({ annotation }) => {
 
   useEffect(() => {
     const prevHeight = containerHeightRef.current;
-    const currHeight = window.getComputedStyle(containerRef.current).height;
+    const currHeight = containerRef.current.getBoundingClientRect().height;
+    containerHeightRef.current = currHeight;
 
-    if (!prevHeight || prevHeight !== currHeight) {
-      containerHeightRef.current = currHeight;
+    // have a prevHeight check here because we don't want to call resize on mount
+    if (prevHeight && prevHeight !== currHeight) {
       resize();
     }
   });

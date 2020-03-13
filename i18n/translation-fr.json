@@ -38,7 +38,8 @@
     "draw": "Dessiner",
     "type": "Type",
     "upload": "Télécharger",
-    "link": "Lien"
+    "link": "Lien",
+    "fileAttachmentDownload": "Télécharger le fichier joint"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "Mesure de distance",
     "ellipse": "Ellipse",
     "eraser": "La gomme",
+    "fileattachment": "Pièce jointe",
     "freehand": "Stylo",
     "freehand2": "Stylo",
     "freetext": "Texte libre",
@@ -69,8 +71,7 @@
     "strikeout": "Barré",
     "underline": "Soulignage",
     "custom": "personnalisation",
-    "rubberStamp": "Rubber Stamp",
-    "fileattachment": "Pièce jointe"
+    "rubberStamp": "Rubber Stamp"
   },
   "rubberStamp": {
     "Approved": "Approuvée",

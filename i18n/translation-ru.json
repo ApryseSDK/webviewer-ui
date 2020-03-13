@@ -38,7 +38,8 @@
     "draw": "Привлечь",
     "type": "Тип",
     "upload": "Загрузить",
-    "link": "Ссылка на сайт"
+    "link": "Ссылка на сайт",
+    "fileAttachmentDownload": "Скачать прикрепленный файл"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "Дистанция",
     "ellipse": "Эллипс",
     "eraser": "ластик",
+    "fileattachment": "Файл вложения",
     "freehand": "От руки",
     "freehand2": "От руки",
     "freetext": "Текст",
@@ -69,8 +71,7 @@
     "strikeout": "Зачеркнуть",
     "underline": "Подчеркнуть",
     "custom": "Свой стиль",
-    "rubberStamp": "Штамп",
-    "fileattachment": "Файл вложения"
+    "rubberStamp": "Штамп"
   },
   "rubberStamp": {
     "Approved": "Одобренный",

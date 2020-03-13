@@ -38,7 +38,8 @@
     "draw": "Desenhar",
     "type": "Tipo",
     "upload": "Envio",
-    "link": "Ligação"
+    "link": "Ligação",
+    "fileAttachmentDownload": "Baixar arquivo anexado"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "Medição de distância",
     "ellipse": "Elipse",
     "eraser": "Apagador",
+    "fileattachment": "Anexo de arquivo",
     "freehand": "Mão livre",
     "freehand2": "Mão livre",
     "freetext": "Texto livre",
@@ -69,8 +71,7 @@
     "strikeout": "Riscar",
     "underline": "Sublinhar",
     "custom": "Personalizado",
-    "rubberStamp": "Carimbo de borracha",
-    "fileattachment": "Anexo de arquivo"
+    "rubberStamp": "Carimbo de borracha"
   },
   "rubberStamp": {
     "Approved": "Aprovado",

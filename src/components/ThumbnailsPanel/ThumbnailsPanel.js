@@ -42,6 +42,7 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs = [];
     this.listRef = React.createRef();
     this.afterMovePageNumber = null;
+    this.isDraggingGroup = false;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       isDocumentControlHidden: true,
@@ -58,6 +59,8 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('beginRendering', this.onBeginRendering);
     core.addEventListener('finishedRendering', this.onFinishedRendering);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
+    core.addEventListener('layoutChanged', this.onLayoutChanged);
+    core.addEventListener('documentLoaded', this.onDocumentLoaded);
     core.addEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.addEventListener('pageComplete', this.onPageComplete);
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
@@ -68,6 +71,8 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('beginRendering', this.onBeginRendering);
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
+    core.removeEventListener('layoutChanged', this.onLayoutChanged);
+    core.removeEventListener('documentLoaded', this.onDocumentLoaded);
     core.removeEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.removeEventListener('pageComplete', this.onPageComplete);
     core.removeEventListener('annotationHidden', this.onAnnotationChanged);
@@ -112,8 +117,8 @@ class ThumbnailsPanel extends React.PureComponent {
           updateSelectedPageIndexes.push(...pageNumbersToMove.map((val, index) => targetPageIndex + index));
         }
 
-        setSelectedPageThumbnails(updateSelectedPageIndexes);
-      });
+      this.afterMovePageNumber = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
+      core.movePages(pageNumbersToMove, targetPageNumber);
     }
 
     this.setState({ draggingOverPageIndex: null });
@@ -130,6 +135,9 @@ class ThumbnailsPanel extends React.PureComponent {
     // 'preventDefault' to prevent opening pdf dropped in and 'stopPropagation' to keep parent from opening pdf
     e.preventDefault();
     e.stopPropagation();
+
+    // for Mac "metaKey" is only true during onDragOver
+    this.isDraggingGroup = e.ctrlKey || e.metaKey;
 
     const { numberOfColumns } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
@@ -243,6 +251,29 @@ class ThumbnailsPanel extends React.PureComponent {
 
       this.updateAnnotations(pageIndex);
     });
+  }
+
+  onLayoutChanged = changes => {
+    if (!changes) {
+      return;
+    }
+    const { selectedPageIndexes, setSelectedPageThumbnails } = this.props;
+    let updatedPagesIndexes = Array.from(selectedPageIndexes);
+
+    if (changes.removed) {
+      updatedPagesIndexes = updatedPagesIndexes.filter(pageIndex => changes.removed.indexOf(pageIndex + 1) === -1);
+    }
+
+    if (changes.moved) {
+      updatedPagesIndexes = updatedPagesIndexes.map(pageIndex => changes.moved[pageIndex + 1]? changes.moved[pageIndex + 1] - 1 : pageIndex);
+    }
+
+    setSelectedPageThumbnails(updatedPagesIndexes);
+  };
+
+  onDocumentLoaded = () => {
+    const { setSelectedPageThumbnails } = this.props;
+    setSelectedPageThumbnails([]);
   }
 
   onPageNumberUpdated = pageNumber => {
