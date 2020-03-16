@@ -7,7 +7,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.8em;
     margin: 0px 16px;
 
     .bookmarks-panel-container {
@@ -20,20 +19,31 @@
     }
 
     .bookmarks-panel-button {
-      border: 1px solid var(--border-color);
-      border-radius: 3px;
-      padding: 10px;
-      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--primary-button-text);
+      padding: 6px 18px;
+      width: fit-content;
+      background: var(--primary-button);
+      border-radius: 4px;
+      height: 32px;
       cursor: pointer;
+  
+      &:hover {
+        background: var(--primary-button-hover);
+      }
     }
   }
 
   .bookmarks-panel-row {
-    margin: 0px 20px;
+    margin: 0 8px 16px 16px;
 
     .bookmarks-panel-label {
+      border-top: 1px solid var(--border);
       margin-top: 16px;
       font-weight: bold;
+      padding-top: 10px;
     }
   }
 }

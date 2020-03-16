@@ -20,10 +20,11 @@ class EditingBookmark extends React.PureComponent {
   }
 
   render() {
-    const { onSave, onCancel, label, t } = this.props;
+    const { className, onSave, onCancel, label, t } = this.props;
+    const customClassName = `editing-bookmark ${className}`;
 
     return (
-      <div className="editing-bookmark">
+      <div className={customClassName}>
         {label && <div className="editing-label">{label}</div>}
         <input
           type="text"
@@ -36,7 +37,7 @@ class EditingBookmark extends React.PureComponent {
           }}
         />
         <div className="editing-controls">
-          <div className="editing-button editing-pad" onClick={onCancel}>
+          <div className="cancel-button editing-pad" onClick={onCancel}>
             {t('action.cancel')}
           </div>
           <div className="editing-button" onClick={() => onSave(this.state.bookmarkText)}>

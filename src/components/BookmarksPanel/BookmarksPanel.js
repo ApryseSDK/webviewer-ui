@@ -41,6 +41,7 @@ class BookmarksPanel extends React.PureComponent {
         {
           this.state.isAdding ?
             <EditingBookmark
+              className="adding"
               label={`${t('component.bookmarkPage')} ${currentPage}: ${t('component.newBookmark')}`}
               bookmarkText={''}
               onSave={newText => {
@@ -52,12 +53,6 @@ class BookmarksPanel extends React.PureComponent {
               }}
             /> :
             <div className="bookmarks-panel-header ">
-              <div className="bookmarks-panel-container">
-                <Icon
-                  glyph="ic_bookmarks_black_24px"
-                />
-                <div className="label">{t('component.bookmarksPanel')}</div>
-              </div>
               <div
                 className="bookmarks-panel-button"
                 onClick={() => {
