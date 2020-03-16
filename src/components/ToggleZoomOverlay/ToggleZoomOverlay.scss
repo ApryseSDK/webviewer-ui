@@ -18,11 +18,11 @@
 
     &:first-child {
       margin-left: 0px;
-    }    
+    }
   }
 
   .toggle-element-button {
-    height: 100%;  
+    height: 100%;
   }
 
 }
@@ -32,7 +32,7 @@
   color: var(--text-color);
   margin-right: 1px;
 
-  .textarea{ 
+  .textarea{
     resize: none;
     border: none;
     outline: none;
@@ -62,7 +62,7 @@
   &.active {
     background-color: var(--view-header-button-active);
   }
-  
+
   // Avoids the child button chevron from overlapping the zoom text
   .Button.active, .Button:hover {
     background: none;
@@ -72,9 +72,10 @@
     width: 26px;
     margin-left: 4px;
     margin-top: -2px;
+    // hack for down arrow being dependent on font-size
     font-size: 16px;
     height: 26px;
-  }  
+  }
 }
 
 
@@ -90,7 +91,7 @@
   background-color: inherit;
   // &:hover + .OverlayButton {
   //   background-color:inherit;
-  // } 
+  // }
 }
 
 input[type=number]::-webkit-inner-spin-button,

@@ -21,6 +21,8 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import classNames from 'classnames';
 
+import { Swipeable } from 'react-swipeable';
+
 import './MenuOverlay.scss';
 
 class MenuOverlay extends React.PureComponent {
@@ -100,97 +102,103 @@ class MenuOverlay extends React.PureComponent {
     }
 
     return (
-      <div
-        className={classNames({
-          Overlay: true,
-          MenuOverlay: true,
-          mobile: isMobile,
-          closed: !isOpen,
-        })}
-        data-element="menuOverlay"
-        style={style}
-        ref={this.overlay}
+      <Swipeable
+        onSwipedUp={() => this.props.closeElements(['menuOverlay'])}
+        onSwipedDown={() => this.props.closeElements(['menuOverlay'])}
+        preventDefaultTouchmoveEvent
       >
-        {isMobile && <div className="swipe-indicator" />}
-        {!isFilePickerButtonDisabled &&
-          <div className="row" dataElement="filePickerButton">
-            <div
-              className="MenuItem"
-              onClick={openFilePicker}
-            >
-              <Icon
-                className="MenuIcon"
-                glyph="icon-header-file-picker-line"
-              />
-              <div className="MenuLabel">{t('action.openFile')}</div>
+        <div
+          className={classNames({
+            Overlay: true,
+            MenuOverlay: true,
+            mobile: isMobile,
+            closed: !isOpen,
+          })}
+          data-element="menuOverlay"
+          style={style}
+          ref={this.overlay}
+        >
+          {isMobile && <div className="swipe-indicator" />}
+          {!isFilePickerButtonDisabled &&
+            <div className="row" dataElement="filePickerButton">
+              <div
+                className="MenuItem"
+                onClick={openFilePicker}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph="icon-header-file-picker-line"
+                />
+                <div className="MenuLabel">{t('action.openFile')}</div>
+              </div>
+            </div>}
+          {!isIOS &&
+            <div className="row">
+              <div
+                className="MenuItem"
+                onClick={toggleFullscreen}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+                />
+                <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+              </div>
             </div>
-          </div>}
-        {!isIOS &&
+          }
+          {documentType !== workerTypes.XOD &&
+            <div className="row">
+              <div
+                className="MenuItem"
+                onClick={this.downloadDocument}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph="icon-header-download"
+                />
+                <div className="MenuLabel">{t('action.download')}</div>
+              </div>
+            </div>
+          }
           <div className="row">
             <div
               className="MenuItem"
-              onClick={toggleFullscreen}
+              onClick={this.handlePrintButtonClick}
             >
               <Icon
                 className="MenuIcon"
-                glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+                glyph="icon-header-print-line"
               />
-              <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+              <div className="MenuLabel">{t('action.print')}</div>
             </div>
           </div>
-        }
-        {documentType !== workerTypes.XOD &&
-          <div className="row">
-            <div
-              className="MenuItem"
-              onClick={this.downloadDocument}
-            >
-              <Icon
-                className="MenuIcon"
-                glyph="icon-header-download"
-              />
-              <div className="MenuLabel">{t('action.download')}</div>
-            </div>
-          </div>
-        }
-        <div className="row">
-          <div
-            className="MenuItem"
-            onClick={this.handlePrintButtonClick}
-          >
-            <Icon
-              className="MenuIcon"
-              glyph="icon-header-print-line"
-            />
-            <div className="MenuLabel">{t('action.print')}</div>
-          </div>
+          {activeTheme === 'dark' ?
+            <div className="row">
+              <div
+                className="MenuItem"
+                onClick={setActiveLightTheme}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph="icon - header - mode - day"
+                />
+                <div className="MenuLabel">{t('action.lightMode')}</div>
+              </div>
+            </div> :
+            <div className="row">
+              <div
+                className="MenuItem"
+                onClick={setActiveDarkTheme}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph="icon - header - mode - night"
+                />
+                <div className="MenuLabel">{t('action.darkMode')}</div>
+              </div>
+            </div>}
         </div>
-        {activeTheme === 'dark' ?
-          <div className="row">
-            <div
-              className="MenuItem"
-              onClick={setActiveLightTheme}
-            >
-              <Icon
-                className="MenuIcon"
-                glyph="icon - header - mode - day"
-              />
-              <div className="MenuLabel">{t('action.lightMode')}</div>
-            </div>
-          </div> :
-          <div className="row">
-            <div
-              className="MenuItem"
-              onClick={setActiveDarkTheme}
-            >
-              <Icon
-                className="MenuIcon"
-                glyph="icon - header - mode - night"
-              />
-              <div className="MenuLabel">{t('action.darkMode')}</div>
-            </div>
-          </div>}
-      </div>
+      </Swipeable>
     );
   }
 }

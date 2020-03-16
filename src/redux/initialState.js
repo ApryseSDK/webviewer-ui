@@ -29,6 +29,7 @@ export default {
           type: 'customElement',
           render: () => <ToggleZoomOverlay />,
           dataElement: 'zoomOverlayButton',
+          hidden: ['mobile'],
           element: 'zoomOverlay',
           style: {
             height: '100%',

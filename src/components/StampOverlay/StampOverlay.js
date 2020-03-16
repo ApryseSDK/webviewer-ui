@@ -10,6 +10,8 @@ import core from 'core';
 import defaultTool from 'constants/defaultTool';
 import useMedia from 'hooks/useMedia';
 
+import { Swipeable } from 'react-swipeable';
+
 import './StampOverlay.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
@@ -122,15 +124,21 @@ class StampOverlay extends React.Component {
     });
 
     return (
-      <div
-        className={className}
-        ref={this.overlay}
-        data-element="stampOverlay"
+      <Swipeable
+        onSwipedUp={() => this.props.closeElement('toolsOverlay')}
+        onSwipedDown={() => this.props.closeElement('toolsOverlay')}
+        preventDefaultTouchmoveEvent
       >
-        <div className="default-stamp-container">
-          {rubberStamps}
+        <div
+          className={className}
+          ref={this.overlay}
+          data-element="stampOverlay"
+        >
+          <div className="default-stamp-container">
+            {rubberStamps}
+          </div>
         </div>
-      </div>
+      </Swipeable>
     );
   }
 }
