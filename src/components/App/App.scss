@@ -23,7 +23,7 @@
 
     // breaks horizontal scroll
     // border-bottom: 2px solid transparent;
-    // background-clip: padding-box;    
+    // background-clip: padding-box;
   }
 }
 
@@ -45,6 +45,10 @@ html, body , #app {
 
 input, label, textarea, form, #app {
   font-size: 13px;
+
+  @include tablet-and-mobile {
+    font-size: 16px;
+  }
 }
 
 input, textarea, select {
