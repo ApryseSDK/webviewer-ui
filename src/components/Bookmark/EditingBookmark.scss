@@ -1,13 +1,13 @@
 .editing-bookmark {
-  
   border-radius: 4px;
   padding: 8px 8px;
-  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
+  box-shadow: 0px 0px 3px 0px var(--note-box-shadow);
+  background: var(--component-background);
 
   &.adding {
-    margin: 0 8px 16px 16px;
+    margin: 1px 8px 16px 16px;
   }
 
   &.editing {
@@ -17,7 +17,6 @@
   .editing-controls {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     margin-top: 13px;
   }
 
