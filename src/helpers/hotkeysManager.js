@@ -254,6 +254,10 @@ WebViewer(...)
         }
       },
       up: () => {
+        if (isFocusingElement() || core.isContinuousDisplayMode()) {
+          return;
+        }
+
         // do not call preventDefault else it will prevent scrolling
         const scrollViewElement = core.getScrollViewElement();
         const { scrollHeight, clientHeight } = scrollViewElement;
@@ -266,6 +270,10 @@ WebViewer(...)
         }
       },
       down: () => {
+        if (isFocusingElement() || core.isContinuousDisplayMode()) {
+          return;
+        }
+
         // do not call preventDefault else it will prevent scrolling
         const scrollViewElement = core.getScrollViewElement();
         const { scrollTop, clientHeight, scrollHeight } = scrollViewElement;
