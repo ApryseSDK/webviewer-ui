@@ -38,7 +38,8 @@
     "draw": "Привлечь",
     "type": "Тип",
     "upload": "Загрузить",
-    "link": "Ссылка на сайт"
+    "link": "Ссылка на сайт",
+    "fileAttachmentDownload": "Скачать прикрепленный файл"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "Дистанция",
     "ellipse": "Эллипс",
     "eraser": "ластик",
+    "fileattachment": "Файл вложения",
     "freehand": "От руки",
     "freehand2": "От руки",
     "freetext": "Текст",
@@ -186,7 +188,7 @@
     "searchPanel": {
       "caseSensitive": "С учетом регистра",
       "wholeWordOnly": "Всё слово",
-      "wildcard": "Wildcard"
+      "wildcard": "Поиск по шаблону"
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"
@@ -217,7 +219,8 @@
       "area": "Площадь",
       "distanceMeasurement": "Замерение дистанции",
       "perimeterMeasurement": "Замерение периметера",
-      "areaMeasurement": "Замерение площади"
+      "areaMeasurement": "Замерение площади",
+      "radius": "Радиус"
     },
     "measurementOption": {
       "scale": "Масштаб"

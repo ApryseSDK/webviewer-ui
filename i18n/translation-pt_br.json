@@ -38,7 +38,8 @@
     "draw": "Desenhar",
     "type": "Tipo",
     "upload": "Envio",
-    "link": "Ligação"
+    "link": "Ligação",
+    "fileAttachmentDownload": "Baixar arquivo anexado"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "Medição de distância",
     "ellipse": "Elipse",
     "eraser": "Apagador",
+    "fileattachment": "Anexo de arquivo",
     "freehand": "Mão livre",
     "freehand2": "Mão livre",
     "freetext": "Texto livre",
@@ -217,7 +219,8 @@
       "area": "Área",
       "distanceMeasurement": "Medição de distância",
       "perimeterMeasurement": "Medição de perímetro",
-      "areaMeasurement": "Medição de área"
+      "areaMeasurement": "Medição de área",
+      "radius": "Raio"
     },
     "measurementOption": {
       "scale": "Escala"

@@ -38,7 +38,8 @@
     "draw": "画",
     "type": "类型",
     "upload": "上载",
-    "link": "链接"
+    "link": "链接",
+    "fileAttachmentDownload": "下载附件"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "距离测量",
     "ellipse": "椭圆",
     "eraser": "橡皮",
+    "fileattachment": "文件附件",
     "freehand": "手绘",
     "freehand2": "手绘",
     "freetext": "自由文本",
@@ -217,7 +219,8 @@
       "area": "面积",
       "distanceMeasurement": "距离测量",
       "perimeterMeasurement": "周长测量",
-      "areaMeasurement": "面积测量"
+      "areaMeasurement": "面积测量",
+      "radius": "半径"
     },
     "measurementOption": {
       "scale": "比例"

@@ -6,6 +6,8 @@ import { withTranslation } from 'react-i18next';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import Icon from 'components/Icon';
+
 import './Dropdown.scss';
 
 class Dropdown extends React.PureComponent {
@@ -60,7 +62,10 @@ class Dropdown extends React.PureComponent {
     return (
       <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
         <div className="items">
-          <div className="display-item">{this.getTranslatedContent(sortStrategy)}</div>
+          <div className="display-item">
+            <span>{this.getTranslatedContent(sortStrategy)}</span>
+            <Icon className="down-arrow" glyph="ic_arrow_drop_down_black_24px" />
+          </div>
           <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
             {this.renderDropdownItems()}
           </div>

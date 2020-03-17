@@ -37,13 +37,19 @@ class Thumbnail extends React.PureComponent {
     super(props);
     this.thumbContainer = React.createRef();
     this.onLayoutChangedHandler = this.onLayoutChanged.bind(this);
+    this.loadThumbnailTimeout = null;
   }
 
   componentDidMount() {
     const { onLoad, index } = this.props;
-    const id = this.loadThumbnailAsync();
 
-    onLoad(index, this.thumbContainer.current, id);
+    this.loadThumbnailTimeout = setTimeout(() => {
+      // wrap loadThumbnailAsync inside a setTimeout so that we are not calling it a lot of times when users scroll the panel frantically
+      // this is a workaround for WVS where proper cancelLoadThumbnail hasn't been implemented, and too many requests to the server will add a lot of overhead to it
+      this.loadThumbnailTimeout = null;
+      const id = this.loadThumbnailAsync();
+      onLoad(index, this.thumbContainer.current, id);
+    }, 100);
 
     core.addEventListener('layoutChanged', this.onLayoutChangedHandler);
   }
@@ -62,6 +68,8 @@ class Thumbnail extends React.PureComponent {
   componentWillUnmount() {
     const { onRemove, index } = this.props;
     core.removeEventListener('layoutChanged', this.onLayoutChangedHandler);
+
+    clearTimeout(this.loadThumbnailTimeout);
     onRemove(index);
   }
 
