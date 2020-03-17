@@ -255,4 +255,9 @@ export default {
   hive: {
     atMentions: [],
   },
+
+  // Custom Hive API
+  hive: {
+    atMentions: [],
+  },
 };
