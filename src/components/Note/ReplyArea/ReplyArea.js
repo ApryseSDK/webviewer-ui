@@ -58,11 +58,12 @@ const ReplyArea = ({ annotation }) => {
     }
   }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
+  const trimmedValue = value ? value.trim() : '';
+
   const postReply = e => {
     // prevent the textarea from blurring out
     e.preventDefault();
 
-    const trimmedValue = value.trim();
     if (trimmedValue || attachedFiles.length > 0) {
       textareaRef.current.handleMentions();
       core.createAnnotationReply(annotation, trimmedValue);
@@ -85,7 +86,7 @@ const ReplyArea = ({ annotation }) => {
   };
 
   const replyBtnClass = classNames({
-    disabled: !value,
+    disabled: !trimmedValue,
   });
 
   const ifReplyNotAllowed =
