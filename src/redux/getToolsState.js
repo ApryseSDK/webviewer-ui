@@ -16,11 +16,11 @@ const getTools = () => {
     { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'component.freeTextToolsButton' },
     { type: 'toolGroupButton', toolGroup: 'stickyTools', dataElement: 'stickyToolGroupButton', title: 'component.stickyToolsButton' },
     { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
-    {
-      type: 'customElement',
-      render: () => <SignatureToolButton />,
-      // dataElement: 'signatureToolButton',
-    },
+    // {
+    //   type: 'customElement',
+    //   render: () => <SignatureToolButton />,
+    //   // dataElement: 'signatureToolButton',
+    // },
     { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'icon-tools-more', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
     {
       type: 'customElement',
@@ -61,11 +61,11 @@ const getTools = () => {
     // { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton' },
     { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'component.freeTextToolsButton' },
     { type: 'toolGroupButton', toolGroup: 'stickyTools', dataElement: 'stickyToolGroupButton', title: 'component.stickyToolsButton' },
-    {
-      type: 'customElement',
-      render: () => <SignatureToolButton />,
-      // dataElement: 'signatureToolButton',
-    },
+    // {
+    //   type: 'customElement',
+    //   render: () => <SignatureToolButton />,
+    //   // dataElement: 'signatureToolButton',
+    // },
 
     { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton' },
     { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
@@ -113,11 +113,11 @@ const getTools = () => {
     // { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton' },
     { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'component.freeTextToolsButton' },
     // { type: 'toolGroupButton', toolGroup: 'stickyTools', dataElement: 'stickyToolGroupButton', title: 'component.stickyToolsButton' },
-    {
-      type: 'customElement',
-      render: () => <SignatureToolButton />,
-      // dataElement: 'signatureToolButton',
-    },
+    // {
+    //   type: 'customElement',
+    //   render: () => <SignatureToolButton />,
+    //   // dataElement: 'signatureToolButton',
+    // },
 
     { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton' },
     { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
