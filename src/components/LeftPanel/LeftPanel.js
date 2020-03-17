@@ -37,6 +37,16 @@ const LeftPanel = () => {
     }
   }, [dispatch, isOpen]);
 
+  const onDrop = e => {
+    // this is mainly for the thumbnail panel, to prevent the broswer from loading a document that dropped in
+    e.preventDefault();
+  };
+
+  const onDragOver = e => {
+    // when dragging over the "LeftPanel", change the cursor to "Move" from "Copy"
+    e.preventDefault();
+  };
+
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
   // IE11 will use javascript for controlling width, other broswers will use CSS variables
   const style = isIE11 && leftPanelWidth ? { width: leftPanelWidth } : { };
@@ -49,6 +59,8 @@ const LeftPanel = () => {
         open: isOpen,
         closed: !isOpen,
       })}
+      onDrop={onDrop}
+      onDragOver={onDragOver}
       data-element="leftPanel"
       style={style}
     >
