@@ -1,0 +1,18 @@
+.hv-attached-file {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 5px;
+  color: #4990E2;
+}
+.hv-attached-file .paperclip-icon {
+  height: 12px;
+  width: 12px;
+  cursor: pointer;
+}
+.hv-attached-file .hv-attached-file-url {
+  display: inline-block;
+  word-break: break-word;
+  padding-left: 5px;
+  cursor: pointer;
+}

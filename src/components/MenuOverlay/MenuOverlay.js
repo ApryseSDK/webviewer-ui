@@ -18,6 +18,8 @@ import { workerTypes } from 'constants/types';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import { HiveAPI } from 'helpers/hiveApi';
+
 import './MenuOverlay.scss';
 
 class MenuOverlay extends React.PureComponent {
@@ -99,6 +101,11 @@ class MenuOverlay extends React.PureComponent {
         {documentType !== workerTypes.XOD &&
           <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
         }
+        <ActionButton
+          dataElement="downloadButton"
+          label={t('action.downloadOriginal')}
+          onClick={() => HiveAPI.onDownloadFile()}
+        />
         <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} />
       </div>
     );

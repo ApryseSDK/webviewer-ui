@@ -15,6 +15,7 @@ import ContentArea from 'components/NoteContent/ContentArea';
 import NotePopup from 'components/NotePopup';
 import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
+import AttachedFile from 'components/AttachedFile';
 
 import core from 'core';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
@@ -50,6 +51,8 @@ const NoteContent = ({ annotation }) => {
     resize();
   }, [isEditing]);
 
+  const [attachedFiles, setAttachedFiles] = useState([]);
+
   useEffect(() => {
     // when the comment button in the annotation popup is clicked,
     // this effect will run and we set isEditing to true so that
@@ -78,8 +81,6 @@ const NoteContent = ({ annotation }) => {
 
   const renderContents = useCallback(
     contents => {
-      contents = escapeHtml(contents);
-
       let text;
       const transformedContents = Autolinker.link(contents, {
         stripPrefix: false,
@@ -107,6 +108,7 @@ const NoteContent = ({ annotation }) => {
 
   return useMemo(
     () => (
+      <>
       <div
         className="NoteContent"
         // to prevent textarea from blurring out during editing when clicking on the note content
@@ -128,6 +130,8 @@ const NoteContent = ({ annotation }) => {
               onTextAreaValueChange={setTextAreaValue}
               annotation={annotation}
               setIsEditing={setIsEditing}
+              attachedFiles={attachedFiles}
+              setAttachedFiles={setAttachedFiles}
             />
           ) : (
             contents && (
@@ -136,6 +140,10 @@ const NoteContent = ({ annotation }) => {
           )}
         </div>
       </div>
+      {annotation.attachedFiles && annotation.attachedFiles.map(file => (
+        <AttachedFile key={file._id} file={file} />
+      ))}
+      </>
     ),
     [
       annotationState,
@@ -146,6 +154,7 @@ const NoteContent = ({ annotation }) => {
       annotation,
       contents,
       renderContents,
+      attachedFiles,
     ],
   );
 };

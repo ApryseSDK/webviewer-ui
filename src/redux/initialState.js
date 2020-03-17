@@ -247,4 +247,9 @@ export default {
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null
   },
+
+  // Custom Hive API
+  hive: {
+    atMentions: [],
+  },
 };
