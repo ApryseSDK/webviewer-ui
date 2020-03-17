@@ -105,15 +105,7 @@ class SearchOverlay extends React.PureComponent {
     }
   }
 
-  componentDidMount() {
-    core.addEventListener('searchFailed', this.searchFailed);
-  }
-
-  componentWillUnmount() {
-    core.removeEventListener('searchFailed', this.searchFailed);
-  }
-
-  searchFailed = error => {
+  handleSearchError = error => {
     const { setIsSearching, setSearchError } = this.props;
     setIsSearching(false);
     if (error && error.message) {
@@ -164,8 +156,18 @@ class SearchOverlay extends React.PureComponent {
       }
     };
 
+
     setIsSearching(true);
-    core.textSearchInit(searchValue, searchMode, isFullSearch, handleSearchResult);
+
+    const options = {
+      'fullSearch': isFullSearch,
+      'onResult': handleSearchResult,
+      'onPageEnd': handleSearchResult,
+      'onDocumentEnd': handleSearchResult,
+      'onError': this.handleSearchError.bind(this),
+    };
+
+    core.textSearchInit(searchValue, searchMode, options);
   }
 
   getSearchMode = (isFull = false) => {
@@ -243,7 +245,15 @@ class SearchOverlay extends React.PureComponent {
     };
 
     setIsSearching(true);
-    core.textSearchInit(searchValue, searchMode, isFullSearch, handleSearchResult);
+
+    const options = {
+      'fullSearch': isFullSearch,
+      'onResult': handleSearchResult,
+      'onPageEnd': handleSearchResult,
+      'onDocumentEnd': handleSearchResult,
+      'onError': this.handleSearchError.bind(this),
+    };
+    core.textSearchInit(searchValue, searchMode, options);
   }
 
   runSearchListeners = () => {
