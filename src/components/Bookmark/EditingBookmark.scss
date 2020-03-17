@@ -1,23 +1,54 @@
 .editing-bookmark {
-  margin-top: 10px;
-  background: white;
+  border-radius: 4px;
+  padding: 8px 8px;
   display: flex;
   flex-direction: column;
-  padding: 13px;
-  box-shadow: 0 0 10px 5px rgb(190, 188, 188);
+  box-shadow: 0px 0px 3px 0px var(--note-box-shadow);
+  background: var(--component-background);
+
+  &.adding {
+    margin: 1px 8px 16px 16px;
+  }
+
+  &.editing {
+    margin: 16px 0;
+  }
 
   .editing-controls {
     display: flex;
+    flex-direction: row;
     margin-top: 13px;
-    font-size: 0.8em;
   }
 
   .editing-button {
-    border: 1px solid var(--border-color);
-    border-radius: 3px;
-    padding: 8px;
-    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-button-text);
+    padding: 6px 18px;
+    width: fit-content;
+    background: var(--primary-button);
+    border-radius: 4px;
+    height: 32px;
     cursor: pointer;
+
+    &:hover {
+      background: var(--primary-button-hover);
+    }
+  }
+
+  .cancel-button {
+    color: var(--secondary-button-text);
+    padding: 0 16px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--secondary-button-hover);
+    }
   }
 
   .editing-pad {
@@ -25,16 +56,30 @@
   }
 
   .editing-input {
-    border: 1px solid var(--border-color);
-    border-radius: 3px;
-    padding: 6.5px 13px;
-    font-size: 0.8em;
-    font-weight: normal;
+    margin-top: 8px;
+    width: 100%;
+    height: 30px;
+    font-size: 13px;
+    padding-left: 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-color);
+    padding-bottom: 6px;
+    padding-right: 42px;
+    padding-top: 4px;
+
+    &:focus {
+      outline: none;
+      border: 1px solid var(--focus-border);
+    }
+
+    &::placeholder {
+      color: var(--placeholder-text);
+    }
   }
 
   .editing-label {
-    margin-top: 9.750px;
+    margin-top: 9.75px;
     margin-bottom: 13px;
-    font-size: 0.8em;
   }
 }
