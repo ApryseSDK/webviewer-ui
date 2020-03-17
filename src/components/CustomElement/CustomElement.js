@@ -25,7 +25,7 @@ const CustomElement = ({
 }) => {
   const [reactComponent, setReactComponent] = useState(null);
   const wrapperRef = useRef();
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
+  const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement) || (selectors.isElementOpen(state, dataElement) !== undefined && !selectors.isElementOpen(state, dataElement)));
 
   useEffect(() => {
     // currently UI is running in an iframe, and there are two ways an user can add a CustomElement component to the header using setHeaderItems.

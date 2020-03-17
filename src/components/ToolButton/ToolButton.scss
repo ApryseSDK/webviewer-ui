@@ -2,19 +2,18 @@
 
 .tool-button-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   border-radius: 4px;
-  margin: 0 4px;
-  margin-top: 4px;
+  margin: 0 8px;
 
-  @include tablet-and-mobile {
-    margin: 0 12px;
-  }     
+  // @include tablet-and-mobile {
+  //   margin: 0 12px;
+  // }
 
   .Button {
     &:hover {
-      background: var(--tools-overlay-button-hover);   
+      background: var(--tools-overlay-button-hover);
     }
     &.active {
       background: var(--tools-overlay-button-active);
@@ -47,10 +46,10 @@
     @include mobile {
       margin-top: -2px;
       padding-bottom: 5px;
-    }         
+    }
 
     &:hover {
-      background: var(--tools-overlay-button-hover);    
+      background: var(--tools-overlay-button-hover);
     }
 
     .styling-down-arrow {

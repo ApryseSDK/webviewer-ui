@@ -1,9 +1,21 @@
 @import '../../constants/popup';
 
 .ToolStylePopup {
-  background: var(--component-background);
+  background: var(--preset-background);
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  border-radius: 0px 0px 4px 4px;
+  box-shadow: 0 -3px 0 var(--preset-background), 0 0 3px 0 var(--box-shadow);
+
+  .divider-horizontal {
+    height: 1px;
+    margin-right: 4px;
+    margin-left: 4px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    background: var(--divider);
+  }
 
   @include mobile {
     margin: 0;
@@ -35,8 +47,10 @@
     }
   }
 
-  @include tablet {
-    background: none;
+  @include tablet-and-mobile {
+    background: var(--component-background);
+    border-radius: 4px;
+    box-shadow: 0 0 3px 0 var(--document-box-shadow);
     position: fixed;
   }
 }

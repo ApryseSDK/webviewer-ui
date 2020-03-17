@@ -22,17 +22,17 @@
 
   --component-background: var(--gray-0);
   --faded-component-background: var(--gray-2);
-  --signature-draw-background: var(--gray-2);  
+  --signature-draw-background: var(--gray-2);
   --toggle-zoom-overlay-background: var(--gray-2);
   --document-background-color: var(--gray-2);
-  
+
   --panel-background: var(--gray-1);
-  
+
   --slider-filled: var(--blue-5);
   --slider-background: var(--gray-4);
   --badge-fill: var(--gray-8);
   --badge-text-color: var(--gray-0);
-  --top-header-icon-active-fill: var(--blue-6);
+  --view-header-icon-active-fill: var(--blue-6);
 
   --text-color: var(--gray-8);
   --faded-text: var(--gray-7);
@@ -47,25 +47,25 @@
   --popup-button-hover: var(--blue-1);
   --popup-button-active: var(--blue-2);
 
-  --primary-button: var(--blue-5); 
-  --primary-button-text: var(--gray-1); 
-  --primary-button-hover: var(--blue-6); 
+  --primary-button: var(--blue-5);
+  --primary-button-text: var(--gray-1);
+  --primary-button-hover: var(--blue-6);
 
   --secondary-button-text: var(--blue-5);
-  --secondary-button-hover: var(--blue-6); 
+  --secondary-button-hover: var(--blue-6);
 
   --box-shadow: var(--gray-6);
   --document-box-shadow: var(--gray-7);
-  
+
   --panel-background: var(--gray-1);
-  
+
   --divider: var(--gray-5);
   --border: var(--gray-5);
   --focus-border: var(--blue-5);
   --color-palette-border: var(--gray-8);
 
-  --modal-negative-space: rgba(0, 0, 0, 0.3);  
-  --spinner-negative-space: rgba(0, 0, 0, 0.3);  
+  --modal-negative-space: rgba(0, 0, 0, 0.3);
+  --spinner-negative-space: rgba(0, 0, 0, 0.3);
 
   --white-color-palette-border: var(--border);
 
@@ -85,4 +85,6 @@
 
   --outline-color: var(--blue-5);
   --outline-hover: var(--blue-1);
+
+  --preset-background: var(--gray-1);
 }

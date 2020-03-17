@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 4px;
+    margin: 0 7px;
 
     @include tablet-and-mobile {
       width: 36px;
@@ -27,14 +27,14 @@
         border-radius: 10000000px;
         display: flex;
         align-items: center;
-        justify-content: center;     
-        
+        justify-content: center;
+
         @include tablet-and-mobile  {
           width: 34px;
           height: 34px;
-        }        
+        }
       }
-   
+
       .cell {
         width: 18px;
         height: 18px;
