@@ -18,7 +18,7 @@ export default {
     disabledElements: {},
     openElements: {
       header: true,
-      toolsHeader: true,
+      toolsHeader: false,
     },
     headers: {
       default: [

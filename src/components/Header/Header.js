@@ -26,7 +26,7 @@ class Header extends React.PureComponent {
     }
 
     return (
-      <React.Fragment>
+      <div>
         <div
           className={classNames({
             Header: true,
@@ -36,7 +36,7 @@ class Header extends React.PureComponent {
           <HeaderItems items={activeHeaderItems} />
         </div>
         {!isToolsHeaderOpen && <div className="view-header-border" />}
-      </React.Fragment>
+      </div>
     );
   }
 }

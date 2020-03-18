@@ -9,7 +9,7 @@ import StylePopup from 'components/StylePopup';
 import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
-import { mapToolNameToKey, getDataWithKey } from 'constants/map';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
@@ -108,7 +108,7 @@ class ToolStylePopup extends React.PureComponent {
   positionToolStylePopup = () => {
     const { toolButtonObjects, activeToolName, toolButtonDataElement } = this.props;
 
-    const toolButton = document.querySelector(`[data-element="styling-button"]`);
+    const toolButton = document.querySelector(`[data-element="${toolButtonDataElement}"]`);
 
     if (toolButton) {
       const { left, top } = getToolStylePopupPositionBasedOn(
@@ -116,12 +116,12 @@ class ToolStylePopup extends React.PureComponent {
         this.popup,
       );
 
-      this.setState({ left: left + 10, top: top + 8 });
+      this.setState({ left: left + 10, top: top + 26 });
     }
   };
 
   render() {
-    const { isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop, isOpen, handleCloseClick } = this.props;
+    const { isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isOpen, handleCloseClick } = this.props;
     const { left, top } = this.state;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     const colorMapKey = mapToolNameToKey(activeToolName);
@@ -136,8 +136,6 @@ class ToolStylePopup extends React.PureComponent {
       style = { left, top };
     }
 
-    const { availablePalettes } = getDataWithKey(colorMapKey);
-
     return (
       <div
         className={classNames({
@@ -148,7 +146,6 @@ class ToolStylePopup extends React.PureComponent {
         style={style}
       >
         {isMobile && <div className="swipe-indicator" />}
-        {isDesktop && availablePalettes.length === 1 && <div className="divider-horizontal" />}
         {activeToolName !== 'CropPage'
           &&
             <StylePopup
@@ -160,6 +157,16 @@ class ToolStylePopup extends React.PureComponent {
               hideSlider={hideSlider}
               onStyleChange={this.handleStyleChange}
             />}
+        {isTablet && activeToolName !== 'CropPage' &&
+          <div className="Close-Container">
+            <div className="Close-Button" onClick={
+              () => {
+                handleCloseClick();
+              }}
+            >
+              <Icon className="Close-Icon" glyph="icon-close" />
+            </div>
+          </div>}
       </div>
     );
   }
@@ -206,15 +213,9 @@ export default props => {
     false,
   );
 
-  const isDesktop = useMedia(
-    // Media queries
-    ['(min-width: 901px)'],
-    [true],
-    // Default value
-    false,
-  );
+
 
   return (
-    <ConnectedToolStylePopup {...props} isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop} />
+    <ConnectedToolStylePopup {...props} isMobile={isMobile} isTablet={isTablet} />
   );
-};
+}

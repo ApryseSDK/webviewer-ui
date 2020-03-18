@@ -187,8 +187,7 @@ class ToolsOverlay extends React.PureComponent {
     );
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
-    // let style = { left, right, top };
-    let style = {};
+    let style = { left, right, top };
     let arrowStyle = {};
 
     if (isTabletAndMobile) {
@@ -216,10 +215,7 @@ class ToolsOverlay extends React.PureComponent {
 
     return (
       <div
-        className={classNames({
-          [className]: true,
-          shadow: !isTabletAndMobile && isStylingOpen,
-        })}
+        className={className}
         ref={this.overlay}
         style={style}
         data-element="toolsOverlay"
@@ -232,6 +228,7 @@ class ToolsOverlay extends React.PureComponent {
           ref={this.toolsContainer}
           className={classNames({
             "tools-container": true,
+            "extra-margin": toolNames.length <= 4,
           })}
         >
           <div className="tool-buttons-container" ref={this.itemsContainer}>
@@ -243,19 +240,6 @@ class ToolsOverlay extends React.PureComponent {
                 isStylingOpen={isStylingOpen}
               />
             ))}
-            <div
-              className={classNames({
-                "styling-arrow-container": true,
-                active: isStylingOpen,
-              })}
-              data-element="styling-button"
-              onClick={() => this.setState({ isStylingOpen: !isStylingOpen })}
-            >
-              <Icon glyph="icon-menu-style-line" />
-              {isStylingOpen ?
-                <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-                <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-            </div>
           </div>
           {isStylingOpen && (
             <Swipeable
@@ -269,6 +253,12 @@ class ToolsOverlay extends React.PureComponent {
             </Swipeable>
           )}
         </div>
+        {!isTabletAndMobile &&
+          <div className="Close-Container">
+            <div className="Close-Button" onClick={this.handleCloseClick}>
+              <Icon className="Close-Icon" glyph="icon-close" />
+            </div>
+          </div>}
       </div>
     );
   }

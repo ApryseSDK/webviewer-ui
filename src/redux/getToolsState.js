@@ -2,7 +2,6 @@ import React from 'react';
 import core from 'core';
 import SignatureToolButton from 'components/SignatureToolButton';
 import actions from 'actions';
-// import ToolsOverlay from 'components/ToolsOverlay';
 import defaultTool from 'constants/defaultTool';
 
 const getTools = () => {
@@ -22,14 +21,6 @@ const getTools = () => {
       // dataElement: 'signatureToolButton',
     },
     { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'icon-tools-more', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
-    {
-      type: 'customElement',
-      render: () => {
-        const ToolsOverlay = require('components/ToolsOverlay').default;
-        return (<ToolsOverlay />);
-      },
-      dataElement: 'toolsOverlay',
-    },
     { type: 'divider' },
     {
       type: 'actionButton',

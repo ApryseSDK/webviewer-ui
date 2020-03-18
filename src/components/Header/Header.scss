@@ -26,7 +26,7 @@
     .Button {
       &.active {
         .Icon {
-          color: var(--view-header-icon-active-fill);
+          color: var(--top-header-icon-active-fill);
         }
       }
     }
@@ -59,7 +59,7 @@
 
     .Button, .tool-group-button {
       &:hover {
-        background: var(--tools-button-hover);
+        background: var(--tools-button-hover);     
       }
 
       &.active {

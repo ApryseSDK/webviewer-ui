@@ -105,7 +105,7 @@ const ToolButton = ({
         })}
       >
         {ButtonComponent}
-        {/* {toolStylesExist(toolName) && toolName !== 'AnnotationCreateRubberStamp' &&
+        {toolStylesExist(toolName) && toolName !== 'AnnotationCreateRubberStamp' && 
           <div
             className="styling-down-arrow-container"
             onClick={() => {
@@ -117,7 +117,7 @@ const ToolButton = ({
               className="styling-down-arrow"
               glyph="icon-chevron-down-bold"
             />
-          </div>} */}
+          </div>}
       </div>
     );
   }
