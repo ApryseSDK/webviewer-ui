@@ -6,7 +6,7 @@
   padding-bottom: 4px;
   display: flex;
   flex-direction: column;
-  max-width: 200px;
+  max-width: 230px;
 
   .sliders-container {
     margin: 0px 12px;
@@ -20,7 +20,7 @@
 
   @include tablet {
     border-radius: 4px;
-    box-shadow: 0 0 3px 0 var(--document-box-shadow);
+    // box-shadow: 0 0 3px 0 var(--document-box-shadow);
     padding: 4px;
     max-width: 318px;
   }

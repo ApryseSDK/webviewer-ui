@@ -8,6 +8,7 @@ import actions from 'actions';
 import HeaderItems from 'components/HeaderItems';
 import ToolsOverlay from 'components/ToolsOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
+import useMedia from 'hooks/useMedia';
 
 import selectors from 'selectors';
 
@@ -26,23 +27,23 @@ class ToolsHeader extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen, isToolsOverlayOpen, isToolsOverlayDisabled, isSignatureOverlayOpen, isSignatureOverlayDisabled } = this.props;
+    const { isTabletAndMobile, isDisabled, activeHeaderItems, isOpen, isToolsOverlayOpen, isToolsOverlayDisabled, isSignatureOverlayOpen, isSignatureOverlayDisabled } = this.props;
 
     if (isDisabled || !isOpen) {
       return null;
     }
 
     return (
-      <div>
+      <React.Fragment>
         <div
           className="Header Tools"
           data-element="toolsHeader"
         >
           <HeaderItems items={activeHeaderItems} />
         </div>
-        {isToolsOverlayOpen && !isToolsOverlayDisabled && <ToolsOverlay />}
-        {<SignatureOverlay />}
-      </div>
+        {isTabletAndMobile && isToolsOverlayOpen && !isToolsOverlayDisabled && <ToolsOverlay />}
+        {/* {<SignatureOverlay />} */}
+      </React.Fragment>
     );
   }
 }
@@ -61,4 +62,33 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolsHeader);
+// export default connect(mapStateToProps, mapDispatchToProps)(ToolsHeader);
+
+const ConnectedToolsHeader = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ToolsHeader);
+
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+
+  return (
+    <ConnectedToolsHeader {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
+  );
+};
