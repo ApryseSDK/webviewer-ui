@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +12,24 @@ const propTypes = {
   content: PropTypes.string,
 };
 
-const Tooltip = ({ content = '', children }) => {
+function useCombinedRefs(forwardedRef) {
+  // this is mainly for 'CustomElement' because they might need to update the DOM when rendering 
+  const targetRef = useRef();
+
+  useEffect(() => {
+    if (!forwardedRef) {
+      return
+    }
+
+    forwardedRef.current = targetRef.current;
+  }, [forwardedRef]);
+
+  return targetRef;
+}
+
+const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
   const timeoutRef = useRef(null);
-  const childRef = useRef(null);
+  const childRef = forwardedRef ? useCombinedRefs(forwardedRef) : useRef(null);
   const tooltipRef = useRef(null);
   const [show, setShow] = useState(false);
   const [opacity, setOpacity] = useState(0);
@@ -141,7 +156,7 @@ const Tooltip = ({ content = '', children }) => {
         )}
     </React.Fragment>
   );
-};
+});
 
 Tooltip.propTypes = propTypes;
 
