@@ -44,6 +44,7 @@
 
   &.Tools {
     background: var(--tools-header-background);
+    height: 40px;
     // @include desktop {
     //   padding-top: 2px; // top lowered 1px due to the border on the header above.
     //   padding-bottom: 2px;

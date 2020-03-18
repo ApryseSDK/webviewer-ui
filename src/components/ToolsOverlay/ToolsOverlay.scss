@@ -16,7 +16,11 @@
   border-radius: 4px;
 
   &.shadow {
-    box-shadow: 0 0 3px 0 var(--box-shadow);
+    box-shadow: 0 0 5px 0 var(--box-shadow);
+
+    .ToolStylePopup {
+      box-shadow: 0 -5px 0 var(--preset-background), 0 0 5px 0 var(--box-shadow);
+    }
   }
 
   // @include tablet {
@@ -27,7 +31,7 @@
 
   .styling-arrow-container {
     width: 40px;
-    height: 24px;
+    height: 26px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,7 +123,7 @@
     // padding: 0px 4px;
     // padding-top: 4px;
     // padding-bottom: 4px;
-    height: 28px;
+    height: 32px;
 
     @include tablet-and-mobile {
       box-shadow: none;
@@ -141,24 +145,30 @@
       justify-content: center;
       // margin-top: 4px;
       // height: 100%;
-      height: 28px;
+      height: 32px;
       .tool-button-container {
-        width: 22px;
-        height: 22px;
-        margin: 0 12px;
+        // width: 22px;
+        // height: 22px;
+        margin: 0 10px;
         // height: 100%;
         .Button {
-          width: 22px;
-          height: 22px;
+          width: 26px;
+          height: 26px;
           // height: 100%;
 
           // &:hover {
           //   background: none;
           // }
-          @include desktop {
-            &.active {
-              background: none;
-            }
+          // @include desktop {
+          //   &.active {
+          //     background: none;
+          //   }
+          // }
+          &:hover {
+            background: var(--view-header-button-hover);
+          }
+          &.active {
+            background: var(--view-header-button-active);
           }
         }
 

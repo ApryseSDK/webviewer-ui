@@ -187,6 +187,8 @@ class ToolsOverlay extends React.PureComponent {
     );
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
+    console.log('activeToolGroup', activeToolGroup);
+
     // let style = { left, right, top };
     let style = {};
     let arrowStyle = {};
@@ -243,19 +245,20 @@ class ToolsOverlay extends React.PureComponent {
                 isStylingOpen={isStylingOpen}
               />
             ))}
-            <div
-              className={classNames({
-                "styling-arrow-container": true,
-                active: isStylingOpen,
-              })}
-              data-element="styling-button"
-              onClick={() => this.setState({ isStylingOpen: !isStylingOpen })}
-            >
-              <Icon glyph="icon-menu-style-line" />
-              {isStylingOpen ?
-                <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-                <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-            </div>
+            {activeToolGroup !== 'miscTools' &&
+              <div
+                className={classNames({
+                  "styling-arrow-container": true,
+                  active: isStylingOpen,
+                })}
+                data-element="styling-button"
+                onClick={() => this.setState({ isStylingOpen: !isStylingOpen })}
+              >
+                <Icon glyph="icon-menu-style-line" />
+                {isStylingOpen ?
+                  <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
+                  <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
+              </div>}
           </div>
           {isStylingOpen && (
             <Swipeable

@@ -114,11 +114,12 @@ class ToolGroupButton extends React.PureComponent {
     const img = this.props.img
       ? this.props.img
       : toolButtonObjects[toolName]?.img;
-    const color =
-      isActive && !this.props.img && iconColor
-        ? getToolStyles(toolName)[iconColor] &&
-          getToolStyles(toolName)[iconColor].toHexString()
-        : '';
+    // const color =
+    //   isActive && !this.props.img && iconColor
+    //     ? getToolStyles(toolName)[iconColor] &&
+    //       getToolStyles(toolName)[iconColor].toHexString()
+    //     : '';
+    const color = '';
 
     return allButtonsInGroupDisabled ? null : (
       <div
