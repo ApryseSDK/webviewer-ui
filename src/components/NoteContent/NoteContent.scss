@@ -15,7 +15,7 @@
 
   .author-and-overflow {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
   }
 
   .author-and-date {
@@ -66,7 +66,7 @@
 
   .date-and-time {
     opacity: 0.8;
-    font-size: 10px;
+    font-size: 10px; // intended
     color: var(--faded-text);
   }
 
@@ -140,11 +140,11 @@
         position: relative;
         color: var(--primary-button-text);
         padding: 0 13px;
-  
+
         &:hover {
           background: var(--primary-button-hover);
           color: var(--primary-button-text);
-        }             
+        }
       }
 
       .cancel-button {
@@ -153,13 +153,13 @@
         height: 24px;
         display: flex;
         align-items: center;
-        justify-content: center;    
-        cursor: pointer;  
+        justify-content: center;
+        cursor: pointer;
 
         &:hover {
-          color: var(--secondary-button-hover);     
-        }        
-      }      
+          color: var(--secondary-button-hover);
+        }
+      }
     }
   }
 

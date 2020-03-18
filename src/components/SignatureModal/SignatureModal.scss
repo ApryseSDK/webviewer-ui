@@ -8,9 +8,8 @@
     margin-bottom: 8px;
   }
 
-  .tab-list { 
-    // hack for extra area in the tab list. 13px looks bad.
-    font-size: 14px;
+  .tab-list {
+    font-size: 14px; // hack for extra area in the tab list. 13px looks bad.
   }
 
 
@@ -30,7 +29,7 @@
           &.active {
             width: 34px;
             height: 34px;
-          }  
+          }
 
           .cell {
             width: 24px;
@@ -58,9 +57,9 @@
       left: 0;
       bottom: 0;
       padding-top: 24px;
-      padding-bottom: 16px; 
+      padding-bottom: 16px;
       padding-left: 24px;
-      padding-right: 24px;  
+      padding-right: 24px;
 
       .swipe-indicator {
         background: var(--divider);
@@ -73,18 +72,18 @@
         margin-right: auto;
         left: 0;
         right: 0;
-    
+
         @include tablet-and-desktop {
           display: none;
         }
-      }     
+      }
     }
 
     .StylePopup {
       border-radius: 0px;
       box-shadow: none;
-    }    
-    
+    }
+
     .divider-horizontal {
       width: 100%;
       height: 1px;
@@ -124,12 +123,12 @@
         white-space: nowrap;
         flex: 1;
         border-radius: 0px;
-  
+
         &:first-child {
           border-bottom-left-radius: 4px;
           border-top-left-radius: 4px;
         }
-    
+
         &:last-child {
           border-bottom-right-radius: 4px;
           border-top-right-radius: 4px;
@@ -143,11 +142,11 @@
           background: var(--popup-button-active);
         }
       }
-    
+
       .tab-options-divider {
         width: 1px;
         background: var(--divider);
-      }        
+      }
     }
 
     .ActionButton {
@@ -161,7 +160,7 @@
         }
       }
     }
-    
+
 
     .footer {
       display: flex;
@@ -221,11 +220,11 @@
         height: 32px;
         display: flex;
         align-items: center;
-        justify-content: center;    
-        cursor: pointer;  
-        
+        justify-content: center;
+        cursor: pointer;
+
         &:hover {
-          color: var(--secondary-button-hover);     
+          color: var(--secondary-button-hover);
         }
       }
 
@@ -245,11 +244,11 @@
         @include mobile {
           height: 40px;
           width: 128px;
-        }    
-        
+        }
+
         &:hover {
           background: var(--primary-button-hover);
-        }        
+        }
       }
     }
   }

@@ -10,11 +10,11 @@
 
   @include tablet-and-mobile {
     margin: 0 12px;
-  }     
+  }
 
   .Button {
     &:hover {
-      background: var(--tools-overlay-button-hover);   
+      background: var(--tools-overlay-button-hover);
     }
     &.active {
       background: var(--tools-overlay-button-active);
@@ -41,16 +41,15 @@
     border-radius: 4px;
     cursor: pointer;
 
-    // hack for down arrow being dependent on font-size
-    font-size: 16px;
+    font-size: 16px; // hack for down arrow being dependent on font-size
 
     @include mobile {
       margin-top: -2px;
       padding-bottom: 5px;
-    }         
+    }
 
     &:hover {
-      background: var(--tools-overlay-button-hover);    
+      background: var(--tools-overlay-button-hover);
     }
 
     .styling-down-arrow {

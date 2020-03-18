@@ -13,7 +13,7 @@
   @include mobile {
     position: fixed;
     top: 0;
-    right: 0;  
+    right: 0;
     height: 100%;
     width: 100%;
   }
@@ -21,14 +21,14 @@
 
 .NotesPanel {
   padding-left: 16px;
-  padding-bottom: 0px;  
+  padding-bottom: 0px;
   display: flex;
   flex-direction: column;
   width: 100%;
   padding-right: 8px;
   // Needed
   overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
-  
+
   padding-top: 16px;
   @include mobile {
     padding-top: 0px;
@@ -38,10 +38,10 @@
       align-items: center;
       justify-content: flex-end;
       height: 64px;
-  
+
       width: 100%;
       padding-right: 12px;
-  
+
       .close-icon-container {
         cursor: pointer;
         .close-icon {
@@ -91,7 +91,7 @@
         padding-bottom: 6px;
         padding-right: 42px;
         padding-top: 4px;
-        
+
 
         &:focus {
           outline: none;
@@ -120,7 +120,7 @@
         .Icon {
           width: 20px;
           height: 20px;
-        }        
+        }
 
         svg {
           color: var(--primary-button-text);
@@ -166,7 +166,6 @@
     padding-right: 18px;
 
     .msg {
-      font-size: 14px;
       width: 92px;
       text-align: center;
     }

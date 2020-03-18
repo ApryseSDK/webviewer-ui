@@ -72,8 +72,7 @@
     width: 26px;
     margin-left: 4px;
     margin-top: -2px;
-    // hack for down arrow being dependent on font-size
-    font-size: 16px;
+    font-size: 16px; // hack for down arrow being dependent on font-size
     height: 26px;
   }
 }

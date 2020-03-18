@@ -15,23 +15,23 @@
   @include mobile {
     position: fixed;
     top: 0;
-    right: 0;  
+    right: 0;
     height: 100%;
     width: 100%;
-  }  
+  }
 }
 
 .SearchPanel {
   padding-top: 0px;
   padding-left: 16px;
-  padding-bottom: 0px;  
+  padding-bottom: 0px;
   display: flex;
   flex-direction: column;
   width: 100%;
   padding-right: 8px;
   // Needed
-  overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width  
-  
+  overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
+
   padding-top: 16px;
 
   .ListSeparator:first-child {
@@ -41,7 +41,7 @@
 
   @include mobile {
     padding-top: 0px;
-    
+
     .close-container {
       display: flex;
       align-items: center;
@@ -66,7 +66,7 @@
     overflow-y: overlay;
     padding-right: 18px;
     flex: 1;
-    
+
     &.wild-card-visible {
       margin-top: 110px !important;
     }
@@ -80,6 +80,5 @@
 
   .info {
     padding: 15px 0;
-    font-size: 14px;
   }
 }

@@ -43,7 +43,7 @@ html, body , #app {
   color: var(--text-color);
 }
 
-input, label, textarea, form, #app {
+input, label, textarea, form, select, #app {
   font-size: 13px;
 
   @include tablet-and-mobile {
