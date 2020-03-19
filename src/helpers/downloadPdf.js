@@ -67,8 +67,7 @@ export default (dispatch, options = {}) => {
         },
       );
     }
-  })
-  .catch(() => {
+  }).catch(() => {
     dispatch(actions.closeElement('loadingModal'));
   });
 };
