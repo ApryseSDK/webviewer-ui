@@ -73,7 +73,9 @@ class StampOverlay extends React.Component {
 
   setRubberStamp(annotation) {
     core.setToolMode(TOOL_NAME);
-    this.props.closeElement('toolsOverlay');
+    // this.props.closeElement('toolsOverlay');
+    // debugger;
+    this.props.closeElement("toolStylePopup");
     const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
     this.stampTool.setRubberStamp(annotation, text);
     this.stampTool.showPreview();

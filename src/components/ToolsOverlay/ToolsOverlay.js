@@ -16,6 +16,8 @@ import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
 import classNames from 'classnames';
 
+import toolStylesExist from "helpers/toolStylesExist";
+
 import './ToolsOverlay.scss';
 
 class ToolsOverlay extends React.PureComponent {
@@ -61,9 +63,10 @@ class ToolsOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     // this.setArrowStyle();
-    if (this.props.activeToolName === 'AnnotationCreateRubberStamp') {
-      this.setState({ isStylingOpen: true });
-    }
+    // if (this.props.activeToolName === 'AnnotationCreateRubberStamp') {
+    //   this.props.openElement('toolStylePopup');
+    //   // this.setState({ isStylingOpen: true });
+    // }
 
     const clickedOnAnotherToolGroupButton =
       prevProps.activeToolGroup !== this.props.activeToolGroup;
@@ -83,7 +86,7 @@ class ToolsOverlay extends React.PureComponent {
 
     if (clickedOnAnotherToolGroupButton) {
       this.setOverlayPosition();
-      this.setState({ isStylingOpen: false });
+      // this.setState({ isStylingOpen: false });
     }
 
     if (this.itemsContainer.current) {
@@ -92,11 +95,11 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    // const { activeToolGroup } = this.props;
-    // if (activeToolGroup === 'miscTools') {
-    //   core.setToolMode(defaultTool);
-    //   this.props.setActiveToolGroup('');
-    // }
+    const { activeToolGroup } = this.props;
+    if (activeToolGroup === 'miscTools') {
+      core.setToolMode(defaultTool);
+      this.props.setActiveToolGroup('');
+    }
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
@@ -142,26 +145,26 @@ class ToolsOverlay extends React.PureComponent {
 
   handleCloseClick = () => {
     const { setActiveToolGroup, closeElements, activeToolGroup } = this.props;
-    console.log('activeToolGroup', activeToolGroup);
     // core.setToolMode(defaultTool);
     // setActiveToolGroup('');
     closeElements(['toolsOverlay']);
   };
 
   handleStyleClick = toolName => {
+    // this.props.toggleElement('toolStylePopup');
     // debugger;
-    if (toolName === this.props.activeToolName) {
-      this.setState({ isStylingOpen: !this.state.isStylingOpen, toolNameThatOpenedStyling: null });
-    } else if (toolName === this.state.toolNameThatOpenedStyling) {
-      this.setState({ isStylingOpen: false, toolNameThatOpenedStyling: null });
-      // } else if () {
-    } else {
-      this.setState({
-        isStylingOpen: true,
-        // isStylingOpen: !this.state.isStylingOpen,
-        toolNameThatOpenedStyling: toolName,
-      });
-    }
+    // if (toolName === this.props.activeToolName) {
+    //   this.setState({ isStylingOpen: !this.state.isStylingOpen, toolNameThatOpenedStyling: null });
+    // } else if (toolName === this.state.toolNameThatOpenedStyling) {
+    //   this.setState({ isStylingOpen: false, toolNameThatOpenedStyling: null });
+    //   // } else if () {
+    // } else {
+    //   this.setState({
+    //     isStylingOpen: true,
+    //     // isStylingOpen: !this.state.isStylingOpen,
+    //     toolNameThatOpenedStyling: toolName,
+    //   });
+    // }
     // this.setState({ isStylingOpen: !this.state.isStylingOpen });
   };
 
@@ -176,6 +179,8 @@ class ToolsOverlay extends React.PureComponent {
       isMobile,
       isTabletAndMobile,
       closeElements,
+      isToolStyleOpen,
+      activeToolName,
     } = this.props;
 
     if (isDisabled || !activeToolGroup) {
@@ -186,8 +191,6 @@ class ToolsOverlay extends React.PureComponent {
       toolName => toolButtonObjects[toolName].group === activeToolGroup,
     );
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
-
-    console.log('activeToolGroup', activeToolGroup);
 
     // let style = { left, right, top };
     let style = {};
@@ -220,7 +223,7 @@ class ToolsOverlay extends React.PureComponent {
       <div
         className={classNames({
           [className]: true,
-          shadow: !isTabletAndMobile && isStylingOpen,
+          shadow: !isTabletAndMobile && isToolStyleOpen,
         })}
         ref={this.overlay}
         style={style}
@@ -242,32 +245,32 @@ class ToolsOverlay extends React.PureComponent {
                 key={`${toolName}-${i}`}
                 toolName={toolName}
                 handleStyleClick={this.handleStyleClick}
-                isStylingOpen={isStylingOpen}
+                isStylingOpen={isToolStyleOpen}
               />
             ))}
             {activeToolGroup !== 'miscTools' &&
               <div
                 className={classNames({
                   "styling-arrow-container": true,
-                  active: isStylingOpen,
+                  active: isToolStyleOpen,
                 })}
                 data-element="styling-button"
-                onClick={() => this.setState({ isStylingOpen: !isStylingOpen })}
+                onClick={() => this.props.toggleElement('toolStylePopup')}
               >
                 <Icon glyph="icon-menu-style-line" />
-                {isStylingOpen ?
+                {isToolStyleOpen ?
                   <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
                   <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
               </div>}
           </div>
-          {isStylingOpen && (
+          {isToolStyleOpen && toolStylesExist(activeToolName) && activeToolName !== "AnnotationCreateStamp" && (
             <Swipeable
-              onSwipedUp={() => this.setState({ isStylingOpen: false })}
-              onSwipedDown={() => this.setState({ isStylingOpen: false })}
+              onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+              onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
               preventDefaultTouchmoveEvent
             >
               <ToolStylePopup
-                handleCloseClick={() => this.setState({ isStylingOpen: false })}
+                handleCloseClick={() => this.props.closeElements(['toolStylePopup'])}
               />
             </Swipeable>
           )}
@@ -280,6 +283,7 @@ class ToolsOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'toolsOverlay'),
   isOpen: selectors.isElementOpen(state, 'toolsOverlay'),
+  isToolStyleOpen: selectors.isElementOpen(state, 'toolStylePopup'),
   toolButtonObjects: selectors.getToolButtonObjects(state),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
@@ -288,6 +292,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   toggleElement: actions.toggleElement,
+  openElement: actions.openElement,
   closeElements: actions.closeElements,
   setActiveToolGroup: actions.setActiveToolGroup,
 };

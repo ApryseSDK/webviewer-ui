@@ -13,7 +13,6 @@ import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
-import Icon from 'components/Icon';
 
 import './ToolStylePopup.scss';
 
@@ -108,7 +107,9 @@ class ToolStylePopup extends React.PureComponent {
   positionToolStylePopup = () => {
     const { toolButtonObjects, activeToolName, toolButtonDataElement } = this.props;
 
-    const toolButton = document.querySelector(`[data-element="styling-button"]`);
+    const toolButton = activeToolName === 'AnnotationCreateRubberStamp' ?
+      document.querySelector(`[data-element="rubberStampToolButton"]`) :
+      document.querySelector(`[data-element="styling-button"]`);
 
     if (toolButton) {
       const { left, top } = getToolStylePopupPositionBasedOn(

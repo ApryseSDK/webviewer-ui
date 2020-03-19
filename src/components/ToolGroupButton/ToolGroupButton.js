@@ -92,7 +92,9 @@ class ToolGroupButton extends React.PureComponent {
       // setActiveToolGroup('');
       closeElement('toolsOverlay');
     } else {
-      core.setToolMode(toolName);
+      if (toolGroup !== 'miscTools') {
+        core.setToolMode(toolName);
+      }
       setActiveToolGroup(toolGroup);
       openElement('toolsOverlay');
     }
