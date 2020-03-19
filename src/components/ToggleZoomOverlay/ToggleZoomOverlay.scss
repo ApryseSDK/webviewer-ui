@@ -65,7 +65,7 @@
 
   // Avoids the child button chevron from overlapping the zoom text
   .Button.active, .Button:hover {
-    background: none;
+    background: none !important;
   }
 
   .toggle-element-button {

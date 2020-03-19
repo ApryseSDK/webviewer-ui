@@ -65,16 +65,15 @@ const ToolButton = ({
 
   const handleClick = () => {
     if (isActive) {
-      if (toolStylesExist(toolName) && toolName !== "AnnotationCreateStamp") {
+      if (toolStylesExist(toolName) && toolName !== "AnnotationCreateStamp" && toolName !== 'AnnotationCreateRubberStamp') {
         dispatch(actions.toggleElement("toolStylePopup"));
       }
     } else {
       core.setToolMode(toolName);
       dispatch(actions.setActiveToolGroup(group));
-      if (toolName === 'AnnotationCreateRubberStamp') {
-        dispatch(actions.openElement("toolStylePopup"));
+      if (group === 'miscTools') {
+        dispatch(actions.closeElement("toolStylePopup"));
       }
-      // dispatch(actions.closeElement("toolStylePopup"));
     }
   };
 

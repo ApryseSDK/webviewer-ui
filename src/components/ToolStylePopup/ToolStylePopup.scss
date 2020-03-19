@@ -7,15 +7,25 @@
   justify-content: center;
   border-radius: 0px 0px 4px 4px;
   box-shadow: 0 0 3px 0 var(--box-shadow);
+  align-items: center;
 
-  .divider-horizontal {
-    height: 1px;
-    margin-right: 4px;
-    margin-left: 4px;
-    margin-bottom: 8px;
-    margin-top: 8px;
-    background: var(--divider);
+  .divider-container {
+    width: 100%;
+    padding-right: 4px;
+    padding-left: 4px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    .divider-horizontal {
+      height: 1px;
+      // margin-right: 4px;
+      // margin-left: 4px;
+      // margin-bottom: 8px;
+      // margin-top: 8px;
+      background: var(--divider);
+      // width: 100%;
+    }
   }
+
 
   @include mobile {
     margin: 0;

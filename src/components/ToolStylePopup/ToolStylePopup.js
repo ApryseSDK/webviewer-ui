@@ -86,9 +86,9 @@ class ToolStylePopup extends React.PureComponent {
     const clickedToolsOverlay = toolsOverlay?.contains(e.target);
     const clickedHeader = header?.contains(e.target);
 
-    if (!clickedToolsOverlay && !clickedHeader) {
-      this.close();
-    }
+    // if (!clickedToolsOverlay && !clickedHeader) {
+    //   this.close();
+    // }
   };
 
   close = () => {
@@ -149,7 +149,11 @@ class ToolStylePopup extends React.PureComponent {
         style={style}
       >
         {isMobile && <div className="swipe-indicator" />}
-        {isDesktop && availablePalettes.length === 1 && <div className="divider-horizontal" />}
+        {isDesktop && availablePalettes.length === 1
+          &&
+          (<div className="divider-container">
+            <div className="divider-horizontal" />
+          </div>)}
         {activeToolName !== 'CropPage'
           &&
             <StylePopup

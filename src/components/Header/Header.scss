@@ -14,32 +14,19 @@
   min-width: 300px;
   height: 36px;
   background: var(--view-header-background);
-  // border-bottom: solid 1px var(--border);
-  // border-bottom: solid 1px transparent;
-  // box-sizing: content-box !important;
-
-  // .border {
-  //   border-bottom: solid 1px var(--border);
-  // }
-
 
   &:not(.Tools) {
     .Button {
+      &:hover {
+        background: var(--view-header-button-hover);
+      }
+
       &.active {
+        background: var(--view-header-button-active);
         .Icon {
           color: var(--view-header-icon-active-fill);
         }
       }
-    }
-  }
-
-  .Button {
-    &:hover {
-      background: var(--view-header-button-hover);
-    }
-
-    &.active {
-      background: var(--view-header-button-active);
     }
   }
 
@@ -61,7 +48,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .Button, .tool-group-button {
+    .tool-group-button {
       &:hover {
         background: var(--tools-button-hover);
       }
