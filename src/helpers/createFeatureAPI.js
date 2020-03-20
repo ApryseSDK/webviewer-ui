@@ -28,6 +28,7 @@ export default (enable, store) => features => {
         'notesPanel',
         'notesPanelButton',
         'toolsButton',
+        'linkButton',
       ],
       fn: () => {
         if (enable) {

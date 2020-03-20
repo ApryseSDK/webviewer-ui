@@ -249,8 +249,8 @@ WebViewer(...)
 
         setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
       },
-      up: e => {
-        if (e.target.classList.contains('mention__input') || core.isContinuousDisplayMode()) {
+      up: () => {
+        if (isFocusingElement() || core.isContinuousDisplayMode()) {
           return;
         }
 
@@ -264,8 +264,8 @@ WebViewer(...)
           scrollViewElement.scrollTop = scrollHeight - clientHeight;
         }
       },
-      down: e => {
-        if (e.target.classList.contains('mention__input') || core.isContinuousDisplayMode()) {
+      down: () => {
+        if (isFocusingElement() || core.isContinuousDisplayMode()) {
           return;
         }
 

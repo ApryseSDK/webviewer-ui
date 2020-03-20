@@ -38,7 +38,8 @@
     "draw": "畫",
     "type": "類型",
     "upload": "上載",
-    "link": "鏈接"
+    "link": "鏈接",
+    "fileAttachmentDownload": "下載附件"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "測量距離",
     "ellipse": "橢圓",
     "eraser": "橡皮",
+    "fileattachment": "文件附件",
     "freehand": "手繪",
     "freehand2": "手繪",
     "freetext": "任意文字",
@@ -69,8 +71,7 @@
     "strikeout": "刪除線",
     "underline": "底線",
     "custom": "自訂",
-    "rubberStamp": "橡皮圖章",
-    "fileattachment": "文件附件"
+    "rubberStamp": "橡皮圖章"
   },
   "rubberStamp": {
     "Approved": "已批准",

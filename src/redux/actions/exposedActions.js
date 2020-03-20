@@ -173,10 +173,6 @@ export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) => 
   type: 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES',
   payload: { selectedThumbnailPageIndexes },
 });
-export const deletePageIndex = pageIndexDeleted => ({
-  type: 'REMOVE_PAGE_INDEX',
-  payload: { pageIndexDeleted },
-});
 export const setSwipeOrientation = swipeOrientation => ({
   type: 'SET_SWIPE_ORIENTATION',
   payload: { swipeOrientation },

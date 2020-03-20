@@ -11,6 +11,7 @@ export default store => () => {
   const elements = [
     'annotationPopup',
     'toolsButton',
+    'linkButton',
   ];
 
   if (isReadOnly) {
