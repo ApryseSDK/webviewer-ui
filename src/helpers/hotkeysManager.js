@@ -317,7 +317,7 @@ WebViewer(...)
             'printModal',
             'searchOverlay',
             'stampOverlay',
-          ]),
+          ])
         );
       },
       p: this.createToolHotkeyHandler(() => {
@@ -358,47 +358,35 @@ WebViewer(...)
       }),
       s: this.createToolHotkeyHandler(() => {
         const sigToolButton = document.querySelector(
-          '[data-element="signatureToolButton"] .Button',
+          '[data-element="signatureToolButton"] .Button'
         );
 
         sigToolButton?.click();
       }),
       g: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
-          createTextAnnotationAndSelect(
-            dispatch,
-            window.Annotations.TextSquigglyAnnotation,
-          );
+          createTextAnnotationAndSelect(dispatch, window.Annotations.TextSquigglyAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextSquiggly');
         }
       }),
       h: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
-          createTextAnnotationAndSelect(
-            dispatch,
-            window.Annotations.TextHighlightAnnotation,
-          );
+          createTextAnnotationAndSelect(dispatch, window.Annotations.TextHighlightAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextHighlight');
         }
       }),
       k: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
-          createTextAnnotationAndSelect(
-            dispatch,
-            window.Annotations.TextStrikeoutAnnotation,
-          );
+          createTextAnnotationAndSelect(dispatch, window.Annotations.TextStrikeoutAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextStrikeout');
         }
       }),
       u: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
-          createTextAnnotationAndSelect(
-            dispatch,
-            window.Annotations.TextUnderlineAnnotation,
-          );
+          createTextAnnotationAndSelect(dispatch, window.Annotations.TextUnderlineAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextUnderline');
         }
