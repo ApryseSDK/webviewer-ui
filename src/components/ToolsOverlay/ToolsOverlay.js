@@ -227,24 +227,37 @@ class ToolsOverlay extends React.PureComponent {
     const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
 
 
+    const list = {
+      visible: {
+        width: "230px",
+        opacity: 1,
+      },
+      hidden: {
+        width: "0px",
+        opacity: 0,
+      },
+    };
+
+    const item = {
+      visible: {
+        'margin-left': "10px",
+        'margin-right': "10px",
+      },
+      hidden: {
+        'margin-left': "4px",
+        'margin-right': "-20px",
+      },
+    };
+
     return (
       <AnimatePresence>
         {isVisible && (
           <motion.div
             key="toolsOverlayAnim"
-            initial={{
-              width: "0px",
-              scale: 0.8,
-            }}
-            animate={{
-              width: "230px",
-              scale: 1,
-            }}
-            exit={{
-              width: "0px",
-              scale: 0.8,
-              opacity: 0,
-            }}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={list}
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
             <div
@@ -268,12 +281,21 @@ class ToolsOverlay extends React.PureComponent {
               >
                 <div className="tool-buttons-container" ref={this.itemsContainer}>
                   {toolNames.map((toolName, i) => (
-                    <ToolButton
+                    <motion.div
                       key={`${toolName}-${i}`}
-                      toolName={toolName}
-                      handleStyleClick={this.handleStyleClick}
-                      isStylingOpen={isToolStyleOpen}
-                    />
+                      initial={false}
+                      animate="visible"
+                      exit="hidden"
+                      variants={item}
+                      transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+                    >
+                      <ToolButton
+
+                        toolName={toolName}
+                        handleStyleClick={this.handleStyleClick}
+                        isStylingOpen={isToolStyleOpen}
+                      />
+                    </motion.div>
                   ))}
                   {activeToolGroup !== 'miscTools' &&
                     <div
