@@ -263,7 +263,7 @@ class ToolsOverlay extends React.PureComponent {
                   <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
               </div>}
           </div>
-          {(isToolStyleOpen || activeToolName === "AnnotationCreateRubberStamp") && (
+          {(isToolStyleOpen) && (
             <Swipeable
               onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
               onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}

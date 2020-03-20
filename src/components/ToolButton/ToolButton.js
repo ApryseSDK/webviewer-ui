@@ -11,6 +11,7 @@ import toolStylesExist from "helpers/toolStylesExist";
 import getToolStyles from "helpers/getToolStyles";
 import hotkeysManager from "helpers/hotkeysManager";
 import { mapToolNameToKey } from "constants/map";
+import defaultTool from 'constants/defaultTool';
 import actions from "actions";
 import selectors from "selectors";
 
@@ -35,7 +36,7 @@ const ToolButton = ({
     // eslint-disable-next-line
     activeToolStyles,
     { group = "", showColor, ...restObjectData },
-    customOverrides
+    customOverrides,
   ] = useSelector(
     state => [
       selectors.getActiveToolName(state) === toolName,
@@ -65,14 +66,24 @@ const ToolButton = ({
 
   const handleClick = () => {
     if (isActive) {
-      if (toolStylesExist(toolName) && toolName !== "AnnotationCreateStamp" && toolName !== 'AnnotationCreateRubberStamp') {
+      if (toolStylesExist(toolName) && toolName !== "AnnotationCreateStamp") {
         dispatch(actions.toggleElement("toolStylePopup"));
+        if (toolName === "AnnotationCreateRubberStamp") {
+          core.setToolMode(defaultTool);
+          // dispatch(actions.setActiveToolGroup(''));
+        }
       }
     } else {
-      core.setToolMode(toolName);
-      dispatch(actions.setActiveToolGroup(group));
       if (group === 'miscTools') {
         dispatch(actions.closeElement("toolStylePopup"));
+      }
+      core.setToolMode(toolName);
+      dispatch(actions.setActiveToolGroup(group));
+      // if (group === 'miscTools') {
+      //   dispatch(actions.closeElement("toolStylePopup"));
+      // }
+      if (toolName === "AnnotationCreateRubberStamp") {
+        dispatch(actions.openElement("toolStylePopup"));
       }
     }
   };
