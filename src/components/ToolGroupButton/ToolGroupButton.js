@@ -13,6 +13,7 @@ import getToolStyles from 'helpers/getToolStyles';
 import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 
 import './ToolGroupButton.scss';
 
@@ -81,16 +82,17 @@ class ToolGroupButton extends React.PureComponent {
       openElement,
       toolGroup,
       isToolsOverlayOpen,
+      isTabletAndMobile,
     } = this.props;
     const { toolName } = this.state;
 
     // toggleElement('toolsOverlay');
     if (isActive && !isToolsOverlayOpen) {
       openElement('toolsOverlay');
-    } else if (isActive) {
-      // core.setToolMode(defaultTool);
-      // setActiveToolGroup('');
-      // closeElement('toolsOverlay');
+    } else if (isActive && isTabletAndMobile) {
+      core.setToolMode(defaultTool);
+      setActiveToolGroup('');
+      closeElement('toolsOverlay');
     } else {
       closeElement('toolStylePopup');
       if (toolGroup !== 'miscTools') {
@@ -168,4 +170,19 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
+// export default connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
+const ConnectedToolGroupButton = connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
+
+export default props => {
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedToolGroupButton {...props} isTabletAndMobile={isTabletAndMobile} />
+  );
+};

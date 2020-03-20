@@ -129,7 +129,7 @@
     // padding-top: 4px;
     // padding-bottom: 4px;
     height: 32px;
-    // width: 100%;
+    width: 100%;
 
     @include tablet-and-mobile {
       box-shadow: none;
@@ -146,9 +146,13 @@
     }
 
     .tool-buttons-container {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
+
+      @include tablet-and-mobile {
+        justify-content: center;
+      }
       // margin-top: 4px;
       // height: 100%;
       // width: 100%;

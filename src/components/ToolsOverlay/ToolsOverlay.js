@@ -227,9 +227,9 @@ class ToolsOverlay extends React.PureComponent {
     const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
 
 
-    const list = {
+    let list = {
       visible: {
-        width: "230px",
+        width: "214px",
         opacity: 1,
       },
       hidden: {
@@ -238,10 +238,10 @@ class ToolsOverlay extends React.PureComponent {
       },
     };
 
-    const item = {
+    let item = {
       visible: {
-        'margin-left': "10px",
-        'margin-right': "10px",
+        'margin-left': "8px",
+        'margin-right': "8px",
       },
       hidden: {
         'margin-left': "4px",
@@ -249,16 +249,33 @@ class ToolsOverlay extends React.PureComponent {
       },
     };
 
+    if (isTabletAndMobile) {
+      list = {
+        visible: {
+          width: "100%",
+        },
+        hidden: false,
+      };
+
+      item = {
+        visible: {
+          'margin-left': "8px",
+          'margin-right': "8px",
+        },
+        hidden: false,
+      };
+    }
+
     return (
       <AnimatePresence>
         {isVisible && (
           <motion.div
             key="toolsOverlayAnim"
-            initial="hidden"
+            initial={isTabletAndMobile ? false : "hidden"}
             animate="visible"
             exit="hidden"
             variants={list}
-            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+            transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
             <div
               className={classNames({
@@ -287,7 +304,7 @@ class ToolsOverlay extends React.PureComponent {
                       animate="visible"
                       exit="hidden"
                       variants={item}
-                      transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+                      transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
                     >
                       <ToolButton
 
