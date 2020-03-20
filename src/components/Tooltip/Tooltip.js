@@ -12,24 +12,10 @@ const propTypes = {
   content: PropTypes.string,
 };
 
-function useCombinedRefs(forwardedRef) {
-  // this is mainly for 'CustomElement' because they might need to update the DOM when rendering 
-  const targetRef = useRef();
-
-  useEffect(() => {
-    if (!forwardedRef) {
-      return
-    }
-
-    forwardedRef.current = targetRef.current;
-  }, [forwardedRef]);
-
-  return targetRef;
-}
-
 const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
   const timeoutRef = useRef(null);
-  const childRef = forwardedRef ? useCombinedRefs(forwardedRef) : useRef(null);
+  const childRef = forwardedRef ? forwardedRef : useRef(null);
+
   const tooltipRef = useRef(null);
   const [show, setShow] = useState(false);
   const [opacity, setOpacity] = useState(0);
