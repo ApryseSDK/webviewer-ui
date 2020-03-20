@@ -14,7 +14,12 @@
   position: relative;
   background: var(--preset-background);
   border-radius: 4px;
-  width: 230px;
+  // width: 230px;
+  // width: 100%;
+
+  @include tablet-and-mobile {
+    width: 100%;
+  }
 
   &.shadow {
     box-shadow: 0 0 5px 0 var(--box-shadow);
@@ -124,10 +129,11 @@
     // padding-top: 4px;
     // padding-bottom: 4px;
     height: 32px;
+    // width: 100%;
 
     @include tablet-and-mobile {
       box-shadow: none;
-      width: 100vw;
+      width: 100%;
       padding: 0px;
       min-height: 52px;
       padding-top: 3px;
@@ -145,6 +151,7 @@
       justify-content: center;
       // margin-top: 4px;
       // height: 100%;
+      // width: 100%;
       height: 32px;
       .tool-button-container {
         // width: 22px;
@@ -185,7 +192,7 @@
 
       @include tablet-and-mobile {
         box-shadow: none;
-        width: 100vw;
+        width: 100%;
         margin-top: 0px;
       }
     }

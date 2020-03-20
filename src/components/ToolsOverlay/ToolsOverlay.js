@@ -16,6 +16,8 @@ import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
 import classNames from 'classnames';
 
+import { motion, AnimatePresence } from "framer-motion";
+
 import toolStylesExist from "helpers/toolStylesExist";
 
 import './ToolsOverlay.scss';
@@ -183,9 +185,7 @@ class ToolsOverlay extends React.PureComponent {
       activeToolName,
     } = this.props;
 
-    if (isDisabled || !activeToolGroup) {
-      return null;
-    }
+
 
     const toolNames = Object.keys(toolButtonObjects).filter(
       toolName => toolButtonObjects[toolName].group === activeToolGroup,
@@ -219,63 +219,93 @@ class ToolsOverlay extends React.PureComponent {
       };
     }
 
+
+    // if (isDisabled || !activeToolGroup) {
+    //   return null;
+    // }
+
+    const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
+
+
     return (
-      <div
-        className={classNames({
-          [className]: true,
-          shadow: !isTabletAndMobile && isToolStyleOpen,
-        })}
-        ref={this.overlay}
-        style={style}
-        data-element="toolsOverlay"
-      >
-        <div
-          className="arrow-up"
-          style={arrowStyle}
-        />
-        <div
-          ref={this.toolsContainer}
-          className={classNames({
-            "tools-container": true,
-          })}
-        >
-          <div className="tool-buttons-container" ref={this.itemsContainer}>
-            {toolNames.map((toolName, i) => (
-              <ToolButton
-                key={`${toolName}-${i}`}
-                toolName={toolName}
-                handleStyleClick={this.handleStyleClick}
-                isStylingOpen={isToolStyleOpen}
-              />
-            ))}
-            {activeToolGroup !== 'miscTools' &&
-              <div
-                className={classNames({
-                  "styling-arrow-container": true,
-                  active: isToolStyleOpen,
-                })}
-                data-element="styling-button"
-                onClick={() => this.props.toggleElement('toolStylePopup')}
-              >
-                <Icon glyph="icon-menu-style-line" />
-                {isToolStyleOpen ?
-                  <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-                  <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-              </div>}
-          </div>
-          {(isToolStyleOpen) && (
-            <Swipeable
-              onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-              onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-              preventDefaultTouchmoveEvent
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            key="toolsOverlayAnim"
+            initial={{
+              width: "0px",
+              scale: 0.8,
+            }}
+            animate={{
+              width: "230px",
+              scale: 1,
+            }}
+            exit={{
+              width: "0px",
+              scale: 0.8,
+              opacity: 0,
+            }}
+            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+          >
+            <div
+              className={classNames({
+                [className]: true,
+                shadow: !isTabletAndMobile && isToolStyleOpen,
+              })}
+              ref={this.overlay}
+              style={style}
+              data-element="toolsOverlay"
             >
-              <ToolStylePopup
-                handleCloseClick={() => this.props.closeElements(['toolStylePopup'])}
+              <div
+                className="arrow-up"
+                style={arrowStyle}
               />
-            </Swipeable>
-          )}
-        </div>
-      </div>
+              <div
+                ref={this.toolsContainer}
+                className={classNames({
+                  "tools-container": true,
+                })}
+              >
+                <div className="tool-buttons-container" ref={this.itemsContainer}>
+                  {toolNames.map((toolName, i) => (
+                    <ToolButton
+                      key={`${toolName}-${i}`}
+                      toolName={toolName}
+                      handleStyleClick={this.handleStyleClick}
+                      isStylingOpen={isToolStyleOpen}
+                    />
+                  ))}
+                  {activeToolGroup !== 'miscTools' &&
+                    <div
+                      className={classNames({
+                        "styling-arrow-container": true,
+                        active: isToolStyleOpen,
+                      })}
+                      data-element="styling-button"
+                      onClick={() => this.props.toggleElement('toolStylePopup')}
+                    >
+                      <Icon glyph="icon-menu-style-line" />
+                      {isToolStyleOpen ?
+                        <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
+                        <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
+                    </div>}
+                </div>
+                {(isToolStyleOpen) && (
+                  <Swipeable
+                    onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+                    onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+                    preventDefaultTouchmoveEvent
+                  >
+                    <ToolStylePopup
+                      handleCloseClick={() => this.props.closeElements(['toolStylePopup'])}
+                    />
+                  </Swipeable>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     );
   }
 }

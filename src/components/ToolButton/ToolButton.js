@@ -77,6 +77,7 @@ const ToolButton = ({
       if (group === 'miscTools') {
         dispatch(actions.closeElement("toolStylePopup"));
       }
+
       core.setToolMode(toolName);
       dispatch(actions.setActiveToolGroup(group));
       // if (group === 'miscTools') {

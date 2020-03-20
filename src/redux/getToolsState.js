@@ -5,6 +5,7 @@ import actions from 'actions';
 // import ToolsOverlay from 'components/ToolsOverlay';
 import defaultTool from 'constants/defaultTool';
 
+
 const getTools = () => {
   const desktopState = [
     { type: 'spacer' },
