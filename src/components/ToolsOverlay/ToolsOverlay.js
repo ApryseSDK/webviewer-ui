@@ -271,11 +271,17 @@ class ToolsOverlay extends React.PureComponent {
       };
     }
 
+    let motionStyle = {};
+    if (!isToolStyleOpen) {
+      motionStyle = { 'overflow': 'hidden' };
+    }
+
     return (
       <AnimatePresence>
         {isVisible && (
           <motion.div
             key="toolsOverlayAnim"
+            style={motionStyle}
             initial={isTabletAndMobile ? false : "hidden"}
             animate="visible"
             exit="hidden"
