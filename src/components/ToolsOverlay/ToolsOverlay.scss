@@ -129,7 +129,7 @@
     // padding-top: 4px;
     // padding-bottom: 4px;
     height: 32px;
-    width: 100%;
+    // width: 100%;
 
     @include tablet-and-mobile {
       box-shadow: none;
@@ -148,7 +148,7 @@
     .tool-buttons-container {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
+      // justify-content: center;
 
       @include tablet-and-mobile {
         justify-content: center;

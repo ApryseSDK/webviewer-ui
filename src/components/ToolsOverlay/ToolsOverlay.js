@@ -238,14 +238,19 @@ class ToolsOverlay extends React.PureComponent {
       },
     };
 
+
+
     let item = {
-      visible: {
+      visible: activeToolGroup === 'miscTools' ? {
+        'margin-left': "13px",
+        'margin-right': "13px",
+      } : {
         'margin-left': "8px",
         'margin-right': "8px",
       },
       hidden: {
         'margin-left': "4px",
-        'margin-right': "-20px",
+        'margin-right': "-16px",
       },
     };
 
@@ -304,10 +309,9 @@ class ToolsOverlay extends React.PureComponent {
                       animate="visible"
                       exit="hidden"
                       variants={item}
-                      transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
+                      transition={{ duration: 0.5 }}
                     >
                       <ToolButton
-
                         toolName={toolName}
                         handleStyleClick={this.handleStyleClick}
                         isStylingOpen={isToolStyleOpen}
