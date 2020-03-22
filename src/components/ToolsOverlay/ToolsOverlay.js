@@ -234,7 +234,7 @@ class ToolsOverlay extends React.PureComponent {
       },
       hidden: {
         width: "0px",
-        opacity: 0,
+        opacity: 0.5,
       },
     };
 
