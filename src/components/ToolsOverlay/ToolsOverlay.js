@@ -249,8 +249,8 @@ class ToolsOverlay extends React.PureComponent {
         'margin-right': "8px",
       },
       hidden: {
-        'margin-left': "4px",
-        'margin-right': "-16px",
+        'margin-left': "8px",
+        'margin-right': "8px",
       },
     };
 
@@ -286,7 +286,7 @@ class ToolsOverlay extends React.PureComponent {
             animate="visible"
             exit="hidden"
             variants={list}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
           >
             <div
               className={classNames({
@@ -315,7 +315,7 @@ class ToolsOverlay extends React.PureComponent {
                       animate="visible"
                       exit="hidden"
                       variants={item}
-                      transition={{ duration: 0.5 }}
+                      transition={{ duration: 0.3 }}
                     >
                       <ToolButton
                         toolName={toolName}

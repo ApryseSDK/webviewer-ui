@@ -12,6 +12,7 @@ export default dispatch => (newTool, oldTool) => {
   if (newTool && newTool.name === defaultTool) {
     // dispatch(actions.setActiveToolGroup(''));
     // dispatch(actions.closeElement('toolsOverlay'));
+    // dispatch(actions.closeElement('toolStylePopup'));
   }
 
   dispatch(actions.setActiveToolNameAndStyle(newTool));

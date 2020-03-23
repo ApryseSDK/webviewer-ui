@@ -86,9 +86,9 @@ class ToolStylePopup extends React.PureComponent {
     const clickedToolsOverlay = toolsOverlay?.contains(e.target);
     const clickedHeader = header?.contains(e.target);
 
-    // if (!clickedToolsOverlay && !clickedHeader) {
-    //   this.close();
-    // }
+    if (!clickedToolsOverlay && !clickedHeader) {
+      this.close();
+    }
   };
 
   close = () => {

@@ -89,7 +89,7 @@ class ToolGroupButton extends React.PureComponent {
     // toggleElement('toolsOverlay');
     if (isActive && !isToolsOverlayOpen) {
       openElement('toolsOverlay');
-    } else if (isActive && isTabletAndMobile) {
+    } else if (isActive) {
       core.setToolMode(defaultTool);
       setActiveToolGroup('');
       closeElement('toolsOverlay');
