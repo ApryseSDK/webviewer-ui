@@ -238,19 +238,30 @@ class ToolsOverlay extends React.PureComponent {
       },
     };
 
+    console.log('activeToolGroup', activeToolGroup);
 
+    let itemVisible = {
+      'marginLeft': "8px",
+      'marginRight': "8px",
+    };
+
+    if (activeToolGroup === 'miscTools') {
+      itemVisible = {
+        'marginLeft': "13px",
+        'marginRight': "13px",
+      };
+    } else if (activeToolGroup === 'measurementTools') {
+      itemVisible = {
+        'marginLeft': "15px",
+        'marginRight': "15px",
+      };
+    }
 
     let item = {
-      visible: activeToolGroup === 'miscTools' ? {
-        'margin-left': "13px",
-        'margin-right': "13px",
-      } : {
-        'margin-left': "8px",
-        'margin-right': "8px",
-      },
+      visible: itemVisible,
       hidden: {
-        'margin-left': "8px",
-        'margin-right': "8px",
+        'marginLeft': "8px",
+        'marginRight': "8px",
       },
     };
 
@@ -264,8 +275,8 @@ class ToolsOverlay extends React.PureComponent {
 
       item = {
         visible: {
-          'margin-left': "8px",
-          'margin-right': "8px",
+          'marginLeft': "8px",
+          'marginRight': "8px",
         },
         hidden: false,
       };

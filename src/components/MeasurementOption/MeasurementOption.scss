@@ -2,8 +2,9 @@
 
 .MeasurementOption {
   width: 100%;
-  background: var(--component-background);
   margin-left: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
   // margin-right: 2px;
 
   input, select {
@@ -46,7 +47,7 @@
       width: 79px;
       height: 32px;
     }
-  
+
     @include tablet {
       width: 79px;
       height: 32px;
@@ -75,7 +76,7 @@
       width: 64px;
       height: 32px;
     }
-  
+
     @include tablet {
       width: 48px;
       height: 32px;
@@ -93,18 +94,18 @@
       width: 151px;
       height: 32px;
     }
-  
+
     @include tablet {
       width: 86px;
       height: 32px;
     }
   }
-  
+
   .Precision {
     display: flex;
     flex-direction: column;
   }
-  
+
   .LayoutTitle {
     margin-left: 4px;
     // margin-top: 6px;
@@ -114,7 +115,7 @@
     margin-left: 4px;
     margin-top: 10px;
   }
-  
+
   .Layout {
     display: flex;
     margin-left: 4px;
@@ -126,7 +127,7 @@
     margin-left: 4px;
     margin-top: 5px;
   }
-  
+
   .ScaleDropdown {
     @include mobile{
       &.open{
@@ -137,7 +138,7 @@
     margin-right: 3px;
     z-index: 2;
   }
-  
+
   .PrecisionDropdown {
     @include mobile{
       &.open{
@@ -148,10 +149,10 @@
     margin-left: 3px;
     width: 65px;
   }
-  
-  input[type=number]::-webkit-inner-spin-button, 
-  input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none; 
-    margin: 0; 
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
