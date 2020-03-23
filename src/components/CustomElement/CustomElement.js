@@ -52,7 +52,7 @@ const CustomElement = ({
       const element = render();
 
       if (isDOMElement(element)) {
-        const wrapperElement = toolTipWrapperRef ? toolTipWrapperRef.current : wrapperRef.current;
+        const wrapperElement = toolTipWrapperRef.current ? toolTipWrapperRef.current : wrapperRef.current;
 
         while (wrapperElement.firstChild) {
           wrapperElement.removeChild(wrapperElement.firstChild);
@@ -70,7 +70,7 @@ const CustomElement = ({
 
   if (isDisabled) {
     return null;
-  } 
+  }
 
   const children = (
     <div
