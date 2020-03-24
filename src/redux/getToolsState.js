@@ -177,11 +177,11 @@ const getToolButtonObjects = () => {
 
     AnnotationCreateRectangle: { position: 0, dataElement: 'rectangleToolButton', title: 'annotation.rectangle', img: 'icon-tool-shape-rectangle', group: 'shapeTools', showColor: 'always' },
     AnnotationCreateEllipse: { position: 1, dataElement: 'ellipseToolButton', title: 'annotation.ellipse', img: 'icon-tool-shape-oval', group: 'shapeTools', showColor: 'always' },
-    AnnotationCreateLine: { position: 2, dataElement: 'lineToolButton', title: 'annotation.line', img: 'icon-tool-shape-line', group: 'shapeTools', showColor: 'always' },
+    AnnotationCreateArrow: { position: 2, dataElement: 'arrowToolButton', title: 'annotation.arrow', img: 'icon-tool-shape-arrow', group: 'shapeTools', showColor: 'always' },
     AnnotationCreatePolyline: { position: 3, dataElement: 'polylineToolButton', title: 'annotation.polyline', img: 'icon-tool-shape-polyline', group: 'shapeTools', showColor: 'always' },
-    AnnotationCreatePolygon: { position: 4, dataElement: 'polygonToolButton', title: 'annotation.polygon', img: 'icon-tool-shape-polygon', group: 'shapeTools', showColor: 'always' },
-    AnnotationCreatePolygonCloud: { position: 5, dataElement: 'cloudToolButton', title: 'annotation.polygonCloud', img: 'icon-tool-shape-cloud', group: 'shapeTools', showColor: 'always' },
-    AnnotationCreateArrow: { position: 6, dataElement: 'arrowToolButton', title: 'annotation.arrow', img: 'icon-tool-shape-arrow', group: 'shapeTools', showColor: 'always' },
+    AnnotationCreateLine: { position: 4, dataElement: 'lineToolButton', title: 'annotation.line', img: 'icon-tool-shape-line', group: 'shapeTools', showColor: 'always' },
+    AnnotationCreatePolygon: { position: 5, dataElement: 'polygonToolButton', title: 'annotation.polygon', img: 'icon-tool-shape-polygon', group: 'shapeTools', showColor: 'always' },
+    AnnotationCreatePolygonCloud: { position: 6, dataElement: 'cloudToolButton', title: 'annotation.polygonCloud', img: 'icon-tool-shape-cloud', group: 'shapeTools', showColor: 'always' },
     AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'ic_annotation_add_redact_black_24px', showColor: 'never' },
     AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.signature', img: 'icon-tool-signature', group: 'signatureTools', showColor: 'active' },
 
