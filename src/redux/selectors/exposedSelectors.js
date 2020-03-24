@@ -33,6 +33,42 @@ export const getDisabledElementPriority = (state, dataElement) =>
 
 export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
 
+export const getActiveToolNamesForActiveToolGroup = state => {
+  const { toolButtonObjects, activeToolGroup } = state.viewer;
+
+  return Object.keys(toolButtonObjects).filter(
+    toolName => {
+      const toolButtonObject = toolButtonObjects[toolName];
+      const { group, position } = toolButtonObject;
+
+      return group === activeToolGroup && (position <= 3 || position === undefined);
+    },
+  ).sort((toolNameA, toolNameB) => {
+    const toolButtonA = toolButtonObjects[toolNameA];
+    const toolButtonB = toolButtonObjects[toolNameB];
+    const { position: positionA } = toolButtonA;
+    const { position: positionB } = toolButtonB;
+    return positionA - positionB;
+  });
+};
+export const getSwapableToolNamesForActiveToolGroup = state => {
+  const { toolButtonObjects, activeToolGroup } = state.viewer;
+  return Object.keys(toolButtonObjects).filter(
+    toolName => {
+      const toolButtonObject = toolButtonObjects[toolName];
+      const { group, position } = toolButtonObject;
+
+      return group === activeToolGroup && position >= 4;
+    },
+  ).sort((toolNameA, toolNameB) => {
+    const toolButtonA = toolButtonObjects[toolNameA];
+    const toolButtonB = toolButtonObjects[toolNameB];
+    const { position: positionA } = toolButtonA;
+    const { position: positionB } = toolButtonB;
+    return positionA - positionB;
+  });
+};
+
 export const getToolButtonDataElements = (state, toolNames) =>
   toolNames
     .map(toolName => state.viewer.toolButtonObjects[toolName]?.dataElement)

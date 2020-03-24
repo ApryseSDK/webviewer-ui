@@ -13,6 +13,7 @@ import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
+import ToolButton from 'components/ToolButton';
 
 import './ToolStylePopup.scss';
 
@@ -107,7 +108,7 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   positionToolStylePopup = () => {
-    const { toolButtonObjects, activeToolName, toolButtonDataElement } = this.props;
+    const { activeToolName } = this.props;
 
     const toolButton = activeToolName === 'AnnotationCreateRubberStamp' ?
       document.querySelector(`[data-element="rubberStampToolButton"]`) :
@@ -123,11 +124,17 @@ class ToolStylePopup extends React.PureComponent {
     }
   };
 
+  handleSwap = toolName => {
+
+  }
+
   render() {
-    const { isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop, isOpen, handleCloseClick } = this.props;
+    const { swapableToolNames, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop, isOpen, handleCloseClick } = this.props;
     const { left, top } = this.state;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     const colorMapKey = mapToolNameToKey(activeToolName);
+
+    console.log('swapableToolNames', swapableToolNames);
 
     if (isDisabled) {
       return null;
@@ -151,22 +158,30 @@ class ToolStylePopup extends React.PureComponent {
         style={style}
       >
         {isMobile && <div className="swipe-indicator" />}
-        {isDesktop && availablePalettes.length === 1
+        {(swapableToolNames.length > 0 || availablePalettes.length === 1)
           &&
           (<div className="divider-container">
             <div className="divider-horizontal" />
           </div>)}
-        {activeToolName !== 'CropPage'
-          &&
-            <StylePopup
-              key={activeToolName}
-              toolName={activeToolName}
-              colorMapKey={colorMapKey}
-              style={activeToolStyle}
-              isFreeText={isFreeText}
-              hideSlider={hideSlider}
-              onStyleChange={this.handleStyleChange}
-            />}
+        <div
+          className="swap-tools-container"
+        >
+          {swapableToolNames.map((toolName, i) =>
+            <ToolButton
+              key={`${toolName}-${i}`}
+              toolName={toolName}
+              isSwap
+            />)}
+        </div>
+        <StylePopup
+          key={activeToolName}
+          toolName={activeToolName}
+          colorMapKey={colorMapKey}
+          style={activeToolStyle}
+          isFreeText={isFreeText}
+          hideSlider={hideSlider}
+          onStyleChange={this.handleStyleChange}
+        />
       </div>
     );
   }
@@ -182,7 +197,7 @@ const mapStateToProps = state => {
     activeToolStyle: selectors.getActiveToolStyles(state),
     isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
     isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
-    toolButtonObjects: selectors.getToolButtonObjects(state),
+    swapableToolNames: selectors.getSwapableToolNamesForActiveToolGroup(state),
   };
 };
 

@@ -2,6 +2,9 @@
 // following are the tools that we want to change the default styles due to design
 // we could change the default styles in core but we don't want the legacy UI to be affected, so we do it here
 export default {
+  AnnotationCreatePolygon: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
   AnnotationCreateRectangle: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },

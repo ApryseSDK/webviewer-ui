@@ -152,31 +152,13 @@ class ToolsOverlay extends React.PureComponent {
     closeElements(['toolsOverlay']);
   };
 
-  handleStyleClick = toolName => {
-    // this.props.toggleElement('toolStylePopup');
-    // debugger;
-    // if (toolName === this.props.activeToolName) {
-    //   this.setState({ isStylingOpen: !this.state.isStylingOpen, toolNameThatOpenedStyling: null });
-    // } else if (toolName === this.state.toolNameThatOpenedStyling) {
-    //   this.setState({ isStylingOpen: false, toolNameThatOpenedStyling: null });
-    //   // } else if () {
-    // } else {
-    //   this.setState({
-    //     isStylingOpen: true,
-    //     // isStylingOpen: !this.state.isStylingOpen,
-    //     toolNameThatOpenedStyling: toolName,
-    //   });
-    // }
-    // this.setState({ isStylingOpen: !this.state.isStylingOpen });
-  };
-
   render() {
     const { left, right, top, isStylingOpen } = this.state;
 
     const {
       isDisabled,
       isOpen,
-      toolButtonObjects,
+      toolNames,
       activeToolGroup,
       isMobile,
       isTabletAndMobile,
@@ -185,11 +167,9 @@ class ToolsOverlay extends React.PureComponent {
       activeToolName,
     } = this.props;
 
-
-
-    const toolNames = Object.keys(toolButtonObjects).filter(
-      toolName => toolButtonObjects[toolName].group === activeToolGroup,
-    );
+    // const toolNames = Object.keys(toolButtonObjects).filter(
+    //   toolName => toolButtonObjects[toolName].group === activeToolGroup,
+    // );
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
     // let style = { left, right, top };
@@ -330,8 +310,6 @@ class ToolsOverlay extends React.PureComponent {
                     >
                       <ToolButton
                         toolName={toolName}
-                        handleStyleClick={this.handleStyleClick}
-                        isStylingOpen={isToolStyleOpen}
                       />
                     </motion.div>
                   ))}
@@ -374,7 +352,8 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'toolsOverlay'),
   isOpen: selectors.isElementOpen(state, 'toolsOverlay'),
   isToolStyleOpen: selectors.isElementOpen(state, 'toolStylePopup'),
-  toolButtonObjects: selectors.getToolButtonObjects(state),
+  // toolButtonObjects: selectors.getToolButtonObjects(state),
+  toolNames: selectors.getActiveToolNamesForActiveToolGroup(state),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
   activeToolName: selectors.getActiveToolName(state),

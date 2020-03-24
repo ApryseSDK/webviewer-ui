@@ -110,6 +110,11 @@ export const toggleElement = dataElement => (dispatch, getState) => {
   }
 };
 
+export const swapTools = (toolNameToSwap, otherToolName) => ({
+  type: 'SWAP_TOOLS',
+  payload: { toolNameToSwap, otherToolName },
+});
+
 export const setActiveHeaderGroup = headerGroup => ({
   type: 'SET_ACTIVE_HEADER_GROUP',
   payload: { headerGroup },

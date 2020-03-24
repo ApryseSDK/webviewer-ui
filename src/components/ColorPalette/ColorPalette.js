@@ -83,7 +83,10 @@ class ColorPalette extends React.PureComponent {
           <div
             key={i}
             className="cell-container"
-            onClick={() => this.setColor(bg)}
+            onClick={() => {
+              console.log('bg', bg);
+              this.setColor(bg);
+            }}
           >
             <div
               className={classNames({

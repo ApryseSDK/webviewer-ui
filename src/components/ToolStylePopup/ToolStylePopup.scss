@@ -9,6 +9,15 @@
   box-shadow: 0 0 3px 0 var(--box-shadow);
   align-items: center;
 
+  .swap-tools-container {
+    display: flex;
+    width: 100%;
+
+    .tool-button {
+      margin: 0 8px;
+    }
+  }
+
   .divider-container {
     width: 100%;
     padding-right: 4px;

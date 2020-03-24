@@ -108,6 +108,26 @@ export default initialState => (state = initialState, action) => {
         ...state,
         headers: { ...state.headers, [payload.header]: payload.headerItems },
       };
+    case 'SWAP_TOOLS': {
+      const { toolNameToSwap, otherToolName } = payload;
+      const toolToSwap = state.toolButtonObjects[toolNameToSwap];
+      const otherTool = state.toolButtonObjects[otherToolName];
+
+      return {
+        ...state,
+        toolButtonObjects: {
+          ...state.toolButtonObjects,
+          [toolNameToSwap]: {
+            ...toolToSwap,
+            position: otherTool.position,
+          },
+          [otherToolName]: {
+            ...otherTool,
+            position: toolToSwap.position,
+          },
+        },
+      };
+    }
     case 'SET_TOOLS_HEADER':
       return {
         ...state,

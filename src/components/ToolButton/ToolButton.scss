@@ -1,6 +1,6 @@
 @import '../../constants/styles';
 
-.tool-button-container {
+.tool-button {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -11,7 +11,10 @@
   //   margin: 0 12px;
   // }
 
-  .Button {
+  &.Button {
+    width: 26px;
+    height: 26px;
+
     &:hover {
       background: var(--tools-overlay-button-hover);
     }

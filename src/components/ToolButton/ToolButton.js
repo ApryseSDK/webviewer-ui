@@ -4,7 +4,6 @@ import classNames from "classnames";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import Button from "components/Button";
-import Icon from "components/Icon";
 
 import core from "core";
 import toolStylesExist from "helpers/toolStylesExist";
@@ -23,12 +22,13 @@ const propTypes = {
 };
 
 const ToolButton = ({
+  isSwap,
   toolName,
-  handleStyleClick,
   isStylingOpen,
   ...restProps
 }) => {
   const [
+    activeToolName,
     isActive,
     iconColor,
     // use this to trigger rerender so the color will be right
@@ -39,6 +39,7 @@ const ToolButton = ({
     customOverrides,
   ] = useSelector(
     state => [
+      selectors.getActiveToolName(state),
       selectors.getActiveToolName(state) === toolName,
       selectors.getIconColor(state, mapToolNameToKey(toolName)),
       selectors.getActiveToolStyles(state),
@@ -63,6 +64,11 @@ const ToolButton = ({
       hotkeysManager.on(toolName);
     }
   }, [customOverrides, toolName]);
+
+  const handleSwap = () => {
+    dispatch(actions.swapTools(toolName, activeToolName));
+    core.setToolMode(toolName);
+  };
 
   const handleClick = () => {
     if (isActive) {
@@ -92,7 +98,7 @@ const ToolButton = ({
   const toolStyles = getToolStyles(toolName);
   let color = "";
 
-  if (showColor === "always" || (showColor === "active" && isActive)) {
+  if ((showColor === "always" || (showColor === "active" && isActive))) {
     color = toolStyles[iconColor]?.toHexString?.();
   }
 
@@ -102,7 +108,7 @@ const ToolButton = ({
         "tool-button": true,
         hasStyles: toolStylesExist(toolName),
       })}
-      onClick={handleClick}
+      onClick={isSwap ? handleSwap : handleClick}
       isActive={isActive}
       color={color}
       {...restProps}
@@ -110,31 +116,6 @@ const ToolButton = ({
     />
   );
 
-  if (handleStyleClick) {
-    return (
-      <div
-        className={classNames({
-          "tool-button-container": true,
-          active: isStylingOpen && isActive,
-        })}
-      >
-        {ButtonComponent}
-        {/* {toolStylesExist(toolName) && toolName !== 'AnnotationCreateRubberStamp' &&
-          <div
-            className="styling-down-arrow-container"
-            onClick={() => {
-              handleClick();
-              handleStyleClick(toolName);
-            }}
-          >
-            <Icon
-              className="styling-down-arrow"
-              glyph="icon-chevron-down-bold"
-            />
-          </div>} */}
-      </div>
-    );
-  }
   return ButtonComponent;
 };
 
