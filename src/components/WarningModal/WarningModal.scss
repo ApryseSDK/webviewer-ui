@@ -6,95 +6,41 @@
 
   .container {
     @extend %modal-shared-container-style;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-width: 400px;
-    border-radius: 4px;
-    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-    padding: 8px 8px;
-    background: var(--component-background);
+    $paddingX: 5%;
+    $paddingY: 4%;
 
-    @include mobile {
-      width: 100%;
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      padding-top: 24px;
-      padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
-      min-width: 100px;
-
-      .swipe-indicator {
-        background: var(--divider);
-        border-radius: 2px;
-        height: 4px;
-        width: 38px;
-        position: absolute;
-        top: 12px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-
-        @include tablet-and-desktop {
-          display: none;
-        }
-      }
-    }
+    width: calc(100% - 20px);
+    max-width: 500px;
 
     .header {
-      display: flex;
-      justify-content: flex-start;
-      width: 100%;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      font-size: 15px;
+      padding: $paddingY $paddingX $paddingY;
+      font-weight: bold;
     }
 
+    .body {
+      padding: 0% $paddingX;
+      line-height: 20px;
+    }
+    
     .footer {
       display: flex;
-      flex-direction: row;
       justify-content: flex-end;
-      width: 100%;
-      margin-top: 13px;
-    }
+      margin: $paddingY $paddingX;
 
-    .warningMessageCancel {
-      color: var(--secondary-button-text);
-      padding: 6px 18px;
-      margin-top: 8px;
-      margin-right:15px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-
-      &:hover {
-        color: var(--secondary-button-hover);
+      .Button {
+        margin: 0% 1%;
+        border-radius: 4px;
+        letter-spacing: 1px;
+        padding: 0% 3%;
       }
-    }
 
-    .warningMessageConfirm {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--primary-button-text);
-      font-weight: 600;
-      padding: 6px 18px;
-      margin-top: 8px;
-      margin-left: 5px;
-      width: fit-content;
-      background: var(--primary-button);
-      border-radius: 4px;
-      height: 30px;
-      cursor: pointer;
+      .warningMessageConfirm{
+        background-color: $pdftron-blue;
+        color: white;
 
-      &:hover {
-        background: var(--primary-button-hover);
+        &:hover{
+          opacity: 0.5;
+        }
       }
     }
   }
