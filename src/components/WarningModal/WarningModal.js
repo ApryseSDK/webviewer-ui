@@ -11,6 +11,8 @@ import getPopupElements from 'helpers/getPopupElements';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import { Swipeable } from 'react-swipeable';
+
 import './WarningModal.scss';
 
 class WarningModal extends React.PureComponent {
@@ -65,25 +67,33 @@ class WarningModal extends React.PureComponent {
     const cancelBtnText = i18next.t('action.cancel');
 
     return (
-      <div className={className}>
-        <div className="container">
-          <div className="header">{title}</div>
-          <div className="body">{message}</div>
-          <div className="footer">
-            <Button
-              dataElement="WarningModalClearButton"
-              label={cancelBtnText}
-              onClick={this.onCancel}
-            />
-            <Button
-              className="warningMessageConfirm"
-              dataElement="WarningModalSignButton"
-              label={label}
-              onClick={this.onConfirm}
-            />
+      <Swipeable
+        onSwipedUp={this.onCancel}
+        onSwipedDown={this.onCancel}
+        preventDefaultTouchmoveEvent
+      >
+        <div className={className} onMouseDown={this.onCancel}>
+          <div className="container" onMouseDown={e => e.stopPropagation()}>
+            <div className="swipe-indicator" />
+            <div className="header">{title}</div>
+            <div className="body">{message}</div>
+            <div className="footer">
+              <Button
+                className="warningMessageCancel"
+                dataElement="WarningModalClearButton"
+                label={cancelBtnText}
+                onClick={this.onCancel}
+              />
+              <Button
+                className="warningMessageConfirm"
+                dataElement="WarningModalSignButton"
+                label={label}
+                onClick={this.onConfirm}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Swipeable>
     );
   }
 }
@@ -103,7 +113,4 @@ const mapDispatchToProps = {
   closeElements: actions.closeElements,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(WarningModal);
+export default connect(mapStateToProps, mapDispatchToProps)(WarningModal);
