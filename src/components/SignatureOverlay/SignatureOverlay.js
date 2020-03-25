@@ -243,7 +243,7 @@ class SignatureOverlay extends React.PureComponent {
     const { left, right, top, defaultSignatures } = this.state;
     const { t, isDisabled, maxSignaturesCount, isOpen, isMobile, isTabletAndMobile } = this.props;
 
-    const className = getClassName('Overlay ToolsOverlay', { isOpen });
+    const className = getClassName('Overlay ToolsOverlay SignatureOverlay', { isOpen });
 
     if (isDisabled) {
       return null;
@@ -283,53 +283,46 @@ class SignatureOverlay extends React.PureComponent {
         <div
           className="tools-container"
         >
-          <div className="default-signatures-container">
-            {defaultSignatures.length < maxSignaturesCount &&
+          {defaultSignatures.length < maxSignaturesCount &&
+            <div
+              className={`row${
+                defaultSignatures.length >= maxSignaturesCount
+                  ? ' disabled'
+                  : ' enabled'
+              }`}
+              onClick={this.openSignatureModal}
+            >
               <div
-                className={`row${
-                  defaultSignatures.length >= maxSignaturesCount
+                className={`content${
+                  defaultSignatures.length < maxSignaturesCount
                     ? ' disabled'
                     : ' enabled'
                 }`}
-                onClick={this.openSignatureModal}
               >
-                <div
-                  className={`content${
-                    defaultSignatures.length < maxSignaturesCount
-                      ? ' disabled'
-                      : ' enabled'
-                  }`}
-                >
-                  {t('option.signatureOverlay.addSignature')}
-                </div>
-                <div className="icon">
-                  <Icon glyph="icon-menu-add" />
-                </div>
-              </div>}
-            {defaultSignatures.map(({ imgSrc }, index) => (
-              <div className="row" key={index}>
-                <div
-                  className="content"
-                  onClick={() => this.setSignature(index)}
-                >
-                  <img src={imgSrc} />
-                </div>
-                <div
-                  className="icon"
-                  dataElement="defaultSignatureDeleteButton"
-                  onClick={() => this.deleteDefaultSignature(index)}
-                >
-                  <Icon glyph="ic_delete_black_24px"/>
-                </div>
+                {t('option.signatureOverlay.addSignature')}
               </div>
-            ))}
-          </div>
+              <div className="icon">
+                <Icon glyph="icon-menu-add" />
+              </div>
+            </div>}
+          {defaultSignatures.map(({ imgSrc }, index) => (
+            <div className="row" key={index}>
+              <div
+                className="content"
+                onClick={() => this.setSignature(index)}
+              >
+                <img src={imgSrc} />
+              </div>
+              <div
+                className="icon"
+                dataElement="defaultSignatureDeleteButton"
+                onClick={() => this.deleteDefaultSignature(index)}
+              >
+                <Icon glyph="ic_delete_black_24px"/>
+              </div>
+            </div>
+          ))}
         </div>
-        {!isTabletAndMobile && <div className="Close-Container">
-          <div className="Close-Button" onClick={() => this.props.closeElement('signatureOverlay')}>
-            <Icon className="Close-Icon" glyph="icon-close" />
-          </div>
-        </div>}
       </div>
     );
   }

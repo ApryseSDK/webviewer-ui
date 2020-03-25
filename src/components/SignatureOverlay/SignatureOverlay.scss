@@ -2,19 +2,20 @@
 @import '../../constants/overlay';
 
 .SignatureOverlay {
-  @extend %overlay;
+  @include desktop {
+    position: absolute;
+    box-shadow: 0 0 3px 0 var(--document-box-shadow);
+    width: 160px;
+  }
 
-  top: 46px;
-  width: 232px;
-  border-radius: 4px 0 0 4px;
-  box-shadow: 0px 0px 3px 0px var(--box-shadow);
-  width: 232px;
-  padding: 0px 16px 16px 16px; 
+  .tools-container {
+    height: auto;
+  }
 }
 
-.default-signatures-container {
-  display: flex;
-  flex-direction: column;
+// .default-signatures-container {
+  // display: flex;
+  // flex-direction: column;
 
   .row {
     display: flex;
@@ -28,7 +29,7 @@
       color: #E1E1E3;
       .Icon {
         color: #E1E1E3;
-      }      
+      }
     }
 
     .content {
@@ -39,9 +40,9 @@
       cursor: pointer;
 
       img {
-        max-width: 120px;
+        max-width: 110px;
         max-height: 60px;
-      }      
+      }
     }
 
     .icon {
@@ -54,7 +55,9 @@
           color: #767f9b;
         }
       }
-    }    
-  }
+    }
+  // }
 
 }
+
+

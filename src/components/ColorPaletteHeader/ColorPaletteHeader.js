@@ -109,7 +109,7 @@ class ColorPaletteHeader extends React.PureComponent {
     const { t, colorPalette, colorMapKey, toolName } = this.props;
     const { availablePalettes } = getDataWithKey(colorMapKey);
 
-    if (toolName.includes('Line') || toolName.includes('Arrow') || toolName.includes('Polyline')) {
+    if (toolName && (toolName.includes('Line') || toolName.includes('Arrow') || toolName.includes('Polyline'))) {
       return (
         <div className="palette-options">
           {["StrokeColor", "FillColor"].map((pallette, i) =>

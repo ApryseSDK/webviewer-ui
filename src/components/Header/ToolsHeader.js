@@ -42,7 +42,7 @@ class ToolsHeader extends React.PureComponent {
           <HeaderItems items={activeHeaderItems} />
         </div>
         {isTabletAndMobile && isToolsOverlayOpen && !isToolsOverlayDisabled && <ToolsOverlay />}
-        {/* {<SignatureOverlay />} */}
+        <SignatureOverlay />
       </React.Fragment>
     );
   }
