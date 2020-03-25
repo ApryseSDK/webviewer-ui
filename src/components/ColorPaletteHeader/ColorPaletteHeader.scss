@@ -43,6 +43,15 @@
     &.active {
       background: var(--popup-button-active)
     }
+
+    &.disabled {
+      color: var(--gray-6);
+      cursor: default;
+
+      &:hover {
+        background: none;
+      }
+    }
   }
 
   .palette-options-divider {

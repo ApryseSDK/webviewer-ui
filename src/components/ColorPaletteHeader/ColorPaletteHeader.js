@@ -106,8 +106,29 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   render() {
-    const { t, colorPalette, colorMapKey } = this.props;
+    const { t, colorPalette, colorMapKey, toolName } = this.props;
     const { availablePalettes } = getDataWithKey(colorMapKey);
+
+    if (toolName.includes('Line') || toolName.includes('Arrow') || toolName.includes('Polyline')) {
+      return (
+        <div className="palette-options">
+          {["StrokeColor", "FillColor"].map((pallette, i) =>
+            <React.Fragment key={i}>
+              <div
+                className={classNames({
+                  'palette-options-button': true,
+                  active: colorPalette === pallette,
+                  disabled: pallette === 'FillColor',
+                })}
+              >
+                {t(`option.annotationColor.${pallette}`)}
+              </div>
+              {i < 1 && <div className="palette-options-divider" />}
+            </React.Fragment>,
+          )}
+        </div>
+      );
+    }
 
 
     if (availablePalettes.length < 2) {

@@ -118,6 +118,8 @@ class StylePopup extends React.PureComponent {
     const { currentPalette, style, colorMapKey, onStyleChange, toolName, isMobile } = this.props;
     const { Scale, Precision, Style } = style;
 
+    console.log('currentPalette', currentPalette);
+
     const className = classNames({
       Popup: true,
       StylePopup: true,
@@ -141,6 +143,7 @@ class StylePopup extends React.PureComponent {
               colorPalette={currentPalette}
               colorMapKey={colorMapKey}
               style={style}
+              toolName={toolName}
             />
             {this.renderColorPalette()}
           </div>
