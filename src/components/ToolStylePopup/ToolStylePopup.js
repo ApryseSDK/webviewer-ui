@@ -158,7 +158,7 @@ class ToolStylePopup extends React.PureComponent {
         style={style}
       >
         {isMobile && <div className="swipe-indicator" />}
-        {(swapableToolNames.length > 0 || availablePalettes.length === 1)
+        {isDesktop && (swapableToolNames.length > 0 || availablePalettes.length === 1)
           &&
           (<div className="divider-container">
             <div className="divider-horizontal" />

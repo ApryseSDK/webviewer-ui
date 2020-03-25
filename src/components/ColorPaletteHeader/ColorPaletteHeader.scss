@@ -2,11 +2,12 @@
 
 .palette-options {
   display: flex;
-  margin: 0 4px;
+  // margin: 0 4px;
   margin-bottom: 8px;
   margin-top: 4px;
   border-radius: 4px;
   border: 1px solid var(--border);
+  width: 100%;
   cursor: pointer;
 
   .palette-options-button {
@@ -14,10 +15,10 @@
     // display: flex;
     // justify-content: center;
     // align-items: center;
-    height: 24px;
+    height: 20px;
     text-align: center;
     vertical-align: middle;
-    line-height: 24px;
+    line-height: 20px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

@@ -1,57 +1,69 @@
 @import '../../constants/styles.scss';
 
-.ColorPalette {
+.colors-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 
-  .cell-container {
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
+  .ColorPalette {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 5px;
+    flex-wrap: wrap;
+    width: 196px;
 
     @include tablet-and-mobile {
-      width: 36px;
-      height: 36px;
-      margin: 0 13px;
+      width: auto;
     }
 
-    .cell-outer {
-      &.active {
-        border: 1px solid var(--color-palette-border);
-        width: 26px;
-        height: 26px;
-        border-radius: 10000000px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .cell-container {
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 0px;
+      // flex-basis: 14%;
 
-        @include tablet-and-mobile  {
-          width: 34px;
-          height: 34px;
-        }
+      @include tablet-and-mobile {
+        width: 32px;
+        height: 32px;
+        margin: 0 5px;
       }
 
-      .cell {
-        width: 18px;
-        height: 18px;
-        border-radius: 10000000px;
-
-        .transparent {
-          border: 2px solid var(--faded-text);
+      .cell-outer {
+        &.active {
+          border: 1px solid var(--color-palette-border);
+          width: 26px;
+          height: 26px;
           border-radius: 10000000px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          // @include tablet-and-mobile  {
+          //   width: 34px;
+          //   height: 34px;
+          // }
         }
 
-        &.border{
-          border: 1px solid var(--white-color-palette-border);
-        }
+        .cell {
+          width: 18px;
+          height: 18px;
+          border-radius: 10000000px;
 
-        @include tablet-and-mobile  {
-          width: 24px;
-          height: 24px;
+          .transparent {
+            border: 2px solid var(--faded-text);
+            border-radius: 10000000px;
+          }
+
+          &.border{
+            border: 1px solid var(--white-color-palette-border);
+          }
+
+          // @include tablet-and-mobile  {
+          //   width: 24px;
+          //   height: 24px;
+          // }
         }
       }
     }
