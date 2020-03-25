@@ -318,7 +318,7 @@ class SignatureOverlay extends React.PureComponent {
                 dataElement="defaultSignatureDeleteButton"
                 onClick={() => this.deleteDefaultSignature(index)}
               >
-                <Icon glyph="ic_delete_black_24px"/>
+                <Icon glyph="icon-delete-line"/>
               </div>
             </div>
           ))}
