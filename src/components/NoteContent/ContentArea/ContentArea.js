@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
-import AutoResizeTextarea from 'components/AutoResizeTextarea';
+import NoteTextarea from 'components/NoteTextarea';
 
 import core from 'core';
 
@@ -34,12 +34,12 @@ const ContentArea = ({
 
     const hasEdited = textAreaValue !== contents;
     if (hasEdited) {
+      setIsEditing(false);
+
       core.setNoteContents(annotation, textAreaValue);
       if (annotation instanceof window.Annotations.FreeTextAnnotation) {
         core.drawAnnotationsFromList([annotation]);
       }
-
-      setIsEditing(false);
     }
   };
 
@@ -49,7 +49,7 @@ const ContentArea = ({
 
   return (
     <div className="edit-content">
-      <AutoResizeTextarea
+      <NoteTextarea
         ref={el => {
           textareaRef.current = el;
         }}

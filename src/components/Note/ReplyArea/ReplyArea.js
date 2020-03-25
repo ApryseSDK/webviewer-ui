@@ -5,7 +5,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import NoteContext from 'components/Note/Context';
-import AutoResizeTextarea from 'components/AutoResizeTextarea';
+import NoteTextarea from 'components/NoteTextarea';
 
 import core from 'core';
 import useDidUpdate from 'hooks/useDidUpdate';
@@ -89,7 +89,7 @@ const ReplyArea = ({ annotation }) => {
       // due to annotation deselection
       onMouseDown={e => e.stopPropagation()}
     >
-      <AutoResizeTextarea
+      <NoteTextarea
         ref={el => {
           textareaRef.current = el;
         }}
