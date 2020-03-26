@@ -299,7 +299,6 @@ class ToolsOverlay extends React.PureComponent {
                       animate="visible"
                       exit="hidden"
                       variants={item}
-                      transition={{ duration: 0.3 }}
                     >
                       <ToolButton
                         toolName={toolName}
@@ -307,19 +306,31 @@ class ToolsOverlay extends React.PureComponent {
                     </motion.div>
                   ))}
                   {activeToolGroup !== 'miscTools' &&
-                    <div
-                      className={classNames({
-                        "styling-arrow-container": true,
-                        active: isToolStyleOpen,
-                      })}
-                      data-element="styling-button"
-                      onClick={() => this.props.toggleElement('toolStylePopup')}
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        'marginLeft': "2px",
+                        'marginRight': "4px",
+                      }}
+                      exit={{
+                        'marginLeft': "2px",
+                        'marginRight': "4px",
+                      }}
                     >
-                      <Icon glyph="icon-menu-style-line" />
-                      {isToolStyleOpen ?
-                        <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-                        <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-                    </div>}
+                      <div
+                        className={classNames({
+                          "styling-arrow-container": true,
+                          active: isToolStyleOpen,
+                        })}
+                        data-element="styling-button"
+                        onClick={() => this.props.toggleElement('toolStylePopup')}
+                      >
+                        <Icon glyph="icon-menu-style-line" />
+                        {isToolStyleOpen ?
+                          <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
+                          <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
+                      </div>
+                    </motion.div>}
                 </div>
                 {(isToolStyleOpen) && (
                   <Swipeable
