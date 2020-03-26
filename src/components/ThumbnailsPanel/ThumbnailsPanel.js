@@ -34,6 +34,7 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs = [];
     this.listRef = React.createRef();
     this.afterMovePageNumber = null;
+    this.isDraggingGroup = false;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       isDocumentControlHidden: true,
@@ -50,6 +51,8 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('beginRendering', this.onBeginRendering);
     core.addEventListener('finishedRendering', this.onFinishedRendering);
     core.addEventListener('annotationChanged', this.onAnnotationChanged);
+    core.addEventListener('layoutChanged', this.onLayoutChanged);
+    core.addEventListener('documentLoaded', this.onDocumentLoaded);
     core.addEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.addEventListener('pageComplete', this.onPageComplete);
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
@@ -60,6 +63,8 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('beginRendering', this.onBeginRendering);
     core.removeEventListener('finishedRendering', this.onFinishedRendering);
     core.removeEventListener('annotationChanged', this.onAnnotationChanged);
+    core.removeEventListener('layoutChanged', this.onLayoutChanged);
+    core.removeEventListener('documentLoaded', this.onDocumentLoaded);
     core.removeEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.removeEventListener('pageComplete', this.onPageComplete);
     core.removeEventListener('annotationHidden', this.onAnnotationChanged);
@@ -72,41 +77,19 @@ class ThumbnailsPanel extends React.PureComponent {
     });
   }
 
-  onDragEnd = () => {
-    const { currentPage, selectedPageIndexes, setSelectedPageThumbnails } = this.props;
+  onDragEnd = e => {
+    const { currentPage, selectedPageIndexes, isThumbnailReorderingEnabled } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
-    if (draggingOverPageIndex !== null) {
+    if (isThumbnailReorderingEnabled && draggingOverPageIndex !== null) {
       const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
-      const pageNumberIncreased = currentPage < targetPageNumber;
-      let afterMovePageNumber = null;
 
-      if (pageNumberIncreased) {
-        // moving page down so destination page number will decrease by 1 since that page been moved
-        afterMovePageNumber = targetPageNumber - 1;
-      } else {
-        // moving page up
-        afterMovePageNumber = targetPageNumber;
+      let pageNumbersToMove = [currentPage];
+      if (this.isDraggingGroup) {
+        pageNumbersToMove = selectedPageIndexes.map(i => i + 1);
       }
 
-      this.afterMovePageNumber = afterMovePageNumber;
-      core.movePages([currentPage], targetPageNumber).then(() => {
-        const currentPageIndex = currentPage - 1;
-        const targetPageIndex = this.afterMovePageNumber - 1;
-
-        // update selected pages affected by the move, exclude the page that was moved
-        let updateSelectedPageIndexes = selectedPageIndexes.filter(pageIndex => pageIndex !== currentPageIndex);
-        if (pageNumberIncreased) {
-          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p > currentPageIndex && p <= targetPageIndex ? p - 1 : p));
-        } else {
-          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p < currentPageIndex && p >= targetPageIndex ? p + 1 : p));
-        }
-
-        if (selectedPageIndexes.includes(currentPageIndex)) {
-          updateSelectedPageIndexes.push(targetPageIndex);
-        }
-
-        setSelectedPageThumbnails(updateSelectedPageIndexes);
-      });
+      this.afterMovePageNumber = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
+      core.movePages(pageNumbersToMove, targetPageNumber);
     }
 
     this.setState({ draggingOverPageIndex: null });
@@ -123,6 +106,9 @@ class ThumbnailsPanel extends React.PureComponent {
     // 'preventDefault' to prevent opening pdf dropped in and 'stopPropagation' to keep parent from opening pdf
     e.preventDefault();
     e.stopPropagation();
+
+    // for Mac "metaKey" is only true during onDragOver
+    this.isDraggingGroup = e.ctrlKey || e.metaKey;
 
     const { numberOfColumns } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
@@ -148,9 +134,14 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onDragStart = (e, index) => {
     const { currentPage } = this.props;
-
+    const moveMultiplePages = (e.ctrlKey || e.metaKey);
     // need to set 'text' to empty for drag to work in FireFox and mobile
     e.dataTransfer.setData('text', '');
+
+    if (moveMultiplePages) {
+      // can't set to null so set to new instance of an image
+      e.dataTransfer.setDragImage(new Image(), 0, 0);
+    }
 
     if (currentPage !== (index + 1)) {
       core.setCurrentPage(index + 1);
@@ -200,6 +191,29 @@ class ThumbnailsPanel extends React.PureComponent {
 
       this.updateAnnotations(pageIndex);
     });
+  }
+
+  onLayoutChanged = changes => {
+    if (!changes) {
+      return;
+    }
+    const { selectedPageIndexes, setSelectedPageThumbnails } = this.props;
+    let updatedPagesIndexes = Array.from(selectedPageIndexes);
+
+    if (changes.removed) {
+      updatedPagesIndexes = updatedPagesIndexes.filter(pageIndex => changes.removed.indexOf(pageIndex + 1) === -1);
+    }
+
+    if (changes.moved) {
+      updatedPagesIndexes = updatedPagesIndexes.map(pageIndex => changes.moved[pageIndex + 1]? changes.moved[pageIndex + 1] - 1 : pageIndex);
+    }
+
+    setSelectedPageThumbnails(updatedPagesIndexes);
+  };
+
+  onDocumentLoaded = () => {
+    const { setSelectedPageThumbnails } = this.props;
+    setSelectedPageThumbnails([]);
   }
 
   onPageNumberUpdated = pageNumber => {

@@ -1,0 +1,49 @@
+@import '../../../constants/styles';
+
+.mention {
+  &__control {
+    background-color: '#fff';
+    font-size: 14;
+    font-weight: normal;
+    border: 1px solid silver;
+    border-radius: 4px;
+  }
+
+  &__highlighter {
+    overflow: hidden;
+    padding: 9px;
+  }
+
+  &__input {
+    padding: 5px;
+    border: none;
+  }
+
+  &__suggestions {
+    // margin: 5px 15px;
+
+    &__list {
+      border: 1px solid $gray20;
+      font-size: 14px;
+    }
+
+    &__item {
+      padding: 5px;
+
+      .email {
+        margin-top: 2px;
+        font-size: 12px;
+        color: $gray54;
+      }
+
+      &--focused {
+        background-color: $gray12;
+      }
+
+      &__highlight {
+        background-color: #fffc95;
+        font-weight: normal;
+      }
+    }
+  }
+}

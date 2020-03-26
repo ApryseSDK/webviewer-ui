@@ -204,6 +204,7 @@ export default {
     signatureFonts: ['GreatVibes-Regular'],
     leftPanelWidth: 300,
     isReplyDisabledFunc: null,
+    userData: [],
     customMeasurementOverlay: [],
     noteTransformFunction: null,
   },

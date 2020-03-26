@@ -31,6 +31,7 @@
     "react-hot-loader": "^4.12.19",
     "react-i18next": "^11.3.1",
     "react-measure": "^2.3.0",
+    "react-mentions": "git+https://github.com/PDFTron/react-mentions.git",
     "react-onclickoutside": "^6.9.0",
     "react-redux": "^7.1.3",
     "react-virtualized": "^9.21.2",
