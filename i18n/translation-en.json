@@ -38,7 +38,8 @@
     "draw": "Draw",
     "type": "Type",
     "upload": "Upload",
-    "link": "Link"
+    "link": "Link",
+    "fileAttachmentDownload": "Download attached file"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",

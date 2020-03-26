@@ -38,7 +38,8 @@
     "draw": "ドロー",
     "type": "タイプ",
     "upload": "アップロードする",
-    "link": "リンク"
+    "link": "リンク",
+    "fileAttachmentDownload": "添付ファイルをダウンロード"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -49,6 +50,7 @@
     "distanceMeasurement": "距離測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
+    "fileattachment": "添付ファイル",
     "freehand": "フリーハンド",
     "freehand2": "フリーハンド",
     "freetext": "フリーテキスト",
@@ -69,8 +71,7 @@
     "strikeout": "抹消線",
     "underline": "下線",
     "custom": "カスタム",
-    "rubberStamp": "ゴム印",
-    "fileattachment": "添付ファイル"
+    "rubberStamp": "ゴム印"
   },
   "rubberStamp": {
     "Approved": "承認済み",
