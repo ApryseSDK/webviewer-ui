@@ -13,6 +13,11 @@
     display: flex;
     width: 100%;
 
+    @include tablet-and-mobile {
+      padding: 0 8px;
+      padding-top: 8px;
+    }
+
     .tool-button {
       margin: 0 8px;
     }

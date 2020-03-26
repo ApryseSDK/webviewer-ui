@@ -20,6 +20,13 @@ $popup-icon-width: 18px;
 
   .Button {
     margin: 4px;
+    width: 32px;
+    height: 32px;
+
+    @include tablet-and-mobile {
+      width: 42px;
+      height: 42px;
+    }
 
     &:hover {
       background: var(--popup-button-hover);

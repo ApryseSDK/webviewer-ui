@@ -18,14 +18,12 @@
   }
 
   @include mobile {
-    max-width: 310px;
+    max-width: 346px;
   }
 
   @include tablet {
     border-radius: 4px;
-    // box-shadow: 0 0 3px 0 var(--document-box-shadow);
-    // padding-top: 12px;
     padding-bottom: 12px;
-    max-width: 318px;
+    max-width: 346px;
   }
 }
