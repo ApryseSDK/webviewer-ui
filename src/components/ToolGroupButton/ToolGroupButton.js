@@ -114,7 +114,6 @@ class ToolGroupButton extends React.PureComponent {
       allButtonsInGroupDisabled,
       iconColor,
       title,
-      isToolsOverlayOpen,
     } = this.props;
 
     const { toolName } = this.state;

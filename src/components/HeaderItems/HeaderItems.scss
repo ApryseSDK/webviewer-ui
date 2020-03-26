@@ -11,12 +11,12 @@
     margin: 0 6px;
 
     @include mobile {
-      margin: 0 4px;        
+      margin: 0 4px;
     }
 
     @include tablet {
-      margin: 0 10px;       
-    }    
+      margin: 0 10px;
+    }
   }
 
   .spacer {
@@ -36,7 +36,27 @@
     }
 
     @include tablet {
-      margin: 0 10px;       
-    }    
+      margin: 0 10px;
+    }
+  }
+}
+
+.Tools {
+  .HeaderItems {
+    > .Button , .tool-group-button {
+      margin: 0 8px;
+      width: 32px;
+      height: 32px;
+
+      &:not(.ActionButton) {
+        &:hover {
+          background: var(--tools-button-hover);
+        }
+
+        &.active {
+          background: var(--tools-button-active);
+        }
+      }
+    }
   }
 }

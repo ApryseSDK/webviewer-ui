@@ -33,12 +33,6 @@
   &.Tools {
     background: var(--tools-header-background);
     height: 40px;
-    // @include desktop {
-    //   padding-top: 2px; // top lowered 1px due to the border on the header above.
-    //   padding-bottom: 2px;
-    //   // height: 35px;
-    //   background: var(--tools-header-background);
-    // }
 
     @include tablet-and-mobile {
       height: 52px;
@@ -48,15 +42,15 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .tool-group-button {
-      &:hover {
-        background: var(--tools-button-hover);
-      }
+    // .tool-group-button {
+    //   &:hover {
+    //     background: var(--tools-button-hover);
+    //   }
 
-      &.active {
-        background: var(--tools-button-active);
-      }
-    }
+    //   &.active {
+    //     background: var(--tools-button-active);
+    //   }
+    // }
   }
 
   @include tablet-and-mobile {
