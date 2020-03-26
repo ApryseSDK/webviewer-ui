@@ -49,7 +49,7 @@ class ColorPalette extends React.PureComponent {
       '#CDCDCD',
       '#9C9C9C',
       '#696969',
-      '#373737',
+      '#272727',
       '#000000',
     ];
 

@@ -59,7 +59,7 @@ class SignatureOverlay extends React.PureComponent {
         'viewControlsOverlay',
         'searchOverlay',
         'menuOverlay',
-        'toolsOverlay',
+        // 'toolsOverlay',
         'zoomOverlay',
         'toolStylePopup',
       ]);

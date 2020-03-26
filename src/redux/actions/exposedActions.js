@@ -2,6 +2,7 @@ import core from 'core';
 import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import localStorageManager from 'helpers/localStorageManager';
 
 // viewer
 export const enableAllElements = () => ({
@@ -110,9 +111,33 @@ export const toggleElement = dataElement => (dispatch, getState) => {
   }
 };
 
-export const swapTools = (toolNameToSwap, otherToolName) => ({
-  type: 'SWAP_TOOLS',
-  payload: { toolNameToSwap, otherToolName },
+export const swapTools = (toolNameToSwap, otherToolName) => (dispatch, getState) => {
+  dispatch({
+    type: 'SWAP_TOOLS',
+    payload: { toolNameToSwap, otherToolName },
+  });
+
+  // if (localStorageManager.isLocalStorageEnabled()) {
+  //   const storePosition = (toolName, { position }) => {
+  //     try {
+  //       localStorage.setItem(`toolPosition-${toolName}`, position);
+  //     } catch (err) {
+  //       console.warn(`localStorage could not be accessed. ${err.message}`);
+  //     }
+  //   };
+
+  //   const state = getState();
+  //   const toolToSwap = state.viewer.toolButtonObjects[toolNameToSwap];
+  //   const otherTool = state.viewer.toolButtonObjects[otherToolName];
+
+  //   storePosition(toolNameToSwap, toolToSwap);
+  //   storePosition(otherToolName, otherTool);
+  // }
+};
+
+export const setDefaultToolPositions = positions => ({
+  type: 'SET_DEFAULT_TOOL_POSITIONS',
+  payload: { positions },
 });
 
 export const setActiveHeaderGroup = headerGroup => ({

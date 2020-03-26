@@ -21,6 +21,7 @@ import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
+import setDefaultToolPositions from 'helpers/setDefaultToolPositions';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
@@ -137,6 +138,7 @@ if (window.CanvasRenderingContext2D) {
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
     setDefaultToolStyles();
+    // setDefaultToolPositions(store);
     core.setToolMode(defaultTool);
 
     ReactDOM.render(
