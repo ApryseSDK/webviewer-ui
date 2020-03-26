@@ -2,9 +2,10 @@
 @import '../../constants/overlay';
 
 .StampOverlay {
-  margin-left: 8px;
+  margin-left: 0px;
   margin-right: 6px;
   margin-bottom: 8px;
+  margin-top: 8px;
 
   @include mobile {
     margin-bottom: 0px;
@@ -19,22 +20,22 @@
     height: 300px;
     overflow-y: scroll;
     padding-right: 14px;
-    
+
     @include mobile {
       height: 240px;
-    }    
-  
+    }
+
     .rubber-stamp {
       border-radius: 4px;
       flex-basis: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
-  
+
       &:hover {
         background: var(--popup-button-hover);
       }
-  
+
       img {
         width: 100%;
       }

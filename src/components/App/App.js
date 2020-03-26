@@ -10,7 +10,6 @@ import ToolsHeader from 'components/Header/ToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
-import RedactionOverlay from 'components/RedactionOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
@@ -108,7 +107,6 @@ const App = ({ removeEventHandlers }) => {
           {isNotesOpen && !isNotesDisabled && <NotesPanel />}
         </div>
         <ViewControlsOverlay />
-        <RedactionOverlay />
         <MenuOverlay />
         <ZoomOverlay />
         <MeasurementOverlay />

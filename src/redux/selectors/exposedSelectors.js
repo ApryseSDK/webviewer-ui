@@ -39,26 +39,26 @@ export const getActiveToolNamesForActiveToolGroup = state => {
   return Object.keys(toolButtonObjects).filter(
     toolName => {
       const toolButtonObject = toolButtonObjects[toolName];
-      const { group, position } = toolButtonObject;
+      const { group, dataElement } = toolButtonObject;
 
-      return group === activeToolGroup && (position <= 3 || position === undefined);
+      return group === activeToolGroup && !isElementDisabled(state, dataElement);
     },
   ).sort((toolNameA, toolNameB) => {
     const toolButtonA = toolButtonObjects[toolNameA];
     const toolButtonB = toolButtonObjects[toolNameB];
-    const { position: positionA } = toolButtonA;
-    const { position: positionB } = toolButtonB;
+    const { position: positionA = 99 } = toolButtonA;
+    const { position: positionB = 99 } = toolButtonB;
     return positionA - positionB;
-  });
+  }).slice(0, 4);
 };
 export const getSwapableToolNamesForActiveToolGroup = state => {
   const { toolButtonObjects, activeToolGroup } = state.viewer;
   return Object.keys(toolButtonObjects).filter(
     toolName => {
       const toolButtonObject = toolButtonObjects[toolName];
-      const { group, position } = toolButtonObject;
+      const { group, dataElement } = toolButtonObject;
 
-      return group === activeToolGroup && position >= 4;
+      return group === activeToolGroup && !isElementDisabled(state, dataElement);
     },
   ).sort((toolNameA, toolNameB) => {
     const toolButtonA = toolButtonObjects[toolNameA];
@@ -66,7 +66,7 @@ export const getSwapableToolNamesForActiveToolGroup = state => {
     const { position: positionA } = toolButtonA;
     const { position: positionB } = toolButtonB;
     return positionA - positionB;
-  });
+  }).slice(4);
 };
 
 export const getToolButtonDataElements = (state, toolNames) =>

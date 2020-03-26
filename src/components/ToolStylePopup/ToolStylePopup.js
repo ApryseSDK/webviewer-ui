@@ -14,6 +14,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import ToolButton from 'components/ToolButton';
+import defaultTool from 'constants/defaultTool';
 
 import './ToolStylePopup.scss';
 
@@ -82,15 +83,20 @@ class ToolStylePopup extends React.PureComponent {
   handleClickOutside = e => {
     // e.preventDefault();
     // e.stopPropagation();
+    const { activeToolName } = this.props;
     const toolsOverlay = document.querySelector(
       '[data-element="toolsOverlay"]',
     );
-    const header = document.querySelector('[data-element="header"]');
+    // const header = document.querySelector('[data-element="header"]');
     const clickedToolsOverlay = toolsOverlay?.contains(e.target);
     // const clickedHeader = header?.contains(e.target);
 
     if (!clickedToolsOverlay) {
       this.close();
+      if (activeToolName === 'AnnotationCreateRubberStamp') {
+        core.setToolMode(defaultTool);
+        // this.props.setActiveToolGroup('');
+      }
     }
   };
 
@@ -124,17 +130,11 @@ class ToolStylePopup extends React.PureComponent {
     }
   };
 
-  handleSwap = toolName => {
-
-  }
-
   render() {
     const { swapableToolNames, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop, isOpen, handleCloseClick } = this.props;
     const { left, top } = this.state;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     const colorMapKey = mapToolNameToKey(activeToolName);
-
-    console.log('swapableToolNames', swapableToolNames);
 
     if (isDisabled) {
       return null;

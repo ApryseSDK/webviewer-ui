@@ -32,9 +32,9 @@ class WarningModal extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { isOpen, closeElements } = this.props;
 
-    if (!prevProps.isOpen && isOpen) {
-      closeElements(getPopupElements());
-    }
+    // if (!prevProps.isOpen && isOpen) {
+    //   closeElements(getPopupElements());
+    // }
   }
 
   onCancel = () => {

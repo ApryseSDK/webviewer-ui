@@ -199,13 +199,7 @@ class ToolsOverlay extends React.PureComponent {
       };
     }
 
-
-    // if (isDisabled || !activeToolGroup) {
-    //   return null;
-    // }
-
     const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
-
 
     let list = {
       visible: {
@@ -218,17 +212,16 @@ class ToolsOverlay extends React.PureComponent {
       },
     };
 
-    console.log('activeToolGroup', activeToolGroup);
-
     let itemVisible = {
       'marginLeft': "8px",
       'marginRight': "8px",
     };
 
     if (activeToolGroup === 'miscTools') {
+      const margin = Math.floor((214 - (toolNames.length * 26)) / (2 * toolNames.length));
       itemVisible = {
-        'marginLeft': "13px",
-        'marginRight': "13px",
+        'marginLeft': `${margin}px`,
+        'marginRight': `${margin}px`,
       };
     } else if (activeToolGroup === 'measurementTools') {
       itemVisible = {

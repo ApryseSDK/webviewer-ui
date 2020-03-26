@@ -109,6 +109,7 @@
     border-radius: 4px;
     background: var(--preset-background);
     height: 32px;
+    width: 100%;
 
     @include tablet-and-mobile {
       box-shadow: none;
