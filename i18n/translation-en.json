@@ -101,6 +101,7 @@
   },
   "component": {
     "freehandToolsButton": "Freehand tools",
+    "freeHandAndShapeToolsButton": "Freehand/Shape tools",
     "leftPanel": "Panel",
     "toolsHeader": "Tools",
     "searchOverlay": "Search",
