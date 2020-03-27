@@ -40,7 +40,7 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.close);
+    // window.addEventListener('resize', this.close);
     this.positionToolStylePopup();
   }
 

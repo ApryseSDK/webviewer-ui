@@ -18,6 +18,10 @@
       padding-top: 8px;
     }
 
+    @include mobile {
+      width: 346px;
+    }
+
     .tool-button {
       margin: 0 8px;
     }
