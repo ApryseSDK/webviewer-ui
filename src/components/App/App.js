@@ -101,10 +101,10 @@ const App = ({ removeEventHandlers }) => {
         <Header />
         {isToolsHeaderOpen && !isToolsHeaderDisabled && <ToolsHeader />}
         <div className="content">
-          {isLeftPanelOpen && !isLeftPanelDisabled && <LeftPanel />}
+          <LeftPanel />
           <DocumentContainer />
-          {isSearchPanelOpen && !isSearchPanelDisabled && <SearchPanel />}
-          {isNotesOpen && !isNotesDisabled && <NotesPanel />}
+          <SearchPanel />
+          <NotesPanel />
         </div>
         <ViewControlsOverlay />
         <MenuOverlay />

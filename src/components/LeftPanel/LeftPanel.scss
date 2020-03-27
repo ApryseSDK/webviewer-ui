@@ -5,12 +5,13 @@
   z-index: 65;
   @include mobile {
     z-index: 95;
-  }  
+  }
   display: flex;
   flex-direction: column;
   background-color: var(--panel-background);
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
   position: relative;
 
   @include mobile {
@@ -18,7 +19,7 @@
     top: 0;
     right: 0;
     height: 100%;
-    width: 100%; 
+    width: 100%;
   }
 
   // @include tablet-and-mobile {
@@ -28,11 +29,11 @@
   .left-panel-container{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    // width: 100%;
     padding-right: 8px;
-    
+
     // Needed
-    overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
+    // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
 
 
     padding-top: 16px;
@@ -48,7 +49,7 @@
         width: 100%;
         padding-right: 5px;
         top: 0;
-    
+
         .close-icon-container {
           cursor: pointer;
           .close-icon {
@@ -56,7 +57,7 @@
             height: 24px;
           }
         }
-      }    
+      }
     }
   }
 

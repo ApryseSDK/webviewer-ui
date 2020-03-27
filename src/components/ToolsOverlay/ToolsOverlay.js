@@ -270,7 +270,7 @@ class ToolsOverlay extends React.PureComponent {
             animate="visible"
             exit="hidden"
             variants={list}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
           >
             <div
               className={classNames({

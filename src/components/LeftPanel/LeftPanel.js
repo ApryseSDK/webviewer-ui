@@ -15,6 +15,8 @@ import selectors from 'selectors';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 
+import { motion, AnimatePresence } from "framer-motion";
+
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
@@ -34,8 +36,10 @@ const LeftPanel = () => {
     false,
   );
 
-  const [activePanel, customPanels] = useSelector(
+  const [isOpen, isDisabled, activePanel, customPanels] = useSelector(
     state => [
+      selectors.isElementOpen(state, 'leftPanel'),
+      selectors.isElementDisabled(state, 'leftPanel'),
       selectors.getActiveLeftPanel(state),
       selectors.getCustomPanels(state),
     ],
@@ -48,64 +52,75 @@ const LeftPanel = () => {
 
   let style = {};
   if (!isMobile) {
-    style = { width: `${width}px` };
+    style = { width: `${width}px`, minWidth: '218px' };
   }
 
+  const isVisible = !(!isOpen || isDisabled);
+
   return (
-    <div
-      className={classNames({
-        Panel: true,
-        LeftPanel: true,
-      })}
-      data-element="leftPanel"
-      style={style}
-    >
-      <div className="left-panel-container">
-        {isMobile &&
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          className={classNames({
+            Panel: true,
+            LeftPanel: true,
+          })}
+          data-element="leftPanel"
+          initial={{ width: '0px' }}
+          animate={{ width: 'auto' }}
+          exit={{ width: '0px' }}
+          transition={{ ease: "easeOut", duration: 0.3 }}
+        >
           <div
-            className="close-container"
+            className="left-panel-container"
+            style={style}
           >
-            <div
-              className="close-icon-container"
-              onClick={() => {
-                dispatch(actions.closeElements(['leftPanel']));
-              }}
-            >
-              <Icon
-                glyph="ic_close_black_24px"
-                className="close-icon"
-              />
+            {isMobile &&
+              <div
+                className="close-container"
+              >
+                <div
+                  className="close-icon-container"
+                  onClick={() => {
+                    dispatch(actions.closeElements(['leftPanel']));
+                  }}
+                >
+                  <Icon
+                    glyph="ic_close_black_24px"
+                    className="close-icon"
+                  />
+                </div>
+              </div>}
+            <div className="left-panel-header">
+              <LeftPanelTabs />
             </div>
-          </div>}
-        <div className="left-panel-header">
-          <LeftPanelTabs />
-        </div>
+            <ThumbnailsPanel
+              display={getDisplay('thumbnailsPanel')}
+            />
+            <OutlinesPanel display={getDisplay('outlinesPanel')} />
+            <BookmarksPanel display={getDisplay('bookmarksPanel')} />
+            <LayersPanel display={getDisplay('layersPanel')} />
 
-        <ThumbnailsPanel
-          display={getDisplay('thumbnailsPanel')}
-        />
-        <OutlinesPanel display={getDisplay('outlinesPanel')} />
-        <BookmarksPanel display={getDisplay('bookmarksPanel')} />
-        <LayersPanel display={getDisplay('layersPanel')} />
-
-        {customPanels.map(({ panel }, index) => (
-          <CustomElement
-            key={panel.dataElement || index}
-            className={`Panel ${panel.dataElement}`}
-            display={getDisplay(panel.dataElement)}
-            dataElement={panel.dataElement}
-            render={panel.render}
-          />
-        ))}
-      </div>
-      {!isTabletAndMobile &&
-        <ResizeBar
-          minWidth={215}
-          onResize={_width => {
-            setWidth(_width);
-          }}
-        />}
-    </div>
+            {customPanels.map(({ panel }, index) => (
+              <CustomElement
+                key={panel.dataElement || index}
+                className={`Panel ${panel.dataElement}`}
+                display={getDisplay(panel.dataElement)}
+                dataElement={panel.dataElement}
+                render={panel.render}
+              />
+            ))}
+          </div>
+          {!isTabletAndMobile &&
+            <ResizeBar
+              minWidth={215}
+              onResize={_width => {
+                setWidth(_width);
+              }}
+            />}
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -9,6 +9,7 @@
   background-color: var(--panel-background);
   display: flex;
   flex-direction: row;
+  position: relative;
 
   @include mobile {
     position: fixed;
@@ -24,10 +25,11 @@
   padding-bottom: 0px;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  // width: 100%;
+  // width: 293px;
   padding-right: 8px;
   // Needed
-  overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
+  // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
 
   padding-top: 16px;
   @include mobile {

@@ -19,18 +19,22 @@ import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 
+import { motion, AnimatePresence } from "framer-motion";
+
 import './NotesPanel.scss';
 
 const NotesPanel = () => {
   const [
     sortStrategy,
     isOpen,
+    isDisabled,
     pageLabels,
     customNoteFilter,
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
       selectors.isElementOpen(state, 'notesPanel'),
+      selectors.isElementDisabled(state, 'notesPanel'),
       selectors.getPageLabels(state),
       selectors.getCustomNoteFilter(state),
     ],
@@ -252,104 +256,114 @@ const NotesPanel = () => {
 
   let style = {};
   if (!isMobile) {
-    style = { width: `${width}px` };
+    style = { width: `${width}px`, minWidth: '293px' };
   }
 
+  const isVisible = !(!isOpen || isDisabled);
+
   return (
-    <div
-      className="notes-panel-container"
-      style={style}
-    >
-      {!isTabletAndMobile &&
-        <ResizeBar
-          minWidth={215}
-          onResize={_width => {
-            setWidth(_width);
-          }}
-          leftDirection
-        />}
-      <div
-        className={classNames({
-          Panel: true,
-          NotesPanel: true,
-        })}
-        data-element="notesPanel"
-        onClick={core.deselectAllAnnotations}
-      >
-        {isMobile &&
-          <div
-            className="close-container"
-          >
-            <div
-              className="close-icon-container"
-              onClick={() => {
-                dispatch(actions.closeElements(['notesPanel']));
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          className="notes-panel-container"
+          initial={{ width: '0px' }}
+          animate={{ width: 'auto' }}
+          exit={{ width: '0px' }}
+          transition={{ ease: "easeOut", duration: 0.3 }}
+        >
+          {!isTabletAndMobile &&
+            <ResizeBar
+              minWidth={293}
+              onResize={_width => {
+                setWidth(_width);
               }}
-            >
-              <Icon
-                glyph="ic_close_black_24px"
-                className="close-icon"
-              />
-            </div>
-          </div>}
-        {notes.length === 0 ? (
-          <div className="no-annotations">{t('message.noAnnotations')}</div>
-        ) : (
-          <React.Fragment>
-            <div className="header">
-              <div className="input-container">
-                <input
-                  type="text"
-                  placeholder={t('message.searchCommentsPlaceholder')}
-                  onChange={handleInputChange}
-                />
-                {/* <div className="input-button" onClick={() => {}}>
-                  <Icon glyph="icon-header-search" />
-                </div> */}
-              </div>
-              <div className="divider" />
-              <div className="sort-row">
-                <div className="sort-container">
-                  <div className="label">{`Sort by:`}</div>
-                  <Dropdown items={Object.keys(getSortStrategies())} />
-                </div>
-              </div>
-            </div>
-            {notesToRender.length === 0 ? (
-              <div className="no-results">
-                <div>
+              leftDirection
+            />}
+          <div
+            className={classNames({
+              Panel: true,
+              NotesPanel: true,
+            })}
+            style={style}
+            data-element="notesPanel"
+            onClick={core.deselectAllAnnotations}
+          >
+            {isMobile &&
+              <div
+                className="close-container"
+              >
+                <div
+                  className="close-icon-container"
+                  onClick={() => {
+                    dispatch(actions.closeElements(['notesPanel']));
+                  }}
+                >
                   <Icon
-                    className="empty-icon"
-                    glyph="illustration - empty state - outlines"
+                    glyph="ic_close_black_24px"
+                    className="close-icon"
                   />
                 </div>
-                <div className="msg">
-                  {t('message.noResults')}
-                </div>
-              </div>
-            ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
-              <NormalList
-                ref={listRef}
-                notes={notesToRender}
-                onScroll={handleScroll}
-                initialScrollTop={scrollTopRef.current}
-              >
-                {renderChild}
-              </NormalList>
+              </div>}
+            {notes.length === 0 ? (
+              <div className="no-annotations">{t('message.noAnnotations')}</div>
             ) : (
-              <VirtualizedList
-                ref={listRef}
-                notes={notesToRender}
-                onScroll={handleScroll}
-                initialScrollTop={scrollTopRef.current}
-              >
-                {renderChild}
-              </VirtualizedList>
+              <React.Fragment>
+                <div className="header">
+                  <div className="input-container">
+                    <input
+                      type="text"
+                      placeholder={t('message.searchCommentsPlaceholder')}
+                      onChange={handleInputChange}
+                    />
+                    {/* <div className="input-button" onClick={() => {}}>
+                      <Icon glyph="icon-header-search" />
+                    </div> */}
+                  </div>
+                  <div className="divider" />
+                  <div className="sort-row">
+                    <div className="sort-container">
+                      <div className="label">{`Sort by:`}</div>
+                      <Dropdown items={Object.keys(getSortStrategies())} />
+                    </div>
+                  </div>
+                </div>
+                {notesToRender.length === 0 ? (
+                  <div className="no-results">
+                    <div>
+                      <Icon
+                        className="empty-icon"
+                        glyph="illustration - empty state - outlines"
+                      />
+                    </div>
+                    <div className="msg">
+                      {t('message.noResults')}
+                    </div>
+                  </div>
+                ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
+                  <NormalList
+                    ref={listRef}
+                    notes={notesToRender}
+                    onScroll={handleScroll}
+                    initialScrollTop={scrollTopRef.current}
+                  >
+                    {renderChild}
+                  </NormalList>
+                ) : (
+                  <VirtualizedList
+                    ref={listRef}
+                    notes={notesToRender}
+                    onScroll={handleScroll}
+                    initialScrollTop={scrollTopRef.current}
+                  >
+                    {renderChild}
+                  </VirtualizedList>
+                )}
+              </React.Fragment>
             )}
-          </React.Fragment>
-        )}
-      </div>
-    </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

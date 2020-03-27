@@ -17,6 +17,7 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 
 import './SearchPanel.scss';
+import { motion, AnimatePresence } from "framer-motion";
 
 class SearchPanel extends React.PureComponent {
   static propTypes = {
@@ -77,7 +78,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t, results, isSearching, noResult, isMobile, isTabletAndMobile, closeElements } = this.props;
+    const { isOpen, isDisabled, t, results, isSearching, noResult, isMobile, isTabletAndMobile, closeElements } = this.props;
 
     if (isDisabled) {
       return null;
@@ -87,59 +88,72 @@ class SearchPanel extends React.PureComponent {
 
     let style = {};
     if (!isMobile) {
-      style = { width: `${this.state.width}px` };
+      style = { width: `${this.state.width}px`, minWidth: '293px' };
     }
 
-    return (
-      <div
-        className="search-panel-container"
-        style={style}
-      >
-        {!isTabletAndMobile &&
-          <ResizeBar
-            minWidth={215}
-            onResize={_width => {
-              this.setState({ width: _width });
-            }}
-            leftDirection
-          />}
-        <div className={className} data-element="searchPanel">
-          {isMobile &&
-            <div
-              className="close-container"
-            >
-              <div
-                className="close-icon-container"
-                onClick={() => {
-                  closeElements(['searchPanel']);
-                }}
-              >
-                <Icon
-                  glyph="ic_close_black_24px"
-                  className="close-icon"
-                />
-              </div>
-            </div>}
-          <SearchOverlay />
-          <div className={`results`}>
-            {noResult && <div className="info">{t('message.noResults')}</div>}
-            {results.map((result, i) => {
-              const prevResult = i === 0 ? results[0] : results[i - 1];
+    const isVisible = !(!isOpen || isDisabled);
 
-              return (
-                <React.Fragment key={i}>
-                  {this.renderListSeparator(prevResult, result)}
-                  <SearchResult
-                    result={result}
-                    index={i}
-                    onClickResult={this.onClickResult}
-                  />
-                </React.Fragment>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+    return (
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            className="search-panel-container"
+            initial={{ width: '0px' }}
+            animate={{ width: 'auto' }}
+            exit={{ width: '0px' }}
+            transition={{ ease: "easeOut", duration: 0.3 }}
+          >
+            {!isTabletAndMobile &&
+              <ResizeBar
+                minWidth={293}
+                onResize={_width => {
+                  this.setState({ width: _width });
+                }}
+                leftDirection
+              />}
+            <div
+              className={className}
+              data-element="searchPanel"
+              style={style}
+            >
+              {isMobile &&
+                <div
+                  className="close-container"
+                >
+                  <div
+                    className="close-icon-container"
+                    onClick={() => {
+                      closeElements(['searchPanel']);
+                    }}
+                  >
+                    <Icon
+                      glyph="ic_close_black_24px"
+                      className="close-icon"
+                    />
+                  </div>
+                </div>}
+              <SearchOverlay />
+              <div className={`results`}>
+                {noResult && <div className="info">{t('message.noResults')}</div>}
+                {results.map((result, i) => {
+                  const prevResult = i === 0 ? results[0] : results[i - 1];
+
+                  return (
+                    <React.Fragment key={i}>
+                      {this.renderListSeparator(prevResult, result)}
+                      <SearchResult
+                        result={result}
+                        index={i}
+                        onClickResult={this.onClickResult}
+                      />
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     );
   }
 }
