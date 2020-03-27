@@ -283,6 +283,23 @@ class SignatureOverlay extends React.PureComponent {
         <div
           className="tools-container"
         >
+          {defaultSignatures.map(({ imgSrc }, index) => (
+            <div className="row" key={index}>
+              <div
+                className="content"
+                onClick={() => this.setSignature(index)}
+              >
+                <img src={imgSrc} />
+              </div>
+              <div
+                className="icon"
+                dataElement="defaultSignatureDeleteButton"
+                onClick={() => this.deleteDefaultSignature(index)}
+              >
+                <Icon glyph="icon-delete-line"/>
+              </div>
+            </div>
+          ))}
           {defaultSignatures.length < maxSignaturesCount &&
             <div
               className={`row${
@@ -305,23 +322,6 @@ class SignatureOverlay extends React.PureComponent {
                 <Icon glyph="icon-menu-add" />
               </div>
             </div>}
-          {defaultSignatures.map(({ imgSrc }, index) => (
-            <div className="row" key={index}>
-              <div
-                className="content"
-                onClick={() => this.setSignature(index)}
-              >
-                <img src={imgSrc} />
-              </div>
-              <div
-                className="icon"
-                dataElement="defaultSignatureDeleteButton"
-                onClick={() => this.deleteDefaultSignature(index)}
-              >
-                <Icon glyph="icon-delete-line"/>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     );
