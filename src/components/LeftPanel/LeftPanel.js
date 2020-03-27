@@ -59,6 +59,11 @@ const LeftPanel = () => {
 
   const isVisible = !(!isOpen || isDisabled);
 
+  let animate = { width: 'auto' };
+  if (isMobile) {
+    animate = { width: '100%' };
+  }
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -69,7 +74,7 @@ const LeftPanel = () => {
           })}
           data-element="leftPanel"
           initial={{ width: '0px' }}
-          animate={{ width: 'auto' }}
+          animate={animate}
           exit={{ width: '0px' }}
           transition={{ ease: "easeOut", duration: 0.3 }}
         >

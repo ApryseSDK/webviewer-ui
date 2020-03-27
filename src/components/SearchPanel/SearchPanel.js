@@ -95,13 +95,18 @@ class SearchPanel extends React.PureComponent {
 
     const isVisible = !(!isOpen || isDisabled);
 
+    let animate = { width: 'auto' };
+    if (isMobile) {
+      animate = { width: '100%' };
+    }
+
     return (
       <AnimatePresence>
         {isVisible && (
           <motion.div
             className="search-panel-container"
             initial={{ width: '0px' }}
-            animate={{ width: 'auto' }}
+            animate={animate}
             exit={{ width: '0px' }}
             transition={{ ease: "easeOut", duration: 0.3 }}
           >
