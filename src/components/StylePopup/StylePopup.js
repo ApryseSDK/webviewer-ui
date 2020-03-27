@@ -13,15 +13,26 @@ import selectors from 'selectors';
 
 import './StylePopup.scss';
 
+const DATA_ELEMENTS = {
+  COLOR_PALETTE: 'colorPalette',
+  OPACITY_SLIDER: 'opacitySlider',
+  STROKE_THICKNESS_SLIDER: 'strokeThicknessSlider',
+  FONT_SIZE_SLIDER: 'fontSizeSlider'
+};
+
 class StylePopup extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
+    // TODO do something about this
     hideSlider: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
-    isColorPaletteDisabled: PropTypes.bool,
+    hideColorPalette: PropTypes.bool,
+    hideOpacitySlider: PropTypes.bool,
+    hideStrokeThicknessSlider: PropTypes.bool,
+    hideFontSizeSlider: PropTypes.bool,
   };
 
   renderColorPalette = () => {
@@ -41,41 +52,94 @@ class StylePopup extends React.PureComponent {
       style: { Opacity, StrokeThickness, FontSize },
       onStyleChange,
       isFreeText,
+      hideOpacitySlider,
+      hideStrokeThicknessSlider,
+      hideFontSizeSlider,
     } = this.props;
     const lineStart = circleRadius;
-    const sliderProps = [
-      {
-        property: 'Opacity',
-        displayProperty: 'opacity',
-        value: Opacity,
-        displayValue: `${Math.round(Opacity * 100)}%`,
-        getCirclePosition: lineLength => Opacity * lineLength + lineStart,
-        convertRelativeCirclePositionToValue: circlePosition => circlePosition,
-      },
-      {
-        property: 'StrokeThickness',
-        displayProperty: 'thickness',
-        value: StrokeThickness,
-        displayValue: `${Math.round(StrokeThickness)}pt`,
-        // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
-        getCirclePosition: lineLength =>
-          (isFreeText
-            ? (StrokeThickness / 20) * lineLength + lineStart
-            : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
-        convertRelativeCirclePositionToValue: circlePosition =>
-          (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
-      },
-      {
-        property: 'FontSize',
-        displayProperty: 'text',
-        value: FontSize,
-        displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
-        getCirclePosition: lineLength =>
-          ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
-        convertRelativeCirclePositionToValue: circlePosition =>
-          `${circlePosition * 40 + 5}pt`,
-      },
-    ];
+    const sliderProps = [];
+    if (!hideOpacitySlider) {
+      sliderProps.push(
+        {
+          property: 'Opacity',
+          displayProperty: 'opacity',
+          value: Opacity,
+          displayValue: `${Math.round(Opacity * 100)}%`,
+          getCirclePosition: lineLength => Opacity * lineLength + lineStart,
+          convertRelativeCirclePositionToValue: circlePosition => circlePosition,
+          dataElement: DATA_ELEMENTS.OPACITY_SLIDER
+        }
+      );
+    }
+    if (!hideStrokeThicknessSlider) {
+      sliderProps.push(
+        {
+          dataElement: DATA_ELEMENTS.STROKE_THICKNESS_SLIDER,
+          property: 'StrokeThickness',
+          displayProperty: 'thickness',
+          value: StrokeThickness,
+          displayValue: `${Math.round(StrokeThickness)}pt`,
+          // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
+          getCirclePosition: lineLength =>
+            (isFreeText
+              ? (StrokeThickness / 20) * lineLength + lineStart
+              : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
+          convertRelativeCirclePositionToValue: circlePosition =>
+            (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
+        }
+      );
+    }
+    if (!hideFontSizeSlider) {
+      sliderProps.push(
+        {
+          dataElement: DATA_ELEMENTS.FONT_SIZE_SLIDER,
+          property: 'FontSize',
+          displayProperty: 'text',
+          value: FontSize,
+          displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
+          getCirclePosition: lineLength =>
+            ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
+          convertRelativeCirclePositionToValue: circlePosition =>
+            `${circlePosition * 40 + 5}pt`,
+        },
+      );
+    }
+    // const sliderProps = [
+    //   {
+    //     property: 'Opacity',
+    //     displayProperty: 'opacity',
+    //     value: Opacity,
+    //     displayValue: `${Math.round(Opacity * 100)}%`,
+    //     getCirclePosition: lineLength => Opacity * lineLength + lineStart,
+    //     convertRelativeCirclePositionToValue: circlePosition => circlePosition,
+    //     dataElement: DATA_ELEMENTS.OPACITY_SLIDER
+    //   },
+    //   {
+    //     dataElement: DATA_ELEMENTS.STROKE_THICKNESS_SLIDER,
+    //     property: 'StrokeThickness',
+    //     displayProperty: 'thickness',
+    //     value: StrokeThickness,
+    //     displayValue: `${Math.round(StrokeThickness)}pt`,
+    //     // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
+    //     getCirclePosition: lineLength =>
+    //       (isFreeText
+    //         ? (StrokeThickness / 20) * lineLength + lineStart
+    //         : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
+    //     convertRelativeCirclePositionToValue: circlePosition =>
+    //       (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
+    //   },
+    //   {
+    //     dataElement: DATA_ELEMENTS.FONT_SIZE_SLIDER,
+    //     property: 'FontSize',
+    //     displayProperty: 'text',
+    //     value: FontSize,
+    //     displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
+    //     getCirclePosition: lineLength =>
+    //       ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
+    //     convertRelativeCirclePositionToValue: circlePosition =>
+    //       `${circlePosition * 40 + 5}pt`,
+    //   },
+    // ];
 
     return [Opacity, StrokeThickness, FontSize].map((value, index) => {
       if (value === null || value === undefined) {
@@ -91,7 +155,7 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { isColorPaletteDisabled, currentPalette, style, colorMapKey, onStyleChange } = this.props;
+    const { hideColorPalette, currentPalette, style, colorMapKey, onStyleChange } = this.props;
     const { Scale, Precision, Style } = style;
 
     return (
@@ -99,8 +163,8 @@ class StylePopup extends React.PureComponent {
         className="Popup StylePopup"
         data-element="stylePopup"
       >
-        {currentPalette && !isColorPaletteDisabled && (
-          <div className="colors-container" data-element="colorPalette">
+        {currentPalette && !hideColorPalette && (
+          <div className="colors-container" data-element={DATA_ELEMENTS.COLOR_PALETTE}>
             <div className="inner-wrapper">
               <ColorPaletteHeader
                 colorPalette={currentPalette}
@@ -134,7 +198,10 @@ class StylePopup extends React.PureComponent {
 
 const mapStateToProps = (state, { colorMapKey }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
-  isColorPaletteDisabled: selectors.isElementDisabled(state, 'colorPalette')
+  hideColorPalette: selectors.isElementDisabled(state, DATA_ELEMENTS.COLOR_PALETTE),
+  hideOpacitySlider: selectors.isElementDisabled(state, DATA_ELEMENTS.OPACITY_SLIDER),
+  hideStrokeThicknessSlider: selectors.isElementDisabled(state, DATA_ELEMENTS.STROKE_THICKNESS_SLIDER),
+  hideFontSizeSlider: selectors.isElementDisabled(state, DATA_ELEMENTS.FONT_SIZE_SLIDER),
 });
 
 export default connect(mapStateToProps)(StylePopup);
