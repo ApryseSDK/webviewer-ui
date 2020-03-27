@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
@@ -14,8 +14,17 @@ function EllipseMeasurementOverlay(props) {
   const precision = annotation.Precision;
   const unit = annotation.Scale[1][1];
   const className = getClassName('Overlay MeasurementOverlay', { isOpen });
-
   const renderScaleRatio = () => `${scale[0][0]} ${scale[0][1]} = ${scale[1][0]} ${scale[1][1]}`;
+
+  useEffect(() => {
+    const onAnnotationChanged = () => {
+      setRadius(computeRadius());
+    };
+    core.addEventListener('mouseMove', onAnnotationChanged);
+    return () => {
+      core.removeEventListener('mouseMove', onAnnotationChanged);
+    };
+  });
 
   const computeRadius = () => {
     const decimalPlaces = getNumberOfDecimalPlaces(annotation);
@@ -29,23 +38,33 @@ function EllipseMeasurementOverlay(props) {
       ? 0
       : annotation.Precision.toString().split('.')[1].length);
 
+  const finishAnnotation = () => {
+    const tool = core.getTool('AnnotationCreateEllipseMeasurement');
+    tool.finish();
+    const annotationManager = core.getAnnotationManager();
+    annotationManager.selectAnnotation(annotation);
+  };
+
   const onChangeRadiusLength = event => {
     const radius = Math.abs(event.target.value);
     const factor = annotation.Measure.axis[0].factor;
     const radiusInPts = radius / factor;
     const diameterInPts = radiusInPts * 2;
+
     annotation.setHeight(diameterInPts);
     annotation.setWidth(diameterInPts);
+    setRadius(radius);
+    finishAnnotation();
     forceEllipseRedraw();
   };
 
-  const forceEllipseRedraw = () => {
+  const forceEllipseRedraw = useCallback(() => {
     const annotationManager = core.getAnnotationManager();
     annotationManager.redrawAnnotation(annotation);
     annotationManager.trigger('annotationChanged', [[annotation], 'modify', []]);
-  };
+  }, [annotation]);
 
-  const getMaxDiameterInPts = () => {
+  const getMaxDiameterInPts = useCallback(() => {
     const currentPageIndex = core.getCurrentPage() - 1;
     const documentWidth = window.docViewer.getPageWidth(currentPageIndex);
     const documentHeight = window.docViewer.getPageHeight(currentPageIndex);
@@ -56,9 +75,9 @@ function EllipseMeasurementOverlay(props) {
     const maxY = documentHeight - startY;
 
     return Math.min(maxX, maxY);
-  };
+  }, [annotation]);
 
-  const onBlurValidateRadius = event => {
+  const validateDiameter = event => {
     const radius = Math.abs(event.target.value);
     const factor = annotation.Measure.axis[0].factor;
     const radiusInPts = radius / factor;
@@ -66,7 +85,7 @@ function EllipseMeasurementOverlay(props) {
     ensureDiameterIsWithinBounds(diameterInPts);
   };
 
-  const ensureDiameterIsWithinBounds = diameterInPts => {
+  const ensureDiameterIsWithinBounds = useCallback(diameterInPts => {
     const maxDiameterInPts = getMaxDiameterInPts();
 
     if (diameterInPts > maxDiameterInPts) {
@@ -74,12 +93,16 @@ function EllipseMeasurementOverlay(props) {
       annotation.setWidth(maxDiameterInPts);
       forceEllipseRedraw();
     }
-  };
+  }, [annotation, forceEllipseRedraw, getMaxDiameterInPts]);
 
-  if (!isOpen) {
-    ensureDiameterIsWithinBounds(annotation.getWidth());
-  }
 
+  useEffect(() => {
+    if (!isOpen) {
+      ensureDiameterIsWithinBounds(annotation.getWidth());
+    }
+  }, [annotation, ensureDiameterIsWithinBounds, isOpen]);
+
+  const [ radius, setRadius ] = useState(computeRadius());
 
   return (
     <div className={className} data-element="measurementOverlay">
@@ -97,7 +120,16 @@ function EllipseMeasurementOverlay(props) {
         {t('option.measurementOverlay.area')}: {annotation.getContents()}
       </div>
       <div className="measurement__value">
-        {t('option.measurementOverlay.radius')}: <input className="lineMeasurementInput" type="number" min="0" value={computeRadius()} onChange={event => onChangeRadiusLength(event)} onBlur={event => onBlurValidateRadius(event)}/> {unit}
+        {t('option.measurementOverlay.radius')}:
+        <input
+          autoFocus
+          className="lineMeasurementInput"
+          type="number"
+          min="0"
+          value={radius}
+          onChange={event => onChangeRadiusLength(event)}
+          onBlur={event => validateDiameter(event)}
+        /> {unit}
       </div>
     </div>
   );
