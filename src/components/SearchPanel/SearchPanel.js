@@ -19,6 +19,8 @@ import useMedia from 'hooks/useMedia';
 import './SearchPanel.scss';
 import { motion, AnimatePresence } from "framer-motion";
 
+const minWidth = 293;
+
 class SearchPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -32,7 +34,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   state = {
-    width: 293,
+    width: minWidth,
   };
 
   componentDidUpdate(prevProps) {
@@ -88,7 +90,7 @@ class SearchPanel extends React.PureComponent {
 
     let style = {};
     if (!isMobile) {
-      style = { width: `${this.state.width}px`, minWidth: '293px' };
+      style = { width: `${this.state.width}px`, minWidth: `${minWidth}px` };
     }
 
     const isVisible = !(!isOpen || isDisabled);
@@ -105,7 +107,7 @@ class SearchPanel extends React.PureComponent {
           >
             {!isTabletAndMobile &&
               <ResizeBar
-                minWidth={293}
+                minWidth={minWidth}
                 onResize={_width => {
                   this.setState({ width: _width });
                 }}

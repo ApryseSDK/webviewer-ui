@@ -60,7 +60,8 @@ const NotesPanel = () => {
 
 
   const [notes, setNotes] = useState([]);
-  const [width, setWidth] = useState(293);
+  const minWidth = 293;
+  const [width, setWidth] = useState(minWidth);
 
   // the object will be in a shape of { [note.Id]: true }
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
@@ -256,7 +257,7 @@ const NotesPanel = () => {
 
   let style = {};
   if (!isMobile) {
-    style = { width: `${width}px`, minWidth: '293px' };
+    style = { width: `${width}px`, minWidth: `${minWidth}px` };
   }
 
   const isVisible = !(!isOpen || isDisabled);
@@ -273,7 +274,7 @@ const NotesPanel = () => {
         >
           {!isTabletAndMobile &&
             <ResizeBar
-              minWidth={293}
+              minWidth={minWidth}
               onResize={_width => {
                 setWidth(_width);
               }}

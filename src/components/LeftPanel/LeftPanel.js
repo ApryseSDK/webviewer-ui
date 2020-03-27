@@ -45,14 +45,16 @@ const LeftPanel = () => {
     ],
     shallowEqual,
   );
-  const [width, setWidth] = useState(218);
+
+  const minWidth = 218;
+  const [width, setWidth] = useState(minWidth);
   const dispatch = useDispatch();
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
   let style = {};
   if (!isMobile) {
-    style = { width: `${width}px`, minWidth: '218px' };
+    style = { width: `${width}px`, minWidth: `${minWidth}px` };
   }
 
   const isVisible = !(!isOpen || isDisabled);
@@ -113,7 +115,7 @@ const LeftPanel = () => {
           </div>
           {!isTabletAndMobile &&
             <ResizeBar
-              minWidth={215}
+              minWidth={minWidth}
               onResize={_width => {
                 setWidth(_width);
               }}
