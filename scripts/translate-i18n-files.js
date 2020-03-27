@@ -15,9 +15,9 @@ const filesToTranslate = fs
   .filter(filePath => filePath !== baseFile);
 
 const runTranslation = () => {
-  const baseTranslationData = require(baseFile);
+  const baseTranslationData = JSON.parse(fs.readFileSync(baseFile));
   filesToTranslate.forEach(async file => {
-    const translationData = require(file);
+    const translationData = JSON.parse(fs.readFileSync(file));
     const updatedData = {};
     const languageCode = file.match(/translation-(.+?)\.json/i)[1];
 
@@ -25,57 +25,46 @@ const runTranslation = () => {
       console.error(`Can't determine language code of ${file}`);
     }
 
-    await addMissingKey(
-      baseTranslationData,
-      translationData,
-      updatedData,
-      languageCode,
-    );
+    try {
+      await addMissingKey(baseTranslationData, translationData, updatedData, languageCode);
+    } catch (e) {
+      console.log(e.message);
+    }
+
     fs.writeFileSync(file, JSON.stringify(updatedData, null, 2));
   });
 };
 
-const addMissingKey = (
-  baseTranslationData,
-  translationData,
-  result,
-  languageCode,
-) =>
-  new Promise(resolve => {
-    Promise.all(
-      Object.keys(baseTranslationData).map(
-        key =>
-          new Promise(async resolve => {
-            try {
-              if (typeof baseTranslationData[key] === 'object') {
-                result[key] = {};
-                await addMissingKey(
-                  baseTranslationData[key],
-                  // translationData[key] may not exist when the base object is nested so we need to pass an empty object
-                  // an empty object is okay since the translated values are added to result[key]
-                  translationData[key] || {},
-                  result[key],
-                  languageCode,
-                );
-              } else if (translationData[key]) {
-                result[key] = translationData[key];
-              } else {
-                const [translated] = await translate.translate(
-                  baseTranslationData[key],
-                  mapI18nCodeToGoogleTranslationCode(languageCode),
-                );
-                result[key] = translated;
-              }
-              resolve();
-            } catch (e) {
-              console.log(e);
-            }
-          }),
-      ),
-    ).then(resolve);
-  });
+const addMissingKey = async(baseTranslationData, translationData, result, languageCode) => {
+  const keys = Object.keys(baseTranslationData);
+
+  for (const key of keys) {
+    if (typeof baseTranslationData[key] === 'object') {
+      result[key] = {};
+      await addMissingKey(
+        baseTranslationData[key],
+        // translationData[key] may not exist when the base object is nested so we need to pass an empty object
+        // an empty object is okay since the translated values are added to result[key]
+        translationData[key] || {},
+        result[key],
+        languageCode
+      );
+    } else if (typeof translationData[key] === 'string') {
+      // a translation already exists, copy it over
+      result[key] = translationData[key];
+    } else {
+      const [translated] = await translate.translate(
+        baseTranslationData[key],
+        mapI18nCodeToGoogleTranslationCode(languageCode)
+      );
+      result[key] = translated;
+    }
+  }
+};
 
 const mapI18nCodeToGoogleTranslationCode = code => {
+  // key of the map should be the language code that's after the '-' in the json filename.
+  // value of a key should be a language code that's listed in https://cloud.google.com/translate/docs/languages
   const map = {
     de: 'de',
     es: 'es',
@@ -92,7 +81,7 @@ const mapI18nCodeToGoogleTranslationCode = code => {
 
   if (!map[code]) {
     throw Error(
-      `${code} is missing in the map object in translate-i18n-files.js. Please add it to the map and then run the script again`,
+      `${code} is missing in the map object in translate-i18n-files.js. Please add it to the map and then run the script again`
     );
   }
 
