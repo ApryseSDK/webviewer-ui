@@ -99,7 +99,7 @@ class StylePopup extends React.PureComponent {
         data-element="stylePopup"
       >
         {currentPalette && (
-          <div className="colors-container">
+          <div className="colors-container" data-element="colorPalette">
             <div className="inner-wrapper">
               <ColorPaletteHeader
                 colorPalette={currentPalette}
