@@ -97,7 +97,7 @@ class SearchPanel extends React.PureComponent {
 
     let animate = { width: 'auto' };
     if (isMobile) {
-      animate = { width: '100%' };
+      animate = { width: '100vw' };
     }
 
     return (

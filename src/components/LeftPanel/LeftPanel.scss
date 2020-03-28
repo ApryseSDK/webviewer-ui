@@ -18,9 +18,9 @@
   @include mobile {
     position: fixed;
     top: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
   }
 
   // @include tablet-and-mobile {
@@ -40,7 +40,7 @@
     padding-top: 16px;
     @include mobile {
       padding-top: 0px;
-      width: 100%;
+      width: 100vw;
       .close-container {
         display: flex;
         align-items: center;

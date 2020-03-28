@@ -33,6 +33,9 @@
   &.Tools {
     background: var(--tools-header-background);
     height: 40px;
+    // position: absolute;
+    // top: 36px;
+    // z-index: 50;
 
     @include tablet-and-mobile {
       height: 52px;
