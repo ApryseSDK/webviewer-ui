@@ -104,45 +104,9 @@ class StylePopup extends React.PureComponent {
         },
       );
     }
-    // const sliderProps = [
-    //   {
-    //     property: 'Opacity',
-    //     displayProperty: 'opacity',
-    //     value: Opacity,
-    //     displayValue: `${Math.round(Opacity * 100)}%`,
-    //     getCirclePosition: lineLength => Opacity * lineLength + lineStart,
-    //     convertRelativeCirclePositionToValue: circlePosition => circlePosition,
-    //     dataElement: DATA_ELEMENTS.OPACITY_SLIDER
-    //   },
-    //   {
-    //     dataElement: DATA_ELEMENTS.STROKE_THICKNESS_SLIDER,
-    //     property: 'StrokeThickness',
-    //     displayProperty: 'thickness',
-    //     value: StrokeThickness,
-    //     displayValue: `${Math.round(StrokeThickness)}pt`,
-    //     // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
-    //     getCirclePosition: lineLength =>
-    //       (isFreeText
-    //         ? (StrokeThickness / 20) * lineLength + lineStart
-    //         : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
-    //     convertRelativeCirclePositionToValue: circlePosition =>
-    //       (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
-    //   },
-    //   {
-    //     dataElement: DATA_ELEMENTS.FONT_SIZE_SLIDER,
-    //     property: 'FontSize',
-    //     displayProperty: 'text',
-    //     value: FontSize,
-    //     displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
-    //     getCirclePosition: lineLength =>
-    //       ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
-    //     convertRelativeCirclePositionToValue: circlePosition =>
-    //       `${circlePosition * 40 + 5}pt`,
-    //   },
-    // ];
 
     return [Opacity, StrokeThickness, FontSize].map((value, index) => {
-      if (value === null || value === undefined) {
+      if (value === null || value === undefined || !sliderProps[index]) {
         // we still want to render a slider if the value is 0
         return null;
       }
