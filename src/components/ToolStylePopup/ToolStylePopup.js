@@ -139,7 +139,9 @@ class ToolStylePopup extends React.PureComponent {
           colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}
-          hideSlider={hideSlider}
+          hideOpacitySlider={hideSlider}
+          hideStrokeThicknessSlider={hideSlider}
+          hideFontSizeSlider={hideSlider}
           onStyleChange={this.handleStyleChange}
         />
       </div>

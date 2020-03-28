@@ -25,8 +25,6 @@ class StylePopup extends React.PureComponent {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
-    // TODO do something about this
-    hideSlider: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     hideColorPalette: PropTypes.bool,
@@ -119,8 +117,10 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { hideColorPalette, currentPalette, style, colorMapKey, onStyleChange } = this.props;
+    const { hideColorPalette, currentPalette, style, colorMapKey, onStyleChange, hideOpacitySlider, hideStrokeThicknessSlider, hideFontSizeSlider } = this.props;
     const { Scale, Precision, Style } = style;
+
+    const hideAllSlider = hideOpacitySlider && hideStrokeThicknessSlider && hideFontSizeSlider;
 
     return (
       <div
@@ -144,7 +144,7 @@ class StylePopup extends React.PureComponent {
           onMouseDown={e => e.preventDefault()}
         >
           <div className="sliders">
-            {!this.props.hideSlider && this.renderSliders()}
+            {!hideAllSlider && this.renderSliders()}
           </div>
         </div>
         {Scale && Precision && (
