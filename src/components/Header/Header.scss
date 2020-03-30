@@ -9,11 +9,15 @@
 .HeaderToolsContainer {
   display: flex;
   align-items: flex-end;
+  width: 100%;
 
   z-index: 0;
   @include tablet-and-mobile {
     z-index: 2;
     border-bottom: 1px solid var(--border);
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 }
 
@@ -48,10 +52,8 @@
 
     @include tablet-and-mobile {
       height: 52px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      border-bottom: 1px solid var(--border);
+
+      // border-bottom: 1px solid var(--border);
     }
   }
 

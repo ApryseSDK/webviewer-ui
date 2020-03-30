@@ -108,7 +108,7 @@ class SearchPanel extends React.PureComponent {
             initial={{ width: '0px' }}
             animate={animate}
             exit={{ width: '0px' }}
-            transition={{ ease: "easeOut", duration: 0.3 }}
+            transition={{ ease: "easeOut", duration: 0.25 }}
           >
             {!isTabletAndMobile &&
               <ResizeBar

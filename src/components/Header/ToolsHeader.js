@@ -23,21 +23,10 @@ class ToolsHeader extends React.PureComponent {
     activeHeaderItems: PropTypes.array.isRequired,
   }
 
-  componentWillUnmount() {
-    // core.setToolMode(defaultTool);
-    // this.props.setActiveToolGroup('');
-  }
-
   render() {
-    const { isTabletAndMobile, isDisabled, activeHeaderItems, isOpen, isToolsOverlayOpen, isToolsOverlayDisabled, isSignatureOverlayOpen, isSignatureOverlayDisabled } = this.props;
-
-    // if (isDisabled || !isOpen) {
-    //   return null;
-    // }
+    const { isTabletAndMobile, isDisabled, activeHeaderItems, isOpen, isToolsOverlayOpen, isToolsOverlayDisabled } = this.props;
 
     const isVisible = !isDisabled && isOpen;
-
-    // const style = { width: `${width}px`, minWidth: `${minWidth}px` };
 
     return (
       <React.Fragment>

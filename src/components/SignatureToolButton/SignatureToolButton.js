@@ -42,7 +42,7 @@ const SignatureToolButton = () => {
       dispatch(actions.closeElement('signatureOverlay'));
     } else {
       core.setToolMode('AnnotationCreateSignature');
-      // dispatch(actions.setActiveToolGroup(''));
+      dispatch(actions.setActiveToolGroup(''));
       dispatch(actions.openElement('signatureOverlay'));
     }
   };

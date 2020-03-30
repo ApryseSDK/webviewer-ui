@@ -275,7 +275,7 @@ const NotesPanel = () => {
           initial={{ width: '0px' }}
           animate={animate}
           exit={{ width: '0px' }}
-          transition={{ ease: "easeOut", duration: .3 }}
+          transition={{ ease: "easeOut", duration: .25 }}
         >
           {!isTabletAndMobile &&
             <ResizeBar
