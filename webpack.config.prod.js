@@ -10,7 +10,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: 'webviewer-ui.min.js',
     chunkFilename: 'chunks/[name].chunk.js',
-    publicPath: '/',
+    publicPath: './',
   },
   plugins: [
     new CopyWebpackPlugin([
