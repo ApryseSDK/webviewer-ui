@@ -11,9 +11,9 @@
   align-items: flex-end;
   width: 100%;
 
-  z-index: 0;
+  z-index: 70;
   @include tablet-and-mobile {
-    z-index: 2;
+    z-index: 72;
     border-bottom: 1px solid var(--border);
     position: fixed;
     top: 0;
@@ -22,7 +22,6 @@
 }
 
 .Header {
-  z-index: 1;
   box-sizing: content-box !important;
   display: flex;
   align-items: center;
@@ -30,6 +29,7 @@
   min-width: 300px;
   height: 36px;
   background: var(--view-header-background);
+  z-index: 71;
 
   &:not(.Tools) {
     .Button {
