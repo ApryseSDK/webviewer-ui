@@ -12,6 +12,8 @@ import useMedia from 'hooks/useMedia';
 
 import selectors from 'selectors';
 
+import { motion, AnimatePresence } from "framer-motion";
+
 import './Header.scss';
 
 class ToolsHeader extends React.PureComponent {
@@ -22,25 +24,42 @@ class ToolsHeader extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    core.setToolMode(defaultTool);
-    this.props.setActiveToolGroup('');
+    // core.setToolMode(defaultTool);
+    // this.props.setActiveToolGroup('');
   }
 
   render() {
     const { isTabletAndMobile, isDisabled, activeHeaderItems, isOpen, isToolsOverlayOpen, isToolsOverlayDisabled, isSignatureOverlayOpen, isSignatureOverlayDisabled } = this.props;
 
-    if (isDisabled || !isOpen) {
-      return null;
-    }
+    // if (isDisabled || !isOpen) {
+    //   return null;
+    // }
+
+    const isVisible = !isDisabled && isOpen;
+
+    // const style = { width: `${width}px`, minWidth: `${minWidth}px` };
 
     return (
       <React.Fragment>
-        <div
-          className="Header Tools"
-          data-element="toolsHeader"
-        >
-          <HeaderItems items={activeHeaderItems} />
-        </div>
+        <AnimatePresence>
+          {isVisible && (
+            <motion.div
+              className="HeaderToolsContainer"
+              data-element="toolsHeader"
+              initial={{ height: '0px' }}
+              animate={{ height: 'auto' }}
+              exit={{ height: '0px' }}
+              transition={{ ease: "easeOut", duration: 0.2 }}
+            >
+              <div
+                className="Header Tools"
+
+              >
+                <HeaderItems items={activeHeaderItems} />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         {isTabletAndMobile && isToolsOverlayOpen && !isToolsOverlayDisabled && <ToolsOverlay />}
         <SignatureOverlay />
       </React.Fragment>

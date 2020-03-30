@@ -35,6 +35,7 @@
   padding-top: 16px;
   @include mobile {
     width: 100vw;
+    min-width: 100vw;
     padding-top: 0px;
 
     .close-container {

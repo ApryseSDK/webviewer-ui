@@ -36,11 +36,11 @@
     // Needed
     // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
 
-
     padding-top: 16px;
     @include mobile {
       padding-top: 0px;
       width: 100vw;
+      min-width: 100vw;
       .close-container {
         display: flex;
         align-items: center;

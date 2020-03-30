@@ -6,7 +6,19 @@
   background: var(--border);
 }
 
+.HeaderToolsContainer {
+  display: flex;
+  align-items: flex-end;
+
+  z-index: 0;
+  @include tablet-and-mobile {
+    z-index: 2;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
 .Header {
+  z-index: 1;
   box-sizing: content-box !important;
   display: flex;
   align-items: center;
@@ -33,9 +45,6 @@
   &.Tools {
     background: var(--tools-header-background);
     height: 40px;
-    // position: absolute;
-    // top: 36px;
-    // z-index: 50;
 
     @include tablet-and-mobile {
       height: 52px;
@@ -44,16 +53,6 @@
       left: 0;
       border-bottom: 1px solid var(--border);
     }
-
-    // .tool-group-button {
-    //   &:hover {
-    //     background: var(--tools-button-hover);
-    //   }
-
-    //   &.active {
-    //     background: var(--tools-button-active);
-    //   }
-    // }
   }
 
   @include tablet-and-mobile {

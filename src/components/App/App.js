@@ -99,7 +99,7 @@ const App = ({ removeEventHandlers }) => {
         <Accessibility />
 
         <Header />
-        {isToolsHeaderOpen && !isToolsHeaderDisabled && <ToolsHeader />}
+        <ToolsHeader />
         <div className="content">
           <LeftPanel />
           <DocumentContainer />

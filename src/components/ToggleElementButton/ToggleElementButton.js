@@ -9,6 +9,9 @@ import selectors from 'selectors';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 
+import core from 'core';
+import defaultTool from 'constants/defaultTool';
+
 import './ToggleElementButton.scss';
 
 const ToggleElementButton = ({
@@ -38,10 +41,10 @@ const ToggleElementButton = ({
 
 const mapStateToProps = (state, ownProps) => {
   let isActive = selectors.isElementOpen(state, ownProps.element);
-  if (ownProps.dataElement === 'redactionButton') {
-    const isToolActive = selectors.getActiveToolName(state);
-    isActive = isActive || isToolActive === 'AnnotationCreateRedaction';
-  }
+  // if (ownProps.dataElement === 'redactionButton') {
+  //   const isToolActive = selectors.getActiveToolName(state);
+  //   isActive = isActive || isToolActive === 'AnnotationCreateRedaction';
+  // }
 
   return {
     isElementDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
@@ -56,6 +59,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       dispatch(actions.closeElement('notesPanel'));
     } else if (ownProps.element === 'notesPanel') {
       dispatch(actions.closeElement('searchPanel'));
+    } else if (ownProps.element === 'toolsHeader') {
+      core.setToolMode(defaultTool);
+      dispatch(actions.setActiveToolGroup(''));
     }
     dispatch(actions.toggleElement(ownProps.element));
   },

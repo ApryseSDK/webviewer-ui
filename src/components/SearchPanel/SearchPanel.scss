@@ -43,6 +43,7 @@
 
   @include mobile {
     width: 100%;
+    min-width: 100vw;
     padding-top: 0px;
 
     .close-container {
