@@ -229,7 +229,6 @@ const AnnotationPopup = () => {
               img="icon-menu-style-line"
               onClick={() => {
                 setIsStylePopupOpen(true);
-                dispatch(actions.closeElements(['toolsOverlay']));
               }}
             />
           )}
