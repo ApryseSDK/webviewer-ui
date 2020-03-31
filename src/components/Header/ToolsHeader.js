@@ -49,7 +49,7 @@ class ToolsHeader extends React.PureComponent {
             </motion.div>
           )}
         </AnimatePresence>
-        {isTabletAndMobile && isToolsOverlayOpen && !isToolsOverlayDisabled && <ToolsOverlay />}
+        {isTabletAndMobile && <ToolsOverlay />}
         <SignatureOverlay />
       </React.Fragment>
     );
