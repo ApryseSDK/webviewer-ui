@@ -15,9 +15,9 @@ export default dispatch => () => {
     window.CoreControls.SetPreRenderLevel(2);
   }
 
-  if (totalPages >= 500) {
-    core.setDisplayMode(window.CoreControls.DisplayModes.Single);
-  }
+  // if (totalPages >= 500) {
+  //   core.setDisplayMode(window.CoreControls.DisplayModes.Single);
+  // }
 
   dispatch(actions.setPageLabels(getDefaultPageLabels(totalPages)));
   dispatch(actions.setTotalPages(totalPages));
