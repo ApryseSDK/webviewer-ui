@@ -42,6 +42,9 @@ import fireEvent from 'helpers/fireEvent';
 
 import actions from 'actions';
 
+import core from 'core';
+import defaultTool from 'constants/defaultTool';
+
 import './App.scss';
 
 const propTypes = {
@@ -79,14 +82,23 @@ const App = ({ removeEventHandlers }) => {
 
     mobileListener.addListener(() => {
       dispatch(actions.setMobileToolsHeader());
+      dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
+      core.setToolMode(defaultTool);
+      dispatch(actions.setActiveToolGroup(''));
     });
 
     tabletListener.addListener(() => {
       dispatch(actions.setTabletToolsHeader());
+      dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
+      core.setToolMode(defaultTool);
+      dispatch(actions.setActiveToolGroup(''));
     });
 
     desktopListener.addListener(() => {
       dispatch(actions.setDesktopToolsHeader());
+      dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
+      core.setToolMode(defaultTool);
+      dispatch(actions.setActiveToolGroup(''));
     });
 
     return removeEventHandlers;

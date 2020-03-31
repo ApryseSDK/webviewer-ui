@@ -137,11 +137,11 @@ const NotesPanel = () => {
     // eslint-disable-next-line
   }, [selectedNoteIds]);
 
-  useEffect(() => {
-    if (isOpen) {
-      dispatch(actions.closeElements(['searchPanel', 'searchOverlay']));
-    }
-  }, [dispatch, isOpen]);
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     dispatch(actions.closeElements(['searchPanel', 'searchOverlay']));
+  //   }
+  // }, [dispatch, isOpen]);
 
   const handleScroll = scrollTop => {
     if (scrollTop) {

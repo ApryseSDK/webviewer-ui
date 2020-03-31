@@ -8,6 +8,7 @@ import ActionButton from 'components/ActionButton';
 import Icon from 'components/Icon';
 
 import core from 'core';
+import defaultTool from 'constants/defaultTool';
 import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
@@ -94,6 +95,8 @@ class SignatureOverlay extends React.PureComponent {
 
     if (!clickedToggleSignatureButton) {
       this.props.closeElement('signatureOverlay');
+      // core.setToolMode(defaultTool);
+
     }
   };
 

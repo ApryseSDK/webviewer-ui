@@ -43,7 +43,7 @@ class SearchPanel extends React.PureComponent {
       //   this.props.closeElements(['leftPanel']);
       // }
 
-      this.props.closeElements(['notesPanel']);
+      // this.props.closeElements(['notesPanel']);
     }
   }
 

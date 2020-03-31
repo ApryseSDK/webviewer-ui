@@ -9,6 +9,7 @@ import '../ToolGroupButton/ToolGroupButton.scss';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 
 const SignatureToolButton = () => {
   const [isActive, isSignatureModalOpen, isSignatureOverlayOpen] = useSelector(
@@ -21,6 +22,14 @@ const SignatureToolButton = () => {
   );
   const dispatch = useDispatch();
   const [hasSavedSignature, setHasSavedSignature] = useState(false);
+
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
 
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -42,7 +51,9 @@ const SignatureToolButton = () => {
       dispatch(actions.closeElement('signatureOverlay'));
     } else {
       core.setToolMode('AnnotationCreateSignature');
-      dispatch(actions.setActiveToolGroup(''));
+      // if (isTabletAndMobile) {
+        dispatch(actions.setActiveToolGroup(''));
+      // }
       dispatch(actions.openElement('signatureOverlay'));
     }
   };

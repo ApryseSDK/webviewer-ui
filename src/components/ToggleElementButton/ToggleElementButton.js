@@ -41,10 +41,6 @@ const ToggleElementButton = ({
 
 const mapStateToProps = (state, ownProps) => {
   let isActive = selectors.isElementOpen(state, ownProps.element);
-  // if (ownProps.dataElement === 'redactionButton') {
-  //   const isToolActive = selectors.getActiveToolName(state);
-  //   isActive = isActive || isToolActive === 'AnnotationCreateRedaction';
-  // }
 
   return {
     isElementDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
