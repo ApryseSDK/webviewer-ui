@@ -7,8 +7,6 @@ import Icon from 'components/Icon';
 import actions from 'actions';
 import selectors from 'selectors';
 
-import Icon from 'components/Icon';
-
 import './Dropdown.scss';
 
 class Dropdown extends React.PureComponent {

@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
 
-import AutoResizeTextarea from 'components/AutoResizeTextarea';
+import AutoResizeTextarea from 'components/NoteTextarea/AutoResizeTextarea/AutoResizeTextarea';
 import NotePopup from 'components/NotePopup';
 import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
