@@ -9,6 +9,11 @@ export default () => {
   const uiVersion = packageConfig.version;
   const pdftronServer = !!getHashParams('pdftronServer', null);
   const fullAPI = !!getHashParams('pdfnet', false);
+  const disableLogs = getHashParams('disableLogs', false);
+
+  if (disableLogs) {
+    return;
+  }
 
   if (coreVersion && uiVersion) {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number

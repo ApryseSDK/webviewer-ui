@@ -121,6 +121,12 @@ export default initialState => (state = initialState, action) => {
         noResult: payload.noResult,
       };
     }
+    case 'SET_SEARCH_ERROR': {
+      return {
+        ...state,
+        errorMessage: payload.errorMessage,
+      };
+    }
     case 'RESET_SEARCH': {
       return {
         ...initialState,

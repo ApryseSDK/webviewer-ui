@@ -26,6 +26,7 @@ const AnnotationPopup = () => {
     // can probably use mutation observer
     isLeftPanelOpen,
     isRightPanelOpen,
+    popupItems,
   ] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'annotationPopup'),
@@ -34,6 +35,7 @@ const AnnotationPopup = () => {
       selectors.isElementDisabled(state, 'annotationStylePopup'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementOpen(state, 'searchPanel'),
+      selectors.getPopupItems(state, 'annotationPopup'),
     ],
     shallowEqual,
   );
@@ -62,11 +64,10 @@ const AnnotationPopup = () => {
     // calling this function will always rerender this component
     // because the position state always has a new object reference
     const setPopupPositionAndShow = () => {
-      if (popupRef.current) {
+      if (popupRef.current && popupItems.length > 0) {
         setPosition(
           getAnnotationPopupPositionBasedOn(firstAnnotation, popupRef),
         );
-
         dispatch(actions.openElement('annotationPopup'));
       }
     };
@@ -114,7 +115,7 @@ const AnnotationPopup = () => {
         onUpdateAnnotationPermission,
       );
     };
-  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen]);
+  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen, popupItems]);
 
   useEffect(() => {
     const closeAndReset = () => {
@@ -185,6 +186,12 @@ const AnnotationPopup = () => {
     window.readerControl.focusNote(firstAnnotation.Id);
 
     dispatch(actions.closeElement('annotationPopup'));
+  };
+
+  const downloadFileAttachment = annot => {
+    // no need to check that annot is of type file annot as the check is done in the JSX
+    // trigger the annotationDoubleClicked event so that it will download the file
+    core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
 
   return (
@@ -296,28 +303,40 @@ const AnnotationPopup = () => {
               }}
             />
           )}
-          {!(['CropPage', 'AnnotationCreateSignature', 'AnnotationCreateRedaction', 'AnnotationCreateSticky'].includes(firstAnnotation.ToolName)) && (<ActionButton
+          {!(['CropPage', 'AnnotationCreateSignature', 'AnnotationCreateRedaction', 'AnnotationCreateSticky'].includes(firstAnnotation.ToolName)) &&
+          (<ActionButton
             title="tool.Link"
-            img={firstAnnotation.getAssociatedLinks().length > 0 ? "icon-tool-unlink" : "icon-tool-link"}
+            img={firstAnnotation.getAssociatedLinks().length > 0 ? 'icon-tool-unlink' : 'icon-tool-link'}
             onClick={
               firstAnnotation.getAssociatedLinks().length > 0
-              ? () => {
-                const annotManager = core.getAnnotationManager();
-                selectedAnnotations.forEach(annot => {
-                  annot.getAssociatedLinks().forEach(annotId => {
-                    const linkAnnot = annotManager.getAnnotationById(annotId);
-                    annotManager.deleteAnnotation(linkAnnot, null, true);
+                ? () => {
+                  const annotManager = core.getAnnotationManager();
+                  selectedAnnotations.forEach(annot => {
+                    annot.getAssociatedLinks().forEach(annotId => {
+                      const linkAnnot = annotManager.getAnnotationById(annotId);
+                      annotManager.deleteAnnotation(linkAnnot, null, true);
+                    });
+                    annot.unassociateLinks();
+                    if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {
+                      annotManager.deleteAnnotation(annot);
+                    }
                   });
-                  annot.unassociateLinks();
-                  if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {
-                    annotManager.deleteAnnotation(annot);
-                  }
-                });
-              }
-              : () => dispatch(actions.openElement('linkModal'))
+                }
+                : () => dispatch(actions.openElement('linkModal'))
             }
             dataElement="linkButton"
           />)}
+          {
+            firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation &&
+            (<ActionButton
+              title="action.fileAttachmentDownload"
+              img="icon-download"
+              onClick={
+                () => downloadFileAttachment(firstAnnotation)
+              }
+              dataElement="fileAttachmentDownload"
+            />)
+          }
         </CustomizablePopup>
       )}
     </div>

@@ -16,17 +16,17 @@ import selectors from 'selectors';
 import './TextPopup.scss';
 
 const TextPopup = () => {
-  const [isDisabled, isOpen] = useSelector(
+  const [isDisabled, isOpen, popupItems] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'textPopup'),
       selectors.isElementOpen(state, 'textPopup'),
+      selectors.getPopupItems(state, 'textPopup'),
     ],
     shallowEqual,
   );
   const dispatch = useDispatch();
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const popupRef = useRef();
-
   useOnClickOutside(popupRef, () => {
     dispatch(actions.closeElement('textPopup'));
   });
@@ -40,15 +40,15 @@ const TextPopup = () => {
   useEffect(() => {
     const textSelectTool = core.getTool('TextSelect');
     const onSelectionComplete = (startQuad, allQuads) => {
-      if (popupRef.current) {
+      if (popupRef.current && popupItems.length > 0) {
         setPosition(getTextPopupPositionBasedOn(allQuads, popupRef));
         dispatch(actions.openElement('textPopup'));
       }
     };
 
     textSelectTool.on('selectionComplete', onSelectionComplete);
-    return () => textSelectTool.on('selectionComplete', onSelectionComplete);
-  }, [dispatch]);
+    return () => textSelectTool.off('selectionComplete', onSelectionComplete);
+  }, [dispatch, popupItems]);
 
   return isDisabled ? null : (
     <div

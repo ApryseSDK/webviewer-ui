@@ -41,7 +41,8 @@
     "upload": "上載",
     "link": "鏈接",
     "darkMode": "暗模式",
-    "lightMode": "燈光模式"
+    "lightMode": "燈光模式",
+    "fileAttachmentDownload": "下載附件"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -52,6 +53,7 @@
     "distanceMeasurement": "測量距離",
     "ellipse": "橢圓",
     "eraser": "橡皮",
+    "fileattachment": "文件附件",
     "freehand": "手繪",
     "freehand2": "手繪",
     "freetext": "任意文字",
@@ -226,7 +228,8 @@
       "area": "面積",
       "distanceMeasurement": "測量距離",
       "perimeterMeasurement": "測量周長",
-      "areaMeasurement": "測量面積"
+      "areaMeasurement": "測量面積",
+      "radius": "半徑"
     },
     "measurementOption": {
       "scale": "比例"

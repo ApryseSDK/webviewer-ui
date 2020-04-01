@@ -41,7 +41,8 @@
     "upload": "업로드",
     "link": "링크",
     "lightMode": "라이트 모드",
-    "darkMode": "다크 모드"
+    "darkMode": "다크 모드",
+    "fileAttachmentDownload": "첨부 파일 다운로드"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -52,6 +53,7 @@
     "distanceMeasurement": "거리 측정",
     "ellipse": "타원",
     "eraser": "지우개",
+    "fileattachment": "첨부 파일",
     "freehand": "자유형",
     "freehand2": "자유형",
     "freetext": "자유 텍스트",
@@ -226,7 +228,8 @@
       "area": "면적",
       "distanceMeasurement": "거리 측정",
       "perimeterMeasurement": "둘레 측정",
-      "areaMeasurement": "면적 측정"
+      "areaMeasurement": "면적 측정",
+      "radius": "반지름"
     },
     "measurementOption": {
       "scale": "배율"

@@ -68,6 +68,7 @@ import isMobileDevice from './isMobileDevice';
 import isReadOnly from './isReadOnly';
 import isToolDisabled from './isToolDisabled';
 import loadDocument from './loadDocument';
+import mentions from './mentions';
 import openElement from './openElement';
 import openElements from './openElements';
 import print from './print';
@@ -127,6 +128,9 @@ import setSignatureFonts from './setSignatureFonts';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
+import setNoteTransformFunction from './setNoteTransformFunction';
+import selectThumbnailPages from './selectThumbnailPages';
+import unselectThumbnailPages from './unselectThumbnailPages';
 
 export default store => {
   window.readerControl = {
@@ -184,6 +188,7 @@ export default store => {
     setSortStrategy: setSortStrategy(store),
     setSwipeOrientation,
     setTheme: setTheme(store),
+    dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setToolMode: setToolMode(store),
     setZoomLevel,
     setZoomList: setZoomList(store),
@@ -196,10 +201,13 @@ export default store => {
     updateElement: updateElement(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
+    mentions: mentions(store),
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
     getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
+    selectThumbnailPages: selectThumbnailPages(store),
+    unselectThumbnailPages: unselectThumbnailPages(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),

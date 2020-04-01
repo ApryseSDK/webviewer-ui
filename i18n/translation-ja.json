@@ -41,7 +41,8 @@
     "upload": "アップロードする",
     "link": "リンク",
     "darkMode": "ダークモード",
-    "lightMode": "ライトモード"
+    "lightMode": "ライトモード",
+    "fileAttachmentDownload": "添付ファイルをダウンロード"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -52,6 +53,7 @@
     "distanceMeasurement": "距離測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
+    "fileattachment": "添付ファイル",
     "freehand": "フリーハンド",
     "freehand2": "フリーハンド",
     "freetext": "フリーテキスト",
@@ -226,7 +228,8 @@
       "area": "領域",
       "distanceMeasurement": "距離測定",
       "perimeterMeasurement": "境界測定",
-      "areaMeasurement": "面積測定"
+      "areaMeasurement": "面積測定",
+      "radius": "半径"
     },
     "measurementOption": {
       "scale": "スケール"

@@ -31,6 +31,7 @@ class SearchPanel extends React.PureComponent {
     setActiveResultIndex: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
   };
 
   state = {
@@ -80,7 +81,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isOpen, isDisabled, t, results, isSearching, noResult, isMobile, isTabletAndMobile, closeElements } = this.props;
+    const { isOpen, isDisabled, t, results, noResult, isMobile, isTabletAndMobile, closeElements } = this.props;
 
     if (isDisabled) {
       return null;
@@ -171,6 +172,7 @@ const mapStateToProps = state => ({
   results: selectors.getResults(state),
   isSearching: selectors.isSearching(state),
   noResult: selectors.isNoResult(state),
+  errorMessage: selectors.getSearchErrorMessage(state),
 });
 
 const mapDispatchToProps = {

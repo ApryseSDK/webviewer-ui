@@ -41,7 +41,8 @@
     "upload": "Subir",
     "link": "Enlace",
     "lightMode": "Modo de luz",
-    "darkMode": "Modo oscuro"
+    "darkMode": "Modo oscuro",
+    "fileAttachmentDownload": "Descargar archivo adjunto"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -52,6 +53,7 @@
     "distanceMeasurement": "Medición de distancia",
     "ellipse": "Elipse",
     "eraser": "Borrador",
+    "fileattachment": "Archivo adjunto",
     "freehand": "A mano alzada",
     "freehand2": "A mano alzada",
     "freetext": "Texto libre",
@@ -226,7 +228,8 @@
       "area": "Área",
       "distanceMeasurement": "Medición de distancia",
       "perimeterMeasurement": "Medición del perímetro",
-      "areaMeasurement": "Medición del área"
+      "areaMeasurement": "Medición del área",
+      "radius": "Radio"
     },
     "measurementOption": {
       "scale": "Escala"

@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useContext, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 import ReplyArea from 'components/Note/ReplyArea';
 
+import selectors from 'selectors';
 import core from 'core';
 
 import './Note.scss';
@@ -14,19 +16,61 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
+let currId = 0;
+
 const Note = ({ annotation }) => {
   const { isSelected, resize } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
+  const ids = useRef([]);
+
+  const [noteTransformFunction] = useSelector(
+    state => [
+      selectors.getNoteTransformFunction(state)
+    ],
+    shallowEqual,
+  );
 
   useEffect(() => {
     const prevHeight = containerHeightRef.current;
-    const currHeight = window.getComputedStyle(containerRef.current).height;
+    const currHeight = containerRef.current.getBoundingClientRect().height;
+    containerHeightRef.current = currHeight;
 
-    if (!prevHeight || prevHeight !== currHeight) {
-      containerHeightRef.current = currHeight;
+    // have a prevHeight check here because we don't want to call resize on mount
+    if (prevHeight && prevHeight !== currHeight) {
       resize();
+    }
+  });
+
+  useEffect(() => {
+    if (noteTransformFunction) {
+      ids.current.forEach(id => {
+        const child = document.querySelector(`[data-webviewer-custom-element='${id}']`);
+        if (child) {
+          child.parentNode.removeChild(child);
+        }
+      });
+
+      ids.current = [];
+
+      const state = {
+        annotation,
+        isSelected,
+      };
+
+      noteTransformFunction(containerRef.current, state, (...params) => {
+        const element = document.createElement(...params);
+        const id = `custom-element-${currId}`;
+        currId++;
+        ids.current.push(id);
+        element.setAttribute('data-webviewer-custom-element', id);
+        element.addEventListener('mousedown', e => {
+          e.stopPropagation();
+        });
+
+        return element;
+      });
     }
   });
 

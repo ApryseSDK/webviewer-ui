@@ -50,6 +50,16 @@ const LeftPanel = () => {
   const [width, setWidth] = useState(minWidth);
   const dispatch = useDispatch();
 
+  const onDrop = e => {
+    // this is mainly for the thumbnail panel, to prevent the broswer from loading a document that dropped in
+    e.preventDefault();
+  };
+
+  const onDragOver = e => {
+    // when dragging over the "LeftPanel", change the cursor to "Move" from "Copy"
+    e.preventDefault();
+  };
+
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
   let style = {};
@@ -72,6 +82,8 @@ const LeftPanel = () => {
             Panel: true,
             LeftPanel: true,
           })}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
           data-element="leftPanel"
           initial={{ width: '0px' }}
           animate={animate}

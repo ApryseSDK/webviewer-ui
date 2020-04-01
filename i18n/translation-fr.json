@@ -41,7 +41,8 @@
     "upload": "Télécharger",
     "link": "Lien",
     "darkMode": "Mode sombre",
-    "lightMode": "Mode lumière"
+    "lightMode": "Mode lumière",
+    "fileAttachmentDownload": "Télécharger le fichier joint"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -52,6 +53,7 @@
     "distanceMeasurement": "Mesure de distance",
     "ellipse": "Ellipse",
     "eraser": "La gomme",
+    "fileattachment": "Pièce jointe",
     "freehand": "Stylo",
     "freehand2": "Stylo",
     "freetext": "Texte libre",
@@ -226,7 +228,8 @@
       "area": "Surface",
       "distanceMeasurement": "Mesure de distance",
       "perimeterMeasurement": "Mesure du périmètre",
-      "areaMeasurement": "Mesure du surface"
+      "areaMeasurement": "Mesure du surface",
+      "radius": "Rayon"
     },
     "measurementOption": {
       "scale": "Échelle"

@@ -7,10 +7,6 @@
   box-shadow: 0 0 3px 0 var(--document-box-shadow);
   background: var(--component-background);
 
-  &:empty {
-    padding: 0;
-  }
-
   @include mobile {
     // style popup in the mobile view will be placed at the bottom of the viewport
     // so we need to set the padding to 0px otherwise we will see a little circle under the selected annotation

@@ -20,6 +20,7 @@ export default (enable, store) => features => {
         'distanceMeasurementToolButton',
         'perimeterMeasurementToolButton',
         'areaMeasurementToolButton',
+        'ellipseMeasurementToolButton',
       ],
     },
     [Feature.Annotations]: {
@@ -27,6 +28,7 @@ export default (enable, store) => features => {
         'notesPanel',
         'notesPanelButton',
         'toolsButton',
+        'linkButton',
       ],
       fn: () => {
         if (enable) {

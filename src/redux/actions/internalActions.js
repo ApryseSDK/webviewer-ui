@@ -381,6 +381,10 @@ export const setNoResult = noResult => ({
   type: 'SET_NO_RESULT',
   payload: { noResult },
 });
+export const setSearchError = errorMessage => ({
+  type: 'SET_SEARCH_ERROR',
+  payload: { errorMessage },
+});
 export const resetSearch = () => ({ type: 'RESET_SEARCH', payload: {} });
 export const setIsProgrammaticSearch = isProgrammaticSearch => ({
   type: 'SET_IS_PROG_SEARCH',
@@ -390,3 +394,7 @@ export const setIsProgrammaticSearchFull = isProgrammaticSearchFull => ({
   type: 'SET_IS_PROG_SEARCH_FULL',
   payload: { isProgrammaticSearchFull },
 });
+export const setNoteTransformFunction = noteTransformFunction => ({
+  type: 'SET_NOTE_TRANSFORM_FUNCTION',
+  payload: { noteTransformFunction },
+})

@@ -41,7 +41,8 @@
     "upload": "Uploaden",
     "link": "Koppeling",
     "darkMode": "Donkere modus",
-    "lightMode": "Lichte modus"
+    "lightMode": "Lichte modus",
+    "fileAttachmentDownload": "Download bijgevoegd bestand"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -52,6 +53,7 @@
     "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
     "eraser": "Gom",
+    "fileattachment": "Bestandsbijlage",
     "freehand": "Vrije hand",
     "freehand2": "Vrije hand",
     "freetext": "Tekst plaatsen",
@@ -226,7 +228,8 @@
       "area": "Gebied",
       "distanceMeasurement": "Afstands meting",
       "perimeterMeasurement": "Perimeter meting",
-      "areaMeasurement": "Gebieds meting"
+      "areaMeasurement": "Gebieds meting",
+      "radius": "Straal"
     },
     "measurementOption": {
       "scale": "Schaal"

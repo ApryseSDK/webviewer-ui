@@ -54,7 +54,8 @@ class SearchOverlay extends React.PureComponent {
     setIsProgrammaticSearch: PropTypes.func.isRequired,
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-  };
+    setSearchError: PropTypes.func.isRequired,
+  }
 
   constructor() {
     super();
@@ -112,6 +113,14 @@ class SearchOverlay extends React.PureComponent {
     }
   }
 
+  handleSearchError = error => {
+    const { setIsSearching, setSearchError } = this.props;
+    setIsSearching(false);
+    if (error && error.message) {
+      setSearchError(error.message);
+    }
+  }
+
   handleClickOutside = e => {
     const { closeElements, isSearchPanelOpen } = this.props;
     const clickedSearchButton =
@@ -164,14 +173,19 @@ class SearchOverlay extends React.PureComponent {
       }
     };
 
+
     setIsSearching(true);
-    core.textSearchInit(
-      searchValue,
-      searchMode,
-      isFullSearch,
-      handleSearchResult,
-    );
-  };
+
+    const options = {
+      'fullSearch': isFullSearch,
+      'onResult': handleSearchResult,
+      'onPageEnd': handleSearchResult,
+      'onDocumentEnd': handleSearchResult,
+      'onError': this.handleSearchError.bind(this),
+    };
+
+    core.textSearchInit(searchValue, searchMode, options);
+  }
 
   getSearchMode = (isFull = false) => {
     const {
@@ -276,13 +290,16 @@ class SearchOverlay extends React.PureComponent {
     };
 
     setIsSearching(true);
-    core.textSearchInit(
-      searchValue,
-      searchMode,
-      isFullSearch,
-      handleSearchResult,
-    );
-  };
+
+    const options = {
+      'fullSearch': isFullSearch,
+      'onResult': handleSearchResult,
+      'onPageEnd': handleSearchResult,
+      'onDocumentEnd': handleSearchResult,
+      'onError': this.handleSearchError.bind(this),
+    };
+    core.textSearchInit(searchValue, searchMode, options);
+  }
 
   runSearchListeners = () => {
     const {
@@ -580,6 +597,7 @@ const mapDispatchToProps = {
   setWholeWord: actions.setWholeWord,
   setWildcard: actions.setWildcard,
   setNoResult: actions.setNoResult,
+  setSearchError: actions.setSearchError,
   setIsProgrammaticSearch: actions.setIsProgrammaticSearch,
   setIsProgrammaticSearchFull: actions.setIsProgrammaticSearchFull,
 };

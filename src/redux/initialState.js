@@ -64,6 +64,7 @@ export default {
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'calibrateButton' },
       { dataElement: 'linkButton' },
+      { dataElement: 'fileAttachmentDownload' },
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
@@ -125,7 +126,9 @@ export default {
     signatureFonts: ['GreatVibes-Regular'],
     leftPanelWidth: 300,
     isReplyDisabledFunc: null,
+    userData: [],
     customMeasurementOverlay: [],
+    noteTransformFunction: null,
   },
   search: {
     listeners: [],
@@ -167,6 +170,6 @@ export default {
     useSharedWorker: getHashParams('useSharedWorker', false),
     disableI18n: getHashParams('disableI18n', false),
     pdfWorkerTransportPromise: null,
-    officeWorkerTransportPromise: null,
+    officeWorkerTransportPromise: null
   },
 };

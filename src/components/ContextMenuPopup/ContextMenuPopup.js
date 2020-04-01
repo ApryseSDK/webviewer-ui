@@ -13,10 +13,11 @@ import selectors from 'selectors';
 import './ContextMenuPopup.scss';
 
 const ContextMenuPopup = () => {
-  const [isOpen, isDisabled] = useSelector(
+  const [isOpen, isDisabled, popupItems] = useSelector(
     state => [
       selectors.isElementOpen(state, 'contextMenuPopup'),
       selectors.isElementDisabled(state, 'contextMenuPopup'),
+      selectors.getPopupItems(state, 'contextMenuPopup'),
     ],
     shallowEqual,
   );
@@ -53,7 +54,6 @@ const ContextMenuPopup = () => {
         !(clickedOnInput || clickedOnTextarea)
       ) {
         e.preventDefault();
-
         let { pageX: left, pageY: top } = e;
         const { width, height } = popupRef.current.getBoundingClientRect();
         const documentContainer = document.querySelector('.DocumentContainer');
@@ -74,15 +74,16 @@ const ContextMenuPopup = () => {
         if (top + height > containerBox.bottom) {
           top = containerBox.bottom - height - verticalGap;
         }
-
-        setPosition({ left, top });
-        dispatch(actions.openElement('contextMenuPopup'));
+        if (popupItems.length > 0) {
+          setPosition({ left, top });
+          dispatch(actions.openElement('contextMenuPopup'));
+        }
       }
     };
 
     document.addEventListener('contextmenu', onContextMenu);
     return () => document.removeEventListener('contextmenu', onContextMenu);
-  }, [dispatch]);
+  }, [dispatch, popupItems]);
 
   return isDisabled ? null : (
     <div

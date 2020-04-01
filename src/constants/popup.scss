@@ -1,7 +1,6 @@
 @import './styles';
 
 $popup-button-height: 38px;
-$popup-button-width: 38px;
 $popup-icon-height: 18px;
 $popup-icon-width: 18px;
 
@@ -13,6 +12,10 @@ $popup-icon-width: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:empty {
+    padding: 0;
+  }
 
   .buttons {
     display: flex;

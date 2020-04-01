@@ -71,6 +71,18 @@ const map = {
       annotation.IT === 'PolyLineDimension' &&
       annotation.Measure,
   },
+  rectangularAreaMeasurement: {
+    icon: 'ic_annotation_rectangular_area_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: [Tools.ToolNames.RECTANGULAR_AREA_MEASUREMENT],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.PolygonAnnotation &&
+      annotation.IT === 'PolygonDimension' &&
+      annotation.Measure &&
+      annotation.isRectangularPolygon(),
+  },
   areaMeasurement: {
     icon: 'ic_annotation_area_black_24px',
     iconColor: 'StrokeColor',
@@ -80,6 +92,17 @@ const map = {
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.IT === 'PolygonDimension' &&
+      annotation.Measure,
+  },
+  ellipseMeasurement: {
+    icon: 'ic_annotation_circle_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: ['AnnotationCreateEllipseMeasurement'],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.EllipseAnnotation &&
+      annotation.IT === 'EllipseDimension' &&
       annotation.Measure,
   },
   callout: {
@@ -276,7 +299,8 @@ const map = {
     currentPalette: null,
     availablePalettes: [],
     toolNames: ['AnnotationEraserTool'],
-    annotationCheck: null,
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.FreeHandAnnotation,
   },
   cropPage: {
     icon: 'ic_crop_black_24px',
@@ -285,6 +309,14 @@ const map = {
     availablePalettes: [],
     toolNames: ['CropPage'],
     annotationCheck: null,
+  },
+  fileattachment: {
+    icon: 'ic_placeholder_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: ['AnnotationCreateFileAttachment'],
+    annotationCheck: annotation => annotation instanceof window.Annotations.FileAttachmentAnnotation,
   },
 };
 

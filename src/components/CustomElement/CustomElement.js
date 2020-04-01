@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import Tooltip from 'components/Tooltip';
 import selectors from 'selectors';
 
 import './CustomElement.scss';
@@ -13,6 +14,7 @@ const propTypes = {
   display: PropTypes.string,
   render: PropTypes.func.isRequired,
   mediaQueryClassName: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const CustomElement = ({
@@ -21,10 +23,11 @@ const CustomElement = ({
   display,
   render,
   mediaQueryClassName,
-  style = {},
+  title,
 }) => {
   const [reactComponent, setReactComponent] = useState(null);
   const wrapperRef = useRef();
+  const toolTipWrapperRef = useRef();
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
 
   useEffect(() => {
@@ -49,7 +52,7 @@ const CustomElement = ({
       const element = render();
 
       if (isDOMElement(element)) {
-        const wrapperElement = wrapperRef.current;
+        const wrapperElement = toolTipWrapperRef.current ? toolTipWrapperRef.current : wrapperRef.current;
 
         while (wrapperElement.firstChild) {
           wrapperElement.removeChild(wrapperElement.firstChild);
@@ -65,7 +68,11 @@ const CustomElement = ({
     }
   }, [isDisabled, render]);
 
-  return isDisabled ? null : (
+  if (isDisabled) {
+    return null;
+  }
+
+  const children = (
     <div
       className={classNames({
         [className]: !!className,
@@ -73,12 +80,14 @@ const CustomElement = ({
       })}
       ref={wrapperRef}
       data-element={dataElement}
-      style={{ display, ...style }}
+      style={{ display }}
 
     >
       {reactComponent}
     </div>
   );
+
+  return title ? (<Tooltip content={title} ref={toolTipWrapperRef}>{children}</Tooltip>) : children;
 };
 
 CustomElement.propTypes = propTypes;

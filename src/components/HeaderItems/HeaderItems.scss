@@ -59,4 +59,8 @@
       }
     }
   }
+
+  @include mobile {
+    overflow-x: auto;
+  }
 }

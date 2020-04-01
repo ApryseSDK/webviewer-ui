@@ -162,6 +162,8 @@ export const getIsNoteEditing = state => state.viewer.isNoteEditing;
 
 export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
+export const getUserData = state => state.viewer.userData;
+
 export const getSignatureFonts = state => state.viewer.signatureFonts;
 
 export const getSelectedTab = (state, id) => state.viewer.tab[id];
@@ -246,7 +248,11 @@ export const isSearching = state => state.search.isSearching;
 
 export const isNoResult = state => state.search.noResult;
 
+export const getSearchErrorMessage = state => state.search.errorMessage;
+
 export const isProgrammaticSearch = state => state.search.isProgrammaticSearch;
 
 export const isProgrammaticSearchFull = state =>
   state.search.isProgrammaticSearchFull;
+
+export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;

@@ -25,6 +25,7 @@
       height: 240px;
     }
 
+<<<<<<< HEAD
     .rubber-stamp {
       border-radius: 4px;
       flex-basis: 50%;
@@ -40,5 +41,14 @@
         width: 100%;
       }
     }
+=======
+.default-stamp-container {
+  .column {
+    padding: 10px;
+  }
+  .column:hover {
+    background: #f6f6f6;
+    background: var(--button-hover-color);
+>>>>>>> a89f235133ab337bc74e0e80192a84c49d846efa
   }
 }

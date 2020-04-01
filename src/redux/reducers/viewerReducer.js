@@ -222,10 +222,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, pageLabels: [...payload.pageLabels] };
     case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':
       return { ...state, selectedThumbnailPageIndexes: payload.selectedThumbnailPageIndexes };
-    case 'REMOVE_PAGE_INDEX':
-      return { ...state,
-        selectedThumbnailPageIndexes: state.selectedThumbnailPageIndexes.filter(p => p !== payload.pageIndexDeleted).map(p => (p < payload.pageIndexDeleted ? p : p - 1)),
-      };
     case 'SET_COLOR_PALETTE': {
       const { colorMapKey, colorPalette } = payload;
       return {
@@ -273,6 +269,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, leftPanelWidth: payload.width };
     case 'SET_MAX_SIGNATURES_COUNT':
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
+    case 'SET_USER_DATA':
+      return { ...state, userData: payload.userData };
     case 'SET_CUSTOM_MEASUREMENT_OVERLAY':
       return { ...state, customMeasurementOverlay: payload.customMeasurementOverlay };
     case 'SET_SIGNATURE_FONTS':
@@ -281,6 +279,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, tab: { ...state.tab, [payload.id]: payload.dataElement } };
     case 'SET_CUSTOM_ELEMENT_OVERRIDES':
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
+    case 'SET_NOTE_TRANSFORM_FUNCTION':
+      return { ...state, noteTransformFunction: payload.noteTransformFunction }
     default:
       return state;
   }

@@ -27,6 +27,7 @@ class StylePopup extends React.PureComponent {
     hideSlider: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
+    isColorPaletteDisabled: PropTypes.bool,
   };
 
   renderColorPalette = () => {
@@ -117,7 +118,7 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { currentPalette, style, colorMapKey, onStyleChange, toolName, isMobile } = this.props;
+    const { isColorPaletteDisabled, currentPalette, style, colorMapKey, onStyleChange, toolName, isMobile } = this.props;
     const { Scale, Precision, Style } = style;
 
     const className = classNames({
@@ -137,7 +138,7 @@ class StylePopup extends React.PureComponent {
 
     return (
       <div className={className} data-element="stylePopup">
-        {currentPalette && (
+        {currentPalette && !isColorPaletteDisabled && (
           <div className="color-palette-container">
             <ColorPaletteHeader
               colorPalette={currentPalette}
@@ -169,6 +170,7 @@ class StylePopup extends React.PureComponent {
 
 const mapStateToProps = (state, { colorMapKey }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
+  isColorPaletteDisabled: selectors.isElementDisabled(state, 'colorPalette')
 });
 
 const ConnectedStylePopup = connect(
