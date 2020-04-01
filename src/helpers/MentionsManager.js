@@ -100,7 +100,10 @@ class MentionsManager {
     const deletedMentions = [];
 
     annotations.forEach(annotation => {
-      const prevMentionData = this.idMentionDataMap[annotation.Id] || {};
+      const prevMentionData = this.idMentionDataMap[annotation.Id] || {
+        mentions: [],
+        contentWithoutMentions: '',
+      };
       const currMentionData = this.extractMentionData(annotation);
       const prevMentions = prevMentionData.mentions;
       const currMentions = currMentionData.mentions;
