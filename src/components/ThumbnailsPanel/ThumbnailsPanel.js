@@ -8,7 +8,6 @@ import classNames from 'classnames';
 import Thumbnail, { THUMBNAIL_SIZE } from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
 import { extractPagesToMerge, mergeExternalWebViewerDocument, mergeDocument } from 'helpers/pageManipulation';
-import fireEvent from 'helpers/fireEvent';
 
 import core from 'core';
 import selectors from 'selectors';
