@@ -13,7 +13,9 @@ import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
 
-import AutoResizeTextarea from 'components/NoteTextarea/AutoResizeTextarea/AutoResizeTextarea';
+// import AutoResizeTextarea from 'components/NoteTextarea/AutoResizeTextarea/AutoResizeTextarea';
+// import ContentArea from 'components/NoteContent/ContentArea';
+import NoteTextarea from 'components/NoteTextarea';
 import NotePopup from 'components/NotePopup';
 import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
@@ -225,13 +227,12 @@ const ContentArea = ({
   // onBlur={() => setIsEditing(false)}
   return (
     <div className="edit-content">
-      <AutoResizeTextarea
+      <NoteTextarea
         ref={el => {
           textareaRef.current = el;
         }}
         value={textAreaValue}
         onChange={onTextAreaValueChange}
-
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
       />
