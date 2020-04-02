@@ -3,6 +3,10 @@ import { isChrome, isAndroid } from 'helpers/device';
 // viewer
 export const getLeftPanelWidth = state =>
   state.viewer.panelWidths.leftPanel;
+export const getSearchPanelWidth = state =>
+  state.viewer.panelWidths.searchPanel;
+export const getNotesPanelWidth = state =>
+  state.viewer.panelWidths.notesPanel;
 
 export const isElementDisabled = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.disabled;

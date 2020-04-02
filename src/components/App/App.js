@@ -92,6 +92,9 @@ const App = ({ removeEventHandlers }) => {
       dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
       core.setToolMode(defaultTool);
       dispatch(actions.setActiveToolGroup(''));
+      dispatch(actions.setLeftPanelWidth(218));
+      dispatch(actions.setNotesPanelWidth(293));
+      dispatch(actions.setSearchPanelWidth(293));
     });
 
     desktopListener.addListener(() => {

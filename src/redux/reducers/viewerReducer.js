@@ -10,6 +10,22 @@ export default initialState => (state = initialState, action) => {
           leftPanel: payload.width,
         }
       };
+    case 'SET_SEARCH_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          searchPanel: payload.width,
+        }
+      };
+    case 'SET_NOTES_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          notesPanel: payload.width,
+        }
+      };
     case 'SET_ACTIVE_THEME':
       return {
         ...state,

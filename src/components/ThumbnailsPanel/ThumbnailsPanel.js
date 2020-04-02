@@ -504,6 +504,7 @@ const mapStateToProps = state => ({
   isThumbnailMergingEnabled: selectors.getIsThumbnailMergingEnabled(state),
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),
   isThumbnailControlDisabled: selectors.isElementDisabled(state, 'thumbnailControl'),
+  cccc: selectors.getLeftPanelWidth(state),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThumbnailsPanel);

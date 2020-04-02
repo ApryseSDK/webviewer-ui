@@ -38,7 +38,7 @@ class ToolsHeader extends React.PureComponent {
               initial={{ height: '0px' }}
               animate={{ height: 'auto' }}
               exit={{ height: '0px' }}
-              transition={{ ease: "easeOut", duration: 0.2 }}
+              transition={{ ease: "easeOut", duration: 0.25 }}
             >
               <div
                 className="Header Tools"

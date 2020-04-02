@@ -9,6 +9,14 @@ export const setLeftPanelWidth = width => ({
   type: 'SET_LEFT_PANEL_WIDTH',
   payload: { width },
 });
+export const setSearchPanelWidth = width => ({
+  type: 'SET_SEARCH_PANEL_WIDTH',
+  payload: { width },
+});
+export const setNotesPanelWidth = width => ({
+  type: 'SET_NOTES_PANEL_WIDTH',
+  payload: { width },
+});
 
 export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',
@@ -16,10 +24,6 @@ export const enableAllElements = () => ({
 });
 export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
-
-  // if (dataElement === 'menuOverlay') {
-  //   debugger;
-  // }
 
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;

@@ -22,6 +22,8 @@ export default {
     },
     panelWidths: {
       leftPanel: 218,
+      searchPanel: 293,
+      notesPanel: 293,
     },
     headers: {
       default: [

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
@@ -63,7 +63,6 @@ const LeftPanel = () => {
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
-  console.log('currentWidth', currentWidth);
   let style = {};
   if (!isMobile) {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };

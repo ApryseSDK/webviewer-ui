@@ -34,10 +34,6 @@ class SearchPanel extends React.PureComponent {
     errorMessage: PropTypes.string,
   };
 
-  state = {
-    width: minWidth,
-  };
-
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
       // if (isTabletOrMobile()) {
@@ -81,7 +77,7 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isOpen, isDisabled, t, results, noResult, isMobile, isTabletAndMobile, closeElements } = this.props;
+    const { setSearchPanelWidth, currentWidth, isOpen, isDisabled, t, results, noResult, isMobile, isTabletAndMobile, closeElements } = this.props;
 
     if (isDisabled) {
       return null;
@@ -91,7 +87,7 @@ class SearchPanel extends React.PureComponent {
 
     let style = {};
     if (!isMobile) {
-      style = { width: `${this.state.width}px`, minWidth: `${this.state.width}px` };
+      style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
     }
 
     const isVisible = !(!isOpen || isDisabled);
@@ -115,7 +111,7 @@ class SearchPanel extends React.PureComponent {
               <ResizeBar
                 minWidth={minWidth}
                 onResize={_width => {
-                  this.setState({ width: _width });
+                  setSearchPanelWidth(_width);
                 }}
                 leftDirection
               />}
@@ -173,11 +169,13 @@ const mapStateToProps = state => ({
   isSearching: selectors.isSearching(state),
   noResult: selectors.isNoResult(state),
   errorMessage: selectors.getSearchErrorMessage(state),
+  currentWidth: selectors.getSearchPanelWidth(state),
 });
 
 const mapDispatchToProps = {
   setActiveResultIndex: actions.setActiveResultIndex,
   closeElements: actions.closeElements,
+  setSearchPanelWidth: actions.setSearchPanelWidth,
 };
 
 const ConnectedSearchPanel = connect(

@@ -30,6 +30,7 @@ const NotesPanel = () => {
     isDisabled,
     pageLabels,
     customNoteFilter,
+    currentWidth,
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -37,6 +38,7 @@ const NotesPanel = () => {
       selectors.isElementDisabled(state, 'notesPanel'),
       selectors.getPageLabels(state),
       selectors.getCustomNoteFilter(state),
+      selectors.getNotesPanelWidth(state),
     ],
     shallowEqual,
   );
@@ -61,7 +63,6 @@ const NotesPanel = () => {
 
   const [notes, setNotes] = useState([]);
   const minWidth = 293;
-  const [width, setWidth] = useState(minWidth);
 
   // the object will be in a shape of { [note.Id]: true }
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
@@ -257,7 +258,7 @@ const NotesPanel = () => {
 
   let style = {};
   if (!isMobile) {
-    style = { width: `${width}px`, minWidth: `${width}px` };
+    style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
   const isVisible = !(!isOpen || isDisabled);
@@ -281,7 +282,7 @@ const NotesPanel = () => {
             <ResizeBar
               minWidth={minWidth}
               onResize={_width => {
-                setWidth(_width);
+                dispatch(actions.setNotesPanelWidth(_width));
               }}
               leftDirection
             />}
