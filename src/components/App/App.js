@@ -41,6 +41,7 @@ import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
 
 import './App.scss';
+import '../../constants/pikaday.scss';
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
