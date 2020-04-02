@@ -27,10 +27,10 @@ class StylePopup extends React.PureComponent {
     isFreeText: PropTypes.bool.isRequired,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
-    hideColorPalette: PropTypes.bool,
-    hideOpacitySlider: PropTypes.bool,
-    hideStrokeThicknessSlider: PropTypes.bool,
-    hideFontSizeSlider: PropTypes.bool,
+    isColorPaletteDisabled: PropTypes.bool,
+    isOpacitySliderDisabled: PropTypes.bool,
+    isStrokeThicknessSliderDisabled: PropTypes.bool,
+    isFontSizeSliderDisabled: PropTypes.bool,
   };
 
   renderColorPalette = () => {
@@ -50,13 +50,13 @@ class StylePopup extends React.PureComponent {
       style: { Opacity, StrokeThickness, FontSize },
       onStyleChange,
       isFreeText,
-      hideOpacitySlider,
-      hideStrokeThicknessSlider,
-      hideFontSizeSlider,
+      isOpacitySliderDisabled,
+      isStrokeThicknessSliderDisabled,
+      isFontSizeSliderDisabled,
     } = this.props;
     const lineStart = circleRadius;
     const sliderProps = [];
-    if (!hideOpacitySlider) {
+    if (!isOpacitySliderDisabled) {
       sliderProps.push(
         {
           property: 'Opacity',
@@ -69,7 +69,7 @@ class StylePopup extends React.PureComponent {
         }
       );
     }
-    if (!hideStrokeThicknessSlider) {
+    if (!isStrokeThicknessSliderDisabled) {
       sliderProps.push(
         {
           dataElement: DATA_ELEMENTS.STROKE_THICKNESS_SLIDER,
@@ -87,7 +87,7 @@ class StylePopup extends React.PureComponent {
         }
       );
     }
-    if (!hideFontSizeSlider) {
+    if (!isFontSizeSliderDisabled) {
       sliderProps.push(
         {
           dataElement: DATA_ELEMENTS.FONT_SIZE_SLIDER,
@@ -117,17 +117,17 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { hideColorPalette, currentPalette, style, colorMapKey, onStyleChange, hideOpacitySlider, hideStrokeThicknessSlider, hideFontSizeSlider } = this.props;
+    const { isColorPaletteDisabled, currentPalette, style, colorMapKey, onStyleChange, isOpacitySliderDisabled, isStrokeThicknessSliderDisabled, isFontSizeSliderDisabled } = this.props;
     const { Scale, Precision, Style } = style;
 
-    const hideAllSlider = hideOpacitySlider && hideStrokeThicknessSlider && hideFontSizeSlider;
+    const hideAllSlider = isOpacitySliderDisabled && isStrokeThicknessSliderDisabled && isFontSizeSliderDisabled;
 
     return (
       <div
         className="Popup StylePopup"
         data-element="stylePopup"
       >
-        {currentPalette && !hideColorPalette && (
+        {currentPalette && !isColorPaletteDisabled && (
           <div className="colors-container" data-element={DATA_ELEMENTS.COLOR_PALETTE}>
             <div className="inner-wrapper">
               <ColorPaletteHeader
@@ -162,10 +162,10 @@ class StylePopup extends React.PureComponent {
 
 const mapStateToProps = (state, { colorMapKey }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
-  hideColorPalette: selectors.isElementDisabled(state, DATA_ELEMENTS.COLOR_PALETTE),
-  hideOpacitySlider: selectors.isElementDisabled(state, DATA_ELEMENTS.OPACITY_SLIDER),
-  hideStrokeThicknessSlider: selectors.isElementDisabled(state, DATA_ELEMENTS.STROKE_THICKNESS_SLIDER),
-  hideFontSizeSlider: selectors.isElementDisabled(state, DATA_ELEMENTS.FONT_SIZE_SLIDER),
+  isColorPaletteDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.COLOR_PALETTE),
+  isOpacitySliderDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.OPACITY_SLIDER),
+  isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.STROKE_THICKNESS_SLIDER),
+  isFontSizeSliderDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.FONT_SIZE_SLIDER),
 });
 
 export default connect(mapStateToProps)(StylePopup);

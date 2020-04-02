@@ -66,9 +66,9 @@ class AnnotationStylePopup extends React.Component {
           style={style}
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}
-          hideOpacitySlider={hideSlider}
-          hideStrokeThicknessSlider={hideSlider}
-          hideFontSizeSlider={hideSlider}
+          isOpacitySliderDisabled={hideSlider}
+          isStrokeThicknessSliderDisabled={hideSlider}
+          isFontSizeSliderDisabled={hideSlider}
         />
       </div>
     );
