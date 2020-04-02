@@ -30,8 +30,8 @@ class MeasurementOption extends React.Component {
       to: PropTypes.array,
     }).isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    hideScaleInputContainer: PropTypes.bool,
-    hidePrecisionInputContainer: PropTypes.bool
+    isScaleInputDisabled: PropTypes.bool,
+    isPrecisionInputDisabled: PropTypes.bool
   };
 
   constructor(props) {
@@ -153,7 +153,7 @@ class MeasurementOption extends React.Component {
   };
 
   render() {
-    const { measurementUnits, t, hideScaleInputContainer, hidePrecisionInputContainer } = this.props;
+    const { measurementUnits, t, isScaleInputDisabled, isPrecisionInputDisabled } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
     const precisionOptions = [
       { value: 0.1, name: '0.1' },
@@ -162,13 +162,13 @@ class MeasurementOption extends React.Component {
       { value: 0.0001, name: '0.0001' },
     ];
 
-    if (hideScaleInputContainer && hidePrecisionInputContainer) {
+    if (isScaleInputDisabled && isPrecisionInputDisabled) {
       return null;
     }
 
     return (
       <div className="MeasurementOption">
-        { !hideScaleInputContainer &&
+        { !isScaleInputDisabled &&
         <div className="Scale" data-element={DATA_ELEMENTS.SCALE_INPUT_CONTAINER}>
           <div className="LayoutTitle">
             {t('option.measurementOption.scale')}
@@ -202,7 +202,7 @@ class MeasurementOption extends React.Component {
           </div>
         </div>
         }
-        { !hidePrecisionInputContainer &&
+        { !isPrecisionInputDisabled &&
           <div className="Precision" data-element={DATA_ELEMENTS.PRECISION_INPUT_CONTAINER}>
             <div className="LayoutTitlePrecision">
               {t('option.shared.precision')}
@@ -231,8 +231,8 @@ class MeasurementOption extends React.Component {
 
 const mapStateToProps = state => ({
   measurementUnits: selectors.getMeasurementUnits(state),
-  hideScaleInputContainer: selectors.isElementDisabled(state, DATA_ELEMENTS.SCALE_INPUT_CONTAINER),
-  hidePrecisionInputContainer: selectors.isElementDisabled(state, DATA_ELEMENTS.PRECISION_INPUT_CONTAINER),
+  isScaleInputDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.SCALE_INPUT_CONTAINER),
+  isPrecisionInputDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.PRECISION_INPUT_CONTAINER),
 });
 
 export default connect(mapStateToProps)(withTranslation()(MeasurementOption));

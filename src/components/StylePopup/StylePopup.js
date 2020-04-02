@@ -17,7 +17,8 @@ const DATA_ELEMENTS = {
   COLOR_PALETTE: 'colorPalette',
   OPACITY_SLIDER: 'opacitySlider',
   STROKE_THICKNESS_SLIDER: 'strokeThicknessSlider',
-  FONT_SIZE_SLIDER: 'fontSizeSlider'
+  FONT_SIZE_SLIDER: 'fontSizeSlider',
+  STYLE_OPTION: 'styleOption'
 };
 
 class StylePopup extends React.PureComponent {
@@ -31,6 +32,7 @@ class StylePopup extends React.PureComponent {
     isOpacitySliderDisabled: PropTypes.bool,
     isStrokeThicknessSliderDisabled: PropTypes.bool,
     isFontSizeSliderDisabled: PropTypes.bool,
+    isStyleOptionDisabled: PropTypes.bool,
   };
 
   renderColorPalette = () => {
@@ -117,7 +119,15 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { isColorPaletteDisabled, currentPalette, style, colorMapKey, onStyleChange, isOpacitySliderDisabled, isStrokeThicknessSliderDisabled, isFontSizeSliderDisabled } = this.props;
+    const { isColorPaletteDisabled,
+      currentPalette,
+      style,
+      colorMapKey,
+      onStyleChange,
+      isOpacitySliderDisabled,
+      isStrokeThicknessSliderDisabled,
+      isFontSizeSliderDisabled,
+      isStyleOptionDisabled } = this.props;
     const { Scale, Precision, Style } = style;
 
     const hideAllSlider = isOpacitySliderDisabled && isStrokeThicknessSliderDisabled && isFontSizeSliderDisabled;
@@ -157,7 +167,7 @@ class StylePopup extends React.PureComponent {
             onStyleChange={onStyleChange}
           />
         )}
-        { colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
+        { !isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
       </div>
     );
   }
@@ -169,6 +179,7 @@ const mapStateToProps = (state, { colorMapKey }) => ({
   isOpacitySliderDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.OPACITY_SLIDER),
   isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.STROKE_THICKNESS_SLIDER),
   isFontSizeSliderDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.FONT_SIZE_SLIDER),
+  isStyleOptionDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.STYLE_OPTION)
 });
 
 export default connect(mapStateToProps)(StylePopup);
