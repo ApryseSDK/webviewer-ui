@@ -7,14 +7,11 @@ import React, {
   useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
 
-// import AutoResizeTextarea from 'components/NoteTextarea/AutoResizeTextarea/AutoResizeTextarea';
-// import ContentArea from 'components/NoteContent/ContentArea';
 import NoteTextarea from 'components/NoteTextarea';
 import NotePopup from 'components/NotePopup';
 import NoteContext from 'components/Note/Context';
