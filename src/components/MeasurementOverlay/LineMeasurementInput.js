@@ -52,7 +52,7 @@ function LineMeasurementInput(props) {
 
   const forceLineRedraw = useCallback(() => {
     const annotationManager = core.getAnnotationManager();
-    annotationManager.redrawAnnotation(annotation);
+    annotationManager.drawAnnotations(annotation.PageNumber);
     annotationManager.trigger('annotationChanged', [[annotation], 'modify', {}]);
   }, [annotation]);
 
