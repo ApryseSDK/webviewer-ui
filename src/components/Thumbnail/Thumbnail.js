@@ -82,7 +82,7 @@ class Thumbnail extends React.PureComponent {
       changedPage => currentPage === changedPage,
     );
     const didPageMove = Object.keys(moved).some(
-      movedPage => currentPage === movedPage,
+      movedPage => currentPage === parseInt(movedPage),
     );
     const isPageRemoved = removed.indexOf(currentPage) > -1;
     const newPageCount = pageLabels.length - removed.length;
