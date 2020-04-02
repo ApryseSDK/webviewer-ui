@@ -124,7 +124,6 @@ class ToolStylePopup extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-    const hideSlider = activeToolName === 'AnnotationCreateRedaction';
 
     return (
       <div
@@ -139,9 +138,6 @@ class ToolStylePopup extends React.PureComponent {
           colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}
-          isOpacitySliderDisabled={hideSlider}
-          isStrokeThicknessSliderDisabled={hideSlider}
-          isFontSizeSliderDisabled={hideSlider}
           onStyleChange={this.handleStyleChange}
         />
       </div>

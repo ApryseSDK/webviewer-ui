@@ -34,6 +34,12 @@ export default annotation => {
   if (annotation.elementName === 'highlight' && !core.isBlendModeSupported(annotation['BlendMode'])) {
     style.Opacity = null;
   }
+  // we do not have sliders to show up for redaction annots
+  if (annotation instanceof window.Annotations.RedactionAnnotation) {
+    style.Opacity = null;
+    style.StrokeThickness = null;
+    style.FontSize = null;
+  }
 
   return style;
 };
