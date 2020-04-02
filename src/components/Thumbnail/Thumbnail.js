@@ -76,14 +76,13 @@ class Thumbnail extends React.PureComponent {
     const { index, pageLabels } = this.props;
 
     const currentPage = index + 1;
-    const currentPageStr = `${currentPage}`;
 
     const isPageAdded = added.indexOf(currentPage) > -1;
     const didPageChange = contentChanged.some(
-      changedPage => currentPageStr === changedPage,
+      changedPage => currentPage === changedPage,
     );
     const didPageMove = Object.keys(moved).some(
-      movedPage => currentPageStr === movedPage,
+      movedPage => currentPage === parseInt(movedPage),
     );
     const isPageRemoved = removed.indexOf(currentPage) > -1;
     const newPageCount = pageLabels.length - removed.length;
@@ -95,6 +94,9 @@ class Thumbnail extends React.PureComponent {
 
     if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
       this.loadThumbnailAsync();
+      if (this.props.updateAnnotations) {
+        this.props.updateAnnotations(index);
+      }
     }
   }
 
