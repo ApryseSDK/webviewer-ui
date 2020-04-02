@@ -404,6 +404,7 @@ class ThumbnailsPanel extends React.PureComponent {
                   onRemove={this.onRemove}
                   onDragStart={this.onDragStart}
                   onDragOver={this.onDragOver}
+                  onFinishLoading={this.removeFromPendingThumbs}
                   updateAnnotations={updateHandler}
                 />
                 {showPlaceHolder && !isDraggingToPreviousPage && (

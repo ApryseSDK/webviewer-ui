@@ -22,6 +22,7 @@ class Thumbnail extends React.PureComponent {
     isSelected: PropTypes.bool,
     isThumbnailMultiselectEnabled: PropTypes.bool,
     onLoad: PropTypes.func.isRequired,
+    onFinishLoading: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
     updateAnnotations: PropTypes.func,
@@ -41,24 +42,21 @@ class Thumbnail extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { onLoad, index } = this.props;
-
     this.loadThumbnailTimeout = setTimeout(() => {
       // wrap loadThumbnailAsync inside a setTimeout so that we are not calling it a lot of times when users scroll the panel frantically
       // this is a workaround for WVS where proper cancelLoadThumbnail hasn't been implemented, and too many requests to the server will add a lot of overhead to it
       this.loadThumbnailTimeout = null;
-      const id = this.loadThumbnailAsync();
-      onLoad(index, this.thumbContainer.current, id);
+      this.loadThumbnailAsync();
     }, 100);
 
     core.addEventListener('layoutChanged', this.onLayoutChangedHandler);
   }
 
   componentDidUpdate(prevProps) {
-    const { onLoad, onCancel, index } = this.props;
+    const { onCancel, index } = this.props;
 
     if (!prevProps.canLoad && this.props.canLoad) {
-      onLoad(index, this.thumbContainer.current);
+      this.loadThumbnailAsync();
     }
     if (prevProps.canLoad && !this.props.canLoad) {
       onCancel(index);
@@ -101,7 +99,7 @@ class Thumbnail extends React.PureComponent {
   }
 
   loadThumbnailAsync = () => {
-    const { index } = this.props;
+    const { index, onLoad } = this.props;
     const { thumbContainer } = this;
     const { current } = thumbContainer;
 
@@ -118,7 +116,10 @@ class Thumbnail extends React.PureComponent {
       if (this.props.updateAnnotations) {
         this.props.updateAnnotations(index);
       }
+
+      this.props.onFinishLoading(index);
     });
+    onLoad(index, this.thumbContainer.current, id);
 
     return id;
   }
