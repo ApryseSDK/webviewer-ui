@@ -42,7 +42,6 @@ class ThumbnailsPanel extends React.PureComponent {
     this.thumbs = [];
     this.listRef = React.createRef();
     this.afterMovePageNumber = null;
-    this.isDraggingGroup = false;
     this.state = {
       numberOfColumns: this.getNumberOfColumns(),
       isDocumentControlHidden: true,
@@ -85,47 +84,6 @@ class ThumbnailsPanel extends React.PureComponent {
     });
   }
 
-  onDragEnd = () => {
-    const { currentPage, selectedPageIndexes, isThumbnailReorderingEnabled } = this.props;
-    const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
-
-    if (isThumbnailReorderingEnabled && draggingOverPageIndex !== null) {
-      const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
-      const pageNumberIncreased = currentPage < targetPageNumber;
-
-      let pageNumbersToMove = [currentPage];
-      if (this.isDraggingGroup) {
-
-        pageNumbersToMove = selectedPageIndexes.map(i => i + 1);
-      }
-
-      const afterMovePageNumber = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
-
-      this.afterMovePageNumber = afterMovePageNumber;
-      core.movePages(pageNumbersToMove, targetPageNumber).then(() => {
-        const currentPageIndex = currentPage - 1;
-        const targetPageIndex = this.afterMovePageNumber - 1;
-
-        // update selected pages affected by the move, exclude the page that was moved
-        let updateSelectedPageIndexes = selectedPageIndexes.filter(pageIndex => !pageNumbersToMove.includes(pageIndex + 1));
-        if (pageNumberIncreased) {
-          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p > currentPageIndex && p <= targetPageIndex ? p - 1 : p));
-        } else {
-          updateSelectedPageIndexes = updateSelectedPageIndexes.map(p => (p < currentPageIndex && p >= targetPageIndex ? p + 1 : p));
-        }
-
-        if (selectedPageIndexes.includes(currentPageIndex)) {
-          updateSelectedPageIndexes.push(...pageNumbersToMove.map((val, index) => targetPageIndex + index));
-        }
-
-        this.afterMovePageNumber = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
-        core.movePages(pageNumbersToMove, targetPageNumber);
-      });
-
-      this.setState({ draggingOverPageIndex: null });
-    }
-  }
-
   onPageComplete = () => {
     if (this.afterMovePageNumber) {
       core.setCurrentPage(this.afterMovePageNumber);
@@ -137,9 +95,6 @@ class ThumbnailsPanel extends React.PureComponent {
     // 'preventDefault' to prevent opening pdf dropped in and 'stopPropagation' to keep parent from opening pdf
     e.preventDefault();
     e.stopPropagation();
-
-    // for Mac "metaKey" is only true during onDragOver
-    this.isDraggingGroup = e.ctrlKey || e.metaKey;
 
     const { numberOfColumns } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
@@ -164,36 +119,42 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   onDragStart = (e, index) => {
-    const { currentPage, selectedPageIndexes, isThumbnailMergingEnabled } = this.props;
-    const moveMultiplePages = (e.ctrlKey || e.metaKey);
-    const pagesToMove = moveMultiplePages ? selectedPageIndexes.map(index => index + 1) : [index + 1];
+    const { selectedPageIndexes, isThumbnailMergingEnabled, setSelectedPageThumbnails } = this.props;
+    const draggingSelectedPage = selectedPageIndexes.some(i => i === index);
+    const pagesToMove = draggingSelectedPage ? selectedPageIndexes.map(index => index + 1) : [index + 1];
 
     // need to set 'text' to empty for drag to work in FireFox and mobile
     e.dataTransfer.setData('text', '');
 
-    e.dataTransfer.dropEffect = 'move';
-    e.dataTransfer.effectAllowed = 'all';
-    e.dataTransfer.setData(dataTransferWebViewerFrameKey, window.frameElement.id);
-    e.dataTransfer.setData(dataTransferPagesCopiedKey, pagesToMove.map(i => i + i).join(','));
-    e.dataTransfer.setData(dataTransferDocumentKey, core.getDocument()?.getFilename());
-
-    if (moveMultiplePages) {
+    if (pagesToMove.length > 1) {
       // can't set to null so set to new instance of an image
       e.dataTransfer.setDragImage(new Image(), 0, 0);
     }
 
     if (isThumbnailMergingEnabled) {
+      e.dataTransfer.dropEffect = 'move';
+      e.dataTransfer.effectAllowed = 'all';
+      e.dataTransfer.setData(dataTransferWebViewerFrameKey, window.frameElement.id);
+      e.dataTransfer.setData(dataTransferPagesCopiedKey, pagesToMove.map(i => i + i).join(','));
+      e.dataTransfer.setData(dataTransferDocumentKey, core.getDocument()?.getFilename());
+      
       extractPagesToMerge(pagesToMove);
     }
 
-    if (currentPage !== (index + 1)) {
-      core.setCurrentPage(index + 1);
-    }
+    if (!draggingSelectedPage) {
+      setSelectedPageThumbnails([]);
+    }   
+
+    core.setCurrentPage(index + 1);
   }
 
   onDrop = e => {
     e.preventDefault();
-    const { isThumbnailMergingEnabled, mergeExternalWebViewerDocument, mergeDocument } = this.props;
+    const { isThumbnailMergingEnabled, mergeExternalWebViewerDocument, mergeDocument
+    , selectedPageIndexes
+    , isThumbnailReorderingEnabled
+    , currentPage
+    } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
 
     const { files } = e.dataTransfer;
@@ -201,35 +162,34 @@ class ThumbnailsPanel extends React.PureComponent {
     const externalPageWebViewerFrameId = e.dataTransfer.getData(dataTransferWebViewerFrameKey);
     const pageMoved = e.dataTransfer.getData(dataTransferPagesCopiedKey) || '';
     const externalFileName = e.dataTransfer.getData(dataTransferDocumentKey);
-
-    this.isDraggingGroup = false;
-    if (e.ctrlKey || e.metaKey) {
-      this.isDraggingGroup = true;
+    const mergingDocument = (window.frameElement.id !== externalPageWebViewerFrameId) || files.length;
+    const currentPageIndex = currentPage - 1;
+    if (isThumbnailMergingEnabled 
+      && mergingDocument) {
+      if (externalPageWebViewerFrameId
+        && window.frameElement.id !== externalPageWebViewerFrameId) {
+        mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo).then(() => {
+  
+        });
+        this.setState({ draggingOverPageIndex: null });
+      } else if (files.length) {
+        mergeDocument(files[0], insertTo).then(() => {   
+        });
+        this.setState({ draggingOverPageIndex: null });
+      }
     }
-
-    if (isThumbnailMergingEnabled
-      && externalPageWebViewerFrameId
-      && window.frameElement.id !== externalPageWebViewerFrameId) {
-      mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo).then(pagesInserted => {
-        if (pagesInserted) {
-          //TODO update webViewer.js
-          fireEvent('documentMerged', {
-            pages: pageMoved.split(',').map(v => parseInt(v)),
-            document: externalFileName
-          });
-        }
-      });
-      this.setState({ draggingOverPageIndex: null });
-    } else if (isThumbnailMergingEnabled && files.length) {
-      mergeDocument(files[0], insertTo).then(pagesInserted => {
-        if (pagesInserted) {
-          fireEvent('documentMerged', {
-            pages: [...Array(pagesInserted).keys()].map(i => i + 1),
-            document: files[0].name
-          });
-        }
-      });
-      this.setState({ draggingOverPageIndex: null });
+    else if (isThumbnailReorderingEnabled) {
+      if ( draggingOverPageIndex !== null) {
+        const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
+  
+        const draggingSelectedPage = selectedPageIndexes.some(i => i === currentPageIndex);
+        let pageNumbersToMove = draggingSelectedPage ? selectedPageIndexes.map(i => i + 1) : [currentPage];
+        const afterMovePageNumber = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
+  
+        this.afterMovePageNumber = afterMovePageNumber;
+        core.movePages(pageNumbersToMove, targetPageNumber);
+        this.setState({ draggingOverPageIndex: null });
+      }
     }
   }
 
@@ -448,7 +408,6 @@ class ThumbnailsPanel extends React.PureComponent {
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
             const thumbIndex = index * numberOfColumns + columnIndex;
-            const updateHandler = thumbs && thumbs[thumbIndex] ? thumbs[thumbIndex].updateAnnotationHandler : null;
             const showPlaceHolder = (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && draggingOverPageIndex === thumbIndex;
 
             return thumbIndex < this.props.totalPages ? (
@@ -466,7 +425,7 @@ class ThumbnailsPanel extends React.PureComponent {
                   onRemove={this.onRemove}
                   onDragStart={this.onDragStart}
                   onDragOver={this.onDragOver}
-                  updateAnnotations={updateHandler}
+                  updateAnnotations={this.updateAnnotations}
                 />
                 {showPlaceHolder && !isDraggingToPreviousPage && (
                   <hr className="thumbnailPlaceholder" />

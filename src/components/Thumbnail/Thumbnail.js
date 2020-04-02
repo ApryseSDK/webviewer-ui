@@ -78,14 +78,15 @@ class Thumbnail extends React.PureComponent {
     const { index, pageLabels } = this.props;
 
     const currentPage = index + 1;
-    const currentPageStr = `${currentPage}`;
 
     const isPageAdded = added.indexOf(currentPage) > -1;
     const didPageChange = contentChanged.some(
-      changedPage => currentPageStr === changedPage,
+      changedPage => currentPage === changedPage,
     );
+
+    // "changes.moved" is an object instead of an array (keys is previous page and value is new location)
     const didPageMove = Object.keys(moved).some(
-      movedPage => currentPageStr === movedPage,
+      movedPage => currentPage === parseInt(movedPage),
     );
     const isPageRemoved = removed.indexOf(currentPage) > -1;
     const newPageCount = pageLabels.length - removed.length;
@@ -97,6 +98,9 @@ class Thumbnail extends React.PureComponent {
 
     if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
       this.loadThumbnailAsync();
+      if (this.props.updateAnnotations) {
+        this.props.updateAnnotations(index);
+      }
     }
   }
 
@@ -126,12 +130,18 @@ class Thumbnail extends React.PureComponent {
   handleClick = e => {
     const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled } = this.props;
 
-    if (isThumbnailMultiselectEnabled && (e.ctrlKey || e.metaKey)) {
+    if (isThumbnailMultiselectEnabled) {
+      let togglingSelectedPage = e.ctrlKey || e.metaKey;
       let updatedSelectedPages = [...selectedPageIndexes];
-      if (selectedPageIndexes.indexOf(index) > -1) {
-        updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+
+      if (togglingSelectedPage) {
+        if(selectedPageIndexes.indexOf(index) > -1) {
+          updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+        } else {
+          updatedSelectedPages.push(index);
+        }        
       } else {
-        updatedSelectedPages.push(index);
+        updatedSelectedPages = [];
       }
 
       setSelectedPageThumbnails(updatedSelectedPages);
