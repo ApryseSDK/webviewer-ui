@@ -91,7 +91,7 @@ class SearchPanel extends React.PureComponent {
 
     let style = {};
     if (!isMobile) {
-      style = { width: `${this.state.width}px`, minWidth: `${minWidth}px` };
+      style = { width: `${this.state.width}px`, minWidth: `${this.state.width}px` };
     }
 
     const isVisible = !(!isOpen || isDisabled);

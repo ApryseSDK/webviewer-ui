@@ -230,7 +230,7 @@ const mapStateToProps = state => ({
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
   // using leftPanelWidth to trigger render
-  leftPanelWidth: selectors.getLeftPanelWidth(state),
+  // leftPanelWidth: selectors.getLeftPanelWidth(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
 });
 

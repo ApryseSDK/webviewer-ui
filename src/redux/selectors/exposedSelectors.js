@@ -1,6 +1,9 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
+export const getLeftPanelWidth = state =>
+  state.viewer.panelWidths.leftPanel;
+
 export const isElementDisabled = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.disabled;
 
@@ -97,8 +100,6 @@ export const getActiveToolStyles = state => state.viewer.activeToolStyles;
 export const getActiveLeftPanel = state => state.viewer.activeLeftPanel;
 
 export const getActiveToolGroup = state => state.viewer.activeToolGroup;
-
-export const getLeftPanelWidth = state => state.viewer.leftPanelWidth;
 
 export const getNotePopupId = state => state.viewer.notePopupId;
 

@@ -5,6 +5,11 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import localStorageManager from 'helpers/localStorageManager';
 
 // viewer
+export const setLeftPanelWidth = width => ({
+  type: 'SET_LEFT_PANEL_WIDTH',
+  payload: { width },
+});
+
 export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',
   payload: {},

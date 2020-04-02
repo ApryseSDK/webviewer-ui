@@ -257,7 +257,7 @@ const NotesPanel = () => {
 
   let style = {};
   if (!isMobile) {
-    style = { width: `${width}px`, minWidth: `${minWidth}px` };
+    style = { width: `${width}px`, minWidth: `${width}px` };
   }
 
   const isVisible = !(!isOpen || isDisabled);

@@ -20,6 +20,9 @@ export default {
       header: true,
       // toolsHeader: true,
     },
+    panelWidths: {
+      leftPanel: 218,
+    },
     headers: {
       default: [
         { type: 'toggleElementButton', img: 'icon-header-sidebar-line', activeImg: 'icon-header-sidebar-fill', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
@@ -124,7 +127,6 @@ export default {
     },
     maxSignaturesCount: 2,
     signatureFonts: ['GreatVibes-Regular'],
-    leftPanelWidth: 300,
     isReplyDisabledFunc: null,
     userData: [],
     customMeasurementOverlay: [],

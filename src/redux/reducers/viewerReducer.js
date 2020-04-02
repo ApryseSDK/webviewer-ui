@@ -2,6 +2,14 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_LEFT_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          leftPanel: payload.width,
+        }
+      };
     case 'SET_ACTIVE_THEME':
       return {
         ...state,

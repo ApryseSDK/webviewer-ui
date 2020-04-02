@@ -36,18 +36,19 @@ const LeftPanel = () => {
     false,
   );
 
-  const [isOpen, isDisabled, activePanel, customPanels] = useSelector(
+  const [isOpen, isDisabled, activePanel, customPanels, currentWidth] = useSelector(
     state => [
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementDisabled(state, 'leftPanel'),
       selectors.getActiveLeftPanel(state),
       selectors.getCustomPanels(state),
+      selectors.getLeftPanelWidth(state),
     ],
     shallowEqual,
   );
 
   const minWidth = 218;
-  const [width, setWidth] = useState(minWidth);
+  // const [width, setWidth] = useState(minWidth);
   const dispatch = useDispatch();
 
   const onDrop = e => {
@@ -62,9 +63,10 @@ const LeftPanel = () => {
 
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
+  console.log('currentWidth', currentWidth);
   let style = {};
   if (!isMobile) {
-    style = { width: `${width}px`, minWidth: `${minWidth}px` };
+    style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
   const isVisible = !(!isOpen || isDisabled);
@@ -134,7 +136,7 @@ const LeftPanel = () => {
             <ResizeBar
               minWidth={minWidth}
               onResize={_width => {
-                setWidth(_width);
+                dispatch(actions.setLeftPanelWidth(_width));
               }}
             />}
         </motion.div>
