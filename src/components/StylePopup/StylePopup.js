@@ -13,7 +13,7 @@ import selectors from 'selectors';
 
 import './StylePopup.scss';
 
-const DATA_ELEMENTS = {
+const DataElements = {
   COLOR_PALETTE: 'colorPalette',
   OPACITY_SLIDER: 'opacitySlider',
   STROKE_THICKNESS_SLIDER: 'strokeThicknessSlider',
@@ -67,14 +67,14 @@ class StylePopup extends React.PureComponent {
           displayValue: `${Math.round(Opacity * 100)}%`,
           getCirclePosition: lineLength => Opacity * lineLength + lineStart,
           convertRelativeCirclePositionToValue: circlePosition => circlePosition,
-          dataElement: DATA_ELEMENTS.OPACITY_SLIDER
+          dataElement: DataElements.OPACITY_SLIDER
         }
       );
     }
     if (!isStrokeThicknessSliderDisabled) {
       sliderProps.push(
         {
-          dataElement: DATA_ELEMENTS.STROKE_THICKNESS_SLIDER,
+          dataElement: DataElements.STROKE_THICKNESS_SLIDER,
           property: 'StrokeThickness',
           displayProperty: 'thickness',
           value: StrokeThickness,
@@ -92,7 +92,7 @@ class StylePopup extends React.PureComponent {
     if (!isFontSizeSliderDisabled) {
       sliderProps.push(
         {
-          dataElement: DATA_ELEMENTS.FONT_SIZE_SLIDER,
+          dataElement: DataElements.FONT_SIZE_SLIDER,
           property: 'FontSize',
           displayProperty: 'text',
           value: FontSize,
@@ -138,7 +138,7 @@ class StylePopup extends React.PureComponent {
         data-element="stylePopup"
       >
         {currentPalette && !isColorPaletteDisabled && (
-          <div className="colors-container" data-element={DATA_ELEMENTS.COLOR_PALETTE}>
+          <div className="colors-container" data-element={DataElements.COLOR_PALETTE}>
             <div className="inner-wrapper">
               <ColorPaletteHeader
                 colorPalette={currentPalette}
@@ -175,11 +175,11 @@ class StylePopup extends React.PureComponent {
 
 const mapStateToProps = (state, { colorMapKey }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
-  isColorPaletteDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.COLOR_PALETTE),
-  isOpacitySliderDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.OPACITY_SLIDER),
-  isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.STROKE_THICKNESS_SLIDER),
-  isFontSizeSliderDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.FONT_SIZE_SLIDER),
-  isStyleOptionDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.STYLE_OPTION)
+  isColorPaletteDisabled: selectors.isElementDisabled(state, DataElements.COLOR_PALETTE),
+  isOpacitySliderDisabled: selectors.isElementDisabled(state, DataElements.OPACITY_SLIDER),
+  isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DataElements.STROKE_THICKNESS_SLIDER),
+  isFontSizeSliderDisabled: selectors.isElementDisabled(state, DataElements.FONT_SIZE_SLIDER),
+  isStyleOptionDisabled: selectors.isElementDisabled(state, DataElements.STYLE_OPTION)
 });
 
 export default connect(mapStateToProps)(StylePopup);

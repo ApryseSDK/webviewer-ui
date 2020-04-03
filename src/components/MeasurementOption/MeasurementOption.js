@@ -9,7 +9,7 @@ import selectors from 'selectors';
 
 import './MeasurementOption.scss';
 
-const DATA_ELEMENTS = {
+const DataElements = {
   SCALE_INPUT_CONTAINER: 'scaleInputContainer',
   PRECISION_INPUT_CONTAINER: 'precisionInputContainer'
 };
@@ -169,7 +169,7 @@ class MeasurementOption extends React.Component {
     return (
       <div className="MeasurementOption">
         { !isScaleInputDisabled &&
-        <div className="Scale" data-element={DATA_ELEMENTS.SCALE_INPUT_CONTAINER}>
+        <div className="Scale" data-element={DataElements.SCALE_INPUT_CONTAINER}>
           <div className="LayoutTitle">
             {t('option.measurementOption.scale')}
           </div>
@@ -203,7 +203,7 @@ class MeasurementOption extends React.Component {
         </div>
         }
         { !isPrecisionInputDisabled &&
-          <div className="Precision" data-element={DATA_ELEMENTS.PRECISION_INPUT_CONTAINER}>
+          <div className="Precision" data-element={DataElements.PRECISION_INPUT_CONTAINER}>
             <div className="LayoutTitlePrecision">
               {t('option.shared.precision')}
             </div>
@@ -231,8 +231,8 @@ class MeasurementOption extends React.Component {
 
 const mapStateToProps = state => ({
   measurementUnits: selectors.getMeasurementUnits(state),
-  isScaleInputDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.SCALE_INPUT_CONTAINER),
-  isPrecisionInputDisabled: selectors.isElementDisabled(state, DATA_ELEMENTS.PRECISION_INPUT_CONTAINER),
+  isScaleInputDisabled: selectors.isElementDisabled(state, DataElements.SCALE_INPUT_CONTAINER),
+  isPrecisionInputDisabled: selectors.isElementDisabled(state, DataElements.PRECISION_INPUT_CONTAINER),
 });
 
 export default connect(mapStateToProps)(withTranslation()(MeasurementOption));
