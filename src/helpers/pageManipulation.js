@@ -11,8 +11,7 @@ export const mergeDocument = (srcToMerge, mergeToPage) => dispatch => {
   dispatch(actions.openElement('loadingModal'));
 
   return new Promise((resolve, reject) => {
-    core.mergeDocument(srcToMerge, mergeToPage)
-    .then(pageInserted => {
+    core.mergeDocument(srcToMerge, mergeToPage).then(pageInserted => {
       dispatch(actions.closeElement('loadingModal'));
       core.setCurrentPage(mergeToPage);
       resolve(pageInserted);
@@ -21,7 +20,7 @@ export const mergeDocument = (srcToMerge, mergeToPage) => dispatch => {
       dispatch(actions.closeElement('loadingModal'));
     });
   });
-}
+};
 
 export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => dispatch => {
   return new Promise((resolve, reject) => {
@@ -39,8 +38,7 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => dispatc
 
     dispatch(actions.openElement('loadingModal'));
     extractedDataPromise.then(docToMerge => {
-      dispatch(mergeDocument(docToMerge, mergeToPage))
-      .then(pageInserted => {
+      dispatch(mergeDocument(docToMerge, mergeToPage)).then(pageInserted => {
         dispatch(actions.closeElement('loadingModal'));
         resolve(pageInserted);
       });
@@ -49,4 +47,4 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => dispatc
       reject(err);
     });
   });
-}
+};
