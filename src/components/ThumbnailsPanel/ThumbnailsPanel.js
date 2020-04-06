@@ -130,7 +130,7 @@ class ThumbnailsPanel extends React.PureComponent {
 
     if (pagesToMove.length > 1) {
       // can't set to null so set to new instance of an image
-     e.dataTransfer.setDragImage(new Image(), 0, 0);
+      e.dataTransfer.setDragImage(new Image(), 0, 0);
     }
 
     if (isThumbnailMergingEnabled) {
@@ -156,7 +156,7 @@ class ThumbnailsPanel extends React.PureComponent {
       selectedPageIndexes,
       isThumbnailReorderingEnabled,
       currentPage
-      } = this.props;
+    } = this.props;
     const { draggingOverPageIndex, isDraggingToPreviousPage } = this.state;
     const { files } = e.dataTransfer;
     const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
@@ -166,11 +166,11 @@ class ThumbnailsPanel extends React.PureComponent {
 
     if (isThumbnailMergingEnabled && mergingDocument) {
       if (externalPageWebViewerFrameId
-        && window.frameElement.id !== externalPageWebViewerFrameId) {
-          mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo);
-        } else if (files.length) {
-          mergeDocument(files[0], insertTo);
-        }
+      && window.frameElement.id !== externalPageWebViewerFrameId) {
+        mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo);
+      } else if (files.length) {
+        mergeDocument(files[0], insertTo);
+      }
     } else if (isThumbnailReorderingEnabled) {
       if ( draggingOverPageIndex !== null) {
         const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;

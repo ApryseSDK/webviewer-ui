@@ -141,7 +141,7 @@ class Thumbnail extends React.PureComponent {
         }
       } else {
         updatedSelectedPages = [];
-      }  
+      }
 
       setSelectedPageThumbnails(updatedSelectedPages);
     } else if (isMobile()) {
