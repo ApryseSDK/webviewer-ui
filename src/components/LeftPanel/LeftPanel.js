@@ -47,8 +47,7 @@ const LeftPanel = () => {
     shallowEqual,
   );
 
-  const minWidth = 218;
-  // const [width, setWidth] = useState(minWidth);
+  const minWidth = 251;
   const dispatch = useDispatch();
 
   const onDrop = e => {

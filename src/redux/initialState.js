@@ -21,7 +21,7 @@ export default {
       // toolsHeader: true,
     },
     panelWidths: {
-      leftPanel: 218,
+      leftPanel: 251,
       searchPanel: 293,
       notesPanel: 293,
     },

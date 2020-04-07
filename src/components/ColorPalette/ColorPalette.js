@@ -49,7 +49,7 @@ class ColorPalette extends React.PureComponent {
       '#CDCDCD',
       '#9C9C9C',
       '#696969',
-      // '#272727',
+      '#272727',
       '#000000',
     ];
 
@@ -84,7 +84,6 @@ class ColorPalette extends React.PureComponent {
             key={i}
             className="cell-container"
             onClick={() => {
-              console.log('bg', bg);
               this.setColor(bg);
             }}
           >

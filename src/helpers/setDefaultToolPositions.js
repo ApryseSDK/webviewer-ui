@@ -27,7 +27,6 @@ const setDefaultToolPositions = store => {
     // }
   });
 
-  console.log('positions', positions);
   store.dispatch(actions.setDefaultToolPositions(positions));
 };
 
