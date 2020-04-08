@@ -187,16 +187,15 @@ class ToolsOverlay extends React.PureComponent {
         item => item.toolGroup === activeToolGroup,
       );
 
-      if (!element) {
-        return null;
+      if (element) {
+        const button = document.querySelector(`[data-element=${element.dataElement}]`);
+        const { left: buttonLeft } = button.getBoundingClientRect();
+        arrowStyle = {
+          left: buttonLeft,
+          right: 'auto',
+          top: -10,
+        };
       }
-      const button = document.querySelector(`[data-element=${element.dataElement}]`);
-      const { left: buttonLeft } = button.getBoundingClientRect();
-      arrowStyle = {
-        left: buttonLeft,
-        right: 'auto',
-        top: -10,
-      };
     }
 
     const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
@@ -241,9 +240,14 @@ class ToolsOverlay extends React.PureComponent {
     if (isTabletAndMobile) {
       list = {
         visible: {
-          width: "100%",
+          height: 'auto',
+          overflow: 'hidden',
+          transitionEnd: { overflow: 'initial' },
         },
-        hidden: false,
+        hidden: {
+          height: '0px',
+          overflow: 'hidden',
+        },
       };
 
       item = {
@@ -264,13 +268,13 @@ class ToolsOverlay extends React.PureComponent {
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            key="toolsOverlayAnim"
+            className="ToolsOverlayContainer"
             style={motionStyle}
-            initial={isTabletAndMobile ? false : "hidden"}
+            initial="hidden"
             animate="visible"
             exit="hidden"
             variants={list}
-            transition={{ duration: 0.25 }}
+            transition={{ ease: "easeOut", duration: 0.25 }}
           >
             <div
               className={classNames({

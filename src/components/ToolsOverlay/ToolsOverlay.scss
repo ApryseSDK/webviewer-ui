@@ -1,6 +1,13 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
+
+.ToolsOverlayContainer {
+  // overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
 .ToolsOverlay {
   @extend %overlay;
   box-shadow: none;
