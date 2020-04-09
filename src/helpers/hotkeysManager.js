@@ -264,7 +264,7 @@ WebViewer(...)
         e.preventDefault();
         dispatch(actions.openElement('searchOverlay'));
       },
-      [`${Keys.CTRL_EQUAL}. ${Keys.COMMAND_EQUAL}`]: e => {
+      [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
         e.preventDefault();
         zoomIn();
       },
