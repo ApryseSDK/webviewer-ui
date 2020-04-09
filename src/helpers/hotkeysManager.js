@@ -92,6 +92,7 @@ export const Keys = {
   COMMAND_0: 'command+0',
   CTRL_P: 'ctrl+p',
   COMMAND_P: 'command+p',
+  ENTER: 'enter',
   PAGE_UP: 'pageup',
   PAGE_DOWN: 'pagedown',
   UP: 'up',
@@ -286,7 +287,7 @@ WebViewer(...)
 
         print(dispatch, selectors.isEmbedPrintSupported(getState()));
       },
-      enter: () => {
+      [`${Keys.ENTER}`]: () => {
         if (document.activeElement.className.includes('Note')) {
           document.activeElement.click();
         } else if (document.activeElement.className === 'skip-to-document') {
@@ -299,17 +300,17 @@ WebViewer(...)
           }
         }
       },
-      pageup: e => {
+      [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();
 
         setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
       },
-      pagedown: e => {
+      [`${Keys.PAGE_DOWN}`]: e => {
         e.preventDefault();
 
         setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
       },
-      up: () => {
+      [`${Keys.UP}`]: () => {
         if (isFocusingElement() || core.isContinuousDisplayMode()) {
           return;
         }
@@ -324,7 +325,7 @@ WebViewer(...)
           scrollViewElement.scrollTop = scrollHeight - clientHeight;
         }
       },
-      down: () => {
+      [`${Keys.DOWN}`]: () => {
         if (isFocusingElement() || core.isContinuousDisplayMode()) {
           return;
         }
@@ -337,7 +338,7 @@ WebViewer(...)
           setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
         }
       },
-      space: {
+      [`${Keys.SPACE}`]: {
         keyup: this.createToolHotkeyHandler(e => {
           e.preventDefault();
 
@@ -353,7 +354,7 @@ WebViewer(...)
           }
         }),
       },
-      escape: e => {
+      [`${Keys.ESCAPE}`]: e => {
         e.preventDefault();
         setToolModeAndGroup(store, 'AnnotationEdit', '');
 
@@ -380,71 +381,71 @@ WebViewer(...)
           ])
         );
       },
-      p: this.createToolHotkeyHandler(() => {
+      [`${Keys.P}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'Pan');
       }),
-      a: this.createToolHotkeyHandler(() => {
+      [`${Keys.A}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateArrow');
       }),
-      c: this.createToolHotkeyHandler(() => {
+      [`${Keys.C}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateCallout');
       }),
-      e: this.createToolHotkeyHandler(() => {
+      [`${Keys.E}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationEraserTool');
       }),
-      f: this.createToolHotkeyHandler(() => {
+      [`${Keys.F}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateFreeHand');
       }),
-      i: this.createToolHotkeyHandler(() => {
+      [`${Keys.I}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateStamp');
       }),
-      l: this.createToolHotkeyHandler(() => {
+      [`${Keys.L}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateLine');
       }),
-      n: this.createToolHotkeyHandler(() => {
+      [`${Keys.N}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateSticky');
       }),
-      o: this.createToolHotkeyHandler(() => {
+      [`${Keys.O}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateEllipse');
       }),
-      r: this.createToolHotkeyHandler(() => {
+      [`${Keys.R}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateRectangle');
       }),
-      q: this.createToolHotkeyHandler(() => {
+      [`${Keys.Q}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateRubberStamp');
       }),
-      t: this.createToolHotkeyHandler(() => {
+      [`${Keys.T}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateFreeText');
       }),
-      s: this.createToolHotkeyHandler(() => {
+      [`${Keys.S}`]: this.createToolHotkeyHandler(() => {
         const sigToolButton = document.querySelector(
           '[data-element="signatureToolButton"] .Button'
         );
 
         sigToolButton?.click();
       }),
-      g: this.createToolHotkeyHandler(() => {
+      [`${Keys.G}`]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Annotations.TextSquigglyAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextSquiggly');
         }
       }),
-      h: this.createToolHotkeyHandler(() => {
+      [`${Keys.H}`]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Annotations.TextHighlightAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextHighlight');
         }
       }),
-      k: this.createToolHotkeyHandler(() => {
+      [`${Keys.K}`]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Annotations.TextStrikeoutAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextStrikeout');
         }
       }),
-      u: this.createToolHotkeyHandler(() => {
+      [`${Keys.U}`]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Annotations.TextUnderlineAnnotation);
         } else {
