@@ -1,5 +1,6 @@
 import * as eventListeners from 'src/event-listeners';
 import hotkeysManager from 'helpers/hotkeysManager';
+import { setIsFreeTextEditorFocused } from 'helpers/isFocusingElement';
 import core from 'core';
 
 export default store => {

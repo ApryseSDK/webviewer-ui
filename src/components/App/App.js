@@ -22,6 +22,7 @@ import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
 import ContextMenuPopup from 'components/ContextMenuPopup';
 import ToolStylePopup from 'components/ToolStylePopup';
+import RichTextPopup from 'components/RichTextPopup';
 import SignatureModal from 'components/SignatureModal';
 import PrintModal from 'components/PrintModal';
 import LoadingModal from 'components/LoadingModal';
@@ -41,7 +42,8 @@ import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
 
 import './App.scss';
-import '../../constants/pikaday.scss';
+import 'constants/pikaday.scss';
+import 'constants/quill.scss';
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
@@ -86,6 +88,7 @@ const App = ({ removeEventHandlers }) => {
         <TextPopup />
         <ContextMenuPopup />
         <ToolStylePopup />
+        <RichTextPopup />
 
         <SignatureModal />
         <PrintModal />

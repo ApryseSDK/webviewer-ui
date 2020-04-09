@@ -1,0 +1,30 @@
+@import '../../constants/styles.scss';
+@import '../../constants/popup';
+
+.RichTextPopup {
+  @extend %popup;
+  padding: 0;
+  overflow: hidden;
+  flex-direction: column;
+
+  .rich-text-format {
+    display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ColorPalette {
+    width: 256px;
+    padding: 10px;
+    background-color: #fafafa;
+    margin-top: 0px;
+
+    .cell {
+      @include mobile {
+        width: 30px;
+        height: 26px;
+      }
+    }
+  }
+}

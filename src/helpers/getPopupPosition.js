@@ -157,7 +157,7 @@ const calcTextPopupPosition = (selectedTextPosition, popupDimension) => {
   return { left, top };
 };
 
-const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
+export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
   const { scrollLeft } = core.getScrollViewElement();
   const center = (topLeft.x + bottomRight.x) / 2 - scrollLeft;
   let left = center - width / 2;
@@ -176,7 +176,7 @@ const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
  * @param {number} approximateHeight The max height of the popup element.
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
-const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHeight) => {
+export const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHeight) => {
   const scrollContainer = core.getScrollViewElement();
   const boundingBox = scrollContainer.getBoundingClientRect();
   const visibleRegion = {
@@ -185,6 +185,7 @@ const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHeight) =
     top: boundingBox.top + scrollContainer.scrollTop,
     bottom: boundingBox.top + scrollContainer.scrollTop + boundingBox.height,
   };
+
   // gap between the annotation selection box and the popup element
   const gap = 13;
   const annotTop = topLeft.y - gap;

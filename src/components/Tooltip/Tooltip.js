@@ -113,8 +113,9 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
   const translatedContent = t(content);
   // If shortcut.xxx exists in translation-en.json file
   // method t will return the shortcut, otherwise it will return shortcut.xxx
-  const hasShortcut = t(`shortcut.${content.split('.')[1]}`).indexOf('.') === -1;
-  let shortcut = t(`shortcut.${content.split('.')[1]}`);
+  const shortcutKey = content.slice(content.indexOf('.') + 1);
+  const hasShortcut = t(`shortcut.${shortcutKey}`).indexOf('.') === -1;
+  let shortcut = t(`shortcut.${shortcutKey}`);
   if (isMac) {
     shortcut = shortcut.replace('Ctrl', 'Cmd');
   }
