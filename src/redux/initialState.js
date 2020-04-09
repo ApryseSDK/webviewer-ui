@@ -18,7 +18,7 @@ export default {
     disabledElements: {},
     openElements: {
       header: true,
-      // toolsHeader: true,
+      toolsHeader: true,
     },
     panelWidths: {
       leftPanel: 251,
