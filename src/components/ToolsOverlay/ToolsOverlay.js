@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import ToolButton from 'components/ToolButton';
 import ToolStylePopup from 'components/ToolStylePopup';
+import SignatureRowContent from 'components/SignatureStylePopup/SignatureRowContent';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
@@ -105,28 +106,6 @@ class ToolsOverlay extends React.PureComponent {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  // setArrowStyle = () => {
-  //   const { activeToolGroup, activeHeaderItems, isTabletAndMobile } = this.props;
-  //   if (isTabletAndMobile) {
-  //     const element = activeHeaderItems.find(
-  //       item => item.toolGroup === activeToolGroup,
-  //     );
-
-  //     if (!element) {
-  //       return null;
-  //     }
-  //     const button = document.querySelector(`[data-element=${element.dataElement}]`);
-  //     const { left: buttonLeft } = button.getBoundingClientRect();
-  //     const arrowStyle = {
-  //       left: buttonLeft,
-  //       right: 'auto',
-  //       top: -10,
-  //     };
-
-  //     this.setState({ arrowStyle });
-  //   }
-  // }
-
   handleWindowResize = () => {
     this.setOverlayPosition();
     this.forceUpdate();
@@ -167,9 +146,6 @@ class ToolsOverlay extends React.PureComponent {
       activeToolName,
     } = this.props;
 
-    // const toolNames = Object.keys(toolButtonObjects).filter(
-    //   toolName => toolButtonObjects[toolName].group === activeToolGroup,
-    // );
     const className = getClassName('Overlay ToolsOverlay', { isOpen });
 
     // let style = { left, right, top };
@@ -266,63 +242,26 @@ class ToolsOverlay extends React.PureComponent {
 
     let Component = (
       <React.Fragment>
-        <div className="tool-buttons-container" ref={this.itemsContainer}>
-          {toolNames.map((toolName, i) => (
-            <motion.div
-              key={`${toolName}-${i}`}
-              initial={false}
-              animate="visible"
-              exit="hidden"
-              variants={item}
-            >
-              <ToolButton
-                toolName={toolName}
-              />
-            </motion.div>
-          ))}
-          {activeToolGroup !== 'miscTools' &&
-            <motion.div
-              initial={false}
-              animate={{
-                'marginLeft': "2px",
-                'marginRight': "4px",
-              }}
-              exit={{
-                'marginLeft': "2px",
-                'marginRight': "4px",
-              }}
-            >
-              <div
-                className={classNames({
-                  "styling-arrow-container": true,
-                  active: isToolStyleOpen,
-                })}
-                data-element="styling-button"
-                onClick={() => this.props.toggleElement('toolStylePopup')}
-              >
-                <Icon glyph="icon-menu-style-line" />
-                {isToolStyleOpen ?
-                  <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-                  <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-              </div>
-            </motion.div>}
-        </div>
-        {(isToolStyleOpen) && (
-          <Swipeable
-            onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-            onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-            preventDefaultTouchmoveEvent
+        {toolNames.map((toolName, i) => (
+          <motion.div
+            key={`${toolName}-${i}`}
+            initial={false}
+            animate="visible"
+            exit="hidden"
+            variants={item}
           >
-            <ToolStylePopup
-              handleCloseClick={() => this.props.closeElements(['toolStylePopup'])}
+            <ToolButton
+              toolName={toolName}
             />
-          </Swipeable>
-        )}
+          </motion.div>
+        ))}
       </React.Fragment>
     );
 
     if (activeToolName === 'AnnotationCreateSignature') {
-      Component = <SignatureOverlay/>;
+      Component = (
+        <SignatureRowContent/>
+      );
     }
 
     return (
@@ -356,7 +295,44 @@ class ToolsOverlay extends React.PureComponent {
                   "tools-container": true,
                 })}
               >
-                {Component}
+                <div className="tool-buttons-container" ref={this.itemsContainer}>
+                  {Component}
+                  {activeToolGroup !== 'miscTools' &&
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        'marginLeft': "2px",
+                        'marginRight': "4px",
+                      }}
+                      exit={{
+                        'marginLeft': "2px",
+                        'marginRight': "4px",
+                      }}
+                    >
+                      <div
+                        className={classNames({
+                          "styling-arrow-container": true,
+                          active: isToolStyleOpen,
+                        })}
+                        data-element="styling-button"
+                        onClick={() => this.props.toggleElement('toolStylePopup')}
+                      >
+                        <Icon glyph="icon-menu-style-line" />
+                        {isToolStyleOpen ?
+                          <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
+                          <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
+                      </div>
+                    </motion.div>}
+                </div>
+                {(isToolStyleOpen) && (
+                  <Swipeable
+                    onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+                    onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+                    preventDefaultTouchmoveEvent
+                  >
+                    {<ToolStylePopup/>}
+                  </Swipeable>
+                )}
               </div>
             </div>
           </motion.div>

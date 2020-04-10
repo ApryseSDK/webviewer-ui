@@ -68,7 +68,7 @@ const SignatureModal = () => {
   const closeModal = () => {
     signatureTool.clearLocation();
     dispatch(actions.closeElement('signatureModal'));
-    core.setToolMode(defaultTool);
+    // core.setToolMode(defaultTool);
   };
 
   const createSignature = () => {

@@ -1,6 +1,8 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
+export const getSavedSignatures = state => [0,1,2,3];
+
 export const getLeftPanelWidth = state =>
   state.viewer.panelWidths.leftPanel;
 export const getSearchPanelWidth = state =>

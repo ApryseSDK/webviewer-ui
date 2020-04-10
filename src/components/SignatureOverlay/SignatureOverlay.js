@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
 import Icon from 'components/Icon';
+import classNames from 'classnames';
 import core from 'core';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import actions from 'actions';
@@ -214,7 +215,7 @@ class SignatureOverlay extends React.PureComponent {
 
   render() {
     const { defaultSignatures } = this.state;
-    const { t, isDisabled, maxSignaturesCount } = this.props;
+    const { t, maxSignaturesCount } = this.props;
 
     return (
       <React.Fragment>
@@ -235,28 +236,23 @@ class SignatureOverlay extends React.PureComponent {
             </div>
           </div>
         ))}
-        {defaultSignatures.length < maxSignaturesCount &&
+        <div
+          className="row"
+          onClick={this.openSignatureModal}
+        >
           <div
-            className={`row${
-              defaultSignatures.length >= maxSignaturesCount
-                ? ' disabled'
-                : ' enabled'
-            }`}
-            onClick={this.openSignatureModal}
+            className="content"
           >
             <div
-              className={`content${
-                defaultSignatures.length < maxSignaturesCount
-                  ? ' disabled'
-                  : ' enabled'
-              }`}
+              className={classNames({
+                'add-btn': true,
+                disabled: defaultSignatures.length >= maxSignaturesCount
+              })}
             >
               {t('option.signatureOverlay.addSignature')}
             </div>
-            <div className="icon">
-              <Icon glyph="icon-menu-add" />
-            </div>
-          </div>}
+          </div>
+        </div>
       </React.Fragment>
     );
   }

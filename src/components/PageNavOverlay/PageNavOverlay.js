@@ -133,7 +133,8 @@ class PageNavOverlay extends React.PureComponent {
             window.docViewer.setCurrentPage(
               Math.min(
                 window.docViewer.getCurrentPage() + 1,
-                window.docViewer.getPageCount(),
+                // window.docViewer.getPageCount(),
+                9,
               ),
             )
           }

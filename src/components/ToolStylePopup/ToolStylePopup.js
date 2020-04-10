@@ -6,6 +6,7 @@ import classNames from 'classnames';
 
 import core from 'core';
 import StylePopup from 'components/StylePopup';
+import SignatureStylePopup from 'components/SignatureStylePopup';
 import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
@@ -55,14 +56,7 @@ class ToolStylePopup extends React.PureComponent {
         'zoomOverlay',
         'redactionOverlay',
       ]);
-      // this.positionToolStylePopup();
     }
-
-    // const selectedAnotherTool =
-    //   prevProps.activeToolName !== this.props.activeToolName;
-    // if (selectedAnotherTool && !this.props.isDisabled) {
-    //   this.positionToolStylePopup();
-    // }
   }
 
   componentWillUnmount() {
@@ -81,8 +75,6 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   handleClickOutside = e => {
-    // e.preventDefault();
-    // e.stopPropagation();
     const { activeToolName } = this.props;
     const toolsOverlay = document.querySelector(
       '[data-element="toolsOverlay"]',
@@ -131,7 +123,7 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   render() {
-    const { swapableToolNames, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop, isOpen, handleCloseClick } = this.props;
+    const { swapableToolNames, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop } = this.props;
     const { left, top } = this.state;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     const colorMapKey = mapToolNameToKey(activeToolName);
@@ -148,21 +140,8 @@ class ToolStylePopup extends React.PureComponent {
 
     const { availablePalettes } = getDataWithKey(colorMapKey);
 
-    return (
-      <div
-        className={classNames({
-          ToolStylePopup: true,
-        })}
-        data-element="toolStylePopup"
-        ref={this.popup}
-        style={style}
-      >
-        {isMobile && <div className="swipe-indicator" />}
-        {isDesktop && (swapableToolNames.length > 0 || availablePalettes.length === 1)
-          &&
-          (<div className="divider-container">
-            <div className="divider-horizontal" />
-          </div>)}
+    let Component = (
+      <React.Fragment>
         <div
           className="swap-tools-container"
         >
@@ -182,6 +161,31 @@ class ToolStylePopup extends React.PureComponent {
           hideSlider={hideSlider}
           onStyleChange={this.handleStyleChange}
         />
+      </React.Fragment>
+    );
+
+    if (activeToolName === 'AnnotationCreateSignature') {
+      Component = (
+        <SignatureStylePopup/>
+      );
+    }
+
+    return (
+      <div
+        className={classNames({
+          ToolStylePopup: true,
+        })}
+        data-element="toolStylePopup"
+        ref={this.popup}
+        style={style}
+      >
+        {isMobile && <div className="swipe-indicator" />}
+        {isDesktop && (swapableToolNames.length > 0 || availablePalettes.length === 1)
+          &&
+          (<div className="divider-container">
+            <div className="divider-horizontal" />
+          </div>)}
+        {Component}
       </div>
     );
   }

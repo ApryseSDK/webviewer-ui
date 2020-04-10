@@ -1,0 +1,17 @@
+@import '../../constants/styles';
+
+.content {
+  width: 158px;
+  height: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  img {
+    max-width: 100%;
+    max-height: 22px;
+  }
+}
+
