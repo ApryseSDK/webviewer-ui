@@ -22,7 +22,7 @@ const SignatureStylePopup = props => {
       {savedSignatures.map((_, i) =>
         <div
           key={i}
-          className="row"
+          className="signature-row"
         >
           <SignatureRowContent/>
           <div
@@ -35,20 +35,15 @@ const SignatureStylePopup = props => {
         </div>
       )}
       <div
-        className="row"
-        onClick={() => {}}
+        className="signature-row"
       >
         <div
-          className="signature-row-content"
+          className={classNames({
+            'add-btn': true,
+            disabled: savedSignatures.length >= 4
+          })}
         >
-          <div
-            className={classNames({
-              'add-btn': true,
-              disabled: savedSignatures.length >= 4
-            })}
-          >
-            {t('option.signatureOverlay.addSignature')}
-          </div>
+          {t('option.signatureOverlay.addSignature')}
         </div>
       </div>
     </div>

@@ -1,0 +1,10 @@
+@import '../../constants/styles';
+
+.selected-signature-row {
+  display: flex;
+  flex-direction: row;
+  width: 214px;
+  justify-content: space-between;
+  padding-left: 4px;
+  padding-right: 4px;
+}
