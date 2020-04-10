@@ -1,8 +1,10 @@
 @import '../../constants/styles';
 
-.content {
-  width: 158px;
+.signature-row-content {
+  width: 160px;
   height: 26px;
+  background: green;
+  border-radius: 4px;
 
   display: flex;
   align-items: center;

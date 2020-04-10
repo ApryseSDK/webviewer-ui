@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import ToolButton from 'components/ToolButton';
 import ToolStylePopup from 'components/ToolStylePopup';
-import SignatureRowContent from 'components/SignatureStylePopup/SignatureRowContent';
+import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
@@ -19,7 +19,6 @@ import classNames from 'classnames';
 
 import { motion, AnimatePresence } from "framer-motion";
 
-import SignatureOverlay from 'components/SignatureOverlay';
 
 import './ToolsOverlay.scss';
 
@@ -255,12 +254,38 @@ class ToolsOverlay extends React.PureComponent {
             />
           </motion.div>
         ))}
+        {activeToolGroup !== 'miscTools' &&
+          <motion.div
+            initial={false}
+            animate={{
+              'marginLeft': "2px",
+              'marginRight': "4px",
+            }}
+            exit={{
+              'marginLeft': "2px",
+              'marginRight': "4px",
+            }}
+          >
+            <div
+              className={classNames({
+                "styling-arrow-container": true,
+                active: isToolStyleOpen,
+              })}
+              data-element="styling-button"
+              onClick={() => this.props.toggleElement('toolStylePopup')}
+            >
+              <Icon glyph="icon-menu-style-line" />
+              {isToolStyleOpen ?
+                <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
+                <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
+            </div>
+          </motion.div>}
       </React.Fragment>
     );
 
     if (activeToolName === 'AnnotationCreateSignature') {
       Component = (
-        <SignatureRowContent/>
+        <SelectedSignatureRow/>
       );
     }
 
@@ -297,32 +322,6 @@ class ToolsOverlay extends React.PureComponent {
               >
                 <div className="tool-buttons-container" ref={this.itemsContainer}>
                   {Component}
-                  {activeToolGroup !== 'miscTools' &&
-                    <motion.div
-                      initial={false}
-                      animate={{
-                        'marginLeft': "2px",
-                        'marginRight': "4px",
-                      }}
-                      exit={{
-                        'marginLeft': "2px",
-                        'marginRight': "4px",
-                      }}
-                    >
-                      <div
-                        className={classNames({
-                          "styling-arrow-container": true,
-                          active: isToolStyleOpen,
-                        })}
-                        data-element="styling-button"
-                        onClick={() => this.props.toggleElement('toolStylePopup')}
-                      >
-                        <Icon glyph="icon-menu-style-line" />
-                        {isToolStyleOpen ?
-                          <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-                          <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-                      </div>
-                    </motion.div>}
                 </div>
                 {(isToolStyleOpen) && (
                   <Swipeable

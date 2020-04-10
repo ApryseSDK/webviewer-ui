@@ -4,7 +4,7 @@ import './SignatureRowContent.scss';
 const SignatureRowContent = props => {
   return (
     <div
-      className="content"
+      className="signature-row-content"
     >
       hello
     </div>

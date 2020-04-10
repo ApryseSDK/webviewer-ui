@@ -2,50 +2,34 @@
 @import '../../constants/overlay';
 
 .signature-style-popup {
-  width: 214px;
-  padding: 0 8px;
+  width: 100%;
+  padding: 0 4px;
 
   .row {
-    background: green;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin: 6px 0;
     height: 26px;
-
     cursor: pointer;
 
-    .content {
-      height: 26px;
-      width: 158px;
+    .add-btn {
+      border-radius: 4px;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      width: 100%;
+      height: 100%;
 
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
 
-      img {
-        max-width: 100%;
-        max-height: 22px;
-      }
-
-      .add-btn {
-        border-radius: 4px;
-        border: 1px solid var(--text-color);
-        color: var(--text-color);
-        width: 100%;
-        height: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &.disabled {
-          border: 1px solid var(--disabled-text);
-          color: var(--disabled-text);
-        }
+      &.disabled {
+        border: 1px solid var(--disabled-text);
+        color: var(--disabled-text);
       }
     }
+
 
     .icon {
       display: flex;

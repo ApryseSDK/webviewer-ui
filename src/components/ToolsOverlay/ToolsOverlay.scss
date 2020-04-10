@@ -19,8 +19,8 @@
   border-radius: 0px;
   background: transparent;
   position: relative;
-  background: var(--preset-background);
-  border-radius: 4px;
+  // background: var(--preset-background);
+  border-radius: 4px 4px 0 0;
   width: 100%;
 
   @include tablet-and-mobile {
@@ -31,7 +31,7 @@
     box-shadow: 0 0 5px 0 var(--box-shadow);
 
     .ToolStylePopup {
-      box-shadow: 0 -5px 0 var(--preset-background), 0 0 5px 0 var(--box-shadow);
+      box-shadow: 0 -20px 0 var(--preset-background), 0 0 5px 0 var(--box-shadow);
     }
   }
 

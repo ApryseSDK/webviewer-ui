@@ -39,7 +39,7 @@ const SignatureStylePopup = props => {
         onClick={() => {}}
       >
         <div
-          className="content"
+          className="signature-row-content"
         >
           <div
             className={classNames({
