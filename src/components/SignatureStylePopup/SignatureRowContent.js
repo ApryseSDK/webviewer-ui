@@ -1,10 +1,15 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import './SignatureRowContent.scss';
 
-const SignatureRowContent = props => {
+const SignatureRowContent = ({ onClick }) => {
   return (
     <div
-      className="signature-row-content"
+      className={classNames({
+        "signature-row-content": true,
+        "interactable": onClick,
+      })}
     >
       hello
     </div>

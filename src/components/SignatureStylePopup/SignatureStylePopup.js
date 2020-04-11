@@ -24,7 +24,9 @@ const SignatureStylePopup = props => {
           key={i}
           className="signature-row"
         >
-          <SignatureRowContent/>
+          <SignatureRowContent
+            onClick={() => {}}
+          />
           <div
             className="icon"
             dataElement="defaultSignatureDeleteButton"

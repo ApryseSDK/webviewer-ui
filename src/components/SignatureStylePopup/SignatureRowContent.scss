@@ -15,11 +15,13 @@
     max-height: 22px;
   }
 
-  &:hover {
-    background: var(--tools-overlay-button-hover);
-  }
-  &.active {
-    background: var(--tools-overlay-button-active);
+  &.interactable {
+    &:hover {
+      background: var(--tools-overlay-button-hover);
+    }
+    &.active {
+      background: var(--tools-overlay-button-active);
+    }
   }
 }
 
