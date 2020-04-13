@@ -248,6 +248,7 @@ export default {
     serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
     useSharedWorker: getHashParams('useSharedWorker', false),
     disableI18n: getHashParams('disableI18n', false),
+    i18nResources: null,
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null
   },

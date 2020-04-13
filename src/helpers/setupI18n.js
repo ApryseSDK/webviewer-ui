@@ -7,34 +7,42 @@ export default state => {
     fallbackLng: 'en',
     react: {
       useSuspense: false,
-      wait: true,
-    },
+      wait: true
+    }
   };
   const callback = (err, t) => {
     window.Annotations.Utilities.setAnnotationSubjectHandler(type =>
-      t(`annotation.${type}`),
+      t(`annotation.${type}`)
     );
 
     window.Tools.SignatureCreateTool.setTextHandler(() =>
-      t('message.signHere'),
+      t('message.signHere')
     );
 
     window.Tools.FreeTextCreateTool.setTextHandler(() =>
-      t('message.insertTextHere'),
+      t('message.insertTextHere')
     );
   };
 
   if (state.advanced.disableI18n) {
     i18next.init(options, callback);
+  } else if (state.advanced.i18nResources) {
+    i18next.use(XHR).init(
+      {
+        ...options,
+        resources: state.advanced.i18nResources
+      },
+      callback
+    );
   } else {
     i18next.use(XHR).init(
       {
         ...options,
         backend: {
-          loadPath: './i18n/{{ns}}-{{lng}}.json',
-        },
+          loadPath: './i18n/{{ns}}-{{lng}}.json'
+        }
       },
-      callback,
+      callback
     );
   }
 };
