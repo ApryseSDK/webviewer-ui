@@ -1,3 +1,4 @@
+@import '../../constants/styles.scss';
 @import '../../constants/popup';
 
 .ToolStylePopup {
@@ -7,4 +8,9 @@
 
   position: absolute;
   z-index: 85;
+
+  @media (orientation: landscape) {
+    max-height: calc(100% - #{$top-bar-height-m});
+    overflow: auto;
+  }
 }
