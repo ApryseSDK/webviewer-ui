@@ -3,12 +3,17 @@
 
 .signature-style-popup {
   width: 100%;
-  padding: 0 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+
+  @include mobile {
+    width: auto;
+  }
 
   .signature-row {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    // justify-content: space-between;
     margin: 6px 0;
     height: 26px;
 
