@@ -1,15 +1,19 @@
 /**
- * Sets the theme of Webviewer UI. Please note that this does not work in IE11.
+ * @typedef {Object} WebViewerInstance.ThemeObject
+ * @property {string} [primary=#FFFFFF] Background color for the header, modals, overlays, etc.
+ * @property {string} [secondary=#F5F5F5] Background color for panels and the document container.
+ * @property {string} [border=#CDCDCD] Border color for different components.
+ * @property {string} [buttonHover=#F6F6F6] Background color for hovering on a button.
+ * @property {string} [buttonActive=#F0F0F0] Background color for an active button.
+ * @property {string} [text=#333333] Text color.
+ * @property {string} [icon=#757575] Icon color.
+ * @property {string} [iconActive=#757575] Icon color when button is active.
+ */
+
+/**
+ * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
  * @method WebViewerInstance#setTheme
- * @param {(string|object)} theme Either theme object or predefined string. Predefined strings are 'default' and 'dark'.
- * @param {string} [theme.primary=#FFFFFF] Background color for the header, modals, overlays, etc.
- * @param {string} [theme.secondary=#F5F5F5] ackground color for panels and the document container.
- * @param {string} [theme.border=#CDCDCD] Border color for different components.
- * @param {string} [theme.buttonHover=#F6F6F6] Background color for hovering on a button.
- * @param {string} [theme.buttonActive=#F0F0F0] Background color for an active button.
- * @param {string} [theme.text=#333333] Text color.
- * @param {string} [theme.icon=#757575] Icon color.
- * @param {string} [theme.iconActive=#757575] Icon color when button is active.
+ * @param {string|WebViewerInstance.ThemeObject} theme Either theme object or predefined string. Predefined strings are 'default' and 'dark'.
  * @example
 // Using an object
 WebViewer(...)
