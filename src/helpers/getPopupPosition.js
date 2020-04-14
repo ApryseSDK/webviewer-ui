@@ -1,13 +1,19 @@
 import core from 'core';
 
 export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
-  const { left, top } = calcAnnotationPopupPosition(getAnnotationPosition(annotation), getPopupDimensions(popup));
+  const { left, top } = calcAnnotationPopupPosition(
+    getAnnotationPosition(annotation),
+    getPopupDimensions(popup)
+  );
 
   return { left, top };
 };
 
 export const getTextPopupPositionBasedOn = (allQuads, popup) => {
-  const { left, top } = calcTextPopupPosition(getSelectedTextPosition(allQuads), getPopupDimensions(popup));
+  const { left, top } = calcTextPopupPosition(
+    getSelectedTextPosition(allQuads),
+    getPopupDimensions(popup)
+  );
 
   return { left, top };
 };
@@ -58,7 +64,11 @@ const getAnnotationPageCoordinates = annotation => {
 
 const getSelectedTextPosition = allQuads => {
   const { startPageIndex, endPageIndex } = getSelectedTextPageIndex(allQuads);
-  const { left, right, top, bottom } = getSelectedTextPageCoordinates(allQuads, startPageIndex, endPageIndex);
+  const { left, right, top, bottom } = getSelectedTextPageCoordinates(
+    allQuads,
+    startPageIndex,
+    endPageIndex
+  );
 
   let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, startPageIndex);
   let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, endPageIndex);
@@ -132,16 +142,16 @@ const getPopupDimensions = popup => {
 };
 
 const calcAnnotationPopupPosition = (annotationPosition, popupDimension) => {
-  const topThreshold = 300;
-  const top = calcPopupTop(annotationPosition, popupDimension, topThreshold);
+  const approximateHeight = 350;
+  const top = calcPopupTop(annotationPosition, popupDimension, approximateHeight);
   const left = calcPopupLeft(annotationPosition, popupDimension);
 
   return { left, top };
 };
 
 const calcTextPopupPosition = (selectedTextPosition, popupDimension) => {
-  const topThreshold = 150;
-  const top = calcPopupTop(selectedTextPosition, popupDimension, topThreshold);
+  const approximateHeight = 50;
+  const top = calcPopupTop(selectedTextPosition, popupDimension, approximateHeight);
   const left = calcPopupLeft(selectedTextPosition, popupDimension);
 
   return { left, top };
@@ -161,22 +171,42 @@ const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
   return Math.round(left);
 };
 
-const calcPopupTop = ({ topLeft, bottomRight }, { height }, topThreshold) => {
-  const { scrollTop, clientHeight } = core.getScrollViewElement();
-  const topGap = 10;
-  const stylePopupHeight = 252;
-  const bottomGap = 17;
-  const bottomThreshold = topThreshold - 60;
-  let top = topLeft.y - scrollTop - topGap;
-  const bottom = bottomRight.y;
-  const annotationHeight = bottomRight.y - top;
+/**
+ * @ignore
+ * @param {number} approximateHeight The max height of the popup element.
+ * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
+ */
+const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHeight) => {
+  const scrollContainer = core.getScrollViewElement();
+  const boundingBox = scrollContainer.getBoundingClientRect();
+  const visibleRegion = {
+    left: boundingBox.x + scrollContainer.scrollLeft,
+    right: boundingBox.x + scrollContainer.scrollLeft + boundingBox.width,
+    top: boundingBox.y + scrollContainer.scrollTop,
+    bottom: boundingBox.y + scrollContainer.scrollTop + boundingBox.height,
+  };
+  // gap between the annotation selection box and the popup element
+  const gap = 13;
+  const annotTop = topLeft.y - gap;
+  const annotBottom = bottomRight.y + gap;
 
-  if (top >= topThreshold) {
-    top -= height;
-  } else if (bottom - scrollTop > clientHeight - bottomThreshold) {
-    top += (annotationHeight - stylePopupHeight) / 2;
+  let top;
+  // in the current design the height of the annotation popup changes when the style edit button is clicked
+  // however we don't know the height of it when an annotation is selected
+  // if we instead use `height` then we might see the case where the style picker shows on the other side of the annotation
+  if (annotBottom + approximateHeight < visibleRegion.bottom) {
+    top = annotBottom;
+  } else if (annotTop - approximateHeight > visibleRegion.top) {
+    top = annotTop - height;
+  } else if (annotBottom + height < visibleRegion.bottom) {
+    // either side doesn't have enough space for the approximate height, we try to use the actual height of the popup element
+    top = annotBottom;
+  } else if (annotTop - height > visibleRegion.top) {
+    top = annotTop - height;
   } else {
-    top = bottomRight.y - scrollTop + bottomGap;
+    // there's no room for it in the vertical axis, so just choose the top of the visible region
+    top = visibleRegion.top + 5;
   }
-  return Math.round(top);
+
+  return Math.round(top - scrollContainer.scrollTop);
 };

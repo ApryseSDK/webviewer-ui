@@ -46,6 +46,13 @@ $popup-icon-width: 18px;
   }
 }
 
+%popup-landscape {
+  @media (orientation: landscape) {
+    max-height: calc(100% - #{$top-bar-height} - 5px);
+    overflow: auto;
+  }
+}
+
 %popup-mobile {
   @include mobile {
     position: fixed;
