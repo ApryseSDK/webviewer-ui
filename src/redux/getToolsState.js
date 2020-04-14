@@ -18,6 +18,11 @@ const getTools = () => {
     { type: 'toolGroupButton', toolGroup: 'stickyTools', dataElement: 'stickyToolGroupButton', title: 'component.stickyToolsButton' },
     { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolButton', title: 'component.miscToolsButton' },
     { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'icon-tools-more', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
+    // {
+    //   type: 'customElement',
+    //   render: () => <SignatureToolButton />,
+    //   // dataElement: 'signatureToolButton',
+    // },
     {
       type: 'customElement',
       render: () => {

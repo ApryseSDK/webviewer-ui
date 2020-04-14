@@ -46,14 +46,22 @@
     border-radius: 4px;
     cursor: pointer;
 
-    &:hover {
-      background: var(--tools-overlay-button-hover);
-    }
-    &.active {
-      background: var(--tools-overlay-button-active);
+    &:not(.disabled) {
+      &:hover {
+        background: var(--tools-overlay-button-hover);
+      }
+      &.active {
+        background: var(--tools-overlay-button-active);
 
+        .Icon {
+          color: var(--selected-icon-color);
+        }
+      }
+    }
+
+    &.disabled {
       .Icon {
-        color: var(--selected-icon-color);
+        color: var(--disabled-text);
       }
     }
 

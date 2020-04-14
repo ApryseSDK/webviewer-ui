@@ -76,14 +76,17 @@ class ToolStylePopup extends React.PureComponent {
 
   handleClickOutside = e => {
     const { activeToolName } = this.props;
-    const toolsOverlay = document.querySelector(
-      '[data-element="toolsOverlay"]',
+    const documentContainer = document.querySelector(
+      '[data-element="documentContainer"]',
     );
+    // const toolsOverlay = document.querySelector(
+    //   '[data-element="toolsOverlay"]',
+    // );
     // const header = document.querySelector('[data-element="header"]');
-    const clickedToolsOverlay = toolsOverlay?.contains(e.target);
+    const clickedDocumentContainer= documentContainer?.contains(e.target);
     // const clickedHeader = header?.contains(e.target);
 
-    if (!clickedToolsOverlay) {
+    if (clickedDocumentContainer) {
       this.close();
       if (activeToolName === 'AnnotationCreateRubberStamp') {
         core.setToolMode(defaultTool);

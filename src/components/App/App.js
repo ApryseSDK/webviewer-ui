@@ -131,7 +131,7 @@ const App = ({ removeEventHandlers }) => {
         <TextPopup />
         <ContextMenuPopup />
 
-        {isSignatureModalOpen && !isSignatureModalDisabled && <SignatureModal />}
+        <SignatureModal />
         <PrintModal />
         <LoadingModal />
         <ErrorModal />

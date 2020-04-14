@@ -22,7 +22,6 @@ const propTypes = {
 
 const InkSignature = ({
   isModalOpen,
-  _setSaveSignature,
   isTabPanelSelected,
   createSignature,
 }) => {
@@ -71,24 +70,21 @@ const InkSignature = ({
       const signatureTool = core.getTool('AnnotationCreateSignature');
       signatureTool.setSignature(freeHandPathsRef.current);
       setCanClear(!!freeHandPathsRef.current);
-      // _setSaveSignature(!!freeHandPathsRef.current);
     }
-  }, [isTabPanelSelected, _setSaveSignature]);
+  }, [isTabPanelSelected]);
 
   const clearCanvas = useCallback(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
     signatureTool.clearSignatureCanvas();
     setCanClear(false);
-    // _setSaveSignature(false);
     freeHandPathsRef.current = null;
-  }, [_setSaveSignature]);
+  }, []);
 
   const handleFinishDrawing = () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
     if (!signatureTool.isEmptySignature()) {
       setCanClear(true);
-      _setSaveSignature(true);
 
       // need to deep copy the paths because it will be modified
       // when the annotation is added to the document

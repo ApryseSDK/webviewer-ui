@@ -3,15 +3,21 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
+
+import ActionButton from 'components/ActionButton';
 import Icon from 'components/Icon';
-import classNames from 'classnames';
+
 import core from 'core';
+import defaultTool from 'constants/defaultTool';
+import getClassName from 'helpers/getClassName';
+import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 import selectors from 'selectors';
 
 import './SignatureOverlay.scss';
+import '../ToolsOverlay/ToolsOverlay.scss';
 
 class SignatureOverlay extends React.PureComponent {
   static propTypes = {
@@ -90,8 +96,30 @@ class SignatureOverlay extends React.PureComponent {
     if (!clickedToggleSignatureButton) {
       this.props.closeElement('signatureOverlay');
       // core.setToolMode(defaultTool);
-
     }
+  };
+
+  handleWindowResize = () => {
+    this.setOverlayPosition();
+    this.forceUpdate();
+  };
+
+  setOverlayPosition = () => {
+    // const signatureToolButton = document.querySelector(
+    //   '[data-element="signatureToolButton"]',
+    // );
+
+    // if (!signatureToolButton && this.overlay.current) {
+    //   // the button has been disabled using instance.disableElements
+    //   // but this component can still be opened by clicking on a signature widget
+    //   // in this case we just place it in the center
+    //   const { width } = this.overlay.current.getBoundingClientRect();
+    //   this.setState({ left: (window.innerWidth - width) / 2, right: 'auto' });
+    // } else {
+    this.setState(
+      getOverlayPositionBasedOn('signatureToolButton', this.overlay),
+    );
+    // }
   };
 
   onSignatureSaved = async annotations => {
@@ -116,7 +144,7 @@ class SignatureOverlay extends React.PureComponent {
     });
   };
 
-  onSignatureDeleted = async () => {
+  onSignatureDeleted = async() => {
     let savedSignatures = this.signatureTool.getSavedSignatures();
 
     // the saved signatures will have a different style than what we've saved in this component
@@ -214,46 +242,93 @@ class SignatureOverlay extends React.PureComponent {
   };
 
   render() {
-    const { defaultSignatures } = this.state;
-    const { t, maxSignaturesCount } = this.props;
+    const { left, right, top, defaultSignatures } = this.state;
+    const { t, isDisabled, maxSignaturesCount, isOpen, isMobile, isTabletAndMobile } = this.props;
+
+
+    console.log('state.defaultSignatures', this.state.defaultSignatures);
+
+    const className = getClassName('Overlay ToolsOverlay SignatureOverlay', { isOpen });
+
+    if (isDisabled) {
+      return null;
+    }
+
+    let style = { left, right, top };
+    let arrowStyle = {};
+    if (isTabletAndMobile) {
+      style = {
+        // left: 0,
+        // top: 52,
+      };
+
+      const signatureToolButton = document.querySelector(
+        '[data-element="signatureToolButton"]',
+      );
+      if (signatureToolButton) {
+        const { left: buttonLeft } = signatureToolButton.getBoundingClientRect();
+        arrowStyle = {
+          left: buttonLeft,
+          right: 'auto',
+          top: -10,
+        };
+      }
+    }
 
     return (
-      <React.Fragment>
-        {defaultSignatures.map(({ imgSrc }, index) => (
-          <div className="row" key={index}>
-            <div
-              className="content"
-              onClick={() => this.setSignature(index)}
-            >
-              <img src={imgSrc} />
-            </div>
-            <div
-              className="icon"
-              dataElement="defaultSignatureDeleteButton"
-              onClick={() => this.deleteDefaultSignature(index)}
-            >
-              <Icon glyph="icon-delete-line"/>
-            </div>
-          </div>
-        ))}
+      <div
+        className={className}
+        ref={this.overlay}
+        style={style}
+      >
         <div
-          className="row"
-          onClick={this.openSignatureModal}
+          className="arrow-up"
+          style={arrowStyle}
+        />
+        <div
+          className="tools-container"
         >
-          <div
-            className="content"
-          >
-            <div
-              className={classNames({
-                'add-btn': true,
-                disabled: defaultSignatures.length >= maxSignaturesCount
-              })}
-            >
-              {t('option.signatureOverlay.addSignature')}
+          {defaultSignatures.map(({ imgSrc }, index) => (
+            <div className="row" key={index}>
+              <div
+                className="content"
+                onClick={() => this.setSignature(index)}
+              >
+                <img src={imgSrc} />
+              </div>
+              <div
+                className="icon"
+                dataElement="defaultSignatureDeleteButton"
+                onClick={() => this.deleteDefaultSignature(index)}
+              >
+                <Icon glyph="icon-delete-line"/>
+              </div>
             </div>
-          </div>
+          ))}
+          {defaultSignatures.length < maxSignaturesCount &&
+            <div
+              className={`row${
+                defaultSignatures.length >= maxSignaturesCount
+                  ? ' disabled'
+                  : ' enabled'
+              }`}
+              onClick={this.openSignatureModal}
+            >
+              <div
+                className={`content${
+                  defaultSignatures.length < maxSignaturesCount
+                    ? ' disabled'
+                    : ' enabled'
+                }`}
+              >
+                {t('option.signatureOverlay.addSignature')}
+              </div>
+              <div className="icon">
+                <Icon glyph="icon-menu-add" />
+              </div>
+            </div>}
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

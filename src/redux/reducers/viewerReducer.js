@@ -2,6 +2,16 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_SELECTED_SIGNATURE_INDEX':
+      return {
+        ...state,
+        selectedSignatureIndex: payload.index,
+      };
+    case 'SET_SAVED_SIGNATURES':
+      return {
+        ...state,
+        savedSignatures: payload.savedSignatures,
+      };
     case 'SET_LEFT_PANEL_WIDTH':
       return {
         ...state,
@@ -14,6 +24,7 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         panelWidths: {
+
           ...state.panelWidths,
           searchPanel: payload.width,
         }

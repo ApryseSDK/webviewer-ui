@@ -133,6 +133,8 @@ export default {
     userData: [],
     customMeasurementOverlay: [],
     noteTransformFunction: null,
+    savedSignatures: [],
+    selectedSignatureIndex: 0,
   },
   search: {
     listeners: [],

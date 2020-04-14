@@ -15,7 +15,6 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './AnnotationPopup.scss';
-import focusNote from '../../apis/focusNote';
 
 const AnnotationPopup = () => {
   const [

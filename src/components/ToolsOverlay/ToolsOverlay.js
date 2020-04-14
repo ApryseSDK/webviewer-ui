@@ -329,7 +329,7 @@ class ToolsOverlay extends React.PureComponent {
                     onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
                     preventDefaultTouchmoveEvent
                   >
-                    {<ToolStylePopup/>}
+                    <ToolStylePopup/>
                   </Swipeable>
                 )}
               </div>
@@ -345,7 +345,6 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'toolsOverlay'),
   isOpen: selectors.isElementOpen(state, 'toolsOverlay'),
   isToolStyleOpen: selectors.isElementOpen(state, 'toolStylePopup'),
-  // toolButtonObjects: selectors.getToolButtonObjects(state),
   toolNames: selectors.getActiveToolNamesForActiveToolGroup(state),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),

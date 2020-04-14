@@ -3,15 +3,17 @@ import classNames from 'classnames';
 
 import './SignatureRowContent.scss';
 
-const SignatureRowContent = ({ onClick }) => {
+const SignatureRowContent = ({ onClick, imgSrc, isActive }) => {
   return (
     <div
       className={classNames({
         "signature-row-content": true,
         "interactable": onClick,
+        "active": isActive,
       })}
+      onClick={onClick}
     >
-      hello
+      <img src={imgSrc} />
     </div>
   );
 };

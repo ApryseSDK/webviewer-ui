@@ -20,7 +20,6 @@ const FONT_SIZE = 72;
 
 const TextSignature = ({
   isModalOpen,
-  _setSaveSignature,
   isTabPanelSelected,
   createSignature,
 }) => {
@@ -43,14 +42,13 @@ const TextSignature = ({
   const setSignature = useCallback(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
     const canvas = canvasRef.current;
-    _setSaveSignature(!!value);
 
     if (value) {
       signatureTool.setSignature(canvas.toDataURL());
     } else {
       signatureTool.setSignature(null);
     }
-  }, [_setSaveSignature, value]);
+  }, [value]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

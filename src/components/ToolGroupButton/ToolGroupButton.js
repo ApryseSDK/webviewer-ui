@@ -73,7 +73,7 @@ class ToolGroupButton extends React.PureComponent {
     }
   }
 
-  onClick = () => {
+  onClick = e => {
     const {
       setActiveToolGroup,
       isActive,
@@ -83,24 +83,32 @@ class ToolGroupButton extends React.PureComponent {
       toolGroup,
       isToolsOverlayOpen,
       isTabletAndMobile,
+      selectedSignatureIndex,
+      savedSignatures,
     } = this.props;
     const { toolName } = this.state;
 
-    if (isActive && !isToolsOverlayOpen) {
-      openElement('toolsOverlay');
-    } else if (isActive) {
+    if (isActive) {
       core.setToolMode(defaultTool);
       setActiveToolGroup('');
       closeElement('toolsOverlay');
     } else {
       closeElement('toolStylePopup');
-      if (toolGroup !== 'miscTools') {
-        core.setToolMode(toolName);
-      } else {
+      if (toolGroup === 'miscTools') {
         core.setToolMode(defaultTool);
+      } else {
+        core.setToolMode(toolName);
       }
       setActiveToolGroup(toolGroup);
-      openElement('toolsOverlay');
+      if (toolGroup === 'signatureTools') {
+        if (savedSignatures.length === 0) {
+          openElement('signatureModal');
+        } else {
+          openElement('toolsOverlay');
+        }
+      } else {
+        openElement('toolsOverlay');
+      }
     }
   };
 
@@ -148,6 +156,8 @@ class ToolGroupButton extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  selectedSignatureIndex: selectors.getSelectedSignatureIndex(state),
+  savedSignatures: selectors.getSavedSignatures(state),
   isToolsOverlayOpen: selectors.isElementOpen(state, 'toolsOverlay'),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),

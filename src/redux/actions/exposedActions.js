@@ -5,6 +5,14 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import localStorageManager from 'helpers/localStorageManager';
 
 // viewer
+export const setSelectedSignatureIndex = index => ({
+  type: 'SET_SELECTED_SIGNATURE_INDEX',
+  payload: { index },
+});
+export const setSavedSignatures = savedSignatures => ({
+  type: 'SET_SAVED_SIGNATURES',
+  payload: { savedSignatures },
+});
 export const setLeftPanelWidth = width => ({
   type: 'SET_LEFT_PANEL_WIDTH',
   payload: { width },

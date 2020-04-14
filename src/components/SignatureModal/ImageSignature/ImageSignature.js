@@ -16,7 +16,6 @@ const acceptedFileTypes = ['png', 'jpg', 'jpeg'];
 
 const ImageSignature = ({
   isModalOpen,
-  _setSaveSignature,
   isTabPanelSelected,
   createSignature,
 }) => {
@@ -30,10 +29,9 @@ const ImageSignature = ({
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
     if (isModalOpen && isTabPanelSelected) {
-      // _setSaveSignature(!!imageSrc);
       signatureTool.setSignature(imageSrc);
     }
-  }, [imageSrc, isTabPanelSelected, _setSaveSignature, isModalOpen]);
+  }, [imageSrc, isTabPanelSelected, isModalOpen]);
 
   const handleFileChange = e => {
     readFile(e.target.files[0]);
