@@ -5,12 +5,8 @@
   @extend %open;
   @extend %closed;
   @extend %popup-mobile;
+  @extend %popup-landscape;
 
   position: absolute;
   z-index: 85;
-
-  @media (orientation: landscape) {
-    max-height: calc(100% - #{$top-bar-height-m});
-    overflow: auto;
-  }
 }
