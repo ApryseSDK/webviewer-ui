@@ -100,6 +100,7 @@ function LineMeasurementInput(props) {
   const onAngleChange = event => {
     setAngle(event.target.value);
     setLineAngle(event);
+    finishAnnotation();
   };
 
   const computeAngle = useCallback(() => {
@@ -133,7 +134,7 @@ function LineMeasurementInput(props) {
           onBlur={event => validateLineLength(event)}
           onKeyDown={event => {
             if (event.key === 'Enter') {
-              validateLineLength(event);
+              onInputChanged(event);
             }
           }}
         /> {unit}
@@ -146,6 +147,11 @@ function LineMeasurementInput(props) {
           max="360"
           value={angle}
           onChange={event => onAngleChange(event)}
+          onKeyDown={event => {
+            if (event.key === 'Enter') {
+              onAngleChange(event);
+            }
+          }}
         /> &deg;
       </div>
     </div>
