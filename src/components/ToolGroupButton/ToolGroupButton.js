@@ -89,9 +89,10 @@ class ToolGroupButton extends React.PureComponent {
     const { toolName } = this.state;
 
     if (isActive) {
+      closeElement('toolStylePopup');
+      closeElement('toolsOverlay');
       core.setToolMode(defaultTool);
       setActiveToolGroup('');
-      closeElement('toolsOverlay');
     } else {
       closeElement('toolStylePopup');
       if (toolGroup === 'miscTools') {
@@ -100,13 +101,16 @@ class ToolGroupButton extends React.PureComponent {
         core.setToolMode(toolName);
       }
       setActiveToolGroup(toolGroup);
-      if (toolGroup === 'signatureTools') {
+      if (toolGroup === 'signatureTools' && false) {
         if (savedSignatures.length === 0) {
           openElement('signatureModal');
         } else {
           openElement('toolsOverlay');
         }
       } else {
+        if (toolGroup === 'signatureTools' && savedSignatures.length === 0) {
+          openElement('signatureModal');
+        }
         openElement('toolsOverlay');
       }
     }

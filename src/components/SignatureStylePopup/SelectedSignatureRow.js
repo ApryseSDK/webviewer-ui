@@ -40,6 +40,7 @@ const SelectedSignatureRow = () => {
       {selectedSignature ?
         <SignatureRowContent
           imgSrc={selectedSignature.imgSrc}
+          isActive
         /> :
         <SignatureAddBtn/>
       }

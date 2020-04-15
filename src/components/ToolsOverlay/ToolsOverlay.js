@@ -283,7 +283,7 @@ class ToolsOverlay extends React.PureComponent {
       </React.Fragment>
     );
 
-    if (activeToolName === 'AnnotationCreateSignature') {
+    if (activeToolGroup === 'signatureTools') {
       Component = (
         <SelectedSignatureRow/>
       );

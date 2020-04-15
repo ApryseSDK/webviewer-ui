@@ -126,7 +126,7 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   render() {
-    const { swapableToolNames, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop } = this.props;
+    const { activeToolGroup, swapableToolNames, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop } = this.props;
     const { left, top } = this.state;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     const colorMapKey = mapToolNameToKey(activeToolName);
@@ -167,7 +167,7 @@ class ToolStylePopup extends React.PureComponent {
       </React.Fragment>
     );
 
-    if (activeToolName === 'AnnotationCreateSignature') {
+    if (activeToolGroup === 'signatureTools') {
       Component = (
         <SignatureStylePopup/>
       );
@@ -200,6 +200,7 @@ const mapStateToProps = state => {
 
   return {
     activeToolName,
+    activeToolGroup: selectors.getActiveToolGroup(state),
     toolButtonDataElement,
     activeToolStyle: selectors.getActiveToolStyles(state),
     isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),

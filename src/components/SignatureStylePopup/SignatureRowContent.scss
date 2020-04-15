@@ -24,5 +24,9 @@
       background: var(--tools-overlay-button-active);
     }
   }
+
+  &.active {
+    background: var(--tools-overlay-button-active);
+  }
 }
 
