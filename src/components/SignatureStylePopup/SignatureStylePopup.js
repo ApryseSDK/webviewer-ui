@@ -8,13 +8,15 @@ import SignatureRowContent from './SignatureRowContent';
 import SignatureAddBtn from './SignatureAddBtn';
 import core from 'core';
 import actions from 'actions';
+import defaultTool from 'constants/defaultTool';
 
 import './SignatureStylePopup.scss';
 
 const SignatureStylePopup = props => {
   const { t } = props;
-  const [savedSignatures, selectedSignatureIndex] = useSelector(
+  const [activeToolName, savedSignatures, selectedSignatureIndex] = useSelector(
     state => [
+      selectors.getActiveToolName(state),
       selectors.getSavedSignatures(state),
       selectors.getSelectedSignatureIndex(state),
     ],
@@ -23,9 +25,12 @@ const SignatureStylePopup = props => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
   const dispatch = useDispatch();
 
-  const setSignatureIndex = index => {
+  const setSignature = index => {
     dispatch(actions.setSelectedSignatureIndex(index));
-    // const { annotation } = savedSignatures[index];
+    const { annotation } = savedSignatures[index];
+    signatureTool.setSignature(annotation);
+    core.setToolMode('AnnotationCreateSignature');
+    signatureTool.showPreview();
     // core.setToolMode('AnnotationCreateSignature');
     // signatureTool.setSignature(annotation);
 
@@ -40,15 +45,18 @@ const SignatureStylePopup = props => {
     signatureTool.deleteSavedSignature(index);
 
     const isDeletingSelectedSignature = selectedSignatureIndex === index;
+    // debugger;
     if (isDeletingSelectedSignature) {
-      if (savedSignatures.length > 1) {
-        setSignatureIndex(0);
-      } else {
+      dispatch(actions.setSelectedSignatureIndex(0));
+      if (savedSignatures.length === 1) {
         signatureTool.annot = null;
         signatureTool.hidePreview();
-        dispatch(actions.setSelectedSignatureIndex(0));
         dispatch(actions.closeElements(['toolStylePopup']));
+        core.setToolMode(defaultTool);
+        // dispatch(actions.setActiveToolGroup(''));
       }
+    } else if (index < selectedSignatureIndex) {
+      dispatch(actions.setSelectedSignatureIndex(selectedSignatureIndex - 1));
     }
   };
 
@@ -62,9 +70,9 @@ const SignatureStylePopup = props => {
           className="signature-row"
         >
           <SignatureRowContent
-            onClick={() => setSignatureIndex(i)}
+            onClick={() => setSignature(i)}
             imgSrc={imgSrc}
-            isActive={selectedSignatureIndex === i}
+            isActive={selectedSignatureIndex === i && activeToolName === 'AnnotationCreateSignature'}
           />
           <div
             className="icon"

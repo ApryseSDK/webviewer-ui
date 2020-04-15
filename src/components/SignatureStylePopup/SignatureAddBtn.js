@@ -10,7 +10,7 @@ const SignatureAddBtn = ({ t, disabled }) => {
   const dispatch = useDispatch();
 
   const openSignatureModal = () => {
-    dispatch(actions.openElement('signatureModal'));
+    !disabled && dispatch(actions.openElement('signatureModal'));
   };
 
   return (

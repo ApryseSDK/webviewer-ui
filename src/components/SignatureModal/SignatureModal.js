@@ -18,10 +18,11 @@ import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
-  const [isDisabled, isOpen, activeToolName] = useSelector(state => [
+  const [isDisabled, isOpen, activeToolName, savedSignatures2] = useSelector(state => [
     selectors.isElementDisabled(state, 'signatureModal'),
     selectors.isElementOpen(state, 'signatureModal'),
     selectors.getActiveToolName(state),
+    selectors.getSavedSignatures(state),
   ]);
 
   const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -74,11 +75,17 @@ const SignatureModal = () => {
   const createSignature = () => {
     if (!signatureTool.isEmptySignature()) {
       signatureTool.saveSignatures(signatureTool.annot);
-      if (signatureTool.hasLocation()) {
-        signatureTool.addSignature();
-      } else {
-        signatureTool.showPreview();
-      }
+
+      dispatch(actions.setSelectedSignatureIndex(savedSignatures2.length));
+      signatureTool.setSignature(signatureTool.annot);
+      core.setToolMode('AnnotationCreateSignature');
+      signatureTool.showPreview();
+
+      // if (signatureTool.hasLocation()) {
+      //   signatureTool.addSignature();
+      // } else {
+      //   signatureTool.showPreview();
+      // }
       dispatch(actions.closeElement('signatureModal'));
     }
   };
@@ -100,6 +107,7 @@ const SignatureModal = () => {
     const signaturesToStore = await getSignatureDataToStore(annotations);
     newSavedSignatures = newSavedSignatures.concat(signaturesToStore);
 
+    // dispatch(actions.setSelectedSignatureIndex(newSavedSignatures.length - 1));
     dispatch(actions.setSavedSignatures(newSavedSignatures));
   };
 
@@ -123,7 +131,7 @@ const SignatureModal = () => {
     dispatch(actions.setSavedSignatures(newSavedSignatures));
   };
 
-  const onAnnotationChanged = async (annotations, action) => {
+  const onAnnotationChanged = async(annotations, action) => {
     const savedSignatures = selectors.getSavedSignatures(store.getState());
     if (
       action === 'modify' &&

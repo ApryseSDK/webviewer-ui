@@ -14,12 +14,14 @@
   &.disabled {
     border: 1px solid var(--disabled-text);
     color: var(--disabled-text);
+    cursor: auto;
   }
 }
 
 .signature-row {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   height: 26px;
 
 

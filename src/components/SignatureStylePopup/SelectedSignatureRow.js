@@ -11,26 +11,28 @@ import core from 'core';
 import './SelectedSignatureRow.scss';
 
 const SelectedSignatureRow = () => {
-  const [isToolStyleOpen, selectedSignature, savedSignatures] = useSelector(
+  const [activeToolName, isToolStyleOpen, selectedSignature, savedSignatures] = useSelector(
     state => [
+      selectors.getActiveToolName(state),
       selectors.isElementOpen(state, 'toolStylePopup'),
       selectors.getSelectedSignature(state),
       selectors.getSavedSignatures(state),
     ],
   );
 
-  useEffect(() => {
-    if (selectedSignature) {
-      const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.setSignature(selectedSignature.annotation);
-      core.setToolMode('AnnotationCreateSignature');
-      // if (signatureTool.hasLocation()) {
-      //   signatureTool.addSignature();
-      // } else {
-        signatureTool.showPreview();
-      // }
-    }
-  }, [selectedSignature]);
+  const signatureTool = core.getTool('AnnotationCreateSignature');
+  // useEffect(() => {
+  //   if (selectedSignature) {
+  //     signatureTool.setSignature(selectedSignature.annotation);
+  //     core.setToolMode('AnnotationCreateSignature');
+  //     signatureTool.showPreview();
+  //     // if (signatureTool.hasLocation()) {
+  //     //   signatureTool.addSignature();
+  //     // } else {
+
+  //     // }
+  //   }
+  // }, [selectedSignature, signatureTool]);
 
   const dispatch = useDispatch();
   return (
@@ -40,7 +42,12 @@ const SelectedSignatureRow = () => {
       {selectedSignature ?
         <SignatureRowContent
           imgSrc={selectedSignature.imgSrc}
-          isActive
+          onClick={() => {
+            signatureTool.setSignature(selectedSignature.annotation);
+            core.setToolMode('AnnotationCreateSignature');
+            signatureTool.showPreview();
+          }}
+          isActive={activeToolName === 'AnnotationCreateSignature'}
         /> :
         <SignatureAddBtn/>
       }

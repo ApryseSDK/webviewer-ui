@@ -6,6 +6,8 @@ export default dispatch => signatureAnnotation => {
   core.setToolMode(defaultTool);
   core.getTool('AnnotationCreateSignature').hidePreview();
   core.selectAnnotation(signatureAnnotation);
-  dispatch(actions.closeElement('toolsOverlay'));
-  dispatch(actions.setActiveToolGroup(''));
+  const signatureTool = core.getTool('AnnotationCreateSignature');
+  signatureTool.annot = null;
+  // dispatch(actions.closeElement('toolsOverlay'));
+  // dispatch(actions.setActiveToolGroup(''));
 };

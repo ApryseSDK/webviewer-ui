@@ -60,6 +60,7 @@
     }
 
     &.disabled {
+      cursor: auto;
       .Icon {
         color: var(--disabled-text);
       }
