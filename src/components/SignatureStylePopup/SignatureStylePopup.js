@@ -48,12 +48,15 @@ const SignatureStylePopup = props => {
     // debugger;
     if (isDeletingSelectedSignature) {
       dispatch(actions.setSelectedSignatureIndex(0));
+      // debugger;
+      // if (savedSignatures.length === 1) {
+      signatureTool.annot = null;
+      signatureTool.hidePreview();
+      core.setToolMode(defaultTool);
+      // dispatch(actions.setActiveToolGroup(''));
+      // }
       if (savedSignatures.length === 1) {
-        signatureTool.annot = null;
-        signatureTool.hidePreview();
         dispatch(actions.closeElements(['toolStylePopup']));
-        core.setToolMode(defaultTool);
-        // dispatch(actions.setActiveToolGroup(''));
       }
     } else if (index < selectedSignatureIndex) {
       dispatch(actions.setSelectedSignatureIndex(selectedSignatureIndex - 1));
