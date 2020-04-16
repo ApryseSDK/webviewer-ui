@@ -9,6 +9,7 @@
  * @param {string} [properties.buttonGroup] Group of the tool button belongs to.
  * @param {string} [properties.tooltip] Tooltip of the tool button.
  * @param {function} [annotationConstructor] The constructor function for the annotation that will be created by the registered tool.
+ * @param {function} [customAnnotationCheckFxn] Function that takes in a parameter of an annotation. Returns a boolean if the specified annotation is a certain type of annotation. When this is defined, annotationConstructor can be omitted. Must define it when creating a custom annotation
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -22,7 +23,7 @@ WebViewer(...)
       tooltip: 'MyTooltip'
     };
 
-    instance.registerTool(myTool, myCustomAnnotation);
+    instance.registerTool(myTool, undefined, annot => annot && annot.isCustomAnnot);
   });
  */
 
