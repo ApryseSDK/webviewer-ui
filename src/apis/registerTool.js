@@ -29,11 +29,11 @@ WebViewer(...)
 import core from 'core';
 import { register, copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
-
-export default store => (tool, annotationConstructor) => {
+// TODO may want to remove annotationConstructor in 6.4.0 as custoomANnotationCheckFxn makes it sort of redundant
+export default store => (tool, annotationConstructor, customAnnotationCheckFxn) => {
   registerToolInToolModeMap(tool);
   registerToolInRedux(store, tool);
-  register(tool, annotationConstructor);
+  register(tool, annotationConstructor, customAnnotationCheckFxn);
   updateColorMapInRedux(store);
 };
 
