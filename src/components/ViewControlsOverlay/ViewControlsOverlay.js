@@ -47,7 +47,6 @@ class ViewControlsOverlay extends React.PureComponent {
       this.props.closeElements([
         'searchOverlay',
         'menuOverlay',
-        'toolStylePopup',
         'signatureOverlay',
         'zoomOverlay',
         'redactionOverlay',

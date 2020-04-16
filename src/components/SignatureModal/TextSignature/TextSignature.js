@@ -16,7 +16,7 @@ const propTypes = {
   isTabPanelSelected: PropTypes.bool,
 };
 
-const FONT_SIZE = 72;
+const FONT_SIZE = 140;
 
 const TextSignature = ({
   isModalOpen,
@@ -123,9 +123,6 @@ const TextSignature = ({
         {fonts.map((font, index) => (
           <div
             key={font}
-            ref={el => {
-              textDivsRef.current[index] = el;
-            }}
             className={classNames({
               'text-signature-text': true,
               active: index === activeIndex,
@@ -133,7 +130,12 @@ const TextSignature = ({
             style={{ fontFamily: font, fontSize: FONT_SIZE }}
             onClick={() => setActiveIndex(index)}
           >
-            <div className="text-container">
+            <div
+              className="text-container"
+              ref={el => {
+                textDivsRef.current[index] = el;
+              }}
+            >
               {value}
             </div>
           </div>

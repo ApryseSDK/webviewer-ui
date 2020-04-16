@@ -14,6 +14,11 @@ import core from 'core';
 
 import './InkSignature.scss';
 
+const useForceUpdate = () => {
+  const [, setIt] = useState(false);
+  return () => setIt(it => !it);
+};
+
 const propTypes = {
   isModalOpen: PropTypes.bool,
   _setSaveSignature: PropTypes.func,
@@ -30,6 +35,8 @@ const InkSignature = ({
   const [canClear, setCanClear] = useState(false);
   const [t] = useTranslation();
   const [dimension, setDimension] = useState({});
+
+  const forceUpdate = useForceUpdate();
 
   const [
     activeToolName,
@@ -107,13 +114,16 @@ const InkSignature = ({
     return pathsCopy;
   };
 
+  const signatureTool = core.getTool('AnnotationCreateSignature');
+  const toolStyles = signatureTool.defaults;
+
   return (
     <React.Fragment>
       <div
         className="color-palette-container"
       >
         <ColorPalette
-          color={activeToolStyles['StrokeColor']}
+          color={toolStyles['StrokeColor']}
           property="StrokeColor"
           onStyleChange={(property, value) => {
             setToolStyles('AnnotationCreateSignature', property, value);
@@ -122,6 +132,8 @@ const InkSignature = ({
               signatureTool.annot.StrokeColor = value;
               signatureTool.resizeCanvas();
             }
+            // hack for tool styles for signature not being on state
+            forceUpdate();
           }}
           overridePalette2={['#E44234', '#4E7DE9', '#000000']}
         />

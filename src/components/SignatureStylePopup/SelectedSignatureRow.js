@@ -53,14 +53,13 @@ const SelectedSignatureRow = () => {
       }
       <div
         className={classNames({
-          "styling-arrow-container": true,
+          "signatures-arrow-container": true,
           active: isToolStyleOpen,
           disabled: savedSignatures.length === 0,
         })}
         data-element="styling-button"
         onClick={() => savedSignatures.length > 0 && dispatch(actions.toggleElement('toolStylePopup'))}
       >
-        <Icon glyph="icon-menu-style-line" />
         {isToolStyleOpen ?
           <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
           <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}

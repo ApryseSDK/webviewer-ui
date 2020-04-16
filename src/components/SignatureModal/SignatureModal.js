@@ -159,7 +159,10 @@ const SignatureModal = () => {
     // since it's been added to the canvas
     annotations = annotations.map(core.getAnnotationCopy);
     const previews = await Promise.all(
-      annotations.map(annotation => signatureTool.getPreview(annotation)),
+      annotations.map(annotation => {
+        annotation['StrokeThickness'] = 6;
+        return signatureTool.getPreview(annotation);
+      }),
     );
 
     return annotations.map((annotation, i) => ({
