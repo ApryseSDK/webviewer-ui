@@ -16,7 +16,7 @@ const propTypes = {
   isTabPanelSelected: PropTypes.bool,
 };
 
-const FONT_SIZE = 140;
+const FONT_SIZE = 96;
 
 const TextSignature = ({
   isModalOpen,

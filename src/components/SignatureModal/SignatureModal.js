@@ -81,11 +81,11 @@ const SignatureModal = () => {
       core.setToolMode('AnnotationCreateSignature');
       signatureTool.showPreview();
 
-      // if (signatureTool.hasLocation()) {
-      //   signatureTool.addSignature();
-      // } else {
-      //   signatureTool.showPreview();
-      // }
+      if (signatureTool.hasLocation()) {
+        signatureTool.addSignature();
+      } else {
+        signatureTool.showPreview();
+      }
       dispatch(actions.closeElement('signatureModal'));
     }
   };

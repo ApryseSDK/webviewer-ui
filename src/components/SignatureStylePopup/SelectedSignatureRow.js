@@ -21,19 +21,6 @@ const SelectedSignatureRow = () => {
   );
 
   const signatureTool = core.getTool('AnnotationCreateSignature');
-  // useEffect(() => {
-  //   if (selectedSignature) {
-  //     signatureTool.setSignature(selectedSignature.annotation);
-  //     core.setToolMode('AnnotationCreateSignature');
-  //     signatureTool.showPreview();
-  //     // if (signatureTool.hasLocation()) {
-  //     //   signatureTool.addSignature();
-  //     // } else {
-
-  //     // }
-  //   }
-  // }, [selectedSignature, signatureTool]);
-
   const dispatch = useDispatch();
   return (
     <div
@@ -45,7 +32,11 @@ const SelectedSignatureRow = () => {
           onClick={() => {
             signatureTool.setSignature(selectedSignature.annotation);
             core.setToolMode('AnnotationCreateSignature');
-            signatureTool.showPreview();
+            if (signatureTool.hasLocation()) {
+              signatureTool.addSignature();
+            } else {
+              signatureTool.showPreview();
+            }
           }}
           isActive={activeToolName === 'AnnotationCreateSignature'}
         /> :

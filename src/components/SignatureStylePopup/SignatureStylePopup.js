@@ -30,31 +30,22 @@ const SignatureStylePopup = props => {
     const { annotation } = savedSignatures[index];
     signatureTool.setSignature(annotation);
     core.setToolMode('AnnotationCreateSignature');
-    signatureTool.showPreview();
-    // core.setToolMode('AnnotationCreateSignature');
-    // signatureTool.setSignature(annotation);
-
-    // if (signatureTool.hasLocation()) {
-    //   signatureTool.addSignature();
-    // } else {
-    //   signatureTool.showPreview();
-    // }
+    if (signatureTool.hasLocation()) {
+      signatureTool.addSignature();
+    } else {
+      signatureTool.showPreview();
+    }
   };
 
   const deleteSignature = index => {
     signatureTool.deleteSavedSignature(index);
 
     const isDeletingSelectedSignature = selectedSignatureIndex === index;
-    // debugger;
     if (isDeletingSelectedSignature) {
       dispatch(actions.setSelectedSignatureIndex(0));
-      // debugger;
-      // if (savedSignatures.length === 1) {
       signatureTool.annot = null;
       signatureTool.hidePreview();
       core.setToolMode(defaultTool);
-      // dispatch(actions.setActiveToolGroup(''));
-      // }
       if (savedSignatures.length === 1) {
         dispatch(actions.closeElements(['toolStylePopup']));
       }
