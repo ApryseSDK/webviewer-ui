@@ -22,26 +22,13 @@ const AnnotationContentOverlay = () => {
   });
 
   useEffect(() => {
-    const isMouseOnModal = e => {
-      let node = e.target;
-
-      while (node && node !== document.body) {
-        if (node.classList.contains('Modal')) {
-          return true;
-        }
-
-        node = node.parentNode;
-      }
-
-      return false;
-    };
-
     const onMouseHover = e => {
+      const viewElement = core.getViewerElement();
       let annotation = core
         .getAnnotationManager()
         .getAnnotationByMouseEvent(e);
 
-      if (annotation && !isMouseOnModal(e)) {
+      if (annotation && viewElement.contains(e.target)) {
         // if hovered annot is grouped, pick the "primary" annot to match Adobe's behavior
         const groupedAnnots = core.getAnnotationManager().getGroupAnnotations(annotation);
         const ungroupedAnnots = groupedAnnots.filter(annot => !annot.isGrouped());
