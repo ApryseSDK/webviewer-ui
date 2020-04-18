@@ -6,6 +6,8 @@
 
   .container {
     @extend %modal-shared-container-style;
+    background: var(--component-background);
+    box-shadow: 0 0 3px 0 var(--document-box-shadow);
 
     display: flex;
     flex-direction: column;
