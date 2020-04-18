@@ -1,7 +1,10 @@
 @import '../../constants/styles';
 @import '../../constants/font.scss';
 @import '../../constants/light.scss';
-// @import '../../constants/dark.scss';
+
+* {
+  transition: background-color .25s ease;
+}
 
 * {
   &::-webkit-scrollbar {

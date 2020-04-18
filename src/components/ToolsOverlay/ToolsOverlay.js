@@ -7,7 +7,6 @@ import ToolStylePopup from 'components/ToolStylePopup';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
 
 import core from 'core';
-import getClassName from 'helpers/getClassName';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import defaultTool from 'constants/defaultTool';
 import Icon from 'components/Icon';
@@ -145,8 +144,6 @@ class ToolsOverlay extends React.PureComponent {
       activeToolName,
     } = this.props;
 
-    const className = getClassName('Overlay ToolsOverlay', { isOpen });
-
     // let style = { left, right, top };
     let style = {};
     let arrowStyle = {};
@@ -175,7 +172,7 @@ class ToolsOverlay extends React.PureComponent {
 
     const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
 
-    let list = {
+    let containerAnimations = {
       visible: {
         width: "214px",
         opacity: 1,
@@ -186,34 +183,8 @@ class ToolsOverlay extends React.PureComponent {
       },
     };
 
-    let itemVisible = {
-      'marginLeft': "8px",
-      'marginRight': "8px",
-    };
-
-    if (activeToolGroup === 'miscTools') {
-      const margin = Math.floor((214 - (toolNames.length * 26)) / (2 * toolNames.length));
-      itemVisible = {
-        'marginLeft': `${margin}px`,
-        'marginRight': `${margin}px`,
-      };
-    } else if (activeToolGroup === 'measurementTools') {
-      itemVisible = {
-        'marginLeft': "15px",
-        'marginRight': "15px",
-      };
-    }
-
-    let item = {
-      visible: itemVisible,
-      hidden: {
-        'marginLeft': "8px",
-        'marginRight': "8px",
-      },
-    };
-
     if (isTabletAndMobile) {
-      list = {
+      containerAnimations = {
         visible: {
           height: 'auto',
           overflow: 'hidden',
@@ -223,14 +194,6 @@ class ToolsOverlay extends React.PureComponent {
           height: '0px',
           overflow: 'hidden',
         },
-      };
-
-      item = {
-        visible: {
-          'marginLeft': "8px",
-          'marginRight': "8px",
-        },
-        hidden: false,
       };
     }
 
@@ -242,44 +205,25 @@ class ToolsOverlay extends React.PureComponent {
     let Component = (
       <React.Fragment>
         {toolNames.map((toolName, i) => (
-          <motion.div
+          <ToolButton
             key={`${toolName}-${i}`}
-            initial={false}
-            animate="visible"
-            exit="hidden"
-            variants={item}
-          >
-            <ToolButton
-              toolName={toolName}
-            />
-          </motion.div>
+            toolName={toolName}
+          />
         ))}
         {activeToolGroup !== 'miscTools' &&
-          <motion.div
-            initial={false}
-            animate={{
-              'marginLeft': "2px",
-              'marginRight': "4px",
-            }}
-            exit={{
-              'marginLeft': "2px",
-              'marginRight': "4px",
-            }}
+          <div
+            className={classNames({
+              "styling-arrow-container": true,
+              active: isToolStyleOpen,
+            })}
+            data-element="styling-button"
+            onClick={() => this.props.toggleElement('toolStylePopup')}
           >
-            <div
-              className={classNames({
-                "styling-arrow-container": true,
-                active: isToolStyleOpen,
-              })}
-              data-element="styling-button"
-              onClick={() => this.props.toggleElement('toolStylePopup')}
-            >
-              <Icon glyph="icon-menu-style-line" />
-              {isToolStyleOpen ?
-                <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-                <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-            </div>
-          </motion.div>}
+            <Icon glyph="icon-menu-style-line" />
+            {isToolStyleOpen ?
+              <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
+              <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
+          </div>}
       </React.Fragment>
     );
 
@@ -298,12 +242,14 @@ class ToolsOverlay extends React.PureComponent {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            variants={list}
+            variants={containerAnimations}
             transition={{ ease: "easeOut", duration: 0.25 }}
           >
             <div
               className={classNames({
-                [className]: true,
+                Overlay: true,
+                ToolsOverlay: true,
+                open: isOpen,
                 shadow: !isTabletAndMobile && isToolStyleOpen,
               })}
               ref={this.overlay}
@@ -320,7 +266,11 @@ class ToolsOverlay extends React.PureComponent {
                   "tools-container": true,
                 })}
               >
-                <div className="tool-buttons-container" ref={this.itemsContainer}>
+                <div
+                  className="tool-buttons-container"
+                  tool-group={activeToolGroup}
+                  ref={this.itemsContainer}
+                >
                   {Component}
                 </div>
                 {(isToolStyleOpen) && (

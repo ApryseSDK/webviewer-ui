@@ -114,7 +114,7 @@ class ToolGroupButton extends React.PureComponent {
       dataElement,
       toolButtonObjects,
       isActive,
-      allButtonsInGroupDisabled,
+      isToolGroupButtonDisabled,
       iconColor,
       title,
     } = this.props;
@@ -130,7 +130,7 @@ class ToolGroupButton extends React.PureComponent {
     //     : '';
     const color = '';
 
-    return allButtonsInGroupDisabled ? null : (
+    return isToolGroupButtonDisabled ? null : (
       <div
         className={classNames({
           'tool-group-button': true,
@@ -159,10 +159,11 @@ const mapStateToProps = (state, ownProps) => ({
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  allButtonsInGroupDisabled: selectors.allButtonsInGroupDisabled(
-    state,
-    ownProps.toolGroup,
-  ),
+  // allButtonsInGroupDisabled: selectors.allButtonsInGroupDisabled(
+  //   state,
+  //   ownProps.toolGroup,
+  // ),
+  isToolGroupButtonDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
   iconColor: selectors.getIconColor(
     state,
     mapToolNameToKey(selectors.getActiveToolName(state)),

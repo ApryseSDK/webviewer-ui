@@ -3,7 +3,6 @@
 
 
 .ToolsOverlayContainer {
-  // overflow: hidden;
   display: flex;
   align-items: flex-end;
 }
@@ -19,9 +18,7 @@
   border-radius: 0px;
   background: transparent;
   position: relative;
-  // background: var(--preset-background);
   border-radius: 4px 4px 0 0;
-  width: 100%;
 
   @include tablet-and-mobile {
     width: 100%;
@@ -41,10 +38,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    // margin-left: 2px;
-    // margin-right: 4px;
     border-radius: 4px;
     cursor: pointer;
+
+    @include tablet-and-mobile {
+      margin-left: 8px;
+    }
 
     &:not(.disabled) {
       &:hover {
@@ -85,7 +84,6 @@
   }
 
 
-
   @include tablet-and-mobile {
     border-bottom: solid 1px var(--border);
     position: relative;
@@ -117,6 +115,7 @@
     border-radius: 4px;
     background: var(--preset-background);
     height: 32px;
+    width: 100%;
 
     @include tablet-and-mobile {
       box-shadow: none;
@@ -138,6 +137,10 @@
       align-items: center;
       height: 32px;
 
+      @include desktop {
+        width: 214px;
+      }
+
       @include tablet-and-mobile {
         justify-content: center;
       }
@@ -145,7 +148,28 @@
       @include tablet-and-mobile {
         box-shadow: none;
         width: 100%;
-        margin-top: 0px;
+      }
+
+      .Button {
+        margin: 0 8px;
+      }
+
+      @include desktop {
+        &[tool-group="miscTools"] {
+          justify-content: space-around;
+
+          .Button {
+            margin: 0 0;
+          }
+        }
+
+        &[tool-group="measurementTools"] {
+          justify-content: space-around;
+
+          .Button {
+            margin: 0 0px;
+          }
+        }
       }
     }
   }

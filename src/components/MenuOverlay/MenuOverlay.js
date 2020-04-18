@@ -120,7 +120,7 @@ class MenuOverlay extends React.PureComponent {
         >
           {isMobile && <div className="swipe-indicator" />}
           {!isFilePickerButtonDisabled &&
-            <div className="row" dataElement="filePickerButton">
+            <div className="row" data-element="filePickerButton">
               <div
                 className="MenuItem"
                 onClick={openFilePicker}
