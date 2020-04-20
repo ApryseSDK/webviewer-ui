@@ -128,7 +128,7 @@ class ThumbnailsPanel extends React.PureComponent {
     // need to set 'text' to empty for drag to work in FireFox and mobile
     e.dataTransfer.setData('text', '');
 
-    if (pagesToMove.length > 1) { 
+    if (pagesToMove.length > 1) {
       // can't set to null so set to new instance of an image
       e.dataTransfer.setDragImage(new Image(), 0, 0);
     }
