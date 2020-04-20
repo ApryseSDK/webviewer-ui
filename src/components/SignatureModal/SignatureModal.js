@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
@@ -9,12 +9,9 @@ import TextSignature from 'components/SignatureModal/TextSignature';
 import ImageSignature from 'components/SignatureModal/ImageSignature';
 
 import core from 'core';
-import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
-import getAnnotationStyles from 'helpers/getAnnotationStyles';
-
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
@@ -26,15 +23,6 @@ const SignatureModal = () => {
   ]);
 
   const signatureTool = core.getTool('AnnotationCreateSignature');
-  useEffect(() => {
-    signatureTool.on('signatureSaved', onSignatureSaved);
-    signatureTool.on('signatureDeleted', onSignatureDeleted);
-
-    // return () => {
-    //   signatureTool.off('signatureSaved', onSignatureSaved);
-    //   signatureTool.off('signatureDeleted', onSignatureDeleted);
-    // };
-  }, []);
 
   // Hack to close modal if hotkey to open other tool is used.
   useEffect(() => {
@@ -50,7 +38,6 @@ const SignatureModal = () => {
 
   const dispatch = useDispatch();
   const [t] = useTranslation();
-  const store = useStore();
 
   useEffect(() => {
     if (isOpen) {
@@ -68,7 +55,6 @@ const SignatureModal = () => {
   const closeModal = () => {
     signatureTool.clearLocation();
     dispatch(actions.closeElement('signatureModal'));
-    // core.setToolMode(defaultTool);
   };
 
   const createSignature = () => {
@@ -88,54 +74,6 @@ const SignatureModal = () => {
       dispatch(actions.closeElement('signatureModal'));
     }
   };
-
-  const onSignatureSaved = async annotations => {
-    const savedSignatures = selectors.getSavedSignatures(store.getState());
-    const numberOfSignaturesToRemove = savedSignatures.length + annotations.length - 4;
-    let newSavedSignatures = [...savedSignatures];
-
-    if (numberOfSignaturesToRemove > 0) {
-      // to keep the UI sync with the signatures saved in the tool
-      for (let i = 0; i < numberOfSignaturesToRemove; i++) {
-        signatureTool.deleteSavedSignature(0);
-      }
-
-      newSavedSignatures.splice(0, numberOfSignaturesToRemove);
-    }
-
-    const signaturesToStore = await getSignatureDataToStore(annotations);
-    newSavedSignatures = newSavedSignatures.concat(signaturesToStore);
-
-    dispatch(actions.setSavedSignatures(newSavedSignatures));
-  };
-
-  const onSignatureDeleted = async() => {
-    const coreSavedSignatures = signatureTool.getSavedSignatures();
-    const newSavedSignatures = await getSignatureDataToStore(coreSavedSignatures);
-    dispatch(actions.setSavedSignatures(newSavedSignatures));
-  };
-
-  // returns an array of objects in the shape of: { annotation, preview }
-  // annotation: a copy of the annotation passed in
-  // imgSrc: preview of the annotation, a base64 string
-  const getSignatureDataToStore = async annotations => {
-    // copy the annotation because we need to mutate the annotation object later if there're any styles changes
-    // and we don't want the original annotation to be mutated as well
-    // since it's been added to the canvas
-    annotations = annotations.map(core.getAnnotationCopy);
-    const previews = await Promise.all(
-      annotations.map(annotation => {
-        annotation['StrokeThickness'] = 6;
-        return signatureTool.getPreview(annotation);
-      }),
-    );
-
-    return annotations.map((annotation, i) => ({
-      annotation,
-      imgSrc: previews[i],
-    }));
-  };
-
 
   const modalClass = classNames({
     Modal: true,

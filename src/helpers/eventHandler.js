@@ -26,9 +26,12 @@ export default store => {
   const onPageComplete = eventListeners.onPageComplete(store);
   const onFileAttachmentAnnotationAdded = eventListeners.onFileAttachmentAnnotationAdded(dispatch);
   const onFileAttachmentDataAvailable = eventListeners.onFileAttachmentDataAvailable(dispatch);
+  const onSignatureSaved = eventListeners.onSignatureSaved(dispatch, store);
+  const onSignatureDeleted = eventListeners.onSignatureDeleted(dispatch, store);
 
   return {
     addEventHandlers: () => {
+      core.addEventListener('beforeDocumentLoaded', onBeforeDocumentLoaded);
       core.addEventListener('beforeDocumentLoaded', onBeforeDocumentLoaded);
       core.addEventListener('displayModeUpdated', onDisplayModeUpdated);
       core.addEventListener('documentLoaded', onDocumentLoaded);
@@ -51,6 +54,8 @@ export default store => {
       core.getTool('AnnotationCreateSticky4').on('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('locationSelected', onLocationSelected);
       core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
+      core.getTool('AnnotationCreateSignature').on('signatureSaved', onSignatureSaved);
+      core.getTool('AnnotationCreateSignature').on('signatureDeleted', onSignatureDeleted);
       core.getTool('AnnotationCreateRubberStamp').on('annotationAdded', onRubberStampAnnotationAdded);
       core.getTool('AnnotationCreateFileAttachment').on('annotationAdded', onFileAttachmentAnnotationAdded);
       hotkeysManager.initialize(store);

@@ -47,7 +47,6 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentDidMount() {
-    // this.setArrowStyle();
     window.addEventListener('resize', this.handleWindowResize);
 
     // this component can be opened before mounting to the DOM if users call the setToolMode API
@@ -63,12 +62,6 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    // this.setArrowStyle();
-    // if (this.props.activeToolName === 'AnnotationCreateRubberStamp') {
-    //   this.props.openElement('toolStylePopup');
-    //   // this.setState({ isStylingOpen: true });
-    // }
-
     const clickedOnAnotherToolGroupButton =
       prevProps.activeToolGroup !== this.props.activeToolGroup;
 
@@ -87,7 +80,6 @@ class ToolsOverlay extends React.PureComponent {
 
     if (clickedOnAnotherToolGroupButton) {
       this.setOverlayPosition();
-      // this.setState({ isStylingOpen: false });
     }
 
     if (this.itemsContainer.current) {
@@ -123,37 +115,22 @@ class ToolsOverlay extends React.PureComponent {
   };
 
   handleCloseClick = () => {
-    const { setActiveToolGroup, closeElements, activeToolGroup } = this.props;
-    // core.setToolMode(defaultTool);
-    // setActiveToolGroup('');
+    const { closeElements } = this.props;
     closeElements(['toolsOverlay']);
   };
 
   render() {
-    const { left, right, top, isStylingOpen } = this.state;
-
     const {
       isDisabled,
       isOpen,
       toolNames,
       activeToolGroup,
-      isMobile,
       isTabletAndMobile,
-      closeElements,
       isToolStyleOpen,
-      activeToolName,
     } = this.props;
 
-    // let style = { left, right, top };
-    let style = {};
     let arrowStyle = {};
-
     if (isTabletAndMobile) {
-      style = {
-        // left: 0,
-        // top: 52,
-      };
-
       const { activeToolGroup, activeHeaderItems } = this.props;
       const element = activeHeaderItems.find(
         item => item.toolGroup === activeToolGroup,
@@ -253,7 +230,6 @@ class ToolsOverlay extends React.PureComponent {
                 shadow: !isTabletAndMobile && isToolStyleOpen,
               })}
               ref={this.overlay}
-              style={style}
               data-element="toolsOverlay"
             >
               <div

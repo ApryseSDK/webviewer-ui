@@ -24,7 +24,6 @@
   .toggle-element-button {
     height: 100%;
   }
-
 }
 
 .ToggleZoomOverlay {
@@ -77,7 +76,6 @@
   }
 }
 
-
 .OverlayText {
   border-radius: 4px;
   display: flex;
@@ -87,14 +85,4 @@
   height: 100%;
   text-align: center;
   display: flex;
-  background-color: inherit;
-  // &:hover + .OverlayButton {
-  //   background-color:inherit;
-  // }
-}
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
