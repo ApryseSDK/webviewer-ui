@@ -106,27 +106,12 @@ const SignatureModal = () => {
     const signaturesToStore = await getSignatureDataToStore(annotations);
     newSavedSignatures = newSavedSignatures.concat(signaturesToStore);
 
-    // dispatch(actions.setSelectedSignatureIndex(newSavedSignatures.length - 1));
     dispatch(actions.setSavedSignatures(newSavedSignatures));
   };
 
   const onSignatureDeleted = async() => {
-    const savedSignatures = selectors.getSavedSignatures(store.getState());
     const coreSavedSignatures = signatureTool.getSavedSignatures();
-
-    // fire set saved signatures
-    const newSavedSignatures = await getSignatureDataToStore(
-      // the saved signatures will have a different style than what we've saved in this component
-      // if a user changes the styles of a signature after it's added to the document
-      // here to sync up the styles we grab a saved signature in this component and use its styles to override the signatures saved in the tool
-      coreSavedSignatures.map(annotation =>
-        Object.assign(
-          annotation,
-          getAnnotationStyles(savedSignatures[0].annotation),
-        ),
-      )
-    );
-
+    const newSavedSignatures = await getSignatureDataToStore(coreSavedSignatures);
     dispatch(actions.setSavedSignatures(newSavedSignatures));
   };
 
