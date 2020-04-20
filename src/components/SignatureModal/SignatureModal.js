@@ -29,7 +29,6 @@ const SignatureModal = () => {
   useEffect(() => {
     signatureTool.on('signatureSaved', onSignatureSaved);
     signatureTool.on('signatureDeleted', onSignatureDeleted);
-    core.addEventListener('annotationChanged', onAnnotationChanged);
 
     // return () => {
     //   signatureTool.off('signatureSaved', onSignatureSaved);
@@ -129,25 +128,6 @@ const SignatureModal = () => {
     );
 
     dispatch(actions.setSavedSignatures(newSavedSignatures));
-  };
-
-  const onAnnotationChanged = async(annotations, action) => {
-    const savedSignatures = selectors.getSavedSignatures(store.getState());
-    if (
-      action === 'modify' &&
-      annotations.length === 1 &&
-      annotations[0].ToolName === 'AnnotationCreateSignature'
-    ) {
-      const newStyles = getAnnotationStyles(annotations[0]);
-      const annotationsWithNewStyles = savedSignatures.map(
-        ({ annotation }) => Object.assign(annotation, newStyles),
-      );
-      const newSavedSignatures = await this.getSignatureDataToStore(
-        annotationsWithNewStyles,
-      );
-
-      dispatch(actions.setSavedSignatures(newSavedSignatures));
-    }
   };
 
   // returns an array of objects in the shape of: { annotation, preview }
