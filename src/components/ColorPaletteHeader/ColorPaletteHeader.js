@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 
-import Tooltip from 'components/Tooltip';
-
-import getBrightness from 'helpers/getBrightness';
 import { getDataWithKey } from 'constants/map';
 import classNames from 'classnames';
 import actions from 'actions';
+import selectors from 'selectors';
 
 import './ColorPaletteHeader.scss';
 
@@ -19,6 +17,9 @@ class ColorPaletteHeader extends React.PureComponent {
     colorMapKey: PropTypes.string.isRequired,
     setColorPalette: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
+    isTextColorPaletteDisabled: PropTypes.bool,
+    isFillColorPaletteDisabled: PropTypes.bool,
+    isBorderColorPaletteDisabled: PropTypes.bool,
   }
 
   setColorPalette = newPalette => {
@@ -27,86 +28,16 @@ class ColorPaletteHeader extends React.PureComponent {
     setColorPalette(colorMapKey, newPalette);
   }
 
-  renderTextColorIcon = () => {
-    const { style: { TextColor }, colorPalette } = this.props;
-
-    return (
-      <Tooltip content="option.annotationColor.TextColor">
-        <div
-          className={colorPalette === 'TextColor' ? 'text selected' : 'text'}
-          style={{ color: TextColor.toHexString() }}
-          onClick={() => this.setColorPalette('TextColor')}
-        >
-          Aa
-        </div>
-      </Tooltip>
-    );
-  }
-
-  renderBorderColorIcon = () => {
-    const { style: { StrokeColor }, colorPalette } = this.props;
-
-    const renderInnerCircle = () => {
-      const borderColor = getBrightness(StrokeColor) === 'dark' ? '#bfbfbf' : 'none';
-
-      return (
-        <svg height="100%" width="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r="4.5"
-            strokeWidth="1"
-            stroke={borderColor}
-            fill="#fafafa"
-          />
-        </svg>
-      );
-    };
-
-    return (
-      <Tooltip content="option.annotationColor.StrokeColor">
-        <div
-          className={colorPalette === 'StrokeColor' ? 'border selected' : 'border'}
-          onClick={() => this.setColorPalette('StrokeColor')}
-        >
-          <div
-            className={`border-icon ${getBrightness(StrokeColor)}}`}
-            style={{ backgroundColor: StrokeColor.toHexString() }}
-          >
-            {renderInnerCircle()}
-          </div>
-        </div>
-      </Tooltip>
-    );
-  }
-
-  renderFillColorIcon = () => {
-    const { style: { FillColor }, colorPalette } = this.props;
-    const isTransparency = FillColor.toHexString() === null;
-
-    return (
-      <Tooltip content="option.annotationColor.FillColor">
-        <div
-          className={colorPalette === 'FillColor' ? 'fill selected' : 'fill'}
-          onClick={() => this.setColorPalette('FillColor')}
-        >
-          <div
-            className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
-            style={{ backgroundColor: FillColor.toHexString() }}
-          >
-            {isTransparency &&
-              <svg width="100%" height="100%">
-                <line x1="0%" y1="100%" x2="100%" y2="0%" strokeWidth="1" stroke="#e44234" strokeLinecap="square" />
-              </svg>
-            }
-          </div>
-        </div>
-      </Tooltip>
-    );
-  }
-
   render() {
-    const { t, colorPalette, colorMapKey, toolName } = this.props;
+    const {
+      t,
+      colorPalette,
+      colorMapKey,
+      toolName,
+      isTextColorPaletteDisabled,
+      isBorderColorPaletteDisabled,
+      isFillColorPaletteDisabled,
+    } = this.props;
     const { availablePalettes } = getDataWithKey(colorMapKey);
 
     if (toolName && (toolName.includes('Line') || toolName.includes('Arrow') || toolName.includes('Polyline'))) {
@@ -135,6 +66,10 @@ class ColorPaletteHeader extends React.PureComponent {
       return null;
     }
 
+    // TODO: Actually disable these elements
+    // isTextColorPaletteDisabled, isBorderColorPaletteDisabled, isFillColorPaletteDisabled
+    // TextColor, StrokeColor, FillColor
+
     return (
       <div className="palette-options">
         {availablePalettes.map((pallette, i) =>
@@ -156,8 +91,14 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 }
 
+const mapStateToProps = state => ({
+  isTextColorPaletteDisabled: selectors.isElementDisabled(state, 'textColorPalette'),
+  isFillColorPaletteDisabled: selectors.isElementDisabled(state, 'fillColorPalette'),
+  isBorderColorPaletteDisabled: selectors.isElementDisabled(state, 'borderColorPalette'),
+});
+
 const mapDispatchToProps = {
   setColorPalette: actions.setColorPalette,
 };
 
-export default connect(null, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));

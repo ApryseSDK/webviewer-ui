@@ -382,7 +382,6 @@ class ThumbnailsPanel extends React.PureComponent {
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
             const thumbIndex = index * numberOfColumns + columnIndex;
-            const updateHandler = thumbs && thumbs[thumbIndex] ? thumbs[thumbIndex].updateAnnotationHandler : null;
             const showPlaceHolder = (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && draggingOverPageIndex === thumbIndex;
 
             return thumbIndex < this.props.totalPages ? (
@@ -400,7 +399,8 @@ class ThumbnailsPanel extends React.PureComponent {
                   onRemove={this.onRemove}
                   onDragStart={this.onDragStart}
                   onDragOver={this.onDragOver}
-                  updateAnnotations={updateHandler}
+                  onFinishLoading={this.removeFromPendingThumbs}
+                  updateAnnotations={this.updateAnnotations}
                 />
                 {showPlaceHolder && !isDraggingToPreviousPage && (
                   <hr className="thumbnailPlaceholder" />

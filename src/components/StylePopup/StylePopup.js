@@ -17,15 +17,26 @@ import classNames from 'classnames';
 
 import './StylePopup.scss';
 
+const DataElements = {
+  COLOR_PALETTE: 'colorPalette',
+  OPACITY_SLIDER: 'opacitySlider',
+  STROKE_THICKNESS_SLIDER: 'strokeThicknessSlider',
+  FONT_SIZE_SLIDER: 'fontSizeSlider',
+  STYLE_OPTION: 'styleOption'
+};
+
 class StylePopup extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
     isFreeText: PropTypes.bool.isRequired,
-    hideSlider: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     isColorPaletteDisabled: PropTypes.bool,
+    isOpacitySliderDisabled: PropTypes.bool,
+    isStrokeThicknessSliderDisabled: PropTypes.bool,
+    isFontSizeSliderDisabled: PropTypes.bool,
+    isStyleOptionDisabled: PropTypes.bool,
   };
 
   renderColorPalette = () => {
@@ -45,6 +56,10 @@ class StylePopup extends React.PureComponent {
       style: { Opacity, StrokeThickness, FontSize },
       onStyleChange,
       isFreeText,
+      // TODO: Actually disable these elements
+      isOpacitySliderDisabled,
+      isStrokeThicknessSliderDisabled,
+      isFontSizeSliderDisabled,
       currentPalette,
     } = this.props;
     const lineStart = circleRadius;
@@ -116,7 +131,16 @@ class StylePopup extends React.PureComponent {
   };
 
   render() {
-    const { isColorPaletteDisabled, currentPalette, style, colorMapKey, onStyleChange, toolName, isMobile } = this.props;
+    const {
+      toolName,
+      isMobile,
+      isColorPaletteDisabled,
+      currentPalette,
+      style,
+      colorMapKey,
+      onStyleChange,
+      isStyleOptionDisabled,
+    } = this.props;
     const { Scale, Precision, Style } = style;
 
     const className = classNames({
@@ -128,7 +152,7 @@ class StylePopup extends React.PureComponent {
     if (toolName === 'AnnotationCreateRubberStamp') {
       return (
         <div className={className} data-element="stylePopup">
-          {!this.props.hideSlider && this.renderSliders()}
+          {this.renderSliders()}
           <StampOverlay />
         </div>
       );
@@ -147,7 +171,7 @@ class StylePopup extends React.PureComponent {
             {this.renderColorPalette()}
           </div>
         )}
-        {!this.props.hideSlider && this.renderSliders()}
+        {this.renderSliders()}
         {Scale && Precision && (
           <React.Fragment>
             <div
@@ -160,7 +184,7 @@ class StylePopup extends React.PureComponent {
             />
           </React.Fragment>
         )}
-        {colorMapKey === 'rectangle' && false && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
+        {false && !isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
       </div>
     );
   }
@@ -168,7 +192,11 @@ class StylePopup extends React.PureComponent {
 
 const mapStateToProps = (state, { colorMapKey }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
-  isColorPaletteDisabled: selectors.isElementDisabled(state, 'colorPalette')
+  isColorPaletteDisabled: selectors.isElementDisabled(state, DataElements.COLOR_PALETTE),
+  isOpacitySliderDisabled: selectors.isElementDisabled(state, DataElements.OPACITY_SLIDER),
+  isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DataElements.STROKE_THICKNESS_SLIDER),
+  isFontSizeSliderDisabled: selectors.isElementDisabled(state, DataElements.FONT_SIZE_SLIDER),
+  isStyleOptionDisabled: selectors.isElementDisabled(state, DataElements.STYLE_OPTION)
 });
 
 const ConnectedStylePopup = connect(

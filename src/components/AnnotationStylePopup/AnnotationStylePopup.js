@@ -46,9 +46,6 @@ class AnnotationStylePopup extends React.Component {
       annotation.getIntent() ===
         window.Annotations.FreeTextAnnotation.Intent.FreeText;
     const className = getClassName('Popup AnnotationStylePopup', this.props);
-    const hideSlider =
-      annotation instanceof window.Annotations.RedactionAnnotation;
-
     const colorMapKey = mapAnnotationToKey(annotation);
 
     if (isDisabled) {
@@ -66,7 +63,6 @@ class AnnotationStylePopup extends React.Component {
           style={style}
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}
-          hideSlider={hideSlider}
         />
       </div>
     );

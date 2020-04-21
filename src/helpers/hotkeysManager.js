@@ -17,28 +17,39 @@ import selectors from 'selectors';
 const NOOP = () => {};
 
 /**
- * Available hotkeys that can be passed to {@link WebViewerInstance.Hotkeys#on instance.hotkeys.on} or {@link WebViewerInstance.Hotkeys#off instance.hotkeys.off} as lowercase. Hotkeys that use the Ctrl key can also be activated by pressing the Command key. <br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> These strings are not static properties of this class. They are listed here only for the documentation purpose.
- * @name WebViewerInstance.Hotkeys.AvailableHotkeys
+ * Available hotkeys that can be passed to {@link WebViewerInstance.Hotkeys#on instance.hotkeys.on} or {@link WebViewerInstance.Hotkeys#off instance.hotkeys.off}. <br/><br/>
+ * @name WebViewerInstance.Hotkeys.Keys
  * @enum {string}
- * @property {string} Ctrl_Shift_Equals Rotate the document clockwise (Ctrl+Shift+=).
- * @property {string} Ctrl_Shift_Minus Rotate the document counterclockwise (Ctrl+Shift+-)
- * @property {string} Ctrl_C Copy selected text or annotations
- * @property {string} Ctrl_V Paste text or annotations
- * @property {string} Ctrl_Z Undo an annotation change
- * @property {string} Ctrl_Y Redo an annotation change
- * @property {string} Ctrl_O Open the file picker
- * @property {string} Ctrl_F Open the search overlay
- * @property {string} Ctrl_Equals Zoom in (Ctrl+=)
- * @property {string} Ctrl_Minus Zoom out (Ctrl+-)
- * @property {string} Ctrl_0 Fit the document to the screen width in a small screen(< 640px), otherwise fit it to its original size
- * @property {string} Ctrl_P Print
- * @property {string} PageUp Go to the previous page
- * @property {string} PageDown Go to the next page
- * @property {string} Up Go to the previous page in single layout mode (ArrowUp)
- * @property {string} Down Go to the next page in single layout mode (ArrowDown)
- * @property {string} Space Hold to switch to Pan mode and release to return to previous tool
- * @property {string} Escape Select the AnnotationEdit tool
+ * @property {string} CTRL_SHIFT_EQUAL Rotate the document clockwise
+ * @property {string} COMMAND_SHIFT_EQUAL Rotate the document clockwise
+ * @property {string} CTRL_SHIFT_MINUS Rotate the document counterclockwise
+ * @property {string} COMMAND_SHIFT_MINUS Rotate the document counterclockwise
+ * @property {string} CTRL_C Copy selected text or annotations
+ * @property {string} COMMAND_C Copy selected text or annotations
+ * @property {string} CTRL_V Paste text or annotations
+ * @property {string} COMMAND_V Paste text or annotations
+ * @property {string} CTRL_Z Undo an annotation change
+ * @property {string} COMMAND_Z Undo an annotation change
+ * @property {string} CTRL_Y Redo an annotation change
+ * @property {string} COMMAND_Y Redo an annotation change
+ * @property {string} CTRL_O Open the file picker
+ * @property {string} COMMAND_O Open the file picker
+ * @property {string} CTRL_F Open the search overlay
+ * @property {string} COMMAND_F Open the search overlay
+ * @property {string} CTRL_EQUAL Zoom in
+ * @property {string} COMMAND_EQUAL Zoom in
+ * @property {string} CTRL_MINUS Zoom out
+ * @property {string} COMMAND_MINUS Zoom out
+ * @property {string} CTRL_0 Fit the document to the screen width in a small screen(< 640px), otherwise fit it to its original size
+ * @property {string} COMMAND_0 Fit the document to the screen width in a small screen(< 640px), otherwise fit it to its original size
+ * @property {string} CTRL_P Print
+ * @property {string} COMMAND_P Print
+ * @property {string} PAGE_UP Go to the previous page
+ * @property {string} PAGE_DOWN Go to the next page
+ * @property {string} UP Go to the previous page in single layout mode (ArrowUp)
+ * @property {string} DOWN Go to the next page in single layout mode (ArrowDown)
+ * @property {string} SPACE Hold to switch to Pan mode and release to return to previous tool
+ * @property {string} ESCAPE Select the AnnotationEdit tool
  * @property {string} P Select the Pan tool
  * @property {string} A Select the AnnotationCreateArrow tool
  * @property {string} C Select the AnnotationCreateCallout tool
@@ -56,6 +67,56 @@ const NOOP = () => {};
  * @property {string} K Select the AnnotationCreateTextStrikeout tool
  * @property {string} U Select the AnnotationCreateTextUnderline tool
  */
+export const Keys = {
+  CTRL_SHIFT_EQUAL: 'ctrl+shift+=',
+  COMMAND_SHIFT_EQUAL: 'command+shift+=',
+  CTRL_SHIFT_MINUS: 'ctrl+shift+-',
+  COMMAND_SHIFT_MINUS: 'command+shift+-',
+  CTRL_C: 'ctrl+c',
+  COMMAND_C: 'command+c',
+  CTRL_V: 'ctrl+v',
+  COMMAND_V: 'command+v',
+  CTRL_Z: 'ctrl+z',
+  COMMAND_Z: 'command+z',
+  CTRL_Y: 'ctrl+y',
+  COMMAND_SHIFT_Z: 'command+shift+z',
+  CTRL_O: 'ctrl+o',
+  COMMAND_O: 'command+o',
+  CTRL_F: 'ctrl+f',
+  COMMAND_F: 'command+f',
+  CTRL_EQUAL: 'ctrl+=',
+  COMMAND_EQUAL: 'command+=',
+  CTRL_MINUS: 'ctrl+-',
+  COMMAND_MINUS: 'command+-',
+  CTRL_0: 'ctrl+0',
+  COMMAND_0: 'command+0',
+  CTRL_P: 'ctrl+p',
+  COMMAND_P: 'command+p',
+  ENTER: 'enter',
+  PAGE_UP: 'pageup',
+  PAGE_DOWN: 'pagedown',
+  UP: 'up',
+  DOWN: 'down',
+  SPACE: 'space',
+  ESCAPE: 'escape',
+  P: 'p',
+  A: 'a',
+  C: 'c',
+  E: 'e',
+  F: 'f',
+  I: 'i',
+  L: 'l',
+  N: 'n',
+  O: 'o',
+  R: 'r',
+  Q: 'q',
+  T: 't',
+  S: 's',
+  G: 'g',
+  H: 'h',
+  K: 'k',
+  U: 'u',
+};
 
 /**
  * A class which contains hotkeys APIs.<br/><br/>
@@ -166,15 +227,15 @@ WebViewer(...)
     const { dispatch, getState } = store;
 
     return {
-      'ctrl+shift+=, command+shift+=': e => {
+      [`${Keys.CTRL_SHIFT_EQUAL}, ${Keys.COMMAND_SHIFT_EQUAL}`]: e => {
         e.preventDefault();
         core.rotateClockwise();
       },
-      'ctrl+shift+-, command+shift+-': e => {
+      [`${Keys.CTRL_SHIFT_MINUS}, ${Keys.COMMAND_SHIFT_MINUS}`]: e => {
         e.preventDefault();
         core.rotateCounterClockwise();
       },
-      'ctrl+c, command+c': () => {
+      [`${Keys.CTRL_C}, ${Keys.COMMAND_C}`]: () => {
         if (core.getSelectedText()) {
           copyText();
           dispatch(actions.closeElement('textPopup'));
@@ -182,37 +243,37 @@ WebViewer(...)
           core.updateCopiedAnnotations();
         }
       },
-      'ctrl+v, command+v': e => {
+      [`${Keys.CTRL_V}, ${Keys.COMMAND_V}`]: e => {
         if (!isFocusingElement()) {
           e.preventDefault();
           core.pasteCopiedAnnotations();
         }
       },
-      'ctrl+z, command+z': e => {
+      [`${Keys.CTRL_Z}, ${Keys.COMMAND_Z}`]: e => {
         e.preventDefault();
         core.undo();
       },
-      'ctrl+y, command+shift+z': e => {
+      [`${Keys.CTRL_Y}, ${Keys.COMMAND_SHIFT_Z}`]: e => {
         e.preventDefault();
         core.redo();
       },
-      'ctrl+o, command+o': e => {
+      [`${Keys.CTRL_O}, ${Keys.COMMAND_O}`]: e => {
         e.preventDefault();
         openFilePicker();
       },
-      'ctrl+f, command+f': e => {
+      [`${Keys.CTRL_F}, ${Keys.COMMAND_F}`]: e => {
         e.preventDefault();
         dispatch(actions.openElement('searchOverlay'));
       },
-      'ctrl+=, command+=': e => {
+      [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
         e.preventDefault();
         zoomIn();
       },
-      'ctrl+-, command+-': e => {
+      [`${Keys.CTRL_MINUS}, ${Keys.COMMAND_MINUS}`]: e => {
         e.preventDefault();
         zoomOut();
       },
-      'ctrl+0, command+0': e => {
+      [`${Keys.CTRL_0}, ${Keys.COMMAND_0}`]: e => {
         e.preventDefault();
 
         if (isMobile) {
@@ -221,12 +282,12 @@ WebViewer(...)
           core.fitToPage();
         }
       },
-      'ctrl+p, command+p': e => {
+      [`${Keys.CTRL_P}, ${Keys.COMMAND_P}`]: e => {
         e.preventDefault();
 
         print(dispatch, selectors.isEmbedPrintSupported(getState()));
       },
-      enter: () => {
+      [`${Keys.ENTER}`]: () => {
         if (document.activeElement.className.includes('Note')) {
           document.activeElement.click();
         } else if (document.activeElement.className === 'skip-to-document') {
@@ -239,17 +300,17 @@ WebViewer(...)
           }
         }
       },
-      pageup: e => {
+      [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();
 
         setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
       },
-      pagedown: e => {
+      [`${Keys.PAGE_DOWN}`]: e => {
         e.preventDefault();
 
         setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
       },
-      up: () => {
+      [`${Keys.UP}`]: () => {
         if (isFocusingElement() || core.isContinuousDisplayMode()) {
           return;
         }
@@ -264,7 +325,7 @@ WebViewer(...)
           scrollViewElement.scrollTop = scrollHeight - clientHeight;
         }
       },
-      down: () => {
+      [`${Keys.DOWN}`]: () => {
         if (isFocusingElement() || core.isContinuousDisplayMode()) {
           return;
         }
@@ -277,7 +338,7 @@ WebViewer(...)
           setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
         }
       },
-      space: {
+      [`${Keys.SPACE}`]: {
         keyup: this.createToolHotkeyHandler(e => {
           e.preventDefault();
 
@@ -293,7 +354,7 @@ WebViewer(...)
           }
         }),
       },
-      escape: e => {
+      [`${Keys.ESCAPE}`]: e => {
         e.preventDefault();
         setToolModeAndGroup(store, 'AnnotationEdit', '');
 
@@ -320,71 +381,71 @@ WebViewer(...)
           ])
         );
       },
-      p: this.createToolHotkeyHandler(() => {
+      [`${Keys.P}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'Pan');
       }),
-      a: this.createToolHotkeyHandler(() => {
+      [`${Keys.A}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateArrow');
       }),
-      c: this.createToolHotkeyHandler(() => {
+      [`${Keys.C}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateCallout');
       }),
-      e: this.createToolHotkeyHandler(() => {
+      [`${Keys.E}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationEraserTool');
       }),
-      f: this.createToolHotkeyHandler(() => {
+      [`${Keys.F}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateFreeHand');
       }),
-      i: this.createToolHotkeyHandler(() => {
+      [`${Keys.I}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateStamp');
       }),
-      l: this.createToolHotkeyHandler(() => {
+      [`${Keys.L}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateLine');
       }),
-      n: this.createToolHotkeyHandler(() => {
+      [`${Keys.N}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateSticky');
       }),
-      o: this.createToolHotkeyHandler(() => {
+      [`${Keys.O}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateEllipse');
       }),
-      r: this.createToolHotkeyHandler(() => {
+      [`${Keys.R}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateRectangle');
       }),
-      q: this.createToolHotkeyHandler(() => {
+      [`${Keys.Q}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateRubberStamp');
       }),
-      t: this.createToolHotkeyHandler(() => {
+      [`${Keys.T}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateFreeText');
       }),
-      s: this.createToolHotkeyHandler(() => {
+      [`${Keys.S}`]: this.createToolHotkeyHandler(() => {
         const sigToolButton = document.querySelector(
           '[data-element="signatureToolButton"] .Button'
         );
 
         sigToolButton?.click();
       }),
-      g: this.createToolHotkeyHandler(() => {
+      [`${Keys.G}`]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Annotations.TextSquigglyAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextSquiggly');
         }
       }),
-      h: this.createToolHotkeyHandler(() => {
+      [`${Keys.H}`]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Annotations.TextHighlightAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextHighlight');
         }
       }),
-      k: this.createToolHotkeyHandler(() => {
+      [`${Keys.K}`]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Annotations.TextStrikeoutAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextStrikeout');
         }
       }),
-      u: this.createToolHotkeyHandler(() => {
+      [`${Keys.U}`]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
           createTextAnnotationAndSelect(dispatch, window.Annotations.TextUnderlineAnnotation);
         } else {

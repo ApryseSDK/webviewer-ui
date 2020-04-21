@@ -134,7 +134,6 @@ class ToolStylePopup extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-    const hideSlider = activeToolName === 'AnnotationCreateRedaction';
 
     let style = {};
     if (isTablet) {
@@ -161,7 +160,6 @@ class ToolStylePopup extends React.PureComponent {
           colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}
-          hideSlider={hideSlider}
           onStyleChange={this.handleStyleChange}
         />
       </React.Fragment>

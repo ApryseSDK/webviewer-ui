@@ -247,7 +247,7 @@
     },
     "styleOption": {
       "style": "Style",
-      "regular": "Regular",
+      "solid": "Solid",
       "cloudy": "Cloudy"
     },
     "slider": {

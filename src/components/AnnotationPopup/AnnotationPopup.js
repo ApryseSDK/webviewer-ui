@@ -227,7 +227,7 @@ const AnnotationPopup = () => {
           {canModify &&
             hasStyle &&
             !isAnnotationStylePopupDisabled &&
-            !multipleAnnotationsSelected &&
+            (!multipleAnnotationsSelected || canUngroup) &&
             firstAnnotation.ToolName !== 'CropPage' && (
             <ActionButton
               dataElement="annotationStyleEditButton"

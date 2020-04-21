@@ -46,6 +46,7 @@ import core from 'core';
 import defaultTool from 'constants/defaultTool';
 
 import './App.scss';
+import '../../constants/pikaday.scss';
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,

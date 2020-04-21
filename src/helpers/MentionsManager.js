@@ -5,8 +5,9 @@ import selectors from 'selectors';
  * typedef {Object} WebViewerInstance.MentionsManager.Mention
  * @property {string} email The email of the mentioned person. This is passed from setUserData.
  * @property {string} value The value(display name) of the mentioned person. This is passed from setUserData.
- * @property {string} type The type of the mentioned persion. This is passed from setUserData.
- * @property {string} id The id of the annotation in which the contents contain the mentions.
+ * @property {string} type The type of the mentioned person. This is passed from setUserData.
+ * @property {string} id The id of the mentioned person. This is passed from setUserData.
+ * @property {string} annotId The id of the annotation in which the contents contain the mentions.
  */
 
 /**
@@ -99,7 +100,10 @@ class MentionsManager {
     const deletedMentions = [];
 
     annotations.forEach(annotation => {
-      const prevMentionData = this.idMentionDataMap[annotation.Id] || {};
+      const prevMentionData = this.idMentionDataMap[annotation.Id] || {
+        mentions: [],
+        contentWithoutMentions: '',
+      };
       const currMentionData = this.extractMentionData(annotation);
       const prevMentions = prevMentionData.mentions;
       const currMentions = currMentionData.mentions;
@@ -175,16 +179,14 @@ class MentionsManager {
       return result;
     }
 
-    userData.forEach(({ email, value, type }) => {
-      if (this.includesMention(content, value)) {
+    userData.forEach(user => {
+      if (this.includesMention(content, user.value)) {
         result.mentions.push({
-          email,
-          value,
-          type,
-          id: annotation.Id,
+          ...user,
+          annotId: annotation.Id,
         });
 
-        result.contentWithoutMentions = result.contentWithoutMentions.replace(`@${value}`, '');
+        result.contentWithoutMentions = result.contentWithoutMentions.replace(`@${user.value}`, '');
       }
     });
 

@@ -228,7 +228,7 @@
     "styleOption": {
       "style": "Stile",
       "cloudy": "Nuvoloso",
-      "regular": "Regolare"
+      "solid": "Solido"
     },
     "slider": {
       "thickness": "Spessore",
