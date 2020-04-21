@@ -17,17 +17,17 @@ class ColorPaletteHeader extends React.PureComponent {
     style: PropTypes.object.isRequired,
     colorPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     colorMapKey: PropTypes.string.isRequired,
-    setColorPalette: PropTypes.func.isRequired,
+    setActivePalette: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     isTextColorPaletteDisabled: PropTypes.bool,
     isFillColorPaletteDisabled: PropTypes.bool,
     isBorderColorPaletteDisabled: PropTypes.bool,
   }
 
-  setColorPalette = newPalette => {
-    const { setColorPalette, colorMapKey } = this.props;
+  setActivePalette = newPalette => {
+    const { setActivePalette, colorMapKey } = this.props;
 
-    setColorPalette(colorMapKey, newPalette);
+    setActivePalette(colorMapKey, newPalette);
   }
 
   renderTextColorIcon = () => {
@@ -38,7 +38,7 @@ class ColorPaletteHeader extends React.PureComponent {
         <div
           className={colorPalette === 'TextColor' ? 'text selected' : 'text'}
           style={{ color: TextColor.toHexString() }}
-          onClick={() => this.setColorPalette('TextColor')}
+          onClick={() => this.setActivePalette('TextColor')}
         >
           Aa
         </div>
@@ -70,7 +70,7 @@ class ColorPaletteHeader extends React.PureComponent {
       <Tooltip content="option.annotationColor.StrokeColor">
         <div
           className={colorPalette === 'StrokeColor' ? 'border selected' : 'border'}
-          onClick={() => this.setColorPalette('StrokeColor')}
+          onClick={() => this.setActivePalette('StrokeColor')}
         >
           <div
             className={`border-icon ${getBrightness(StrokeColor)}}`}
@@ -91,7 +91,7 @@ class ColorPaletteHeader extends React.PureComponent {
       <Tooltip content="option.annotationColor.FillColor">
         <div
           className={colorPalette === 'FillColor' ? 'fill selected' : 'fill'}
-          onClick={() => this.setColorPalette('FillColor')}
+          onClick={() => this.setActivePalette('FillColor')}
         >
           <div
             className={`fill-icon ${getBrightness(FillColor)} ${isTransparency ? 'transparency' : ''}`}
@@ -151,7 +151,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setColorPalette: actions.setColorPalette,
+  setActivePalette: actions.setActivePalette,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));

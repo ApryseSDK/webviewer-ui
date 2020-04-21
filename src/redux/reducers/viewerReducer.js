@@ -171,7 +171,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, pageLabels: [...payload.pageLabels] };
     case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':
       return { ...state, selectedThumbnailPageIndexes: payload.selectedThumbnailPageIndexes };
-    case 'SET_COLOR_PALETTE': {
+    case 'SET_ACTIVE_PALETTE': {
       const { colorMapKey, colorPalette } = payload;
       return {
         ...state,
@@ -229,7 +229,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_CUSTOM_ELEMENT_OVERRIDES':
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
     case 'SET_NOTE_TRANSFORM_FUNCTION':
-      return { ...state, noteTransformFunction: payload.noteTransformFunction }
+      return { ...state, noteTransformFunction: payload.noteTransformFunction };
     default:
       return state;
   }

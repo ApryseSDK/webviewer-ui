@@ -36,13 +36,14 @@ class StylePopup extends React.PureComponent {
   };
 
   renderColorPalette = () => {
-    const { style, onStyleChange, currentPalette } = this.props;
+    const { style, onStyleChange, currentPalette, colorMapKey } = this.props;
 
     return (
       <ColorPalette
         color={style[currentPalette]}
         property={currentPalette}
         onStyleChange={onStyleChange}
+        colorMapKey={colorMapKey}
       />
     );
   };
