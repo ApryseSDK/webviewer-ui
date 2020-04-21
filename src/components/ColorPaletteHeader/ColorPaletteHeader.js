@@ -8,6 +8,7 @@ import Tooltip from 'components/Tooltip';
 import getBrightness from 'helpers/getBrightness';
 import { getDataWithKey } from 'constants/map';
 import actions from 'actions';
+import selectors from 'selectors';
 
 import './ColorPaletteHeader.scss';
 
@@ -18,6 +19,9 @@ class ColorPaletteHeader extends React.PureComponent {
     colorMapKey: PropTypes.string.isRequired,
     setColorPalette: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
+    isTextColorPaletteDisabled: PropTypes.bool,
+    isFillColorPaletteDisabled: PropTypes.bool,
+    isBorderColorPaletteDisabled: PropTypes.bool,
   }
 
   setColorPalette = newPalette => {
@@ -105,7 +109,14 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   render() {
-    const { t, colorPalette, colorMapKey } = this.props;
+    const {
+      t,
+      colorPalette,
+      colorMapKey,
+      isTextColorPaletteDisabled,
+      isBorderColorPaletteDisabled,
+      isFillColorPaletteDisabled,
+    } = this.props;
     const { availablePalettes } = getDataWithKey(colorMapKey);
 
     if (availablePalettes.length < 2) {
@@ -118,13 +129,13 @@ class ColorPaletteHeader extends React.PureComponent {
           {t(`option.annotationColor.${colorPalette}`)}
         </div>
         <div className="palette">
-          {availablePalettes.includes('TextColor') &&
+          {availablePalettes.includes('TextColor') && !isTextColorPaletteDisabled &&
             this.renderTextColorIcon()
           }
-          {availablePalettes.includes('StrokeColor') &&
+          {availablePalettes.includes('StrokeColor') && !isBorderColorPaletteDisabled &&
             this.renderBorderColorIcon()
           }
-          {availablePalettes.includes('FillColor') &&
+          {availablePalettes.includes('FillColor') && !isFillColorPaletteDisabled &&
             this.renderFillColorIcon()
           }
         </div>
@@ -133,8 +144,14 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 }
 
+const mapStateToProps = state => ({
+  isTextColorPaletteDisabled: selectors.isElementDisabled(state, 'textColorPalette'),
+  isFillColorPaletteDisabled: selectors.isElementDisabled(state, 'fillColorPalette'),
+  isBorderColorPaletteDisabled: selectors.isElementDisabled(state, 'borderColorPalette'),
+});
+
 const mapDispatchToProps = {
   setColorPalette: actions.setColorPalette,
 };
 
-export default connect(null, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));
