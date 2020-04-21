@@ -213,21 +213,23 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   getNumberOfColumns = () => {
-    const desktopBreakPoint = 640;
-    const { innerWidth } = window;
-    let numberOfColumns;
+    // const desktopBreakPoint = 640;
+    // const { innerWidth } = window;
+    // let numberOfColumns;
 
-    if (innerWidth >= desktopBreakPoint) {
-      numberOfColumns = 1;
-    // TODO: use forwardRef to get the width of the thumbnail div instead of using the magic 20px
-    } else if (innerWidth >= 3 * (THUMBNAIL_SIZE + 20)) {
-      numberOfColumns = 3;
-    } else if (innerWidth >= 2 * (THUMBNAIL_SIZE + 20)) {
-      numberOfColumns = 2;
-    } else {
-      numberOfColumns = 1;
-    }
+    // if (innerWidth >= desktopBreakPoint) {
+    //   numberOfColumns = 1;
+    // // TODO: use forwardRef to get the width of the thumbnail div instead of using the magic 20px
+    // } else if (innerWidth >= 3 * (THUMBNAIL_SIZE + 20)) {
+    //   numberOfColumns = 3;
+    // } else if (innerWidth >= 2 * (THUMBNAIL_SIZE + 20)) {
+    //   numberOfColumns = 2;
+    // } else {
+    //   numberOfColumns = 1;
+    // }
 
+    // return numberOfColumns;
+    const numberOfColumns = Math.min(3, Math.max(1, Math.floor(this.state && this.state.width ? this.state.width / 160 : 0)));
     return numberOfColumns;
   }
 
@@ -432,6 +434,10 @@ class ThumbnailsPanel extends React.PureComponent {
             this.setState({
               height: bounds.height,
               width: bounds.width,
+            }, () => {
+              this.setState({
+                numberOfColumns: this.getNumberOfColumns()
+              });
             });
           }}
         >
