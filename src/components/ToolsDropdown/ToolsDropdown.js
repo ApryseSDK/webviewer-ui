@@ -13,7 +13,7 @@ const ToolsDropdown = ({ isActive, isDisabled, onClick, style }) => {
         active: isActive,
         disabled: isDisabled,
       })}
-      data-element="tools-dropdown-button"
+      data-element="styling-button"
       onClick={onClick}
       style={style}
     >
