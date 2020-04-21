@@ -28,7 +28,7 @@ const ToolButton = ({ toolName, ...restProps }) => {
     // TODO: fix the issue properly. Can listen to toolUpdated
     // eslint-disable-next-line
     activeToolStyles,
-    { group = '', showColor, ...restObjectData },
+    toolButtonObject,
     customOverrides,
   ] = useSelector(
     state => [
@@ -41,6 +41,7 @@ const ToolButton = ({ toolName, ...restProps }) => {
     shallowEqual,
   );
   const dispatch = useDispatch();
+  const { group = '', ...restObjectData } = toolButtonObject;
 
   useEffect(() => {
     if (typeof customOverrides?.disable === 'undefined') {
@@ -66,11 +67,11 @@ const ToolButton = ({ toolName, ...restProps }) => {
     }
   };
 
-  const toolStyles = getToolStyles(toolName);
   let color = '';
-
+  const showColor = customOverrides?.showColor || toolButtonObject.showColor;
   if (showColor === 'always' || (showColor === 'active' && isActive)) {
-    color = toolStyles[iconColor]?.toHexString?.();
+    const toolStyles = getToolStyles(toolName);
+    color = toolStyles?.[iconColor]?.toHexString?.();
   }
 
   return (

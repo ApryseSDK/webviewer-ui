@@ -8,6 +8,7 @@
  * @param {string} [properties.buttonName] Name of the tool button that will be used in data-element.
  * @param {string} [properties.buttonGroup] Group of the tool button belongs to.
  * @param {string} [properties.tooltip] Tooltip of the tool button.
+ * @param {'always'|'active'|'never'} [properties.showColor] Controls when the tool button should show the color.
  * @param {function} [annotationConstructor] The constructor function for the annotation that will be created by the registered tool.
  * @example
 WebViewer(...)
