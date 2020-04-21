@@ -118,8 +118,10 @@ class ColorPaletteHeader extends React.PureComponent {
       isFillColorPaletteDisabled,
     } = this.props;
     const { availablePalettes } = getDataWithKey(colorMapKey);
-
-    if (availablePalettes.length < 2) {
+    const shouldRenderTextColorIcon = availablePalettes.includes('TextColor') && !isTextColorPaletteDisabled;
+    const shouldRenderBorderColorIcon = availablePalettes.includes('StrokeColor') && !isBorderColorPaletteDisabled;
+    const shouldRenderFillColorIcon = availablePalettes.includes('FillColor') && !isFillColorPaletteDisabled;
+    if (availablePalettes.length < 2 || (!shouldRenderTextColorIcon && !shouldRenderBorderColorIcon && !shouldRenderFillColorIcon)) {
       return null;
     }
 
@@ -129,13 +131,13 @@ class ColorPaletteHeader extends React.PureComponent {
           {t(`option.annotationColor.${colorPalette}`)}
         </div>
         <div className="palette">
-          {availablePalettes.includes('TextColor') && !isTextColorPaletteDisabled &&
+          { shouldRenderTextColorIcon &&
             this.renderTextColorIcon()
           }
-          {availablePalettes.includes('StrokeColor') && !isBorderColorPaletteDisabled &&
+          {shouldRenderBorderColorIcon &&
             this.renderBorderColorIcon()
           }
-          {availablePalettes.includes('FillColor') && !isFillColorPaletteDisabled &&
+          {shouldRenderFillColorIcon &&
             this.renderFillColorIcon()
           }
         </div>
