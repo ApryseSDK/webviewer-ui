@@ -227,7 +227,7 @@
     },
     "styleOption": {
       "style": "Estilo",
-      "regular": "Regular",
+      "solid": "Sólido",
       "cloudy": "Nublado"
     },
     "slider": {
