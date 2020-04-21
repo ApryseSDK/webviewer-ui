@@ -8,8 +8,6 @@ import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
 import StampOverlay from 'components/StampOverlay';
-import RedactionOverlay from 'components/RedactionOverlay';
-import core from 'core';
 
 import { circleRadius } from 'constants/slider';
 import selectors from 'selectors';
