@@ -1,0 +1,304 @@
+{
+  "action": {
+    "save": "Salva",
+    "clear": "Chiaro",
+    "reply": "rispondere",
+    "cancel": "Annulla",
+    "openFile": "Apri il file",
+    "applyAll": "Applicare tutte",
+    "link": "collegamento",
+    "rotate": "Ruotare",
+    "upload": "Caricare",
+    "ungroup": "Separa",
+    "edit": "modificare",
+    "extract": "Estratto",
+    "fileAttachmentDownload": "Scarica il file allegato",
+    "zoomIn": "Ingrandire",
+    "comment": "Commento",
+    "enterFullscreen": "A schermo intero",
+    "exitFullscreen": "Esci dalla modalità schermo intero",
+    "draw": "Disegnare",
+    "delete": "Elimina",
+    "close": "Vicino",
+    "rotateCounterClockwise": "Antiorario",
+    "apply": "Applicare",
+    "download": "Scarica",
+    "fitToWidth": "Adatta alla larghezza",
+    "fit": "In forma",
+    "copy": "copia",
+    "calibrate": "Calibrare",
+    "group": "Gruppo",
+    "submit": "Invia",
+    "print": "Stampa",
+    "style": "Stile",
+    "type": "genere",
+    "ok": "ok",
+    "sign": "Cartello",
+    "showMoreResults": "Mostra più risultati",
+    "zoomOut": "Rimpicciolisci",
+    "create": "Creare",
+    "zoom": "Ingrandisci",
+    "rotateClockwise": "Senso orario",
+    "fitToPage": "Adatta alla pagina"
+  },
+  "annotation": {
+    "fileattachment": "File allegato",
+    "areaMeasurement": "Misurazione dell'area",
+    "custom": "costume",
+    "eraser": "Gomma per cancellare",
+    "polygonCloud": "Nube",
+    "freetext": "Testo libero",
+    "squiggly": "Squiggly",
+    "line": "Linea",
+    "polyline": "polilinea",
+    "redact": "Oscura",
+    "highlight": "Evidenziare",
+    "callout": "Chiamare",
+    "highlight2": "Evidenziare",
+    "arrow": "Freccia",
+    "freetext2": "Testo libero",
+    "stickyNote": "Commento",
+    "rubberStamp": "Timbro",
+    "freehand2": "Mano libera",
+    "strikeout": "strikeout",
+    "ellipse": "Ellisse",
+    "signature": "Firma",
+    "perimeterMeasurement": "Misurazione perimetrale",
+    "rectangle": "Rettangolo",
+    "freehand": "Mano libera",
+    "polygon": "Poligono",
+    "distanceMeasurement": "Misurazione della distanza",
+    "caret": "non",
+    "stamp": "Francobollo",
+    "crop": "Ritaglia pagina",
+    "underline": "Sottolineare"
+  },
+  "rubberStamp": {
+    "Approved": "Approvato",
+    "Confidential": "confidenziale",
+    "Sold": "Venduto",
+    "AsIs": "Come è",
+    "NotApproved": "Non approvato",
+    "Experimental": "Sperimentale",
+    "SHSignHere": "Firmare qui",
+    "Expired": "Scaduto",
+    "Final": "Finale",
+    "SHInitialHere": "Iniziale qui",
+    "Void": "vuoto",
+    "PreliminaryResults": "Risultati preliminari",
+    "SHAccepted": "Accettato",
+    "Draft": "Bozza",
+    "ForComment": "Per commento",
+    "InformationOnly": "Solo informazioni",
+    "ForPublicRelease": "Per il rilascio pubblico",
+    "Completed": "Completato",
+    "SBRejected": "Respinto",
+    "SHWitness": "Testimone",
+    "Departmental": "dipartimentale",
+    "TopSecret": "Segretissimo",
+    "NotForPublicRelease": "Non per pubblicazione pubblica"
+  },
+  "component": {
+    "textToolsButton": "Strumenti di testo",
+    "miscToolsButton": "Strumenti vari",
+    "menuOverlay": "Menù",
+    "thumbnailsPanel": "miniature",
+    "measurementToolsButton": "Strumenti di misura",
+    "layersPanel": "Livelli",
+    "freehandToolsButton": "Strumenti a mano libera",
+    "leftPanel": "Pannello",
+    "bookmarkPage": "Pagina",
+    "shapeToolsButton": "Strumenti di forma",
+    "viewControlsOverlay": "Visualizza i controlli",
+    "searchOverlay": "Ricerca",
+    "outlinesPanel": "Lineamenti",
+    "notesPanel": "Appunti",
+    "calibration": "Calibrazione",
+    "bookmarksPanel": "segnalibri",
+    "toolsButton": "Utensili",
+    "redaction": "redazione",
+    "newBookmark": "Nuovo segnalibro"
+  },
+  "message": {
+    "linkURLorPage": "Link URL o una pagina",
+    "encryptedAttemptsExceeded": "Caricamento del documento crittografato non riuscito. Troppi tentativi.",
+    "noOutlines": "Questo documento non ha contorni.",
+    "noResults": "Nessun risultato trovato.",
+    "passwordRequired": "Password richiesta",
+    "imageSignatureAcceptedFileTypes": "Sono accettati solo {{AcceptedFileTypes}}",
+    "insertTextHere": "Inserisci qui il testo",
+    "incorrectPassword": "Password errata, tentativi rimasti: {{rimanendo tentativi}}",
+    "notSupported": "Quel tipo di file non è supportato.",
+    "annotationReplyCount_plural": "{{count}} risposte",
+    "searching": "Ricerca in corso ...",
+    "enterMeasurement": "Immettere la misurazione tra i due punti",
+    "encryptedUserCancelled": "Caricamento del documento crittografato non riuscito. Inserimento password annullato.",
+    "annotationReplyCount": "{{count}} Rispondi",
+    "processing": "In lavorazione...",
+    "printTotalPageCount": "Totale: {{count}} pagina",
+    "badDocument": "Caricamento del documento non riuscito. Il documento è corrotto o non valido.",
+    "printTotalPageCount_plural": "Totale: {{count}} pagine",
+    "signHere": "Firmare qui",
+    "searchPlaceholder": "Cerca commenti ...",
+    "enterPassword": "Questo documento è protetto da password. Per favore inserire una password",
+    "preparingToPrint": "Preparazione alla stampa ...",
+    "noAnnotations": "Questo documento non ha annotazioni.",
+    "customPrintPlaceholder": "es 3, 4-10"
+  },
+  "option": {
+    "annotationColor": {
+      "StrokeColor": "Colore del bordo",
+      "TextColor": "Colore del testo",
+      "FillColor": "Colore di riempimento"
+    },
+    "displayMode": {
+      "layout": "disposizione",
+      "pageTransition": "Transizione di pagina"
+    },
+    "documentControls": {
+      "placeholder": "Immettere le pagine per selezionare cioè 2, 5-9"
+    },
+    "layout": {
+      "cover": "Copertina",
+      "double": "Doppio",
+      "single": "singolo"
+    },
+    "notesPanel": {
+      "separator": {
+        "today": "Oggi",
+        "yesterday": "Ieri"
+      },
+      "orderPosition": "Posizione",
+      "orderTime": "Tempo"
+    },
+    "pageTransition": {
+      "default": "Pagina per pagina",
+      "continuous": "Continuo"
+    },
+    "print": {
+      "all": "Tutti",
+      "pages": "pagine",
+      "addWatermarkSettings": "Aggiungi impostazioni filigrana",
+      "current": "attuale",
+      "includeComments": "Includi commenti"
+    },
+    "redaction": {
+      "markForRedaction": "Contrassegna per redazione"
+    },
+    "searchPanel": {
+      "caseSensitive": "Che tiene conto del maiuscolo o minuscolo",
+      "wildcard": "Carta jolly",
+      "wholeWordOnly": "Parola intera"
+    },
+    "signatureOverlay": {
+      "addSignature": "Aggiungi una firma"
+    },
+    "signatureModal": {
+      "or": "O",
+      "pickImage": "Scegli l'immagine della firma",
+      "dragAndDrop": "Trascina e rilascia l'immagine qui",
+      "saveSignature": "Salva firma"
+    },
+    "status": {
+      "status": "Stato"
+    },
+    "state": {
+      "accepted": "Accettato",
+      "completed": "Completato",
+      "rejected": "Respinto",
+      "none": "Nessuna",
+      "setBy": "fissato dalla",
+      "set": "Imposta stato:",
+      "cancelled": "Annullato"
+    },
+    "measurementOverlay": {
+      "angle": "Angolo",
+      "area": "La zona",
+      "perimeter": "Perimetro",
+      "scale": "Rapporto di scala",
+      "distance": "Distanza",
+      "perimeterMeasurement": "Misura perimetrale",
+      "areaMeasurement": "Misura dell'area",
+      "radius": "Raggio",
+      "distanceMeasurement": "Misurazione della distanza"
+    },
+    "measurementOption": {
+      "scale": "Scala"
+    },
+    "styleOption": {
+      "style": "Stile",
+      "cloudy": "Nuvoloso",
+      "solid": "Solido"
+    },
+    "slider": {
+      "thickness": "Spessore",
+      "opacity": "Opacità",
+      "text": "Dimensione del testo"
+    },
+    "shared": {
+      "page": "Pagina",
+      "precision": "Precisione"
+    },
+    "watermark": {
+      "resetAllSettings": "Resettare tutte le impostazioni",
+      "size": "Taglia",
+      "style": "Stile",
+      "text": "Testo",
+      "location": "Scegli una posizione per modificare le filigrane",
+      "font": "font"
+    },
+    "thumbnailPanel": {
+      "rotateClockwise": "Senso orario",
+      "delete": "Elimina",
+      "rotateCounterClockwise": "Antiorario"
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteMessage": "Sei sicuro di voler eliminare le pagine selezionate. Questo non può essere annullato",
+      "deleteTitle": "Elimina pagina",
+      "deleteLastPageMessage": "Ciò comporterebbe che non restino pagine. Si prega di lasciare almeno una pagina"
+    },
+    "redaction": {
+      "applyTile": "Applica redazione",
+      "applyMessage": "Questa azione rimuoverà permanentemente tutti gli elementi selezionati per la redazione. Non può essere annullato."
+    }
+  },
+  "shortcut": {
+    "freetext": "(T)",
+    "signature": "(S)",
+    "zoomOut": "(Ctrl -)",
+    "stamp": "(IO)",
+    "freehand": "(F)",
+    "pan": "(P)",
+    "highlight": "(H)",
+    "zoomIn": "(Ctrl +)",
+    "select": "(Esc)",
+    "rectangle": "(R)",
+    "arrow": "(UN)",
+    "line": "(L)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "eraser": "(E)",
+    "stickyNote": "(N)",
+    "squiggly": "(G)",
+    "underline": "(U)",
+    "callout": "(C)",
+    "delete": "(In)",
+    "rotateClockwise": "(Ctrl Maiusc +)",
+    "copy": "(Ctrl C)",
+    "strikeout": "(K)",
+    "ellipse": "(O)"
+  },
+  "tool": {
+    "pan": "Padella",
+    "select": "Selezionare",
+    "Link": "Link URL o Pagina",
+    "Marquee": "Zoom tendone"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Pagina",
+    "enterurl": "Inserisci l'URL che desideri collegare",
+    "enterpage": "Seleziona il numero di pagina che desideri collegare"
+  }
+}
