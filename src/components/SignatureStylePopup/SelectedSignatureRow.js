@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import SignatureRowContent from 'components/SignatureStylePopup/SignatureRowContent';
 import SignatureAddBtn from 'components/SignatureStylePopup/SignatureAddBtn';
 import Icon from 'components/Icon';
+import ToolsDropdown from 'components/ToolsDropdown';
 import classNames from 'classnames';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -42,19 +43,11 @@ const SelectedSignatureRow = () => {
         /> :
         <SignatureAddBtn/>
       }
-      <div
-        className={classNames({
-          "signatures-arrow-container": true,
-          active: isToolStyleOpen,
-          disabled: savedSignatures.length === 0,
-        })}
-        data-element="styling-button"
+      <ToolsDropdown
         onClick={() => savedSignatures.length > 0 && dispatch(actions.toggleElement('toolStylePopup'))}
-      >
-        {isToolStyleOpen ?
-          <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-          <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-      </div>
+        isActive={isToolStyleOpen}
+        isDisabled={savedSignatures.length === 0}
+      />
     </div>
   );
 };

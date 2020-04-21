@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import ToolButton from 'components/ToolButton';
 import ToolStylePopup from 'components/ToolStylePopup';
+import ToolsDropdown from 'components/ToolsDropdown';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
 
 import core from 'core';
@@ -127,6 +128,7 @@ class ToolsOverlay extends React.PureComponent {
       activeToolGroup,
       isTabletAndMobile,
       isToolStyleOpen,
+      swapableToolNames,
     } = this.props;
 
     let arrowStyle = {};
@@ -179,6 +181,32 @@ class ToolsOverlay extends React.PureComponent {
       motionStyle = { 'overflow': 'hidden' };
     }
 
+    let dropdownButton = (
+      <div
+        className={classNames({
+          "styling-arrow-container": true,
+          active: isToolStyleOpen,
+        })}
+        data-element="styling-button"
+        onClick={() => this.props.toggleElement('toolStylePopup')}
+      >
+        <Icon glyph="icon-menu-style-line" />
+        {isToolStyleOpen ?
+          <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
+          <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
+      </div>
+    );
+
+    if (swapableToolNames.length > 0) {
+      dropdownButton = (
+        <ToolsDropdown
+          onClick={() => this.props.toggleElement('toolStylePopup')}
+          isActive={isToolStyleOpen}
+          style={{ width: '40px' }}
+        />
+      );
+    }
+
     let Component = (
       <React.Fragment>
         {toolNames.map((toolName, i) => (
@@ -187,20 +215,7 @@ class ToolsOverlay extends React.PureComponent {
             toolName={toolName}
           />
         ))}
-        {activeToolGroup !== 'miscTools' &&
-          <div
-            className={classNames({
-              "styling-arrow-container": true,
-              active: isToolStyleOpen,
-            })}
-            data-element="styling-button"
-            onClick={() => this.props.toggleElement('toolStylePopup')}
-          >
-            <Icon glyph="icon-menu-style-line" />
-            {isToolStyleOpen ?
-              <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-              <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-          </div>}
+        {activeToolGroup !== 'miscTools' && dropdownButton}
       </React.Fragment>
     );
 
@@ -275,6 +290,7 @@ const mapStateToProps = state => ({
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
   activeToolName: selectors.getActiveToolName(state),
+  swapableToolNames: selectors.getSwapableToolNamesForActiveToolGroup(state),
 });
 
 const mapDispatchToProps = {
