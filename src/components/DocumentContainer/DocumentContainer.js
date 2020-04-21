@@ -128,7 +128,7 @@ class DocumentContainer extends React.PureComponent {
     const reachedTop = scrollTop === 0;
     const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
 
-    // depending on the track pad used (see this on MacBooks), deltaY can go between 1 and -1 which cause it to go to another page
+    // depending on the track pad used (see this on MacBooks), deltaY can be randomly between 1 and -1 which cause page change
     const scrollingUp = e.deltaY < 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
     const scrollingDown = e.deltaY> 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
 
