@@ -9,8 +9,8 @@
  * @param {string} [properties.buttonGroup] Group of the tool button belongs to.
  * @param {string} [properties.tooltip] Tooltip of the tool button.
  * @param {'always'|'active'|'never'} [properties.showColor] Controls when the tool button should show the color.
- * @param {function} [annotationConstructor] The constructor function for the annotation that will be created by the registered tool.
- * @param {function} [customAnnotationCheckFxn] Function that takes in a parameter of an annotation. Returns a boolean if the specified annotation is a certain type of annotation. When this is defined, annotationConstructor can be omitted. Must define it when creating a custom annotation
+ * @param {function} [annotationConstructor] Deprecated Please use customAnnotationCheckFxn instead. Will be removed in the future.
+ * @param {function} [customAnnotationCheckFxn] Function that takes in a parameter of an annotation. Returns a boolean if the specified annotation is a certain type of annotation. This function is used by the viewer to check if the annotation passed in is associated(created) with the registered tool.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -31,7 +31,7 @@ WebViewer(...)
 import core from 'core';
 import { register, copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
-// TODO may want to remove annotationConstructor in 6.4.0 as custoomANnotationCheckFxn makes it sort of redundant
+// TODO may want to remove annotationConstructor in 7.0 as custoomANnotationCheckFxn makes it sort of redundant
 export default store => (tool, annotationConstructor, customAnnotationCheckFxn) => {
   registerToolInToolModeMap(tool);
   registerToolInRedux(store, tool);
