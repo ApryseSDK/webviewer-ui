@@ -118,7 +118,7 @@ export default initialState => (state = initialState, action) => {
             title: payload.tooltip,
             group: payload.buttonGroup,
             img: payload.buttonImage,
-            showColor: 'active',
+            showColor: payload.showColor || 'active',
           },
         },
       };
@@ -229,7 +229,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_CUSTOM_ELEMENT_OVERRIDES':
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
     case 'SET_NOTE_TRANSFORM_FUNCTION':
-      return { ...state, noteTransformFunction: payload.noteTransformFunction }
+      return { ...state, noteTransformFunction: payload.noteTransformFunction };
     default:
       return state;
   }
