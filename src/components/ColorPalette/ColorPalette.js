@@ -16,7 +16,8 @@ class ColorPalette extends React.PureComponent {
     property: PropTypes.string.isRequired,
     color: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    overridePalette: PropTypes.array,
+    colorMapKey: PropTypes.string.isRequired,
+    overridePalette: PropTypes.object,
   };
 
   defaultPalette = [
@@ -53,33 +54,21 @@ class ColorPalette extends React.PureComponent {
   setColor = e => {
     const { property, onStyleChange } = this.props;
     const bg = e.target.style.backgroundColor; // rgb(r, g, b);
-    const rgba = bg
-      ? bg.slice(bg.indexOf('(') + 1, -1).split(',')
-      : [0, 0, 0, 0];
-    const color = new window.Annotations.Color(
-      rgba[0],
-      rgba[1],
-      rgba[2],
-      rgba[3],
-    );
+    const rgba = bg ? bg.slice(bg.indexOf('(') + 1, -1).split(',') : [0, 0, 0, 0];
+    const color = new window.Annotations.Color(rgba[0], rgba[1], rgba[2], rgba[3]);
     onStyleChange(property, color);
   };
 
   renderTransparencyCell = bg => {
     const { property } = this.props;
-    const shouldRenderDummyCell =
-      property === 'TextColor' || property === 'StrokeColor';
+    const shouldRenderDummyCell = property === 'TextColor' || property === 'StrokeColor';
 
     if (shouldRenderDummyCell) {
       return <div className="dummy-cell" />;
     }
 
     const diagonalLine = (
-      <svg
-        width="100%"
-        height="100%"
-        style={{ position: 'absolute', top: '0px', left: '0px' }}
-      >
+      <svg width="100%" height="100%" style={{ position: 'absolute', top: '0px', left: '0px' }}>
         <line
           x1="0%"
           y1="100%"
@@ -132,24 +121,19 @@ class ColorPalette extends React.PureComponent {
     }
 
     return isColorPicked ? (
-      <Icon
-        className={`check-mark ${getBrightness(color)}`}
-        glyph="ic_check_black_24px"
-      />
+      <Icon className={`check-mark ${getBrightness(color)}`} glyph="ic_check_black_24px" />
     ) : null;
   };
 
   render() {
-    const { overridePalette } = this.props;
-    const palette = overridePalette || this.defaultPalette;
+    const { overridePalette, colorMapKey } = this.props;
+    const palette = overridePalette?.[colorMapKey] || overridePalette?.global || this.defaultPalette;
 
     return (
       <div className="ColorPalette" data-element={dataElement}>
-        {palette.map((bg, i) => (
-          <React.Fragment key={i}>
-            {bg === 'transparency'
-              ? this.renderTransparencyCell(bg)
-              : this.renderColorCell(bg)}
+        {palette.map(bg => (
+          <React.Fragment key={bg}>
+            {bg === 'transparency' ? this.renderTransparencyCell(bg) : this.renderColorCell(bg)}
           </React.Fragment>
         ))}
       </div>

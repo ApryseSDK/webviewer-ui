@@ -83,6 +83,7 @@ import setActiveHeaderGroup from './setActiveHeaderGroup';
 import setActiveLeftPanel from './setActiveLeftPanel';
 import setAdminUser from './setAdminUser';
 import setAnnotationUser from './setAnnotationUser';
+import setActivePalette from './setActivePalette';
 import setColorPalette from './setColorPalette';
 import setCurrentPageNumber from './setCurrentPageNumber';
 import setCustomNoteFilter from './setCustomNoteFilter';
@@ -243,6 +244,8 @@ export default store => {
     setNotesPanelSort: setNotesPanelSort(store),
     setShowSideWindow: setShowSideWindow(store),
     setSideWindowVisibility: setSideWindowVisibility(store),
+    setActivePalette: setActivePalette(store),
+    setColorPalette: setColorPalette(store),
     disableTool: disableTool(store),
     enableAllElements: enableAllElements(store),
     goToFirstPage,
@@ -268,7 +271,6 @@ export default store => {
     loadedFromServer: false,
     serverFailed: false,
     i18n: i18next,
-    setColorPalette: setColorPalette(store),
     showWarningMessage: showWarningMessage(store),
     updateOutlines: updateOutlines(store),
     getBBAnnotManager,

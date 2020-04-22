@@ -180,10 +180,10 @@ const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHeight) =
   const scrollContainer = core.getScrollViewElement();
   const boundingBox = scrollContainer.getBoundingClientRect();
   const visibleRegion = {
-    left: boundingBox.x + scrollContainer.scrollLeft,
-    right: boundingBox.x + scrollContainer.scrollLeft + boundingBox.width,
-    top: boundingBox.y + scrollContainer.scrollTop,
-    bottom: boundingBox.y + scrollContainer.scrollTop + boundingBox.height,
+    left: boundingBox.left + scrollContainer.scrollLeft,
+    right: boundingBox.left + scrollContainer.scrollLeft + boundingBox.width,
+    top: boundingBox.top + scrollContainer.scrollTop,
+    bottom: boundingBox.top + scrollContainer.scrollTop + boundingBox.height,
   };
   // gap between the annotation selection box and the popup element
   const gap = 13;

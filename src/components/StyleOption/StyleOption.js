@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import './StyleOption.scss';
 
 function StyleOption(props) {
-  const style = props.borderStyle ? props.borderStyle : 'regular';
-  const styleOptions = ['regular', 'cloudy'];
+  const style = props.borderStyle ? props.borderStyle : 'solid';
+  const styleOptions = ['solid', 'cloudy'];
   const [t] = useTranslation();
 
   const onChange = value => {

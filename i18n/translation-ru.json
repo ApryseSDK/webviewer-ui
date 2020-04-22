@@ -227,7 +227,7 @@
     },
     "styleOption": {
       "style": "Стиль",
-      "regular": "регулярное",
+      "solid": "твердый",
       "cloudy": "облачный"
     },
     "slider": {

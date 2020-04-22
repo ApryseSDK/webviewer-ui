@@ -15,6 +15,8 @@ import selectors from 'selectors';
 
 import './ToolButton.scss';
 
+import DataElements from 'constants/dataElement';
+
 const propTypes = {
   toolName: PropTypes.string.isRequired,
   group: PropTypes.string,
@@ -28,8 +30,9 @@ const ToolButton = ({ toolName, ...restProps }) => {
     // TODO: fix the issue properly. Can listen to toolUpdated
     // eslint-disable-next-line
     activeToolStyles,
-    { group = '', showColor, ...restObjectData },
+    toolButtonObject,
     customOverrides,
+    isStylePopupDisabled
   ] = useSelector(
     state => [
       selectors.getActiveToolName(state) === toolName,
@@ -37,10 +40,12 @@ const ToolButton = ({ toolName, ...restProps }) => {
       selectors.getActiveToolStyles(state),
       selectors.getToolButtonObject(state, toolName),
       selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
+      selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
     ],
     shallowEqual,
   );
   const dispatch = useDispatch();
+  const { group = '', ...restObjectData } = toolButtonObject;
 
   useEffect(() => {
     if (typeof customOverrides?.disable === 'undefined') {
@@ -66,18 +71,18 @@ const ToolButton = ({ toolName, ...restProps }) => {
     }
   };
 
-  const toolStyles = getToolStyles(toolName);
   let color = '';
-
+  const showColor = customOverrides?.showColor || toolButtonObject.showColor;
   if (showColor === 'always' || (showColor === 'active' && isActive)) {
-    color = toolStyles[iconColor]?.toHexString?.();
+    const toolStyles = getToolStyles(toolName);
+    color = toolStyles?.[iconColor]?.toHexString?.();
   }
 
   return (
     <Button
       className={classNames({
         ToolButton: true,
-        hasStyles: toolStylesExist(toolName),
+        hasStyles: !isStylePopupDisabled && toolStylesExist(toolName),
       })}
       onClick={handleClick}
       isActive={isActive}
