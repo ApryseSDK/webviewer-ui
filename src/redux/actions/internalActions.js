@@ -200,6 +200,10 @@ export const setColorPalette = (colorMapKey, colorPalette) => ({
   type: 'SET_COLOR_PALETTE',
   payload: { colorMapKey, colorPalette },
 });
+export const setActivePalette = (colorMapKey, colorPalette) => ({
+  type: 'SET_ACTIVE_PALETTE',
+  payload: { colorMapKey, colorPalette },
+});
 export const setIconColor = (colorMapKey, color) => ({
   type: 'SET_ICON_COLOR',
   payload: { colorMapKey, color },
@@ -355,4 +359,4 @@ export const setIsProgrammaticSearchFull = isProgrammaticSearchFull => ({
 export const setNoteTransformFunction = noteTransformFunction => ({
   type: 'SET_NOTE_TRANSFORM_FUNCTION',
   payload: { noteTransformFunction },
-})
+});

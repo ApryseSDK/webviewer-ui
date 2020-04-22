@@ -171,7 +171,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, pageLabels: [...payload.pageLabels] };
     case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':
       return { ...state, selectedThumbnailPageIndexes: payload.selectedThumbnailPageIndexes };
-    case 'SET_COLOR_PALETTE': {
+    case 'SET_ACTIVE_PALETTE': {
       const { colorMapKey, colorPalette } = payload;
       return {
         ...state,
