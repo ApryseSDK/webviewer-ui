@@ -15,6 +15,8 @@ import selectors from 'selectors';
 
 import './ToolButton.scss';
 
+import DataElements from 'constants/dataElement';
+
 const propTypes = {
   toolName: PropTypes.string.isRequired,
   group: PropTypes.string,
@@ -30,6 +32,7 @@ const ToolButton = ({ toolName, ...restProps }) => {
     activeToolStyles,
     toolButtonObject,
     customOverrides,
+    isStylePopupDisabled
   ] = useSelector(
     state => [
       selectors.getActiveToolName(state) === toolName,
@@ -37,6 +40,7 @@ const ToolButton = ({ toolName, ...restProps }) => {
       selectors.getActiveToolStyles(state),
       selectors.getToolButtonObject(state, toolName),
       selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
+      selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
     ],
     shallowEqual,
   );
@@ -78,7 +82,7 @@ const ToolButton = ({ toolName, ...restProps }) => {
     <Button
       className={classNames({
         ToolButton: true,
-        hasStyles: toolStylesExist(toolName),
+        hasStyles: !isStylePopupDisabled && toolStylesExist(toolName),
       })}
       onClick={handleClick}
       isActive={isActive}

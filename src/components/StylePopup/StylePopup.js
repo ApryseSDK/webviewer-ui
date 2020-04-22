@@ -9,17 +9,10 @@ import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
 
 import { circleRadius } from 'constants/slider';
+import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
 
 import './StylePopup.scss';
-
-const DataElements = {
-  COLOR_PALETTE: 'colorPalette',
-  OPACITY_SLIDER: 'opacitySlider',
-  STROKE_THICKNESS_SLIDER: 'strokeThicknessSlider',
-  FONT_SIZE_SLIDER: 'fontSizeSlider',
-  STYLE_OPTION: 'styleOption'
-};
 
 class StylePopup extends React.PureComponent {
   static propTypes = {
@@ -33,6 +26,7 @@ class StylePopup extends React.PureComponent {
     isStrokeThicknessSliderDisabled: PropTypes.bool,
     isFontSizeSliderDisabled: PropTypes.bool,
     isStyleOptionDisabled: PropTypes.bool,
+    isStylePopupDisabled: PropTypes.bool,
   };
 
   renderColorPalette = () => {
@@ -128,15 +122,18 @@ class StylePopup extends React.PureComponent {
       isOpacitySliderDisabled,
       isStrokeThicknessSliderDisabled,
       isFontSizeSliderDisabled,
-      isStyleOptionDisabled } = this.props;
+      isStyleOptionDisabled,
+      isStylePopupDisabled } = this.props;
     const { Scale, Precision, Style } = style;
 
     const hideAllSlider = isOpacitySliderDisabled && isStrokeThicknessSliderDisabled && isFontSizeSliderDisabled;
-
+    if (isStylePopupDisabled) {
+      return null;
+    }
     return (
       <div
         className="Popup StylePopup"
-        data-element="stylePopup"
+        data-element={DataElements.STYLE_POPUP}
       >
         {currentPalette && !isColorPaletteDisabled && (
           <div className="colors-container" data-element={DataElements.COLOR_PALETTE}>
@@ -176,6 +173,7 @@ class StylePopup extends React.PureComponent {
 
 const mapStateToProps = (state, { colorMapKey }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
+  isStylePopupDisabled: selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
   isColorPaletteDisabled: selectors.isElementDisabled(state, DataElements.COLOR_PALETTE),
   isOpacitySliderDisabled: selectors.isElementDisabled(state, DataElements.OPACITY_SLIDER),
   isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DataElements.STROKE_THICKNESS_SLIDER),

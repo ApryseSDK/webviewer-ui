@@ -9,10 +9,7 @@ import selectors from 'selectors';
 
 import './MeasurementOption.scss';
 
-const DataElements = {
-  SCALE_INPUT_CONTAINER: 'scaleInputContainer',
-  PRECISION_INPUT_CONTAINER: 'precisionInputContainer'
-};
+import DataElements from 'constants/dataElement';
 
 class MeasurementOption extends React.Component {
   static propTypes = {
