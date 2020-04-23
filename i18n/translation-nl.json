@@ -300,5 +300,12 @@
     "page": "Bladzijde",
     "enterurl": "Voer de URL in waarnaar u wilt linken",
     "enterpage": "Selecteer het paginanummer waarnaar u wilt linken"
+  },
+  "datePicker": {
+    "previousMonth" : "Vorige maand",
+    "nextMonth"     : "Volgende maand",
+    "months"        : ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
+    "weekdays"      : ["zondag", "maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag"],
+    "weekdaysShort" : ["zo.", "ma.", "di.", "wo.", "do.", "vr.", "za."]
   }
 }

@@ -300,5 +300,12 @@
     "page": "Page",
     "enterurl": "Entrez l'URL à laquelle vous souhaitez créer un lien",
     "enterpage": "Sélectionnez le numéro de page auquel vous souhaitez lier"
+  },
+  "datePicker": {
+    "previousMonth" : "Le mois précédent",
+    "nextMonth"     : "Le mois prochain",
+    "months"        : ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
+    "weekdays"      : ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
+    "weekdaysShort" : ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."]
   }
 }
