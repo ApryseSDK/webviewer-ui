@@ -117,6 +117,11 @@ export default (enable, store) => features => {
         }
       },
     },
+    [Feature.MultipleViewers]: {
+      fn: () => {
+        store.dispatch(actions.setIsMultiViewer(enable));
+      },
+    },
     [Feature.ThumbnailMerging]: {
       fn: () => {
         store.dispatch(actions.setThumbnailMerging(enable));
