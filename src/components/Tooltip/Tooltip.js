@@ -43,7 +43,7 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
     childRef.current?.addEventListener('mouseenter', showToolTip);
     childRef.current?.addEventListener('mouseleave', hideTooltip);
     childRef.current?.addEventListener('click', hideTooltip);
-  }, []);
+  }, [childRef]);
 
   useLayoutEffect(() => {
     const childEle = childRef.current;
@@ -83,7 +83,7 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
           && newLeft > 0
           && newLeft + tooltipRect.width < window.innerWidth
         );
-      });
+      }) || 'bottom';
 
       const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[
         bestLocation
@@ -104,7 +104,7 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
     } else {
       setOpacity(0);
     }
-  }, [show]);
+  }, [childRef, show]);
 
   const isUsingMobileDevices = isIOS || isAndroid;
   const child = React.cloneElement(children, {
