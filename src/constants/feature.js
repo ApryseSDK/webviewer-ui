@@ -36,7 +36,7 @@ export default {
   TextSelection: 'TextSelection',
   TouchScrollLock: 'TouchScrollLock',
   Copy: 'Copy',
-  MultipleViewers: 'MultipleViewers',
+  MultipleViewerMerging: 'MultipleViewerMerging',
   ThumbnailMerging: 'ThumbnailMerging',
   ThumbnailReordering: 'ThumbnailReordering',
   ThumbnailMultiselect: 'ThumbnailMultiselect',

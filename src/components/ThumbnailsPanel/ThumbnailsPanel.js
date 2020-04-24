@@ -29,7 +29,7 @@ class ThumbnailsPanel extends React.PureComponent {
     currentPage: PropTypes.number,
     isThumbnailMergingEnabled: PropTypes.bool,
     isThumbnailReorderingEnabled: PropTypes.bool,
-    isMultiViewer: PropTypes.bool,
+    isMultipleViewerMerging: PropTypes.bool,
     dispatch: PropTypes.func,
     isThumbnailControlDisabled: PropTypes.bool,
   }
@@ -122,7 +122,7 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   onDragStart = (e, index) => {
-    const { selectedPageIndexes, isThumbnailMergingEnabled, isMultiViewer, setSelectedPageThumbnails } = this.props;
+    const { selectedPageIndexes, isThumbnailMergingEnabled, isMultipleViewerMerging, setSelectedPageThumbnails } = this.props;
     const draggingSelectedPage = selectedPageIndexes.some(i => i === index);
     const pagesToMove = draggingSelectedPage ? selectedPageIndexes.map(index => index + 1) : [index + 1];
 
@@ -134,7 +134,7 @@ class ThumbnailsPanel extends React.PureComponent {
       e.dataTransfer.setDragImage(new Image(), 0, 0);
     }
 
-    if (isThumbnailMergingEnabled && isMultiViewer) {
+    if (isThumbnailMergingEnabled && isMultipleViewerMerging) {
       e.dataTransfer.dropEffect = 'move';
       e.dataTransfer.effectAllowed = 'all';
       e.dataTransfer.setData(dataTransferWebViewerFrameKey, window.frameElement.id);
@@ -523,7 +523,7 @@ const mapStateToProps = state => ({
   selectedPageIndexes: selectors.getSelectedThumbnailPageIndexes(state),
   isThumbnailMergingEnabled: selectors.getIsThumbnailMergingEnabled(state),
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),
-  isMultiViewer: selectors.getIsMultiViewer(state),
+  isMultipleViewerMerging: selectors.getIsMultipleViewerMerging(state),
   isThumbnailControlDisabled: selectors.isElementDisabled(state, 'thumbnailControl'),
 });
 

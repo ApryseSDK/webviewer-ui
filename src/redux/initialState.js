@@ -181,7 +181,7 @@ export default {
     currentPage: 1,
     sortStrategy: 'position',
     isFullScreen: false,
-    isMultiViewer: false,
+    isMultipleViewerMerging: false,
     isThumbnailMerging: true,
     isThumbnailReordering: true,
     isThumbnailMultiselect: false,

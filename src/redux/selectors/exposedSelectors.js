@@ -137,7 +137,7 @@ export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnail
 
 export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
 
-export const getIsMultiViewer = state => state.viewer.isMultiViewer;
+export const getIsMultipleViewerMerging = state => state.viewer.isMultipleViewerMerging;
 
 export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
 
