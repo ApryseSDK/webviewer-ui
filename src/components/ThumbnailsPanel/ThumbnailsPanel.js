@@ -35,7 +35,7 @@ class ThumbnailsPanel extends React.PureComponent {
     this.listRef = React.createRef();
     this.afterMovePageNumber = null;
     this.state = {
-      numberOfColumns: this.getNumberOfColumns(),
+      numberOfColumns: 1,
       isDocumentControlHidden: true,
       canLoad: true,
       height: 0,
@@ -208,12 +208,12 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onWindowResize = () => {
     this.setState({
-      numberOfColumns: this.getNumberOfColumns(),
+      numberOfColumns: this.getNumberOfColumns(this.state.width),
     });
   }
 
-  getNumberOfColumns = () => {
-    const numberOfColumns = Math.min(3, Math.max(1, Math.floor(this.state && this.state.width ? this.state.width / 160 : 0)));
+  getNumberOfColumns = width => {
+    const numberOfColumns = Math.min(3, Math.max(1, Math.floor(width / 160)));
     return numberOfColumns;
   }
 
@@ -397,6 +397,14 @@ class ThumbnailsPanel extends React.PureComponent {
     });
   }
 
+  onPanelResize = ({ bounds }) => {
+    this.setState({
+      height: bounds.height,
+      width: bounds.width,
+      numberOfColumns: this.getNumberOfColumns(bounds.width),
+    });
+  }
+
   render() {
     const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes } = this.props;
     const { numberOfColumns, height, width, documentControlHeight, isDocumentControlHidden } = this.state;
@@ -414,16 +422,7 @@ class ThumbnailsPanel extends React.PureComponent {
       >
         <Measure
           bounds
-          onResize={({ bounds }) => {
-            this.setState({
-              height: bounds.height,
-              width: bounds.width,
-            }, () => {
-              this.setState({
-                numberOfColumns: this.getNumberOfColumns()
-              });
-            });
-          }}
+          onResize={this.onPanelResize}
         >
           {({ measureRef }) => (
             <div ref={measureRef} className="virtualized-thumbnails-container"
