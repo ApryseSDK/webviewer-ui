@@ -129,12 +129,18 @@ class Thumbnail extends React.PureComponent {
   handleClick = e => {
     const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled } = this.props;
 
-    if (isThumbnailMultiselectEnabled && (e.ctrlKey || e.metaKey)) {
+    if (isThumbnailMultiselectEnabled) {
+      let togglingSelectedPage = e.ctrlKey || e.metaKey;
       let updatedSelectedPages = [...selectedPageIndexes];
-      if (selectedPageIndexes.indexOf(index) > -1) {
-        updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+
+      if (togglingSelectedPage) {
+        if(selectedPageIndexes.indexOf(index) > -1) {
+          updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+        } else {
+          updatedSelectedPages.push(index);
+        }
       } else {
-        updatedSelectedPages.push(index);
+        updatedSelectedPages = [];
       }
 
       setSelectedPageThumbnails(updatedSelectedPages);
