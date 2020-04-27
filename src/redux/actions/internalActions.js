@@ -103,6 +103,10 @@ export const setThumbnailMultiselect = (useThumbnailMultiselect = true) => ({
   type: 'SET_THUMBNAIL_MULTISELECT',
   payload: { useThumbnailMultiselect },
 });
+export const setIsMultipleViewerMerging = (isMultipleViewerMerging = false) => ({
+  type: 'SET_MULTI_VIEWER_MERGING',
+  payload: { isMultipleViewerMerging },
+});
 export const setAllowPageNavigation = (allowPageNavigation = true) => ({
   type: 'SET_ALLOW_PAGE_NAVIGATION',
   payload: { allowPageNavigation },

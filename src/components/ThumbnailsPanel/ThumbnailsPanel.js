@@ -29,6 +29,7 @@ class ThumbnailsPanel extends React.PureComponent {
     currentPage: PropTypes.number,
     isThumbnailMergingEnabled: PropTypes.bool,
     isThumbnailReorderingEnabled: PropTypes.bool,
+    isMultipleViewerMerging: PropTypes.bool,
     dispatch: PropTypes.func,
     isThumbnailControlDisabled: PropTypes.bool,
   }
@@ -121,7 +122,7 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   onDragStart = (e, index) => {
-    const { selectedPageIndexes, isThumbnailMergingEnabled, setSelectedPageThumbnails } = this.props;
+    const { selectedPageIndexes, isThumbnailMergingEnabled, isMultipleViewerMerging, setSelectedPageThumbnails } = this.props;
     const draggingSelectedPage = selectedPageIndexes.some(i => i === index);
     const pagesToMove = draggingSelectedPage ? selectedPageIndexes.map(index => index + 1) : [index + 1];
 
@@ -133,7 +134,7 @@ class ThumbnailsPanel extends React.PureComponent {
       e.dataTransfer.setDragImage(new Image(), 0, 0);
     }
 
-    if (isThumbnailMergingEnabled) {
+    if (isThumbnailMergingEnabled && isMultipleViewerMerging) {
       e.dataTransfer.dropEffect = 'move';
       e.dataTransfer.effectAllowed = 'all';
       e.dataTransfer.setData(dataTransferWebViewerFrameKey, window.frameElement.id);
@@ -161,7 +162,7 @@ class ThumbnailsPanel extends React.PureComponent {
     const { files } = e.dataTransfer;
     const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
     const externalPageWebViewerFrameId = e.dataTransfer.getData(dataTransferWebViewerFrameKey);
-    const mergingDocument = (window.frameElement.id !== externalPageWebViewerFrameId) || files.length;
+    const mergingDocument = (externalPageWebViewerFrameId && window.frameElement.id !== externalPageWebViewerFrameId) || files.length;
     const currentPageIndex = currentPage - 1;
 
     if (isThumbnailMergingEnabled && mergingDocument) {
@@ -171,7 +172,7 @@ class ThumbnailsPanel extends React.PureComponent {
       } else if (files.length) {
         mergeDocument(files[0], insertTo);
       }
-    } else if (isThumbnailReorderingEnabled) {
+    } else if (isThumbnailReorderingEnabled && !mergingDocument) {
       if ( draggingOverPageIndex !== null) {
         const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
 
@@ -522,6 +523,7 @@ const mapStateToProps = state => ({
   selectedPageIndexes: selectors.getSelectedThumbnailPageIndexes(state),
   isThumbnailMergingEnabled: selectors.getIsThumbnailMergingEnabled(state),
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),
+  isMultipleViewerMerging: selectors.getIsMultipleViewerMerging(state),
   isThumbnailControlDisabled: selectors.isElementDisabled(state, 'thumbnailControl'),
 });
 
