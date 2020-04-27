@@ -12,6 +12,8 @@ import { extractPagesToMerge, mergeExternalWebViewerDocument, mergeDocument } fr
 import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
+import { workerTypes } from 'constants/types';
+import { PRIORITY_THREE, PRIORITY_ONE } from 'constants/actionPriority';
 
 import './ThumbnailsPanel.scss';
 
@@ -224,7 +226,15 @@ class ThumbnailsPanel extends React.PureComponent {
   };
 
   onDocumentLoaded = () => {
-    const { setSelectedPageThumbnails } = this.props;
+    const { setSelectedPageThumbnails, dispatch } = this.props;
+
+    let doc = core.getDocument();
+    if (doc.type !== workerTypes.PDF) {
+      dispatch(actions.disableElements(['thumbnailControl',], PRIORITY_ONE));
+      dispatch(actions.setThumbnailReordering(false));
+      dispatch(actions.setThumbnailMerging(false));
+    }
+
     setSelectedPageThumbnails([]);
   }
 
