@@ -17,7 +17,7 @@ export const mergeDocument = (srcToMerge, mergeToPage, shouldFireEvent) => dispa
       dispatch(actions.closeElement('loadingModal'));
       core.setCurrentPage(mergeToPage);
 
-      if(shouldFireEvent) {
+      if (shouldFireEvent) {
         fireEvent('documentMerged', mergeResults);
       }
 
