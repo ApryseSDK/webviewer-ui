@@ -9,7 +9,7 @@ export const extractPagesToMerge = pageNumbers => {
   window.pagesExtracted = pageNumbers;
 };
 
-export const mergeDocument = (srcToMerge, mergeToPage, shouldFireEvent) => dispatch => {
+export const mergeDocument = (srcToMerge, mergeToPage, shouldFireEvent = true) => dispatch => {
   dispatch(actions.openElement('loadingModal'));
 
   return new Promise((resolve, reject) => {
