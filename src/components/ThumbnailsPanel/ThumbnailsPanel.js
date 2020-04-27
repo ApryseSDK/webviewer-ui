@@ -35,7 +35,6 @@ class ThumbnailsPanel extends React.PureComponent {
     this.listRef = React.createRef();
     this.afterMovePageNumber = null;
     this.state = {
-      numberOfColumns: 1,
       isDocumentControlHidden: true,
       canLoad: true,
       height: 0,
@@ -53,7 +52,6 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.addEventListener('pageComplete', this.onPageComplete);
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
-    window.addEventListener('resize', this.onWindowResize);
   }
 
   componentWillUnmount() {
@@ -63,7 +61,6 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.removeEventListener('pageComplete', this.onPageComplete);
     core.removeEventListener('annotationHidden', this.onAnnotationChanged);
-    window.removeEventListener('resize', this.onWindowResize);
   }
 
   onBeginRendering = () => {
@@ -124,7 +121,7 @@ class ThumbnailsPanel extends React.PureComponent {
     e.preventDefault();
     e.stopPropagation();
 
-    const { numberOfColumns } = this.state;
+    const numberOfColumns = this.getNumberOfColumns(this.state.width);
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
 
     if (!isThumbnailReorderingEnabled && !isThumbnailMergingEnabled) {
@@ -204,12 +201,6 @@ class ThumbnailsPanel extends React.PureComponent {
 
   onPageNumberUpdated = pageNumber => {
     this.listRef.current?.scrollToRow(pageNumber - 1);
-  }
-
-  onWindowResize = () => {
-    this.setState({
-      numberOfColumns: this.getNumberOfColumns(this.state.width),
-    });
   }
 
   getNumberOfColumns = width => {
@@ -341,11 +332,12 @@ class ThumbnailsPanel extends React.PureComponent {
 
   renderThumbnails = ({ index, key, style }) => {
     const {
-      numberOfColumns,
       canLoad,
       draggingOverPageIndex,
       isDraggingToPreviousPage,
+      width,
     } = this.state;
+    const numberOfColumns = this.getNumberOfColumns(width);
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled, selectedPageIndexes } = this.props;
     const { thumbs } = this;
     const className = classNames({
@@ -401,13 +393,13 @@ class ThumbnailsPanel extends React.PureComponent {
     this.setState({
       height: bounds.height,
       width: bounds.width,
-      numberOfColumns: this.getNumberOfColumns(bounds.width),
     });
   }
 
   render() {
     const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes } = this.props;
-    const { numberOfColumns, height, width, documentControlHeight, isDocumentControlHidden } = this.state;
+    const { height, width, documentControlHeight, isDocumentControlHidden } = this.state;
+    const numberOfColumns = this.getNumberOfColumns(this.state.width);
     const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
     const shouldShowControls = !isDocumentControlHidden || selectedPageIndexes.length > 0;
