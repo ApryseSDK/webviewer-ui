@@ -35,7 +35,6 @@ class ThumbnailsPanel extends React.PureComponent {
     this.listRef = React.createRef();
     this.afterMovePageNumber = null;
     this.state = {
-      numberOfColumns: this.getNumberOfColumns(),
       isDocumentControlHidden: true,
       canLoad: true,
       height: 0,
@@ -53,7 +52,6 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.addEventListener('pageComplete', this.onPageComplete);
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
-    window.addEventListener('resize', this.onWindowResize);
   }
 
   componentWillUnmount() {
@@ -63,7 +61,6 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.removeEventListener('pageComplete', this.onPageComplete);
     core.removeEventListener('annotationHidden', this.onAnnotationChanged);
-    window.removeEventListener('resize', this.onWindowResize);
   }
 
   onBeginRendering = () => {
@@ -124,7 +121,7 @@ class ThumbnailsPanel extends React.PureComponent {
     e.preventDefault();
     e.stopPropagation();
 
-    const { numberOfColumns } = this.state;
+    const numberOfColumns = this.getNumberOfColumns(this.state.width);
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled } = this.props;
 
     if (!isThumbnailReorderingEnabled && !isThumbnailMergingEnabled) {
@@ -206,28 +203,8 @@ class ThumbnailsPanel extends React.PureComponent {
     this.listRef.current?.scrollToRow(pageNumber - 1);
   }
 
-  onWindowResize = () => {
-    this.setState({
-      numberOfColumns: this.getNumberOfColumns(),
-    });
-  }
-
-  getNumberOfColumns = () => {
-    const desktopBreakPoint = 640;
-    const { innerWidth } = window;
-    let numberOfColumns;
-
-    if (innerWidth >= desktopBreakPoint) {
-      numberOfColumns = 1;
-    // TODO: use forwardRef to get the width of the thumbnail div instead of using the magic 20px
-    } else if (innerWidth >= 3 * (THUMBNAIL_SIZE + 20)) {
-      numberOfColumns = 3;
-    } else if (innerWidth >= 2 * (THUMBNAIL_SIZE + 20)) {
-      numberOfColumns = 2;
-    } else {
-      numberOfColumns = 1;
-    }
-
+  getNumberOfColumns = width => {
+    const numberOfColumns = Math.min(3, Math.max(1, Math.floor(width / 160)));
     return numberOfColumns;
   }
 
@@ -355,11 +332,12 @@ class ThumbnailsPanel extends React.PureComponent {
 
   renderThumbnails = ({ index, key, style }) => {
     const {
-      numberOfColumns,
       canLoad,
       draggingOverPageIndex,
       isDraggingToPreviousPage,
+      width,
     } = this.state;
+    const numberOfColumns = this.getNumberOfColumns(width);
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled, selectedPageIndexes } = this.props;
     const { thumbs } = this;
     const className = classNames({
@@ -411,9 +389,17 @@ class ThumbnailsPanel extends React.PureComponent {
     });
   }
 
+  onPanelResize = ({ bounds }) => {
+    this.setState({
+      height: bounds.height,
+      width: bounds.width,
+    });
+  }
+
   render() {
     const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes } = this.props;
-    const { numberOfColumns, height, width, documentControlHeight, isDocumentControlHidden } = this.state;
+    const { height, width, documentControlHeight, isDocumentControlHidden } = this.state;
+    const numberOfColumns = this.getNumberOfColumns(this.state.width);
     const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
     const shouldShowControls = !isDocumentControlHidden || selectedPageIndexes.length > 0;
@@ -428,12 +414,7 @@ class ThumbnailsPanel extends React.PureComponent {
       >
         <Measure
           bounds
-          onResize={({ bounds }) => {
-            this.setState({
-              height: bounds.height,
-              width: bounds.width,
-            });
-          }}
+          onResize={this.onPanelResize}
         >
           {({ measureRef }) => (
             <div ref={measureRef} className="virtualized-thumbnails-container"
