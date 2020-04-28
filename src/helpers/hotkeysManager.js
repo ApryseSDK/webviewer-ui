@@ -128,6 +128,7 @@ const HotkeysManager = {
   initialize(store) {
     // still allow hotkeys when focusing a textarea or an input
     hotkeys.filter = () => true;
+    this.store = store;
     this.keyHandlerMap = this.createKeyHandlerMap(store);
     this.prevToolName = null;
     Object.keys(this.keyHandlerMap).forEach(key => {
@@ -460,7 +461,17 @@ WebViewer(...)
    * @ignore
    */
   createToolHotkeyHandler(handler) {
+    const { getState } = this.store;
+
     return (...args) => {
+      const openElements = selectors.getOpenElements(getState());
+      const currentToolName = core.getToolMode().name;
+    
+      if (currentToolName=== window.Tools.ToolNames.SIGNATURE && openElements['signatureModal']) {
+        // disable changing tool when the signature overlay is opened
+        return;
+      }
+  
       if (!isFocusingElement()) {
         handler(...args);
       }

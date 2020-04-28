@@ -6,14 +6,6 @@ import selectors from 'selectors';
 export default (store, toolName) => {
   const { dispatch, getState } = store;
 
-  const openElements = selectors.getOpenElements(getState());
-  const currentTool = core.getToolMode().name;
-
-  if (currentTool === window.Tools.ToolNames.SIGNATURE && openElements['signatureModal']) {
-    // disable changing tool when the signature overlay is opened
-    return;
-  }
-
   const toolGroup =
     selectors.getToolButtonObject(getState(), toolName)?.group || '';
 
@@ -23,12 +15,12 @@ export default (store, toolName) => {
     dispatch(actions.closeElement('toolsOverlay'));
   }
 
-  const hasToolBeenSelected = currentTool === toolName;
+  const hasToolBeenSelected = selectors.getOpenElements(getState()) === toolName;
   if (hasToolBeenSelected && toolStylesExist(toolName)) {
     dispatch(actions.toggleElement('toolStylePopup'));
     return;
   }
-
+ 
   if (
     window.innerWidth <= 900 &&
     // TODO: revisit
