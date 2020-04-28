@@ -190,7 +190,12 @@ const RichTextPopup = () => {
             title="option.richText.strikeout"
           />
         </div>
-        <ColorPalette color={format.color} property="TextColor" onStyleChange={handleColorChange} />
+        <ColorPalette
+          colorMapKey="freeText"
+          color={format.color}
+          property="TextColor"
+          onStyleChange={handleColorChange}
+        />
       </div>
     </Draggable>
   );
