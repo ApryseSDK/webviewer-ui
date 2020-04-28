@@ -92,6 +92,10 @@ export const closeElements = dataElements => dispatch => {
 
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
+  if (dataElement === 'searchOverlay' && state.viewer.openElements[dataElement]) {
+    dispatch(closeElement(dataElement));
+    return;
+  }
 
   if (
     state.viewer.disabledElements[dataElement]?.disabled
