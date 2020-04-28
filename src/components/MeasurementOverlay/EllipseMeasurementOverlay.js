@@ -62,8 +62,8 @@ function EllipseMeasurementOverlay(props) {
     annotation.setHeight(diameterInPts);
     annotation.setWidth(diameterInPts);
     setRadius(radius);
-    finishAnnotation();
     forceEllipseRedraw();
+    finishAnnotation();
   };
 
   const forceEllipseRedraw = useCallback(() => {
