@@ -10,6 +10,7 @@ export default (store, toolName) => {
   const currentTool = core.getToolMode().name;
 
   if (currentTool === window.Tools.ToolNames.SIGNATURE && openElement['signatureModal']) {
+    // disable changing tool when the signature overlay is opened
     return;
   }
 
@@ -21,7 +22,7 @@ export default (store, toolName) => {
   } else {
     dispatch(actions.closeElement('toolsOverlay'));
   }
-  const hasToolBeenSelected = core.getToolMode().name === toolName;
+  const hasToolBeenSelected = currentTool === toolName;
   if (hasToolBeenSelected && toolStylesExist(toolName)) {
     dispatch(actions.toggleElement('toolStylePopup'));
     return;
