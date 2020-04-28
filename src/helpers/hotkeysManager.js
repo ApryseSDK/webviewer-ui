@@ -467,7 +467,7 @@ WebViewer(...)
       const openElements = selectors.getOpenElements(getState());
       const currentToolName = core.getToolMode().name;
     
-       // disable changing tool when the signature overlay is opened.
+      // disable changing tool when the signature overlay is opened.
       const isSignatureModalOpen = currentToolName === window.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
 
       if (isFocusingElement() || isSignatureModalOpen) {
