@@ -51,6 +51,7 @@ class ThumbnailsPanel extends React.PureComponent {
       documentControlHeight: 0,
       draggingOverPageIndex: null,
       isDraggingToPreviousPage: false,
+      allowPageOperations: true,
     };
   }
 
@@ -226,13 +227,13 @@ class ThumbnailsPanel extends React.PureComponent {
   };
 
   onDocumentLoaded = () => {
-    const { setSelectedPageThumbnails, dispatch } = this.props;
+    const { setSelectedPageThumbnails } = this.props;
 
     let doc = core.getDocument();
     if (doc.type !== workerTypes.PDF) {
-      dispatch(actions.disableElements(['thumbnailControl',], PRIORITY_ONE));
-      dispatch(actions.setThumbnailReordering(false));
-      dispatch(actions.setThumbnailMerging(false));
+      this.setState({ allowPageOperations: false });
+    } else {
+      this.setState({ allowPageOperations: true });
     }
 
     setSelectedPageThumbnails([]);
@@ -375,10 +376,10 @@ class ThumbnailsPanel extends React.PureComponent {
       draggingOverPageIndex,
       isDraggingToPreviousPage,
       width,
+      allowPageOperations,
     } = this.state;
     const numberOfColumns = this.getNumberOfColumns(width);
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled, selectedPageIndexes } = this.props;
-    const { thumbs } = this;
     const className = classNames({
       columnsOfThumbnails: (numberOfColumns > 1),
       row: true,
@@ -389,7 +390,8 @@ class ThumbnailsPanel extends React.PureComponent {
         {
           new Array(numberOfColumns).fill().map((_, columnIndex) => {
             const thumbIndex = index * numberOfColumns + columnIndex;
-            const showPlaceHolder = (isThumbnailMergingEnabled || isThumbnailReorderingEnabled) && draggingOverPageIndex === thumbIndex;
+            const allowDragAndDrop = allowPageOperations && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled)
+            const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
             return thumbIndex < this.props.totalPages ? (
               <div key={thumbIndex} onDragEnd={this.onDragEnd}>
@@ -397,7 +399,7 @@ class ThumbnailsPanel extends React.PureComponent {
                   <hr className="thumbnailPlaceholder" />
                 )}
                 <Thumbnail
-                  isDraggable={isThumbnailReorderingEnabled || isThumbnailMergingEnabled}
+                  isDraggable={allowDragAndDrop}
                   isSelected={selectedPageIndexes.includes(thumbIndex)}
                   index={thumbIndex}
                   canLoad={canLoad}
@@ -408,6 +410,7 @@ class ThumbnailsPanel extends React.PureComponent {
                   onDragOver={this.onDragOver}
                   onFinishLoading={this.removeFromPendingThumbs}
                   updateAnnotations={this.updateAnnotations}
+                  shouldShowControls={allowPageOperations}
                 />
                 {showPlaceHolder && !isDraggingToPreviousPage && (
                   <hr className="thumbnailPlaceholder" />
@@ -436,11 +439,11 @@ class ThumbnailsPanel extends React.PureComponent {
 
   render() {
     const { isDisabled, totalPages, display, isThumbnailControlDisabled, selectedPageIndexes } = this.props;
-    const { height, width, documentControlHeight, isDocumentControlHidden } = this.state;
+    const { height, width, documentControlHeight, isDocumentControlHidden, allowPageOperations } = this.state;
     const numberOfColumns = this.getNumberOfColumns(this.state.width);
     const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
-    const shouldShowControls = !isDocumentControlHidden || selectedPageIndexes.length > 0;
+    const shouldShowControls = allowPageOperations && !isDocumentControlHidden || selectedPageIndexes.length > 0;
 
     return isDisabled ? null : (
       <div
