@@ -12,6 +12,7 @@ import { extractPagesToMerge, mergeExternalWebViewerDocument, mergeDocument } fr
 import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
+import { workerTypes } from 'constants/types';
 
 import './ThumbnailsPanel.scss';
 
