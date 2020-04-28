@@ -5,6 +5,14 @@ import selectors from 'selectors';
 
 export default (store, toolName) => {
   const { dispatch, getState } = store;
+
+  const openElement = selectors.getOpenElements(getState());
+  const currentTool = core.getToolMode().name;
+
+  if (currentTool === window.Tools.ToolNames.SIGNATURE && openElement['signatureModal']) {
+    return;
+  }
+
   const toolGroup =
     selectors.getToolButtonObject(getState(), toolName)?.group || '';
 
@@ -13,8 +21,8 @@ export default (store, toolName) => {
   } else {
     dispatch(actions.closeElement('toolsOverlay'));
   }
-
   const hasToolBeenSelected = core.getToolMode().name === toolName;
+
   if (hasToolBeenSelected && toolStylesExist(toolName)) {
     dispatch(actions.toggleElement('toolStylePopup'));
     return;
