@@ -1,20 +1,27 @@
 import core from 'core';
 import actions from 'actions';
 import extractPagesWithAnnotations from './extractPagesWithAnnotations';
+import fireEvent from './fireEvent';
 
 export const extractPagesToMerge = pageNumbers => {
   // extract pages and put the data on the iFrame window element for another instance of WebViewer to access
   window.extractedDataPromise = extractPagesWithAnnotations(pageNumbers);
+  window.pagesExtracted = pageNumbers;
 };
 
-export const mergeDocument = (srcToMerge, mergeToPage) => dispatch => {
+export const mergeDocument = (srcToMerge, mergeToPage, shouldFireEvent = true) => dispatch => {
   dispatch(actions.openElement('loadingModal'));
 
   return new Promise((resolve, reject) => {
-    core.mergeDocument(srcToMerge, mergeToPage).then(pageInserted => {
+    core.mergeDocument(srcToMerge, mergeToPage).then(mergeResults => {
       dispatch(actions.closeElement('loadingModal'));
       core.setCurrentPage(mergeToPage);
-      resolve(pageInserted);
+
+      if (shouldFireEvent) {
+        fireEvent('documentMerged', mergeResults);
+      }
+
+      resolve(mergeResults);
     }).catch(err => {
       reject(err);
       dispatch(actions.closeElement('loadingModal'));
@@ -38,9 +45,11 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => dispatc
 
     dispatch(actions.openElement('loadingModal'));
     extractedDataPromise.then(docToMerge => {
-      dispatch(mergeDocument(docToMerge, mergeToPage)).then(pageInserted => {
+      dispatch(mergeDocument(docToMerge, mergeToPage, false)).then(({ filename, pages }) => {
+
+        fireEvent('documentMerged', { filename, pages: otherWebViewerIframe.contentWindow.pagesExtracted });
         dispatch(actions.closeElement('loadingModal'));
-        resolve(pageInserted);
+        resolve({ filename, pages });
       });
     }).catch(err => {
       dispatch(actions.closeElement('loadingModal'));
