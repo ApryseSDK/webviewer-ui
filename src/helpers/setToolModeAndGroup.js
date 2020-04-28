@@ -22,6 +22,7 @@ export default (store, toolName) => {
   } else {
     dispatch(actions.closeElement('toolsOverlay'));
   }
+  
   const hasToolBeenSelected = currentTool === toolName;
   if (hasToolBeenSelected && toolStylesExist(toolName)) {
     dispatch(actions.toggleElement('toolStylePopup'));
