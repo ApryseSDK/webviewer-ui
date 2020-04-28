@@ -41,8 +41,16 @@ function EllipseMeasurementOverlay(props) {
   const finishAnnotation = () => {
     const tool = core.getTool('AnnotationCreateEllipseMeasurement');
     tool.finish();
+  };
+
+  const selectAnnotation = () => {
     const annotationManager = core.getAnnotationManager();
     annotationManager.selectAnnotation(annotation);
+  };
+
+  const deselectAnnot = () => {
+    const annotationManager = core.getAnnotationManager();
+    annotationManager.deselectAnnotation(annotation);
   };
 
   const onChangeRadiusLength = event => {
@@ -54,8 +62,8 @@ function EllipseMeasurementOverlay(props) {
     annotation.setHeight(diameterInPts);
     annotation.setWidth(diameterInPts);
     setRadius(radius);
-    finishAnnotation();
     forceEllipseRedraw();
+    finishAnnotation();
   };
 
   const forceEllipseRedraw = useCallback(() => {
@@ -127,8 +135,17 @@ function EllipseMeasurementOverlay(props) {
           type="number"
           min="0"
           value={radius}
-          onChange={event => onChangeRadiusLength(event)}
+          onChange={event => {
+            onChangeRadiusLength(event);
+            selectAnnotation();
+          }}
           onBlur={event => validateDiameter(event)}
+          onKeyDown={event => {
+            if (event.key === 'Enter') {
+              onChangeRadiusLength(event);
+              deselectAnnot();
+            }
+          }}
         /> {unit}
       </div>
     </div>

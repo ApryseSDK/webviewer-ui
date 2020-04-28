@@ -90,7 +90,7 @@ const map = {
       annotation.Measure,
   },
   ellipseMeasurement: {
-    icon: 'ic_annotation_circle_black_24px',
+    icon: 'ic_annotation_ellipse_area_black',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
