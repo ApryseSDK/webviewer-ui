@@ -45,11 +45,11 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => dispatc
 
     dispatch(actions.openElement('loadingModal'));
     extractedDataPromise.then(docToMerge => {
-      dispatch(mergeDocument(docToMerge, mergeToPage, false)).then(({ fileName, pages }) => {
+      dispatch(mergeDocument(docToMerge, mergeToPage, false)).then(({ filename, pages }) => {
 
-        fireEvent('documentMerged', { fileName, pages: otherWebViewerIframe.contentWindow.pagesExtracted });
+        fireEvent('documentMerged', { filename, pages: otherWebViewerIframe.contentWindow.pagesExtracted });
         dispatch(actions.closeElement('loadingModal'));
-        resolve({ fileName, pages });
+        resolve({ filename, pages });
       });
     }).catch(err => {
       dispatch(actions.closeElement('loadingModal'));
