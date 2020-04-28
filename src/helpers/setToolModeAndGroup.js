@@ -5,7 +5,6 @@ import selectors from 'selectors';
 
 export default (store, toolName) => {
   const { dispatch, getState } = store;
-
   const toolGroup =
     selectors.getToolButtonObject(getState(), toolName)?.group || '';
 
@@ -15,12 +14,12 @@ export default (store, toolName) => {
     dispatch(actions.closeElement('toolsOverlay'));
   }
 
-  const hasToolBeenSelected = selectors.getOpenElements(getState()) === toolName;
+  const hasToolBeenSelected = core.getToolMode().name === toolName;
   if (hasToolBeenSelected && toolStylesExist(toolName)) {
     dispatch(actions.toggleElement('toolStylePopup'));
     return;
   }
- 
+
   if (
     window.innerWidth <= 900 &&
     // TODO: revisit
