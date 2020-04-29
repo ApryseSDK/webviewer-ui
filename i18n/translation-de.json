@@ -251,6 +251,12 @@
       "delete": "Löschen",
       "rotateClockwise": "Im Uhrzeigersinn",
       "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
+    },
+    "richText": {
+      "bold": "Mutig",
+      "italic": "Kursiv",
+      "underline": "Unterstreichen",
+      "strikeout": "Durchgestrichen"
     }
   },
   "warning": {
@@ -287,7 +293,13 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "richText": {
+      "bold": "(Strg B)",
+      "italic": "(Strg I)",
+      "underline": "(Strg L)",
+      "strikeout": "(Strg K)"
+    }
   },
   "tool": {
     "pan": "Hand",
@@ -302,10 +314,39 @@
     "enterpage": "Wählen Sie die Seitennummer aus, zu der Sie einen Link erstellen möchten"
   },
   "datePicker": {
-    "previousMonth" : "Vorheriger Monat",
-    "nextMonth"     : "Nächsten Monat",
-    "months"        : ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
-    "weekdays"      : ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
-    "weekdaysShort" : ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."]
+    "previousMonth": "Vorheriger Monat",
+    "nextMonth": "Nächsten Monat",
+    "months": {
+      "0": "Januar",
+      "1": "Februar",
+      "2": "März",
+      "3": "April",
+      "4": "Mai",
+      "5": "Juni",
+      "6": "Juli",
+      "7": "August",
+      "8": "September",
+      "9": "Oktober",
+      "10": "November",
+      "11": "Dezember"
+    },
+    "weekdays": {
+      "0": "Sonntag",
+      "1": "Montag",
+      "2": "Dienstag",
+      "3": "Mittwoch",
+      "4": "Donnerstag",
+      "5": "Freitag",
+      "6": "Samstag"
+    },
+    "weekdaysShort": {
+      "0": "So.",
+      "1": "Mo.",
+      "2": "Di.",
+      "3": "Mi.",
+      "4": "Do.",
+      "5": "Fr.",
+      "6": "Sa."
+    }
   }
 }

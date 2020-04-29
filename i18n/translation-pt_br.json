@@ -251,6 +251,12 @@
       "delete": "Excluir",
       "rotateClockwise": "Sentido horário",
       "rotateCounterClockwise": "Sentido anti-horário"
+    },
+    "richText": {
+      "bold": "Negrito",
+      "italic": "itálico",
+      "underline": "Sublinhar",
+      "strikeout": "Tachado"
     }
   },
   "warning": {
@@ -287,7 +293,13 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "richText": {
+      "bold": "(Ctrl B)",
+      "italic": "(Ctrl I)",
+      "underline": "(Ctrl L)",
+      "strikeout": "(Ctrl K)"
+    }
   },
   "tool": {
     "pan": "Pan",
@@ -302,10 +314,39 @@
     "enterpage": "Selecione o número da página que você deseja vincular"
   },
   "datePicker": {
-    "previousMonth" : "Mês anterior",
-    "nextMonth"     : "Próximo mês",
-    "months"        : ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-    "weekdays"      : ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"],
-    "weekdaysShort" : ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+    "previousMonth": "Mês anterior",
+    "nextMonth": "Próximo mês",
+    "months": {
+      "0": "Janeiro",
+      "1": "Fevereiro",
+      "2": "Março",
+      "3": "Abril",
+      "4": "Maio",
+      "5": "Junho",
+      "6": "Julho",
+      "7": "Agosto",
+      "8": "Setembro",
+      "9": "Outubro",
+      "10": "Novembro",
+      "11": "Dezembro"
+    },
+    "weekdays": {
+      "0": "Domingo",
+      "1": "Segunda-feira",
+      "2": "Terça-feira",
+      "3": "Quarta-feira",
+      "4": "Quinta-feira",
+      "5": "Sexta-feira",
+      "6": "Sábado"
+    },
+    "weekdaysShort": {
+      "0": "Dom",
+      "1": "Seg",
+      "2": "Ter",
+      "3": "Qua",
+      "4": "Qui",
+      "5": "Sex",
+      "6": "Sáb"
+    }
   }
 }

@@ -251,6 +251,12 @@
       "delete": "Delete",
       "rotateClockwise": "Met de klok mee",
       "rotateCounterClockwise": "Tegen de klok in"
+    },
+    "richText": {
+      "bold": "Vet",
+      "italic": "Cursief",
+      "underline": "Onderstrepen",
+      "strikeout": "Doorhalen"
     }
   },
   "warning": {
@@ -287,7 +293,13 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "richText": {
+      "bold": "(Ctrl B)",
+      "italic": "(Ctrl I)",
+      "underline": "(Ctrl L)",
+      "strikeout": "(Ctrl K)"
+    }
   },
   "tool": {
     "pan": "Schuiven",
@@ -302,10 +314,39 @@
     "enterpage": "Selecteer het paginanummer waarnaar u wilt linken"
   },
   "datePicker": {
-    "previousMonth" : "Vorige maand",
-    "nextMonth"     : "Volgende maand",
-    "months"        : ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
-    "weekdays"      : ["zondag", "maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag"],
-    "weekdaysShort" : ["zo.", "ma.", "di.", "wo.", "do.", "vr.", "za."]
+    "previousMonth": "Vorige maand",
+    "nextMonth": "Volgende maand",
+    "months": {
+      "0": "januari",
+      "1": "februari",
+      "2": "maart",
+      "3": "april",
+      "4": "mei",
+      "5": "juni",
+      "6": "juli",
+      "7": "augustus",
+      "8": "september",
+      "9": "oktober",
+      "10": "november",
+      "11": "december"
+    },
+    "weekdays": {
+      "0": "zondag",
+      "1": "maandag",
+      "2": "dinsdag",
+      "3": "woensdag",
+      "4": "donderdag",
+      "5": "vrijdag",
+      "6": "zaterdag"
+    },
+    "weekdaysShort": {
+      "0": "zo.",
+      "1": "ma.",
+      "2": "di.",
+      "3": "wo.",
+      "4": "do.",
+      "5": "vr.",
+      "6": "za."
+    }
   }
 }

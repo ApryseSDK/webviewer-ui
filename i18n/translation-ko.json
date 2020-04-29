@@ -251,6 +251,12 @@
       "delete": "지우다",
       "rotateClockwise": "시계 방향",
       "rotateCounterClockwise": "시계 반대 방향"
+    },
+    "richText": {
+      "bold": "굵게",
+      "italic": "이탤릭체",
+      "underline": "밑줄",
+      "strikeout": "취소 선"
     }
   },
   "warning": {
@@ -287,7 +293,13 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "richText": {
+      "bold": "(Ctrl B)",
+      "italic": "(Ctrl I)",
+      "underline": "(Ctrl L)",
+      "strikeout": "(Ctrl K)"
+    }
   },
   "tool": {
     "pan": "이동",
@@ -302,10 +314,39 @@
     "enterpage": "연결하려는 페이지 번호를 선택하십시오"
   },
   "datePicker": {
-    "previousMonth" : "지난달",
-    "nextMonth"     : "다음 달",
-    "months"        : ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-    "weekdays"      : ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
-    "weekdaysShort" : ["일", "월", "화", "수", "목", "금", "토"]
+    "previousMonth": "지난달",
+    "nextMonth": "다음 달",
+    "months": {
+      "0": "1월",
+      "1": "2월",
+      "2": "3월",
+      "3": "4월",
+      "4": "5월",
+      "5": "6월",
+      "6": "7월",
+      "7": "8월",
+      "8": "9월",
+      "9": "10월",
+      "10": "11월",
+      "11": "12월"
+    },
+    "weekdays": {
+      "0": "일요일",
+      "1": "월요일",
+      "2": "화요일",
+      "3": "수요일",
+      "4": "목요일",
+      "5": "금요일",
+      "6": "토요일"
+    },
+    "weekdaysShort": {
+      "0": "일",
+      "1": "월",
+      "2": "화",
+      "3": "수",
+      "4": "목",
+      "5": "금",
+      "6": "토"
+    }
   }
 }
