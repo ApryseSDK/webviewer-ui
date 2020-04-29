@@ -300,5 +300,12 @@
     "page": "Pagina",
     "enterurl": "Inserisci l'URL che desideri collegare",
     "enterpage": "Seleziona il numero di pagina che desideri collegare"
+  },
+  "datePicker": {
+    "previousMonth" : "Il mese scorso",
+    "nextMonth"     : "Il prossimo mese",
+    "months"        : ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"],
+    "weekdays"      : ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"],
+    "weekdaysShort" : ["dom", "lun", "mar", "mer", "gio", "ven", "sab"]
   }
 }

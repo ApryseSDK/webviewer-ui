@@ -10,7 +10,9 @@ WebViewer(...)
  */
 
 import i18next from 'i18next';
+import setDatePickerLocale from './setDatePickerLocale';
 
 export default language => {
-  i18next.changeLanguage(language);
+  const promise = i18next.changeLanguage(language);
+  setDatePickerLocale(promise);
 };

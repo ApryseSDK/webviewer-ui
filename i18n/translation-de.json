@@ -300,5 +300,12 @@
     "page": "Seite",
     "enterurl": "Geben Sie die URL ein, zu der Sie einen Link erstellen möchten",
     "enterpage": "Wählen Sie die Seitennummer aus, zu der Sie einen Link erstellen möchten"
+  },
+  "datePicker": {
+    "previousMonth" : "Vorheriger Monat",
+    "nextMonth"     : "Nächsten Monat",
+    "months"        : ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+    "weekdays"      : ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+    "weekdaysShort" : ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."]
   }
 }
