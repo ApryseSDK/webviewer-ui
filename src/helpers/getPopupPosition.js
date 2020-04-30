@@ -23,7 +23,21 @@ const getAnnotationPosition = annotation => {
 
   const pageIndex = annotation.getPageNumber() - 1;
   const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageIndex);
-  const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageIndex);
+  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageIndex);
+
+  const isNote = annotation instanceof window.Annotations.StickyAnnotation;
+  if (isNote) {
+    const zoom = core.getZoom();
+    const width = bottomRight.x - topLeft.x;
+    const height = bottomRight.y - topLeft.y;
+
+    // the visual size of a sticky annotation isn't the same as the rect we get above due to its NoZoom property
+    // here we do some calculations to try to make the rect have the same size as what the annotation looks in the canvas
+    bottomRight = {
+      x: topLeft.x + width / zoom * 1.2,
+      y: topLeft.y + height / zoom * 1.2,
+    };
+  }
 
   return { topLeft, bottomRight };
 };
