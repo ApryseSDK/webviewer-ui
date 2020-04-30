@@ -3,6 +3,7 @@ import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
+import Element from 'components/Element';
 import ColorPalette from 'components/ColorPalette';
 import Button from 'components/Button';
 
@@ -14,10 +15,11 @@ import selectors from 'selectors';
 import './RichTextPopup.scss';
 
 const RichTextPopup = () => {
-  const [isDisabled, isOpen] = useSelector(
+  const [isDisabled, isOpen, isPaletteDisabled] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'richTextPopup'),
       selectors.isElementOpen(state, 'richTextPopup'),
+      selectors.isElementDisabled(state, 'richTextColorPalette'),
     ],
     shallowEqual
   );
@@ -160,7 +162,7 @@ const RichTextPopup = () => {
         data-element="richTextPopup"
         style={{ ...cssPosition }}
       >
-        <div className="rich-text-format">
+        <Element className="rich-text-format" dataElement="richTextFormats">
           <Button
             isActive={format.bold}
             data-element="richTextBoldButton"
@@ -189,13 +191,15 @@ const RichTextPopup = () => {
             img="ic_annotation_strikeout_black_24px"
             title="option.richText.strikeout"
           />
-        </div>
-        <ColorPalette
-          colorMapKey="freeText"
-          color={format.color}
-          property="TextColor"
-          onStyleChange={handleColorChange}
-        />
+        </Element>
+        {!isPaletteDisabled && (
+          <ColorPalette
+            colorMapKey="freeText"
+            color={format.color}
+            property="TextColor"
+            onStyleChange={handleColorChange}
+          />
+        )}
       </div>
     </Draggable>
   );
