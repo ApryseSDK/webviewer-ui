@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import core from 'core';
+import { isMobileDevice } from 'helpers/device';
 
 function LineMeasurementInput(props) {
   const { t, annotation, isOpen } = props;
@@ -137,7 +138,7 @@ function LineMeasurementInput(props) {
           type="number"
           min="0"
           value={length}
-          autoFocus
+          autoFocus={!isMobileDevice}
           onChange={event => {
             onInputChanged(event);
             selectAnnotation();
