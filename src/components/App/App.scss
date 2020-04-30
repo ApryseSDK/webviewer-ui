@@ -30,8 +30,16 @@
   }
 }
 
+.DocumentContainer::-webkit-scrollbar {
+  width: 7px;
+
+  &:horizontal {
+    height: 7px;
+  }
+}
+
 .DocumentContainer {
-  border-right: 2px solid transparent;
+  border-right: 3px solid transparent;
 }
 
 html, body , #app {
