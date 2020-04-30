@@ -5,6 +5,7 @@ import Icon from 'components/Icon';
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
+import { isMobileDevice } from 'src/helpers/device';
 
 function EllipseMeasurementOverlay(props) {
   const { t, annotation, isOpen } = props;
@@ -130,7 +131,7 @@ function EllipseMeasurementOverlay(props) {
       <div className="measurement__value">
         {t('option.measurementOverlay.radius')}:
         <input
-          autoFocus
+          autoFocus={!isMobileDevice}
           className="lineMeasurementInput"
           type="number"
           min="0"
