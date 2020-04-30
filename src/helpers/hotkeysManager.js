@@ -377,7 +377,6 @@ WebViewer(...)
             'annotationStylePopup',
             'signatureModal',
             'printModal',
-            'searchOverlay',
             'stampOverlay',
           ])
         );

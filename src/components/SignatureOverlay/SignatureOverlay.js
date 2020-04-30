@@ -50,7 +50,6 @@ class SignatureOverlay extends React.PureComponent {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([
         'viewControlsOverlay',
-        'searchOverlay',
         'menuOverlay',
         'toolsOverlay',
         'zoomOverlay',
