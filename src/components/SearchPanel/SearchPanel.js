@@ -27,6 +27,7 @@ class SearchPanel extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
+    pageLabels: PropTypes.array.isRequired,
   };
 
   componentDidUpdate(prevProps) {
@@ -58,7 +59,9 @@ class SearchPanel extends React.PureComponent {
       return (
         <ListSeparator
           renderContent={() =>
-            `${this.props.t('option.shared.page')} ${currResult.page_num + 1}`
+            `${this.props.t('option.shared.page')} ${
+              this.props.pageLabels[currResult.page_num]
+            }`
           }
         />
       );
@@ -68,7 +71,15 @@ class SearchPanel extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t, results, isSearching, noResult, isWildCardSearchDisabled, errorMessage } = this.props;
+    const {
+      isDisabled,
+      t,
+      results,
+      isSearching,
+      noResult,
+      isWildCardSearchDisabled,
+      errorMessage,
+    } = this.props;
 
     if (isDisabled) {
       return null;
@@ -94,11 +105,7 @@ class SearchPanel extends React.PureComponent {
             return (
               <React.Fragment key={i}>
                 {this.renderListSeparator(prevResult, result)}
-                <SearchResult
-                  result={result}
-                  index={i}
-                  onClickResult={this.onClickResult}
-                />
+                <SearchResult result={result} index={i} onClickResult={this.onClickResult} />
               </React.Fragment>
             );
           })}
@@ -116,6 +123,7 @@ const mapStateToProps = state => ({
   isSearching: selectors.isSearching(state),
   noResult: selectors.isNoResult(state),
   errorMessage: selectors.getSearchErrorMessage(state),
+  pageLabels: selectors.getPageLabels(state),
 });
 
 const mapDispatchToProps = {
@@ -123,7 +131,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(SearchPanel));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SearchPanel));

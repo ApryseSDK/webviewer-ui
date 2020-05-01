@@ -26,10 +26,20 @@ class BookmarksPanel extends React.PureComponent {
     display: PropTypes.string.isRequired,
     currentPage: PropTypes.number.isRequired,
     isDisabled: PropTypes.bool,
-  }
+    t: PropTypes.func.isRequired,
+    pageLabels: PropTypes.array.isRequired,
+  };
 
   render() {
-    const { isDisabled, display, bookmarks, addBookmark, currentPage, t } = this.props;
+    const {
+      isDisabled,
+      display,
+      bookmarks,
+      addBookmark,
+      currentPage,
+      t,
+      pageLabels
+    } = this.props;
 
     if (isDisabled) {
       return null;
@@ -38,40 +48,40 @@ class BookmarksPanel extends React.PureComponent {
     const pageIndexes = Object.keys(bookmarks).map(pageIndex => parseInt(pageIndex, 10));
     return (
       <div className="Panel BookmarksPanel" style={{ display }} data-element="bookmarksPanel">
-        {
-          this.state.isAdding ?
-            <EditingBookmark
-              label={`${t('component.bookmarkPage')} ${currentPage}: ${t('component.newBookmark')}`}
-              bookmarkText={''}
-              onSave={newText => {
-                addBookmark(currentPage - 1, newText);
-                this.setState({ isAdding: false });
-              }}
-              onCancel={() => {
-                this.setState({ isAdding: false });
-              }}
-            /> :
-            <div className="bookmarks-panel-header ">
-              <div className="bookmarks-panel-container">
-                <Icon
-                  glyph="ic_bookmarks_black_24px"
-                />
-                <div className="label">{t('component.bookmarksPanel')}</div>
-              </div>
-              <div
-                className="bookmarks-panel-button"
-                onClick={() => {
-                  this.setState({ isAdding: true });
-                }}
-              >
-                {t('component.newBookmark')}
-              </div>
+        {this.state.isAdding ? (
+          <EditingBookmark
+            label={`${t('component.bookmarkPage')} ${pageLabels[currentPage - 1]}: ${t('component.newBookmark')}`}
+            bookmarkText={''}
+            onSave={newText => {
+              addBookmark(currentPage - 1, newText);
+              this.setState({ isAdding: false });
+            }}
+            onCancel={() => {
+              this.setState({ isAdding: false });
+            }}
+          />
+        ) : (
+          <div className="bookmarks-panel-header ">
+            <div className="bookmarks-panel-container">
+              <Icon glyph="ic_bookmarks_black_24px" />
+              <div className="label">{t('component.bookmarksPanel')}</div>
             </div>
-        }
+            <div
+              className="bookmarks-panel-button"
+              onClick={() => {
+                this.setState({ isAdding: true });
+              }}
+            >
+              {t('component.newBookmark')}
+            </div>
+          </div>
+        )}
         <div className="bookmarks-panel-row">
           {pageIndexes.map(pageIndex => (
             <React.Fragment>
-              <div className="bookmarks-panel-label">{`${t('component.bookmarkPage')} ${pageIndex + 1}`}</div>
+              <div className="bookmarks-panel-label">
+                {`${t('component.bookmarkPage')} ${pageLabels[pageIndex]}`}
+              </div>
               <Bookmark text={bookmarks[pageIndex]} pageIndex={pageIndex} />
             </React.Fragment>
           ))}
@@ -85,6 +95,7 @@ const mapStateToProps = state => ({
   bookmarks: selectors.getBookmarks(state),
   isDisabled: selectors.isElementDisabled(state, 'bookmarksPanel'),
   currentPage: selectors.getCurrentPage(state),
+  pageLabels: selectors.getPageLabels(state),
 });
 
 const mapDispatchToProps = {
@@ -93,7 +104,4 @@ const mapDispatchToProps = {
   removeBookmark: actions.removeBookmark,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(BookmarksPanel));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(BookmarksPanel));
