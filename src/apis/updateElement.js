@@ -19,7 +19,7 @@ export default store => (dataElement, overrides) => {
   switch (dataElement) {
     // for backwards compatibility
     case 'colorPalette':
-      setColorPalette(overrides);
+      setColorPalette(store)(overrides);
       break;
     default:
       if (validateButtonOverrides(overrides)) {
