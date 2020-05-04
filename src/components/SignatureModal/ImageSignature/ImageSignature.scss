@@ -1,9 +1,9 @@
 @import '../../../constants/styles';
+@import '../../../constants/modal';
 
 .image-signature {
-  margin: 0px 24px;
-  width: 552px;
-  height: 200px;
+  @extend %signature-modal-container-shared-style;
+
   border: 1px solid $signature-modal-shared-color;
   position: relative;
   border-radius: 4px;
