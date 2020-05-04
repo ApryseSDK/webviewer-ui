@@ -1,19 +1,15 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useStore, useSelector, useDispatch } from 'react-redux';
+import { useStore, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import selectors from 'selectors';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
 import ToolsHeader from 'components/Header/ToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
-import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
-import PageNavOverlay from 'components/PageNavOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
-import ToolsOverlay from 'components/ToolsOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import NotesPanel from 'components/NotesPanel';
@@ -21,7 +17,6 @@ import SearchPanel from 'components/SearchPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
 import ContextMenuPopup from 'components/ContextMenuPopup';
-import ToolStylePopup from 'components/ToolStylePopup';
 import SignatureModal from 'components/SignatureModal';
 import PrintModal from 'components/PrintModal';
 import LoadingModal from 'components/LoadingModal';
@@ -57,23 +52,6 @@ const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900
 const desktopListener = window.matchMedia('(min-width: 901px)');
 
 const App = ({ removeEventHandlers }) => {
-  const [isToolsHeaderOpen, isToolsHeaderDisabled, isToolsOverlayOpen, isToolsOverlayDisabled, isNotesOpen, isNotesDisabled, isLeftPanelOpen, isLeftPanelDisabled, isSearchPanelOpen, isSearchPanelDisabled, isSignatureModalOpen, isSignatureModalDisabled] = useSelector(
-    state => [
-      selectors.isElementOpen(state, 'toolsHeader'),
-      selectors.isElementDisabled(state, 'toolsHeader'),
-      selectors.isElementOpen(state, 'toolsOverlay'),
-      selectors.isElementDisabled(state, 'toolsOverlay'),
-      selectors.isElementOpen(state, 'notesPanel'),
-      selectors.isElementDisabled(state, 'notesPanel'),
-      selectors.isElementOpen(state, 'leftPanel'),
-      selectors.isElementDisabled(state, 'leftPanel'),
-      selectors.isElementOpen(state, 'searchPanel'),
-      selectors.isElementDisabled(state, 'searchPanel'),
-      selectors.isElementOpen(state, 'signatureModal'),
-      selectors.isElementDisabled(state, 'signatureModal'),
-    ],
-  );
-
   const store = useStore();
   const dispatch = useDispatch();
 
