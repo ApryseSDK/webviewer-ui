@@ -165,28 +165,28 @@ const RichTextPopup = () => {
         <Element className="rich-text-format" dataElement="richTextFormats">
           <Button
             isActive={format.bold}
-            data-element="richTextBoldButton"
+            dataElement="richTextBoldButton"
             onClick={handleClick('bold')}
             img="icon-text-bold"
             title="option.richText.bold"
           />
           <Button
             isActive={format.italic}
-            data-element="richTextItalicButton"
+            dataElement="richTextItalicButton"
             onClick={handleClick('italic')}
             img="icon-text-italic"
             title="option.richText.italic"
           />
           <Button
             isActive={format.underline}
-            data-element="richTextUnderlineButton"
+            dataElement="richTextUnderlineButton"
             onClick={handleClick('underline')}
             img="ic_annotation_underline_black_24px"
             title="option.richText.underline"
           />
           <Button
             isActive={format.strike}
-            data-element="richTextStrikeButton"
+            dataElement="richTextStrikeButton"
             onClick={handleClick('strike')}
             img="ic_annotation_strikeout_black_24px"
             title="option.richText.strikeout"
