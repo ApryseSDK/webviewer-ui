@@ -18,6 +18,17 @@
     justify-content: space-between;
   }
 
+  .state-and-overflow {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .author-and-time {
+    display: flex;
+    flex-direction: column;
+  }
+
   .author-and-date {
     flex: 1;
     min-width: 0;

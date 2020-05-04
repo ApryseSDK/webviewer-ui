@@ -14,6 +14,7 @@ import dayjs from 'dayjs';
 
 import NoteTextarea from 'components/NoteTextarea';
 import NotePopup from 'components/NotePopup';
+import NoteState from 'components/NoteState';
 import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
 
@@ -35,11 +36,13 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
     noteDateFormat,
     iconColor,
     isNoteEditingTriggeredByAnnotationPopup,
+    isStateDisabled,
   ] = useSelector(
     state => [
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
       selectors.getIsNoteEditing(state),
+      selectors.isElementDisabled(state, 'notePopupState'),
     ],
     shallowEqual,
   );
@@ -136,15 +139,24 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
       }
       <div className="author-and-date">
         <div className="author-and-overflow">
-          {renderAuthorName(annotation)}
-          {!isEditing && isSelected &&
-            <NotePopup
-              annotation={annotation}
-              setIsEditing={setIsEditing}
-            />}
-        </div>
-        <div className="date-and-time">
-          {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
+          <div className="author-and-time">
+            {renderAuthorName(annotation)}
+            <div className="date-and-time">
+              {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
+            </div>
+          </div>
+          <div className="state-and-overflow">
+            {!isStateDisabled && !isReply &&
+              <NoteState
+                annotation={annotation}
+              />
+            }
+            {!isEditing && isSelected &&
+              <NotePopup
+                annotation={annotation}
+                setIsEditing={setIsEditing}
+              />}
+          </div>
         </div>
         {isEditing && isSelected ? (
           <ContentArea
@@ -162,22 +174,14 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
     </React.Fragment>
   ), [annotation, color, contents, formatNumberOfReplies, icon, isEditing, setIsEditing, isReply, noteDateFormat, numberOfReplies, renderAuthorName, renderContents, textAreaValue]);
 
-  const annotationState = annotation.getStatus();
 
   return useMemo(
     () => (
-      <div
-        className="NoteContent"
-      >
+      <div className="NoteContent">
         {header}
-        {annotationState && annotationState !== 'None' && (
-          <div className="status">
-            {t('option.status.status')}: {t(`option.state.${annotationState.toLowerCase()}`)}
-          </div>
-        )}
       </div>
     ),
-    [t, annotationState, header],
+    [t, header],
   );
 };
 

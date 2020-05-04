@@ -1,6 +1,6 @@
 @import '../../constants/styles';
 
-.NotePopup  {
+.NoteState  {
   flex-grow: 0;
   display: flex;
   justify-content: flex-end;
@@ -31,12 +31,17 @@
 
     .option {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 28px;
-      padding-left: 8px;
-      padding-right: 17px;
+      flex-direction: row;
+      justify-content: flex-start;
+      height: 35px;
+      padding: 8px;
       border-radius: 0px;
+
+      .Icon {
+        margin-right: 5px;
+        width: 18px;
+        height: 18px;
+      }
 
       &:hover {
         background-color: var(--popup-button-hover);
