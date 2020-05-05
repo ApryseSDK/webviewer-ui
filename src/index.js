@@ -1,3 +1,7 @@
+import 'core-js/stable';
+import "regenerator-runtime/runtime";
+console.log('9');
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
