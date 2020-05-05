@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
+import getHashParams from 'helpers/getHashParams';
 import loadDocument from 'helpers/loadDocument';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -23,12 +24,15 @@ const FilePickerHandler = () => {
     }
   };
 
+  const pdftronServer = !!getHashParams('pdftronServer', null);
+  const acceptFormats = pdftronServer ? window.CoreControls.SupportedFileFormats.SERVER : window.CoreControls.SupportedFileFormats.CLIENT;
+
   return isDisabled ? null : (
     <div className="FilePickerHandler">
       <input
         id="file-picker"
         type="file"
-        accept={window.CoreControls.SupportedFileFormats.CLIENT.map(
+        accept={acceptFormats.map(
           format => `.${format}`,
         ).join(', ')}
         onChange={openDocument}
