@@ -1,7 +1,7 @@
 import actions from 'actions';
 import selectors from 'selectors';
 
-import { parse } from 'css-variables-parser';
+import { parse } from 'helpers/cssVariablesParser';
 
 import lightModeString from '!!raw-loader!../constants/light.scss';
 import lightToolsMobileString from '!!raw-loader!../constants/lightToolsMobile.scss';
