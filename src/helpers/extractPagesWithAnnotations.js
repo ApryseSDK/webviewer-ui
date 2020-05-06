@@ -1,11 +1,11 @@
 import { isIE } from 'helpers/device';
 
-export default async pagesToExtract => {
+export default async pageNumbersToExtract => {
   const doc = window.docViewer.getDocument();
   const annotManager = window.docViewer.getAnnotationManager();
 
   const pageCount = doc.getPageCount();
-  const pageOutOfRange = pagesToExtract.some(page => page < 1 || page > pageCount);
+  const pageOutOfRange = pageNumbersToExtract.some(page => page < 1 || page > pageCount);
 
   if (pageOutOfRange) {
     return Promise.reject(`Page out of range, please enter an array of numbers between 1 and ${pageCount}`);
@@ -14,11 +14,11 @@ export default async pagesToExtract => {
   const finishPromise = new Promise(function(resolve, reject) {
     try {
       const pageMap = new Map();
-      pagesToExtract.forEach(page => pageMap.set(page, true));
+      pageNumbersToExtract.forEach(page => pageMap.set(page, true));
 
       const annotList = annotManager.getAnnotationsList().filter(annot => pageMap.has(annot.PageNumber));
       annotManager.exportAnnotations({ annotList }).then(xfdfString => {
-        doc.extractPages(pagesToExtract, xfdfString).then(data => {
+        doc.extractPages(pageNumbersToExtract, xfdfString).then(data => {
           const arr = new Uint8Array(data);
           const fileName = doc.getFilename() || 'extractedDocument.pdf';
 
