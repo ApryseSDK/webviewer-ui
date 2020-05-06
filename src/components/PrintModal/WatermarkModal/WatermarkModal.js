@@ -113,7 +113,7 @@ class WatermarkModal extends React.PureComponent {
 
     core.setWatermark(watermarkOptions);
 
-    const pageHeight = core.getPageHeight(this.props.pageIndexToView);
+    const pageHeight = core.getPageHeight(this.props.pageIndexToView + 1);
     const pageWidth = core.getPageWidth(this.props.pageIndexToView + 1);
 
     const desiredZoomForWidth = DESIRED_WIDTH / pageWidth;
