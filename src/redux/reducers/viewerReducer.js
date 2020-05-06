@@ -204,7 +204,7 @@ export default initialState => (state = initialState, action) => {
             title: payload.tooltip,
             group: payload.buttonGroup,
             img: payload.buttonImage,
-            showColor: 'active',
+            showColor: payload.showColor || 'active',
           },
         },
       };
@@ -240,6 +240,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isThumbnailReordering: payload.useThumbnailReordering };
     case 'SET_THUMBNAIL_MULTISELECT':
       return { ...state, isThumbnailMultiselect: payload.useThumbnailMultiselect };
+    case 'SET_MULTI_VIEWER_MERGING':
+      return { ...state, isMultipleViewerMerging: payload.isMultipleViewerMerging };
     case 'SET_ALLOW_PAGE_NAVIGATION':
       return { ...state, allowPageNavigation: payload.allowPageNavigation };
     case 'SET_TOOL_BUTTON_OBJECTS':
@@ -257,7 +259,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, pageLabels: [...payload.pageLabels] };
     case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':
       return { ...state, selectedThumbnailPageIndexes: payload.selectedThumbnailPageIndexes };
-    case 'SET_COLOR_PALETTE': {
+    case 'SET_ACTIVE_PALETTE': {
       const { colorMapKey, colorPalette } = payload;
       return {
         ...state,
@@ -315,7 +317,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_CUSTOM_ELEMENT_OVERRIDES':
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
     case 'SET_NOTE_TRANSFORM_FUNCTION':
-      return { ...state, noteTransformFunction: payload.noteTransformFunction }
+      return { ...state, noteTransformFunction: payload.noteTransformFunction };
     default:
       return state;
   }

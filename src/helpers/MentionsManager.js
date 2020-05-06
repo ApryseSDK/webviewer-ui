@@ -18,7 +18,7 @@ import selectors from 'selectors';
  */
 
 /**
- * @typedef {Object} WebViewerInstance.MentionsManager.UserData
+ * @typedef {Object.<string, string>} WebViewerInstance.MentionsManager.UserData
  * @property {string} value The display name of the user, which will be displayed in the suggestion overlay.
  * @property {string} [id] The unique id of the user. Default to `value`.
  * @property {string} [email] The email of the user, which will be displayed under `value` in the suggestion overlay, if present.
@@ -251,7 +251,7 @@ WebViewer(...)
 
   /**
    * Sets the characters that can follow a mention, while not invalidating it
-   * By default, a mention can only be followed by a sapce, or is located at the end of the string
+   * By default, a mention can only be followed by a space, or is located at the end of the string
    * @method WebViewerInstance.MentionsManager#setAllowedTrailingCharacters
    * @param {string[]|'*'} chars An array of characters. If `*` is passed, then a mention can be followed by any characters
    * @example

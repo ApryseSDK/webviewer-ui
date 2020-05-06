@@ -32,6 +32,7 @@ class Thumbnail extends React.PureComponent {
     setSelectedPageThumbnails: PropTypes.func,
     selectedPageIndexes: PropTypes.arrayOf(PropTypes.number),
     isDraggable: PropTypes.bool,
+    shouldShowControls: PropTypes.bool,
   };
 
   constructor(props) {
@@ -129,12 +130,18 @@ class Thumbnail extends React.PureComponent {
   handleClick = e => {
     const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled } = this.props;
 
-    if (isThumbnailMultiselectEnabled && (e.ctrlKey || e.metaKey)) {
+    if (isThumbnailMultiselectEnabled) {
+      let togglingSelectedPage = e.ctrlKey || e.metaKey;
       let updatedSelectedPages = [...selectedPageIndexes];
-      if (selectedPageIndexes.indexOf(index) > -1) {
-        updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+
+      if (togglingSelectedPage) {
+        if(selectedPageIndexes.indexOf(index) > -1) {
+          updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+        } else {
+          updatedSelectedPages.push(index);
+        }
       } else {
-        updatedSelectedPages.push(index);
+        updatedSelectedPages = [];
       }
 
       setSelectedPageThumbnails(updatedSelectedPages);
@@ -156,7 +163,7 @@ class Thumbnail extends React.PureComponent {
   };
 
   render() {
-    const { index, currentPage, pageLabels, isDraggable, isSelected } = this.props;
+    const { index, currentPage, pageLabels, isDraggable, isSelected, shouldShowControls } = this.props;
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
 
@@ -183,7 +190,7 @@ class Thumbnail extends React.PureComponent {
           <div ref={this.thumbContainer} className="thumbnail" />
         </div>
         <div className="page-label">{pageLabel}</div>
-        {isActive && <ThumbnailControls index={index} />}
+        {isActive && shouldShowControls && <ThumbnailControls index={index} />}
       </div>
     );
   }

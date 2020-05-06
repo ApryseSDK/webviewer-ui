@@ -1,4 +1,5 @@
 @import '../../../constants/styles';
+@import '../../../constants/modal';
 
 .ink-signature {
   width: 450px;
@@ -12,9 +13,9 @@
 
   @include mobile {
     width: 100%;
-    height: 126px; 
+    height: 126px;
   }
-   
+
   // hack for div inserted by Swipeable
   >div{
     width: 100%;

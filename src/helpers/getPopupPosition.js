@@ -23,7 +23,21 @@ const getAnnotationPosition = annotation => {
 
   const pageIndex = annotation.getPageNumber() - 1;
   const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageIndex);
-  const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageIndex);
+  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageIndex);
+
+  const isNote = annotation instanceof window.Annotations.StickyAnnotation;
+  if (isNote) {
+    const zoom = core.getZoom();
+    const width = bottomRight.x - topLeft.x;
+    const height = bottomRight.y - topLeft.y;
+
+    // the visual size of a sticky annotation isn't the same as the rect we get above due to its NoZoom property
+    // here we do some calculations to try to make the rect have the same size as what the annotation looks in the canvas
+    bottomRight = {
+      x: topLeft.x + width / zoom * 1.2,
+      y: topLeft.y + height / zoom * 1.2,
+    };
+  }
 
   return { topLeft, bottomRight };
 };
@@ -157,7 +171,7 @@ const calcTextPopupPosition = (selectedTextPosition, popupDimension) => {
   return { left, top };
 };
 
-const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
+export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
   const { scrollLeft } = core.getScrollViewElement();
   const center = (topLeft.x + bottomRight.x) / 2 - scrollLeft;
   let left = center - width / 2;
@@ -176,7 +190,7 @@ const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
  * @param {number} approximateHeight The max height of the popup element.
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
-const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHeight) => {
+export const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHeight) => {
   const scrollContainer = core.getScrollViewElement();
   const boundingBox = scrollContainer.getBoundingClientRect();
   const visibleRegion = {
@@ -185,6 +199,7 @@ const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHeight) =
     top: boundingBox.top + scrollContainer.scrollTop,
     bottom: boundingBox.top + scrollContainer.scrollTop + boundingBox.height,
   };
+
   // gap between the annotation selection box and the popup element
   const gap = 13;
   const annotTop = topLeft.y - gap;

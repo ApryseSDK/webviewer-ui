@@ -16,6 +16,8 @@ import selectors from "selectors";
 
 import "./ToolButton.scss";
 
+import DataElements from 'constants/dataElement';
+
 const propTypes = {
   toolName: PropTypes.string.isRequired,
   group: PropTypes.string
@@ -35,7 +37,7 @@ const ToolButton = ({
     // TODO: fix the issue properly. Can listen to toolUpdated
     // eslint-disable-next-line
     activeToolStyles,
-    { group = "", showColor, ...restObjectData },
+    toolButtonObject,
     customOverrides,
   ] = useSelector(
     state => [
@@ -44,14 +46,13 @@ const ToolButton = ({
       selectors.getIconColor(state, mapToolNameToKey(toolName)),
       selectors.getActiveToolStyles(state),
       selectors.getToolButtonObject(state, toolName),
-      selectors.getCustomElementOverrides(
-        state,
-        selectors.getToolButtonDataElement(state, toolName),
-      ),
+      selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
+      selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
     ],
     shallowEqual,
   );
   const dispatch = useDispatch();
+  const { group = '', ...restObjectData } = toolButtonObject;
 
   useEffect(() => {
     if (typeof customOverrides?.disable === "undefined") {
@@ -93,11 +94,11 @@ const ToolButton = ({
     }
   };
 
-  const toolStyles = getToolStyles(toolName);
-  let color = "";
-
-  if ((showColor === "always" || (showColor === "active" && isActive))) {
-    color = toolStyles[iconColor]?.toHexString?.();
+  let color = '';
+  const showColor = customOverrides?.showColor || toolButtonObject.showColor;
+  if (showColor === 'always' || (showColor === 'active' && isActive)) {
+    const toolStyles = getToolStyles(toolName);
+    color = toolStyles?.[iconColor]?.toHexString?.();
   }
 
   const ButtonComponent = (

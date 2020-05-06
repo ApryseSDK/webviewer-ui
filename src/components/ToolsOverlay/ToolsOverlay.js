@@ -69,7 +69,6 @@ class ToolsOverlay extends React.PureComponent {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([
         'viewControlsOverlay',
-        'searchOverlay',
         'menuOverlay',
         'toolStylePopup',
         'signatureOverlay',

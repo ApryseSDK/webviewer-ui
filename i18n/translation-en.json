@@ -271,19 +271,26 @@
       "delete": "Delete",
       "rotateClockwise": "Clockwise",
       "rotateCounterClockwise": "Counter-clockwise"
+    },
+    "richText": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "strikeout": "Strikeout"
     }
   },
   "warning": {
-    "deletePage" :{
+    "deletePage": {
       "deleteTitle": "Delete Page",
       "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
       "deleteLastPageMessage": "This would result in no pages remaining. Please leave at least one page"
     },
-    "redaction":{
+    "redaction": {
       "applyTile": "Apply Redaction",
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
+  
   "shortcut": {
     "arrow": "(A)",
     "callout": "(C)",
@@ -307,7 +314,13 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "richText": {
+      "bold": "(Ctrl B)",
+      "italic": "(Ctrl I)",
+      "underline": "(Ctrl L)",
+      "strikeout": "(Ctrl K)"
+    }
   },
   "tool": {
     "pan": "Pan",
@@ -320,5 +333,12 @@
     "page": "Page",
     "enterurl": "Enter URL you would like to link to",
     "enterpage": "Select the page number you would like to link to"
+  },
+  "datePicker": {
+    "previousMonth" : "Previous Month",
+    "nextMonth"     : "Next Month",
+    "months"        : ["January","February","March","April","May","June","July","August","September","October","November","December"],
+    "weekdays"      : ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    "weekdaysShort" : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
   }
 }

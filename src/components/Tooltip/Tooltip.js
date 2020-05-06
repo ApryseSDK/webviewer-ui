@@ -43,7 +43,7 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
     childRef.current?.addEventListener('mouseenter', showToolTip);
     childRef.current?.addEventListener('mouseleave', hideTooltip);
     childRef.current?.addEventListener('click', hideTooltip);
-  }, []);
+  }, [childRef]);
 
   useLayoutEffect(() => {
     const childEle = childRef.current;
@@ -83,7 +83,7 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
           && newLeft > 0
           && newLeft + tooltipRect.width < window.innerWidth
         );
-      });
+      }) || 'bottom';
 
       const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[
         bestLocation
@@ -104,7 +104,7 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
     } else {
       setOpacity(0);
     }
-  }, [show]);
+  }, [childRef, show]);
 
   const isUsingMobileDevices = isIOS || isAndroid;
   const child = React.cloneElement(children, {
@@ -113,8 +113,9 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
   const translatedContent = t(content);
   // If shortcut.xxx exists in translation-en.json file
   // method t will return the shortcut, otherwise it will return shortcut.xxx
-  const hasShortcut = t(`shortcut.${content.split('.')[1]}`).indexOf('.') === -1;
-  let shortcut = t(`shortcut.${content.split('.')[1]}`);
+  const shortcutKey = content.slice(content.indexOf('.') + 1);
+  const hasShortcut = t(`shortcut.${shortcutKey}`).indexOf('.') === -1;
+  let shortcut = t(`shortcut.${shortcutKey}`);
   if (isMac) {
     shortcut = shortcut.replace('Ctrl', 'Cmd');
   }

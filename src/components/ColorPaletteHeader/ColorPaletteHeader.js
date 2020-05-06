@@ -15,17 +15,17 @@ class ColorPaletteHeader extends React.PureComponent {
     style: PropTypes.object.isRequired,
     colorPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     colorMapKey: PropTypes.string.isRequired,
-    setColorPalette: PropTypes.func.isRequired,
+    setActivePalette: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     isTextColorPaletteDisabled: PropTypes.bool,
     isFillColorPaletteDisabled: PropTypes.bool,
     isBorderColorPaletteDisabled: PropTypes.bool,
   }
 
-  setColorPalette = newPalette => {
-    const { setColorPalette, colorMapKey } = this.props;
+  setActivePalette = newPalette => {
+    const { setActivePalette, colorMapKey } = this.props;
 
-    setColorPalette(colorMapKey, newPalette);
+    setActivePalette(colorMapKey, newPalette);
   }
 
   render() {
@@ -98,7 +98,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setColorPalette: actions.setColorPalette,
+  setActivePalette: actions.setActivePalette,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation(null, { wait: false })(ColorPaletteHeader));

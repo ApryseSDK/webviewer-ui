@@ -26,10 +26,20 @@ class BookmarksPanel extends React.PureComponent {
     display: PropTypes.string.isRequired,
     currentPage: PropTypes.number.isRequired,
     isDisabled: PropTypes.bool,
-  }
+    t: PropTypes.func.isRequired,
+    pageLabels: PropTypes.array.isRequired,
+  };
 
   render() {
-    const { isDisabled, display, bookmarks, addBookmark, currentPage, t } = this.props;
+    const {
+      isDisabled,
+      display,
+      bookmarks,
+      addBookmark,
+      currentPage,
+      t,
+      pageLabels
+    } = this.props;
 
     if (isDisabled) {
       return null;
@@ -66,7 +76,9 @@ class BookmarksPanel extends React.PureComponent {
         <div className="bookmarks-panel-row">
           {pageIndexes.map(pageIndex => (
             <React.Fragment>
-              <div className="bookmarks-panel-label">{`${t('component.bookmarkPage')} ${pageIndex + 1}`}</div>
+              <div className="bookmarks-panel-label">
+                {`${t('component.bookmarkPage')} ${pageLabels[pageIndex]}`}
+              </div>
               <Bookmark text={bookmarks[pageIndex]} pageIndex={pageIndex} />
             </React.Fragment>
           ))}
@@ -80,6 +92,7 @@ const mapStateToProps = state => ({
   bookmarks: selectors.getBookmarks(state),
   isDisabled: selectors.isElementDisabled(state, 'bookmarksPanel'),
   currentPage: selectors.getCurrentPage(state),
+  pageLabels: selectors.getPageLabels(state),
 });
 
 const mapDispatchToProps = {
@@ -88,7 +101,4 @@ const mapDispatchToProps = {
   removeBookmark: actions.removeBookmark,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(BookmarksPanel));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(BookmarksPanel));

@@ -109,6 +109,10 @@ export const setThumbnailMultiselect = (useThumbnailMultiselect = true) => ({
   type: 'SET_THUMBNAIL_MULTISELECT',
   payload: { useThumbnailMultiselect },
 });
+export const setIsMultipleViewerMerging = (isMultipleViewerMerging = false) => ({
+  type: 'SET_MULTI_VIEWER_MERGING',
+  payload: { isMultipleViewerMerging },
+});
 export const setAllowPageNavigation = (allowPageNavigation = true) => ({
   type: 'SET_ALLOW_PAGE_NAVIGATION',
   payload: { allowPageNavigation },
@@ -240,6 +244,10 @@ export const setPopupItems = (dataElement, items) => ({
 });
 export const setColorPalette = (colorMapKey, colorPalette) => ({
   type: 'SET_COLOR_PALETTE',
+  payload: { colorMapKey, colorPalette },
+});
+export const setActivePalette = (colorMapKey, colorPalette) => ({
+  type: 'SET_ACTIVE_PALETTE',
   payload: { colorMapKey, colorPalette },
 });
 export const setIconColor = (colorMapKey, color) => ({
@@ -397,4 +405,4 @@ export const setIsProgrammaticSearchFull = isProgrammaticSearchFull => ({
 export const setNoteTransformFunction = noteTransformFunction => ({
   type: 'SET_NOTE_TRANSFORM_FUNCTION',
   payload: { noteTransformFunction },
-})
+});

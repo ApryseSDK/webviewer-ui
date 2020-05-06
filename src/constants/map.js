@@ -95,7 +95,7 @@ const map = {
       annotation.Measure,
   },
   ellipseMeasurement: {
-    icon: 'ic_annotation_circle_black_24px',
+    icon: 'ic_annotation_ellipse_area_black',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
@@ -342,7 +342,7 @@ export const copyMapWithDataProperties = (...properties) =>
     return newMap;
   }, {});
 
-export const register = (tool, annotationConstructor) => {
+export const register = (tool, annotationConstructor, customAnnotCheckFunc) => {
   const { toolName, buttonImage, toolObject } = tool;
   const key = toolName;
   const availablePalettes = ['TextColor', 'StrokeColor', 'FillColor'].filter(
@@ -355,9 +355,9 @@ export const register = (tool, annotationConstructor) => {
     currentPalette: availablePalettes[0],
     availablePalettes,
     toolNames: [toolName],
-    annotationCheck: annotationConstructor
-      ? annotation => annotation instanceof annotationConstructor
-      : null,
+    annotationCheck: customAnnotCheckFunc ?
+      annotation => customAnnotCheckFunc(annotation) :
+      (annotationConstructor ? annotation => annotation instanceof annotationConstructor: null),
   };
 };
 

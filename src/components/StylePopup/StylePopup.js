@@ -10,20 +10,13 @@ import StyleOption from 'components/StyleOption';
 import StampOverlay from 'components/StampOverlay';
 
 import { circleRadius } from 'constants/slider';
+import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
 import pickBy from 'lodash/pickBy';
 import useMedia from 'hooks/useMedia';
 import classNames from 'classnames';
 
 import './StylePopup.scss';
-
-const DataElements = {
-  COLOR_PALETTE: 'colorPalette',
-  OPACITY_SLIDER: 'opacitySlider',
-  STROKE_THICKNESS_SLIDER: 'strokeThicknessSlider',
-  FONT_SIZE_SLIDER: 'fontSizeSlider',
-  STYLE_OPTION: 'styleOption'
-};
 
 class StylePopup extends React.PureComponent {
   static propTypes = {
@@ -37,16 +30,18 @@ class StylePopup extends React.PureComponent {
     isStrokeThicknessSliderDisabled: PropTypes.bool,
     isFontSizeSliderDisabled: PropTypes.bool,
     isStyleOptionDisabled: PropTypes.bool,
+    isStylePopupDisabled: PropTypes.bool,
   };
 
   renderColorPalette = () => {
-    const { style, onStyleChange, currentPalette } = this.props;
+    const { style, onStyleChange, currentPalette, colorMapKey } = this.props;
 
     return (
       <ColorPalette
         color={style[currentPalette]}
         property={currentPalette}
         onStyleChange={onStyleChange}
+        colorMapKey={colorMapKey}
       />
     );
   };
@@ -192,6 +187,7 @@ class StylePopup extends React.PureComponent {
 
 const mapStateToProps = (state, { colorMapKey }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
+  isStylePopupDisabled: selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
   isColorPaletteDisabled: selectors.isElementDisabled(state, DataElements.COLOR_PALETTE),
   isOpacitySliderDisabled: selectors.isElementDisabled(state, DataElements.OPACITY_SLIDER),
   isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DataElements.STROKE_THICKNESS_SLIDER),

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import core from 'core';
+import { isMobileDevice } from 'helpers/device';
 
 function LineMeasurementInput(props) {
   const { t, annotation, isOpen } = props;
@@ -28,8 +29,16 @@ function LineMeasurementInput(props) {
   const finishAnnotation = () => {
     const tool = core.getTool('AnnotationCreateDistanceMeasurement');
     tool.finish();
+  };
+
+  const selectAnnotation = () => {
     const annotationManager = core.getAnnotationManager();
     annotationManager.selectAnnotation(annotation);
+  };
+
+  const deselectAnnotation = () => {
+    const annotationManager = core.getAnnotationManager();
+    annotationManager.deselectAnnotation(annotation);
   };
 
   const validateLineLength = event => {
@@ -129,12 +138,16 @@ function LineMeasurementInput(props) {
           type="number"
           min="0"
           value={length}
-          autoFocus
-          onChange={event => onInputChanged(event)}
+          autoFocus={!isMobileDevice}
+          onChange={event => {
+            onInputChanged(event);
+            selectAnnotation();
+          }}
           onBlur={event => validateLineLength(event)}
           onKeyDown={event => {
             if (event.key === 'Enter') {
               onInputChanged(event);
+              deselectAnnotation();
             }
           }}
         /> {unit}
@@ -146,10 +159,14 @@ function LineMeasurementInput(props) {
           min="0"
           max="360"
           value={angle}
-          onChange={event => onAngleChange(event)}
+          onChange={event => {
+            onAngleChange(event);
+            selectAnnotation();
+          }}
           onKeyDown={event => {
             if (event.key === 'Enter') {
               onAngleChange(event);
+              deselectAnnotation();
             }
           }}
         /> &deg;

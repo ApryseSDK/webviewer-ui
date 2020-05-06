@@ -32,6 +32,7 @@ class SearchPanel extends React.PureComponent {
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
+    pageLabels: PropTypes.array.isRequired,
   };
 
   componentDidUpdate(prevProps) {
@@ -67,7 +68,9 @@ class SearchPanel extends React.PureComponent {
       return (
         <ListSeparator
           renderContent={() =>
-            `${this.props.t('option.shared.page')} ${currResult.page_num + 1}`
+            `${this.props.t('option.shared.page')} ${
+              this.props.pageLabels[currResult.page_num]
+            }`
           }
         />
       );
@@ -170,6 +173,7 @@ const mapStateToProps = state => ({
   noResult: selectors.isNoResult(state),
   errorMessage: selectors.getSearchErrorMessage(state),
   currentWidth: selectors.getSearchPanelWidth(state),
+  pageLabels: selectors.getPageLabels(state),
 });
 
 const mapDispatchToProps = {

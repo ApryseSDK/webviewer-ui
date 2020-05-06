@@ -1,4 +1,5 @@
 @import '../../../constants/styles';
+@import '../../../constants/modal';
 
 .image-signature {
   width: 450px;
@@ -6,9 +7,9 @@
 
   @include mobile {
     width: 100%;
-    height: 126px; 
+    height: 126px;
   }
-  
+
   position: relative;
   border-radius: 4px;
   background: var(--faded-component-background);
@@ -38,7 +39,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     width: 100%;
     height: 100%;
     position: absolute;

@@ -15,7 +15,7 @@ const dataElement = 'colorPalette';
 class ColorPalette extends React.PureComponent {
   static propTypes = {
     property: PropTypes.string.isRequired,
-    color: PropTypes.object.isRequired,
+    color: PropTypes.object,
     onStyleChange: PropTypes.func.isRequired,
     overridePalette: PropTypes.array,
   }

@@ -260,6 +260,12 @@
       "delete": "删除",
       "rotateClockwise": "顺时针",
       "rotateCounterClockwise": "逆时针方向"
+    },
+    "richText": {
+      "bold": "粗体",
+      "italic": "斜体",
+      "underline": "下划线",
+      "strikeout": "删除线"
     }
   },
   "warning": {
@@ -296,7 +302,13 @@
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)"
+    "zoomOut": "(Ctrl -)",
+    "richText": {
+      "bold": "（Ctrl B）",
+      "italic": "（Ctrl I）",
+      "underline": "（Ctrl L）",
+      "strikeout": "（Ctrl K）"
+    }
   },
   "tool": {
     "pan": "移动",
@@ -309,5 +321,41 @@
     "page": "页",
     "enterurl": "输入您想要链接的URL",
     "enterpage": "选择您要链接的页码"
+  },
+  "datePicker": {
+    "previousMonth": "前一个月",
+    "nextMonth": "下个月",
+    "months": {
+      "0": "一月",
+      "1": "二月",
+      "2": "三月",
+      "3": "四月",
+      "4": "五月",
+      "5": "六月",
+      "6": "七月",
+      "7": "八月",
+      "8": "九月",
+      "9": "十月",
+      "10": "十一月",
+      "11": "十二月"
+    },
+    "weekdays": {
+      "0": "星期日",
+      "1": "星期一",
+      "2": "星期二",
+      "3": "星期三",
+      "4": "星期四",
+      "5": "星期五",
+      "6": "星期六"
+    },
+    "weekdaysShort": {
+      "0": "周日",
+      "1": "周一",
+      "2": "周二",
+      "3": "周三",
+      "4": "周四",
+      "5": "周五",
+      "6": "周六"
+    }
   }
 }

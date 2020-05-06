@@ -17,6 +17,7 @@ import SearchPanel from 'components/SearchPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
 import ContextMenuPopup from 'components/ContextMenuPopup';
+import RichTextPopup from 'components/RichTextPopup';
 import SignatureModal from 'components/SignatureModal';
 import PrintModal from 'components/PrintModal';
 import LoadingModal from 'components/LoadingModal';
@@ -41,7 +42,8 @@ import core from 'core';
 import defaultTool from 'constants/defaultTool';
 
 import './App.scss';
-import '../../constants/pikaday.scss';
+import 'constants/pikaday.scss';
+import 'constants/quill.scss';
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
@@ -109,7 +111,7 @@ const App = ({ removeEventHandlers }) => {
         <AnnotationPopup />
         <TextPopup />
         <ContextMenuPopup />
-
+        <RichTextPopup />
         <SignatureModal />
         <PrintModal />
         <LoadingModal />

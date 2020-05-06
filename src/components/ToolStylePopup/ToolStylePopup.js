@@ -50,7 +50,6 @@ class ToolStylePopup extends React.PureComponent {
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
       this.props.closeElements([
         'viewControlsOverlay',
-        'searchOverlay',
         'menuOverlay',
         'signatureOverlay',
         'zoomOverlay',
