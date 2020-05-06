@@ -21,9 +21,9 @@ export const getTextPopupPositionBasedOn = (allQuads, popup) => {
 const getAnnotationPosition = annotation => {
   const { left, top, right, bottom } = getAnnotationPageCoordinates(annotation);
 
-  const pageIndex = annotation.getPageNumber() - 1;
-  const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageIndex);
-  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageIndex);
+  const pageNumber = annotation.getPageNumber();
+  const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageNumber);
+  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber);
 
   const isNote = annotation instanceof window.Annotations.StickyAnnotation;
   if (isNote) {
@@ -84,8 +84,8 @@ const getSelectedTextPosition = allQuads => {
     endPageIndex
   );
 
-  let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, startPageIndex);
-  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, endPageIndex);
+  let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, startPageIndex + 1);
+  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, endPageIndex + 1);
 
   if (core.getRotation() > 1) {
     const tmp = topLeft;
@@ -143,10 +143,10 @@ const getSelectedTextPageCoordinates = (allQuads, startPageIndex, endPageIndex) 
   return { left, top, bottom, right };
 };
 
-const convertPageCoordinatesToWindowCoordinates = (x, y, pageIndex) => {
+const convertPageCoordinatesToWindowCoordinates = (x, y, pageNumber) => {
   const displayMode = core.getDisplayModeObject();
 
-  return displayMode.pageToWindow({ x, y }, pageIndex);
+  return displayMode.pageToWindow({ x, y }, pageNumber);
 };
 
 const getPopupDimensions = popup => {
