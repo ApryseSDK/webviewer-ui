@@ -105,8 +105,9 @@ class Thumbnail extends React.PureComponent {
     const { index, onLoad } = this.props;
     const { thumbContainer } = this;
     const { current } = thumbContainer;
+    const pageNum = index + 1;
 
-    const id = core.loadThumbnailAsync(index, thumb => {
+    const id = core.loadThumbnailAsync(pageNum, thumb => {
       thumb.className = 'page-image';
       thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
       thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
@@ -131,11 +132,11 @@ class Thumbnail extends React.PureComponent {
     const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled } = this.props;
 
     if (isThumbnailMultiselectEnabled) {
-      let togglingSelectedPage = e.ctrlKey || e.metaKey;
+      const togglingSelectedPage = e.ctrlKey || e.metaKey;
       let updatedSelectedPages = [...selectedPageIndexes];
 
       if (togglingSelectedPage) {
-        if(selectedPageIndexes.indexOf(index) > -1) {
+        if (selectedPageIndexes.indexOf(index) > -1) {
           updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
         } else {
           updatedSelectedPages.push(index);
