@@ -234,3 +234,7 @@ export const setCustomElementOverrides = (dataElement, overrides) => ({
   type: 'SET_CUSTOM_ELEMENT_OVERRIDES',
   payload: { dataElement, overrides },
 });
+export const setSearchResults = searchResults => ({
+  type: 'SET_SEARCH_RESULTS',
+  payload: searchResults,
+});
