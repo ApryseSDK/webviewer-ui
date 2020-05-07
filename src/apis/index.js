@@ -132,6 +132,7 @@ import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 import setNoteTransformFunction from './setNoteTransformFunction';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
+import setSearchResults from './setSearchResults';
 
 export default store => {
   window.readerControl = {
@@ -193,6 +194,7 @@ export default store => {
     setToolMode: setToolMode(store),
     setZoomLevel,
     setZoomList: setZoomList(store),
+    setSearchResults: setSearchResults(store),
     showErrorMessage: showErrorMessage(store),
     textPopup: textPopup(store),
     toggleElement: toggleElement(store),

@@ -284,8 +284,11 @@ export const setCustomElementOverrides = (dataElement, overrides) => ({
   type: 'SET_CUSTOM_ELEMENT_OVERRIDES',
   payload: { dataElement, overrides },
 });
-
 export const setActiveTheme = theme => ({
   type: 'SET_ACTIVE_THEME',
   payload: { theme },
+});
+export const setSearchResults = searchResults => ({
+  type: 'SET_SEARCH_RESULTS',
+  payload: searchResults,
 });
