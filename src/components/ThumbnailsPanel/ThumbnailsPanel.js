@@ -421,8 +421,7 @@ class ThumbnailsPanel extends React.PureComponent {
       allowPageOperations,
     } = this.state;
     const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled, selectedPageIndexes } = this.props;
-    const { thumbs } = this;
-    const numberOfColumns = this.getNumberOfColumns();
+    const numberOfColumns = this.getNumberOfColumns(width);
     const className = classNames({
       columnsOfThumbnails: numberOfColumns > 1,
       row: true,
@@ -573,7 +572,6 @@ const mapStateToProps = state => ({
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),
   isMultipleViewerMerging: selectors.getIsMultipleViewerMerging(state),
   isThumbnailControlDisabled: selectors.isElementDisabled(state, 'thumbnailControl'),
-  cccc: selectors.getLeftPanelWidth(state),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThumbnailsPanel);
