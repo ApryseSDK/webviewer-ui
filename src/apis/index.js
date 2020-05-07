@@ -134,9 +134,6 @@ import unselectThumbnailPages from './unselectThumbnailPages';
 import * as HiveApi from './hiveApi';
 import hiveApi from '../helpers/hiveApi';
 
-import * as HiveApi from './hiveApi';
-import hiveApi from '../helpers/hiveApi';
-
 export default store => {
   window.readerControl = {
     docViewer: window.docViewer,
