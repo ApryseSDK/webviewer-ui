@@ -79,7 +79,7 @@ class ColorPaletteHeader extends React.PureComponent {
                 'palette-options-button': true,
                 active: colorPalette === pallette,
               })}
-              onClick={() => this.setColorPalette(pallette)}
+              onClick={() => this.setActivePalette(pallette)}
             >
               {t(`option.annotationColor.${pallette}`)}
             </div>
