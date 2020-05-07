@@ -119,25 +119,21 @@ const InkSignature = ({
 
   return (
     <React.Fragment>
-      <div
-        className="color-palette-container"
-      >
-        <ColorPalette
-          color={toolStyles['StrokeColor']}
-          property="StrokeColor"
-          onStyleChange={(property, value) => {
-            setToolStyles('AnnotationCreateSignature', property, value);
-            const signatureTool = core.getTool('AnnotationCreateSignature');
-            if (signatureTool.annot) {
-              signatureTool.annot.StrokeColor = value;
-              signatureTool.resizeCanvas();
-            }
-            // hack for tool styles for signature not being on state
-            forceUpdate();
-          }}
-          overridePalette2={['#E44234', '#4E7DE9', '#000000']}
-        />
-      </div>
+      <ColorPalette
+        color={toolStyles['StrokeColor']}
+        property="StrokeColor"
+        onStyleChange={(property, value) => {
+          setToolStyles('AnnotationCreateSignature', property, value);
+          const signatureTool = core.getTool('AnnotationCreateSignature');
+          if (signatureTool.annot) {
+            signatureTool.annot.StrokeColor = value;
+            signatureTool.resizeCanvas();
+          }
+          // hack for tool styles for signature not being on state
+          forceUpdate();
+        }}
+        overridePalette2={['#E44234', '#4E7DE9', '#000000']}
+      />
       <div
         className="divider-horizontal"
       />

@@ -1,15 +1,16 @@
 @import '../../constants/styles.scss';
 
-.color-palette-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .ColorPalette {
   display: flex;
   flex-wrap: wrap;
   width: 196px;
+
+  &.padding {
+    padding-top: 4px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 
   @include tablet-and-mobile {
     width: auto;

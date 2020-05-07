@@ -156,7 +156,7 @@ class StylePopup extends React.PureComponent {
     return (
       <div className={className} data-element="stylePopup">
         {currentPalette && !isColorPaletteDisabled && (
-          <div className="color-palette-container">
+          <React.Fragment>
             <ColorPaletteHeader
               colorPalette={currentPalette}
               colorMapKey={colorMapKey}
@@ -164,7 +164,7 @@ class StylePopup extends React.PureComponent {
               toolName={toolName}
             />
             {this.renderColorPalette()}
-          </div>
+          </React.Fragment>
         )}
         {this.renderSliders()}
         {Scale && Precision && (

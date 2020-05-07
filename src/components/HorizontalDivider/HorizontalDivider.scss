@@ -1,0 +1,13 @@
+@import '../../constants/styles';
+
+.divider-container {
+  width: 100%;
+  padding-right: 4px;
+  padding-left: 4px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  .divider-horizontal {
+    height: 1px;
+    background: var(--divider);
+  }
+}

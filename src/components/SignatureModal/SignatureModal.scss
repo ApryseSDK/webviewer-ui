@@ -4,43 +4,17 @@
 .SignatureModal {
   @extend %modal;
 
-  .color-palette-container {
-    margin-bottom: 8px;
-    .ColorPalette {
-      width: auto;
-    }
-  }
-
   .tab-list {
     font-size: 14px; // hack for extra area in the tab list. 13px looks bad.
   }
-
 
   @include mobile {
     background: none;
   }
 
-  .StylePopup {
-    max-width: 318px;
-    .ColorPalette {
-      .cell-container {
-        width: 36px;
-        height: 36px;
-        margin: 0 13px;
-
-        .cell-outer {
-          &.active {
-            width: 34px;
-            height: 34px;
-          }
-
-          .cell {
-            width: 24px;
-            height: 24px;
-          }
-        }
-      }
-    }
+  .ColorPalette {
+    margin-bottom: 8px;
+    width: auto;
   }
 
   .container {

@@ -15,6 +15,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import ToolButton from 'components/ToolButton';
+import HorizontalDivider from 'components/HorizontalDivider';
 import defaultTool from 'constants/defaultTool';
 
 import './ToolStylePopup.scss';
@@ -181,10 +182,7 @@ class ToolStylePopup extends React.PureComponent {
       >
         {isMobile && <div className="swipe-indicator" />}
         {isDesktop && (swapableToolNames.length > 0 || availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
-          &&
-          (<div className="divider-container">
-            <div className="divider-horizontal" />
-          </div>)}
+          && <HorizontalDivider/>}
         {Component}
       </div>
     );
