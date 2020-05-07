@@ -77,15 +77,15 @@ const getAnnotationPageCoordinates = annotation => {
 };
 
 const getSelectedTextPosition = allQuads => {
-  const { startPageIndex, endPageIndex } = getSelectedTextPageIndex(allQuads);
+  const { startPageNumber, endPageNumber } = getSelectedTextPageNumber(allQuads);
   const { left, right, top, bottom } = getSelectedTextPageCoordinates(
     allQuads,
-    startPageIndex,
-    endPageIndex
+    startPageNumber,
+    endPageNumber
   );
 
-  let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, startPageIndex + 1);
-  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, endPageIndex + 1);
+  let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, startPageNumber);
+  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, endPageNumber);
 
   if (core.getRotation() > 1) {
     const tmp = topLeft;
@@ -96,21 +96,21 @@ const getSelectedTextPosition = allQuads => {
   return { topLeft, bottomRight };
 };
 
-const getSelectedTextPageIndex = allQuads => {
-  const pageIndices = Object.keys(allQuads).map(pageIndex => Number(pageIndex));
+const getSelectedTextPageNumber = allQuads => {
+  const pageNumbers = Object.keys(allQuads).map(pageNumber => Number(pageNumber));
   // Object.keys returns keys in arbitrary order so use Math.min/max instead of index to access array
-  const startPageIndex = Math.min(...pageIndices);
-  const endPageIndex = Math.max(...pageIndices);
+  const startPageNumber = Math.min(...pageNumbers);
+  const endPageNumber = Math.max(...pageNumbers);
 
-  return { startPageIndex, endPageIndex };
+  return { startPageNumber, endPageNumber };
 };
 
-const getSelectedTextPageCoordinates = (allQuads, startPageIndex, endPageIndex) => {
+const getSelectedTextPageCoordinates = (allQuads, startPageNumber, endPageNumber) => {
   const getTopAndBottom = () => {
-    const firstQuad = allQuads[startPageIndex][0];
+    const firstQuad = allQuads[startPageNumber][0];
     const top = firstQuad.y3;
 
-    const endPageQuads = allQuads[endPageIndex];
+    const endPageQuads = allQuads[endPageNumber];
     const lastQuad = endPageQuads[endPageQuads.length - 1];
     const bottom = lastQuad.y1;
 
@@ -121,8 +121,8 @@ const getSelectedTextPageCoordinates = (allQuads, startPageIndex, endPageIndex) 
     let left;
     let right;
 
-    Object.keys(allQuads).forEach(pageIndex => {
-      allQuads[pageIndex].forEach(quad => {
+    Object.keys(allQuads).forEach(pageNumber => {
+      allQuads[pageNumber].forEach(quad => {
         const { x1: quadLeft, x2: quadRight } = quad;
 
         if (!left || quadLeft < left) {
