@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import core from 'core';
 import { isMobileDevice } from 'helpers/device';
+import skipHtml from 'helpers/skipHtml';
 import selectors from 'selectors';
 
 import './AnnotationContentOverlay.scss';
@@ -49,7 +50,7 @@ const AnnotationContentOverlay = () => {
     };
   }, []);
 
-  const contents = annotation?.getContents();
+  const contents = skipHtml(annotation?.getContents());
   const numberOfReplies = annotation?.getReplies().length;
 
   return isDisabled || isMobileDevice || !contents ? null : (

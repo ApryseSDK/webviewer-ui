@@ -55,7 +55,6 @@ app.listen(3300, '0.0.0.0', err => {
       disabledElements: [
         'outlinesPanelButton',
         'signatureToolButton',
-        'calloutToolButton',
         'stampToolButton',
         'pageNavOverlay',
         'notePopupEdit',

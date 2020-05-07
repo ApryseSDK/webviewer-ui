@@ -34,12 +34,12 @@ const ContentArea = ({
     // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
 
-    const trimmedValue = textAreaValue.trim();
-    const hasEdited = trimmedValue !== contents || attachedFiles.length > 0;
+    const value = textAreaValue ? textAreaValue.trim() : '';
+    const hasEdited = value !== contents || attachedFiles.length > 0;
     if (hasEdited) {
       textareaRef.current.handleMentions();
       annotation.attachedFiles = attachedFiles;
-      core.setNoteContents(annotation, trimmedValue);
+      core.setNoteContents(annotation, value);
       if (annotation instanceof window.Annotations.FreeTextAnnotation) {
         core.drawAnnotationsFromList([annotation]);
       }
