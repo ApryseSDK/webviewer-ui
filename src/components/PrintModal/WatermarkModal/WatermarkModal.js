@@ -122,7 +122,7 @@ class WatermarkModal extends React.PureComponent {
     const desiredZoom = Math.min(desiredZoomForHeight, desiredZoomForWidth);
 
     core.getDocument().loadCanvasAsync({
-      pageIndex: this.props.pageIndexToView,
+      pageNumber: this.props.pageIndexToView + 1,
       zoom: desiredZoom,
       drawComplete: canvas => {
         const nodes = this.canvasContainerRef.current.childNodes;

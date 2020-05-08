@@ -203,7 +203,7 @@ class PrintModal extends React.PureComponent {
       };
 
       const id = core.getDocument().loadCanvasAsync({
-        pageIndex,
+        pageNumber,
         zoom,
         pageRotation: printRotation,
         drawComplete: onCanvasLoaded,
