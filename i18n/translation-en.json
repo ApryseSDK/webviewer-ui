@@ -6,6 +6,8 @@
     "cancel": "Cancel",
     "clear": "Clear",
     "close": "Close",
+    "undo": "Undo",
+    "redo": "Redo",
     "comment": "Comment",
     "copy": "Copy",
     "delete": "Delete",
@@ -290,7 +292,7 @@
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
-  
+
   "shortcut": {
     "arrow": "(A)",
     "callout": "(C)",

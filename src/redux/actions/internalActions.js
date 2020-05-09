@@ -3,12 +3,6 @@ import { isIOS, isAndroid } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import selectors from 'selectors';
 import core from 'core';
-import {
-  // getMobileToolsState,
-  // getTabletToolsState,
-  // getDesktopToolsState,
-  getToolsState,
-} from '../getToolsState';
 
 // viewer
 /**
@@ -194,47 +188,15 @@ export const unregisterTool = toolName => ({
 });
 
 
-export const setMobileToolsHeader = () => dispatch => {
-  const { tools, toolButtonObjects } = getToolsState();
+export const setToolsScreen = screen => dispatch => {
   dispatch({
-    type: 'SET_TOOLS_HEADER',
+    type: 'SET_TOOLS_SCREEN',
     payload: {
-      tools,
-      toolButtonObjects,
+      screen,
     },
   });
 };
 
-export const setTabletToolsHeader = () => dispatch => {
-  const { tools, toolButtonObjects } = getToolsState();
-  dispatch({
-    type: 'SET_TOOLS_HEADER',
-    payload: {
-      tools,
-      toolButtonObjects,
-    },
-  });
-};
-
-export const setDesktopToolsHeader = () => dispatch => {
-  const { tools, toolButtonObjects } = getToolsState();
-  dispatch({
-    type: 'SET_TOOLS_HEADER',
-    payload: {
-      tools,
-      toolButtonObjects,
-    },
-  });
-};
-
-export const setToolButtonObjects = toolButtonObjects => ({
-  type: 'SET_TOOL_BUTTON_OBJECTS',
-  payload: { toolButtonObjects },
-});
-export const setHeaderItems = (header, headerItems) => ({
-  type: 'SET_HEADER_ITEMS',
-  payload: { header, headerItems },
-});
 export const setPopupItems = (dataElement, items) => ({
   type: 'SET_POPUP_ITEMS',
   payload: {

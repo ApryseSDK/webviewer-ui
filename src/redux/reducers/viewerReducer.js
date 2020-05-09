@@ -24,7 +24,6 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         panelWidths: {
-
           ...state.panelWidths,
           searchPanel: payload.width,
         }
@@ -164,30 +163,35 @@ export default initialState => (state = initialState, action) => {
       return newState;
     }
     case 'SWAP_TOOLS': {
-      const { toolNameToSwap, otherToolName } = payload;
-      const toolToSwap = state.toolButtonObjects[toolNameToSwap];
-      const otherTool = state.toolButtonObjects[otherToolName];
+      const { toolNameToSwap, otherToolName, screen } = payload;
+
+      const screenToolButtonObjects = state.toolButtonObjects[screen];
+
+      const toolToSwap = screenToolButtonObjects[toolNameToSwap];
+      const otherTool = screenToolButtonObjects[otherToolName];
 
       return {
         ...state,
         toolButtonObjects: {
           ...state.toolButtonObjects,
-          [toolNameToSwap]: {
-            ...toolToSwap,
-            position: otherTool.position,
-          },
-          [otherToolName]: {
-            ...otherTool,
-            position: toolToSwap.position,
+          [screen]: {
+            ...screenToolButtonObjects,
+            [toolNameToSwap]: {
+              ...toolToSwap,
+              position: otherTool.position,
+            },
+            [otherToolName]: {
+              ...otherTool,
+              position: toolToSwap.position,
+            },
           },
         },
       };
     }
-    case 'SET_TOOLS_HEADER':
+    case 'SET_TOOLS_SCREEN':
       return {
         ...state,
-        headers: { ...state.headers, tools: payload.tools },
-        toolButtonObjects: payload.toolButtonObjects,
+        screen: payload.screen,
       };
     case 'SET_POPUP_ITEMS':
       return {
@@ -244,8 +248,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isMultipleViewerMerging: payload.isMultipleViewerMerging };
     case 'SET_ALLOW_PAGE_NAVIGATION':
       return { ...state, allowPageNavigation: payload.allowPageNavigation };
-    case 'SET_TOOL_BUTTON_OBJECTS':
-      return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
     case 'SET_READ_ONLY':
       return { ...state, isReadOnly: payload.isReadOnly };
     case 'SET_CUSTOM_PANEL':
@@ -302,8 +304,6 @@ export default initialState => (state = initialState, action) => {
     case 'SET_MEASUREMENT_UNITS': {
       return { ...state, measurementUnits: payload };
     }
-    case 'SET_LEFT_PANEL_WIDTH':
-      return { ...state, leftPanelWidth: payload.width };
     case 'SET_MAX_SIGNATURES_COUNT':
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
     case 'SET_USER_DATA':

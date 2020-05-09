@@ -60,6 +60,10 @@ class ToolGroupButton extends React.PureComponent {
       this.setState({ toolName: this.props.activeToolName });
       this.props.setActiveToolGroup(this.props.toolGroup);
     }
+
+    if (!this.props.isActive) {
+      this.setState({ toolName: this.props.toolNames[0] });
+    }
   }
 
   onClick = e => {
@@ -161,10 +165,6 @@ const mapStateToProps = (state, ownProps) => ({
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
-  // allButtonsInGroupDisabled: selectors.allButtonsInGroupDisabled(
-  //   state,
-  //   ownProps.toolGroup,
-  // ),
   isToolGroupButtonDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
   iconColor: selectors.getIconColor(
     state,
@@ -179,7 +179,6 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
 const ConnectedToolGroupButton = connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
 
 export default props => {
