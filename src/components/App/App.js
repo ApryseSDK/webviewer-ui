@@ -49,9 +49,9 @@ const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
 };
 
-const mobileListener = window.matchMedia('(max-width: 640px)');
-const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
-const desktopListener = window.matchMedia('(min-width: 901px)');
+const mobileBreakpoint = window.matchMedia('(max-width: 640px)');
+const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
+const desktopBreakpoint = window.matchMedia('(min-width: 901px)');
 
 const App = ({ removeEventHandlers }) => {
   const store = useStore();
@@ -61,29 +61,47 @@ const App = ({ removeEventHandlers }) => {
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
-    mobileListener.addListener(() => {
-      dispatch(actions.setMobileToolsHeader());
+    const setMobileState = () => {
+      dispatch(actions.setToolsScreen('mobile'));
       dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
       core.setToolMode(defaultTool);
       dispatch(actions.setActiveToolGroup(''));
-    });
+    };
 
-    tabletListener.addListener(() => {
-      dispatch(actions.setTabletToolsHeader());
+    const setTabletState = () => {
+      dispatch(actions.setToolsScreen('tablet'));
       dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
       core.setToolMode(defaultTool);
       dispatch(actions.setActiveToolGroup(''));
       dispatch(actions.setLeftPanelWidth(251));
       dispatch(actions.setNotesPanelWidth(293));
       dispatch(actions.setSearchPanelWidth(293));
-    });
+    };
 
-    desktopListener.addListener(() => {
-      dispatch(actions.setDesktopToolsHeader());
+    const setDesktopState = () => {
+      dispatch(actions.setToolsScreen('desktop'));
       dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
       core.setToolMode(defaultTool);
       dispatch(actions.setActiveToolGroup(''));
-    });
+    };
+
+    const onBreakpoint = () => {
+      if (mobileBreakpoint.matches) {
+        setMobileState();
+      } else if (tabletBreakpoint.matches) {
+        setTabletState();
+      } else if (desktopBreakpoint.matches) {
+        setDesktopState();
+      } else {
+        console.warn('Unexpected breakpoint');
+      }
+    }
+
+    mobileBreakpoint.addListener(onBreakpoint);
+    tabletBreakpoint.addListener(onBreakpoint);
+    desktopBreakpoint.addListener(onBreakpoint);
+
+
 
     return removeEventHandlers;
     // eslint-disable-next-line

@@ -16,6 +16,8 @@ export default store => toolName => {
   const state = store.getState();
   const group = state.viewer.toolButtonObjects[toolName].group;
 
+  console.log('setToolMode', toolName);
+
   core.setToolMode(toolName);
   setActiveToolGroupAndToolsOverlay(store, group);
 };

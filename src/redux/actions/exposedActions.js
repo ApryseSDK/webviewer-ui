@@ -2,7 +2,6 @@ import core from 'core';
 import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
-import localStorageManager from 'helpers/localStorageManager';
 
 // viewer
 export const setSelectedSignatureIndex = index => ({
@@ -129,9 +128,10 @@ export const toggleElement = dataElement => (dispatch, getState) => {
 };
 
 export const swapTools = (toolNameToSwap, otherToolName) => (dispatch, getState) => {
+  const screen = getState().viewer.screen;
   dispatch({
     type: 'SWAP_TOOLS',
-    payload: { toolNameToSwap, otherToolName },
+    payload: { toolNameToSwap, otherToolName, screen },
   });
 
   // if (localStorageManager.isLocalStorageEnabled()) {
