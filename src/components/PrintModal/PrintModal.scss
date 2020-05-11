@@ -6,28 +6,62 @@
 
   .container {
     @extend %modal-shared-container-style;
-    background: var(--component-background);
-    box-shadow: 0 0 3px 0 var(--document-box-shadow);
-
     display: flex;
     flex-direction: column;
-    width: 320px;
-    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+    padding: 16px;
+    background: var(--component-background);
+
+    @include mobile {
+      width: 100%;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      padding-top: 24px;
+      padding-bottom: 16px;
+      padding-left: 24px;
+      padding-right: 24px;
+      min-width: 100px;
+
+      .swipe-indicator {
+        background: var(--divider);
+        border-radius: 2px;
+        height: 4px;
+        width: 38px;
+        position: absolute;
+        top: 12px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+
+        @include tablet-and-desktop {
+          display: none;
+        }
+      }
+    }
 
     .settings {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
+    }
+
+    .divider {
+      height: 1px;
+      width: 100%;
+      background: var(--divider);
+      margin: 16px 0;
     }
 
     .col {
+      padding: 8px;
+    }
 
-      &:first-child {
-        width: 70px;
-      }
-
-      &:last-child {
-        flex: 1;
-      }
+    .settings-form {
+      padding: 8px;
     }
 
     label {
@@ -38,14 +72,29 @@
 
     input[type='text'] {
       width: 100%;
+      height: 30px;
+      padding-left: 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-color);
+      padding-bottom: 6px;
+      padding-right: 42px;
+      padding-top: 4px;
+
+      &:focus {
+        outline: none;
+        border: 1px solid var(--focus-border);
+      }
+
+      &::placeholder {
+        color: var(--placeholder-text);
+      }
     }
 
     .total {
       display: flex;
       flex-direction: row;
-      justify-content: flex-start;
-      flex: 1;
-      padding: 5px 0;
+      padding: 0px 8px;
       font-size: 0.9em;
       color: #aaa;
     }
@@ -54,41 +103,56 @@
       width: 100%;
       height: 10px;
       transform: translateY(-50%);
-      fill: #E2F3FE;
+      fill: #e2f3fe;
     }
 
     .progress {
       height: 10px;
       transform: translateY(-50%);
-      fill: #077BC5;
+      fill: #077bc5;
     }
 
     .buttons {
       display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
       width: 100%;
-      margin: 10px 0 0;
-      padding: 10px 0 0;
-      border-top: 1px solid $gray12;
-      border-top: 1px solid var(--border-color);
-      box-sizing: border-box;
 
       .button {
-        color: white;
-        border: 1px solid $pdftron-blue;
-        background: $pdftron-blue;
-        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--primary-button-text);
         padding: 6px 18px;
+        width: fit-content;
+        background: var(--primary-button);
+        border-radius: 4px;
+        border: 0px;
+        height: 32px;
         cursor: pointer;
+
+        &:hover {
+          background: var(--primary-button-hover);
+        }
       }
     }
 
     .apply-watermark {
       cursor: pointer;
-      color: $pdftron-blue;
-      background: white;
-      border-radius: 4px;
-      border: 1px solid $pdftron-blue;
-      padding: 6px 18px;
+      margin-top: 16px;
+      background: none;
+      border: 0;
+      width: 100%;
+      color: var(--secondary-button-text);
+      padding: 6px 16px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: var(--secondary-button-hover);
+      }
     }
 
     .header-container {

@@ -64,3 +64,10 @@ input[type=checkbox]:checked + label {
     border: 1px solid var(--primary-button);
   }
 }
+
+input[type=radio]:checked + label {
+  &:before{
+    background: var(--primary-button);
+    border: 1px solid var(--primary-button);
+  }
+}

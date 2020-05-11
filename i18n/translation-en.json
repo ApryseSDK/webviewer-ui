@@ -198,9 +198,9 @@
     "print": {
       "all": "All",
       "current": "Current",
-      "pages": "Pages",
+      "pages": "Pages to print",
       "includeComments": "Include comments",
-      "addWatermarkSettings": "Add Watermark Settings"
+      "addWatermarkSettings": "Add Watermark"
     },
     "redaction": {
       "markForRedaction": "Mark for redaction"

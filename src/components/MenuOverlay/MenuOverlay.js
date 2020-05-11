@@ -70,7 +70,7 @@ class MenuOverlay extends React.PureComponent {
 
   handlePrintButtonClick = () => {
     const { dispatch, isEmbedPrintSupported } = this.props;
-
+    this.props.closeElements(['menuOverlay']);
     print(dispatch, isEmbedPrintSupported);
   }
 

@@ -51,28 +51,48 @@ $gap: 15px;
     @extend %modal-shared-container-style;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 400px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+    padding: 8px 8px;
+    background: var(--component-background);
 
-    @include portrait-mobile {
-      width: 100vw;
-      max-height: 100vh;
-      overflow:auto;
-    }
-    @include low-res-tablet-landscape-mobiles {
-      width: 100vw;
-      max-height: 100vh;
-      overflow:auto;
-    }
-    @include tablets-and-landscape-ipads {
-      width: 100vw;
-      max-height: 100vh;
-      overflow:auto;
+    @include mobile {
+      width: 100%;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      padding-top: 24px;
+      padding-bottom: 16px;
+      padding-left: 24px;
+      padding-right: 24px;
+      min-width: 100px;
+
+      .swipe-indicator {
+        background: var(--divider);
+        border-radius: 2px;
+        height: 4px;
+        width: 38px;
+        position: absolute;
+        top: 12px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+
+        @include tablet-and-desktop {
+          display: none;
+        }
+      }
     }
   }
-  
+
   .form-content-container {
     display: flex;
     margin: $gap;
-    
+
     justify-content: space-around;
     align-items: center;
 
@@ -104,7 +124,7 @@ $gap: 15px;
       margin-top: 10px;
     }
   }
-  
+
   .button-container {
     display: flex;
     justify-content: space-between;
@@ -116,7 +136,7 @@ $gap: 15px;
     height: 0;
     min-width: 35px;
   }
-  
+
   .button {
     padding: 6px 18px;
     border-radius: 4px 4px 4px 4px;
@@ -141,20 +161,20 @@ $gap: 15px;
       margin-right: 5px;
     }
   }
-    
+
   .form-field {
     display: flex;
     flex-direction: column;
     margin: 0 0 $gap 0;
 
     @include low-res-tablet-landscape-mobiles {
-      margin: 0 0 $gap+10 0;
+      margin: 0 0 $gap + 10 0;
     }
     @include tablets-and-landscape-ipads {
-      margin: 0 0 $gap+10 0;
+      margin: 0 0 $gap + 10 0;
     }
-  
-    >label {
+
+    > label {
       margin: 3px 0;
     }
 
