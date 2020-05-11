@@ -95,7 +95,6 @@
       display: flex;
       flex-direction: row;
       padding: 0px 8px;
-      font-size: 0.9em;
       color: #aaa;
     }
 
@@ -130,6 +129,7 @@
         border: 0px;
         height: 32px;
         cursor: pointer;
+        font-size: 13px;
 
         &:hover {
           background: var(--primary-button-hover);

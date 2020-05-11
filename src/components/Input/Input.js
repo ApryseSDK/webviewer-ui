@@ -33,7 +33,7 @@ const Input = React.forwardRef((props, ref) => {
     <React.Fragment>
       <input className="Input" ref={ref} {...props}/>
       <label className="Input" htmlFor={props.id}>{props.label}
-        {checked &&
+        {ref?.current?.checked &&
           <div
             className="icon-container"
           >
