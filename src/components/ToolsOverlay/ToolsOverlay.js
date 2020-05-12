@@ -17,6 +17,8 @@ import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
 import classNames from 'classnames';
 
+import { motion, AnimatePresence } from "framer-motion";
+
 import './ToolsOverlay.scss';
 
 class ToolsOverlay extends React.PureComponent {
@@ -147,9 +149,6 @@ class ToolsOverlay extends React.PureComponent {
 
     // const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
     const isVisible = isOpen && !isDisabled;
-    if (!isVisible) {
-      return null;
-    }
 
     let dropdownButton = (
       <div
@@ -203,49 +202,77 @@ class ToolsOverlay extends React.PureComponent {
       );
     }
 
+    let containerAnimations = {
+      visible: {},
+      hidden: {},
+    };
+
+    if (isTabletAndMobile) {
+      containerAnimations = {
+        visible: {
+          height: 'auto',
+          overflow: 'hidden',
+          transitionEnd: { overflow: 'initial' },
+        },
+        hidden: {
+          height: '0px',
+          overflow: 'hidden',
+        },
+      };
+    }
+
     return (
-      <div
-        className="ToolsOverlayContainer"
-      >
-        <div
-          className={classNames({
-            Overlay: true,
-            ToolsOverlay: true,
-            open: isOpen,
-            shadow: !isTabletAndMobile && isToolStyleOpen,
-          })}
-          ref={this.overlay}
-          data-element="toolsOverlay"
-        >
-          <div
-            className="arrow-up"
-            style={arrowStyle}
-          />
-          <div
-            ref={this.toolsContainer}
-            className={classNames({
-              "tools-container": true,
-            })}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            className="ToolsOverlayContainer"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={containerAnimations}
+            transition={{ ease: "easeOut", duration: 0.25 }}
           >
             <div
-              className="tool-buttons-container"
-              tool-group={activeToolGroup}
-              ref={this.itemsContainer}
+              className={classNames({
+                Overlay: true,
+                ToolsOverlay: true,
+                open: isOpen,
+                shadow: !isTabletAndMobile && isToolStyleOpen,
+              })}
+              ref={this.overlay}
+              data-element="toolsOverlay"
             >
-              {Component}
-            </div>
-            {(isToolStyleOpen) && (
-              <Swipeable
-                onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-                onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-                preventDefaultTouchmoveEvent
+              <div
+                className="arrow-up"
+                style={arrowStyle}
+              />
+              <div
+                ref={this.toolsContainer}
+                className={classNames({
+                  "tools-container": true,
+                })}
               >
-                <ToolStylePopup/>
-              </Swipeable>
-            )}
+                <div
+                  className="tool-buttons-container"
+                  tool-group={activeToolGroup}
+                  ref={this.itemsContainer}
+                >
+                  {Component}
+                </div>
+                {(isToolStyleOpen) && (
+                  <Swipeable
+                    onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+                    onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+                    preventDefaultTouchmoveEvent
+                  >
+                    <ToolStylePopup/>
+                  </Swipeable>
+                )}
+              </div>
           </div>
-        </div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     );
   }
 }
