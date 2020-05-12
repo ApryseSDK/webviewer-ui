@@ -148,7 +148,8 @@ class ToolsOverlay extends React.PureComponent {
       }
     }
 
-    const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
+    // const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
+    const isVisible = !isDisabled;
 
     let containerAnimations = {
       visible: {
@@ -185,9 +186,10 @@ class ToolsOverlay extends React.PureComponent {
         className={classNames({
           "styling-arrow-container": true,
           active: isToolStyleOpen,
+          disabled: !activeToolGroup,
         })}
         data-element="styling-button"
-        onClick={() => this.props.toggleElement('toolStylePopup')}
+        onClick={() => activeToolGroup && this.props.toggleElement('toolStylePopup')}
       >
         <Icon glyph="icon-menu-style-line" />
         {isToolStyleOpen ?
@@ -221,6 +223,13 @@ class ToolsOverlay extends React.PureComponent {
     if (activeToolGroup === 'signatureTools') {
       Component = (
         <SelectedSignatureRow/>
+      );
+    } else if (!activeToolGroup) {
+      Component = (
+        <React.Fragment>
+          <div className="no-presets-container">No Presets</div>
+          {dropdownButton}
+        </React.Fragment>
       );
     }
 

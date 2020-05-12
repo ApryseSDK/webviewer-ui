@@ -32,6 +32,14 @@
     }
   }
 
+  .no-presets-container {
+    width: 168px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--faded-text);
+  }
+
   .styling-arrow-container {
     width: 40px;
     height: 26px;
