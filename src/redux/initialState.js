@@ -70,8 +70,7 @@ export default {
           { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'icon-tools-more', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
           {
             type: 'customElement',
-            render: () => <ToolsOverlay/>,
-            },
+            render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
           },
           { type: 'divider' },
