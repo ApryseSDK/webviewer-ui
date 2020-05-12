@@ -149,6 +149,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
             {!isStateDisabled && !isReply &&
               <NoteState
                 annotation={annotation}
+                isSelected={isSelected}
               />
             }
             {!isEditing && isSelected &&

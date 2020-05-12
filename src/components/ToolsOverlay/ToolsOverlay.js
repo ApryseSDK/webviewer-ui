@@ -17,9 +17,6 @@ import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
 import classNames from 'classnames';
 
-import { motion, AnimatePresence } from "framer-motion";
-
-
 import './ToolsOverlay.scss';
 
 class ToolsOverlay extends React.PureComponent {
@@ -149,36 +146,9 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     // const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
-    const isVisible = !isDisabled;
-
-    let containerAnimations = {
-      visible: {
-        width: "214px",
-        opacity: 1,
-      },
-      hidden: {
-        width: "0px",
-        opacity: 0.5,
-      },
-    };
-
-    if (isTabletAndMobile) {
-      containerAnimations = {
-        visible: {
-          height: 'auto',
-          overflow: 'hidden',
-          transitionEnd: { overflow: 'initial' },
-        },
-        hidden: {
-          height: '0px',
-          overflow: 'hidden',
-        },
-      };
-    }
-
-    let motionStyle = {};
-    if (!isToolStyleOpen && !isTabletAndMobile) {
-      motionStyle = { 'overflow': 'hidden' };
+    const isVisible = isOpen || !isDisabled;
+    if (!isVisible) {
+      return null;
     }
 
     let dropdownButton = (
@@ -234,58 +204,48 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     return (
-      <AnimatePresence>
-        {isVisible && (
-          <motion.div
-            className="ToolsOverlayContainer"
-            style={motionStyle}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={containerAnimations}
-            transition={{ ease: "easeOut", duration: 0.25 }}
+      <div
+        className="ToolsOverlayContainer"
+      >
+        <div
+          className={classNames({
+            Overlay: true,
+            ToolsOverlay: true,
+            open: isOpen,
+            shadow: !isTabletAndMobile && isToolStyleOpen,
+          })}
+          ref={this.overlay}
+          data-element="toolsOverlay"
+        >
+          <div
+            className="arrow-up"
+            style={arrowStyle}
+          />
+          <div
+            ref={this.toolsContainer}
+            className={classNames({
+              "tools-container": true,
+            })}
           >
             <div
-              className={classNames({
-                Overlay: true,
-                ToolsOverlay: true,
-                open: isOpen,
-                shadow: !isTabletAndMobile && isToolStyleOpen,
-              })}
-              ref={this.overlay}
-              data-element="toolsOverlay"
+              className="tool-buttons-container"
+              tool-group={activeToolGroup}
+              ref={this.itemsContainer}
             >
-              <div
-                className="arrow-up"
-                style={arrowStyle}
-              />
-              <div
-                ref={this.toolsContainer}
-                className={classNames({
-                  "tools-container": true,
-                })}
-              >
-                <div
-                  className="tool-buttons-container"
-                  tool-group={activeToolGroup}
-                  ref={this.itemsContainer}
-                >
-                  {Component}
-                </div>
-                {(isToolStyleOpen) && (
-                  <Swipeable
-                    onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-                    onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-                    preventDefaultTouchmoveEvent
-                  >
-                    <ToolStylePopup/>
-                  </Swipeable>
-                )}
-              </div>
+              {Component}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {(isToolStyleOpen) && (
+              <Swipeable
+                onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+                onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+                preventDefaultTouchmoveEvent
+              >
+                <ToolStylePopup/>
+              </Swipeable>
+            )}
+          </div>
+        </div>
+      </div>
     );
   }
 }
