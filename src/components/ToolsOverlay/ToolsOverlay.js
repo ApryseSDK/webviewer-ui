@@ -127,6 +127,7 @@ class ToolsOverlay extends React.PureComponent {
       isTabletAndMobile,
       isToolStyleOpen,
       swapableToolNames,
+      isDesktop,
     } = this.props;
 
     let arrowStyle = {};
@@ -148,7 +149,7 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     // const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
-    const isVisible = isOpen && !isDisabled;
+    const isVisible = (isOpen || isDesktop) && !isDisabled;
 
     let dropdownButton = (
       <div
@@ -269,7 +270,7 @@ class ToolsOverlay extends React.PureComponent {
                   </Swipeable>
                 )}
               </div>
-          </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -314,7 +315,15 @@ export default props => {
     false,
   );
 
+  const isDesktop = useMedia(
+    // Media queries
+    ['(min-width: 901px)'],
+    [true],
+    // Default value
+    false,
+  );
+
   return (
-    <ConnectedToolsOverlay {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
+    <ConnectedToolsOverlay {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} isDesktop={isDesktop} />
   );
 };

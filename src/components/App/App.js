@@ -63,16 +63,10 @@ const App = ({ removeEventHandlers }) => {
 
     const setMobileState = () => {
       dispatch(actions.setToolsScreen('mobile'));
-      dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
-      core.setToolMode(defaultTool);
-      dispatch(actions.setActiveToolGroup(''));
     };
 
     const setTabletState = () => {
       dispatch(actions.setToolsScreen('tablet'));
-      dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
-      core.setToolMode(defaultTool);
-      dispatch(actions.setActiveToolGroup(''));
       dispatch(actions.setLeftPanelWidth(251));
       dispatch(actions.setNotesPanelWidth(293));
       dispatch(actions.setSearchPanelWidth(293));
@@ -80,9 +74,6 @@ const App = ({ removeEventHandlers }) => {
 
     const setDesktopState = () => {
       dispatch(actions.setToolsScreen('desktop'));
-      dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay']));
-      core.setToolMode(defaultTool);
-      dispatch(actions.setActiveToolGroup(''));
     };
 
     const onBreakpoint = () => {
@@ -92,9 +83,10 @@ const App = ({ removeEventHandlers }) => {
         setTabletState();
       } else if (desktopBreakpoint.matches) {
         setDesktopState();
-      } else {
-        console.warn('Unexpected breakpoint');
       }
+      dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
+      core.setToolMode(defaultTool);
+      dispatch(actions.setActiveToolGroup(''));
     };
 
     mobileBreakpoint.addListener(onBreakpoint);
