@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
+import ToolsOverlay from 'components/ToolsOverlay';
 import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
@@ -69,9 +70,7 @@ export default {
           { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'icon-tools-more', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton' },
           {
             type: 'customElement',
-            render: () => {
-              const ToolsOverlay = require('components/ToolsOverlay').default;
-              return (<ToolsOverlay />);
+            render: () => <ToolsOverlay/>,
             },
             dataElement: 'toolsOverlay',
           },
