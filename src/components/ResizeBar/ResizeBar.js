@@ -7,11 +7,6 @@ import './ResizeBar.scss';
 
 
 const ResizeBar = ({ onResize, minWidth, leftDirection }) => {
-  // TODO: Get panel width from store
-  // const [panelWidth] = useSelector(state => [
-  //   selectors.getPanelWidth(state, dataElement),
-  // ]);
-
   const isMouseDownRef = useRef(false);
 
   useEffect(() => {
@@ -23,7 +18,7 @@ const ResizeBar = ({ onResize, minWidth, leftDirection }) => {
     // Maybe throttle is necessary because other components listening to the width would re-render too often?
     const dragMouseMove = ({ clientX }) => {
       if (isMouseDownRef.current) {
-        onResize(Math.max(minWidth, leftDirection ? window.innerWidth - clientX : clientX));
+        onResize(Math.max(minWidth, Math.min(window.innerWidth, leftDirection ? window.innerWidth - clientX : clientX)));
       }
     };
 
