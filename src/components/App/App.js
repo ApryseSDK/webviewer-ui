@@ -95,12 +95,12 @@ const App = ({ removeEventHandlers }) => {
       } else {
         console.warn('Unexpected breakpoint');
       }
-    }
+    };
 
     mobileBreakpoint.addListener(onBreakpoint);
     tabletBreakpoint.addListener(onBreakpoint);
     desktopBreakpoint.addListener(onBreakpoint);
-
+    onBreakpoint();
 
 
     return removeEventHandlers;

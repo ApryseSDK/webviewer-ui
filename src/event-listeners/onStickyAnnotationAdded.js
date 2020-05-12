@@ -13,6 +13,7 @@ export default ({ dispatch, getState }) => annotation => {
 
   core.setToolMode(defaultTool);
   dispatch(actions.setActiveToolGroup(''));
+  dispatch(actions.closeElement('searchPanel'));
   dispatch(actions.openElement('notesPanel'));
   core.selectAnnotation(annotation);
   dispatch(actions.triggerNoteEditing());

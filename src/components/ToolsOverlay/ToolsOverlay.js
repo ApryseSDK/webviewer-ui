@@ -146,7 +146,7 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     // const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
-    const isVisible = isOpen || !isDisabled;
+    const isVisible = isOpen && !isDisabled;
     if (!isVisible) {
       return null;
     }
