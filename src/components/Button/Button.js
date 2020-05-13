@@ -50,7 +50,7 @@ const Button = props => {
 
   const isBase64 = img?.trim().startsWith('data:');
 
-  let imgToShow = img;
+  const imgToShow = img;
   // if (isActive && activeImg) {
   //   imgToShow = activeImg;
   // }
@@ -61,7 +61,7 @@ const Button = props => {
   const shouldRenderTooltip = title && !disable;
 
   const children = (
-    <div
+    <button
       className={classNames({
         Button: true,
         active: isActive,
@@ -76,7 +76,7 @@ const Button = props => {
       {isGlyph && <Icon glyph={imgToShow} color={color} />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
       {label && <p>{label}</p>}
-    </div>
+    </button>
   );
 
   return removeElement ? null : shouldRenderTooltip ? (

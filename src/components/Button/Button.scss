@@ -1,6 +1,8 @@
 @import '../../constants/styles';
 
 .Button {
+  @include button-reset;
+
   position: relative;
   display: flex;
   justify-content: center;
