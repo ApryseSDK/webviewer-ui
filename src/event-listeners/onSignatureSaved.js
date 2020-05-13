@@ -5,7 +5,8 @@ import getSignatureDataToStore from 'helpers/getSignatureDataToStore';
 
 export default (dispatch, store) => async annotations => {
   const savedSignatures = selectors.getSavedSignatures(store.getState());
-  const numberOfSignaturesToRemove = savedSignatures.length + annotations.length - 4;
+  const maxSignaturesCount = selectors.getMaxSignaturesCount(store.getState());
+  const numberOfSignaturesToRemove = savedSignatures.length + annotations.length - maxSignaturesCount;
   let newSavedSignatures = [...savedSignatures];
 
   const signatureTool = core.getTool('AnnotationCreateSignature');

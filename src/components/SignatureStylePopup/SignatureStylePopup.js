@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import selectors from 'selectors';
-import classNames from 'classnames';
 import Icon from 'components/Icon';
 import SignatureRowContent from './SignatureRowContent';
 import SignatureAddBtn from './SignatureAddBtn';
@@ -14,11 +13,12 @@ import './SignatureStylePopup.scss';
 
 const SignatureStylePopup = props => {
   const { t } = props;
-  const [activeToolName, savedSignatures, selectedSignatureIndex] = useSelector(
+  const [activeToolName, savedSignatures, selectedSignatureIndex, maxSignaturesCount] = useSelector(
     state => [
       selectors.getActiveToolName(state),
       selectors.getSavedSignatures(state),
       selectors.getSelectedSignatureIndex(state),
+      selectors.getMaxSignaturesCount(state),
     ],
   );
 
@@ -78,7 +78,7 @@ const SignatureStylePopup = props => {
         </div>
       )}
       <SignatureAddBtn
-        disabled={savedSignatures.length >= 4}
+        disabled={savedSignatures.length >= maxSignaturesCount}
       />
     </div>
   );
