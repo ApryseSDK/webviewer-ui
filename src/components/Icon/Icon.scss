@@ -13,15 +13,13 @@
     fill: currentColor;
   }
 
-  path[fill=null],
-  rect[fill=null],
-  polygon[fill=null] {
-    fill: none;
+  path[fill=default] {
+    fill: var(--icon-color);
   }
 
   path[fill=none],
   rect[fill=none],
   polygon[fill=none] {
-    fill: var(--icon-color);
+    fill: none;
   }
 }

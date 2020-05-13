@@ -97,9 +97,11 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     <div
       className="NotePopup"
       data-element="notePopup"
-      onClick={togglePopup}
     >
-      <div className="overflow">
+      <div
+        className="overflow"
+        onClick={togglePopup}
+      >
         <Icon glyph="icon-tools-more" />
       </div>
       {isOpen && (

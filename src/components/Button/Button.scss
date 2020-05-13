@@ -12,7 +12,7 @@
 
   // color for svgs
   &.active {
-    path[fill=none] {
+    path[fill=default] {
       fill: var(--selected-icon-color);
     }
 
