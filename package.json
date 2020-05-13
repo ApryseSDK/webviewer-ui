@@ -22,6 +22,7 @@
     "classnames": "^2.2.6",
     "dayjs": "^1.8.19",
     "file-saver": "git+https://github.com/ZhijieZhang/FileSaver.js.git",
+    "html2canvas": "git+https://github.com/mparizeau/html2canvas.git",
     "hotkeys-js": "^3.7.3",
     "i18next": "^19.0.3",
     "i18next-xhr-backend": "^3.2.2",
