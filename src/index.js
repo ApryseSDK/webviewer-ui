@@ -26,6 +26,12 @@ import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
 import getHashParams from 'helpers/getHashParams';
 
+// TODO: remove once 7.0 is official
+console.log(
+  '%cBREAKING CHANGES WebViewer 7.0!!!! All APIs now expect a 1-indexed page number. Make sure you adjust your code when using this experimental version',
+  'background: #ff0000; color: #ffffff; text-transform: uppercase; font-size: 25px;'
+);
+
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
