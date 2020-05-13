@@ -5,7 +5,6 @@ import actions from 'actions';
 
 import HeaderItems from 'components/HeaderItems';
 import ToolsOverlay from 'components/ToolsOverlay';
-import SignatureOverlay from 'components/SignatureOverlay';
 import useMedia from 'hooks/useMedia';
 
 import selectors from 'selectors';
