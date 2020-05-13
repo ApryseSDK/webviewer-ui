@@ -19,15 +19,15 @@
 
   // color for svgs
   &.active {
-    path:last-child:nth-child(4) {
-      color: var(--selected-icon-color);
+    path[fill=none] {
+      fill: var(--selected-icon-color);
     }
 
     // hack for pan tool and annot select tool
     &[data-element="panToolButton"],&[data-element="selectToolButton"] {
       background: var(--view-header-button-active);
     }
-  }  
+  }
 
   &.active {
     .Icon {
@@ -39,6 +39,6 @@
       polygon {
         fill: var(--selected-icon-color);
       }
-    }   
+    }
   }
 }

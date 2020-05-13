@@ -7,14 +7,21 @@
   color: var(--icon-color);
 
   // color for svgs
-  path:not([fill=none]),
-  polygon[fill=none],
-  rect:not([fill=none]) {
+  path:not([fill*="#"]),
+  rect:not([fill*="#"]),
+  polygon:not([fill*="#"]) {
     fill: currentColor;
   }
 
-  // color for svgs
-  path:last-child:nth-child(4) {
-    color: var(--icon-color);
+  path[fill=null],
+  rect[fill=null],
+  polygon[fill=null] {
+    fill: none;
+  }
+
+  path[fill=none],
+  rect[fill=none],
+  polygon[fill=none] {
+    fill: var(--icon-color);
   }
 }
