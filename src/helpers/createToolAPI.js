@@ -15,8 +15,6 @@ export default (enable, store) => (
     AnnotationCreateTextStrikeout: 'textStrikeoutToolButton',
   };
 
-  console.log('toolNames', toolNames);
-
   const toolNameArray = typeof toolNames === 'string' ? [toolNames] : toolNames;
   const dataElements = selectors.getToolButtonDataElements(
     store.getState(),
