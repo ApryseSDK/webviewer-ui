@@ -73,7 +73,7 @@ const ToolButton = ({
 
   const handleClick = () => {
     if (isActive) {
-      if (toolName !== "AnnotationCreateStamp" && toolName !== "AnnotationCreateRedaction") {
+      if (toolName !== "AnnotationCreateStamp" && toolName !== "AnnotationCreateRedaction" && toolName !== "AnnotationEraserTool") {
         if (toolStylesExist(toolName)) {
           dispatch(actions.toggleElement("toolStylePopup"));
           if (toolName === "AnnotationCreateRubberStamp") {
