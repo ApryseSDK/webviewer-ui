@@ -6,6 +6,7 @@ import ToolButton from 'components/ToolButton';
 import ToolStylePopup from 'components/ToolStylePopup';
 import ToolsDropdown from 'components/ToolsDropdown';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
+import { withTranslation } from 'react-i18next';
 
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
@@ -120,6 +121,7 @@ class ToolsOverlay extends React.PureComponent {
 
   render() {
     const {
+      t,
       isDisabled,
       isOpen,
       toolNames,
@@ -197,7 +199,7 @@ class ToolsOverlay extends React.PureComponent {
     } else if (!activeToolGroup) {
       Component = (
         <React.Fragment>
-          <div className="no-presets-container">No Presets</div>
+          <div className="no-presets-container">{t('message.toolsOverlayNoPresets')}</div>
           {dropdownButton}
         </React.Fragment>
       );
@@ -296,7 +298,7 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-const ConnectedToolsOverlay = connect(mapStateToProps, mapDispatchToProps)(ToolsOverlay);
+const ConnectedToolsOverlay = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(ToolsOverlay));
 
 export default props => {
   const isMobile = useMedia(

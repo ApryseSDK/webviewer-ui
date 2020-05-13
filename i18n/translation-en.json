@@ -131,6 +131,7 @@
     "calibration": "Calibration"
   },
   "message": {
+    "toolsOverlayNoPresets": "No Presets",
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
     "customPrintPlaceholder": "e.g. 3, 4-10",
     "encryptedAttemptsExceeded": "Failed to load encrypted document. Too many attempts.",
