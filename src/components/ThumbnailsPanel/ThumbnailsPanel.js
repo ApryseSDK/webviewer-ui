@@ -293,9 +293,9 @@ class ThumbnailsPanel extends React.PureComponent {
       return;
     }
 
-    const pageWidth = core.getPageWidth(pageIndex);
-    const pageHeight = core.getPageHeight(pageIndex);
     const pageNumber = pageIndex + 1;
+    const pageWidth = core.getPageWidth(pageNumber);
+    const pageHeight = core.getPageHeight(pageNumber);
 
     const { width, height } = this.getThumbnailSize(pageWidth, pageHeight);
 

@@ -212,7 +212,7 @@ class PrintModal extends React.PureComponent {
       };
 
       const id = core.getDocument().loadCanvasAsync({
-        pageIndex,
+        pageNumber,
         zoom,
         pageRotation: printRotation,
         drawComplete: onCanvasLoaded,
@@ -221,7 +221,7 @@ class PrintModal extends React.PureComponent {
     });
 
   getPrintRotation = pageIndex => {
-    const { width, height } = core.getPageInfo(pageIndex);
+    const { width, height } = core.getPageInfo(pageIndex + 1);
     const documentRotation = this.getDocumentRotation(pageIndex);
     let printRotation = (4 - documentRotation) % 4;
 
@@ -236,7 +236,7 @@ class PrintModal extends React.PureComponent {
   };
 
   positionCanvas = (canvas, pageIndex) => {
-    const { width, height } = core.getPageInfo(pageIndex);
+    const { width, height } = core.getPageInfo(pageIndex + 1);
     const documentRotation = this.getDocumentRotation(pageIndex);
     const ctx = canvas.getContext('2d');
 
@@ -295,7 +295,7 @@ class PrintModal extends React.PureComponent {
   };
 
   createWidgetContainer = pageIndex => {
-    const { width, height } = core.getPageInfo(pageIndex);
+    const { width, height } = core.getPageInfo(pageIndex + 1);
     const widgetContainer = document.createElement('div');
 
     widgetContainer.id = 'printWidgetContainer';

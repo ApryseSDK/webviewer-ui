@@ -17,8 +17,8 @@ const createTextAnnotation = annotationConstructor => {
   const annotations = [];
   const quads = core.getSelectedTextQuads();
 
-  Object.keys(quads).forEach(pageIndex => {
-    const pageNumber = parseInt(pageIndex, 10) + 1;
+  Object.keys(quads).forEach(pageNumber => {
+    pageNumber = parseInt(pageNumber, 10);
     const annotation = createAnnotation(annotationConstructor, pageNumber, quads);
 
     if (window.Tools.TextAnnotationCreateTool.AUTO_SET_TEXT && !(annotation instanceof window.Annotations.RedactionAnnotation)) {
@@ -41,7 +41,7 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
   const annotation = new annotationConstructor();
 
   annotation.PageNumber = pageNumber;
-  annotation.Quads = quads[pageNumber - 1];
+  annotation.Quads = quads[pageNumber];
   annotation.Author = core.getCurrentUser();
   return annotation;
 };

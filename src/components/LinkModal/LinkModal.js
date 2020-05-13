@@ -67,8 +67,8 @@ const LinkModal = () => {
 
     if (quads) {
       const selectedText = core.getSelectedText();
-      for (let currPageNumber in quads) {
-        let currPageLinks = [];
+      for (const currPageNumber in quads) {
+        const currPageLinks = [];
         quads[currPageNumber].forEach(quad => {
           currPageLinks.push(
             newLink(
@@ -76,8 +76,8 @@ const LinkModal = () => {
               Math.min(quad.y1, quad.y3),
               Math.abs(quad.x1 - quad.x3),
               Math.abs(quad.y1 - quad.y3),
-              parseInt(currPageNumber) + 1,
-            ),
+              parseInt(currPageNumber)
+            )
           );
         });
         createHighlightAnnot(
@@ -110,7 +110,7 @@ const LinkModal = () => {
     return linksResults;
   };
 
-  const createHighlightAnnot = async (linkAnnotArray, quads, text) => {
+  const createHighlightAnnot = async(linkAnnotArray, quads, text) => {
     const linkAnnot = linkAnnotArray[0];
     const highlight = new Annotations.TextHighlightAnnotation();
     highlight.PageNumber = linkAnnot.PageNumber;
@@ -134,7 +134,7 @@ const LinkModal = () => {
     const links = createLink();
 
     const action = new window.Actions.URI({ uri: url });
-    links.forEach(async link => {
+    links.forEach(link => {
       link.addAction('U', action);
       core.addAnnotations([link]);
     });
@@ -155,7 +155,7 @@ const LinkModal = () => {
     const options = { dest: new Dest({ page: pageNumber }) };
     const action = new window.Actions.GoTo(options);
 
-    links.forEach(async link => {
+    links.forEach(link => {
       link.addAction('U', action);
       core.addAnnotations([link]);
     });
@@ -189,7 +189,7 @@ const LinkModal = () => {
     } else if (tabSelected === 'URLPanelButton' && isOpen) {
       urlInput.current.focus();
     }
-  }, [tabSelected, isOpen]);
+  }, [tabSelected, isOpen, pageNumberInput, urlInput]);
 
   const setDropdownNumbers = () => {
     const numbers = [];
@@ -197,7 +197,7 @@ const LinkModal = () => {
       numbers.push(
         <option key={i} value={i}>
           {i}
-        </option>,
+        </option>
       );
     }
     return numbers;
