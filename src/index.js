@@ -167,3 +167,21 @@ if (window.CanvasRenderingContext2D) {
 window.addEventListener('hashchange', () => {
   window.location.reload();
 });
+
+/* --- The following adds a data attribute to `<html>` when user is keyboard navigating. --- */
+
+function onTab(event) {
+  if (event.key === 'Tab') {
+    document.documentElement.setAttribute('data-tabbing', 'true');
+    window.removeEventListener('keydown', onTab);
+    window.addEventListener('mousedown', onMouse);
+  }
+}
+
+function onMouse() {
+  document.documentElement.removeAttribute('data-tabbing');
+  window.removeEventListener('mousedown', onMouse);
+  window.addEventListener('keydown', onTab);
+}
+
+window.addEventListener('keydown', onTab);
