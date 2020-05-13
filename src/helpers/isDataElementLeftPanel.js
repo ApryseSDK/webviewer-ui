@@ -1,5 +1,13 @@
-export default (dataElement, state) => isDefaultPanel(dataElement) || isCustomPanel(dataElement, state);
+export default (dataElement, state) => getLeftPanelDataElements(state).includes(dataElement);
 
-const isDefaultPanel = dataElement => ['thumbnailsPanel', 'outlinesPanel', 'layersPanel', 'bookmarksPanel'].includes(dataElement);
+export const getLeftPanelDataElements = state => {
+  const defaultLeftPanels = [
+    'thumbnailsPanel',
+    'outlinesPanel',
+    'layersPanel',
+    'bookmarksPanel',
+  ];
+  const customPanels = state.viewer.customPanels.map(({ panel }) => panel.dataElement);
 
-const isCustomPanel = (dataElement, state) => state.viewer.customPanels.map(({ panel }) => panel.dataElement).includes(dataElement);
+  return [...defaultLeftPanels, ...customPanels];
+};
