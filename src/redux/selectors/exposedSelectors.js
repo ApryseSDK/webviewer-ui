@@ -60,7 +60,7 @@ export const getActiveToolNamesForActiveToolGroup = state => {
     toolName => {
       const toolButtonObject = toolButtonObjects[toolName];
       const { group, dataElement } = toolButtonObject;
-
+      // console.log('toolName for active group testing', toolName, dataElement, isElementDisabled(state, dataElement));
       return group === activeToolGroup && !isElementDisabled(state, dataElement);
     },
   ).sort((toolNameA, toolNameB) => {

@@ -132,6 +132,8 @@ class ToolsOverlay extends React.PureComponent {
       isDesktop,
     } = this.props;
 
+    console.log('toolNames for group', toolNames);
+
     let arrowStyle = {};
     if (isTabletAndMobile) {
       const { activeToolGroup, activeHeaderItems } = this.props;

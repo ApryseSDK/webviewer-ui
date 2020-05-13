@@ -24,7 +24,7 @@ export default dispatch => () => {
     // if redaction is already enabled for some reason (i.e. calling readerControl.enableRedaction() before loading a doc), keep it enabled
 
     if (core.isCreateRedactionEnabled()) {
-      dispatch(actions.enableElement('redactionButton', PRIORITY_TWO));
+      dispatch(actions.enableElement('redactionButton', PRIORITY_ONE));
     } else {
       dispatch(actions.disableElement('redactionButton', PRIORITY_TWO));
     }
