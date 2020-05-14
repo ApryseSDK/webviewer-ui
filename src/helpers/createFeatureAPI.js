@@ -35,6 +35,7 @@ export default (enable, store) => features => {
       dataElements: [
         'notesPanel',
         'toggleNotesButton',
+        'toggleToolsButton',
         'toolsButton',
         'linkButton',
         'toolsHeader',
