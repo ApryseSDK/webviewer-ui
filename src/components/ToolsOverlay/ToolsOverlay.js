@@ -85,6 +85,10 @@ class ToolsOverlay extends React.PureComponent {
     if (this.itemsContainer.current) {
       this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
+
+    if (this.props.activeToolGroup === '') {
+      this.props.closeElements(['toolStylePopup']);
+    }
   }
 
   componentWillUnmount() {
