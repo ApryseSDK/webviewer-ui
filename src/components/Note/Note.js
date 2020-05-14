@@ -36,7 +36,9 @@ const Note = ({ annotation }) => {
     containerHeightRef.current = currHeight;
 
     // have a prevHeight check here because we don't want to call resize on mount
-    if (prevHeight && prevHeight !== currHeight) {
+    // use Math.round because in some cases in IE11 these two numbers will differ in just 0.00001
+    // and we don't want call resize in this case
+    if (prevHeight && Math.round(prevHeight) !== Math.round(currHeight)) {
       resize();
     }
   });

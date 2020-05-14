@@ -2,9 +2,8 @@ import { calcPopupLeft, calcPopupTop } from 'helpers/getPopupPosition';
 import core from 'core';
 
 export default (annotation, popup) => {
-  const pageIndex = annotation.PageNumber - 1;
   const editorContainer = document.querySelector(
-    `#pageWidgetContainer${pageIndex} [id="freetext-editor-${annotation.Id}"]`
+    `#pageWidgetContainer${annotation.PageNumber} [id="freetext-editor-${annotation.Id}"]`
   );
   const scrollContainer = core.getScrollViewElement();
   const padding = 2 * parseFloat(annotation.StrokeThickness) * core.getZoom();

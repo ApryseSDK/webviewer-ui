@@ -4,7 +4,7 @@ class OrientationManager {
   getDocumentCenter = pageNumber => {
     let result;
     if (pageNumber <= core.getTotalPages()) {
-      result = core.getPageInfo(pageNumber - 1);
+      result = core.getPageInfo(pageNumber);
     } else {
       result = {
         width: 0,
