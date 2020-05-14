@@ -85,7 +85,9 @@ class SearchOverlay extends React.PureComponent {
       this.props.openElements(['searchOverlay', 'searchPanel']);
       this.caseSensitiveInput.current.checked = this.props.isCaseSensitive;
       this.wholeWordInput.current.checked = this.props.isWholeWord;
-      this.wildcardInput.current.checked = this.props.isWildcard;
+      if (this.wildcardInput.current) {
+        this.wildcardInput.current.checked = this.props.isWildcard;
+      }
       this.clearSearchResults();
       this.executeFullSearch();
       this.props.setIsProgrammaticSearchFull(false);
