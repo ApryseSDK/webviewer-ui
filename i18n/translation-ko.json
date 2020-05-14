@@ -6,6 +6,8 @@
     "cancel": "취소",
     "clear": "지우기",
     "close": "닫기",
+    "undo": "실행 취소",
+    "redo": "준비된",
     "comment": "댓글",
     "copy": "복사",
     "delete": "삭제",
@@ -40,8 +42,8 @@
     "type": "유형",
     "upload": "업로드",
     "link": "링크",
-    "lightMode": "라이트 모드",
     "darkMode": "다크 모드",
+    "lightMode": "라이트 모드",
     "fileAttachmentDownload": "첨부 파일 다운로드"
   },
   "annotation": {
@@ -103,12 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "자유형 도구",
+    "freeHandAndShapeToolsButton": "자유형 / 모양 도구",
     "leftPanel": "패널",
     "toolsHeader": "도구",
     "searchOverlay": "검색",
     "searchPanel": "검색",
     "menuOverlay": "메뉴",
     "miscToolsButton": "기타 도구",
+    "signatureToolsButton": "서명 도구",
     "notesPanel": "참고",
     "outlinesPanel": "개요",
     "bookmarksPanel": "북마크",
@@ -127,6 +131,7 @@
     "calibration": "구경 측정"
   },
   "message": {
+    "toolsOverlayNoPresets": "사전 설정 없음",
     "badDocument": "문서를 로드하지 못했습니다. 문서가 손상되었거나 유효하지 않습니다.",
     "customPrintPlaceholder": "예: 3, 4-10",
     "encryptedAttemptsExceeded": "암호화된 문서를 로드하지 못했습니다. 시도가 너무 많습니다.",

@@ -6,6 +6,8 @@
     "cancel": "Cancelar",
     "clear": "Borrar",
     "close": "Cerrar",
+    "undo": "Deshacer",
+    "redo": "Listo",
     "comment": "Añadir comentario",
     "copy": "Copiar",
     "delete": "Eliminar",
@@ -40,8 +42,8 @@
     "type": "Tipo",
     "upload": "Subir",
     "link": "Enlace",
-    "lightMode": "Modo de luz",
     "darkMode": "Modo oscuro",
+    "lightMode": "Modo de luz",
     "fileAttachmentDownload": "Descargar archivo adjunto"
   },
   "annotation": {
@@ -103,12 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "Herramientas a mano alzada",
+    "freeHandAndShapeToolsButton": "Herramientas a mano alzada / forma",
     "leftPanel": "Panel",
     "toolsHeader": "Herramientas",
     "searchOverlay": "Buscar",
     "searchPanel": "Buscar",
     "menuOverlay": "Menú",
     "miscToolsButton": "Herramientas varias",
+    "signatureToolsButton": "Herramientas de firma",
     "notesPanel": "Notas",
     "outlinesPanel": "Esquemas",
     "bookmarksPanel": "Marcadores",
@@ -127,6 +131,7 @@
     "calibration": "Calibración"
   },
   "message": {
+    "toolsOverlayNoPresets": "Sin preajustes",
     "badDocument": "Error al cargar el documento. El documento está dañado o no es válido.",
     "customPrintPlaceholder": "por ej. 3, 4-10",
     "encryptedAttemptsExceeded": "Error al cargar el documento cifrado. Demasiados intentos.",

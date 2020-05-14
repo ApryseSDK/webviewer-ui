@@ -6,6 +6,8 @@
     "cancel": "Abbrechen",
     "clear": "Löschen",
     "close": "Schliessen",
+    "undo": "Rückgängig machen",
+    "redo": "Bereit",
     "comment": "Kommentar",
     "copy": "Kopieren",
     "delete": "Löschen",
@@ -40,8 +42,8 @@
     "type": "Art",
     "upload": "Hochladen",
     "link": "Verknüpfung",
-    "lightMode": "Lichtmodus",
     "darkMode": "Dunkler Modus",
+    "lightMode": "Lichtmodus",
     "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter"
   },
   "annotation": {
@@ -103,12 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "Freihand-Werkzeuge",
+    "freeHandAndShapeToolsButton": "Freihand- / Formwerkzeuge",
     "leftPanel": "Linke Leiste",
     "toolsHeader": "Werkzeuge",
     "searchOverlay": "Suche",
     "searchPanel": "Suche",
     "menuOverlay": "Menü",
     "miscToolsButton": "Verschiedene Werkzeuge",
+    "signatureToolsButton": "Signaturwerkzeuge",
     "notesPanel": "Annotationen",
     "outlinesPanel": "Gliederung",
     "bookmarksPanel": "Lesezeichen",
@@ -127,6 +131,7 @@
     "calibration": "Kalibrierung"
   },
   "message": {
+    "toolsOverlayNoPresets": "Keine Voreinstellungen",
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
     "customPrintPlaceholder": "z.B. 3, 4-10",
     "encryptedAttemptsExceeded": "Fehler beim Laden des verschlüsselten Dokuments. Zu viele Versuche.",

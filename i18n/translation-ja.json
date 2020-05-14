@@ -6,6 +6,8 @@
     "cancel": "キャンセル",
     "clear": "クリア",
     "close": "閉じる",
+    "undo": "元に戻す",
+    "redo": "準備ができて",
     "comment": "コメント",
     "copy": "コピー",
     "delete": "削除",
@@ -103,12 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "フリーハンド ツール",
+    "freeHandAndShapeToolsButton": "フリーハンド/シェイプツール",
     "leftPanel": "パネル",
     "toolsHeader": "道具",
     "searchOverlay": "検索",
     "searchPanel": "探す",
     "menuOverlay": "メニュー",
     "miscToolsButton": "その他のツール",
+    "signatureToolsButton": "署名ツール",
     "notesPanel": "備考",
     "outlinesPanel": "概要",
     "bookmarksPanel": "しおり",
@@ -127,6 +131,7 @@
     "calibration": "較正"
   },
   "message": {
+    "toolsOverlayNoPresets": "プリセットなし",
     "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
     "customPrintPlaceholder": "例：3, 4-10",
     "encryptedAttemptsExceeded": "暗号化されたドキュメントを読み込めませんでした。試行回数が多すぎます。",
