@@ -36,8 +36,8 @@ export const getScreen = state =>
 export const getActiveTheme = state =>
   state.viewer.activeTheme;
 
-export const getActiveHeaderItems = state => {
-  return state.viewer.headers[state.viewer.activeHeaderGroup];
+export const getDefaultHeaderItems = state => {
+  return state.viewer.headers.default;
 };
 
 export const getDisabledElementPriority = (state, dataElement) =>
