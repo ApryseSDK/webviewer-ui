@@ -70,7 +70,7 @@ const SignatureStylePopup = props => {
           />
           <div
             className="icon"
-            dataElement="defaultSignatureDeleteButton"
+            data-element="defaultSignatureDeleteButton"
             onClick={() => deleteSignature(i)}
           >
             <Icon glyph="icon-delete-line"/>
