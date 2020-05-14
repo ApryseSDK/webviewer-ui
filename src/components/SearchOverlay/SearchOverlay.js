@@ -423,8 +423,7 @@ class SearchOverlay extends React.PureComponent {
       if (results.length === 0) {
         return;
       }
-      const prevResultIndex =
-        activeResultIndex === 0 ? results.length - 1 : activeResultIndex - 1;
+      const prevResultIndex = activeResultIndex <= 0 ? results.length - 1 : activeResultIndex - 1;
       setActiveResultIndex(prevResultIndex);
       core.setActiveSearchResult(results[prevResultIndex]);
     } else {

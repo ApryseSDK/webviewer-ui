@@ -6,6 +6,8 @@
     "cancel": "Annuler",
     "clear": "Effacer",
     "close": "Fermer",
+    "undo": "annuler",
+    "redo": "Prêt",
     "comment": "Commenter",
     "copy": "Copier",
     "delete": "Supprimer",
@@ -103,12 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "Outils de stylo",
+    "freeHandAndShapeToolsButton": "Outils à main levée / forme",
     "leftPanel": "Panneau de gauche",
     "toolsHeader": "Outils",
     "searchOverlay": "Recherche",
     "searchPanel": "Chercher",
     "menuOverlay": "Menu",
     "miscToolsButton": "Outils divers",
+    "signatureToolsButton": "Outils de signature",
     "notesPanel": "Remarques",
     "outlinesPanel": "Contour",
     "bookmarksPanel": "Signets",
@@ -127,6 +131,7 @@
     "calibration": "Étalonnage"
   },
   "message": {
+    "toolsOverlayNoPresets": "Aucun préréglage",
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
     "customPrintPlaceholder": "par ex. : 3 4-10",
     "encryptedAttemptsExceeded": "Échec du chargement du document chiffré. Trop de tentatives.",

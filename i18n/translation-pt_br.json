@@ -6,6 +6,8 @@
     "cancel": "Cancelar",
     "clear": "Limpar",
     "close": "Fechar",
+    "undo": "Desfazer",
+    "redo": "pronto",
     "comment": "Novo comentário",
     "copy": "Copiar",
     "delete": "Apagar",
@@ -40,8 +42,8 @@
     "type": "Tipo",
     "upload": "Envio",
     "link": "Ligação",
-    "lightMode": "Modo de luz",
     "darkMode": "Modo escuro",
+    "lightMode": "Modo de luz",
     "fileAttachmentDownload": "Baixar arquivo anexado"
   },
   "annotation": {
@@ -103,12 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "Ferramentas mão livre",
+    "freeHandAndShapeToolsButton": "Ferramentas à mão livre / Forma",
     "leftPanel": "Painel",
     "toolsHeader": "Ferramentas",
     "searchOverlay": "Procurar",
     "searchPanel": "Procurar",
     "menuOverlay": "Menu",
     "miscToolsButton": "Ferramentas diversas",
+    "signatureToolsButton": "Ferramentas de assinatura",
     "notesPanel": "Anotações",
     "outlinesPanel": "Esquemas",
     "bookmarksPanel": "Favoritos",
@@ -127,6 +131,7 @@
     "calibration": "Calibração"
   },
   "message": {
+    "toolsOverlayNoPresets": "Sem predefinições",
     "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
     "customPrintPlaceholder": "p. ex. 3, 4-10",
     "encryptedAttemptsExceeded": "Falha ao carregar documento criptografado. Tentativas demais.",

@@ -6,6 +6,8 @@
     "cancel": "取消",
     "clear": "清除",
     "close": "關閉",
+    "undo": "撤消",
+    "redo": "準備",
     "comment": "評論",
     "copy": "複製",
     "delete": "刪除",
@@ -103,12 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "手繪工具",
+    "freeHandAndShapeToolsButton": "寫意/形狀工具",
     "leftPanel": "面板",
     "toolsHeader": "工具類",
     "searchOverlay": "搜尋",
     "searchPanel": "搜索",
     "menuOverlay": "功能表",
     "miscToolsButton": "其他工具",
+    "signatureToolsButton": "簽名工具",
     "notesPanel": "備忘稿",
     "outlinesPanel": "大綱",
     "bookmarksPanel": "書籤",
@@ -127,6 +131,7 @@
     "calibration": "校準"
   },
   "message": {
+    "toolsOverlayNoPresets": "無預設",
     "badDocument": "無法載入文件。此文件已損壞或無效。",
     "customPrintPlaceholder": "例如：3, 4-10",
     "encryptedAttemptsExceeded": "無法載入加密文件。嘗試次數過多。",

@@ -268,8 +268,7 @@ class PrintModal extends React.PureComponent {
       .getAnnotationsList()
       .filter(
         annot =>
-          annot.PageNumber === pageNumber &&
-          annot instanceof window.Annotations.WidgetAnnotation,
+          annot.PageNumber === pageNumber && annot instanceof window.Annotations.WidgetAnnotation
       );
 
     if (annotations.length === 0) {
@@ -277,21 +276,22 @@ class PrintModal extends React.PureComponent {
     }
 
     const widgetContainer = this.createWidgetContainer(pageNumber - 1);
-    return core
-      .drawAnnotations(pageNumber, canvas, true, widgetContainer)
-      .then(() => {
-        document.body.appendChild(widgetContainer);
-        return window
-          .html2canvas(widgetContainer, {
+    return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
+      document.body.appendChild(widgetContainer);
+
+      return import(/* webpackChunkName: 'html2canvas' */ 'html2canvas').then(
+        ({ default: html2canvas }) => {
+          return html2canvas(widgetContainer, {
             canvas,
             backgroundColor: null,
             scale: 1,
             logging: false,
-          })
-          .then(() => {
+          }).then(() => {
             document.body.removeChild(widgetContainer);
           });
-      });
+        }
+      );
+    });
   };
 
   createWidgetContainer = pageIndex => {
