@@ -262,27 +262,10 @@ class ThumbnailsPanel extends React.PureComponent {
   };
 
   onPageNumberUpdated = pageNumber => {
-    const numberOfColumns = this.getNumberOfColumns();
-    this.listRef.current?.scrollToRow(Math.round((pageNumber) / numberOfColumns) - 1);
-  }
+    this.listRef.current?.scrollToRow(pageNumber - 1);
+  };
 
   getNumberOfColumns = width => {
-    // const desktopBreakPoint = 640;
-    // const { innerWidth } = window;
-    // let numberOfColumns;
-
-    // if (innerWidth >= desktopBreakPoint) {
-    //   numberOfColumns = 1;
-    // // TODO: use forwardRef to get the width of the thumbnail div instead of using the magic 20px
-    // } else if (innerWidth >= 3 * (THUMBNAIL_SIZE + 20)) {
-    //   numberOfColumns = 3;
-    // } else if (innerWidth >= 2 * (THUMBNAIL_SIZE + 20)) {
-    //   numberOfColumns = 2;
-    // } else {
-    //   numberOfColumns = 1;
-    // }
-
-    // return numberOfColumns;
     const numberOfColumns = Math.min(3, Math.max(1, Math.floor(width / 160)));
     return numberOfColumns;
   };
@@ -420,8 +403,12 @@ class ThumbnailsPanel extends React.PureComponent {
       width,
       allowPageOperations,
     } = this.state;
-    const { isThumbnailReorderingEnabled, isThumbnailMergingEnabled, selectedPageIndexes } = this.props;
     const numberOfColumns = this.getNumberOfColumns(width);
+    const {
+      isThumbnailReorderingEnabled,
+      isThumbnailMergingEnabled,
+      selectedPageIndexes,
+    } = this.props;
     const className = classNames({
       columnsOfThumbnails: numberOfColumns > 1,
       row: true,
@@ -494,7 +481,7 @@ class ThumbnailsPanel extends React.PureComponent {
       allowPageOperations,
     } = this.state;
     const numberOfColumns = this.getNumberOfColumns(this.state.width);
-    const thumbnailHeight = isThumbnailControlDisabled ? 195 : 225;
+    const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
     const shouldShowControls =
       (allowPageOperations && !isDocumentControlHidden) || selectedPageIndexes.length > 0;
@@ -527,7 +514,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 rowRenderer={this.renderThumbnails}
                 overscanRowCount={10}
                 className={'thumbnailsList'}
-                style={{ overflow: 'overlay', outline: 'none' }}
+                style={{ outline: 'none' }}
               />
               <Measure
                 bounds
