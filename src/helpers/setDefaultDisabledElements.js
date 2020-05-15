@@ -73,7 +73,6 @@ export default store => {
         'layersPanelButton',
         'bookmarksPanel',
         'bookmarksPanelButton',
-        'documentControl',
       ],
       PRIORITY_ONE,
     ),
