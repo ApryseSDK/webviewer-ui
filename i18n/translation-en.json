@@ -25,7 +25,7 @@
     "reply": "Reply",
     "rotate": "Rotate",
     "rotateClockwise": "Clockwise",
-    "rotateCounterClockwise": "Counter-clockwise",
+    "rotateCounterClockwise": "Counterclockwise",
     "save": "Save",
     "create": "Create",
     "showMoreResults": "Show more results",
@@ -250,7 +250,8 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Clockwise",
-      "rotateCounterClockwise": "Counter-clockwise"
+      "rotateCounterClockwise": "Counterclockwise",
+      "extractZeroPageError": "No pages were selected to extract"
     },
     "richText": {
       "bold": "Bold",
