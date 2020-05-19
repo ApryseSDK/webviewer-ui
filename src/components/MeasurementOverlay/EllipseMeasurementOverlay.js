@@ -5,6 +5,7 @@ import Icon from 'components/Icon';
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
+import { isMobileDevice } from 'src/helpers/device';
 
 function EllipseMeasurementOverlay(props) {
   const { t, annotation, isOpen } = props;
@@ -41,8 +42,16 @@ function EllipseMeasurementOverlay(props) {
   const finishAnnotation = () => {
     const tool = core.getTool('AnnotationCreateEllipseMeasurement');
     tool.finish();
+  };
+
+  const selectAnnotation = () => {
     const annotationManager = core.getAnnotationManager();
     annotationManager.selectAnnotation(annotation);
+  };
+
+  const deselectAnnot = () => {
+    const annotationManager = core.getAnnotationManager();
+    annotationManager.deselectAnnotation(annotation);
   };
 
   const onChangeRadiusLength = event => {
@@ -54,8 +63,8 @@ function EllipseMeasurementOverlay(props) {
     annotation.setHeight(diameterInPts);
     annotation.setWidth(diameterInPts);
     setRadius(radius);
-    finishAnnotation();
     forceEllipseRedraw();
+    finishAnnotation();
   };
 
   const forceEllipseRedraw = useCallback(() => {
@@ -65,9 +74,9 @@ function EllipseMeasurementOverlay(props) {
   }, [annotation]);
 
   const getMaxDiameterInPts = useCallback(() => {
-    const currentPageIndex = core.getCurrentPage() - 1;
-    const documentWidth = window.docViewer.getPageWidth(currentPageIndex);
-    const documentHeight = window.docViewer.getPageHeight(currentPageIndex);
+    const currentPageNumber = core.getCurrentPage();
+    const documentWidth = window.docViewer.getPageWidth(currentPageNumber);
+    const documentHeight = window.docViewer.getPageHeight(currentPageNumber);
     const startX = annotation['X'];
     const startY = annotation['Y'];
 
@@ -122,13 +131,22 @@ function EllipseMeasurementOverlay(props) {
       <div className="measurement__value">
         {t('option.measurementOverlay.radius')}:
         <input
-          autoFocus
+          autoFocus={!isMobileDevice}
           className="lineMeasurementInput"
           type="number"
           min="0"
           value={radius}
-          onChange={event => onChangeRadiusLength(event)}
+          onChange={event => {
+            onChangeRadiusLength(event);
+            selectAnnotation();
+          }}
           onBlur={event => validateDiameter(event)}
+          onKeyDown={event => {
+            if (event.key === 'Enter') {
+              onChangeRadiusLength(event);
+              deselectAnnot();
+            }
+          }}
         /> {unit}
       </div>
     </div>

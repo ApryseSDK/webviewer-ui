@@ -5,7 +5,7 @@
  * @type {Class<WebViewerInstance.Hotkeys>}
  */
 
-import hotkeysManager from 'helpers/hotkeysManager';
+import hotkeysManager, { Keys } from 'helpers/hotkeysManager';
 
 export default {
   on: (...args) => {
@@ -14,4 +14,5 @@ export default {
   off: (...args) => {
     hotkeysManager.off(...args);
   },
+  Keys,
 };

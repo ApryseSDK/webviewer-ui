@@ -83,6 +83,7 @@ import setActiveHeaderGroup from './setActiveHeaderGroup';
 import setActiveLeftPanel from './setActiveLeftPanel';
 import setAdminUser from './setAdminUser';
 import setAnnotationUser from './setAnnotationUser';
+import setActivePalette from './setActivePalette';
 import setColorPalette from './setColorPalette';
 import setCurrentPageNumber from './setCurrentPageNumber';
 import setCustomNoteFilter from './setCustomNoteFilter';
@@ -131,6 +132,7 @@ import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 import setNoteTransformFunction from './setNoteTransformFunction';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
+import setSearchResults from './setSearchResults';
 
 export default store => {
   window.readerControl = {
@@ -192,6 +194,7 @@ export default store => {
     setToolMode: setToolMode(store),
     setZoomLevel,
     setZoomList: setZoomList(store),
+    setSearchResults: setSearchResults(store),
     showErrorMessage: showErrorMessage(store),
     textPopup: textPopup(store),
     toggleElement: toggleElement(store),
@@ -243,6 +246,8 @@ export default store => {
     setNotesPanelSort: setNotesPanelSort(store),
     setShowSideWindow: setShowSideWindow(store),
     setSideWindowVisibility: setSideWindowVisibility(store),
+    setActivePalette: setActivePalette(store),
+    setColorPalette: setColorPalette(store),
     disableTool: disableTool(store),
     enableAllElements: enableAllElements(store),
     goToFirstPage,
@@ -268,7 +273,6 @@ export default store => {
     loadedFromServer: false,
     serverFailed: false,
     i18n: i18next,
-    setColorPalette: setColorPalette(store),
     showWarningMessage: showWarningMessage(store),
     updateOutlines: updateOutlines(store),
     getBBAnnotManager,

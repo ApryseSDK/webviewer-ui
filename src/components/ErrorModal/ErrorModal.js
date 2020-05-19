@@ -15,7 +15,7 @@ const ErrorModal = () => {
       selectors.isElementDisabled(state, 'errorModal'),
       selectors.isElementOpen(state, 'errorModal'),
     ],
-    shallowEqual,
+    shallowEqual
   );
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -23,30 +23,26 @@ const ErrorModal = () => {
   useEffect(() => {
     if (isOpen) {
       dispatch(
-        actions.closeElements([
-          'signatureModal',
-          'printModal',
-          'loadingModal',
-          'progressModal',
-        ]),
+        actions.closeElements(['signatureModal', 'printModal', 'loadingModal', 'progressModal'])
       );
     }
   }, [dispatch, isOpen]);
 
   useEffect(() => {
     const onError = error => {
-      error = (error.detail && (error.detail.message || error.detail)) || error.message;
+      error = error.detail?.message || error.detail || error.message;
+
       let errorMessage;
 
       if (typeof error === 'string') {
         errorMessage = error;
 
         // provide a more specific error message
-        if (errorMessage.indexOf('File does not exist') > -1) {
-          errorMessage = t('message.notSupported');
+        if (errorMessage.includes('File does not exist')) {
+          errorMessage = 'message.notSupported';
         }
       } else if (error?.type === 'InvalidPDF') {
-        errorMessage = t('message.badDocument');
+        errorMessage = 'message.badDocument';
       }
 
       if (errorMessage) {
@@ -56,7 +52,9 @@ const ErrorModal = () => {
 
     window.addEventListener('loaderror', onError);
     return () => window.removeEventListener('loaderror', onError);
-  }, [dispatch, t]);
+  }, [dispatch]);
+
+  const shouldTranslate = message.startsWith('message.');
 
   return isDisabled ? null : (
     <div
@@ -68,7 +66,7 @@ const ErrorModal = () => {
       })}
       data-element="errorModal"
     >
-      <div className="container">{message}</div>
+      <div className="container">{shouldTranslate ? t(message) : message}</div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import core from 'core';
+import { isMobileDevice } from 'helpers/device';
 
 function LineMeasurementInput(props) {
   const { t, annotation, isOpen } = props;
@@ -28,8 +29,16 @@ function LineMeasurementInput(props) {
   const finishAnnotation = () => {
     const tool = core.getTool('AnnotationCreateDistanceMeasurement');
     tool.finish();
+  };
+
+  const selectAnnotation = () => {
     const annotationManager = core.getAnnotationManager();
     annotationManager.selectAnnotation(annotation);
+  };
+
+  const deselectAnnotation = () => {
+    const annotationManager = core.getAnnotationManager();
+    annotationManager.deselectAnnotation(annotation);
   };
 
   const validateLineLength = event => {
@@ -52,14 +61,14 @@ function LineMeasurementInput(props) {
 
   const forceLineRedraw = useCallback(() => {
     const annotationManager = core.getAnnotationManager();
-    annotationManager.redrawAnnotation(annotation);
+    annotationManager.drawAnnotations(annotation.PageNumber);
     annotationManager.trigger('annotationChanged', [[annotation], 'modify', {}]);
   }, [annotation]);
 
   const getMaxLineLengthInPts = useCallback(() => {
-    const currentPageIndex = core.getCurrentPage() - 1;
-    const documentWidth = window.docViewer.getPageWidth(currentPageIndex);
-    const documentHeight = window.docViewer.getPageHeight(currentPageIndex);
+    const currentPageNumber = core.getCurrentPage();
+    const documentWidth = window.docViewer.getPageWidth(currentPageNumber);
+    const documentHeight = window.docViewer.getPageHeight(currentPageNumber);
     const angleInDegrees = annotation.getAngle() * (180 / Math.PI).toFixed(2);
     const startPoint = annotation.getStartPoint();
     const startX = startPoint.x;
@@ -100,6 +109,7 @@ function LineMeasurementInput(props) {
   const onAngleChange = event => {
     setAngle(event.target.value);
     setLineAngle(event);
+    finishAnnotation();
   };
 
   const computeAngle = useCallback(() => {
@@ -128,12 +138,16 @@ function LineMeasurementInput(props) {
           type="number"
           min="0"
           value={length}
-          autoFocus
-          onChange={event => onInputChanged(event)}
+          autoFocus={!isMobileDevice}
+          onChange={event => {
+            onInputChanged(event);
+            selectAnnotation();
+          }}
           onBlur={event => validateLineLength(event)}
           onKeyDown={event => {
             if (event.key === 'Enter') {
-              validateLineLength(event);
+              onInputChanged(event);
+              deselectAnnotation();
             }
           }}
         /> {unit}
@@ -145,7 +159,16 @@ function LineMeasurementInput(props) {
           min="0"
           max="360"
           value={angle}
-          onChange={event => onAngleChange(event)}
+          onChange={event => {
+            onAngleChange(event);
+            selectAnnotation();
+          }}
+          onKeyDown={event => {
+            if (event.key === 'Enter') {
+              onAngleChange(event);
+              deselectAnnotation();
+            }
+          }}
         /> &deg;
       </div>
     </div>

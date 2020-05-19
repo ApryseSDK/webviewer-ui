@@ -3,7 +3,6 @@ import XHR from 'i18next-xhr-backend';
 
 export default state => {
   const options = {
-    lng: 'en',
     fallbackLng: 'en',
     react: {
       useSuspense: false,

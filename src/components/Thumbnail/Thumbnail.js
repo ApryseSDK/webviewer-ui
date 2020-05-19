@@ -22,6 +22,7 @@ class Thumbnail extends React.PureComponent {
     isSelected: PropTypes.bool,
     isThumbnailMultiselectEnabled: PropTypes.bool,
     onLoad: PropTypes.func.isRequired,
+    onFinishLoading: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
     updateAnnotations: PropTypes.func,
@@ -31,6 +32,7 @@ class Thumbnail extends React.PureComponent {
     setSelectedPageThumbnails: PropTypes.func,
     selectedPageIndexes: PropTypes.arrayOf(PropTypes.number),
     isDraggable: PropTypes.bool,
+    shouldShowControls: PropTypes.bool,
   };
 
   constructor(props) {
@@ -41,24 +43,21 @@ class Thumbnail extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { onLoad, index } = this.props;
-
     this.loadThumbnailTimeout = setTimeout(() => {
       // wrap loadThumbnailAsync inside a setTimeout so that we are not calling it a lot of times when users scroll the panel frantically
       // this is a workaround for WVS where proper cancelLoadThumbnail hasn't been implemented, and too many requests to the server will add a lot of overhead to it
       this.loadThumbnailTimeout = null;
-      const id = this.loadThumbnailAsync();
-      onLoad(index, this.thumbContainer.current, id);
+      this.loadThumbnailAsync();
     }, 100);
 
     core.addEventListener('layoutChanged', this.onLayoutChangedHandler);
   }
 
   componentDidUpdate(prevProps) {
-    const { onLoad, onCancel, index } = this.props;
+    const { onCancel, index } = this.props;
 
     if (!prevProps.canLoad && this.props.canLoad) {
-      onLoad(index, this.thumbContainer.current);
+      this.loadThumbnailAsync();
     }
     if (prevProps.canLoad && !this.props.canLoad) {
       onCancel(index);
@@ -78,14 +77,13 @@ class Thumbnail extends React.PureComponent {
     const { index, pageLabels } = this.props;
 
     const currentPage = index + 1;
-    const currentPageStr = `${currentPage}`;
 
     const isPageAdded = added.indexOf(currentPage) > -1;
     const didPageChange = contentChanged.some(
-      changedPage => currentPageStr === changedPage,
+      changedPage => currentPage === changedPage,
     );
     const didPageMove = Object.keys(moved).some(
-      movedPage => currentPageStr === movedPage,
+      movedPage => currentPage === parseInt(movedPage),
     );
     const isPageRemoved = removed.indexOf(currentPage) > -1;
     const newPageCount = pageLabels.length - removed.length;
@@ -97,15 +95,19 @@ class Thumbnail extends React.PureComponent {
 
     if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
       this.loadThumbnailAsync();
+      if (this.props.updateAnnotations) {
+        this.props.updateAnnotations(index);
+      }
     }
   }
 
   loadThumbnailAsync = () => {
-    const { index } = this.props;
+    const { index, onLoad } = this.props;
     const { thumbContainer } = this;
     const { current } = thumbContainer;
+    const pageNum = index + 1;
 
-    const id = core.loadThumbnailAsync(index, thumb => {
+    const id = core.loadThumbnailAsync(pageNum, thumb => {
       thumb.className = 'page-image';
       thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
       thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
@@ -118,7 +120,10 @@ class Thumbnail extends React.PureComponent {
       if (this.props.updateAnnotations) {
         this.props.updateAnnotations(index);
       }
+
+      this.props.onFinishLoading(index);
     });
+    onLoad(index, this.thumbContainer.current, id);
 
     return id;
   }
@@ -126,12 +131,18 @@ class Thumbnail extends React.PureComponent {
   handleClick = e => {
     const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled } = this.props;
 
-    if (isThumbnailMultiselectEnabled && (e.ctrlKey || e.metaKey)) {
+    if (isThumbnailMultiselectEnabled) {
+      const togglingSelectedPage = e.ctrlKey || e.metaKey;
       let updatedSelectedPages = [...selectedPageIndexes];
-      if (selectedPageIndexes.indexOf(index) > -1) {
-        updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+
+      if (togglingSelectedPage) {
+        if (selectedPageIndexes.indexOf(index) > -1) {
+          updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+        } else {
+          updatedSelectedPages.push(index);
+        }
       } else {
-        updatedSelectedPages.push(index);
+        updatedSelectedPages = [];
       }
 
       setSelectedPageThumbnails(updatedSelectedPages);
@@ -153,7 +164,7 @@ class Thumbnail extends React.PureComponent {
   };
 
   render() {
-    const { index, currentPage, pageLabels, isDraggable, isSelected } = this.props;
+    const { index, currentPage, pageLabels, isDraggable, isSelected, shouldShowControls } = this.props;
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
 
@@ -180,7 +191,7 @@ class Thumbnail extends React.PureComponent {
           <div ref={this.thumbContainer} className="thumbnail" />
         </div>
         <div className="page-label">{pageLabel}</div>
-        {isActive && <ThumbnailControls index={index} />}
+        {isActive && shouldShowControls && <ThumbnailControls index={index} />}
       </div>
     );
   }
