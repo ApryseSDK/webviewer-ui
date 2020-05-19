@@ -97,7 +97,7 @@ class WatermarkModal extends React.PureComponent {
     if (this.props.isVisible) {
       this.setState({
         locationSettings: this.state.previousLocationSettings,
-      }, async () => {
+      }, async() => {
         // Store the pre-existing watermark (if any) before we overwrite it
         this.preExistingWatermark = await core.getWatermark();
         this.addWatermarks();
@@ -322,7 +322,9 @@ class WatermarkModal extends React.PureComponent {
                 <select
                   id="location"
                   value={WATERMARK_LOCATIONS[currLocation]}
-                  onChange={event => { this.onLocationChanged(event.target.value); }}
+                  onChange={event => {
+                    this.onLocationChanged(event.target.value);
+                  }}
                 >
                   { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
                 </select>
@@ -420,9 +422,12 @@ class WatermarkModal extends React.PureComponent {
                 {
                   this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} id="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
                     <ColorPalette
+                      colorMapKey={null}
                       color={formInfo[FORM_FIELD_KEYS.color]}
                       property={'TextColor'} // arbitrary property name. this property isn't used in this file
-                      onStyleChange = {(property, color) => { this.onColorChanged(color); this.setColorPaletteVisibility(false); }}
+                      onStyleChange = {(property, color) => {
+                        this.onColorChanged(color); this.setColorPaletteVisibility(false);
+                      }}
                     />
                   </div>
                 }

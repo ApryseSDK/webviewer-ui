@@ -120,6 +120,8 @@ export const getIsNoteEditing = state => state.viewer.isNoteEditing;
 
 export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
+export const getUserData = state => state.viewer.userData;
+
 export const getSignatureFonts = state => state.viewer.signatureFonts;
 
 export const getSelectedTab = (state, id) => state.viewer.tab[id];
@@ -134,6 +136,8 @@ export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMer
 export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
 
 export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
+
+export const getIsMultipleViewerMerging = state => state.viewer.isMultipleViewerMerging;
 
 export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
 

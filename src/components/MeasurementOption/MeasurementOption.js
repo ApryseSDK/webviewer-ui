@@ -9,6 +9,8 @@ import selectors from 'selectors';
 
 import './MeasurementOption.scss';
 
+import DataElements from 'constants/dataElement';
+
 class MeasurementOption extends React.Component {
   static propTypes = {
     // The current scale of a measurement tool that is consisted of two arrays
@@ -25,6 +27,8 @@ class MeasurementOption extends React.Component {
       to: PropTypes.array,
     }).isRequired,
     onStyleChange: PropTypes.func.isRequired,
+    isScaleInputDisabled: PropTypes.bool,
+    isPrecisionInputDisabled: PropTypes.bool
   };
 
   constructor(props) {
@@ -146,7 +150,7 @@ class MeasurementOption extends React.Component {
   };
 
   render() {
-    const { measurementUnits, t } = this.props;
+    const { measurementUnits, t, isScaleInputDisabled, isPrecisionInputDisabled } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
     const precisionOptions = [
       { value: 0.1, name: '0.1' },
@@ -155,9 +159,14 @@ class MeasurementOption extends React.Component {
       { value: 0.0001, name: '0.0001' },
     ];
 
+    if (isScaleInputDisabled && isPrecisionInputDisabled) {
+      return null;
+    }
+
     return (
       <div className="MeasurementOption">
-        <div className="Scale">
+        { !isScaleInputDisabled &&
+        <div className="Scale" data-element={DataElements.SCALE_INPUT_CONTAINER}>
           <div className="LayoutTitle">
             {t('option.measurementOption.scale')}
           </div>
@@ -189,26 +198,29 @@ class MeasurementOption extends React.Component {
             </select>
           </div>
         </div>
-        <div className="Precision">
-          <div className="LayoutTitlePrecision">
-            {t('option.shared.precision')}
+        }
+        { !isPrecisionInputDisabled &&
+          <div className="Precision" data-element={DataElements.PRECISION_INPUT_CONTAINER}>
+            <div className="LayoutTitlePrecision">
+              {t('option.shared.precision')}
+            </div>
+            <div className="LayoutPrecision">
+              <select
+                className="PrecisionInput"
+                value={this.state.currPrecision}
+                onChange={e =>
+                  this.onPrecisionChange(e.target.value, 'currPrecision')
+                }
+              >
+                {precisionOptions.map(e => (
+                  <option key={e.value} value={e.value}>
+                    {this.formatValue(e.value)}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div className="LayoutPrecision">
-            <select
-              className="PrecisionInput"
-              value={this.state.currPrecision}
-              onChange={e =>
-                this.onPrecisionChange(e.target.value, 'currPrecision')
-              }
-            >
-              {precisionOptions.map(e => (
-                <option key={e.value} value={e.value}>
-                  {this.formatValue(e.value)}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        }
       </div>
     );
   }
@@ -216,6 +228,8 @@ class MeasurementOption extends React.Component {
 
 const mapStateToProps = state => ({
   measurementUnits: selectors.getMeasurementUnits(state),
+  isScaleInputDisabled: selectors.isElementDisabled(state, DataElements.SCALE_INPUT_CONTAINER),
+  isPrecisionInputDisabled: selectors.isElementDisabled(state, DataElements.PRECISION_INPUT_CONTAINER),
 });
 
 export default connect(mapStateToProps)(withTranslation()(MeasurementOption));

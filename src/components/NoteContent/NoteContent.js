@@ -141,7 +141,7 @@ const NoteContent = ({ annotation }) => {
         </div>
       </div>
       {annotation.attachedFiles && annotation.attachedFiles.map(file => (
-        <AttachedFile key={file._id} file={file} />
+        <AttachedFile key={file._id} {...file} />
       ))}
       </>
     ),

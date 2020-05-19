@@ -23,7 +23,7 @@ const CalibrationModal = () => {
       selectors.isElementDisabled(state, 'calibrationModal'),
       selectors.getMeasurementUnits(state),
     ],
-    shallowEqual,
+    shallowEqual
   );
   const dispatch = useDispatch();
   const [annotation, setAnnotation] = useState(null);
@@ -82,6 +82,48 @@ const CalibrationModal = () => {
   };
 
   const handleApply = () => {
+    const newScale = getNewScale();
+
+    handleLossOfPrecision(newScale).then(accurateNewScale => {
+      core.setAnnotationStyles(annotation, {
+        Scale: accurateNewScale,
+      });
+
+      // this will also set the Scale for the other two measurement tools
+      setToolStyles(
+        'AnnotationCreateDistanceMeasurement',
+        'Scale',
+        accurateNewScale
+      );
+
+      dispatch(actions.closeElements(['calibrationModal']));
+    });
+  };
+
+  const handleLossOfPrecision = scale => {
+    return new Promise(resolve => {
+      const annotManager = core.getAnnotationManager();
+
+      annotManager.one('annotationChanged', (annotations, action) => {
+        if (
+          action === 'modify' &&
+          annotations.length === 1 &&
+          annotations[0] === annotation
+        ) {
+          const newScale = getNewScale();
+          resolve(newScale);
+        }
+      });
+      // when the new distance that's entered in the modal is much bigger than the current distance, loss of precision can happen
+      // because internally WebViewer will do several multiplications and divisions to get the value to store in a measure dictionary
+      // in this case, setting 'Scale' again should fix this issue because this time the new distance and the current distance is very close, and we should get the accurate scale
+      core.setAnnotationStyles(annotation, {
+        Scale: scale,
+      });
+    });
+  };
+
+  const getNewScale = () => {
     const currentDistance = parseMeasurementContents(annotation.getContents());
     const newDistance = parseFloat(value);
     const ratio = newDistance / currentDistance;
@@ -92,14 +134,7 @@ const CalibrationModal = () => {
       [currentScale[1][0] * ratio, unitTo],
     ];
 
-    core.setAnnotationStyles(annotation, {
-      Scale: newScale,
-    });
-
-    // this will also set the Scale for the other two measurement tools
-    setToolStyles('AnnotationCreateDistanceMeasurement', 'Scale', newScale);
-
-    dispatch(actions.closeElements(['calibrationModal']));
+    return newScale;
   };
 
   const handleCancel = () => {

@@ -1,0 +1,30 @@
+.NoteTextarea {
+  background-color: #fff;
+  color: black;
+  padding: 3px;
+  outline-color: #3e3e3e;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, .12);
+  border-radius: 4px;
+
+  .TextAreaWrapper {
+    flex: 1;
+
+    textarea, .mention__control {
+      width: 100%;
+      outline: none;
+      border: none;
+      resize: none;
+    }
+  }
+
+  .Icon {
+    color: black;
+    height: 14px;
+    width: 14px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+}

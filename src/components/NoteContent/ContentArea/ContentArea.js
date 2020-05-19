@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+
+import NoteTextarea from 'components/NoteTextarea';
+
 import core from 'core';
-import AtMentionsReplyBox from '../../AtMentionsReplyBox/AtMentionsReplyBox';
 
 // a component that contains the content textarea, the save button and the cancel button
 const ContentArea = ({
@@ -19,14 +21,12 @@ const ContentArea = ({
   const textareaRef = useRef();
 
   useEffect(() => {
-    if (!textareaRef.current) return;
-    textareaRef.current.setText(contents || '')
-  }, [contents]);
-
-  useEffect(() => {
     // on initial mount, focus the last character of the textarea
     if (textareaRef.current) {
       textareaRef.current.focus();
+
+      const textLength = textareaRef.current.value.length;
+      textareaRef.current.setSelectionRange(textLength, textLength);
     }
   }, []);
 
@@ -37,27 +37,30 @@ const ContentArea = ({
     const value = textAreaValue ? textAreaValue.trim() : '';
     const hasEdited = value !== contents || attachedFiles.length > 0;
     if (hasEdited) {
-      textareaRef.current.handleMentions();
+      setIsEditing(false);
+
       annotation.attachedFiles = attachedFiles;
+
       core.setNoteContents(annotation, value);
       if (annotation instanceof window.Annotations.FreeTextAnnotation) {
         core.drawAnnotationsFromList([annotation]);
       }
 
-      setIsEditing(false);
       setAttachedFiles([]);
     }
   };
+
   const saveBtnClass = classNames({
-    disabled: textAreaValue === contents,
+    disabled: textAreaValue === contents && !attachedFiles.length,
   });
 
   return (
     <div className="edit-content">
-      <AtMentionsReplyBox
+      <NoteTextarea
         ref={el => {
           textareaRef.current = el;
         }}
+        value={textAreaValue}
         onChange={onTextAreaValueChange}
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
@@ -87,6 +90,9 @@ ContentArea.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,
   onTextAreaValueChange: PropTypes.func.isRequired,
+
+  attachedFiles: PropTypes.array,
+  setAttachedFiles: PropTypes.func,
 };
 
 export default ContentArea;

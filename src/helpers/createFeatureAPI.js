@@ -28,6 +28,7 @@ export default (enable, store) => features => {
         'notesPanel',
         'notesPanelButton',
         'toolsButton',
+        'linkButton',
       ],
       fn: () => {
         if (enable) {
@@ -114,6 +115,11 @@ export default (enable, store) => features => {
         } else {
           hotkeys.off('ctrl+c, command+c');
         }
+      },
+    },
+    [Feature.MultipleViewerMerging]: {
+      fn: () => {
+        store.dispatch(actions.setIsMultipleViewerMerging(enable));
       },
     },
     [Feature.ThumbnailMerging]: {

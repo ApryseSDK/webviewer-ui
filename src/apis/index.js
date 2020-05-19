@@ -68,6 +68,7 @@ import isMobileDevice from './isMobileDevice';
 import isReadOnly from './isReadOnly';
 import isToolDisabled from './isToolDisabled';
 import loadDocument from './loadDocument';
+import mentions from './mentions';
 import openElement from './openElement';
 import openElements from './openElements';
 import print from './print';
@@ -82,6 +83,7 @@ import setActiveHeaderGroup from './setActiveHeaderGroup';
 import setActiveLeftPanel from './setActiveLeftPanel';
 import setAdminUser from './setAdminUser';
 import setAnnotationUser from './setAnnotationUser';
+import setActivePalette from './setActivePalette';
 import setColorPalette from './setColorPalette';
 import setCurrentPageNumber from './setCurrentPageNumber';
 import setCustomNoteFilter from './setCustomNoteFilter';
@@ -131,7 +133,6 @@ import setNoteTransformFunction from './setNoteTransformFunction';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
 
-import * as HiveApi from './hiveApi';
 import hiveApi from '../helpers/hiveApi';
 
 export default store => {
@@ -203,6 +204,7 @@ export default store => {
     updateElement: updateElement(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
+    mentions: mentions(store),
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
@@ -244,6 +246,8 @@ export default store => {
     setNotesPanelSort: setNotesPanelSort(store),
     setShowSideWindow: setShowSideWindow(store),
     setSideWindowVisibility: setSideWindowVisibility(store),
+    setActivePalette: setActivePalette(store),
+    setColorPalette: setColorPalette(store),
     disableTool: disableTool(store),
     enableAllElements: enableAllElements(store),
     goToFirstPage,
@@ -269,7 +273,6 @@ export default store => {
     loadedFromServer: false,
     serverFailed: false,
     i18n: i18next,
-    setColorPalette: setColorPalette(store),
     showWarningMessage: showWarningMessage(store),
     updateOutlines: updateOutlines(store),
     getBBAnnotManager,
@@ -277,6 +280,5 @@ export default store => {
 
     // Custom Hive API
     hiveApi,
-    setAtMentions: HiveApi.setAtMentions(store),
   };
 };

@@ -1,11 +1,11 @@
 @import '../../../constants/styles';
+@import '../../../constants/modal';
 
 $border-radius: 4px;
 
 .text-signature {
-  margin: 0px 24px;
-  width: 552px;
-  height: 200px;
+  @extend %signature-modal-container-shared-style;
+
   display: flex;
   flex-direction: column;
 

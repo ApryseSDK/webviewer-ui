@@ -1,9 +1,11 @@
+@import '../../constants/styles.scss';
 @import '../../constants/popup';
 
 .ToolStylePopup {
   @extend %open;
   @extend %closed;
   @extend %popup-mobile;
+  @extend %popup-landscape;
 
   position: absolute;
   z-index: 85;

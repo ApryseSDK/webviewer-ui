@@ -5,12 +5,12 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import NoteContext from 'components/Note/Context';
+import NoteTextarea from 'components/NoteTextarea';
 
 import core from 'core';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
-import AtMentionsReplyBox from '../../AtMentionsReplyBox/AtMentionsReplyBox';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -58,35 +58,31 @@ const ReplyArea = ({ annotation }) => {
     }
   }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
-  const trimmedValue = value ? value.trim() : '';
-
   const postReply = e => {
     // prevent the textarea from blurring out
     e.preventDefault();
 
-    if (trimmedValue || attachedFiles.length > 0) {
-      textareaRef.current.handleMentions();
-      core.createAnnotationReply(annotation, trimmedValue);
+    if (value || attachedFiles.length > 0) {
+      core.createAnnotationReply(annotation, value);
+      setValue('');
+
       const replies = annotation.getReplies();
       if (replies.length > 0) {
         replies[replies.length - 1].attachedFiles = attachedFiles;
       }
-      setValue('');
+
       setAttachedFiles([]);
-      textareaRef.current.setText('');
-      setIsFocused(false);
     }
   };
 
   const handleCancelClick = () => {
     setValue('');
-    setIsFocused(false);
-    setAttachedFiles([]);
     textareaRef.current.blur();
+    setAttachedFiles([]);
   };
 
   const replyBtnClass = classNames({
-    disabled: !trimmedValue,
+    disabled: !value && !attachedFiles.length,
   });
 
   const ifReplyNotAllowed =
@@ -102,12 +98,13 @@ const ReplyArea = ({ annotation }) => {
       // due to annotation deselection
       onMouseDown={e => e.stopPropagation()}
     >
-      <AtMentionsReplyBox
+      <NoteTextarea
         ref={el => {
           textareaRef.current = el;
         }}
+        value={value}
         onChange={value => setValue(value)}
-        onSubmit={postReply}
+        onSubmit={e => postReply(e)}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}

@@ -6,18 +6,19 @@ import { HiveAPI } from '../../helpers/hiveApi';
 
 import './AttachedFile.scss';
 
-const AttachedFile = ({ file }) => (
-  <div key={file._id} className="hv-attached-file" onMouseDown={event => {
+const AttachedFile = React.memo(({ _id, name }) => (
+  <div className="hv-attached-file" onMouseDown={event => {
     event.stopPropagation();
-    HiveAPI.onDownloadFile(file._id);
+    HiveAPI.onDownloadFile(_id);
   }}>
     <Icon glyph="hive-paperclip" />
-    <div className="hv-attached-file-url">{file.name}</div>
+    <div className="hv-attached-file-url">{name}</div>
   </div>
-);
+));
 
 AttachedFile.propTypes = {
-  file: PropTypes.object.isRequired,
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string,
 };
 
 export default AttachedFile;

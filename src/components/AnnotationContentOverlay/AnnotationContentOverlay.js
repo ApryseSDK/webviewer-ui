@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 
 import core from 'core';
 import { isMobileDevice } from 'helpers/device';
-import skipHtml from 'helpers/skipHtml';
 import selectors from 'selectors';
 
 import './AnnotationContentOverlay.scss';
@@ -24,33 +23,36 @@ const AnnotationContentOverlay = () => {
 
   useEffect(() => {
     const onMouseHover = e => {
+      const viewElement = core.getViewerElement();
       let annotation = core
         .getAnnotationManager()
         .getAnnotationByMouseEvent(e);
 
-      if (annotation) {
-        // if hovered annot is grouped, pick the "primary" annot
-        // do this as this is what Adobe does
+      if (annotation && viewElement.contains(e.target)) {
+        // if hovered annot is grouped, pick the "primary" annot to match Adobe's behavior
         const groupedAnnots = core.getAnnotationManager().getGroupAnnotations(annotation);
         const ungroupedAnnots = groupedAnnots.filter(annot => !annot.isGrouped());
         annotation = ungroupedAnnots.length > 0 ? ungroupedAnnots[0] : annotation;
-      }
 
-      if (!(annotation instanceof Annotations.FreeTextAnnotation)) {
-        setAnnotation(annotation);
-        setOverlayPosition({
-          left: e.clientX + 20,
-          top: e.clientY + 20,
-        });
+        if (!(annotation instanceof Annotations.FreeTextAnnotation)) {
+          setAnnotation(annotation);
+          setOverlayPosition({
+            left: e.clientX + 20,
+            top: e.clientY + 20,
+          });
+        }
+      } else {
+        setAnnotation(null);
       }
     };
+
     core.addEventListener('mouseMove', onMouseHover);
     return () => {
       core.removeEventListener('mouseMove', onMouseHover);
     };
   }, []);
 
-  const contents = skipHtml(annotation?.getContents());
+  const contents = annotation?.getContents();
   const numberOfReplies = annotation?.getReplies().length;
 
   return isDisabled || isMobileDevice || !contents ? null : (

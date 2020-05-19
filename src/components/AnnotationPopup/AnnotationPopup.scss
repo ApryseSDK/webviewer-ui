@@ -3,12 +3,17 @@
 
 .AnnotationPopup {
   @extend %popup;
-
-  @include mobile {
+  
+  &.stylePopupOpen {
     // style popup in the mobile view will be placed at the bottom of the viewport
     // so we need to set the padding to 0px otherwise we will see a little circle under the selected annotation
-    &.stylePopupOpen {
+    @include mobile {
       padding: 0px;
+    }
+    
+    @extend %popup-landscape;
+    @media (orientation: landscape) {
+      align-items: flex-start;
     }
   }
 }

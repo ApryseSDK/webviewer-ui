@@ -5,7 +5,6 @@ import viewerReducer from 'reducers/viewerReducer';
 import searchReducer from 'reducers/searchReducer';
 import userReducer from 'reducers/userReducer';
 import documentReducer from 'reducers/documentReducer';
-import hiveReducer from 'reducers/hiveReducer';
 
 export default combineReducers({
   viewer: viewerReducer(initialState.viewer),
@@ -14,6 +13,4 @@ export default combineReducers({
   document: documentReducer(initialState.document),
   // TODO: refactor in another PR to remove state.advanced. It's not necessary to have this because those states never change.
   advanced: () => initialState.advanced,
-
-  hive: hiveReducer(initialState.hive),
 });

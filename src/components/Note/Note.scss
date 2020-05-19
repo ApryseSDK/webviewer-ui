@@ -31,30 +31,28 @@
       display: flex;
       flex-direction: column;
       margin: 15px 0 0;
-      
+
       textarea {
         width: 100%;
         resize: none;
         overflow: hidden;
         box-sizing: border-box;
-        border: 1px solid rgba(0, 0, 0, .12);
-        border-radius: 4px;
         font-size: 12px;
       }
-  
+
       .buttons {
         @extend %textarea-buttons;
         margin-top: 9px;
         display: flex;
         align-items: flex-start;
-  
+
         &:hover {
           cursor: auto;
         }
       }
-    } 
+    }
   }
-  
+
   &:hover {
     cursor: pointer;
   }

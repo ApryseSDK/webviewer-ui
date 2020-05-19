@@ -46,7 +46,6 @@ class RedactionOverlay extends React.PureComponent {
         'menuOverlay',
         'toolsOverlay',
         'viewControlsOverlay',
-        'searchOverlay',
         'toolStylePopup',
       ]);
 

@@ -42,7 +42,6 @@ class ZoomOverlay extends React.PureComponent {
       this.props.closeElements([
         'viewControlsOverlay',
         'toolsOverlay',
-        'searchOverlay',
         'menuOverlay',
         'toolStylePopup',
       ]);
