@@ -331,7 +331,7 @@ export default {
     isMultipleViewerMerging: false,
     isThumbnailMerging: true,
     isThumbnailReordering: true,
-    isThumbnailMultiselect: false,
+    isThumbnailMultiselect: true,
     allowPageNavigation: true,
     doesAutoLoad: getHashParams('auto_load', true),
     isReadOnly: getHashParams('readonly', false),
