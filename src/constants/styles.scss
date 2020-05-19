@@ -133,13 +133,13 @@ $signature-modal-shared-color: #e1e1e3;
   hyphens: auto;
 }
 
-// Will prevent tab styles when user is not using keyboard nav.
+// Fixes default button styling, and prevents outline when not tabbing.
 @mixin button-reset {
   padding: 0;
   border: none;
   background-color: transparent;
 
-  @at-root html:not([data-tabbing='true']) #{&}:focus {
+  @at-root html:not([data-tabbing='true']) #{&} {
     outline: none;
 
     // No need to use this if you aren't doing custom focus style.

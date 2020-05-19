@@ -41,6 +41,7 @@
   }
 
   .styling-arrow-container {
+    @include button-reset;
     width: 40px;
     height: 26px;
     display: flex;

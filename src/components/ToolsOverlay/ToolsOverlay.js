@@ -152,7 +152,7 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     let dropdownButton = (
-      <div
+      <button
         className={classNames({
           "styling-arrow-container": true,
           active: isToolStyleOpen,
@@ -165,7 +165,7 @@ class ToolsOverlay extends React.PureComponent {
         {isToolStyleOpen ?
           <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
           <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-      </div>
+      </button>
     );
 
     if (swapableToolNames.length > 0) {

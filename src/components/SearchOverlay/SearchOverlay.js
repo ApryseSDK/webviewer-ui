@@ -458,24 +458,6 @@ class SearchOverlay extends React.PureComponent {
     this.executeDebouncedFullSearch();
   }
 
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
   render() {
     const {
       isDisabled,
@@ -507,9 +489,9 @@ class SearchOverlay extends React.PureComponent {
             value={searchValue}
             placeholder={t('message.searchDocumentPlaceholder')}
           />
-          <div className="input-button" onClick={this.search}>
+          <button className="input-button" onClick={this.search}>
             <Icon glyph="icon-header-search" />
-          </div>
+          </button>
         </div>
         <div className="options">
           <Input
@@ -539,18 +521,18 @@ class SearchOverlay extends React.PureComponent {
         <div className="footer">
           {<div>{results.length} {t('message.numResultsFound')}</div>}
           <div className="buttons">
-            <div className="button" onClick={this.onClickPrevious}>
+            <button className="button" onClick={this.onClickPrevious}>
               <Icon
                 className="arrow"
                 glyph="icon-chevron-left"
               />
-            </div>
-            <div className="button" onClick={this.onClickNext}>
+            </button>
+            <button className="button" onClick={this.onClickNext}>
               <Icon
                 className="arrow"
                 glyph="icon-chevron-right"
               />
-            </div>
+            </button>
           </div>
         </div>
       </div>
