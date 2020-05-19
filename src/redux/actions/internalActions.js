@@ -136,10 +136,18 @@ export const setActiveToolStyles = (toolStyles = {}) => ({
   type: 'SET_ACTIVE_TOOL_STYLES',
   payload: { toolStyles },
 });
-export const setActiveToolGroup = toolGroup => ({
-  type: 'SET_ACTIVE_TOOL_GROUP',
-  payload: { toolGroup },
-});
+export const setActiveToolGroup = toolGroup => (dispatch, getState) => {
+  const currentActiveToolGroup = selectors.getActiveToolGroup(getState());
+
+  if (currentActiveToolGroup === toolGroup) {
+    return;
+  }
+
+  dispatch({
+    type: 'SET_ACTIVE_TOOL_GROUP',
+    payload: { toolGroup },
+  });
+};
 export const setNotePopupId = id => ({
   type: 'SET_NOTE_POPUP_ID',
   payload: { id },
