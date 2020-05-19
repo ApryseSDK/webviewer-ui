@@ -73,6 +73,7 @@ export default store => {
         'layersPanelButton',
         'bookmarksPanel',
         'bookmarksPanelButton',
+        'wildCardSearchOption',
       ],
       PRIORITY_ONE,
     ),
