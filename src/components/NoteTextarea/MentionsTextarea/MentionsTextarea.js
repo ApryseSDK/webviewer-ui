@@ -38,7 +38,6 @@ const MentionsTextarea = React.forwardRef(
       ...userData.map(data => ({
         ...data,
         display: data.value,
-        id: data.id || data.value,
       })),
     ];
 
@@ -48,9 +47,7 @@ const MentionsTextarea = React.forwardRef(
           className="mention"
           inputRef={forwardedRef}
           value={value}
-          onChange={(fakeEvent, _, plainTextValue) => {
-            onChange(plainTextValue);
-          }}
+          onChange={onChange}
           onKeyDown={onKeyDown}
           onBlur={onBlur}
           onFocus={onFocus}
