@@ -15,7 +15,7 @@
   transform: translateX(-50%);
   top: 0px;
 
-  @include mobile {
+  // @include mobile {
     position: fixed;
     left: 50%;
     bottom: 24px;
@@ -27,7 +27,7 @@
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--box-shadow);
     z-index: 55;
-  }
+  // }
 
   .side-arrow-container {
     height: 100%;
