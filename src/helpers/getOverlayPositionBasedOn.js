@@ -39,5 +39,5 @@ export default (element, overlay, align = 'left') => {
     right = 'auto';
     left = buttonLeft - (overlayWidth - buttonWidth);
   }
-  return { left, right };
+  return { left: Math.max(left, 0), right };
 };
