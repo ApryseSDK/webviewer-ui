@@ -177,7 +177,6 @@ class MentionsManager {
     let match;
     let plainTextValue = str;
 
-    window.str11 = str;
     // iterate through the matches, extract ids and build the plainTextValue
     // after the iteration finishes, if the incoming string is Hello! @[Zhijie Zhang](zzhang@pdftron.com), then we should have:
     // {
