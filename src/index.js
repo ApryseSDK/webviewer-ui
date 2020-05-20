@@ -168,7 +168,7 @@ window.addEventListener('hashchange', () => {
   window.location.reload();
 });
 
-/* --- The following adds a data attribute to `<html>` when user is keyboard navigating. --- */
+/* The following adds a data attribute to `<html>` when user is keyboard navigating. */
 
 function onTab(event) {
   if (event.key === 'Tab') {
