@@ -43,7 +43,7 @@ const MentionsTextarea = React.forwardRef(
     ];
 
     return (
-      <div onMouseDown={e => e.stopPropagation()}>
+      <div className="mention-element" onMouseDown={e => e.stopPropagation()}>
         <MentionsInput
           className="mention"
           inputRef={forwardedRef}
