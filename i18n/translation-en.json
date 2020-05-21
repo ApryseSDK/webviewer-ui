@@ -273,7 +273,8 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Clockwise",
-      "rotateCounterClockwise": "Counter-clockwise"
+      "rotateCounterClockwise": "Counterclockwise",
+      "extractZeroPageError": "No pages were selected to extract"
     },
     "richText": {
       "bold": "Bold",

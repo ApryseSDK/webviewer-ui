@@ -19,6 +19,7 @@ import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
 
 import core from 'core';
+import mentionsManager from 'helpers/MentionsManager';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import escapeHtml from 'helpers/escapeHtml';
 import useDidUpdate from 'hooks/useDidUpdate';
@@ -51,8 +52,9 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
     NoteContext,
   );
   // const [isEditing, setIsEditing] = useState(false);
-  const [textAreaValue, setTextAreaValue] = useState(annotation.getContents());
-  const [t] = useTranslation();
+  const [textAreaValue, setTextAreaValue] = useState(
+    annotation.getCustomData('trn-mention')?.contents || annotation.getContents()
+  );
   const dispatch = useDispatch();
   const isReply = annotation.isReply();
 
@@ -75,7 +77,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
     ) {
       setIsEditing(true);
     }
-  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
+  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected, setIsEditing]);
 
   const renderAuthorName = useCallback(
     annotation => {
@@ -173,7 +175,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
         )}
       </div>
     </React.Fragment>
-  ), [annotation, color, contents, formatNumberOfReplies, icon, isEditing, setIsEditing, isReply, noteDateFormat, numberOfReplies, renderAuthorName, renderContents, textAreaValue]);
+  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, textAreaValue, contents, renderContents]);
 
 
   return useMemo(
@@ -182,7 +184,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
         {header}
       </div>
     ),
-    [t, header],
+    [header],
   );
 };
 
@@ -197,9 +199,12 @@ const ContentArea = ({
   textAreaValue,
   onTextAreaValueChange,
 }) => {
-  const contents = annotation.getContents();
+  const [isMentionEnabled] = useSelector(state => [
+    selectors.getIsMentionEnabled(state),
+  ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
+  const contents = annotation.getCustomData('trn-mention')?.contents || annotation.getContents();
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
@@ -215,18 +220,25 @@ const ContentArea = ({
     // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
 
-    // const hasEdited = textAreaValue !== contents;
-    // if (hasEdited) {
-    core.setNoteContents(annotation, textAreaValue);
+    if (isMentionEnabled) {
+      const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
+
+      annotation.setCustomData('trn-mention', {
+        contents: textAreaValue,
+        ids,
+      });
+      core.setNoteContents(annotation, plainTextValue);
+    } else {
+      core.setNoteContents(annotation, textAreaValue);
+    }
+
     if (annotation instanceof window.Annotations.FreeTextAnnotation) {
       core.drawAnnotationsFromList([annotation]);
     }
 
     setIsEditing(false);
-    // }
   };
 
-  // onBlur={() => setIsEditing(false)}
   return (
     <div className="edit-content">
       <NoteTextarea

@@ -1,3 +1,4 @@
+import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -31,7 +32,7 @@ import selectors from 'selectors';
  * @extends EventHandler
  */
 class MentionsManager {
-  constructor(store, annotManager) {
+  initialize(store, annotManager) {
     this.store = store;
     /**
      * the key represents the event name
@@ -83,7 +84,7 @@ class MentionsManager {
     let newMentions = [];
 
     annotations.forEach(annotation => {
-      const mentionData = this.extractMentionData(annotation);
+      const mentionData = this.extractMentionDataFromAnnot(annotation);
 
       this.idMentionDataMap[annotation.Id] = mentionData;
       newMentions = newMentions.concat(mentionData.mentions);
@@ -104,7 +105,7 @@ class MentionsManager {
         mentions: [],
         contentWithoutMentions: '',
       };
-      const currMentionData = this.extractMentionData(annotation);
+      const currMentionData = this.extractMentionDataFromAnnot(annotation);
       const prevMentions = prevMentionData.mentions;
       const currMentions = currMentionData.mentions;
 
@@ -163,24 +164,62 @@ class MentionsManager {
   }
 
   /**
+   * @param {string} str a string to extract mention data from
+   * @returns {object} returns an object that contains the following properties
+   * plainTextValue: a string that has been transformed to not have the markups in the incoming string
+   * ids: an array of strings that contains the mentioned ids
+   * @ignore
+   */
+  extractMentionDataFromStr(str) {
+    // the value of the markup is defined at https://github.com/signavio/react-mentions#configuration
+    const markupRegex = /@\[(.*?)\]\((.*?)\)/g;
+    const ids = [];
+    let match;
+    let plainTextValue = str;
+
+    // iterate through the matches, extract ids and build the plainTextValue
+    // after the iteration finishes, if the incoming string is Hello! @[Zhijie Zhang](zzhang@pdftron.com), then we should have:
+    // {
+    //   plainTextValue: Hello! Zhijie Zhang,
+    //   ids: ['zzhang@pdftron.com'],
+    // }
+    while ((match = markupRegex.exec(str)) !== null) {
+      const [wholeMatch, displayName, id] = match;
+
+      ids.push(id);
+      plainTextValue = plainTextValue.replace(
+        // keep the @ and only replace the remaining text
+        wholeMatch.slice(1),
+        displayName,
+      );
+    }
+
+    return {
+      plainTextValue,
+      ids,
+    };
+  }
+
+  /**
    * @param {string} content
    * @returns {mentionData}
    * @ignore
    */
-  extractMentionData(annotation) {
-    const content = annotation.getContents();
+  extractMentionDataFromAnnot(annotation) {
+    const mentionData = annotation.getCustomData('trn-mention');
     const userData = this.getUserData();
+    const contents = annotation.getContents();
     const result = {
       mentions: [],
-      contentWithoutMentions: content,
+      contentWithoutMentions: contents,
     };
 
-    if (!content) {
+    if (!mentionData) {
       return result;
     }
 
     userData.forEach(user => {
-      if (this.includesMention(content, user.value)) {
+      if (mentionData.ids.includes(user.id) && this.isValidMention(contents, user.value)) {
         result.mentions.push({
           ...user,
           annotId: annotation.Id,
@@ -193,14 +232,10 @@ class MentionsManager {
     return result;
   }
 
-  includesMention(content, value) {
+  isValidMention(content, value) {
     value = `@${value}`;
+
     const startIndex = content.indexOf(value);
-
-    if (startIndex === -1) {
-      return;
-    }
-
     const nextChar = content[startIndex + value.length];
     const isEndOfString = typeof nextChar === 'undefined';
     const allowedChars = this.getAllowedTrailingCharacters();
@@ -216,6 +251,26 @@ class MentionsManager {
     }
 
     return true;
+  }
+
+  createMentionReply(annotation, value) {
+    const { plainTextValue, ids } = this.extractMentionDataFromStr(value);
+
+    const replyAnnot = new Annotations.StickyAnnotation();
+    replyAnnot['InReplyTo'] = annotation['Id'];
+    replyAnnot['X'] = annotation['X'];
+    replyAnnot['Y'] = annotation['Y'];
+    replyAnnot['PageNumber'] = annotation['PageNumber'];
+    replyAnnot['Author'] = core.getCurrentUser();
+    replyAnnot.setContents(plainTextValue || '');
+    replyAnnot.setCustomData('trn-mention', {
+      contents: value,
+      ids,
+    });
+
+    annotation.addReply(replyAnnot);
+
+    core.addAnnotations([replyAnnot]);
   }
 
   /**
@@ -237,6 +292,11 @@ WebViewer(...)
   });
    */
   setUserData(userData) {
+    userData = userData.map(user => ({
+      ...user,
+      id: user.id || user.email || user.value,
+    }));
+
     this.store.dispatch(actions.setUserData(userData));
   }
 
@@ -380,4 +440,7 @@ WebViewer(...)
  * @param {'add'|'modify'|'delete'} action The action that occurred (add, delete, modify)
  */
 
-export default MentionsManager;
+export default new MentionsManager();
+export {
+  MentionsManager
+};
