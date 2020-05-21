@@ -39,5 +39,10 @@ export default (element, overlay, align = 'left') => {
     right = 'auto';
     left = buttonLeft - (overlayWidth - buttonWidth);
   }
-  return { left, right };
+
+
+  return { 
+    left: !isNaN(left) ? Math.max(left, 0) : left,
+    right
+  };
 };
