@@ -10,7 +10,6 @@ import { isIOS } from "helpers/device";
 import Icon from "components/Icon";
 
 import "./PageNavOverlay.scss";
-import goToPrevPage from "../../apis/goToPrevPage";
 
 class PageNavOverlay extends React.PureComponent {
   static propTypes = {

@@ -72,27 +72,29 @@ const App = ({ removeEventHandlers }) => {
       dispatch(actions.setSearchPanelWidth(293));
     };
 
-    const setDesktopState = () => {
-      dispatch(actions.setToolsScreen('desktop'));
-    };
+    // const setDesktopState = () => {
+    //   dispatch(actions.setToolsScreen('annotate'));
+    // };
 
-    const onBreakpoint = () => {
-      if (mobileBreakpoint.matches) {
-        setMobileState();
-      } else if (tabletBreakpoint.matches) {
-        setTabletState();
-      } else if (desktopBreakpoint.matches) {
-        setDesktopState();
-      }
-      dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
-      core.setToolMode(defaultTool);
-      dispatch(actions.setActiveToolGroup(''));
-    };
+    // const onBreakpoint = () => {
+    //   if (mobileBreakpoint.matches) {
+    //     setMobileState();
+    //   } else if (tabletBreakpoint.matches) {
+    //     setTabletState();
+    //   } else if (desktopBreakpoint.matches) {
+    //     setDesktopState();
+    //   }
+    //   dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
+    //   core.setToolMode(defaultTool);
+    //   dispatch(actions.setActiveToolGroup(''));
+    // };
 
-    mobileBreakpoint.addListener(onBreakpoint);
-    tabletBreakpoint.addListener(onBreakpoint);
-    desktopBreakpoint.addListener(onBreakpoint);
-    onBreakpoint();
+    // mobileBreakpoint.addListener(onBreakpoint);
+    // tabletBreakpoint.addListener(onBreakpoint);
+    // desktopBreakpoint.addListener(onBreakpoint);
+    // onBreakpoint();
+
+    // setDesktopState();
 
 
     return removeEventHandlers;

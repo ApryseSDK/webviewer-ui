@@ -3,7 +3,21 @@ import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
+import defaultTool from 'constants/defaultTool';
+
 // viewer
+export const setToolbarScreen = screen => dispatch => {
+  dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
+  core.setToolMode(defaultTool);
+  dispatch({
+    type: 'SET_ACTIVE_TOOL_GROUP',
+    payload: { toolGroup: '' },
+  });
+  dispatch({
+    type: 'SET_TOOLBAR_SCREEN',
+    payload: { screen },
+  });
+};
 export const setSelectedSignatureIndex = index => ({
   type: 'SET_SELECTED_SIGNATURE_INDEX',
   payload: { index },

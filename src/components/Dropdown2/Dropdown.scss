@@ -1,0 +1,76 @@
+@import '../../constants/styles';
+
+.Dropdown {
+  display: flex;
+  user-select: none;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 80;
+
+  border-radius: 4px;
+  height: 28px;
+  width: 96px;
+  border: 1px solid	var(--border);
+  padding-left: 8px;
+  padding-right: 4px;
+  position: relative;
+  background: var(--component-background);
+
+  cursor: pointer;
+
+  .down-arrow {
+    width: 12px;
+    height: 16px;
+    margin-top: 2px;
+  }
+
+  .picked-option {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dropdown-items {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 30px;
+    right: 0px;
+
+    border-radius: 4px;
+    width: 94px;
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+
+    background: var(--component-background);
+    overflow:hidden; // necessary so that children respect border-radius on hover
+
+    .dropdown-item {
+      height: 28px;
+      padding-left: 8px;
+      padding-right: 4px;
+      align-items: center;
+      display: flex;
+      border-radius: 0px;
+
+      &:hover {
+        background-color: var(--popup-button-hover);
+      }
+
+      &:first-child {
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+      }
+
+      &:last-child {
+        border-bottom-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+    }
+
+    &.hide {
+      display: none;
+    }
+  }
+}

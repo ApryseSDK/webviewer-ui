@@ -2,6 +2,11 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_TOOLBAR_SCREEN':
+      return {
+        ...state,
+        screen: payload.screen,
+      };
     case 'SET_SELECTED_SIGNATURE_INDEX':
       return {
         ...state,

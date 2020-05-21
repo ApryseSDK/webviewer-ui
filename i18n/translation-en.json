@@ -160,6 +160,14 @@
     "linkURLorPage": "Link URL or a Page"
   },
   "option": {
+    "toolbarScreen": {
+      "View": "View",
+      "Annotate": "Annotate",
+      "Draw": "Draw",
+      "Fill&Sign": "Fill & Sign",
+      "Insert": "Insert",
+      "Measure": "Measure"
+    },
     "annotationColor": {
       "StrokeColor": "Stroke",
       "FillColor": "Fill",
@@ -168,15 +176,6 @@
     "displayMode": {
       "layout": "Page Layout",
       "pageTransition": "Page Transition"
-    },
-    "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
-    },
-    "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
-    },
-    "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
     "documentControls": {
       "placeholder": "Enter pages to select i.e. 2, 5-9"

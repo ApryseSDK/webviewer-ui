@@ -8,11 +8,12 @@ import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
-import PageNavOverlay from '../components/PageNavOverlay/PageNavOverlay';
+import PageNavOverlay from 'components/PageNavOverlay';
+import Ribbons from 'components/Ribbons';
 
 export default {
   viewer: {
-    screen: 'desktop',
+    screen: 'View',
     activeTheme: 'light',
     disabledElements: {},
     openElements: {
@@ -45,7 +46,13 @@ export default {
         { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },
         { type: 'spacer' },
-        { type: 'toggleElementButton', dataElement: 'toggleToolsButton', element: 'toolsHeader', img: 'icon-header-annotations-line', activeImg: 'icon-header-annotation-fill', title: 'component.toolsHeader' },
+        {
+          type: 'customElement',
+          render: () => <Ribbons />,
+          dataElement: 'ribbons',
+          className: 'custom-ribbons-container',
+        },
+        { type: 'spacer' },
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', activeImg: 'icon-header-chat-fill', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
@@ -54,10 +61,13 @@ export default {
           render: () => <PageNavOverlay />,
           dataElement: 'pageNavOverlay',
         },
+
       ],
       // second header
       tools: {
-        desktop: [
+        View: [
+        ],
+        Annotate: [
           { type: 'spacer' },
           { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton' },
           { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton' },
@@ -190,7 +200,13 @@ export default {
       { dataElement: 'freeTextToolButton' },
     ],
     toolButtonObjects: {
-      desktop: {
+      View: {
+        Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
+        AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
+        TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },
+        MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
+      },
+      Annotate: {
         AnnotationCreateDistanceMeasurement: { position: 0, dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'measurementTools', showColor: 'active' },
         AnnotationCreatePerimeterMeasurement: { position: 1, dataElement: 'perimeterMeasurementToolButton', title: 'annotation.perimeterMeasurement', img: 'ic_annotation_perimeter_black_24px', group: 'measurementTools', showColor: 'active' },
         AnnotationCreateAreaMeasurement: { position: 2, dataElement: 'areaMeasurementToolButton', title: 'annotation.areaMeasurement', img: 'ic_annotation_area_black_24px', group: 'measurementTools', showColor: 'active' },
