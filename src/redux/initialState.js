@@ -13,7 +13,7 @@ import Ribbons from 'components/Ribbons';
 
 export default {
   viewer: {
-    screen: 'View',
+    screen: 'Annotate',
     activeTheme: 'light',
     disabledElements: {},
     openElements: {
@@ -66,6 +66,7 @@ export default {
       // second header
       tools: {
         View: [
+          { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         ],
         Annotate: [
           { type: 'spacer' },
@@ -205,6 +206,7 @@ export default {
         AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
         TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },
         MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
+        AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'icon-operation-eraser', showColor: 'never' },
       },
       Annotate: {
         AnnotationCreateDistanceMeasurement: { position: 0, dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'measurementTools', showColor: 'active' },

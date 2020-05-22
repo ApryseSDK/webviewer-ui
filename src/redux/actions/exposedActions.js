@@ -7,6 +7,12 @@ import defaultTool from 'constants/defaultTool';
 
 // viewer
 export const setToolbarScreen = screen => dispatch => {
+  if (screen === 'View') {
+    dispatch(closeElements(['toolsHeader']));
+  } else {
+    dispatch(openElements(['toolsHeader']));
+  }
+
   dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
   core.setToolMode(defaultTool);
   dispatch({

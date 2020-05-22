@@ -51,6 +51,7 @@ const ToolButton = ({
     shallowEqual,
   );
   const dispatch = useDispatch();
+  console.log(toolButtonObject, toolName);
   const { group = '', ...restObjectData } = toolButtonObject;
 
   useEffect(() => {
