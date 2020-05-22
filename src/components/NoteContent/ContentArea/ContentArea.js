@@ -51,7 +51,7 @@ const ContentArea = ({
   };
 
   const saveBtnClass = classNames({
-    disabled: textAreaValue === contents && !attachedFiles.length,
+    disabled: textAreaValue === contents,
   });
 
   return (
