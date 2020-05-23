@@ -45,14 +45,12 @@ export const getDisabledElementPriority = (state, dataElement) =>
 
 export const getToolsHeaderItems = state => {
   const screen = getScreen(state);
-  console.log(screen,state.viewer.headers.tools[screen]);
   return state.viewer.headers.tools[screen];
 };
 
 export const getToolButtonObjects = state => {
-  const screen = getScreen(state);
-  console.log(screen,state.viewer.toolButtonObjects[screen]);
-  return state.viewer.toolButtonObjects[screen];
+  // const screen = getScreen(state);
+  return state.viewer.toolButtonObjects['default'];
 };
 
 export const getActiveToolNamesForActiveToolGroup = state => {

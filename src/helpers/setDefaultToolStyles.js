@@ -8,13 +8,12 @@ const setDefaultToolStyles = () => {
   Object.keys(toolModeMap).forEach(toolName => {
     let toolStyles = null;
 
-    // localStorageManager.disableLocalStorage();
-    try {
-      toolStyles = localStorage.getItem(`toolData-${toolName}`);
-    } catch (ex) {
-      console.warn(`Disabling "localStorage" because it could not be accessed.`);
-      localStorageManager.disableLocalStorage();
-    }
+    // try {
+    //   toolStyles = localStorage.getItem(`toolData-${toolName}`);
+    // } catch (ex) {
+    //   console.warn(`Disabling "localStorage" because it could not be accessed.`);
+    //   localStorageManager.disableLocalStorage();
+    // }
 
     if (!toolStyles && defaultToolStylesMap[toolName]) {
       toolStyles = JSON.stringify(defaultToolStylesMap[toolName]);

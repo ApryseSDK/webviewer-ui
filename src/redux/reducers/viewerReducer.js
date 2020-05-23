@@ -254,9 +254,7 @@ export default initialState => (state = initialState, action) => {
         ...state,
         toolButtonObjects: {
           ...state.toolButtonObjects,
-          desktop: createStateForScreen('desktop'),
-          tablet: createStateForScreen('tablet'),
-          mobile: createStateForScreen('mobile'),
+          default: createStateForScreen('default'),
         },
       };
     }

@@ -51,10 +51,10 @@ const mapStateToProps = (state, ownProps) => ({
       key: 'Fill&Sign',
       translationKey: 'option.toolbarScreen.Fill&Sign',
     },
-    {
-      key: 'Insert',
-      translationKey: 'option.toolbarScreen.Insert',
-    },
+    // {
+    //   key: 'Insert',
+    //   translationKey: 'option.toolbarScreen.Insert',
+    // },
     {
       key: 'Measure',
       translationKey: 'option.toolbarScreen.Measure',

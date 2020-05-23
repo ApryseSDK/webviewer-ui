@@ -2,7 +2,100 @@
 // following are the tools that we want to change the default styles due to design
 // we could change the default styles in core but we don't want the legacy UI to be affected, so we do it here
 export default {
+  AnnotationCreateRectangularAreaMeasurement: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateRectangularAreaMeasurement2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateRectangularAreaMeasurement3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateRectangularAreaMeasurement4: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateEllipseMeasurement: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateEllipseMeasurement2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateEllipseMeasurement3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateEllipseMeasurement4: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateAreaMeasurement: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateAreaMeasurement2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateAreaMeasurement3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateAreaMeasurement4: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreatePerimeterMeasurement: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreatePerimeterMeasurement2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreatePerimeterMeasurement3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreatePerimeterMeasurement4: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateDistanceMeasurement: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateDistanceMeasurement2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateDistanceMeasurement3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateDistanceMeasurement4: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateArrow: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateArrow2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateArrow3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateArrow4: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateLine: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateLine2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateLine3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateLine4: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
   AnnotationCreatePolyline: {
+    StrokeColor: { R: 37, G: 210, B: 209, A: 1 },
+  },
+  AnnotationCreatePolyline2: {
+    StrokeColor: { R: 37, G: 210, B: 209, A: 1 },
+  },
+  AnnotationCreatePolyline3: {
+    StrokeColor: { R: 37, G: 210, B: 209, A: 1 },
+  },
+  AnnotationCreatePolyline4: {
     StrokeColor: { R: 37, G: 210, B: 209, A: 1 },
   },
   AnnotationCreatePolygonCloud: {
@@ -14,7 +107,25 @@ export default {
   AnnotationCreateRectangle: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
+  AnnotationCreateRectangle2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateRectangle3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateRectangle4: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
   AnnotationCreateEllipse: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateEllipse2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateEllipse3: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateEllipse4: {
     StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateFreeHand: {
