@@ -47,7 +47,6 @@ const ToolButton = ({
       selectors.getActiveToolStyles(state),
       selectors.getToolButtonObject(state, toolName),
       selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
-      selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
     ],
     shallowEqual,
   );
@@ -73,7 +72,7 @@ const ToolButton = ({
 
   const handleClick = () => {
     if (isActive) {
-      if (toolName !== "AnnotationCreateStamp" && toolName !== "AnnotationCreateRedaction") {
+      if (toolName !== "AnnotationCreateStamp" && toolName !== "AnnotationCreateRedaction" && toolName !== "AnnotationEraserTool") {
         if (toolStylesExist(toolName)) {
           dispatch(actions.toggleElement("toolStylePopup"));
           if (toolName === "AnnotationCreateRubberStamp") {

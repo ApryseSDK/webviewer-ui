@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
+import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
 
 import core from 'core';
@@ -120,7 +121,10 @@ class MenuOverlay extends React.PureComponent {
         >
           {isMobile && <div className="swipe-indicator" />}
           {!isFilePickerButtonDisabled &&
-            <div className="row" data-element="filePickerButton">
+            <DataElementWrapper
+              className="row"
+              dataElement="filePickerButton"
+            >
               <div
                 className="MenuItem"
                 onClick={openFilePicker}
@@ -131,7 +135,7 @@ class MenuOverlay extends React.PureComponent {
                 />
                 <div className="MenuLabel">{t('action.openFile')}</div>
               </div>
-            </div>}
+            </DataElementWrapper>}
           {!isIOS &&
             <div className="row">
               <div
@@ -147,7 +151,10 @@ class MenuOverlay extends React.PureComponent {
             </div>
           }
           {documentType !== workerTypes.XOD &&
-            <div className="row">
+            <DataElementWrapper
+              className="row"
+              dataElement="downloadButton"
+            >
               <div
                 className="MenuItem"
                 onClick={this.downloadDocument}
@@ -158,9 +165,12 @@ class MenuOverlay extends React.PureComponent {
                 />
                 <div className="MenuLabel">{t('action.download')}</div>
               </div>
-            </div>
+            </DataElementWrapper>
           }
-          <div className="row">
+          <DataElementWrapper
+            className="row"
+            dataElement="printButton"
+          >
             <div
               className="MenuItem"
               onClick={this.handlePrintButtonClick}
@@ -171,7 +181,7 @@ class MenuOverlay extends React.PureComponent {
               />
               <div className="MenuLabel">{t('action.print')}</div>
             </div>
-          </div>
+          </DataElementWrapper>
           {activeTheme === 'dark' ?
             <div className="row">
               <div

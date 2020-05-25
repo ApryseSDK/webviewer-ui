@@ -74,9 +74,9 @@ function EllipseMeasurementOverlay(props) {
   }, [annotation]);
 
   const getMaxDiameterInPts = useCallback(() => {
-    const currentPageIndex = core.getCurrentPage() - 1;
-    const documentWidth = window.docViewer.getPageWidth(currentPageIndex);
-    const documentHeight = window.docViewer.getPageHeight(currentPageIndex);
+    const currentPageNumber = core.getCurrentPage();
+    const documentWidth = window.docViewer.getPageWidth(currentPageNumber);
+    const documentHeight = window.docViewer.getPageHeight(currentPageNumber);
     const startX = annotation['X'];
     const startY = annotation['Y'];
 

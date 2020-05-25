@@ -85,7 +85,9 @@ class SearchOverlay extends React.PureComponent {
       this.props.openElements(['searchOverlay', 'searchPanel']);
       this.caseSensitiveInput.current.checked = this.props.isCaseSensitive;
       this.wholeWordInput.current.checked = this.props.isWholeWord;
-      this.wildcardInput.current.checked = this.props.isWildcard;
+      if (this.wildcardInput.current) {
+        this.wildcardInput.current.checked = this.props.isWildcard;
+      }
       this.clearSearchResults();
       this.executeFullSearch();
       this.props.setIsProgrammaticSearchFull(false);
@@ -421,8 +423,7 @@ class SearchOverlay extends React.PureComponent {
       if (results.length === 0) {
         return;
       }
-      const prevResultIndex =
-        activeResultIndex === 0 ? results.length - 1 : activeResultIndex - 1;
+      const prevResultIndex = activeResultIndex <= 0 ? results.length - 1 : activeResultIndex - 1;
       setActiveResultIndex(prevResultIndex);
       core.setActiveSearchResult(results[prevResultIndex]);
     } else {

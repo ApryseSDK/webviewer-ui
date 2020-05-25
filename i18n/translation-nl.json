@@ -6,6 +6,8 @@
     "cancel": "Annuleren",
     "clear": "Legen",
     "close": "Sluiten",
+    "undo": "Ongedaan maken",
+    "redo": "Klaar",
     "comment": "Opmerking",
     "copy": "Kopieer",
     "delete": "Verwijder",
@@ -103,12 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "Vrije hand tools",
+    "freeHandAndShapeToolsButton": "Uit de vrije hand / vormgereedschappen",
     "leftPanel": "Panel",
     "toolsHeader": "Gereedschap",
     "searchOverlay": "Zoeken",
     "searchPanel": "Zoeken",
     "menuOverlay": "Menu",
     "miscToolsButton": "Diverse tools",
+    "signatureToolsButton": "Handtekening tools",
     "notesPanel": "Notities",
     "outlinesPanel": "Hoofdlijnen",
     "bookmarksPanel": "bladwijzers",
@@ -127,6 +131,7 @@
     "calibration": "ijking"
   },
   "message": {
+    "toolsOverlayNoPresets": "Geen voorinstellingen",
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
     "customPrintPlaceholder": "bijv. 3, 4-10",
     "encryptedAttemptsExceeded": "Fout bij het laden van versleuteld document. Te veel pogingen.",

@@ -183,7 +183,7 @@ const AnnotationPopup = () => {
     //   dispatch(actions.triggerNoteEditing());
     // }
     window.readerControl.focusNote(firstAnnotation.Id);
-
+    dispatch(actions.closeElement('searchPanel'));
     dispatch(actions.closeElement('annotationPopup'));
   };
 

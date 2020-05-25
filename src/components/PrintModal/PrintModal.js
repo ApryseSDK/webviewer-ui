@@ -212,7 +212,7 @@ class PrintModal extends React.PureComponent {
       };
 
       const id = core.getDocument().loadCanvasAsync({
-        pageIndex,
+        pageNumber,
         zoom,
         pageRotation: printRotation,
         drawComplete: onCanvasLoaded,
@@ -221,7 +221,7 @@ class PrintModal extends React.PureComponent {
     });
 
   getPrintRotation = pageIndex => {
-    const { width, height } = core.getPageInfo(pageIndex);
+    const { width, height } = core.getPageInfo(pageIndex + 1);
     const documentRotation = this.getDocumentRotation(pageIndex);
     let printRotation = (4 - documentRotation) % 4;
 
@@ -236,7 +236,7 @@ class PrintModal extends React.PureComponent {
   };
 
   positionCanvas = (canvas, pageIndex) => {
-    const { width, height } = core.getPageInfo(pageIndex);
+    const { width, height } = core.getPageInfo(pageIndex + 1);
     const documentRotation = this.getDocumentRotation(pageIndex);
     const ctx = canvas.getContext('2d');
 
@@ -268,8 +268,7 @@ class PrintModal extends React.PureComponent {
       .getAnnotationsList()
       .filter(
         annot =>
-          annot.PageNumber === pageNumber &&
-          annot instanceof window.Annotations.WidgetAnnotation,
+          annot.PageNumber === pageNumber && annot instanceof window.Annotations.WidgetAnnotation
       );
 
     if (annotations.length === 0) {
@@ -277,25 +276,26 @@ class PrintModal extends React.PureComponent {
     }
 
     const widgetContainer = this.createWidgetContainer(pageNumber - 1);
-    return core
-      .drawAnnotations(pageNumber, canvas, true, widgetContainer)
-      .then(() => {
-        document.body.appendChild(widgetContainer);
-        return window
-          .html2canvas(widgetContainer, {
+    return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
+      document.body.appendChild(widgetContainer);
+
+      return import(/* webpackChunkName: 'html2canvas' */ 'html2canvas').then(
+        ({ default: html2canvas }) => {
+          return html2canvas(widgetContainer, {
             canvas,
             backgroundColor: null,
             scale: 1,
             logging: false,
-          })
-          .then(() => {
+          }).then(() => {
             document.body.removeChild(widgetContainer);
           });
-      });
+        }
+      );
+    });
   };
 
   createWidgetContainer = pageIndex => {
-    const { width, height } = core.getPageInfo(pageIndex);
+    const { width, height } = core.getPageInfo(pageIndex + 1);
     const widgetContainer = document.createElement('div');
 
     widgetContainer.id = 'printWidgetContainer';

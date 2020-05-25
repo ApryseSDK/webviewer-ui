@@ -6,6 +6,7 @@ import ToolButton from 'components/ToolButton';
 import ToolStylePopup from 'components/ToolStylePopup';
 import ToolsDropdown from 'components/ToolsDropdown';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
+import { withTranslation } from 'react-i18next';
 
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
@@ -16,6 +17,8 @@ import useMedia from 'hooks/useMedia';
 import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
 import classNames from 'classnames';
+
+import { motion, AnimatePresence } from "framer-motion";
 
 import './ToolsOverlay.scss';
 
@@ -82,6 +85,10 @@ class ToolsOverlay extends React.PureComponent {
     if (this.itemsContainer.current) {
       this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
+
+    if (this.props.activeToolGroup === '') {
+      this.props.closeElements(['toolStylePopup']);
+    }
   }
 
   componentWillUnmount() {
@@ -118,6 +125,7 @@ class ToolsOverlay extends React.PureComponent {
 
   render() {
     const {
+      t,
       isDisabled,
       isOpen,
       toolNames,
@@ -125,6 +133,7 @@ class ToolsOverlay extends React.PureComponent {
       isTabletAndMobile,
       isToolStyleOpen,
       swapableToolNames,
+      isDesktop,
     } = this.props;
 
     let arrowStyle = {};
@@ -146,10 +155,7 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     // const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
-    const isVisible = isOpen || !isDisabled;
-    if (!isVisible) {
-      return null;
-    }
+    const isVisible = (isOpen || isDesktop) && !isDisabled;
 
     let dropdownButton = (
       <button
@@ -197,55 +203,83 @@ class ToolsOverlay extends React.PureComponent {
     } else if (!activeToolGroup) {
       Component = (
         <React.Fragment>
-          <div className="no-presets-container">No Presets</div>
+          <div className="no-presets-container">{t('message.toolsOverlayNoPresets')}</div>
           {dropdownButton}
         </React.Fragment>
       );
     }
 
+    let containerAnimations = {
+      visible: {},
+      hidden: {},
+    };
+
+    if (isTabletAndMobile) {
+      containerAnimations = {
+        visible: {
+          height: 'auto',
+          overflow: 'hidden',
+          transitionEnd: { overflow: 'initial' },
+        },
+        hidden: {
+          height: '0px',
+          overflow: 'hidden',
+        },
+      };
+    }
+
     return (
-      <div
-        className="ToolsOverlayContainer"
-      >
-        <div
-          className={classNames({
-            Overlay: true,
-            ToolsOverlay: true,
-            open: isOpen,
-            shadow: !isTabletAndMobile && isToolStyleOpen,
-          })}
-          ref={this.overlay}
-          data-element="toolsOverlay"
-        >
-          <div
-            className="arrow-up"
-            style={arrowStyle}
-          />
-          <div
-            ref={this.toolsContainer}
-            className={classNames({
-              "tools-container": true,
-            })}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            className="ToolsOverlayContainer"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={containerAnimations}
+            transition={{ ease: "easeOut", duration: 0.25 }}
           >
             <div
-              className="tool-buttons-container"
-              tool-group={activeToolGroup}
-              ref={this.itemsContainer}
+              className={classNames({
+                Overlay: true,
+                ToolsOverlay: true,
+                open: isOpen,
+                shadow: !isTabletAndMobile && isToolStyleOpen,
+              })}
+              ref={this.overlay}
+              data-element="toolsOverlay"
             >
-              {Component}
-            </div>
-            {(isToolStyleOpen) && (
-              <Swipeable
-                onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-                onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-                preventDefaultTouchmoveEvent
+              <div
+                className="arrow-up"
+                style={arrowStyle}
+              />
+              <div
+                ref={this.toolsContainer}
+                className={classNames({
+                  "tools-container": true,
+                })}
               >
-                <ToolStylePopup/>
-              </Swipeable>
-            )}
-          </div>
-        </div>
-      </div>
+                <div
+                  className="tool-buttons-container"
+                  tool-group={activeToolGroup}
+                  ref={this.itemsContainer}
+                >
+                  {Component}
+                </div>
+                {(isToolStyleOpen) && (
+                  <Swipeable
+                    onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+                    onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+                    preventDefaultTouchmoveEvent
+                  >
+                    <ToolStylePopup/>
+                  </Swipeable>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     );
   }
 }
@@ -268,7 +302,7 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-const ConnectedToolsOverlay = connect(mapStateToProps, mapDispatchToProps)(ToolsOverlay);
+const ConnectedToolsOverlay = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(ToolsOverlay));
 
 export default props => {
   const isMobile = useMedia(
@@ -287,7 +321,15 @@ export default props => {
     false,
   );
 
+  const isDesktop = useMedia(
+    // Media queries
+    ['(min-width: 901px)'],
+    [true],
+    // Default value
+    false,
+  );
+
   return (
-    <ConnectedToolsOverlay {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
+    <ConnectedToolsOverlay {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} isDesktop={isDesktop} />
   );
 };

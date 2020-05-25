@@ -2,6 +2,7 @@ export default (dataElement, state) => getLeftPanelDataElements(state).includes(
 
 export const getLeftPanelDataElements = state => {
   const defaultLeftPanels = [
+    'notesPanel',
     'thumbnailsPanel',
     'outlinesPanel',
     'layersPanel',

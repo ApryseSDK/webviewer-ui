@@ -220,21 +220,38 @@ export default initialState => (state = initialState, action) => {
     case 'UPDATE_TOOL': {
       const { toolName, properties } = payload;
       const { buttonName, tooltip, buttonGroup, buttonImage } = properties;
+
+      const createStateForScreen = _screen => {
+        const screenToolButtonObjects = state.toolButtonObjects[_screen];
+        const toolToUpdate =  screenToolButtonObjects[toolName];
+
+        if (toolToUpdate) {
+          return {
+            ...screenToolButtonObjects,
+            [toolName]: {
+              ...toolToUpdate,
+              dataElement:
+                buttonName || toolToUpdate.dataElement,
+              title: tooltip || toolToUpdate.title,
+              group:
+                buttonGroup !== undefined
+                  ? buttonGroup
+                  : toolToUpdate.group,
+              img: buttonImage || toolToUpdate.img,
+            },
+          };
+        }
+
+        return screenToolButtonObjects;
+      };
+
       return {
         ...state,
         toolButtonObjects: {
           ...state.toolButtonObjects,
-          [toolName]: {
-            ...state.toolButtonObjects[toolName],
-            dataElement:
-              buttonName || state.toolButtonObjects[toolName].dataElement,
-            title: tooltip || state.toolButtonObjects[toolName].title,
-            group:
-              buttonGroup !== undefined
-                ? buttonGroup
-                : state.toolButtonObjects[toolName].group,
-            img: buttonImage || state.toolButtonObjects[toolName].img,
-          },
+          desktop: createStateForScreen('desktop'),
+          tablet: createStateForScreen('tablet'),
+          mobile: createStateForScreen('mobile'),
         },
       };
     }

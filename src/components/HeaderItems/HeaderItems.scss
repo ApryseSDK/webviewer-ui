@@ -47,16 +47,32 @@
       // margin: 0 8px;
       width: 32px;
       height: 32px;
+      // background-position: center;
+      // transition: background 0.8s;
 
-      &:not(.ActionButton) {
+      // background-position: center;
+      // transition: background 0.8s;
+
+      // &:not(.ActionButton) {
         &:hover {
           background: var(--tools-button-hover);
+
+          // background: var(--tools-button-hover);
         }
 
         &.active {
           background: var(--tools-button-active);
         }
-      }
+
+        &.ActionButton {
+          &:active {
+            background: var(--tools-button-active);
+          }
+        }
+      // }
+
+
+
     }
   }
 

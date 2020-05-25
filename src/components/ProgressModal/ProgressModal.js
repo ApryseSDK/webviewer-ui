@@ -34,11 +34,14 @@ const ProgressModal = () => {
 
   useEffect(() => {
     const circle = progressCircle.current;
-    const radius = circle.r.baseVal.value;
-    const circumference = radius * 2 * Math.PI;
-    const offset = circumference - loadingProgress * circumference;
-    circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    circle.style.strokeDashoffset = offset;
+
+    if (circle) {
+      const radius = circle.r.baseVal.value;
+      const circumference = radius * 2 * Math.PI;
+      const offset = circumference - loadingProgress * circumference;
+      circle.style.strokeDasharray = `${circumference} ${circumference}`;
+      circle.style.strokeDashoffset = offset;
+    }
   }, [loadingProgress]);
 
   return isDisabled ? null : (

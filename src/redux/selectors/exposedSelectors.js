@@ -36,8 +36,8 @@ export const getScreen = state =>
 export const getActiveTheme = state =>
   state.viewer.activeTheme;
 
-export const getActiveHeaderItems = state => {
-  return state.viewer.headers[state.viewer.activeHeaderGroup];
+export const getDefaultHeaderItems = state => {
+  return state.viewer.headers.default;
 };
 
 export const getDisabledElementPriority = (state, dataElement) =>
@@ -60,7 +60,7 @@ export const getActiveToolNamesForActiveToolGroup = state => {
     toolName => {
       const toolButtonObject = toolButtonObjects[toolName];
       const { group, dataElement } = toolButtonObject;
-
+      // console.log('toolName for active group testing', toolName, dataElement, isElementDisabled(state, dataElement));
       return group === activeToolGroup && !isElementDisabled(state, dataElement);
     },
   ).sort((toolNameA, toolNameB) => {
@@ -189,6 +189,8 @@ export const getIsNoteEditing = state => state.viewer.isNoteEditing;
 export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
 export const getUserData = state => state.viewer.userData;
+
+export const getIsMentionEnabled = state => !!state.viewer.userData;
 
 export const getSignatureFonts = state => state.viewer.signatureFonts;
 

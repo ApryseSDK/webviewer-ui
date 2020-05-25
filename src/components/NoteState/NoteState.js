@@ -62,7 +62,7 @@ const NoteState = ({ annotation, isSelected }) => {
   const annotationState = annotation.getStatus();
   const icon = `icon-annotation-status-${annotationState === '' ? 'none' : annotationState.toLowerCase()}`;
   const isReply = annotation.isReply();
-  console.log(annotationState);
+
   if ((annotationState === '' || annotationState === 'None') && !isSelected) {
     return null;
   }
