@@ -5,20 +5,46 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
 import defaultTool from 'constants/defaultTool';
 
+const getFirstToolGroupForScreen = (state, screen) => {
+  const toolGroups = state.viewer.headers.tools?.[screen];
+  let firstToolGroupForScreen = '';
+  if (toolGroups) {
+    const firstTool = Object.values(toolGroups).find(({ toolGroup }) => toolGroup);
+    if (firstTool) {
+      firstToolGroupForScreen = firstTool.toolGroup;
+    }
+  }
+  return firstToolGroupForScreen;
+};
+
+const getFirstToolNameForGroup = (state, toolGroup) => {
+  const tools = state.viewer.toolButtonObjects.default;
+  const firstTool = Object.keys(tools).find(key => {
+    return tools[key].group === toolGroup;
+  });
+  return firstTool;
+};
+
 // viewer
-export const setToolbarScreen = screen => dispatch => {
+export const setToolbarScreen = screen => (dispatch, getState) => {
   if (screen === 'View') {
     dispatch(closeElements(['toolsHeader']));
+    core.setToolMode(defaultTool);
+    dispatch({
+      type: 'SET_ACTIVE_TOOL_GROUP',
+      payload: { toolGroup: '' },
+    });
   } else {
     dispatch(openElements(['toolsHeader']));
+    const firstToolGroupForScreen = getFirstToolGroupForScreen(getState(), screen);
+    const toolName = getFirstToolNameForGroup(getState(), firstToolGroupForScreen);
+    core.setToolMode(toolName);
+    dispatch({
+      type: 'SET_ACTIVE_TOOL_GROUP',
+      payload: { toolGroup: firstToolGroupForScreen },
+    });
   }
-
   dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
-  core.setToolMode(defaultTool);
-  dispatch({
-    type: 'SET_ACTIVE_TOOL_GROUP',
-    payload: { toolGroup: '' },
-  });
   dispatch({
     type: 'SET_TOOLBAR_SCREEN',
     payload: { screen },

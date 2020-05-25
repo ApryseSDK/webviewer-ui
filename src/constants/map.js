@@ -135,7 +135,12 @@ const map = {
     iconColor: 'TextColor',
     currentPalette: 'TextColor',
     availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreateCallout'],
+    toolNames: [
+      'AnnotationCreateCallout',
+      'AnnotationCreateCallout2',
+      'AnnotationCreateCallout3',
+      'AnnotationCreateCallout4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
@@ -212,7 +217,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateTextUnderline', 'AnnotationCreateTextUnderline2'],
+    toolNames: [
+      'AnnotationCreateTextUnderline',
+      'AnnotationCreateTextUnderline2',
+      'AnnotationCreateTextUnderline3',
+      'AnnotationCreateTextUnderline4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.TextUnderlineAnnotation,
   },
@@ -221,7 +231,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateTextSquiggly'],
+    toolNames: [
+      'AnnotationCreateTextSquiggly',
+      'AnnotationCreateTextSquiggly2',
+      'AnnotationCreateTextSquiggly3',
+      'AnnotationCreateTextSquiggly4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.TextSquigglyAnnotation,
   },
@@ -230,7 +245,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateTextStrikeout'],
+    toolNames: [
+      'AnnotationCreateTextStrikeout',
+      'AnnotationCreateTextStrikeout2',
+      'AnnotationCreateTextStrikeout3',
+      'AnnotationCreateTextStrikeout4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.TextStrikeoutAnnotation,
   },

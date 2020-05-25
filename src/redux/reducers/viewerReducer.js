@@ -193,11 +193,6 @@ export default initialState => (state = initialState, action) => {
         },
       };
     }
-    case 'SET_TOOLS_SCREEN':
-      return {
-        ...state,
-        screen: payload.screen,
-      };
     case 'SET_POPUP_ITEMS':
       return {
         ...state,

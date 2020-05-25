@@ -152,6 +152,18 @@ export default {
   AnnotationCreateFreeText4: {
     TextColor: { R: 37, G: 210, B: 209, A: 1 },
   },
+  AnnotationCreateCallout: {
+    TextColor: { R: 37, G: 210, B: 209, A: 1 },
+  },
+  AnnotationCreateCallout2: {
+    TextColor: { R: 37, G: 210, B: 209, A: 1 },
+  },
+  AnnotationCreateCallout3: {
+    TextColor: { R: 37, G: 210, B: 209, A: 1 },
+  },
+  AnnotationCreateCallout4: {
+    TextColor: { R: 37, G: 210, B: 209, A: 1 },
+  },
   AnnotationCreateSticky: {
     StrokeColor: { R: 255, G: 230, B: 162, A: 1 },
   },
@@ -182,10 +194,34 @@ export default {
   AnnotationCreateTextUnderline2: {
     StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
+  AnnotationCreateTextUnderline3: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateTextUnderline4: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
   AnnotationCreateTextSquiggly: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
+  AnnotationCreateTextSquiggly2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateTextSquiggly3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateTextSquiggly4: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
   AnnotationCreateTextStrikeout: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateTextStrikeout2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateTextStrikeout3: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateTextStrikeout4: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
 };

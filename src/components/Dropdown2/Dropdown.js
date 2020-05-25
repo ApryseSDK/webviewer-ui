@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
@@ -38,10 +39,17 @@ class Dropdown extends React.PureComponent {
 
   renderDropdownItems = () => {
     const { items, currentSelectionKey } = this.props;
-    const dropdownItems = items.filter(({ key }) => key !== currentSelectionKey);
+    // const dropdownItems = items.filter(({ key }) => key !== currentSelectionKey);
 
-    return dropdownItems.map(({ key, translationKey }) =>
-      <div key={key} className="dropdown-item" onClick={e => this.onClickDropdownItem(e, { key, translationKey })}>
+    return items.map(({ key, translationKey }) =>
+      <div
+        key={key}
+        className={classNames({
+          "dropdown-item": true,
+          active: key === currentSelectionKey,
+        })}
+        onClick={e => this.onClickDropdownItem(e, { key, translationKey })}
+      >
         {this.props.t(translationKey)}
       </div>,
     );

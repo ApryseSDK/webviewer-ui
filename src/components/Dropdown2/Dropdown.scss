@@ -54,6 +54,10 @@
       display: flex;
       border-radius: 0px;
 
+      &.active {
+        background-color: var(--popup-button-active);
+      }
+
       &:hover {
         background-color: var(--popup-button-hover);
       }
