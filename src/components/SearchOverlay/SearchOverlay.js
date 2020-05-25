@@ -15,6 +15,8 @@ import actions from 'actions';
 import selectors from 'selectors';
 import debounce from 'lodash/debounce';
 
+import { Choice } from '@pdftron/webviewer-react-toolkit';
+
 import './SearchOverlay.scss';
 
 class SearchOverlay extends React.PureComponent {
@@ -495,24 +497,21 @@ class SearchOverlay extends React.PureComponent {
           </button>
         </div>
         <div className="options">
-          <Input
+          <Choice
             id="case-sensitive-option"
-            type="checkbox"
             ref={this.caseSensitiveInput}
             onChange={this.onChangeCaseSensitive}
             label={t('option.searchPanel.caseSensitive')}
           />
-          <Input
+          <Choice
             id="whole-word-option"
-            type="checkbox"
             ref={this.wholeWordInput}
             onChange={this.onChangeWholeWord}
             label={t('option.searchPanel.wholeWordOnly')}
           />
           {!isWildCardSearchDisabled &&
-            <Input
+            <Choice
               id="wild-card-option"
-              type="checkbox"
               ref={this.wildcardInput}
               onChange={this.onChangeWildcard}
               label={t('option.searchPanel.wildcard')}

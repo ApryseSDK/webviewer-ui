@@ -30,6 +30,8 @@ import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
 import getHashParams from 'helpers/getHashParams';
 
+import './index.scss';
+
 // TODO: remove once 7.0 is official
 if (process.env.NODE_ENV !== 'development') {
   console.log(

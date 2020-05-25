@@ -78,21 +78,11 @@
   .options {
     display: flex;
     flex-direction: row;
-    margin-left: 18px;
+    margin-left: -8px;
     margin-top: 5px;
 
-    label.Input {
-      display: flex;
-      align-items: center;
-      margin-right: 10px;
-    }
-
-    label:nth-child(4) {
-      margin-left: 10px;
-    }
-
-    label:nth-child(6) {
-      margin-left: 10px;
+    > span {
+      margin-left: 8px;
     }
   }
 
