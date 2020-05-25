@@ -193,14 +193,17 @@ export const unregisterTool = toolName => ({
   type: 'UNREGISTER_TOOL',
   payload: { toolName },
 });
-export const setToolButtonObjects = toolButtonObjects => ({
-  type: 'SET_TOOL_BUTTON_OBJECTS',
-  payload: { toolButtonObjects },
-});
-export const setHeaderItems = (header, headerItems) => ({
-  type: 'SET_HEADER_ITEMS',
-  payload: { header, headerItems },
-});
+
+
+export const setToolsScreen = screen => dispatch => {
+  dispatch({
+    type: 'SET_TOOLS_SCREEN',
+    payload: {
+      screen,
+    },
+  });
+};
+
 export const setPopupItems = (dataElement, items) => ({
   type: 'SET_POPUP_ITEMS',
   payload: {

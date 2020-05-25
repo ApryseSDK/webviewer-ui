@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useContext, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import ReplyArea from 'components/Note/ReplyArea';
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
+import ReplyArea from 'components/Note/ReplyArea';
+
 import selectors from 'selectors';
 import core from 'core';
 
@@ -21,6 +22,7 @@ const Note = ({ annotation }) => {
   const { isSelected, resize } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
+  const [isEditingMap, setIsEditingMap] = useState({});
   const ids = useRef([]);
 
   const [noteTransformFunction] = useSelector(
@@ -79,9 +81,7 @@ const Note = ({ annotation }) => {
     // due to annotation deselection
     e.stopPropagation();
 
-    if (isSelected) {
-      core.deselectAnnotation(annotation);
-    } else {
+    if (!isSelected) {
       core.deselectAllAnnotations();
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
@@ -102,15 +102,38 @@ const Note = ({ annotation }) => {
     .getReplies()
     .sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
+  const showReplyArea = !Object.values(isEditingMap).some(val => val);
+
   return (
-    <div ref={containerRef} className={noteClass} onMouseDown={handleNoteClick}>
-      <NoteContent annotation={annotation} />
-      <div className={repliesClass}>
-        {replies.map(reply => (
-          <NoteContent key={reply.Id} annotation={reply} />
-        ))}
-        <ReplyArea annotation={annotation} />
-      </div>
+    <div ref={containerRef} className={noteClass} onClick={handleNoteClick}>
+      <NoteContent
+        annotation={annotation}
+        isSelected={isSelected}
+        setIsEditing={isEditing => setIsEditingMap(map => ({
+          ...map,
+          0: isEditing,
+        }))}
+        isEditing={isEditingMap[0]}
+      />
+      {isSelected && (
+        <React.Fragment>
+          {replies.length > 0 && <div className="divider" />}
+          <div className={repliesClass}>
+            {replies.map((reply, i) => (
+              <NoteContent
+                key={reply.Id}
+                annotation={reply}
+                setIsEditing={isEditing => setIsEditingMap(map => ({
+                  ...map,
+                  [i + 1]: isEditing,
+                }))}
+                isEditing={isEditingMap[i + 1]}
+              />
+            ))}
+            {showReplyArea && <ReplyArea annotation={annotation} />}
+          </div>
+        </React.Fragment>
+      )}
     </div>
   );
 };

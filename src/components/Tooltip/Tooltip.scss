@@ -4,7 +4,7 @@
   position: absolute;
   z-index: 100;
   background: #222;
-  font-size: 12px;
+  font-size: 12px; // intended
   padding: 6px 8px;
   border-radius: 3px;
   transition: opacity 0.3s ease-out;
@@ -21,7 +21,7 @@
 .tooltip--top {
   @extend %tooltip;
   margin-top: -10px;
-  
+
   .tooltip__content::before {
     @extend %tooltip__arrow;
     bottom: -6px;
@@ -88,5 +88,5 @@
 .tooltip__content {
   background: #222;
   color: #fff;
-  font-size: 12px;
+  font-size: 12px; // intended
 }

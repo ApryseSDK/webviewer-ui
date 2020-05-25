@@ -2,6 +2,45 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_SELECTED_SIGNATURE_INDEX':
+      return {
+        ...state,
+        selectedSignatureIndex: payload.index,
+      };
+    case 'SET_SAVED_SIGNATURES':
+      return {
+        ...state,
+        savedSignatures: payload.savedSignatures,
+      };
+    case 'SET_LEFT_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          leftPanel: payload.width,
+        }
+      };
+    case 'SET_SEARCH_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          searchPanel: payload.width,
+        }
+      };
+    case 'SET_NOTES_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          notesPanel: payload.width,
+        }
+      };
+    case 'SET_ACTIVE_THEME':
+      return {
+        ...state,
+        activeTheme: payload.theme,
+      };
     case 'DISABLE_ELEMENT':
       return {
         ...state,
@@ -103,6 +142,57 @@ export default initialState => (state = initialState, action) => {
         ...state,
         headers: { ...state.headers, [payload.header]: payload.headerItems },
       };
+    case 'SET_DEFAULT_TOOL_POSITIONS': {
+      const { positions } = payload;
+
+      const newState = {
+        ...state,
+      };
+      newState.toolButtonObjects = {
+        ...newState.toolButtonObjects,
+      };
+      positions.forEach(({ toolName, position }) => {
+        const toolButtonObject = newState.toolButtonObjects[toolName];
+        if (toolButtonObject) {
+          newState.toolButtonObjects[toolName] = {
+            ...toolButtonObject,
+            position,
+          };
+        }
+      });
+      return newState;
+    }
+    case 'SWAP_TOOLS': {
+      const { toolNameToSwap, otherToolName, screen } = payload;
+
+      const screenToolButtonObjects = state.toolButtonObjects[screen];
+
+      const toolToSwap = screenToolButtonObjects[toolNameToSwap];
+      const otherTool = screenToolButtonObjects[otherToolName];
+
+      return {
+        ...state,
+        toolButtonObjects: {
+          ...state.toolButtonObjects,
+          [screen]: {
+            ...screenToolButtonObjects,
+            [toolNameToSwap]: {
+              ...toolToSwap,
+              position: otherTool.position,
+            },
+            [otherToolName]: {
+              ...otherTool,
+              position: toolToSwap.position,
+            },
+          },
+        },
+      };
+    }
+    case 'SET_TOOLS_SCREEN':
+      return {
+        ...state,
+        screen: payload.screen,
+      };
     case 'SET_POPUP_ITEMS':
       return {
         ...state,
@@ -130,21 +220,38 @@ export default initialState => (state = initialState, action) => {
     case 'UPDATE_TOOL': {
       const { toolName, properties } = payload;
       const { buttonName, tooltip, buttonGroup, buttonImage } = properties;
+
+      const createStateForScreen = _screen => {
+        const screenToolButtonObjects = state.toolButtonObjects[_screen];
+        const toolToUpdate =  screenToolButtonObjects[toolName];
+
+        if (toolToUpdate) {
+          return {
+            ...screenToolButtonObjects,
+            [toolName]: {
+              ...toolToUpdate,
+              dataElement:
+                buttonName || toolToUpdate.dataElement,
+              title: tooltip || toolToUpdate.title,
+              group:
+                buttonGroup !== undefined
+                  ? buttonGroup
+                  : toolToUpdate.group,
+              img: buttonImage || toolToUpdate.img,
+            },
+          };
+        }
+
+        return screenToolButtonObjects;
+      };
+
       return {
         ...state,
         toolButtonObjects: {
           ...state.toolButtonObjects,
-          [toolName]: {
-            ...state.toolButtonObjects[toolName],
-            dataElement:
-              buttonName || state.toolButtonObjects[toolName].dataElement,
-            title: tooltip || state.toolButtonObjects[toolName].title,
-            group:
-              buttonGroup !== undefined
-                ? buttonGroup
-                : state.toolButtonObjects[toolName].group,
-            img: buttonImage || state.toolButtonObjects[toolName].img,
-          },
+          desktop: createStateForScreen('desktop'),
+          tablet: createStateForScreen('tablet'),
+          mobile: createStateForScreen('mobile'),
         },
       };
     }
@@ -158,8 +265,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isMultipleViewerMerging: payload.isMultipleViewerMerging };
     case 'SET_ALLOW_PAGE_NAVIGATION':
       return { ...state, allowPageNavigation: payload.allowPageNavigation };
-    case 'SET_TOOL_BUTTON_OBJECTS':
-      return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
     case 'SET_READ_ONLY':
       return { ...state, isReadOnly: payload.isReadOnly };
     case 'SET_CUSTOM_PANEL':
@@ -216,8 +321,6 @@ export default initialState => (state = initialState, action) => {
     case 'SET_MEASUREMENT_UNITS': {
       return { ...state, measurementUnits: payload };
     }
-    case 'SET_LEFT_PANEL_WIDTH':
-      return { ...state, leftPanelWidth: payload.width };
     case 'SET_MAX_SIGNATURES_COUNT':
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
     case 'SET_USER_DATA':

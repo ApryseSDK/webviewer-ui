@@ -168,21 +168,22 @@ const AnnotationPopup = () => {
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
   const commentOnAnnotation = () => {
-    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
-      core
-        .getAnnotationManager()
-        .trigger('annotationDoubleClicked', firstAnnotation);
-    } else if (!isLeftPanelOpen) {
-      dispatch(actions.openElement('notesPanel'));
-      // wait for the notes panel to be fully opened before focusing
-      setTimeout(() => {
-        dispatch(actions.triggerNoteEditing());
-      }, 400);
-    } else {
-      dispatch(actions.setActiveLeftPanel('notesPanel'));
-      dispatch(actions.triggerNoteEditing());
-    }
-
+    // if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
+    //   core
+    //     .getAnnotationManager()
+    //     .trigger('annotationDoubleClicked', firstAnnotation);
+    // } else if (!isLeftPanelOpen) {
+    //   dispatch(actions.openElement('notesPanel'));
+    //   // wait for the notes panel to be fully opened before focusing
+    //   setTimeout(() => {
+    //     dispatch(actions.triggerNoteEditing());
+    //   }, 400);
+    // } else {
+    //   dispatch(actions.setActiveLeftPanel('notesPanel'));
+    //   dispatch(actions.triggerNoteEditing());
+    // }
+    window.readerControl.focusNote(firstAnnotation.Id);
+    dispatch(actions.closeElement('searchPanel'));
     dispatch(actions.closeElement('annotationPopup'));
   };
 
@@ -219,7 +220,7 @@ const AnnotationPopup = () => {
             <ActionButton
               dataElement="annotationCommentButton"
               title="action.comment"
-              img="ic_comment_black_24px"
+              img="icon-header-chat-line"
               onClick={commentOnAnnotation}
             />
           )}
@@ -231,8 +232,10 @@ const AnnotationPopup = () => {
             <ActionButton
               dataElement="annotationStyleEditButton"
               title="action.style"
-              img="ic_palette_black_24px"
-              onClick={() => setIsStylePopupOpen(true)}
+              img="icon-menu-style-line"
+              onClick={() => {
+                setIsStylePopupOpen(true);
+              }}
             />
           )}
           {firstAnnotation.ToolName === 'CropPage' && (
@@ -279,7 +282,7 @@ const AnnotationPopup = () => {
             <ActionButton
               dataElement="annotationDeleteButton"
               title="action.delete"
-              img="ic_delete_black_24px"
+              img="icon-delete-line"
               onClick={() => {
                 core.deleteAnnotations(core.getSelectedAnnotations());
                 dispatch(actions.closeElement('annotationPopup'));

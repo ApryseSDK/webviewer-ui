@@ -5,12 +5,7 @@
   @extend %closed;
   position: absolute;
   z-index: 85;
-  display: flex;
-  flex-wrap: wrap;
-  background: $white;
-  background: var(--primary-color);
-  padding: 5px;
-  border: 1px solid $gray12;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 0 var(--document-box-shadow);
+  background: var(--component-background);  
 }

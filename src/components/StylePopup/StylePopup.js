@@ -7,10 +7,14 @@ import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
+import StampOverlay from 'components/StampOverlay';
 
 import { circleRadius } from 'constants/slider';
 import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
+import pickBy from 'lodash/pickBy';
+import useMedia from 'hooks/useMedia';
+import classNames from 'classnames';
 
 import './StylePopup.scss';
 
@@ -47,125 +51,135 @@ class StylePopup extends React.PureComponent {
       style: { Opacity, StrokeThickness, FontSize },
       onStyleChange,
       isFreeText,
+      // TODO: Actually disable these elements
       isOpacitySliderDisabled,
       isStrokeThicknessSliderDisabled,
       isFontSizeSliderDisabled,
+      currentPalette,
     } = this.props;
     const lineStart = circleRadius;
-    const sliderProps = [];
-    if (!isOpacitySliderDisabled) {
-      sliderProps.push(
-        {
-          property: 'Opacity',
-          displayProperty: 'opacity',
-          value: Opacity,
-          displayValue: `${Math.round(Opacity * 100)}%`,
-          getCirclePosition: lineLength => Opacity * lineLength + lineStart,
-          convertRelativeCirclePositionToValue: circlePosition => circlePosition,
-          dataElement: DataElements.OPACITY_SLIDER
-        }
-      );
-    }
-    if (!isStrokeThicknessSliderDisabled) {
-      sliderProps.push(
-        {
-          dataElement: DataElements.STROKE_THICKNESS_SLIDER,
-          property: 'StrokeThickness',
-          displayProperty: 'thickness',
-          value: StrokeThickness,
-          displayValue: `${Math.round(StrokeThickness)}pt`,
-          // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
-          getCirclePosition: lineLength =>
-            (isFreeText
-              ? (StrokeThickness / 20) * lineLength + lineStart
-              : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
-          convertRelativeCirclePositionToValue: circlePosition =>
-            (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
-        }
-      );
-    }
-    if (!isFontSizeSliderDisabled) {
-      sliderProps.push(
-        {
-          dataElement: DataElements.FONT_SIZE_SLIDER,
-          property: 'FontSize',
-          displayProperty: 'text',
-          value: FontSize,
-          displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
-          getCirclePosition: lineLength =>
-            ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
-          convertRelativeCirclePositionToValue: circlePosition =>
-            `${circlePosition * 40 + 5}pt`,
-        },
-      );
+    const sliderProps = {
+      Opacity: {
+        property: 'Opacity',
+        displayProperty: 'opacity',
+        value: Opacity,
+        displayValue: `${Math.round(Opacity * 100)}%`,
+        getCirclePosition: lineLength => Opacity * lineLength + lineStart,
+        convertRelativeCirclePositionToValue: circlePosition => circlePosition,
+      },
+      StrokeThickness: {
+        property: 'StrokeThickness',
+        displayProperty: 'thickness',
+        value: StrokeThickness,
+        displayValue: `${Math.round(StrokeThickness)}pt`,
+        // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
+        getCirclePosition: lineLength =>
+          (isFreeText
+            ? (StrokeThickness / 20) * lineLength + lineStart
+            : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
+        convertRelativeCirclePositionToValue: circlePosition =>
+          (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
+      },
+      FontSize: {
+        property: 'FontSize',
+        displayProperty: 'text',
+        value: FontSize,
+        displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
+        getCirclePosition: lineLength =>
+          ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
+        convertRelativeCirclePositionToValue: circlePosition =>
+          `${circlePosition * 40 + 5}pt`,
+      },
+    };
+
+    // default sliders
+    let sliders = { Opacity, StrokeThickness, FontSize };
+    if (currentPalette === 'TextColor') {
+      sliders = { Opacity, FontSize };
+    } else if (currentPalette === 'StrokeColor') {
+      sliders = { Opacity, StrokeThickness };
+    } else if (currentPalette === 'FillColor') {
+      sliders = { Opacity };
     }
 
-    return [Opacity, StrokeThickness, FontSize].map((value, index) => {
-      if (value === null || value === undefined || !sliderProps[index]) {
-        // we still want to render a slider if the value is 0
-        return null;
-      }
+    // we still want to render a slider if the value is 0
+    sliders = pickBy(sliders, slider => slider !== null && slider !== undefined);
 
-      const props = sliderProps[index];
-      const key = props.property;
+    const sliderComponents = Object.keys(sliders).map(key => {
+      const props = sliderProps[key];
 
       return <Slider {...props} key={key} onStyleChange={onStyleChange} />;
     });
-  };
 
-  render() {
-    const { isColorPaletteDisabled,
-      currentPalette,
-      style,
-      colorMapKey,
-      onStyleChange,
-      isOpacitySliderDisabled,
-      isStrokeThicknessSliderDisabled,
-      isFontSizeSliderDisabled,
-      isStyleOptionDisabled,
-      isStylePopupDisabled } = this.props;
-    const { Scale, Precision, Style } = style;
-
-    const hideAllSlider = isOpacitySliderDisabled && isStrokeThicknessSliderDisabled && isFontSizeSliderDisabled;
-    if (isStylePopupDisabled) {
-      return null;
-    }
     return (
-      <div
-        className="Popup StylePopup"
-        data-element={DataElements.STYLE_POPUP}
-      >
-        {currentPalette && !isColorPaletteDisabled && (
-          <div className="colors-container" data-element={DataElements.COLOR_PALETTE}>
-            <div className="inner-wrapper">
-              <ColorPaletteHeader
-                colorPalette={currentPalette}
-                colorMapKey={colorMapKey}
-                style={style}
-              />
-              {this.renderColorPalette()}
-            </div>
-          </div>
-        )}
-        {!hideAllSlider &&
+      <React.Fragment>
+        {sliderComponents.length > 0 && (
           <div
             className="sliders-container"
             onMouseDown={e => e.preventDefault()}
           >
-            <div className="sliders">
-              {this.renderSliders()}
-            </div>
+            {sliderComponents}
           </div>
-        }
-
-        {Scale && Precision && (
-          <MeasurementOption
-            scale={Scale}
-            precision={Precision}
-            onStyleChange={onStyleChange}
-          />
         )}
-        { !isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
+      </React.Fragment>
+    );
+  };
+
+  render() {
+    const {
+      toolName,
+      isMobile,
+      isColorPaletteDisabled,
+      currentPalette,
+      style,
+      colorMapKey,
+      onStyleChange,
+      isStyleOptionDisabled,
+    } = this.props;
+    const { Scale, Precision, Style } = style;
+
+    const className = classNames({
+      Popup: true,
+      StylePopup: true,
+      mobile: isMobile,
+    });
+
+    if (toolName === 'AnnotationCreateRubberStamp') {
+      return (
+        <div className={className} data-element="stylePopup">
+          {this.renderSliders()}
+          <StampOverlay />
+        </div>
+      );
+    }
+
+    return (
+      <div className={className} data-element="stylePopup">
+        {currentPalette && !isColorPaletteDisabled && (
+          <React.Fragment>
+            <ColorPaletteHeader
+              colorPalette={currentPalette}
+              colorMapKey={colorMapKey}
+              style={style}
+              toolName={toolName}
+            />
+            {this.renderColorPalette()}
+          </React.Fragment>
+        )}
+        {this.renderSliders()}
+        {Scale && Precision && (
+          <React.Fragment>
+            <div
+              className="divider-horizontal"
+            />
+            <MeasurementOption
+              scale={Scale}
+              precision={Precision}
+              onStyleChange={onStyleChange}
+            />
+          </React.Fragment>
+        )}
+        {false && !isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
       </div>
     );
   }
@@ -181,4 +195,20 @@ const mapStateToProps = (state, { colorMapKey }) => ({
   isStyleOptionDisabled: selectors.isElementDisabled(state, DataElements.STYLE_OPTION)
 });
 
-export default connect(mapStateToProps)(StylePopup);
+const ConnectedStylePopup = connect(
+  mapStateToProps,
+)(StylePopup);
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedStylePopup {...props} isMobile={isMobile} />
+  );
+};

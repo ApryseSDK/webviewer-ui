@@ -17,6 +17,13 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateFreeHand2 = new window.Tools.FreeHandCreateTool(docViewer, 'AnnotationCreateFreeHand2');
   toolModeMap.AnnotationCreateFreeHand3 = new window.Tools.FreeHandCreateTool(docViewer, 'AnnotationCreateFreeHand3');
   toolModeMap.AnnotationCreateFreeHand4 = new window.Tools.FreeHandCreateTool(docViewer, 'AnnotationCreateFreeHand4');
+  toolModeMap.AnnotationCreateFreeText2 = new window.Tools.FreeTextCreateTool(docViewer, 'AnnotationCreateFreeText2');
+  toolModeMap.AnnotationCreateFreeText3 = new window.Tools.FreeTextCreateTool(docViewer, 'AnnotationCreateFreeText3');
+  toolModeMap.AnnotationCreateFreeText4 = new window.Tools.FreeTextCreateTool(docViewer, 'AnnotationCreateFreeText4');
+  toolModeMap.AnnotationCreateSticky2 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky2');
+  toolModeMap.AnnotationCreateSticky3 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky3');
+  toolModeMap.AnnotationCreateSticky4 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky4');
+  toolModeMap.AnnotationCreateTextUnderline2 = new window.Tools.TextUnderlineCreateTool(docViewer, 'AnnotationCreateTextUnderline2');
 };
 
 export default setupDocViewer;

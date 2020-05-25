@@ -1,0 +1,9 @@
+@import '../../constants/styles.scss';
+
+.toggle-element-button {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+  }

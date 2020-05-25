@@ -1,9 +1,30 @@
 import core from 'core';
-import isDataElementPanel from 'helpers/isDataElementPanel';
+import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
 // viewer
+export const setSelectedSignatureIndex = index => ({
+  type: 'SET_SELECTED_SIGNATURE_INDEX',
+  payload: { index },
+});
+export const setSavedSignatures = savedSignatures => ({
+  type: 'SET_SAVED_SIGNATURES',
+  payload: { savedSignatures },
+});
+export const setLeftPanelWidth = width => ({
+  type: 'SET_LEFT_PANEL_WIDTH',
+  payload: { width },
+});
+export const setSearchPanelWidth = width => ({
+  type: 'SET_SEARCH_PANEL_WIDTH',
+  payload: { width },
+});
+export const setNotesPanelWidth = width => ({
+  type: 'SET_NOTES_PANEL_WIDTH',
+  payload: { width },
+});
+
 export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',
   payload: {},
@@ -14,7 +35,7 @@ export const openElement = dataElement => (dispatch, getState) => {
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
-  const isElementOpen = isDataElementPanel(dataElement, state)
+  const isElementOpen = isDataElementLeftPanel(dataElement, state)
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
     : state.viewer.openElements[dataElement];
 
@@ -22,7 +43,7 @@ export const openElement = dataElement => (dispatch, getState) => {
     return;
   }
 
-  if (isDataElementPanel(dataElement, state)) {
+  if (isDataElementLeftPanel(dataElement, state)) {
     if (!isLeftPanelOpen) {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
       fireEvent('visibilityChanged', { element: 'leftPanel', isVisible: true });
@@ -54,7 +75,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
 
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;
-  const isElementClosed = isDataElementPanel(dataElement, state)
+  const isElementClosed = isDataElementLeftPanel(dataElement, state)
     ? state.viewer.activeLeftPanel !== dataElement
     : !state.viewer.openElements[dataElement];
 
@@ -63,7 +84,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
   }
 
   if (
-    isDataElementPanel(dataElement, state) &&
+    isDataElementLeftPanel(dataElement, state) &&
     state.viewer.openElements['leftPanel']
   ) {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
@@ -106,6 +127,36 @@ export const toggleElement = dataElement => (dispatch, getState) => {
   }
 };
 
+export const swapTools = (toolNameToSwap, otherToolName) => (dispatch, getState) => {
+  const screen = getState().viewer.screen;
+  dispatch({
+    type: 'SWAP_TOOLS',
+    payload: { toolNameToSwap, otherToolName, screen },
+  });
+
+  // if (localStorageManager.isLocalStorageEnabled()) {
+  //   const storePosition = (toolName, { position }) => {
+  //     try {
+  //       localStorage.setItem(`toolPosition-${toolName}`, position);
+  //     } catch (err) {
+  //       console.warn(`localStorage could not be accessed. ${err.message}`);
+  //     }
+  //   };
+
+  //   const state = getState();
+  //   const toolToSwap = state.viewer.toolButtonObjects[toolNameToSwap];
+  //   const otherTool = state.viewer.toolButtonObjects[otherToolName];
+
+  //   storePosition(toolNameToSwap, toolToSwap);
+  //   storePosition(otherToolName, otherTool);
+  // }
+};
+
+export const setDefaultToolPositions = positions => ({
+  type: 'SET_DEFAULT_TOOL_POSITIONS',
+  payload: { positions },
+});
+
 export const setActiveHeaderGroup = headerGroup => ({
   type: 'SET_ACTIVE_HEADER_GROUP',
   payload: { headerGroup },
@@ -113,7 +164,7 @@ export const setActiveHeaderGroup = headerGroup => ({
 export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  if (isDataElementPanel(dataElement, state)) {
+  if (isDataElementLeftPanel(dataElement, state)) {
     if (state.viewer.activeLeftPanel !== dataElement) {
       dispatch({
         type: 'CLOSE_ELEMENT',
@@ -131,7 +182,6 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       ...state.viewer.customPanels.map(({ panel }) => panel.dataElement),
       'thumbnailsPanel',
       'outlinesPanel',
-      'notesPanel',
       'layersPanel',
       'bookmarksPanel',
     ].join(', ');
@@ -233,6 +283,10 @@ export const setSelectedTab = (id, dataElement) => ({
 export const setCustomElementOverrides = (dataElement, overrides) => ({
   type: 'SET_CUSTOM_ELEMENT_OVERRIDES',
   payload: { dataElement, overrides },
+});
+export const setActiveTheme = theme => ({
+  type: 'SET_ACTIVE_THEME',
+  payload: { theme },
 });
 export const setSearchResults = searchResults => ({
   type: 'SET_SEARCH_RESULTS',

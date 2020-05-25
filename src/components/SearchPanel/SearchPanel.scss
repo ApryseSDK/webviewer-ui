@@ -1,14 +1,75 @@
 @import '../../constants/styles';
 @import '../../constants/panel';
 
+.search-panel-container {
+  z-index: 65;
+  @include mobile {
+    z-index: 95;
+  }
+  display: flex;
+  flex-direction: column;
+  background-color: var(--panel-background);
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+
+  @include mobile {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+  }
+}
+
 .SearchPanel {
-  @extend %right-panel;
+  padding-top: 0px;
+  padding-left: 16px;
+  padding-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  // width: 100%;
+  padding-right: 8px;
+  // Needed
+  // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
+
+  padding-top: 16px;
+
+  .ListSeparator:first-child {
+    margin-top: 0px;
+  }
+
+
+  @include mobile {
+    width: 100%;
+    min-width: 100vw;
+    padding-top: 0px;
+
+    .close-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 64px;
+
+      width: 100%;
+      padding-right: 12px;
+
+      .close-icon-container {
+        cursor: pointer;
+        .close-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
 
   .results {
-    flex: 1;
     overflow-y: auto;
-    padding: 10px;
-    margin-top: 80px !important;
+    overflow-y: overlay;
+    padding-right: 18px;
+    flex: 1;
 
     &.wild-card-visible {
       margin-top: 110px !important;
@@ -23,20 +84,5 @@
 
   .info {
     padding: 15px 0;
-    font-size: 0.8em;
-  }
-  .warn {
-    padding: 15px 0;
-    font-size: 0.8em;
-  }
-  .warn::before {
-    content: "⚠️ ";
-  }
-
-  .close-btn {
-    @include mobile {
-      display: flex;
-      align-self: flex-end;
-    }
   }
 }

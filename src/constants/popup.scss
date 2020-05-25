@@ -8,16 +8,10 @@ $popup-icon-width: 18px;
   @extend %open;
   @extend %closed;
   position: absolute;
-  z-index: 60;
+  z-index: 70;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  background: $white;
-  background: var(--primary-color);
-  box-shadow: 1px 1px 10px #aaa;
 
   &:empty {
     padding: 0;
@@ -28,19 +22,26 @@ $popup-icon-width: 18px;
   }
 
   .Button {
-    height: $popup-button-height;
+    margin: 4px;
+    width: 32px;
+    height: 32px;
 
-    @include mobile {
-      height: $popup-button-height;
+    @include tablet-and-mobile {
+      width: 42px;
+      height: 42px;
+    }
+
+    &:hover {
+      background: var(--popup-button-hover);
     }
 
     .Icon {
-      width: $popup-icon-width;
-      height: $popup-icon-height;
+      width: 18px;
+      height: 18px;
 
-      @include mobile {
-        width: $popup-icon-width;
-        height: $popup-icon-height;
+      @include tablet-and-mobile {
+        width: 24px;
+        height: 24px;
       }
     }
   }
@@ -64,11 +65,11 @@ $popup-icon-width: 18px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    
+
     &.open {
       animation: bottom-up 0.3s;
     }
-    
+
     &.closed {
       transition: visibility 0s 0.3s;
       animation: up-bottom 0.3s;
@@ -78,7 +79,7 @@ $popup-icon-width: 18px;
 
 @keyframes bottom-up {
   0% {
-    transform: translateY(100%);    
+    transform: translateY(100%);
   }
 
   100% {
@@ -88,12 +89,10 @@ $popup-icon-width: 18px;
 
 @keyframes up-bottom {
   0% {
-    transform: translateY(0%);    
+    transform: translateY(0%);
   }
 
   100% {
     transform: translateY(100%);
   }
 }
-
-

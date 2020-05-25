@@ -6,6 +6,8 @@
     "cancel": "Cancel",
     "clear": "Clear",
     "close": "Close",
+    "undo": "Undo",
+    "redo": "Redo",
     "comment": "Comment",
     "copy": "Copy",
     "delete": "Delete",
@@ -23,10 +25,11 @@
     "print": "Print",
     "ok": "OK",
     "reply": "Reply",
-    "rotate": "Rotate",
-    "rotateClockwise": "Clockwise",
-    "rotateCounterClockwise": "Counterclockwise",
+    "rotate": "Page Orientation",
+    "rotateClockwise": "Rotate Clockwise",
+    "rotateCounterClockwise": "Rotate Counterclockwise",
     "save": "Save",
+    "post": "Post",
     "create": "Create",
     "showMoreResults": "Show more results",
     "sign": "Sign",
@@ -39,6 +42,8 @@
     "type": "Type",
     "upload": "Upload",
     "link": "Link",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
     "fileAttachmentDownload": "Download attached file"
   },
   "annotation": {
@@ -99,27 +104,34 @@
     "SBRejected": "Rejected"
   },
   "component": {
-    "freehandToolsButton": "Freehand tools",
+    "freehandToolsButton": "Freehand Tools",
+    "freeHandAndShapeToolsButton": "Freehand/Shape Tools",
     "leftPanel": "Panel",
+    "toolsHeader": "Tools",
     "searchOverlay": "Search",
+    "searchPanel": "Search",
     "menuOverlay": "Menu",
-    "miscToolsButton": "Misc tools",
+    "miscToolsButton": "Misc Tools",
+    "signatureToolsButton": "Signature Tools",
     "notesPanel": "Notes",
     "outlinesPanel": "Outlines",
     "bookmarksPanel": "Bookmarks",
     "newBookmark": "New Bookmark",
     "bookmarkPage": "Page",
     "layersPanel": "Layers",
-    "shapeToolsButton": "Shape tools",
-    "textToolsButton": "Text tools",
+    "shapeToolsButton": "Shape Tools",
+    "textToolsButton": "Text Tools",
+    "freeTextToolsButton": "Free Text Tools",
+    "stickyToolsButton": "Comments Tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
     "redaction": "Redaction",
-    "viewControlsOverlay": "View controls",
-    "measurementToolsButton": "Measurement tools",
+    "viewControlsOverlay": "View Controls",
+    "measurementToolsButton": "Measurement Tools",
     "calibration": "Calibration"
   },
   "message": {
+    "toolsOverlayNoPresets": "No Presets",
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
     "customPrintPlaceholder": "e.g. 3, 4-10",
     "encryptedAttemptsExceeded": "Failed to load encrypted document. Too many attempts.",
@@ -129,6 +141,7 @@
     "noAnnotations": "This document has no annotations.",
     "noOutlines": "This document has no outline.",
     "noResults": "No results found.",
+    "numResultsFound": "results found",
     "notSupported": "That file type is not supported.",
     "passwordRequired": "Password required",
     "preparingToPrint": "Preparing to print...",
@@ -138,7 +151,8 @@
     "printTotalPageCount_plural": "Total: {{count}} pages",
     "processing": "Processing...",
     "searching": "Searching...",
-    "searchPlaceholder": "Search comments...",
+    "searchCommentsPlaceholder": "Search comments",
+    "searchDocumentPlaceholder": "Search document",
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
     "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
@@ -147,21 +161,30 @@
   },
   "option": {
     "annotationColor": {
-      "StrokeColor": "Border color",
-      "FillColor": "Fill color",
-      "TextColor": "Text color"
+      "StrokeColor": "Stroke",
+      "FillColor": "Fill",
+      "TextColor": "Text"
     },
     "displayMode": {
-      "layout": "Layout",
-      "pageTransition": "Page transition"
+      "layout": "Page Layout",
+      "pageTransition": "Page Transition"
+    },
+    "documentControls": {
+      "placeholder": "Enter pages to select i.e. 2, 5-9"
+    },
+    "documentControls": {
+      "placeholder": "Enter pages to select i.e. 2, 5-9"
+    },
+    "documentControls": {
+      "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
     "documentControls": {
       "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
     "layout": {
-      "cover": "Cover",
-      "double": "Double",
-      "single": "Single"
+      "cover": "Cover Facing Page",
+      "double": "Double Page",
+      "single": "Single Page"
     },
     "notesPanel": {
       "orderPosition": "Position",
@@ -172,15 +195,15 @@
       }
     },
     "pageTransition": {
-      "continuous": "Continuous",
-      "default": "Page by page"
+      "continuous": "Continuous Page",
+      "default": "Page by Page"
     },
     "print": {
       "all": "All",
       "current": "Current",
-      "pages": "Pages",
+      "pages": "Pages to print",
       "includeComments": "Include comments",
-      "addWatermarkSettings": "Add Watermark Settings"
+      "addWatermarkSettings": "Add Watermark"
     },
     "redaction": {
       "markForRedaction": "Mark for redaction"
@@ -191,13 +214,13 @@
       "wildcard": "Wildcard"
     },
     "signatureOverlay": {
-      "addSignature": "Add a signature"
+      "addSignature": "Add New Signature"
     },
     "signatureModal": {
       "saveSignature": "Save signature",
       "dragAndDrop": "Drag & Drop your image here",
       "or": "Or",
-      "pickImage": "Pick Signature Image"
+      "pickImage": "Choose a signature"
     },
     "status": {
       "status": "Status"
@@ -232,7 +255,7 @@
     },
     "slider": {
       "opacity": "Opacity",
-      "thickness": "Thickness",
+      "thickness": "Stroke",
       "text": "Text Size"
     },
     "shared": {
@@ -271,7 +294,7 @@
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
-  
+
   "shortcut": {
     "arrow": "(A)",
     "callout": "(C)",
@@ -291,6 +314,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

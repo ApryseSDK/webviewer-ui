@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -13,6 +14,8 @@ import setCurrentPage from 'helpers/setCurrentPage';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
+
+import Measure from 'react-measure';
 
 import './DocumentContainer.scss';
 
@@ -169,10 +172,6 @@ class DocumentContainer extends React.PureComponent {
     core.zoomToMouse(newZoomFactor);
   }
 
-  onTransitionEnd = () => {
-    core.scrollViewUpdated();
-  }
-
   handleScroll = () => {
     this.props.closeElements([
       'annotationPopup',
@@ -182,16 +181,13 @@ class DocumentContainer extends React.PureComponent {
 
   getClassName = props => {
     const {
-      isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen,
+      isSearchOverlayOpen,
     } = props;
 
-    return [
-      'DocumentContainer',
-      isLeftPanelOpen ? 'left-panel' : '',
-      isRightPanelOpen ? 'right-panel' : '',
-      isHeaderOpen ? '' : 'no-header',
-      isSearchOverlayOpen ? 'search-overlay' : '',
-    ].join(' ').trim();
+    return classNames({
+      DocumentContainer: true,
+      'search-overlay': isSearchOverlayOpen,
+    });
   }
 
   render() {
@@ -204,16 +200,32 @@ class DocumentContainer extends React.PureComponent {
     }
 
     return (
-      <div className={className} ref={this.container} data-element="documentContainer" onScroll={this.handleScroll} onTransitionEnd={this.onTransitionEnd}>
-        <div className="document" ref={this.document} tabIndex="-1"></div>
-      </div>
+      <Measure
+        onResize={() => {
+          core.setScrollViewElement(this.container.current);
+          core.scrollViewUpdated();
+        }}
+      >
+        {({ measureRef }) => (
+          <div className="measurement-container" ref={measureRef}>
+            <div
+              className={className}
+              ref={this.container}
+              data-element="documentContainer"
+              onScroll={this.handleScroll}
+            >
+              <div className="document" ref={this.document}></div>
+            </div>
+          </div>
+        )}
+      </Measure>
     );
   }
 }
 
 const mapStateToProps = state => ({
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
-  isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
   doesDocumentAutoLoad: selectors.doesDocumentAutoLoad(state),
   zoom: selectors.getZoom(state),
@@ -222,7 +234,7 @@ const mapStateToProps = state => ({
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
   // using leftPanelWidth to trigger render
-  leftPanelWidth: selectors.getLeftPanelWidth(state),
+  // leftPanelWidth: selectors.getLeftPanelWidth(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
 });
 

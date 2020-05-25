@@ -17,6 +17,8 @@ const getEventToObjectMap = () => {
   const editBoxManager = annotManager.getEditBoxManager();
 
   return {
+    signatureSaved: window.docViewer,
+    signatureDeleted: window.docViewer,
     annotationsLoaded: window.docViewer,
     changePage: window.docViewer,
     click: window.docViewer,

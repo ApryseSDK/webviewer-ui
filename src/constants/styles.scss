@@ -1,12 +1,12 @@
 // Dimensions
-$top-bar-height: 47px;
+$top-bar-height: 36px;
 $button-width: 46px;
 $button-height: 46px;
 $icon-width: 24px;
 $icon-height: 24px;
-$panel-width: 300px;
-$right-panel-width: $panel-width;
-$left-panel-width: $panel-width;
+$panel-width: 293px;
+$right-panel-width: 293px;
+$left-panel-width: 219px;
 $left-panel-width: var(--left-panel-width);
 
 // Font
@@ -53,19 +53,6 @@ $signature-modal-shared-color: #E1E1E3;
   }
 }
 
-.text-input {
-  border: 1px solid grey;
-  &::placeholder {
-    color:$gray12;
-  }
-  &::-webkit-input-placeholder {
-    color:$gray12;
-  }
-  &:-ms-input-placeholder {
-    color:$gray12;
-  }
-}
-
 @mixin desktop {
   @media (min-width: #{$tablet-width + 1px}) {
     @content;
@@ -74,6 +61,12 @@ $signature-modal-shared-color: #E1E1E3;
 
 @mixin tablet {
   @media (min-width: #{$mobile-width + 1px}) and (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin tablet-and-desktop {
+  @media (min-width: #{$mobile-width + 1px}) {
     @content;
   }
 }

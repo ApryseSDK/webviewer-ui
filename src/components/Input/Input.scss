@@ -3,10 +3,6 @@
 input[type='checkbox'].Input,
 input[type='radio'].Input {
   display: none;
-
-  &:checked + label:after {
-    background: $gray20;
-  }
 }
 
 label.Input {
@@ -14,8 +10,23 @@ label.Input {
   display: block;
   flex: 1;
   padding: 5px;
-  font-size: 0.8em;
   cursor: pointer;
+
+  .icon-container {
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    svg {
+      color: var(--primary-button-text);
+    }
+
+    .Icon {
+      height: 14px;
+      width: 14px;
+    }
+  }  
+  
 
   &:before {
     content: '';
@@ -27,9 +38,11 @@ label.Input {
     height: 15px;
     padding: 2px;
     box-sizing: border-box;
-    border: 1px solid $gray12;
-    background: white;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--component-background);
   }
+
 
   &:after {
     content: '';
@@ -42,5 +55,19 @@ label.Input {
     box-sizing: border-box;
     background: transparent;
     transition: all 0.2s ease;
+  }
+}
+
+input[type=checkbox]:checked + label {
+  &:before{
+    background: var(--primary-button);
+    border: 1px solid var(--primary-button);
+  }
+}
+
+input[type=radio]:checked + label {
+  &:before{
+    background: var(--primary-button);
+    border: 1px solid var(--primary-button);
   }
 }

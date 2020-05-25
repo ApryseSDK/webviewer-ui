@@ -2,44 +2,91 @@
 @import '../../constants/overlay';
 
 .PageNavOverlay {
-  @extend %overlay;
-  bottom: 10px;
-  left: 10px;
-  padding: 10px;
-  font-size: 16px;
+  height: 32px;
+  font-family: 'Lato';
+  font-weight: bold;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
   cursor: pointer;
 
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0px;
+
   @include mobile {
-    bottom: 8px;
-    left: 8px;
-    padding: 8px;
-    font-size: 14px;
-    z-index: 50;
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    top: auto;
+    transform: translateX(-50%);
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--component-background);
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px var(--box-shadow);
+    z-index: 55;
   }
 
-  &.open {
-    transition: opacity .3s ease, transform .3s ease, font-size .3s ease, padding .3s ease;
-  }
+  .side-arrow-container {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    @include desktop {
+      margin-right: 8px;
+      margin-left: 8px;
+    }
 
-  &.shifted {
-    transform: translateX($left-panel-width);
+    @include tablet-and-mobile {
+      padding-right: 8px;
+      padding-left: 8px;
+    }
 
-    @include mobile {
-      transform: none;
+    &:hover {
+      background: var(--view-header-button-hover);
+    }
+
+    .side-arrow {
+      width: 16px;
+      height: 16px;
+
+      @include mobile {
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 
-  input {
-    padding: 0;
-    border: none;
-    text-align: right;
-    font-size: 16px;
-    background: transparent;
-    color: var(--text-color);
-    cursor: pointer;
+  .formContainer {
+    height: 100%;
+    display: flex;
+    align-items: center;
 
     @include mobile {
-      font-size: 14px;
+      padding: 0 8px;
+    }
+
+    form {
+      top: -1px;
+      position: relative;
+      input {
+        min-width: 8px;
+        padding: 0;
+        border: none;
+        text-align: right;
+        font-family: 'Lato';
+        font-weight: bold;
+        background: transparent;
+        color: var(--text-color);
+        cursor: pointer;
+        outline: none;
+        border-bottom: 1px solid var(--text-color);
+        border-radius: 0px;
+      }
     }
   }
+
+
 }

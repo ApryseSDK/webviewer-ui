@@ -1,32 +1,64 @@
 @import '../../constants/styles';
+@import '../../constants/overlay';
 
 .ZoomOverlay {
-  position: absolute;
-  top: 46px;
-  z-index: 100;
-  box-shadow: $md-shadow1;
+  @extend %overlay;
 
-  &.open {
-    display: visible;
-  };
-  &.closed {
-    display: none;
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
+  flex-wrap: nowrap;
+  border: 0px;
+  border-radius: 0px;
+  background: transparent;
+
+  .ZoomContainer {
+    padding: 6px 0px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    background: var(--component-background);
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+
+    .ZoomItem {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 2px 6px;
+      padding-right: 19px;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--popup-button-hover);
+      }
+
+      .ZoomIcon {
+        margin: 4px;
+      }
+
+      .ZoomLabel {
+        margin: 0 4px;
+      }
+    }
   }
 
   .spacer {
+    margin: 2px 10px;
     height: 1px;
-    background: #F0F0F0;
-    background: var(--button-active-color);
-  }
-  
-  .ToolButton {
-    background-color: #FFFFFF;
-    background-color: var(--primary-color);
-    height: 35px;
+    background: var(--divider);
 
-    &:hover {
-      background-color: #F6F6F6;
-      background-color: var(--button-hover-color);
+    &.extraMarginTop {
+      margin-top: 6px;
     }
+  }
+
+  .tool-button {
+    width: auto;
+  }
+
+  .OverlayItem {
+    &:hover {
+      background: var(--popup-button-hover);
+    }    
   }
 }

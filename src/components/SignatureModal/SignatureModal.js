@@ -1,45 +1,46 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import Button from 'components/Button';
-import ActionButton from 'components/ActionButton';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
 import TextSignature from 'components/SignatureModal/TextSignature';
 import ImageSignature from 'components/SignatureModal/ImageSignature';
 
 import core from 'core';
-import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
-
+import { Swipeable } from 'react-swipeable';
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
-  const [isDisabled, isSaveSignatureDisabled, isOpen] = useSelector(state => [
+  const [isDisabled, isOpen, activeToolName, savedSignatures2] = useSelector(state => [
     selectors.isElementDisabled(state, 'signatureModal'),
-    selectors.isElementDisabled(state, 'saveSignatureButton'),
     selectors.isElementOpen(state, 'signatureModal'),
+    selectors.getActiveToolName(state),
+    selectors.getSavedSignatures(state),
   ]);
-  const dispatch = useDispatch();
-  const [saveSignature, setSaveSignature] = useState(false);
-  const [t] = useTranslation();
+
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
-  const _setSaveSignature = useCallback(
-    save => {
-      if (!isSaveSignatureDisabled) {
-        setSaveSignature(save);
-      }
-    },
-    [isSaveSignatureDisabled],
-  );
+  // Hack to close modal if hotkey to open other tool is used.
+  useEffect(() => {
+    if (activeToolName !== 'AnnotationCreateSignature') {
+      dispatch(
+        actions.closeElements([
+          'signatureModal',
+          'signatureOverlay',
+        ]),
+      );
+    }
+  }, [dispatch, activeToolName]);
+
+  const dispatch = useDispatch();
+  const [t] = useTranslation();
 
   useEffect(() => {
     if (isOpen) {
-      core.setToolMode('AnnotationCreateSignature');
       dispatch(
         actions.closeElements([
           'printModal',
@@ -49,23 +50,22 @@ const SignatureModal = () => {
         ]),
       );
     }
-  }, [_setSaveSignature, dispatch, isOpen]);
+  }, [dispatch, isOpen]);
 
   const closeModal = () => {
     signatureTool.clearLocation();
     dispatch(actions.closeElement('signatureModal'));
-    core.setToolMode(defaultTool);
-  };
-
-  const toggleSaveSignature = () => {
-    _setSaveSignature(!saveSignature);
   };
 
   const createSignature = () => {
     if (!signatureTool.isEmptySignature()) {
-      if (saveSignature) {
-        signatureTool.saveSignatures(signatureTool.annot);
-      }
+      signatureTool.saveSignatures(signatureTool.annot);
+
+      dispatch(actions.setSelectedSignatureIndex(savedSignatures2.length));
+      signatureTool.setSignature(signatureTool.annot);
+      core.setToolMode('AnnotationCreateSignature');
+      signatureTool.showPreview();
+
       if (signatureTool.hasLocation()) {
         signatureTool.addSignature();
       } else {
@@ -83,80 +83,63 @@ const SignatureModal = () => {
   });
 
   return isDisabled ? null : (
-    <div
-      className={modalClass}
-      data-element="signatureModal"
-      onMouseDown={closeModal}
+    <Swipeable
+      onSwipedUp={closeModal}
+      onSwipedDown={closeModal}
+      preventDefaultTouchmoveEvent
     >
-      <div className="container" onMouseDown={e => e.stopPropagation()}>
-        <Tabs id="signatureModal">
-          <div className="header">
+      <div
+        className={modalClass}
+        data-element="signatureModal"
+        onMouseDown={closeModal}
+      >
+        <div
+          className="container"
+          onMouseDown={e => e.stopPropagation()}
+        >
+          <div className="swipe-indicator" />
+          <Tabs id="signatureModal">
             <div className="tab-list">
               <Tab dataElement="inkSignaturePanelButton">
-                <Button label={t('action.draw')} />
+                <div className="tab-options-button">
+                  {t('action.draw')}
+                </div>
               </Tab>
+              <div className="tab-options-divider" />
               <Tab dataElement="textSignaturePanelButton">
-                <Button label={t('action.type')} />
+                <div className="tab-options-button">
+                  {t('action.type')}
+                </div>
               </Tab>
+              <div className="tab-options-divider" />
               <Tab dataElement="imageSignaturePanelButton">
-                <Button label={t('action.upload')} />
+                <div className="tab-options-button">
+                  {t('action.upload')}
+                </div>
               </Tab>
             </div>
-            <ActionButton
-              dataElement="signatureModalCloseButton"
-              title="action.close"
-              img="ic_close_black_24px"
-              onClick={closeModal}
-            />
-          </div>
-
-          <TabPanel dataElement="inkSignaturePanel">
-            <InkSignature
-              isModalOpen={isOpen}
-              _setSaveSignature={_setSaveSignature}
-            />
-          </TabPanel>
-          <TabPanel dataElement="textSignaturePanel">
-            <TextSignature
-              isModalOpen={isOpen}
-              _setSaveSignature={_setSaveSignature}
-            />
-          </TabPanel>
-          <TabPanel dataElement="imageSignaturePanel">
-            <ImageSignature
-              isModalOpen={isOpen}
-              _setSaveSignature={_setSaveSignature}
-            />
-          </TabPanel>
-        </Tabs>
-
-        <div
-          className="footer"
-          style={{
-            justifyContent: isSaveSignatureDisabled
-              ? 'flex-end'
-              : 'space-between',
-          }}
-        >
-          {!isSaveSignatureDisabled && (
-            <div className="signature-save" data-element="saveSignatureButton">
-              <input
-                id="default-signature"
-                type="checkbox"
-                checked={saveSignature}
-                onChange={toggleSaveSignature}
+            <TabPanel dataElement="inkSignaturePanel">
+              <InkSignature
+                isModalOpen={isOpen}
+                createSignature={createSignature}
               />
-              <label htmlFor="default-signature">
-                {t('option.signatureModal.saveSignature')}
-              </label>
-            </div>
-          )}
-          <div className="signature-create" onClick={createSignature}>
-            {t('action.create')}
-          </div>
+            </TabPanel>
+            <TabPanel dataElement="textSignaturePanel">
+              <TextSignature
+                isModalOpen={isOpen}
+                createSignature={createSignature}
+              />
+            </TabPanel>
+            <TabPanel dataElement="imageSignaturePanel">
+              <ImageSignature
+                isModalOpen={isOpen}
+                createSignature={createSignature}
+              />
+            </TabPanel>
+          </Tabs>
         </div>
       </div>
-    </div>
+    </Swipeable>
   );
 };
 

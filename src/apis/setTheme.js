@@ -1,3 +1,14 @@
+import actions from 'actions';
+import selectors from 'selectors';
+
+import { parse } from 'helpers/cssVariablesParser';
+
+import lightModeString from '!!raw-loader!../constants/light.scss';
+import lightToolsMobileString from '!!raw-loader!../constants/lightToolsMobile.scss';
+import darkModeString from '!!raw-loader!../constants/dark.scss';
+import darkToolsMobileString from '!!raw-loader!../constants/darkToolsMobile.scss';
+
+
 /**
  * @typedef {Object} WebViewerInstance.ThemeObject
  * @property {string} [primary=#FFFFFF] Background color for the header, modals, overlays, etc.
@@ -13,22 +24,7 @@
 /**
  * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
  * @method WebViewerInstance#setTheme
- * @param {string|WebViewerInstance.ThemeObject} theme Either theme object or predefined string. Predefined strings are 'default' and 'dark'.
- * @example
-// Using an object
-WebViewer(...)
-  .then(function(instance) {
-    instance.setTheme({
-      primary: '#2C2B3A',
-      secondary: '#4D4C5F',
-      border: '#555555',
-      buttonHover: '#686880',
-      buttonActive: '#686880',
-      text: '#FFFFFF',
-      icon: '#FFFFFF',
-      iconActive: '#FFFFFF'
-    });
-  });
+ * @param {string} theme Either the string 'light' or 'dark'.
  * @example
 // Using predefined string
 WebViewer(...)
@@ -37,69 +33,71 @@ WebViewer(...)
   });
  */
 
-export default theme => {
-  const isPresetTheme = typeof theme === 'string';
-  const isCustomizedTheme = typeof theme === 'object';
+const mobileListener = window.matchMedia('(max-width: 640px)');
+const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
+const desktopListener = window.matchMedia('(min-width: 901px)');
 
-  if (isPresetTheme) {
-    setPresetTheme(theme);
-  } else if (isCustomizedTheme) {
-    setTheme(theme);
-  }
-};
+export default store => {
+  mobileListener.addListener(() => {
+    updateColours(store);
+  });
 
-const setPresetTheme = theme => {
-  const themeToPresetThemeMap = {
-    default: {
-      primary: '#FFFFFF',
-      secondary: '#F5F5F5',
-      border: '#E0E0E0',
-      buttonHover: '#F6F6F6',
-      buttonActive: '#F0F0F0',
-      text: '#333333',
-      icon: '#757575',
-      iconActive: '#757575',
-    },
-    dark: {
-      primary: '#2C2B3A',
-      secondary: '#4D4C5F',
-      border: '#555555',
-      buttonHover: '#686880',
-      buttonActive: '#686880',
-      text: '#FFFFFF',
-      icon: '#FFFFFF',
-      iconActive: '#FFFFFF',
-    },
-  };
-  const presetTheme = themeToPresetThemeMap[theme];
+  tabletListener.addListener(() => {
+    updateColours(store);
+  });
 
-  if (presetTheme) {
-    setTheme(themeToPresetThemeMap[theme]);
-  } else {
-    console.warn(`${theme} is not one of: default, dark`);
-  }
-};
+  desktopListener.addListener(() => {
+    updateColours(store);
+  });
 
-const setTheme = theme => {
-  const keyToCSSVarMap = {
-    primary: '--primary-color',
-    secondary: '--secondary-color',
-    border: '--border-color',
-    buttonHover: '--button-hover-color',
-    buttonActive: '--button-active-color',
-    text: '--text-color',
-    icon: '--icon-color',
-    iconActive: '--icon-active-color',
-  };
-
-  Object.keys(theme).forEach(key => {
-    const cssVar = keyToCSSVarMap[key];
-    if (cssVar) {
-      const color = theme[key];
-      document.body.style.setProperty(cssVar, color);
-    } else {
-      console.warn(`${key} is not valid, please make sure properties are a subset of:`);
-      console.warn(`primary, secondary, text, buttonHover, buttonActive and icon`);
+  let previousActiveTheme;
+  store.subscribe(() => {
+    const activeTheme = selectors.getActiveTheme(store.getState());
+    if (previousActiveTheme !== activeTheme) {
+      previousActiveTheme = activeTheme;
+      updateColours(store);
     }
   });
+  return theme => {
+    if (theme !== 'dark' && theme !== 'light') {
+      throw new Error(`${theme} is not one of: light, dark`);
+    }
+    store.dispatch(actions.setActiveTheme(theme));
+  };
+};
+
+const setVariables = (themeVarString = '') => {
+  const root = document.documentElement;
+  const themeVariables = parse(themeVarString, {});
+  Object.keys(themeVariables).forEach(key => {
+    const themeVariable = themeVariables[key];
+    root.style.setProperty(`--${key}`, themeVariable);
+  });
+};
+
+const updateColours = store => {
+  const activeTheme = selectors.getActiveTheme(store.getState());
+  if (window.matchMedia('(max-width: 640px)').matches) {
+    if (activeTheme === 'light') {
+      setVariables(lightModeString);
+      setVariables(lightToolsMobileString);
+    } else if (activeTheme === 'dark') {
+      setVariables(darkModeString);
+      setVariables(darkToolsMobileString);
+    }
+  } else if (window.matchMedia('(max-width: 900px)').matches) {
+    if (activeTheme === 'light') {
+      setVariables(lightModeString);
+      setVariables(lightToolsMobileString);
+    } else if (activeTheme === 'dark') {
+      setVariables(darkModeString);
+      setVariables(darkToolsMobileString);
+    }
+  } else {
+    if (activeTheme === 'light') {
+      setVariables(lightModeString);
+    } else if (activeTheme === 'dark') {
+      setVariables(darkModeString);
+    }
+  }
 };

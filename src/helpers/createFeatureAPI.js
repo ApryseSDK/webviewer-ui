@@ -13,6 +13,14 @@ import disableTools from 'src/apis/disableTools';
 export default (enable, store) => features => {
   // map a feature to the dataElements that should be enabled/disabled and the function to run
   const map = {
+    [Feature.Annotating]: {
+      dataElements: [
+        'toolsHeader',
+        'toggleToolsButton',
+        'annotationPopup',
+        'linkButton',
+      ],
+    },
     [Feature.Measurement]: {
       dataElements: [
         'measurementToolGroupButton',
@@ -26,9 +34,11 @@ export default (enable, store) => features => {
     [Feature.Annotations]: {
       dataElements: [
         'notesPanel',
-        'notesPanelButton',
+        'toggleNotesButton',
+        'toggleToolsButton',
         'toolsButton',
         'linkButton',
+        'toolsHeader',
       ],
       fn: () => {
         if (enable) {
@@ -67,6 +77,7 @@ export default (enable, store) => features => {
         'annotationCommentButton',
         'notesPanelButton',
         'notesPanel',
+        'toggleNotesButton',
       ],
     },
     [Feature.Print]: {

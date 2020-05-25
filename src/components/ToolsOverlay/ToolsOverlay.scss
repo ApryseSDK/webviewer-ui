@@ -1,37 +1,184 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
+
+.ToolsOverlayContainer {
+  display: flex;
+  align-items: flex-end;
+}
+
 .ToolsOverlay {
   @extend %overlay;
-
-  top: 46px;
-  padding: 0;
-  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
   flex-wrap: nowrap;
-  overflow: hidden;
+  border: 0px;
+  border-radius: 0px;
+  background: transparent;
+  position: relative;
+  border-radius: 4px 4px 0 0;
 
   @include tablet-and-mobile {
-    left: 0 !important;
-    right: 0 !important;
-    top: 0;
     width: 100%;
-    border: none;
   }
 
-  & > * {
-    &:first-child {
-      margin-left: 0;
-    }
+  &.shadow {
+    box-shadow: 0 0 5px 0 var(--box-shadow);
 
-    &:last-child {
-      margin-right: 0;
+    .ToolStylePopup {
+      box-shadow: 0 -20px 0 var(--preset-background), 0 0 5px 0 var(--box-shadow);
     }
   }
 
-  .spacer {
+  .no-presets-container {
+    width: 168px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--no-presets-text);
+  }
+
+  .styling-arrow-container {
+    width: 40px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+
     @include tablet-and-mobile {
-      flex: 1;
-      height: 100%;
+      margin-left: 8px;
+    }
+
+    &:not(.disabled) {
+      &:hover {
+        background: var(--tools-overlay-button-hover);
+      }
+      &.active {
+        background: var(--tools-overlay-button-active);
+
+        .Icon {
+          color: var(--selected-icon-color);
+        }
+      }
+    }
+
+    &.disabled {
+      cursor: auto;
+      .Icon {
+        color: var(--disabled-text);
+      }
+    }
+
+    @include tablet-and-mobile {
+      height: 28px;
+    }
+
+    .styling-arrow-up {
+      width: 12px;
+      height: 16px;
+      margin-left: 1px;
+    }
+
+    .styling-arrow-down {
+      width: 12px;
+      height: 16px;
+      margin-top: 1px;
+      margin-left: 1px;
+    }
+  }
+
+
+  @include tablet-and-mobile {
+    border-bottom: solid 1px var(--border);
+    position: relative;
+    &.closed {
+      position: absolute;
+    }
+
+    .arrow-up {
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+
+      border-bottom: 10px solid var(--tools-overlay-background);
+      position: absolute;
+
+      transform: translateX(50%);
+    }
+  }
+
+  .divider {
+    width: 1px;
+    height: 24px;
+    margin: 0 4px;
+    background: var(--divider);
+  }
+
+  .tools-container {
+    border-radius: 4px;
+    background: var(--preset-background);
+    height: 32px;
+    width: 100%;
+
+    @include tablet-and-mobile {
+      box-shadow: none;
+      width: 100%;
+      padding: 0px;
+      min-height: 52px;
+      height: auto;
+      padding-top: 3px;
+      padding-bottom: 3px;
+      border-radius: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--tools-overlay-background);
+    }
+
+    .tool-buttons-container {
+      display: flex;
+      align-items: center;
+      height: 32px;
+
+      @include desktop {
+        width: 214px;
+      }
+
+      @include tablet-and-mobile {
+        justify-content: center;
+      }
+
+      @include tablet-and-mobile {
+        box-shadow: none;
+        width: 100%;
+      }
+
+      .Button {
+        margin: 0 8px;
+      }
+
+      @include desktop {
+        &[tool-group="miscTools"] {
+          justify-content: space-around;
+
+          .Button {
+            margin: 0 0;
+          }
+        }
+
+        // &[tool-group="measurementTools"] {
+        //   justify-content: space-around;
+
+        //   .Button {
+        //     margin: 0 0px;
+        //   }
+        // }
+      }
     }
   }
 }

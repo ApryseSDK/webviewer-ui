@@ -20,8 +20,12 @@ import onLocationSelected from './onLocationSelected';
 import onRubberStampAnnotationAdded from './onRubberStampAnnotationAdded';
 import onPageComplete from './onPageComplete';
 import onFileAttachmentDataAvailable from './onFileAttachmentDataAvailable';
+import onSignatureSaved from './onSignatureSaved';
+import onSignatureDeleted from './onSignatureDeleted';
 
 export {
+  onSignatureSaved,
+  onSignatureDeleted,
   onBeforeDocumentLoaded,
   onDisplayModeUpdated,
   onDocumentLoaded,

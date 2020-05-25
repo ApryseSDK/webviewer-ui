@@ -63,17 +63,17 @@ const ThumbnailControls = ({
   return isElementDisabled ? null : (
     <div className="thumbnailControls" data-element={dataElementName}>
       <Button
-        img="ic_rotate_left_black_24px"
+        img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
         onClick={rotateCounterClockwise}
         title="option.thumbnailPanel.rotateCounterClockwise"
       />
       <Button
-        img="ic_delete_black_24px"
+        img="icon-delete-line"
         onClick={handleDelete}
         title="option.thumbnailPanel.delete"
       />
       <Button
-        img="ic_rotate_right_black_24px"
+        img="icon-header-page-manipulation-page-rotation-clockwise-line"
         onClick={rotateClockwise}
         title="option.thumbnailPanel.rotateClockwise"
       />

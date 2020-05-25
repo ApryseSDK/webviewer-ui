@@ -5,64 +5,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: $button-width;
-  height: $button-height;
-  padding: 6px;
-  font-size: 16px;
   cursor: pointer;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
 
-  @include mobile {
-    min-width: $button-width-m;
-    height: $button-height-m;
-  }
+  // color for svgs
+  &.active {
+    path[fill=default] {
+      fill: var(--selected-icon-color);
+    }
 
-  img {
-    width: 24px;
-
-    @include mobile {
-      width: 18px;
+    // hack for pan tool and annot select tool
+    &[data-element="panToolButton"],&[data-element="selectToolButton"] {
+      background: var(--view-header-button-active);
     }
   }
 
-  &.disable {
-    cursor: not-allowed;
-    color: $gray20;
-
+  &.active {
     .Icon {
-      color: $gray20;
-    }
-
-    &.down-arrow:after {
-      border-top: 6px solid $gray20;
-    }
-  }
-
-  &:hover:not(.disable) {
-    background: #F6F6F6;
-    background: var(--button-hover-color);
-  }
-
-  &.active:not(.disable) {
-    background: #F0F0F0;
-    background: var(--button-active-color);
-
-    .Icon {
-      color: #757575;
-      color: var(--icon-active-color);
-    }
-  }
-
-  &.down-arrow:after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid  #757575;
-    border-top: 6px solid var(--icon-color);
-    
-    @include mobile {
-      font-size: 10px;
+      color: var(--selected-icon-color);
     }
   }
 }

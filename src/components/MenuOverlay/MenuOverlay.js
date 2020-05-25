@@ -5,6 +5,8 @@ import { withTranslation } from 'react-i18next';
 import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
+import DataElementWrapper from 'components/DataElementWrapper';
+import Icon from 'components/Icon';
 
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
@@ -17,6 +19,10 @@ import { isIOS } from 'helpers/device';
 import { workerTypes } from 'constants/types';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
+import classNames from 'classnames';
+
+import { Swipeable } from 'react-swipeable';
 
 import './MenuOverlay.scss';
 
@@ -37,6 +43,7 @@ class MenuOverlay extends React.PureComponent {
     this.state = {
       left: 0,
       right: 'auto',
+      top: 'auto',
       documentType: null,
     };
   }
@@ -47,8 +54,8 @@ class MenuOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['groupOverlay', 'viewControlsOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
-      this.setState(getOverlayPositionBasedOn('menuButton', this.overlay));
+      this.props.closeElements(['groupOverlay', 'viewControlsOverlay', 'searchOverlay', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
+      this.setState(getOverlayPositionBasedOn('menuButton', this.overlay, this.props.isTabletOrMobile));
     }
   }
 
@@ -64,13 +71,15 @@ class MenuOverlay extends React.PureComponent {
 
   handlePrintButtonClick = () => {
     const { dispatch, isEmbedPrintSupported } = this.props;
-
+    this.props.closeElements(['menuOverlay']);
     print(dispatch, isEmbedPrintSupported);
   }
 
   handleClickOutside = e => {
-    const clickedMenuButton = e.target.getAttribute('data-element') === 'menuButton';
-
+    const menuButton = document.querySelector(
+      '[data-element="menuButton"]',
+    );
+    const clickedMenuButton = menuButton?.contains(e.target);
     if (!clickedMenuButton) {
       this.props.closeElements(['menuOverlay']);
     }
@@ -81,40 +90,168 @@ class MenuOverlay extends React.PureComponent {
   }
 
   render() {
-    const { left, right, documentType } = this.state;
-    const { isDisabled, isFullScreen, t } = this.props;
+    const { left, right, top, documentType } = this.state;
+    const { isDisabled, isFullScreen, t, isMobile, isOpen, isFilePickerButtonDisabled, activeTheme, setActiveLightTheme, setActiveDarkTheme } = this.props;
 
     if (isDisabled) {
       return null;
     }
 
-    const className = getClassName('Overlay MenuOverlay', this.props);
+    let style = {};
+    if (!isMobile) {
+      style = { left, right, top };
+    }
 
     return (
-      <div className={className} data-element="menuOverlay" style={{ left, right }} ref={this.overlay}>
-        <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
-        {!isIOS &&
-          <ActionButton dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
-        }
-        {documentType !== workerTypes.XOD &&
-          <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
-        }
-        <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} />
-      </div>
+      <Swipeable
+        onSwipedUp={() => this.props.closeElements(['menuOverlay'])}
+        onSwipedDown={() => this.props.closeElements(['menuOverlay'])}
+        preventDefaultTouchmoveEvent
+      >
+        <div
+          className={classNames({
+            Overlay: true,
+            MenuOverlay: true,
+            mobile: isMobile,
+            closed: !isOpen,
+          })}
+          data-element="menuOverlay"
+          style={style}
+          ref={this.overlay}
+        >
+          {isMobile && <div className="swipe-indicator" />}
+          {!isFilePickerButtonDisabled &&
+            <DataElementWrapper
+              className="row"
+              dataElement="filePickerButton"
+            >
+              <div
+                className="MenuItem"
+                onClick={openFilePicker}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph="icon-header-file-picker-line"
+                />
+                <div className="MenuLabel">{t('action.openFile')}</div>
+              </div>
+            </DataElementWrapper>}
+          {!isIOS &&
+            <div className="row">
+              <div
+                className="MenuItem"
+                onClick={toggleFullscreen}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+                />
+                <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+              </div>
+            </div>
+          }
+          {documentType !== workerTypes.XOD &&
+            <DataElementWrapper
+              className="row"
+              dataElement="downloadButton"
+            >
+              <div
+                className="MenuItem"
+                onClick={this.downloadDocument}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph="icon-header-download"
+                />
+                <div className="MenuLabel">{t('action.download')}</div>
+              </div>
+            </DataElementWrapper>
+          }
+          <DataElementWrapper
+            className="row"
+            dataElement="printButton"
+          >
+            <div
+              className="MenuItem"
+              onClick={this.handlePrintButtonClick}
+            >
+              <Icon
+                className="MenuIcon"
+                glyph="icon-header-print-line"
+              />
+              <div className="MenuLabel">{t('action.print')}</div>
+            </div>
+          </DataElementWrapper>
+          {activeTheme === 'dark' ?
+            <div className="row">
+              <div
+                className="MenuItem"
+                onClick={setActiveLightTheme}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph="icon - header - mode - day"
+                />
+                <div className="MenuLabel">{t('action.lightMode')}</div>
+              </div>
+            </div> :
+            <div className="row">
+              <div
+                className="MenuItem"
+                onClick={setActiveDarkTheme}
+              >
+                <Icon
+                  className="MenuIcon"
+                  glyph="icon - header - mode - night"
+                />
+                <div className="MenuLabel">{t('action.darkMode')}</div>
+              </div>
+            </div>}
+        </div>
+      </Swipeable>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  activeTheme: selectors.getActiveTheme(state),
   isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
   isFullScreen: selectors.isFullScreen(state),
   isDisabled: selectors.isElementDisabled(state, 'menuOverlay'),
+  isFilePickerButtonDisabled: selectors.isElementDisabled(state, 'filePickerButton'),
   isOpen: selectors.isElementOpen(state, 'menuOverlay'),
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
+  setActiveLightTheme: () => dispatch(actions.setActiveTheme('light')),
+  setActiveDarkTheme: () => dispatch(actions.setActiveTheme('dark')),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(MenuOverlay)));
+const ConnectedMenuOverlay = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(onClickOutside(MenuOverlay)));
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  const isTabletOrMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedMenuOverlay {...props} isMobile={isMobile} isTabletOrMobile={isTabletOrMobile} />
+  );
+};

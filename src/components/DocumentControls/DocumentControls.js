@@ -152,7 +152,7 @@ const DocumentControls = props => {
           </div>
           <div className="documentControlsButton">
             <Button
-              img="ic_delete_black_24px"
+              img="icon-delete-line"
               onClick={onDeletePages}
               title="option.thumbnailPanel.delete"
             />

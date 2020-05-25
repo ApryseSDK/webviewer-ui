@@ -14,23 +14,9 @@ $modal-z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--modal-negative-space);
 }
 
 %modal-shared-container-style {
-  background: $white;
-  background: var(--primary-color);
-  box-shadow: 1px 1px 5px black;
-  border-radius: 5px;
-}
-
-%signature-modal-container-shared-style {
-  margin: 0px 24px;
-  width: 552px;
-  height: 200px;
-
-  @include mobile {
-    margin: 6px 12px 0px 12px;
-    width: calc(100% - 24px);
-  }
+  border-radius: 4px;
 }

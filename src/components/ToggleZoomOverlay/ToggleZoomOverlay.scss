@@ -1,9 +1,35 @@
 @import '../../constants/styles';
 
-.ToggleZoomOverlay{
-  height: $button-height;  
-  width: auto;
-  top:0;
+.zoom-overlay {
+  display: flex;
+  align-items: center;
+  background-color: var(--toggle-zoom-overlay-background);
+  border-radius: 4px;
+  height: 28px;
+  margin: 0 2px;
+
+  .Button {
+    margin: 0px 1px;
+    height: 100%;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+
+    &:first-child {
+      margin-left: 0px;
+    }
+  }
+
+  .toggle-element-button {
+    height: 100%;
+  }
+}
+
+.ToggleZoomOverlay {
+  height: 100%;
+  color: var(--text-color);
+  margin-right: 1px;
 
   .textarea{
     resize: none;
@@ -11,47 +37,52 @@
     outline: none;
     color: inherit;
     background-color: transparent;
-    font-size: 16px;
-    margin-top: -2px;
-    margin-right: 2px;
-    width: 42px;
-    height: $top-bar-height;
-    line-height: 42px;
+    font-weight: bold;
+    min-width: 28px;
     text-align: right;
   }
+
+  .Icon {
+    width: 12px;
+    height: 16px;
+  }
 }
 
-.OverlayContainer{
+.OverlayContainer {
   display: flex;
   align-items: center;
+  height: 100%;
+  border-radius: 4px;
+  position: relative;
+
   &:hover {
-    background-color: #F6F6F6;
-    background-color: var(--button-hover-color);
+    background-color: var(--view-header-button-hover);
   }
-  &.active{
-    background-color: #F0F0F0;
-    background-color: var(--button-active-color);
+  &.active {
+    background-color: var(--view-header-button-active);
+  }
+
+  // Avoids the child button chevron from overlapping the zoom text
+  .Button.active, .Button:hover {
+    background: none !important;
+  }
+
+  .toggle-element-button {
+    width: 26px;
+    margin-left: 4px;
+    margin-top: -2px;
+    font-size: 16px; // hack for down arrow being dependent on font-size
+    height: 26px;
   }
 }
 
-.OverlayText{
+.OverlayText {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
   margin-right:-8px;
-  font-size: 16px;
-  font-weight: normal;
-  height: $button-height;
-  line-height: $button-height;
-  // height: 19px;
+  font-weight: bold;
+  height: 100%;
   text-align: center;
   display: flex;
-  z-index: 1;
-  background-color: inherit;
-  &:hover + .OverlayButton {
-    background-color:inherit;
-  }
-}
-
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
 }

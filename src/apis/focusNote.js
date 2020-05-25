@@ -20,24 +20,10 @@ WebViewer(...)
 
 import core from 'core';
 import actions from 'actions';
-import selectors from 'selectors';
 
 export default store => id => {
-  const state = store.getState();
+  // store.dispatch(actions.triggerNoteEditing());
   const annotation = core.getAnnotationById(id);
-  if (selectors.isElementOpen(state, 'leftPanel')) {
-    if (!core.isAnnotationSelected(annotation)) {
-      core.selectAnnotation(annotation);
-    }
-    store.dispatch(actions.setActiveLeftPanel('notesPanel'));
-    store.dispatch(actions.triggerNoteEditing());
-  } else {
-    store.dispatch(actions.openElement('notesPanel'));
-    setTimeout(() => {
-      if (!core.isAnnotationSelected(annotation)) {
-        core.selectAnnotation(annotation);
-      }
-      store.dispatch(actions.triggerNoteEditing());
-    }, 400);
-  }
+  store.dispatch(actions.openElement('notesPanel'));
+  core.selectAnnotation(annotation);
 };

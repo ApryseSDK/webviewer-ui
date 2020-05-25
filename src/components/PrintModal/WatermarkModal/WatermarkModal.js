@@ -10,13 +10,13 @@ import ActionButton from 'components/ActionButton';
 import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 
+import { Swipeable } from 'react-swipeable';
+
 const DESIRED_WIDTH = 300;
 const DESIRED_HEIGHT = 300;
 
 // numbers were taken from font dropdown menu in google docs
-const FONT_SIZES = [
-  8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48,
-];
+const FONT_SIZES = [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48];
 
 const WATERMARK_LOCATIONS = {
   CENTER: 'Center',
@@ -71,7 +71,7 @@ class WatermarkModal extends React.PureComponent {
     modalClosed: PropTypes.func,
     formSubmitted: PropTypes.func,
     t: PropTypes.func.isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -87,21 +87,27 @@ class WatermarkModal extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (this.props.isVisible !== prevProps.isVisible) {
-      this.setState({
-        isColorPaletteVisible: false,
-      }, () => this.handleWatermarkOnVisibilityChanged());
+      this.setState(
+        {
+          isColorPaletteVisible: false,
+        },
+        () => this.handleWatermarkOnVisibilityChanged(),
+      );
     }
   }
 
   handleWatermarkOnVisibilityChanged = () => {
     if (this.props.isVisible) {
-      this.setState({
-        locationSettings: this.state.previousLocationSettings,
-      }, async() => {
-        // Store the pre-existing watermark (if any) before we overwrite it
-        this.preExistingWatermark = await core.getWatermark();
-        this.addWatermarks();
-      });
+      this.setState(
+        {
+          locationSettings: this.state.previousLocationSettings,
+        },
+        async () => {
+          // Store the pre-existing watermark (if any) before we overwrite it
+          this.preExistingWatermark = await core.getWatermark();
+          this.addWatermarks();
+        },
+      );
     } else {
       this.removeWatermarkCreatedByModal();
       core.setWatermark(this.preExistingWatermarks);
@@ -136,7 +142,7 @@ class WatermarkModal extends React.PureComponent {
     });
 
     // Note: do not update and refresh the doc else it may affect other docs as well
-  }
+  };
 
   // eslint-disable-next-line class-methods-use-this
   constructWatermarkOption = value => {
@@ -160,27 +166,29 @@ class WatermarkModal extends React.PureComponent {
     };
 
     return watermarkOption;
-  }
+  };
 
   createWatermarks = () => {
     const watermarks = {};
 
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
-      const temp = this.constructWatermarkOption(this.state.locationSettings[key]);
+      const temp = this.constructWatermarkOption(
+        this.state.locationSettings[key],
+      );
       const value = WATERMARK_LOCATIONS[key];
       watermarks[WATERMARK_API_LOCATIONS[value]] = temp;
     });
     return watermarks;
-  }
+  };
 
   // eslint-disable-next-line class-methods-use-this
   removeWatermarkCreatedByModal = () => {
     core.setWatermark({});
-  }
+  };
 
   closeModal = () => {
     this.props.modalClosed();
-  }
+  };
 
   handleInputChange = (key, value) => {
     const currLocationSettings = {
@@ -192,41 +200,57 @@ class WatermarkModal extends React.PureComponent {
       [key]: value,
     };
 
-    this.setState({
-      locationSettings: currLocationSettings,
-    }, () => {
-      this.addWatermarks();
-    });
-  }
+    this.setState(
+      {
+        locationSettings: currLocationSettings,
+      },
+      () => {
+        this.addWatermarks();
+      },
+    );
+  };
 
   resetForm = event => {
     event.preventDefault();
     const locationSettings = this.initializeLocationSettings();
-    this.setState({
-      locationSettings,
-    }, () => this.addWatermarks());
-  }
+    this.setState(
+      {
+        locationSettings,
+      },
+      () => this.addWatermarks(),
+    );
+  };
 
   onOkPressed = () => {
-    this.setState({
-      previousLocationSettings: this.state.locationSettings,
-    }, () => {
-      // the order of these fxn calls matter
-      this.props.modalClosed();
-      const watermarkOptions = this.createWatermarks();
-      this.props.formSubmitted(watermarkOptions);
-    });
-  }
+    this.setState(
+      {
+        previousLocationSettings: this.state.locationSettings,
+      },
+      () => {
+        // the order of these fxn calls matter
+        this.props.modalClosed();
+        const watermarkOptions = this.createWatermarks();
+        this.props.formSubmitted(watermarkOptions);
+      },
+    );
+  };
 
   getCirclePosn = lineLength => {
     const lineStart = circleRadius;
     const currSelectedLocation = this.getCurrentSelectedLocation();
-    return (this.state.locationSettings[currSelectedLocation][FORM_FIELD_KEYS.opacity] / 100) * lineLength + lineStart;
-  }
+    return (
+      (this.state.locationSettings[currSelectedLocation][
+        FORM_FIELD_KEYS.opacity
+      ] /
+        100) *
+        lineLength +
+      lineStart
+    );
+  };
 
   setColorPaletteVisibility = visible => {
     this.setState({ isColorPaletteVisible: visible });
-  }
+  };
 
   onLocationChanged = newLocation => {
     const key = this.getKeyByValue(WATERMARK_LOCATIONS, newLocation);
@@ -242,58 +266,74 @@ class WatermarkModal extends React.PureComponent {
       currLocationSettings[locationKey] = locationSetting;
     });
 
-
-    this.setState({
-      locationSettings: currLocationSettings,
-    }, () => {
-      this.addWatermarks();
-    });
-  }
+    this.setState(
+      {
+        locationSettings: currLocationSettings,
+      },
+      () => {
+        this.addWatermarks();
+      },
+    );
+  };
 
   // eslint-disable-next-line class-methods-use-this
   initializeLocationSettings = () => {
     const locationSettings = {};
     Object.keys(WATERMARK_LOCATIONS).forEach(key => {
       // ignore location as it is redundant as we already have location key
-      const { location, ...others } = DEFAULT_VALS;
-      const temp = { ...others, isSelected: WATERMARK_LOCATIONS[key] === DEFAULT_VALS.location };
+      const { ...others } = DEFAULT_VALS;
+      const temp = {
+        ...others,
+        isSelected: WATERMARK_LOCATIONS[key] === DEFAULT_VALS.location,
+      };
       locationSettings[key] = temp;
     });
     return locationSettings;
-  }
+  };
 
   // eslint-disable-next-line class-methods-use-this
-  getKeyByValue = (object, value) => Object.keys(object).find(key => object[key] === value)
+  getKeyByValue = (object, value) =>
+    Object.keys(object).find(key => object[key] === value);
 
-  getCurrentSelectedLocation = () => Object.keys(this.state.locationSettings).find(locationKey => {
-    const locationSetting = this.state.locationSettings[locationKey];
-    return locationSetting.isSelected;
-  });
+  getCurrentSelectedLocation = () =>
+    Object.keys(this.state.locationSettings).find(locationKey => {
+      const locationSetting = this.state.locationSettings[locationKey];
+      return locationSetting.isSelected;
+    });
 
   onColorChanged = newColor => {
     const currLocation = this.getCurrentSelectedLocation();
     const currLocationSetting = this.state.locationSettings[currLocation];
-    currLocationSetting[FORM_FIELD_KEYS.color] = new window.Annotations.Color(newColor.R, newColor.G, newColor.B);
+    currLocationSetting[FORM_FIELD_KEYS.color] = new window.Annotations.Color(
+      newColor.R,
+      newColor.G,
+      newColor.B,
+    );
     const locationSettings = {
       ...this.state.locationSettings,
     };
-    if (!(currLocationSetting[FORM_FIELD_KEYS.text])) {
+    if (!currLocationSetting[FORM_FIELD_KEYS.text]) {
       // if text is undefined, persist the changed color to other location settings (customer's request)
       Object.keys(WATERMARK_LOCATIONS).forEach(location => {
         const locationSetting = locationSettings[location];
-        if (!(locationSetting[FORM_FIELD_KEYS.text])) {
-          locationSetting[FORM_FIELD_KEYS.color] = new window.Annotations.Color(newColor.R, newColor.G, newColor.B);
+        if (!locationSetting[FORM_FIELD_KEYS.text]) {
+          locationSetting[FORM_FIELD_KEYS.color] = new window.Annotations.Color(
+            newColor.R,
+            newColor.G,
+            newColor.B,
+          );
         }
       });
     }
     this.setState(
       {
         locationSettings,
-      }, () => {
+      },
+      () => {
         this.addWatermarks();
       },
     );
-  }
+  };
 
   render() {
     const { isVisible } = this.props;
@@ -306,149 +346,215 @@ class WatermarkModal extends React.PureComponent {
     const currLocation = this.getCurrentSelectedLocation();
     const formInfo = this.state.locationSettings[currLocation];
     return (
-      <div className={'Modal Watermark'} id="watermarkModal" onMouseDown={this.closeModal}>
-        <div className="form-container" id="formContainer" onMouseDown={e => e.stopPropagation()}>
-          <div className="header-container" onMouseDown={e => e.stopPropagation()}>
-            <div className="header">{t('option.print.addWatermarkSettings')}</div>
-            <ActionButton dataElement="watermarkModalCloseButton" title="action.close" img="ic_close_black_24px" onClick={this.closeModal} />
-          </div>
-
-          <div className="form-content-container">
-            <form id="form">
-              <div className="form-field">
-                <label>
-                  {t(`option.watermark.location`)}
-                </label>
-                <select
-                  id="location"
-                  value={WATERMARK_LOCATIONS[currLocation]}
-                  onChange={event => {
-                    this.onLocationChanged(event.target.value);
-                  }}
-                >
-                  { Object.keys(WATERMARK_LOCATIONS).map(key => <option key={key}>{WATERMARK_LOCATIONS[key]}</option>) }
-                </select>
-
-              </div>
-
-              <div className="form-field separator">
-
-              </div>
-              <div className="form-field">
-                <label>
-                  {t(`option.watermark.text`)}
-                </label>
-                <input
-                  className="text-input"
-                  id="textInput"
-                  value={formInfo[FORM_FIELD_KEYS.text]}
-                  onChange={event => this.handleInputChange(FORM_FIELD_KEYS.text, event.target.value)}
-                  type="text"
-                />
-
-              </div>
-              <div className="form-field">
-                <label>
-                  {t(`option.watermark.font`)}
-                </label>
-                <select
-                  id="fonts"
-                  value={formInfo[FORM_FIELD_KEYS.font]}
-                  onChange={event => this.handleInputChange(FORM_FIELD_KEYS.font, event.target.value)}
-                >
-                  { FONTS.map(font => <option key={font}>{font}</option>) }
-                </select>
-              </div>
-              <div className="form-field">
-                <label>
-                  {t(`option.watermark.size`)}
-                </label>
-                <select
-                  id="fontSize"
-                  value={formInfo[FORM_FIELD_KEYS.fontSize]}
-                  onChange={event => this.handleInputChange(FORM_FIELD_KEYS.fontSize, +event.target.value)}
-                >
-                  { FONT_SIZES.map(fontSize => <option key={fontSize}>{fontSize}</option>) }
-                </select>
-              </div>
-              <div className="form-field opacity-slider" id="opacitySlider">
-                <Slider
-                  property={'opacity'} // arbitrary property name. this property isn't used in this file
-                  displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
-                  value={formInfo[FORM_FIELD_KEYS.opacity]}
-                  displayValue={`${(formInfo[FORM_FIELD_KEYS.opacity])}%`}
-                  getCirclePosition={this.getCirclePosn}
-                  convertRelativeCirclePositionToValue={circlePosn => circlePosn}
-                  onStyleChange={(property, value) => this.handleInputChange(FORM_FIELD_KEYS.opacity, Math.round(value * 100))}
-                />
-              </div>
-              <div className="form-field">
-
-                <label>
-                  {t(`option.watermark.style`)}
-                </label>
-                <div className="style-container">
-                  {/* use Button class so that it looks consistent with the other form fields below */}
-                  <div
-                    id="currentColorCell"
-                    className="Button"
-                    style={{ backgroundColor: formInfo[FORM_FIELD_KEYS.color].toHexString() }}
-                    onClick={() => this.setColorPaletteVisibility(!this.state.isColorPaletteVisible)}
-                  >
-                  </div>
-                  <div className="style-container">
-                    <Button
-                      dataElement="boldText"
-                      img="icon-text-bold"
-                      isActive={formInfo[FORM_FIELD_KEYS.isBolded]}
-                      onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isBolded, !formInfo[FORM_FIELD_KEYS.isBolded])}
-                    />
-                    <Button
-                      dataElement="italicizeText"
-                      img="icon-text-italic"
-                      isActive={formInfo[FORM_FIELD_KEYS.isItalic]}
-                      onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isItalic, !formInfo[FORM_FIELD_KEYS.isItalic])}
-                    />
-                    <Button
-                      dataElement="underlineText"
-                      img="icon-text-underline"
-                      isActive={formInfo[FORM_FIELD_KEYS.isUnderlined]}
-                      onClick={() => this.handleInputChange(FORM_FIELD_KEYS.isUnderlined, !formInfo[FORM_FIELD_KEYS.isUnderlined])}
-                    />
-                  </div>
-
-                </div>
-
-                {
-                  this.state.isColorPaletteVisible && <div className={'Popup StylePopup'} id="stylePopup" onClick={() => this.setColorPaletteVisibility(false)}>
-                    <ColorPalette
-                      colorMapKey={null}
-                      color={formInfo[FORM_FIELD_KEYS.color]}
-                      property={'TextColor'} // arbitrary property name. this property isn't used in this file
-                      onStyleChange = {(property, color) => {
-                        this.onColorChanged(color); this.setColorPaletteVisibility(false);
+      <Swipeable
+        onSwipedUp={this.closeModal}
+        onSwipedDown={this.closeModal}
+        preventDefaultTouchmoveEvent
+      >
+        <div
+          className={'Modal Watermark'}
+          id="watermarkModal"
+          onMouseDown={this.closeModal}
+        >
+          <div
+            className="form-container"
+            id="formContainer"
+            onMouseDown={e => e.stopPropagation()}
+          >
+            <div className="swipe-indicator" />
+            <div className="form-content-container">
+              <div className="watermark-settings">
+                <form id="form">
+                  <div className="form-field">
+                    <label>{t(`option.watermark.location`)}</label>
+                    <select
+                      id="location"
+                      value={WATERMARK_LOCATIONS[currLocation]}
+                      onChange={event => {
+                        this.onLocationChanged(event.target.value);
                       }}
+                    >
+                      {Object.keys(WATERMARK_LOCATIONS).map(key => (
+                        <option key={key}>{WATERMARK_LOCATIONS[key]}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="form-field separator"></div>
+                  <div className="form-field">
+                    <label>{t(`option.watermark.text`)}</label>
+                    <input
+                      className="text-input"
+                      id="textInput"
+                      value={formInfo[FORM_FIELD_KEYS.text]}
+                      onChange={event =>
+                        this.handleInputChange(
+                          FORM_FIELD_KEYS.text,
+                          event.target.value,
+                        )
+                      }
+                      type="text"
                     />
                   </div>
-                }
+                  <div className="form-field">
+                    <label>{t(`option.watermark.font`)}</label>
+                    <select
+                      id="fonts"
+                      value={formInfo[FORM_FIELD_KEYS.font]}
+                      onChange={event =>
+                        this.handleInputChange(
+                          FORM_FIELD_KEYS.font,
+                          event.target.value,
+                        )
+                      }
+                    >
+                      {FONTS.map(font => (
+                        <option key={font}>{font}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-field">
+                    <label>{t(`option.watermark.size`)}</label>
+                    <select
+                      id="fontSize"
+                      value={formInfo[FORM_FIELD_KEYS.fontSize]}
+                      onChange={event =>
+                        this.handleInputChange(
+                          FORM_FIELD_KEYS.fontSize,
+                          +event.target.value,
+                        )
+                      }
+                    >
+                      {FONT_SIZES.map(fontSize => (
+                        <option key={fontSize}>{fontSize}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-field opacity-slider" id="opacitySlider">
+                    <Slider
+                      property={'opacity'} // arbitrary property name. this property isn't used in this file
+                      displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
+                      value={formInfo[FORM_FIELD_KEYS.opacity]}
+                      displayValue={`${formInfo[FORM_FIELD_KEYS.opacity]}%`}
+                      getCirclePosition={this.getCirclePosn}
+                      convertRelativeCirclePositionToValue={circlePosn =>
+                        circlePosn
+                      }
+                      onStyleChange={(property, value) =>
+                        this.handleInputChange(
+                          FORM_FIELD_KEYS.opacity,
+                          Math.round(value * 100),
+                        )
+                      }
+                    />
+                  </div>
+                  <div className="form-field">
+                    <label>{t(`option.watermark.style`)}</label>
+                    <div className="style-container">
+                      <div
+                        id="currentColorCell"
+                        className="colorSelect"
+                        style={{
+                          backgroundColor: formInfo[
+                            FORM_FIELD_KEYS.color
+                          ].toHexString(),
+                        }}
+                        onClick={() =>
+                          this.setColorPaletteVisibility(
+                            !this.state.isColorPaletteVisible,
+                          )
+                        }
+                      ></div>
+                      <div className="style-container">
+                        <Button
+                          dataElement="boldText"
+                          img="icon-text-bold"
+                          isActive={formInfo[FORM_FIELD_KEYS.isBolded]}
+                          onClick={() =>
+                            this.handleInputChange(
+                              FORM_FIELD_KEYS.isBolded,
+                              !formInfo[FORM_FIELD_KEYS.isBolded],
+                            )
+                          }
+                        />
+                        <Button
+                          dataElement="italicizeText"
+                          img="icon-text-italic"
+                          isActive={formInfo[FORM_FIELD_KEYS.isItalic]}
+                          onClick={() =>
+                            this.handleInputChange(
+                              FORM_FIELD_KEYS.isItalic,
+                              !formInfo[FORM_FIELD_KEYS.isItalic],
+                            )
+                          }
+                        />
+                        <Button
+                          dataElement="underlineText"
+                          img="icon-text-underline"
+                          isActive={formInfo[FORM_FIELD_KEYS.isUnderlined]}
+                          onClick={() =>
+                            this.handleInputChange(
+                              FORM_FIELD_KEYS.isUnderlined,
+                              !formInfo[FORM_FIELD_KEYS.isUnderlined],
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
 
+                    {this.state.isColorPaletteVisible && (
+                      <div
+                        className={'Popup StylePopup'}
+                        id="stylePopup"
+                        onClick={() => this.setColorPaletteVisibility(false)}
+                      >
+                        <ColorPalette
+                          color={formInfo[FORM_FIELD_KEYS.color]}
+                          property={'TextColor'} // arbitrary property name. this property isn't used in this file
+                          onStyleChange={(property, color) => {
+                            this.onColorChanged(color);
+                            this.setColorPaletteVisibility(false);
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div className="form-field separator"></div>
+                    <a
+                      className="resetSettings"
+                      id="reset"
+                      onClick={this.resetForm}
+                    >
+                      {t(`option.watermark.resetAllSettings`)}
+                    </a>
+                  </div>
+                </form>
               </div>
-            </form>
 
-            <div className="canvas-container" ref={this.canvasContainerRef}>
-
+              <div
+                className="canvas-container"
+                ref={this.canvasContainerRef}
+              ></div>
             </div>
-          </div>
 
-          <div className="button-container">
-            <a className="reset button" id="reset" onClick={this.resetForm}>{t(`option.watermark.resetAllSettings`)}</a>
-            <div className="action-button-container">
-              <button className="cancel button" id="cancel" onClick={this.closeModal}>{t(`action.cancel`)}</button>
-              <button className="ok button" id="submit" onClick={this.onOkPressed}>{t(`action.ok`)}</button>
+            <div className="button-container">
+              <button
+                className="cancel button"
+                id="cancel"
+                onClick={this.closeModal}
+              >
+                {t(`action.cancel`)}
+              </button>
+              <button
+                className="ok button"
+                id="submit"
+                onClick={this.onOkPressed}
+              >
+                {t(`action.ok`)}
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      </Swipeable>
     );
   }
 }

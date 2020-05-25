@@ -6,6 +6,8 @@
     "cancel": "Abbrechen",
     "clear": "Löschen",
     "close": "Schliessen",
+    "undo": "Rückgängig machen",
+    "redo": "Bereit",
     "comment": "Kommentar",
     "copy": "Kopieren",
     "delete": "Löschen",
@@ -27,6 +29,7 @@
     "rotateClockwise": "Im Uhrzeigersinn",
     "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
     "save": "Speichern",
+    "post": "Post",
     "create": "Erzeugen",
     "showMoreResults": "Mehr Ergebnisse anzeigen",
     "sign": "Unterschrift",
@@ -39,6 +42,8 @@
     "type": "Art",
     "upload": "Hochladen",
     "link": "Verknüpfung",
+    "darkMode": "Dunkler Modus",
+    "lightMode": "Lichtmodus",
     "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter"
   },
   "annotation": {
@@ -100,10 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "Freihand-Werkzeuge",
+    "freeHandAndShapeToolsButton": "Freihand- / Formwerkzeuge",
     "leftPanel": "Linke Leiste",
+    "toolsHeader": "Werkzeuge",
     "searchOverlay": "Suche",
+    "searchPanel": "Suche",
     "menuOverlay": "Menü",
     "miscToolsButton": "Verschiedene Werkzeuge",
+    "signatureToolsButton": "Signaturwerkzeuge",
     "notesPanel": "Annotationen",
     "outlinesPanel": "Gliederung",
     "bookmarksPanel": "Lesezeichen",
@@ -112,6 +121,8 @@
     "layersPanel": "Schichten",
     "shapeToolsButton": "Formwerkzeuge",
     "textToolsButton": "Textwerkzeuge",
+    "freeTextToolsButton": "Freitext-Tools",
+    "stickyToolsButton": "Kommentare Tools",
     "thumbnailsPanel": "Miniaturansicht",
     "toolsButton": "Werkzeuge",
     "redaction": "Schwärzen",
@@ -120,6 +131,7 @@
     "calibration": "Kalibrierung"
   },
   "message": {
+    "toolsOverlayNoPresets": "Keine Voreinstellungen",
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
     "customPrintPlaceholder": "z.B. 3, 4-10",
     "encryptedAttemptsExceeded": "Fehler beim Laden des verschlüsselten Dokuments. Zu viele Versuche.",
@@ -129,6 +141,7 @@
     "noAnnotations": "Dieses Dokument hat keine Annotationen.",
     "noOutlines": "Dieses Dokument enthält keine Gliederung.",
     "noResults": "Keine Ergebnisse gefunden.",
+    "numResultsFound": "gefundene Ergebnisse",
     "notSupported": "Dieser Dateityp ist nicht unterstützt.",
     "passwordRequired": "Passwort erforderlich",
     "preparingToPrint": "Druckvorbereitung...",
@@ -138,7 +151,8 @@
     "printTotalPageCount_plural": "{{count}} Seiten",
     "processing": "Bearbeite...",
     "searching": "Suche...",
-    "searchPlaceholder": "Suche Kommentare...",
+    "searchCommentsPlaceholder": "Kommentare suchen",
+    "searchDocumentPlaceholder": "Dokument suchen",
     "signHere": "Hier unterschreiben",
     "insertTextHere": "Hier Text eingeben",
     "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
@@ -255,7 +269,7 @@
     "richText": {
       "bold": "Fett",
       "italic": "Kursiv",
-      "underline": "Unterstreichen",
+      "underline": "Unterstrichen",
       "strikeout": "Durchgestrichen"
     }
   },

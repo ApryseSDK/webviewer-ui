@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import core from 'core';
 import { isIOS } from 'helpers/device';
 import selectors from 'selectors';
+import { useTranslation } from 'react-i18next';
 
 import './TextSignature.scss';
 
@@ -15,12 +16,12 @@ const propTypes = {
   isTabPanelSelected: PropTypes.bool,
 };
 
-const FONT_SIZE = 100;
+const FONT_SIZE = 96;
 
 const TextSignature = ({
   isModalOpen,
-  _setSaveSignature,
   isTabPanelSelected,
+  createSignature,
 }) => {
   const fonts = useSelector(state => selectors.getSignatureFonts(state));
   const [value, setValue] = useState(core.getCurrentUser());
@@ -28,6 +29,7 @@ const TextSignature = ({
   const inputRef = useRef();
   const canvasRef = useRef();
   const textDivsRef = useRef([]);
+  const [t] = useTranslation();
 
   useEffect(() => {
     // this can happen when an user added a new signature font, select it and then removed it
@@ -40,14 +42,13 @@ const TextSignature = ({
   const setSignature = useCallback(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
     const canvas = canvasRef.current;
-    _setSaveSignature(!!value);
 
     if (value) {
       signatureTool.setSignature(canvas.toDataURL());
     } else {
       signatureTool.setSignature(null);
     }
-  }, [_setSaveSignature, value]);
+  }, [value]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -109,36 +110,50 @@ const TextSignature = ({
   };
 
   return (
-    <div className="text-signature">
-      <input
-        className="text-signature-input"
-        ref={inputRef}
-        type="text"
-        value={value}
-        onChange={handleInputChange}
-      />
-      <div className="text-signature-container">
-        <div className="text-signature-inner-container">
-          {fonts.map((font, index) => (
+    <React.Fragment>
+      <div className="text-signature">
+        <input
+          className="text-signature-input"
+          ref={inputRef}
+          type="text"
+          value={value}
+          onChange={handleInputChange}
+        />
+        {/* <div className="text-signature-container"> */}
+        {fonts.map((font, index) => (
+          <div
+            key={font}
+            className={classNames({
+              'text-signature-text': true,
+              active: index === activeIndex,
+            })}
+            style={{ fontFamily: font, fontSize: FONT_SIZE }}
+            onClick={() => setActiveIndex(index)}
+          >
             <div
-              key={font}
+              className="text-container"
               ref={el => {
                 textDivsRef.current[index] = el;
               }}
-              className={classNames({
-                'text-signature-text': true,
-                active: index === activeIndex,
-              })}
-              style={{ fontFamily: font, fontSize: FONT_SIZE }}
-              onClick={() => setActiveIndex(index)}
             >
               {value}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
         <canvas ref={canvasRef} />
+        {/* </div> */}
       </div>
-    </div>
+      <div
+        className="footer"
+      >
+        <div className="signature-clear" onClick={() => setValue('')}>
+          {t('action.clear')}
+        </div>
+        <div className="signature-create" onClick={createSignature}>
+          {t('action.create')}
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 

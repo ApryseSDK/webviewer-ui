@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -51,7 +50,15 @@ const ReplyArea = ({ annotation }) => {
   }, [isFocused]);
 
   useEffect(() => {
-    if (isNoteEditingTriggeredByAnnotationPopup && isSelected && !isContentEditable) {
+    textareaRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (
+      isNoteEditingTriggeredByAnnotationPopup &&
+      isSelected &&
+      !isContentEditable
+    ) {
       textareaRef.current?.focus();
     }
   }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
@@ -73,15 +80,6 @@ const ReplyArea = ({ annotation }) => {
     setValue('');
   };
 
-  const handleCancelClick = () => {
-    setValue('');
-    textareaRef.current.blur();
-  };
-
-  const replyBtnClass = classNames({
-    disabled: !value,
-  });
-
   const ifReplyNotAllowed =
     isReadOnly ||
     isReplyDisabled ||
@@ -90,7 +88,7 @@ const ReplyArea = ({ annotation }) => {
 
   return ifReplyNotAllowed ? null : (
     <div
-      className="reply-container"
+      className="reply-area-container"
       // stop bubbling up otherwise the note will be closed
       // due to annotation deselection
       onMouseDown={e => e.stopPropagation()}
@@ -98,6 +96,7 @@ const ReplyArea = ({ annotation }) => {
       <NoteTextarea
         ref={el => {
           textareaRef.current = el;
+          {/* textareaRef.current && textareaRef.current.focus(); */}
         }}
         value={value}
         onChange={value => setValue(value)}
@@ -106,15 +105,12 @@ const ReplyArea = ({ annotation }) => {
         onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}
       />
-
-      {isFocused && (
-        <div className="buttons">
-          <button className={replyBtnClass} onMouseDown={postReply}>
-            {t('action.reply')}
-          </button>
-          <button onMouseDown={handleCancelClick}>{t('action.cancel')}</button>
-        </div>
-      )}
+      <div
+        className="reply-button"
+        onClick={e => postReply(e)}
+      >
+        {t('action.post')}
+      </div>
     </div>
   );
 };

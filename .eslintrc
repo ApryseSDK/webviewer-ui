@@ -19,7 +19,7 @@
   ],
   "rules": {
     "quotes": [
-      2,
+      0,
       "single",
       {
         "allowTemplateLiterals": true

@@ -6,7 +6,7 @@ export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
     getPopupDimensions(popup)
   );
 
-  return { left, top };
+  return { left: Math.max(left, 4), top };
 };
 
 export const getTextPopupPositionBasedOn = (allQuads, popup) => {

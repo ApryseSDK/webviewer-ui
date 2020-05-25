@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import onClickOutside from 'react-onclickoutside';
 
 import ActionButton from 'components/ActionButton';
@@ -9,7 +10,6 @@ import ToolButton from 'components/ToolButton';
 import Button from 'components/Button';
 
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import getClassName from 'helpers/getClassName';
 import applyRedactions from 'helpers/applyRedactions';
 import { isDesktop } from 'helpers/device';
 
@@ -87,12 +87,14 @@ class RedactionOverlay extends React.PureComponent {
     const { left, right } = this.state;
     const { isDisabled, isOpen } = this.props;
 
-    if (isDisabled || !isOpen || !core.isCreateRedactionEnabled()) {
+    if (isDisabled) {
       return null;
     }
-    const showApply = core.isApplyRedactionEnabled();
 
-    const className = getClassName('Overlay RedactionOverlay', this.props);
+    const className = classNames({
+      'Overlay': true,
+      'RedactionOverlay': true,
+    });
 
     return (
       // TODO ask if there an easy way to keep the tool group as "redact"
@@ -103,15 +105,12 @@ class RedactionOverlay extends React.PureComponent {
         data-element="redactionOverlay"
       >
         <ToolButton toolName="AnnotationCreateRedaction" />
-        {showApply && (
-          <ActionButton
-            dataElement="applyAllButton"
-            title="action.applyAll"
-            img="ic_check_black_24px"
-            onClick={this.handleApplyButtonClick}
-          />
-        )}
-
+        <ActionButton
+          dataElement="applyAllButton"
+          title="action.applyAll"
+          img="ic_check_black_24px"
+          onClick={this.handleApplyButtonClick}
+        />
         <div className="spacer hide-in-desktop" />
         <Button
           className="close hide-in-desktop"
