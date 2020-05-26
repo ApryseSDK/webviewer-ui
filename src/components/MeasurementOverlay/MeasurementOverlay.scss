@@ -21,6 +21,11 @@
   & > * {
     margin: 6px;
   }
+
+  &.transparent {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
 
 .measurement__title {
