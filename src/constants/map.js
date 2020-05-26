@@ -183,7 +183,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreatePolygon'],
+    toolNames: [
+      'AnnotationCreatePolygon',
+      'AnnotationCreatePolygon2',
+      'AnnotationCreatePolygon3',
+      'AnnotationCreatePolygon4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.Style !== 'cloudy',
@@ -193,7 +198,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreatePolygonCloud'],
+    toolNames: [
+      'AnnotationCreatePolygonCloud',
+      'AnnotationCreatePolygonCloud2',
+      'AnnotationCreatePolygonCloud3',
+      'AnnotationCreatePolygonCloud4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.Style === 'cloudy',

@@ -41,6 +41,12 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateEllipse2 = new window.Tools.EllipseCreateTool(docViewer, 'AnnotationCreateEllipse2');
   toolModeMap.AnnotationCreateEllipse3 = new window.Tools.EllipseCreateTool(docViewer, 'AnnotationCreateEllipse3');
   toolModeMap.AnnotationCreateEllipse4 = new window.Tools.EllipseCreateTool(docViewer, 'AnnotationCreateEllipse4');
+  toolModeMap.AnnotationCreatePolygon2 = new window.Tools.PolygonCreateTool(docViewer, 'AnnotationCreatePolygon2');
+  toolModeMap.AnnotationCreatePolygon3 = new window.Tools.PolygonCreateTool(docViewer, 'AnnotationCreatePolygon3');
+  toolModeMap.AnnotationCreatePolygon4 = new window.Tools.PolygonCreateTool(docViewer, 'AnnotationCreatePolygon4');
+  toolModeMap.AnnotationCreatePolygonCloud2 = new window.Tools.PolygonCloudCreateTool(docViewer, 'AnnotationCreatePolygonCloud2');
+  toolModeMap.AnnotationCreatePolygonCloud3 = new window.Tools.PolygonCloudCreateTool(docViewer, 'AnnotationCreatePolygonCloud3');
+  toolModeMap.AnnotationCreatePolygonCloud4 = new window.Tools.PolygonCloudCreateTool(docViewer, 'AnnotationCreatePolygonCloud4');
   toolModeMap.AnnotationCreateLine2 = new window.Tools.LineCreateTool(docViewer, 'AnnotationCreateLine2');
   toolModeMap.AnnotationCreateLine3 = new window.Tools.LineCreateTool(docViewer, 'AnnotationCreateLine3');
   toolModeMap.AnnotationCreateLine4 = new window.Tools.LineCreateTool(docViewer, 'AnnotationCreateLine4');

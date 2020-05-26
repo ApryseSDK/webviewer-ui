@@ -66,67 +66,85 @@ export default {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateArrow2: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateArrow3: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateArrow4: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateLine: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateLine2: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateLine3: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateLine4: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreatePolyline: {
-    StrokeColor: { R: 37, G: 210, B: 209, A: 1 },
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreatePolyline2: {
-    StrokeColor: { R: 37, G: 210, B: 209, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreatePolyline3: {
-    StrokeColor: { R: 37, G: 210, B: 209, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreatePolyline4: {
-    StrokeColor: { R: 37, G: 210, B: 209, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreatePolygonCloud: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
+  AnnotationCreatePolygonCloud2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreatePolygonCloud3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreatePolygonCloud4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
   AnnotationCreatePolygon: {
-    StrokeColor: { R: 255, G: 141, B: 0, A: 1 },
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreatePolygon2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreatePolygon3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreatePolygon4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateRectangle: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateRectangle2: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateRectangle3: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateRectangle4: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateEllipse: {
-    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateEllipse2: {
     StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateEllipse3: {
-    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateEllipse4: {
-    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateFreeHand: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },

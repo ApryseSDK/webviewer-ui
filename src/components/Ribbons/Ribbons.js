@@ -9,7 +9,7 @@ import { withTranslation } from 'react-i18next';
 
 import "./Ribbons.scss";
 
-const Ribbons = ({ screens, currentScreen, setToolbarScreen, t }) => {
+const Ribbons = ({ screens, currentScreen, setToolbarScreen, closeElements, t }) => {
 
   return (
     <div
@@ -69,6 +69,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   setToolbarScreen: actions.setToolbarScreen,
+  closeElements: actions.closeElements,
 };
 
 const ConnectedRibbons = connect(

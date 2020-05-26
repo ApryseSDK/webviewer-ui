@@ -16,7 +16,6 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import ToolButton from 'components/ToolButton';
 import HorizontalDivider from 'components/HorizontalDivider';
-import defaultTool from 'constants/defaultTool';
 
 import './ToolStylePopup.scss';
 
@@ -40,12 +39,6 @@ class ToolStylePopup extends React.PureComponent {
       top: 0,
     };
   }
-
-  componentDidMount() {
-    // window.addEventListener('resize', this.close);
-    this.positionToolStylePopup();
-  }
-
   componentDidUpdate(prevProps) {
     this.positionToolStylePopup();
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
@@ -57,10 +50,6 @@ class ToolStylePopup extends React.PureComponent {
         'redactionOverlay',
       ]);
     }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.close);
   }
 
   handleClick = e => {
@@ -75,28 +64,13 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   handleClickOutside = e => {
-    const { activeToolName } = this.props;
-    const documentContainer = document.querySelector(
-      '[data-element="documentContainer"]',
+    const toolsOverlay = document.querySelector(
+      '[data-element="toolsOverlay"]',
     );
-    // const toolsOverlay = document.querySelector(
-    //   '[data-element="toolsOverlay"]',
-    // );
-    // const header = document.querySelector('[data-element="header"]');
-    const clickedDocumentContainer= documentContainer?.contains(e.target);
-    // const clickedHeader = header?.contains(e.target);
-
-    if (clickedDocumentContainer) {
-      this.close();
-      if (activeToolName === 'AnnotationCreateRubberStamp') {
-        core.setToolMode(defaultTool);
-        // this.props.setActiveToolGroup('');
-      }
+    const clickedOnToolsOverlay = toolsOverlay?.contains(e.target);
+    if (!clickedOnToolsOverlay) {
+      this.props.closeElement('toolStylePopup');
     }
-  };
-
-  close = () => {
-    this.props.closeElement('toolStylePopup');
   };
 
   handleStyleChange = (property, value) => {
