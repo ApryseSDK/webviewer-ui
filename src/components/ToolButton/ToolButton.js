@@ -81,10 +81,6 @@ const ToolButton = ({
         }
       }
     } else {
-      if (group === 'miscTools') {
-        dispatch(actions.closeElement("toolStylePopup"));
-      }
-
       core.setToolMode(toolName);
       dispatch(actions.setActiveToolGroup(group));
       if (toolName === "AnnotationCreateRubberStamp") {

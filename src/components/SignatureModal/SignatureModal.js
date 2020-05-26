@@ -15,7 +15,7 @@ import { Swipeable } from 'react-swipeable';
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
-  const [isDisabled, isOpen, activeToolName, savedSignatures2] = useSelector(state => [
+  const [isDisabled, isOpen, activeToolName, savedSignatures] = useSelector(state => [
     selectors.isElementDisabled(state, 'signatureModal'),
     selectors.isElementOpen(state, 'signatureModal'),
     selectors.getActiveToolName(state),
@@ -61,7 +61,7 @@ const SignatureModal = () => {
     if (!signatureTool.isEmptySignature()) {
       signatureTool.saveSignatures(signatureTool.annot);
 
-      dispatch(actions.setSelectedSignatureIndex(savedSignatures2.length));
+      dispatch(actions.setSelectedSignatureIndex(savedSignatures.length));
       signatureTool.setSignature(signatureTool.annot);
       core.setToolMode('AnnotationCreateSignature');
       signatureTool.showPreview();

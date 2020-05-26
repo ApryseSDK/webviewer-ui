@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import onClickOutside from 'react-onclickoutside';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
@@ -36,6 +37,13 @@ class Dropdown extends React.PureComponent {
       isOpen: false,
     });
   }
+
+  handleClickOutside = e => {
+    this.setState({
+      isOpen: false,
+    });
+  }
+
 
   renderDropdownItems = () => {
     const { items, currentSelectionKey } = this.props;
@@ -90,4 +98,4 @@ const mapDispatchToProps = {
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dropdown));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(Dropdown)));

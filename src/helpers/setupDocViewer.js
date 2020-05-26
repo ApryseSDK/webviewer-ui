@@ -59,9 +59,9 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateAreaMeasurement2 = new window.Tools.AreaMeasurementCreateTool(docViewer, 'AnnotationCreateAreaMeasurement2');
   toolModeMap.AnnotationCreateAreaMeasurement3 = new window.Tools.AreaMeasurementCreateTool(docViewer, 'AnnotationCreateAreaMeasurement3');
   toolModeMap.AnnotationCreateAreaMeasurement4 = new window.Tools.AreaMeasurementCreateTool(docViewer, 'AnnotationCreateAreaMeasurement4');
-  toolModeMap.AnnotationCreateEllipseMeasurement2 = new window.Tools.AreaMeasurementCreateTool(docViewer, 'AnnotationCreateEllipseMeasurement2');
-  toolModeMap.AnnotationCreateEllipseMeasurement3 = new window.Tools.AreaMeasurementCreateTool(docViewer, 'AnnotationCreateEllipseMeasurement3');
-  toolModeMap.AnnotationCreateEllipseMeasurement4 = new window.Tools.AreaMeasurementCreateTool(docViewer, 'AnnotationCreateEllipseMeasurement4');
+  toolModeMap.AnnotationCreateEllipseMeasurement2 = new window.Tools.EllipseMeasurementCreateTool(docViewer, 'AnnotationCreateEllipseMeasurement2');
+  toolModeMap.AnnotationCreateEllipseMeasurement3 = new window.Tools.EllipseMeasurementCreateTool(docViewer, 'AnnotationCreateEllipseMeasurement3');
+  toolModeMap.AnnotationCreateEllipseMeasurement4 = new window.Tools.EllipseMeasurementCreateTool(docViewer, 'AnnotationCreateEllipseMeasurement4');
   toolModeMap.AnnotationCreateRectangularAreaMeasurement2 = new window.Tools.RectangularAreaMeasurementCreateTool(docViewer, 'AnnotationCreateRectangularAreaMeasurement2');
   toolModeMap.AnnotationCreateRectangularAreaMeasurement3 = new window.Tools.RectangularAreaMeasurementCreateTool(docViewer, 'AnnotationCreateRectangularAreaMeasurement3');
   toolModeMap.AnnotationCreateRectangularAreaMeasurement4 = new window.Tools.RectangularAreaMeasurementCreateTool(docViewer, 'AnnotationCreateRectangularAreaMeasurement4');

@@ -166,7 +166,8 @@
       "Draw": "Draw",
       "Fill&Sign": "Fill & Sign",
       "Insert": "Insert",
-      "Measure": "Measure"
+      "Measure": "Measure",
+      "Edit": "Edit"
     },
     "annotationColor": {
       "StrokeColor": "Stroke",

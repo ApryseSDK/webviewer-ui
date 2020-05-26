@@ -207,6 +207,37 @@ export default {
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
           { type: 'spacer' },
         ],
+        Edit: [
+          { type: 'spacer' },
+          { type: 'toolGroupButton', toolGroup: 'cropTools', dataElement: 'cropToolGroupButton', title: 'component.measurementToolsButton' },
+          { type: 'toolGroupButton', toolGroup: 'redactionTools', dataElement: 'redactionToolGroupButton', title: 'component.measurementToolsButton' },
+          {
+            type: 'customElement',
+            render: () => <ToolsOverlay />,
+            dataElement: 'toolsOverlay',
+          },
+          { type: 'divider' },
+          {
+            type: 'actionButton',
+            dataElement: 'undoButton',
+            title: 'action.undo',
+            img: 'icon-operation-undo',
+            onClick: () => {
+              core.undo();
+            },
+          },
+          {
+            type: 'actionButton',
+            dataElement: 'redoButton',
+            title: 'action.redo',
+            img: 'icon-operation-redo',
+            onClick: () => {
+              core.redo();
+            },
+          },
+          { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+          { type: 'spacer' },
+        ],
       },
     },
     annotationPopup: [
@@ -316,8 +347,8 @@ export default {
         AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.signature', img: 'icon-tool-signature', group: 'signatureTools', showColor: 'active' },
         AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'icon-tool-image-line', group: 'stampTools', showColor: 'active' },
         AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'icon-tool-stamp-line', group: 'rubberStampTools', showColor: 'active' },
-        CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'miscTools' },
-        AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'icon-tool-redaction-inline', group: 'miscTools', showColor: 'never' },
+        CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'cropTools' },
+        AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'icon-tool-redaction-inline', group: 'redactionTools', showColor: 'never' },
         Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
         AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
         TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },

@@ -93,10 +93,6 @@ class ToolsOverlay extends React.PureComponent {
 
   componentWillUnmount() {
     const { activeToolGroup } = this.props;
-    if (activeToolGroup === 'miscTools') {
-      core.setToolMode(defaultTool);
-      this.props.setActiveToolGroup('');
-    }
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
@@ -154,18 +150,17 @@ class ToolsOverlay extends React.PureComponent {
       }
     }
 
-    // const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
     const isVisible = (isOpen || isDesktop) && !isDisabled;
-
-    let dropdownButton = (
+    const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools';
+    const dropdownButton = (
       <div
         className={classNames({
           "styling-arrow-container": true,
           active: isToolStyleOpen,
-          disabled: !activeToolGroup,
+          disabled: noPresets,
         })}
         data-element="styling-button"
-        onClick={() => activeToolGroup && this.props.toggleElement('toolStylePopup')}
+        onClick={() => !noPresets && this.props.toggleElement('toolStylePopup')}
       >
         <Icon glyph="icon-menu-style-line" />
         {isToolStyleOpen ?
@@ -173,16 +168,6 @@ class ToolsOverlay extends React.PureComponent {
           <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
       </div>
     );
-
-    if (swapableToolNames.length > 0) {
-      dropdownButton = (
-        <ToolsDropdown
-          onClick={() => this.props.toggleElement('toolStylePopup')}
-          isActive={isToolStyleOpen}
-          style={{ width: '40px' }}
-        />
-      );
-    }
 
     let Component = (
       <React.Fragment>
@@ -192,7 +177,7 @@ class ToolsOverlay extends React.PureComponent {
             toolName={toolName}
           />
         ))}
-        {activeToolGroup !== 'miscTools' && dropdownButton}
+        {dropdownButton}
       </React.Fragment>
     );
 
@@ -200,7 +185,11 @@ class ToolsOverlay extends React.PureComponent {
       Component = (
         <SelectedSignatureRow/>
       );
-    } else if (!activeToolGroup) {
+    } else if (activeToolGroup === 'rubberStampTools') {
+      Component = (
+        <SelectedSignatureRow/>
+      );
+    } else if (noPresets) {
       Component = (
         <React.Fragment>
           <div className="no-presets-container">{t('message.toolsOverlayNoPresets')}</div>

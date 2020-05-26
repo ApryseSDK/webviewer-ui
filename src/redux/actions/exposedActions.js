@@ -38,7 +38,11 @@ export const setToolbarScreen = screen => (dispatch, getState) => {
     dispatch(openElements(['toolsHeader']));
     const firstToolGroupForScreen = getFirstToolGroupForScreen(getState(), screen);
     const toolName = getFirstToolNameForGroup(getState(), firstToolGroupForScreen);
-    core.setToolMode(toolName);
+    if (toolName === 'AnnotationCreateSignature') {
+      core.setToolMode(defaultTool);
+    } else {
+      core.setToolMode(toolName);
+    }
     dispatch({
       type: 'SET_ACTIVE_TOOL_GROUP',
       payload: { toolGroup: firstToolGroupForScreen },

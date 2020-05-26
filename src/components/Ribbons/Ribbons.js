@@ -59,6 +59,10 @@ const mapStateToProps = (state, ownProps) => ({
       key: 'Measure',
       translationKey: 'option.toolbarScreen.Measure',
     },
+    {
+      key: 'Edit',
+      translationKey: 'option.toolbarScreen.Edit',
+    },
   ],
   currentScreen: selectors.getScreen(state),
 });

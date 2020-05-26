@@ -88,7 +88,7 @@ class ToolGroupButton extends React.PureComponent {
       setActiveToolGroup('');
     } else {
       closeElement('toolStylePopup');
-      if (toolGroup === 'miscTools' || toolGroup === 'signatureTools') {
+      if (toolGroup === 'signatureTools') {
         core.setToolMode(defaultTool);
       } else {
         core.setToolMode(toolName);
