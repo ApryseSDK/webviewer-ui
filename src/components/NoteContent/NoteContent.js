@@ -32,7 +32,7 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
+const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
   const [
     noteDateFormat,
     iconColor,
@@ -51,7 +51,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
   const { isSelected, searchInput, resize, isContentEditable } = useContext(
     NoteContext,
   );
-  // const [isEditing, setIsEditing] = useState(false);
+
   const [textAreaValue, setTextAreaValue] = useState(
     annotation.getCustomData('trn-mention')?.contents || annotation.getContents()
   );
@@ -75,7 +75,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing }) => {
       isSelected &&
       isContentEditable
     ) {
-      setIsEditing(true);
+      setIsEditing(true, noteIndex);
     }
   }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected, setIsEditing]);
 
@@ -195,6 +195,7 @@ export default NoteContent;
 // a component that contains the content textarea, the save button and the cancel button
 const ContentArea = ({
   annotation,
+  noteIndex,
   setIsEditing,
   textAreaValue,
   onTextAreaValueChange,
@@ -236,7 +237,7 @@ const ContentArea = ({
       core.drawAnnotationsFromList([annotation]);
     }
 
-    setIsEditing(false);
+    setIsEditing(false, noteIndex);
   };
 
   return (
@@ -255,7 +256,7 @@ const ContentArea = ({
           className="cancel-button"
           onClick={e => {
             e.stopPropagation();
-            setIsEditing(false);
+            setIsEditing(false, noteIndex);
             onTextAreaValueChange(contents);
           }}
         >
@@ -276,6 +277,7 @@ const ContentArea = ({
 };
 
 ContentArea.propTypes = {
+  noteIndex: PropTypes.number.isRequired,
   annotation: PropTypes.object.isRequired,
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,
