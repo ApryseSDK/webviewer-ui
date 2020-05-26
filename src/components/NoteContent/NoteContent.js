@@ -156,6 +156,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
             }
             {!isEditing && isSelected &&
               <NotePopup
+                noteIndex={noteIndex}
                 annotation={annotation}
                 setIsEditing={setIsEditing}
               />}
@@ -166,6 +167,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
             textAreaValue={textAreaValue}
             onTextAreaValueChange={setTextAreaValue}
             annotation={annotation}
+            noteIndex={noteIndex}
             setIsEditing={setIsEditing}
           />
         ) : (
