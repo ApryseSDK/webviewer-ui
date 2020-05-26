@@ -6,61 +6,61 @@ export default {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateRectangularAreaMeasurement2: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateRectangularAreaMeasurement3: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateRectangularAreaMeasurement4: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateEllipseMeasurement: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateEllipseMeasurement2: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateEllipseMeasurement3: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateEllipseMeasurement4: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateAreaMeasurement: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateAreaMeasurement2: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateAreaMeasurement3: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateAreaMeasurement4: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreatePerimeterMeasurement: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreatePerimeterMeasurement2: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreatePerimeterMeasurement3: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreatePerimeterMeasurement4: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateDistanceMeasurement: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateDistanceMeasurement2: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateDistanceMeasurement3: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateDistanceMeasurement4: {
-    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateArrow: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
@@ -141,25 +141,25 @@ export default {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateFreeText: {
-    TextColor: { R: 78, G: 125, B: 233, A: 1 },
+    TextColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateFreeText2: {
     TextColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateFreeText3: {
-    TextColor: { R: 228, G: 66, B: 52, A: 1 },
+    TextColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateFreeText4: {
     TextColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateCallout: {
-    TextColor: { R: 78, G: 125, B: 233, A: 1 },
+    TextColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateCallout2: {
     TextColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateCallout3: {
-    TextColor: { R: 228, G: 66, B: 52, A: 1 },
+    TextColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateCallout4: {
     TextColor: { R: 0, G: 122, B: 59, A: 1 },

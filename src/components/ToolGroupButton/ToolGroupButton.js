@@ -27,12 +27,14 @@ class ToolGroupButton extends React.PureComponent {
     toolNames: PropTypes.arrayOf(PropTypes.string),
     toolButtonObjects: PropTypes.object,
     allButtonsInGroupDisabled: PropTypes.bool,
+    isToolGroupButtonDisabled: PropTypes.bool,
     openElement: PropTypes.func.isRequired,
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
     isActive: PropTypes.bool.isRequired,
     showColor: PropTypes.string,
+    palette: PropTypes.string,
   };
 
   constructor(props) {
@@ -101,20 +103,6 @@ class ToolGroupButton extends React.PureComponent {
     }
   };
 
-  getColor = () => {
-    const { isActive, showColor } = this.props;
-    const { toolName } = this.state;
-    const { iconColor } = getDataWithKey(mapToolNameToKey(toolName));
-
-    let color = '';
-    if (showColor === 'always' || (showColor === 'active' && isActive)) {
-      const toolStyles = getToolStyles(toolName);
-      color = toolStyles?.[iconColor]?.toHexString?.();
-    }
-
-    return color;
-  };
-
   render() {
     const {
       mediaQueryClassName,
@@ -123,7 +111,8 @@ class ToolGroupButton extends React.PureComponent {
       isActive,
       isToolGroupButtonDisabled,
       allButtonsInGroupDisabled,
-      iconColor,
+      palette,
+      showColor,
       title,
     } = this.props;
     const { toolName } = this.state;
@@ -131,9 +120,9 @@ class ToolGroupButton extends React.PureComponent {
       ? this.props.img
       : toolButtonObjects[toolName]?.img;
     const color =
-      isActive && !this.props.img && iconColor
-        ? getToolStyles(toolName)[iconColor] &&
-          getToolStyles(toolName)[iconColor].toHexString()
+      (showColor !== 'never' && isActive) && palette
+        ? getToolStyles(toolName)[palette] &&
+          getToolStyles(toolName)[palette].toHexString()
         : '';
 
     return (isToolGroupButtonDisabled || allButtonsInGroupDisabled) ? null : (
@@ -167,7 +156,7 @@ const mapStateToProps = (state, ownProps) => ({
   toolButtonObjects: selectors.getToolButtonObjects(state),
   isToolGroupButtonDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
   allButtonsInGroupDisabled: selectors.allButtonsInGroupDisabled(state, ownProps.toolGroup),
-  iconColor: selectors.getIconColor(
+  palette: selectors.getIconColor(
     state,
     mapToolNameToKey(selectors.getActiveToolName(state)),
   ),

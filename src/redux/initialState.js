@@ -27,7 +27,7 @@ export default {
     },
     headers: {
       default: [
-        { type: 'toggleElementButton', img: 'icon-header-sidebar-line', activeImg: 'icon-header-sidebar-fill', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
+        { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
         { type: 'divider' },
         { type: 'toggleElementButton', img: 'icon-header-page manipulation-line', element: 'viewControlsOverlay', dataElement: 'viewControlsButton', title: 'component.viewControlsOverlay' },
         {
@@ -54,7 +54,7 @@ export default {
         },
         { type: 'spacer' },
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },
-        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', activeImg: 'icon-header-chat-fill', title: 'component.notesPanel' },
+        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
         {
           type: 'customElement',
@@ -210,7 +210,7 @@ export default {
         Edit: [
           { type: 'spacer' },
           { type: 'toolGroupButton', toolGroup: 'cropTools', dataElement: 'cropToolGroupButton', title: 'component.measurementToolsButton' },
-          { type: 'toolGroupButton', toolGroup: 'redactionTools', dataElement: 'redactionToolGroupButton', title: 'component.measurementToolsButton' },
+          { type: 'toolGroupButton', toolGroup: 'redactionTools', dataElement: 'redactionToolGroupButton', title: 'component.measurementToolsButton', showColor: 'never' },
           {
             type: 'customElement',
             render: () => <ToolsOverlay />,

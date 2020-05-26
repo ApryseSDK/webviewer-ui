@@ -38,7 +38,6 @@ const Button = props => {
     isActive,
     mediaQueryClassName,
     img,
-    activeImg,
     label,
     color,
     dataElement,
@@ -51,9 +50,6 @@ const Button = props => {
   const isBase64 = img?.trim().startsWith('data:');
 
   const imgToShow = img;
-  // if (isActive && activeImg) {
-  //   imgToShow = activeImg;
-  // }
 
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
