@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import core from 'core';
 import { isMobileDevice } from 'helpers/device';
+import selectors from 'selectors';
 
 function LineMeasurementInput(props) {
   const { t, annotation, isOpen } = props;
+  const isReadOnly = useSelector(state => selectors.isDocumentReadOnly(state));
   const factor = annotation.Measure.axis[0].factor;
   const unit = annotation.Scale[1][1];
   const [length, setLength] = useState((annotation.getLineLength() * factor).toFixed(2));
@@ -132,11 +136,12 @@ function LineMeasurementInput(props) {
   return (
     <div>
       <div className="measurement__value">
-        {t('option.measurementOverlay.distance')}:
+        {t('option.measurementOverlay.distance')}: {' '}
         <input
           className="lineMeasurementInput"
           type="number"
           min="0"
+          disabled={isReadOnly}
           value={length}
           autoFocus={!isMobileDevice}
           onChange={event => {
@@ -153,11 +158,12 @@ function LineMeasurementInput(props) {
         /> {unit}
       </div>
       <div className="angle_input">
-        {t('option.measurementOverlay.angle')}:
+        {t('option.measurementOverlay.angle')}: {' '}
         <input className="lineMeasurementInput"
           type="number"
           min="0"
           max="360"
+          disabled={isReadOnly}
           value={angle}
           onChange={event => {
             onAngleChange(event);

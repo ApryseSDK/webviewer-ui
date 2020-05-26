@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
+
 import Icon from 'components/Icon';
+
 import core from 'core';
+import selectors from 'selectors';
 import getClassName from 'helpers/getClassName';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 import { isMobileDevice } from 'src/helpers/device';
 
 function EllipseMeasurementOverlay(props) {
   const { t, annotation, isOpen } = props;
+  const isReadOnly = useSelector(state => selectors.isDocumentReadOnly(state));
   const annotationKey = mapAnnotationToKey(annotation);
   const { icon } = getDataWithKey(annotationKey);
   const scale = annotation.Scale;
@@ -135,6 +140,7 @@ function EllipseMeasurementOverlay(props) {
           className="lineMeasurementInput"
           type="number"
           min="0"
+          disabled={isReadOnly}
           value={radius}
           onChange={event => {
             onChangeRadiusLength(event);
