@@ -12,7 +12,7 @@ import './TextSignature.scss';
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
-  _setSaveSignature: PropTypes.func.isRequired,
+  createSignature: PropTypes.func.isRequired,
   isTabPanelSelected: PropTypes.bool,
 };
 

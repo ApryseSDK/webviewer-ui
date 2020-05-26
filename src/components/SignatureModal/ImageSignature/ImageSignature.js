@@ -8,8 +8,8 @@ import './ImageSignature.scss';
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
-  _setSaveSignature: PropTypes.func.isRequired,
   isTabPanelSelected: PropTypes.bool,
+  createSignature: PropTypes.func.isRequired,
 };
 
 const acceptedFileTypes = ['png', 'jpg', 'jpeg'];

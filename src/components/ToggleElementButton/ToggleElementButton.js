@@ -40,7 +40,7 @@ const ToggleElementButton = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let isActive = selectors.isElementOpen(state, ownProps.element);
+  const isActive = selectors.isElementOpen(state, ownProps.element);
 
   return {
     isElementDisabled: selectors.isElementDisabled(state, ownProps.dataElement),

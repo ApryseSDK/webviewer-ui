@@ -19,7 +19,7 @@ const propTypes = {
   color: PropTypes.string,
   dataElement: PropTypes.string,
   className: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 
 const NOOP = () => {};
@@ -50,7 +50,7 @@ const Button = props => {
 
   const isBase64 = img?.trim().startsWith('data:');
 
-  let imgToShow = img;
+  const imgToShow = img;
   // if (isActive && activeImg) {
   //   imgToShow = activeImg;
   // }
