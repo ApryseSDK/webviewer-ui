@@ -1,7 +1,7 @@
 export default (property, defaultValue) => {
   const defaultType = typeof defaultValue;
 
-  const result = getWindowHash().split('&').reduce(function (result, item) {
+  const result = getWindowHash().split('&').reduce(function(result, item) {
     var parts = item.split('=');
     result[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
     return result;

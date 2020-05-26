@@ -156,7 +156,7 @@ const getPopupDimensions = popup => {
 };
 
 const calcAnnotationPopupPosition = (annotationPosition, popupDimension) => {
-  const approximateHeight = 350;
+  const approximateHeight = 375;
   const top = calcPopupTop(annotationPosition, popupDimension, approximateHeight);
   const left = calcPopupLeft(annotationPosition, popupDimension);
 

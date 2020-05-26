@@ -17,7 +17,7 @@ const propTypes = {
   setIsEditing: PropTypes.func.isRequired,
 };
 
-const NotePopup = ({ annotation, setIsEditing }) => {
+const NotePopup = ({ annotation, setIsEditing, noteIndex }) => {
   const [
     notePopupId,
     isDisabled,
@@ -82,7 +82,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     if (isFreeText) {
       core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
     } else {
-      setIsEditing(true);
+      setIsEditing(true, noteIndex);
     }
   };
 

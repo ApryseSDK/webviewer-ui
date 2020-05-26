@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext, useState } from 'react';
+import React, { useEffect, useRef, useContext, useState, useCallback } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
@@ -104,15 +104,23 @@ const Note = ({ annotation }) => {
 
   const showReplyArea = !Object.values(isEditingMap).some(val => val);
 
+  const setIsEditing = useCallback(
+    (isEditing, index) => {
+      setIsEditingMap(map => ({
+        ...map,
+        [index]: isEditing,
+      }));
+    },
+    [setIsEditingMap],
+  );
+
   return (
     <div ref={containerRef} className={noteClass} onClick={handleNoteClick}>
       <NoteContent
+        noteIndex={0}
         annotation={annotation}
         isSelected={isSelected}
-        setIsEditing={isEditing => setIsEditingMap(map => ({
-          ...map,
-          0: isEditing,
-        }))}
+        setIsEditing={setIsEditing}
         isEditing={isEditingMap[0]}
       />
       {isSelected && (
@@ -121,12 +129,10 @@ const Note = ({ annotation }) => {
           <div className={repliesClass}>
             {replies.map((reply, i) => (
               <NoteContent
+                noteIndex={i+1}
                 key={reply.Id}
                 annotation={reply}
-                setIsEditing={isEditing => setIsEditingMap(map => ({
-                  ...map,
-                  [i + 1]: isEditing,
-                }))}
+                setIsEditing={setIsEditing}
                 isEditing={isEditingMap[i + 1]}
               />
             ))}
