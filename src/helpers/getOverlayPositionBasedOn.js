@@ -10,7 +10,13 @@ export default (element, overlay, isTabletAndMobile) => {
     return { left: -9999, right };
   }
 
-  const { top: buttonTop, bottom: buttonBottom, left: buttonLeft, right: buttonRight, width: buttonWidth } = button.getBoundingClientRect();
+  const {
+    top: buttonTop,
+    bottom: buttonBottom,
+    left: buttonLeft,
+    right: buttonRight,
+    width: buttonWidth,
+  } = button.getBoundingClientRect();
   const { width: overlayWidth } = overlay.current.getBoundingClientRect();
 
   // if (align === 'left') {
@@ -22,8 +28,8 @@ export default (element, overlay, isTabletAndMobile) => {
     left = buttonLeft;
     right = 'auto';
   }
-  // } 
-  
+  // }
+
   // Never used
   // else if (align === 'center') {
   //   if (buttonLeft + (overlayWidth + buttonWidth) / 2 > window.innerWidth) {
@@ -42,5 +48,10 @@ export default (element, overlay, isTabletAndMobile) => {
   //   right = 'auto';
   //   left = buttonLeft - (overlayWidth - buttonWidth);
   // }
-  return { left, right, top: buttonBottom + (isTabletAndMobile ? 14 : 6) };
+
+  return {
+    left: !isNaN(left) ? Math.max(left, 0) : left,
+    right,
+    top: buttonBottom + (isTabletAndMobile ? 14 : 6),
+  };
 };

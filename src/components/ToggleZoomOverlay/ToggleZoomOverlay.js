@@ -9,6 +9,7 @@ import { zoomTo, zoomIn, zoomOut } from 'helpers/zoom';
 import selectors from 'selectors';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
+import zoomFactors from 'constants/zoomFactors';
 
 import './ToggleZoomOverlay.scss';
 
@@ -52,7 +53,10 @@ const ToggleZoomOverlay = () => {
       if (e.target.value === '') {
         setValue(zoom);
       } else {
-        zoomTo(Number(e.target.value) / 100);
+        let zoomValue = (e.target.value) / 100;
+        zoomValue = Math.max(zoomValue, zoomFactors.getMinZoomLevel());
+        zoomValue = Math.min(zoomValue, zoomFactors.getMaxZoomLevel());
+        zoomTo(zoomValue);
       }
     }
   };

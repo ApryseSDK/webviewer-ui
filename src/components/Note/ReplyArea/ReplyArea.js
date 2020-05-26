@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +7,7 @@ import NoteContext from 'components/Note/Context';
 import NoteTextarea from 'components/NoteTextarea';
 
 import core from 'core';
+import mentionsManager from 'helpers/MentionsManager';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -22,15 +22,17 @@ const ReplyArea = ({ annotation }) => {
     isReadOnly,
     isReplyDisabled,
     isReplyDisabledForAnnotation,
+    isMentionEnabled,
     isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector(
     state => [
       selectors.isDocumentReadOnly(state),
       selectors.isElementDisabled(state, 'noteReply'),
       selectors.getIsReplyDisabled(state)?.(annotation),
+      selectors.getIsMentionEnabled(state),
       selectors.getIsNoteEditing(state),
     ],
-    shallowEqual,
+    shallowEqual
   );
   const { resize, isContentEditable, isSelected } = useContext(NoteContext);
   const [isFocused, setIsFocused] = useState(false);
@@ -65,10 +67,17 @@ const ReplyArea = ({ annotation }) => {
     // prevent the textarea from blurring out
     e.preventDefault();
 
-    if (value) {
-      core.createAnnotationReply(annotation, value);
-      setValue('');
+    if (!value) {
+      return;
     }
+
+    if (isMentionEnabled) {
+      mentionsManager.createMentionReply(annotation, value);
+    } else {
+      core.createAnnotationReply(annotation, value);
+    }
+
+    setValue('');
   };
 
   const ifReplyNotAllowed =
@@ -91,7 +100,7 @@ const ReplyArea = ({ annotation }) => {
         }}
         value={value}
         onChange={value => setValue(value)}
-        onSubmit={e => postReply(e)}
+        onSubmit={postReply}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}

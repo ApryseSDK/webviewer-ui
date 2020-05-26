@@ -56,6 +56,8 @@ import getShowSideWindow from './getShowSideWindow';
 import getSideWindowVisibility from './getSideWindowVisibility';
 import getToolMode from './getToolMode';
 import getZoomLevel from './getZoomLevel';
+import getMaxZoomLevel from './getMaxZoomLevel';
+import getMinZoomLevel from './getMinZoomLevel';
 import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
@@ -158,6 +160,8 @@ export default store => {
     getLayoutMode: getLayoutMode(store),
     getToolMode,
     getZoomLevel,
+    getMaxZoomLevel,
+    getMinZoomLevel,
     hotkeys,
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),

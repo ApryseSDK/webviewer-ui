@@ -1,47 +1,53 @@
 @import '../../../constants/styles';
 
+.mention-element {
+  width: 100%;
+}
+
 .mention {
   &__control {
-    background-color: $white;
+    background: var(--component-background);
     font-size: 14px;
     font-weight: normal;
-    border: 1px solid silver;
+    border: 1px solid var(--border);
     border-radius: 4px;
   }
 
   &__highlighter {
     overflow: hidden;
-    padding: 9px;
+    padding: 5px;
   }
 
   &__input {
-    padding: 5px;
     border: none;
   }
 
   &__suggestions {
-    // margin: 5px 15px;
+    background-color: var(--component-background)!important;
+    border: 1px solid var(--border);
+    border-radius: 4px;
 
     &__list {
-      border: 1px solid $gray20;
       font-size: 14px;
     }
 
     &__item {
-      padding: 5px;
+      padding: 8px;
+      background-color: var(--component-background);
 
       .email {
         margin-top: 2px;
         font-size: 12px;
-        color: $gray54;
+        color: var(--faded-text);
       }
 
       &--focused {
-        background-color: $gray12;
+        background-color: var(--popup-button-hover);
+        cursor: pointer;
       }
 
       &__highlight {
-        background-color: #fffc95;
+        background-color: #face0080;
         font-weight: normal;
       }
     }

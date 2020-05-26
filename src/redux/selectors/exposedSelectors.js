@@ -190,6 +190,8 @@ export const getMaxSignaturesCount = state => state.viewer.maxSignaturesCount;
 
 export const getUserData = state => state.viewer.userData;
 
+export const getIsMentionEnabled = state => !!state.viewer.userData;
+
 export const getSignatureFonts = state => state.viewer.signatureFonts;
 
 export const getSelectedTab = (state, id) => state.viewer.tab[id];
