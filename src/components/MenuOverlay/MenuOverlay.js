@@ -13,6 +13,7 @@ import openFilePicker from 'helpers/openFilePicker';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import downloadPdf from 'helpers/downloadPdf';
 import { isIOS } from 'helpers/device';
+import getClassName from 'helpers/getClassName';
 import { workerTypes } from 'constants/types';
 import actions from 'actions';
 import selectors from 'selectors';

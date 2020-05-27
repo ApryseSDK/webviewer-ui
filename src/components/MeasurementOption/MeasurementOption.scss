@@ -2,7 +2,6 @@
 
 .MeasurementOption {
   width: 100%;
-  height: 135px;
   background: white;
 
   .textarea {
@@ -111,8 +110,8 @@
   }
 
   label[for="measurement-snapping"] {
-    margin-top: 10px;
-    margin-left: 20px;
+    margin: 10px 0px 6px 35px;
+    font-size: 1em;
   }
 }
 
