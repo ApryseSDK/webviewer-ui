@@ -7,7 +7,6 @@ import Icon from 'components/Icon';
 
 import core from 'core';
 import selectors from 'selectors';
-import getClassName from 'helpers/getClassName';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 import { isMobileDevice } from 'src/helpers/device';
 
@@ -19,7 +18,6 @@ function EllipseMeasurementOverlay(props) {
   const scale = annotation.Scale;
   const precision = annotation.Precision;
   const unit = annotation.Scale[1][1];
-  const className = getClassName('Overlay MeasurementOverlay', { isOpen });
   const renderScaleRatio = () => `${scale[0][0]} ${scale[0][1]} = ${scale[1][0]} ${scale[1][1]}`;
 
   useEffect(() => {
@@ -119,7 +117,7 @@ function EllipseMeasurementOverlay(props) {
   const [ radius, setRadius ] = useState(computeRadius());
 
   return (
-    <div className={className} data-element="measurementOverlay">
+    <>
       <div className="measurement__title">
         {icon && <Icon className="measurement__icon" glyph={icon}/>}
         {t('option.measurementOverlay.areaMeasurement')}
@@ -155,7 +153,7 @@ function EllipseMeasurementOverlay(props) {
           }}
         /> {unit}
       </div>
-    </div>
+    </>
   );
 }
 
