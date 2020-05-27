@@ -1,0 +1,16 @@
+@import '../../constants/styles';
+
+.selected-rubber-stamp-container {
+  display: flex;
+  flex-direction: row;
+  width: 214px;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-right: 4px;
+
+  .selected-rubber-stamp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

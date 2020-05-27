@@ -7,7 +7,7 @@ import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
-import StampOverlay from 'components/StampOverlay';
+import RubberStampOverlay from 'components/RubberStampOverlay';
 
 import { circleRadius } from 'constants/slider';
 import DataElements from 'constants/dataElement';
@@ -147,7 +147,7 @@ class StylePopup extends React.PureComponent {
     if (toolName === 'AnnotationCreateRubberStamp') {
       return (
         <div className={className} data-element="stylePopup">
-          <StampOverlay />
+          <RubberStampOverlay />
         </div>
       );
     }

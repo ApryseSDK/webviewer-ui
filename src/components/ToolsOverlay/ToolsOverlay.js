@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ToolButton from 'components/ToolButton';
 import ToolStylePopup from 'components/ToolStylePopup';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
-import SelectedRubberStamp from 'components/StampOverlay/SelectedRubberStamp';
+import SelectedRubberStamp from 'components/RubberStampOverlay/SelectedRubberStamp';
 import { withTranslation } from 'react-i18next';
 
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
@@ -190,7 +190,9 @@ class ToolsOverlay extends React.PureComponent {
     } else if (noPresets) {
       Component = (
         <React.Fragment>
-          <div className="no-presets-container">{t('message.toolsOverlayNoPresets')}</div>
+          <div className="no-presets-container">
+            {t('message.toolsOverlayNoPresets')}
+          </div>
           {dropdownButton}
         </React.Fragment>
       );

@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import core from 'core';
 import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';
-import StampOverlay from 'components/StampOverlay';
 import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
@@ -15,7 +14,6 @@ import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
-import ToolButton from 'components/ToolButton';
 import HorizontalDivider from 'components/HorizontalDivider';
 
 import './ToolStylePopup.scss';

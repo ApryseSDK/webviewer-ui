@@ -11,14 +11,14 @@ import useMedia from 'hooks/useMedia';
 
 import { Swipeable } from 'react-swipeable';
 
-import './StampOverlay.scss';
+import './RubberStampOverlay.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const canvasWidth = 160;
 const canvasHeight = 58;
 
 
-class StampOverlay extends React.Component {
+class RubberStampOverlay extends React.Component {
   static propTypes = {
     activeToolName: PropTypes.string,
     isDisabled: PropTypes.bool,
@@ -121,7 +121,7 @@ class StampOverlay extends React.Component {
     );
 
     const className = classNames({
-      'StampOverlay': true,
+      'rubber-stamp-overlay': true,
     });
 
     return (
@@ -133,7 +133,7 @@ class StampOverlay extends React.Component {
         <div
           className={className}
           ref={this.overlay}
-          data-element="stampOverlay"
+          data-element="rubberStampOverlay"
         >
           <div className="default-stamp-container">
             {rubberStamps}
@@ -159,10 +159,10 @@ const mapDispatchToProps = {
   toggleElement: actions.toggleElement,
 };
 
-const ConnectedStampOverlay = connect(
+const ConnectedRubberStampOverlay = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(StampOverlay));
+)(withTranslation()(RubberStampOverlay));
 
 
 export default props => {
@@ -175,6 +175,6 @@ export default props => {
   );
 
   return (
-    <ConnectedStampOverlay {...props} isMobile={isMobile} />
+    <ConnectedRubberStampOverlay {...props} isMobile={isMobile} />
   );
 };
