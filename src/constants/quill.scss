@@ -23,10 +23,10 @@
 }
 
 .ql-clipboard {
-  position: absolute;
+  position: fixed;
   height: 1px;
   top: 50%;
-  left: -100000px;
+  left: 50%;
   overflow-y: hidden;
 
   p {
