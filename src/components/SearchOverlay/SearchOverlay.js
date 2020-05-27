@@ -514,6 +514,7 @@ class SearchOverlay extends React.PureComponent {
         </div>
         <div className="options">
           <Input
+            dataElement="caseSensitiveSearchOption"
             id="case-sensitive-option"
             type="checkbox"
             ref={this.caseSensitiveInput}
@@ -521,20 +522,21 @@ class SearchOverlay extends React.PureComponent {
             label={t('option.searchPanel.caseSensitive')}
           />
           <Input
+            dataElement="wholeWordSearchOption"
             id="whole-word-option"
             type="checkbox"
             ref={this.wholeWordInput}
             onChange={this.onChangeWholeWord}
             label={t('option.searchPanel.wholeWordOnly')}
           />
-          {!isWildCardSearchDisabled &&
-            <Input
-              id="wild-card-option"
-              type="checkbox"
-              ref={this.wildcardInput}
-              onChange={this.onChangeWildcard}
-              label={t('option.searchPanel.wildcard')}
-            />}
+          <Input
+            dataElement="wildCardSearchOption"
+            id="wild-card-option"
+            type="checkbox"
+            ref={this.wildcardInput}
+            onChange={this.onChangeWildcard}
+            label={t('option.searchPanel.wildcard')}
+          />
         </div>
         <div className="divider" />
         <div className="footer">
@@ -563,7 +565,6 @@ const mapStateToProps = state => ({
   isSearching: selectors.isSearching(state),
   isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
   isSearchPanelDisabled: selectors.isElementDisabled(state, 'searchPanel'),
-  isWildCardSearchDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
   searchValue: selectors.getSearchValue(state),
   isCaseSensitive: selectors.isCaseSensitive(state),
   isWholeWord: selectors.isWholeWord(state),
