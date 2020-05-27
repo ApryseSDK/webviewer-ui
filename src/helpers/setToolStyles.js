@@ -1,9 +1,11 @@
 import core from 'core';
 
 export const MEASUREMENT_TOOL_NAMES = [
-  'AnnotationCreateDistanceMeasurement',
-  'AnnotationCreatePerimeterMeasurement',
-  'AnnotationCreateAreaMeasurement',
+  Tools.ToolNames['DISTANCE_MEASUREMENT'],
+  Tools.ToolNames['PERIMETER_MEASUREMENT'],
+  Tools.ToolNames['AREA_MEASUREMENT'],
+  Tools.ToolNames['RECTANGULAR_AREA_MEASUREMENT'],
+  Tools.ToolNames['ELLIPSE_MEASUREMENT'],
 ];
 
 export default (toolName, property, value) => {
