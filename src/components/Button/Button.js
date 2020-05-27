@@ -59,7 +59,6 @@ const Button = props => {
   const isGlyph =
     img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
   const shouldRenderTooltip = title;
-
   const children = (
     <div
       className={classNames({
@@ -80,7 +79,7 @@ const Button = props => {
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title}>{children}</Tooltip>
+    <Tooltip content={title} hideShortcut={disable}>{children}</Tooltip>
   ) : (
     children
   );
