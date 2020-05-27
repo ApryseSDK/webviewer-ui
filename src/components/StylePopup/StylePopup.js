@@ -147,7 +147,6 @@ class StylePopup extends React.PureComponent {
     if (toolName === 'AnnotationCreateRubberStamp') {
       return (
         <div className={className} data-element="stylePopup">
-          {this.renderSliders()}
           <StampOverlay />
         </div>
       );

@@ -4,13 +4,11 @@ import { connect } from 'react-redux';
 
 import ToolButton from 'components/ToolButton';
 import ToolStylePopup from 'components/ToolStylePopup';
-import ToolsDropdown from 'components/ToolsDropdown';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
+import SelectedRubberStamp from 'components/StampOverlay/SelectedRubberStamp';
 import { withTranslation } from 'react-i18next';
 
-import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import defaultTool from 'constants/defaultTool';
 import Icon from 'components/Icon';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
@@ -187,7 +185,7 @@ class ToolsOverlay extends React.PureComponent {
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
-        <SelectedSignatureRow/>
+        <SelectedRubberStamp/>
       );
     } else if (noPresets) {
       Component = (

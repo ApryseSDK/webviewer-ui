@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import core from 'core';
 import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';
+import StampOverlay from 'components/StampOverlay';
 import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
@@ -100,7 +101,7 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   render() {
-    const { activeToolGroup, swapableToolNames, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop } = this.props;
+    const { activeToolGroup, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop } = this.props;
     const { left, top } = this.state;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     const colorMapKey = mapToolNameToKey(activeToolName);
@@ -118,16 +119,6 @@ class ToolStylePopup extends React.PureComponent {
 
     let Component = (
       <React.Fragment>
-        <div
-          className="swap-tools-container"
-        >
-          {swapableToolNames.map((toolName, i) =>
-            <ToolButton
-              key={`${toolName}-${i}`}
-              toolName={toolName}
-              isSwap
-            />)}
-        </div>
         <StylePopup
           key={activeToolName}
           toolName={activeToolName}
@@ -155,7 +146,7 @@ class ToolStylePopup extends React.PureComponent {
         style={style}
       >
         {isMobile && <div className="swipe-indicator" />}
-        {isDesktop && (swapableToolNames.length > 0 || availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
+        {isDesktop && (availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
           && <HorizontalDivider/>}
         {Component}
       </div>
@@ -174,7 +165,6 @@ const mapStateToProps = state => {
     activeToolStyle: selectors.getActiveToolStyles(state),
     isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
     isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
-    swapableToolNames: selectors.getSwapableToolNamesForActiveToolGroup(state),
   };
 };
 

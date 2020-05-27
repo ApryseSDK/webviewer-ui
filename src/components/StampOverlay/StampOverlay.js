@@ -7,7 +7,6 @@ import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionB
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
-import defaultTool from 'constants/defaultTool';
 import useMedia from 'hooks/useMedia';
 
 import { Swipeable } from 'react-swipeable';
