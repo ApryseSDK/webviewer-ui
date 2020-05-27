@@ -144,14 +144,6 @@ class StylePopup extends React.PureComponent {
       mobile: isMobile,
     });
 
-    if (toolName === 'AnnotationCreateRubberStamp') {
-      return (
-        <div className={className} data-element="stylePopup">
-          <RubberStampOverlay />
-        </div>
-      );
-    }
-
     return (
       <div className={className} data-element="stylePopup">
         {currentPalette && !isColorPaletteDisabled && (

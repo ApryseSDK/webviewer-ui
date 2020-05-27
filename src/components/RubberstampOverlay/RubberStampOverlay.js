@@ -23,6 +23,7 @@ class RubberStampOverlay extends React.Component {
     activeToolName: PropTypes.string,
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
+    isMobile: PropTypes.bool,
     isActive: PropTypes.bool,
     t: PropTypes.func.isRequired,
     i18n: PropTypes.any,
@@ -72,8 +73,6 @@ class RubberStampOverlay extends React.Component {
 
   setRubberStamp(annotation) {
     core.setToolMode(TOOL_NAME);
-    // this.props.closeElement('toolsOverlay');
-    // debugger;
     this.props.closeElement("toolStylePopup");
     const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
     this.stampTool.setRubberStamp(annotation, text);
@@ -108,6 +107,7 @@ class RubberStampOverlay extends React.Component {
 
   render() {
     const { defaultAnnotations } = this.state;
+    const { isMobile } = this.props;
 
     const rubberStamps = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
       <div key={index}
@@ -120,26 +120,31 @@ class RubberStampOverlay extends React.Component {
       </div>,
     );
 
-    const className = classNames({
-      'rubber-stamp-overlay': true,
-    });
-
     return (
-      <Swipeable
-        onSwipedUp={() => this.props.closeElement('toolsOverlay')}
-        onSwipedDown={() => this.props.closeElement('toolsOverlay')}
-        preventDefaultTouchmoveEvent
+      <div
+        className={classNames({
+          Popup: true,
+          StylePopup: true,
+          mobile: isMobile,
+        })}
+        data-element="stylePopup"
       >
-        <div
-          className={className}
-          ref={this.overlay}
-          data-element="rubberStampOverlay"
+        <Swipeable
+          onSwipedUp={() => this.props.closeElement('toolsOverlay')}
+          onSwipedDown={() => this.props.closeElement('toolsOverlay')}
+          preventDefaultTouchmoveEvent
         >
-          <div className="default-stamp-container">
-            {rubberStamps}
+          <div
+            className="rubber-stamp-overlay"
+            ref={this.overlay}
+            data-element="rubberStampOverlay"
+          >
+            <div className="default-stamp-container">
+              {rubberStamps}
+            </div>
           </div>
-        </div>
-      </Swipeable>
+        </Swipeable>
+      </div>
     );
   }
 }
