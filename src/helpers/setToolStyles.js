@@ -1,6 +1,6 @@
 import core from 'core';
 
-const MEASUREMENT_TOOL_NAMES = [
+export const MEASUREMENT_TOOL_NAMES = [
   'AnnotationCreateDistanceMeasurement',
   'AnnotationCreatePerimeterMeasurement',
   'AnnotationCreateAreaMeasurement',

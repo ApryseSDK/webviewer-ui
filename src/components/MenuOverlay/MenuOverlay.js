@@ -9,7 +9,6 @@ import ActionButton from 'components/ActionButton';
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import print from 'helpers/print';
-import getClassName from 'helpers/getClassName';
 import openFilePicker from 'helpers/openFilePicker';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import downloadPdf from 'helpers/downloadPdf';
