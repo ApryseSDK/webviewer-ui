@@ -10,9 +10,10 @@ import './Tooltip.scss';
 const propTypes = {
   children: PropTypes.element.isRequired,
   content: PropTypes.string,
+  hideShortcut: PropTypes.bool,
 };
 
-const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
+const Tooltip = forwardRef( ({ content = '', children, hideShortcut }, forwardedRef) => {
   const timeoutRef = useRef(null);
   const childRef = forwardedRef ? forwardedRef : useRef(null);
 
@@ -134,7 +135,7 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
           >
             <div className={`tooltip__content`}>
               {translatedContent}
-              {hasShortcut && (
+              {hasShortcut && !hideShortcut && (
                 <span className="tooltip__shortcut">{shortcut}</span>
               )}
             </div>
