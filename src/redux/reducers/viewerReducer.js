@@ -12,6 +12,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         selectedSignatureIndex: payload.index,
       };
+    case 'SET_DEFAULT_STAMPS':
+      return {
+        ...state,
+        defaultStamps: payload.defaultStamps,
+      };
     case 'SET_SAVED_SIGNATURES':
       return {
         ...state,

@@ -2,9 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import SignatureRowContent from 'components/SignatureStylePopup/SignatureRowContent';
 import ToolsDropdown from 'components/ToolsDropdown';
 import selectors from 'selectors';
 import actions from 'actions';
+import core from 'core';
 
 import './SelectedRubberStamp.scss';
 
@@ -20,6 +22,14 @@ const SelectedSignatureRow = () => {
   const dispatch = useDispatch();
   const [t, i18n] = useTranslation();
   const prevLanguage = usePrevious(i18n.language);
+
+  const [
+    activeToolName,
+    selectedStamp,
+  ] = useSelector(state => [
+    selectors.getActiveToolName(state),
+    selectors.getSelectedStamp(state),
+  ]);
 
   useEffect(() => {
     dispatch(actions.setDefaultStamps(t));
@@ -38,7 +48,7 @@ const SelectedSignatureRow = () => {
       selectors.isElementOpen(state, 'toolStylePopup'),
     ],
   );
-
+  const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
   return (
     <div
       className="selected-rubber-stamp-container"
@@ -46,7 +56,17 @@ const SelectedSignatureRow = () => {
       <div
         className="selected-rubber-stamp"
       >
-        test
+        {selectedStamp &&
+          <SignatureRowContent
+            imgSrc={selectedStamp.imgSrc}
+            onClick={() => {
+              core.setToolMode('AnnotationCreateRubberStamp');
+              const text = t(`rubberStamp.${selectedStamp.annotation['Icon']}`);
+              rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
+              rubberStampTool.showPreview();
+            }}
+            isActive={activeToolName === 'AnnotationCreateRubberStamp'}
+          />}
       </div>
       <ToolsDropdown
         onClick={() => dispatch(actions.toggleElement('toolStylePopup'))}

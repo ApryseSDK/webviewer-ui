@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
@@ -14,9 +13,6 @@ import { Swipeable } from 'react-swipeable';
 import './RubberStampOverlay.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
-const canvasWidth = 160;
-const canvasHeight = 58;
-
 
 class RubberStampOverlay extends React.Component {
   static propTypes = {
@@ -48,29 +44,6 @@ class RubberStampOverlay extends React.Component {
     this.stampTool = core.getTool(TOOL_NAME);
   }
 
-  componentDidMount() {
-    this.getDefaultRubberStamps();
-  }
-
-  componentDidUpdate(prevProps) {
-    // if language changes while overlay is open we wanted update it
-    const isLanguageChanged = this.props.i18n.language !== prevProps.i18n.language;
-    if (isLanguageChanged) {
-      this.getDefaultRubberStamps();
-    }
-  }
-
-  setOverlayPosition = () => {
-    const rubberStampToolButton = document.querySelector(
-      `[data-element="${this.props.dataElement}"]`,
-    );
-
-    if (rubberStampToolButton && this.overlay.current) {
-      const res = getToolStylePopupPositionBasedOn(rubberStampToolButton, this.overlay);
-      this.setState(res);
-    }
-  }
-
   setRubberStamp(annotation) {
     core.setToolMode(TOOL_NAME);
     this.props.closeElement("toolStylePopup");
@@ -81,35 +54,10 @@ class RubberStampOverlay extends React.Component {
     this.setState({ isStampSelected: true });
   }
 
-  getDefaultRubberStamps = async() => {
-    const annotations = this.stampTool.getDefaultStampAnnotations();
-    const previews = await Promise.all(
-      annotations.map(annotation => {
-        const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
-
-        const options = {
-          canvasWidth,
-          canvasHeight,
-          text,
-        };
-
-        return this.stampTool.getPreview(annotation, options);
-      }),
-    );
-
-    const defaultAnnotations = annotations.map((annotation, i) => ({
-      annotation,
-      imgSrc: previews[i],
-    }));
-
-    this.setState({ defaultAnnotations });
-  }
-
   render() {
-    const { defaultAnnotations } = this.state;
-    const { isMobile } = this.props;
+    const { isMobile, defaultStamps } = this.props;
 
-    const rubberStamps = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
+    const rubberStamps = defaultStamps.map(({ imgSrc, annotation }, index) =>
       <div key={index}
         className="rubber-stamp"
         onClick={() => {

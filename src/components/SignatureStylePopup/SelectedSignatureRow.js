@@ -18,9 +18,9 @@ const SelectedSignatureRow = () => {
       selectors.getSavedSignatures(state),
     ],
   );
+  const dispatch = useDispatch();
 
   const signatureTool = core.getTool('AnnotationCreateSignature');
-  const dispatch = useDispatch();
   return (
     <div
       className="selected-signature-row"
@@ -39,8 +39,7 @@ const SelectedSignatureRow = () => {
           }}
           isActive={activeToolName === 'AnnotationCreateSignature'}
         /> :
-        <SignatureAddBtn/>
-      }
+        <SignatureAddBtn/>}
       <ToolsDropdown
         onClick={() => savedSignatures.length > 0 && dispatch(actions.toggleElement('toolStylePopup'))}
         isActive={isToolStyleOpen}
