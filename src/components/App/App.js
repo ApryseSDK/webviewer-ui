@@ -38,9 +38,6 @@ import fireEvent from 'helpers/fireEvent';
 
 import actions from 'actions';
 
-import core from 'core';
-import defaultTool from 'constants/defaultTool';
-
 import './App.scss';
 import 'constants/pikaday.scss';
 import 'constants/quill.scss';
@@ -48,10 +45,6 @@ import 'constants/quill.scss';
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
 };
-
-const mobileBreakpoint = window.matchMedia('(max-width: 640px)');
-const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
-const desktopBreakpoint = window.matchMedia('(min-width: 901px)');
 
 const App = ({ removeEventHandlers }) => {
   const store = useStore();

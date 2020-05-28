@@ -147,52 +147,6 @@ export default initialState => (state = initialState, action) => {
         ...state,
         headers: { ...state.headers, [payload.header]: payload.headerItems },
       };
-    case 'SET_DEFAULT_TOOL_POSITIONS': {
-      const { positions } = payload;
-
-      const newState = {
-        ...state,
-      };
-      newState.toolButtonObjects = {
-        ...newState.toolButtonObjects,
-      };
-      positions.forEach(({ toolName, position }) => {
-        const toolButtonObject = newState.toolButtonObjects[toolName];
-        if (toolButtonObject) {
-          newState.toolButtonObjects[toolName] = {
-            ...toolButtonObject,
-            position,
-          };
-        }
-      });
-      return newState;
-    }
-    case 'SWAP_TOOLS': {
-      const { toolNameToSwap, otherToolName, screen } = payload;
-
-      const screenToolButtonObjects = state.toolButtonObjects[screen];
-
-      const toolToSwap = screenToolButtonObjects[toolNameToSwap];
-      const otherTool = screenToolButtonObjects[otherToolName];
-
-      return {
-        ...state,
-        toolButtonObjects: {
-          ...state.toolButtonObjects,
-          [screen]: {
-            ...screenToolButtonObjects,
-            [toolNameToSwap]: {
-              ...toolToSwap,
-              position: otherTool.position,
-            },
-            [otherToolName]: {
-              ...otherTool,
-              position: toolToSwap.position,
-            },
-          },
-        },
-      };
-    }
     case 'SET_POPUP_ITEMS':
       return {
         ...state,

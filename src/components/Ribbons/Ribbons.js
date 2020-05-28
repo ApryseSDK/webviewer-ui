@@ -5,12 +5,10 @@ import Dropdown2 from 'components/Dropdown2/Dropdown.js';
 
 import actions from 'actions';
 import selectors from 'selectors';
-import { withTranslation } from 'react-i18next';
 
 import "./Ribbons.scss";
 
-const Ribbons = ({ screens, currentScreen, setToolbarScreen, closeElements, t }) => {
-
+const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
   return (
     <div
       className="Ribbons"
@@ -69,12 +67,11 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   setToolbarScreen: actions.setToolbarScreen,
-  closeElements: actions.closeElements,
 };
 
 const ConnectedRibbons = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(Ribbons));
+)(Ribbons);
 
 export default ConnectedRibbons;

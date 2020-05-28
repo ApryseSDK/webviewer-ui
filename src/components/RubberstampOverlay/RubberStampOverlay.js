@@ -155,6 +155,7 @@ const mapStateToProps = state => ({
   isActive: selectors.getActiveToolName(state) === TOOL_NAME,
   toolButtonObjects: selectors.getToolButtonObjects(state),
   dataElement: selectors.getToolButtonObjects(state)[TOOL_NAME].dataElement,
+  defaultStamps: selectors.getDefaultStamps(state),
 });
 
 const mapDispatchToProps = {

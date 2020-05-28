@@ -126,7 +126,6 @@ class ToolsOverlay extends React.PureComponent {
       activeToolGroup,
       isTabletAndMobile,
       isToolStyleOpen,
-      swapableToolNames,
       isDesktop,
     } = this.props;
 
@@ -281,7 +280,6 @@ const mapStateToProps = state => ({
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
   activeToolName: selectors.getActiveToolName(state),
-  swapableToolNames: selectors.getSwapableToolNamesForActiveToolGroup(state),
 });
 
 const mapDispatchToProps = {

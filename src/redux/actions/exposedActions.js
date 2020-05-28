@@ -5,28 +5,58 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
 import defaultTool from 'constants/defaultTool';
 
-const getFirstToolGroupForScreen = (state, screen) => {
-  const toolGroups = state.viewer.headers.tools?.[screen];
-  let firstToolGroupForScreen = '';
-  if (toolGroups) {
-    const firstTool = Object.values(toolGroups).find(({ toolGroup }) => toolGroup);
-    if (firstTool) {
-      firstToolGroupForScreen = firstTool.toolGroup;
-    }
-  }
-  return firstToolGroupForScreen;
-};
+export const setDefaultStamps = t => async dispatch => {
+  const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
+  const canvasWidth = 160;
+  const canvasHeight = 58;
 
-const getFirstToolNameForGroup = (state, toolGroup) => {
-  const tools = state.viewer.toolButtonObjects.default;
-  const firstTool = Object.keys(tools).find(key => {
-    return tools[key].group === toolGroup;
+  const annotations = rubberStampTool.getDefaultStampAnnotations();
+  const previews = await Promise.all(
+    annotations.map(annotation => {
+      const text = t(`rubberStamp.${annotation['Icon']}`);
+
+      const options = {
+        canvasWidth,
+        canvasHeight,
+        text,
+      };
+
+      return rubberStampTool.getPreview(annotation, options);
+    }),
+  );
+
+  const defaultStamps = annotations.map((annotation, i) => ({
+    annotation,
+    imgSrc: previews[i],
+  }));
+
+  dispatch({
+    type: 'SET_DEFAULT_STAMPS',
+    payload: { defaultStamps },
   });
-  return firstTool;
 };
 
-// viewer
 export const setToolbarScreen = screen => (dispatch, getState) => {
+  const getFirstToolGroupForScreen = (state, screen) => {
+    const toolGroups = state.viewer.headers.tools?.[screen];
+    let firstToolGroupForScreen = '';
+    if (toolGroups) {
+      const firstTool = Object.values(toolGroups).find(({ toolGroup }) => toolGroup);
+      if (firstTool) {
+        firstToolGroupForScreen = firstTool.toolGroup;
+      }
+    }
+    return firstToolGroupForScreen;
+  };
+
+  const getFirstToolNameForGroup = (state, toolGroup) => {
+    const tools = state.viewer.toolButtonObjects.default;
+    const firstTool = Object.keys(tools).find(key => {
+      return tools[key].group === toolGroup;
+    });
+    return firstTool;
+  };
+
   if (screen === 'View') {
     dispatch(closeElements(['toolsHeader']));
     core.setToolMode(defaultTool);
@@ -176,36 +206,6 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     dispatch(openElement(dataElement));
   }
 };
-
-export const swapTools = (toolNameToSwap, otherToolName) => (dispatch, getState) => {
-  const screen = getState().viewer.screen;
-  dispatch({
-    type: 'SWAP_TOOLS',
-    payload: { toolNameToSwap, otherToolName, screen },
-  });
-
-  // if (localStorageManager.isLocalStorageEnabled()) {
-  //   const storePosition = (toolName, { position }) => {
-  //     try {
-  //       localStorage.setItem(`toolPosition-${toolName}`, position);
-  //     } catch (err) {
-  //       console.warn(`localStorage could not be accessed. ${err.message}`);
-  //     }
-  //   };
-
-  //   const state = getState();
-  //   const toolToSwap = state.viewer.toolButtonObjects[toolNameToSwap];
-  //   const otherTool = state.viewer.toolButtonObjects[otherToolName];
-
-  //   storePosition(toolNameToSwap, toolToSwap);
-  //   storePosition(otherToolName, otherTool);
-  // }
-};
-
-export const setDefaultToolPositions = positions => ({
-  type: 'SET_DEFAULT_TOOL_POSITIONS',
-  payload: { positions },
-});
 
 export const setActiveHeaderGroup = headerGroup => ({
   type: 'SET_ACTIVE_HEADER_GROUP',

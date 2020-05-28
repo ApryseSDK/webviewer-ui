@@ -402,6 +402,8 @@ export default {
     userData: [],
     customMeasurementOverlay: [],
     noteTransformFunction: null,
+    defaultStamps: [],
+    selectedStampIndex: 0,
     savedSignatures: [],
     selectedSignatureIndex: 0,
   },

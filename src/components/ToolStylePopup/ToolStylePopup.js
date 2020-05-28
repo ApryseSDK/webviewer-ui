@@ -15,7 +15,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import HorizontalDivider from 'components/HorizontalDivider';
-import RubberStampOverlay from 'components/RubberStampOverlay';
+import RubberStampStylePopup from 'components/RubberStampOverlay';
 
 import './ToolStylePopup.scss';
 
@@ -135,7 +135,7 @@ class ToolStylePopup extends React.PureComponent {
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
-        <RubberStampOverlay />
+        <RubberStampStylePopup />
       );
     }
 

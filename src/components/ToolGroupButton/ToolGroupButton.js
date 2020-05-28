@@ -4,12 +4,11 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
-import Icon from 'components/Icon';
 import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
-import { mapToolNameToKey, getDataWithKey } from 'constants/map';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
@@ -73,12 +72,8 @@ class ToolGroupButton extends React.PureComponent {
       setActiveToolGroup,
       isActive,
       closeElement,
-      toggleElement,
       openElement,
       toolGroup,
-      isToolsOverlayOpen,
-      isTabletAndMobile,
-      selectedSignatureIndex,
       savedSignatures,
     } = this.props;
     const { toolName } = this.state;
@@ -147,9 +142,7 @@ class ToolGroupButton extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  selectedSignatureIndex: selectors.getSelectedSignatureIndex(state),
   savedSignatures: selectors.getSavedSignatures(state),
-  isToolsOverlayOpen: selectors.isElementOpen(state, 'toolsOverlay'),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
