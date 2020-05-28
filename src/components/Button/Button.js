@@ -57,9 +57,8 @@ const Button = props => {
 
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
-    imgToShow && !isBase64 && (!imgToShow.includes('.') || imgToShow.startsWith('<svg'));
-  const shouldRenderTooltip = title && !disable;
-
+    img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
+  const shouldRenderTooltip = title;
   const children = (
     <div
       className={classNames({
@@ -80,7 +79,7 @@ const Button = props => {
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title}>{children}</Tooltip>
+    <Tooltip content={title} hideShortcut={disable}>{children}</Tooltip>
   ) : (
     children
   );
