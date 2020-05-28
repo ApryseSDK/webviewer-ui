@@ -84,6 +84,10 @@ export const setToolbarScreen = screen => (dispatch, getState) => {
     payload: { screen },
   });
 };
+export const setSelectedStampIndex = index => ({
+  type: 'SET_SELECTED_STAMP_INDEX',
+  payload: { index },
+});
 export const setSelectedSignatureIndex = index => ({
   type: 'SET_SELECTED_SIGNATURE_INDEX',
   payload: { index },

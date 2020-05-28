@@ -33,25 +33,17 @@ class RubberStampOverlay extends React.Component {
 
   constructor(props) {
     super(props);
-    this.overlay = React.createRef();
-    this.state = {
-      left: 0,
-      right: 'auto',
-      top: 0,
-      defaultAnnotations: [],
-      isStampSelected: false,
-    };
     this.stampTool = core.getTool(TOOL_NAME);
   }
 
-  setRubberStamp(annotation) {
+  setRubberStamp(annotation, index) {
+    const { closeElement, setSelectedStamp } = this.props;
     core.setToolMode(TOOL_NAME);
     this.props.closeElement("toolStylePopup");
     const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
     this.stampTool.setRubberStamp(annotation, text);
     this.stampTool.showPreview();
-
-    this.setState({ isStampSelected: true });
+    this.props.setSelectedStampIndex(index);
   }
 
   render() {
@@ -61,7 +53,7 @@ class RubberStampOverlay extends React.Component {
       <div key={index}
         className="rubber-stamp"
         onClick={() => {
-          this.setRubberStamp(annotation);
+          this.setRubberStamp(annotation, index);
         }}
       >
         <img src={imgSrc} />
@@ -84,7 +76,6 @@ class RubberStampOverlay extends React.Component {
         >
           <div
             className="rubber-stamp-overlay"
-            ref={this.overlay}
             data-element="rubberStampOverlay"
           >
             <div className="default-stamp-container">
@@ -111,6 +102,7 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement,
   openElement: actions.openElement,
   toggleElement: actions.toggleElement,
+  setSelectedStampIndex: actions.setSelectedStampIndex,
 };
 
 const ConnectedRubberStampOverlay = connect(

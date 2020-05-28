@@ -7,6 +7,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         screen: payload.screen,
       };
+    case 'SET_SELECTED_STAMP_INDEX':
+      return {
+        ...state,
+        selectedStampIndex: payload.index,
+      };
     case 'SET_SELECTED_SIGNATURE_INDEX':
       return {
         ...state,
