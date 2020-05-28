@@ -186,6 +186,10 @@ class ToolsOverlay extends React.PureComponent {
       Component = (
         <SelectedRubberStamp/>
       );
+    } else if (activeToolGroup === 'stampTools') {
+      Component = (
+        <SelectedSignatureRow/>
+      );
     } else if (noPresets) {
       Component = (
         <React.Fragment>

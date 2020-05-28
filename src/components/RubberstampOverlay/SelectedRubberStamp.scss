@@ -12,5 +12,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .signature-row-content {
+      img {
+        max-width: 120%;
+        max-height: 120%;
+      }
+    }
   }
 }
