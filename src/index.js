@@ -72,6 +72,14 @@ if (window.CanvasRenderingContext2D) {
     window.CoreControls.disableLogs(true);
   }
 
+  // PDFjs config. Needs to be put on window since the scripts are loading seperate.
+  if (getHashParams('disableFlattenedAnnotations', false)) {
+    window.disableFlattenedAnnotations = true;
+  }
+  if (getHashParams('isPdfjs', false)) {
+    window.isPdfjs = true;
+  }
+
   window.CoreControls.enableSubzero(getHashParams('subzero', false));
   window.CoreControls.setWorkerPath('../core');
   window.CoreControls.setResourcesPath('../core/assets');
