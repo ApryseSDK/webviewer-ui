@@ -62,14 +62,14 @@ class SearchPanel extends React.PureComponent {
 
   renderListSeparator = (prevResult, currResult) => {
     const isFirstResult = prevResult === currResult;
-    const isInDifferentPage = prevResult.page_num !== currResult.page_num;
+    const isInDifferentPage = prevResult.pageNum !== currResult.pageNum;
 
     if (isFirstResult || isInDifferentPage) {
       return (
         <ListSeparator
           renderContent={() =>
             `${this.props.t('option.shared.page')} ${
-              this.props.pageLabels[currResult.page_num]
+              this.props.pageLabels[currResult.pageNum - 1]
             }`
           }
         />
