@@ -56,23 +56,21 @@
 
     .container {
       .thumbnail::before {
-        content: "✓";
         color: white;
-        background: $pdftron-blue;
+        background: var(--focus-border);
         width: $selected-icon-size;
         height: $selected-icon-size;
-        border-bottom-right-radius: 5px;
         position: absolute;
         z-index: 10;
       }
     }
 
     .page-label {
-      color: $pdftron-blue !important;
+      color: var(--focus-border) !important;
     }
 
     canvas:first-of-type {
-      border: solid $pdftron-blue $selected-border-size !important;
+      border: solid var(--focus-border) $selected-border-size !important;
     }
   }
 }

@@ -477,14 +477,13 @@ class ThumbnailsPanel extends React.PureComponent {
       height,
       width,
       documentControlHeight,
-      isDocumentControlHidden,
       allowPageOperations,
     } = this.state;
     const numberOfColumns = this.getNumberOfColumns(this.state.width);
     const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
     const shouldShowControls =
-      (allowPageOperations && !isDocumentControlHidden) || selectedPageIndexes.length > 0;
+      (allowPageOperations) || selectedPageIndexes.length > 0;
 
     return isDisabled ? null : (
       <div
@@ -527,7 +526,6 @@ class ThumbnailsPanel extends React.PureComponent {
                 {({ measureRef: innerMeasureRef }) => (
                   <div ref={innerMeasureRef}>
                     <DocumentControls
-                      toggleDocumentControl={this.toggleDocumentControl}
                       shouldShowControls={shouldShowControls}
                     />
                   </div>

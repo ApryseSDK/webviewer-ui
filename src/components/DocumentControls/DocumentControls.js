@@ -22,7 +22,9 @@ function getPageString(selectedPageArray, pageLabels) {
     if (sortedPages[i + 1] === sortedPages[i] + 1) {
       prevIndex = prevIndex !== null ? prevIndex : sortedPages[i];
     } else if (prevIndex !== null) {
-      pagesToPrint = `${pagesToPrint}${pageLabels[prevIndex]}-${pageLabels[sortedPages[i]]}, `;
+      pagesToPrint = `${pagesToPrint}${pageLabels[prevIndex]}-${
+        pageLabels[sortedPages[i]]
+      }, `;
       prevIndex = null;
     } else {
       pagesToPrint = `${pagesToPrint}${pageLabels[sortedPages[i]]}, `;
@@ -33,10 +35,7 @@ function getPageString(selectedPageArray, pageLabels) {
 }
 
 const DocumentControls = props => {
-  const {
-    toggleDocumentControl,
-    shouldShowControls,
-  } = props;
+  const { shouldShowControls } = props;
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -50,7 +49,9 @@ const DocumentControls = props => {
   const initialPagesString = getPageString(selectedPageIndexes, pageLabels);
 
   const [pageString, setPageString] = useState(initialPagesString);
-  const [previousPageString, setPreviousPageString] = useState(initialPagesString);
+  const [previousPageString, setPreviousPageString] = useState(
+    initialPagesString,
+  );
 
   useEffect(() => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
@@ -66,12 +67,15 @@ const DocumentControls = props => {
       message,
       title,
       confirmBtnText,
-      onConfirm: () => core.removePages(pageNumbersToDelete).then(() => {
-        dispatch(actions.setSelectedPageThumbnails([]));
-      }),
+      onConfirm: () =>
+        core.removePages(pageNumbersToDelete).then(() => {
+          dispatch(actions.setSelectedPageThumbnails([]));
+        }),
     };
 
-    if (core.getDocumentViewer().getPageCount() === pageNumbersToDelete.length) {
+    if (
+      core.getDocumentViewer().getPageCount() === pageNumbersToDelete.length
+    ) {
       message = t('warning.deletePage.deleteLastPageMessage');
 
       warning = {
@@ -99,14 +103,18 @@ const DocumentControls = props => {
       return;
     }
 
-    extractPagesWithAnnotations(selectedPageIndexes.map(index => index + 1)).then(file => {
+    extractPagesWithAnnotations(
+      selectedPageIndexes.map(index => index + 1),
+    ).then(file => {
       saveAs(file, 'extractedDocument.pdf');
     });
   };
 
   const onBlur = e => {
     const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pages = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels);
+    const pages = !selectedPagesString
+      ? []
+      : getPageArrayFromString(selectedPagesString, pageLabels);
     const pageIndexes = pages.map(page => page - 1);
 
     if (pages.length || !selectedPagesString) {
@@ -125,45 +133,38 @@ const DocumentControls = props => {
     setPageString(e.target.value);
   };
 
-  const onToggleDocumentControl = () => {
-    dispatch(actions.setSelectedPageThumbnails([]));
-    toggleDocumentControl(!shouldShowControls);
-  };
-
-  const icon = shouldShowControls ? 'ic_arrow_down_black_24px' : 'ic_arrow_up_black_24px';
-
   return isDisabled ? null : (
-    <div className={'documentControlsContainer'} data-element={'documentControl'}>
-      <Button
-        className={'documentControlToggle'}
-        img={icon}
-        onClick={onToggleDocumentControl}
-      />
-      {shouldShowControls ?
+    <div
+      className={'documentControlsContainer'}
+      data-element={'documentControl'}
+    >
+      {shouldShowControls ? (
         <div className={'documentControls'}>
-          <div>
+          <div className={'divider'}></div>
+          <div className={'documentControlsInput'}>
             <input
               onBlur={onBlur}
               onChange={pageStringUpdate}
               value={pageString}
               placeholder={t('option.documentControls.placeholder')}
-              className="pagesInput" type="text"
+              className="pagesInput"
+              type="text"
             />
-          </div>
-          <div className="documentControlsButton">
-            <Button
-              img="icon-delete-line"
-              onClick={onDeletePages}
-              title="option.thumbnailPanel.delete"
-            />
-            <Button
-              img="ic_extract_black_24px"
-              title="action.extract"
-              onClick={extractPages}
-            />
+            <div className={'documentControlsButton'}>
+              <Button
+                img="icon-delete-line"
+                onClick={onDeletePages}
+                title="option.thumbnailPanel.delete"
+              />
+              <Button
+                img="ic_extract_black_24px"
+                title="action.extract"
+                onClick={extractPages}
+              />
+            </div>
           </div>
         </div>
-        : null}
+      ) : null}
     </div>
   );
 };
