@@ -30,6 +30,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    // color: var(--ribbon-active-color);
   }
 
   .dropdown-items {
@@ -53,6 +54,7 @@
       align-items: center;
       display: flex;
       border-radius: 0px;
+      // color: var(--faded-text);
 
       &.active {
         background-color: var(--popup-button-active);

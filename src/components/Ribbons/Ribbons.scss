@@ -24,6 +24,7 @@
   .ribbon-group {
     margin: 0 22px;
     cursor: pointer;
+    color: var(--faded-text);
 
     &.active {
       color: var(--ribbon-active-color);

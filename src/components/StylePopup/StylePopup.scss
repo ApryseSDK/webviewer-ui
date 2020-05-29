@@ -7,6 +7,7 @@
   padding-left: 12px;
   padding-right: 12px;
   display: flex;
+  align-items: center;
   flex-direction: column;
   max-width: 214px;
 
@@ -14,7 +15,7 @@
     margin-left: 6px;
     margin-right: 4px;
     margin-top: 8px;
-    // margin-left: 4px;
+    width: 100%;
   }
 
   @include mobile {
