@@ -13,7 +13,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
   const [t] = useTranslation();
   const hasEnoughSpace = useMedia(
     // Media queries
-    ['(min-width: 1400px)'],
+    ['(min-width: 1350px)'],
     [true],
     // Default value
     false,
