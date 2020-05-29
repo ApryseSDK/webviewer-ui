@@ -147,7 +147,7 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     const isVisible = (isOpen || isDesktop) && !isDisabled;
-    const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools';
+    const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools' || activeToolGroup === 'fileAttachmentTools';
     const dropdownButton = (
       <div
         className={classNames({

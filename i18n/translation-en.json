@@ -55,7 +55,7 @@
     "distanceMeasurement": "Distance",
     "ellipse": "Ellipse",
     "eraser": "Eraser",
-    "fileattachment": "File attachment",
+    "fileattachment": "File Attachment",
     "freehand": "Free Hand",
     "freetext": "Free Text",
     "highlight": "Highlight",
@@ -152,7 +152,6 @@
       "View": "View",
       "Annotate": "Annotate",
       "Draw": "Draw",
-      "Fill&Sign": "Fill & Sign",
       "Insert": "Insert",
       "Measure": "Measure",
       "Edit": "Edit"

@@ -64,8 +64,8 @@ const mapStateToProps = state => ({
       translationKey: 'option.toolbarScreen.Draw',
     },
     {
-      key: 'Fill&Sign',
-      translationKey: 'option.toolbarScreen.Fill&Sign',
+      key: 'Insert',
+      translationKey: 'option.toolbarScreen.Insert',
     },
     {
       key: 'Measure',
