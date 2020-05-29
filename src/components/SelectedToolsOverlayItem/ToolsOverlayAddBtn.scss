@@ -1,0 +1,22 @@
+@import '../../constants/styles';
+
+.tools-overlay-add-btn {
+  width: 158px;
+  height: 26px;
+  border-radius: 4px;
+  border: 1px solid var(--icon-color);
+  color: var(--text-color);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.disabled {
+    border: 1px solid var(--disabled-text);
+    color: var(--disabled-text);
+    cursor: auto;
+  }
+}
+
+

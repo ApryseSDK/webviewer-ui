@@ -90,7 +90,6 @@ class ToolsOverlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { activeToolGroup } = this.props;
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
@@ -186,10 +185,15 @@ class ToolsOverlay extends React.PureComponent {
       Component = (
         <SelectedRubberStamp/>
       );
-    } else if (activeToolGroup === 'stampTools') {
-      Component = (
-        <SelectedSignatureRow/>
-      );
+    // } else if (activeToolGroup === 'stampTools') {
+    //   Component = (
+    //     <SelectedToolsOverlayItem
+    //       textTranslationKey="option.stampOverlay.addStamp"
+    //       onClick={() => {
+    //         core.setToolMode('AnnotationCreateStamp');
+    //       }}
+    //     />
+    //   );
     } else if (noPresets) {
       Component = (
         <React.Fragment>

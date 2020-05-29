@@ -20,9 +20,9 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateFreeText2 = new window.Tools.FreeTextCreateTool(docViewer, 'AnnotationCreateFreeText2');
   toolModeMap.AnnotationCreateFreeText3 = new window.Tools.FreeTextCreateTool(docViewer, 'AnnotationCreateFreeText3');
   toolModeMap.AnnotationCreateFreeText4 = new window.Tools.FreeTextCreateTool(docViewer, 'AnnotationCreateFreeText4');
-  toolModeMap.AnnotationCreateCallout2 = new window.Tools.FreeTextCreateTool(docViewer, 'AnnotationCreateCallout2');
-  toolModeMap.AnnotationCreateCallout3 = new window.Tools.FreeTextCreateTool(docViewer, 'AnnotationCreateCallout3');
-  toolModeMap.AnnotationCreateCallout4 = new window.Tools.FreeTextCreateTool(docViewer, 'AnnotationCreateCallout4');
+  toolModeMap.AnnotationCreateCallout2 = new window.Tools.CalloutCreateTool(docViewer, 'AnnotationCreateCallout2');
+  toolModeMap.AnnotationCreateCallout3 = new window.Tools.CalloutCreateTool(docViewer, 'AnnotationCreateCallout3');
+  toolModeMap.AnnotationCreateCallout4 = new window.Tools.CalloutCreateTool(docViewer, 'AnnotationCreateCallout4');
   toolModeMap.AnnotationCreateSticky2 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky2');
   toolModeMap.AnnotationCreateSticky3 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky3');
   toolModeMap.AnnotationCreateSticky4 = new window.Tools.StickyCreateTool(docViewer, 'AnnotationCreateSticky4');

@@ -5,6 +5,16 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
 import defaultTool from 'constants/defaultTool';
 
+export const setCanUndo = canUndo => ({
+  type: 'SET_CAN_UNDO',
+  payload: { canUndo },
+});
+
+export const setCanRedo = canRedo => ({
+  type: 'SET_CAN_REDO',
+  payload: { canRedo },
+});
+
 export const setDefaultStamps = t => async dispatch => {
   const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
   const canvasWidth = 160;
@@ -37,11 +47,19 @@ export const setDefaultStamps = t => async dispatch => {
 };
 
 export const setToolbarScreen = screen => (dispatch, getState) => {
+  const isElementDisabled = (state, dataElement) =>
+    state.viewer.disabledElements[dataElement]?.disabled;
+
   const getFirstToolGroupForScreen = (state, screen) => {
     const toolGroups = state.viewer.headers.tools?.[screen];
     let firstToolGroupForScreen = '';
     if (toolGroups) {
-      const firstTool = Object.values(toolGroups).find(({ toolGroup }) => toolGroup);
+      const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {
+        if (toolGroup && !isElementDisabled(state, dataElement)) {
+          return true;
+        }
+        return false;
+      });
       if (firstTool) {
         firstToolGroupForScreen = firstTool.toolGroup;
       }

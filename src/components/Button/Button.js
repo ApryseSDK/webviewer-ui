@@ -11,6 +11,7 @@ import selectors from 'selectors';
 import './Button.scss';
 
 const propTypes = {
+  isNotClickable: PropTypes.bool,
   isActive: PropTypes.bool,
   mediaQueryClassName: PropTypes.string,
   img: PropTypes.string,
@@ -34,7 +35,8 @@ const Button = props => {
   );
 
   const {
-    disable,
+    disable, // No idea where this comes from
+    isNotClickable,
     isActive,
     mediaQueryClassName,
     img,
@@ -61,13 +63,13 @@ const Button = props => {
       className={classNames({
         Button: true,
         active: isActive,
-        disable,
+        disable: isNotClickable,
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
       })}
       style={style}
       data-element={dataElement}
-      onClick={disable ? NOOP : onClick}
+      onClick={(!disable && !isNotClickable) ? onClick : NOOP}
     >
       {isGlyph && <Icon glyph={imgToShow} color={color} />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}

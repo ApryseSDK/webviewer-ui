@@ -132,7 +132,7 @@ const map = {
   },
   callout: {
     icon: 'icon-tool-callout-line',
-    iconColor: 'TextColor',
+    iconColor: 'StrokeColor',
     currentPalette: 'TextColor',
     availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
     toolNames: [

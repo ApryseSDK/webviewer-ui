@@ -1,37 +1,55 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import classNames from 'classnames';
 import Dropdown2 from 'components/Dropdown2/Dropdown.js';
-
 import actions from 'actions';
 import selectors from 'selectors';
+import { useTranslation } from 'react-i18next';
+import useMedia from 'hooks/useMedia';
 
 import "./Ribbons.scss";
 
 const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
+  const [t] = useTranslation();
+  const hasEnoughSpace = useMedia(
+    // Media queries
+    ['(min-width: 1400px)'],
+    [true],
+    // Default value
+    false,
+  );
+
   return (
     <div
       className="Ribbons"
     >
-      {/* {screens.map(({ key, translationKey }) =>
-        <div
-          key={key}
-          className="ribbon-group"
-        >
-          {t(translationKey)}
-        </div>)} */}
-      <Dropdown2
-        items={screens}
-        currentSelectionKey={currentScreen}
-        onClickItem={screen => {
-          setToolbarScreen(screen);
-        }}
-      />
+      {hasEnoughSpace ?
+        screens.map(({ key, translationKey }) =>
+          <div
+            key={key}
+            className={classNames({
+              "ribbon-group": true,
+              "active": key === currentScreen,
+            })}
+            onClick={() => {
+              setToolbarScreen(key);
+            }}
+          >
+            {t(translationKey)}
+          </div>) :
+        <Dropdown2
+          items={screens}
+          currentSelectionKey={currentScreen}
+          onClickItem={screen => {
+            setToolbarScreen(screen);
+          }}
+        />
+      }
     </div>
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   screens: [
     {
       key: 'View',
@@ -49,10 +67,6 @@ const mapStateToProps = (state, ownProps) => ({
       key: 'Fill&Sign',
       translationKey: 'option.toolbarScreen.Fill&Sign',
     },
-    // {
-    //   key: 'Insert',
-    //   translationKey: 'option.toolbarScreen.Insert',
-    // },
     {
       key: 'Measure',
       translationKey: 'option.toolbarScreen.Measure',

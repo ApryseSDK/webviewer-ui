@@ -2,6 +2,16 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_CAN_UNDO':
+      return {
+        ...state,
+        canUndo: payload.canUndo,
+      };
+    case 'SET_CAN_REDO':
+      return {
+        ...state,
+        canRedo: payload.canRedo,
+      };
     case 'SET_TOOLBAR_SCREEN':
       return {
         ...state,

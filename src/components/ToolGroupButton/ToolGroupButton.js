@@ -33,7 +33,7 @@ class ToolGroupButton extends React.PureComponent {
     setActiveToolGroup: PropTypes.func.isRequired,
     isActive: PropTypes.bool.isRequired,
     showColor: PropTypes.string,
-    palette: PropTypes.string,
+    iconColorKey: PropTypes.string,
   };
 
   constructor(props) {
@@ -67,7 +67,7 @@ class ToolGroupButton extends React.PureComponent {
     }
   }
 
-  onClick = e => {
+  onClick = () => {
     const {
       setActiveToolGroup,
       isActive,
@@ -106,7 +106,7 @@ class ToolGroupButton extends React.PureComponent {
       isActive,
       isToolGroupButtonDisabled,
       allButtonsInGroupDisabled,
-      palette,
+      iconColorKey,
       showColor,
       title,
     } = this.props;
@@ -115,9 +115,9 @@ class ToolGroupButton extends React.PureComponent {
       ? this.props.img
       : toolButtonObjects[toolName]?.img;
     const color =
-      (showColor !== 'never' && isActive) && palette
-        ? getToolStyles(toolName)[palette] &&
-          getToolStyles(toolName)[palette].toHexString()
+      (showColor !== 'never' && isActive) && iconColorKey
+        ? getToolStyles(toolName)[iconColorKey] &&
+          getToolStyles(toolName)[iconColorKey].toHexString()
         : '';
 
     return (isToolGroupButtonDisabled || allButtonsInGroupDisabled) ? null : (
@@ -149,7 +149,7 @@ const mapStateToProps = (state, ownProps) => ({
   toolButtonObjects: selectors.getToolButtonObjects(state),
   isToolGroupButtonDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
   allButtonsInGroupDisabled: selectors.allButtonsInGroupDisabled(state, ownProps.toolGroup),
-  palette: selectors.getIconColor(
+  iconColorKey: selectors.getIconColor(
     state,
     mapToolNameToKey(selectors.getActiveToolName(state)),
   ),

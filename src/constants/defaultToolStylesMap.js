@@ -171,16 +171,16 @@ export default {
     TextColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateCallout: {
-    TextColor: { R: 228, G: 66, B: 52, A: 1 },
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   AnnotationCreateCallout2: {
-    TextColor: { R: 0, G: 0, B: 0, A: 1 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateCallout3: {
-    TextColor: { R: 78, G: 125, B: 233, A: 1 },
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateCallout4: {
-    TextColor: { R: 0, G: 122, B: 59, A: 1 },
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateSticky: {
     StrokeColor: { R: 255, G: 205, B: 69, A: 1 },

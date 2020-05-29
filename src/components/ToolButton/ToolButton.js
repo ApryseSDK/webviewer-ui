@@ -32,7 +32,7 @@ const ToolButton = ({
   const [
     activeToolName,
     isActive,
-    iconColor,
+    iconColorKey,
     // use this to trigger rerender so the color will be right
     // TODO: fix the issue properly. Can listen to toolUpdated
     // eslint-disable-next-line
@@ -97,7 +97,7 @@ const ToolButton = ({
   const showColor = customOverrides?.showColor || toolButtonObject.showColor;
   if (showColor === 'always' || (showColor === 'active' && isActive)) {
     const toolStyles = getToolStyles(toolName);
-    color = toolStyles?.[iconColor]?.toHexString?.();
+    color = toolStyles?.[iconColorKey]?.toHexString?.();
   }
 
   const ButtonComponent = (

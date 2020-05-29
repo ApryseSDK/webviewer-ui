@@ -43,16 +43,16 @@ class ColorPaletteHeader extends React.PureComponent {
     if (toolName && (toolName.includes('Line') || toolName.includes('Arrow') || toolName.includes('Polyline'))) {
       return (
         <div className="palette-options">
-          {["StrokeColor", "FillColor"].map((pallette, i) =>
+          {["StrokeColor", "FillColor"].map((palette, i) =>
             <React.Fragment key={i}>
               <div
                 className={classNames({
                   'palette-options-button': true,
-                  active: colorPalette === pallette,
-                  disabled: pallette === 'FillColor',
+                  active: colorPalette === palette,
+                  disabled: palette === 'FillColor',
                 })}
               >
-                {t(`option.annotationColor.${pallette}`)}
+                {t(`option.annotationColor.${palette}`)}
               </div>
               {i < 1 && <div className="palette-options-divider" />}
             </React.Fragment>,

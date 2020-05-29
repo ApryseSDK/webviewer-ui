@@ -27,4 +27,11 @@
       color: var(--selected-icon-color);
     }
   }
+
+  &.disable {
+    .Icon {
+      color: var(--disabled-icon);
+    }
+    cursor: default;
+  }
 }

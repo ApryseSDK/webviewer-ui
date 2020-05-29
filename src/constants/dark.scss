@@ -20,11 +20,12 @@
   --gray-11: #F8F9FA;
   --gray-12: #FFFFFF;
 
-  --component-background: var(--gray-2);
   --panel-background: var(--gray-3);
   --faded-component-background: var(--gray-1);
   --signature-draw-background: var(--gray-3);
   --toggle-zoom-overlay-background: var(--gray-4);
+  --component-background: var(--gray-2);
+  --ribbons-background: var(--gray-2);
   --box-shadow: var(--gray-5);
   --document-box-shadow: var(--gray-5);
   --focus-border: var(--blue-6);
@@ -33,11 +34,11 @@
   --faded-text: var(--gray-6);
   --text-color: var(--gray-11);
   --placeholder-text: var(--gray-5);
+  --ribbon-active-color: var(--blue-6);
 
   --no-presets-text: var(--gray-6);
   --disabled-text: var(--gray-4);
-
-
+  --disabled-icon: var(--gray-4);
 
   --slider-filled: var(--blue-6);
   --slider-background: var(--gray-4);

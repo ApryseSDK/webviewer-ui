@@ -201,6 +201,9 @@
       "wholeWordOnly": "Whole word",
       "wildcard": "Wildcard"
     },
+    "stampOverlay": {
+      "addStamp": "Add New Stamp"
+    },
     "signatureOverlay": {
       "addSignature": "Add New Signature"
     },

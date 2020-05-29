@@ -2,17 +2,17 @@ import React from 'react';
 
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
-import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import { copyMapWithDataProperties } from 'constants/map';
-import actions from 'actions';
 import PageNavOverlay from 'components/PageNavOverlay';
 import Ribbons from 'components/Ribbons';
 
 export default {
   viewer: {
+    canUndo: true,
+    canRedo: true,
     screen: 'Annotate',
     activeTheme: 'light',
     disabledElements: {},
@@ -90,6 +90,7 @@ export default {
             onClick: () => {
               core.undo();
             },
+            isNotClickableSelector: state => !state.viewer.canUndo,
           },
           {
             type: 'actionButton',
@@ -99,6 +100,7 @@ export default {
             onClick: () => {
               core.redo();
             },
+            isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
           { type: 'spacer' },
@@ -127,6 +129,7 @@ export default {
             onClick: () => {
               core.undo();
             },
+            isNotClickableSelector: state => !state.viewer.canUndo,
           },
           {
             type: 'actionButton',
@@ -136,6 +139,7 @@ export default {
             onClick: () => {
               core.redo();
             },
+            isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
           { type: 'spacer' },
@@ -143,8 +147,8 @@ export default {
         'Fill&Sign': [
           { type: 'spacer' },
           { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolButton', title: 'annotation.signature' },
-          { type: 'toolGroupButton', toolGroup: 'stampTools', img: 'icon-tool-image-line', dataElement: 'stampToolButton', title: 'annotation.stamp' },
           { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp' },
+          { type: 'toolGroupButton', toolGroup: 'stampTools', img: 'icon-tool-image-line', dataElement: 'stampToolButton', title: 'annotation.stamp' },
           {
             type: 'customElement',
             render: () => <ToolsOverlay />,
@@ -159,6 +163,7 @@ export default {
             onClick: () => {
               core.undo();
             },
+            isNotClickableSelector: state => !state.viewer.canUndo,
           },
           {
             type: 'actionButton',
@@ -168,6 +173,7 @@ export default {
             onClick: () => {
               core.redo();
             },
+            isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
           { type: 'spacer' },
@@ -193,6 +199,7 @@ export default {
             onClick: () => {
               core.undo();
             },
+            isNotClickableSelector: state => !state.viewer.canUndo,
           },
           {
             type: 'actionButton',
@@ -202,6 +209,7 @@ export default {
             onClick: () => {
               core.redo();
             },
+            isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
           { type: 'spacer' },
@@ -219,6 +227,7 @@ export default {
             onClick: () => {
               core.undo();
             },
+            isNotClickableSelector: state => !state.viewer.canUndo,
           },
           {
             type: 'actionButton',
@@ -228,6 +237,7 @@ export default {
             onClick: () => {
               core.redo();
             },
+            isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
           { type: 'spacer' },
@@ -348,7 +358,7 @@ export default {
         AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'icon-tool-image-line', group: 'stampTools', showColor: 'active' },
         AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'icon-tool-stamp-line', group: 'rubberStampTools', showColor: 'active' },
         CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'cropTools' },
-        AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'icon-tool-redaction-inline', group: 'redactionTools', showColor: 'never' },
+        AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'icon-tool-redaction-area', group: 'redactionTools', showColor: 'never' },
         Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
         AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
         TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },
