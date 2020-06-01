@@ -51,6 +51,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
   const { isSelected, searchInput, resize, isContentEditable } = useContext(
     NoteContext,
   );
+
   const [textAreaValue, setTextAreaValue] = useState(
     annotation.getCustomData('trn-mention')?.contents || annotation.getContents()
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext, useState } from 'react';
+import React, { useEffect, useRef, useContext, useState, useCallback } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';

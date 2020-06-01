@@ -24,7 +24,6 @@ export default (element, overlay, isTabletAndMobile) => {
     left = buttonLeft;
     right = 'auto';
   }
-  // }
 
   return {
     left: !isNaN(left) ? Math.max(left, 0) : left,
