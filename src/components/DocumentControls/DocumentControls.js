@@ -157,7 +157,7 @@ const DocumentControls = props => {
                 title="option.thumbnailPanel.delete"
               />
               <Button
-                img="ic_extract_black_24px"
+                img="ic-operation-export-line"
                 title="action.extract"
                 onClick={extractPages}
               />
