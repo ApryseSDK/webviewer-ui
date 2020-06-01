@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import ToolButton from 'components/ToolButton';
+import PresetButton from 'components/ToolButton/PresetButton';
 import ToolStylePopup from 'components/ToolStylePopup';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
 import SelectedRubberStamp from 'components/RubberStampOverlay/SelectedRubberStamp';
@@ -158,7 +158,7 @@ class ToolsOverlay extends React.PureComponent {
         className="tool-buttons-container"
       >
         {toolNames.map((toolName, i) => (
-          <ToolButton
+          <PresetButton
             key={`${toolName}-${i}`}
             toolName={toolName}
             isToolStyleOpen={isToolStyleOpen}

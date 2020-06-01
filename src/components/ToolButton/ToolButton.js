@@ -23,9 +23,7 @@ const propTypes = {
 };
 
 const ToolButton = ({
-  isSwap,
   toolName,
-  isToolStyleOpen,
   ...restProps
 }) => {
   const [
@@ -64,11 +62,6 @@ const ToolButton = ({
     }
   }, [customOverrides, toolName]);
 
-  const handleSwap = () => {
-    dispatch(actions.swapTools(toolName, activeToolName));
-    core.setToolMode(toolName);
-  };
-
   const handleClick = () => {
     if (isActive) {
       if (toolName !== "AnnotationCreateStamp" && toolName !== "AnnotationCreateRedaction" && toolName !== "AnnotationEraserTool") {
@@ -92,20 +85,6 @@ const ToolButton = ({
     }
   };
 
-  const getStylingDropdownButton = isActive => {
-    return (
-      <div
-        className="tool-button-arrow-container"
-        onClick={() => dispatch(actions.toggleElement('toolStylePopup'))}
-      >
-        {isActive &&
-        (isToolStyleOpen ?
-          <Icon className="tool-button-arrow-up" glyph="icon-chevron-up" /> :
-          <Icon className="tool-button-arrow-down" glyph="icon-chevron-down" />)}
-      </div>
-    );
-  };
-
   let color = '';
   const showColor = customOverrides?.showColor || toolButtonObject.showColor;
   if (showColor === 'always' || (showColor === 'active' && isActive)) {
@@ -113,28 +92,19 @@ const ToolButton = ({
     color = toolStyles?.[iconColorKey]?.toHexString?.();
   }
 
-  const ButtonComponent = (
-    <div
+  return (
+    <Button
       className={classNames({
-        "tool-button-container": true,
+        "tool-button": true,
+        hasStyles: toolStylesExist(toolName),
       })}
-    >
-      <Button
-        className={classNames({
-          "tool-button": true,
-          hasStyles: toolStylesExist(toolName),
-        })}
-        onClick={isSwap ? handleSwap : handleClick}
-        isActive={isActive}
-        color={color}
-        {...restProps}
-        {...restObjectData}
-      />
-      {getStylingDropdownButton(isActive)}
-    </div>
+      onClick={handleClick}
+      isActive={isActive}
+      color={color}
+      {...restProps}
+      {...restObjectData}
+    />
   );
-
-  return ButtonComponent;
 };
 
 ToolButton.propTypes = propTypes;
