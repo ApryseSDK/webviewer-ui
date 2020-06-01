@@ -26,4 +26,6 @@ export const stepToZoomFactorRangesMap = {
 export default {
   setMinZoomLevel,
   setMaxZoomLevel,
+  getMinZoomLevel,
+  getMaxZoomLevel
 };

@@ -498,24 +498,26 @@ class SearchOverlay extends React.PureComponent {
         </div>
         <div className="options">
           <Choice
+            data-element="caseSensitiveSearchOption"
             id="case-sensitive-option"
             ref={this.caseSensitiveInput}
             onChange={this.onChangeCaseSensitive}
             label={t('option.searchPanel.caseSensitive')}
           />
           <Choice
+            data-element="wholeWordSearchOption"
             id="whole-word-option"
             ref={this.wholeWordInput}
             onChange={this.onChangeWholeWord}
             label={t('option.searchPanel.wholeWordOnly')}
           />
-          {!isWildCardSearchDisabled &&
-            <Choice
-              id="wild-card-option"
-              ref={this.wildcardInput}
-              onChange={this.onChangeWildcard}
-              label={t('option.searchPanel.wildcard')}
-            />}
+          <Choice
+            data-element="wildCardSearchOption"
+            id="wild-card-option"
+            ref={this.wildcardInput}
+            onChange={this.onChangeWildcard}
+            label={t('option.searchPanel.wildcard')}
+          />
         </div>
         <div className="divider" />
         <div className="footer">
@@ -544,7 +546,6 @@ const mapStateToProps = state => ({
   isSearching: selectors.isSearching(state),
   isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
   isSearchPanelDisabled: selectors.isElementDisabled(state, 'searchPanel'),
-  isWildCardSearchDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
   searchValue: selectors.getSearchValue(state),
   isCaseSensitive: selectors.isCaseSensitive(state),
   isWholeWord: selectors.isWholeWord(state),

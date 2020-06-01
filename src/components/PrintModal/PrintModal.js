@@ -522,6 +522,7 @@ class PrintModal extends React.PureComponent {
                   onSubmit={this.createPagesAndPrint}
                 >
                   <Input
+                    dataElement="allPagesPrintOption"
                     ref={this.allPages}
                     id="all-pages"
                     name="pages"
@@ -531,6 +532,7 @@ class PrintModal extends React.PureComponent {
                     disabled={isPrinting}
                   />
                   <Input
+                    dataElement="currentPagePrintOption"
                     ref={this.currentPage}
                     id="current-page"
                     name="pages"
@@ -539,6 +541,7 @@ class PrintModal extends React.PureComponent {
                     disabled={isPrinting}
                   />
                   <Input
+                    dataElement="customPagesPrintOption"
                     ref={this.customPages}
                     id="custom-pages"
                     name="pages"
@@ -547,6 +550,7 @@ class PrintModal extends React.PureComponent {
                     disabled={isPrinting}
                   />
                   <Input
+                    dataElement="commentsPrintOption"
                     ref={this.includeComments}
                     id="include-comments"
                     name="comments"

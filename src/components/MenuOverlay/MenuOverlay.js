@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import onClickOutside from 'react-onclickoutside';
 
-import ActionButton from 'components/ActionButton';
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
 
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import print from 'helpers/print';
-import getClassName from 'helpers/getClassName';
 import openFilePicker from 'helpers/openFilePicker';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import downloadPdf from 'helpers/downloadPdf';

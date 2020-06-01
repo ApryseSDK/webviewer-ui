@@ -2,10 +2,8 @@
 
 .MeasurementOption {
   width: 100%;
-  // margin-left: 2px;
   margin-top: 4px;
   margin-bottom: 4px;
-  // margin-right: 2px;
 
   input, select {
     &:focus {
@@ -16,18 +14,6 @@
 
   @include tablet {
     margin-bottom: 5px;
-  }
-
-  .textarea {
-    resize: none;
-    outline: none;
-    border: none;
-    width: 34px;
-    margin-right: 3px;
-    margin-left: 3px;
-    margin-top: 1px;
-    height: 13px;
-    text-align:right;
   }
 
   .Scale {
@@ -153,5 +139,10 @@
   input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+
+  label[for="measurement-snapping"] {
+    margin-top: 10px;
+    margin-left: 20px;
   }
 }

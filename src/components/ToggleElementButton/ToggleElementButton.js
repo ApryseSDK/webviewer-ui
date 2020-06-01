@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import Button from 'components/Button';
-import Icon from 'components/Icon';
 
 import selectors from 'selectors';
 import actions from 'actions';
@@ -40,7 +39,7 @@ const ToggleElementButton = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let isActive = selectors.isElementOpen(state, ownProps.element);
+  const isActive = selectors.isElementOpen(state, ownProps.element);
 
   return {
     isElementDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
