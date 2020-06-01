@@ -16,8 +16,6 @@ import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
 import classNames from 'classnames';
 
-import { motion, AnimatePresence } from "framer-motion";
-
 import './ToolsOverlay.scss';
 
 class ToolsOverlay extends React.PureComponent {
@@ -41,8 +39,6 @@ class ToolsOverlay extends React.PureComponent {
       isStylingOpen: false,
       siblingWidth: 0,
     };
-    this.itemsContainer = React.createRef();
-    this.toolsContainer = React.createRef();
   }
 
   componentDidMount() {
@@ -53,10 +49,6 @@ class ToolsOverlay extends React.PureComponent {
     // otherwise its left is 0 instead of left-aligned with the tool group button
     if (this.props.isOpen) {
       this.setOverlayPosition();
-    }
-
-    if (this.itemsContainer.current) {
-      this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
   }
 
@@ -78,10 +70,6 @@ class ToolsOverlay extends React.PureComponent {
 
     if (clickedOnAnotherToolGroupButton) {
       this.setOverlayPosition();
-    }
-
-    if (this.itemsContainer.current) {
-      this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
 
     if (this.props.activeToolGroup === '') {
@@ -166,15 +154,17 @@ class ToolsOverlay extends React.PureComponent {
     );
 
     let Component = (
-      <React.Fragment>
+      <div
+        className="tool-buttons-container"
+      >
         {toolNames.map((toolName, i) => (
           <ToolButton
             key={`${toolName}-${i}`}
             toolName={toolName}
+            isToolStyleOpen={isToolStyleOpen}
           />
         ))}
-        {dropdownButton}
-      </React.Fragment>
+      </div>
     );
 
     if (activeToolGroup === 'signatureTools') {
@@ -196,12 +186,9 @@ class ToolsOverlay extends React.PureComponent {
     //   );
     } else if (noPresets) {
       Component = (
-        <React.Fragment>
-          <div className="no-presets-container">
-            {t('message.toolsOverlayNoPresets')}
-          </div>
-          {dropdownButton}
-        </React.Fragment>
+        <div className="no-presets">
+          {t('message.toolsOverlayNoPresets')}
+        </div>
       );
     }
 
@@ -228,28 +215,22 @@ class ToolsOverlay extends React.PureComponent {
             style={arrowStyle}
           />
           <div
-            ref={this.toolsContainer}
             className={classNames({
               "tools-container": true,
             })}
           >
-            <div
-              className="tool-buttons-container"
-              tool-group={activeToolGroup}
-              ref={this.itemsContainer}
-            >
-              {Component}
-            </div>
-            {(isToolStyleOpen) && (
-              <Swipeable
-                onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-                onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-                preventDefaultTouchmoveEvent
-              >
-                <ToolStylePopup/>
-              </Swipeable>
-            )}
+            {Component}
+
           </div>
+          {(isToolStyleOpen) && (
+            <Swipeable
+              onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+              onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+              preventDefaultTouchmoveEvent
+            >
+              <ToolStylePopup/>
+            </Swipeable>
+          )}
         </div>
       </div>
     );

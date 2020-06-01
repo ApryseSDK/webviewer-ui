@@ -1,63 +1,88 @@
 @import '../../constants/styles';
 
-.tool-button {
+.tool-button-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-radius: 4px;
+  margin-left: 6px;
+  margin-right: 6px;
 
-  &.Button {
-    width: 26px;
-    height: 26px;
-
-    @include tablet-and-mobile {
-      width: 28px;
-      height: 28px;
-    }
-
-    &:hover {
-      background: var(--tools-overlay-button-hover);
-    }
-    &.active {
-      background: var(--tools-overlay-button-active);
-    }
-  }
-
-  &.active {
-    background: var(--tools-overlay-button-active);
-
-    .Icon {
-      color: var(--selected-icon-color);
-    }
-
-    div:hover {
-      background: none;
-    }
-  }
-
-  .styling-down-arrow-container {
-    display: flex;
-    justify-content: center;
-    width: 32px;
-    padding-bottom: 8px;
-    border-radius: 4px;
+  .tool-button-arrow-container {
+    width: 13px;
+    height: 13px;
+    margin-right: 2px;
     cursor: pointer;
 
-    font-size: 16px; // hack for down arrow being dependent on font-size
-
-    @include mobile {
-      margin-top: -2px;
-      padding-bottom: 5px;
+    .tool-button-arrow-down, .tool-button-arrow-up {
+      width: 100%;
+      height: 100%;
     }
 
-    &:hover {
-      background: var(--tools-overlay-button-hover);
+    .tool-button-arrow-up {
+      margin-top: -1px;
+    }
+  }
+
+  .tool-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 4px;
+    margin-right: 1px;
+
+    &.Button {
+      width: 26px;
+      height: 26px;
+
+      @include tablet-and-mobile {
+        width: 28px;
+        height: 28px;
+      }
+
+      &:hover {
+        background: var(--tools-overlay-button-hover);
+      }
+      &.active {
+        background: var(--tools-overlay-button-active);
+      }
     }
 
-    .styling-down-arrow {
-      width: 12px;
-      height: 12px;
-      margin-top: -2px;
+    &.active {
+      background: var(--tools-overlay-button-active);
+
+      .Icon {
+        color: var(--selected-icon-color);
+      }
+
+      div:hover {
+        background: none;
+      }
+    }
+
+    .styling-down-arrow-container {
+      display: flex;
+      justify-content: center;
+      width: 32px;
+      padding-bottom: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+
+      font-size: 16px; // hack for down arrow being dependent on font-size
+
+      @include mobile {
+        margin-top: -2px;
+        padding-bottom: 5px;
+      }
+
+      &:hover {
+        background: var(--tools-overlay-button-hover);
+      }
+
+      .styling-down-arrow {
+        width: 12px;
+        height: 12px;
+        margin-top: -2px;
+      }
     }
   }
 }

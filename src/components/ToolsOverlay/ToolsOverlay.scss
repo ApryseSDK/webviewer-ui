@@ -10,8 +10,6 @@
 .ToolsOverlay {
   @extend %overlay;
   box-shadow: none;
-  display: flex;
-  flex-direction: row;
   padding: 0px;
   flex-wrap: nowrap;
   border: 0px;
@@ -19,6 +17,10 @@
   background: transparent;
   position: relative;
   border-radius: 4px 4px 0 0;
+  // Very important.
+  // This makes it so the toolstylepopup goes below the presets.
+  // It will overflow properly.
+  height: 32px;
 
   @include tablet-and-mobile {
     width: 100%;
@@ -32,12 +34,12 @@
     }
   }
 
-  .no-presets-container {
-    width: 168px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .no-presets {
     color: var(--no-presets-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 
   .styling-arrow-container {
@@ -120,10 +122,13 @@
   }
 
   .tools-container {
+    display: flex;
+    align-items: center;
+    // flex-direction: column;
     border-radius: 4px;
     background: var(--preset-background);
-    height: 32px;
-    width: 100%;
+    height: 100%;
+    width: 218px;
 
     @include tablet-and-mobile {
       box-shadow: none;
@@ -144,9 +149,11 @@
       display: flex;
       align-items: center;
       height: 32px;
+      padding-left: 2px;
+      margin-right: -2px;
 
       @include desktop {
-        width: 214px;
+        width: 218px;
       }
 
       @include tablet-and-mobile {
@@ -156,28 +163,6 @@
       @include tablet-and-mobile {
         box-shadow: none;
         width: 100%;
-      }
-
-      .Button {
-        margin: 0 8px;
-      }
-
-      @include desktop {
-        &[tool-group="miscTools"] {
-          justify-content: space-around;
-
-          .Button {
-            margin: 0 0;
-          }
-        }
-
-        // &[tool-group="measurementTools"] {
-        //   justify-content: space-around;
-
-        //   .Button {
-        //     margin: 0 0px;
-        //   }
-        // }
       }
     }
   }
