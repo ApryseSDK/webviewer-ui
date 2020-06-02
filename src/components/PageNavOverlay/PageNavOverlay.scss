@@ -30,13 +30,14 @@
   // }
 
   .side-arrow-container {
-    height: 100%;
+    width: 24px;
+    height: 24px;
     border-radius: 4px;
     display: flex;
     align-items: center;
     @include desktop {
-      margin-right: 8px;
-      margin-left: 8px;
+      margin: 0 4px;
+      padding: 0 4px;
     }
 
     @include tablet-and-mobile {
