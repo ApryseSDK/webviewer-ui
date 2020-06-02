@@ -158,12 +158,13 @@ class ToolsOverlay extends React.PureComponent {
     const isVisible = (isOpen || isDesktop) && !isDisabled;
 
     let dropdownButton = (
-      <div
+      <button
         className={classNames({
           "styling-arrow-container": true,
           active: isToolStyleOpen,
           disabled: !activeToolGroup,
         })}
+        disabled={!activeToolGroup}
         data-element="styling-button"
         onClick={() => activeToolGroup && this.props.toggleElement('toolStylePopup')}
       >
@@ -171,7 +172,7 @@ class ToolsOverlay extends React.PureComponent {
         {isToolStyleOpen ?
           <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
           <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-      </div>
+      </button>
     );
 
     if (swapableToolNames.length > 0) {

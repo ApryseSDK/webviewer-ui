@@ -127,7 +127,7 @@ class SearchPanel extends React.PureComponent {
                 <div
                   className="close-container"
                 >
-                  <div
+                  <button
                     className="close-icon-container"
                     onClick={() => {
                       closeElements(['searchPanel']);
@@ -137,7 +137,7 @@ class SearchPanel extends React.PureComponent {
                       glyph="ic_close_black_24px"
                       className="close-icon"
                     />
-                  </div>
+                  </button>
                 </div>}
               <SearchOverlay />
               <div className={`results`}>
