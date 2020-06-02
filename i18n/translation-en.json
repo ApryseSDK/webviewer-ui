@@ -178,6 +178,7 @@
     "print": {
       "all": "All",
       "current": "Current",
+      "view": "View",
       "pages": "Pages",
       "includeComments": "Include comments",
       "addWatermarkSettings": "Add Watermark Settings"

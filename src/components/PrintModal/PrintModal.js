@@ -41,6 +41,7 @@ class PrintModal extends React.PureComponent {
     super();
     this.allPages = React.createRef();
     this.currentPage = React.createRef();
+    this.currentView = React.createRef();
     this.customPages = React.createRef();
     this.customInput = React.createRef();
     this.includeComments = React.createRef();
@@ -52,10 +53,19 @@ class PrintModal extends React.PureComponent {
       isWatermarkModalVisible: false,
       watermarkModalOption: null,
       existingWatermarks: null,
+      selectedPrintOption: this.allPages,
     };
   }
 
   componentDidUpdate(prevProps) {
+    const { selectedPrintOption } = this.state;
+    if(!selectedPrintOption?.current){
+      const printOptions = [this.allPages, this.currentPage, this.currentView, this.customPages];
+      const selectedOptions = printOptions.find(o => o.current?.checked)
+      
+      this.setState({ selectedPrintOption: selectedOptions ?? printOptions.find(o => o.current)});
+    }
+    
     if (!prevProps.isOpen && this.props.isOpen) {
       this.onChange();
       this.props.closeElements([
@@ -83,12 +93,14 @@ class PrintModal extends React.PureComponent {
   onChange = () => {
     const { currentPage, pageLabels, layoutMode } = this.props;
     let pagesToPrint = [];
+    let selectedPrintOption = null;
 
-    if (this.allPages.current.checked) {
+    if (this.allPages.current?.checked) {
       for (let i = 1; i <= core.getTotalPages(); i++) {
         pagesToPrint.push(i);
       }
-    } else if (this.currentPage.current.checked) {
+      selectedPrintOption = this.allPages;
+    } else if (this.currentPage.current?.checked) {
       const pageCount = core.getTotalPages();
 
       // when displaying 2 pages, "Current" should print both of them
@@ -115,12 +127,14 @@ class PrintModal extends React.PureComponent {
           pagesToPrint.push(currentPage);
           break;
       }
-    } else if (this.customPages.current.checked) {
+      selectedPrintOption = this.currentPage;
+    } else if (this.customPages.current?.checked ||this.currentView.current?.checked ) {
       const customInput = this.customInput.current.value.replace(/\s+/g, '');
       pagesToPrint = getPageArrayFromString(customInput, pageLabels);
+      selectedPrintOption = this.customPages.current?.checked ? this.customPages : this.currentView;
     }
 
-    this.setState({ pagesToPrint });
+    this.setState({ pagesToPrint, selectedPrintOption });
   };
 
   onFocus = () => {
@@ -168,7 +182,7 @@ class PrintModal extends React.PureComponent {
       creatingPages.push(this.creatingImage(pageNumber));
 
       const printableAnnotations = this.getPrintableAnnotations(pageNumber);
-      if (this.includeComments.current.checked && printableAnnotations.length) {
+      if (this.includeComments.current?.checked && printableAnnotations.length) {
         const sortedNotes = getSortStrategies()[
           this.props.sortStrategy
         ].getSortedNotes(printableAnnotations);
@@ -184,6 +198,7 @@ class PrintModal extends React.PureComponent {
       const pageIndex = pageNumber - 1;
       const zoom = 1;
       const printRotation = this.getPrintRotation(pageIndex);
+      let renderRect = null;
       const onCanvasLoaded = canvas => {
         this.pendingCanvases = this.pendingCanvases.filter(
           pendingCanvas => pendingCanvas !== id,
@@ -202,11 +217,34 @@ class PrintModal extends React.PureComponent {
           });
       };
 
+      if (this.currentView.current?.checked) {
+        const displayMode = core.getDisplayModeObject();
+        const containerElement = document.querySelector('.DocumentContainer');
+        const documentElement = document.querySelector('.document');
+
+        const coordinates = [];
+        coordinates[0] = displayMode.windowToPageNoRotate({
+          x: Math.max(containerElement.scrollLeft, documentElement.offsetLeft),
+          y: Math.max(containerElement.scrollTop + 47, 0)
+        }, pageIndex);
+        coordinates[1] = displayMode.windowToPageNoRotate({
+          x: Math.min(window.innerWidth, documentElement.offsetLeft + documentElement.offsetWidth) + containerElement.scrollLeft,
+          y: window.innerHeight + containerElement.scrollTop
+        }, pageIndex);
+        const x1 = Math.min(coordinates[0].x, coordinates[1].x);
+        const y1 = Math.min(coordinates[0].y, coordinates[1].y);
+        const x2 = Math.max(coordinates[0].x, coordinates[1].x);
+        const y2 = Math.max(coordinates[0].y, coordinates[1].y);
+
+        renderRect = { x1, y1, x2, y2 };
+      }
+
       const id = core.getDocument().loadCanvasAsync({
         pageIndex,
         zoom,
         pageRotation: printRotation,
         drawComplete: onCanvasLoaded,
+        renderRect,
       });
       this.pendingCanvases.push(id);
     });
@@ -468,9 +506,9 @@ class PrintModal extends React.PureComponent {
       return null;
     }
 
-    const { count, pagesToPrint } = this.state;
+    const { count, pagesToPrint, selectedPrintOption } = this.state;
     const isPrinting = count >= 0;
-    const className = getClassName('Modal PrintModal', this.props);
+    const className = getClassName('Modal PrintModal', this.props);  
     const customPagesLabelElement = (
       <input
         ref={this.customInput}
@@ -525,7 +563,7 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={t('option.print.all')}
-                  defaultChecked
+                  checked={selectedPrintOption === this.allPages}
                   disabled={isPrinting}
                 />
                 <Input
@@ -535,6 +573,17 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={t('option.print.current')}
+                  checked={selectedPrintOption === this.currentPage}
+                  disabled={isPrinting}
+                />
+                <Input
+                  dataElement="currentViewPrintOption"
+                  ref={this.currentView}
+                  id="current-view"
+                  name="pages"
+                  type="radio"
+                  label={t('option.print.view')}
+                  checked={selectedPrintOption === this.currentView}
                   disabled={isPrinting}
                 />
                 <Input
@@ -544,6 +593,7 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={customPagesLabelElement}
+                  checked={selectedPrintOption === this.customPages}
                   disabled={isPrinting}
                 />
                 <Input
@@ -610,6 +660,11 @@ const mapStateToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   colorMap: selectors.getColorMap(state),
   layoutMode: selectors.getDisplayMode(state),
+
+  printAllPageDisabled: selectors.isElementDisabled(state, 'allPagesPrintOption'),
+  printCurrentPageDisabled: selectors.isElementDisabled(state, 'currentPagePrintOption'),
+  printViewPageDisabled: selectors.isElementDisabled(state, 'currentViewPrintOption'),
+  printCustomPageDisabled: selectors.isElementDisabled(state, 'customPagesPrintOption'),
 });
 
 const mapDispatchToProps = dispatch => ({
