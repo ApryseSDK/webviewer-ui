@@ -63,7 +63,7 @@ class PrintModal extends React.PureComponent {
       const printOptions = [this.allPages, this.currentPage, this.currentView, this.customPages];
       const selectedOptions = printOptions.find(o => o.current?.checked)
       
-      this.setState({ selectedPrintOption: selectedOptions ?? printOptions.find(o => o.current)});
+      this.setState({ selectedPrintOption: selectedOptions ?? printOptions.find(o => o?.current)});
     }
     
     if (!prevProps.isOpen && this.props.isOpen) {
