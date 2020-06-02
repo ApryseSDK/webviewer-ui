@@ -6,15 +6,20 @@
 
   .divider {
     height: 1px;
-    width: 100%;
     background: var(--divider);
-    margin: 8px 16px 8px 8px;
+    margin-top: 16px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    margin-left: 16px;
   }
 
   .documentControlsInput {
     display: flex;
     flex-direction: row;
-    padding: 8px 0px 8px 8px;
+    padding-left: 16px;
+    padding-right: 8px;
+    padding-bottom: 16px;
+    padding-top: 8px;
 
     .pagesInput {
       width: 100%;
@@ -22,6 +27,11 @@
       border: 1px solid var(--border);
       border-radius: 4px;
       color: var(--text-color);
+
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-left: 8px;
+      padding-right: 8px;
 
       &:focus {
         outline: none;
