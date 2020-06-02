@@ -59,7 +59,30 @@
 
 
   .no-annotations {
-    @extend %center-of-panel;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .msg {
+      line-height: 15px;
+      width: 146px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 65px;
+      height: 83px;
+
+      svg {
+        width: 65px;
+        height: 83px;
+      }
+
+      * {
+        fill: var(--gray-5);
+        color: var(--gray-5);
+      }
+    }
   }
 
   >.header {

@@ -91,9 +91,6 @@ class ToolGroupButton extends React.PureComponent {
         core.setToolMode(toolName);
       }
       setActiveToolGroup(toolGroup);
-      if (toolGroup === 'signatureTools' && savedSignatures.length === 0) {
-        openElement('signatureModal');
-      }
       openElement('toolsOverlay');
     }
   };

@@ -247,6 +247,34 @@ const NotesPanel = () => {
     [sortStrategy].getSortedNotes(notes)
     .filter(filterNote);
 
+  const NoResults = (
+    <div className="no-results">
+      <div>
+        <Icon
+          className="empty-icon"
+          glyph="illustration - empty state - outlines"
+        />
+      </div>
+      <div className="msg">
+        {t('message.noResults')}
+      </div>
+    </div>
+  );
+
+  const NoAnnotations = (
+    <div className="no-annotations">
+      <div>
+        <Icon
+          className="empty-icon"
+          glyph="illustration - empty state - outlines"
+        />
+      </div>
+      <div className="msg">
+        {t('message.noAnnotations')}
+      </div>
+    </div>
+  );
+
   // keep track of the index of the single selected note in the sorted and filtered list
   // in order to scroll it into view in this render effect
   const ids = Object.keys(selectedNoteIds);
@@ -311,62 +339,46 @@ const NotesPanel = () => {
                   />
                 </div>
               </div>}
-            {notes.length === 0 ? (
-              <div className="no-annotations">{t('message.noAnnotations')}</div>
-            ) : (
-              <React.Fragment>
-                <div className="header">
-                  <div className="input-container">
-                    <input
-                      type="text"
-                      placeholder={t('message.searchCommentsPlaceholder')}
-                      onChange={handleInputChange}
-                    />
-                    {/* <div className="input-button" onClick={() => {}}>
-                      <Icon glyph="icon-header-search" />
-                    </div> */}
-                  </div>
-                  <div className="divider" />
-                  <div className="sort-row">
-                    <div className="sort-container">
-                      <div className="label">{`Sort by:`}</div>
-                      <Dropdown items={Object.keys(getSortStrategies())} />
-                    </div>
+            <React.Fragment>
+              <div className="header">
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder={t('message.searchCommentsPlaceholder')}
+                    onChange={handleInputChange}
+                  />
+                  {/* <div className="input-button" onClick={() => {}}>
+                    <Icon glyph="icon-header-search" />
+                  </div> */}
+                </div>
+                <div className="divider" />
+                <div className="sort-row">
+                  <div className="sort-container">
+                    <div className="label">{`Sort by:`}</div>
+                    <Dropdown items={Object.keys(getSortStrategies())} />
                   </div>
                 </div>
-                {notesToRender.length === 0 ? (
-                  <div className="no-results">
-                    <div>
-                      <Icon
-                        className="empty-icon"
-                        glyph="illustration - empty state - outlines"
-                      />
-                    </div>
-                    <div className="msg">
-                      {t('message.noResults')}
-                    </div>
-                  </div>
-                ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
-                  <NormalList
-                    ref={listRef}
-                    notes={notesToRender}
-                    onScroll={handleScroll}
-                    initialScrollTop={scrollTopRef.current}
-                  >
-                    {renderChild}
-                  </NormalList>
-                ) : (
-                  <VirtualizedList
-                    ref={listRef}
-                    notes={notesToRender}
-                    onScroll={handleScroll}
-                    initialScrollTop={scrollTopRef.current}
-                  >
-                    {renderChild}
-                  </VirtualizedList>
-                )}
-              </React.Fragment>
-            )}
+              </div>
+              {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
+                <NormalList
+                  ref={listRef}
+                  notes={notesToRender}
+                  onScroll={handleScroll}
+                  initialScrollTop={scrollTopRef.current}
+                >
+                  {renderChild}
+                </NormalList>
+              ) : (
+                <VirtualizedList
+                  ref={listRef}
+                  notes={notesToRender}
+                  onScroll={handleScroll}
+                  initialScrollTop={scrollTopRef.current}
+                >
+                  {renderChild}
+                </VirtualizedList>
+              )}
+            </React.Fragment>
           </div>
         </motion.div>
       )}

@@ -24,15 +24,20 @@ const PresetButton = ({
 
   const dispatch = useDispatch();
   const getStylingDropdownButton = () => {
+
     return (
       <div
         className="tool-button-arrow-container"
-        onClick={() => dispatch(actions.toggleElement('toolStylePopup'))}
       >
         {isActive &&
-        (isToolStyleOpen ?
-          <Icon className="tool-button-arrow-up" glyph="icon-chevron-up" /> :
-          <Icon className="tool-button-arrow-down" glyph="icon-chevron-down" />)}
+          <div
+            className="tool-button-arrow-inner-container"
+            onClick={() => dispatch(actions.toggleElement('toolStylePopup'))}
+          >
+            {(isToolStyleOpen ?
+              <Icon className="tool-button-arrow-up" glyph="icon-chevron-up" /> :
+              <Icon className="tool-button-arrow-down" glyph="icon-chevron-down" />)}
+          </div>}
       </div>
     );
   };

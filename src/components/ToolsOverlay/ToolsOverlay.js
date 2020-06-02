@@ -136,22 +136,6 @@ class ToolsOverlay extends React.PureComponent {
 
     const isVisible = (isOpen || isDesktop) && !isDisabled;
     const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools' || activeToolGroup === 'fileAttachmentTools';
-    const dropdownButton = (
-      <div
-        className={classNames({
-          "styling-arrow-container": true,
-          active: isToolStyleOpen,
-          disabled: noPresets,
-        })}
-        data-element="styling-button"
-        onClick={() => !noPresets && this.props.toggleElement('toolStylePopup')}
-      >
-        <Icon glyph="icon-menu-style-line" />
-        {isToolStyleOpen ?
-          <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-          <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-      </div>
-    );
 
     let Component = (
       <div
