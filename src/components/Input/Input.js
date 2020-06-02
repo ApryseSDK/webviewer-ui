@@ -1,10 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
-import { useSelector } from 'react-redux';
-import selectors from 'selectors';
 
 import './Input.scss';
+
+import selectors from 'selectors';
 
 const propTypes = {
   id: PropTypes.string.isRequired,

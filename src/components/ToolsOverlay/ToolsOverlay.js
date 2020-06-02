@@ -164,6 +164,7 @@ class ToolsOverlay extends React.PureComponent {
           active: isToolStyleOpen,
           disabled: !activeToolGroup,
         })}
+        disabled={!activeToolGroup}
         data-element="styling-button"
         onClick={() => activeToolGroup && this.props.toggleElement('toolStylePopup')}
       >
