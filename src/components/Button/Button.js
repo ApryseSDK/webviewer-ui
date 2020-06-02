@@ -79,7 +79,7 @@ const Button = props => {
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title} hideShortcut={disable}>{children}</Tooltip>
+    <Tooltip content={title} hideShortcut={disabled}>{children}</Tooltip>
   ) : (
     children
   );
