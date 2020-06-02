@@ -22,8 +22,6 @@ const propTypes = {
   onClick: PropTypes.func,
 };
 
-const NOOP = () => {};
-
 const Button = props => {
   const [removeElement, customOverrides = {}] = useSelector(
     state => [
@@ -42,7 +40,7 @@ const Button = props => {
     label,
     color,
     dataElement,
-    onClick = NOOP,
+    onClick,
     className,
     title,
     style,
@@ -68,9 +66,10 @@ const Button = props => {
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
       })}
+      disabled={disabled}
       style={style}
       data-element={dataElement}
-      onClick={disabled ? NOOP : onClick}
+      onClick={onClick}
     >
       {isGlyph && <Icon glyph={imgToShow} color={color} />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
