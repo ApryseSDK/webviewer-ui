@@ -24,5 +24,6 @@ WebViewer(...)
 import actions from 'actions';
 
 export default store => (searchValue, options) => {
+  store.dispatch(actions.openElement('searchPanel'));
   store.dispatch(actions.searchTextFull(searchValue, options));
 };

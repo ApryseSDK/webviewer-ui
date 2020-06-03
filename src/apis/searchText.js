@@ -37,6 +37,7 @@ export default store => (searchValue, options) => {
     searchOptions = options;
   }
 
+  store.dispatch(actions.openElement('searchPanel'));
   store.dispatch(actions.searchText(searchValue, searchOptions));
 };
 

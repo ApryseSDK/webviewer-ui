@@ -55,8 +55,8 @@ class SearchOverlay extends React.PureComponent {
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     setSearchError: PropTypes.func.isRequired,
-    isCaseSensitiveDisabled: PropTypes.bool.isRequired,
-    isWholeWordDisabled: PropTypes.bool.isRequired,
+    isCaseSensitiveDisabled: PropTypes.bool,
+    isWholeWordDisabled: PropTypes.bool,
     isWildcardDisabled: PropTypes.bool.isRequired,
   }
 
@@ -79,22 +79,22 @@ class SearchOverlay extends React.PureComponent {
     this.searchTextInput.current.focus();
   }
 
+  componentWillUnmount() {
+    this.clearSearchResults();
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.isProgrammaticSearch) {
-      if (this.props.isSearchPanelOpen) {
-        this.props.closeElement('searchPanel');
-      }
-      this.props.openElement('searchOverlay');
       this.clearSearchResults();
       this.executeSingleSearch();
       this.props.setIsProgrammaticSearch(false);
     } else if (this.props.isProgrammaticSearchFull) {
-      this.props.openElements(['searchOverlay', 'searchPanel']);
       this.caseSensitiveInput.current.checked = this.props.isCaseSensitive;
       this.wholeWordInput.current.checked = this.props.isWholeWord;
       if (this.wildcardInput.current) {
         this.wildcardInput.current.checked = this.props.isWildcard;
       }
+
       this.clearSearchResults();
       this.executeFullSearch();
       this.props.setIsProgrammaticSearchFull(false);
