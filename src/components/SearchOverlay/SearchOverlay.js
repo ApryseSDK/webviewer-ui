@@ -339,12 +339,6 @@ class SearchOverlay extends React.PureComponent {
     });
   };
 
-  // onTransitionEnd = () => {
-  //   if (this.props.isOpen) {
-  //     this.searchTextInput.current.focus();
-  //   }
-  // }
-
   onChange = e => {
     const { isSearchPanelOpen, setSearchValue } = this.props;
     const searchValue = e.target.value;
