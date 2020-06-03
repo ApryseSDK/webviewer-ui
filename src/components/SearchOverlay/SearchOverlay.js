@@ -75,6 +75,10 @@ class SearchOverlay extends React.PureComponent {
     };
   }
 
+  componentDidMount() {
+    this.searchTextInput.current.focus();
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.isProgrammaticSearch) {
       if (this.props.isSearchPanelOpen) {
@@ -334,12 +338,6 @@ class SearchOverlay extends React.PureComponent {
       );
     });
   };
-
-  // onTransitionEnd = () => {
-  //   if (this.props.isOpen) {
-  //     this.searchTextInput.current.focus();
-  //   }
-  // }
 
   onChange = e => {
     const { isSearchPanelOpen, setSearchValue } = this.props;
