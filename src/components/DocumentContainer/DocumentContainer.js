@@ -12,6 +12,7 @@ import touchEventManager from 'helpers/TouchEventManager';
 import getHashParams from 'helpers/getHashParams';
 import setCurrentPage from 'helpers/setCurrentPage';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import MeasurementOverlay from 'components/MeasurementOverlay';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -214,8 +215,9 @@ class DocumentContainer extends React.PureComponent {
               data-element="documentContainer"
               onScroll={this.handleScroll}
             >
-              <div className="document" ref={this.document}></div>
+              <div className="document" ref={this.document}/>
             </div>
+            <MeasurementOverlay />
           </div>
         )}
       </Measure>
@@ -233,8 +235,6 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  // using leftPanelWidth to trigger render
-  // leftPanelWidth: selectors.getLeftPanelWidth(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
 });
 

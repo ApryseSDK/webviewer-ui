@@ -8,7 +8,6 @@ import Header from 'components/Header';
 import ToolsHeader from 'components/Header/ToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import MenuOverlay from 'components/MenuOverlay';
-import MeasurementOverlay from 'components/MeasurementOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
@@ -75,7 +74,6 @@ const App = ({ removeEventHandlers }) => {
         <ViewControlsOverlay />
         <MenuOverlay />
         <ZoomOverlay />
-        <MeasurementOverlay />
         <AnnotationContentOverlay />
 
         <AnnotationPopup />
