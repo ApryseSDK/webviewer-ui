@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getDataWithKey } from 'constants/map';
 
 import Icon from 'components/Icon';
 
@@ -18,6 +19,7 @@ class ColorPalette extends React.PureComponent {
     onStyleChange: PropTypes.func.isRequired,
     colorMapKey: PropTypes.string.isRequired,
     overridePalette: PropTypes.object,
+    overrideAvailablePalettes: PropTypes.object,
   };
 
   defaultPalette = [
@@ -126,8 +128,14 @@ class ColorPalette extends React.PureComponent {
   };
 
   render() {
-    const { overridePalette, colorMapKey } = this.props;
+    const { overridePalette, property, colorMapKey, overrideAvailablePalettes } = this.props;
     const palette = overridePalette?.[colorMapKey] || overridePalette?.global || this.defaultPalette;
+
+    const availablePalettes = overrideAvailablePalettes?.[colorMapKey] || getDataWithKey(colorMapKey).availablePalettes;
+
+    if (availablePalettes && !availablePalettes.includes(property)) {
+      return null;
+    }
 
     return (
       <div className="ColorPalette" data-element={dataElement}>
@@ -143,6 +151,7 @@ class ColorPalette extends React.PureComponent {
 
 const mapStateToProps = state => ({
   overridePalette: selectors.getCustomElementOverrides(state, dataElement),
+  overrideAvailablePalettes: selectors.getCustomElementOverrides(state, 'availablePalettes'),
 });
 
 export default connect(mapStateToProps)(ColorPalette);
