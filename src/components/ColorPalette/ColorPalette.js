@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { getDataWithKey } from 'constants/map';
 
 import getBrightness from 'helpers/getBrightness';
 import selectors from 'selectors';
@@ -17,7 +16,6 @@ class ColorPalette extends React.PureComponent {
     color: PropTypes.object,
     onStyleChange: PropTypes.func.isRequired,
     overridePalette: PropTypes.array,
-    overrideAvailablePalettes: PropTypes.object,
   }
 
   constructor(props) {
@@ -71,17 +69,11 @@ class ColorPalette extends React.PureComponent {
   }
 
   render() {
-    const { hasPadding, style = {}, colorMapKey, property, color, overridePalette, overridePalette2, overrideAvailablePalettes } = this.props;
+    const { hasPadding, style = {}, property, color, overridePalette, overridePalette2 } = this.props;
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
 
     const palette = overridePalette2 || overridePalette || this.palette;
-
-    const availablePalettes = overrideAvailablePalettes?.[colorMapKey] || getDataWithKey(colorMapKey).availablePalettes;
-
-    if (availablePalettes && !availablePalettes.includes(property)) {
-      return null;
-    }
 
     return (
       <div
@@ -151,7 +143,6 @@ class ColorPalette extends React.PureComponent {
 
 const mapStateToProps = state => ({
   overridePalette: selectors.getCustomElementOverrides(state, dataElement),
-  overrideAvailablePalettes: selectors.getCustomElementOverrides(state, 'availablePalettes'),
 });
 
 export default connect(mapStateToProps)(ColorPalette);
