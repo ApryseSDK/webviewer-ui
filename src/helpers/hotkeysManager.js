@@ -264,7 +264,7 @@ WebViewer(...)
       },
       [`${Keys.CTRL_F}, ${Keys.COMMAND_F}`]: e => {
         e.preventDefault();
-        dispatch(actions.openElement('searchOverlay'));
+        dispatch(actions.openElement('searchPanel'));
       },
       [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
         e.preventDefault();
