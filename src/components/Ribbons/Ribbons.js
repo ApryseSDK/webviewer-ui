@@ -50,32 +50,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
 };
 
 const mapStateToProps = state => ({
-  screens: [
-    {
-      key: 'View',
-      translationKey: 'option.toolbarScreen.View',
-    },
-    {
-      key: 'Annotate',
-      translationKey: 'option.toolbarScreen.Annotate',
-    },
-    {
-      key: 'Draw',
-      translationKey: 'option.toolbarScreen.Draw',
-    },
-    {
-      key: 'Insert',
-      translationKey: 'option.toolbarScreen.Insert',
-    },
-    {
-      key: 'Measure',
-      translationKey: 'option.toolbarScreen.Measure',
-    },
-    {
-      key: 'Edit',
-      translationKey: 'option.toolbarScreen.Edit',
-    },
-  ],
+  screens: state.viewer.toolbarScreens,
   currentScreen: selectors.getScreen(state),
 });
 
