@@ -86,6 +86,7 @@ import setActiveLeftPanel from './setActiveLeftPanel';
 import setAdminUser from './setAdminUser';
 import setAnnotationUser from './setAnnotationUser';
 import setActivePalette from './setActivePalette';
+import setAvailablePalettes from './setAvailablePalettes';
 import setColorPalette from './setColorPalette';
 import setCurrentPageNumber from './setCurrentPageNumber';
 import setCustomNoteFilter from './setCustomNoteFilter';
@@ -251,6 +252,7 @@ export default store => {
     setShowSideWindow: setShowSideWindow(store),
     setSideWindowVisibility: setSideWindowVisibility(store),
     setActivePalette: setActivePalette(store),
+    setAvailablePalettes: setAvailablePalettes(store),
     setColorPalette: setColorPalette(store),
     disableTool: disableTool(store),
     enableAllElements: enableAllElements(store),

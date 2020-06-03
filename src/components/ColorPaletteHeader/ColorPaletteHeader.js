@@ -20,6 +20,7 @@ class ColorPaletteHeader extends React.PureComponent {
     isTextColorPaletteDisabled: PropTypes.bool,
     isFillColorPaletteDisabled: PropTypes.bool,
     isBorderColorPaletteDisabled: PropTypes.bool,
+    overrideAvailablePalettes: PropTypes.object,
   }
 
   setActivePalette = newPalette => {
@@ -37,8 +38,10 @@ class ColorPaletteHeader extends React.PureComponent {
       isTextColorPaletteDisabled,
       isBorderColorPaletteDisabled,
       isFillColorPaletteDisabled,
+      overrideAvailablePalettes,
     } = this.props;
     const { availablePalettes } = getDataWithKey(colorMapKey);
+    const localAvailablePalettes = overrideAvailablePalettes?.[colorMapKey] || overrideAvailablePalettes?.global || availablePalettes;
 
     if (toolName && (toolName.includes('Line') || toolName.includes('Arrow') || toolName.includes('Polyline'))) {
       return (
@@ -62,7 +65,7 @@ class ColorPaletteHeader extends React.PureComponent {
     }
 
 
-    if (availablePalettes.length < 2) {
+    if (localAvailablePalettes.length < 2) {
       return null;
     }
 
@@ -72,7 +75,7 @@ class ColorPaletteHeader extends React.PureComponent {
 
     return (
       <div className="palette-options">
-        {availablePalettes.map((pallette, i) =>
+        {localAvailablePalettes.map((pallette, i) =>
           <React.Fragment key={i}>
             <div
               className={classNames({
@@ -83,7 +86,7 @@ class ColorPaletteHeader extends React.PureComponent {
             >
               {t(`option.annotationColor.${pallette}`)}
             </div>
-            {i < availablePalettes.length - 1 && <div className="palette-options-divider" />}
+            {i < localAvailablePalettes.length - 1 && <div className="palette-options-divider" />}
           </React.Fragment>,
         )}
       </div>
@@ -95,6 +98,7 @@ const mapStateToProps = state => ({
   isTextColorPaletteDisabled: selectors.isElementDisabled(state, 'textColorPalette'),
   isFillColorPaletteDisabled: selectors.isElementDisabled(state, 'fillColorPalette'),
   isBorderColorPaletteDisabled: selectors.isElementDisabled(state, 'borderColorPalette'),
+  overrideAvailablePalettes: selectors.getCustomElementOverrides(state, 'availablePalettes'),
 });
 
 const mapDispatchToProps = {
