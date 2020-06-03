@@ -5,8 +5,9 @@ import selectors from 'selectors';
 import setActivePalette from './setActivePalette';
 
 /**
- * ???
+ * Sets the available palettes for a particular tool
  * @method WebViewerInstance#setAvailablePalettes
+ * @param {string} toolName The tool name.
  * @param {string[]} colorPalettes An array of palettes that are available for a particular tool. Contains one of 'text', 'border' and 'fill'.
  * @example
 WebViewer(...)
