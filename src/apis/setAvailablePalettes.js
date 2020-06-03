@@ -18,7 +18,7 @@ WebViewer(...)
 
 export default store => (toolName, colorPalettes) => {
   if (!colorPalettes) {
-    console.warn(`${toolName} is not a valid tool name!`);
+    console.warn(`No palette names were provided: ${colorPalettes}. Please use one of the following: 'text', 'border' and/or 'fill'.`);
     return;
   }
 
