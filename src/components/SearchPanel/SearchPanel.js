@@ -93,8 +93,6 @@ class SearchPanel extends React.PureComponent {
       style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
     }
 
-    const isVisible = !(!isOpen || isDisabled);
-
     let animate = { width: 'auto' };
     if (isMobile) {
       animate = { width: '100vw' };
@@ -102,7 +100,7 @@ class SearchPanel extends React.PureComponent {
 
     return (
       <AnimatePresence>
-        {isVisible && (
+        {isOpen && (
           <motion.div
             className="search-panel-container"
             initial={{ width: '0px' }}
