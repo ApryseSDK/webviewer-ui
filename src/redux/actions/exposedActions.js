@@ -300,3 +300,7 @@ export const setActiveResultIndex = index => ({
   type: 'SET_ACTIVE_RESULT_INDEX',
   payload: { index },
 });
+export const setAnnotationContentOverlayHandler = annotationContentOverlayHandler => ({
+  type: 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER',
+  payload: { annotationContentOverlayHandler }
+});
