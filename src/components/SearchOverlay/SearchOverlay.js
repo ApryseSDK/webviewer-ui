@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import onClickOutside from 'react-onclickoutside';
 
 import Icon from 'components/Icon';
-import Tooltip from 'components/Tooltip';
-import Input from 'components/Input';
 
 import core from 'core';
 import getClassName from 'helpers/getClassName';
@@ -14,6 +12,8 @@ import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
 import debounce from 'lodash/debounce';
+
+import { Choice } from '@pdftron/webviewer-react-toolkit';
 
 import './SearchOverlay.scss';
 
@@ -55,6 +55,9 @@ class SearchOverlay extends React.PureComponent {
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     setSearchError: PropTypes.func.isRequired,
+    isCaseSensitiveDisabled: PropTypes.bool.isRequired,
+    isWholeWordDisabled: PropTypes.bool.isRequired,
+    isWildcardDisabled: PropTypes.bool.isRequired,
   }
 
   constructor() {
@@ -459,24 +462,6 @@ class SearchOverlay extends React.PureComponent {
     this.executeDebouncedFullSearch();
   }
 
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
   render() {
     const {
       isDisabled,
@@ -490,6 +475,9 @@ class SearchOverlay extends React.PureComponent {
       isCaseSensitive,
       isWholeWord,
       isSearching,
+      isCaseSensitiveDisabled,
+      isWholeWordDisabled,
+      isWildcardDisabled,
     } = this.props;
 
     if (isDisabled) {
@@ -508,50 +496,55 @@ class SearchOverlay extends React.PureComponent {
             value={searchValue}
             placeholder={t('message.searchDocumentPlaceholder')}
           />
-          <div className="input-button" onClick={this.search}>
+          <button className="input-button" onClick={this.search}>
             <Icon glyph="icon-header-search" />
-          </div>
+          </button>
         </div>
         <div className="options">
-          <Input
-            id="case-sensitive-option"
-            type="checkbox"
-            ref={this.caseSensitiveInput}
-            onChange={this.onChangeCaseSensitive}
-            label={t('option.searchPanel.caseSensitive')}
-          />
-          <Input
-            id="whole-word-option"
-            type="checkbox"
-            ref={this.wholeWordInput}
-            onChange={this.onChangeWholeWord}
-            label={t('option.searchPanel.wholeWordOnly')}
-          />
-          {!isWildCardSearchDisabled &&
-            <Input
+          {!isCaseSensitiveDisabled && (
+            <Choice
+              data-element="caseSensitiveSearchOption"
+              id="case-sensitive-option"
+              ref={this.caseSensitiveInput}
+              onChange={this.onChangeCaseSensitive}
+              label={t('option.searchPanel.caseSensitive')}
+            />
+          )}
+          {!isWholeWordDisabled && (
+            <Choice
+              data-element="wholeWordSearchOption"
+              id="whole-word-option"
+              ref={this.wholeWordInput}
+              onChange={this.onChangeWholeWord}
+              label={t('option.searchPanel.wholeWordOnly')}
+            />
+          )}
+          {!isWildcardDisabled && (
+            <Choice
+              data-element="wildCardSearchOption"
               id="wild-card-option"
-              type="checkbox"
               ref={this.wildcardInput}
               onChange={this.onChangeWildcard}
               label={t('option.searchPanel.wildcard')}
-            />}
+            />
+          )}
         </div>
         <div className="divider" />
         <div className="footer">
           {<div>{results.length} {t('message.numResultsFound')}</div>}
           <div className="buttons">
-            <div className="button" onClick={this.onClickPrevious}>
+            <button className="button" onClick={this.onClickPrevious}>
               <Icon
                 className="arrow"
                 glyph="icon-chevron-left"
               />
-            </div>
-            <div className="button" onClick={this.onClickNext}>
+            </button>
+            <button className="button" onClick={this.onClickNext}>
               <Icon
                 className="arrow"
                 glyph="icon-chevron-right"
               />
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -563,7 +556,6 @@ const mapStateToProps = state => ({
   isSearching: selectors.isSearching(state),
   isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
   isSearchPanelDisabled: selectors.isElementDisabled(state, 'searchPanel'),
-  isWildCardSearchDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
   searchValue: selectors.getSearchValue(state),
   isCaseSensitive: selectors.isCaseSensitive(state),
   isWholeWord: selectors.isWholeWord(state),
@@ -579,6 +571,9 @@ const mapStateToProps = state => ({
   searchListeners: selectors.getSearchListeners(state),
   isDisabled: selectors.isElementDisabled(state, 'searchOverlay'),
   isOpen: selectors.isElementOpen(state, 'searchOverlay'),
+  isCaseSensitiveDisabled: selectors.isElementDisabled(state, 'caseSensitiveSearchOption'),
+  isWholeWordDisabled: selectors.isElementDisabled(state, 'wholeWordSearchOption'),
+  isWildcardDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
 });
 
 const mapDispatchToProps = {

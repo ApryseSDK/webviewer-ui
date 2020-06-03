@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import Button from 'components/Button';
-import Icon from 'components/Icon';
 
 import selectors from 'selectors';
 import actions from 'actions';
