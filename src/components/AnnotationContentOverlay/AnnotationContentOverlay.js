@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -64,39 +65,58 @@ const AnnotationContentOverlay = () => {
   const contents = annotation?.getContents();
   const numberOfReplies = annotation?.getReplies().length;
 
-  if (annotation && isUsingCustomHandler) {
-    return (
-      <div
-        className="Overlay AnnotationContentOverlay"
-        data-element="annotationContentOverlay"
-        style={{ ...overlayPosition }}
-      >
-        <CustomElement
-          render={() => customHandler(annotation)}
-        />
-      </div>
-    );
-  }
-
-  return isDisabled || isMobileDevice || !contents ? null : (
+  const OverlayWrapper = props => (
     <div
       className="Overlay AnnotationContentOverlay"
       data-element="annotationContentOverlay"
       style={{ ...overlayPosition }}
     >
-      <div className="author">{core.getDisplayAuthor(annotation)}</div>
-      <div className="contents">
-        {contents.length > MAX_CHARACTERS
-          ? `${contents.slice(0, MAX_CHARACTERS)}...`
-          : contents}
-      </div>
-      {numberOfReplies > 0 && (
-        <div className="replies">
-          {t('message.annotationReplyCount', { count: numberOfReplies })}
-        </div>
-      )}
+      {props.children}
     </div>
   );
+
+  const CustomOverlay = () => {
+    if (annotation) {
+      return (
+        <OverlayWrapper>
+          <CustomElement render={() => customHandler(annotation)} />
+        </OverlayWrapper>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const DefaultOverlay = () => {
+    if (contents) {
+      return (
+        <OverlayWrapper>
+          <div className="author">{core.getDisplayAuthor(annotation)}</div>
+          <div className="contents">
+            {contents.length > MAX_CHARACTERS
+              ? `${contents.slice(0, MAX_CHARACTERS)}...`
+              : contents}
+          </div>
+          {numberOfReplies > 0 && (
+            <div className="replies">
+              {t('message.annotationReplyCount', { count: numberOfReplies })}
+            </div>
+          )}
+        </OverlayWrapper>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  if (isDisabled || isMobileDevice) {
+    return null;
+  } else if (isUsingCustomHandler) {
+    return <CustomOverlay />;
+  } else {
+    return <DefaultOverlay />;
+  }
+
 };
 
 export default AnnotationContentOverlay;
