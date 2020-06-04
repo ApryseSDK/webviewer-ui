@@ -24,7 +24,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
       className="Ribbons"
     >
       {hasEnoughSpace ?
-        screens.map(({ key, translationKey }) =>
+        Object.keys(screens).map(key =>
           <div
             key={key}
             className={classNames({
@@ -35,10 +35,11 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
               setToolbarScreen(key);
             }}
           >
-            {t(translationKey)}
+            {t(`option.toolbarScreen.${key}`)}
           </div>) :
         <Dropdown2
-          items={screens}
+          items={Object.keys(screens)}
+          translationPrefix="option.toolbarScreen"
           currentSelectionKey={currentScreen}
           onClickItem={screen => {
             setToolbarScreen(screen);
@@ -50,7 +51,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
 };
 
 const mapStateToProps = state => ({
-  screens: state.viewer.toolbarScreens,
+  screens: state.viewer.headers.tools,
   currentScreen: selectors.getScreen(state),
 });
 

@@ -25,32 +25,6 @@ export default {
       searchPanel: 293,
       notesPanel: 293,
     },
-    toolbarScreens: [
-      {
-        key: 'View',
-        translationKey: 'option.toolbarScreen.View',
-      },
-      {
-        key: 'Annotate',
-        translationKey: 'option.toolbarScreen.Annotate',
-      },
-      {
-        key: 'Draw',
-        translationKey: 'option.toolbarScreen.Draw',
-      },
-      {
-        key: 'Insert',
-        translationKey: 'option.toolbarScreen.Insert',
-      },
-      {
-        key: 'Measure',
-        translationKey: 'option.toolbarScreen.Measure',
-      },
-      {
-        key: 'Edit',
-        translationKey: 'option.toolbarScreen.Edit',
-      },
-    ],
     headers: {
       default: [
         { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },

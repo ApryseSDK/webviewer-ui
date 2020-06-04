@@ -27,7 +27,7 @@ class Dropdown extends React.PureComponent {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
 
-  onClickDropdownItem = (e, { key }) => {
+  onClickDropdownItem = (e, key) => {
     const { onClickItem } = this.props;
 
     e.stopPropagation();
@@ -46,19 +46,18 @@ class Dropdown extends React.PureComponent {
 
 
   renderDropdownItems = () => {
-    const { items, currentSelectionKey } = this.props;
-    // const dropdownItems = items.filter(({ key }) => key !== currentSelectionKey);
+    const { items, currentSelectionKey, translationPrefix } = this.props;
 
-    return items.map(({ key, translationKey }) =>
+    return items.map((key) =>
       <div
         key={key}
         className={classNames({
           "dropdown-item": true,
           active: key === currentSelectionKey,
         })}
-        onClick={e => this.onClickDropdownItem(e, { key, translationKey })}
+        onClick={e => this.onClickDropdownItem(e, key)}
       >
-        {this.props.t(translationKey)}
+        {this.props.t(`${translationPrefix}.${key}`)}
       </div>,
     );
   }
@@ -72,14 +71,15 @@ class Dropdown extends React.PureComponent {
     const {
       items,
       currentSelectionKey,
+      translationPrefix,
     } = this.props;
 
-    const selectedItem = items.find(({ key }) => key === currentSelectionKey);
+    const selectedItem = items.find(key => key === currentSelectionKey);
 
     return (
       <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
         <div className="picked-option">
-          {selectedItem && this.props.t(selectedItem.translationKey)}
+          {selectedItem && this.props.t(`${translationPrefix}.${currentSelectionKey}`)}
           <Icon className="down-arrow" glyph="icon-chevron-down" />
         </div>
         <div className={`dropdown-items ${isOpen ? 'show' : 'hide'}`}>
