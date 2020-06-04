@@ -54,8 +54,9 @@ html, body , #app {
   color: var(--text-color);
 }
 
-input, label, textarea, form, select, #app {
+input, button, label, textarea, form, select, #app {
   font-size: 13px;
+  font-family: 'Lato', sans-serif;
 
   @include tablet-and-mobile {
     font-size: 16px;
