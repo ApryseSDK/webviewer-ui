@@ -17,14 +17,4 @@
     margin-top: 8px;
     width: 100%;
   }
-
-  @include mobile {
-    max-width: 346px;
-  }
-
-  @include tablet {
-    border-radius: 4px;
-    padding-bottom: 12px;
-    max-width: 346px;
-  }
 }

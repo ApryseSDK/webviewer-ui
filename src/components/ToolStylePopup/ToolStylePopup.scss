@@ -10,24 +10,6 @@
   box-shadow: 0 0 3px 0 var(--box-shadow);
   align-items: center;
 
-  .swap-tools-container {
-    display: flex;
-    width: 100%;
-
-    @include tablet-and-mobile {
-      padding: 0 8px;
-      padding-top: 8px;
-    }
-
-    @include mobile {
-      width: 346px;
-    }
-
-    .tool-button {
-      margin: 0 8px;
-    }
-  }
-
   .divider-container {
     width: 100%;
     padding-right: 4px;
@@ -39,7 +21,6 @@
       background: var(--divider);
     }
   }
-
 
   @include mobile {
     margin: 0;
@@ -57,6 +38,11 @@
 
     padding: 28px 24px;
 
+    background: var(--component-background);
+    border-radius: 4px;
+    box-shadow: 0 0 3px 0 var(--document-box-shadow);
+    position: fixed;
+
     .swipe-indicator {
       background: var(--divider);
       border-radius: 2px;
@@ -69,12 +55,5 @@
       left: 0;
       right: 0;
     }
-  }
-
-  @include tablet-and-mobile {
-    background: var(--component-background);
-    border-radius: 4px;
-    box-shadow: 0 0 3px 0 var(--document-box-shadow);
-    position: fixed;
   }
 }

@@ -111,30 +111,15 @@ class ToolsOverlay extends React.PureComponent {
       isOpen,
       toolNames,
       activeToolGroup,
-      isTabletAndMobile,
       isToolStyleOpen,
       isDesktop,
     } = this.props;
 
-    let arrowStyle = {};
-    if (isTabletAndMobile) {
-      const { activeToolGroup, activeHeaderItems } = this.props;
-      const element = activeHeaderItems.find(
-        item => item.toolGroup === activeToolGroup,
-      );
-
-      if (element) {
-        const button = document.querySelector(`[data-element=${element.dataElement}]`);
-        const { left: buttonLeft } = button.getBoundingClientRect();
-        arrowStyle = {
-          left: buttonLeft,
-          right: 'auto',
-          top: -10,
-        };
-      }
+    const isVisible = (isOpen || true) && !isDisabled;
+    if (!isVisible) {
+      return null;
     }
 
-    const isVisible = (isOpen || isDesktop) && !isDisabled;
     const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools' || activeToolGroup === 'fileAttachmentTools';
 
     let Component = (
@@ -176,10 +161,6 @@ class ToolsOverlay extends React.PureComponent {
       );
     }
 
-    if (!isVisible) {
-      return null;
-    }
-
     return (
       <div
         className="ToolsOverlayContainer"
@@ -189,15 +170,11 @@ class ToolsOverlay extends React.PureComponent {
             Overlay: true,
             ToolsOverlay: true,
             open: isOpen,
-            shadow: !isTabletAndMobile && isToolStyleOpen,
+            shadow: isToolStyleOpen,
           })}
           ref={this.overlay}
           data-element="toolsOverlay"
         >
-          <div
-            className="arrow-up"
-            style={arrowStyle}
-          />
           <div
             className={classNames({
               "tools-container": true,

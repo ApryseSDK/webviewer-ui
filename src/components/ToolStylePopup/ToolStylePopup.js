@@ -9,7 +9,6 @@ import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';
 import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import setToolStyles from 'helpers/setToolStyles';
-import { isMobile } from 'helpers/device';
 import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -40,7 +39,6 @@ class ToolStylePopup extends React.PureComponent {
     };
   }
   componentDidUpdate(prevProps) {
-    this.positionToolStylePopup();
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
       this.props.closeElements([
         'viewControlsOverlay',
@@ -82,26 +80,8 @@ class ToolStylePopup extends React.PureComponent {
     setToolStyles(this.props.activeToolName, property, value);
   };
 
-  positionToolStylePopup = () => {
-    const { activeToolName } = this.props;
-
-    const toolButton = activeToolName === 'AnnotationCreateRubberStamp' ?
-      document.querySelector(`[data-element="rubberStampToolButton"]`) :
-      document.querySelector(`[data-element="styling-button"]`);
-
-    if (toolButton) {
-      const { left, top } = getToolStylePopupPositionBasedOn(
-        toolButton,
-        this.popup,
-      );
-
-      this.setState({ left: left + 10, top: top + 8 });
-    }
-  };
-
   render() {
-    const { activeToolGroup, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop } = this.props;
-    const { left, top } = this.state;
+    const { activeToolGroup, isDisabled, activeToolName, activeToolStyle, isMobile } = this.props;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     const colorMapKey = mapToolNameToKey(activeToolName);
 
@@ -109,24 +89,17 @@ class ToolStylePopup extends React.PureComponent {
       return null;
     }
 
-    let style = {};
-    if (isTablet) {
-      style = { left, top };
-    }
-
     const { availablePalettes } = getDataWithKey(colorMapKey);
 
     let Component = (
-      <React.Fragment>
-        <StylePopup
-          key={activeToolName}
-          toolName={activeToolName}
-          colorMapKey={colorMapKey}
-          style={activeToolStyle}
-          isFreeText={isFreeText}
-          onStyleChange={this.handleStyleChange}
-        />
-      </React.Fragment>
+      <StylePopup
+        key={activeToolName}
+        toolName={activeToolName}
+        colorMapKey={colorMapKey}
+        style={activeToolStyle}
+        isFreeText={isFreeText}
+        onStyleChange={this.handleStyleChange}
+      />
     );
 
     if (activeToolGroup === 'signatureTools') {
@@ -146,10 +119,9 @@ class ToolStylePopup extends React.PureComponent {
         })}
         data-element="toolStylePopup"
         ref={this.popup}
-        style={style}
       >
         {isMobile && <div className="swipe-indicator" />}
-        {isDesktop && (availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
+        {(availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
           && <HorizontalDivider/>}
         {Component}
       </div>

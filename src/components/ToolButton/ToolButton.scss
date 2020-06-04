@@ -41,11 +41,6 @@
       width: 26px;
       height: 26px;
 
-      @include tablet-and-mobile {
-        width: 28px;
-        height: 28px;
-      }
-
       &:hover {
         background: var(--tools-overlay-button-hover);
       }
@@ -63,32 +58,6 @@
 
       div:hover {
         background: none;
-      }
-    }
-
-    .styling-down-arrow-container {
-      display: flex;
-      justify-content: center;
-      width: 32px;
-      padding-bottom: 8px;
-      border-radius: 4px;
-      cursor: pointer;
-
-      font-size: 16px; // hack for down arrow being dependent on font-size
-
-      @include mobile {
-        margin-top: -2px;
-        padding-bottom: 5px;
-      }
-
-      &:hover {
-        background: var(--tools-overlay-button-hover);
-      }
-
-      .styling-down-arrow {
-        width: 12px;
-        height: 12px;
-        margin-top: -2px;
       }
     }
   }

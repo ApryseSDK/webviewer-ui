@@ -12,10 +12,6 @@
     padding-right: 12px;
   }
 
-  @include tablet-and-mobile {
-    width: auto;
-  }
-
   .cell-container {
     cursor: pointer;
     width: 28px;
@@ -24,12 +20,6 @@
     align-items: center;
     justify-content: center;
     margin: 0 0px;
-
-    @include tablet-and-mobile {
-      width: 36px;
-      height: 36px;
-      margin: 0 5px;
-    }
 
     .cell-outer {
       &.active {
@@ -40,11 +30,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
-        @include tablet-and-mobile  {
-          width: 34px;
-          height: 34px;
-        }
       }
 
       .cell {
@@ -59,11 +44,6 @@
 
         &.border{
           border: 1px solid var(--white-color-palette-border);
-        }
-
-        @include tablet-and-mobile  {
-          width: 24px;
-          height: 24px;
         }
       }
     }
