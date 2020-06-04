@@ -145,6 +145,8 @@ export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
 
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
 
+export const getAnnotationContentOverlayHandler = state => state.viewer.annotationContentOverlayHandler;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 
