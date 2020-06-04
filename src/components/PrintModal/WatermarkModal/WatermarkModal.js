@@ -102,7 +102,7 @@ class WatermarkModal extends React.PureComponent {
         {
           locationSettings: this.state.previousLocationSettings,
         },
-        async () => {
+        async() => {
           // Store the pre-existing watermark (if any) before we overwrite it
           this.preExistingWatermark = await core.getWatermark();
           this.addWatermarks();
@@ -364,7 +364,7 @@ class WatermarkModal extends React.PureComponent {
             <div className="swipe-indicator" />
             <div className="form-content-container">
               <div className="watermark-settings">
-                <form id="form">
+                <form id="form" onSubmit={e => e.preventDefault()}>
                   <div className="form-field">
                     <label>{t(`option.watermark.location`)}</label>
                     <select
