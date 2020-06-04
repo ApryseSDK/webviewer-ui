@@ -13,6 +13,7 @@ class Dropdown extends React.PureComponent {
     onClickItem: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
     currentSelectionKey: PropTypes.string.isRequired,
+    translationPrefix: PropTypes.string.isRequired,
     t: PropTypes.func.isRequired,
   }
 
@@ -48,7 +49,7 @@ class Dropdown extends React.PureComponent {
   renderDropdownItems = () => {
     const { items, currentSelectionKey, translationPrefix } = this.props;
 
-    return items.map((key) =>
+    return items.map(key =>
       <div
         key={key}
         className={classNames({
@@ -65,7 +66,6 @@ class Dropdown extends React.PureComponent {
   render() {
     const {
       isOpen,
-      // currentSelection,
     } = this.state;
 
     const {
