@@ -357,6 +357,7 @@ export default {
     noteTransformFunction: null,
     savedSignatures: [],
     selectedSignatureIndex: 0,
+    annotationContentOverlayHandler: null
   },
   search: {
     listeners: [],
