@@ -9,7 +9,6 @@
 
   border-radius: 4px;
   height: 28px;
-  width: 96px;
   border: 1px solid	var(--border);
   padding-left: 8px;
   padding-right: 4px;
@@ -30,7 +29,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    // color: var(--ribbon-active-color);
   }
 
   .dropdown-items {
@@ -41,7 +39,6 @@
     right: 0px;
 
     border-radius: 4px;
-    width: 94px;
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
 
     background: var(--component-background);
@@ -54,7 +51,7 @@
       align-items: center;
       display: flex;
       border-radius: 0px;
-      // color: var(--faded-text);
+      padding-right: 32px;
 
       &.active {
         background-color: var(--popup-button-active);
@@ -76,7 +73,7 @@
     }
 
     &.hide {
-      display: none;
+      visibility: hidden;
     }
   }
 }

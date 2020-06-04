@@ -59,7 +59,7 @@ class Dropdown extends React.PureComponent {
     }
 
     return (
-      <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
+      <div className="old-dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
         <div className="picked-option">
           {this.getTranslatedContent(sortStrategy)}
           <Icon className="down-arrow" glyph="icon-chevron-down" />

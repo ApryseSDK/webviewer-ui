@@ -45,7 +45,6 @@ class ToolsHeader extends React.PureComponent {
             </motion.div>
           )}
         </AnimatePresence>
-        {isTabletAndMobile && <ToolsOverlay />}
       </React.Fragment>
     );
   }

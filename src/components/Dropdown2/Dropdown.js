@@ -21,6 +21,7 @@ class Dropdown extends React.PureComponent {
     super();
     this.state = {
       isOpen: false,
+      itemsWidth: 94,
     };
   }
 
@@ -66,6 +67,7 @@ class Dropdown extends React.PureComponent {
   render() {
     const {
       isOpen,
+      itemsWidth,
     } = this.state;
 
     const {
@@ -77,12 +79,35 @@ class Dropdown extends React.PureComponent {
     const selectedItem = items.find(key => key === currentSelectionKey);
 
     return (
-      <div className="Dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
-        <div className="picked-option">
-          {selectedItem && this.props.t(`${translationPrefix}.${currentSelectionKey}`)}
+      <div
+        className="Dropdown"
+        style={{ width: `${itemsWidth + 2}px` }}
+        data-element="dropdown"
+        onClick={this.toggleDropdown}
+      >
+        <div
+          className="picked-option"
+        >
+          {selectedItem &&
+            <div
+              className="picked-option-text"
+            >
+              {this.props.t(`${translationPrefix}.${currentSelectionKey}`)}
+            </div>
+          }
           <Icon className="down-arrow" glyph="icon-chevron-down" />
         </div>
-        <div className={`dropdown-items ${isOpen ? 'show' : 'hide'}`}>
+        <div
+          className={classNames({
+            "dropdown-items": true,
+            "hide": !isOpen,
+          })}
+          ref={ele => {
+            if (ele) {
+              this.setState({ itemsWidth: ele.clientWidth });
+            }
+          }}
+        >
           {this.renderDropdownItems()}
         </div>
       </div>
