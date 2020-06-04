@@ -1,33 +1,37 @@
 @import '../../constants/styles';
 
 .custom-ribbons-container {
-  // width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.Ribbons {
-  // height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--ribbons-background);
-  border-radius: 4px;
-  height: 28px;
+  .is-hidden {
+    visibility: hidden;
+  }
 
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  .ribbons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--ribbons-background);
+    border-radius: 4px;
+    height: 28px;
 
-  .ribbon-group {
-    margin: 0 22px;
-    cursor: pointer;
-    color: var(--faded-text);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 
-    &.active {
-      color: var(--ribbon-active-color);
+    .ribbon-group {
+      margin: 0 22px;
+      cursor: pointer;
+      color: var(--faded-text);
+
+      &.active {
+        color: var(--ribbon-active-color);
+      }
     }
   }
 }
+
+
