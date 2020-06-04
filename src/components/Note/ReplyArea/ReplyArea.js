@@ -105,12 +105,12 @@ const ReplyArea = ({ annotation }) => {
         onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}
       />
-      <div
+      <button
         className="reply-button"
         onClick={e => postReply(e)}
       >
         {t('action.post')}
-      </div>
+      </button>
     </div>
   );
 };

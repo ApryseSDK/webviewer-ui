@@ -104,6 +104,14 @@ const Note = ({ annotation }) => {
 
   const showReplyArea = !Object.values(isEditingMap).some(val => val);
 
+  const handleNoteKeydown = e => {
+    // Stop enter/space key on Note from being submitted into field.
+    const isNote = e.target === e.currentTarget;
+    if (isNote && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+    }
+  };
+
   const setIsEditing = useCallback(
     (isEditing, index) => {
       setIsEditingMap(map => ({
@@ -115,7 +123,7 @@ const Note = ({ annotation }) => {
   );
 
   return (
-    <div ref={containerRef} className={noteClass} onClick={handleNoteClick}>
+    <button ref={containerRef} className={noteClass} onClick={handleNoteClick} onKeyDown={handleNoteKeydown}>
       <NoteContent
         noteIndex={0}
         annotation={annotation}
@@ -140,7 +148,7 @@ const Note = ({ annotation }) => {
           </div>
         </React.Fragment>
       )}
-    </div>
+    </button>
   );
 };
 
