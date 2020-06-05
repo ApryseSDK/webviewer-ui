@@ -128,11 +128,14 @@ class PrintModal extends React.PureComponent {
           break;
       }
       selectedPrintOption = this.currentPage;
-    } else if (this.customPages.current?.checked ||this.currentView.current?.checked ) {
+    } else if (this.currentView.current?.checked) {
+      pagesToPrint = [currentPage];
+      selectedPrintOption = this.currentView;
+    } else if (this.customPages.current?.checked) {
       const customInput = this.customInput.current.value.replace(/\s+/g, '');
       pagesToPrint = getPageArrayFromString(customInput, pageLabels);
-      selectedPrintOption = this.customPages.current?.checked ? this.customPages : this.currentView;
-    }
+      selectedPrintOption = this.customPages;
+     }
 
     this.setState({ pagesToPrint, selectedPrintOption });
   };
@@ -160,7 +163,7 @@ class PrintModal extends React.PureComponent {
 
     const creatingPages = this.creatingPages();
     Promise.all(creatingPages)
-      .then(pages => {
+      .then(pages => {        
         this.printPages(pages);
         this.resetPrintQuality();
       })
@@ -196,9 +199,9 @@ class PrintModal extends React.PureComponent {
   creatingImage = pageNumber =>
     new Promise(resolve => {
       const pageIndex = pageNumber - 1;
-      const zoom = 1;
+      let zoom = 1;
       const printRotation = this.getPrintRotation(pageIndex);
-      let renderRect = null;
+      let renderRect;
       const onCanvasLoaded = canvas => {
         this.pendingCanvases = this.pendingCanvases.filter(
           pendingCanvas => pendingCanvas !== id,
@@ -236,6 +239,7 @@ class PrintModal extends React.PureComponent {
         const x2 = Math.max(coordinates[0].x, coordinates[1].x);
         const y2 = Math.max(coordinates[0].y, coordinates[1].y);
 
+        zoom = this.props.zoom;
         renderRect = { x1, y1, x2, y2 };
       }
 
@@ -244,7 +248,7 @@ class PrintModal extends React.PureComponent {
         zoom,
         pageRotation: printRotation,
         drawComplete: onCanvasLoaded,
-        renderRect,
+        'renderRect': renderRect,
       });
       this.pendingCanvases.push(id);
     });
@@ -660,7 +664,7 @@ const mapStateToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   colorMap: selectors.getColorMap(state),
   layoutMode: selectors.getDisplayMode(state),
-
+  zoom: selectors.getZoom(state),
   printAllPageDisabled: selectors.isElementDisabled(state, 'allPagesPrintOption'),
   printCurrentPageDisabled: selectors.isElementDisabled(state, 'currentPagePrintOption'),
   printViewPageDisabled: selectors.isElementDisabled(state, 'currentViewPrintOption'),
