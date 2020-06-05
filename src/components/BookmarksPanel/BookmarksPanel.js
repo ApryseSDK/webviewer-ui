@@ -48,34 +48,31 @@ class BookmarksPanel extends React.PureComponent {
     const pageIndexes = Object.keys(bookmarks).map(pageIndex => parseInt(pageIndex, 10));
     return (
       <div className="Panel BookmarksPanel" style={{ display }} data-element="bookmarksPanel">
-        {this.state.isAdding ? (
-          <EditingBookmark
-            label={`${t('component.bookmarkPage')} ${pageLabels[currentPage - 1]}: ${t('component.newBookmark')}`}
-            bookmarkText={''}
-            onSave={newText => {
-              addBookmark(currentPage - 1, newText);
-              this.setState({ isAdding: false });
-            }}
-            onCancel={() => {
-              this.setState({ isAdding: false });
-            }}
-          />
-        ) : (
-          <div className="bookmarks-panel-header ">
-            <div className="bookmarks-panel-container">
-              <Icon glyph="ic_bookmarks_black_24px" />
-              <div className="label">{t('component.bookmarksPanel')}</div>
-            </div>
-            <div
-              className="bookmarks-panel-button"
-              onClick={() => {
-                this.setState({ isAdding: true });
+        {
+          this.state.isAdding ?
+            <EditingBookmark
+              className="adding"
+              label={`${t('component.bookmarkPage')} ${currentPage}: ${t('component.newBookmark')}`}
+              bookmarkText={''}
+              onSave={newText => {
+                addBookmark(currentPage - 1, newText);
+                this.setState({ isAdding: false });
               }}
-            >
-              {t('component.newBookmark')}
+              onCancel={() => {
+                this.setState({ isAdding: false });
+              }}
+            /> :
+            <div className="bookmarks-panel-header ">
+              <div
+                className="bookmarks-panel-button"
+                onClick={() => {
+                  this.setState({ isAdding: true });
+                }}
+              >
+                {t('component.newBookmark')}
+              </div>
             </div>
-          </div>
-        )}
+        }
         <div className="bookmarks-panel-row">
           {pageIndexes.map(pageIndex => (
             <React.Fragment>

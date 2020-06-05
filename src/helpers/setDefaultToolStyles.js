@@ -8,6 +8,7 @@ const setDefaultToolStyles = () => {
   Object.keys(toolModeMap).forEach(toolName => {
     let toolStyles = null;
 
+    // localStorageManager.disableLocalStorage();
     try {
       toolStyles = localStorage.getItem(`toolData-${toolName}`);
     } catch (ex) {

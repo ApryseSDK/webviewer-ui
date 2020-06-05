@@ -1,20 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
+
 import Icon from 'components/Icon';
+
 import core from 'core';
-import getClassName from 'helpers/getClassName';
+import selectors from 'selectors';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 import { isMobileDevice } from 'src/helpers/device';
 
 function EllipseMeasurementOverlay(props) {
   const { t, annotation, isOpen } = props;
+  const isReadOnly = useSelector(state => selectors.isDocumentReadOnly(state));
   const annotationKey = mapAnnotationToKey(annotation);
   const { icon } = getDataWithKey(annotationKey);
   const scale = annotation.Scale;
   const precision = annotation.Precision;
   const unit = annotation.Scale[1][1];
-  const className = getClassName('Overlay MeasurementOverlay', { isOpen });
   const renderScaleRatio = () => `${scale[0][0]} ${scale[0][1]} = ${scale[1][0]} ${scale[1][1]}`;
 
   useEffect(() => {
@@ -114,7 +117,7 @@ function EllipseMeasurementOverlay(props) {
   const [ radius, setRadius ] = useState(computeRadius());
 
   return (
-    <div className={className} data-element="measurementOverlay">
+    <>
       <div className="measurement__title">
         {icon && <Icon className="measurement__icon" glyph={icon}/>}
         {t('option.measurementOverlay.areaMeasurement')}
@@ -135,6 +138,7 @@ function EllipseMeasurementOverlay(props) {
           className="lineMeasurementInput"
           type="number"
           min="0"
+          disabled={isReadOnly}
           value={radius}
           onChange={event => {
             onChangeRadiusLength(event);
@@ -149,7 +153,7 @@ function EllipseMeasurementOverlay(props) {
           }}
         /> {unit}
       </div>
-    </div>
+    </>
   );
 }
 

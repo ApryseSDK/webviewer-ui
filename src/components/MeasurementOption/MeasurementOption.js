@@ -5,11 +5,15 @@ import { withTranslation } from 'react-i18next';
 import { isFirefox } from 'helpers/device';
 import i18next from 'i18next';
 
+import Input from 'components/Input';
+
+import core from 'core';
+import { MEASUREMENT_TOOL_NAMES } from 'helpers/setToolStyles';
+import { workerTypes } from 'constants/types';
+import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
 
 import './MeasurementOption.scss';
-
-import DataElements from 'constants/dataElement';
 
 class MeasurementOption extends React.Component {
   static propTypes = {
@@ -28,7 +32,7 @@ class MeasurementOption extends React.Component {
     }).isRequired,
     onStyleChange: PropTypes.func.isRequired,
     isScaleInputDisabled: PropTypes.bool,
-    isPrecisionInputDisabled: PropTypes.bool
+    isPrecisionInputDisabled: PropTypes.bool,
   };
 
   constructor(props) {
@@ -40,7 +44,12 @@ class MeasurementOption extends React.Component {
       currUnitTo: props.scale[1][1],
       currPrecision: props.precision,
       isEditing: false,
+      documentType: core.getDocument()?.getType(),
     };
+  }
+
+  componentDidMount() {
+    core.addEventListener('documentLoaded', this.onDocumentLoaded);
   }
 
   componentDidUpdate(prevProps) {
@@ -59,6 +68,16 @@ class MeasurementOption extends React.Component {
         currPrecision: precision,
       });
     }
+  }
+
+  componentWillUnmount() {
+    core.removeEventListener('documentLoaded', this.onDocumentLoaded);
+  }
+
+  onDocumentLoaded = () => {
+    this.setState({
+      documentType: core.getDocument().getType(),
+    });
   }
 
   onScaleChange = (value, type) => {
@@ -84,6 +103,20 @@ class MeasurementOption extends React.Component {
       ]);
     });
   };
+
+  onSnappingChange = event => {
+    if (!core.isFullPDFEnabled()) {
+      return;
+    }
+
+    const enableSnapping = event.target.checked;
+    const mode = enableSnapping ? window.docViewer.SnapMode.e_DefaultSnapMode : null;
+    const measurementTools = MEASUREMENT_TOOL_NAMES.map(core.getTool);
+
+    measurementTools.forEach(tool => {
+      tool.setSnapMode?.(mode);
+    });
+  }
 
   getLanguage = () => {
     let lang = 'en';
@@ -165,52 +198,46 @@ class MeasurementOption extends React.Component {
 
     return (
       <div className="MeasurementOption">
-        { !isScaleInputDisabled &&
-        <div className="Scale" data-element={DataElements.SCALE_INPUT_CONTAINER}>
-          <div className="LayoutTitle">
-            {t('option.measurementOption.scale')}
-          </div>
-          <div className="Layout">
-            {this.renderScaleInput('currScaleFrom', this.state.currScaleFrom)}
-            <select
-              className="UnitInput"
-              value={this.state.currUnitFrom}
-              onChange={event => this.onUnitChange(event, 'currUnitFrom')}
-            >
-              {unitFromOptions.map(unit => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
-            </select>
-            <div className="ScaleEquals">=</div>
-            {this.renderScaleInput('currScaleTo', this.state.currScaleTo)}
-            <select
-              className="UnitInput"
-              value={this.state.currUnitTo}
-              onChange={event => this.onUnitChange(event, 'currUnitTo')}
-            >
-              {unitToOptions.map(unit => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        }
-        { !isPrecisionInputDisabled &&
-          <div className="Precision" data-element={DataElements.PRECISION_INPUT_CONTAINER}>
-            <div className="LayoutTitlePrecision">
-              {t('option.shared.precision')}
+        {!isScaleInputDisabled && (
+          <div className="Scale" data-element={DataElements.SCALE_INPUT_CONTAINER}>
+            <div className="LayoutTitle">{t('option.measurementOption.scale')}</div>
+            <div className="Layout">
+              {this.renderScaleInput('currScaleFrom', this.state.currScaleFrom)}
+              <select
+                className="UnitInput"
+                value={this.state.currUnitFrom}
+                onChange={event => this.onUnitChange(event, 'currUnitFrom')}
+              >
+                {unitFromOptions.map(unit => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+              <div className="ScaleEquals">=</div>
+              {this.renderScaleInput('currScaleTo', this.state.currScaleTo)}
+              <select
+                className="UnitInput"
+                value={this.state.currUnitTo}
+                onChange={event => this.onUnitChange(event, 'currUnitTo')}
+              >
+                {unitToOptions.map(unit => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
             </div>
+          </div>
+        )}
+        {!isPrecisionInputDisabled && (
+          <div className="Precision" data-element={DataElements.PRECISION_INPUT_CONTAINER}>
+            <div className="LayoutTitlePrecision">{t('option.shared.precision')}</div>
             <div className="LayoutPrecision">
               <select
                 className="PrecisionInput"
                 value={this.state.currPrecision}
-                onChange={e =>
-                  this.onPrecisionChange(e.target.value, 'currPrecision')
-                }
+                onChange={e => this.onPrecisionChange(e.target.value, 'currPrecision')}
               >
                 {precisionOptions.map(e => (
                   <option key={e.value} value={e.value}>
@@ -220,6 +247,16 @@ class MeasurementOption extends React.Component {
               </select>
             </div>
           </div>
+        )}
+        {this.state.documentType === workerTypes.PDF &&
+          <Input
+            dataElement="measurementSnappingOption"
+            id="measurement-snapping"
+            name="measurement-snapping"
+            type="checkbox"
+            label="Enable Snapping"
+            onChange={this.onSnappingChange}
+          />
         }
       </div>
     );
@@ -229,7 +266,10 @@ class MeasurementOption extends React.Component {
 const mapStateToProps = state => ({
   measurementUnits: selectors.getMeasurementUnits(state),
   isScaleInputDisabled: selectors.isElementDisabled(state, DataElements.SCALE_INPUT_CONTAINER),
-  isPrecisionInputDisabled: selectors.isElementDisabled(state, DataElements.PRECISION_INPUT_CONTAINER),
+  isPrecisionInputDisabled: selectors.isElementDisabled(
+    state,
+    DataElements.PRECISION_INPUT_CONTAINER
+  ),
 });
 
 export default connect(mapStateToProps)(withTranslation()(MeasurementOption));

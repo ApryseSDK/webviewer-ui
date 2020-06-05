@@ -1,35 +1,71 @@
 @import '../../constants/styles.scss';
 
 .ColorPalette {
-  margin-top: 6px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  width: 196px;
 
-  .cell {
-    @extend %cell;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    border-radius: 1px;
-    border: 1px solid transparent;
+  &.padding {
+    padding-top: 4px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  @include tablet-and-mobile {
+    width: auto;
+  }
+
+  .cell-container {
     cursor: pointer;
-  
-    .check-mark {
-      width: 20px;
-      height: 20px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0px;
 
-      &.dark {
-        color: rgba(0, 0, 0, 0.54);
+    @include tablet-and-mobile {
+      width: 36px;
+      height: 36px;
+      margin: 0 5px;
+    }
+
+    .cell-outer {
+      &.active {
+        border: 1px solid var(--color-palette-border);
+        width: 26px;
+        height: 26px;
+        border-radius: 10000000px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @include tablet-and-mobile  {
+          width: 34px;
+          height: 34px;
+        }
       }
 
-      &.bright {
-        color: rgba(255, 255, 255, 0.70);
+      .cell {
+        width: 18px;
+        height: 18px;
+        border-radius: 10000000px;
+
+        .transparent {
+          border: 2px solid var(--faded-text);
+          border-radius: 10000000px;
+        }
+
+        &.border{
+          border: 1px solid var(--white-color-palette-border);
+        }
+
+        @include tablet-and-mobile  {
+          width: 24px;
+          height: 24px;
+        }
       }
     }
-  }
-  
-  .dummy-cell {
-    @extend %cell;
   }
 }

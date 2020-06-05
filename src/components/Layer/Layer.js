@@ -77,6 +77,7 @@ class Layer extends React.PureComponent {
             label={layer.name}
             onChange={this.onChange}
             checked={layer.visible}
+            dataElement={`${layer.name}LayerOption`}
           />
         </div>
         {hasSubLayers && isExpanded && (

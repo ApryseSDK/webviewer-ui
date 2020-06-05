@@ -102,19 +102,19 @@ const ContextMenuPopup = () => {
         <ActionButton
           dataElement="panToolButton"
           title="tool.pan"
-          img="ic_pan_black_24px"
+          img="icon-header-pan"
           onClick={() => setToolModeAndGroup(store, 'Pan')}
         />
         <ActionButton
           dataElement="stickyToolButton"
           title="annotation.stickyNote"
-          img="ic_annotation_sticky_note_black_24px"
+          img="icon-tool-comment-line"
           onClick={() => setToolModeAndGroup(store, 'AnnotationCreateSticky')}
         />
         <ActionButton
           dataElement="highlightToolButton"
           title="annotation.highlight"
-          img="ic_annotation_highlight_black_24px"
+          img="icon-tool-highlight"
           onClick={() =>
             setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
           }
@@ -122,13 +122,13 @@ const ContextMenuPopup = () => {
         <ActionButton
           dataElement="freeHandToolButton"
           title="annotation.freehand"
-          img="ic_annotation_freehand_black_24px"
+          img="icon-tool-pen-line"
           onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHand')}
         />
         <ActionButton
           dataElement="freeTextToolButton"
           title="annotation.freetext"
-          img="ic_annotation_freetext_black_24px"
+          img="icon-tool-text-free-text"
           onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeText')}
         />
       </CustomizablePopup>

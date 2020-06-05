@@ -136,10 +136,18 @@ export const setActiveToolStyles = (toolStyles = {}) => ({
   type: 'SET_ACTIVE_TOOL_STYLES',
   payload: { toolStyles },
 });
-export const setActiveToolGroup = toolGroup => ({
-  type: 'SET_ACTIVE_TOOL_GROUP',
-  payload: { toolGroup },
-});
+export const setActiveToolGroup = toolGroup => (dispatch, getState) => {
+  const currentActiveToolGroup = selectors.getActiveToolGroup(getState());
+
+  if (currentActiveToolGroup === toolGroup) {
+    return;
+  }
+
+  dispatch({
+    type: 'SET_ACTIVE_TOOL_GROUP',
+    payload: { toolGroup },
+  });
+};
 export const setNotePopupId = id => ({
   type: 'SET_NOTE_POPUP_ID',
   payload: { id },
@@ -185,14 +193,17 @@ export const unregisterTool = toolName => ({
   type: 'UNREGISTER_TOOL',
   payload: { toolName },
 });
-export const setToolButtonObjects = toolButtonObjects => ({
-  type: 'SET_TOOL_BUTTON_OBJECTS',
-  payload: { toolButtonObjects },
-});
-export const setHeaderItems = (header, headerItems) => ({
-  type: 'SET_HEADER_ITEMS',
-  payload: { header, headerItems },
-});
+
+
+export const setToolsScreen = screen => dispatch => {
+  dispatch({
+    type: 'SET_TOOLS_SCREEN',
+    payload: {
+      screen,
+    },
+  });
+};
+
 export const setPopupItems = (dataElement, items) => ({
   type: 'SET_POPUP_ITEMS',
   payload: {
@@ -314,14 +325,6 @@ export const removeSearchListener = func => ({
 export const setSearchValue = value => ({
   type: 'SET_SEARCH_VALUE',
   payload: { value },
-});
-export const setActiveResult = activeResult => ({
-  type: 'SET_ACTIVE_RESULT',
-  payload: { activeResult },
-});
-export const setActiveResultIndex = index => ({
-  type: 'SET_ACTIVE_RESULT_INDEX',
-  payload: { index },
 });
 export const addResult = result => ({
   type: 'ADD_RESULT',

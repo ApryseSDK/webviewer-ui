@@ -41,6 +41,11 @@ class Slider extends React.PureComponent {
     this.updateSvg();
   }
 
+  // Fix for slider having the wrong size
+  UNSAFE_componentWillUpdate() {
+    this.setLineLength();
+  }
+
   componentWillUnmount() {
     window.removeEventListener('mousemove', this.onMove);
     window.removeEventListener('mouseup', this.onMouseUp);
@@ -113,19 +118,19 @@ class Slider extends React.PureComponent {
     const circleCenter = getCirclePosition(this.lineLength);
 
     return (
-      <React.Fragment>
-        <div className="slider__property">
+      <div className="slider">
+        <div className="slider-property">
           {t(`option.slider.${displayProperty}`)}
         </div>
-        <svg data-element="slider" width="100%" height={svgHeight} onMouseDown={this.onMouseDown} onTouchStart={this.onTouchStart} ref={this.sliderSvg}>
-          <line x1={circleRadius} y1="50%" x2={circleCenter} y2="50%" strokeWidth="2" stroke="#00a5e4" strokeLinecap="round" />
-          <line x1={circleCenter} y1="50%" x2={this.lineLength + circleRadius} y2="50%" strokeWidth="2" stroke="#e0e0e0" strokeLinecap="round" />
-          <circle cx={circleCenter} cy="50%" r={circleRadius} fill="#00a5e4" />
-        </svg>
-        <div className="slider__value">
-          {displayValue}
+        <div className="slider-svg-container">
+          <svg data-element="slider" onMouseDown={this.onMouseDown} onTouchStart={this.onTouchStart} ref={this.sliderSvg}>
+            <line x1={circleRadius} y1="50%" x2={circleCenter} y2="50%" strokeWidth="2" stroke="#00a5e4" strokeLinecap="round" />
+            <line x1={circleCenter} y1="50%" x2={this.lineLength + circleRadius} y2="50%" strokeWidth="2" stroke="#e0e0e0" strokeLinecap="round" />
+            <circle cx={circleCenter} cy="50%" r={circleRadius} fill="#00a5e4" />
+          </svg>
+          <div className="slider-value">{displayValue}</div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 

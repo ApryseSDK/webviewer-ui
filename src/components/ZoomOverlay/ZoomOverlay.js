@@ -10,6 +10,7 @@ import selectors from 'selectors';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import { zoomTo } from 'helpers/zoom';
 
+import Icon from 'components/Icon';
 import OverlayItem from '../OverlayItem';
 import ToolButton from '../ToolButton';
 
@@ -30,6 +31,7 @@ class ZoomOverlay extends React.PureComponent {
     this.state = {
       left: 0,
       right: 'auto',
+      top: 'auto',
     };
   }
 
@@ -41,17 +43,18 @@ class ZoomOverlay extends React.PureComponent {
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([
         'viewControlsOverlay',
-        'toolsOverlay',
         'menuOverlay',
+        'zoomOverlayButton',
         'toolStylePopup',
       ]);
-      const { left, right } = getOverlayPositionBasedOn(
+      const { left, right, top } = getOverlayPositionBasedOn(
         'zoomOverlayButton',
         this.dropdown,
       );
       this.setState({
-        left: left - 20,
+        left,
         right,
+        top,
       });
     }
   }
@@ -70,22 +73,23 @@ class ZoomOverlay extends React.PureComponent {
   };
 
   handleWindowResize = () => {
-    const { left, right } = getOverlayPositionBasedOn(
+    const { left, right, top } = getOverlayPositionBasedOn(
       'zoomOverlayButton',
       this.dropdown,
     );
     this.setState({
-      left: left - 20,
+      left,
       right,
+      top,
     });
   };
 
   render() {
-    const { isOpen, isDisabled, t, closeElements, zoomList } = this.props;
+    const { isOpen, isDisabled, t, zoomList, closeElements } = this.props;
     const className = ['ZoomOverlay', isOpen ? 'open' : 'closed']
       .join(' ')
       .trim();
-    const { left, right } = this.state;
+    const { left, right, top } = this.state;
 
     if (isDisabled) {
       return null;
@@ -95,28 +99,50 @@ class ZoomOverlay extends React.PureComponent {
       <div
         className={className}
         data-element="zoomOverlay"
-        style={{ left, right }}
+        style={{ left, right, top }}
         ref={this.dropdown}
         onClick={() => closeElements(['zoomOverlay'])}
       >
-        <OverlayItem
-          onClick={core.fitToWidth}
-          buttonName={t('action.fitToWidth')}
-        />
-        <OverlayItem
-          onClick={core.fitToPage}
-          buttonName={t('action.fitToPage')}
-        />
-        <div className="spacer" />
-        {zoomList.map((zoomValue, i) => (
-          <OverlayItem
-            key={i}
-            onClick={() => zoomTo(zoomValue)}
-            buttonName={`${zoomValue * 100}%`}
-          />
-        ))}
-        <div className="spacer" />
-        <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
+        <div
+          className="ZoomContainer"
+        >
+          <div
+            className="ZoomItem"
+            onClick={core.fitToWidth}
+          >
+            <Icon
+              className="ZoomIcon"
+              glyph="icon-header-zoom-fit-to-width"
+            />
+            <div className="ZoomLabel">{t('action.fitToWidth')}</div>
+          </div>
+          <div
+            className="ZoomItem"
+            onClick={core.fitToPage}
+          >
+            <Icon
+              className="ZoomIcon"
+              glyph="icon-header-zoom-fit-to-page"
+            />
+            <div className="ZoomLabel">{t('action.fitToPage')}</div>
+          </div>
+          <div className="spacer extraMarginTop" />
+          {zoomList.map((zoomValue, i) => (
+            <OverlayItem
+              key={i}
+              onClick={() => zoomTo(zoomValue)}
+              buttonName={`${zoomValue * 100}%`}
+            />
+          ))}
+          <div className="spacer" />
+          <div className="ZoomItem">
+            <Icon
+              className="ZoomIcon"
+              glyph="icon-header-zoom-marquee"
+            />
+            <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
+          </div>
+        </div>
       </div>
     );
   }

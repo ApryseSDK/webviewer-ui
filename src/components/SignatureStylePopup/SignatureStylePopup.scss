@@ -1,0 +1,63 @@
+@import '../../constants/styles';
+@import '../../constants/overlay';
+
+.add-btn {
+  border-radius: 4px;
+  border: 1px solid var(--icon-color);
+  color: var(--text-color);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.disabled {
+    border: 1px solid var(--disabled-text);
+    color: var(--disabled-text);
+    cursor: auto;
+  }
+}
+
+.signature-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 26px;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--tools-overlay-button-hover);
+    }
+  }
+}
+
+.signature-style-popup {
+  width: 100%;
+  padding-left: 8px;
+  padding-right: 4px;
+
+  @include tablet-and-mobile {
+    padding-top: 8px;
+  }
+
+  @include mobile {
+    width: auto;
+  }
+
+  .signature-row {
+    margin-bottom: 12px;
+  }
+
+  .add-btn {
+    margin-bottom: 8px;
+  }
+}
+
+

@@ -2,60 +2,71 @@
 @import '../../constants/note';
 
 .Note {
-  width: 100%;
-  margin-top: -1px;
-  padding: 10px;
-  border: 1px solid $gray12;
-  border: 1px solid var(--border-color);
-  font-size: 13px;
-  background: white;
-  background: var(--primary-color);
+  border-radius: 4px;
+  box-shadow: 0px 0px 3px 0px var(--note-box-shadow);
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+  margin-left: 2px;
+  background: var(--component-background);
+  cursor: pointer;
 
-  &.expanded {
-    margin: 10px 0;
-  }
+  .reply-area-container {
+    display: flex;
+    position: relative;
+    flex: 1;
+    display: flex;
+    margin-right: 12px;
+    margin-top: 12px;
+    margin-left: 42px;
 
-  .replies {
-    margin: 15px 0 0;
-    transition: all 1s ease;
+    textarea {
+      width: 100%;
+      padding-left: 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-color);
+      padding-top: 4px;
+      padding-bottom: 4px;
+      resize: none;
+      overflow: hidden;
+      padding-right: 56px;
+      box-sizing: border-box;
 
-    .NoteContent {
-      padding: 5px 0px;
+      &:focus {
+        outline: none;
+        border: 1px solid var(--focus-border);
+      }
+
+      &::placeholder {
+        color: var(--placeholder-text);
+      }
     }
 
-    &.hidden {
-      display: none;
-    }
-
-    .reply-container {
+    .reply-button {
+      background: var(--primary-button);
+      border-radius: 4px;
+      height: 24px;
       display: flex;
-      flex-direction: column;
-      margin: 15px 0 0;
-      
-      textarea {
-        width: 100%;
-        resize: none;
-        overflow: hidden;
-        box-sizing: border-box;
-        border: 1px solid rgba(0, 0, 0, .12);
-        border-radius: 4px;
-        font-size: 12px;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: var(--primary-button-text);
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      padding: 0 13px;
+
+      &:hover {
+        background: var(--primary-button-hover);
       }
-  
-      .buttons {
-        @extend %textarea-buttons;
-        margin-top: 9px;
-        display: flex;
-        align-items: flex-start;
-  
-        &:hover {
-          cursor: auto;
-        }
-      }
-    } 
+    }
   }
-  
-  &:hover {
-    cursor: pointer;
+
+  .divider{
+    height: 1px;
+    width: 100%;
+    background: var(--divider);
+    margin-top: 12px;
+    margin-bottom: 5px;
   }
 }

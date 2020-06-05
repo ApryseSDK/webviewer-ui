@@ -5,7 +5,6 @@
   @extend %modal;
   
   .container {
-    @extend %modal-shared-container-style;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,11 +14,11 @@
 
   .inner-wrapper {
     margin: 10px;
-    border: 5px solid #eee;
-    border-top: 5px solid #aaa;
+    border: 5px solid var(--border);
+    border-top: 5px solid var(--focus-border);
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 54px;
+    height: 54px;
     animation: spin 1.2s ease infinite;
 
     @keyframes spin {
@@ -30,9 +29,5 @@
         transform: rotate(360deg);
       }
     }
-  }
-
-  .text {
-    color: #777;
   }
 }

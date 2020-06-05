@@ -2,15 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
+import core from 'core';
 import StylePopup from 'components/StylePopup';
+import SignatureStylePopup from 'components/SignatureStylePopup';
 import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
-import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
-import { mapToolNameToKey } from 'constants/map';
+import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
+import ToolButton from 'components/ToolButton';
+import HorizontalDivider from 'components/HorizontalDivider';
+import defaultTool from 'constants/defaultTool';
 
 import './ToolStylePopup.scss';
 
@@ -36,10 +42,12 @@ class ToolStylePopup extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.close);
+    // window.addEventListener('resize', this.close);
+    this.positionToolStylePopup();
   }
 
   componentDidUpdate(prevProps) {
+    this.positionToolStylePopup();
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
       this.props.closeElements([
         'viewControlsOverlay',
@@ -48,13 +56,6 @@ class ToolStylePopup extends React.PureComponent {
         'zoomOverlay',
         'redactionOverlay',
       ]);
-      this.positionToolStylePopup();
-    }
-
-    const selectedAnotherTool =
-      prevProps.activeToolName !== this.props.activeToolName;
-    if (selectedAnotherTool && !this.props.isDisabled) {
-      this.positionToolStylePopup();
     }
   }
 
@@ -74,15 +75,23 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   handleClickOutside = e => {
-    const toolsOverlay = document.querySelector(
-      '[data-element="toolsOverlay"]',
+    const { activeToolName } = this.props;
+    const documentContainer = document.querySelector(
+      '[data-element="documentContainer"]',
     );
-    const header = document.querySelector('[data-element="header"]');
-    const clickedToolsOverlay = toolsOverlay?.contains(e.target);
-    const clickedHeader = header?.contains(e.target);
+    // const toolsOverlay = document.querySelector(
+    //   '[data-element="toolsOverlay"]',
+    // );
+    // const header = document.querySelector('[data-element="header"]');
+    const clickedDocumentContainer= documentContainer?.contains(e.target);
+    // const clickedHeader = header?.contains(e.target);
 
-    if (!clickedToolsOverlay && !clickedHeader) {
+    if (clickedDocumentContainer) {
       this.close();
+      if (activeToolName === 'AnnotationCreateRubberStamp') {
+        core.setToolMode(defaultTool);
+        // this.props.setActiveToolGroup('');
+      }
     }
   };
 
@@ -91,73 +100,146 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   handleStyleChange = (property, value) => {
+    const { activeToolName } = this.props;
+    const tool = core.getTool(activeToolName);
+    if (typeof tool.complete === 'function') {
+      tool.complete();
+    }
     setToolStyles(this.props.activeToolName, property, value);
   };
 
   positionToolStylePopup = () => {
-    const { toolButtonObjects, activeToolName } = this.props;
-    const dataElement = toolButtonObjects[activeToolName].dataElement;
-    const toolButton = document.querySelectorAll(
-      `.Header [data-element=${dataElement}], .ToolsOverlay [data-element=${dataElement}]`,
-    )[0];
+    const { activeToolName } = this.props;
 
-    if (!toolButton) {
-      return;
+    const toolButton = activeToolName === 'AnnotationCreateRubberStamp' ?
+      document.querySelector(`[data-element="rubberStampToolButton"]`) :
+      document.querySelector(`[data-element="styling-button"]`);
+
+    if (toolButton) {
+      const { left, top } = getToolStylePopupPositionBasedOn(
+        toolButton,
+        this.popup,
+      );
+
+      this.setState({ left: left + 10, top: top + 8 });
     }
-
-    const { left, top } = getToolStylePopupPositionBasedOn(
-      toolButton,
-      this.popup,
-    );
-
-    this.setState({ left, top });
   };
 
   render() {
+    const { activeToolGroup, swapableToolNames, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop } = this.props;
     const { left, top } = this.state;
-    const { isDisabled, activeToolName, activeToolStyle } = this.props;
-    const isFreeText = activeToolName === 'AnnotationCreateFreeText';
-    const className = getClassName(`Popup ToolStylePopup`, this.props);
+    const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     const colorMapKey = mapToolNameToKey(activeToolName);
 
     if (isDisabled) {
       return null;
     }
 
-    return (
-      <div
-        className={className}
-        data-element="toolStylePopup"
-        style={{ top, left }}
-        ref={this.popup}
-        onClick={this.handleClick}
-      >
+    let style = {};
+    if (isTablet) {
+      style = { left, top };
+    }
+
+    const { availablePalettes } = getDataWithKey(colorMapKey);
+
+    let Component = (
+      <React.Fragment>
+        <div
+          className="swap-tools-container"
+        >
+          {swapableToolNames.map((toolName, i) =>
+            <ToolButton
+              key={`${toolName}-${i}`}
+              toolName={toolName}
+              isSwap
+            />)}
+        </div>
         <StylePopup
           key={activeToolName}
+          toolName={activeToolName}
           colorMapKey={colorMapKey}
           style={activeToolStyle}
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}
         />
+      </React.Fragment>
+    );
+
+    if (activeToolGroup === 'signatureTools') {
+      Component = (
+        <SignatureStylePopup/>
+      );
+    }
+
+    return (
+      <div
+        className={classNames({
+          ToolStylePopup: true,
+        })}
+        data-element="toolStylePopup"
+        ref={this.popup}
+        style={style}
+      >
+        {isMobile && <div className="swipe-indicator" />}
+        {isDesktop && (swapableToolNames.length > 0 || availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
+          && <HorizontalDivider/>}
+        {Component}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  activeToolName: selectors.getActiveToolName(state),
-  activeToolStyle: selectors.getActiveToolStyles(state),
-  isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
-  isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
-  toolButtonObjects: selectors.getToolButtonObjects(state),
-});
+const mapStateToProps = state => {
+  const activeToolName = selectors.getActiveToolName(state);
+  const toolButtonDataElement = selectors.getToolButtonDataElement(state, activeToolName);
+
+  return {
+    activeToolName,
+    activeToolGroup: selectors.getActiveToolGroup(state),
+    toolButtonDataElement,
+    activeToolStyle: selectors.getActiveToolStyles(state),
+    isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
+    isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
+    swapableToolNames: selectors.getSwapableToolNamesForActiveToolGroup(state),
+  };
+};
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
   closeElements: actions.closeElements,
 };
 
-export default connect(
+const ConnectedToolStylePopup = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(onClickOutside(ToolStylePopup));
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  const isTablet = useMedia(
+    // Media queries
+    ['(min-width: 641px) and (max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  const isDesktop = useMedia(
+    // Media queries
+    ['(min-width: 901px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedToolStylePopup {...props} isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop} />
+  );
+};

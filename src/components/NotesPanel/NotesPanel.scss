@@ -1,41 +1,194 @@
 @import '../../constants/panel';
 
-.NotesPanel {
-  overflow: hidden !important;
-  padding: 8px 0px;
+.notes-panel-container {
+  z-index: 65;
+  @include mobile {
+    z-index: 95;
+  }
   display: flex;
+  background-color: var(--panel-background);
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+
+  @include mobile {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+  }
+}
+
+.NotesPanel {
+  padding-left: 16px;
+  padding-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  // width: 100%;
+  // width: 293px;
+  padding-right: 8px;
+  // Needed
+  // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
+
+  padding-top: 16px;
+  @include mobile {
+    width: 100vw;
+    min-width: 100vw;
+    padding-top: 0px;
+
+    .close-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 64px;
+
+      width: 100%;
+      padding-right: 12px;
+
+      .close-icon-container {
+        cursor: pointer;
+        .close-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+
 
   .no-annotations {
     @extend %center-of-panel;
   }
 
-  .header {
-    flex: 0 0 24px;
-    display: flex;
-    justify-content: space-between;
+  >.header {
+    padding-right: 18px;
 
-    margin: 0 16px;
+    .sort-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
 
-    input {
-      width: 150px;
-      outline: none;
-      border: 1px solid $gray12;
-      border-radius: 4px;
-      margin-right: 5px;
+      .sort-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+
+        .label {
+          margin-right: 8px;
+        }
+      }
     }
+
+    .input-container {
+      display: flex;
+      position: relative;
+      flex: 1;
+
+      input {
+        width: 100%;
+        padding-left: 8px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text-color);
+        padding-bottom: 6px;
+        padding-right: 42px;
+        padding-top: 4px;
+
+
+        &:focus {
+          outline: none;
+          border: 1px solid var(--focus-border);
+        }
+
+
+        &::placeholder {
+          color: var(--placeholder-text);
+        }
+      }
+
+      .input-button {
+        cursor: pointer;
+        background: var(--primary-button);
+        border-radius: 4px;
+        height: 100%;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+
+        .Icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        svg {
+          color: var(--primary-button-text);
+        }
+
+        &:hover {
+          background: var(--primary-button-hover);
+        }
+      }
+    }
+
+    .divider {
+      height: 1px;
+      width: 100%;
+      background: var(--divider);
+      margin: 16px 0px;
+    }
+
   }
+
 
   .virtualized-notes-container,
   .normal-notes-container {
     margin-top: 10px;
     flex: 1;
+    padding-right: 18px;
   }
 
   .normal-notes-container {
     overflow: auto;
+    overflow: overlay;
+  }
+
+  .note-wrapper:first-child {
+    .ListSeparator {
+      margin-top: 0px;
+    }
   }
 
   .no-results {
-    @extend %center-of-panel;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 18px;
+
+    .msg {
+      width: 92px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 65px;
+      height: 83px;
+
+      svg {
+        width: 65px;
+        height: 83px;
+      }
+
+      * {
+        fill: var(--border);
+        color: var(--border);
+      }
+    }
   }
 }

@@ -6,6 +6,8 @@
     "cancel": "Abbrechen",
     "clear": "Löschen",
     "close": "Schliessen",
+    "undo": "Rückgängig machen",
+    "redo": "Bereit",
     "comment": "Kommentar",
     "copy": "Kopieren",
     "delete": "Löschen",
@@ -13,7 +15,7 @@
     "ungroup": "Gruppierung aufheben",
     "download": "Download",
     "edit": "Bearbeiten",
-    "extract": "Extrakt",
+    "extract": "Extrahieren",
     "enterFullscreen": "Vollbildansicht",
     "exitFullscreen": "Vollbildansicht beenden",
     "fit": "Anpassen",
@@ -27,6 +29,7 @@
     "rotateClockwise": "Im Uhrzeigersinn",
     "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
     "save": "Speichern",
+    "post": "Post",
     "create": "Erzeugen",
     "showMoreResults": "Mehr Ergebnisse anzeigen",
     "sign": "Unterschrift",
@@ -39,6 +42,8 @@
     "type": "Art",
     "upload": "Hochladen",
     "link": "Verknüpfung",
+    "darkMode": "Dunkler Modus",
+    "lightMode": "Lichtmodus",
     "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter"
   },
   "annotation": {
@@ -69,7 +74,7 @@
     "stamp": "Stempel",
     "stickyNote": "Kommentar",
     "strikeout": "Durchstreichen",
-    "underline": "Unterstreichen",
+    "underline": "Unterstrichen",
     "custom": "Angepasst",
     "rubberStamp": "Stempel"
   },
@@ -100,10 +105,14 @@
   },
   "component": {
     "freehandToolsButton": "Freihand-Werkzeuge",
+    "freeHandAndShapeToolsButton": "Freihand- / Formwerkzeuge",
     "leftPanel": "Linke Leiste",
+    "toolsHeader": "Werkzeuge",
     "searchOverlay": "Suche",
+    "searchPanel": "Suche",
     "menuOverlay": "Menü",
     "miscToolsButton": "Verschiedene Werkzeuge",
+    "signatureToolsButton": "Signaturwerkzeuge",
     "notesPanel": "Annotationen",
     "outlinesPanel": "Gliederung",
     "bookmarksPanel": "Lesezeichen",
@@ -112,6 +121,8 @@
     "layersPanel": "Schichten",
     "shapeToolsButton": "Formwerkzeuge",
     "textToolsButton": "Textwerkzeuge",
+    "freeTextToolsButton": "Freitext-Tools",
+    "stickyToolsButton": "Kommentare Tools",
     "thumbnailsPanel": "Miniaturansicht",
     "toolsButton": "Werkzeuge",
     "redaction": "Schwärzen",
@@ -120,6 +131,7 @@
     "calibration": "Kalibrierung"
   },
   "message": {
+    "toolsOverlayNoPresets": "Keine Voreinstellungen",
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
     "customPrintPlaceholder": "z.B. 3, 4-10",
     "encryptedAttemptsExceeded": "Fehler beim Laden des verschlüsselten Dokuments. Zu viele Versuche.",
@@ -129,6 +141,7 @@
     "noAnnotations": "Dieses Dokument hat keine Annotationen.",
     "noOutlines": "Dieses Dokument enthält keine Gliederung.",
     "noResults": "Keine Ergebnisse gefunden.",
+    "numResultsFound": "gefundene Ergebnisse",
     "notSupported": "Dieser Dateityp ist nicht unterstützt.",
     "passwordRequired": "Passwort erforderlich",
     "preparingToPrint": "Druckvorbereitung...",
@@ -138,7 +151,8 @@
     "printTotalPageCount_plural": "{{count}} Seiten",
     "processing": "Bearbeite...",
     "searching": "Suche...",
-    "searchPlaceholder": "Suche Kommentare...",
+    "searchCommentsPlaceholder": "Kommentare suchen",
+    "searchDocumentPlaceholder": "Dokument suchen",
     "signHere": "Hier unterschreiben",
     "insertTextHere": "Hier Text eingeben",
     "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
@@ -227,7 +241,7 @@
     },
     "styleOption": {
       "style": "Stil",
-      "solid": "Solide",
+      "solid": "Regulär",
       "cloudy": "Wolkig"
     },
     "slider": {
@@ -253,9 +267,9 @@
       "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
     },
     "richText": {
-      "bold": "Mutig",
+      "bold": "Fett",
       "italic": "Kursiv",
-      "underline": "Unterstreichen",
+      "underline": "Unterstrichen",
       "strikeout": "Durchgestrichen"
     }
   },
@@ -273,7 +287,7 @@
   "shortcut": {
     "arrow": "(A)",
     "callout": "(C)",
-    "copy": "(Ctrl C)",
+    "copy": "(Strg C)",
     "delete": "(Del)",
     "ellipse": "(O)",
     "eraser": "(E)",
@@ -283,8 +297,8 @@
     "line": "(L)",
     "pan": "(P)",
     "rectangle": "(R)",
-    "rotateClockwise": "(Ctrl Shift +)",
-    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "rotateClockwise": "(Strg Shift +)",
+    "rotateCounterClockwise": "(Strg Shift -)",
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
@@ -292,8 +306,8 @@
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",
-    "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
+    "zoomIn": "(Strg +)",
+    "zoomOut": "(Strg -)",
     "richText": {
       "bold": "(Strg B)",
       "italic": "(Strg I)",
@@ -315,7 +329,7 @@
   },
   "datePicker": {
     "previousMonth": "Vorheriger Monat",
-    "nextMonth": "Nächsten Monat",
+    "nextMonth": "Nächster Monat",
     "months": {
       "0": "Januar",
       "1": "Februar",

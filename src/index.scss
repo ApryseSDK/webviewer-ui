@@ -1,0 +1,37 @@
+@import '../node_modules/@pdftron/webviewer-react-toolkit/dist/css/style.css';
+
+/* Defaults. Remove from here as you override below. */
+//   --color-theme-primary: #00a5e4;
+//   --color-theme-secondary: #242933;
+//   --color-font-secondary: #5b5c68;
+//   --color-gray-2: #f4f4f4;
+//   --color-gray-3: #f4f4f4;
+//   --color-blue-gray-1: #dfe2ed;
+//   --color-blue-gray-2: #c3c6d4;
+//   --color-blue-gray-4: #8b92ab;
+//   --color-blue-gray-6: #415797;
+//   --color-contrast-1: #fafafa;
+//   --color-contrast-2: #f0f0f0;
+//   --color-message-info: #2980b9;
+//   --color-message-success: #27ae60;
+//   --color-message-warning: #e67e22;
+//   --color-message-error: #e74c3c;
+//   --color-message-info-focus-shadow: rgba(41, 128, 185, 0.4);
+//   --color-message-success-focus-shadow: rgba(39, 174, 96, 0.4);
+//   --color-message-warning-focus-shadow: rgba(230, 126, 34, 0.4);
+//   --color-message-error-focus-shadow: rgba(231, 76, 60, 0.4);
+//   --color-background-canvas: #eee;
+//   --color-focus-shadow: rgba(20, 110, 170, 0.4);
+//   --color-overlay-canvas: rgba(0, 0, 0, 0.4);
+
+/* Overriding theme from webviewer-react-toolkit. */
+:root,
+html[data-theme='dark'] {
+  --color-font-primary: var(--text-color);
+  // Choice background
+  --color-gray-1: var(--component-background);
+  // Choice border
+  --color-blue-gray-3: var(--border);
+  // Choice checked
+  --color-blue-gray-5: var(--primary-button);
+}

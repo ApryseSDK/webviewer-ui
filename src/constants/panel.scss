@@ -1,16 +1,14 @@
 @import './styles';
 
 %panel {
-  position: fixed;
-  top: $top-bar-height;
+  // position: fixed;
   z-index: 65;
   display: flex;
   flex-direction: column;
-  height: calc(100% - #{$top-bar-height});
   background: $gray4;
   background: var(--secondary-color);
   transition: transform .3s ease, visibility 0s .3s ease;
-  
+
   @include mobile {
     top: 0px;
     width: 100%;
@@ -38,31 +36,13 @@
 
 %right-panel {
   @extend %panel;
-  @include closed(translateX(100%));
-  width: $right-panel-width;
-  right: 0;
-  padding: 10px 5px 10px 5px;
-  border-left: 1px solid $gray12;
-  border-left: 1px solid var(--border-color);
-  @include mobile {
-    width: 100%;
-    border-left: none;
-  }
+  padding-top: 16px;
+  padding-left: 16px;
+  padding-bottom: 0px;
 }
 
 %left-panel {
   @extend %panel;
-  @include closed(translateX(-100%));
-  width: 300px;
-  width: $left-panel-width;
-  left: 0;
-  border-right: 1px solid $gray12;
-  border-right: 1px solid var(--border-color);
-  @include mobile {
-    z-index: 100; // Need to be above search overlay
-    width: 100%;
-    border-right: none;
-  }
 }
 
 %sub-panel {

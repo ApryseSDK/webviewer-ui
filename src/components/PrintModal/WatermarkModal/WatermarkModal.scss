@@ -4,22 +4,20 @@
 
 @import './media-query';
 
-$color-widget-border: 1px solid #e1e1e3;
-$gap: 15px;
-
 .Watermark {
   @extend %modal;
   z-index: $modal-z-index + 10;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
   .StylePopup {
     position: absolute;
-    margin-top: 50px;
-    border: $color-widget-border;
-    background-color: #fafafa;
+    margin-top: 60px;
+    background: var(--preset-background);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0px 0px 4px 4px;
+    box-shadow: 0 0 3px 0 var(--box-shadow);
+    align-items: center;
 
     @include ie11 {
       margin-top: 0;
@@ -34,143 +32,176 @@ $gap: 15px;
     display: flex;
   }
 
-  .header-container {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    padding: 10px;
-  }
-
-  .header {
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-  }
-
   .form-container {
     @extend %modal-shared-container-style;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 400px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+    padding: 16px;
+    background: var(--component-background);
 
-    @include portrait-mobile {
-      width: 100vw;
-      max-height: 100vh;
-      overflow:auto;
-    }
-    @include low-res-tablet-landscape-mobiles {
-      width: 100vw;
-      max-height: 100vh;
-      overflow:auto;
-    }
-    @include tablets-and-landscape-ipads {
-      width: 100vw;
-      max-height: 100vh;
-      overflow:auto;
+    @include mobile {
+      width: 100%;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      padding-top: 24px;
+      padding-bottom: 16px;
+      padding-left: 24px;
+      padding-right: 24px;
+      min-width: 100px;
+
+      .swipe-indicator {
+        background: var(--divider);
+        border-radius: 2px;
+        height: 4px;
+        width: 38px;
+        position: absolute;
+        top: 12px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+
+        @include tablet-and-desktop {
+          display: none;
+        }
+      }
     }
   }
-  
+
   .form-content-container {
     display: flex;
-    margin: $gap;
-    
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
 
-    @include portrait-mobile {
-      flex-direction: column;
-      margin-left: $gap;
-    }
-    @include low-res-tablet-landscape-mobiles {
-      justify-content: space-evenly;
-    }
-    @include tablets-and-landscape-ipads {
-      justify-content: space-evenly;
-    }
-
     & form {
-      margin-right: $gap;
-      width: 265px;
+      width: auto;
       @include portrait-mobile {
         width: auto;
       }
     }
-
-    & .canvas-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 300px;
-      height: 300px;
-      margin-top: 10px;
-    }
   }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    padding: $gap;
-  }
-  // override Button style so it looks better on watermark modal
-  .Button {
-    padding: 15px;
-    height: 0;
-    min-width: 35px;
-  }
-  
-  .button {
-    padding: 6px 18px;
-    border-radius: 4px 4px 4px 4px;
-    cursor: pointer;
 
-    &.reset {
-      color: $pdftron-blue;
-    }
-
-    &.ok {
-      font-weight: normal;
-      background: $pdftron-blue;
-      border: 1px solid $pdftron-blue;
-      color: white;
-    }
-
-    &.cancel {
-      font-weight: normal;
-      background: white;
-      border: 1px solid $pdftron-blue;
-      color: $pdftron-blue;
-      margin-right: 5px;
-    }
-  }
-    
-  .form-field {
+  .watermark-settings {
     display: flex;
     flex-direction: column;
-    margin: 0 0 $gap 0;
 
-    @include low-res-tablet-landscape-mobiles {
-      margin: 0 0 $gap+10 0;
-    }
-    @include tablets-and-landscape-ipads {
-      margin: 0 0 $gap+10 0;
-    }
-  
-    >label {
-      margin: 3px 0;
-    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      margin: 8px 0;
 
-    &.opacity-slider {
-      display: grid;
-      grid-column-gap: 2px;
-      grid-template-columns: auto auto 1fr;
-      align-items: center;
+      label {
+        margin-bottom: 8px;
+      }
 
-      @include ie11 {
-        align-items: stretch;
+      select,
+      input {
+        height: 30px;
+      }
+
+      &.opacity-slider {
+        display: flex;
+
+        .slider-svg-container {
+          margin: 0px; //child component sets it to -5px
+          height: 30px;
+        }
+
+        @include ie11 {
+          align-items: stretch;
+        }
+      }
+
+      &.separator {
+        height: 1px;
+        width: 100%;
+        background: var(--divider);
+        margin: 16px 0;
+      }
+
+      .resetSettings {
+        cursor: pointer;
+        background: none;
+        border: 0;
+        width: 100%;
+        color: var(--secondary-button-text);
+        margin-bottom: 16px;
+        display: flex;
+        font-size: 13px;
+        padding: 6px 18px;
+
+        &:hover {
+          color: var(--secondary-button-hover);
+        }
       }
     }
 
-    &.separator {
-      border: 1px solid $color-widget-border;
+    .colorSelect {
+      width: 18px;
+      height: 18px;
+      margin: 7px;
+      border-radius: 10000000px;
+    }
+  }
+
+  .canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+
+    // highly unlikely someone will be editing watermarking on mobile
+    @include mobile {
+      display: none;
+    }
+
+    canvas {
+      border: 1px solid var(--border) !important;
+    }
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 6px 18px;
+      width: fit-content;
+      border-radius: 4px;
+      border: 0px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 13px;
+
+      &.ok {
+        color: var(--primary-button-text);
+        background: var(--primary-button);
+
+        &:hover {
+          background: var(--primary-button-hover);
+        }
+      }
+
+      &.cancel {
+        color: var(--secondary-button-text);
+        background: none;
+  
+        &:hover {
+          color: var(--secondary-button-hover);
+        }
+      }
     }
   }
 }

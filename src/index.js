@@ -1,3 +1,6 @@
+import 'core-js/stable';
+import "regenerator-runtime/runtime";
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -21,16 +24,21 @@ import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
+import setDefaultToolPositions from 'helpers/setDefaultToolPositions';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
 import getHashParams from 'helpers/getHashParams';
 
+import './index.scss';
+
 // TODO: remove once 7.0 is official
-console.log(
-  '%cBREAKING CHANGES WebViewer 7.0!!!! All APIs now expect a 1-indexed page number. Make sure you adjust your code when using this experimental version',
-  'background: #ff0000; color: #ffffff; text-transform: uppercase; font-size: 25px;'
-);
+if (process.env.NODE_ENV !== 'development') {
+  console.log(
+    '%cBREAKING CHANGES WebViewer 7.0!!!! All APIs now expect a 1-indexed page number. Make sure you adjust your code when using this experimental version',
+    'background: #ff0000; color: #ffffff; text-transform: uppercase; font-size: 25px;'
+  );
+}
 
 const middleware = [thunk];
 
@@ -152,6 +160,7 @@ if (window.CanvasRenderingContext2D) {
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
     setDefaultToolStyles();
+    // setDefaultToolPositions(store);
     core.setToolMode(defaultTool);
 
     ReactDOM.render(
@@ -168,3 +177,21 @@ if (window.CanvasRenderingContext2D) {
 window.addEventListener('hashchange', () => {
   window.location.reload();
 });
+
+/* The following adds a data attribute to `<html>` when user is keyboard navigating. */
+
+function onTab(event) {
+  if (event.key === 'Tab') {
+    document.documentElement.setAttribute('data-tabbing', 'true');
+    window.removeEventListener('keydown', onTab);
+    window.addEventListener('mousedown', onMouse);
+  }
+}
+
+function onMouse() {
+  document.documentElement.removeAttribute('data-tabbing');
+  window.removeEventListener('mousedown', onMouse);
+  window.addEventListener('keydown', onTab);
+}
+
+window.addEventListener('keydown', onTab);

@@ -5,6 +5,7 @@
   // we should fix this to not use !important after 6.0 release
   overflow: hidden !important;
   display: flex;
+  height: 100%;
 
   .virtualized-thumbnails-container {
     flex: 1;
@@ -12,11 +13,11 @@
 
   .row {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
   }
 
   .thumbnailPlaceholder {
-    border-color: $gray87;
     margin: 0px;
   }
 

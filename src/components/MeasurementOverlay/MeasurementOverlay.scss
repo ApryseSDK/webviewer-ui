@@ -8,6 +8,7 @@
   right: 20px;
   font-size: 16px;
   min-width: 215px;
+  padding: 6px;
 
   @include mobile {
     bottom: 8px;
@@ -18,7 +19,12 @@
   }
 
   & > * {
-    margin: 3px;
+    margin: 6px;
+  }
+
+  &.transparent {
+    opacity: 0.5;
+    pointer-events: none;
   }
 }
 
@@ -38,7 +44,7 @@
 }
 
 .lineMeasurementInput {
-  width: 40px;
+  width: 50px;
 }
 
 .length_input {

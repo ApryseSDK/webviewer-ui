@@ -11,10 +11,11 @@ WebViewer(...)
 
 import core from 'core';
 import actions from 'actions';
+import selectors from 'selectors';
 
 export default store => toolName => {
   const state = store.getState();
-  const group = state.viewer.toolButtonObjects[toolName].group;
+  const { group = '' } = selectors.getToolButtonObject(state, toolName);
 
   core.setToolMode(toolName);
   setActiveToolGroupAndToolsOverlay(store, group);

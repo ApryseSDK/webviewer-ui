@@ -38,19 +38,16 @@ const MentionsTextarea = React.forwardRef(
       ...userData.map(data => ({
         ...data,
         display: data.value,
-        id: data.id || data.value,
       })),
     ];
 
     return (
-      <div onMouseDown={e => e.stopPropagation()}>
+      <div className="mention-element" onMouseDown={e => e.stopPropagation()}>
         <MentionsInput
           className="mention"
           inputRef={forwardedRef}
           value={value}
-          onChange={(fakeEvent, _, plainTextValue) => {
-            onChange(plainTextValue);
-          }}
+          onChange={onChange}
           onKeyDown={onKeyDown}
           onBlur={onBlur}
           onFocus={onFocus}

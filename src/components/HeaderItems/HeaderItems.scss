@@ -4,17 +4,19 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: 100%;
+  position: relative;
+  padding: 0 4px;
 
-  & > * {
-    padding: 0;
-    & > * {
-      padding: 0;
+  > .Button, > .toggle-element-button {
+    margin: 0 6px;
+
+    @include mobile {
+      margin: 0 4px;
     }
-  }
 
-  span {
-    display: flex;
+    @include tablet {
+      margin: 0 10px;
+    }
   }
 
   .spacer {
@@ -24,10 +26,54 @@
 
   .divider {
     width: 1px;
-    height: 50%;
-    margin: 0 10px;
-    background: $gray12;
-    background: var(--border-color);
+    height: 20px;
+    margin: 0 6px;
+    background: var(--divider);
+    flex-shrink: 0;
+
+    @include mobile {
+      margin: 0 4px;
+    }
+
+    @include tablet {
+      margin: 0 10px;
+    }
+  }
+}
+
+.Tools {
+  .HeaderItems {
+    > .Button , .tool-group-button {
+      // margin: 0 8px;
+      width: 32px;
+      height: 32px;
+      // background-position: center;
+      // transition: background 0.8s;
+
+      // background-position: center;
+      // transition: background 0.8s;
+
+      // &:not(.ActionButton) {
+        &:hover {
+          background: var(--tools-button-hover);
+
+          // background: var(--tools-button-hover);
+        }
+
+        &.active {
+          background: var(--tools-button-active);
+        }
+
+        &.ActionButton {
+          &:active {
+            background: var(--tools-button-active);
+          }
+        }
+      // }
+
+
+
+    }
   }
 
   @include mobile {

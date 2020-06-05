@@ -52,7 +52,7 @@ function CustomEllipseMeasurementOverlay(props) {
   };
 
   return (
-    <div className="Overlay MeasurementOverlay open" data-element="measurementOverlay">
+    <>
       <div className="measurement__title">
         {icon && <Icon className="measurement__icon" glyph={icon} />}
         {props.title}
@@ -66,7 +66,7 @@ function CustomEllipseMeasurementOverlay(props) {
       <div className="measurement__value">
         {props.label}: <input className="lineMeasurementInput" type="number" min="0" value={computeRadius()} onChange={event => props.onChange(event, props.annotation)}/> {unit}
       </div>
-    </div>
+    </>
   );
 }
 

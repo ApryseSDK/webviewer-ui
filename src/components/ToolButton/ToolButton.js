@@ -1,29 +1,36 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
-import Button from 'components/Button';
+import Button from "components/Button";
 
-import core from 'core';
-import toolStylesExist from 'helpers/toolStylesExist';
-import getToolStyles from 'helpers/getToolStyles';
-import hotkeysManager from 'helpers/hotkeysManager';
-import { mapToolNameToKey } from 'constants/map';
-import actions from 'actions';
-import selectors from 'selectors';
+import core from "core";
+import toolStylesExist from "helpers/toolStylesExist";
+import getToolStyles from "helpers/getToolStyles";
+import hotkeysManager from "helpers/hotkeysManager";
+import { mapToolNameToKey } from "constants/map";
+import defaultTool from 'constants/defaultTool';
+import actions from "actions";
+import selectors from "selectors";
 
-import './ToolButton.scss';
+import "./ToolButton.scss";
 
 import DataElements from 'constants/dataElement';
 
 const propTypes = {
   toolName: PropTypes.string.isRequired,
-  group: PropTypes.string,
+  group: PropTypes.string
 };
 
-const ToolButton = ({ toolName, ...restProps }) => {
+const ToolButton = ({
+  isSwap,
+  toolName,
+  isStylingOpen,
+  ...restProps
+}) => {
   const [
+    activeToolName,
     isActive,
     iconColor,
     // use this to trigger rerender so the color will be right
@@ -32,15 +39,14 @@ const ToolButton = ({ toolName, ...restProps }) => {
     activeToolStyles,
     toolButtonObject,
     customOverrides,
-    isStylePopupDisabled
   ] = useSelector(
     state => [
+      selectors.getActiveToolName(state),
       selectors.getActiveToolName(state) === toolName,
       selectors.getIconColor(state, mapToolNameToKey(toolName)),
       selectors.getActiveToolStyles(state),
       selectors.getToolButtonObject(state, toolName),
       selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
-      selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
     ],
     shallowEqual,
   );
@@ -48,7 +54,7 @@ const ToolButton = ({ toolName, ...restProps }) => {
   const { group = '', ...restObjectData } = toolButtonObject;
 
   useEffect(() => {
-    if (typeof customOverrides?.disable === 'undefined') {
+    if (typeof customOverrides?.disable === "undefined") {
       return;
     }
 
@@ -59,15 +65,31 @@ const ToolButton = ({ toolName, ...restProps }) => {
     }
   }, [customOverrides, toolName]);
 
+  const handleSwap = () => {
+    dispatch(actions.swapTools(toolName, activeToolName));
+    core.setToolMode(toolName);
+  };
+
   const handleClick = () => {
     if (isActive) {
-      if (toolStylesExist(toolName)) {
-        dispatch(actions.toggleElement('toolStylePopup'));
+      if (toolName !== "AnnotationCreateStamp" && toolName !== "AnnotationCreateRedaction" && toolName !== "AnnotationEraserTool") {
+        if (toolStylesExist(toolName)) {
+          dispatch(actions.toggleElement("toolStylePopup"));
+          if (toolName === "AnnotationCreateRubberStamp") {
+            core.setToolMode(defaultTool);
+          }
+        }
       }
     } else {
+      if (group === 'miscTools') {
+        dispatch(actions.closeElement("toolStylePopup"));
+      }
+
       core.setToolMode(toolName);
       dispatch(actions.setActiveToolGroup(group));
-      dispatch(actions.closeElement('toolStylePopup'));
+      if (toolName === "AnnotationCreateRubberStamp") {
+        dispatch(actions.openElement("toolStylePopup"));
+      }
     }
   };
 
@@ -78,19 +100,21 @@ const ToolButton = ({ toolName, ...restProps }) => {
     color = toolStyles?.[iconColor]?.toHexString?.();
   }
 
-  return (
+  const ButtonComponent = (
     <Button
       className={classNames({
-        ToolButton: true,
-        hasStyles: !isStylePopupDisabled && toolStylesExist(toolName),
+        "tool-button": true,
+        hasStyles: toolStylesExist(toolName),
       })}
-      onClick={handleClick}
+      onClick={isSwap ? handleSwap : handleClick}
       isActive={isActive}
       color={color}
       {...restProps}
       {...restObjectData}
     />
   );
+
+  return ButtonComponent;
 };
 
 ToolButton.propTypes = propTypes;

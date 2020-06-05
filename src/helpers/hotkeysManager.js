@@ -264,7 +264,7 @@ WebViewer(...)
       },
       [`${Keys.CTRL_F}, ${Keys.COMMAND_F}`]: e => {
         e.preventDefault();
-        dispatch(actions.openElement('searchOverlay'));
+        dispatch(actions.openElement('searchPanel'));
       },
       [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
         e.preventDefault();
@@ -465,7 +465,7 @@ WebViewer(...)
     return (...args) => {
       const openElements = selectors.getOpenElements(getState());
       const currentToolName = core.getToolMode().name;
-    
+
       // disable changing tool when the signature overlay is opened.
       const isSignatureModalOpen = currentToolName === window.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
 

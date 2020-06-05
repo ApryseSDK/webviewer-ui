@@ -1,16 +1,45 @@
 @import '../../constants/styles';
 @import '../../constants/font.scss';
+@import '../../constants/light.scss';
 
-:root {
-  --primary-color: #FFFFFF;
-  --secondary-color: #F5F5F5;
-  --border-color: #E0E0E0;
-  --button-hover-color: #F6F6F6;
-  --button-active-color: #F0F0F0;
-  --text-color: #333333;
-  --icon-color: #757575;
-  --icon-active-color: #757575;
-  --left-panel-width: 300px;
+* {
+  transition: background-color .25s ease;
+}
+
+* {
+  &::-webkit-scrollbar {
+    width: 7px;
+
+    &:horizontal {
+      height: 7px;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 10px;
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-color);
+    border-top: 2px solid transparent;
+
+    // breaks horizontal scroll
+    // border-bottom: 2px solid transparent;
+    // background-clip: padding-box;
+  }
+}
+
+// .DocumentContainer::-webkit-scrollbar {
+//   width: 7px;
+
+//   &:horizontal {
+//     height: 7px;
+//   }
+// }
+
+.DocumentContainer {
+  border-right: 3px solid transparent;
 }
 
 html, body , #app {
@@ -21,28 +50,54 @@ html, body , #app {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family: $font-family;
-  color: #333;
+  font-family: 'Lato', sans-serif;
   color: var(--text-color);
 }
 
+input, label, textarea, form, select, #app {
+  font-size: 13px;
+
+  @include tablet-and-mobile {
+    font-size: 16px;
+  }
+}
+
+input, textarea, select {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--component-background);
+  color: var(--text-color);
+
+  &:focus {
+    outline: none;
+    border: 1px solid var(--focus-border);
+  }
+}
+
 .App {
+  display: flex;
+  flex-direction: column;
   position: relative;
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  background: $gray4;
-  background: var(--secondary-color);
+  background-color: var(--document-background-color);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
 
-  @include tablet-and-mobile {
-    position: fixed;
+  >.content {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: auto;
+  }
+
+  *, *:before, *:after {
+    box-sizing: border-box;
   }
 
   div {
-    box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -51,12 +106,12 @@ html, body , #app {
   }
 
   textarea {
-    font-family: $font-family;
     appearance: none;
     user-select: text !important;
   }
 
   input[type=text] {
+    font-family: 'Lato';
     appearance: none;
     user-select: text !important;
   }

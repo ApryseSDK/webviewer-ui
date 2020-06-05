@@ -6,6 +6,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import Element from 'components/Element';
 import ColorPalette from 'components/ColorPalette';
 import Button from 'components/Button';
+import HorizontalDivider from 'components/HorizontalDivider';
 
 import core from 'core';
 import getRichTextPopupPosition from 'helpers/getRichTextPopupPosition';
@@ -192,12 +193,14 @@ const RichTextPopup = () => {
             title="option.richText.strikeout"
           />
         </Element>
+        <HorizontalDivider style={{ paddingTop: 0 }} />
         {!isPaletteDisabled && (
           <ColorPalette
             colorMapKey="freeText"
             color={format.color}
             property="TextColor"
             onStyleChange={handleColorChange}
+            hasPadding
           />
         )}
       </div>
