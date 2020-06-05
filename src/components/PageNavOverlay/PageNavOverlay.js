@@ -101,7 +101,7 @@ class PageNavOverlay extends React.PureComponent {
 
     return (
       <div className={className} data-element="pageNavOverlay">
-        <div
+        <button
           className="side-arrow-container"
           onClick={() =>
             window.docViewer.setCurrentPage(
@@ -110,7 +110,7 @@ class PageNavOverlay extends React.PureComponent {
           }
         >
           <Icon className="side-arrow" glyph="icon-chevron-left" />
-        </div>
+        </button>
         <div className="formContainer" onClick={this.onClick}>
           <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
             <input
@@ -127,7 +127,7 @@ class PageNavOverlay extends React.PureComponent {
               : ` / ${totalPages}`}
           </form>
         </div>
-        <div
+        <button
           className="side-arrow-container"
           onClick={() =>
             window.docViewer.setCurrentPage(
@@ -139,7 +139,7 @@ class PageNavOverlay extends React.PureComponent {
           }
         >
           <Icon className="side-arrow" glyph="icon-chevron-right" />
-        </div>
+        </button>
       </div>
     );
   }
