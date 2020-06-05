@@ -62,7 +62,6 @@ class PrintModal extends React.PureComponent {
     if(!selectedPrintOption?.current){
       const printOptions = [this.allPages, this.currentPage, this.currentView, this.customPages];
       const selectedOptions = printOptions.find(o => o.current?.checked)
-      
       this.setState({ selectedPrintOption: selectedOptions ?? printOptions.find(o => o?.current)});
     }
     
@@ -163,7 +162,7 @@ class PrintModal extends React.PureComponent {
 
     const creatingPages = this.creatingPages();
     Promise.all(creatingPages)
-      .then(pages => {        
+      .then(pages => {
         this.printPages(pages);
         this.resetPrintQuality();
       })
@@ -239,7 +238,7 @@ class PrintModal extends React.PureComponent {
         const x2 = Math.max(coordinates[0].x, coordinates[1].x);
         const y2 = Math.max(coordinates[0].y, coordinates[1].y);
 
-        zoom = this.props.zoom;
+        zoom = core.getZoom();
         renderRect = { x1, y1, x2, y2 };
       }
 
@@ -248,7 +247,7 @@ class PrintModal extends React.PureComponent {
         zoom,
         pageRotation: printRotation,
         drawComplete: onCanvasLoaded,
-        'renderRect': renderRect,
+        renderRect,
       });
       this.pendingCanvases.push(id);
     });
@@ -512,7 +511,7 @@ class PrintModal extends React.PureComponent {
 
     const { count, pagesToPrint, selectedPrintOption } = this.state;
     const isPrinting = count >= 0;
-    const className = getClassName('Modal PrintModal', this.props);  
+    const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = (
       <input
         ref={this.customInput}
@@ -664,7 +663,6 @@ const mapStateToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   colorMap: selectors.getColorMap(state),
   layoutMode: selectors.getDisplayMode(state),
-  zoom: selectors.getZoom(state),
   printAllPageDisabled: selectors.isElementDisabled(state, 'allPagesPrintOption'),
   printCurrentPageDisabled: selectors.isElementDisabled(state, 'currentPagePrintOption'),
   printViewPageDisabled: selectors.isElementDisabled(state, 'currentViewPrintOption'),
