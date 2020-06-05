@@ -42,10 +42,20 @@
 }
 
 .Tools {
+  .tool-group-buttons-container {
+    display: flex;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      display: none;  /* Safari and Chrome */
+  }
+  }
+
   .HeaderItems {
     > .Button , .tool-group-button {
       width: 32px;
       height: 32px;
+      flex-shrink: 0;
 
       &:hover {
         background: var(--tools-button-hover);
@@ -68,9 +78,5 @@
         }
       }
     }
-  }
-
-  @include mobile {
-    overflow-x: auto;
   }
 }

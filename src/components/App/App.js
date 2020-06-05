@@ -53,7 +53,7 @@ const App = ({ removeEventHandlers }) => {
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
-    dispatch(actions.setToolbarScreen('Annotate'));
+    // dispatch(actions.setToolbarScreen('Annotate'));
     return removeEventHandlers;
     // eslint-disable-next-line
   }, []);

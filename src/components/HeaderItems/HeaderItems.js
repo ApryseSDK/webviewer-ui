@@ -17,6 +17,22 @@ class HeaderItems extends React.PureComponent {
 
   render() {
     const { items } = this.props;
+
+    const toolGroupButtonsItems = items.filter(({ type }) => type === 'toolGroupButton');
+    const toolGroupButtons = (
+      <div
+        className="tool-group-buttons-container"
+      >
+        {toolGroupButtonsItems.map((item, i) => {
+          const { type, dataElement, hidden } = item;
+          const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
+          const key = `${type}-${dataElement || i}`;
+          return <ToolGroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+        })}
+      </div>
+    );
+    let handledToolGroupButtons = false;
+
     return (
       <div className="HeaderItems">
         {items.map((item, i) => {
@@ -27,7 +43,11 @@ class HeaderItems extends React.PureComponent {
             case 'toolButton':
               return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'toolGroupButton':
-              return <ToolGroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+              if (!handledToolGroupButtons) {
+                handledToolGroupButtons = true;
+                return toolGroupButtons;
+              }
+              return null;
             case 'toggleElementButton':
               return <ToggleElementButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
             case 'actionButton':

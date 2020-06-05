@@ -13,7 +13,7 @@ export default {
   viewer: {
     canUndo: true,
     canRedo: true,
-    screen: 'Annotate',
+    screen: 'Insert',
     activeTheme: 'light',
     disabledElements: {},
     openElements: {
@@ -115,12 +115,13 @@ export default {
           { type: 'toolGroupButton', toolGroup: 'lineTools', dataElement: 'lineToolGroupButton', title: 'annotation.line' },
           { type: 'toolGroupButton', toolGroup: 'polyLineTools', dataElement: 'polyLineToolGroupButton', title: 'annotation.polyline' },
           { type: 'toolGroupButton', toolGroup: 'arrowTools', dataElement: 'arrowToolGroupButton', title: 'annotation.arrow' },
+          { type: 'divider', hidden: ['desktop'] },
           {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
           },
-          { type: 'divider' },
+          { type: 'divider', hidden: ['tablet', 'mobile'] },
           {
             type: 'actionButton',
             dataElement: 'undoButton',
@@ -142,20 +143,21 @@ export default {
             isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer' },
+          { type: 'spacer', hidden: ['tablet', 'mobile'] },
         ],
-        'Insert': [
+        Insert: [
           { type: 'spacer' },
           { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolButton', title: 'annotation.signature', showColor: 'never' },
           { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp' },
           { type: 'toolGroupButton', toolGroup: 'stampTools', img: 'icon-tool-image-line', dataElement: 'stampToolButton', title: 'annotation.stamp' },
           { type: 'toolGroupButton', toolGroup: 'fileAttachmentTools', img: 'ic_fileattachment_24px', dataElement: 'fileAttachmentToolButton', title: 'annotation.fileattachment', showColor: 'never' },
+          { type: 'divider', hidden: ['desktop'] },
           {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
           },
-          { type: 'divider' },
+          { type: 'divider', hidden: ['tablet', 'mobile'] },
           {
             type: 'actionButton',
             dataElement: 'undoButton',
@@ -177,7 +179,7 @@ export default {
             isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer' },
+          { type: 'spacer', hidden: ['tablet', 'mobile'] },
         ],
         Measure: [
           { type: 'spacer' },
