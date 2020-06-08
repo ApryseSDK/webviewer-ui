@@ -8,7 +8,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
   const [isScrolledToEnd, setIsScrolledToEnd] = useState(false);
   const [isScrolledToStart, setIsScrolledToStart] = useState(false);
 
-  const onScroll = () => {
+  const checkScrollPosition = () => {
     if (scrollRef.current) {
       const {
         scrollWidth,
@@ -31,13 +31,12 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('resize', onScroll);
-    return () => window.removeEventListener('resize', onScroll);
+    window.addEventListener('resize', checkScrollPosition);
+    return () => window.removeEventListener('resize', checkScrollPosition);
   }, []);
 
   useEffect(() => {
-    console.log(toolGroupButtonsItems);
-    onScroll();
+    checkScrollPosition();
   });
 
   return (
