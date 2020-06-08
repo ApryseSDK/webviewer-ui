@@ -80,7 +80,6 @@ if (window.CanvasRenderingContext2D) {
     window.CoreControls.disableLogs(true);
   }
 
-  window.CoreControls.enableSubzero(getHashParams('subzero', false));
   window.CoreControls.setWorkerPath('../core');
   window.CoreControls.setResourcesPath('../core/assets');
 
