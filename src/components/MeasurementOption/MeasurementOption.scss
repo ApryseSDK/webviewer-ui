@@ -47,12 +47,6 @@
       width: 79px;
       height: 32px;
     }
-
-    @include tablet {
-      width: 79px;
-      height: 32px;
-      margin-right: 10px;
-    }
   }
 
   .ScaleEquals {
@@ -76,11 +70,6 @@
       width: 64px;
       height: 32px;
     }
-
-    @include tablet {
-      width: 48px;
-      height: 32px;
-    }
   }
 
   .PrecisionInput {
@@ -91,11 +80,6 @@
 
     @include mobile {
       width: 151px;
-      height: 32px;
-    }
-
-    @include tablet {
-      width: 86px;
       height: 32px;
     }
   }
