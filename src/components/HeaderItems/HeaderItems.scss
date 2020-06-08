@@ -16,7 +16,7 @@
     }
 
     @include tablet {
-      margin: 0 10px;
+      margin: 0 8px;
     }
   }
 
@@ -56,10 +56,12 @@
       background: var(--tools-header-background);
     }
 
-    .scroll-edge {
-      width: 4px;
-      height: 100%;
-      background: var(--tools-header-background);
+    @include tablet-and-mobile {
+      .scroll-edge {
+        width: 4px;
+        height: 100%;
+        background: var(--tools-header-background);
+      }
     }
 
     .chevron-scroll {
@@ -69,30 +71,34 @@
       z-index: 1;
       height: 100%;
       background: var(--tools-header-background);
+      width: 64px;
+      pointer-events: none;
 
       .tool-group-button {
         margin: 0px;
+        pointer-events: all;
       }
 
       &.left-chevron {
         left: 0px;
         -webkit-mask-image: -webkit-gradient(linear, right top, left top,
         from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-        color-stop(0.5,  rgba(0,0,0,1)));
+        color-stop(0.8,  rgba(0,0,0,1)));
+        justify-content: flex-start;
       }
 
       &.right-chevron {
         right: 0px;
         -webkit-mask-image: -webkit-gradient(linear, left top, right top,
         from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-        color-stop(0.5,  rgba(0,0,0,1)));
+        color-stop(0.8,  rgba(0,0,0,1)));
+        justify-content: flex-end;
       }
 
       &.right-chevron:not(:hover) {
-
-      // -webkit-mask-image: -webkit-gradient(linear, left top, right top,
-      //   from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-      //   color-stop(0.5,  rgba(0,0,0,1)));
+        // -webkit-mask-image: -webkit-gradient(linear, left top, right top,
+        //   from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
+        //   color-stop(0.5,  rgba(0,0,0,1)));
       }
     }
   }
