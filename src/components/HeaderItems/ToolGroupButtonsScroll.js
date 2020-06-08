@@ -85,7 +85,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
       <div
         className="tool-group-buttons-scroll"
         ref={scrollRef}
-        onScroll={onScroll}
+        onScroll={checkScrollPosition}
       >
         {toolGroupButtonsItems.map((item, i) => {
           const { type, dataElement, hidden } = item;
