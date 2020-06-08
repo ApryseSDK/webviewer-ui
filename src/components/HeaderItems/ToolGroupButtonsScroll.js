@@ -5,14 +5,8 @@ import ToolGroupButton from 'components/ToolGroupButton';
 
 const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
   const scrollRef = useRef();
-  // const [ribbonsWidth, setRibbonsWidth] = useState(0);
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isScrolledToEnd, setIsScrolledToEnd] = useState(false);
   const [isScrolledToStart, setIsScrolledToStart] = useState(false);
-
-  // setInterval(() => {
-  //   onScroll();
-  // }, 1000);
 
   const onScroll = () => {
     if (scrollRef.current) {
@@ -37,13 +31,12 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
   };
 
   useEffect(() => {
-    // debugger;
-    // onScroll();
     window.addEventListener('resize', onScroll);
     return () => window.removeEventListener('resize', onScroll);
   }, []);
 
   useEffect(() => {
+    console.log(toolGroupButtonsItems);
     onScroll();
   });
 
@@ -63,6 +56,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
               "tool-group-button": true,
             })}
             onClick={() => {
+              // Move two tools over
               scrollRef.current.scrollTo(scrollRef.current.scrollLeft - 56 * 2, 0);
             }}
           >
@@ -81,13 +75,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
               "tool-group-button": true,
             })}
             onClick={() => {
-              const {
-                clientWidth,
-                scrollWidth,
-                scrollLeft,
-                offsetWidth,
-              } = scrollRef.current;
-
+              // Move two tools over
               scrollRef.current.scrollTo(scrollRef.current.scrollLeft + 56 * 2, 0);
             }}
           >

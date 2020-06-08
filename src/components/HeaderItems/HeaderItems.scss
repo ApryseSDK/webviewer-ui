@@ -81,7 +81,7 @@
 
       &.left-chevron {
         left: 0px;
-        -webkit-mask-image: -webkit-gradient(linear, right top, left top,
+        mask-image: -webkit-gradient(linear, right top, left top,
         from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
         color-stop(0.8,  rgba(0,0,0,1)));
         justify-content: flex-start;
@@ -89,16 +89,10 @@
 
       &.right-chevron {
         right: 0px;
-        -webkit-mask-image: -webkit-gradient(linear, left top, right top,
+        mask-image: -webkit-gradient(linear, left top, right top,
         from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
         color-stop(0.8,  rgba(0,0,0,1)));
         justify-content: flex-end;
-      }
-
-      &.right-chevron:not(:hover) {
-        // -webkit-mask-image: -webkit-gradient(linear, left top, right top,
-        //   from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-        //   color-stop(0.5,  rgba(0,0,0,1)));
       }
     }
   }
@@ -109,8 +103,6 @@
     scroll-behavior: smooth;
     height: 100%;
     align-items: center;
-    // scroll-snap-type: x mandatory;
-
 
     &::-webkit-scrollbar {
       display: none;  /* Safari and Chrome */
