@@ -28,7 +28,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
   useEffect(() => {
     // TODO: This constant is the left icons in the header times 2
     // Ideally calculate this or let the someone override it with an API call.
-    const remainingSpace = windowWidth - 2 * (736 / 2);
+    const remainingSpace = windowWidth - 2 * (700 / 2);
     if (remainingSpace - ribbonsWidth > 0) {
       setHasEnoughSpace(true);
     } else {

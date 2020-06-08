@@ -6,14 +6,13 @@ import ToolsOverlay from 'components/ToolsOverlay';
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import { copyMapWithDataProperties } from 'constants/map';
-import PageNavOverlay from 'components/PageNavOverlay';
 import Ribbons from 'components/Ribbons';
 
 export default {
   viewer: {
     canUndo: true,
     canRedo: true,
-    screen: 'Insert',
+    screen: 'Draw',
     activeTheme: 'light',
     disabledElements: {},
     openElements: {
@@ -41,10 +40,10 @@ export default {
           },
         },
         { type: 'divider', hidden: ['mobile', 'tablet'] },
-        { type: 'toolButton', toolName: 'Pan', hidden: ['mobile', 'tablet'] },
+        { type: 'toolButton', toolName: 'Pan', hidden: ['mobile'] },
         // For mobile
         { type: 'toolButton', toolName: 'TextSelect' },
-        { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },
+        { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['mobile'] },
         { type: 'spacer' },
         {
           type: 'customElement',
@@ -56,12 +55,6 @@ export default {
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
-        {
-          type: 'customElement',
-          render: () => <PageNavOverlay />,
-          dataElement: 'pageNavOverlay',
-        },
-
       ],
       // second header
       tools: {
@@ -76,12 +69,13 @@ export default {
           { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'annotation.freetext' },
           { type: 'toolGroupButton', toolGroup: 'calloutTools', dataElement: 'calloutToolGroupButton', title: 'annotation.callout' },
           { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'annotation.freehand' },
+          { type: 'divider', hidden: ['desktop'] },
           {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
           },
-          { type: 'divider' },
+          { type: 'divider', hidden: ['tablet', 'mobile'] },
           {
             type: 'actionButton',
             dataElement: 'undoButton',
@@ -188,12 +182,13 @@ export default {
           { type: 'toolGroupButton', toolGroup: 'areaTools', dataElement: 'areaToolGroupButton', title: 'annotation.areaMeasurement' },
           { type: 'toolGroupButton', toolGroup: 'ellipseAreaTools', dataElement: 'ellipseAreaToolGroupButton', title: 'annotation.areaMeasurement' },
           { type: 'toolGroupButton', toolGroup: 'rectangleAreaTools', dataElement: 'rectangleAreaToolGroupButton', title: 'annotation.areaMeasurement' },
+          { type: 'divider', hidden: ['desktop'] },
           {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
           },
-          { type: 'divider' },
+          { type: 'divider', hidden: ['tablet', 'mobile'] },
           {
             type: 'actionButton',
             dataElement: 'undoButton',

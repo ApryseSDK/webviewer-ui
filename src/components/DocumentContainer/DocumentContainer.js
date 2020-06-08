@@ -13,6 +13,7 @@ import getHashParams from 'helpers/getHashParams';
 import setCurrentPage from 'helpers/setCurrentPage';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import MeasurementOverlay from 'components/MeasurementOverlay';
+import PageNavOverlay from 'components/PageNavOverlay';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -218,6 +219,7 @@ class DocumentContainer extends React.PureComponent {
               <div className="document" ref={this.document}/>
             </div>
             <MeasurementOverlay />
+            <PageNavOverlay />
           </div>
         )}
       </Measure>

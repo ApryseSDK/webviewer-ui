@@ -6,6 +6,10 @@
   align-items: center;
   justify-content: center;
 
+  @include tablet-and-mobile {
+    position: relative;
+  }
+
   .is-hidden {
     visibility: hidden;
   }

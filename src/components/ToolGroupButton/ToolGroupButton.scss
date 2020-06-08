@@ -4,20 +4,12 @@
   margin: 0 8px;
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 32px;
   border-radius: 4px;
   cursor: pointer;
 
   @include tablet {
     margin: 0 12px;
-  }
-
-  &.active{
-    // hack
-    &.signature {
-      svg {
-        color: var(--selected-icon-color);
-      }
-    }
   }
 }

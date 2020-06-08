@@ -113,9 +113,8 @@ const LeftPanel = () => {
             <div className="left-panel-header">
               <LeftPanelTabs />
             </div>
-            <ThumbnailsPanel
-              display={getDisplay('thumbnailsPanel')}
-            />
+            {activePanel === 'thumbnailsPanel' &&
+              <ThumbnailsPanel/>}
             <OutlinesPanel display={getDisplay('outlinesPanel')} />
             <BookmarksPanel display={getDisplay('bookmarksPanel')} />
             <LayersPanel display={getDisplay('layersPanel')} />

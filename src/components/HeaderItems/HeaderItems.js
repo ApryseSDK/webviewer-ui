@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ToolButton from 'components/ToolButton';
-import ToolGroupButton from 'components/ToolGroupButton';
 import ToggleElementButton from 'components/ToggleElementButton';
 import ActionButton from 'components/ActionButton';
 import StatefulButton from 'components/StatefulButton';
 import CustomElement from 'components/CustomElement';
+import ToolGroupButtonsScroll from './ToolGroupButtonsScroll';
 
 import './HeaderItems.scss';
 
@@ -19,18 +19,6 @@ class HeaderItems extends React.PureComponent {
     const { items } = this.props;
 
     const toolGroupButtonsItems = items.filter(({ type }) => type === 'toolGroupButton');
-    const toolGroupButtons = (
-      <div
-        className="tool-group-buttons-container"
-      >
-        {toolGroupButtonsItems.map((item, i) => {
-          const { type, dataElement, hidden } = item;
-          const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
-          const key = `${type}-${dataElement || i}`;
-          return <ToolGroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-        })}
-      </div>
-    );
     let handledToolGroupButtons = false;
 
     return (
@@ -45,7 +33,8 @@ class HeaderItems extends React.PureComponent {
             case 'toolGroupButton':
               if (!handledToolGroupButtons) {
                 handledToolGroupButtons = true;
-                return toolGroupButtons;
+
+                return <ToolGroupButtonsScroll toolGroupButtonsItems={toolGroupButtonsItems} />;
               }
               return null;
             case 'toggleElementButton':
