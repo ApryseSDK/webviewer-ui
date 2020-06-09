@@ -20,6 +20,7 @@ import { isSafari, isChromeOniOS } from 'helpers/device';
 import { Swipeable } from 'react-swipeable';
 
 import './PrintModal.scss';
+import Choice from '../Choice/Choice';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -521,42 +522,45 @@ class PrintModal extends React.PureComponent {
                   onChange={this.onChange}
                   onSubmit={this.createPagesAndPrint}
                 >
-                  <Input
+                  <Choice
                     dataElement="allPagesPrintOption"
                     ref={this.allPages}
                     id="all-pages"
                     name="pages"
-                    type="radio"
+                    radio
                     label={t('option.print.all')}
                     defaultChecked
                     disabled={isPrinting}
+                    center
                   />
-                  <Input
+                  <Choice
                     dataElement="currentPagePrintOption"
                     ref={this.currentPage}
                     id="current-page"
                     name="pages"
-                    type="radio"
+                    radio
                     label={t('option.print.current')}
                     disabled={isPrinting}
+                    center
                   />
-                  <Input
+                  <Choice
                     dataElement="customPagesPrintOption"
                     ref={this.customPages}
                     id="custom-pages"
                     name="pages"
-                    type="radio"
+                    radio
                     label={customPagesLabelElement}
                     disabled={isPrinting}
+                    center
                   />
-                  <Input
+                  <Choice
                     dataElement="commentsPrintOption"
                     ref={this.includeComments}
                     id="include-comments"
                     name="comments"
-                    type="checkbox"
                     label={t('option.print.includeComments')}
                     disabled={isPrinting}
+                    center
                   />
                 </form>
                 <div className="total">
