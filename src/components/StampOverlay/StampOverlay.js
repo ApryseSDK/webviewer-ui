@@ -64,28 +64,7 @@ class StampOverlay extends React.Component {
       this.setOverlayPosition();
       this.getDefaultRubberStamps(isLanChanged);
       this.getCustomRubberStamps(isLanChanged);
-      this.stampTool.on('customRubberStampAdded', this.onCustomRubberStampAdded);
     }
-
-
-
-    // if (prevProps.activeToolName !== this.props.activeToolName && this.props.activeToolName === TOOL_NAME) {
-    //   this.setState({ isStampSelected: false });
-    //   this.props.openElement('stampOverlay');
-    //   this.setOverlayPosition();
-    //   this.getDefaultRubberStamps(isLanChanged);
-    //   this.getCustomRubberStamps(isLanChanged);
-    // } else if (this.props.isOpen && isLanChanged) {
-    //   this.getDefaultRubberStamps(isLanChanged);
-    //   this.getCustomRubberStamps(isLanChanged);
-    // }
-  }
-
-  onCustomRubberStampAdded = async annotations => {
-    this.setState({ customAnnotations: [] }, () => {
-      console.log('onCustomRubberStampAdded', annotations, this.state.customAnnotations);
-      this.getCustomRubberStamps();
-    });
   }
 
   handleClickOutside = e => {
