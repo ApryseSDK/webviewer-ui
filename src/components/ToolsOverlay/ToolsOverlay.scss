@@ -5,6 +5,14 @@
 .ToolsOverlayContainer {
   display: flex;
   align-items: flex-end;
+
+  @include mobile {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
 }
 
 .ToolsOverlay {
@@ -22,15 +30,17 @@
   // It will overflow properly.
   height: 32px;
 
-  @include tablet-and-mobile {
+  @include mobile {
     width: 100%;
   }
 
   &.shadow {
     box-shadow: 0 0 5px 0 var(--box-shadow);
 
-    .ToolStylePopup {
-      box-shadow: 0 -20px 0 var(--preset-background), 0 0 5px 0 var(--box-shadow);
+    @include tablet-and-desktop {
+      .ToolStylePopup {
+        box-shadow: 0 -20px 0 var(--preset-background), 0 0 5px 0 var(--box-shadow);
+      }
     }
   }
 
@@ -57,6 +67,10 @@
     height: 100%;
     width: 218px;
 
+    @include mobile {
+      width: 100%;
+    }
+
 
     .tool-buttons-container {
       display: flex;
@@ -64,10 +78,13 @@
       height: 32px;
       padding-left: 2px;
       margin-right: -2px;
+      width: 218px;
 
-      // @include desktop {
-        width: 218px;
-      // }
+      @include mobile {
+        width: 100%;
+        justify-content: center;
+      }
+
     }
   }
 }

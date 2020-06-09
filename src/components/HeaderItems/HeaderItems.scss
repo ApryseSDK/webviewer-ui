@@ -12,7 +12,7 @@
     margin: 0 6px;
 
     @include mobile {
-      margin: 0 4px;
+      margin: 0 6px;
     }
 
     @include tablet {
@@ -46,9 +46,9 @@
     display: flex;
     align-items: center;
 
-    @include tablet-and-mobile {
-      margin-right: -16px;
-    }
+    // @include tablet-and-mobile {
+    //   margin-right: -16px;
+    // }
 
     .chevron-edge {
       width: 4px;
@@ -111,8 +111,20 @@
 
   .HeaderItems {
     .divider {
-      margin: 0 16px;
-      // margin-left: 0px;
+      @include desktop {
+        margin-left: 12px;
+        margin-right: 6px;
+      }
+
+      @include mobile {
+        margin-left: 12px;
+        margin-right: 6px;
+      }
+
+      @include tablet {
+        margin: 0 16px;
+        // margin-left: 8px;
+      }
     }
 
     .tool-group-button {
