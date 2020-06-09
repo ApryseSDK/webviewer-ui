@@ -344,6 +344,12 @@ class MeasurementOverlay extends React.PureComponent {
     );
   };
 
+  renderCount = () => {
+    const annotationList = core.getAnnotationsList();
+    const measurementAnnotationsList = annotationList.filter(annotation => this.isMeasurementAnnotation(annotation));
+    return measurementAnnotationsList.length;
+  }
+
   render() {
     const { annotation, position, transparentBackground } = this.state;
     const { isDisabled, t, isOpen } = this.props;
@@ -398,6 +404,9 @@ class MeasurementOverlay extends React.PureComponent {
               {key !== 'rectangularAreaMeasurement' &&
                 key !== 'distanceMeasurement' &&
                 this.renderAngle()}
+              <div className="measurement__count">
+                {t('option.measurementOverlay.count')}: {this.renderCount()}
+              </div>
             </>
           )}
         </div>
