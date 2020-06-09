@@ -25,6 +25,32 @@
     background: #f6f6f6;
     background: var(--button-hover-color);
   }
+
+
+  .tab-panel {
+    min-height: 576px;
+  }
+
+  .header {
+    margin: 0px 0px 10px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    .tab-list {
+      display: flex;
+
+      .Button {
+        padding: 0 12px;
+        border-bottom: 3px solid transparent;
+        &.selected {
+          border-bottom: 3px solid #00a5e4;
+        }
+      }
+    }
+  }
+
+
 }
 
 
