@@ -50,6 +50,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
             "left-chevron": true,
           })}
         >
+          <div className="chevron-edge" />
           <div
             className={classNames({
               "tool-group-button": true,
