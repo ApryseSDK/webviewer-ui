@@ -1,9 +1,8 @@
 @import '../../constants/styles';
 
-.slider{
+.slider {
   svg {
     height: 18px;
-    // width: 100%;
     cursor: pointer;
   }
 
@@ -18,7 +17,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    // justify-content: space-between;
     margin-left: -5px;
     height: 18px;
 
