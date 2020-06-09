@@ -7,8 +7,8 @@ import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionB
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
-import defaultTool from 'constants/defaultTool';
 import useMedia from 'hooks/useMedia';
+import { Tabs, Tab, TabPanel } from 'components/Tabs';
 
 import { Swipeable } from 'react-swipeable';
 
@@ -43,6 +43,7 @@ class StampOverlay extends React.Component {
       right: 'auto',
       top: 0,
       defaultAnnotations: [],
+      customAnnotations: [],
       isStampSelected: false,
     };
     this.stampTool = core.getTool(TOOL_NAME);
@@ -50,6 +51,7 @@ class StampOverlay extends React.Component {
 
   componentDidMount() {
     this.getDefaultRubberStamps();
+    this.getCustomRubberStamps();
   }
 
   componentDidUpdate(prevProps) {
@@ -57,6 +59,7 @@ class StampOverlay extends React.Component {
     const isLanguageChanged = this.props.i18n.language !== prevProps.i18n.language;
     if (isLanguageChanged) {
       this.getDefaultRubberStamps();
+      this.getCustomRubberStamps();
     }
   }
 
@@ -81,6 +84,30 @@ class StampOverlay extends React.Component {
     this.stampTool.showPreview();
 
     this.setState({ isStampSelected: true });
+  }
+
+  getCustomRubberStamps = async() => {
+    const annotations = await this.stampTool.getCustomStampAnnotations();
+    await Promise.all(
+      annotations.map(annotation => {
+        const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
+
+        const options = {
+          canvasWidth,
+          canvasHeight,
+          text,
+        };
+
+        return this.stampTool.getPreview(annotation, options);
+      }),
+    );
+
+    const customAnnotations = annotations.map(annotation => ({
+      annotation,
+      imgSrc: annotation['ImageData'],
+    }));
+
+    this.setState({ customAnnotations });
   }
 
   getDefaultRubberStamps = async() => {
@@ -108,14 +135,23 @@ class StampOverlay extends React.Component {
   }
 
   render() {
-    const { defaultAnnotations } = this.state;
+    const { defaultAnnotations, customAnnotations } = this.state;
+    const StandardBusiness =  this.props.t(`tool.StandardBusiness`);
+    const CustomStamp = this.props.t(`tool.CustomStamps`);
 
     const rubberStamps = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
       <div key={index}
         className="rubber-stamp"
-        onClick={() => {
-          this.setRubberStamp(annotation);
-        }}
+        onClick={() => {this.setRubberStamp(annotation)}}
+      >
+        <img src={imgSrc} />
+      </div>,
+    );
+
+    const customImgs = customAnnotations.map(({ imgSrc, annotation }, index) =>
+      <div key={index}
+        className="rubber-stamp"
+        onClick={() => this.setRubberStamp(annotation)}
       >
         <img src={imgSrc} />
       </div>,
@@ -136,9 +172,34 @@ class StampOverlay extends React.Component {
           ref={this.overlay}
           data-element="stampOverlay"
         >
-          <div className="default-stamp-container">
-            {rubberStamps}
-          </div>
+          <Tabs id="rubberStampTab">
+            <div className="header">
+              <div className="tab-list">
+                <Tab dataElement="defaultRubberStampButton">
+                  <div className="tab-options-button">
+                    {StandardBusiness}
+                  </div>
+                </Tab>
+                <div className="tab-options-divider" />
+                <Tab dataElement="customRubberStampButton">
+                  <div className="tab-options-button">
+                    {CustomStamp}
+                  </div>
+                </Tab>
+              </div>
+            </div>
+
+            <TabPanel dataElement="defaultRubberStamp">
+              <div className="default-stamp-container">
+                { rubberStamps }
+              </div>
+            </TabPanel>
+            <TabPanel dataElement="customRubberStamp">
+              <div className="custom-stamp-container">
+                { customImgs }
+              </div>
+            </TabPanel>
+          </Tabs>
         </div>
       </Swipeable>
     );

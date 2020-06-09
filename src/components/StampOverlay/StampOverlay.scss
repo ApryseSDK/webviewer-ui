@@ -13,7 +13,7 @@
     padding-top: 12px;
   }
 
-  .default-stamp-container {
+  .default-stamp-container, .custom-stamp-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -39,6 +39,56 @@
       img {
         width: 100%;
       }
+    }
+  }
+
+  .tab-list {
+    display: flex;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    height: 28px;
+    color: var(--text-color);
+    margin: 8px 0;
+    width: 100%;
+    cursor: pointer;
+
+    .tab-options-button {
+      // flex breaks ellipsis text overflow for some reason
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 24px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      flex: 1;
+      border-radius: 0px;
+
+      &:first-child {
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+      }
+
+      &:last-child {
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+
+      &:hover {
+        background: var(--popup-button-hover);
+      }
+
+      &.selected {
+        background: var(--popup-button-active);
+      }
+    }
+
+    .tab-options-divider {
+      width: 1px;
+      background: var(--divider);
     }
   }
 }
