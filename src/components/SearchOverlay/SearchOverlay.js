@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import onClickOutside from 'react-onclickoutside';
 
 import Icon from 'components/Icon';
-import Choice from 'components/Choice';
+import Choice from '../Choice/Choice';
 
 import core from 'core';
 import defaultTool from 'constants/defaultTool';

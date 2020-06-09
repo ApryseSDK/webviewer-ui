@@ -135,7 +135,7 @@ class PrintModal extends React.PureComponent {
   };
 
   onFocus = () => {
-    this.customPages.current.checked = true;
+    this.customPages.current.click();
     this.onChange();
   };
 
