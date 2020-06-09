@@ -45,13 +45,10 @@
     height: 100%;
     display: flex;
     align-items: center;
-
-    // @include tablet-and-mobile {
-    //   margin-right: -16px;
-    // }
+    // margin-left: 10px;
 
     .chevron-edge {
-      width: 10px;
+      width: 8px;
       height: 100%;
       background: var(--tools-header-background);
     }
@@ -83,7 +80,7 @@
         left: 0px;
         mask-image: -webkit-gradient(linear, right top, left top,
         from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-        color-stop(0.8,  rgba(0,0,0,1)));
+        color-stop(0.6,  rgba(0,0,0,1)));
         justify-content: flex-start;
       }
 
@@ -117,13 +114,12 @@
       }
 
       @include mobile {
-        margin-left: 12px;
-        margin-right: 6px;
+        margin-left: 10px;
+        margin-right: 4px;
       }
 
       @include tablet {
         margin: 0 16px;
-        // margin-left: 8px;
       }
     }
 
