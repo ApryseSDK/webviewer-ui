@@ -238,9 +238,6 @@ class StampOverlay extends React.Component {
             </div>
           </TabPanel>
         </Tabs>
-
-
-
       </div>
     );
   }

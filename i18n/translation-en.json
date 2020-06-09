@@ -271,7 +271,7 @@
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
-  
+
   "shortcut": {
     "arrow": "(A)",
     "callout": "(C)",
@@ -307,7 +307,9 @@
     "pan": "Pan",
     "select": "Select",
     "Marquee": "Marquee Zoom",
-    "Link": "Link URL or Page"
+    "Link": "Link URL or Page",
+    "StandardBusiness": "Standard Business",
+    "CustomStamps": "Custom Stamps"
   },
   "link": {
     "url": "URL",
