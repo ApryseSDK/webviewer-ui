@@ -115,7 +115,6 @@ class StampOverlay extends React.Component {
   }
 
   getCustomRubberStamps = async isLanChanged => {
-    console.log(`%c getCustomRubberStamps `, 'background: red; color: white;');
     if (!this.state.customAnnotations.length || isLanChanged) {
       const annotations = await this.stampTool.getCustomStampAnnotations();
       const previews = await Promise.all(
@@ -174,6 +173,9 @@ class StampOverlay extends React.Component {
       return null;
     }
 
+    const StandardBusiness =  this.props.t(`tool.StandardBusiness`);
+    const CustomStamp = this.props.t(`tool.CustomStamps`);
+
     let imgs = null;
     let customImgs = null;
     if (isOpen) {
@@ -209,25 +211,14 @@ class StampOverlay extends React.Component {
         style={{ left, top }}
         data-element="stampOverlay"
       >
-        {/*
-          <div className="default-stamp-container">
-            <div className="modal-body">
-              { imgs }
-              { customImgs }
-            </div>
-          </div>
-        */}
-
-
-
         <Tabs id="rubberStampTab">
           <div className="header">
             <div className="tab-list">
               <Tab dataElement="defaultRubberStampButton">
-                <Button label={'Standard Business'} />
+                <Button label={StandardBusiness} />
               </Tab>
               <Tab dataElement="customRubberStampButton">
-                <Button label={'Custom Stamps'} />
+                <Button label={CustomStamp} />
               </Tab>
             </div>
           </div>
