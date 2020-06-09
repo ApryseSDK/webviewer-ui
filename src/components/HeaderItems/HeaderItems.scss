@@ -8,15 +8,20 @@
   position: relative;
   padding: 0 4px;
 
-  > .Button, > .toggle-element-button {
+  >.Button, >.toggle-element-button {
     margin: 0 6px;
-
     @include mobile {
       margin: 0 6px;
     }
-
     @include tablet {
       margin: 0 8px;
+    }
+  }
+
+  .tool-group-button {
+    margin: 0 8px;
+    @include tablet-and-mobile {
+      margin: 0 10px;
     }
   }
 
@@ -45,7 +50,6 @@
     height: 100%;
     display: flex;
     align-items: center;
-    // margin-left: 10px;
 
     .chevron-edge {
       width: 8px;
@@ -120,6 +124,7 @@
 
       @include tablet {
         margin: 0 16px;
+        // margin-left: 10px
       }
     }
 

@@ -51,18 +51,16 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
           })}
         >
           <div className="chevron-edge" />
-          <div>
-            <div
-              className={classNames({
-                "tool-group-button": true,
-              })}
-              onClick={() => {
-                // Move two tools over
-                scrollRef.current.scrollTo(scrollRef.current.scrollLeft - 56 * 2, 0);
-              }}
-            >
-              <Icon  glyph="icon-chevron-left" />
-            </div>
+          <div
+            className={classNames({
+              "tool-group-button": true,
+            })}
+            onClick={() => {
+              // Move two tools over
+              scrollRef.current.scrollTo(scrollRef.current.scrollLeft - 56 * 2, 0);
+            }}
+          >
+            <Icon  glyph="icon-chevron-left" />
           </div>
         </div>}
       {!isScrolledToEnd &&

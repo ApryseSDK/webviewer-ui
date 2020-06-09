@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import Dropdown2 from 'components/Dropdown2/Dropdown.js';
@@ -13,77 +13,84 @@ import "./Ribbons.scss";
 const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
   const [t] = useTranslation();
   const [ribbonsWidth, setRibbonsWidth] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [containerWidth, setContainerWidth] = useState(0);
   const [hasEnoughSpace, setHasEnoughSpace] = useState(false);
-
-  const handleWindowResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
+  const ribbonsRef = useRef();
+  const containerRef = useRef();
 
   useEffect(() => {
-    window.addEventListener('resize', handleWindowResize);
-    return () => window.removeEventListener('resize', handleWindowResize);
-  }, []);
-
-  useEffect(() => {
-    // TODO: This constant is the left icons in the header times 2
-    // Ideally calculate this or let the someone override it with an API call.
-    const remainingSpace = windowWidth - 2 * (700 / 2);
+    const ribbonsRight = ribbonsRef.current.getBoundingClientRect().right;
+    const containerLeft = containerRef.current.getBoundingClientRect().left;
+    const remainingSpace = ribbonsRight - containerLeft;
     if (remainingSpace - ribbonsWidth > 0) {
       setHasEnoughSpace(true);
     } else {
       setHasEnoughSpace(false);
     }
-  }, [ribbonsWidth, windowWidth]);
+  }, [ribbonsWidth, containerWidth]);
 
   return (
-    <React.Fragment>
-      <Measure
-        bounds
-        onResize={({ bounds }) => {
-          setRibbonsWidth(bounds.width);
-        }}
-      >
-        {({ measureRef }) => (
+    <Measure
+      bounds
+      innerRef={containerRef}
+      onResize={({ bounds }) => {
+        setContainerWidth(bounds.width);
+      }}
+    >
+      {({ measureRef }) => (
+        <div
+          className="ribbons-container"
+          ref={measureRef}
+        >
+          <Measure
+            bounds
+            innerRef={ribbonsRef}
+            onResize={({ bounds }) => {
+              setRibbonsWidth(bounds.width);
+            }}
+          >
+            {({ measureRef }) => (
+              <div
+                ref={measureRef}
+                className={classNames({
+                  "ribbons": true,
+                  "is-hidden": !hasEnoughSpace,
+                })}
+              >
+                {Object.keys(screens).map(key =>
+                  <div
+                    key={key}
+                    className={classNames({
+                      "ribbon-group": true,
+                      "active": key === currentScreen,
+                    })}
+                    onClick={() => {
+                      setToolbarScreen(key);
+                    }}
+                  >
+                    {t(`option.toolbarScreen.${key}`)}
+                  </div>)}
+              </div>
+            )}
+          </Measure>
           <div
-            ref={measureRef}
             className={classNames({
               "ribbons": true,
-              "is-hidden": !hasEnoughSpace,
+              "is-hidden": hasEnoughSpace,
             })}
           >
-            {Object.keys(screens).map(key =>
-              <div
-                key={key}
-                className={classNames({
-                  "ribbon-group": true,
-                  "active": key === currentScreen,
-                })}
-                onClick={() => {
-                  setToolbarScreen(key);
-                }}
-              >
-                {t(`option.toolbarScreen.${key}`)}
-              </div>)}
+            <Dropdown2
+              items={Object.keys(screens)}
+              translationPrefix="option.toolbarScreen"
+              currentSelectionKey={currentScreen}
+              onClickItem={screen => {
+                setToolbarScreen(screen);
+              }}
+            />
           </div>
-        )}
-      </Measure>
-      <div
-        className={classNames({
-          "ribbons": true,
-          "is-hidden": hasEnoughSpace,
-        })}
-      >
-        <Dropdown2
-          items={Object.keys(screens)}
-          translationPrefix="option.toolbarScreen"
-          currentSelectionKey={currentScreen}
-          onClickItem={screen => {
-            setToolbarScreen(screen);
-          }}
-        />
-      </div>
-    </React.Fragment>
+        </div>
+      )}
+    </Measure>
   );
 };
 

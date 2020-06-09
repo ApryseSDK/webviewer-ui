@@ -1,15 +1,10 @@
 @import '../../constants/styles';
 
 .tool-group-button {
-  margin: 0 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 32px;
   border-radius: 4px;
   cursor: pointer;
-
-  @include tablet-and-mobile {
-    margin: 0 10px;
-  }
 }

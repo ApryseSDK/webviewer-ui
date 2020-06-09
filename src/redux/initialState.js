@@ -44,14 +44,12 @@ export default {
         // For mobile
         { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['mobile'] },
-        { type: 'spacer' },
         {
           type: 'customElement',
           render: () => <Ribbons />,
           dataElement: 'ribbons',
           className: 'custom-ribbons-container',
         },
-        { type: 'spacer' },
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
@@ -74,6 +72,7 @@ export default {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
+            hidden: ['desktop'],
           },
           { type: 'divider', hidden: ['tablet', 'mobile'] },
           {
