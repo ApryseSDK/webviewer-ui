@@ -1,8 +1,5 @@
 @import '../../constants/popup';
 
 .AnnotationStylePopup {
-  @include mobile {
-    max-width: 310px;
-    width: 310px;
-  }
+
 }

@@ -13,7 +13,7 @@
   padding-left: 8px;
   padding-right: 4px;
   position: relative;
-  background: var(--page-nav-background);
+  background: var(--component-background);
 
   cursor: pointer;
 
@@ -41,7 +41,7 @@
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
 
-    background: var(--page-nav-background);
+    background: var(--component-background);
     overflow:hidden; // necessary so that children respect border-radius on hover
 
     .dropdown-item {

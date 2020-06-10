@@ -72,7 +72,6 @@ export default {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
-            hidden: ['desktop'],
           },
           { type: 'divider', hidden: ['tablet', 'mobile'] },
           {

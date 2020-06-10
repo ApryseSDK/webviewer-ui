@@ -65,20 +65,17 @@
     border-radius: 4px;
     background: var(--preset-background);
     height: 100%;
-    width: 218px;
+    width: 220px;
 
     @include mobile {
       width: 100%;
     }
 
-
     .tool-buttons-container {
       display: flex;
       align-items: center;
       height: 32px;
-      padding-left: 2px;
-      margin-right: -2px;
-      width: 218px;
+      padding-left: 4px;
 
       @include mobile {
         width: 100%;
