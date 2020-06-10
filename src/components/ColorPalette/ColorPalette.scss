@@ -13,7 +13,7 @@
   }
 
   @include mobile {
-    width: 322px;
+    width: 336px;
   }
 
   .cell-container {
@@ -28,7 +28,7 @@
     @include mobile {
       width: 36px;
       height: 36px;
-      margin: 0 5px;
+      margin: 0 6px;
     }
 
     .cell-outer {

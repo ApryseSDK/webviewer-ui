@@ -15,7 +15,13 @@
     width: 188px;
 
     @include mobile {
-      width: 310px;
+      width: 324px;
     }
   }
+
+  // @include mobile {
+  //   // * {
+  //     font-size : 16px;
+  //   // }
+  // }
 }

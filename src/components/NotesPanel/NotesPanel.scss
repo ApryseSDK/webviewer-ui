@@ -64,8 +64,10 @@
     align-items: center;
 
     .msg {
-      line-height: 15px;
-      width: 146px;
+      @include tablet-and-desktop {
+        line-height: 15px;
+        width: 146px;
+      }
       text-align: center;
     }
 
@@ -195,7 +197,10 @@
     padding-right: 18px;
 
     .msg {
-      width: 92px;
+      @include tablet-and-desktop {
+        line-height: 15px;
+        width: 92px;
+      }
       text-align: center;
     }
 
