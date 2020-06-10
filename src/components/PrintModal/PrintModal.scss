@@ -116,6 +116,7 @@
       width: 100%;
 
       .button {
+        @include button-reset;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -136,6 +137,7 @@
     }
 
     .apply-watermark {
+      @include button-reset;
       cursor: pointer;
       margin-top: 16px;
       background: none;

@@ -345,6 +345,13 @@ class WatermarkModal extends React.PureComponent {
     );
   };
 
+  onBackgroundClick = event => {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+    this.closeModal();
+  }
+
   render() {
     const { isVisible } = this.props;
     if (!isVisible) {
@@ -365,13 +372,9 @@ class WatermarkModal extends React.PureComponent {
           <div
             className={'Modal Watermark'}
             id="watermarkModal"
-            onMouseDown={this.closeModal}
+            onMouseDown={this.onBackgroundClick}
           >
-            <div
-              className="form-container"
-              id="formContainer"
-              onMouseDown={e => e.stopPropagation()}
-            >
+            <div className="form-container" id="formContainer">
               <div className="swipe-indicator" />
               <div className="form-content-container">
                 <div className="watermark-settings">
