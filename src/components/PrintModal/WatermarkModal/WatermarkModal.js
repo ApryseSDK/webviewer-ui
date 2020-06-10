@@ -530,13 +530,13 @@ class WatermarkModal extends React.PureComponent {
                         </div>
                       )}
                       <div className="form-field separator"></div>
-                      <a
+                      <button
                         className="resetSettings"
                         id="reset"
                         onClick={this.resetForm}
                       >
                         {t(`option.watermark.resetAllSettings`)}
-                      </a>
+                      </button>
                     </div>
                   </form>
                 </div>
