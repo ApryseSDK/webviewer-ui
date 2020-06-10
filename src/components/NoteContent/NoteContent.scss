@@ -77,7 +77,10 @@
 
   .date-and-time {
     opacity: 0.8;
-    font-size: 10px; // intended
+    font-size: 10px;
+    @include mobile {
+      font-size: 12px;
+    }
     color: var(--faded-text);
   }
 
