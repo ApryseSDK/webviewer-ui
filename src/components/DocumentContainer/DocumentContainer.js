@@ -14,8 +14,10 @@ import setCurrentPage from 'helpers/setCurrentPage';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import MeasurementOverlay from 'components/MeasurementOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
+import ToolsOverlay from 'components/ToolsOverlay';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 
 import Measure from 'react-measure';
 
@@ -219,7 +221,10 @@ class DocumentContainer extends React.PureComponent {
               <div className="document" ref={this.document}/>
             </div>
             <MeasurementOverlay />
-            <PageNavOverlay />
+            <div className="footer">
+              <PageNavOverlay />
+              {this.props.isMobile && <ToolsOverlay />}
+            </div>
           </div>
         )}
       </Measure>
@@ -246,4 +251,19 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
+const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
+
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedDocumentContainer {...props} isMobile={isMobile} />
+  );
+};

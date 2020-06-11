@@ -71,6 +71,7 @@ export default {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
+            hidden: ['mobile'],
           },
           { type: 'divider', hidden: ['tablet', 'mobile'] },
           {
@@ -111,6 +112,7 @@ export default {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
+            hidden: ['mobile'],
           },
           { type: 'divider', hidden: ['tablet', 'mobile'] },
           {
@@ -147,6 +149,7 @@ export default {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
+            hidden: ['mobile'],
           },
           { type: 'divider', hidden: ['tablet', 'mobile'] },
           {
@@ -184,6 +187,7 @@ export default {
             type: 'customElement',
             render: () => <ToolsOverlay />,
             dataElement: 'toolsOverlay',
+            hidden: ['mobile'],
           },
           { type: 'divider', hidden: ['tablet', 'mobile'] },
           {

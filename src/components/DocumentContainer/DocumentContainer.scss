@@ -10,6 +10,14 @@
   overflow: hidden;
   transition: all .3s ease;
   user-select: none;
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 55;
+    width: 100%;
+  }
 }
 
 .DocumentContainer {
@@ -22,7 +30,6 @@
   overflow: auto;
   transition: all .3s ease;
   user-select: none;
-
 
   .document {
     margin: auto; // vertical centering when content is smaller than document container

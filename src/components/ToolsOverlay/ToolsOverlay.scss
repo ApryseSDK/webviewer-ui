@@ -5,14 +5,6 @@
 .ToolsOverlayContainer {
   display: flex;
   align-items: flex-end;
-
-  @include mobile {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-  }
 }
 
 .ToolsOverlay {
@@ -32,6 +24,11 @@
 
   @include mobile {
     width: 100%;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    background: var(--mobile-presets-background);
+    border-top: 1px solid var(--border);
   }
 
   &.shadow {
@@ -68,7 +65,7 @@
     width: 220px;
 
     @include mobile {
-      width: 100%;
+      background: var(--mobile-presets-background);
     }
 
     .tool-buttons-container {
@@ -81,7 +78,6 @@
         width: 100%;
         justify-content: center;
       }
-
     }
   }
 }

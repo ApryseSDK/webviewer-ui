@@ -4,9 +4,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 6px;
-  margin-right: 6px;
   height: 26px;
+  margin: 0 6px;
+
+  @include mobile {
+    margin: 0 10px;
+  }
 
   .tool-button-arrow-container {
     width: 13px;

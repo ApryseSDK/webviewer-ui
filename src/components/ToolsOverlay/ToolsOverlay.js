@@ -113,6 +113,7 @@ class ToolsOverlay extends React.PureComponent {
       activeToolGroup,
       isToolStyleOpen,
       isDesktop,
+      isMobile,
     } = this.props;
 
     const isVisible = (isOpen || true) && !isDisabled;
@@ -159,6 +160,10 @@ class ToolsOverlay extends React.PureComponent {
           {t('message.toolsOverlayNoPresets')}
         </div>
       );
+    }
+
+    if (noPresets && isMobile) {
+      return null;
     }
 
     return (

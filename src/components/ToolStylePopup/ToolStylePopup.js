@@ -62,10 +62,13 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   handleClickOutside = e => {
-    const toolsOverlay = document.querySelector(
+    // can have multiple toolsOverlays because of mobile mode
+    const toolsOverlays = Array.from(document.querySelectorAll(
       '[data-element="toolsOverlay"]',
-    );
-    const clickedOnToolsOverlay = toolsOverlay?.contains(e.target);
+    ));
+    const clickedOnToolsOverlay = toolsOverlays.some(toolsOverlay => {
+      return toolsOverlay?.contains(e.target);
+    });
     if (!clickedOnToolsOverlay) {
       this.props.closeElement('toolStylePopup');
     }

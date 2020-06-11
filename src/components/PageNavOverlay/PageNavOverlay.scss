@@ -6,20 +6,15 @@
   font-family: 'Lato';
   font-weight: bold;
   color: var(--text-color);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   cursor: pointer;
 
-  position: absolute;
+  position: relative;
   left: 50%;
   transform: translateX(-50%);
-  top: 0px;
-
-  // position: fixed;
-  left: 50%;
   bottom: 24px;
   top: auto;
-  transform: translateX(-50%);
   margin-left: auto;
   margin-right: auto;
   background: var(--component-background);
