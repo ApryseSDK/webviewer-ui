@@ -181,7 +181,6 @@ class MeasurementOverlay extends React.PureComponent {
       'areaMeasurement',
       'rectangularAreaMeasurement',
       'ellipseMeasurement',
-      'countMeasurement'
     ].includes(mapAnnotationToKey(annotation));
 
   isMeasurementTool = toolName =>
