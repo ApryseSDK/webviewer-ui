@@ -148,7 +148,6 @@ class PrintModal extends React.PureComponent {
     }
 
     this.setState({ count: 0 });
-    this.setPrintQuality();
 
     if (this.state.allowWatermarkModal) {
       core.setWatermark(this.state.watermarkModalOption);
@@ -160,16 +159,11 @@ class PrintModal extends React.PureComponent {
     Promise.all(creatingPages)
       .then(pages => {
         this.printPages(pages);
-        this.resetPrintQuality();
       })
       .catch(e => {
         console.error(e);
         this.setState({ count: -1 });
       });
-  };
-
-  setPrintQuality = () => {
-    window.utils.setCanvasMultiplier(this.props.printQuality);
   };
 
   creatingPages = () => {
@@ -218,6 +212,7 @@ class PrintModal extends React.PureComponent {
         zoom,
         pageRotation: printRotation,
         drawComplete: onCanvasLoaded,
+        multiplier: this.props.printQuality,
       });
       this.pendingCanvases.push(id);
     });
@@ -443,10 +438,6 @@ class PrintModal extends React.PureComponent {
       window.print();
     }
     this.closePrintModal();
-  };
-
-  resetPrintQuality = () => {
-    window.utils.unsetCanvasMultiplier();
   };
 
   closePrintModal = () => {
