@@ -105,6 +105,16 @@ const map = {
       annotation.IT === 'EllipseDimension' &&
       annotation.Measure,
   },
+  countMeasurement: {
+    icon: 'ic_check_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: ['AnnotationCreateCountMeasurement'],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.StickyAnnotation &&
+      annotation.getCustomData('trn-is-count')
+  },
   callout: {
     icon: 'icon-tool-callout-line',
     iconColor: 'TextColor',
