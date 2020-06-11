@@ -181,6 +181,7 @@ class MeasurementOverlay extends React.PureComponent {
       'areaMeasurement',
       'rectangularAreaMeasurement',
       'ellipseMeasurement',
+      'countMeasurement'
     ].includes(mapAnnotationToKey(annotation));
 
   isMeasurementTool = toolName =>
@@ -190,11 +191,13 @@ class MeasurementOverlay extends React.PureComponent {
       'areaMeasurement',
       'rectangularAreaMeasurement',
       'ellipseMeasurement',
+      'countMeasurement'
     ].includes(mapToolNameToKey(toolName));
 
   shouldShowCustomOverlay = annotation =>
-    !this.isMeasurementAnnotation(annotation) &&
-    this.props.customMeasurementOverlay.some(overlay => overlay.validate(annotation));
+    (!this.isMeasurementAnnotation(annotation) &&
+    this.props.customMeasurementOverlay.some(overlay => overlay.validate(annotation))) ||
+    mapAnnotationToKey(annotation) === 'countMeasurement'
 
   shouldShowInfo = annotation => {
     const key = mapAnnotationToKey(annotation);
@@ -344,12 +347,6 @@ class MeasurementOverlay extends React.PureComponent {
     );
   };
 
-  renderCount = () => {
-    const annotationList = core.getAnnotationsList();
-    const measurementAnnotationsList = annotationList.filter(annotation => this.isMeasurementAnnotation(annotation));
-    return measurementAnnotationsList.length;
-  }
-
   render() {
     const { annotation, position, transparentBackground } = this.state;
     const { isDisabled, t, isOpen } = this.props;
@@ -404,9 +401,6 @@ class MeasurementOverlay extends React.PureComponent {
               {key !== 'rectangularAreaMeasurement' &&
                 key !== 'distanceMeasurement' &&
                 this.renderAngle()}
-              <div className="measurement__count">
-                {t('option.measurementOverlay.count')}: {this.renderCount()}
-              </div>
             </>
           )}
         </div>
