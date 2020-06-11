@@ -64,6 +64,7 @@ class StylePopup extends React.PureComponent {
         displayProperty: 'opacity',
         value: Opacity,
         displayValue: `${Math.round(Opacity * 100)}%`,
+        dataElement: DataElements.OPACITY_SLIDER,
         getCirclePosition: lineLength => Opacity * lineLength + lineStart,
         convertRelativeCirclePositionToValue: circlePosition => circlePosition,
       },
@@ -72,6 +73,7 @@ class StylePopup extends React.PureComponent {
         displayProperty: 'thickness',
         value: StrokeThickness,
         displayValue: `${Math.round(StrokeThickness)}pt`,
+        dataElement: DataElements.STROKE_THICKNESS_SLIDER,
         // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
         getCirclePosition: lineLength =>
           (isFreeText
@@ -85,6 +87,7 @@ class StylePopup extends React.PureComponent {
         displayProperty: 'text',
         value: FontSize,
         displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
+        dataElement: DataElements.FONT_SIZE_SLIDER,
         getCirclePosition: lineLength =>
           ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
         convertRelativeCirclePositionToValue: circlePosition =>

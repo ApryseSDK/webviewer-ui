@@ -19,6 +19,7 @@ class Slider extends React.PureComponent {
       PropTypes.number,
       PropTypes.string,
     ]),
+    dataElement: PropTypes.string.isRequired,
     getCirclePosition: PropTypes.func.isRequired,
     convertRelativeCirclePositionToValue: PropTypes.func.isRequired,
     onStyleChange: PropTypes.func.isRequired,
@@ -114,11 +115,11 @@ class Slider extends React.PureComponent {
   }
 
   renderSlider = () => {
-    const { displayProperty, displayValue, getCirclePosition, t } = this.props;
+    const { dataElement, displayProperty, displayValue, getCirclePosition, t } = this.props;
     const circleCenter = getCirclePosition(this.lineLength);
 
     return (
-      <div className="slider">
+      <div className="slider" data-element={dataElement}>
         <div className="slider-property">
           {t(`option.slider.${displayProperty}`)}
         </div>
