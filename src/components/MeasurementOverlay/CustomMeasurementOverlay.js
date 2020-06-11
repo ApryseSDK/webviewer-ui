@@ -9,6 +9,8 @@ function CustomMeasurementOverlay(props) {
   const renderAppropriateOverlay = type => {
     const annotationType = mapAnnotationToKey(props.annotation);
     switch (annotationType) {
+      case 'countMeasurement':
+        return <CustomCountMeasurementOverlay {...props}/>;
       case 'ellipse':
         return <CustomEllipseMeasurementOverlay {...props}/>;
       default:
@@ -26,6 +28,31 @@ CustomMeasurementOverlay.propTypes = {
   t: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
+
+function CustomCountMeasurementOverlay(props) {
+  const annotationKey = mapAnnotationToKey(props.annotation);
+  const { icon } = getDataWithKey(annotationKey);
+  const { t } = props;
+  const annotationList = core.getAnnotationsList();
+
+  const measurementAnnotationsList = annotationList.filter(annotation => {
+    return annotation.getCustomData('trn-is-count');
+  });
+  const annotationCount = measurementAnnotationsList.length;
+
+  return (
+    <>
+      <div className="measurement__title">
+        {icon && <Icon className="measurement__icon" glyph={icon} />}
+        {t('option.measurementOverlay.countMeasurement')}
+      </div>
+      <div className="measurement__count">
+        {t('option.measurementOverlay.count')}: {annotationCount}
+      </div>
+    </>
+  );
+}
+CustomCountMeasurementOverlay.propTypes = CustomMeasurementOverlay.propTypes;
 
 function CustomEllipseMeasurementOverlay(props) {
   const annotationKey = mapAnnotationToKey(props.annotation);
