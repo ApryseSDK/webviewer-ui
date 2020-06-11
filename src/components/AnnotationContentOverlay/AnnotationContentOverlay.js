@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -18,11 +18,12 @@ const AnnotationContentOverlay = () => {
     selectors.isElementDisabled(state, 'annotationContentOverlay'),
   );
   const [t] = useTranslation();
-  const [annotation, setAnnotation] = useState();
+  const [annotationState, setAnnotation] = useState();
   const [overlayPosition, setOverlayPosition] = useState({
     left: 0,
     top: 0,
   });
+  const wrapperRef = useRef();
 
   // Clients have the option to customize how the tooltip is rendered
   // by passing a handler
@@ -54,16 +55,27 @@ const AnnotationContentOverlay = () => {
       } else {
         setAnnotation(null);
       }
+
+      if (annotation && isUsingCustomHandler) {
+        const wrapperElement = wrapperRef.current;
+        if (wrapperElement) {
+          while (wrapperElement.firstChild) {
+            wrapperElement.removeChild(wrapperElement.firstChild);
+          }
+          const element = customHandler(annotation);
+          wrapperElement.appendChild(element);
+        }
+      }
     };
 
     core.addEventListener('mouseMove', onMouseHover);
     return () => {
       core.removeEventListener('mouseMove', onMouseHover);
     };
-  }, []);
+  }, [annotationState, customHandler, isUsingCustomHandler]);
 
-  const contents = annotation?.getContents();
-  const numberOfReplies = annotation?.getReplies().length;
+  const contents = annotationState?.getContents();
+  const numberOfReplies = annotationState?.getReplies().length;
 
   const OverlayWrapper = props => (
     <div
@@ -76,10 +88,11 @@ const AnnotationContentOverlay = () => {
   );
 
   const CustomOverlay = () => {
-    if (annotation) {
+    if (annotationState) {
       return (
         <OverlayWrapper>
-          <CustomElement render={() => customHandler(annotation)} />
+          <div ref={wrapperRef}/>
+          {/* <CustomElement render={() => customHandler(annotationState)} /> */}
         </OverlayWrapper>
       );
     } else {
@@ -91,7 +104,7 @@ const AnnotationContentOverlay = () => {
     if (contents) {
       return (
         <OverlayWrapper>
-          <div className="author">{core.getDisplayAuthor(annotation)}</div>
+          <div className="author">{core.getDisplayAuthor(annotationState)}</div>
           <div className="contents">
             {contents.length > MAX_CHARACTERS
               ? `${contents.slice(0, MAX_CHARACTERS)}...`
@@ -108,6 +121,7 @@ const AnnotationContentOverlay = () => {
       return null;
     }
   };
+
 
   if (isDisabled || isMobileDevice) {
     return null;
