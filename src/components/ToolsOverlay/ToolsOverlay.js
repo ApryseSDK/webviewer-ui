@@ -8,6 +8,8 @@ import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatu
 import SelectedRubberStamp from 'components/RubberStampOverlay/SelectedRubberStamp';
 import { withTranslation } from 'react-i18next';
 
+import defaultTool from 'constants/defaultTool';
+import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import Icon from 'components/Icon';
 import actions from 'actions';
@@ -197,6 +199,20 @@ class ToolsOverlay extends React.PureComponent {
               <ToolStylePopup/>
             </Swipeable>
           )}
+          {this.props.isMobile &&
+            <div
+              className="close-icon-container"
+              onClick={() => {
+                this.props.closeElements(['toolStylePopup']);
+                core.setToolMode(defaultTool);
+                this.props.setActiveToolGroup('');
+              }}
+            >
+              <Icon
+                glyph="ic_close_black_24px"
+                className="close-icon"
+              />
+            </div>}
         </div>
       </div>
     );
