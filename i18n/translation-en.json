@@ -52,6 +52,7 @@
     "callout": "Callout",
     "crop": "Crop Page",
     "caret": "Caret",
+    "countMeasurement": "Count measurement",
     "distanceMeasurement": "Distance measurement",
     "ellipse": "Ellipse",
     "eraser": "Eraser",
@@ -243,6 +244,7 @@
       "distanceMeasurement": "Distance Measurement",
       "perimeterMeasurement": "Perimeter Measurement",
       "areaMeasurement": "Area Measurement",
+      "countMeasurement": "Count measurement",
       "radius": "Radius",
       "count": "Count"
     },
