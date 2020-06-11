@@ -54,50 +54,44 @@ class StylePopup extends React.PureComponent {
     const lineStart = circleRadius;
     const sliderProps = [];
     if (!isOpacitySliderDisabled) {
-      sliderProps.push(
-        {
-          property: 'Opacity',
-          displayProperty: 'opacity',
-          value: Opacity,
-          displayValue: `${Math.round(Opacity * 100)}%`,
-          getCirclePosition: lineLength => Opacity * lineLength + lineStart,
-          convertRelativeCirclePositionToValue: circlePosition => circlePosition,
-          dataElement: DataElements.OPACITY_SLIDER
-        }
-      );
+      sliderProps[0] = {
+        property: 'Opacity',
+        displayProperty: 'opacity',
+        value: Opacity,
+        displayValue: `${Math.round(Opacity * 100)}%`,
+        getCirclePosition: lineLength => Opacity * lineLength + lineStart,
+        convertRelativeCirclePositionToValue: circlePosition => circlePosition,
+        dataElement: DataElements.OPACITY_SLIDER
+      };
     }
     if (!isStrokeThicknessSliderDisabled) {
-      sliderProps.push(
-        {
-          dataElement: DataElements.STROKE_THICKNESS_SLIDER,
-          property: 'StrokeThickness',
-          displayProperty: 'thickness',
-          value: StrokeThickness,
-          displayValue: `${Math.round(StrokeThickness)}pt`,
-          // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
-          getCirclePosition: lineLength =>
-            (isFreeText
-              ? (StrokeThickness / 20) * lineLength + lineStart
-              : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
-          convertRelativeCirclePositionToValue: circlePosition =>
-            (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
-        }
-      );
+      sliderProps[1] = {
+        dataElement: DataElements.STROKE_THICKNESS_SLIDER,
+        property: 'StrokeThickness',
+        displayProperty: 'thickness',
+        value: StrokeThickness,
+        displayValue: `${Math.round(StrokeThickness)}pt`,
+        // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
+        getCirclePosition: lineLength =>
+          (isFreeText
+            ? (StrokeThickness / 20) * lineLength + lineStart
+            : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
+        convertRelativeCirclePositionToValue: circlePosition =>
+          (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
+      };
     }
     if (!isFontSizeSliderDisabled) {
-      sliderProps.push(
-        {
-          dataElement: DataElements.FONT_SIZE_SLIDER,
-          property: 'FontSize',
-          displayProperty: 'text',
-          value: FontSize,
-          displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
-          getCirclePosition: lineLength =>
-            ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
-          convertRelativeCirclePositionToValue: circlePosition =>
-            `${circlePosition * 40 + 5}pt`,
-        },
-      );
+      sliderProps[2] = {
+        dataElement: DataElements.FONT_SIZE_SLIDER,
+        property: 'FontSize',
+        displayProperty: 'text',
+        value: FontSize,
+        displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
+        getCirclePosition: lineLength =>
+          ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
+        convertRelativeCirclePositionToValue: circlePosition =>
+          `${circlePosition * 40 + 5}pt`,
+      };
     }
 
     return [Opacity, StrokeThickness, FontSize].map((value, index) => {
