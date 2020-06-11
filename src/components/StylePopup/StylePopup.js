@@ -58,8 +58,10 @@ class StylePopup extends React.PureComponent {
       currentPalette,
     } = this.props;
     const lineStart = circleRadius;
-    const sliderProps = {
-      Opacity: {
+    const sliderProps = {};
+
+    if (!isOpacitySliderDisabled) {
+      sliderProps.Opacity = {
         property: 'Opacity',
         displayProperty: 'opacity',
         value: Opacity,
@@ -67,8 +69,10 @@ class StylePopup extends React.PureComponent {
         dataElement: DataElements.OPACITY_SLIDER,
         getCirclePosition: lineLength => Opacity * lineLength + lineStart,
         convertRelativeCirclePositionToValue: circlePosition => circlePosition,
-      },
-      StrokeThickness: {
+      };
+    }
+    if (!isStrokeThicknessSliderDisabled) {
+      sliderProps.StrokeThickness = {
         property: 'StrokeThickness',
         displayProperty: 'thickness',
         value: StrokeThickness,
@@ -81,8 +85,10 @@ class StylePopup extends React.PureComponent {
             : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
         convertRelativeCirclePositionToValue: circlePosition =>
           (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
-      },
-      FontSize: {
+      };
+    }
+    if (!isFontSizeSliderDisabled) {
+      sliderProps.FontSize = {
         property: 'FontSize',
         displayProperty: 'text',
         value: FontSize,
@@ -92,8 +98,8 @@ class StylePopup extends React.PureComponent {
           ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
         convertRelativeCirclePositionToValue: circlePosition =>
           `${circlePosition * 40 + 5}pt`,
-      },
-    };
+      };
+    }
 
     // default sliders
     let sliders = { Opacity, StrokeThickness, FontSize };
@@ -103,6 +109,18 @@ class StylePopup extends React.PureComponent {
       sliders = { Opacity, StrokeThickness };
     } else if (currentPalette === 'FillColor') {
       sliders = { Opacity };
+    }
+
+    if (isOpacitySliderDisabled) {
+      delete sliders.Opacity;
+    }
+
+    if (isStrokeThicknessSliderDisabled) {
+      delete sliders.StrokeThickness;
+    }
+
+    if (isFontSizeSliderDisabled) {
+      delete sliders.FontSize;
     }
 
     // we still want to render a slider if the value is 0
