@@ -262,7 +262,18 @@ class ThumbnailsPanel extends React.PureComponent {
   };
 
   onPageNumberUpdated = pageNumber => {
-    this.listRef.current?.scrollToRow(pageNumber - 1);
+    const {
+      width,
+    } = this.state;
+    const numberOfColumns = this.getNumberOfColumns(width);
+    // from doing some drawings, page numbers are always ordered from left to right in asc order
+    new Array(numberOfColumns).fill().forEach((columnIndex) => {
+      if (pageNumber % (columnIndex + 1) === 0) {
+        // derived from this formula thumbIndex = index * numberOfColumns + columnIndex;
+        const rowIndex = ((pageNumber - 1) - columnIndex) / numberOfColumns;
+        this.listRef.current?.scrollToRow(rowIndex);
+      }
+    });
   };
 
   getNumberOfColumns = width => {
