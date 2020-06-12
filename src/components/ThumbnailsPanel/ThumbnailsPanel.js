@@ -262,7 +262,9 @@ class ThumbnailsPanel extends React.PureComponent {
   };
 
   onPageNumberUpdated = pageNumber => {
-    this.listRef.current?.scrollToRow(pageNumber - 1);
+    const numberOfColumns = this.getNumberOfColumns(this.state.width);
+    const pageIndex = pageNumber - 1;
+    this.listRef.current?.scrollToRow(Math.floor(pageIndex / numberOfColumns));
   };
 
   getNumberOfColumns = width => {
