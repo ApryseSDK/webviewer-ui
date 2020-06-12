@@ -177,7 +177,7 @@ class ToolsOverlay extends React.PureComponent {
             Overlay: true,
             ToolsOverlay: true,
             open: isOpen,
-            shadow: isToolStyleOpen,
+            shadow: isToolStyleOpen || isMobile,
           })}
           ref={this.overlay}
           data-element="toolsOverlay"
