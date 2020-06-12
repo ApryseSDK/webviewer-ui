@@ -10,6 +10,7 @@ import ActionButton from 'components/ActionButton';
 import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import { Swipeable } from 'react-swipeable';
 
 const DESIRED_WIDTH = 300;
@@ -81,12 +82,21 @@ class WatermarkModal extends React.PureComponent {
       isColorPaletteVisible: false,
       locationSettings,
       previousLocationSettings: locationSettings,
+      lockFocus: false,
     };
     this.canvasContainerRef = React.createRef();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.isVisible !== prevProps.isVisible) {
+      // Sets focus with a slight delay after modal becomes visible in order to
+      // prevent stack overflow with competing print modal focus lock.
+      if (this.props.isVisible) {
+        this.setState({ lockFocus: true });
+      } else {
+        this.setState({ lockFocus: false });
+      }
+
       this.setState(
         {
           isColorPaletteVisible: false,
@@ -335,6 +345,13 @@ class WatermarkModal extends React.PureComponent {
     );
   };
 
+  onBackgroundClick = event => {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+    this.closeModal();
+  }
+
   render() {
     const { isVisible } = this.props;
     if (!isVisible) {
@@ -351,209 +368,207 @@ class WatermarkModal extends React.PureComponent {
         onSwipedDown={this.closeModal}
         preventDefaultTouchmoveEvent
       >
-        <div
-          className={'Modal Watermark'}
-          id="watermarkModal"
-          onMouseDown={this.closeModal}
-        >
+        <FocusTrap locked={this.state.lockFocus}>
           <div
-            className="form-container"
-            id="formContainer"
-            onMouseDown={e => e.stopPropagation()}
+            className={'Modal Watermark'}
+            id="watermarkModal"
+            onMouseDown={this.onBackgroundClick}
           >
-            <div className="swipe-indicator" />
-            <div className="form-content-container">
-              <div className="watermark-settings">
-                <form id="form" onSubmit={e => e.preventDefault()}>
-                  <div className="form-field">
-                    <label>{t(`option.watermark.location`)}</label>
-                    <select
-                      id="location"
-                      value={WATERMARK_LOCATIONS[currLocation]}
-                      onChange={event => {
-                        this.onLocationChanged(event.target.value);
-                      }}
-                    >
-                      {Object.keys(WATERMARK_LOCATIONS).map(key => (
-                        <option key={key}>{WATERMARK_LOCATIONS[key]}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="form-field separator"></div>
-                  <div className="form-field">
-                    <label>{t(`option.watermark.text`)}</label>
-                    <input
-                      className="text-input"
-                      id="textInput"
-                      value={formInfo[FORM_FIELD_KEYS.text]}
-                      onChange={event =>
-                        this.handleInputChange(
-                          FORM_FIELD_KEYS.text,
-                          event.target.value,
-                        )
-                      }
-                      type="text"
-                    />
-                  </div>
-                  <div className="form-field">
-                    <label>{t(`option.watermark.font`)}</label>
-                    <select
-                      id="fonts"
-                      value={formInfo[FORM_FIELD_KEYS.font]}
-                      onChange={event =>
-                        this.handleInputChange(
-                          FORM_FIELD_KEYS.font,
-                          event.target.value,
-                        )
-                      }
-                    >
-                      {FONTS.map(font => (
-                        <option key={font}>{font}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-field">
-                    <label>{t(`option.watermark.size`)}</label>
-                    <select
-                      id="fontSize"
-                      value={formInfo[FORM_FIELD_KEYS.fontSize]}
-                      onChange={event =>
-                        this.handleInputChange(
-                          FORM_FIELD_KEYS.fontSize,
-                          +event.target.value,
-                        )
-                      }
-                    >
-                      {FONT_SIZES.map(fontSize => (
-                        <option key={fontSize}>{fontSize}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-field opacity-slider" id="opacitySlider">
-                    <Slider
-                      property={'opacity'} // arbitrary property name. this property isn't used in this file
-                      displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
-                      value={formInfo[FORM_FIELD_KEYS.opacity]}
-                      displayValue={`${formInfo[FORM_FIELD_KEYS.opacity]}%`}
-                      getCirclePosition={this.getCirclePosn}
-                      convertRelativeCirclePositionToValue={circlePosn =>
-                        circlePosn
-                      }
-                      onStyleChange={(property, value) =>
-                        this.handleInputChange(
-                          FORM_FIELD_KEYS.opacity,
-                          Math.round(value * 100),
-                        )
-                      }
-                    />
-                  </div>
-                  <div className="form-field">
-                    <label>{t(`option.watermark.style`)}</label>
-                    <div className="style-container">
-                      <div
-                        id="currentColorCell"
-                        className="colorSelect"
-                        style={{
-                          backgroundColor: formInfo[
-                            FORM_FIELD_KEYS.color
-                          ].toHexString(),
+            <div className="form-container" id="formContainer">
+              <div className="swipe-indicator" />
+              <div className="form-content-container">
+                <div className="watermark-settings">
+                  <form id="form" onSubmit={e => e.preventDefault()}>
+                    <div className="form-field">
+                      <label>{t(`option.watermark.location`)}</label>
+                      <select
+                        id="location"
+                        value={WATERMARK_LOCATIONS[currLocation]}
+                        onChange={event => {
+                          this.onLocationChanged(event.target.value);
                         }}
-                        onClick={() =>
-                          this.setColorPaletteVisibility(
-                            !this.state.isColorPaletteVisible,
-                          )
-                        }
-                      ></div>
-                      <div className="style-container">
-                        <Button
-                          dataElement="boldText"
-                          img="icon-text-bold"
-                          isActive={formInfo[FORM_FIELD_KEYS.isBolded]}
-                          onClick={() =>
-                            this.handleInputChange(
-                              FORM_FIELD_KEYS.isBolded,
-                              !formInfo[FORM_FIELD_KEYS.isBolded],
-                            )
-                          }
-                        />
-                        <Button
-                          dataElement="italicizeText"
-                          img="icon-text-italic"
-                          isActive={formInfo[FORM_FIELD_KEYS.isItalic]}
-                          onClick={() =>
-                            this.handleInputChange(
-                              FORM_FIELD_KEYS.isItalic,
-                              !formInfo[FORM_FIELD_KEYS.isItalic],
-                            )
-                          }
-                        />
-                        <Button
-                          dataElement="underlineText"
-                          img="icon-text-underline"
-                          isActive={formInfo[FORM_FIELD_KEYS.isUnderlined]}
-                          onClick={() =>
-                            this.handleInputChange(
-                              FORM_FIELD_KEYS.isUnderlined,
-                              !formInfo[FORM_FIELD_KEYS.isUnderlined],
-                            )
-                          }
-                        />
-                      </div>
+                      >
+                        {Object.keys(WATERMARK_LOCATIONS).map(key => (
+                          <option key={key}>{WATERMARK_LOCATIONS[key]}</option>
+                        ))}
+                      </select>
                     </div>
 
-                    {this.state.isColorPaletteVisible && (
-                      <div
-                        className={'Popup StylePopup'}
-                        id="stylePopup"
-                        onClick={() => this.setColorPaletteVisibility(false)}
-                      >
-                        <ColorPalette
-                          color={formInfo[FORM_FIELD_KEYS.color]}
-                          property={'TextColor'} // arbitrary property name. this property isn't used in this file
-                          onStyleChange={(property, color) => {
-                            this.onColorChanged(color);
-                            this.setColorPaletteVisibility(false);
-                          }}
-                        />
-                      </div>
-                    )}
                     <div className="form-field separator"></div>
-                    <a
-                      className="resetSettings"
-                      id="reset"
-                      onClick={this.resetForm}
-                    >
-                      {t(`option.watermark.resetAllSettings`)}
-                    </a>
-                  </div>
-                </form>
+                    <div className="form-field">
+                      <label>{t(`option.watermark.text`)}</label>
+                      <input
+                        className="text-input"
+                        id="textInput"
+                        value={formInfo[FORM_FIELD_KEYS.text]}
+                        onChange={event =>
+                          this.handleInputChange(
+                            FORM_FIELD_KEYS.text,
+                            event.target.value,
+                          )
+                        }
+                        type="text"
+                      />
+                    </div>
+                    <div className="form-field">
+                      <label>{t(`option.watermark.font`)}</label>
+                      <select
+                        id="fonts"
+                        value={formInfo[FORM_FIELD_KEYS.font]}
+                        onChange={event =>
+                          this.handleInputChange(
+                            FORM_FIELD_KEYS.font,
+                            event.target.value,
+                          )
+                        }
+                      >
+                        {FONTS.map(font => (
+                          <option key={font}>{font}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="form-field">
+                      <label>{t(`option.watermark.size`)}</label>
+                      <select
+                        id="fontSize"
+                        value={formInfo[FORM_FIELD_KEYS.fontSize]}
+                        onChange={event =>
+                          this.handleInputChange(
+                            FORM_FIELD_KEYS.fontSize,
+                            +event.target.value,
+                          )
+                        }
+                      >
+                        {FONT_SIZES.map(fontSize => (
+                          <option key={fontSize}>{fontSize}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="form-field opacity-slider" id="opacitySlider">
+                      <Slider
+                        property={'opacity'} // arbitrary property name. this property isn't used in this file
+                        displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
+                        value={formInfo[FORM_FIELD_KEYS.opacity]}
+                        displayValue={`${formInfo[FORM_FIELD_KEYS.opacity]}%`}
+                        getCirclePosition={this.getCirclePosn}
+                        convertRelativeCirclePositionToValue={circlePosn =>
+                          circlePosn
+                        }
+                        onStyleChange={(property, value) =>
+                          this.handleInputChange(
+                            FORM_FIELD_KEYS.opacity,
+                            Math.round(value * 100),
+                          )
+                        }
+                      />
+                    </div>
+                    <div className="form-field">
+                      <label>{t(`option.watermark.style`)}</label>
+                      <div className="style-container">
+                        <div
+                          id="currentColorCell"
+                          className="colorSelect"
+                          style={{
+                            backgroundColor: formInfo[
+                              FORM_FIELD_KEYS.color
+                            ].toHexString(),
+                          }}
+                          onClick={() =>
+                            this.setColorPaletteVisibility(
+                              !this.state.isColorPaletteVisible,
+                            )
+                          }
+                        ></div>
+                        <div className="style-container">
+                          <Button
+                            dataElement="boldText"
+                            img="icon-text-bold"
+                            isActive={formInfo[FORM_FIELD_KEYS.isBolded]}
+                            onClick={() =>
+                              this.handleInputChange(
+                                FORM_FIELD_KEYS.isBolded,
+                                !formInfo[FORM_FIELD_KEYS.isBolded],
+                              )
+                            }
+                          />
+                          <Button
+                            dataElement="italicizeText"
+                            img="icon-text-italic"
+                            isActive={formInfo[FORM_FIELD_KEYS.isItalic]}
+                            onClick={() =>
+                              this.handleInputChange(
+                                FORM_FIELD_KEYS.isItalic,
+                                !formInfo[FORM_FIELD_KEYS.isItalic],
+                              )
+                            }
+                          />
+                          <Button
+                            dataElement="underlineText"
+                            img="icon-text-underline"
+                            isActive={formInfo[FORM_FIELD_KEYS.isUnderlined]}
+                            onClick={() =>
+                              this.handleInputChange(
+                                FORM_FIELD_KEYS.isUnderlined,
+                                !formInfo[FORM_FIELD_KEYS.isUnderlined],
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      {this.state.isColorPaletteVisible && (
+                        <div
+                          className={'Popup StylePopup'}
+                          id="stylePopup"
+                          onClick={() => this.setColorPaletteVisibility(false)}
+                        >
+                          <ColorPalette
+                            color={formInfo[FORM_FIELD_KEYS.color]}
+                            property={'TextColor'} // arbitrary property name. this property isn't used in this file
+                            onStyleChange={(property, color) => {
+                              this.onColorChanged(color);
+                              this.setColorPaletteVisibility(false);
+                            }}
+                          />
+                        </div>
+                      )}
+                      <div className="form-field separator"></div>
+                      <button
+                        className="resetSettings"
+                        id="reset"
+                        onClick={this.resetForm}
+                      >
+                        {t(`option.watermark.resetAllSettings`)}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <div
+                  className="canvas-container"
+                  ref={this.canvasContainerRef}
+                ></div>
               </div>
 
-              <div
-                className="canvas-container"
-                ref={this.canvasContainerRef}
-              ></div>
-            </div>
-
-            <div className="button-container">
-              <button
-                className="cancel button"
-                id="cancel"
-                onClick={this.closeModal}
-              >
-                {t(`action.cancel`)}
-              </button>
-              <button
-                className="ok button"
-                id="submit"
-                onClick={this.onOkPressed}
-              >
-                {t(`action.ok`)}
-              </button>
+              <div className="button-container">
+                <button
+                  className="cancel button"
+                  id="cancel"
+                  onClick={this.closeModal}
+                >
+                  {t(`action.cancel`)}
+                </button>
+                <button
+                  className="ok button"
+                  id="submit"
+                  onClick={this.onOkPressed}
+                >
+                  {t(`action.ok`)}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </FocusTrap>
       </Swipeable>
     );
   }
