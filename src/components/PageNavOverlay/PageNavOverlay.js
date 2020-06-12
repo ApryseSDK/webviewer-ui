@@ -89,7 +89,7 @@ class PageNavOverlay extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, currentPage, totalPages, allowPageNavigation, isToolsOverlayOpen } = this.props;
+    const { isDisabled, currentPage, totalPages, allowPageNavigation } = this.props;
     if (isDisabled) {
       return null;
     }
@@ -101,7 +101,6 @@ class PageNavOverlay extends React.PureComponent {
         className={classNames({
           Overlay: true,
           PageNavOverlay: true,
-          "mobile-tools-overlay-open": isToolsOverlayOpen,
         })}
         data-element="pageNavOverlay"
       >
@@ -152,7 +151,6 @@ class PageNavOverlay extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'pageNavOverlay'),
   isOpen: selectors.isElementOpen(state, 'pageNavOverlay'),
-  isToolsOverlayOpen: selectors.isElementOpen(state, 'toolsOverlay'),
   currentPage: selectors.getCurrentPage(state),
   totalPages: selectors.getTotalPages(state),
   pageLabels: selectors.getPageLabels(state),

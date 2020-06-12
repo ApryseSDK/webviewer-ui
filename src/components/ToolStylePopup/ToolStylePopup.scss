@@ -25,23 +25,18 @@
 
   @include mobile {
     margin: 0;
-    position: fixed;
+    position: relative;
     width: 100%;
     max-width: initial;
-    left: 0;
-    bottom: 0;
 
     border-radius: 0px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border: 0px;
-    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-
-    padding: 28px 24px;
-
+    // padding: 28px 24px;
+    padding-bottom: 24px;
     border-radius: 4px;
-    box-shadow: 0 0 3px 0 var(--document-box-shadow);
-    position: fixed;
+    box-shadow: none;
 
     .swipe-indicator {
       background: var(--divider);

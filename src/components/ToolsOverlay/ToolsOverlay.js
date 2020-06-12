@@ -118,7 +118,7 @@ class ToolsOverlay extends React.PureComponent {
       isMobile,
     } = this.props;
 
-    const isVisible = isOpen && !isDisabled;
+    const isVisible = (isOpen || true) && !isDisabled;
     if (!isVisible) {
       return null;
     }
@@ -188,18 +188,7 @@ class ToolsOverlay extends React.PureComponent {
             })}
           >
             {Component}
-
-          </div>
-          {(isToolStyleOpen) && (
-            <Swipeable
-              onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-              onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-              preventDefaultTouchmoveEvent
-            >
-              <ToolStylePopup/>
-            </Swipeable>
-          )}
-          {this.props.isMobile &&
+            {this.props.isMobile &&
             <div
               className="close-icon-container"
               onClick={() => {
@@ -213,6 +202,16 @@ class ToolsOverlay extends React.PureComponent {
                 className="close-icon"
               />
             </div>}
+          </div>
+          {(isToolStyleOpen) && (
+            <Swipeable
+              onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+              onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+              preventDefaultTouchmoveEvent
+            >
+              <ToolStylePopup/>
+            </Swipeable>
+          )}
         </div>
       </div>
     );

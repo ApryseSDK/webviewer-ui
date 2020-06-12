@@ -123,7 +123,7 @@ class ToolStylePopup extends React.PureComponent {
         data-element="toolStylePopup"
         ref={this.popup}
       >
-        {isMobile && <div className="swipe-indicator" />}
+        {/* {isMobile && <div className="swipe-indicator" />} */}
         <div>
           {(availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
             && <HorizontalDivider/>}
