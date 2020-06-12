@@ -9,6 +9,7 @@
   border-radius: 0px 0px 4px 4px;
   box-shadow: 0 0 3px 0 var(--box-shadow);
   align-items: center;
+  width: 220px;
 
   .divider-container {
     width: 100%;
@@ -38,7 +39,6 @@
 
     padding: 28px 24px;
 
-    background: var(--component-background);
     border-radius: 4px;
     box-shadow: 0 0 3px 0 var(--document-box-shadow);
     position: fixed;

@@ -80,7 +80,6 @@ class ToolGroupButton extends React.PureComponent {
 
     if (isActive) {
       closeElement('toolStylePopup');
-      closeElement('toolsOverlay');
       core.setToolMode(defaultTool);
       setActiveToolGroup('');
     } else {

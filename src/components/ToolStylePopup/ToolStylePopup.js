@@ -124,9 +124,11 @@ class ToolStylePopup extends React.PureComponent {
         ref={this.popup}
       >
         {isMobile && <div className="swipe-indicator" />}
-        {(availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
-          && <HorizontalDivider/>}
-        {Component}
+        <div>
+          {(availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
+            && <HorizontalDivider/>}
+          {Component}
+        </div>
       </div>
     );
   }

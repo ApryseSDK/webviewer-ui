@@ -118,7 +118,7 @@ class ToolsOverlay extends React.PureComponent {
       isMobile,
     } = this.props;
 
-    const isVisible = (isOpen || true) && !isDisabled;
+    const isVisible = isOpen && !isDisabled;
     if (!isVisible) {
       return null;
     }
@@ -203,7 +203,7 @@ class ToolsOverlay extends React.PureComponent {
             <div
               className="close-icon-container"
               onClick={() => {
-                this.props.closeElements(['toolStylePopup']);
+                this.props.closeElements(['toolsOverlay']);
                 core.setToolMode(defaultTool);
                 this.props.setActiveToolGroup('');
               }}

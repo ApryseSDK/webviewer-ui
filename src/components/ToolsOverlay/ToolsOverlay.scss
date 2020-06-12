@@ -80,4 +80,18 @@
       }
     }
   }
+
+  .close-icon-container {
+    position: absolute;
+    right: 18px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    z-index: -1;
+    cursor: pointer;
+    .close-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
 }

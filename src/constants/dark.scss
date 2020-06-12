@@ -25,7 +25,11 @@
   --signature-draw-background: var(--gray-3);
   --toggle-zoom-overlay-background: var(--gray-4);
   --component-background: var(--gray-2);
-  --mobile-presets-background: var(--gray-1);
+  --mobile-tool-style-popup: var(--gray-3);
+  --preset-background: var(--gray-3);
+  --mobile-divider: var(--gray-7);
+  --mobile-presets-background: var(--gray-3);
+
   --ribbons-background: var(--gray-2);
   --box-shadow: var(--gray-5);
   --document-box-shadow: var(--gray-5);
@@ -87,6 +91,4 @@
 
   --outline-color: var(--blue-6);
   --outline-hover: var(--blue-3);
-
-  --preset-background: var(--gray-3);
 }
