@@ -11,29 +11,15 @@
   align-items: center;
   width: 220px;
 
-  .divider-container {
-    width: 100%;
-    padding-right: 4px;
-    padding-left: 4px;
-    padding-bottom: 8px;
-    padding-top: 8px;
-    .divider-horizontal {
-      height: 1px;
-      background: var(--divider);
-    }
-  }
-
   @include mobile {
     margin: 0;
     position: relative;
-    width: 100%;
     max-width: initial;
 
     border-radius: 0px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border: 0px;
-    // padding: 28px 24px;
     padding-bottom: 24px;
     border-radius: 4px;
     box-shadow: none;

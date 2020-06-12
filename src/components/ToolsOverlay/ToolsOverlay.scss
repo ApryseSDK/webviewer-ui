@@ -26,12 +26,16 @@
 
   @include mobile {
     width: 100%;
-    height: auto;
+    height: 52px;
     display: flex;
     justify-content: center;
     align-items: center;
     background: var(--mobile-presets-background);
     margin-top: -16px;
+
+    &.mobile-auto-height {
+      height: auto;
+    }
   }
 
   &.shadow {
@@ -68,8 +72,13 @@
     width: 220px;
 
     @include mobile {
-      margin: 10px 0px;
+      // margin: 10px 0px;
       background: var(--mobile-presets-background);
+
+      &.mobile-is-style-open-padding{
+        margin-top: 20px;
+        margin-bottom: 12px;
+      }
     }
 
     .tool-buttons-container {
@@ -88,10 +97,6 @@
   .close-icon-container {
     position: absolute;
     right: 18px;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    z-index: -1;
     cursor: pointer;
     .close-icon {
       width: 24px;

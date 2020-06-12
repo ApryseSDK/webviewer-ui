@@ -7,6 +7,7 @@ import { getDataWithKey } from 'constants/map';
 import classNames from 'classnames';
 import actions from 'actions';
 import selectors from 'selectors';
+import HorizontalDivider from 'components/HorizontalDivider';
 
 import './ColorPaletteHeader.scss';
 
@@ -63,12 +64,9 @@ class ColorPaletteHeader extends React.PureComponent {
 
 
     if (availablePalettes.length < 2) {
-      return null;
+      return <HorizontalDivider/>;
     }
 
-    // TODO: Actually disable these elements
-    // isTextColorPaletteDisabled, isBorderColorPaletteDisabled, isFillColorPaletteDisabled
-    // TextColor, StrokeColor, FillColor
 
     return (
       <div className="palette-options">
@@ -92,6 +90,9 @@ class ColorPaletteHeader extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  // TODO: Actually disable these elements
+  // isTextColorPaletteDisabled, isBorderColorPaletteDisabled, isFillColorPaletteDisabled
+  // TextColor, StrokeColor, FillColor
   isTextColorPaletteDisabled: selectors.isElementDisabled(state, 'textColorPalette'),
   isFillColorPaletteDisabled: selectors.isElementDisabled(state, 'fillColorPalette'),
   isBorderColorPaletteDisabled: selectors.isElementDisabled(state, 'borderColorPalette'),

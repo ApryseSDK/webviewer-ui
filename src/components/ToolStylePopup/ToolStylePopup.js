@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import core from 'core';
 import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';
-import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import setToolStyles from 'helpers/setToolStyles';
 import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
@@ -66,10 +65,16 @@ class ToolStylePopup extends React.PureComponent {
     const toolsOverlays = Array.from(document.querySelectorAll(
       '[data-element="toolsOverlay"]',
     ));
+    const pageNavOverlays = Array.from(document.querySelectorAll(
+      '[data-element="pageNavOverlay"]',
+    ));
     const clickedOnToolsOverlay = toolsOverlays.some(toolsOverlay => {
       return toolsOverlay?.contains(e.target);
     });
-    if (!clickedOnToolsOverlay) {
+    const clickedONPageNavOverlay = pageNavOverlays.some(pageNavOverlay => {
+      return pageNavOverlay?.contains(e.target);
+    });
+    if (!clickedOnToolsOverlay && !clickedONPageNavOverlay) {
       this.props.closeElement('toolStylePopup');
     }
   };
@@ -107,11 +112,17 @@ class ToolStylePopup extends React.PureComponent {
 
     if (activeToolGroup === 'signatureTools') {
       Component = (
-        <SignatureStylePopup/>
+        <React.Fragment>
+          <HorizontalDivider/>
+          <SignatureStylePopup/>
+        </React.Fragment>
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
-        <RubberStampStylePopup />
+        <React.Fragment>
+          <HorizontalDivider/>
+          <RubberStampStylePopup />
+        </React.Fragment>
       );
     }
 
@@ -125,8 +136,6 @@ class ToolStylePopup extends React.PureComponent {
       >
         {/* {isMobile && <div className="swipe-indicator" />} */}
         <div>
-          {(availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
-            && <HorizontalDivider/>}
           {Component}
         </div>
       </div>
