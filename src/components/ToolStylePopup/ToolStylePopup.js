@@ -113,14 +113,18 @@ class ToolStylePopup extends React.PureComponent {
     if (activeToolGroup === 'signatureTools') {
       Component = (
         <React.Fragment>
-          <HorizontalDivider/>
+          {/* <div> */}
+            <HorizontalDivider/>
+          {/* </div> */}
           <SignatureStylePopup/>
         </React.Fragment>
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
         <React.Fragment>
-          <HorizontalDivider/>
+          {/* <div> */}
+            <HorizontalDivider/>
+          {/* </div> */}
           <RubberStampStylePopup />
         </React.Fragment>
       );
@@ -135,9 +139,7 @@ class ToolStylePopup extends React.PureComponent {
         ref={this.popup}
       >
         {/* {isMobile && <div className="swipe-indicator" />} */}
-        <div>
-          {Component}
-        </div>
+        {Component}
       </div>
     );
   }

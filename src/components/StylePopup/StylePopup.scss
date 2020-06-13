@@ -19,11 +19,9 @@
     width: 188px;
 
     @include mobile {
-      // width: 324px;
       margin-left: 12px;
       margin-right: 12px;
       width: auto;
-      // width: 90%;
     }
   }
 }

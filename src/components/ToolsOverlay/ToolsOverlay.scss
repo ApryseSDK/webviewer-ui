@@ -3,8 +3,7 @@
 
 
 .ToolsOverlayContainer {
-  display: flex;
-  align-items: flex-end;
+
 }
 
 .ToolsOverlay {
@@ -21,13 +20,12 @@
   // This makes it so the toolstylepopup goes below the presets.
   // It will overflow properly.
   height: 32px;
-  display: flex;
-  flex-direction: column;
 
   @include mobile {
     width: 100%;
     height: 52px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background: var(--mobile-presets-background);
