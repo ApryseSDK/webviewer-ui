@@ -13,22 +13,24 @@
   }
 
   @include mobile {
-    width: 336px;
+    min-width: 336px;
+    max-width: 450px;
+    width: auto;
   }
 
   .cell-container {
+    flex: 1 0 14%;
+
     cursor: pointer;
     width: 28px;
     height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 0px;
 
     @include mobile {
       width: 36px;
       height: 36px;
-      margin: 0 6px;
     }
 
     .cell-outer {

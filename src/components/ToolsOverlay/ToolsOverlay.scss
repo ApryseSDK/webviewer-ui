@@ -72,7 +72,6 @@
     width: 220px;
 
     @include mobile {
-      // margin: 10px 0px;
       background: var(--mobile-presets-background);
 
       &.mobile-is-style-open-padding{

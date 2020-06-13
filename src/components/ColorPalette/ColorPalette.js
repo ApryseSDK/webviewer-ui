@@ -108,7 +108,7 @@ class ColorPalette extends React.PureComponent {
             </div>
           </div>
         ))}
-        {allowTransparent &&
+        {allowTransparent ?
           <div
             className="cell-container"
             onClick={() => this.setColor(null)}
@@ -135,7 +135,8 @@ class ColorPalette extends React.PureComponent {
                 </svg>
               </div>
             </div>
-          </div>}
+          </div> :
+          <div className="cell-container" />}
       </div>
     );
   }

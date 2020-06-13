@@ -24,9 +24,14 @@
       min-width: 41px;
       display: flex;
       justify-content: flex-end;
+      flex: 1;
     }
 
     svg {
+      // Actual width of svg
+      // Very important. CSS behaves strangely without it.
+      width: 170px;
+      flex: 7;
       circle {
         fill: var(--slider-filled);
       }

@@ -111,6 +111,8 @@ class StylePopup extends React.PureComponent {
       return <Slider {...props} key={key} onStyleChange={onStyleChange} />;
     });
 
+    // return null;
+
     return (
       <React.Fragment>
         {sliderComponents.length > 0 && (
@@ -128,7 +130,6 @@ class StylePopup extends React.PureComponent {
   render() {
     const {
       toolName,
-      isMobile,
       isColorPaletteDisabled,
       currentPalette,
       style,
@@ -141,7 +142,6 @@ class StylePopup extends React.PureComponent {
     const className = classNames({
       Popup: true,
       StylePopup: true,
-      mobile: isMobile,
     });
 
     return (

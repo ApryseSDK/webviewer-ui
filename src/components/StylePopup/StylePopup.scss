@@ -9,13 +9,21 @@
   display: flex;
   flex-direction: column;
 
+  @include mobile {
+    padding-top: 0px;
+  }
+
   .sliders-container {
     margin-left: 6px;
     margin-top: 8px;
     width: 188px;
 
     @include mobile {
-      width: 324px;
+      // width: 324px;
+      margin-left: 12px;
+      margin-right: 12px;
+      width: auto;
+      // width: 90%;
     }
   }
 }
