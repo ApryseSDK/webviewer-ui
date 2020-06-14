@@ -17,6 +17,7 @@
     margin-right: 2px;
 
     .tool-button-arrow-inner-container {
+      font-size: 13px; // chevron position depends on font-size. mobile changes it to 16.
       display: flex;
       align-items: center;
       height: 100%;
