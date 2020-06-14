@@ -7,8 +7,15 @@
   justify-content: space-between;
   padding-left: 8px;
   padding-right: 4px;
+  align-items: center;
 
   @include mobile {
     width: auto;
+
+    .add-btn {
+      width: 190px;
+    }
   }
+
+
 }
