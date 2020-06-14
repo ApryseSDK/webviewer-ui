@@ -95,7 +95,7 @@ export default {
             isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer' },
+          { type: 'spacer', hidden: ['tablet', 'mobile'] },
         ],
         Draw: [
           { type: 'spacer' },
@@ -211,7 +211,7 @@ export default {
             isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer' },
+          { type: 'spacer', hidden: ['tablet', 'mobile'] },
         ],
         Edit: [
           { type: 'spacer' },
@@ -239,7 +239,7 @@ export default {
             isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer' },
+          { type: 'spacer', hidden: ['tablet', 'mobile'] },
         ],
       },
     },

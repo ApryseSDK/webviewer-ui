@@ -3,11 +3,14 @@
 .selected-rubber-stamp-container {
   display: flex;
   flex-direction: row;
-  // width: 214px;
   width: 100%;
   justify-content: space-between;
   padding-left: 8px;
   padding-right: 4px;
+
+  @include mobile {
+    width: auto;
+  }
 
   .selected-rubber-stamp {
     display: flex;

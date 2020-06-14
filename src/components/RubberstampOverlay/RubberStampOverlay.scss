@@ -13,7 +13,7 @@
     padding-top: 12px;
   }
 
-  .default-stamp-container {
+  .default-stamps-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -22,7 +22,9 @@
     padding-right: 14px;
 
     @include mobile {
-      height: 240px;
+      height: 270px;
+      padding-right: 30px;
+      width: 336px;
     }
 
     .rubber-stamp {

@@ -2,20 +2,18 @@
 
 .MeasurementOption {
   width: 100%;
-  // margin-left: 2px;
   margin-top: 4px;
   margin-bottom: 4px;
-  // margin-right: 2px;
+
+  @include mobile {
+    margin-bottom: 0px;
+  }
 
   input, select {
     &:focus {
       outline: none;
       border: 1px solid var(--focus-border);
     }
-  }
-
-  @include tablet {
-    margin-bottom: 5px;
   }
 
   .textarea {

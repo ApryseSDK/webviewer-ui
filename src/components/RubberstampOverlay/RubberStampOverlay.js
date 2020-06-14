@@ -78,7 +78,7 @@ class RubberStampOverlay extends React.Component {
             className="rubber-stamp-overlay"
             data-element="rubberStampOverlay"
           >
-            <div className="default-stamp-container">
+            <div className="default-stamps-container">
               {rubberStamps}
             </div>
           </div>
