@@ -73,6 +73,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      .ColorPalette {
+        width: 138px;
+        min-width: unset;
+        max-width: unset;
+      }
     }
 
 

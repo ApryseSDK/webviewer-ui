@@ -42,6 +42,7 @@ class StylePopup extends React.PureComponent {
         property={currentPalette}
         onStyleChange={onStyleChange}
         colorMapKey={colorMapKey}
+        useMobileMinMaxWidth
       />
     );
   };
@@ -136,6 +137,7 @@ class StylePopup extends React.PureComponent {
       colorMapKey,
       onStyleChange,
       isStyleOptionDisabled,
+      disableSeparator,
     } = this.props;
     const { Scale, Precision, Style } = style;
 
@@ -153,6 +155,7 @@ class StylePopup extends React.PureComponent {
               colorMapKey={colorMapKey}
               style={style}
               toolName={toolName}
+              disableSeparator={disableSeparator}
             />
             {this.renderColorPalette()}
           </React.Fragment>

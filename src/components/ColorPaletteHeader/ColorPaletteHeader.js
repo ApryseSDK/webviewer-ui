@@ -38,6 +38,7 @@ class ColorPaletteHeader extends React.PureComponent {
       isTextColorPaletteDisabled,
       isBorderColorPaletteDisabled,
       isFillColorPaletteDisabled,
+      disableSeparator
     } = this.props;
     const { availablePalettes } = getDataWithKey(colorMapKey);
 
@@ -64,6 +65,9 @@ class ColorPaletteHeader extends React.PureComponent {
 
 
     if (availablePalettes.length < 2) {
+      if (disableSeparator) {
+        return null;
+      }
       return <HorizontalDivider/>;
     }
 

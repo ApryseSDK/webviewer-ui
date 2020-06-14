@@ -49,13 +49,8 @@ class ColorPalette extends React.PureComponent {
       '#696969',
       '#272727',
       '#000000',
+      'none'
     ];
-
-    // const sigPalette = [
-    //   '#E44234',
-    //   '#4E7DE9',
-    //   '#000000',
-    // ];
   }
 
   setColor = bg => {
@@ -108,8 +103,8 @@ class ColorPalette extends React.PureComponent {
             </div>
           </div>
         ))}
-        {allowTransparent ?
-          <div
+        {allowTransparent &&
+          (<div
             className="cell-container"
             onClick={() => this.setColor(null)}
           >
@@ -135,8 +130,7 @@ class ColorPalette extends React.PureComponent {
                 </svg>
               </div>
             </div>
-          </div> :
-          <div className="cell-container" />}
+          </div>)}
       </div>
     );
   }
