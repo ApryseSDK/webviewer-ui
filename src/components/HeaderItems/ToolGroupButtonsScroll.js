@@ -65,7 +65,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
                 })}
                 onClick={() => {
                   // Move two tools over
-                  scrollRef.current.scrollTo(scrollRef.current.scrollLeft - 56 * 2, 0);
+                  scrollRef.current.scrollTo(scrollRef.current.scrollLeft - 54 * 2, 0);
                 }}
               >
                 <Icon  glyph="icon-chevron-left" />

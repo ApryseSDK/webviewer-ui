@@ -61,6 +61,10 @@
       width: 64px;
       background: var(--tools-header-background);
 
+      .Icon {
+        color: var(--scroll-chevron-color);
+      }
+
       &.left {
         left: 0px;
         mask-image: -webkit-gradient(linear, right top, left top,
