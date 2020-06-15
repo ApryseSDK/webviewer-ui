@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +8,8 @@ import { isMobileDevice } from 'helpers/device';
 import selectors from 'selectors';
 
 import './AnnotationContentOverlay.scss';
+
+import CustomElement from '../CustomElement';
 
 const MAX_CHARACTERS = 100;
 
@@ -20,6 +23,13 @@ const AnnotationContentOverlay = () => {
     left: 0,
     top: 0,
   });
+
+  // Clients have the option to customize how the tooltip is rendered
+  // by passing a handler
+  const customHandler = useSelector(state =>
+    selectors.getAnnotationContentOverlayHandler(state),
+  );
+  const isUsingCustomHandler = customHandler !== null;
 
   useEffect(() => {
     const onMouseHover = e => {
@@ -55,25 +65,58 @@ const AnnotationContentOverlay = () => {
   const contents = annotation?.getContents();
   const numberOfReplies = annotation?.getReplies().length;
 
-  return isDisabled || isMobileDevice || !contents ? null : (
+  const OverlayWrapper = props => (
     <div
       className="Overlay AnnotationContentOverlay"
       data-element="annotationContentOverlay"
       style={{ ...overlayPosition }}
     >
-      <div className="author">{core.getDisplayAuthor(annotation)}</div>
-      <div className="contents">
-        {contents.length > MAX_CHARACTERS
-          ? `${contents.slice(0, MAX_CHARACTERS)}...`
-          : contents}
-      </div>
-      {numberOfReplies > 0 && (
-        <div className="replies">
-          {t('message.annotationReplyCount', { count: numberOfReplies })}
-        </div>
-      )}
+      {props.children}
     </div>
   );
+
+  const CustomOverlay = () => {
+    if (annotation) {
+      return (
+        <OverlayWrapper>
+          <CustomElement render={() => customHandler(annotation)} />
+        </OverlayWrapper>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const DefaultOverlay = () => {
+    if (contents) {
+      return (
+        <OverlayWrapper>
+          <div className="author">{core.getDisplayAuthor(annotation)}</div>
+          <div className="contents">
+            {contents.length > MAX_CHARACTERS
+              ? `${contents.slice(0, MAX_CHARACTERS)}...`
+              : contents}
+          </div>
+          {numberOfReplies > 0 && (
+            <div className="replies">
+              {t('message.annotationReplyCount', { count: numberOfReplies })}
+            </div>
+          )}
+        </OverlayWrapper>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  if (isDisabled || isMobileDevice) {
+    return null;
+  } else if (isUsingCustomHandler) {
+    return <CustomOverlay />;
+  } else {
+    return <DefaultOverlay />;
+  }
+
 };
 
 export default AnnotationContentOverlay;

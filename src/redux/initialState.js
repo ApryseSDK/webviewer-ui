@@ -220,6 +220,9 @@ export default {
     userData: [],
     customMeasurementOverlay: [],
     noteTransformFunction: null,
+    savedSignatures: [],
+    selectedSignatureIndex: 0,
+    annotationContentOverlayHandler: null,
   },
   search: {
     listeners: [],
