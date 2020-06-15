@@ -69,38 +69,6 @@ const AnnotationContentOverlay = () => {
     return customHandler(annotation);
   }, [customHandler, annotation]);
 
-  const OverlayWrapper = props => (
-    <div
-      className="Overlay AnnotationContentOverlay"
-      data-element="annotationContentOverlay"
-      style={{ ...overlayPosition }}
-    >
-      {props.children}
-    </div>
-  );
-
-  const DefaultOverlay = () => {
-    if (contents) {
-      return (
-        <OverlayWrapper>
-          <div className="author">{core.getDisplayAuthor(annotation)}</div>
-          <div className="contents">
-            {contents.length > MAX_CHARACTERS
-              ? `${contents.slice(0, MAX_CHARACTERS)}...`
-              : contents}
-          </div>
-          {numberOfReplies > 0 && (
-            <div className="replies">
-              {t('message.annotationReplyCount', { count: numberOfReplies })}
-            </div>
-          )}
-        </OverlayWrapper>
-      );
-    } else {
-      return null;
-    }
-  };
-
   if (isDisabled || isMobileDevice || !annotation) {
     return null;
   } else if (isUsingCustomHandler) {
@@ -113,10 +81,29 @@ const AnnotationContentOverlay = () => {
         <CustomElement render={customRender} />
       </div>
     );
+  } else if (contents) {
+    return (
+      <div
+        className="Overlay AnnotationContentOverlay"
+        data-element="annotationContentOverlay"
+        style={{ ...overlayPosition }}
+      >
+        <div className="author">{core.getDisplayAuthor(annotation)}</div>
+        <div className="contents">
+          {contents.length > MAX_CHARACTERS
+            ? `${contents.slice(0, MAX_CHARACTERS)}...`
+            : contents}
+        </div>
+        {numberOfReplies > 0 && (
+          <div className="replies">
+            {t('message.annotationReplyCount', { count: numberOfReplies })}
+          </div>
+        )}
+      </div>
+    );
   } else {
-    return <DefaultOverlay />;
+    return null;
   }
-
 };
 
 export default AnnotationContentOverlay;
