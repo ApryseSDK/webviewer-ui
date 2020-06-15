@@ -21,7 +21,7 @@
   .tool-group-button {
     margin: 0 8px;
     @include tablet-and-mobile {
-      margin: 0 10px;
+      margin: 0 12px;
     }
   }
 
@@ -124,7 +124,6 @@
 
       @include tablet {
         margin: 0 16px;
-        // margin-left: 10px
       }
     }
 
