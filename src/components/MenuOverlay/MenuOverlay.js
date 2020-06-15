@@ -1,255 +1,143 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import onClickOutside from 'react-onclickoutside';
-
+import actions from 'actions';
+import classNames from 'classnames';
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
-
-import core from 'core';
-import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import print from 'helpers/print';
-import openFilePicker from 'helpers/openFilePicker';
-import toggleFullscreen from 'helpers/toggleFullscreen';
-import downloadPdf from 'helpers/downloadPdf';
-import { isIOS } from 'helpers/device';
 import { workerTypes } from 'constants/types';
-import actions from 'actions';
-import selectors from 'selectors';
+import core from 'core';
+import { isIOS } from 'helpers/device';
+import downloadPdf from 'helpers/downloadPdf';
+import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
+import openFilePicker from 'helpers/openFilePicker';
+import print from 'helpers/print';
+import toggleFullscreen from 'helpers/toggleFullscreen';
 import useMedia from 'hooks/useMedia';
-import classNames from 'classnames';
-
+import useOnClickOutside from 'hooks/useOnClickOutside';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { Swipeable } from 'react-swipeable';
-
+import selectors from 'selectors';
 import './MenuOverlay.scss';
 
-class MenuOverlay extends React.PureComponent {
-  static propTypes = {
-    isEmbedPrintSupported: PropTypes.bool,
-    isFullScreen: PropTypes.bool,
-    isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    closeElements: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired,
-  }
+const ALL_OTHER_ELEMENTS = [
+  'groupOverlay',
+  'viewControlsOverlay',
+  'searchOverlay',
+  'signatureOverlay',
+  'zoomOverlay',
+  'redactionOverlay',
+];
 
-  constructor() {
-    super();
-    this.overlay = React.createRef();
-    this.state = {
-      left: 0,
-      right: 'auto',
-      top: 'auto',
-      documentType: null,
+function MenuOverlay() {
+  const overlayRef = useRef();
+  const [t] = useTranslation();
+
+  const [position, setPosition] = useState(() => ({ left: 0, right: 'auto', top: 'auto' }));
+  const [documentType, setDocumentType] = useState(null);
+
+  const isMobile = useMedia(['(max-width: 640px)'], [true], false);
+  const isTabletOrMobile = useMedia(['(max-width: 900px)'], [true], false);
+
+  const activeTheme = useSelector(selectors.getActiveTheme);
+  const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
+  const isFullScreen = useSelector(selectors.isFullScreen);
+  const isDisabled = useSelector(state => selectors.isElementDisabled(state, 'menuOverlay'));
+  const isFilePickerButtonDisabled = useSelector(state => selectors.isElementDisabled(state, 'filePickerButton'));
+  const isOpen = useSelector(state => selectors.isElementOpen(state, 'menuOverlay'));
+
+  const dispatch = useDispatch();
+  const closeElements = useCallback(dataElements => dispatch(actions.closeElements(dataElements)), [dispatch]);
+  const setActiveLightTheme = useCallback(() => dispatch(actions.setActiveTheme('light')), [dispatch]);
+  const setActiveDarkTheme = useCallback(() => dispatch(actions.setActiveTheme('dark')), [dispatch]);
+
+  const closeMenuOverlay = useCallback(() => {
+    closeElements(['menuOverlay']);
+  }, [closeElements]);
+
+  useOnClickOutside(overlayRef, closeMenuOverlay);
+
+  useEffect(() => {
+    const onDocumentLoaded = () => setDocumentType(core.getDocument().getType());
+    core.addEventListener('documentLoaded', onDocumentLoaded);
+    return () => {
+      core.removeEventListener('documentLoaded', onDocumentLoaded);
     };
-  }
+  }, []);
 
-  componentDidMount() {
-    core.addEventListener('documentLoaded', this.onDocumentLoaded);
-  }
+  useEffect(() => {
+    closeElements(ALL_OTHER_ELEMENTS);
+    setPosition(getOverlayPositionBasedOn('menuButton', overlayRef, isTabletOrMobile));
+  }, [closeElements, isTabletOrMobile]);
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['groupOverlay', 'viewControlsOverlay', 'searchOverlay', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
-      this.setState(getOverlayPositionBasedOn('menuButton', this.overlay, this.props.isTabletOrMobile));
-    }
-  }
-
-  componentWillUnmount() {
-    core.removeEventListener('documentLoaded', this.onDocumentLoaded);
-  }
-
-  onDocumentLoaded = () => {
-    this.setState({
-      documentType: core.getDocument().getType(),
-    });
-  }
-
-  handlePrintButtonClick = () => {
-    const { dispatch, isEmbedPrintSupported } = this.props;
-    this.props.closeElements(['menuOverlay']);
+  const handlePrintButtonClick = () => {
+    closeElements(['menuOverlay']);
     print(dispatch, isEmbedPrintSupported);
+  };
+
+  const downloadDocument = () => {
+    downloadPdf(dispatch);
+  };
+
+  if (isDisabled) {
+    return null;
   }
 
-  handleClickOutside = e => {
-    const menuButton = document.querySelector(
-      '[data-element="menuButton"]',
-    );
-    const clickedMenuButton = menuButton?.contains(e.target);
-    if (!clickedMenuButton) {
-      this.props.closeElements(['menuOverlay']);
-    }
-  }
-
-  downloadDocument = () => {
-    downloadPdf(this.props.dispatch);
-  }
-
-  render() {
-    const { left, right, top, documentType } = this.state;
-    const { isDisabled, isFullScreen, t, isMobile, isOpen, isFilePickerButtonDisabled, activeTheme, setActiveLightTheme, setActiveDarkTheme } = this.props;
-
-    if (isDisabled) {
-      return null;
-    }
-
-    let style = {};
-    if (!isMobile) {
-      style = { left, right, top };
-    }
-
-    return (
-      <Swipeable
-        onSwipedUp={() => this.props.closeElements(['menuOverlay'])}
-        onSwipedDown={() => this.props.closeElements(['menuOverlay'])}
-        preventDefaultTouchmoveEvent
-      >
-        <div
-          className={classNames({
-            Overlay: true,
-            MenuOverlay: true,
-            mobile: isMobile,
-            closed: !isOpen,
-          })}
-          data-element="menuOverlay"
-          style={style}
-          ref={this.overlay}
-        >
-          {isMobile && <div className="swipe-indicator" />}
-          {!isFilePickerButtonDisabled &&
-            <DataElementWrapper
-              className="row"
-              dataElement="filePickerButton"
-            >
-              <div
-                className="MenuItem"
-                onClick={openFilePicker}
-              >
-                <Icon
-                  className="MenuIcon"
-                  glyph="icon-header-file-picker-line"
-                />
-                <div className="MenuLabel">{t('action.openFile')}</div>
-              </div>
-            </DataElementWrapper>}
-          {!isIOS &&
-            <div className="row">
-              <div
-                className="MenuItem"
-                onClick={toggleFullscreen}
-              >
-                <Icon
-                  className="MenuIcon"
-                  glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
-                />
-                <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
-              </div>
-            </div>
-          }
-          {documentType !== workerTypes.XOD &&
-            <DataElementWrapper
-              className="row"
-              dataElement="downloadButton"
-            >
-              <div
-                className="MenuItem"
-                onClick={this.downloadDocument}
-              >
-                <Icon
-                  className="MenuIcon"
-                  glyph="icon-header-download"
-                />
-                <div className="MenuLabel">{t('action.download')}</div>
-              </div>
-            </DataElementWrapper>
-          }
-          <DataElementWrapper
-            className="row"
-            dataElement="printButton"
-          >
-            <div
-              className="MenuItem"
-              onClick={this.handlePrintButtonClick}
-            >
-              <Icon
-                className="MenuIcon"
-                glyph="icon-header-print-line"
-              />
-              <div className="MenuLabel">{t('action.print')}</div>
-            </div>
-          </DataElementWrapper>
-          {activeTheme === 'dark' ?
-            <div className="row">
-              <div
-                className="MenuItem"
-                onClick={setActiveLightTheme}
-              >
-                <Icon
-                  className="MenuIcon"
-                  glyph="icon - header - mode - day"
-                />
-                <div className="MenuLabel">{t('action.lightMode')}</div>
-              </div>
-            </div> :
-            <div className="row">
-              <div
-                className="MenuItem"
-                onClick={setActiveDarkTheme}
-              >
-                <Icon
-                  className="MenuIcon"
-                  glyph="icon - header - mode - night"
-                />
-                <div className="MenuLabel">{t('action.darkMode')}</div>
-              </div>
-            </div>}
-        </div>
-      </Swipeable>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  activeTheme: selectors.getActiveTheme(state),
-  isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
-  isFullScreen: selectors.isFullScreen(state),
-  isDisabled: selectors.isElementDisabled(state, 'menuOverlay'),
-  isFilePickerButtonDisabled: selectors.isElementDisabled(state, 'filePickerButton'),
-  isOpen: selectors.isElementOpen(state, 'menuOverlay'),
-});
-
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
-  setActiveLightTheme: () => dispatch(actions.setActiveTheme('light')),
-  setActiveDarkTheme: () => dispatch(actions.setActiveTheme('dark')),
-});
-
-const ConnectedMenuOverlay = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(onClickOutside(MenuOverlay)));
-
-export default props => {
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
-  );
-
-  const isTabletOrMobile = useMedia(
-    // Media queries
-    ['(max-width: 900px)'],
-    [true],
-    // Default value
-    false,
-  );
+  const overlayClass = classNames('Overlay', 'MenuOverlay', {
+    mobile: isMobile,
+    closed: !isOpen,
+  });
 
   return (
-    <ConnectedMenuOverlay {...props} isMobile={isMobile} isTabletOrMobile={isTabletOrMobile} />
+    <Swipeable onSwipedUp={closeMenuOverlay} onSwipedDown={closeMenuOverlay} preventDefaultTouchmoveEvent>
+      <div
+        className={overlayClass}
+        data-element="menuOverlay"
+        style={!isMobile ? position : undefined}
+        ref={overlayRef}
+      >
+        {isMobile && <div className="swipe-indicator" />}
+        {!isFilePickerButtonDisabled && (
+          <DataElementWrapper className="row" dataElement="filePickerButton">
+            <button className="MenuItem" onClick={openFilePicker}>
+              <Icon className="MenuIcon" glyph="icon-header-file-picker-line" />
+              <div className="MenuLabel">{t('action.openFile')}</div>
+            </button>
+          </DataElementWrapper>
+        )}
+        {!isIOS && (
+          <div className="row">
+            <button className="MenuItem" onClick={toggleFullscreen}>
+              <Icon
+                className="MenuIcon"
+                glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+              />
+              <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+            </button>
+          </div>
+        )}
+        {documentType !== workerTypes.XOD && (
+          <DataElementWrapper className="row" dataElement="downloadButton">
+            <button className="MenuItem" onClick={downloadDocument}>
+              <Icon className="MenuIcon" glyph="icon-header-download" />
+              <div className="MenuLabel">{t('action.download')}</div>
+            </button>
+          </DataElementWrapper>
+        )}
+        <DataElementWrapper className="row" dataElement="printButton">
+          <button className="MenuItem" onClick={handlePrintButtonClick}>
+            <Icon className="MenuIcon" glyph="icon-header-print-line" />
+            <div className="MenuLabel">{t('action.print')}</div>
+          </button>
+        </DataElementWrapper>
+        <div className="row">
+          <button className="MenuItem" onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}>
+            <Icon className="MenuIcon" glyph={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`} />
+            <div className="MenuLabel">{activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}</div>
+          </button>
+        </div>
+      </div>
+    </Swipeable>
   );
-};
+}
+
+export default MenuOverlay;
