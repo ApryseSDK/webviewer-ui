@@ -59,9 +59,7 @@ input, button, label, textarea, form, select, #app {
   font-family: 'Lato', sans-serif;
 
   @include mobile {
-    // * {
-      font-size : 16px;
-    // }
+    font-size : 16px;
   }
   font-family: 'Lato', sans-serif;
 }

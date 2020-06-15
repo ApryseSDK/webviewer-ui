@@ -191,19 +191,19 @@ class ToolsOverlay extends React.PureComponent {
           >
             {Component}
             {this.props.isMobile &&
-            <div
-              className="close-icon-container"
-              onClick={() => {
-                this.props.closeElements(['toolsOverlay']);
-                core.setToolMode(defaultTool);
-                this.props.setActiveToolGroup('');
-              }}
-            >
-              <Icon
-                glyph="ic_close_black_24px"
-                className="close-icon"
-              />
-            </div>}
+              <button
+                className="close-icon-container"
+                onClick={() => {
+                  this.props.closeElements(['toolsOverlay']);
+                  core.setToolMode(defaultTool);
+                  this.props.setActiveToolGroup('');
+                }}
+              >
+                <Icon
+                  glyph="ic_close_black_24px"
+                  className="close-icon"
+                />
+              </button>}
           </div>
           {(isToolStyleOpen) && (
             <Swipeable

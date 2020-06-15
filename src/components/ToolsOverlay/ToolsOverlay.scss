@@ -99,6 +99,7 @@
   }
 
   .close-icon-container {
+    @include button-reset;
     position: absolute;
     right: 18px;
     cursor: pointer;
