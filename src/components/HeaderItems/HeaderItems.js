@@ -7,6 +7,7 @@ import ActionButton from 'components/ActionButton';
 import StatefulButton from 'components/StatefulButton';
 import CustomElement from 'components/CustomElement';
 import ToolGroupButtonsScroll from './ToolGroupButtonsScroll';
+import useMedia from 'hooks/useMedia';
 
 import './HeaderItems.scss';
 
@@ -16,7 +17,7 @@ class HeaderItems extends React.PureComponent {
   }
 
   render() {
-    const { items } = this.props;
+    const { items, isMobile } = this.props;
 
     const toolGroupButtonsItems = items.filter(({ type }) => type === 'toolGroupButton');
     let handledToolGroupButtons = false;
@@ -24,9 +25,16 @@ class HeaderItems extends React.PureComponent {
     return (
       <div className="HeaderItems">
         {items.map((item, i) => {
-          const { type, dataElement, hidden } = item;
+          const { type, dataElement, hidden, toolName } = item;
           const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
           const key = `${type}-${dataElement || i}`;
+
+          // if (isMobile) {
+          //   if (dataElement === 'undoButton' || dataElement === 'redoButton' || toolName === 'AnnotationEraserTool') {
+          //     return null;
+          //   }
+          // }
+
           switch (type) {
             case 'toolButton':
               return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
@@ -57,4 +65,16 @@ class HeaderItems extends React.PureComponent {
   }
 }
 
-export default HeaderItems;
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <HeaderItems {...props} isMobile={isMobile} />
+  );
+};
