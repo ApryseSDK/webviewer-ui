@@ -3,7 +3,9 @@
 
 
 .ToolsOverlayContainer {
-
+  @include desktop {
+    margin-right: 12px;
+  }
 }
 
 .ToolsOverlay {

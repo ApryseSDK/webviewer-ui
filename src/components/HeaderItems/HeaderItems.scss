@@ -14,7 +14,7 @@
       margin: 0 6px;
     }
     @include tablet {
-      margin: 0 8px;
+      margin: 0 10px;
     }
   }
 
@@ -80,8 +80,20 @@
         right: 0px;
         mask-image: -webkit-gradient(linear, left top, right top,
         from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-        color-stop(0.8,  rgba(0,0,0,1)));
+        color-stop(0.6,  rgba(0,0,0,1)));
         justify-content: flex-end;
+
+        @include mobile {
+          padding-right: 8px;
+        }
+
+        @include tablet {
+          padding-right: 16px;
+        }
+
+        @include mobile {
+          padding-right: 12px;
+        }
       }
     }
   }
@@ -92,6 +104,18 @@
     scroll-behavior: smooth;
     height: 100%;
     align-items: center;
+
+    @include mobile {
+      margin-right: 8px;
+    }
+
+    @include tablet {
+      margin-right: 16px;
+    }
+
+    @include mobile {
+      margin-right: 12px;
+    }
 
     &::-webkit-scrollbar {
       display: none;  /* Safari and Chrome */
@@ -104,18 +128,19 @@
 
   .HeaderItems {
     .divider {
+      margin-left: 0px;
       @include desktop {
-        margin-left: 12px;
+        // margin-left: 12px;
         margin-right: 6px;
       }
 
       @include mobile {
-        margin-left: 12px;
+        // margin-left: 12px;
         margin-right: 6px;
       }
 
       @include tablet {
-        margin: 0 16px;
+        margin-right: 16px;
       }
     }
 
