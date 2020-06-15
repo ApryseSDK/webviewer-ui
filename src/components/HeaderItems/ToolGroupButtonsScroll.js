@@ -81,7 +81,6 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
           >
             <Icon  glyph="icon-chevron-right" />
           </div>
-          {/* <div className="chevron-edge" /> */}
         </div>}
       <div
         className="tool-group-buttons-scroll"
@@ -98,7 +97,6 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
             </React.Fragment>
           );
         })}
-        {/* <div className="scroll-edge"></div> */}
       </div>
     </div>
   );
