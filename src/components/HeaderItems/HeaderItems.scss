@@ -51,12 +51,6 @@
     display: flex;
     align-items: center;
 
-    .chevron-edge {
-      width: 8px;
-      height: 100%;
-      background: var(--tools-header-background);
-    }
-
     .chevron-scroll {
       display: flex;
       align-items: center;
@@ -78,6 +72,8 @@
         from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
         color-stop(0.6,  rgba(0,0,0,1)));
         justify-content: flex-start;
+
+        padding-left: 8px;
       }
 
       &.right-chevron {
@@ -101,9 +97,9 @@
       display: none;  /* Safari and Chrome */
     }
 
-    .tool-group-button:last-child {
-      margin-right: 0px;
-    }
+    // .tool-group-button:last-child {
+    //   margin-right: 0px;
+    // }
   }
 
   .HeaderItems {
