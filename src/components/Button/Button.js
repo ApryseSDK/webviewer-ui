@@ -23,6 +23,8 @@ const propTypes = {
   onClick: PropTypes.func,
 };
 
+const NOOP = () => {};
+
 const Button = props => {
   const [removeElement, customOverrides = {}] = useSelector(
     state => [
@@ -33,7 +35,7 @@ const Button = props => {
   );
 
   const {
-    disable, // No idea where this comes from
+    disabled,
     isNotClickable,
     isActive,
     mediaQueryClassName,
@@ -41,7 +43,7 @@ const Button = props => {
     label,
     color,
     dataElement,
-    onClick,
+    onClick = NOOP,
     className,
     title,
     style,
@@ -64,10 +66,10 @@ const Button = props => {
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
       })}
-      disabled={false}
+      disabled={disabled}
       style={style}
       data-element={dataElement}
-      onClick={(!disable && !isNotClickable) ? onClick : () => {}}
+      onClick={(!disabled && !isNotClickable) ? onClick : NOOP}
     >
       {isGlyph && <Icon glyph={imgToShow} color={color} />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
@@ -76,7 +78,7 @@ const Button = props => {
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title} hideShortcut={false}>{children}</Tooltip>
+    <Tooltip content={title} hideShortcut={disabled}>{children}</Tooltip>
   ) : (
     children
   );
