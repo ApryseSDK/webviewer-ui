@@ -7,6 +7,13 @@
   justify-content: space-between;
   padding-left: 8px;
   padding-right: 4px;
+  align-items: center;
+
+  @include mobile {
+    .signature-row-content {
+      height: 32px;
+    }
+  }
 
   @include mobile {
     width: auto;

@@ -6,6 +6,9 @@
   @include desktop {
     margin-right: 12px;
   }
+  @include tablet {
+    margin-right: 18px;
+  }
 }
 
 .ToolsOverlay {

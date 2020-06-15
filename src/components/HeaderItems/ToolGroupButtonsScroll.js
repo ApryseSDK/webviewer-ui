@@ -10,6 +10,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
 
   const checkScrollPosition = () => {
     if (scrollRef.current) {
+      console.log('checkScrollPosition');
       const {
         scrollWidth,
         scrollLeft,
@@ -36,7 +37,8 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
   }, []);
 
   useEffect(() => {
-    checkScrollPosition();
+    // presets come in late
+    setTimeout(checkScrollPosition);
   });
 
   return (
@@ -47,9 +49,15 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
         <div
           className={classNames({
             "chevron-scroll": true,
-            "left-chevron": true,
+            "left": true,
           })}
         >
+          <div
+            className={classNames({
+              "scroll-edge": true,
+              "left": true,
+            })}
+          />
           <div
             className={classNames({
               "tool-group-button": true,
@@ -66,7 +74,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
         <div
           className={classNames({
             "chevron-scroll": true,
-            "right-chevron": true,
+            "right": true,
           })}
         >
           <div

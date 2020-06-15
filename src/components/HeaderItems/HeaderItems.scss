@@ -19,9 +19,9 @@
   }
 
   .tool-group-button {
-    margin: 0 8px;
+    margin: 0 6px;
     @include tablet-and-mobile {
-      margin: 0 12px;
+      margin: 0 11px;
     }
   }
 
@@ -57,43 +57,53 @@
       position: absolute;
       z-index: 1;
       height: 100%;
-      background: var(--tools-header-background);
-      width: 64px;
       pointer-events: none;
+      width: 64px;
+      background: var(--tools-header-background);
 
-      .tool-group-button {
-        margin: 0px;
-        pointer-events: all;
-      }
-
-      &.left-chevron {
+      &.left {
         left: 0px;
         mask-image: -webkit-gradient(linear, right top, left top,
         from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
         color-stop(0.6,  rgba(0,0,0,1)));
         justify-content: flex-start;
-
-        padding-left: 8px;
       }
 
-      &.right-chevron {
+      &.right {
         right: 0px;
         mask-image: -webkit-gradient(linear, left top, right top,
         from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
         color-stop(0.6,  rgba(0,0,0,1)));
         justify-content: flex-end;
+      }
 
-        @include mobile {
-          padding-right: 8px;
+      .scroll-edge {
+        background: var(--tools-header-background);
+        height: 100%;
+        &.left {
+          width: 8px;
         }
 
-        @include tablet {
-          padding-right: 16px;
+        &.right {
+          right: 0px;
+          @include mobile {
+            width: 8px;
+          }
+
+          @include tablet {
+            width: 16px;
+          }
+
+          @include mobile {
+            width: 12px;
+          }
         }
 
-        @include mobile {
-          padding-right: 12px;
-        }
+      }
+
+      .tool-group-button {
+        margin: 0px;
+        pointer-events: all;
       }
     }
   }
@@ -105,42 +115,31 @@
     height: 100%;
     align-items: center;
 
-    @include mobile {
-      margin-right: 8px;
-    }
-
-    @include tablet {
-      margin-right: 16px;
-    }
-
-    @include mobile {
-      margin-right: 12px;
-    }
-
     &::-webkit-scrollbar {
       display: none;  /* Safari and Chrome */
     }
 
-    // .tool-group-button:last-child {
-    //   margin-right: 0px;
-    // }
+    :last-child {
+      margin-right: 0px;
+    }
   }
 
   .HeaderItems {
     .divider {
       margin-left: 0px;
       @include desktop {
-        // margin-left: 12px;
-        margin-right: 6px;
-      }
-
-      @include mobile {
-        // margin-left: 12px;
-        margin-right: 6px;
+        margin-left: 16px;
+        margin-right: 16px;
       }
 
       @include tablet {
+        margin-left: 16px;
         margin-right: 16px;
+      }
+
+      @include mobile {
+        margin-left: 12px;
+        margin-right: 12px;
       }
     }
 
