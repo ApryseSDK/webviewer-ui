@@ -307,6 +307,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
     case 'SET_NOTE_TRANSFORM_FUNCTION':
       return { ...state, noteTransformFunction: payload.noteTransformFunction };
+    case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
+      return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     default:
       return state;
   }

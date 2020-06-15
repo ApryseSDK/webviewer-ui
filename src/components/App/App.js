@@ -38,8 +38,6 @@ import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 
 import './App.scss';
-import 'constants/pikaday.scss';
-import 'constants/quill.scss';
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,

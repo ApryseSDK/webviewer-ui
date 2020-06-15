@@ -23,8 +23,6 @@ const propTypes = {
   onClick: PropTypes.func,
 };
 
-const NOOP = () => {};
-
 const Button = props => {
   const [removeElement, customOverrides = {}] = useSelector(
     state => [
@@ -43,7 +41,7 @@ const Button = props => {
     label,
     color,
     dataElement,
-    onClick = NOOP,
+    onClick,
     className,
     title,
     style,
@@ -55,11 +53,10 @@ const Button = props => {
 
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
-    imgToShow && !isBase64 && (!imgToShow.includes('.') || imgToShow.startsWith('<svg'));
-  const shouldRenderTooltip = title && !disable;
-
+    img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
+  const shouldRenderTooltip = title;
   const children = (
-    <div
+    <button
       className={classNames({
         Button: true,
         active: isActive,
@@ -67,18 +64,19 @@ const Button = props => {
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
       })}
+      disabled={false}
       style={style}
       data-element={dataElement}
-      onClick={(!disable && !isNotClickable) ? onClick : NOOP}
+      onClick={(!disable && !isNotClickable) ? onClick : () => {}}
     >
       {isGlyph && <Icon glyph={imgToShow} color={color} />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
       {label && <p>{label}</p>}
-    </div>
+    </button>
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title}>{children}</Tooltip>
+    <Tooltip content={title} hideShortcut={false}>{children}</Tooltip>
   ) : (
     children
   );

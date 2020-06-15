@@ -135,6 +135,8 @@ import setNoteTransformFunction from './setNoteTransformFunction';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
 import setSearchResults from './setSearchResults';
+import setActiveResult from './setActiveResult';
+import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
 
 export default store => {
   window.readerControl = {
@@ -199,6 +201,7 @@ export default store => {
     setZoomLevel,
     setZoomList: setZoomList(store),
     setSearchResults: setSearchResults(store),
+    setActiveResult: setActiveResult(store),
     showErrorMessage: showErrorMessage(store),
     textPopup: textPopup(store),
     toggleElement: toggleElement(store),
@@ -215,6 +218,7 @@ export default store => {
     getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
     selectThumbnailPages: selectThumbnailPages(store),
     unselectThumbnailPages: unselectThumbnailPages(store),
+    setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),

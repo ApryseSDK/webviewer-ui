@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 import onClickOutside from 'react-onclickoutside';
 
 import Icon from 'components/Icon';
-import Tooltip from 'components/Tooltip';
-import Input from 'components/Input';
+import Choice from '../Choice/Choice';
 
 import core from 'core';
-import getClassName from 'helpers/getClassName';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -72,22 +70,26 @@ class SearchOverlay extends React.PureComponent {
     };
   }
 
+  componentDidMount() {
+    this.searchTextInput.current.focus();
+  }
+
+  componentWillUnmount() {
+    this.clearSearchResults();
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.isProgrammaticSearch) {
-      if (this.props.isSearchPanelOpen) {
-        this.props.closeElement('searchPanel');
-      }
-      this.props.openElement('searchOverlay');
       this.clearSearchResults();
       this.executeSingleSearch();
       this.props.setIsProgrammaticSearch(false);
     } else if (this.props.isProgrammaticSearchFull) {
-      this.props.openElements(['searchOverlay', 'searchPanel']);
       this.caseSensitiveInput.current.checked = this.props.isCaseSensitive;
       this.wholeWordInput.current.checked = this.props.isWholeWord;
       if (this.wildcardInput.current) {
         this.wildcardInput.current.checked = this.props.isWildcard;
       }
+
       this.clearSearchResults();
       this.executeFullSearch();
       this.props.setIsProgrammaticSearchFull(false);
@@ -332,12 +334,6 @@ class SearchOverlay extends React.PureComponent {
     });
   };
 
-  // onTransitionEnd = () => {
-  //   if (this.props.isOpen) {
-  //     this.searchTextInput.current.focus();
-  //   }
-  // }
-
   onChange = e => {
     const { isSearchPanelOpen, setSearchValue } = this.props;
     const searchValue = e.target.value;
@@ -459,24 +455,6 @@ class SearchOverlay extends React.PureComponent {
     this.executeDebouncedFullSearch();
   }
 
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
   render() {
     const {
       isDisabled,
@@ -508,50 +486,49 @@ class SearchOverlay extends React.PureComponent {
             value={searchValue}
             placeholder={t('message.searchDocumentPlaceholder')}
           />
-          <div className="input-button" onClick={this.search}>
+          <button className="input-button" onClick={this.search}>
             <Icon glyph="icon-header-search" />
-          </div>
+          </button>
         </div>
         <div className="options">
-          <Input
+          <Choice
+            dataElement="caseSensitiveSearchOption"
             id="case-sensitive-option"
-            type="checkbox"
             ref={this.caseSensitiveInput}
             onChange={this.onChangeCaseSensitive}
             label={t('option.searchPanel.caseSensitive')}
           />
-          <Input
+          <Choice
+            dataElement="wholeWordSearchOption"
             id="whole-word-option"
-            type="checkbox"
             ref={this.wholeWordInput}
             onChange={this.onChangeWholeWord}
             label={t('option.searchPanel.wholeWordOnly')}
           />
-          {!isWildCardSearchDisabled &&
-            <Input
-              id="wild-card-option"
-              type="checkbox"
-              ref={this.wildcardInput}
-              onChange={this.onChangeWildcard}
-              label={t('option.searchPanel.wildcard')}
-            />}
+          <Choice
+            dataElement="wildCardSearchOption"
+            id="wild-card-option"
+            ref={this.wildcardInput}
+            onChange={this.onChangeWildcard}
+            label={t('option.searchPanel.wildcard')}
+          />
         </div>
         <div className="divider" />
         <div className="footer">
           {<div>{results.length} {t('message.numResultsFound')}</div>}
           <div className="buttons">
-            <div className="button" onClick={this.onClickPrevious}>
+            <button className="button" onClick={this.onClickPrevious}>
               <Icon
                 className="arrow"
                 glyph="icon-chevron-left"
               />
-            </div>
-            <div className="button" onClick={this.onClickNext}>
+            </button>
+            <button className="button" onClick={this.onClickNext}>
               <Icon
                 className="arrow"
                 glyph="icon-chevron-right"
               />
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -563,7 +540,6 @@ const mapStateToProps = state => ({
   isSearching: selectors.isSearching(state),
   isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
   isSearchPanelDisabled: selectors.isElementDisabled(state, 'searchPanel'),
-  isWildCardSearchDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
   searchValue: selectors.getSearchValue(state),
   isCaseSensitive: selectors.isCaseSensitive(state),
   isWholeWord: selectors.isWholeWord(state),

@@ -127,6 +127,7 @@
       }
 
       .resetSettings {
+        @include button-reset;
         cursor: pointer;
         background: none;
         border: 0;

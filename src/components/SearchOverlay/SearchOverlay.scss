@@ -40,6 +40,7 @@
     }
 
     .input-button {
+      @include button-reset;
       cursor: pointer;
       background: var(--primary-button);
       border-radius: 4px;
@@ -77,21 +78,18 @@
   .options {
     display: flex;
     flex-direction: row;
-    margin-left: 18px;
+    flex-wrap: wrap;
+    margin-left: -16px;
     margin-top: 5px;
 
-    label.Input {
-      display: flex;
-      align-items: center;
-      margin-right: 10px;
-    }
+    // toolkit choice component
+    > span {
+      margin-left: 16px;
 
-    label:nth-child(4) {
-      margin-left: 10px;
-    }
-
-    label:nth-child(6) {
-      margin-left: 10px;
+      // label of toolkit choice component
+      > label {
+        white-space: nowrap;
+      }
     }
   }
 
@@ -109,6 +107,7 @@
       margin-left: auto;
 
       .button {
+        @include button-reset;
         width: 28px;
         height: 28px;
         border-radius: 4px;
@@ -128,7 +127,7 @@
           border: 1px solid var(--primary-button-hover);
           svg {
             color: var(--primary-button-text);
-          }          
+          }
         }
       }
 

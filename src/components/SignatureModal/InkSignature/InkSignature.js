@@ -31,7 +31,12 @@ const InkSignature = ({
   createSignature,
 }) => {
   const canvasRef = useRef();
+  // the ref holds the path points of the underlying freehand annotation
+  // when users switch to a different tab the underlying signature annotation will change
+  // so this ref is used for setting the current uderlying annotation back when users switch back to the ink tab
   const freeHandPathsRef = useRef();
+  // the ref holds an id that will be used to check if the newly added signature annotation is the same as the freehand annotation that's drawn in the canvas
+  const annotIdRef = useRef();
   const [canClear, setCanClear] = useState(false);
   const [t] = useTranslation();
   const [dimension, setDimension] = useState({});
@@ -59,32 +64,39 @@ const InkSignature = ({
   }, []);
 
   useEffect(() => {
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+
+    signatureTool.on('annotationAdded', annot => {
+      if (annot.Id === annotIdRef.current) {
+        clearCanvas();
+      }
+    });
+  }, [clearCanvas]);
+
+  useEffect(() => {
+    if (isModalOpen && isTabPanelSelected) {
+      const signatureTool = core.getTool('AnnotationCreateSignature');
+      signatureTool.setSignature(freeHandPathsRef.current);
+      annotIdRef.current = signatureTool.annot?.Id;
+      // use resizeCanvas here mainly for redawing the underlying signature annotation to make it show on the canvas
+      signatureTool.resizeCanvas();
+      setCanClear(!!freeHandPathsRef.current);
+    }
+  }, [isTabPanelSelected, isModalOpen]);
+
+  useEffect(() => {
     if (dimension.height && dimension.width) {
       const signatureTool = core.getTool('AnnotationCreateSignature');
-      // debugger;
       signatureTool.resizeCanvas();
     }
   }, [dimension]);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      clearCanvas();
-    }
-  }, [clearCanvas, isModalOpen]);
-
-  useEffect(() => {
-    if (isTabPanelSelected) {
-      const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.setSignature(freeHandPathsRef.current);
-      setCanClear(!!freeHandPathsRef.current);
-    }
-  }, [isTabPanelSelected]);
 
   const clearCanvas = useCallback(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
     signatureTool.clearSignatureCanvas();
     setCanClear(false);
     freeHandPathsRef.current = null;
+    annotIdRef.current = null;
   }, []);
 
   const handleFinishDrawing = () => {
@@ -97,6 +109,7 @@ const InkSignature = ({
       // when the annotation is added to the document
       // we want to keep the unmodified paths so that users can keep drawing on the canvas
       freeHandPathsRef.current = deepCopy(signatureTool.annot.getPaths());
+      annotIdRef.current = signatureTool.annot.Id;
     }
   };
 

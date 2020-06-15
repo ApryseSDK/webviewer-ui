@@ -138,7 +138,7 @@ const HotkeysManager = {
   /**
    * Add an event handler for the given hotkey
    * @method WebViewerInstance.Hotkeys#on
-   * @param {string} key A keyboard key or a tool name. <br/>
+   * @param {string} key A keyboard key <br/>
    * If a hotkey is consisted of more than one key. Those keys should be connected using '+'.
    * @param {function|object} [handler] An optional argument <br/>
    * If it is undefined, the default handler of the given key will be registered <br/>
@@ -147,6 +147,10 @@ const HotkeysManager = {
    * @example
 WebViewer(...)
   .then(function(instance) {
+      // this will register the default zoom in handler
+      instance.hotkeys.on(instance.hotkeys.Keys.CTRL_EQUAL);
+      instance.hotkeys.on(instance.hotkeys.Keys.COMMAND_EQUAL);
+
       // this will be called on keydown
       instance.hotkeys.on('ctrl+d, command+d', e => {
         e.preventDefault();
@@ -161,12 +165,6 @@ WebViewer(...)
           console.log('ctrl+g is released!')
         },
       });
-
-      // this will register the default zoom in handler
-      instance.hotkeys.on('ctrl+=, command+=');
-
-      // this is equivalent to instance.hotkeys.on('escape');
-      instance.hotkeys.on('AnnotationEdit');
   });
    */
   on(key, handler) {
@@ -197,16 +195,14 @@ WebViewer(...)
   /**
    * Remove an event handler for the given hotkey
    * @method WebViewerInstance.Hotkeys#off
-   * @param {string} [key] An optional keyboard key or a tool name. If not passed, all handlers will be removed
+   * @param {string} [key] An optional keyboard key. If not passed, all handlers will be removed
    * @param {function} [handler] An optional function. If not passed, all handlers of the given key will be removed
    * @example
 WebViewer(...)
   .then(function(instance) {
       // this will remove all handlers for ctrl = and command =
-      instance.hotkeys.off('ctrl+=, command+=');
-
-      // this is equivalent to instance.hotkeys.off('escape');
-      instance.hotkeys.off('AnnotationEdit');
+      instance.hotkeys.off(instance.hotkeys.Keys.CTRL_EQUAL);
+      instance.hotkeys.off(instance.hotkeys.Keys.COMMAND_EQUAL);
   });
    */
   off(key, handler) {
@@ -264,7 +260,7 @@ WebViewer(...)
       },
       [`${Keys.CTRL_F}, ${Keys.COMMAND_F}`]: e => {
         e.preventDefault();
-        dispatch(actions.openElement('searchOverlay'));
+        dispatch(actions.openElement('searchPanel'));
       },
       [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
         e.preventDefault();

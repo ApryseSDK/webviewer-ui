@@ -30,6 +30,8 @@ import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
 import getHashParams from 'helpers/getHashParams';
 
+import './index.scss';
+
 // TODO: remove once 7.0 is official
 if (process.env.NODE_ENV !== 'development') {
   console.log(
@@ -84,7 +86,6 @@ if (window.CanvasRenderingContext2D) {
     window.CoreControls.disableLogs(true);
   }
 
-  // window.CoreControls.enableSubzero(getHashParams('subzero', false));
   window.CoreControls.setWorkerPath('../core');
   window.CoreControls.setResourcesPath('../core/assets');
 
@@ -175,3 +176,21 @@ if (window.CanvasRenderingContext2D) {
 window.addEventListener('hashchange', () => {
   window.location.reload();
 });
+
+/* The following adds a data attribute to `<html>` when user is keyboard navigating. */
+
+function onTab(event) {
+  if (event.key === 'Tab') {
+    document.documentElement.setAttribute('data-tabbing', 'true');
+    window.removeEventListener('keydown', onTab);
+    window.addEventListener('mousedown', onMouse);
+  }
+}
+
+function onMouse() {
+  document.documentElement.removeAttribute('data-tabbing');
+  window.removeEventListener('mousedown', onMouse);
+  window.addEventListener('keydown', onTab);
+}
+
+window.addEventListener('keydown', onTab);

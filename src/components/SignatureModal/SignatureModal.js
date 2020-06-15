@@ -54,6 +54,7 @@ const SignatureModal = () => {
 
   const closeModal = () => {
     signatureTool.clearLocation();
+    signatureTool.setSignature(null);
     dispatch(actions.closeElement('signatureModal'));
   };
 
