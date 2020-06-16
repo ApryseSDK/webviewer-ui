@@ -47,6 +47,7 @@ class PrintModal extends React.PureComponent {
     this.customPages = React.createRef();
     this.customInput = React.createRef();
     this.includeComments = React.createRef();
+    this.includeAnnotations = React.createRef();
     this.pendingCanvases = [];
     this.state = {
       allowWatermarkModal: false,
@@ -190,23 +191,25 @@ class PrintModal extends React.PureComponent {
       const pageIndex = pageNumber - 1;
       const zoom = 1;
       const printRotation = this.getPrintRotation(pageIndex);
-      const onCanvasLoaded = canvas => {
+      const onCanvasLoaded = async canvas => {
         this.pendingCanvases = this.pendingCanvases.filter(
           pendingCanvas => pendingCanvas !== id,
         );
         this.positionCanvas(canvas, pageIndex);
-        this.drawAnnotationsOnCanvas(canvas, pageNumber).then(() => {
-          const img = document.createElement('img');
-          img.src = canvas.toDataURL();
-          img.onload = () => {
-            this.setState(({ count }) => ({
-              count: count < 0 ? -1 : count + 1,
-            }));
-            resolve(img);
-          };
-        });
-      };
 
+        const includeAnnotations = this.includeAnnotations.current.checked;
+        if (includeAnnotations) {
+          await this.drawAnnotationsOnCanvas(canvas, pageNumber);
+        }
+        const img = document.createElement('img');
+        img.src = canvas.toDataURL();
+        img.onload = () => {
+          this.setState(({ count }) => ({
+            count: count < 0 ? -1 : count + 1,
+          }));
+          resolve(img);
+        };
+      };
       const id = core.getDocument().loadCanvasAsync({
         pageNumber,
         zoom,
@@ -381,7 +384,7 @@ class PrintModal extends React.PureComponent {
       if (icon) {
         const isInlineSvg = icon.indexOf('<svg') === 0;
         /* eslint-disable global-require */
-        innerHTML = isInlineSvg ? icon : require(`../../../assets/${icon}.svg`);
+        innerHTML = isInlineSvg ? icon : require(`../../../assets/icons/${icon}.svg`);
       } else {
         innerHTML = annotation.Subject;
       }
@@ -554,6 +557,15 @@ class PrintModal extends React.PureComponent {
                       id="include-comments"
                       name="comments"
                       label={t('option.print.includeComments')}
+                      disabled={isPrinting}
+                      center
+                    />
+                    <Choice
+                      dataElement="annotationsPrintOption"
+                      ref={this.includeAnnotations}
+                      id="include-annotations"
+                      name="annotations"
+                      label={t('option.print.includeAnnotations')}
                       disabled={isPrinting}
                       center
                     />
