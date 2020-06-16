@@ -3,7 +3,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 /**
- * typedef {Object} WebViewerInstance.MentionsManager.Mention
+ * @typedef {Object} WebViewerInstance.MentionsManager.Mention
  * @property {string} email The email of the mentioned person. This is passed from setUserData.
  * @property {string} value The value(display name) of the mentioned person. This is passed from setUserData.
  * @property {string} type The type of the mentioned person. This is passed from setUserData.
