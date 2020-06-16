@@ -1,9 +1,11 @@
+import { focusableElementDomString } from '@pdftron/webviewer-react-toolkit';
 import actions from 'actions';
 import classNames from 'classnames';
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
 import { workerTypes } from 'constants/types';
 import core from 'core';
+import { findFocusableIndex } from 'core/accessibility';
 import { isIOS } from 'helpers/device';
 import downloadPdf from 'helpers/downloadPdf';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
@@ -29,8 +31,10 @@ const ALL_OTHER_ELEMENTS = [
 ];
 
 function MenuOverlay() {
-  const overlayRef = useRef();
+  const dispatch = useDispatch();
   const [t] = useTranslation();
+
+  const overlayRef = useRef();
 
   const [position, setPosition] = useState(() => ({ left: 0, right: 'auto', top: 'auto' }));
   const [documentType, setDocumentType] = useState(null);
@@ -45,16 +49,63 @@ function MenuOverlay() {
   const isFilePickerButtonDisabled = useSelector(state => selectors.isElementDisabled(state, 'filePickerButton'));
   const isOpen = useSelector(state => selectors.isElementOpen(state, 'menuOverlay'));
 
-  const dispatch = useDispatch();
-  const closeElements = useCallback(dataElements => dispatch(actions.closeElements(dataElements)), [dispatch]);
+  const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements(['menuOverlay'])), [dispatch]);
   const setActiveLightTheme = useCallback(() => dispatch(actions.setActiveTheme('light')), [dispatch]);
   const setActiveDarkTheme = useCallback(() => dispatch(actions.setActiveTheme('dark')), [dispatch]);
 
-  const closeMenuOverlay = useCallback(() => {
-    closeElements(['menuOverlay']);
-  }, [closeElements]);
-
   useOnClickOutside(overlayRef, closeMenuOverlay);
+
+  const getFocusableElements = useCallback(() => {
+    return overlayRef.current.querySelectorAll(focusableElementDomString);
+  }, []);
+
+  useEffect(() => {
+    if (!isDisabled && isOpen) {
+      const lastFocusedElement = document.activeElement;
+
+      const keydownListener = e => {
+        // Tab closes the menu.
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          closeMenuOverlay();
+          if (lastFocusedElement) {
+            lastFocusedElement.focus();
+          }
+          return;
+        }
+
+        // Up and Down keys used to navigate overlay menu.
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+          const focusable = getFocusableElements();
+
+          if (focusable.length === 0) {
+            return;
+          }
+
+          const focusIndex = findFocusableIndex(focusable, document.activeElement);
+
+          if (e.key === 'ArrowUp') {
+            if (focusIndex <= 0) {
+              focusable[focusable.length - 1].focus();
+            } else {
+              focusable[focusIndex - 1].focus();
+            }
+          } else {
+            if (focusIndex >= focusable.length - 1) {
+              focusable[0].focus();
+            } else {
+              focusable[focusIndex + 1].focus();
+            }
+          }
+        }
+      };
+
+      window.addEventListener('keydown', keydownListener);
+      return () => {
+        window.removeEventListener('keydown', keydownListener);
+      };
+    }
+  }, [closeMenuOverlay, getFocusableElements, isDisabled, isOpen]);
 
   useEffect(() => {
     const onDocumentLoaded = () => setDocumentType(core.getDocument().getType());
@@ -65,12 +116,12 @@ function MenuOverlay() {
   }, []);
 
   useEffect(() => {
-    closeElements(ALL_OTHER_ELEMENTS);
+    dispatch(actions.closeElements(ALL_OTHER_ELEMENTS));
     setPosition(getOverlayPositionBasedOn('menuButton', overlayRef, isTabletOrMobile));
-  }, [closeElements, isTabletOrMobile]);
+  }, [dispatch, isTabletOrMobile]);
 
   const handlePrintButtonClick = () => {
-    closeElements(['menuOverlay']);
+    closeMenuOverlay();
     print(dispatch, isEmbedPrintSupported);
   };
 
