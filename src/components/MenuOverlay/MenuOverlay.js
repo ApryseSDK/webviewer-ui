@@ -50,8 +50,12 @@ function MenuOverlay() {
   const setActiveLightTheme = useCallback(() => dispatch(actions.setActiveTheme('light')), [dispatch]);
   const setActiveDarkTheme = useCallback(() => dispatch(actions.setActiveTheme('dark')), [dispatch]);
 
-  const closeMenuOverlay = useCallback(() => {
-    closeElements(['menuOverlay']);
+  const closeMenuOverlay = useCallback(e => {
+    const menuButton = document.querySelector('[data-element="menuButton"]');
+    const clickedMenuButton = menuButton?.contains(e.target);
+    if (!clickedMenuButton) {
+      closeElements(['menuOverlay']);
+    }
   }, [closeElements]);
 
   useOnClickOutside(overlayRef, closeMenuOverlay);
