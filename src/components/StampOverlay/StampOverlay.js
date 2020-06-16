@@ -43,7 +43,6 @@ class StampOverlay extends React.Component {
       right: 'auto',
       top: 0,
       defaultAnnotations: [],
-      customAnnotations: [],
       language: props.i18n.language,
       isStampSelected: false,
     };
@@ -63,7 +62,6 @@ class StampOverlay extends React.Component {
       ]);
       this.setOverlayPosition();
       this.getDefaultRubberStamps(isLanChanged);
-      this.getCustomRubberStamps(isLanChanged);
     }
   }
 
@@ -114,35 +112,9 @@ class StampOverlay extends React.Component {
     this.setState({ isStampSelected: true });
   }
 
-  getCustomRubberStamps = async isLanChanged => {
-    if (!this.state.customAnnotations.length || isLanChanged) {
-      const annotations = await this.stampTool.getCustomStampAnnotations();
-      const previews = await Promise.all(
-        annotations.map(annotation => {
-          const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
-
-          const options = {
-            canvasWidth,
-            canvasHeight,
-            text,
-          };
-
-          return this.stampTool.getPreview(annotation, options);
-        }),
-      );
-
-      const customAnnotations = annotations.map(annotation => ({
-        annotation,
-        imgSrc: annotation['ImageData'],
-      }));
-
-      this.setState({ customAnnotations });
-    }
-  }
-
   getDefaultRubberStamps = async isLanChanged => {
     if (!this.state.defaultAnnotations.length || isLanChanged) {
-      const annotations = this.stampTool.getDefaultStampAnnotations();
+      const annotations = await this.stampTool.getDefaultStampAnnotations();
       const previews = await Promise.all(
         annotations.map(annotation => {
           const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
@@ -167,28 +139,17 @@ class StampOverlay extends React.Component {
   }
 
   render() {
-    const { left, top, defaultAnnotations, customAnnotations } = this.state;
+    const { left, top, defaultAnnotations } = this.state;
     const { isDisabled, isOpen } = this.props;
     if (isDisabled) {
       return null;
     }
 
     const StandardBusiness =  this.props.t(`tool.StandardBusiness`);
-    const CustomStamp = this.props.t(`tool.CustomStamps`);
 
     let imgs = null;
-    let customImgs = null;
     if (isOpen) {
       imgs = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
-        <div key={index}
-          className="rubber-stamp"
-          onClick={() => this.setRubberStamp(annotation)}
-        >
-          <img src={imgSrc} />
-        </div>,
-      );
-
-      customImgs = customAnnotations.map(({ imgSrc, annotation }, index) =>
         <div key={index}
           className="rubber-stamp"
           onClick={() => this.setRubberStamp(annotation)}
@@ -217,9 +178,6 @@ class StampOverlay extends React.Component {
               <Tab dataElement="defaultRubberStampButton">
                 <Button label={StandardBusiness} />
               </Tab>
-              <Tab dataElement="customRubberStampButton">
-                <Button label={CustomStamp} />
-              </Tab>
             </div>
           </div>
 
@@ -227,13 +185,6 @@ class StampOverlay extends React.Component {
             <div className="default-stamp-container">
               <div className="modal-body">
                 { imgs }
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel dataElement="customRubberStamp">
-            <div className="custom-stamp-container">
-              <div className="modal-body">
-                { customImgs }
               </div>
             </div>
           </TabPanel>
