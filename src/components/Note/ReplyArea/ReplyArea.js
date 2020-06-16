@@ -11,6 +11,7 @@ import core from 'core';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
+import { HiveAPI } from 'helpers/hiveApi';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -73,12 +74,14 @@ const ReplyArea = ({ annotation }) => {
 
       setAttachedFiles([]);
     }
+    delete HiveAPI.isEditingAnnotations[annotation.Id];
   };
 
   const handleCancelClick = () => {
     setValue('');
     textareaRef.current.blur();
     setAttachedFiles([]);
+    delete HiveAPI.isEditingAnnotations[annotation.Id];
   };
 
   const replyBtnClass = classNames({
@@ -103,9 +106,11 @@ const ReplyArea = ({ annotation }) => {
           textareaRef.current = el;
         }}
         value={value}
-        onChange={value => setValue(value)}
+        onChange={value => {
+          HiveAPI.isEditingAnnotations[annotation.Id] = true;
+          return setValue(value);
+        }}
         onSubmit={e => postReply(e)}
-        onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}
         attachedFiles={attachedFiles}

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import NoteTextarea from 'components/NoteTextarea';
 
 import core from 'core';
+import { HiveAPI } from 'helpers/hiveApi';
 
 // a component that contains the content textarea, the save button and the cancel button
 const ContentArea = ({
@@ -48,6 +49,7 @@ const ContentArea = ({
 
       setAttachedFiles([]);
     }
+    delete HiveAPI.isEditingAnnotations[annotation.Id];
   };
 
   const saveBtnClass = classNames({
@@ -61,7 +63,10 @@ const ContentArea = ({
           textareaRef.current = el;
         }}
         value={textAreaValue}
-        onChange={onTextAreaValueChange}
+        onChange={evt => {
+          HiveAPI.isEditingAnnotations[annotation.Id] = true;
+          onTextAreaValueChange(evt);
+        }}
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
         attachedFiles={attachedFiles}
@@ -76,6 +81,7 @@ const ContentArea = ({
             setIsEditing(false);
             setAttachedFiles(annotation.attachedFiles || []);
             onTextAreaValueChange(contents);
+            delete HiveAPI.isEditingAnnotations[annotation.Id];
           }}
         >
           {t('action.cancel')}

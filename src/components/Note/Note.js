@@ -8,6 +8,7 @@ import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 import selectors from 'selectors';
 import core from 'core';
+import { HiveAPI } from "helpers/hiveApi";
 
 import './Note.scss';
 
@@ -93,7 +94,7 @@ const Note = ({ annotation }) => {
 
   const repliesClass = classNames({
     replies: true,
-    hidden: !isSelected,
+    hidden: !isSelected && !HiveAPI.isEditingAnnotations[annotation.Id],
   });
 
   const replies = annotation
