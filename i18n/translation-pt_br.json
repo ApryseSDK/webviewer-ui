@@ -117,32 +117,33 @@
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
     "measurementToolsButton": "Ferramentas de medição",
-    "calibration": "Calibração"
+    "calibration": "Calibração",
+    "createStampButton": "Adicionar carimbo personalizado"
   },
   "message": {
-    "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
-    "customPrintPlaceholder": "p. ex. 3, 4-10",
-    "encryptedAttemptsExceeded": "Falha ao carregar documento criptografado. Tentativas demais.",
-    "encryptedUserCancelled": "Falha ao carregar documento criptografado. Digitação de senha cancelada.",
-    "enterPassword": "Esse documento é protegido por senha. Digite uma senha",
-    "incorrectPassword": "Senha incorreta, tentativas restantes: {{ remainingAttempts }}",
-    "noAnnotations": "Esse documento não tem anotações.",
-    "noOutlines": "Esse documento não tem esquema.",
+    "badDocument": "Falha ao carregar o documento. O documento está corrompido ou não é válido.",
+    "customPrintPlaceholder": "por exemplo. 3, 4-10",
+    "encryptedAttemptsExceeded": "Falha ao carregar o documento criptografado. Muitas tentativas.",
+    "encryptedUserCancelled": "Falha ao carregar o documento criptografado. Entrada de senha cancelada.",
+    "enterPassword": "Este documento é protegido por senha. Por favor insira uma senha",
+    "incorrectPassword": "Senha incorreta, tentativas restantes: {{restantesAttempts}}",
+    "noAnnotations": "Este documento não possui anotações.",
+    "noOutlines": "Este documento não tem esboço.",
     "noResults": "Nenhum resultado encontrado.",
-    "notSupported": "Esse tipo de arquivo não é compatível.",
-    "passwordRequired": "Senha obrigatória",
-    "preparingToPrint": "Preparando impressão...",
-    "annotationReplyCount": "{{count}} Resposta",
+    "notSupported": "Esse tipo de arquivo não é suportado.",
+    "passwordRequired": "Senha requerida",
+    "preparingToPrint": "Preparando para imprimir ...",
+    "annotationReplyCount": "Responder",
     "annotationReplyCount_plural": "{{count}} Respostas",
-    "printTotalPageCount": "{{count}} página",
-    "printTotalPageCount_plural": "{{count}} páginas",
-    "processing": "Processando...",
+    "printTotalPageCount": "Total: página {{count}}",
+    "printTotalPageCount_plural": "Total: {{count}} páginas",
+    "processing": "Em processamento...",
     "searching": "Procurando...",
-    "searchPlaceholder": "Buscar comentários...",
+    "searchPlaceholder": "Pesquisar comentários ...",
     "signHere": "Assine aqui",
-    "insertTextHere": "Insira texto aqui",
+    "insertTextHere": "Inserir texto aqui",
     "imageSignatureAcceptedFileTypes": "Somente {{acceptFileTypes}} são aceitos",
-    "enterMeasurement": "Digite a medição entre os dois pontos",
+    "enterMeasurement": "Digite a medida entre os dois pontos",
     "linkURLorPage": "URL do link ou uma página"
   },
   "option": {
@@ -159,13 +160,13 @@
       "placeholder": "Insira as páginas para selecionar, ou seja, 2, 5-9"
     },
     "layout": {
-      "cover": "Capa",
-      "double": "Duplo",
-      "single": "Único"
+      "cover": "Cobrir",
+      "double": "em dobro",
+      "single": "solteiro"
     },
     "notesPanel": {
       "orderPosition": "Posição",
-      "orderTime": "Hora",
+      "orderTime": "Tempo",
       "separator": {
         "today": "Hoje",
         "yesterday": "Ontem"
@@ -176,28 +177,32 @@
       "default": "Página por página"
     },
     "print": {
-      "all": "Todas",
+      "all": "Todos",
       "current": "Atual",
       "pages": "Páginas",
       "includeComments": "Incluir comentários",
       "addWatermarkSettings": "Adicionar configurações de marca d'água"
     },
     "redaction": {
-      "markForRedaction": "Marcar para supressão"
+      "markForRedaction": "Marcar para redação"
     },
     "searchPanel": {
-      "caseSensitive": "Diferenciar maiúsculas e minúsculas",
+      "caseSensitive": "Maiúsculas e Minúsculas",
       "wholeWordOnly": "Palavra inteira",
       "wildcard": "Curinga"
     },
     "signatureOverlay": {
-      "addSignature": "Adicionar assinatura"
+      "addSignature": "Adicione uma assinatura"
     },
     "signatureModal": {
       "saveSignature": "Salvar assinatura",
       "dragAndDrop": "Arraste e solte sua imagem aqui",
       "or": "Ou",
       "pickImage": "Escolher imagem da assinatura"
+    },
+    "customStampModal": {
+      "stampText": "Texto do carimbo:",
+      "timestampText": " Texto do carimbo de data / hora:"
     },
     "status": {
       "status": "Status"
@@ -212,12 +217,12 @@
       "none": "Nenhum"
     },
     "measurementOverlay": {
-      "scale": "Razão de escala",
+      "scale": "Relação de escala",
       "angle": "Ângulo",
       "distance": "Distância",
       "perimeter": "Perímetro",
       "area": "Área",
-      "distanceMeasurement": "Medição de distância",
+      "distanceMeasurement": "Medição de Distância",
       "perimeterMeasurement": "Medição de perímetro",
       "areaMeasurement": "Medição de área",
       "radius": "Raio"
@@ -245,18 +250,19 @@
       "text": "Texto",
       "style": "Estilo",
       "resetAllSettings": "Redefinir todas as configurações",
-      "font": "fonte"
+      "font": "Fonte"
     },
     "thumbnailPanel": {
       "delete": "Excluir",
       "rotateClockwise": "Sentido horário",
-      "rotateCounterClockwise": "Sentido anti-horário"
+      "rotateCounterClockwise": "Sentido anti-horário",
+      "extractZeroPageError": "Nenhuma página foi selecionada para extrair"
     },
     "richText": {
       "bold": "Negrito",
       "italic": "itálico",
-      "underline": "Sublinhar",
-      "strikeout": "Tachado"
+      "underline": "Sublinhado",
+      "strikeout": "Strikeout"
     }
   },
   "warning": {
@@ -271,16 +277,16 @@
     }
   },
   "shortcut": {
-    "arrow": "(A)",
+    "arrow": "(UMA)",
     "callout": "(C)",
     "copy": "(Ctrl C)",
-    "delete": "(Del)",
+    "delete": "(Do)",
     "ellipse": "(O)",
-    "eraser": "(E)",
+    "eraser": "(É)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
-    "line": "(L)",
+    "line": "(EU)",
     "pan": "(P)",
     "rectangle": "(R)",
     "rotateClockwise": "(Ctrl Shift +)",
@@ -288,10 +294,10 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(I)",
+    "stamp": "(EU)",
     "stickyNote": "(N)",
-    "strikeout": "(K)",
-    "underline": "(U)",
+    "strikeout": "(PARA)",
+    "underline": "(VOCÊ)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
     "richText": {
@@ -303,9 +309,11 @@
   },
   "tool": {
     "pan": "Pan",
-    "select": "Selecionar",
-    "Marquee": "Zoom Marquee",
-    "Link": "URL ou página do link"
+    "select": "Selecione",
+    "Marquee": "Marquee Zoom",
+    "Link": "URL ou página do link",
+    "StandardBusiness": "Negócios Padrão",
+    "CustomStamps": "Selos personalizados"
   },
   "link": {
     "url": "URL",
@@ -317,36 +325,36 @@
     "previousMonth": "Mês anterior",
     "nextMonth": "Próximo mês",
     "months": {
-      "0": "Janeiro",
-      "1": "Fevereiro",
-      "2": "Março",
-      "3": "Abril",
+      "0": "janeiro",
+      "1": "fevereiro",
+      "2": "marcha",
+      "3": "abril",
       "4": "Maio",
       "5": "Junho",
       "6": "Julho",
-      "7": "Agosto",
-      "8": "Setembro",
+      "7": "agosto",
+      "8": "setembro",
       "9": "Outubro",
-      "10": "Novembro",
-      "11": "Dezembro"
+      "10": "novembro",
+      "11": "dezembro"
     },
     "weekdays": {
-      "0": "Domingo",
+      "0": "domingo",
       "1": "Segunda-feira",
-      "2": "Terça-feira",
+      "2": "terça",
       "3": "Quarta-feira",
       "4": "Quinta-feira",
       "5": "Sexta-feira",
-      "6": "Sábado"
+      "6": "sábado"
     },
     "weekdaysShort": {
-      "0": "Dom",
-      "1": "Seg",
-      "2": "Ter",
-      "3": "Qua",
-      "4": "Qui",
-      "5": "Sex",
-      "6": "Sáb"
+      "0": "Sol",
+      "1": "Minhas",
+      "2": "seu",
+      "3": "Casar",
+      "4": "qui",
+      "5": "livre",
+      "6": "Sentou"
     }
   }
 }
