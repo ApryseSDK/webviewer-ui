@@ -1,11 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-
+import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import core from 'core';
-import { isIOS } from 'helpers/device';
-import selectors from 'selectors';
 import './CustomStampForums.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
@@ -15,11 +10,8 @@ const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const CustomStampForums = ({ state, setState }) => {
   const [currentUser] = useState(core.getCurrentUser());
   const [stampTextInputValue, setStampText] = useState('DRAFT');
-  const [dateCheckbox, setDateCheckbox] = useState(true);
-  const [timeCheckbox, setTimeCheckbox] = useState(true);
-  const [timeMode, setTimeMode] = useState(true);
-
-  const [formatInput, setFormatInout] = useState(false);
+  const [t] = useTranslation();
+  const [formatInput, setFormatInput] = useState(false);
   const stampTool = core.getTool(TOOL_NAME);
   const [timestampFormat, setTimestampFormat] = useState('DD/MM/YYYY, h:mm a');
 
@@ -65,39 +57,27 @@ const CustomStampForums = ({ state, setState }) => {
     updateCanvas(value, timestampFormat);
   };
 
-  const handleDateInputChange = () => {
-    setDateCheckbox(!dateCheckbox);
-  };
-
-  const handleTimeInputChange = () => {
-    setTimeCheckbox(!timeCheckbox);
-  };
-
   const handleCustomTimeFormat = e => {
     setTimestampFormat(e.target.value);
     updateCanvas(stampTextInputValue, e.target.value);
   };
 
   const changeTimeMode = () => {
-    if (timeMode === false) {
-      setFormatInout(false);
-      setTimestampFormat(timestampOptions[0].value);
-    }
-    setTimeMode(!timeMode);
+    setFormatInput(false);
   };
 
   const changeFormat = e => {
     const value = e.target.value;
     if (value === 'other') {
-      setFormatInout(true);
+      setFormatInput(true);
     } else {
-      setFormatInout(false);
+      setFormatInput(false);
       setTimestampFormat(value);
       updateCanvas(stampTextInputValue, value);
     }
   };
 
-  const isEnabled = (timeMode && formatInput);
+  const isEnabled = (formatInput);
   useEffect(() => {
     if (isEnabled) {
       customFormatInputRef.current.focus();
@@ -108,34 +88,9 @@ const CustomStampForums = ({ state, setState }) => {
     updateCanvas(stampTextInputValue, timestampFormat);
   }, []);
 
-  const btnLabel = (!timeMode) ? 'Custom' : 'Cancel';
-  let dateCheckboxElement = null;
-  let timeCheckboxElement = null;
-
-  if (!timeMode) {
-    dateCheckboxElement = <div className="custom-checkbox" style={{ width: '20%', alignSelf: 'center' }}>
-      <input
-        id="default-date"
-        type="checkbox"
-        checked={dateCheckbox}
-        onChange={handleDateInputChange}
-      />
-      <label htmlFor="default-date">Date</label>
-    </div>;
-
-    timeCheckboxElement = <div className="custom-checkbox" style={{ width: '40%', alignSelf: 'center' }}>
-      <input
-        id="default-time"
-        type="checkbox"
-        checked={timeCheckbox}
-        onChange={handleTimeInputChange}
-      />
-      <label htmlFor="default-time">Time</label>
-    </div>;
-  }
 
   let formatDropdownElement = null;
-  if (timeMode && !formatInput) {
+  if (!formatInput) {
     formatDropdownElement = <div className="StyleOption" style={{ width: '60%', alignSelf: 'center' }}>
       <select
         className="styles-input"
@@ -150,7 +105,7 @@ const CustomStampForums = ({ state, setState }) => {
     </div>;
   }
   let formatInputElement = null;
-  if (timeMode && formatInput) {
+  if (formatInput) {
     formatInputElement = <div style={{ width: '60%', alignSelf: 'center' }}>
       <input style={{ width: '100%' }}
         className="text-customstamp-input"
@@ -162,8 +117,16 @@ const CustomStampForums = ({ state, setState }) => {
     </div>;
   }
 
+  let cancelBtn = null;
+  if (formatInputElement) {
+    cancelBtn = <div style={{ width: '20%', alignSelf: 'center', textAlign: 'end' }}>
+      <button onClick={() => changeTimeMode()} style={{ margin:0 }}>{t('action.cancel')}</button>
+    </div>;
+  }
+
   return (
     <div className="text-customstamp">
+
       <div className="canvas-container" ref={canvasContainerRef}>
         <div className="canvas-holder">
           <canvas
@@ -172,8 +135,9 @@ const CustomStampForums = ({ state, setState }) => {
           />
         </div>
       </div>
+
       <div style={{ marginTop: 10, display: 'flex' }}>
-        <div style={{ width: '20%', alignSelf: 'center' }}> Stamp text: </div>
+        <div style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.stampText')} </div>
         <input style={{ width: '80%' }}
           className="text-customstamp-input txt-uppercase"
           ref={inputRef}
@@ -184,21 +148,10 @@ const CustomStampForums = ({ state, setState }) => {
       </div>
 
       <div style={{ marginTop: 10, display: 'flex' }}>
-        <div style={{ width: '20%', alignSelf: 'center' }}> Timestamp text: </div>
-        {dateCheckboxElement}
-        {timeCheckboxElement}
+        <div style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.timestampText')} </div>
         {formatDropdownElement}
         {formatInputElement}
-        <div style={{ width: '20%', alignSelf: 'center', textAlign: 'end' }}>
-          <button onClick={() => changeTimeMode()} style={{ margin:0 }}>{btnLabel}</button>
-        </div>
-        {/* <input style={{ width: '80%' }}
-          className="text-customstamp-input"
-          ref={timestampInputRef}
-          type="text"
-          value={timestampTextInputValue}
-          onChange={handleTimestampInputChange}
-        /> */}
+        {cancelBtn}
       </div>
 
     </div>

@@ -1,27 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import core from 'core';
-import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
-import './CreateStampModal.scss';
-
-import Button from 'components/Button';
+import { useTranslation } from 'react-i18next';
 import ActionButton from 'components/ActionButton';
 import CustomStampForums from './CustomStampForums';
+
+import './CreateStampModal.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 
 const CustomStampModal = () => {
   const [state, setState] = useState({});
   const stampTool = core.getTool(TOOL_NAME);
-  // const isOpen = true;
-
+  const [t] = useTranslation();
   const [isOpen] = useSelector(state => [
-    // selectors.isElementDisabled(state, 'customStampModal'),
-    // selectors.isElementDisabled(state, 'saveSignatureButton'),
     selectors.isElementOpen(state, 'customStampModal'),
   ]);
   const dispatch = useDispatch();
@@ -29,11 +24,6 @@ const CustomStampModal = () => {
     dispatch(actions.closeElement('customStampModal'));
   };
 
-  const createCustomStamp = () => {
-    console.log('create stamp', state);
-
-    stampTool.addCustomStamp(state);
-  };
 
   const modalClass = classNames({
     Modal: true,
@@ -41,6 +31,15 @@ const CustomStampModal = () => {
     open: isOpen,
     closed: !isOpen,
   });
+
+  const createDynamicStamp = () => {
+    core.setToolMode(TOOL_NAME);
+    stampTool.addDynamicStamp(state);
+    const annot = stampTool.createDynamicStampAnnotation(state);
+    stampTool.setRubberStamp(annot);
+    stampTool.showPreview();
+    dispatch(actions.closeElement('customStampModal'));
+  };
 
   return (
     <div
@@ -50,7 +49,7 @@ const CustomStampModal = () => {
     >
       <div className="container" onMouseDown={e => e.stopPropagation()}>
         <div className="header">
-          {/* <div>Custom Stamp</div> */}
+
           <ActionButton
             dataElement="customStampModalCloseButton"
             title="action.close"
@@ -60,15 +59,12 @@ const CustomStampModal = () => {
 
         </div>
         <CustomStampForums isModalOpen={isOpen} state={state} setState={setState}/>
-        <div
-          className="footer"
-
-        >
+        <div className="footer">
           <div className="stamp-create" onClick={closeModal}>
-            {'Cancel'}
+            {t('action.cancel')}
           </div>
-          <div className="stamp-create" onClick={createCustomStamp}>
-            {'Create'}
+          <div className="stamp-create" onClick={createDynamicStamp}>
+            {t('action.create')}
           </div>
         </div>
       </div>

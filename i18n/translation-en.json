@@ -117,7 +117,8 @@
     "redaction": "Redaction",
     "viewControlsOverlay": "View controls",
     "measurementToolsButton": "Measurement tools",
-    "calibration": "Calibration"
+    "calibration": "Calibration",
+    "createStampButton": "Add custom stamp"
   },
   "message": {
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
@@ -198,6 +199,10 @@
       "dragAndDrop": "Drag & Drop your image here",
       "or": "Or",
       "pickImage": "Pick Signature Image"
+    },
+    "customStampModal": {
+      "stampText": "Stamp text:",
+      "timestampText": " Timestamp text:"
     },
     "status": {
       "status": "Status"
