@@ -1,8 +1,11 @@
 @import '../../constants/styles.scss';
 
 .ColorPalette {
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-wrap: wrap;
+  display: grid;
+  // grid-gap: 10px;
+  grid-template-columns: repeat(7, 1fr);
   width: 196px;
 
   &.padding {
@@ -13,13 +16,13 @@
   }
 
   @include mobile {
-    min-width: 336px;
     max-width: 450px;
     width: auto;
   }
 
   .cell-container {
-    flex: 1 0 14%;
+    @include button-reset;
+    // flex: 1 0 14%;
 
     cursor: pointer;
     width: 28px;
@@ -29,8 +32,8 @@
     justify-content: center;
 
     @include mobile {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
     }
 
     .cell-outer {

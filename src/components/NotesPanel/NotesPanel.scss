@@ -12,6 +12,10 @@
   position: relative;
   overflow: hidden;
 
+  @include tablet {
+    border-left: 1px solid var(--side-panel-border);
+  }
+
   @include mobile {
     position: fixed;
     top: 0;

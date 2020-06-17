@@ -1,6 +1,10 @@
 @import '../../constants/styles';
 
 .slider {
+  @include mobile {
+    margin-top: 6px;
+  }
+
   svg {
     height: 18px;
     cursor: pointer;

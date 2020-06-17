@@ -15,6 +15,10 @@
   position: relative;
   overflow: hidden;
 
+  @include tablet {
+    border-right: 1px solid var(--side-panel-border);
+  }
+
   @include mobile {
     position: fixed;
     top: 0;
@@ -22,10 +26,6 @@
     height: 100vh;
     width: 100vw;
   }
-
-  // @include tablet-and-mobile {
-  //   padding-top: 48px;
-  // }
 
   .left-panel-container{
     display: flex;

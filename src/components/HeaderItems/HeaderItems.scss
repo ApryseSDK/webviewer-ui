@@ -132,8 +132,8 @@
     .divider {
       margin-left: 0px;
       @include desktop {
-        margin-left: 12px;
-        margin-right: 12px;
+        margin-left: 16px;
+        margin-right: 16px;
       }
 
       @include tablet {
@@ -142,8 +142,8 @@
       }
 
       @include mobile {
-        margin-left: 12px;
-        margin-right: 12px;
+        margin-left: 16px;
+        margin-right: 16px;
       }
     }
 
