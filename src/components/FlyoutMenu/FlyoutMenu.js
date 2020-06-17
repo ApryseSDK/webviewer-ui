@@ -36,6 +36,8 @@ const propTypes = {
 };
 
 function FlyoutMenu({ menu, trigger, onClose, children }) {
+  const dispatch = useDispatch();
+
   const allOtherMenus = useMemo(() => MENUS.filter(m => m !== menu), [menu]);
 
   const overlayRef = useRef();
@@ -46,16 +48,26 @@ function FlyoutMenu({ menu, trigger, onClose, children }) {
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, menu));
   const isOpen = useSelector(state => selectors.isElementOpen(state, menu));
 
-  const dispatch = useDispatch();
   const closeMenu = useCallback(() => {
     dispatch(actions.closeElements([menu]));
     onClose && onClose();
   }, [dispatch, menu, onClose]);
 
+  const onClickOutside = useCallback(
+    e => {
+      const menuButton = document.querySelector(`[data-element="${trigger}"]`);
+      const clickedMenuButton = menuButton?.contains(e.target);
+      if (!clickedMenuButton) {
+        closeMenu();
+      }
+    },
+    [closeMenu, trigger],
+  );
+  useOnClickOutside(overlayRef, onClickOutside);
+
   const [position, setPosition] = useState(() => ({ left: 0, right: 'auto', top: 'auto' }));
   const isMobile = useMedia(['(max-width: 640px)'], [true], false);
   const isTabletOrMobile = useMedia(['(max-width: 900px)'], [true], false);
-  useOnClickOutside(overlayRef, closeMenu);
 
   // When open: close others, position, and listen for resizes to position.
   useEffect(() => {
@@ -78,7 +90,7 @@ function FlyoutMenu({ menu, trigger, onClose, children }) {
 
       const keydownListener = e => {
         // Tab closes the menu.
-        if (e.key === 'Tab') {
+        if (e.key === 'Tab' || e.key === 'Escape') {
           e.preventDefault();
           closeMenu();
           if (lastFocusedElement) {

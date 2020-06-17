@@ -51,7 +51,7 @@ function MenuOverlay() {
     <FlyoutMenu menu="menuOverlay" trigger="menuButton" onClose={undefined}>
       {!isFilePickerButtonDisabled && (
         <DataElementWrapper className="row" dataElement="filePickerButton">
-          <button className="MenuItem" onClick={openFilePicker}>
+          <button className="MenuItem" onClick={openFilePicker} aria-label={t('action.openFile')}>
             <Icon className="MenuIcon" glyph="icon-header-file-picker-line" />
             <div className="MenuLabel">{t('action.openFile')}</div>
           </button>
@@ -59,7 +59,11 @@ function MenuOverlay() {
       )}
       {!isIOS && (
         <div className="row">
-          <button className="MenuItem" onClick={toggleFullscreen}>
+          <button
+            className="MenuItem"
+            onClick={toggleFullscreen}
+            aria-label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+          >
             <Icon
               className="MenuIcon"
               glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
@@ -70,20 +74,24 @@ function MenuOverlay() {
       )}
       {documentType !== workerTypes.XOD && (
         <DataElementWrapper className="row" dataElement="downloadButton">
-          <button className="MenuItem" onClick={downloadDocument}>
+          <button className="MenuItem" onClick={downloadDocument} aria-label={t('action.download')}>
             <Icon className="MenuIcon" glyph="icon-header-download" />
             <div className="MenuLabel">{t('action.download')}</div>
           </button>
         </DataElementWrapper>
       )}
       <DataElementWrapper className="row" dataElement="printButton">
-        <button className="MenuItem" onClick={handlePrintButtonClick}>
+        <button className="MenuItem" onClick={handlePrintButtonClick} aria-label={t('action.print')}>
           <Icon className="MenuIcon" glyph="icon-header-print-line" />
           <div className="MenuLabel">{t('action.print')}</div>
         </button>
       </DataElementWrapper>
       <div className="row">
-        <button className="MenuItem" onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}>
+        <button
+          className="MenuItem"
+          onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
+          aria-label={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
+        >
           <Icon className="MenuIcon" glyph={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`} />
           <div className="MenuLabel">{activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}</div>
         </button>
