@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-
 import Button from 'components/Button';
-
-import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 
 const RubberStampToolButton = () => {
-  const [isSignatureOverlayOpen] = useSelector(
+  const [isStampOverlayOpen] = useSelector(
     state => [
       selectors.isElementOpen(state, 'stampOverlay'),
     ],
@@ -29,7 +26,7 @@ const RubberStampToolButton = () => {
   return (
     <Button
       className={buttonClass}
-      isActive={isSignatureOverlayOpen}
+      isActive={isStampOverlayOpen}
       img="ic_annotation_stamp_black_24px"
       onClick={handleClick}
       title="annotation.rubberStamp"
