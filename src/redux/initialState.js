@@ -240,7 +240,7 @@ export default {
             isNotClickableSelector: state => !state.viewer.canRedo,
           },
           { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer', hidden: ['tablet', 'mobile'] },
+          { type: 'spacer', hidden: ['mobile'] },
         ],
       },
     },

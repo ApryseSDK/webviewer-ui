@@ -5,6 +5,7 @@ export default (queries, values, defaultValue) => {
   // Array containing a media query list for each query
   const mediaQueryLists = queries.map(q => window.matchMedia(`screen and ${q}`));
 
+
   // Function that gets value based on matching media query
   const getValue = () => {
     // Get index of first media query that matches
