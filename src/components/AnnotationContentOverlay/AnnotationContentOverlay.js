@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -44,7 +44,7 @@ const AnnotationContentOverlay = () => {
         const ungroupedAnnots = groupedAnnots.filter(annot => !annot.isGrouped());
         annotation = ungroupedAnnots.length > 0 ? ungroupedAnnots[0] : annotation;
 
-        if (!(annotation instanceof Annotations.FreeTextAnnotation)) {
+        if (isUsingCustomHandler || !(annotation instanceof Annotations.FreeTextAnnotation)) {
           setAnnotation(annotation);
           setOverlayPosition({
             left: e.clientX + 20,
@@ -60,63 +60,50 @@ const AnnotationContentOverlay = () => {
     return () => {
       core.removeEventListener('mouseMove', onMouseHover);
     };
-  }, []);
+  }, [annotation, isUsingCustomHandler]);
 
   const contents = annotation?.getContents();
   const numberOfReplies = annotation?.getReplies().length;
 
-  const OverlayWrapper = props => (
-    <div
-      className="Overlay AnnotationContentOverlay"
-      data-element="annotationContentOverlay"
-      style={{ ...overlayPosition }}
-    >
-      {props.children}
-    </div>
-  );
+  const customRender = useCallback(() => {
+    return customHandler(annotation);
+  }, [customHandler, annotation]);
 
-  const CustomOverlay = () => {
-    if (annotation) {
-      return (
-        <OverlayWrapper>
-          <CustomElement render={() => customHandler(annotation)} />
-        </OverlayWrapper>
-      );
-    } else {
-      return null;
-    }
-  };
-
-  const DefaultOverlay = () => {
-    if (contents) {
-      return (
-        <OverlayWrapper>
-          <div className="author">{core.getDisplayAuthor(annotation)}</div>
-          <div className="contents">
-            {contents.length > MAX_CHARACTERS
-              ? `${contents.slice(0, MAX_CHARACTERS)}...`
-              : contents}
-          </div>
-          {numberOfReplies > 0 && (
-            <div className="replies">
-              {t('message.annotationReplyCount', { count: numberOfReplies })}
-            </div>
-          )}
-        </OverlayWrapper>
-      );
-    } else {
-      return null;
-    }
-  };
-
-  if (isDisabled || isMobileDevice) {
+  if (isDisabled || isMobileDevice || !annotation) {
     return null;
   } else if (isUsingCustomHandler) {
-    return <CustomOverlay />;
+    return (
+      <div
+        className="Overlay AnnotationContentOverlay"
+        data-element="annotationContentOverlay"
+        style={{ ...overlayPosition }}
+      >
+        <CustomElement render={customRender} />
+      </div>
+    );
+  } else if (contents) {
+    return (
+      <div
+        className="Overlay AnnotationContentOverlay"
+        data-element="annotationContentOverlay"
+        style={{ ...overlayPosition }}
+      >
+        <div className="author">{core.getDisplayAuthor(annotation)}</div>
+        <div className="contents">
+          {contents.length > MAX_CHARACTERS
+            ? `${contents.slice(0, MAX_CHARACTERS)}...`
+            : contents}
+        </div>
+        {numberOfReplies > 0 && (
+          <div className="replies">
+            {t('message.annotationReplyCount', { count: numberOfReplies })}
+          </div>
+        )}
+      </div>
+    );
   } else {
-    return <DefaultOverlay />;
+    return null;
   }
-
 };
 
 export default AnnotationContentOverlay;
