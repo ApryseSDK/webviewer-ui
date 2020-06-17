@@ -47,7 +47,6 @@ class PrintModal extends React.PureComponent {
     this.customPages = React.createRef();
     this.customInput = React.createRef();
     this.includeComments = React.createRef();
-    this.includeAnnotations = React.createRef();
     this.pendingCanvases = [];
     this.state = {
       allowWatermarkModal: false,
@@ -56,6 +55,7 @@ class PrintModal extends React.PureComponent {
       isWatermarkModalVisible: false,
       watermarkModalOption: null,
       existingWatermarks: null,
+      includeAnnotations: true
     };
   }
 
@@ -197,8 +197,7 @@ class PrintModal extends React.PureComponent {
         );
         this.positionCanvas(canvas, pageIndex);
 
-        const includeAnnotations = this.includeAnnotations.current.checked;
-        if (includeAnnotations) {
+        if (this.state.includeAnnotations) {
           await this.drawAnnotationsOnCanvas(canvas, pageNumber);
         }
         const img = document.createElement('img');
@@ -473,7 +472,7 @@ class PrintModal extends React.PureComponent {
       return null;
     }
 
-    const { count, pagesToPrint } = this.state;
+    const { count, pagesToPrint, includeAnnotations } = this.state;
     const isPrinting = count >= 0;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = (
@@ -562,11 +561,12 @@ class PrintModal extends React.PureComponent {
                     />
                     <Choice
                       dataElement="annotationsPrintOption"
-                      ref={this.includeAnnotations}
                       id="include-annotations"
                       name="annotations"
                       label={t('option.print.includeAnnotations')}
                       disabled={isPrinting}
+                      onChange = {() => this.setState(state => ({ includeAnnotations: !state.includeAnnotations }))}
+                      checked = {includeAnnotations}
                       center
                     />
                   </form>
