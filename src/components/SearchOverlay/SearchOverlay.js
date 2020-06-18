@@ -241,7 +241,7 @@ class SearchOverlay extends React.PureComponent {
       return true;
     }
 
-    const inSamePage = activeResult.page_num === result.page_num;
+    const inSamePage = activeResult.pageNum === result.pageNum;
     const hasSameCoordinates =
       Object.values(activeResult.quads[0]).toString() ===
       Object.values(result.quads[0]).toString();
