@@ -21,9 +21,9 @@ class SearchResult extends React.PureComponent {
   }
 
   renderContent = () => {
-    const { ambientStr, resultStrStart, resultStrEnd } = this.props.result;
+    const { ambientStr, resultStrStart, resultStrEnd, resultStr } = this.props.result;
     const textBeforeSearchValue = ambientStr.slice(0, resultStrStart);
-    const searchValue = ambientStr.slice(resultStrStart, resultStrEnd);
+    const searchValue = ambientStr === '' ? resultStr : ambientStr.slice(resultStrStart, resultStrEnd);
     const textAfterSearchValue = ambientStr.slice(resultStrEnd);
 
     return (
