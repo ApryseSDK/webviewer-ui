@@ -178,7 +178,6 @@ class ToolsOverlay extends React.PureComponent {
             ToolsOverlay: true,
             open: isOpen,
             shadow: isToolStyleOpen || isMobile,
-            "mobile-auto-height": isToolStyleOpen,
           })}
           ref={this.overlay}
           data-element="toolsOverlay"
@@ -186,7 +185,7 @@ class ToolsOverlay extends React.PureComponent {
           <div
             className={classNames({
               "tools-container": true,
-              "mobile-is-style-open-padding": isToolStyleOpen,
+              "is-styling-open": isToolStyleOpen,
             })}
           >
             {Component}
@@ -210,6 +209,7 @@ class ToolsOverlay extends React.PureComponent {
               onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
               onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
               preventDefaultTouchmoveEvent
+              className="swipeable-container"
             >
               <ToolStylePopup/>
             </Swipeable>

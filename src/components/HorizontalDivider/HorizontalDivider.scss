@@ -10,4 +10,8 @@
     height: 1px;
     background: var(--divider);
   }
+
+  @include mobile {
+    padding-top: 0px;
+  }
 }
