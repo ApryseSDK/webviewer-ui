@@ -38,13 +38,16 @@
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom uit",
+    "zoomControls": "Zoomregelaars",
     "draw": "Trek",
     "type": "Type",
     "upload": "Uploaden",
     "link": "Koppeling",
     "darkMode": "Donkere modus",
     "lightMode": "Lichte modus",
-    "fileAttachmentDownload": "Download bijgevoegd bestand"
+    "fileAttachmentDownload": "Download bijgevoegd bestand",
+    "prevResult": "Vorig resultaat",
+    "nextResult": "Volgend resultaat"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Met de klok mee",
-      "rotateCounterClockwise": "Tegen de klok in"
+      "rotateCounterClockwise": "Tegen de klok in",
+      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om te extraheren"
     },
     "richText": {
       "bold": "Vet",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

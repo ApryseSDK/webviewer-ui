@@ -38,13 +38,16 @@
     "zoom": "Увеличить",
     "zoomIn": "Увеличить",
     "zoomOut": "Уменьшить",
+    "zoomControls": "Управление масштабированием",
     "draw": "Привлечь",
     "type": "Тип",
     "upload": "Загрузить",
     "link": "Ссылка на сайт",
     "darkMode": "Темный режим",
     "lightMode": "Легкий режим",
-    "fileAttachmentDownload": "Скачать прикрепленный файл"
+    "fileAttachmentDownload": "Скачать прикрепленный файл",
+    "prevResult": "Предыдущий результат",
+    "nextResult": "Следующий результат"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "удалять",
       "rotateClockwise": "по часовой стрелке",
-      "rotateCounterClockwise": "Против часовой стрелки"
+      "rotateCounterClockwise": "Против часовой стрелки",
+      "extractZeroPageError": "Страницы не были выбраны для извлечения"
     },
     "richText": {
       "bold": "Жирное лицо",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",
