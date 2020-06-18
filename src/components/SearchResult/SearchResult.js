@@ -21,11 +21,10 @@ class SearchResult extends React.PureComponent {
   }
 
   renderContent = () => {
-    const { ambient_str, result_str_start, result_str_end, result_str } = this.props.result;
-    const textBeforeSearchValue = ambient_str.slice(0, result_str_start);
-    // For single search ambient_string is empty, so just use result_str
-    const searchValue = ambient_str === '' ? result_str : ambient_str.slice(result_str_start, result_str_end);
-    const textAfterSearchValue = ambient_str.slice(result_str_end);
+    const { ambientStr, resultStrStart, resultStrEnd, resultStr } = this.props.result;
+    const textBeforeSearchValue = ambientStr.slice(0, resultStrStart);
+    const searchValue = ambientStr === '' ? resultStr : ambientStr.slice(resultStrStart, resultStrEnd);
+    const textAfterSearchValue = ambientStr.slice(resultStrEnd);
 
     return (
       <React.Fragment>
