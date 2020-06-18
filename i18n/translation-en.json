@@ -45,7 +45,9 @@
     "link": "Link",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
-    "fileAttachmentDownload": "Download attached file"
+    "fileAttachmentDownload": "Download attached file",
+    "prevResult": "Previous result",
+    "nextResult": "Next result"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",
