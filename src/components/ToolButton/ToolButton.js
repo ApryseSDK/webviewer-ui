@@ -20,13 +20,15 @@ import DataElements from 'constants/dataElement';
 
 const propTypes = {
   toolName: PropTypes.string.isRequired,
-  group: PropTypes.string
+  group: PropTypes.string,
+  className: PropTypes.string,
 };
 
 const ToolButton = ({
   isSwap,
   toolName,
   isStylingOpen,
+  className,
   ...restProps
 }) => {
   const [
@@ -105,6 +107,7 @@ const ToolButton = ({
       className={classNames({
         "tool-button": true,
         hasStyles: toolStylesExist(toolName),
+        [className]: className,
       })}
       onClick={isSwap ? handleSwap : handleClick}
       isActive={isActive}

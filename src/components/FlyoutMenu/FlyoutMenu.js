@@ -20,9 +20,10 @@ const MENUS = [
   'signatureOverlay',
   'zoomOverlay',
   'redactionOverlay',
+  'toolStylePopup',
 ];
 
-const TRIGGERS = ['menuButton', 'viewControlsButton'];
+const TRIGGERS = ['menuButton', 'viewControlsButton', 'zoomOverlayButton'];
 
 const propTypes = {
   /** Menu must be one of the available menus. */

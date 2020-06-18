@@ -38,6 +38,7 @@
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
+    "zoomControls": "Zoom Controls",
     "draw": "Draw",
     "type": "Type",
     "upload": "Upload",
@@ -168,15 +169,6 @@
     "displayMode": {
       "layout": "Page Layout",
       "pageTransition": "Page Transition"
-    },
-    "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
-    },
-    "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
-    },
-    "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
     "documentControls": {
       "placeholder": "Enter pages to select i.e. 2, 5-9"

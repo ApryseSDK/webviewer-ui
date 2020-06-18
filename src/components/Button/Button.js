@@ -22,6 +22,8 @@ const propTypes = {
   dataElement: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  /** Will override translated title if both given. */
+  ariaLabel: PropTypes.string,
 };
 
 const Button = props => {
@@ -47,10 +49,15 @@ const Button = props => {
     className,
     title,
     style,
+    ariaLabel,
   } = { ...props, ...customOverrides };
-
   const [t] = useTranslation();
-  const ariaLabel = title ? t(title) : undefined;
+
+  let aLabel = ariaLabel;
+  if (!ariaLabel && title) {
+    aLabel = t(title);
+  }
+
   const shortcutKey = title ? title.slice(title.indexOf('.') + 1) : undefined;
   const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
 
@@ -78,7 +85,7 @@ const Button = props => {
       style={style}
       data-element={dataElement}
       onClick={onClick}
-      aria-label={ariaLabel}
+      aria-label={aLabel}
       aria-keyshortcuts={ariaKeyshortcuts}
     >
       {isGlyph && <Icon glyph={imgToShow} color={color} />}
