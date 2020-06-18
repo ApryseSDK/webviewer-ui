@@ -71,8 +71,12 @@ const extractXodOptions = options => {
   const xodOptions = {};
 
   if (options.decryptOptions) {
-    xodOptions.decrypt = window.CoreControls.Encryption.decrypt;
+    xodOptions.decrypt = options.decrypt ? options.decrypt : window.CoreControls.Encryption.decrypt;
     xodOptions.decryptOptions = options.decryptOptions;
+  }
+
+  if (options.decrypt) {
+    xodOptions.decrypt = options.decrypt;
   }
 
   if (options.streaming) {
