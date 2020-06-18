@@ -38,7 +38,9 @@ const NoteContent = ({ annotation }) => {
     NoteContext,
   );
   const [isEditing, setIsEditing] = useState(false);
-  const [textAreaValue, setTextAreaValue] = useState(annotation.getContents());
+  const [textAreaValue, setTextAreaValue] = useState(
+    annotation.getCustomData('trn-mention')?.contents || annotation.getContents()
+  );
   const [t] = useTranslation();
   const dispatch = useDispatch();
 

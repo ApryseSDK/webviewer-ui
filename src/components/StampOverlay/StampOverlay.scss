@@ -1,19 +1,22 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
+@import '../../constants/popup';
 
 .StampOverlay {
   @extend %overlay;
+
+  overflow: auto;
   top: 46px;
-  width: 232px;
   border-radius: 4px 0 0 4px;
   box-shadow: 0 2px 16px 0 #E1E1E3;
   width: 354px;
+  max-height: calc(100% - #{$top-bar-height} - 46px);
   padding: 16px 16px 16px;
 
   .rubber-stamp {
     float: left;
     height: 48px;
-    width: 160px;
+    width: 50%;
 
     img {
       width: 100%;
@@ -26,8 +29,6 @@
     background: var(--button-hover-color);
   }
 }
-
-
 
 .default-stamp-container {
   .column {

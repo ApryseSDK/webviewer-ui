@@ -10,6 +10,7 @@ import './Slider.scss';
 class Slider extends React.PureComponent {
   static propTypes = {
     property: PropTypes.string.isRequired,
+    dataElement: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
@@ -109,20 +110,20 @@ class Slider extends React.PureComponent {
   }
 
   renderSlider = () => {
-    const { displayProperty, displayValue, getCirclePosition, t } = this.props;
+    const { dataElement, displayProperty, displayValue, getCirclePosition, t } = this.props;
     const circleCenter = getCirclePosition(this.lineLength);
 
     return (
       <React.Fragment>
-        <div className="slider__property">
+        <div className="slider__property" data-element={dataElement}>
           {t(`option.slider.${displayProperty}`)}
         </div>
-        <svg data-element="slider" width="100%" height={svgHeight} onMouseDown={this.onMouseDown} onTouchStart={this.onTouchStart} ref={this.sliderSvg}>
+        <svg data-element={`slider ${dataElement}`} width="100%" height={svgHeight} onMouseDown={this.onMouseDown} onTouchStart={this.onTouchStart} ref={this.sliderSvg}>
           <line x1={circleRadius} y1="50%" x2={circleCenter} y2="50%" strokeWidth="2" stroke="#00a5e4" strokeLinecap="round" />
           <line x1={circleCenter} y1="50%" x2={this.lineLength + circleRadius} y2="50%" strokeWidth="2" stroke="#e0e0e0" strokeLinecap="round" />
           <circle cx={circleCenter} cy="50%" r={circleRadius} fill="#00a5e4" />
         </svg>
-        <div className="slider__value">
+        <div className="slider__value" data-element={dataElement}>
           {displayValue}
         </div>
       </React.Fragment>

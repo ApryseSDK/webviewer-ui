@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useContext } from 'react';
+import React, { useLayoutEffect, useRef, useContext, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
@@ -23,7 +23,7 @@ const propTypes = {
 };
 
 const MentionsTextarea = React.lazy(() =>
-  import(/* webpackChunkName: 'mention' */'components/NoteTextarea/MentionsTextarea'),
+  import(/* webpackChunkName: 'mention' */ 'components/NoteTextarea/MentionsTextarea')
 );
 
 const NoteTextarea = React.forwardRef((props, forwardedRef) => {
@@ -52,8 +52,8 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     }
   };
 
-  const handleChange = value => {
-    props.onChange(value);
+  const handleChange = e => {
+    props.onChange(e.target.value);
   };
 
   const textareaProps = {

@@ -34,10 +34,6 @@
       width: 100%;
       padding: 3px;
   
-      &:hover {
-        color: $gray87;
-      }
-
       @include tablet-and-mobile {
         padding: 7px 5px;
       }

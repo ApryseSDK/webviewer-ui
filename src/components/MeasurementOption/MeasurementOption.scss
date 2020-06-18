@@ -2,7 +2,6 @@
 
 .MeasurementOption {
   width: 100%;
-  height: 135px;
   background: white;
 
   .textarea {
@@ -108,6 +107,11 @@
   input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
     margin: 0; 
+  }
+
+  label[for="measurement-snapping"] {
+    margin: 10px 0px 6px 35px;
+    font-size: 1em;
   }
 }
 
