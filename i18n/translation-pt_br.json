@@ -193,6 +193,7 @@
       "all": "Todas",
       "current": "Atual",
       "pages": "Páginas",
+      "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
       "addWatermarkSettings": "Adicionar configurações de marca d'água"
     },
@@ -264,7 +265,8 @@
     "thumbnailPanel": {
       "delete": "Excluir",
       "rotateClockwise": "Sentido horário",
-      "rotateCounterClockwise": "Sentido anti-horário"
+      "rotateCounterClockwise": "Sentido anti-horário",
+      "extractZeroPageError": "Nenhuma página foi selecionada para extrair"
     },
     "richText": {
       "bold": "Negrito",
@@ -303,6 +305,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

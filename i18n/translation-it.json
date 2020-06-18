@@ -193,6 +193,7 @@
       "all": "Tutti",
       "current": "attuale",
       "pages": "pagine",
+      "includeAnnotations": "Includi annotazioni",
       "includeComments": "Includi commenti",
       "addWatermarkSettings": "Aggiungi impostazioni filigrana"
     },
@@ -264,7 +265,8 @@
     "thumbnailPanel": {
       "delete": "Elimina",
       "rotateClockwise": "Senso orario",
-      "rotateCounterClockwise": "Antiorario"
+      "rotateCounterClockwise": "Antiorario",
+      "extractZeroPageError": "Nessuna pagina selezionata per l'estrazione"
     },
     "richText": {
       "bold": "Grassetto",
@@ -303,6 +305,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(IO)",
+    "redo": "(Ctrl Maiusc Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",
