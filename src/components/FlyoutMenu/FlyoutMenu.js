@@ -1,7 +1,7 @@
 import { focusableElementDomString } from '@pdftron/webviewer-react-toolkit';
 import actions from 'actions';
 import classNames from 'classnames';
-import { findFocusableIndex } from 'core/accessibility';
+import { findFocusableIndex } from 'helpers/accessibility';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import useMedia from 'hooks/useMedia';
 import useOnClickOutside from 'hooks/useOnClickOutside';
@@ -110,19 +110,8 @@ function FlyoutMenu({ menu, trigger, onClose, children }) {
 
           const focusIndex = findFocusableIndex(focusable, document.activeElement);
 
-          if (e.key === 'ArrowUp') {
-            if (focusIndex <= 0) {
-              focusable[focusable.length - 1].focus();
-            } else {
-              focusable[focusIndex - 1].focus();
-            }
-          } else {
-            if (focusIndex >= focusable.length - 1) {
-              focusable[0].focus();
-            } else {
-              focusable[focusIndex + 1].focus();
-            }
-          }
+          const vector = e.key === 'ArrowUp' ? -1 : 1;
+          focusable[(focusIndex + vector + focusable.length) % focusable.length].focus();
         }
       };
 

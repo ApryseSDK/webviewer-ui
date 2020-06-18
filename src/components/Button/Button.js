@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
-import { shortcutAria } from 'core/accessibility';
+import { shortcutAria } from 'helpers/hotkeysManager';
 
 import selectors from 'selectors';
 
