@@ -15,5 +15,3 @@ export function findFocusableIndex(elements, toFind) {
   }
   return index;
 }
-
-
