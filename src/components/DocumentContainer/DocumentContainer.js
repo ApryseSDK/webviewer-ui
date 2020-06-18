@@ -211,7 +211,10 @@ class DocumentContainer extends React.PureComponent {
         }}
       >
         {({ measureRef }) => (
-          <div className="measurement-container" ref={measureRef}>
+          <div
+            className="measurement-container"
+            ref={measureRef}
+          >
             <div
               className={className}
               ref={this.container}
