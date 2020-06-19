@@ -33,20 +33,6 @@ class StylePopup extends React.PureComponent {
     isStylePopupDisabled: PropTypes.bool,
   };
 
-  renderColorPalette = () => {
-    const { style, onStyleChange, currentPalette, colorMapKey } = this.props;
-
-    return (
-      <ColorPalette
-        color={style[currentPalette]}
-        property={currentPalette}
-        onStyleChange={onStyleChange}
-        colorMapKey={colorMapKey}
-        useMobileMinMaxWidth
-      />
-    );
-  };
-
   renderSliders = () => {
     const {
       style: { Opacity, StrokeThickness, FontSize },
@@ -160,6 +146,9 @@ class StylePopup extends React.PureComponent {
       isStyleOptionDisabled,
       disableSeparator,
     } = this.props;
+
+
+
     const { Scale, Precision, Style } = style;
 
     const className = classNames({
@@ -178,15 +167,18 @@ class StylePopup extends React.PureComponent {
               toolName={toolName}
               disableSeparator={disableSeparator}
             />
-            {this.renderColorPalette()}
+            <ColorPalette
+              color={style[currentPalette]}
+              property={currentPalette}
+              onStyleChange={onStyleChange}
+              colorMapKey={colorMapKey}
+              useMobileMinMaxWidth
+            />
           </React.Fragment>
         )}
         {this.renderSliders()}
         {Scale && Precision && (
           <React.Fragment>
-            <div
-              className="divider-horizontal"
-            />
             <MeasurementOption
               scale={Scale}
               precision={Precision}

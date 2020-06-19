@@ -8,6 +8,7 @@
   padding-right: 12px;
   display: flex;
   flex-direction: column;
+  // overflow: auto;
 
   @include mobile {
     padding-top: 0px;
@@ -20,8 +21,6 @@
     width: 188px;
 
     @include mobile {
-      // margin-left: 12px;
-      // margin-right: 12px;
       width: auto;
     }
   }

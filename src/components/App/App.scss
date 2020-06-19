@@ -17,10 +17,12 @@
 
   &::-webkit-scrollbar-track {
     width: 10px;
+    border-radius: 10px;
     background: none;
   }
 
   &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
     background-color: var(--scrollbar-color);
     border-top: 2px solid transparent;
 
