@@ -39,6 +39,8 @@ import actions from 'actions';
 
 import './App.scss';
 
+const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
+
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
 };
@@ -51,10 +53,25 @@ const App = ({ removeEventHandlers }) => {
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
+    const setTabletState = () => {
+      // TODO: Use constants
+      dispatch(actions.setLeftPanelWidth(251));
+      dispatch(actions.setNotesPanelWidth(293));
+      dispatch(actions.setSearchPanelWidth(293));
+    };
+
+    const onBreakpoint = () => {
+      if (tabletBreakpoint.matches) {
+        setTabletState();
+      }
+    };
+    tabletBreakpoint.addListener(onBreakpoint);
+
     dispatch(actions.setToolbarScreen('Annotate'));
     return removeEventHandlers;
     // eslint-disable-next-line
   }, []);
+
 
   return (
     <React.Fragment>
