@@ -4,6 +4,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 
+import './Choice.scss';
+
 const propTypes = {
   dataElement: PropTypes.string.isRequired,
 };
