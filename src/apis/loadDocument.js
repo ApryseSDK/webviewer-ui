@@ -10,6 +10,8 @@
  * @param {boolean} [options.withCredentials] Whether or not cross-site requests should be made using credentials.
  * @param {string} [options.cacheKey] A key that will be used for caching the document on WebViewer Server.
  * @param {string} [options.password] A string that will be used to as the password to load a password protected document.
+ * @param {function} [options.decrypt] A custom function to decrypt the document
+ * @param {object} [options.decryptOptions] An object with with properties `type` for the type of encryption and `p` for the password.
  * @example
 WebViewer(...)
   .then(function(instance) {
