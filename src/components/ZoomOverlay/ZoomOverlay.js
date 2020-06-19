@@ -1,164 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import onClickOutside from 'react-onclickoutside';
-
-import core from 'core';
-import actions from 'actions';
-import selectors from 'selectors';
-import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import { zoomTo } from 'helpers/zoom';
-
 import Icon from 'components/Icon';
+import core from 'core';
+import { zoomTo } from 'helpers/zoom';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
+import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import OverlayItem from '../OverlayItem';
 import ToolButton from '../ToolButton';
-
 import './ZoomOverlay.scss';
 
-class ZoomOverlay extends React.PureComponent {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    closeElements: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired,
-    zoomList: PropTypes.arrayOf(PropTypes.number),
-  };
+function ZoomOverlay() {
+  const [t] = useTranslation();
 
-  constructor(props) {
-    super(props);
-    this.dropdown = React.createRef();
-    this.state = {
-      left: 0,
-      right: 'auto',
-      top: 'auto',
-    };
-  }
+  const zoomList = useSelector(selectors.getZoomList);
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleWindowResize);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements([
-        'viewControlsOverlay',
-        'menuOverlay',
-        'zoomOverlayButton',
-        'toolStylePopup',
-      ]);
-      const { left, right, top } = getOverlayPositionBasedOn(
-        'zoomOverlayButton',
-        this.dropdown,
-      );
-      this.setState({
-        left,
-        right,
-        top,
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
-  }
-
-  handleClickOutside = e => {
-    const ToggleZoomButton = document.querySelector('[data-element="zoomOverlayButton"]');
-    const clickedToggleZoomButton = ToggleZoomButton?.contains(e.target);
-
-    if (!clickedToggleZoomButton) {
-      this.props.closeElements('zoomOverlay');
-    }
-  };
-
-  handleWindowResize = () => {
-    const { left, right, top } = getOverlayPositionBasedOn(
-      'zoomOverlayButton',
-      this.dropdown,
-    );
-    this.setState({
-      left,
-      right,
-      top,
-    });
-  };
-
-  render() {
-    const { isOpen, isDisabled, t, zoomList, closeElements } = this.props;
-    const className = ['ZoomOverlay', isOpen ? 'open' : 'closed']
-      .join(' ')
-      .trim();
-    const { left, right, top } = this.state;
-
-    if (isDisabled) {
-      return null;
-    }
-
-    return (
-      <div
-        className={className}
-        data-element="zoomOverlay"
-        style={{ left, right, top }}
-        ref={this.dropdown}
-        onClick={() => closeElements(['zoomOverlay'])}
-      >
-        <div
-          className="ZoomContainer"
-        >
-          <div
-            className="ZoomItem"
-            onClick={core.fitToWidth}
-          >
-            <Icon
-              className="ZoomIcon"
-              glyph="icon-header-zoom-fit-to-width"
-            />
-            <div className="ZoomLabel">{t('action.fitToWidth')}</div>
-          </div>
-          <div
-            className="ZoomItem"
-            onClick={core.fitToPage}
-          >
-            <Icon
-              className="ZoomIcon"
-              glyph="icon-header-zoom-fit-to-page"
-            />
-            <div className="ZoomLabel">{t('action.fitToPage')}</div>
-          </div>
-          <div className="spacer extraMarginTop" />
-          {zoomList.map((zoomValue, i) => (
-            <OverlayItem
-              key={i}
-              onClick={() => zoomTo(zoomValue)}
-              buttonName={`${zoomValue * 100}%`}
-            />
-          ))}
-          <div className="spacer" />
-          <div className="ZoomItem">
-            <Icon
-              className="ZoomIcon"
-              glyph="icon-header-zoom-marquee"
-            />
-            <ToolButton toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
-          </div>
-        </div>
+  return (
+    <FlyoutMenu menu="zoomOverlay" trigger="zoomOverlayButton">
+      <button className="ZoomItem" onClick={core.fitToWidth} aria-label={t('action.fitToWidth')}>
+        <Icon className="ZoomIcon" glyph="icon-header-zoom-fit-to-width" />
+        <div className="ZoomLabel">{t('action.fitToWidth')}</div>
+      </button>
+      <button className="ZoomItem" onClick={core.fitToPage} aria-label={t('action.fitToPage')}>
+        <Icon className="ZoomIcon" glyph="icon-header-zoom-fit-to-page" />
+        <div className="ZoomLabel">{t('action.fitToPage')}</div>
+      </button>
+      <div className="divider" />
+      {zoomList.map((zoomValue, i) => (
+        <OverlayItem key={i} onClick={() => zoomTo(zoomValue)} buttonName={`${zoomValue * 100}%`} />
+      ))}
+      <div className="dividerSmall" />
+      <div className="ZoomItem">
+        <Icon className="ZoomIcon" glyph="icon-header-zoom-marquee" />
+        <ToolButton className="ZoomToolButton" toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
       </div>
-    );
-  }
+    </FlyoutMenu>
+  );
 }
 
-const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'zoomOverlay'),
-  isOpen: selectors.isElementOpen(state, 'zoomOverlay'),
-  zoomList: selectors.getZoomList(state),
-});
-
-const mapDispatchToProps = {
-  closeElements: actions.closeElements,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(onClickOutside(ZoomOverlay)));
+export default ZoomOverlay;

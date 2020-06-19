@@ -38,13 +38,16 @@
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
+    "zoomControls": "Zoom Controls",
     "draw": "Draw",
     "type": "Type",
     "upload": "Upload",
     "link": "Link",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
-    "fileAttachmentDownload": "Download attached file"
+    "fileAttachmentDownload": "Download attached file",
+    "prevResult": "Previous result",
+    "nextResult": "Next result"
   },
   "annotation": {
     "areaMeasurement": "Area measurement",
@@ -168,15 +171,6 @@
     "displayMode": {
       "layout": "Page Layout",
       "pageTransition": "Page Transition"
-    },
-    "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
-    },
-    "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
-    },
-    "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
     },
     "documentControls": {
       "placeholder": "Enter pages to select i.e. 2, 5-9"

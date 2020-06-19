@@ -12,11 +12,11 @@ class OverlayItem extends React.PureComponent {
   render() {
     const { buttonName } = this.props;
     return (
-      <div className="OverlayItem" onClick={this.props.onClick}>
+      <button className="OverlayItem" onClick={this.props.onClick} aria-label={buttonName}>
         <div className="ButtonText">
           { buttonName }
         </div>
-      </div>
+      </button>
     );
   }
 }

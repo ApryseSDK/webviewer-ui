@@ -486,7 +486,11 @@ class SearchOverlay extends React.PureComponent {
             value={searchValue}
             placeholder={t('message.searchDocumentPlaceholder')}
           />
-          <button className="input-button" onClick={this.search}>
+          <button
+            className="input-button"
+            onClick={this.search}
+            aria-label={t('message.searchDocumentPlaceholder')}
+          >
             <Icon glyph="icon-header-search" />
           </button>
         </div>
@@ -517,17 +521,19 @@ class SearchOverlay extends React.PureComponent {
         <div className="footer">
           {<div>{results.length} {t('message.numResultsFound')}</div>}
           <div className="buttons">
-            <button className="button" onClick={this.onClickPrevious}>
-              <Icon
-                className="arrow"
-                glyph="icon-chevron-left"
-              />
+            <button
+              className="button"
+              onClick={this.onClickPrevious}
+              aria-label={t('action.prevResult')}
+            >
+              <Icon className="arrow" glyph="icon-chevron-left" />
             </button>
-            <button className="button" onClick={this.onClickNext}>
-              <Icon
-                className="arrow"
-                glyph="icon-chevron-right"
-              />
+            <button
+              className="button"
+              onClick={this.onClickNext}
+              aria-label={t('action.nextResult')}
+            >
+              <Icon className="arrow" glyph="icon-chevron-right" />
             </button>
           </div>
         </div>
