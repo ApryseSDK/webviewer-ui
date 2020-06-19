@@ -13,7 +13,7 @@ const propTypes = {
 const Choice = React.forwardRef(({ dataElement, ...props }, ref) => {
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
 
-  return isDisabled ? null : <ChoiceComponent {...props} ref={ref} />;
+  return isDisabled ? null : <ChoiceComponent {...props} ref={ref} center/>;
 });
 
 Choice.propTypes = propTypes;
