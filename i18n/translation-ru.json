@@ -52,6 +52,7 @@
     "callout": "Вызыв",
     "crop": "Обрезать страницу",
     "caret": "Знак вставки",
+    "countMeasurement": "Измерение счета",
     "distanceMeasurement": "Дистанция",
     "ellipse": "Эллипс",
     "eraser": "ластик",
@@ -234,7 +235,9 @@
       "distanceMeasurement": "Замерение дистанции",
       "perimeterMeasurement": "Замерение периметера",
       "areaMeasurement": "Замерение площади",
-      "radius": "Радиус"
+      "countMeasurement": "Измерение счета",
+      "radius": "Радиус",
+      "count": "подсчитывать"
     },
     "measurementOption": {
       "scale": "Масштаб"
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "удалять",
       "rotateClockwise": "по часовой стрелке",
-      "rotateCounterClockwise": "Против часовой стрелки"
+      "rotateCounterClockwise": "Против часовой стрелки",
+      "extractZeroPageError": "Страницы не были выбраны для извлечения"
     },
     "richText": {
       "bold": "Жирное лицо",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

@@ -52,6 +52,7 @@
     "callout": "Opmerking met pijl",
     "crop": "Pagina bijsnijden",
     "caret": "Dakje",
+    "countMeasurement": "Tel meting",
     "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
     "eraser": "Gom",
@@ -234,7 +235,9 @@
       "distanceMeasurement": "Afstands meting",
       "perimeterMeasurement": "Perimeter meting",
       "areaMeasurement": "Gebieds meting",
-      "radius": "Straal"
+      "countMeasurement": "Tel meting",
+      "radius": "Straal",
+      "count": "Tel"
     },
     "measurementOption": {
       "scale": "Schaal"
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Met de klok mee",
-      "rotateCounterClockwise": "Tegen de klok in"
+      "rotateCounterClockwise": "Tegen de klok in",
+      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om te extraheren"
     },
     "richText": {
       "bold": "Vet",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

@@ -52,6 +52,7 @@
     "callout": "Callout",
     "crop": "Seite zuschneiden",
     "caret": "Caret",
+    "countMeasurement": "Zählmessung",
     "distanceMeasurement": "Abstandsmessung",
     "ellipse": "Ellipse",
     "eraser": "Radiergummi",
@@ -234,7 +235,9 @@
       "distanceMeasurement": "Abstandsmessung",
       "perimeterMeasurement": "Umfangsmessung",
       "areaMeasurement": "Flächenmessung",
-      "radius": "Radius"
+      "countMeasurement": "Zählmessung",
+      "radius": "Radius",
+      "count": "Anzahl"
     },
     "measurementOption": {
       "scale": "Maßstab"
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "Löschen",
       "rotateClockwise": "Im Uhrzeigersinn",
-      "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
+      "extractZeroPageError": "Es wurden keine Seiten zum Extrahieren ausgewählt"
     },
     "richText": {
       "bold": "Fett",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Strg-Umschalttaste Z)",
+    "undo": "(Strg Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

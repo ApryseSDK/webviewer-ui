@@ -52,6 +52,7 @@
     "callout": "Faire appel à",
     "crop": "Page de recadrage",
     "caret": "Caret",
+    "countMeasurement": "Mesure de comptage",
     "distanceMeasurement": "Mesure de distance",
     "ellipse": "Ellipse",
     "eraser": "La gomme",
@@ -234,7 +235,9 @@
       "distanceMeasurement": "Mesure de distance",
       "perimeterMeasurement": "Mesure du périmètre",
       "areaMeasurement": "Mesure du surface",
-      "radius": "Rayon"
+      "countMeasurement": "Mesure de comptage",
+      "radius": "Rayon",
+      "count": "Compter"
     },
     "measurementOption": {
       "scale": "Échelle"
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "Supprimer",
       "rotateClockwise": "Dans le sens horaire",
-      "rotateCounterClockwise": "Dans le sens antihoraire"
+      "rotateCounterClockwise": "Dans le sens antihoraire",
+      "extractZeroPageError": "Aucune page n'a été sélectionnée pour l'extraction"
     },
     "richText": {
       "bold": "Audacieux",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

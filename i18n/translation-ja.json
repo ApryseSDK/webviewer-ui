@@ -52,6 +52,7 @@
     "callout": "コールアウト",
     "crop": "切り抜きページ",
     "caret": "キャレット",
+    "countMeasurement": "カウント測定",
     "distanceMeasurement": "距離測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
@@ -234,7 +235,9 @@
       "distanceMeasurement": "距離測定",
       "perimeterMeasurement": "境界測定",
       "areaMeasurement": "面積測定",
-      "radius": "半径"
+      "countMeasurement": "カウント測定",
+      "radius": "半径",
+      "count": "カウント"
     },
     "measurementOption": {
       "scale": "スケール"
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "削除する",
       "rotateClockwise": "時計回り",
-      "rotateCounterClockwise": "反時計回り"
+      "rotateCounterClockwise": "反時計回り",
+      "extractZeroPageError": "抽出するページが選択されていません"
     },
     "richText": {
       "bold": "太字",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "（Ctrl Shift Z）",
+    "undo": "（Ctrl Z）",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",
