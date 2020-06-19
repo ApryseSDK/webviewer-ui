@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 import onClickOutside from 'react-onclickoutside';
 
 import Icon from 'components/Icon';
-import Tooltip from 'components/Tooltip';
-import Input from 'components/Input';
+import Choice from '../Choice/Choice';
 
 import core from 'core';
-import getClassName from 'helpers/getClassName';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -72,22 +70,26 @@ class SearchOverlay extends React.PureComponent {
     };
   }
 
+  componentDidMount() {
+    this.searchTextInput.current.focus();
+  }
+
+  componentWillUnmount() {
+    this.clearSearchResults();
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.isProgrammaticSearch) {
-      if (this.props.isSearchPanelOpen) {
-        this.props.closeElement('searchPanel');
-      }
-      this.props.openElement('searchOverlay');
       this.clearSearchResults();
       this.executeSingleSearch();
       this.props.setIsProgrammaticSearch(false);
     } else if (this.props.isProgrammaticSearchFull) {
-      this.props.openElements(['searchOverlay', 'searchPanel']);
       this.caseSensitiveInput.current.checked = this.props.isCaseSensitive;
       this.wholeWordInput.current.checked = this.props.isWholeWord;
       if (this.wildcardInput.current) {
         this.wildcardInput.current.checked = this.props.isWildcard;
       }
+
       this.clearSearchResults();
       this.executeFullSearch();
       this.props.setIsProgrammaticSearchFull(false);
@@ -239,7 +241,7 @@ class SearchOverlay extends React.PureComponent {
       return true;
     }
 
-    const inSamePage = activeResult.page_num === result.page_num;
+    const inSamePage = activeResult.pageNum === result.pageNum;
     const hasSameCoordinates =
       Object.values(activeResult.quads[0]).toString() ===
       Object.values(result.quads[0]).toString();
@@ -331,12 +333,6 @@ class SearchOverlay extends React.PureComponent {
       );
     });
   };
-
-  // onTransitionEnd = () => {
-  //   if (this.props.isOpen) {
-  //     this.searchTextInput.current.focus();
-  //   }
-  // }
 
   onChange = e => {
     const { isSearchPanelOpen, setSearchValue } = this.props;
@@ -459,24 +455,6 @@ class SearchOverlay extends React.PureComponent {
     this.executeDebouncedFullSearch();
   }
 
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
-  onChangeWildcard = e => {
-    this.props.setWildcard(e.target.checked);
-    this.clearSearchResults();
-    this.executeDebouncedFullSearch();
-  }
-
   render() {
     const {
       isDisabled,
@@ -508,31 +486,32 @@ class SearchOverlay extends React.PureComponent {
             value={searchValue}
             placeholder={t('message.searchDocumentPlaceholder')}
           />
-          <div className="input-button" onClick={this.search}>
+          <button
+            className="input-button"
+            onClick={this.search}
+            aria-label={t('message.searchDocumentPlaceholder')}
+          >
             <Icon glyph="icon-header-search" />
-          </div>
+          </button>
         </div>
         <div className="options">
-          <Input
+          <Choice
             dataElement="caseSensitiveSearchOption"
             id="case-sensitive-option"
-            type="checkbox"
             ref={this.caseSensitiveInput}
             onChange={this.onChangeCaseSensitive}
             label={t('option.searchPanel.caseSensitive')}
           />
-          <Input
+          <Choice
             dataElement="wholeWordSearchOption"
             id="whole-word-option"
-            type="checkbox"
             ref={this.wholeWordInput}
             onChange={this.onChangeWholeWord}
             label={t('option.searchPanel.wholeWordOnly')}
           />
-          <Input
+          <Choice
             dataElement="wildCardSearchOption"
             id="wild-card-option"
-            type="checkbox"
             ref={this.wildcardInput}
             onChange={this.onChangeWildcard}
             label={t('option.searchPanel.wildcard')}
@@ -542,18 +521,20 @@ class SearchOverlay extends React.PureComponent {
         <div className="footer">
           {<div>{results.length} {t('message.numResultsFound')}</div>}
           <div className="buttons">
-            <div className="button" onClick={this.onClickPrevious}>
-              <Icon
-                className="arrow"
-                glyph="icon-chevron-left"
-              />
-            </div>
-            <div className="button" onClick={this.onClickNext}>
-              <Icon
-                className="arrow"
-                glyph="icon-chevron-right"
-              />
-            </div>
+            <button
+              className="button"
+              onClick={this.onClickPrevious}
+              aria-label={t('action.prevResult')}
+            >
+              <Icon className="arrow" glyph="icon-chevron-left" />
+            </button>
+            <button
+              className="button"
+              onClick={this.onClickNext}
+              aria-label={t('action.nextResult')}
+            >
+              <Icon className="arrow" glyph="icon-chevron-right" />
+            </button>
           </div>
         </div>
       </div>

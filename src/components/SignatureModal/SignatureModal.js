@@ -54,6 +54,7 @@ const SignatureModal = () => {
 
   const closeModal = () => {
     signatureTool.clearLocation();
+    signatureTool.setSignature(null);
     dispatch(actions.closeElement('signatureModal'));
   };
 
@@ -64,7 +65,6 @@ const SignatureModal = () => {
       dispatch(actions.setSelectedSignatureIndex(savedSignatures2.length));
       signatureTool.setSignature(signatureTool.annot);
       core.setToolMode('AnnotationCreateSignature');
-      signatureTool.showPreview();
 
       if (signatureTool.hasLocation()) {
         signatureTool.addSignature();

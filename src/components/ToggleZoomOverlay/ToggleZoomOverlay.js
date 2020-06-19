@@ -12,8 +12,11 @@ import useMedia from 'hooks/useMedia';
 import zoomFactors from 'constants/zoomFactors';
 
 import './ToggleZoomOverlay.scss';
+import { useTranslation } from 'react-i18next';
 
 const ToggleZoomOverlay = () => {
+  const [t] = useTranslation();
+
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -114,6 +117,7 @@ const ToggleZoomOverlay = () => {
               img="icon-chevron-down"
               element="zoomOverlay"
               dataElement="zoomOverlay"
+              ariaLabel={t('action.zoomControls')}
             />
           </div>
         </div>}

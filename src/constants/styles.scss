@@ -26,20 +26,21 @@ $gray12: #e0e0e0;
 $gray10: #e6e6e6;
 $gray4: #f5f5f5;
 $white: #fff;
-$pdftron-blue: #00A5E4; //confirm that this is what we want
+$pdftron-blue: #00a5e4; // TODO: confirm that this is what we want
 
 // Light theme
 $line-color: $gray10;
 $document-bg-color: $white;
 
 // Shadows
-$md-shadow1: 0 0 2px 0 rgba(0,0,0,0.14), 0 2px 2px 0 rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.12);
+$md-shadow1: 0 0 2px 0 rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.12),
+  0 1px 3px 0 rgba(0, 0, 0, 0.12);
 
 // Screens
 $tablet-width: 900px;
 $mobile-width: 640px;
 
-$signature-modal-shared-color: #E1E1E3;
+$signature-modal-shared-color: #e1e1e3;
 
 %open {
   &.open {
@@ -130,4 +131,20 @@ $signature-modal-shared-color: #E1E1E3;
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+}
+
+// Fixes default button styling, and prevents outline when not tabbing.
+@mixin button-reset {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+
+  @at-root html:not([data-tabbing='true']) #{&} {
+    outline: none;
+
+    // No need to use this if you aren't doing custom focus style.
+    // &::-moz-focus-inner {
+    //   border: 0;
+    // }
+  }
 }

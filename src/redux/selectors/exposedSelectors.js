@@ -95,7 +95,7 @@ export const getToolButtonDataElements = (state, toolNames) => {
   return toolNames
     .map(toolName => toolButtonObjects[toolName]?.dataElement)
     .filter(Boolean);
-}
+};
 
 export const getToolButtonObject = (state, toolName) =>
   getToolButtonObjects(state)[toolName];
@@ -115,7 +115,7 @@ export const getToolNameByDataElement = (state, dataElement) => {
   return Object.keys(toolButtonObjects).find(
     name => toolButtonObjects[name].dataElement === dataElement,
   );
-}
+};
 
 
 export const getActiveToolName = state => state.viewer.activeToolName;
@@ -212,6 +212,8 @@ export const getIsMultipleViewerMerging = state => state.viewer.isMultipleViewer
 export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
 
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
+
+export const getAnnotationContentOverlayHandler = state => state.viewer.annotationContentOverlayHandler;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';

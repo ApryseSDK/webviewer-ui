@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef, useImperativeHandle } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -13,9 +13,10 @@ const propTypes = {
   hideShortcut: PropTypes.bool,
 };
 
-const Tooltip = forwardRef( ({ content = '', children, hideShortcut }, forwardedRef) => {
+const Tooltip = forwardRef( ({ content = '', children, hideShortcut }, ref) => {
   const timeoutRef = useRef(null);
-  const childRef = forwardedRef ? forwardedRef : useRef(null);
+  const childRef = useRef(null);
+  useImperativeHandle(ref, () => childRef.current);
 
   const tooltipRef = useRef(null);
   const [show, setShow] = useState(false);

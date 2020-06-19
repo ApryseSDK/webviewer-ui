@@ -62,14 +62,14 @@ class SearchPanel extends React.PureComponent {
 
   renderListSeparator = (prevResult, currResult) => {
     const isFirstResult = prevResult === currResult;
-    const isInDifferentPage = prevResult.page_num !== currResult.page_num;
+    const isInDifferentPage = prevResult.pageNum !== currResult.pageNum;
 
     if (isFirstResult || isInDifferentPage) {
       return (
         <ListSeparator
           renderContent={() =>
             `${this.props.t('option.shared.page')} ${
-              this.props.pageLabels[currResult.page_num]
+              this.props.pageLabels[currResult.pageNum - 1]
             }`
           }
         />
@@ -93,8 +93,6 @@ class SearchPanel extends React.PureComponent {
       style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
     }
 
-    const isVisible = !(!isOpen || isDisabled);
-
     let animate = { width: 'auto' };
     if (isMobile) {
       animate = { width: '100vw' };
@@ -102,7 +100,7 @@ class SearchPanel extends React.PureComponent {
 
     return (
       <AnimatePresence>
-        {isVisible && (
+        {isOpen && (
           <motion.div
             className="search-panel-container"
             initial={{ width: '0px' }}
@@ -127,7 +125,7 @@ class SearchPanel extends React.PureComponent {
                 <div
                   className="close-container"
                 >
-                  <div
+                  <button
                     className="close-icon-container"
                     onClick={() => {
                       closeElements(['searchPanel']);
@@ -137,7 +135,7 @@ class SearchPanel extends React.PureComponent {
                       glyph="ic_close_black_24px"
                       className="close-icon"
                     />
-                  </div>
+                  </button>
                 </div>}
               <SearchOverlay />
               <div className={`results`}>
