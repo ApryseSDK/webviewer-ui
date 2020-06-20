@@ -28,6 +28,7 @@ export default store => {
   const onFileAttachmentDataAvailable = eventListeners.onFileAttachmentDataAvailable(dispatch);
   const onSignatureSaved = eventListeners.onSignatureSaved(dispatch, store);
   const onSignatureDeleted = eventListeners.onSignatureDeleted(dispatch, store);
+  const onHistoryChanged = eventListeners.onHistoryChanged(dispatch, store);
 
   return {
     addEventHandlers: () => {
@@ -45,6 +46,7 @@ export default store => {
       core.addEventListener('layoutChanged', onLayoutChanged);
       core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.addEventListener('annotationChanged', onAnnotationChanged);
+      core.addEventListener('historyChanged', onHistoryChanged);
       core.addEventListener('pageComplete', onPageComplete);
       core.addEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
       core.getTool('AnnotationCreateStamp').on('annotationAdded', onStampAnnotationAdded);

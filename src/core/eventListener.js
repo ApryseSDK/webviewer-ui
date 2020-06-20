@@ -14,6 +14,7 @@ export const removeEventListener = (event, eventListener) => {
 
 const getEventToObjectMap = () => {
   const annotManager = window.docViewer.getAnnotationManager();
+  const historyManager = window.docViewer.getAnnotationHistoryManager();
   const editBoxManager = annotManager.getEditBoxManager();
 
   return {
@@ -50,6 +51,7 @@ const getEventToObjectMap = () => {
     pageNumberUpdated: window.docViewer,
     layoutChanged: window.docViewer,
     'fitModeUpdated.fitbutton': window.docViewer,
+    historyChanged: historyManager,
     annotationSelected: annotManager,
     annotationChanged: annotManager,
     updateAnnotationPermission: annotManager,

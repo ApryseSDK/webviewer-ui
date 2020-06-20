@@ -10,8 +10,8 @@ import Ribbons from 'components/Ribbons';
 
 export default {
   viewer: {
-    canUndo: true,
-    canRedo: true,
+    canUndo: false,
+    canRedo: false,
     screen: 'Draw',
     activeTheme: 'light',
     disabledElements: {},
