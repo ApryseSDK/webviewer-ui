@@ -16,12 +16,13 @@
   }
 
   .sliders-container {
-    margin-left: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
     margin-top: 4px;
-    width: 188px;
+    width: 100%;
 
-    @include mobile {
-      width: auto;
-    }
+    // @include mobile {
+    //   // width: auto;
+    // }
   }
 }
