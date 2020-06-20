@@ -149,8 +149,10 @@ class SearchOverlay extends React.PureComponent {
     let noActiveResultIndex = true;
     let noResult = true;
     const handleSearchResult = result => {
-      const foundResult = result.resultCode === window.XODText.ResultCode.e_found;
-      const isSearchDone = result.resultCode === window.XODText.ResultCode.e_done;
+      const foundResult =
+        result.resultCode === window.CoreControls.Search.ResultCode.FOUND;
+      const isSearchDone =
+        result.resultCode === window.CoreControls.Search.ResultCode.DONE;
 
       if (foundResult) {
         resultIndex++;
@@ -193,34 +195,34 @@ class SearchOverlay extends React.PureComponent {
       isAmbientString,
     } = this.props;
     const {
-      e_case_sensitive,
-      e_whole_word,
-      e_wild_card,
-      e_regex,
-      e_page_stop,
-      e_highlight,
-      e_search_up,
-      e_ambient_string,
+      CASE_SENSITIVE,
+      WHOLE_WORLD,
+      WILD_CARD,
+      REGEX,
+      PAGE_STOP,
+      HIGHLIGHT,
+      SEARCH_UP,
+      AMBIENT_STRING,
     } = core.getSearchMode();
-    let searchMode = e_page_stop | e_highlight;
+    let searchMode = PAGE_STOP | HIGHLIGHT;
 
     if (isCaseSensitive) {
-      searchMode |= e_case_sensitive;
+      searchMode |= CASE_SENSITIVE;
     }
     if (isWholeWord) {
-      searchMode |= e_whole_word;
+      searchMode |= WHOLE_WORLD;
     }
     if (isWildcard) {
-      searchMode |= e_wild_card;
+      searchMode |= WILD_CARD;
     }
     if (isRegex) {
-      searchMode |= e_regex;
+      searchMode |= REGEX;
     }
     if (isSearchUp && !isFull) {
-      searchMode |= e_search_up;
+      searchMode |= SEARCH_UP;
     }
     if (isAmbientString || isFull) {
-      searchMode |= e_ambient_string;
+      searchMode |= AMBIENT_STRING;
     }
 
     return searchMode;
@@ -243,7 +245,7 @@ class SearchOverlay extends React.PureComponent {
   executeSingleSearch = (isSearchUp = false) => {
     const { searchValue, setActiveResult, setIsSearching, addResult, resetSearch } = this.props;
     const searchMode = isSearchUp
-      ? this.getSearchMode() | core.getSearchMode().e_search_up
+      ? this.getSearchMode() | core.getSearchMode().SEARCH_UP
       : this.getSearchMode();
     const isFullSearch = false;
 
@@ -256,8 +258,10 @@ class SearchOverlay extends React.PureComponent {
 
     resetSearch();
     const handleSearchResult = result => {
-      const foundResult = result.resultCode === window.XODText.ResultCode.e_found;
-      const isSearchDone = result.resultCode === window.XODText.ResultCode.e_done;
+      const foundResult =
+        result.resultCode === window.CoreControls.Search.ResultCode.FOUND;
+      const isSearchDone =
+        result.resultCode === window.CoreControls.Search.ResultCode.DONE;
 
       if (foundResult) {
         this.foundSingleSearchResult = true;
