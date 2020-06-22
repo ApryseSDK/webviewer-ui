@@ -48,15 +48,15 @@ export const setDefaultStamps = t => async dispatch => {
 
 export const setReadOnlyRibbons = () => (dispatch, getState) => {
   dispatch(setToolbarScreen('View'));
+  const state = getState();
+  const screenKeys = Object.keys(state.viewer.headers.tools);
+  const screensToDisable = screenKeys
+    .filter(key => key !== 'View')
+    .map(key => `screen-${key}`);
+
   dispatch({
     type: 'DISABLE_ELEMENTS',
-    payload: { dataElements: [
-      'screen-Annotate',
-      'screen-Draw',
-      'screen-Insert',
-      'screen-Measure',
-      'screen-Edit',
-    ], priority: 3 },
+    payload: { dataElements: screensToDisable, priority: 3 },
   });
 };
 
