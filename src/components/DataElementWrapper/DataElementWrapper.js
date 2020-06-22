@@ -3,15 +3,14 @@ import selectors from 'selectors';
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Wrapper = ({ children, className, dataElement, isDisabled }) => {
+const Wrapper = ({ children, isDisabled, ...props }) => {
   if (isDisabled) {
     return null;
   }
 
   return (
     <div
-      className={className}
-      data-element={dataElement}
+      {...props}
     >
       {children}
     </div>

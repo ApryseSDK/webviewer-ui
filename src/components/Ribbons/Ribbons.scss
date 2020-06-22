@@ -35,6 +35,7 @@
       transform: translateX(-50%);
 
       .ribbon-group {
+        @include button-reset;
         margin: 0 22px;
         cursor: pointer;
         color: var(--faded-text);

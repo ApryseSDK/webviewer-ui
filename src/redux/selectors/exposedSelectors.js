@@ -33,7 +33,14 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const getScreen = state =>
+export const getEnabledScreens = state => {
+  const screenKeys = Object.keys(state.viewer.headers.tools);
+  return screenKeys.filter(key => {
+    return !isElementDisabled(state, `screen-${key}`);
+  });
+};
+
+export const getCurrentScreen = state =>
   state.viewer.screen;
 
 export const getActiveTheme = state =>
@@ -47,12 +54,11 @@ export const getDisabledElementPriority = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.priority;
 
 export const getToolsHeaderItems = state => {
-  const screen = getScreen(state);
+  const screen = getCurrentScreen(state);
   return state.viewer.headers.tools[screen];
 };
 
 export const getToolButtonObjects = state => {
-  // const screen = getScreen(state);
   return state.viewer.toolButtonObjects['default'];
 };
 

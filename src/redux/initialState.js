@@ -12,7 +12,7 @@ export default {
   viewer: {
     canUndo: false,
     canRedo: false,
-    screen: 'Draw',
+    screen: 'Annotate',
     activeTheme: 'light',
     disabledElements: {},
     openElements: {
@@ -75,7 +75,7 @@ export default {
           },
           {
             type: 'actionButton',
-            style: { 'margin-left': '0px' },
+            style: { 'marginLeft': '0px' },
             dataElement: 'undoButton',
             title: 'action.undo',
             img: 'icon-operation-undo',
@@ -116,7 +116,7 @@ export default {
           },
           {
             type: 'actionButton',
-            style: { 'margin-left': '0px' },
+            style: { 'marginLeft': '0px' },
             dataElement: 'undoButton',
             title: 'action.undo',
             img: 'icon-operation-undo',
@@ -153,7 +153,7 @@ export default {
           },
           {
             type: 'actionButton',
-            style: { 'margin-left': '0px' },
+            style: { 'marginLeft': '0px' },
             dataElement: 'undoButton',
             title: 'action.undo',
             img: 'icon-operation-undo',
@@ -191,7 +191,7 @@ export default {
           },
           {
             type: 'actionButton',
-            style: { 'margin-left': '0px' },
+            style: { 'marginLeft': '0px' },
             dataElement: 'undoButton',
             title: 'action.undo',
             img: 'icon-operation-undo',
@@ -220,7 +220,7 @@ export default {
           { type: 'divider' },
           {
             type: 'actionButton',
-            style: { 'margin-left': '0px' },
+            style: { 'marginLeft': '0px' },
             dataElement: 'undoButton',
             title: 'action.undo',
             img: 'icon-operation-undo',

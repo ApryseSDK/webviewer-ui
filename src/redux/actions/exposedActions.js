@@ -46,6 +46,20 @@ export const setDefaultStamps = t => async dispatch => {
   });
 };
 
+export const setReadOnlyRibbons = () => (dispatch, getState) => {
+  dispatch(setToolbarScreen('View'));
+  dispatch({
+    type: 'DISABLE_ELEMENTS',
+    payload: { dataElements: [
+      'screen-Annotate',
+      'screen-Draw',
+      'screen-Insert',
+      'screen-Measure',
+      'screen-Edit',
+    ], priority: 3 },
+  });
+};
+
 export const setToolbarScreen = screen => (dispatch, getState) => {
   const isElementDisabled = (state, dataElement) =>
     state.viewer.disabledElements[dataElement]?.disabled;
