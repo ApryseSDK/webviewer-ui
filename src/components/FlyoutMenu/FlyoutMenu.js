@@ -90,9 +90,8 @@ function FlyoutMenu({ menu, trigger, onClose, children }) {
       const lastFocusedElement = document.activeElement;
 
       const keydownListener = e => {
-        // Tab closes the menu.
+        // Tab and Escape close the menu.
         if (e.key === 'Tab' || e.key === 'Escape') {
-          e.preventDefault();
           closeMenu();
           if (lastFocusedElement) {
             lastFocusedElement.focus();
