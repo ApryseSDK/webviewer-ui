@@ -10,10 +10,10 @@
   flex-direction: column;
   // overflow: auto;
 
-  @include mobile {
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
+  // @include mobile {
+  //   padding-top: 0px;
+  //   padding-bottom: 0px;
+  // }
 
   .sliders-container {
     padding-left: 6px;

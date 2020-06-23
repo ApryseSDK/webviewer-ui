@@ -48,47 +48,47 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
         >
           {!isScrolledToStart &&
             <div
-              className={classNames({
-                "chevron-scroll": true,
-                "left": true,
-              })}
+              className={classNames(
+                'chevron-scroll',
+                'left',
+              )}
             >
               <div
-                className={classNames({
-                  "scroll-edge": true,
-                  "left": true,
-                })}
+                className={classNames(
+                  'scroll-edge',
+                  'left',
+                )}
               />
-              <div
-                className={classNames({
-                  "tool-group-button": true,
-                })}
+              <button
+                className={classNames(
+                  'tool-group-button',
+                )}
                 onClick={() => {
                   // Move two tools over
                   scrollRef.current.scrollTo(scrollRef.current.scrollLeft - 54 * 2, 0);
                 }}
               >
                 <Icon  glyph="icon-chevron-left" />
-              </div>
+              </button>
             </div>}
           {!isScrolledToEnd &&
             <div
-              className={classNames({
-                "chevron-scroll": true,
-                "right": true,
-              })}
+              className={classNames(
+                'chevron-scroll',
+                'right',
+              )}
             >
-              <div
-                className={classNames({
-                  "tool-group-button": true,
-                })}
+              <button
+                className={classNames(
+                  'tool-group-button',
+                )}
                 onClick={() => {
                   // Move two tools over
-                  scrollRef.current.scrollTo(scrollRef.current.scrollLeft + 56 * 2, 0);
+                  scrollRef.current.scrollTo(scrollRef.current.scrollLeft + 54 * 2, 0);
                 }}
               >
                 <Icon  glyph="icon-chevron-right" />
-              </div>
+              </button>
             </div>}
           <div
             className="tool-group-buttons-scroll"
