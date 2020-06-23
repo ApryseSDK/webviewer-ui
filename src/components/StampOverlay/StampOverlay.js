@@ -42,24 +42,24 @@ class StampOverlay extends React.Component {
       left: 0,
       right: 'auto',
       top: 0,
-      defaultAnnotations: [],
-      customAnnotations: [],
+      standardAnnotations: [],
+      dynamicAnnotations: [],
       isStampSelected: false,
     };
     this.stampTool = core.getTool(TOOL_NAME);
   }
 
   componentDidMount() {
-    this.getDefaultRubberStamps();
-    this.getCustomRubberStamps();
+    this.getStandardRubberStamps();
+    this.getDynamicRubberStamps();
   }
 
   componentDidUpdate(prevProps) {
     // if language changes while overlay is open we wanted update it
     const isLanguageChanged = this.props.i18n.language !== prevProps.i18n.language;
     if (isLanguageChanged) {
-      this.getDefaultRubberStamps();
-      this.getCustomRubberStamps();
+      this.getStandardRubberStamps();
+      this.getDynamicRubberStamps();
     }
   }
 
@@ -86,8 +86,8 @@ class StampOverlay extends React.Component {
     this.setState({ isStampSelected: true });
   }
 
-  getCustomRubberStamps = async() => {
-    const annotations = await this.stampTool.getCustomStampAnnotations();
+  getDynamicRubberStamps = async() => {
+    const annotations = await this.stampTool.getDynamicStampAnnotations();
     await Promise.all(
       annotations.map(annotation => {
         const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
@@ -102,16 +102,16 @@ class StampOverlay extends React.Component {
       }),
     );
 
-    const customAnnotations = annotations.map(annotation => ({
+    const dynamicAnnotations = annotations.map(annotation => ({
       annotation,
       imgSrc: annotation['ImageData'],
     }));
 
-    this.setState({ customAnnotations });
+    this.setState({ dynamicAnnotations });
   }
 
-  getDefaultRubberStamps = async() => {
-    const annotations = this.stampTool.getDefaultStampAnnotations();
+  getStandardRubberStamps = async() => {
+    const annotations = await this.stampTool.getStandardStampAnnotations();
     const previews = await Promise.all(
       annotations.map(annotation => {
         const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
@@ -126,34 +126,28 @@ class StampOverlay extends React.Component {
       }),
     );
 
-    const defaultAnnotations = annotations.map((annotation, i) => ({
+    const standardAnnotations = annotations.map((annotation, i) => ({
       annotation,
       imgSrc: previews[i],
     }));
 
-    this.setState({ defaultAnnotations });
+    this.setState({ standardAnnotations });
   }
 
   render() {
-    const { defaultAnnotations, customAnnotations } = this.state;
-    const StandardBusiness =  this.props.t(`tool.StandardBusiness`);
-    const CustomStamp = this.props.t(`tool.CustomStamps`);
+    const { standardAnnotations, dynamicAnnotations } = this.state;
+    const StandardBusiness =  this.props.t(`tool.Standard`);
+    const CustomStamp = this.props.t(`tool.Dynamic`);
 
-    const rubberStamps = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
-      <div key={index}
-        className="rubber-stamp"
-        onClick={() => {this.setRubberStamp(annotation)}}
-      >
-        <img src={imgSrc} />
+    const rubberStamps = standardAnnotations.map(({ imgSrc, annotation }, index) =>
+      <div key={index}  className="rubber-stamp" onClick={() => {this.setRubberStamp(annotation)}}>
+        <img src={imgSrc} alt=""/>
       </div>,
     );
 
-    const customImgs = customAnnotations.map(({ imgSrc, annotation }, index) =>
-      <div key={index}
-        className="rubber-stamp"
-        onClick={() => this.setRubberStamp(annotation)}
-      >
-        <img src={imgSrc} />
+    const customImgs = dynamicAnnotations.map(({ imgSrc, annotation }, index) =>
+      <div key={index} className="rubber-stamp"  onClick={() => this.setRubberStamp(annotation)}>
+        <img src={imgSrc} alt=""/>
       </div>,
     );
 
@@ -175,13 +169,13 @@ class StampOverlay extends React.Component {
           <Tabs id="rubberStampTab">
             <div className="header">
               <div className="tab-list">
-                <Tab dataElement="defaultRubberStampButton">
+                <Tab dataElement="standardStampPanelButton">
                   <div className="tab-options-button">
                     {StandardBusiness}
                   </div>
                 </Tab>
                 <div className="tab-options-divider" />
-                <Tab dataElement="customRubberStampButton">
+                <Tab dataElement="dynamicStampPanelButton">
                   <div className="tab-options-button">
                     {CustomStamp}
                   </div>
@@ -189,13 +183,13 @@ class StampOverlay extends React.Component {
               </div>
             </div>
 
-            <TabPanel dataElement="defaultRubberStamp">
-              <div className="default-stamp-container">
+            <TabPanel dataElement="standardStampPanel">
+              <div className="stadard-stamp-panel">
                 { rubberStamps }
               </div>
             </TabPanel>
-            <TabPanel dataElement="customRubberStamp">
-              <div className="custom-stamp-container">
+            <TabPanel dataElement="dynamicStampPanel">
+              <div className="dynamic-stamp-panel">
                 { customImgs }
               </div>
             </TabPanel>
