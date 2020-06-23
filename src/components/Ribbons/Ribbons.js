@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import Dropdown2 from 'components/Dropdown2/Dropdown.js';
-import DataElementWrapper from 'components/DataElementWrapper';
+import Dropdown from 'components/Dropdown';
 import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
@@ -87,7 +86,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
               "is-hidden": hasEnoughSpace,
             })}
           >
-            <Dropdown2
+            <Dropdown
               items={screens}
               translationPrefix="option.toolbarScreen"
               currentSelectionKey={currentScreen}

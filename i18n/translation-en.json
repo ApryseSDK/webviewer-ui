@@ -151,6 +151,10 @@
     "linkURLorPage": "Link URL or a Page"
   },
   "option": {
+    "notesOrder": {
+      "position": "Position",
+      "time": "Time"
+    },
     "toolbarScreen": {
       "View": "View",
       "Annotate": "Annotate",
@@ -177,8 +181,6 @@
       "single": "Single Page"
     },
     "notesPanel": {
-      "orderPosition": "Position",
-      "orderTime": "Time",
       "separator": {
         "today": "Today",
         "yesterday": "Yesterday"

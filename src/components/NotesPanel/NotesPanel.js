@@ -347,15 +347,19 @@ const NotesPanel = () => {
                     placeholder={t('message.searchCommentsPlaceholder')}
                     onChange={handleInputChange}
                   />
-                  {/* <div className="input-button" onClick={() => {}}>
-                    <Icon glyph="icon-header-search" />
-                  </div> */}
                 </div>
                 <div className="divider" />
                 <div className="sort-row">
                   <div className="sort-container">
                     <div className="label">{`Sort by:`}</div>
-                    <Dropdown items={Object.keys(getSortStrategies())} />
+                    <Dropdown
+                      items={Object.keys(getSortStrategies())}
+                      translationPrefix="option.notesOrder"
+                      currentSelectionKey={sortStrategy}
+                      onClickItem={sortStrategy => {
+                        dispatch(actions.setSortStrategy(sortStrategy));
+                      }}
+                    />
                   </div>
                 </div>
               </div>

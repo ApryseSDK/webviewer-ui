@@ -1,29 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
+import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
-
-import actions from 'actions';
-import selectors from 'selectors';
 
 import './Dropdown.scss';
 
 class Dropdown extends React.PureComponent {
   static propTypes = {
-    isDisabled: PropTypes.bool,
-    sortStrategy: PropTypes.string.isRequired,
-    setSortStrategy: PropTypes.func.isRequired,
+    onClickItem: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
+    currentSelectionKey: PropTypes.string.isRequired,
+    translationPrefix: PropTypes.string.isRequired,
     t: PropTypes.func.isRequired,
   }
 
   constructor() {
     super();
-    this.state = { isOpen: false };
-    this.sortStrategyToTranslationMap = {
-      position: 'option.notesPanel.orderPosition',
-      time: 'option.notesPanel.orderTime',
+    this.state = {
+      isOpen: false,
+      itemsWidth: 94,
     };
   }
 
@@ -31,40 +28,85 @@ class Dropdown extends React.PureComponent {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
 
-  onClickDropdown = (e, item) => {
+  onClickDropdownItem = (e, key) => {
+    const { onClickItem } = this.props;
+
     e.stopPropagation();
 
-    this.props.setSortStrategy(item);
-    this.setState({ isOpen: false });
+    onClickItem(key);
+    this.setState({
+      isOpen: false,
+    });
   }
 
-  getTranslatedContent = sortStrategy => this.props.t(this.sortStrategyToTranslationMap[sortStrategy]) || sortStrategy;
+  handleClickOutside = e => {
+    this.setState({
+      isOpen: false,
+    });
+  }
+
 
   renderDropdownItems = () => {
-    const { sortStrategy, items } = this.props;
-    const dropdownItems = items.filter(item => item !== sortStrategy);
+    const { items, currentSelectionKey, translationPrefix } = this.props;
 
-    return dropdownItems.map(item =>
-      <div key={item} className="dropdown-item" onClick={e => this.onClickDropdown(e, item)}>
-        {this.getTranslatedContent(item)}
+    return items.map(key =>
+      <div
+        key={key}
+        className={classNames({
+          "dropdown-item": true,
+          active: key === currentSelectionKey,
+        })}
+        onClick={e => this.onClickDropdownItem(e, key)}
+      >
+        {this.props.t(`${translationPrefix}.${key}`)}
       </div>,
     );
   }
 
   render() {
-    const { isDisabled, sortStrategy } = this.props;
+    const {
+      isOpen,
+      itemsWidth,
+    } = this.state;
 
-    if (isDisabled) {
-      return null;
-    }
+    const {
+      items,
+      currentSelectionKey,
+      translationPrefix,
+    } = this.props;
+
+    const selectedItem = items.find(key => key === currentSelectionKey);
 
     return (
-      <div className="old-dropdown" data-element="dropdown" onClick={this.toggleDropdown}>
-        <div className="picked-option">
-          {this.getTranslatedContent(sortStrategy)}
+      <div
+        className="Dropdown"
+        style={{ width: `${itemsWidth + 2}px` }}
+        data-element="dropdown"
+        onClick={this.toggleDropdown}
+      >
+        <div
+          className="picked-option"
+        >
+          {selectedItem &&
+            <div
+              className="picked-option-text"
+            >
+              {this.props.t(`${translationPrefix}.${currentSelectionKey}`)}
+            </div>
+          }
           <Icon className="down-arrow" glyph="icon-chevron-down" />
         </div>
-        <div className={`dropdown-items ${this.state.isOpen ? 'show' : 'hide'}`}>
+        <div
+          className={classNames({
+            "dropdown-items": true,
+            "hide": !isOpen,
+          })}
+          ref={ele => {
+            if (ele) {
+              this.setState({ itemsWidth: ele.clientWidth });
+            }
+          }}
+        >
           {this.renderDropdownItems()}
         </div>
       </div>
@@ -72,13 +114,4 @@ class Dropdown extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'dropdown'),
-  sortStrategy: selectors.getSortStrategy(state),
-});
-
-const mapDispatchToProps = {
-  setSortStrategy: actions.setSortStrategy,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dropdown));
+export default withTranslation()(onClickOutside(Dropdown));
