@@ -169,11 +169,7 @@
       "pageTransition": "Page Transition"
     },
     "documentControls": {
-<<<<<<< HEAD
       "placeholder": "Pages to select i.e. 2, 5-9"
-=======
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
->>>>>>> b34a0f3d66927c4535582e55b1afb43e380faa38
     },
     "layout": {
       "cover": "Cover Facing Page",

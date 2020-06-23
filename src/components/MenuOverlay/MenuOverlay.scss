@@ -6,49 +6,13 @@
   color: var(--text-color);
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
   border-radius: 4px;
 
-  .row {
-    width: 100%;
-    margin: 2px 0;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    padding-left: 12px;
-    padding-right: 18px;
-    cursor: pointer;
-
-    &:hover {
-      background: var(--popup-button-hover);
-    }
-
-    .MenuItem {
-      @include button-reset;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      cursor: pointer;
-      border-radius: 4px;
-
-      .MenuIcon {
-        margin: 4px;
-      }
-
-      .MenuLabel {
-        margin: 0 4px;
-        color: var(--text-color);
-      }
-    }
-  }
-
-  .Button {
-    justify-content: left;
-    width: 100%;
-    margin: 0;
+  .MenuIcon {
+    margin: 4px;
   }
 
   .MenuLabel {

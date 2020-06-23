@@ -26,19 +26,9 @@ function MenuOverlay() {
   const isFullScreen = useSelector(selectors.isFullScreen);
   const isFilePickerButtonDisabled = useSelector(state => selectors.isElementDisabled(state, 'filePickerButton'));
 
-  // const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements(['menuOverlay'])), [dispatch]);
+  const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements(['menuOverlay'])), [dispatch]);
   const setActiveLightTheme = useCallback(() => dispatch(actions.setActiveTheme('light')), [dispatch]);
   const setActiveDarkTheme = useCallback(() => dispatch(actions.setActiveTheme('dark')), [dispatch]);
-
-  const closeMenuOverlay = useCallback(e => {
-    const menuButton = document.querySelector('[data-element="menuButton"]');
-    const clickedMenuButton = menuButton?.contains(e.target);
-    if (!clickedMenuButton) {
-      closeElements(['menuOverlay']);
-    }
-  }, [closeElements]);
-
-  useOnClickOutside(overlayRef, closeMenuOverlay);
 
   useEffect(() => {
     const onDocumentLoaded = () => setDocumentType(core.getDocument().getType());
