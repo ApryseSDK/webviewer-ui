@@ -38,13 +38,16 @@
     "zoom": "ズーム",
     "zoomIn": "ズームイン",
     "zoomOut": "ズームアウト",
+    "zoomControls": "ズームコントロール",
     "draw": "ドロー",
     "type": "タイプ",
     "upload": "アップロードする",
     "link": "リンク",
     "darkMode": "ダークモード",
     "lightMode": "ライトモード",
-    "fileAttachmentDownload": "添付ファイルをダウンロード"
+    "fileAttachmentDownload": "添付ファイルをダウンロード",
+    "prevResult": "前の結果",
+    "nextResult": "次の結果"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "削除する",
       "rotateClockwise": "時計回り",
-      "rotateCounterClockwise": "反時計回り"
+      "rotateCounterClockwise": "反時計回り",
+      "extractZeroPageError": "抽出するページが選択されていません"
     },
     "richText": {
       "bold": "太字",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "（Ctrl Shift Z）",
+    "undo": "（Ctrl Z）",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

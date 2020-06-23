@@ -38,13 +38,16 @@
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
+    "zoomControls": "Zoom Controls",
     "draw": "Draw",
     "type": "Type",
     "upload": "Upload",
     "link": "Link",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
-    "fileAttachmentDownload": "Download attached file"
+    "fileAttachmentDownload": "Download attached file",
+    "prevResult": "Previous result",
+    "nextResult": "Next result"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -166,7 +169,11 @@
       "pageTransition": "Page Transition"
     },
     "documentControls": {
+<<<<<<< HEAD
       "placeholder": "Pages to select i.e. 2, 5-9"
+=======
+      "placeholder": "Enter pages to select i.e. 2, 5-9"
+>>>>>>> b34a0f3d66927c4535582e55b1afb43e380faa38
     },
     "layout": {
       "cover": "Cover Facing Page",

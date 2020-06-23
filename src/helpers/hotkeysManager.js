@@ -1,6 +1,7 @@
 import hotkeys from 'hotkeys-js';
 
 import core from 'core';
+import { isMac } from 'helpers/device';
 import openFilePicker from 'helpers/openFilePicker';
 import copyText from 'helpers/copyText';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
@@ -13,6 +14,51 @@ import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import setCurrentPage from 'helpers/setCurrentPage';
 import actions from 'actions';
 import selectors from 'selectors';
+
+// prettier-ignore
+const keyMap = {
+  "arrow":                  "A",
+  "callout":                "C",
+  "copy":                   "Control+C",
+  "delete":                 "Delete",
+  "ellipse":                "O",
+  "eraser":                 "E",
+  "freehand":               "F",
+  "freetext":               "T",
+  "highlight":              "H",
+  "line":                   "L",
+  "pan":                    "P",
+  "rectangle":              "R",
+  "rotateClockwise":        "Control+Shift+=",
+  "rotateCounterClockwise": "Control+Shift+-",
+  "select":                 "Escape",
+  "signature":              "S",
+  "squiggly":               "G",
+  "stamp":                  "I",
+  "redo":                   "Control+Shift+Z",
+  "undo":                   "Control+Z",
+  "stickyNote":             "N",
+  "strikeout":              "K",
+  "underline":              "U",
+  "zoomIn":                 "Control+=",
+  "zoomOut":                "Control+-",
+  "richText.bold":          "Control+B",
+  "richText.italic":        "Control+I",
+  "richText.underline":     "Control+L",
+  "richText.strikeout":     "Control+K",
+};
+
+export function shortcutAria(shortcut) {
+  let aria = keyMap[shortcut];
+  if (aria) {
+    if (isMac) {
+      aria = aria.replace('Control', 'Meta');
+    }
+    return aria;
+  }
+
+  return undefined;
+}
 
 const NOOP = () => {};
 

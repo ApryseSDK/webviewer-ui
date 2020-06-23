@@ -1,40 +1,28 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
-.ViewControlsOverlay {
+.FlyoutMenu {
   @extend %overlay;
-
-  display: flex;
-  flex-direction: row;
-  padding: 0px;
-  flex-wrap: nowrap;
-  border: 0px;
-  border-radius: 0px;
-  background: transparent;
-
-  padding-top: 8px;
-  padding-bottom: 8px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+
   border-radius: 4px;
   background: var(--component-background);
   box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+  padding: 6px 0;
 
-  .type {
-    margin-top: 2px;
-    margin-bottom: 8px;
-    padding-left: 12px;
-    padding-right: 18px;
-  }
-
+  // Classes that use this can add this class to any rows.
+  // TODO: if this is non-sustainable, we should maybe put this in its own
+  // component (FlyoutMenuRow?). But for now this is simple enough.
   .row {
+    width: 100%;
     margin: 2px 0;
     height: 32px;
     display: flex;
     align-items: center;
     padding-left: 12px;
     padding-right: 18px;
-    justify-content: flex-start;
     cursor: pointer;
 
     &:hover {
@@ -50,12 +38,28 @@
     }
   }
 
-  .divider{
+  // Same as .row
+  .type {
+    margin-top: 2px;
+    margin-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 18px;
+  }
+
+  // Same as .row
+  .divider {
     height: 1px;
     background: var(--divider);
-    margin: 8px 0px;
-    margin-left: 12px;
-    margin-right: 18px;
+    margin: 8px 8px;
+    width: calc(100% - 16px);
+  }
+
+  // Same as .row
+  .dividerSmall {
+    height: 1px;
+    background: var(--divider);
+    margin: 2px 8px;
+    width: calc(100% - 16px);
   }
 
   &.mobile {
@@ -86,7 +90,8 @@
       right: 0;
     }
 
-    .type, .row {
+    .type,
+    .row {
       padding: 0 24px;
     }
   }

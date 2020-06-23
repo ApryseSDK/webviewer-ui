@@ -125,7 +125,7 @@ class Slider extends React.PureComponent {
           {t(`option.slider.${displayProperty}`)}
         </div>
         <div className="slider-svg-container">
-          <svg data-element="slider" onMouseDown={this.onMouseDown} onTouchStart={this.onTouchStart} ref={this.sliderSvg}>
+          <svg data-element={dataElement} onMouseDown={this.onMouseDown} onTouchStart={this.onTouchStart} ref={this.sliderSvg}>
             <line x1={getCircleRadius(this.props.isMobile)} y1="50%" x2={circleCenter} y2="50%" strokeWidth="2" stroke="#00a5e4" strokeLinecap="round" />
             <line x1={circleCenter} y1="50%" x2={this.lineLength + getCircleRadius(this.props.isMobile)} y2="50%" strokeWidth="2" stroke="#e0e0e0" strokeLinecap="round" />
             <circle cx={circleCenter} cy="50%" r={getCircleRadius(this.props.isMobile)} fill="#00a5e4" />
