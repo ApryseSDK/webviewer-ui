@@ -6,15 +6,12 @@ import './CustomStampForums.scss';
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 
 
-
 const CustomStampForums = ({ state, setState }) => {
   const [currentUser] = useState(core.getCurrentUser());
   const [stampTextInputValue, setStampText] = useState('DRAFT');
   const [t] = useTranslation();
   const [formatInput, setFormatInput] = useState(false);
   const stampTool = core.getTool(TOOL_NAME);
-  const [timestampFormat, setTimestampFormat] = useState('DD/MM/YYYY, h:mm a');
-
   const timestampOptions = [
     { id: '1', value: 'DD/MM/YYYY, h:mm a' },
     { id: '2', value: '[By $currentUser at] h:mm a, MMMM D, YYYY' },
@@ -22,6 +19,7 @@ const CustomStampForums = ({ state, setState }) => {
     { id: '4', value: 'MMMM D, YYYY, h:mm a' },
     { id: '5', value: 'other' },
   ];
+  const [timestampFormat, setTimestampFormat] = useState(timestampOptions[0].value);
 
   const canvasRef = useRef();
   const canvasContainerRef = useRef();
@@ -34,10 +32,11 @@ const CustomStampForums = ({ state, setState }) => {
       canvas: canvasRef.current,
       title,
       subtitle: stampTool.formatMoment(subtitle.replace('$currentUser', currentUser)),
-      defaultWidth: 300,
-      defaultHeight: 100,
-      container: canvasContainerRef.current,
+      width: 300,
+      height: 100,
+      canvasParent: canvasContainerRef.current,
     };
+
     const width = stampTool.drawDynamicStamp(parameters);
     var dataURL = canvasRef.current.toDataURL();
     setState({
