@@ -17,7 +17,7 @@ import './StampOverlay.scss';
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const canvasWidth = 160;
 const canvasHeight = 58;
-
+let didOpen = false;
 
 class StampOverlay extends React.Component {
   static propTypes = {
@@ -53,11 +53,11 @@ class StampOverlay extends React.Component {
   componentDidMount() {
     this.getStandardRubberStamps();
     this.getDynamicRubberStamps();
-    this.stampTool.on('stampAdded', this.onStampAdded);
+    this.stampTool.on('stampsAdded', this.onStampAdded);
   }
 
   componentWillUnmount() {
-    this.stampTool.off('stampAdded', this.onStampAdded);
+    this.stampTool.off('stampsAdded', this.onStampAdded);
   }
 
   onStampAdded = async() => {
@@ -66,8 +66,6 @@ class StampOverlay extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // if language changes while overlay is open we wanted update it
-    const isLanChanged = this.state.language && this.props.i18n.language !== this.state.language;
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([
         'viewControlsOverlay',
@@ -77,10 +75,16 @@ class StampOverlay extends React.Component {
         'toolStylePopup',
       ]);
       this.setOverlayPosition();
-      // if (isLanChanged) {
-        this.getStandardRubberStamps();
-        this.getDynamicRubberStamps();
-      // }
+    }
+
+    // if language changes while overlay is open we wanted update it
+    // for some reason we cannot use prevPros.i18n.language to check
+    // if language changed.
+    const isLanChanged = this.props.i18n.language !== this.state.language;
+    if (isLanChanged) {
+      this.setState({ language: this.props.i18n.language });
+      this.getStandardRubberStamps();
+      this.getDynamicRubberStamps();
     }
   }
 
