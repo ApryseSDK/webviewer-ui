@@ -4,6 +4,9 @@ import { isChrome, isAndroid } from 'helpers/device';
 export const isElementDisabled = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.disabled;
 
+export const getDisabledElementsCountFromList = (state, dataElements) =>
+ dataElements.filter(dataElement => state.viewer.disabledElements[dataElement]?.disabled).length;
+
 export const isElementOpen = (state, dataElement) =>
   state.viewer.openElements[dataElement] &&
   !state.viewer.disabledElements[dataElement]?.disabled;

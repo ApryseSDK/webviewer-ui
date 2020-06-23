@@ -35,6 +35,7 @@ class PrintModal extends React.PureComponent {
     colorMap: PropTypes.object.isRequired,
     layoutMode: PropTypes.string.isRequired,
     isApplyWatermarkDisabled: PropTypes.bool,
+    disabledPrintOptionCount: PropTypes.number,
   };
 
   constructor() {
@@ -53,16 +54,19 @@ class PrintModal extends React.PureComponent {
       isWatermarkModalVisible: false,
       watermarkModalOption: null,
       existingWatermarks: null,
-      selectedPrintOption: this.allPages,
     };
   }
 
   componentDidUpdate(prevProps) {
-    const { selectedPrintOption } = this.state;
-    if(!selectedPrintOption?.current){
-      const printOptions = [this.allPages, this.currentPage, this.currentView, this.customPages];
-      const selectedOptions = printOptions.find(o => o.current?.checked)
-      this.setState({ selectedPrintOption: selectedOptions ?? printOptions.find(o => o?.current)});
+    const printOptions = [this.allPages, this.currentPage, this.currentView, this.customPages];
+    const selectedPrintOption = printOptions.find(printOption => printOption.current?.checked);
+
+    if(!selectedPrintOption){
+      const optionToSelect = printOptions.find(o => o.current)
+      if (optionToSelect && this.props.isOpen) {
+        optionToSelect.current.checked = true;
+        this.onChange();
+      }
     }
     
     if (!prevProps.isOpen && this.props.isOpen) {
@@ -92,13 +96,11 @@ class PrintModal extends React.PureComponent {
   onChange = () => {
     const { currentPage, pageLabels, layoutMode } = this.props;
     let pagesToPrint = [];
-    let selectedPrintOption = null;
 
     if (this.allPages.current?.checked) {
       for (let i = 1; i <= core.getTotalPages(); i++) {
         pagesToPrint.push(i);
       }
-      selectedPrintOption = this.allPages;
     } else if (this.currentPage.current?.checked) {
       const pageCount = core.getTotalPages();
 
@@ -126,17 +128,14 @@ class PrintModal extends React.PureComponent {
           pagesToPrint.push(currentPage);
           break;
       }
-      selectedPrintOption = this.currentPage;
     } else if (this.currentView.current?.checked) {
       pagesToPrint = [currentPage];
-      selectedPrintOption = this.currentView;
     } else if (this.customPages.current?.checked) {
       const customInput = this.customInput.current.value.replace(/\s+/g, '');
       pagesToPrint = getPageArrayFromString(customInput, pageLabels);
-      selectedPrintOption = this.customPages;
      }
 
-    this.setState({ pagesToPrint, selectedPrintOption });
+    this.setState({ pagesToPrint });
   };
 
   onFocus = () => {
@@ -509,7 +508,7 @@ class PrintModal extends React.PureComponent {
       return null;
     }
 
-    const { count, pagesToPrint, selectedPrintOption } = this.state;
+    const { count, pagesToPrint } = this.state;
     const isPrinting = count >= 0;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = (
@@ -566,7 +565,6 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={t('option.print.all')}
-                  checked={selectedPrintOption === this.allPages}
                   disabled={isPrinting}
                 />
                 <Input
@@ -576,7 +574,6 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={t('option.print.current')}
-                  checked={selectedPrintOption === this.currentPage}
                   disabled={isPrinting}
                 />
                 <Input
@@ -586,7 +583,6 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={t('option.print.view')}
-                  checked={selectedPrintOption === this.currentView}
                   disabled={isPrinting}
                 />
                 <Input
@@ -596,7 +592,6 @@ class PrintModal extends React.PureComponent {
                   name="pages"
                   type="radio"
                   label={customPagesLabelElement}
-                  checked={selectedPrintOption === this.customPages}
                   disabled={isPrinting}
                 />
                 <Input
@@ -663,10 +658,7 @@ const mapStateToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   colorMap: selectors.getColorMap(state),
   layoutMode: selectors.getDisplayMode(state),
-  printAllPageDisabled: selectors.isElementDisabled(state, 'allPagesPrintOption'),
-  printCurrentPageDisabled: selectors.isElementDisabled(state, 'currentPagePrintOption'),
-  printViewPageDisabled: selectors.isElementDisabled(state, 'currentViewPrintOption'),
-  printCustomPageDisabled: selectors.isElementDisabled(state, 'customPagesPrintOption'),
+  disabledPrintOptionCount: selectors.getDisabledElementsCountFromList(state, ['allPagesPrintOption', 'currentPagePrintOption', 'currentViewPrintOption', 'customPagesPrintOption']),
 });
 
 const mapDispatchToProps = dispatch => ({
