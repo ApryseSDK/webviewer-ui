@@ -175,7 +175,7 @@ export default {
     tab: {
       signatureModal: 'inkSignaturePanelButton',
       linkModal: 'URLPanelButton',
-      rubberStampTab: 'defaultRubberStampButton',
+      rubberStampTab: 'standardStampPanelButton',
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',

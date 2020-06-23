@@ -51,6 +51,8 @@ class StampOverlay extends React.Component {
     this.stampTool = core.getTool(TOOL_NAME);
   }
   componentDidMount() {
+    this.getStandardRubberStamps();
+    this.getDynamicRubberStamps();
     this.stampTool.on('stampAdded', this.onStampAdded);
   }
 
@@ -59,7 +61,7 @@ class StampOverlay extends React.Component {
   }
 
   onStampAdded = async() => {
-    this.getDefaultRubberStamps();
+    this.getStandardRubberStamps();
     this.getDynamicRubberStamps();
   }
 
@@ -75,8 +77,10 @@ class StampOverlay extends React.Component {
         'toolStylePopup',
       ]);
       this.setOverlayPosition();
-      this.getDefaultRubberStamps(isLanChanged);
-      this.getDynamicRubberStamps(isLanChanged);
+      // if (isLanChanged) {
+        this.getStandardRubberStamps();
+        this.getDynamicRubberStamps();
+      // }
     }
   }
 
@@ -155,7 +159,7 @@ class StampOverlay extends React.Component {
     this.setState({ dynamicAnnotations });
   }
 
-  getDefaultRubberStamps = async() => {
+  getStandardRubberStamps = async() => {
     const annotations = await this.stampTool.getStandardStampAnnotations();
     const previews = await Promise.all(
       annotations.map(annotation => {
@@ -231,21 +235,21 @@ class StampOverlay extends React.Component {
         <Tabs id="rubberStampTab">
           <div className="header">
             <div className="tab-list">
-              <Tab dataElement="defaultRubberStampButton">
+              <Tab dataElement="standardStampPanelButton">
                 <Button label={StandardBusiness} />
               </Tab>
-              <Tab dataElement="dynamicRubberStampButton">
+              <Tab dataElement="dynamicStampPanelButton">
                 <Button label={CustomStamps} />
               </Tab>
             </div>
           </div>
 
-          <TabPanel dataElement="defaultRubberStamp">
-            <div className="default-stamp-container">
+          <TabPanel dataElement="standardStampPanel">
+            <div className="standard-stamp-panel">
               { imgs }
             </div>
           </TabPanel>
-          <TabPanel dataElement="dynamicRubberStamp">
+          <TabPanel dataElement="dynamicStampPanel">
             <div className="dynamic-stamp-container">
               <div
                 className={`add-custom-stamp-button enabled`}
