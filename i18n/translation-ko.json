@@ -38,13 +38,16 @@
     "zoom": "확대/축소",
     "zoomIn": "확대",
     "zoomOut": "축소",
+    "zoomControls": "줌 컨트롤",
     "draw": "무승부",
     "type": "유형",
     "upload": "업로드",
     "link": "링크",
     "darkMode": "다크 모드",
     "lightMode": "라이트 모드",
-    "fileAttachmentDownload": "첨부 파일 다운로드"
+    "fileAttachmentDownload": "첨부 파일 다운로드",
+    "prevResult": "이전 결과",
+    "nextResult": "다음 결과"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "지우다",
       "rotateClockwise": "시계 방향",
-      "rotateCounterClockwise": "시계 반대 방향"
+      "rotateCounterClockwise": "시계 반대 방향",
+      "extractZeroPageError": "추출 할 페이지가 선택되지 않았습니다"
     },
     "richText": {
       "bold": "굵게",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

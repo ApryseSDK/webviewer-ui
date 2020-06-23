@@ -38,13 +38,16 @@
     "zoom": "Zoom",
     "zoomIn": "Aproximar",
     "zoomOut": "Afastar",
+    "zoomControls": "Controles de zoom",
     "draw": "Desenhar",
     "type": "Tipo",
     "upload": "Envio",
     "link": "Ligação",
     "darkMode": "Modo escuro",
     "lightMode": "Modo de luz",
-    "fileAttachmentDownload": "Baixar arquivo anexado"
+    "fileAttachmentDownload": "Baixar arquivo anexado",
+    "prevResult": "Resultado anterior",
+    "nextResult": "Próximo resultado"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "Excluir",
       "rotateClockwise": "Sentido horário",
-      "rotateCounterClockwise": "Sentido anti-horário"
+      "rotateCounterClockwise": "Sentido anti-horário",
+      "extractZeroPageError": "Nenhuma página foi selecionada para extrair"
     },
     "richText": {
       "bold": "Negrito",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",
