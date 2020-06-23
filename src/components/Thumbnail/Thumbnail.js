@@ -109,8 +109,10 @@ class Thumbnail extends React.PureComponent {
 
     const id = core.loadThumbnailAsync(pageNum, thumb => {
       thumb.className = 'page-image';
-      thumb.style.maxWidth = `${THUMBNAIL_SIZE}px`;
-      thumb.style.maxHeight = `${THUMBNAIL_SIZE}px`;
+
+      const ratio = Math.min(THUMBNAIL_SIZE / thumb.width, THUMBNAIL_SIZE / thumb.height);
+      thumb.style.width = `${thumb.width * ratio}px`;
+      thumb.style.height = `${thumb.height * ratio}px`;
 
       const childElement = current?.querySelector('.page-image');
       if (childElement) {

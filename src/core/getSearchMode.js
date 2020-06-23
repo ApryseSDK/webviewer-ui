@@ -1,1 +1,1 @@
-export default () => window.docViewer.SearchMode;
+export default () => window.CoreControls.Search.Mode;

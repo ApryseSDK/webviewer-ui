@@ -38,13 +38,16 @@
     "zoom": "Zoom",
     "zoomIn": "Heranzoomen",
     "zoomOut": "Rauszoomen",
+    "zoomControls": "Zoomsteuerung",
     "draw": "Zeichnen",
     "type": "Art",
     "upload": "Hochladen",
     "link": "Verknüpfung",
     "darkMode": "Dunkler Modus",
     "lightMode": "Lichtmodus",
-    "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter"
+    "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter",
+    "prevResult": "Vorheriges Ergebnis",
+    "nextResult": "Nächstes Ergebnis"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -264,7 +267,8 @@
     "thumbnailPanel": {
       "delete": "Löschen",
       "rotateClockwise": "Im Uhrzeigersinn",
-      "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
+      "extractZeroPageError": "Es wurden keine Seiten zum Extrahieren ausgewählt"
     },
     "richText": {
       "bold": "Fett",
@@ -303,6 +307,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Strg-Umschalttaste Z)",
+    "undo": "(Strg Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

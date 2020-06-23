@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 
 import Button from 'components/Button';
 
@@ -11,13 +10,12 @@ import useMedia from 'hooks/useMedia';
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
 
-import './ToggleElementButton.scss';
-
 const ToggleElementButton = ({
   onClick,
   dataElement,
   isElementDisabled,
   isActive,
+  ariaLabel,
   ...restProps
 }) => {
   if (isElementDisabled) {
@@ -25,16 +23,7 @@ const ToggleElementButton = ({
   }
 
   return (
-    <div
-      className={classNames({
-        'toggle-element-button': true,
-        active: isActive,
-      })}
-      data-element={dataElement}
-      onClick={onClick}
-    >
-      <Button isActive={isActive} {...restProps} />
-    </div>
+    <Button {...restProps} isActive={isActive} dataElement={dataElement} onClick={onClick} ariaLabel={ariaLabel} />
   );
 };
 

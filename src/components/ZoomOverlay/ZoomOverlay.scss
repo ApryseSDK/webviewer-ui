@@ -1,64 +1,30 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
-.ZoomOverlay {
-  @extend %overlay;
-
+.ZoomItem {
+  @include button-reset;
   display: flex;
   flex-direction: row;
-  padding: 0px;
-  flex-wrap: nowrap;
-  border: 0px;
-  border-radius: 0px;
-  background: transparent;
+  align-items: center;
+  padding: 2px 6px;
+  padding-right: 19px;
+  cursor: pointer;
+  width: 100%;
 
-  .ZoomContainer {
-    padding: 6px 0px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
-    background: var(--component-background);
-    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-
-    .ZoomItem {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 2px 6px;
-      padding-right: 19px;
-      cursor: pointer;
-
-      &:hover {
-        background: var(--popup-button-hover);
-      }
-
-      .ZoomIcon {
-        margin: 4px;
-      }
-
-      .ZoomLabel {
-        margin: 0 4px;
-      }
-    }
+  &:hover {
+    background: var(--popup-button-hover);
   }
 
-  .spacer {
-    margin: 2px 10px;
-    height: 1px;
-    background: var(--divider);
-
-    &.extraMarginTop {
-      margin-top: 6px;
-    }
+  .ZoomIcon {
+    margin: 4px;
   }
 
-  .tool-button {
-    width: auto;
+  .ZoomLabel {
+    margin: 0 4px;
   }
+}
 
-  .OverlayItem {
-    &:hover {
-      background: var(--popup-button-hover);
-    }    
-  }
+// High specificity to override ".tool-button.Button"
+button.tool-button.ZoomToolButton {
+  width: auto;
 }

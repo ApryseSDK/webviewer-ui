@@ -187,7 +187,7 @@ const AnnotationPopup = () => {
   };
 
   return (
-    <Draggable cancel=".Button, .cell, [data-element=slider]">
+    <Draggable cancel=".Button, .cell, .sliders-container svg">
       <div
         className={classNames({
           Popup: true,

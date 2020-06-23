@@ -5,15 +5,13 @@ import { connect } from 'react-redux';
 import onClickOutside from 'react-onclickoutside';
 
 import Icon from 'components/Icon';
+import Choice from '../Choice/Choice';
 
 import core from 'core';
-import getClassName from 'helpers/getClassName';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
 import selectors from 'selectors';
 import debounce from 'lodash/debounce';
-
-import { Choice } from '@pdftron/webviewer-react-toolkit';
 
 import './SearchOverlay.scss';
 
@@ -55,9 +53,6 @@ class SearchOverlay extends React.PureComponent {
     setIsProgrammaticSearchFull: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     setSearchError: PropTypes.func.isRequired,
-    isCaseSensitiveDisabled: PropTypes.bool,
-    isWholeWordDisabled: PropTypes.bool,
-    isWildcardDisabled: PropTypes.bool.isRequired,
   }
 
   constructor() {
@@ -160,9 +155,9 @@ class SearchOverlay extends React.PureComponent {
     let noResult = true;
     const handleSearchResult = result => {
       const foundResult =
-        result.resultCode === window.XODText.ResultCode.e_found;
+        result.resultCode === window.CoreControls.Search.ResultCode.FOUND;
       const isSearchDone =
-        result.resultCode === window.XODText.ResultCode.e_done;
+        result.resultCode === window.CoreControls.Search.ResultCode.DONE;
 
       if (foundResult) {
         resultIndex++;
@@ -206,34 +201,34 @@ class SearchOverlay extends React.PureComponent {
       isAmbientString,
     } = this.props;
     const {
-      e_case_sensitive,
-      e_whole_word,
-      e_wild_card,
-      e_regex,
-      e_page_stop,
-      e_highlight,
-      e_search_up,
-      e_ambient_string,
+      CASE_SENSITIVE,
+      WHOLE_WORLD,
+      WILD_CARD,
+      REGEX,
+      PAGE_STOP,
+      HIGHLIGHT,
+      SEARCH_UP,
+      AMBIENT_STRING,
     } = core.getSearchMode();
-    let searchMode = e_page_stop | e_highlight;
+    let searchMode = PAGE_STOP | HIGHLIGHT;
 
     if (isCaseSensitive) {
-      searchMode |= e_case_sensitive;
+      searchMode |= CASE_SENSITIVE;
     }
     if (isWholeWord) {
-      searchMode |= e_whole_word;
+      searchMode |= WHOLE_WORLD;
     }
     if (isWildcard) {
-      searchMode |= e_wild_card;
+      searchMode |= WILD_CARD;
     }
     if (isRegex) {
-      searchMode |= e_regex;
+      searchMode |= REGEX;
     }
     if (isSearchUp && !isFull) {
-      searchMode |= e_search_up;
+      searchMode |= SEARCH_UP;
     }
     if (isAmbientString || isFull) {
-      searchMode |= e_ambient_string;
+      searchMode |= AMBIENT_STRING;
     }
 
     return searchMode;
@@ -246,7 +241,7 @@ class SearchOverlay extends React.PureComponent {
       return true;
     }
 
-    const inSamePage = activeResult.page_num === result.page_num;
+    const inSamePage = activeResult.pageNum === result.pageNum;
     const hasSameCoordinates =
       Object.values(activeResult.quads[0]).toString() ===
       Object.values(result.quads[0]).toString();
@@ -263,7 +258,7 @@ class SearchOverlay extends React.PureComponent {
       resetSearch,
     } = this.props;
     const searchMode = isSearchUp
-      ? this.getSearchMode() | core.getSearchMode().e_search_up
+      ? this.getSearchMode() | core.getSearchMode().SEARCH_UP
       : this.getSearchMode();
     const isFullSearch = false;
 
@@ -277,9 +272,9 @@ class SearchOverlay extends React.PureComponent {
     resetSearch();
     const handleSearchResult = result => {
       const foundResult =
-        result.resultCode === window.XODText.ResultCode.e_found;
+        result.resultCode === window.CoreControls.Search.ResultCode.FOUND;
       const isSearchDone =
-        result.resultCode === window.XODText.ResultCode.e_done;
+        result.resultCode === window.CoreControls.Search.ResultCode.DONE;
 
       if (foundResult) {
         this.foundSingleSearchResult = true;
@@ -473,9 +468,6 @@ class SearchOverlay extends React.PureComponent {
       isCaseSensitive,
       isWholeWord,
       isSearching,
-      isCaseSensitiveDisabled,
-      isWholeWordDisabled,
-      isWildcardDisabled,
     } = this.props;
 
     if (isDisabled) {
@@ -494,54 +486,54 @@ class SearchOverlay extends React.PureComponent {
             value={searchValue}
             placeholder={t('message.searchDocumentPlaceholder')}
           />
-          <button className="input-button" onClick={this.search}>
+          <button
+            className="input-button"
+            onClick={this.search}
+            aria-label={t('message.searchDocumentPlaceholder')}
+          >
             <Icon glyph="icon-header-search" />
           </button>
         </div>
         <div className="options">
-          {!isCaseSensitiveDisabled && (
-            <Choice
-              data-element="caseSensitiveSearchOption"
-              id="case-sensitive-option"
-              ref={this.caseSensitiveInput}
-              onChange={this.onChangeCaseSensitive}
-              label={t('option.searchPanel.caseSensitive')}
-            />
-          )}
-          {!isWholeWordDisabled && (
-            <Choice
-              data-element="wholeWordSearchOption"
-              id="whole-word-option"
-              ref={this.wholeWordInput}
-              onChange={this.onChangeWholeWord}
-              label={t('option.searchPanel.wholeWordOnly')}
-            />
-          )}
-          {!isWildcardDisabled && (
-            <Choice
-              data-element="wildCardSearchOption"
-              id="wild-card-option"
-              ref={this.wildcardInput}
-              onChange={this.onChangeWildcard}
-              label={t('option.searchPanel.wildcard')}
-            />
-          )}
+          <Choice
+            dataElement="caseSensitiveSearchOption"
+            id="case-sensitive-option"
+            ref={this.caseSensitiveInput}
+            onChange={this.onChangeCaseSensitive}
+            label={t('option.searchPanel.caseSensitive')}
+          />
+          <Choice
+            dataElement="wholeWordSearchOption"
+            id="whole-word-option"
+            ref={this.wholeWordInput}
+            onChange={this.onChangeWholeWord}
+            label={t('option.searchPanel.wholeWordOnly')}
+          />
+          <Choice
+            dataElement="wildCardSearchOption"
+            id="wild-card-option"
+            ref={this.wildcardInput}
+            onChange={this.onChangeWildcard}
+            label={t('option.searchPanel.wildcard')}
+          />
         </div>
         <div className="divider" />
         <div className="footer">
           {<div>{results.length} {t('message.numResultsFound')}</div>}
           <div className="buttons">
-            <button className="button" onClick={this.onClickPrevious}>
-              <Icon
-                className="arrow"
-                glyph="icon-chevron-left"
-              />
+            <button
+              className="button"
+              onClick={this.onClickPrevious}
+              aria-label={t('action.prevResult')}
+            >
+              <Icon className="arrow" glyph="icon-chevron-left" />
             </button>
-            <button className="button" onClick={this.onClickNext}>
-              <Icon
-                className="arrow"
-                glyph="icon-chevron-right"
-              />
+            <button
+              className="button"
+              onClick={this.onClickNext}
+              aria-label={t('action.nextResult')}
+            >
+              <Icon className="arrow" glyph="icon-chevron-right" />
             </button>
           </div>
         </div>
@@ -569,9 +561,6 @@ const mapStateToProps = state => ({
   searchListeners: selectors.getSearchListeners(state),
   isDisabled: selectors.isElementDisabled(state, 'searchOverlay'),
   isOpen: selectors.isElementOpen(state, 'searchOverlay'),
-  isCaseSensitiveDisabled: selectors.isElementDisabled(state, 'caseSensitiveSearchOption'),
-  isWholeWordDisabled: selectors.isElementDisabled(state, 'wholeWordSearchOption'),
-  isWildcardDisabled: selectors.isElementDisabled(state, 'wildCardSearchOption'),
 });
 
 const mapDispatchToProps = {
