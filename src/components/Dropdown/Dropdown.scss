@@ -1,6 +1,7 @@
 @import '../../constants/styles';
 
 .Dropdown {
+  @include button-reset;
   display: flex;
   user-select: none;
   justify-content: space-between;
@@ -45,6 +46,7 @@
     overflow:hidden; // necessary so that children respect border-radius on hover
 
     .dropdown-item {
+      @include button-reset;
       height: 28px;
       padding-left: 8px;
       padding-right: 4px;

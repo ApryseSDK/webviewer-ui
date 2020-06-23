@@ -45,12 +45,11 @@ class Dropdown extends React.PureComponent {
     });
   }
 
-
   renderDropdownItems = () => {
     const { items, currentSelectionKey, translationPrefix } = this.props;
 
     return items.map(key =>
-      <div
+      <button
         key={key}
         className={classNames({
           "dropdown-item": true,
@@ -59,7 +58,7 @@ class Dropdown extends React.PureComponent {
         onClick={e => this.onClickDropdownItem(e, key)}
       >
         {this.props.t(`${translationPrefix}.${key}`)}
-      </div>,
+      </button>,
     );
   }
 
@@ -78,7 +77,7 @@ class Dropdown extends React.PureComponent {
     const selectedItem = items.find(key => key === currentSelectionKey);
 
     return (
-      <div
+      <button
         className="Dropdown"
         style={{ width: `${itemsWidth + 2}px` }}
         data-element="dropdown"
@@ -109,7 +108,7 @@ class Dropdown extends React.PureComponent {
         >
           {this.renderDropdownItems()}
         </div>
-      </div>
+      </button>
     );
   }
 }

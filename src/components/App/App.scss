@@ -25,20 +25,8 @@
     border-radius: 10px;
     background-color: var(--scrollbar-color);
     border-top: 2px solid transparent;
-
-    // breaks horizontal scroll
-    // border-bottom: 2px solid transparent;
-    // background-clip: padding-box;
   }
 }
-
-// .DocumentContainer::-webkit-scrollbar {
-//   width: 7px;
-
-//   &:horizontal {
-//     height: 7px;
-//   }
-// }
 
 .DocumentContainer {
   border-right: 3px solid transparent;
@@ -59,6 +47,7 @@ html, body , #app {
 input, button, label, textarea, form, select, #app {
   font-size: 13px;
   font-family: 'Lato', sans-serif;
+  color: var(--text-color);
 
   @include mobile {
     font-size : 16px;
