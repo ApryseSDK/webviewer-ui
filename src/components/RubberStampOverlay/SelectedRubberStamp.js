@@ -43,22 +43,6 @@ const SelectedSignatureRow = () => {
     }
   });
 
-<<<<<<< HEAD
-  const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
-  const onStampsAdded = () => {
-    dispatch(actions.setStandardStamps(t));
-    dispatch(actions.setDynamicStamps(t));
-  };
-
-  useEffect(() => {
-    rubberStampTool.on('stampsAdded', onStampsAdded);
-    return () => {
-      rubberStampTool.off('stampsAdded', onStampsAdded);
-    };
-  }, []);
-
-=======
->>>>>>> parent of 0e6cb079... Update
   const [isToolStyleOpen] = useSelector(
     state => [
       selectors.isElementOpen(state, 'toolStylePopup'),

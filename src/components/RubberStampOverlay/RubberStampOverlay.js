@@ -35,20 +35,6 @@ class RubberStampOverlay extends React.Component {
     super(props);
     this.stampTool = core.getTool(TOOL_NAME);
   }
-  // componentDidMount() {
-  //   // this.getStandardRubberStamps();
-  //   // this.getDynamicRubberStamps();
-  //   // this.props.setStandardStamps(this.props.t);
-  //   // this.props.setDynamicdStamps(this.props.t);
-  //   this.stampTool.on('stampsAdded', this.onStampAdded);
-  // }
-  // componentWillUnmount() {
-  //   this.stampTool.off('stampsAdded', this.onStampAdded);
-  // }
-  // onStampAdded = () => {
-  //   this.props.setStandardStamps(this.props.t);
-  //   this.props.setDynamicdStamps(this.props.t);
-  // }
 
   setRubberStamp(annotation, index) {
     const { closeElement, setSelectedStamp } = this.props;
@@ -59,38 +45,7 @@ class RubberStampOverlay extends React.Component {
     this.stampTool.showPreview();
     this.props.setSelectedStampIndex(index);
   }
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-=======
->>>>>>> parent of db73a019... Update 2
-  openCustomSampModal = () => {
-    const { openElement } = this.props;
-    openElement('customStampModal');
-  }
-  render() {
-    const { isMobile, standardStamps, dynamicStamps } = this.props;
-
-    const StandardLabel =  this.props.t(`tool.Standard`);
-    const DynamicLabel = this.props.t(`tool.Dynamic`);
-    const ButtonLabel = this.props.t(`component.createStampButton`);
-
-    const rubberStamps = standardStamps.map(({ imgSrc, annotation }, index) =>
-      <div key={index} className="rubber-stamp" onClick={() => this.setRubberStamp(annotation, index)}>
-        <img src={imgSrc} alt="" />
-      </div>,
-    );
-
-    const customImgs = dynamicStamps.map(({ imgSrc, annotation }, index) =>
-      <div key={index}  className="stamp-row">
-        <div className="stamp-row-content">
-          <img src={imgSrc} alt=""/>
-        </div>
-
-        <div className="icon" onClick={() => deleteSignature(i)}>
-          <Icon glyph="icon-delete-line"/>
-        </div>
-=======
   render() {
     const { isMobile, defaultStamps } = this.props;
 
@@ -102,12 +57,7 @@ class RubberStampOverlay extends React.Component {
         }}
       >
         <img src={imgSrc} />
->>>>>>> parent of 0e6cb079... Update
       </div>,
-      // <div key={index} className="rubber-stamp-2"  onClick={() => this.setRubberStamp(annotation, index)}>
-      //   <img src={imgSrc} alt=""/>
-      //   <Icon glyph="icon-delete-line"/>
-      // </div>,
     );
 
     return (
@@ -128,54 +78,9 @@ class RubberStampOverlay extends React.Component {
             className="rubber-stamp-overlay"
             data-element="rubberStampOverlay"
           >
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            {/* <div className="default-stamps-container">
-              {rubberStamps}
-            </div> */}
-
->>>>>>> parent of db73a019... Update 2
-            <Tabs id="rubberStampTab">
-              <div className="header">
-                <div className="tab-list">
-                  <Tab dataElement="standardStampPanelButton">
-                    <div className="tab-options-button">
-                      {StandardLabel}
-                    </div>
-                  </Tab>
-                  <div className="tab-options-divider" />
-                  <Tab dataElement="dynamicStampPanelButton">
-                    <div className="tab-options-button">
-                      {DynamicLabel}
-                    </div>
-                  </Tab>
-                </div>
-              </div>
-
-              <TabPanel dataElement="standardStampPanel">
-                <div className="stadard-stamp-panel">
-                  { rubberStamps }
-                </div>
-              </TabPanel>
-              <TabPanel dataElement="dynamicStampPanel">
-                <div className="dynamic-stamp-panel">
-                  { customImgs }
-                </div>
-                  <div className={`add-dynamic-stamp-button enabled`}
-                    onClick={this.openCustomSampModal}
-                    data-element={'add-dynamic-stamp-button'}
-                  >
-                    {ButtonLabel}
-                 </div>
-              </TabPanel>
-            </Tabs>
-
-=======
             <div className="default-stamps-container">
               {rubberStamps}
             </div>
->>>>>>> parent of 0e6cb079... Update
           </div>
         </Swipeable>
       </div>
