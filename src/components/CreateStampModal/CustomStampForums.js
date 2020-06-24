@@ -31,7 +31,7 @@ const CustomStampForums = ({ state, setState }) => {
     var parameters = {
       canvas: canvasRef.current,
       title,
-      subtitle: stampTool.formatMoment(subtitle.replace('$currentUser', currentUser)),
+      subtitle,
       width: 300,
       height: 100,
       canvasParent: canvasContainerRef.current,
