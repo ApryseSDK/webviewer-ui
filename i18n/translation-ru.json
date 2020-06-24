@@ -60,8 +60,11 @@
     "eraser": "ластик",
     "fileattachment": "Файл вложения",
     "freehand": "От руки",
+    "freehand2": "От руки",
     "freetext": "Текст",
+    "freetext2": "Текст",
     "highlight": "Выделить",
+    "highlight2": "Выделить",
     "line": "Линия",
     "perimeterMeasurement": "Периметр",
     "polygon": "Многоугольник",
@@ -104,23 +107,31 @@
     "SBRejected": "Отклонено"
   },
   "component": {
+    "freehandToolsButton": "Инструменты",
+    "freeHandAndShapeToolsButton": "Инструменты Freehand / Shape",
     "leftPanel": "Панель",
     "toolsHeader": "инструменты",
     "searchOverlay": "Поиск",
     "searchPanel": "Поиск",
     "menuOverlay": "Меню",
+    "miscToolsButton": "Другие инструменты",
+    "signatureToolsButton": "Инструменты подписи",
     "notesPanel": "Заметки",
     "outlinesPanel": "Контуры",
     "bookmarksPanel": "закладки",
     "newBookmark": "Новая закладка",
     "bookmarkPage": "страница",
     "layersPanel": "Слои",
+    "shapeToolsButton": "Фигуры",
+    "textToolsButton": "Инструменты для работы с текстом",
+    "freeTextToolsButton": "Бесплатные текстовые инструменты",
+    "stickyToolsButton": "Инструменты комментариев",
     "thumbnailsPanel": "Эскизы",
     "toolsButton": "Инструменты",
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
-    "calibration": "калибровка",
-    "createStampButton": "Создать новую марку"
+    "measurementToolsButton": "Инструменты для замерения",
+    "calibration": "калибровка"
   },
   "message": {
     "toolsOverlayNoPresets": "Нет пресетов",
@@ -152,18 +163,6 @@
     "linkURLorPage": "Ссылка URL или страница"
   },
   "option": {
-    "notesOrder": {
-      "position": "Позиция",
-      "time": "Время"
-    },
-    "toolbarScreen": {
-      "View": "Посмотреть",
-      "Annotate": "Пометки",
-      "Draw": "Привлечь",
-      "Insert": "Вставить",
-      "Measure": "Мера",
-      "Edit": "редактировать"
-    },
     "annotationColor": {
       "StrokeColor": "Цвет границ",
       "FillColor": "Цвет заливки",
@@ -182,6 +181,8 @@
       "single": "Единый"
     },
     "notesPanel": {
+      "orderPosition": "Позиция",
+      "orderTime": "Время",
       "separator": {
         "today": "Сегодня",
         "yesterday": "Вчера"
@@ -205,9 +206,6 @@
       "caseSensitive": "С учетом регистра",
       "wholeWordOnly": "Всё слово",
       "wildcard": "Поиск по шаблону"
-    },
-    "stampOverlay": {
-      "addStamp": "Добавить новый штамп"
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"
@@ -277,11 +275,6 @@
       "italic": "курсивный",
       "underline": "Подчеркнутый",
       "strikeout": "Зачеркнутый"
-    },
-    "customStampModal": {
-      "stampText": "Штамп текст:",
-      "timestampText": "Текст метки времени:",
-      "stampColor": "Цвет марки:"
     }
   },
   "warning": {
@@ -332,9 +325,7 @@
     "pan": "Панорамирование",
     "select": "Выделить",
     "Marquee": "Увеличить выделение",
-    "Link": "Ссылка URL или Страница",
-    "Standard": "стандарт",
-    "Dynamic": "динамический"
+    "Link": "Ссылка URL или Страница"
   },
   "link": {
     "url": "URL",
