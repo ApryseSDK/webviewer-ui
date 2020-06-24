@@ -44,7 +44,7 @@ const CustomStampForums = ({ state, setState }) => {
       width,
       title,
       subtitle,
-      height: parameters.defaultHeight,
+      height: parameters.height,
       dataURL,
     });
   };
