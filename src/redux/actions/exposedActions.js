@@ -4,6 +4,7 @@ import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
 import defaultTool from 'constants/defaultTool';
+import { PRIORITY_THREE } from 'constants/actionPriority';
 
 export const setCanUndo = canUndo => ({
   type: 'SET_CAN_UNDO',
@@ -56,7 +57,14 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
 
   dispatch({
     type: 'DISABLE_ELEMENTS',
-    payload: { dataElements: screensToDisable, priority: 3 },
+    payload: { dataElements: screensToDisable, priority: PRIORITY_THREE },
+  });
+};
+
+export const disableToolbarScreen = screen => dispatch => {
+  dispatch({
+    type: 'DISABLE_ELEMENTS',
+    payload: { dataElements: [`screen-${screen}`], priority: PRIORITY_THREE },
   });
 };
 
