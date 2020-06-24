@@ -87,7 +87,7 @@ WebViewer(...)
 const Header = {
   initialize(viewerState) {
     this.headers = viewerState.headers;
-    this.toolButtonObjects = viewerState.toolButtonObjects[viewerState.screen];
+    this.toolButtonObjects = viewerState.toolButtonObjects;
     this.headerGroup = 'default';
     this.index = -1;
 
