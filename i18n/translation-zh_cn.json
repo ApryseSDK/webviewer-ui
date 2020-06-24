@@ -55,6 +55,7 @@
     "callout": "标注",
     "crop": "裁剪页面",
     "caret": "插入符号",
+    "countMeasurement": "计数测量",
     "distanceMeasurement": "距离测量",
     "ellipse": "椭圆",
     "eraser": "橡皮",
@@ -237,7 +238,9 @@
       "distanceMeasurement": "距离测量",
       "perimeterMeasurement": "周长测量",
       "areaMeasurement": "面积测量",
-      "radius": "半径"
+      "countMeasurement": "计数测量",
+      "radius": "半径",
+      "count": "计数"
     },
     "measurementOption": {
       "scale": "比例"

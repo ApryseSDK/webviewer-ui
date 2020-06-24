@@ -55,6 +55,7 @@
     "callout": "설명선",
     "crop": "자르기 페이지",
     "caret": "캐럿",
+    "countMeasurement": "카운트 측정",
     "distanceMeasurement": "거리 측정",
     "ellipse": "타원",
     "eraser": "지우개",
@@ -237,7 +238,9 @@
       "distanceMeasurement": "거리 측정",
       "perimeterMeasurement": "둘레 측정",
       "areaMeasurement": "면적 측정",
-      "radius": "반지름"
+      "countMeasurement": "카운트 측정",
+      "radius": "반지름",
+      "count": "카운트"
     },
     "measurementOption": {
       "scale": "배율"

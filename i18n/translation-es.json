@@ -55,6 +55,7 @@
     "callout": "Llamada",
     "crop": "Recortar página",
     "caret": "Circunflejo",
+    "countMeasurement": "Medida de conteo",
     "distanceMeasurement": "Medición de distancia",
     "ellipse": "Elipse",
     "eraser": "Borrador",
@@ -237,7 +238,9 @@
       "distanceMeasurement": "Medición de distancia",
       "perimeterMeasurement": "Medición del perímetro",
       "areaMeasurement": "Medición del área",
-      "radius": "Radio"
+      "countMeasurement": "Medida de conteo",
+      "radius": "Radio",
+      "count": "Contar"
     },
     "measurementOption": {
       "scale": "Escala"

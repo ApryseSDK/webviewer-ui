@@ -55,6 +55,7 @@
     "callout": "圖說文字",
     "crop": "裁剪頁面",
     "caret": "插入號",
+    "countMeasurement": "計數測量",
     "distanceMeasurement": "測量距離",
     "ellipse": "橢圓",
     "eraser": "橡皮",
@@ -237,7 +238,9 @@
       "distanceMeasurement": "測量距離",
       "perimeterMeasurement": "測量周長",
       "areaMeasurement": "測量面積",
-      "radius": "半徑"
+      "countMeasurement": "計數測量",
+      "radius": "半徑",
+      "count": "計數"
     },
     "measurementOption": {
       "scale": "比例"

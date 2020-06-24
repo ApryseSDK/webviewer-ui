@@ -55,6 +55,7 @@
     "callout": "Callout",
     "crop": "Seite zuschneiden",
     "caret": "Caret",
+    "countMeasurement": "Zählmessung",
     "distanceMeasurement": "Abstandsmessung",
     "ellipse": "Ellipse",
     "eraser": "Radiergummi",
@@ -237,7 +238,9 @@
       "distanceMeasurement": "Abstandsmessung",
       "perimeterMeasurement": "Umfangsmessung",
       "areaMeasurement": "Flächenmessung",
-      "radius": "Radius"
+      "countMeasurement": "Zählmessung",
+      "radius": "Radius",
+      "count": "Anzahl"
     },
     "measurementOption": {
       "scale": "Maßstab"
