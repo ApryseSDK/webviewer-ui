@@ -3,19 +3,26 @@
 
 .rubber-stamp-overlay {
   margin-left: 0px;
+<<<<<<< HEAD
+=======
+  margin-right: 2px;
+>>>>>>> parent of 0e6cb079... Update
   margin-bottom: 8px;
-  .tab-panel {
-    margin-right: -5px;
-  }
+
   @include mobile {
     margin-bottom: 0px;
     margin-right: 0px;
     padding-top: 12px;
   }
+<<<<<<< HEAD
   .dynamic-stamp-panel {
     height: 266px;
   }
   .stadard-stamp-panel {
+=======
+
+  .default-stamps-container {
+>>>>>>> parent of 0e6cb079... Update
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -24,8 +31,12 @@
     align-content: flex-start;
     height: 300px;
     overflow-y: scroll;
+<<<<<<< HEAD
   }
   .stadard-stamp-panel, .dynamic-stamp-panel {
+=======
+    padding-right: 14px;
+>>>>>>> parent of 0e6cb079... Update
 
     @include mobile {
       height: 236px;
@@ -37,6 +48,7 @@
       border-radius: 4px;
       flex-basis: 50%;
       cursor: pointer;
+<<<<<<< HEAD
 
       &:hover {
         background: var(--popup-button-hover);
@@ -52,6 +64,10 @@
       cursor: pointer;
       display: flex;
       align-items: baseline;
+=======
+      display: flex;
+      align-items: center;
+>>>>>>> parent of 0e6cb079... Update
 
       &:hover {
         background: var(--popup-button-hover);
@@ -61,6 +77,7 @@
         width: 100%;
       }
     }
+<<<<<<< HEAD
 
     .stamp-row {
       display: flex;
@@ -197,5 +214,7 @@
       border: 1px solid #17324C;
       color: #FFFFFF;
     }
+=======
+>>>>>>> parent of 0e6cb079... Update
   }
 }

@@ -31,7 +31,6 @@ import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
-import CreateStampModal from 'components/CreateStampModal';
 
 import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
@@ -105,7 +104,6 @@ const App = ({ removeEventHandlers }) => {
         <PasswordModal />
         <ProgressModal />
         <CalibrationModal />
-        <CreateStampModal />
         <LinkModal />
       </div>
 
