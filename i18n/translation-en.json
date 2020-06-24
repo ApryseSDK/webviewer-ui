@@ -119,7 +119,8 @@
     "toolsButton": "Tools",
     "redaction": "Redaction",
     "viewControlsOverlay": "View Controls",
-    "calibration": "Calibration"
+    "calibration": "Calibration",
+    "createStampButton": "Create New Stamp"
   },
   "message": {
     "toolsOverlayNoPresets": "No Presets",
@@ -276,6 +277,11 @@
       "italic": "Italic",
       "underline": "Underline",
       "strikeout": "Strikeout"
+    },
+    "customStampModal" : {
+      "stampText": "Stamp text:",
+      "timestampText": "Timestamp text:",
+      "stampColor": "Stamp color:"
     }
   },
   "warning": {
@@ -327,7 +333,9 @@
     "pan": "Pan",
     "select": "Select",
     "Marquee": "Marquee Zoom",
-    "Link": "Link URL or Page"
+    "Link": "Link URL or Page",
+    "Standard": "Standard",
+    "Dynamic": "Dynamic"
   },
   "link": {
     "url": "URL",

@@ -1,9 +1,10 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
-export const getDefaultStamps = state => state.viewer.defaultStamps;
+export const getStandardStamps = state => state.viewer.standardStamps;
+export const getDynamicStamps = state => state.viewer.dynamicStamps;
 export const getSelectedStampIndex = state => state.viewer.selectedStampIndex;
-export const getSelectedStamp = state => getDefaultStamps(state)[getSelectedStampIndex(state)];
+export const getSelectedStamp = state => getStandardStamps(state)[getSelectedStampIndex(state)];
 export const getSavedSignatures = state => state.viewer.savedSignatures;
 export const getSelectedSignatureIndex = state => state.viewer.selectedSignatureIndex;
 export const getSelectedSignature = state => getSavedSignatures(state)[getSelectedSignatureIndex(state)];
