@@ -52,9 +52,9 @@ const SelectedSignatureRow = () => {
   };
 
   useEffect(() => {
-    rubberStampTool.on('stampsAdded', onStampsAdded);
+    rubberStampTool.on('stampsUpdated', onStampsAdded);
     return () => {
-      rubberStampTool.off('stampsAdded', onStampsAdded);
+      rubberStampTool.off('stampsUpdated', onStampsAdded);
     };
   }, []);
 

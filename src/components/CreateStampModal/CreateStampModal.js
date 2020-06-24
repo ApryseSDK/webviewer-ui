@@ -39,6 +39,9 @@ const CustomStampModal = () => {
     stampTool.setRubberStamp(annot);
     stampTool.showPreview();
     dispatch(actions.closeElement('customStampModal'));
+    const standardStampCount = stampTool.getStandardStamps().length;
+    const dynamicStampCount = stampTool.getDynamicStamps().length;
+    dispatch(actions.setSelectedStampIndex(standardStampCount + dynamicStampCount - 1));
   };
 
   return (

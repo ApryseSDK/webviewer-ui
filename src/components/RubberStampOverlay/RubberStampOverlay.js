@@ -37,20 +37,6 @@ class RubberStampOverlay extends React.Component {
     super(props);
     this.stampTool = core.getTool(TOOL_NAME);
   }
-  // componentDidMount() {
-  //   // this.getStandardRubberStamps();
-  //   // this.getDynamicRubberStamps();
-  //   // this.props.setStandardStamps(this.props.t);
-  //   // this.props.setDynamicdStamps(this.props.t);
-  //   this.stampTool.on('stampsAdded', this.onStampAdded);
-  // }
-  // componentWillUnmount() {
-  //   this.stampTool.off('stampsAdded', this.onStampAdded);
-  // }
-  // onStampAdded = () => {
-  //   this.props.setStandardStamps(this.props.t);
-  //   this.props.setDynamicdStamps(this.props.t);
-  // }
 
   setRubberStamp(annotation, index) {
     const { closeElement, setSelectedStamp } = this.props;
@@ -61,10 +47,18 @@ class RubberStampOverlay extends React.Component {
     this.stampTool.showPreview();
     this.props.setSelectedStampIndex(index);
   }
+
   openCustomSampModal = () => {
     const { openElement } = this.props;
     openElement('customStampModal');
   }
+
+  deleteDynamicStamp = index => {
+    const stamps = this.stampTool.getDynamicStamps();
+    stamps.splice(index, 1);
+    this.stampTool.setDynamicStamps(stamps);
+  }
+
   render() {
     const { isMobile, standardStamps, dynamicStamps } = this.props;
 
@@ -80,18 +74,13 @@ class RubberStampOverlay extends React.Component {
 
     const customImgs = dynamicStamps.map(({ imgSrc, annotation }, index) =>
       <div key={index}  className="stamp-row">
-        <div className="stamp-row-content">
+        <div className="stamp-row-content" onClick={() => this.setRubberStamp(annotation, standardStamps.length + index)}>
           <img src={imgSrc} alt=""/>
         </div>
-
-        <div className="icon" onClick={() => deleteSignature(i)}>
+        <div className="icon" onClick={() => this.deleteDynamicStamp(index)}>
           <Icon glyph="icon-delete-line"/>
         </div>
       </div>,
-      // <div key={index} className="rubber-stamp-2"  onClick={() => this.setRubberStamp(annotation, index)}>
-      //   <img src={imgSrc} alt=""/>
-      //   <Icon glyph="icon-delete-line"/>
-      // </div>,
     );
 
     return (
@@ -112,10 +101,6 @@ class RubberStampOverlay extends React.Component {
             className="rubber-stamp-overlay"
             data-element="rubberStampOverlay"
           >
-            {/* <div className="default-stamps-container">
-              {rubberStamps}
-            </div> */}
-
             <Tabs id="rubberStampTab">
               <div className="header">
                 <div className="tab-list">

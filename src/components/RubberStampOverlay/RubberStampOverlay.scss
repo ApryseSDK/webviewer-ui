@@ -3,7 +3,6 @@
 
 .rubber-stamp-overlay {
   margin-left: 0px;
-  // margin-right: 2px;
   margin-bottom: 8px;
   .tab-panel {
     margin-right: -5px;
@@ -13,13 +12,20 @@
     margin-right: 0px;
     padding-top: 12px;
   }
-
-  .stadard-stamp-panel, .dynamic-stamp-panel {
+  .dynamic-stamp-panel {
+    height: 266px;
+  }
+  .stadard-stamp-panel {
     display: flex;
+    align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
+    flex-flow: row wrap;
+    align-content: flex-start;
     height: 300px;
     overflow-y: scroll;
+  }
+  .stadard-stamp-panel, .dynamic-stamp-panel {
 
     @include mobile {
       height: 236px;
@@ -31,8 +37,6 @@
       border-radius: 4px;
       flex-basis: 50%;
       cursor: pointer;
-      display: flex;
-      align-items: baseline;
 
       &:hover {
         background: var(--popup-button-hover);
@@ -63,6 +67,7 @@
       flex-direction: row;
       height: 50px;
       justify-content: space-between;
+
 
       @include mobile {
         justify-content: center;
@@ -96,7 +101,9 @@
           max-width: 100%;
           max-height: 100%;
         }
-
+        &:hover {
+          background: var(--popup-button-hover);
+        }
         &.interactable {
           &:hover {
             background: var(--tools-overlay-button-hover);
