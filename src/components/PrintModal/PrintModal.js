@@ -197,9 +197,8 @@ class PrintModal extends React.PureComponent {
         );
         this.positionCanvas(canvas, pageIndex);
 
-        if (this.state.includeAnnotations) {
-          await this.drawAnnotationsOnCanvas(canvas, pageNumber);
-        }
+        await this.drawAnnotationsOnCanvas(canvas, pageNumber);
+
         const img = document.createElement('img');
         img.src = canvas.toDataURL();
         img.onload = () => {
@@ -263,17 +262,28 @@ class PrintModal extends React.PureComponent {
   };
 
   drawAnnotationsOnCanvas = (canvas, pageNumber) => {
-    const annotations = core
+    core.getAnnotationsList().forEach(annot => {
+      const isWidgetAnnotation = annot instanceof window.Annotations.WidgetAnnotation;
+      // only print widget annotations when include annoations print option disabled
+      if (!this.state.includeAnnotations && !isWidgetAnnotation) {
+        annot.Printable = false;
+      // reset Printable option
+      } else {
+        annot.Printable = true;
+      }
+    });
+
+    const widgetAnnotations = core
       .getAnnotationsList()
       .filter(
         annot =>
           annot.PageNumber === pageNumber && annot instanceof window.Annotations.WidgetAnnotation
       );
-
-    if (annotations.length === 0) {
+    // just draw markup annotations
+    if (widgetAnnotations.length === 0) {
       return core.drawAnnotations(pageNumber, canvas);
     }
-
+    // draw all annotations
     const widgetContainer = this.createWidgetContainer(pageNumber - 1);
     return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
       document.body.appendChild(widgetContainer);
