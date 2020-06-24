@@ -38,13 +38,16 @@
     "zoom": "縮放",
     "zoomIn": "放大",
     "zoomOut": "縮小",
+    "zoomControls": "縮放控制",
     "draw": "畫",
     "type": "類型",
     "upload": "上載",
     "link": "鏈接",
     "darkMode": "暗模式",
     "lightMode": "燈光模式",
-    "fileAttachmentDownload": "下載附件"
+    "fileAttachmentDownload": "下載附件",
+    "prevResult": "先前的結果",
+    "nextResult": "下一個結果"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
