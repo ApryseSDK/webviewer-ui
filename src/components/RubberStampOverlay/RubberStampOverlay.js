@@ -7,6 +7,8 @@ import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 import useMedia from 'hooks/useMedia';
+import { Tabs, Tab, TabPanel } from 'components/Tabs';
+import Icon from 'components/Icon';
 
 import { Swipeable } from 'react-swipeable';
 
@@ -35,20 +37,6 @@ class RubberStampOverlay extends React.Component {
     super(props);
     this.stampTool = core.getTool(TOOL_NAME);
   }
-  // componentDidMount() {
-  //   // this.getStandardRubberStamps();
-  //   // this.getDynamicRubberStamps();
-  //   // this.props.setStandardStamps(this.props.t);
-  //   // this.props.setDynamicdStamps(this.props.t);
-  //   this.stampTool.on('stampsAdded', this.onStampAdded);
-  // }
-  // componentWillUnmount() {
-  //   this.stampTool.off('stampsAdded', this.onStampAdded);
-  // }
-  // onStampAdded = () => {
-  //   this.props.setStandardStamps(this.props.t);
-  //   this.props.setDynamicdStamps(this.props.t);
-  // }
 
   setRubberStamp(annotation, index) {
     const { closeElement, setSelectedStamp } = this.props;
@@ -59,15 +47,18 @@ class RubberStampOverlay extends React.Component {
     this.stampTool.showPreview();
     this.props.setSelectedStampIndex(index);
   }
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-=======
->>>>>>> parent of db73a019... Update 2
   openCustomSampModal = () => {
     const { openElement } = this.props;
     openElement('customStampModal');
   }
+
+  deleteDynamicStamp = index => {
+    const stamps = this.stampTool.getDynamicStamps();
+    stamps.splice(index, 1);
+    this.stampTool.setDynamicStamps(stamps);
+  }
+
   render() {
     const { isMobile, standardStamps, dynamicStamps } = this.props;
 
@@ -83,31 +74,13 @@ class RubberStampOverlay extends React.Component {
 
     const customImgs = dynamicStamps.map(({ imgSrc, annotation }, index) =>
       <div key={index}  className="stamp-row">
-        <div className="stamp-row-content">
+        <div className="stamp-row-content" onClick={() => this.setRubberStamp(annotation, standardStamps.length + index)}>
           <img src={imgSrc} alt=""/>
         </div>
-
-        <div className="icon" onClick={() => deleteSignature(i)}>
+        <div className="icon" onClick={() => this.deleteDynamicStamp(index)}>
           <Icon glyph="icon-delete-line"/>
         </div>
-=======
-  render() {
-    const { isMobile, defaultStamps } = this.props;
-
-    const rubberStamps = defaultStamps.map(({ imgSrc, annotation }, index) =>
-      <div key={index}
-        className="rubber-stamp"
-        onClick={() => {
-          this.setRubberStamp(annotation, index);
-        }}
-      >
-        <img src={imgSrc} />
->>>>>>> parent of 0e6cb079... Update
       </div>,
-      // <div key={index} className="rubber-stamp-2"  onClick={() => this.setRubberStamp(annotation, index)}>
-      //   <img src={imgSrc} alt=""/>
-      //   <Icon glyph="icon-delete-line"/>
-      // </div>,
     );
 
     return (
@@ -128,14 +101,6 @@ class RubberStampOverlay extends React.Component {
             className="rubber-stamp-overlay"
             data-element="rubberStampOverlay"
           >
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            {/* <div className="default-stamps-container">
-              {rubberStamps}
-            </div> */}
-
->>>>>>> parent of db73a019... Update 2
             <Tabs id="rubberStampTab">
               <div className="header">
                 <div className="tab-list">
@@ -171,11 +136,6 @@ class RubberStampOverlay extends React.Component {
               </TabPanel>
             </Tabs>
 
-=======
-            <div className="default-stamps-container">
-              {rubberStamps}
-            </div>
->>>>>>> parent of 0e6cb079... Update
           </div>
         </Swipeable>
       </div>
@@ -189,7 +149,8 @@ const mapStateToProps = state => ({
   isActive: selectors.getActiveToolName(state) === TOOL_NAME,
   toolButtonObjects: selectors.getToolButtonObjects(state),
   dataElement: selectors.getToolButtonObjects(state)[TOOL_NAME].dataElement,
-  defaultStamps: selectors.getDefaultStamps(state),
+  standardStamps: selectors.getStandardStamps(state),
+  dynamicStamps: selectors.getDynamicStamps(state),
 });
 
 const mapDispatchToProps = {
@@ -198,6 +159,8 @@ const mapDispatchToProps = {
   openElement: actions.openElement,
   toggleElement: actions.toggleElement,
   setSelectedStampIndex: actions.setSelectedStampIndex,
+  setStandardStamps: actions.setStandardStamps,
+  setDynamicStamps: actions.setDynamicStamps,
 };
 
 const ConnectedRubberStampOverlay = connect(

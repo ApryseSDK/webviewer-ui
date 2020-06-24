@@ -370,6 +370,7 @@ export default {
     tab: {
       signatureModal: 'inkSignaturePanelButton',
       linkModal: 'URLPanelButton',
+      rubberStampTab: 'standardStampPanelButton',
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
@@ -413,7 +414,8 @@ export default {
     userData: [],
     customMeasurementOverlay: [],
     noteTransformFunction: null,
-    defaultStamps: [],
+    standardStamps: [],
+    dynamicStamps: [],
     selectedStampIndex: 0,
     savedSignatures: [],
     selectedSignatureIndex: 0,

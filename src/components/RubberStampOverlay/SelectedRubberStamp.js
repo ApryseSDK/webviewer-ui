@@ -32,18 +32,19 @@ const SelectedSignatureRow = () => {
   ]);
 
   useEffect(() => {
-    dispatch(actions.setDefaultStamps(t));
+    dispatch(actions.setStandardStamps(t));
+    dispatch(actions.setDynamicStamps(t));
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     const isLanguageChanged = prevLanguage !== i18n.language;
     if (isLanguageChanged) {
-      dispatch(actions.setDefaultStamps(t));
+      dispatch(actions.setStandardStamps(t));
+      dispatch(actions.setDynamicStamps(t));
     }
   });
 
-<<<<<<< HEAD
   const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
   const onStampsAdded = () => {
     dispatch(actions.setStandardStamps(t));
@@ -51,20 +52,18 @@ const SelectedSignatureRow = () => {
   };
 
   useEffect(() => {
-    rubberStampTool.on('stampsAdded', onStampsAdded);
+    rubberStampTool.on('stampsUpdated', onStampsAdded);
     return () => {
-      rubberStampTool.off('stampsAdded', onStampsAdded);
+      rubberStampTool.off('stampsUpdated', onStampsAdded);
     };
   }, []);
 
-=======
->>>>>>> parent of 0e6cb079... Update
   const [isToolStyleOpen] = useSelector(
     state => [
       selectors.isElementOpen(state, 'toolStylePopup'),
     ],
   );
-  const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
+
   return (
     <div
       className="selected-rubber-stamp-container"

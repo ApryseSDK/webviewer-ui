@@ -27,10 +27,15 @@ export default initialState => (state = initialState, action) => {
         ...state,
         selectedSignatureIndex: payload.index,
       };
-    case 'SET_DEFAULT_STAMPS':
+    case 'SET_STANDARD_STAMPS':
       return {
         ...state,
-        defaultStamps: payload.defaultStamps,
+        standardStamps: payload.standardStamps,
+      };
+    case 'SET_DYNAMIC_STAMPS':
+      return {
+        ...state,
+        dynamicStamps: payload.dynamicStamps,
       };
     case 'SET_SAVED_SIGNATURES':
       return {

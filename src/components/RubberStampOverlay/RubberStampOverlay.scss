@@ -3,49 +3,29 @@
 
 .rubber-stamp-overlay {
   margin-left: 0px;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  margin-right: 2px;
->>>>>>> parent of 0e6cb079... Update
-=======
-  // margin-right: 2px;
->>>>>>> parent of db73a019... Update 2
   margin-bottom: 8px;
-
+  .tab-panel {
+    margin-right: -5px;
+  }
   @include mobile {
     margin-bottom: 0px;
     margin-right: 0px;
     padding-top: 12px;
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
   .dynamic-stamp-panel {
     height: 266px;
   }
   .stadard-stamp-panel {
-=======
-
-  .default-stamps-container {
->>>>>>> parent of 0e6cb079... Update
-=======
-
-  .stadard-stamp-panel, .dynamic-stamp-panel {
->>>>>>> parent of db73a019... Update 2
     display: flex;
+    align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
+    flex-flow: row wrap;
+    align-content: flex-start;
     height: 300px;
     overflow-y: scroll;
-<<<<<<< HEAD
-<<<<<<< HEAD
   }
   .stadard-stamp-panel, .dynamic-stamp-panel {
-=======
-    padding-right: 14px;
->>>>>>> parent of 0e6cb079... Update
-=======
->>>>>>> parent of db73a019... Update 2
 
     @include mobile {
       height: 236px;
@@ -57,12 +37,6 @@
       border-radius: 4px;
       flex-basis: 50%;
       cursor: pointer;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      display: flex;
-      align-items: baseline;
->>>>>>> parent of db73a019... Update 2
 
       &:hover {
         background: var(--popup-button-hover);
@@ -78,10 +52,6 @@
       cursor: pointer;
       display: flex;
       align-items: baseline;
-=======
-      display: flex;
-      align-items: center;
->>>>>>> parent of 0e6cb079... Update
 
       &:hover {
         background: var(--popup-button-hover);
@@ -91,13 +61,13 @@
         width: 100%;
       }
     }
-<<<<<<< HEAD
 
     .stamp-row {
       display: flex;
       flex-direction: row;
       height: 50px;
       justify-content: space-between;
+
 
       @include mobile {
         justify-content: center;
@@ -131,7 +101,9 @@
           max-width: 100%;
           max-height: 100%;
         }
-
+        &:hover {
+          background: var(--popup-button-hover);
+        }
         &.interactable {
           &:hover {
             background: var(--tools-overlay-button-hover);
@@ -225,7 +197,5 @@
       border: 1px solid #17324C;
       color: #FFFFFF;
     }
-=======
->>>>>>> parent of 0e6cb079... Update
   }
 }

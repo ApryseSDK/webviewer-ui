@@ -1,10 +1,9 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
-export const getDefaultStamps = state => state.viewer.defaultStamps;
+export const getStandardStamps = state => state.viewer.standardStamps;
+export const getDynamicStamps = state => state.viewer.dynamicStamps;
 export const getSelectedStampIndex = state => state.viewer.selectedStampIndex;
-<<<<<<< HEAD
-<<<<<<< HEAD
 export const getSelectedStamp = state => {
   const standardStamps = getStandardStamps(state);
   const dynamicStamps = getDynamicStamps(state);
@@ -16,12 +15,6 @@ export const getSelectedStamp = state => {
   }
   return selectedStamp;
 };
-=======
-export const getSelectedStamp = state => getDefaultStamps(state)[getSelectedStampIndex(state)];
->>>>>>> parent of 0e6cb079... Update
-=======
-export const getSelectedStamp = state => getStandardStamps(state)[getSelectedStampIndex(state)];
->>>>>>> parent of db73a019... Update 2
 export const getSavedSignatures = state => state.viewer.savedSignatures;
 export const getSelectedSignatureIndex = state => state.viewer.selectedSignatureIndex;
 export const getSelectedSignature = state => getSavedSignatures(state)[getSelectedSignatureIndex(state)];
