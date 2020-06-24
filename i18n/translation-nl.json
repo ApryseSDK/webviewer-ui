@@ -313,8 +313,8 @@
     "select": "Selecteer",
     "Marquee": "Marquee Zoom",
     "Link": "Link-URL of pagina",
-    "StandardBusiness": "Standaardzaken",
-    "CustomStamps": "Aangepaste stempels"
+    "Standard": "Standaard",
+    "Dynamic": "Dynamisch"
   },
   "link": {
     "url": "URL",

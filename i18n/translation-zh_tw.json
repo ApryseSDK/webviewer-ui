@@ -313,8 +313,8 @@
     "select": "選擇",
     "Marquee": "選框縮放",
     "Link": "鏈接網址或頁面",
-    "StandardBusiness": "標準業務",
-    "CustomStamps": "定制郵票"
+    "Standard": "標準",
+    "Dynamic": "動態"
   },
   "link": {
     "url": "網址",

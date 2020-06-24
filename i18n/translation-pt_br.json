@@ -313,8 +313,8 @@
     "select": "Selecione",
     "Marquee": "Marquee Zoom",
     "Link": "URL ou página do link",
-    "StandardBusiness": "Negócios Padrão",
-    "CustomStamps": "Selos personalizados"
+    "Standard": "Padrão",
+    "Dynamic": "Dinâmico"
   },
   "link": {
     "url": "URL",

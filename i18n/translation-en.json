@@ -314,8 +314,8 @@
     "select": "Select",
     "Marquee": "Marquee Zoom",
     "Link": "Link URL or Page",
-    "StandardBusiness": "Standard Business",
-    "CustomStamps": "Custom Stamps"
+    "Standard": "Standard",
+    "Dynamic": "Dynamic"
   },
   "link": {
     "url": "URL",

@@ -313,8 +313,8 @@
     "select": "选择",
     "Marquee": "选框缩放",
     "Link": "链接网址或页面",
-    "StandardBusiness": "标准业务",
-    "CustomStamps": "定制邮票"
+    "Standard": "标准",
+    "Dynamic": "动态"
   },
   "link": {
     "url": "网址",

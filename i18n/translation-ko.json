@@ -313,8 +313,8 @@
     "select": "고르다",
     "Marquee": "마키 줌",
     "Link": "링크 URL 또는 페이지",
-    "StandardBusiness": "표준 비즈니스",
-    "CustomStamps": "맞춤 스탬프"
+    "Standard": "표준",
+    "Dynamic": "동적"
   },
   "link": {
     "url": "URL",

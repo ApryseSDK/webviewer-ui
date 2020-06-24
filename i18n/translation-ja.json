@@ -313,8 +313,8 @@
     "select": "選択する",
     "Marquee": "マーキーズーム",
     "Link": "リンクURLまたはページ",
-    "StandardBusiness": "標準的なビジネス",
-    "CustomStamps": "カスタム切手"
+    "Standard": "標準",
+    "Dynamic": "動的"
   },
   "link": {
     "url": "URL",

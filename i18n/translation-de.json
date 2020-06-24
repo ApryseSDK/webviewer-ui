@@ -313,8 +313,8 @@
     "select": "Wählen",
     "Marquee": "Festzelt Zoom",
     "Link": "Link URL oder Seite",
-    "StandardBusiness": "Standardgeschäft",
-    "CustomStamps": "Benutzerdefinierte Briefmarken"
+    "Standard": "Standard",
+    "Dynamic": "Dynamisch"
   },
   "link": {
     "url": "URL",

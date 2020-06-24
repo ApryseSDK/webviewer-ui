@@ -313,8 +313,8 @@
     "select": "Выбрать",
     "Marquee": "Marquee Zoom",
     "Link": "Ссылка URL или Страница",
-    "StandardBusiness": "Стандарт Бизнес",
-    "CustomStamps": "Пользовательские марки"
+    "Standard": "стандарт",
+    "Dynamic": "динамический"
   },
   "link": {
     "url": "URL",

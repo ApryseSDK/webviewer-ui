@@ -17,7 +17,7 @@ import './StampOverlay.scss';
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const canvasWidth = 160;
 const canvasHeight = 58;
-let didOpen = false;
+
 
 class StampOverlay extends React.Component {
   static propTypes = {
@@ -53,11 +53,11 @@ class StampOverlay extends React.Component {
   componentDidMount() {
     this.getStandardRubberStamps();
     this.getDynamicRubberStamps();
-    this.stampTool.on('stampsAdded', this.onStampAdded);
+    this.stampTool.on('stampsUpdated', this.onStampAdded);
   }
 
   componentWillUnmount() {
-    this.stampTool.off('stampsAdded', this.onStampAdded);
+    this.stampTool.off('stampsUpdated', this.onStampAdded);
   }
 
   onStampAdded = async() => {
@@ -197,8 +197,8 @@ class StampOverlay extends React.Component {
       return null;
     }
 
-    const StandardBusiness =  this.props.t(`tool.StandardBusiness`);
-    const CustomStamps = this.props.t(`tool.CustomStamps`);
+    const StandardLabel =  this.props.t(`tool.Standard`);
+    const DynamicLabel = this.props.t(`tool.Dynamic`);
     const ButtonLabel = this.props.t(`component.createStampButton`);
 
     let imgs = null;
@@ -240,10 +240,10 @@ class StampOverlay extends React.Component {
           <div className="header">
             <div className="tab-list">
               <Tab dataElement="standardStampPanelButton">
-                <Button label={StandardBusiness} />
+                <Button label={StandardLabel} />
               </Tab>
               <Tab dataElement="dynamicStampPanelButton">
-                <Button label={CustomStamps} />
+                <Button label={DynamicLabel} />
               </Tab>
             </div>
           </div>

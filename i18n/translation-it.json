@@ -313,8 +313,8 @@
     "select": "Selezionare",
     "Marquee": "Zoom tendone",
     "Link": "Link URL o Pagina",
-    "StandardBusiness": "Business standard",
-    "CustomStamps": "Francobolli personalizzati"
+    "Standard": "Standard",
+    "Dynamic": "Dinamico"
   },
   "link": {
     "url": "URL",

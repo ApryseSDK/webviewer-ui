@@ -313,8 +313,8 @@
     "select": "Sélectionner",
     "Marquee": "Zoom de sélection",
     "Link": "URL de lien ou page",
-    "StandardBusiness": "Affaires standard",
-    "CustomStamps": "Timbres personnalisés"
+    "Standard": "la norme",
+    "Dynamic": "Dynamique"
   },
   "link": {
     "url": "URL",
