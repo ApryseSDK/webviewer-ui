@@ -38,13 +38,16 @@
     "zoom": "ズーム",
     "zoomIn": "ズームイン",
     "zoomOut": "ズームアウト",
+    "zoomControls": "ズームコントロール",
     "draw": "ドロー",
     "type": "タイプ",
     "upload": "アップロードする",
     "link": "リンク",
     "darkMode": "ダークモード",
     "lightMode": "ライトモード",
-    "fileAttachmentDownload": "添付ファイルをダウンロード"
+    "fileAttachmentDownload": "添付ファイルをダウンロード",
+    "prevResult": "前の結果",
+    "nextResult": "次の結果"
   },
   "annotation": {
     "areaMeasurement": "面積測定",

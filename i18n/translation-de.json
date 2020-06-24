@@ -38,13 +38,16 @@
     "zoom": "Zoom",
     "zoomIn": "Heranzoomen",
     "zoomOut": "Rauszoomen",
+    "zoomControls": "Zoomsteuerung",
     "draw": "Zeichnen",
     "type": "Art",
     "upload": "Hochladen",
     "link": "Verknüpfung",
     "darkMode": "Dunkler Modus",
     "lightMode": "Lichtmodus",
-    "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter"
+    "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter",
+    "prevResult": "Vorheriges Ergebnis",
+    "nextResult": "Nächstes Ergebnis"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",

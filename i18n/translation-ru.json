@@ -38,13 +38,16 @@
     "zoom": "Увеличить",
     "zoomIn": "Увеличить",
     "zoomOut": "Уменьшить",
+    "zoomControls": "Управление масштабированием",
     "draw": "Привлечь",
     "type": "Тип",
     "upload": "Загрузить",
     "link": "Ссылка на сайт",
     "darkMode": "Темный режим",
     "lightMode": "Легкий режим",
-    "fileAttachmentDownload": "Скачать прикрепленный файл"
+    "fileAttachmentDownload": "Скачать прикрепленный файл",
+    "prevResult": "Предыдущий результат",
+    "nextResult": "Следующий результат"
   },
   "annotation": {
     "areaMeasurement": "Площадь",

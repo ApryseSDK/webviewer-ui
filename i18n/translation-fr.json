@@ -38,13 +38,16 @@
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
     "zoomOut": "Dézoomer",
+    "zoomControls": "Commandes de zoom",
     "draw": "Dessiner",
     "type": "Type",
     "upload": "Télécharger",
     "link": "Lien",
     "darkMode": "Mode sombre",
     "lightMode": "Mode lumière",
-    "fileAttachmentDownload": "Télécharger le fichier joint"
+    "fileAttachmentDownload": "Télécharger le fichier joint",
+    "prevResult": "Résultat précédent",
+    "nextResult": "Résultat suivant"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",

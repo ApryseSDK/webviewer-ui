@@ -2,9 +2,11 @@ import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
+import { shortcutAria } from 'helpers/hotkeysManager';
 
 import selectors from 'selectors';
 
@@ -20,9 +22,12 @@ const propTypes = {
   dataElement: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  /** Will override translated title if both given. */
+  ariaLabel: PropTypes.string,
 };
 
 const Button = props => {
+
   const [removeElement, customOverrides = {}] = useSelector(
     state => [
       selectors.isElementDisabled(state, props.dataElement),
@@ -44,7 +49,14 @@ const Button = props => {
     className,
     title,
     style,
+    ariaLabel,
   } = { ...props, ...customOverrides };
+  const [t] = useTranslation();
+
+  const aLabel = ariaLabel || title ? t(title) : undefined;
+
+  const shortcutKey = title ? title.slice(title.indexOf('.') + 1) : undefined;
+  const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
 
   const isBase64 = img?.trim().startsWith('data:');
 
@@ -70,6 +82,8 @@ const Button = props => {
       style={style}
       data-element={dataElement}
       onClick={onClick}
+      aria-label={aLabel}
+      aria-keyshortcuts={ariaKeyshortcuts}
     >
       {isGlyph && <Icon glyph={imgToShow} color={color} />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
