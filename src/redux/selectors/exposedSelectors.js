@@ -59,7 +59,7 @@ export const getToolsHeaderItems = state => {
 };
 
 export const getToolButtonObjects = state => {
-  return state.viewer.toolButtonObjects['default'];
+  return state.viewer.toolButtonObjects;
 };
 
 export const getActiveToolNamesForActiveToolGroup = state => {

@@ -90,7 +90,7 @@ export const setToolbarScreen = screen => (dispatch, getState) => {
   };
 
   const getFirstToolNameForGroup = (state, toolGroup) => {
-    const tools = state.viewer.toolButtonObjects.default;
+    const tools = state.viewer.toolButtonObjects;
     const firstTool = Object.keys(tools).find(key => {
       return tools[key].group === toolGroup;
     });
