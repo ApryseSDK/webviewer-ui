@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
@@ -12,20 +12,26 @@ const propTypes = {
   items: PropTypes.array.isRequired,
   currentSelectionKey: PropTypes.string.isRequired,
   translationPrefix: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired,
 };
 
 function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }) {
   const [t] = useTranslation();
 
+  const overlayRef = useRef(null);
+  const buttonRef = useRef(null);
+
   const [isOpen, setIsOpen] = useState(false);
+
   const [itemsWidth, setItemsWidth] = useState(94);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (overlayRef.current && overlayRef.current.clientWidth !== items.itemsWidth) {
+      setItemsWidth(overlayRef.current.clientWidth || 94);
+    }
+  });
 
   const onClose = useCallback(() => setIsOpen(false), []);
   const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
-
-  const overlayRef = useRef(null);
-  const buttonRef = useRef(null);
 
   useArrowFocus(isOpen, onClose, overlayRef);
 
@@ -76,17 +82,7 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
           <Icon className="down-arrow" glyph="icon-chevron-down" />
         </div>
       </button>
-      <div
-        className={classNames('Dropdown__items', { 'hide': !isOpen })}
-        ref={overlayRef}
-        // ref={elem => {
-        //     if (elem && elem.clientWidth !== items.itemsWidth) {
-        //     overlayRef.current = elem;
-        //     // TODO: this is hacky, but somehow works when normal refs don't.
-        //     setItemsWidth(elem.clientWidth);
-        //   }
-        // }}
-      >
+      <div className={classNames('Dropdown__items', { 'hide': !isOpen })} ref={overlayRef}>
         {renderDropdownItems()}
       </div>
     </div>
