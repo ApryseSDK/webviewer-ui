@@ -18,18 +18,13 @@ $button-width-m: 41px;
 $button-height-m: 41px;
 $search-overlay-height-m: 61px;
 
-// Colors
-$gray87: #212121;
-$gray54: #757575;
-$gray20: #cdcdcd;
-$gray12: #e0e0e0;
-$gray10: #e6e6e6;
-$gray4: #f5f5f5;
+// TODO: Remove
+// Old Colors
 $white: #fff;
 $pdftron-blue: #00a5e4; // TODO: confirm that this is what we want
 
+// TODO: Remove
 // Light theme
-$line-color: $gray10;
 $document-bg-color: $white;
 
 // Shadows
@@ -41,6 +36,9 @@ $tablet-width: 900px;
 $mobile-width: 640px;
 
 $signature-modal-shared-color: #e1e1e3;
+
+// Dark defaults for new ui:
+$gray-3: #343A40;
 
 %open {
   &.open {

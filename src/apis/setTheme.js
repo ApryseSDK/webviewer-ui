@@ -4,9 +4,7 @@ import selectors from 'selectors';
 import { parse } from 'helpers/cssVariablesParser';
 
 import lightModeString from '!!raw-loader!../constants/light.scss';
-import lightToolsMobileString from '!!raw-loader!../constants/lightToolsMobile.scss';
 import darkModeString from '!!raw-loader!../constants/dark.scss';
-import darkToolsMobileString from '!!raw-loader!../constants/darkToolsMobile.scss';
 
 /**
  * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
@@ -20,23 +18,7 @@ WebViewer(...)
   });
  */
 
-const mobileListener = window.matchMedia('(max-width: 640px)');
-const tabletListener = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
-const desktopListener = window.matchMedia('(min-width: 901px)');
-
 export default store => {
-  mobileListener.addListener(() => {
-    updateColours(store);
-  });
-
-  tabletListener.addListener(() => {
-    updateColours(store);
-  });
-
-  desktopListener.addListener(() => {
-    updateColours(store);
-  });
-
   let previousActiveTheme;
   store.subscribe(() => {
     const activeTheme = selectors.getActiveTheme(store.getState());
@@ -64,27 +46,9 @@ const setVariables = (themeVarString = '') => {
 
 const updateColours = store => {
   const activeTheme = selectors.getActiveTheme(store.getState());
-  if (window.matchMedia('(max-width: 640px)').matches) {
-    if (activeTheme === 'light') {
-      setVariables(lightModeString);
-      setVariables(lightToolsMobileString);
-    } else if (activeTheme === 'dark') {
-      setVariables(darkModeString);
-      setVariables(darkToolsMobileString);
-    }
-  } else if (window.matchMedia('(max-width: 900px)').matches) {
-    if (activeTheme === 'light') {
-      setVariables(lightModeString);
-      setVariables(lightToolsMobileString);
-    } else if (activeTheme === 'dark') {
-      setVariables(darkModeString);
-      setVariables(darkToolsMobileString);
-    }
-  } else {
-    if (activeTheme === 'light') {
-      setVariables(lightModeString);
-    } else if (activeTheme === 'dark') {
-      setVariables(darkModeString);
-    }
+  if (activeTheme === 'light') {
+    setVariables(lightModeString);
+  } else if (activeTheme === 'dark') {
+    setVariables(darkModeString);
   }
 };
