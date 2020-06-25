@@ -42,7 +42,7 @@ class HeaderItems extends React.PureComponent {
               if (!handledToolGroupButtons) {
                 handledToolGroupButtons = true;
 
-                return <ToolGroupButtonsScroll toolGroupButtonsItems={toolGroupButtonsItems} />;
+                return <ToolGroupButtonsScroll key={key} toolGroupButtonsItems={toolGroupButtonsItems} />;
               }
               return null;
             case 'toggleElementButton':
@@ -58,6 +58,7 @@ class HeaderItems extends React.PureComponent {
               return <div key={key} className={`${type} ${mediaQueryClassName}`}></div>;
             default:
               console.warn(`${type} is not a valid header item type.`);
+              return null;
           }
         })}
       </div>
