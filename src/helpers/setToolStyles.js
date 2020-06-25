@@ -9,16 +9,16 @@ export const MEASUREMENT_TOOL_NAMES = [
 ];
 
 export default (toolName, property, value) => {
-  let tools = [];
+  const tools = [];
 
   // if (MEASUREMENT_TOOL_NAMES.includes(toolName)) {
   //   // currently we want to keep the styles of measurement tools sync
   //   tools = MEASUREMENT_TOOL_NAMES.map(core.getTool);
   // } else {
-    const tool = core.getTool(toolName);
-    if (tool) {
-      tools.push(tool);
-    }
+  const tool = core.getTool(toolName);
+  if (tool) {
+    tools.push(tool);
+  }
   // }
 
   tools.forEach(tool => {
