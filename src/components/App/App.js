@@ -68,7 +68,6 @@ const App = ({ removeEventHandlers }) => {
     };
     tabletBreakpoint.addListener(onBreakpoint);
 
-    dispatch(actions.disableToolbarScreen('Insert'));
     return removeEventHandlers;
     // eslint-disable-next-line
   }, []);

@@ -1,116 +1,93 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import onClickOutside from 'react-onclickoutside';
 import classNames from 'classnames';
-import { withTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
-
+import useOnClickOutside from 'hooks/useOnClickOutside';
+import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
 
-class Dropdown extends React.PureComponent {
-  static propTypes = {
-    onClickItem: PropTypes.func.isRequired,
-    items: PropTypes.array.isRequired,
-    currentSelectionKey: PropTypes.string.isRequired,
-    translationPrefix: PropTypes.string.isRequired,
-    t: PropTypes.func.isRequired,
-  }
+const propTypes = {
+  onClickItem: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+  currentSelectionKey: PropTypes.string.isRequired,
+  translationPrefix: PropTypes.string.isRequired,
+};
 
-  constructor() {
-    super();
-    this.state = {
-      isOpen: false,
-      itemsWidth: 94,
-    };
-  }
+function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }) {
+  const [t] = useTranslation();
 
-  toggleDropdown = () => {
-    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
-  }
+  const overlayRef = useRef(null);
+  const buttonRef = useRef(null);
 
-  onClickDropdownItem = (e, key) => {
-    const { onClickItem } = this.props;
+  const [isOpen, setIsOpen] = useState(false);
 
+  const [itemsWidth, setItemsWidth] = useState(94);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (overlayRef.current && overlayRef.current.clientWidth !== items.itemsWidth) {
+      setItemsWidth(overlayRef.current.clientWidth || 94);
+    }
+  });
+
+  const onClose = useCallback(() => setIsOpen(false), []);
+  const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
+
+  useArrowFocus(isOpen, onClose, overlayRef);
+
+  const onClickOutside = useCallback(e => {
+    if (buttonRef.current.contains(e.target)) {
+      return;
+    }
+    setIsOpen(false);
+  }, []);
+  useOnClickOutside(overlayRef, onClickOutside);
+
+  const onClickDropdownItem = (e, key) => {
     e.stopPropagation();
 
     onClickItem(key);
-    this.setState({
-      isOpen: false,
-    });
-  }
+    setIsOpen(false);
+    buttonRef.current.focus();
+  };
 
-  handleClickOutside = e => {
-    this.setState({
-      isOpen: false,
-    });
-  }
-
-  renderDropdownItems = () => {
-    const { items, currentSelectionKey, translationPrefix } = this.props;
-
-    return items.map(key =>
+  const renderDropdownItems = () => {
+    return items.map(key => (
       <button
         key={key}
-        className={classNames({
-          "dropdown-item": true,
-          active: key === currentSelectionKey,
-        })}
-        onClick={e => this.onClickDropdownItem(e, key)}
+        className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
+        onClick={e => onClickDropdownItem(e, key)}
+        tabIndex={isOpen ? undefined : -1} // Just to be safe.
       >
-        {this.props.t(`${translationPrefix}.${key}`)}
-      </button>,
-    );
-  }
+        {t(`${translationPrefix}.${key}`)}
+      </button>
+    ));
+  };
 
-  render() {
-    const {
-      isOpen,
-      itemsWidth,
-    } = this.state;
+  const optionIsSelected = items.some(key => key === currentSelectionKey);
 
-    const {
-      items,
-      currentSelectionKey,
-      translationPrefix,
-    } = this.props;
-
-    const selectedItem = items.find(key => key === currentSelectionKey);
-
-    return (
+  return (
+    <div className="Dropdown__wrapper">
       <button
         className="Dropdown"
         style={{ width: `${itemsWidth + 2}px` }}
         data-element="dropdown"
-        onClick={this.toggleDropdown}
+        onClick={onToggle}
+        ref={buttonRef}
       >
-        <div
-          className="picked-option"
-        >
-          {selectedItem &&
-            <div
-              className="picked-option-text"
-            >
-              {this.props.t(`${translationPrefix}.${currentSelectionKey}`)}
-            </div>
-          }
+        <div className="picked-option">
+          {optionIsSelected && (
+            <div className="picked-option-text">{t(`${translationPrefix}.${currentSelectionKey}`)}</div>
+          )}
           <Icon className="down-arrow" glyph="icon-chevron-down" />
         </div>
-        <div
-          className={classNames({
-            "dropdown-items": true,
-            "hide": !isOpen,
-          })}
-          ref={ele => {
-            if (ele) {
-              this.setState({ itemsWidth: ele.clientWidth });
-            }
-          }}
-        >
-          {this.renderDropdownItems()}
-        </div>
       </button>
-    );
-  }
+      <div className={classNames('Dropdown__items', { 'hide': !isOpen })} ref={overlayRef}>
+        {renderDropdownItems()}
+      </div>
+    </div>
+  );
 }
 
-export default withTranslation()(onClickOutside(Dropdown));
+Dropdown.propTypes = propTypes;
+export default Dropdown;
