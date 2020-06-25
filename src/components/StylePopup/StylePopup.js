@@ -7,7 +7,7 @@ import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
-import StampOverlay from 'components/StampOverlay';
+import RubberStampOverlay from 'components/RubberStampOverlay';
 
 import { circleRadius } from 'constants/slider';
 import DataElements from 'constants/dataElement';
@@ -31,19 +31,6 @@ class StylePopup extends React.PureComponent {
     isFontSizeSliderDisabled: PropTypes.bool,
     isStyleOptionDisabled: PropTypes.bool,
     isStylePopupDisabled: PropTypes.bool,
-  };
-
-  renderColorPalette = () => {
-    const { style, onStyleChange, currentPalette, colorMapKey } = this.props;
-
-    return (
-      <ColorPalette
-        color={style[currentPalette]}
-        property={currentPalette}
-        onStyleChange={onStyleChange}
-        colorMapKey={colorMapKey}
-      />
-    );
   };
 
   renderSliders = () => {
@@ -132,6 +119,8 @@ class StylePopup extends React.PureComponent {
       return <Slider {...props} key={key} onStyleChange={onStyleChange} />;
     });
 
+    // return null;
+
     return (
       <React.Fragment>
         {sliderComponents.length > 0 && (
@@ -149,30 +138,23 @@ class StylePopup extends React.PureComponent {
   render() {
     const {
       toolName,
-      isMobile,
       isColorPaletteDisabled,
       currentPalette,
       style,
       colorMapKey,
       onStyleChange,
       isStyleOptionDisabled,
+      disableSeparator,
     } = this.props;
+
+
+
     const { Scale, Precision, Style } = style;
 
     const className = classNames({
       Popup: true,
       StylePopup: true,
-      mobile: isMobile,
     });
-
-    if (toolName === 'AnnotationCreateRubberStamp') {
-      return (
-        <div className={className} data-element="stylePopup">
-          {this.renderSliders()}
-          <StampOverlay />
-        </div>
-      );
-    }
 
     return (
       <div className={className} data-element="stylePopup">
@@ -183,16 +165,20 @@ class StylePopup extends React.PureComponent {
               colorMapKey={colorMapKey}
               style={style}
               toolName={toolName}
+              disableSeparator={disableSeparator}
             />
-            {this.renderColorPalette()}
+            <ColorPalette
+              color={style[currentPalette]}
+              property={currentPalette}
+              onStyleChange={onStyleChange}
+              colorMapKey={colorMapKey}
+              useMobileMinMaxWidth
+            />
           </React.Fragment>
         )}
         {this.renderSliders()}
         {Scale && Precision && (
           <React.Fragment>
-            <div
-              className="divider-horizontal"
-            />
             <MeasurementOption
               scale={Scale}
               precision={Precision}

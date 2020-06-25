@@ -17,6 +17,7 @@ import './MeasurementOverlay.scss';
 import CustomMeasurementOverlay from './CustomMeasurementOverlay';
 import EllipseMeasurementOverlay from './EllipseMeasurementOverlay';
 import LineMeasurementInput from './LineMeasurementInput';
+import CountMeasurementOverlay from './CountMeasurementOverlay';
 
 class MeasurementOverlay extends React.PureComponent {
   static propTypes = {
@@ -181,6 +182,7 @@ class MeasurementOverlay extends React.PureComponent {
       'areaMeasurement',
       'rectangularAreaMeasurement',
       'ellipseMeasurement',
+      'countMeasurement'
     ].includes(mapAnnotationToKey(annotation));
 
   isMeasurementTool = toolName =>
@@ -190,11 +192,12 @@ class MeasurementOverlay extends React.PureComponent {
       'areaMeasurement',
       'rectangularAreaMeasurement',
       'ellipseMeasurement',
+      'countMeasurement'
     ].includes(mapToolNameToKey(toolName));
 
   shouldShowCustomOverlay = annotation =>
-    !this.isMeasurementAnnotation(annotation) &&
-    this.props.customMeasurementOverlay.some(overlay => overlay.validate(annotation));
+    (!this.isMeasurementAnnotation(annotation) &&
+    this.props.customMeasurementOverlay.some(overlay => overlay.validate(annotation)))
 
   shouldShowInfo = annotation => {
     const key = mapAnnotationToKey(annotation);
@@ -344,6 +347,43 @@ class MeasurementOverlay extends React.PureComponent {
     );
   };
 
+  renderOverlay = (annotation, t, isOpen, key) => {
+    if (this.shouldShowCustomOverlay(annotation)) {
+      return (
+        <CustomMeasurementOverlay
+          annotation={annotation}
+          {...this.props.customMeasurementOverlay.filter(customOverlay =>
+            customOverlay.validate(annotation)
+          )[0]}
+        />
+      );
+    } else if (key === 'ellipseMeasurement') {
+      return <EllipseMeasurementOverlay annotation={annotation} isOpen={isOpen} />;
+    } else if (key === 'countMeasurement') {
+      return <CountMeasurementOverlay annotation={annotation} t={t} />;
+    } else {
+      return (
+        <>
+          {this.renderTitle()}
+          <div className="measurement__scale">
+            {t('option.measurementOverlay.scale')}: {this.renderScaleRatio()}
+          </div>
+          <div className="measurement__precision">
+            {t('option.shared.precision')}: {annotation.Precision}
+          </div>
+          {key === 'distanceMeasurement' ? (
+            <LineMeasurementInput annotation={annotation} isOpen={isOpen} t={t} />
+          ) : (
+            this.renderValue()
+          )}
+          {key === 'distanceMeasurement' && this.renderDeltas()}
+          {key !== 'rectangularAreaMeasurement' &&
+            key !== 'distanceMeasurement' &&
+            this.renderAngle()}
+        </>
+      );
+    }
+  }
   render() {
     const { annotation, position, transparentBackground } = this.state;
     const { isDisabled, t, isOpen } = this.props;
@@ -371,35 +411,7 @@ class MeasurementOverlay extends React.PureComponent {
           ref={this.overlayRef}
           data-element="measurementOverlay"
         >
-          {this.shouldShowCustomOverlay(annotation) ? (
-            <CustomMeasurementOverlay
-              annotation={annotation}
-              {...this.props.customMeasurementOverlay.filter(customOverlay =>
-                customOverlay.validate(annotation)
-              )[0]}
-            />
-          ) : key === 'ellipseMeasurement' ? (
-            <EllipseMeasurementOverlay annotation={annotation} isOpen={isOpen} />
-          ) : (
-            <>
-              {this.renderTitle()}
-              <div className="measurement__scale">
-                {t('option.measurementOverlay.scale')}: {this.renderScaleRatio()}
-              </div>
-              <div className="measurement__precision">
-                {t('option.shared.precision')}: {annotation.Precision}
-              </div>
-              {key === 'distanceMeasurement' ? (
-                <LineMeasurementInput annotation={annotation} isOpen={isOpen} t={t} />
-              ) : (
-                this.renderValue()
-              )}
-              {key === 'distanceMeasurement' && this.renderDeltas()}
-              {key !== 'rectangularAreaMeasurement' &&
-                key !== 'distanceMeasurement' &&
-                this.renderAngle()}
-            </>
-          )}
+          {this.renderOverlay(annotation, t, isOpen, key)}
         </div>
       </Draggable>
     );

@@ -20,6 +20,9 @@ export default (enable, store) => features => {
         'annotationPopup',
         'linkButton',
       ],
+      fn: () => {
+        store.dispatch(actions.setReadOnlyRibbons());
+      },
     },
     [Feature.Measurement]: {
       dataElements: [
@@ -29,6 +32,7 @@ export default (enable, store) => features => {
         'perimeterMeasurementToolButton',
         'areaMeasurementToolButton',
         'ellipseMeasurementToolButton',
+        'countMeasurementToolButton'
       ],
     },
     [Feature.Annotations]: {

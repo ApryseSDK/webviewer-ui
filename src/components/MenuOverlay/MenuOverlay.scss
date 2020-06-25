@@ -3,7 +3,6 @@
 
 .MenuItem {
   @include button-reset;
-  color: var(--text-color);
   width: 100%;
   display: flex;
   flex-direction: row;

@@ -111,6 +111,7 @@ import setSortNotesBy from './setSortNotesBy';
 import setSortStrategy from './setSortStrategy';
 import setSwipeOrientation from './setSwipeOrientation';
 import setTheme from './setTheme';
+import setToolbarScreen from './setToolbarScreen';
 import setToolMode from './setToolMode';
 import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
@@ -196,6 +197,7 @@ export default store => {
     setSortStrategy: setSortStrategy(store),
     setSwipeOrientation,
     setTheme: setTheme(store),
+    setToolbarScreen: setToolbarScreen(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setToolMode: setToolMode(store),
     setZoomLevel,

@@ -2,10 +2,35 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_CAN_UNDO':
+      return {
+        ...state,
+        canUndo: payload.canUndo,
+      };
+    case 'SET_CAN_REDO':
+      return {
+        ...state,
+        canRedo: payload.canRedo,
+      };
+    case 'SET_TOOLBAR_SCREEN':
+      return {
+        ...state,
+        screen: payload.screen,
+      };
+    case 'SET_SELECTED_STAMP_INDEX':
+      return {
+        ...state,
+        selectedStampIndex: payload.index,
+      };
     case 'SET_SELECTED_SIGNATURE_INDEX':
       return {
         ...state,
         selectedSignatureIndex: payload.index,
+      };
+    case 'SET_DEFAULT_STAMPS':
+      return {
+        ...state,
+        defaultStamps: payload.defaultStamps,
       };
     case 'SET_SAVED_SIGNATURES':
       return {
@@ -142,57 +167,6 @@ export default initialState => (state = initialState, action) => {
         ...state,
         headers: { ...state.headers, [payload.header]: payload.headerItems },
       };
-    case 'SET_DEFAULT_TOOL_POSITIONS': {
-      const { positions } = payload;
-
-      const newState = {
-        ...state,
-      };
-      newState.toolButtonObjects = {
-        ...newState.toolButtonObjects,
-      };
-      positions.forEach(({ toolName, position }) => {
-        const toolButtonObject = newState.toolButtonObjects[toolName];
-        if (toolButtonObject) {
-          newState.toolButtonObjects[toolName] = {
-            ...toolButtonObject,
-            position,
-          };
-        }
-      });
-      return newState;
-    }
-    case 'SWAP_TOOLS': {
-      const { toolNameToSwap, otherToolName, screen } = payload;
-
-      const screenToolButtonObjects = state.toolButtonObjects[screen];
-
-      const toolToSwap = screenToolButtonObjects[toolNameToSwap];
-      const otherTool = screenToolButtonObjects[otherToolName];
-
-      return {
-        ...state,
-        toolButtonObjects: {
-          ...state.toolButtonObjects,
-          [screen]: {
-            ...screenToolButtonObjects,
-            [toolNameToSwap]: {
-              ...toolToSwap,
-              position: otherTool.position,
-            },
-            [otherToolName]: {
-              ...otherTool,
-              position: toolToSwap.position,
-            },
-          },
-        },
-      };
-    }
-    case 'SET_TOOLS_SCREEN':
-      return {
-        ...state,
-        screen: payload.screen,
-      };
     case 'SET_POPUP_ITEMS':
       return {
         ...state,
@@ -249,9 +223,7 @@ export default initialState => (state = initialState, action) => {
         ...state,
         toolButtonObjects: {
           ...state.toolButtonObjects,
-          desktop: createStateForScreen('desktop'),
-          tablet: createStateForScreen('tablet'),
-          mobile: createStateForScreen('mobile'),
+          default: createStateForScreen('default'),
         },
       };
     }

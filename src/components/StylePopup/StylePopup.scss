@@ -8,22 +8,17 @@
   padding-right: 12px;
   display: flex;
   flex-direction: column;
-  max-width: 214px;
+  // overflow: auto;
+
+  // @include mobile {
+  //   padding-top: 0px;
+  //   padding-bottom: 0px;
+  // }
 
   .sliders-container {
-    margin-left: 6px;
-    margin-right: 4px;
-    margin-top: 8px;
-    // margin-left: 4px;
-  }
-
-  @include mobile {
-    max-width: 346px;
-  }
-
-  @include tablet {
-    border-radius: 4px;
-    padding-bottom: 12px;
-    max-width: 346px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-top: 4px;
+    width: 100%;
   }
 }

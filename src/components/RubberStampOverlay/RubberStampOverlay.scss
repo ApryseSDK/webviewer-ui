@@ -1,11 +1,10 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
-.StampOverlay {
+.rubber-stamp-overlay {
   margin-left: 0px;
-  margin-right: 6px;
+  margin-right: 2px;
   margin-bottom: 8px;
-  margin-top: 8px;
 
   @include mobile {
     margin-bottom: 0px;
@@ -13,7 +12,7 @@
     padding-top: 12px;
   }
 
-  .default-stamp-container {
+  .default-stamps-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -22,7 +21,9 @@
     padding-right: 14px;
 
     @include mobile {
-      height: 240px;
+      height: 236px;
+      padding-right: 30px;
+      width: 300px;
     }
 
     .rubber-stamp {

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Icon from 'components/Icon';
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
@@ -16,8 +17,6 @@ import selectors from "selectors";
 
 import "./ToolButton.scss";
 
-import DataElements from 'constants/dataElement';
-
 const propTypes = {
   toolName: PropTypes.string.isRequired,
   group: PropTypes.string,
@@ -25,16 +24,14 @@ const propTypes = {
 };
 
 const ToolButton = ({
-  isSwap,
   toolName,
-  isStylingOpen,
   className,
   ...restProps
 }) => {
   const [
     activeToolName,
     isActive,
-    iconColor,
+    iconColorKey,
     // use this to trigger rerender so the color will be right
     // TODO: fix the issue properly. Can listen to toolUpdated
     // eslint-disable-next-line
@@ -67,11 +64,6 @@ const ToolButton = ({
     }
   }, [customOverrides, toolName]);
 
-  const handleSwap = () => {
-    dispatch(actions.swapTools(toolName, activeToolName));
-    core.setToolMode(toolName);
-  };
-
   const handleClick = () => {
     if (isActive) {
       if (toolName !== "AnnotationCreateStamp" && toolName !== "AnnotationCreateRedaction" && toolName !== "AnnotationEraserTool") {
@@ -99,25 +91,23 @@ const ToolButton = ({
   const showColor = customOverrides?.showColor || toolButtonObject.showColor;
   if (showColor === 'always' || (showColor === 'active' && isActive)) {
     const toolStyles = getToolStyles(toolName);
-    color = toolStyles?.[iconColor]?.toHexString?.();
+    color = toolStyles?.[iconColorKey]?.toHexString?.();
   }
 
-  const ButtonComponent = (
+  return (
     <Button
       className={classNames({
         "tool-button": true,
         hasStyles: toolStylesExist(toolName),
         [className]: className,
       })}
-      onClick={isSwap ? handleSwap : handleClick}
+      onClick={handleClick}
       isActive={isActive}
       color={color}
       {...restProps}
       {...restObjectData}
     />
   );
-
-  return ButtonComponent;
 };
 
 ToolButton.propTypes = propTypes;

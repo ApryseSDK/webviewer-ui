@@ -7,16 +7,13 @@ import classNames from 'classnames';
 import core from 'core';
 import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';
-import getToolStylePopupPositionBasedOn from 'helpers/getToolStylePopupPositionBasedOn';
 import setToolStyles from 'helpers/setToolStyles';
-import { isMobile } from 'helpers/device';
 import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
-import ToolButton from 'components/ToolButton';
 import HorizontalDivider from 'components/HorizontalDivider';
-import defaultTool from 'constants/defaultTool';
+import RubberStampStylePopup from 'components/RubberStampOverlay';
 
 import './ToolStylePopup.scss';
 
@@ -40,14 +37,7 @@ class ToolStylePopup extends React.PureComponent {
       top: 0,
     };
   }
-
-  componentDidMount() {
-    // window.addEventListener('resize', this.close);
-    this.positionToolStylePopup();
-  }
-
   componentDidUpdate(prevProps) {
-    this.positionToolStylePopup();
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
       this.props.closeElements([
         'viewControlsOverlay',
@@ -57,10 +47,6 @@ class ToolStylePopup extends React.PureComponent {
         'redactionOverlay',
       ]);
     }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.close);
   }
 
   handleClick = e => {
@@ -75,28 +61,22 @@ class ToolStylePopup extends React.PureComponent {
   };
 
   handleClickOutside = e => {
-    const { activeToolName } = this.props;
-    const documentContainer = document.querySelector(
-      '[data-element="documentContainer"]',
-    );
-    // const toolsOverlay = document.querySelector(
-    //   '[data-element="toolsOverlay"]',
-    // );
-    // const header = document.querySelector('[data-element="header"]');
-    const clickedDocumentContainer= documentContainer?.contains(e.target);
-    // const clickedHeader = header?.contains(e.target);
-
-    if (clickedDocumentContainer) {
-      this.close();
-      if (activeToolName === 'AnnotationCreateRubberStamp') {
-        core.setToolMode(defaultTool);
-        // this.props.setActiveToolGroup('');
-      }
+    // can have multiple toolsOverlays because of mobile mode
+    const toolsOverlays = Array.from(document.querySelectorAll(
+      '[data-element="toolsOverlay"]',
+    ));
+    const pageNavOverlays = Array.from(document.querySelectorAll(
+      '[data-element="pageNavOverlay"]',
+    ));
+    const clickedOnToolsOverlay = toolsOverlays.some(toolsOverlay => {
+      return toolsOverlay?.contains(e.target);
+    });
+    const clickedONPageNavOverlay = pageNavOverlays.some(pageNavOverlay => {
+      return pageNavOverlay?.contains(e.target);
+    });
+    if (!clickedOnToolsOverlay && !clickedONPageNavOverlay) {
+      this.props.closeElement('toolStylePopup');
     }
-  };
-
-  close = () => {
-    this.props.closeElement('toolStylePopup');
   };
 
   handleStyleChange = (property, value) => {
@@ -108,26 +88,8 @@ class ToolStylePopup extends React.PureComponent {
     setToolStyles(this.props.activeToolName, property, value);
   };
 
-  positionToolStylePopup = () => {
-    const { activeToolName } = this.props;
-
-    const toolButton = activeToolName === 'AnnotationCreateRubberStamp' ?
-      document.querySelector(`[data-element="rubberStampToolButton"]`) :
-      document.querySelector(`[data-element="styling-button"]`);
-
-    if (toolButton) {
-      const { left, top } = getToolStylePopupPositionBasedOn(
-        toolButton,
-        this.popup,
-      );
-
-      this.setState({ left: left + 10, top: top + 8 });
-    }
-  };
-
   render() {
-    const { activeToolGroup, swapableToolNames, isDisabled, activeToolName, activeToolStyle, isMobile, isTablet, isDesktop } = this.props;
-    const { left, top } = this.state;
+    const { activeToolGroup, isDisabled, activeToolName, activeToolStyle, isMobile } = this.props;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     const colorMapKey = mapToolNameToKey(activeToolName);
 
@@ -135,39 +97,32 @@ class ToolStylePopup extends React.PureComponent {
       return null;
     }
 
-    let style = {};
-    if (isTablet) {
-      style = { left, top };
-    }
-
     const { availablePalettes } = getDataWithKey(colorMapKey);
 
     let Component = (
-      <React.Fragment>
-        <div
-          className="swap-tools-container"
-        >
-          {swapableToolNames.map((toolName, i) =>
-            <ToolButton
-              key={`${toolName}-${i}`}
-              toolName={toolName}
-              isSwap
-            />)}
-        </div>
-        <StylePopup
-          key={activeToolName}
-          toolName={activeToolName}
-          colorMapKey={colorMapKey}
-          style={activeToolStyle}
-          isFreeText={isFreeText}
-          onStyleChange={this.handleStyleChange}
-        />
-      </React.Fragment>
+      <StylePopup
+        key={activeToolName}
+        toolName={activeToolName}
+        colorMapKey={colorMapKey}
+        style={activeToolStyle}
+        isFreeText={isFreeText}
+        onStyleChange={this.handleStyleChange}
+      />
     );
 
     if (activeToolGroup === 'signatureTools') {
       Component = (
-        <SignatureStylePopup/>
+        <React.Fragment>
+          <HorizontalDivider/>
+          <SignatureStylePopup/>
+        </React.Fragment>
+      );
+    } else if (activeToolGroup === 'rubberStampTools') {
+      Component = (
+        <React.Fragment>
+          <HorizontalDivider/>
+          <RubberStampStylePopup />
+        </React.Fragment>
       );
     }
 
@@ -178,11 +133,8 @@ class ToolStylePopup extends React.PureComponent {
         })}
         data-element="toolStylePopup"
         ref={this.popup}
-        style={style}
       >
-        {isMobile && <div className="swipe-indicator" />}
-        {isDesktop && (swapableToolNames.length > 0 || availablePalettes.length === 1 || activeToolGroup === 'signatureTools')
-          && <HorizontalDivider/>}
+        {/* {isMobile && <div className="swipe-indicator" />} */}
         {Component}
       </div>
     );
@@ -200,7 +152,6 @@ const mapStateToProps = state => {
     activeToolStyle: selectors.getActiveToolStyles(state),
     isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
     isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
-    swapableToolNames: selectors.getSwapableToolNamesForActiveToolGroup(state),
   };
 };
 

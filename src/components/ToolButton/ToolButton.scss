@@ -1,63 +1,68 @@
 @import '../../constants/styles';
 
-.tool-button {
+.tool-button-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-radius: 4px;
+  height: 26px;
+  margin: 0 6px;
 
-  &.Button {
-    width: 26px;
-    height: 26px;
+  @include mobile {
+    margin: 0 10px;
+  }
 
-    @include tablet-and-mobile {
-      width: 28px;
-      height: 28px;
+  .tool-button-arrow-container {
+    width: 13px;
+    height: 100%;
+    margin-right: 2px;
+
+    .tool-button-arrow-inner-container {
+      font-size: 13px; // chevron position depends on font-size. mobile changes it to 16.
+      display: flex;
+      align-items: center;
+      height: 100%;
+      cursor: pointer;
+
+      .tool-button-arrow-down, .tool-button-arrow-up {
+        width: 13px;
+        height: 13px;
+      }
+
+      .tool-button-arrow-up {
+        margin-top: -1px;
+      }
+    }
+  }
+
+  .tool-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 4px;
+    margin-right: 1px;
+
+    &.Button {
+      width: 26px;
+      height: 26px;
+
+      &:hover {
+        background: var(--tools-overlay-button-hover);
+      }
+      &.active {
+        background: var(--tools-overlay-button-active);
+      }
     }
 
-    &:hover {
-      background: var(--tools-overlay-button-hover);
-    }
     &.active {
       background: var(--tools-overlay-button-active);
-    }
-  }
 
-  &.active {
-    background: var(--tools-overlay-button-active);
+      .Icon {
+        color: var(--selected-icon-color);
+      }
 
-    .Icon {
-      color: var(--selected-icon-color);
-    }
-
-    div:hover {
-      background: none;
-    }
-  }
-
-  .styling-down-arrow-container {
-    display: flex;
-    justify-content: center;
-    width: 32px;
-    padding-bottom: 8px;
-    border-radius: 4px;
-    cursor: pointer;
-
-    font-size: 16px; // hack for down arrow being dependent on font-size
-
-    @include mobile {
-      margin-top: -2px;
-      padding-bottom: 5px;
-    }
-
-    &:hover {
-      background: var(--tools-overlay-button-hover);
-    }
-
-    .styling-down-arrow {
-      width: 12px;
-      height: 12px;
-      margin-top: -2px;
+      div:hover {
+        background: none;
+      }
     }
   }
 }

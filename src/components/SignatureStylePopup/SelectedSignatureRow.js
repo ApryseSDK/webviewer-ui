@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SignatureRowContent from 'components/SignatureStylePopup/SignatureRowContent';
 import SignatureAddBtn from 'components/SignatureStylePopup/SignatureAddBtn';
-import Icon from 'components/Icon';
 import ToolsDropdown from 'components/ToolsDropdown';
-import classNames from 'classnames';
 import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
@@ -20,9 +18,9 @@ const SelectedSignatureRow = () => {
       selectors.getSavedSignatures(state),
     ],
   );
+  const dispatch = useDispatch();
 
   const signatureTool = core.getTool('AnnotationCreateSignature');
-  const dispatch = useDispatch();
   return (
     <div
       className="selected-signature-row"
@@ -41,8 +39,7 @@ const SelectedSignatureRow = () => {
           }}
           isActive={activeToolName === 'AnnotationCreateSignature'}
         /> :
-        <SignatureAddBtn/>
-      }
+        <SignatureAddBtn/>}
       <ToolsDropdown
         onClick={() => savedSignatures.length > 0 && dispatch(actions.toggleElement('toolStylePopup'))}
         isActive={isToolStyleOpen}

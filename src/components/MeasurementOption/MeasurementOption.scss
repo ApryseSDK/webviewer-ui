@@ -5,6 +5,10 @@
   margin-top: 4px;
   margin-bottom: 4px;
 
+  @include mobile {
+    margin-bottom: 0px;
+  }
+
   input, select {
     &:focus {
       outline: none;
@@ -12,8 +16,16 @@
     }
   }
 
-  @include tablet {
-    margin-bottom: 5px;
+  .textarea {
+    resize: none;
+    outline: none;
+    border: none;
+    width: 34px;
+    margin-right: 3px;
+    margin-left: 3px;
+    margin-top: 1px;
+    height: 13px;
+    text-align:right;
   }
 
   .Scale {
@@ -33,12 +45,6 @@
       width: 79px;
       height: 32px;
     }
-
-    @include tablet {
-      width: 79px;
-      height: 32px;
-      margin-right: 10px;
-    }
   }
 
   .ScaleEquals {
@@ -47,8 +53,8 @@
     margin-right: 4px;
 
     @include tablet {
-      margin-left: 10px;
-      margin-right: 10px;
+      margin-left: 6px;
+      margin-right: 6px;
     }
   }
 
@@ -62,11 +68,6 @@
       width: 64px;
       height: 32px;
     }
-
-    @include tablet {
-      width: 48px;
-      height: 32px;
-    }
   }
 
   .PrecisionInput {
@@ -77,11 +78,6 @@
 
     @include mobile {
       width: 151px;
-      height: 32px;
-    }
-
-    @include tablet {
-      width: 86px;
       height: 32px;
     }
   }

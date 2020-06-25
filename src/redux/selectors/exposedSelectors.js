@@ -1,6 +1,9 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
+export const getDefaultStamps = state => state.viewer.defaultStamps;
+export const getSelectedStampIndex = state => state.viewer.selectedStampIndex;
+export const getSelectedStamp = state => getDefaultStamps(state)[getSelectedStampIndex(state)];
 export const getSavedSignatures = state => state.viewer.savedSignatures;
 export const getSelectedSignatureIndex = state => state.viewer.selectedSignatureIndex;
 export const getSelectedSignature = state => getSavedSignatures(state)[getSelectedSignatureIndex(state)];
@@ -30,7 +33,14 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const getScreen = state =>
+export const getEnabledScreens = state => {
+  const screenKeys = Object.keys(state.viewer.headers.tools);
+  return screenKeys.filter(key => {
+    return !isElementDisabled(state, `screen-${key}`);
+  });
+};
+
+export const getCurrentScreen = state =>
   state.viewer.screen;
 
 export const getActiveTheme = state =>
@@ -44,13 +54,12 @@ export const getDisabledElementPriority = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.priority;
 
 export const getToolsHeaderItems = state => {
-  const screen = getScreen(state);
+  const screen = getCurrentScreen(state);
   return state.viewer.headers.tools[screen];
 };
 
 export const getToolButtonObjects = state => {
-  const screen = getScreen(state);
-  return state.viewer.toolButtonObjects[screen];
+  return state.viewer.toolButtonObjects['default'];
 };
 
 export const getActiveToolNamesForActiveToolGroup = state => {
@@ -60,34 +69,9 @@ export const getActiveToolNamesForActiveToolGroup = state => {
     toolName => {
       const toolButtonObject = toolButtonObjects[toolName];
       const { group, dataElement } = toolButtonObject;
-      // console.log('toolName for active group testing', toolName, dataElement, isElementDisabled(state, dataElement));
       return group === activeToolGroup && !isElementDisabled(state, dataElement);
     },
-  ).sort((toolNameA, toolNameB) => {
-    const toolButtonA = toolButtonObjects[toolNameA];
-    const toolButtonB = toolButtonObjects[toolNameB];
-    const { position: positionA = 99 } = toolButtonA;
-    const { position: positionB = 99 } = toolButtonB;
-    return positionA - positionB;
-  }).slice(0, 4);
-};
-export const getSwapableToolNamesForActiveToolGroup = state => {
-  const { activeToolGroup } = state.viewer;
-  const toolButtonObjects = getToolButtonObjects(state);
-  return Object.keys(toolButtonObjects).filter(
-    toolName => {
-      const toolButtonObject = toolButtonObjects[toolName];
-      const { group, dataElement } = toolButtonObject;
-
-      return group === activeToolGroup && !isElementDisabled(state, dataElement);
-    },
-  ).sort((toolNameA, toolNameB) => {
-    const toolButtonA = toolButtonObjects[toolNameA];
-    const toolButtonB = toolButtonObjects[toolNameB];
-    const { position: positionA } = toolButtonA;
-    const { position: positionB } = toolButtonB;
-    return positionA - positionB;
-  }).slice(4);
+  );
 };
 
 export const getToolButtonDataElements = (state, toolNames) => {

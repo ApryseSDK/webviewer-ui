@@ -16,14 +16,23 @@
     color: var(--disabled-text);
     cursor: auto;
   }
+
+  @include mobile {
+    height: 40px;
+    width: 90vw;
+    margin: 0;
+  }
 }
 
 .signature-row {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   height: 26px;
+  justify-content: space-between;
 
+  @include mobile {
+    justify-content: center;
+  }
   .icon {
     display: flex;
     align-items: center;
@@ -43,20 +52,27 @@
   padding-left: 8px;
   padding-right: 4px;
 
-  @include tablet-and-mobile {
-    padding-top: 8px;
-  }
-
   @include mobile {
     width: auto;
+    padding: 0;
+    margin-top: 12px;
   }
 
   .signature-row {
     margin-bottom: 12px;
+
+    @include mobile {
+      margin-bottom: 16px;
+    }
   }
 
   .add-btn {
     margin-bottom: 8px;
+
+    @include mobile {
+      margin: 0;
+      margin-top: 32px;
+    }
   }
 }
 

@@ -3,15 +3,26 @@
 
 
 .ToolsOverlayContainer {
-  display: flex;
-  align-items: flex-end;
+  @include desktop {
+    margin-right: 12px;
+  }
+  @include tablet {
+    margin-right: 18px;
+  }
+
+  // @include mobile {
+  //   position: fixed;
+  //   top: 0;
+  //   right: 0;
+  //   height: 100vh;
+  //   width: 100vw;
+  //   z-index: 1;
+  // }
 }
 
 .ToolsOverlay {
   @extend %overlay;
   box-shadow: none;
-  display: flex;
-  flex-direction: row;
   padding: 0px;
   flex-wrap: nowrap;
   border: 0px;
@@ -19,167 +30,81 @@
   background: transparent;
   position: relative;
   border-radius: 4px 4px 0 0;
+  // Very important.
+  // This makes it so the toolstylepopup goes below the presets.
+  // It will overflow properly.
+  height: 32px;
+  align-items: center;
+  width: 220px;
 
-  @include tablet-and-mobile {
+  @include mobile {
     width: 100%;
+    // height: 52px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--mobile-presets-background);
+    margin-top: -12px;
+    // margin-top: 0px;
   }
 
   &.shadow {
     box-shadow: 0 0 5px 0 var(--box-shadow);
 
-    .ToolStylePopup {
-      box-shadow: 0 -20px 0 var(--preset-background), 0 0 5px 0 var(--box-shadow);
+    @include tablet-and-desktop {
+      .ToolStylePopup {
+        box-shadow: 0 -20px 0 var(--preset-background), 0 0 5px 0 var(--box-shadow);
+      }
     }
   }
 
-  .no-presets-container {
-    width: 168px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .no-presets {
     color: var(--no-presets-text);
-  }
-
-  .styling-arrow-container {
-    @include button-reset;
-    width: 40px;
-    height: 26px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    border-radius: 4px;
-    cursor: pointer;
-
-    @include tablet-and-mobile {
-      margin-left: 8px;
-    }
-
-    &:not(.disabled) {
-      &:hover {
-        background: var(--tools-overlay-button-hover);
-      }
-      &.active {
-        background: var(--tools-overlay-button-active);
-
-        .Icon {
-          color: var(--selected-icon-color);
-        }
-      }
-    }
-
-    &.disabled {
-      cursor: auto;
-      .Icon {
-        color: var(--disabled-text);
-      }
-    }
-
-    @include tablet-and-mobile {
-      height: 28px;
-    }
-
-    .styling-arrow-up {
-      width: 12px;
-      height: 16px;
-      margin-left: 1px;
-    }
-
-    .styling-arrow-down {
-      width: 12px;
-      height: 16px;
-      margin-top: 1px;
-      margin-left: 1px;
-    }
-  }
-
-
-  @include tablet-and-mobile {
-    border-bottom: solid 1px var(--border);
-    position: relative;
-    &.closed {
-      position: absolute;
-    }
-
-    .arrow-up {
-      width: 0;
-      height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-
-      border-bottom: 10px solid var(--tools-overlay-background);
-      position: absolute;
-
-      transform: translateX(50%);
-    }
-  }
-
-  .divider {
-    width: 1px;
-    height: 24px;
-    margin: 0 4px;
-    background: var(--divider);
+    align-items: center;
+    width: 100%;
   }
 
   .tools-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 4px;
     background: var(--preset-background);
-    height: 32px;
+    height: 100%;
     width: 100%;
 
-    @include tablet-and-mobile {
-      box-shadow: none;
-      width: 100%;
-      padding: 0px;
-      min-height: 52px;
-      height: auto;
-      padding-top: 3px;
-      padding-bottom: 3px;
-      border-radius: 0px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--tools-overlay-background);
+    @include mobile {
+      background: var(--mobile-presets-background);
+      height: 52px;
+
+      &.is-styling-open {
+        height: 78px;
+      }
     }
 
     .tool-buttons-container {
       display: flex;
       align-items: center;
       height: 32px;
+      padding-left: 4px;
 
-      @include desktop {
-        width: 214px;
-      }
-
-      @include tablet-and-mobile {
+      @include mobile {
+        width: 100%;
         justify-content: center;
       }
+    }
+  }
 
-      @include tablet-and-mobile {
-        box-shadow: none;
-        width: 100%;
-      }
-
-      .Button {
-        margin: 0 8px;
-      }
-
-      @include desktop {
-        &[tool-group="miscTools"] {
-          justify-content: space-around;
-
-          .Button {
-            margin: 0 0;
-          }
-        }
-
-        // &[tool-group="measurementTools"] {
-        //   justify-content: space-around;
-
-        //   .Button {
-        //     margin: 0 0px;
-        //   }
-        // }
-      }
+  .close-icon-container {
+    @include button-reset;
+    position: absolute;
+    right: 18px;
+    cursor: pointer;
+    .close-icon {
+      width: 24px;
+      height: 24px;
     }
   }
 }

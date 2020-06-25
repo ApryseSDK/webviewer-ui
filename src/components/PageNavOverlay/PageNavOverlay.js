@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import core from "core";
-import getClassName from "helpers/getClassName";
+import classNames from 'classnames';
 import selectors from "selectors";
 import { isIOS } from "helpers/device";
 
 import Icon from "components/Icon";
 
 import "./PageNavOverlay.scss";
-import goToPrevPage from "../../apis/goToPrevPage";
 
 class PageNavOverlay extends React.PureComponent {
   static propTypes = {
@@ -90,17 +89,21 @@ class PageNavOverlay extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, isLeftPanelOpen, isLeftPanelDisabled, currentPage, totalPages, allowPageNavigation } = this.props;
+    const { isDisabled, currentPage, totalPages, allowPageNavigation } = this.props;
     if (isDisabled) {
       return null;
     }
 
-    const className = getClassName(`Overlay PageNavOverlay`, this.props);
-
     const inputWidth = this.state.input ? (this.state.input.length) * 8 : 0;
 
     return (
-      <div className={className} data-element="pageNavOverlay">
+      <div
+        className={classNames({
+          Overlay: true,
+          PageNavOverlay: true,
+        })}
+        data-element="pageNavOverlay"
+      >
         <button
           className="side-arrow-container"
           onClick={() =>
