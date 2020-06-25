@@ -18,6 +18,7 @@ const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const canvasWidth = 160;
 const canvasHeight = 58;
 
+let isFirstLoad = true;
 
 class StampOverlay extends React.Component {
   static propTypes = {
@@ -51,8 +52,6 @@ class StampOverlay extends React.Component {
     this.stampTool = core.getTool(TOOL_NAME);
   }
   componentDidMount() {
-    this.getStandardRubberStamps();
-    this.getDynamicRubberStamps();
     this.stampTool.on('stampsUpdated', this.onStampAdded);
   }
 
@@ -75,6 +74,12 @@ class StampOverlay extends React.Component {
         'toolStylePopup',
       ]);
       this.setOverlayPosition();
+
+    }
+    if (isFirstLoad) {
+      this.getStandardRubberStamps();
+      this.getDynamicRubberStamps();
+      isFirstLoad = false;
     }
 
     // if language changes while overlay is open we wanted update it
