@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
 
+const DEFAULT_WIDTH = 94;
+
 const propTypes = {
   onClickItem: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
@@ -22,11 +24,13 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [itemsWidth, setItemsWidth] = useState(94);
+  const [itemsWidth, setItemsWidth] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (overlayRef.current && overlayRef.current.clientWidth !== items.itemsWidth) {
-      setItemsWidth(overlayRef.current.clientWidth || 94);
+    // Default to 0 so it's always a number.
+    const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || 0;
+    if (clientWidth !== items.itemsWidth) {
+      setItemsWidth(overlayRef.current.clientWidth);
     }
   });
 
@@ -70,7 +74,7 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
     <div className="Dropdown__wrapper">
       <button
         className="Dropdown"
-        style={{ width: `${itemsWidth + 2}px` }}
+        style={{ width: `${(itemsWidth || DEFAULT_WIDTH) + 2}px` }}
         data-element="dropdown"
         onClick={onToggle}
         ref={buttonRef}
