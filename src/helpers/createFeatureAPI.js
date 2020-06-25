@@ -21,7 +21,11 @@ export default (enable, store) => features => {
         'linkButton',
       ],
       fn: () => {
-        store.dispatch(actions.setReadOnlyRibbons());
+        if (enable) {
+          store.dispatch(actions.enableRibbons());
+        } else {
+          store.dispatch(actions.setReadOnlyRibbons());
+        }
       },
     },
     [Feature.Measurement]: {
