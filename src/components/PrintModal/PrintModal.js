@@ -172,9 +172,9 @@ class PrintModal extends React.PureComponent {
 
     this.pendingCanvases = [];
     this.state.pagesToPrint.forEach(pageNumber => {
-      creatingPages.push(this.creatingImage(pageNumber));
-
       const printableAnnotations = this.getPrintableAnnotations(pageNumber);
+      creatingPages.push(this.creatingImage(pageNumber, printableAnnotations));
+
       if (this.includeComments.current.checked && printableAnnotations.length) {
         const sortedNotes = getSortStrategies()[
           this.props.sortStrategy
@@ -186,7 +186,7 @@ class PrintModal extends React.PureComponent {
     return creatingPages;
   };
 
-  creatingImage = pageNumber =>
+  creatingImage = (pageNumber, printableAnnotations) =>
     new Promise(resolve => {
       const pageIndex = pageNumber - 1;
       const zoom = 1;
@@ -197,7 +197,15 @@ class PrintModal extends React.PureComponent {
         );
         this.positionCanvas(canvas, pageIndex);
 
-        await this.drawAnnotationsOnCanvas(canvas, pageNumber);
+        if (this.state.includeAnnotations) {
+          await this.drawAnnotationsOnCanvas(canvas, pageNumber);
+        } else {
+          // disable all printable annotations before draw
+          printableAnnotations.forEach(annot => annot.Printable = false);
+          await this.drawAnnotationsOnCanvas(canvas, pageNumber);
+          // enable all printable annotations after draw
+          printableAnnotations.forEach(annot => annot.Printable = true);
+        }
 
         const img = document.createElement('img');
         img.src = canvas.toDataURL();
@@ -262,17 +270,6 @@ class PrintModal extends React.PureComponent {
   };
 
   drawAnnotationsOnCanvas = (canvas, pageNumber) => {
-    core.getAnnotationsList().forEach(annot => {
-      const isWidgetAnnotation = annot instanceof window.Annotations.WidgetAnnotation;
-      // only print widget annotations when include annoations print option disabled
-      if (!this.state.includeAnnotations && !isWidgetAnnotation) {
-        annot.Printable = false;
-      // reset Printable option
-      } else {
-        annot.Printable = true;
-      }
-    });
-
     const widgetAnnotations = core
       .getAnnotationsList()
       .filter(
