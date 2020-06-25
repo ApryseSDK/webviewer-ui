@@ -13,7 +13,6 @@ import selectors from 'selectors';
 import './Button.scss';
 
 const propTypes = {
-  isNotClickable: PropTypes.bool,
   isActive: PropTypes.bool,
   mediaQueryClassName: PropTypes.string,
   img: PropTypes.string,
@@ -27,10 +26,7 @@ const propTypes = {
   ariaLabel: PropTypes.string,
 };
 
-const NOOP = () => {};
-
 const Button = props => {
-
   const [removeElement, customOverrides = {}] = useSelector(
     state => [
       selectors.isElementDisabled(state, props.dataElement),
@@ -41,14 +37,13 @@ const Button = props => {
 
   const {
     disabled,
-    isNotClickable,
     isActive,
     mediaQueryClassName,
     img,
     label,
     color,
     dataElement,
-    onClick = NOOP,
+    onClick,
     className,
     title,
     style,
@@ -74,14 +69,14 @@ const Button = props => {
       className={classNames({
         Button: true,
         active: isActive,
-        disable: isNotClickable,
+        disabled,
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
       })}
       disabled={disabled}
       style={style}
       data-element={dataElement}
-      onClick={(!disabled && !isNotClickable) ? onClick : NOOP}
+      onClick={onClick}
       aria-label={aLabel}
       aria-keyshortcuts={ariaKeyshortcuts}
     >
