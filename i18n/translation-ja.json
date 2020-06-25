@@ -197,6 +197,7 @@
       "all": "すべて",
       "current": "現在の",
       "pages": "ページ",
+      "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
       "addWatermarkSettings": "透かし設定を追加"
     },

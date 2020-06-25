@@ -195,6 +195,7 @@
       "all": "All",
       "current": "Current",
       "pages": "Pages to print",
+      "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
       "addWatermarkSettings": "Add Watermark"
     },

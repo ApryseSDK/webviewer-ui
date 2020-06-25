@@ -197,6 +197,7 @@
       "all": "全部",
       "current": "当前",
       "pages": "页数",
+      "includeAnnotations": "包括注释",
       "includeComments": "包括评论",
       "addWatermarkSettings": "添加水印设置"
     },

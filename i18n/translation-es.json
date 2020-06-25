@@ -197,6 +197,7 @@
       "all": "Todo",
       "current": "Actual",
       "pages": "Páginas",
+      "includeAnnotations": "Incluir anotaciones",
       "includeComments": "Incluir comentarios",
       "addWatermarkSettings": "Agregar configuraciones de marca de agua"
     },

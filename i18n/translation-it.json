@@ -197,6 +197,7 @@
       "all": "Tutti",
       "current": "attuale",
       "pages": "pagine",
+      "includeAnnotations": "Includi annotazioni",
       "includeComments": "Includi commenti",
       "addWatermarkSettings": "Aggiungi impostazioni filigrana"
     },
