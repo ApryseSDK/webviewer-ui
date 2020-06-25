@@ -78,13 +78,14 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
       </button>
       <div
         className={classNames('Dropdown__items', { 'hide': !isOpen })}
-        ref={elem => {
-          // if (elem && elem.clientWidth !== items.itemsWidth) {
-          //   overlayRef.current = elem;
-          //   // TODO: this is hacky, but somehow works when normal refs don't.
-          //   setItemsWidth(elem.clientWidth);
-          // }
-        }}
+        ref={overlayRef}
+        // ref={elem => {
+        //     if (elem && elem.clientWidth !== items.itemsWidth) {
+        //     overlayRef.current = elem;
+        //     // TODO: this is hacky, but somehow works when normal refs don't.
+        //     setItemsWidth(elem.clientWidth);
+        //   }
+        // }}
       >
         {renderDropdownItems()}
       </div>
