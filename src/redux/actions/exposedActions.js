@@ -61,6 +61,19 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
   });
 };
 
+export const enableRibbons = () => (dispatch, getState) => {
+  dispatch(setToolbarScreen('Annotate'));
+  const state = getState();
+  const screenKeys = Object.keys(state.viewer.headers.tools);
+  const screensToEnable = screenKeys
+    .map(key => `screen-${key}`);
+
+  dispatch({
+    type: 'ENABLE_ELEMENTS',
+    payload: { dataElements: screensToEnable, priority: PRIORITY_THREE },
+  });
+};
+
 export const disableToolbarScreen = screen => dispatch => {
   dispatch({
     type: 'DISABLE_ELEMENTS',

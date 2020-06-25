@@ -20,9 +20,13 @@ export default (enable, store) => features => {
         'annotationPopup',
         'linkButton',
       ],
-      // fn: () => {
-      //   store.dispatch(actions.setReadOnlyRibbons());
-      // },
+      fn: () => {
+        if (enable) {
+          store.dispatch(actions.enableRibbons());
+        } else {
+          store.dispatch(actions.setReadOnlyRibbons());
+        }
+      },
     },
     [Feature.Measurement]: {
       dataElements: [
