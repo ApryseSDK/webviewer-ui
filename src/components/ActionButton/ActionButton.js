@@ -2,8 +2,9 @@ import { connect } from 'react-redux';
 
 import Button from 'components/Button';
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state, { isNotClickableSelector }) => ({
   className: 'ActionButton',
+  isNotClickable: isNotClickableSelector && isNotClickableSelector(state),
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

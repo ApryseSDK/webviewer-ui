@@ -10,15 +10,7 @@
   display: flex;
   align-items: flex-end;
   width: 100%;
-
   z-index: 70;
-  @include tablet-and-mobile {
-    z-index: 72;
-    border-bottom: 1px solid var(--border);
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
 }
 
 .Header {
@@ -52,8 +44,6 @@
 
     @include tablet-and-mobile {
       height: 52px;
-
-      // border-bottom: 1px solid var(--border);
     }
   }
 

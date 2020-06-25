@@ -26,7 +26,7 @@ $popup-icon-width: 18px;
     width: 32px;
     height: 32px;
 
-    @include tablet-and-mobile {
+    @include mobile {
       width: 42px;
       height: 42px;
     }
@@ -39,7 +39,7 @@ $popup-icon-width: 18px;
       width: 18px;
       height: 18px;
 
-      @include tablet-and-mobile {
+      @include mobile {
         width: 24px;
         height: 24px;
       }

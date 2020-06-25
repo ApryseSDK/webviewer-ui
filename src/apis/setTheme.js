@@ -8,19 +8,6 @@ import lightToolsMobileString from '!!raw-loader!../constants/lightToolsMobile.s
 import darkModeString from '!!raw-loader!../constants/dark.scss';
 import darkToolsMobileString from '!!raw-loader!../constants/darkToolsMobile.scss';
 
-
-/**
- * @typedef {Object} WebViewerInstance.ThemeObject
- * @property {string} [primary=#FFFFFF] Background color for the header, modals, overlays, etc.
- * @property {string} [secondary=#F5F5F5] Background color for panels and the document container.
- * @property {string} [border=#CDCDCD] Border color for different components.
- * @property {string} [buttonHover=#F6F6F6] Background color for hovering on a button.
- * @property {string} [buttonActive=#F0F0F0] Background color for an active button.
- * @property {string} [text=#333333] Text color.
- * @property {string} [icon=#757575] Icon color.
- * @property {string} [iconActive=#757575] Icon color when button is active.
- */
-
 /**
  * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
  * @method WebViewerInstance#setTheme

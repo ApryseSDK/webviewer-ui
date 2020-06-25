@@ -1,9 +1,11 @@
 @import '../../constants/styles.scss';
 
 .ColorPalette {
-  display: flex;
-  flex-wrap: wrap;
-  width: 196px;
+  // display: flex;
+  // flex-wrap: wrap;
+  display: grid;
+  // grid-gap: 10px;
+  grid-template-columns: repeat(7, 1fr);
 
   &.padding {
     padding-top: 4px;
@@ -12,23 +14,25 @@
     padding-right: 12px;
   }
 
-  @include tablet-and-mobile {
+  @include mobile {
+    max-width: 450px;
     width: auto;
   }
 
   .cell-container {
+    @include button-reset;
+    // flex: 1 0 14%;
+
     cursor: pointer;
     width: 28px;
     height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 0px;
 
-    @include tablet-and-mobile {
-      width: 36px;
-      height: 36px;
-      margin: 0 5px;
+    @include mobile {
+      width: 48px;
+      height: 48px;
     }
 
     .cell-outer {
@@ -41,9 +45,9 @@
         align-items: center;
         justify-content: center;
 
-        @include tablet-and-mobile  {
-          width: 34px;
-          height: 34px;
+        @include mobile  {
+          width: 36px;
+          height: 36px;
         }
       }
 
@@ -61,7 +65,7 @@
           border: 1px solid var(--white-color-palette-border);
         }
 
-        @include tablet-and-mobile  {
+        @include mobile  {
           width: 24px;
           height: 24px;
         }

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import getBrightness from 'helpers/getBrightness';
 import selectors from 'selectors';
 
 import './ColorPalette.scss';
@@ -50,12 +49,6 @@ class ColorPalette extends React.PureComponent {
       '#272727',
       '#000000',
     ];
-
-    // const sigPalette = [
-    //   '#E44234',
-    //   '#4E7DE9',
-    //   '#000000',
-    // ];
   }
 
   setColor = bg => {
@@ -85,7 +78,7 @@ class ColorPalette extends React.PureComponent {
         style={style}
       >
         {palette.map((bg, i) => (
-          <div
+          <button
             key={i}
             className="cell-container"
             onClick={() => {
@@ -106,10 +99,10 @@ class ColorPalette extends React.PureComponent {
                 style={{ backgroundColor: bg }}
               />
             </div>
-          </div>
+          </button>
         ))}
-        {allowTransparent &&
-          <div
+        {allowTransparent && (
+          <button
             className="cell-container"
             onClick={() => this.setColor(null)}
           >
@@ -135,7 +128,7 @@ class ColorPalette extends React.PureComponent {
                 </svg>
               </div>
             </div>
-          </div>}
+          </button>)}
       </div>
     );
   }

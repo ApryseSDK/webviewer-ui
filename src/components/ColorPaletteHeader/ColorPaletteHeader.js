@@ -7,6 +7,7 @@ import { getDataWithKey } from 'constants/map';
 import classNames from 'classnames';
 import actions from 'actions';
 import selectors from 'selectors';
+import HorizontalDivider from 'components/HorizontalDivider';
 
 import './ColorPaletteHeader.scss';
 
@@ -37,22 +38,23 @@ class ColorPaletteHeader extends React.PureComponent {
       isTextColorPaletteDisabled,
       isBorderColorPaletteDisabled,
       isFillColorPaletteDisabled,
+      disableSeparator
     } = this.props;
     const { availablePalettes } = getDataWithKey(colorMapKey);
 
     if (toolName && (toolName.includes('Line') || toolName.includes('Arrow') || toolName.includes('Polyline'))) {
       return (
         <div className="palette-options">
-          {["StrokeColor", "FillColor"].map((pallette, i) =>
+          {["StrokeColor", "FillColor"].map((palette, i) =>
             <React.Fragment key={i}>
               <div
                 className={classNames({
                   'palette-options-button': true,
-                  active: colorPalette === pallette,
-                  disabled: pallette === 'FillColor',
+                  active: colorPalette === palette,
+                  disabled: palette === 'FillColor',
                 })}
               >
-                {t(`option.annotationColor.${pallette}`)}
+                {t(`option.annotationColor.${palette}`)}
               </div>
               {i < 1 && <div className="palette-options-divider" />}
             </React.Fragment>,
@@ -63,12 +65,12 @@ class ColorPaletteHeader extends React.PureComponent {
 
 
     if (availablePalettes.length < 2) {
-      return null;
+      if (disableSeparator) {
+        return null;
+      }
+      return <HorizontalDivider/>;
     }
 
-    // TODO: Actually disable these elements
-    // isTextColorPaletteDisabled, isBorderColorPaletteDisabled, isFillColorPaletteDisabled
-    // TextColor, StrokeColor, FillColor
 
     return (
       <div className="palette-options">
@@ -92,6 +94,9 @@ class ColorPaletteHeader extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  // TODO: Actually disable these elements
+  // isTextColorPaletteDisabled, isBorderColorPaletteDisabled, isFillColorPaletteDisabled
+  // TextColor, StrokeColor, FillColor
   isTextColorPaletteDisabled: selectors.isElementDisabled(state, 'textColorPalette'),
   isFillColorPaletteDisabled: selectors.isElementDisabled(state, 'fillColorPalette'),
   isBorderColorPaletteDisabled: selectors.isElementDisabled(state, 'borderColorPalette'),

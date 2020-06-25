@@ -12,8 +12,12 @@ import touchEventManager from 'helpers/TouchEventManager';
 import getHashParams from 'helpers/getHashParams';
 import setCurrentPage from 'helpers/setCurrentPage';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import MeasurementOverlay from 'components/MeasurementOverlay';
+import PageNavOverlay from 'components/PageNavOverlay';
+import ToolsOverlay from 'components/ToolsOverlay';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 
 import Measure from 'react-measure';
 
@@ -207,14 +211,22 @@ class DocumentContainer extends React.PureComponent {
         }}
       >
         {({ measureRef }) => (
-          <div className="measurement-container" ref={measureRef}>
+          <div
+            className="measurement-container"
+            ref={measureRef}
+          >
             <div
               className={className}
               ref={this.container}
               data-element="documentContainer"
               onScroll={this.handleScroll}
             >
-              <div className="document" ref={this.document}></div>
+              <div className="document" ref={this.document}/>
+            </div>
+            <MeasurementOverlay />
+            <div className="footer">
+              <PageNavOverlay />
+              {this.props.isMobile && <ToolsOverlay />}
             </div>
           </div>
         )}
@@ -233,8 +245,6 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  // using leftPanelWidth to trigger render
-  // leftPanelWidth: selectors.getLeftPanelWidth(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
 });
 
@@ -244,4 +254,19 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
+const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
+
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedDocumentContainer {...props} isMobile={isMobile} />
+  );
+};

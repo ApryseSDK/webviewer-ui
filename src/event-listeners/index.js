@@ -12,6 +12,7 @@ import onStampAnnotationAdded from './onStampAnnotationAdded';
 import onSignatureAnnotationAdded from './onSignatureAnnotationAdded';
 import onFileAttachmentAnnotationAdded from './onFileAttachmentAnnotationAdded';
 import onAnnotationChanged from './onAnnotationChanged';
+import onHistoryChanged from './onHistoryChanged';
 import onStickyAnnotationAdded from './onStickyAnnotationAdded';
 import onFullScreenChange from './onFullScreenChange';
 import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
@@ -39,6 +40,7 @@ export {
   onStampAnnotationAdded,
   onSignatureAnnotationAdded,
   onAnnotationChanged,
+  onHistoryChanged,
   onStickyAnnotationAdded,
   onFullScreenChange,
   onUpdateAnnotationPermission,

@@ -4,12 +4,11 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
-import Icon from 'components/Icon';
 import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
-import { mapToolNameToKey, getDataWithKey } from 'constants/map';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
@@ -27,12 +26,14 @@ class ToolGroupButton extends React.PureComponent {
     toolNames: PropTypes.arrayOf(PropTypes.string),
     toolButtonObjects: PropTypes.object,
     allButtonsInGroupDisabled: PropTypes.bool,
+    isToolGroupButtonDisabled: PropTypes.bool,
     openElement: PropTypes.func.isRequired,
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
     isActive: PropTypes.bool.isRequired,
     showColor: PropTypes.string,
+    iconColorKey: PropTypes.string,
   };
 
   constructor(props) {
@@ -66,53 +67,31 @@ class ToolGroupButton extends React.PureComponent {
     }
   }
 
-  onClick = e => {
+  onClick = () => {
     const {
       setActiveToolGroup,
       isActive,
       closeElement,
-      toggleElement,
       openElement,
       toolGroup,
-      isToolsOverlayOpen,
-      isTabletAndMobile,
-      selectedSignatureIndex,
       savedSignatures,
     } = this.props;
     const { toolName } = this.state;
 
     if (isActive) {
       closeElement('toolStylePopup');
-      closeElement('toolsOverlay');
       core.setToolMode(defaultTool);
       setActiveToolGroup('');
     } else {
       closeElement('toolStylePopup');
-      if (toolGroup === 'miscTools' || toolGroup === 'signatureTools') {
+      if (toolGroup === 'signatureTools' || toolGroup === 'rubberStampTools') {
         core.setToolMode(defaultTool);
       } else {
         core.setToolMode(toolName);
       }
       setActiveToolGroup(toolGroup);
-      if (toolGroup === 'signatureTools' && savedSignatures.length === 0) {
-        openElement('signatureModal');
-      }
       openElement('toolsOverlay');
     }
-  };
-
-  getColor = () => {
-    const { isActive, showColor } = this.props;
-    const { toolName } = this.state;
-    const { iconColor } = getDataWithKey(mapToolNameToKey(toolName));
-
-    let color = '';
-    if (showColor === 'always' || (showColor === 'active' && isActive)) {
-      const toolStyles = getToolStyles(toolName);
-      color = toolStyles?.[iconColor]?.toHexString?.();
-    }
-
-    return color;
   };
 
   render() {
@@ -123,19 +102,19 @@ class ToolGroupButton extends React.PureComponent {
       isActive,
       isToolGroupButtonDisabled,
       allButtonsInGroupDisabled,
-      iconColor,
+      iconColorKey,
+      showColor,
       title,
     } = this.props;
     const { toolName } = this.state;
     const img = this.props.img
       ? this.props.img
       : toolButtonObjects[toolName]?.img;
-    // const color =
-    //   isActive && !this.props.img && iconColor
-    //     ? getToolStyles(toolName)[iconColor] &&
-    //       getToolStyles(toolName)[iconColor].toHexString()
-    //     : '';
-    const color = '';
+    const color =
+      (showColor !== 'never' && isActive) && iconColorKey
+        ? getToolStyles(toolName)[iconColorKey] &&
+          getToolStyles(toolName)[iconColorKey].toHexString()
+        : '';
 
     return (isToolGroupButtonDisabled || allButtonsInGroupDisabled) ? null : (
       <div
@@ -159,16 +138,14 @@ class ToolGroupButton extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  selectedSignatureIndex: selectors.getSelectedSignatureIndex(state),
   savedSignatures: selectors.getSavedSignatures(state),
-  isToolsOverlayOpen: selectors.isElementOpen(state, 'toolsOverlay'),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
   isToolGroupButtonDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
   allButtonsInGroupDisabled: selectors.allButtonsInGroupDisabled(state, ownProps.toolGroup),
-  iconColor: selectors.getIconColor(
+  iconColorKey: selectors.getIconColor(
     state,
     mapToolNameToKey(selectors.getActiveToolName(state)),
   ),

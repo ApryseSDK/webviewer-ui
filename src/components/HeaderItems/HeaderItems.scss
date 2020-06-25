@@ -4,18 +4,24 @@
   display: flex;
   align-items: center;
   width: 100%;
+  height: 100%;
   position: relative;
   padding: 0 4px;
 
-  > .Button, > .toggle-element-button {
+  >.Button, >.toggle-element-button {
     margin: 0 6px;
-
     @include mobile {
-      margin: 0 4px;
+      margin: 0 6px;
     }
-
     @include tablet {
       margin: 0 10px;
+    }
+  }
+
+  .tool-group-button {
+    margin: 0 6px;
+    @include tablet-and-mobile {
+      margin: 0 11px;
     }
   }
 
@@ -31,52 +37,153 @@
     background: var(--divider);
     flex-shrink: 0;
 
-    @include mobile {
+    @include tablet-and-mobile {
       margin: 0 4px;
-    }
-
-    @include tablet {
-      margin: 0 10px;
     }
   }
 }
 
 .Tools {
+  .tool-group-buttons-container {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .chevron-scroll {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      z-index: 1;
+      height: 100%;
+      pointer-events: none;
+      width: 64px;
+      background: var(--tools-header-background);
+
+      .Icon {
+        color: var(--scroll-chevron-color);
+      }
+
+      &.left {
+        left: 0px;
+        mask-image: -webkit-gradient(linear, right top, left top,
+        from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
+        color-stop(0.6,  rgba(0,0,0,1)));
+        justify-content: flex-start;
+      }
+
+      &.right {
+        right: 0px;
+        mask-image: -webkit-gradient(linear, left top, right top,
+        from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
+        color-stop(0.6,  rgba(0,0,0,1)));
+        justify-content: flex-end;
+      }
+
+      .scroll-edge {
+        background: var(--tools-header-background);
+        height: 100%;
+        &.left {
+          width: 8px;
+        }
+
+        &.right {
+          right: 0px;
+          @include mobile {
+            width: 8px;
+          }
+
+          @include tablet {
+            width: 16px;
+          }
+
+          @include mobile {
+            width: 12px;
+          }
+        }
+
+      }
+
+      .tool-group-button {
+        @include button-reset;
+        margin: 0px;
+        pointer-events: all;
+      }
+    }
+  }
+
+  .tool-group-buttons-scroll {
+    display: flex;
+    overflow: auto;
+    scroll-behavior: smooth;
+    height: 100%;
+    align-items: center;
+
+    &::-webkit-scrollbar {
+      display: none;  /* Safari and Chrome */
+    }
+
+    :last-child {
+      margin-right: 0px;
+    }
+  }
+
   .HeaderItems {
+    .divider {
+      margin-left: 0px;
+      @include desktop {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+
+      @include tablet {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+
+      @include mobile {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+    }
+
+    .tool-group-button {
+      scroll-snap-align: start;
+    }
+
+    > .Button , .tool-group-button, .scroll-edge, .scroll-gap {
+      flex-shrink: 0;
+    }
+
     > .Button , .tool-group-button {
-      // margin: 0 8px;
       width: 32px;
       height: 32px;
-      // background-position: center;
-      // transition: background 0.8s;
 
-      // background-position: center;
-      // transition: background 0.8s;
-
-      // &:not(.ActionButton) {
-        &:hover {
+      &:not(.disable) {
+        &:hover{
+          border-radius: 4px;
           background: var(--tools-button-hover);
-
-          // background: var(--tools-button-hover);
         }
 
         &.active {
+          border-radius: 4px;
           background: var(--tools-button-active);
         }
 
         &.ActionButton {
+          // don't work. Don't know why
+          // transition: background 9.8s;
+          // transition: color 9.8s;
           &:active {
             background: var(--tools-button-active);
+            // Makes it look bugged
+            // .Icon {
+            //   color: var(--selected-icon-color);
+            // }
           }
         }
-      // }
-
-
-
+      }
     }
-  }
-
-  @include mobile {
-    overflow-x: auto;
   }
 }

@@ -21,30 +21,6 @@
   @extend %overlay;
   position: relative;
 
-  // @include tablet-and-mobile {
-  //   left: 0 !important;
-  //   right: 0 !important;
-  //   top: 0;
-  //   width: 100%;
-  //   border: none;
-  // }
-
-  // & > * {
-  //   &:first-child {
-  //     margin-left: 0;
-  //   }
-
-  //   &:last-child {
-  //     margin-right: 0;
-  //   }
-  // }
-
-  // .spacer {
-  //   @include tablet-and-mobile {
-  //     flex: 1;
-  //     height: 100%;
-  // }}
-
   .Button{
     &.inactive{
       .Icon{

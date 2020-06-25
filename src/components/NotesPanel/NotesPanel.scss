@@ -12,6 +12,10 @@
   position: relative;
   overflow: hidden;
 
+  @include tablet {
+    border-left: 1px solid var(--side-panel-border);
+  }
+
   @include mobile {
     position: fixed;
     top: 0;
@@ -59,7 +63,32 @@
 
 
   .no-annotations {
-    @extend %center-of-panel;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .msg {
+      @include tablet-and-desktop {
+        line-height: 15px;
+        width: 146px;
+      }
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 65px;
+      height: 83px;
+
+      svg {
+        width: 65px;
+        height: 83px;
+      }
+
+      * {
+        fill: var(--gray-5);
+        color: var(--gray-5);
+      }
+    }
   }
 
   >.header {
@@ -94,7 +123,7 @@
         border-radius: 4px;
         color: var(--text-color);
         padding-bottom: 6px;
-        padding-right: 42px;
+        padding-right: 8px;
         padding-top: 4px;
 
 
@@ -172,7 +201,10 @@
     padding-right: 18px;
 
     .msg {
-      width: 92px;
+      @include tablet-and-desktop {
+        line-height: 15px;
+        width: 92px;
+      }
       text-align: center;
     }
 

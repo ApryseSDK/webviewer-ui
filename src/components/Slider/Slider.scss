@@ -1,9 +1,12 @@
 @import '../../constants/styles';
 
-.slider{
+.slider {
+  @include mobile {
+    margin-top: 6px;
+  }
+
   svg {
     height: 18px;
-    // width: 100%;
     cursor: pointer;
   }
 
@@ -18,18 +21,20 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    // justify-content: space-between;
     margin-left: -5px;
-    height: 18px;
 
     .slider-value {
       min-width: 41px;
-      // flex: 8;
       display: flex;
       justify-content: flex-end;
+      flex: 1;
     }
 
     svg {
+      // Actual width of svg
+      // Very important. CSS behaves strangely without it.
+      width: 170px;
+      flex: 7;
       circle {
         fill: var(--slider-filled);
       }

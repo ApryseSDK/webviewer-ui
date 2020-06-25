@@ -8,7 +8,6 @@ import Header from 'components/Header';
 import ToolsHeader from 'components/Header/ToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import MenuOverlay from 'components/MenuOverlay';
-import MeasurementOverlay from 'components/MeasurementOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
@@ -38,18 +37,14 @@ import fireEvent from 'helpers/fireEvent';
 
 import actions from 'actions';
 
-import core from 'core';
-import defaultTool from 'constants/defaultTool';
-
 import './App.scss';
+
+// TODO: Use constants
+const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
 };
-
-const mobileBreakpoint = window.matchMedia('(max-width: 640px)');
-const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
-const desktopBreakpoint = window.matchMedia('(min-width: 901px)');
 
 const App = ({ removeEventHandlers }) => {
   const store = useStore();
@@ -59,43 +54,25 @@ const App = ({ removeEventHandlers }) => {
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
-    const setMobileState = () => {
-      dispatch(actions.setToolsScreen('mobile'));
-    };
-
     const setTabletState = () => {
-      dispatch(actions.setToolsScreen('tablet'));
+      // TODO: Use constants
       dispatch(actions.setLeftPanelWidth(251));
       dispatch(actions.setNotesPanelWidth(293));
       dispatch(actions.setSearchPanelWidth(293));
     };
 
-    const setDesktopState = () => {
-      dispatch(actions.setToolsScreen('desktop'));
-    };
-
     const onBreakpoint = () => {
-      if (mobileBreakpoint.matches) {
-        setMobileState();
-      } else if (tabletBreakpoint.matches) {
+      if (tabletBreakpoint.matches) {
         setTabletState();
-      } else if (desktopBreakpoint.matches) {
-        setDesktopState();
       }
-      dispatch(actions.closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
-      core.setToolMode(defaultTool);
-      dispatch(actions.setActiveToolGroup(''));
     };
-
-    mobileBreakpoint.addListener(onBreakpoint);
     tabletBreakpoint.addListener(onBreakpoint);
-    desktopBreakpoint.addListener(onBreakpoint);
-    onBreakpoint();
 
-
+    // dispatch(actions.setToolbarScreen('Annotate'));
     return removeEventHandlers;
     // eslint-disable-next-line
   }, []);
+
 
   return (
     <React.Fragment>
@@ -113,7 +90,6 @@ const App = ({ removeEventHandlers }) => {
         <ViewControlsOverlay />
         <MenuOverlay />
         <ZoomOverlay />
-        <MeasurementOverlay />
         <AnnotationContentOverlay />
 
         <AnnotationPopup />

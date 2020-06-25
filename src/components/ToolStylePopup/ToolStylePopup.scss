@@ -8,54 +8,21 @@
   justify-content: center;
   border-radius: 0px 0px 4px 4px;
   box-shadow: 0 0 3px 0 var(--box-shadow);
-  align-items: center;
-
-  .swap-tools-container {
-    display: flex;
-    width: 100%;
-
-    @include tablet-and-mobile {
-      padding: 0 8px;
-      padding-top: 8px;
-    }
-
-    @include mobile {
-      width: 346px;
-    }
-
-    .tool-button {
-      margin: 0 8px;
-    }
-  }
-
-  .divider-container {
-    width: 100%;
-    padding-right: 4px;
-    padding-left: 4px;
-    padding-bottom: 8px;
-    padding-top: 8px;
-    .divider-horizontal {
-      height: 1px;
-      background: var(--divider);
-    }
-  }
-
+  width: 220px;
 
   @include mobile {
+    width: auto;
     margin: 0;
-    position: fixed;
-    width: 100%;
+    position: relative;
     max-width: initial;
-    left: 0;
-    bottom: 0;
 
     border-radius: 0px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border: 0px;
-    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-
-    padding: 28px 24px;
+    padding-bottom: 24px;
+    border-radius: 4px;
+    box-shadow: none;
 
     .swipe-indicator {
       background: var(--divider);
@@ -69,12 +36,5 @@
       left: 0;
       right: 0;
     }
-  }
-
-  @include tablet-and-mobile {
-    background: var(--component-background);
-    border-radius: 4px;
-    box-shadow: 0 0 3px 0 var(--document-box-shadow);
-    position: fixed;
   }
 }

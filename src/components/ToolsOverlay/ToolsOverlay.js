@@ -2,23 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import ToolButton from 'components/ToolButton';
+import PresetButton from 'components/ToolButton/PresetButton';
 import ToolStylePopup from 'components/ToolStylePopup';
-import ToolsDropdown from 'components/ToolsDropdown';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
+import SelectedRubberStamp from 'components/RubberStampOverlay/SelectedRubberStamp';
 import { withTranslation } from 'react-i18next';
 
+import defaultTool from 'constants/defaultTool';
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import defaultTool from 'constants/defaultTool';
 import Icon from 'components/Icon';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
 import classNames from 'classnames';
-
-import { motion, AnimatePresence } from "framer-motion";
 
 import './ToolsOverlay.scss';
 
@@ -43,8 +41,6 @@ class ToolsOverlay extends React.PureComponent {
       isStylingOpen: false,
       siblingWidth: 0,
     };
-    this.itemsContainer = React.createRef();
-    this.toolsContainer = React.createRef();
   }
 
   componentDidMount() {
@@ -55,10 +51,6 @@ class ToolsOverlay extends React.PureComponent {
     // otherwise its left is 0 instead of left-aligned with the tool group button
     if (this.props.isOpen) {
       this.setOverlayPosition();
-    }
-
-    if (this.itemsContainer.current) {
-      this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
     }
   }
 
@@ -82,21 +74,12 @@ class ToolsOverlay extends React.PureComponent {
       this.setOverlayPosition();
     }
 
-    if (this.itemsContainer.current) {
-      this.setState({ siblingWidth: this.itemsContainer.current.offsetWidth });
-    }
-
     if (this.props.activeToolGroup === '') {
       this.props.closeElements(['toolStylePopup']);
     }
   }
 
   componentWillUnmount() {
-    const { activeToolGroup } = this.props;
-    if (activeToolGroup === 'miscTools') {
-      core.setToolMode(defaultTool);
-      this.props.setActiveToolGroup('');
-    }
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
@@ -130,157 +113,109 @@ class ToolsOverlay extends React.PureComponent {
       isOpen,
       toolNames,
       activeToolGroup,
-      isTabletAndMobile,
       isToolStyleOpen,
-      swapableToolNames,
       isDesktop,
+      isMobile,
     } = this.props;
 
-    let arrowStyle = {};
-    if (isTabletAndMobile) {
-      const { activeToolGroup, activeHeaderItems } = this.props;
-      const element = activeHeaderItems.find(
-        item => item.toolGroup === activeToolGroup,
-      );
-
-      if (element) {
-        const button = document.querySelector(`[data-element=${element.dataElement}]`);
-        const { left: buttonLeft } = button.getBoundingClientRect();
-        arrowStyle = {
-          left: buttonLeft,
-          right: 'auto',
-          top: -10,
-        };
-      }
+    const isVisible = (isOpen || true) && !isDisabled;
+    if (!isVisible) {
+      return null;
     }
 
-    // const isVisible = !(!isOpen || isDisabled || !activeToolGroup);
-    const isVisible = (isOpen || isDesktop) && !isDisabled;
-
-    let dropdownButton = (
-      <button
-        className={classNames({
-          "styling-arrow-container": true,
-          active: isToolStyleOpen,
-          disabled: !activeToolGroup,
-        })}
-        disabled={!activeToolGroup}
-        data-element="styling-button"
-        onClick={() => activeToolGroup && this.props.toggleElement('toolStylePopup')}
-      >
-        <Icon glyph="icon-menu-style-line" />
-        {isToolStyleOpen ?
-          <Icon className="styling-arrow-up" glyph="icon-chevron-up" /> :
-          <Icon className="styling-arrow-down" glyph="icon-chevron-down" />}
-      </button>
-    );
-
-    if (swapableToolNames.length > 0) {
-      dropdownButton = (
-        <ToolsDropdown
-          onClick={() => this.props.toggleElement('toolStylePopup')}
-          isActive={isToolStyleOpen}
-          style={{ width: '40px' }}
-        />
-      );
-    }
+    const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools' || activeToolGroup === 'fileAttachmentTools';
 
     let Component = (
-      <React.Fragment>
+      <div
+        className="tool-buttons-container"
+      >
         {toolNames.map((toolName, i) => (
-          <ToolButton
+          <PresetButton
             key={`${toolName}-${i}`}
             toolName={toolName}
+            isToolStyleOpen={isToolStyleOpen}
           />
         ))}
-        {activeToolGroup !== 'miscTools' && dropdownButton}
-      </React.Fragment>
+      </div>
     );
 
     if (activeToolGroup === 'signatureTools') {
       Component = (
         <SelectedSignatureRow/>
       );
-    } else if (!activeToolGroup) {
+    } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
-        <React.Fragment>
-          <div className="no-presets-container">{t('message.toolsOverlayNoPresets')}</div>
-          {dropdownButton}
-        </React.Fragment>
+        <SelectedRubberStamp/>
+      );
+    // } else if (activeToolGroup === 'stampTools') {
+    //   Component = (
+    //     <SelectedToolsOverlayItem
+    //       textTranslationKey="option.stampOverlay.addStamp"
+    //       onClick={() => {
+    //         core.setToolMode('AnnotationCreateStamp');
+    //       }}
+    //     />
+    //   );
+    } else if (noPresets) {
+      Component = (
+        <div className="no-presets">
+          {t('message.toolsOverlayNoPresets')}
+        </div>
       );
     }
 
-    let containerAnimations = {
-      visible: {},
-      hidden: {},
-    };
-
-    if (isTabletAndMobile) {
-      containerAnimations = {
-        visible: {
-          height: 'auto',
-          overflow: 'hidden',
-          transitionEnd: { overflow: 'initial' },
-        },
-        hidden: {
-          height: '0px',
-          overflow: 'hidden',
-        },
-      };
+    if (noPresets && isMobile) {
+      return null;
     }
 
     return (
-      <AnimatePresence>
-        {isVisible && (
-          <motion.div
-            className="ToolsOverlayContainer"
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={containerAnimations}
-            transition={{ ease: "easeOut", duration: 0.25 }}
+      <div
+        className="ToolsOverlayContainer"
+      >
+        <div
+          className={classNames({
+            Overlay: true,
+            ToolsOverlay: true,
+            open: isOpen,
+            shadow: isToolStyleOpen || isMobile,
+          })}
+          ref={this.overlay}
+          data-element="toolsOverlay"
+        >
+          <div
+            className={classNames({
+              "tools-container": true,
+              "is-styling-open": isToolStyleOpen,
+            })}
           >
-            <div
-              className={classNames({
-                Overlay: true,
-                ToolsOverlay: true,
-                open: isOpen,
-                shadow: !isTabletAndMobile && isToolStyleOpen,
-              })}
-              ref={this.overlay}
-              data-element="toolsOverlay"
-            >
-              <div
-                className="arrow-up"
-                style={arrowStyle}
-              />
-              <div
-                ref={this.toolsContainer}
-                className={classNames({
-                  "tools-container": true,
-                })}
+            {Component}
+            {this.props.isMobile &&
+              <button
+                className="close-icon-container"
+                onClick={() => {
+                  this.props.closeElements(['toolsOverlay']);
+                  core.setToolMode(defaultTool);
+                  this.props.setActiveToolGroup('');
+                }}
               >
-                <div
-                  className="tool-buttons-container"
-                  tool-group={activeToolGroup}
-                  ref={this.itemsContainer}
-                >
-                  {Component}
-                </div>
-                {(isToolStyleOpen) && (
-                  <Swipeable
-                    onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-                    onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-                    preventDefaultTouchmoveEvent
-                  >
-                    <ToolStylePopup/>
-                  </Swipeable>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <Icon
+                  glyph="ic_close_black_24px"
+                  className="close-icon"
+                />
+              </button>}
+          </div>
+          {(isToolStyleOpen) && (
+            <Swipeable
+              onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+              onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+              preventDefaultTouchmoveEvent
+              className="swipeable-container"
+            >
+              <ToolStylePopup/>
+            </Swipeable>
+          )}
+        </div>
+      </div>
     );
   }
 }
@@ -293,7 +228,6 @@ const mapStateToProps = state => ({
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
   activeToolName: selectors.getActiveToolName(state),
-  swapableToolNames: selectors.getSwapableToolNamesForActiveToolGroup(state),
 });
 
 const mapDispatchToProps = {

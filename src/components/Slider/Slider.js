@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 
+import useMedia from 'hooks/useMedia';
 import { isIE11 } from 'helpers/device';
-import { circleRadius, svgHeight } from 'constants/slider';
+import { getCircleRadius } from 'constants/slider';
 
 import './Slider.scss';
 
@@ -61,7 +62,7 @@ class Slider extends React.PureComponent {
   }
 
   setLineLength = () => {
-    this.lineLength = 0.94 * this.sliderSvg.current.getBoundingClientRect().width - 2 * circleRadius;
+    this.lineLength = 0.94 * this.sliderSvg.current.getBoundingClientRect().width - 2 * getCircleRadius(this.props.isMobile);
   }
 
   onMouseDown = e => {
@@ -94,7 +95,7 @@ class Slider extends React.PureComponent {
 
   getRelativeCirclePosition = e => {
     const isUsingMouse = !e.touches;
-    const lineStart = circleRadius;
+    const lineStart = getCircleRadius(this.props.isMobile);
     const lineEnd = lineStart + this.lineLength;
     const svgLeft = this.sliderSvg.current.getBoundingClientRect().left;
     let circlePosition;
@@ -125,9 +126,9 @@ class Slider extends React.PureComponent {
         </div>
         <div className="slider-svg-container">
           <svg data-element={dataElement} onMouseDown={this.onMouseDown} onTouchStart={this.onTouchStart} ref={this.sliderSvg}>
-            <line x1={circleRadius} y1="50%" x2={circleCenter} y2="50%" strokeWidth="2" stroke="#00a5e4" strokeLinecap="round" />
-            <line x1={circleCenter} y1="50%" x2={this.lineLength + circleRadius} y2="50%" strokeWidth="2" stroke="#e0e0e0" strokeLinecap="round" />
-            <circle cx={circleCenter} cy="50%" r={circleRadius} fill="#00a5e4" />
+            <line x1={getCircleRadius(this.props.isMobile)} y1="50%" x2={circleCenter} y2="50%" strokeWidth="2" stroke="#00a5e4" strokeLinecap="round" />
+            <line x1={circleCenter} y1="50%" x2={this.lineLength + getCircleRadius(this.props.isMobile)} y2="50%" strokeWidth="2" stroke="#e0e0e0" strokeLinecap="round" />
+            <circle cx={circleCenter} cy="50%" r={getCircleRadius(this.props.isMobile)} fill="#00a5e4" />
           </svg>
           <div className="slider-value">{displayValue}</div>
         </div>
@@ -150,4 +151,19 @@ class Slider extends React.PureComponent {
   }
 }
 
-export default withTranslation(null, { wait: false })(Slider);
+const ConnectedSlider = withTranslation(null, { wait: false })(Slider);
+
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedSlider {...props} isMobile={isMobile} />
+  );
+};

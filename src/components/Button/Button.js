@@ -13,6 +13,7 @@ import selectors from 'selectors';
 import './Button.scss';
 
 const propTypes = {
+  isNotClickable: PropTypes.bool,
   isActive: PropTypes.bool,
   mediaQueryClassName: PropTypes.string,
   img: PropTypes.string,
@@ -26,6 +27,8 @@ const propTypes = {
   ariaLabel: PropTypes.string,
 };
 
+const NOOP = () => {};
+
 const Button = props => {
 
   const [removeElement, customOverrides = {}] = useSelector(
@@ -38,14 +41,14 @@ const Button = props => {
 
   const {
     disabled,
+    isNotClickable,
     isActive,
     mediaQueryClassName,
     img,
-    activeImg,
     label,
     color,
     dataElement,
-    onClick,
+    onClick = NOOP,
     className,
     title,
     style,
@@ -61,9 +64,6 @@ const Button = props => {
   const isBase64 = img?.trim().startsWith('data:');
 
   const imgToShow = img;
-  // if (isActive && activeImg) {
-  //   imgToShow = activeImg;
-  // }
 
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
@@ -74,14 +74,14 @@ const Button = props => {
       className={classNames({
         Button: true,
         active: isActive,
-        disabled,
+        disable: isNotClickable,
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
       })}
       disabled={disabled}
       style={style}
       data-element={dataElement}
-      onClick={onClick}
+      onClick={(!disabled && !isNotClickable) ? onClick : NOOP}
       aria-label={aLabel}
       aria-keyshortcuts={ariaKeyshortcuts}
     >

@@ -50,24 +50,21 @@
     "nextResult": "Next result"
   },
   "annotation": {
-    "areaMeasurement": "Area measurement",
+    "areaMeasurement": "Area",
     "arrow": "Arrow",
     "callout": "Callout",
     "crop": "Crop Page",
     "caret": "Caret",
+    "distanceMeasurement": "Distance",
     "countMeasurement": "Count measurement",
-    "distanceMeasurement": "Distance measurement",
     "ellipse": "Ellipse",
     "eraser": "Eraser",
-    "fileattachment": "File attachment",
-    "freehand": "Free hand",
-    "freehand2": "Free hand",
-    "freetext": "Free text",
-    "freetext2": "Free text",
+    "fileattachment": "File Attachment",
+    "freehand": "Free Hand",
+    "freetext": "Free Text",
     "highlight": "Highlight",
-    "highlight2": "Highlight",
     "line": "Line",
-    "perimeterMeasurement": "Perimeter measurement",
+    "perimeterMeasurement": "Perimeter",
     "polygon": "Polygon",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
@@ -108,30 +105,21 @@
     "SBRejected": "Rejected"
   },
   "component": {
-    "freehandToolsButton": "Freehand Tools",
-    "freeHandAndShapeToolsButton": "Freehand/Shape Tools",
     "leftPanel": "Panel",
     "toolsHeader": "Tools",
     "searchOverlay": "Search",
     "searchPanel": "Search",
     "menuOverlay": "Menu",
-    "miscToolsButton": "Misc Tools",
-    "signatureToolsButton": "Signature Tools",
     "notesPanel": "Notes",
     "outlinesPanel": "Outlines",
     "bookmarksPanel": "Bookmarks",
     "newBookmark": "New Bookmark",
     "bookmarkPage": "Page",
     "layersPanel": "Layers",
-    "shapeToolsButton": "Shape Tools",
-    "textToolsButton": "Text Tools",
-    "freeTextToolsButton": "Free Text Tools",
-    "stickyToolsButton": "Comments Tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
     "redaction": "Redaction",
     "viewControlsOverlay": "View Controls",
-    "measurementToolsButton": "Measurement Tools",
     "calibration": "Calibration"
   },
   "message": {
@@ -142,7 +130,7 @@
     "encryptedUserCancelled": "Failed to load encrypted document. Password entry cancelled.",
     "enterPassword": "This document is password protected. Please enter a password",
     "incorrectPassword": "Incorrect password, attempts left: {{ remainingAttempts }}",
-    "noAnnotations": "This document has no annotations.",
+    "noAnnotations": "Start making annotations to leave a comment.",
     "noOutlines": "This document has no outline.",
     "noResults": "No results found.",
     "numResultsFound": "results found",
@@ -164,6 +152,18 @@
     "linkURLorPage": "Link URL or a Page"
   },
   "option": {
+    "notesOrder": {
+      "position": "Position",
+      "time": "Time"
+    },
+    "toolbarScreen": {
+      "View": "View",
+      "Annotate": "Annotate",
+      "Draw": "Draw",
+      "Insert": "Insert",
+      "Measure": "Measure",
+      "Edit": "Edit"
+    },
     "annotationColor": {
       "StrokeColor": "Stroke",
       "FillColor": "Fill",
@@ -174,7 +174,7 @@
       "pageTransition": "Page Transition"
     },
     "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
+      "placeholder": "Pages to select i.e. 2, 5-9"
     },
     "layout": {
       "cover": "Cover Facing Page",
@@ -182,8 +182,6 @@
       "single": "Single Page"
     },
     "notesPanel": {
-      "orderPosition": "Position",
-      "orderTime": "Time",
       "separator": {
         "today": "Today",
         "yesterday": "Yesterday"
@@ -207,6 +205,9 @@
       "caseSensitive": "Case sensitive",
       "wholeWordOnly": "Whole word",
       "wildcard": "Wildcard"
+    },
+    "stampOverlay": {
+      "addStamp": "Add New Stamp"
     },
     "signatureOverlay": {
       "addSignature": "Add New Signature"
