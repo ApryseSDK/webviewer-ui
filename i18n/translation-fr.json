@@ -55,6 +55,7 @@
     "callout": "Faire appel à",
     "crop": "Page de recadrage",
     "caret": "Caret",
+    "countMeasurement": "Mesure de comptage",
     "distanceMeasurement": "Mesure de distance",
     "ellipse": "Ellipse",
     "eraser": "La gomme",
@@ -237,7 +238,9 @@
       "distanceMeasurement": "Mesure de distance",
       "perimeterMeasurement": "Mesure du périmètre",
       "areaMeasurement": "Mesure du surface",
-      "radius": "Rayon"
+      "countMeasurement": "Mesure de comptage",
+      "radius": "Rayon",
+      "count": "Compter"
     },
     "measurementOption": {
       "scale": "Échelle"

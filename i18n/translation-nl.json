@@ -55,6 +55,7 @@
     "callout": "Opmerking met pijl",
     "crop": "Pagina bijsnijden",
     "caret": "Dakje",
+    "countMeasurement": "Tel meting",
     "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
     "eraser": "Gom",
@@ -237,7 +238,9 @@
       "distanceMeasurement": "Afstands meting",
       "perimeterMeasurement": "Perimeter meting",
       "areaMeasurement": "Gebieds meting",
-      "radius": "Straal"
+      "countMeasurement": "Tel meting",
+      "radius": "Straal",
+      "count": "Tel"
     },
     "measurementOption": {
       "scale": "Schaal"
