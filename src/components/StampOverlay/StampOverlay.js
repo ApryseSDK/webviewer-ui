@@ -74,13 +74,13 @@ class StampOverlay extends React.Component {
         'toolStylePopup',
       ]);
       this.setOverlayPosition();
+      if (isFirstLoad) {
+        this.getStandardRubberStamps();
+        this.getDynamicRubberStamps();
+        isFirstLoad = false;
+      }
+    }
 
-    }
-    if (isFirstLoad) {
-      this.getStandardRubberStamps();
-      this.getDynamicRubberStamps();
-      isFirstLoad = false;
-    }
 
     // if language changes while overlay is open we wanted update it
     // for some reason we cannot use prevPros.i18n.language to check
