@@ -1,28 +1,22 @@
+import PropTypes from 'prop-types';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 
-import React from 'react';
-import { connect } from 'react-redux';
+const propTypes = {
+  children: PropTypes.node,
+  dataElement: PropTypes.string,
+};
 
-const Wrapper = ({ children, isDisabled, ...props }) => {
-  if (isDisabled) {
-    return null;
-  }
+const DataElementWrapper = ({ children, dataElement, ...props }) => {
+  const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
 
-  return (
-    <div
-      {...props}
-    >
+  return isDisabled ? null : (
+    <div data-element={dataElement} {...props}>
       {children}
     </div>
   );
 };
 
-const mapStateToProps = (state, { dataElement }) => ({
-  isDisabled: selectors.isElementDisabled(state, dataElement),
-});
-
-const ConnectedWrapper = connect(
-  mapStateToProps,
-)(Wrapper);
-
-export default ConnectedWrapper;
+DataElementWrapper.propTypes = propTypes;
+export default DataElementWrapper;
