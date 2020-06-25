@@ -160,7 +160,7 @@
       width: 32px;
       height: 32px;
 
-      &:not(.disable) {
+      &:not(.disabled) {
         &:hover{
           border-radius: 4px;
           background: var(--tools-button-hover);
@@ -172,15 +172,8 @@
         }
 
         &.ActionButton {
-          // don't work. Don't know why
-          // transition: background 9.8s;
-          // transition: color 9.8s;
           &:active {
             background: var(--tools-button-active);
-            // Makes it look bugged
-            // .Icon {
-            //   color: var(--selected-icon-color);
-            // }
           }
         }
       }

@@ -24,6 +24,7 @@ export default {
       searchPanel: 293,
       notesPanel: 293,
     },
+    screenKeys: [],
     headers: {
       default: [
         { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
