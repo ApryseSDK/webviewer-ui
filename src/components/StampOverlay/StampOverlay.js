@@ -11,6 +11,7 @@ import core from 'core';
 import defaultTool from 'constants/defaultTool';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
+import ActionButton from 'components/ActionButton';
 
 import './StampOverlay.scss';
 
@@ -44,7 +45,7 @@ class StampOverlay extends React.Component {
       left: 0,
       right: 'auto',
       top: 0,
-      defaultAnnotations: [],
+      standardAnnotations: [],
       dynamicAnnotations: [],
       language: props.i18n.language,
       isStampSelected: false,
@@ -75,8 +76,7 @@ class StampOverlay extends React.Component {
       ]);
       this.setOverlayPosition();
       if (isFirstLoad) {
-        this.getStandardRubberStamps();
-        this.getDynamicRubberStamps();
+        this.onStampAdded();
         isFirstLoad = false;
       }
     }
@@ -88,8 +88,7 @@ class StampOverlay extends React.Component {
     const isLanChanged = this.props.i18n.language !== this.state.language;
     if (isLanChanged) {
       this.setState({ language: this.props.i18n.language });
-      this.getStandardRubberStamps();
-      this.getDynamicRubberStamps();
+      this.onStampAdded();
     }
   }
 
@@ -145,7 +144,12 @@ class StampOverlay extends React.Component {
 
 
   getDynamicRubberStamps = async() => {
-    const annotations = await this.stampTool.getDynamicStampAnnotations();
+    let annotations = [];
+    try {
+      annotations = await this.stampTool.getDynamicStampAnnotations();
+    } catch (error) {
+      console.error(error);
+    }
     await Promise.all(
       annotations.map(annotation => {
         const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
@@ -169,7 +173,13 @@ class StampOverlay extends React.Component {
   }
 
   getStandardRubberStamps = async() => {
-    const annotations = await this.stampTool.getStandardStampAnnotations();
+    let annotations = [];
+    try {
+      annotations = await this.stampTool.getStandardStampAnnotations();
+    } catch (error) {
+      console.error(error);
+    }
+
     const previews = await Promise.all(
       annotations.map(annotation => {
         const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
@@ -184,19 +194,26 @@ class StampOverlay extends React.Component {
       }),
     );
 
-    const defaultAnnotations = annotations.map((annotation, i) => ({
+    const standardAnnotations = annotations.map((annotation, i) => ({
       annotation,
       imgSrc: previews[i],
     }));
 
-    this.setState({ defaultAnnotations, language: this.props.i18n.language });
+    this.setState({ standardAnnotations, language: this.props.i18n.language });
   }
   openCustomSampModal = () => {
     const { openElement } = this.props;
     openElement('customStampModal');
   }
+
+  deleteDynamicStamp = index => {
+    const stamps = this.stampTool.getDynamicStamps();
+    stamps.splice(index, 1);
+    this.stampTool.setDynamicStamps(stamps);
+  }
+
   render() {
-    const { left, top, defaultAnnotations, dynamicAnnotations } = this.state;
+    const { left, top, standardAnnotations, dynamicAnnotations } = this.state;
     const { isDisabled, isOpen } = this.props;
     if (isDisabled) {
       return null;
@@ -209,7 +226,7 @@ class StampOverlay extends React.Component {
     let imgs = null;
     let dynamicStamps = null;
     if (isOpen) {
-      imgs = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
+      imgs = standardAnnotations.map(({ imgSrc, annotation }, index) =>
         <div key={index}
           className="rubber-stamp"
           onClick={() => this.setRubberStamp(annotation)}
@@ -219,11 +236,15 @@ class StampOverlay extends React.Component {
       );
 
       dynamicStamps = dynamicAnnotations.map(({ imgSrc, annotation }, index) =>
-        <div key={index}
-          className="rubber-stamp"
-          onClick={() => this.setRubberStamp(annotation)}
-        >
-          <img src={imgSrc} />
+        <div key={index}  className="stamp-row">
+          <div className="stamp-row-content" onClick={() => this.setRubberStamp(annotation, standardAnnotations.length + index)}>
+            <img src={imgSrc} alt=""/>
+          </div>
+          <ActionButton
+            dataElement="dynamicStampDeleteBtn"
+            img="ic_delete_black_24px"
+            onClick={() => this.deleteDynamicStamp(index)}
+          />
         </div>,
       );
     }
@@ -259,15 +280,14 @@ class StampOverlay extends React.Component {
             </div>
           </TabPanel>
           <TabPanel dataElement="dynamicStampPanel">
-            <div className="dynamic-stamp-container">
-              <div
-                className={`add-custom-stamp-button enabled`}
-                onClick={this.openCustomSampModal}
-                data-element={'add-custom-stamp-button'}
-              >
-                {ButtonLabel}
-              </div>
+            <div className="dynamic-stamp-panel">
               { dynamicStamps }
+            </div>
+            <div className={`add-dynamic-stamp-button enabled`}
+              onClick={this.openCustomSampModal}
+              data-element={'add-dynamic-stamp-button'}
+            >
+              {ButtonLabel}
             </div>
           </TabPanel>
         </Tabs>

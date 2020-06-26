@@ -118,7 +118,7 @@
     "viewControlsOverlay": "View controls",
     "measurementToolsButton": "Measurement tools",
     "calibration": "Calibration",
-    "createStampButton": "Add custom stamp"
+    "createStampButton": "Create New Stamp"
   },
   "message": {
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
