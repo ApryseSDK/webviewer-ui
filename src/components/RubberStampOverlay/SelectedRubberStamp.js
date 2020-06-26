@@ -63,7 +63,6 @@ const SelectedSignatureRow = () => {
       selectors.isElementOpen(state, 'toolStylePopup'),
     ],
   );
-
   return (
     <div
       className="selected-rubber-stamp-container"

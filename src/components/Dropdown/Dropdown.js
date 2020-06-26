@@ -101,9 +101,9 @@ class Dropdown extends React.PureComponent {
             "hide": !isOpen,
           })}
           ref={ele => {
-            if (ele) {
-              this.setState({ itemsWidth: ele.clientWidth });
-            }
+            // if (ele) {
+            //   this.setState({ itemsWidth: ele.clientWidth });
+            // }
           }}
         >
           {this.renderDropdownItems()}

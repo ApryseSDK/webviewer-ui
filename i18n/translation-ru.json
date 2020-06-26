@@ -55,6 +55,7 @@
     "callout": "Вызыв",
     "crop": "Обрезать страницу",
     "caret": "Знак вставки",
+    "countMeasurement": "Измерение счета",
     "distanceMeasurement": "Дистанция",
     "ellipse": "Эллипс",
     "eraser": "ластик",
@@ -195,6 +196,7 @@
       "all": "Все",
       "current": "Текущий",
       "pages": "Страницы",
+      "includeAnnotations": "Включить аннотации",
       "includeComments": "Приложить комментарии",
       "addWatermarkSettings": "Добавить настройки водяного знака"
     },
@@ -239,7 +241,9 @@
       "distanceMeasurement": "Замерение дистанции",
       "perimeterMeasurement": "Замерение периметера",
       "areaMeasurement": "Замерение площади",
-      "radius": "Радиус"
+      "countMeasurement": "Измерение счета",
+      "radius": "Радиус",
+      "count": "подсчитывать"
     },
     "measurementOption": {
       "scale": "Масштаб"

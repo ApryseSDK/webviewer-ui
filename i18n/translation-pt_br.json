@@ -55,6 +55,7 @@
     "callout": "Texto explicativo",
     "crop": "Cortar página",
     "caret": "Cursor",
+    "countMeasurement": "Medição de contagem",
     "distanceMeasurement": "Medição de distância",
     "ellipse": "Elipse",
     "eraser": "Apagador",
@@ -195,6 +196,7 @@
       "all": "Todas",
       "current": "Atual",
       "pages": "Páginas",
+      "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
       "addWatermarkSettings": "Adicionar configurações de marca d'água"
     },
@@ -239,7 +241,9 @@
       "distanceMeasurement": "Medição de distância",
       "perimeterMeasurement": "Medição de perímetro",
       "areaMeasurement": "Medição de área",
-      "radius": "Raio"
+      "countMeasurement": "Medição de contagem",
+      "radius": "Raio",
+      "count": "Contagem"
     },
     "measurementOption": {
       "scale": "Escala"

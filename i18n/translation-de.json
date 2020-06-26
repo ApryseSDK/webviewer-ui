@@ -55,6 +55,7 @@
     "callout": "Callout",
     "crop": "Seite zuschneiden",
     "caret": "Caret",
+    "countMeasurement": "Zählmessung",
     "distanceMeasurement": "Abstandsmessung",
     "ellipse": "Ellipse",
     "eraser": "Radiergummi",
@@ -195,6 +196,7 @@
       "all": "Alle",
       "current": "Aktuelle Seite",
       "pages": "Seiten",
+      "includeAnnotations": "Fügen Sie Anmerkungen hinzu",
       "includeComments": "Kommentare einfügen",
       "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"
     },
@@ -239,7 +241,9 @@
       "distanceMeasurement": "Abstandsmessung",
       "perimeterMeasurement": "Umfangsmessung",
       "areaMeasurement": "Flächenmessung",
-      "radius": "Radius"
+      "countMeasurement": "Zählmessung",
+      "radius": "Radius",
+      "count": "Anzahl"
     },
     "measurementOption": {
       "scale": "Maßstab"

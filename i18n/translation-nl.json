@@ -55,6 +55,7 @@
     "callout": "Opmerking met pijl",
     "crop": "Pagina bijsnijden",
     "caret": "Dakje",
+    "countMeasurement": "Tel meting",
     "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
     "eraser": "Gom",
@@ -195,6 +196,7 @@
       "all": "Alles",
       "current": "Huidige",
       "pages": "Pagina's",
+      "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Inclusief commentaar",
       "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
@@ -239,7 +241,9 @@
       "distanceMeasurement": "Afstands meting",
       "perimeterMeasurement": "Perimeter meting",
       "areaMeasurement": "Gebieds meting",
-      "radius": "Straal"
+      "countMeasurement": "Tel meting",
+      "radius": "Straal",
+      "count": "Tel"
     },
     "measurementOption": {
       "scale": "Schaal"
