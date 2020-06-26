@@ -86,6 +86,7 @@
     "postcss-preset-env": "^6.7.0",
     "prop-types": "^15.7.2",
     "raw-loader": "^4.0.0",
+    "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "rimraf": "^3.0.0",
     "sass-loader": "^8.0.2",
