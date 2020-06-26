@@ -285,7 +285,10 @@
     "customStampModal" : {
       "stampText": "Stamp text:",
       "timestampText": "Timestamp text:",
-      "stampColor": "Stamp color:"
+      "stampColor": "Stamp color:",
+      "Username": "Username",
+      "Date":"Date",
+      "Time":"Time"
     }
   },
   "warning": {

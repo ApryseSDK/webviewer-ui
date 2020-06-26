@@ -3,13 +3,33 @@ import { useTranslation } from 'react-i18next';
 import core from 'core';
 import './CustomStampForums.scss';
 import ColorPalette from 'components/ColorPalette';
+import Choice from '../Choice/Choice';
+
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const COLOR_CHOICES = window.Tools.RubberStampCreateTool['FILL_COLORS'];
 const DEFAULT_COLOR =  new window.Annotations.Color(COLOR_CHOICES[0]);
 
 const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) => {
-  const [currentUser] = useState(core.getCurrentUser());
+  const updateTimestampLabel = (usernameChk, dateChk, timeChk) => {
+    let tmpText = '';
+    if (usernameChk) {
+      tmpText += '[$currentUser], ';
+    }
+    if (dateChk) {
+      tmpText += 'DD/MM/YYYY ';
+    }
+
+    if (timeChk) {
+      tmpText += 'h:mm a';
+    }
+    return tmpText;
+  };
+
+  const [usernameCheckbox, setUsernameCheckbox] = useState(true);
+  const [dateCheckbox, setDateCheckbox] = useState(true);
+  const [timeCheckbox, setTimeCheckbox] = useState(true);
+
   const [stampTextInputValue, setStampText] = useState('Draft');
   const [t] = useTranslation();
   const [formatInput, setFormatInput] = useState(false);
@@ -17,7 +37,9 @@ const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) 
   const stampTool = core.getTool(TOOL_NAME);
   const timestampOptions =  window.Tools.RubberStampCreateTool['TIMESTAMP_CHOICHES'];
 
-  const [timestampFormat, setTimestampFormat] = useState(timestampOptions[0].value);
+  // const [timestampFormat, setTimestampFormat] = useState(timestampOptions[0].value);
+  const txt = updateTimestampLabel(usernameCheckbox, dateCheckbox, timeCheckbox);
+  const [timestampFormat, setTimestampFormat] = useState(txt);
 
   const canvasRef = useRef();
   const canvasContainerRef = useRef();
@@ -75,7 +97,7 @@ const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) 
     } else {
       setFormatInput(false);
       setTimestampFormat(value);
-      updateCanvas(stampTextInputValue, value);
+      updateCanvas(stampTextInputValue, value,  colorInput);
     }
   };
 
@@ -87,7 +109,7 @@ const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) 
   }, [isEnabled]);
 
   useEffect(() => {
-    updateCanvas(stampTextInputValue, timestampFormat);
+    updateCanvas(stampTextInputValue, timestampFormat, colorInput);
   }, []);
 
 
@@ -126,6 +148,31 @@ const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) 
     </div>;
   }
 
+
+
+
+  const handleDateInputChange = () => {
+    setDateCheckbox(!dateCheckbox);
+    const txt = updateTimestampLabel(usernameCheckbox, !dateCheckbox, timeCheckbox);
+    setTimestampFormat(txt);
+    updateCanvas(stampTextInputValue, txt, colorInput);
+
+  };
+
+  const handleTimeInputChange = () => {
+    setTimeCheckbox(!timeCheckbox);
+    const txt = updateTimestampLabel(usernameCheckbox, dateCheckbox, !timeCheckbox);
+    setTimestampFormat(txt);
+    updateCanvas(stampTextInputValue, txt, colorInput);
+  };
+
+  const handleUsernameCheckbox = () => {
+    setUsernameCheckbox(!usernameCheckbox);
+    const txt = updateTimestampLabel(!usernameCheckbox, dateCheckbox, timeCheckbox);
+    setTimestampFormat(txt);
+    updateCanvas(stampTextInputValue, txt, colorInput);
+  };
+
   return (
     <div className="text-customstamp">
 
@@ -151,10 +198,31 @@ const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) 
 
       <div style={{ marginTop: 10, marginBottom: 8, display: 'flex' }}>
         <div style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.timestampText')} </div>
+        <Choice
+          id="default-username"
+          checked={usernameCheckbox}
+          onChange={handleUsernameCheckbox}
+          label={t('option.customStampModal.Username')}
+        />
+        <Choice
+          id="default-date"
+          checked={dateCheckbox}
+          onChange={handleDateInputChange}
+          label={t('option.customStampModal.Date')}
+        />
+        <Choice
+          id="default-time"
+          checked={timeCheckbox}
+          onChange={handleTimeInputChange}
+          label={t('option.customStampModal.Time')}
+        />
+      </div>
+      {/* <div style={{ marginTop: 10, marginBottom: 8, display: 'flex' }}>
+        <div style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.timestampText')} </div>
         {formatDropdownElement}
         {formatInputElement}
         {cancelBtn}
-      </div>
+      </div> */}
       <div className="divider-horizontal"></div>
       <div className="footer">
         <div className="stamp-close" onClick={closeModal}>

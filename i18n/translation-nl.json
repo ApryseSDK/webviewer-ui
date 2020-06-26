@@ -55,8 +55,8 @@
     "callout": "Opmerking met pijl",
     "crop": "Pagina bijsnijden",
     "caret": "Dakje",
-    "countMeasurement": "Tel meting",
     "distanceMeasurement": "Afstandsmeting",
+    "countMeasurement": "Tel meting",
     "ellipse": "Ellips",
     "eraser": "Gom",
     "fileattachment": "Bestandsbijlage",
@@ -285,7 +285,10 @@
     "customStampModal": {
       "stampText": "Stempel tekst:",
       "timestampText": "Tijdstempel tekst:",
-      "stampColor": "Stempelkleur:"
+      "stampColor": "Stempelkleur:",
+      "Username": "Gebruikersnaam",
+      "Date": "Datum",
+      "Time": "Tijd"
     }
   },
   "warning": {

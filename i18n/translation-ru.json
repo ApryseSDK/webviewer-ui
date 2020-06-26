@@ -55,8 +55,8 @@
     "callout": "Вызыв",
     "crop": "Обрезать страницу",
     "caret": "Знак вставки",
-    "countMeasurement": "Измерение счета",
     "distanceMeasurement": "Дистанция",
+    "countMeasurement": "Измерение счета",
     "ellipse": "Эллипс",
     "eraser": "ластик",
     "fileattachment": "Файл вложения",
@@ -285,7 +285,10 @@
     "customStampModal": {
       "stampText": "Штамп текст:",
       "timestampText": "Текст метки времени:",
-      "stampColor": "Цвет марки:"
+      "stampColor": "Цвет марки:",
+      "Username": "имя пользователя",
+      "Date": "Дата",
+      "Time": "Время"
     }
   },
   "warning": {

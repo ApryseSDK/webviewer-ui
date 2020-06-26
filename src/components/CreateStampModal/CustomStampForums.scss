@@ -4,15 +4,16 @@
 $border-radius: 4px;
 
 .text-customstamp {
-  // @extend %signature-modal-container-shared-style;
   height: unset;
 
   display: flex;
   flex-direction: column;
 
+  .ui__choice {
+    padding-right: 10px;
+  }
   &-input {
     outline: none;
-    height: 17px;
     border-radius: $border-radius;
     border: 1px solid $signature-modal-shared-color;
     box-shadow: none;

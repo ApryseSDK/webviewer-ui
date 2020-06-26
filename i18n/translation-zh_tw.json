@@ -55,8 +55,8 @@
     "callout": "圖說文字",
     "crop": "裁剪頁面",
     "caret": "插入號",
-    "countMeasurement": "計數測量",
     "distanceMeasurement": "測量距離",
+    "countMeasurement": "計數測量",
     "ellipse": "橢圓",
     "eraser": "橡皮",
     "fileattachment": "文件附件",
@@ -285,7 +285,10 @@
     "customStampModal": {
       "stampText": "印章文字：",
       "timestampText": "時間戳記文字：",
-      "stampColor": "印章顏色："
+      "stampColor": "印章顏色：",
+      "Username": "用戶名",
+      "Date": "日期",
+      "Time": "時間"
     }
   },
   "warning": {

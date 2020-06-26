@@ -55,8 +55,8 @@
     "callout": "コールアウト",
     "crop": "切り抜きページ",
     "caret": "キャレット",
-    "countMeasurement": "カウント測定",
     "distanceMeasurement": "距離測定",
+    "countMeasurement": "カウント測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
     "fileattachment": "添付ファイル",
@@ -285,7 +285,10 @@
     "customStampModal": {
       "stampText": "スタンプテキスト：",
       "timestampText": "タイムスタンプテキスト：",
-      "stampColor": "スタンプ色："
+      "stampColor": "スタンプ色：",
+      "Username": "ユーザー名",
+      "Date": "日付",
+      "Time": "時間"
     }
   },
   "warning": {

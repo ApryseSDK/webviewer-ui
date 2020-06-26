@@ -55,8 +55,8 @@
     "callout": "Texto explicativo",
     "crop": "Cortar página",
     "caret": "Cursor",
-    "countMeasurement": "Medição de contagem",
     "distanceMeasurement": "Medição de distância",
+    "countMeasurement": "Medição de contagem",
     "ellipse": "Elipse",
     "eraser": "Apagador",
     "fileattachment": "Anexo de arquivo",
@@ -285,7 +285,10 @@
     "customStampModal": {
       "stampText": "Texto do carimbo:",
       "timestampText": "Texto do carimbo de data / hora:",
-      "stampColor": "Cor do carimbo:"
+      "stampColor": "Cor do carimbo:",
+      "Username": "Nome do usuário",
+      "Date": "Encontro",
+      "Time": "Tempo"
     }
   },
   "warning": {

@@ -55,8 +55,8 @@
     "callout": "설명선",
     "crop": "자르기 페이지",
     "caret": "캐럿",
-    "countMeasurement": "카운트 측정",
     "distanceMeasurement": "거리 측정",
+    "countMeasurement": "카운트 측정",
     "ellipse": "타원",
     "eraser": "지우개",
     "fileattachment": "첨부 파일",
@@ -285,7 +285,10 @@
     "customStampModal": {
       "stampText": "스탬프 텍스트 :",
       "timestampText": "타임 스탬프 텍스트 :",
-      "stampColor": "스탬프 색상 :"
+      "stampColor": "스탬프 색상 :",
+      "Username": "사용자 이름",
+      "Date": "데이트",
+      "Time": "시각"
     }
   },
   "warning": {

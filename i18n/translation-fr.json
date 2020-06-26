@@ -55,8 +55,8 @@
     "callout": "Faire appel à",
     "crop": "Page de recadrage",
     "caret": "Caret",
-    "countMeasurement": "Mesure de comptage",
     "distanceMeasurement": "Mesure de distance",
+    "countMeasurement": "Mesure de comptage",
     "ellipse": "Ellipse",
     "eraser": "La gomme",
     "fileattachment": "Pièce jointe",
@@ -285,7 +285,10 @@
     "customStampModal": {
       "stampText": "Texte du tampon:",
       "timestampText": "Texte d'horodatage:",
-      "stampColor": "Couleur du tampon:"
+      "stampColor": "Couleur du tampon:",
+      "Username": "Nom d'utilisateur",
+      "Date": "Date",
+      "Time": "Temps"
     }
   },
   "warning": {

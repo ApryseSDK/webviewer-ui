@@ -55,8 +55,8 @@
     "callout": "Callout",
     "crop": "Seite zuschneiden",
     "caret": "Caret",
-    "countMeasurement": "Zählmessung",
     "distanceMeasurement": "Abstandsmessung",
+    "countMeasurement": "Zählmessung",
     "ellipse": "Ellipse",
     "eraser": "Radiergummi",
     "fileattachment": "Dateianhang",
@@ -285,7 +285,10 @@
     "customStampModal": {
       "stampText": "Stempeltext:",
       "timestampText": "Zeitstempeltext:",
-      "stampColor": "Stempelfarbe:"
+      "stampColor": "Stempelfarbe:",
+      "Username": "Nutzername",
+      "Date": "Datum",
+      "Time": "Zeit"
     }
   },
   "warning": {

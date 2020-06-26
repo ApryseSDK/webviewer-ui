@@ -55,8 +55,8 @@
     "callout": "Llamada",
     "crop": "Recortar página",
     "caret": "Circunflejo",
-    "countMeasurement": "Medida de conteo",
     "distanceMeasurement": "Medición de distancia",
+    "countMeasurement": "Medida de conteo",
     "ellipse": "Elipse",
     "eraser": "Borrador",
     "fileattachment": "Archivo adjunto",
@@ -285,7 +285,10 @@
     "customStampModal": {
       "stampText": "Texto de sello:",
       "timestampText": "Texto de marca de tiempo:",
-      "stampColor": "Color del sello:"
+      "stampColor": "Color del sello:",
+      "Username": "Nombre de usuario",
+      "Date": "Fecha",
+      "Time": "Hora"
     }
   },
   "warning": {
