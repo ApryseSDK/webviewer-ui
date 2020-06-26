@@ -54,5 +54,6 @@ const updateColours = store => {
   }
   cssVars({
     onlyLegacy: false,
+    shadowDOM: true,
   });
 };
