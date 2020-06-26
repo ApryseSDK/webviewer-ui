@@ -53,7 +53,7 @@ const updateColours = store => {
     setVariables(darkModeString);
   }
   cssVars({
-    onlyLegacy: false,
-    shadowDOM: true,
+    // onlyLegacy: false,
+    // shadowDOM: true,
   });
 };
