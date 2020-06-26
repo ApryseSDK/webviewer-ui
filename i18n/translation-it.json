@@ -55,6 +55,7 @@
     "callout": "Chiamare",
     "crop": "Ritaglia pagina",
     "caret": "non",
+    "countMeasurement": "Misurazione del conteggio",
     "distanceMeasurement": "Misurazione della distanza",
     "ellipse": "Ellisse",
     "eraser": "Gomma per cancellare",
@@ -196,6 +197,7 @@
       "all": "Tutti",
       "current": "attuale",
       "pages": "pagine",
+      "includeAnnotations": "Includi annotazioni",
       "includeComments": "Includi commenti",
       "addWatermarkSettings": "Aggiungi impostazioni filigrana"
     },
@@ -237,7 +239,9 @@
       "distanceMeasurement": "Misurazione della distanza",
       "perimeterMeasurement": "Misura perimetrale",
       "areaMeasurement": "Misura dell'area",
-      "radius": "Raggio"
+      "countMeasurement": "Misurazione del conteggio",
+      "radius": "Raggio",
+      "count": "Contare"
     },
     "measurementOption": {
       "scale": "Scala"

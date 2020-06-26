@@ -36,6 +36,7 @@ export default (enable, store) => features => {
         'perimeterMeasurementToolButton',
         'areaMeasurementToolButton',
         'ellipseMeasurementToolButton',
+        'countMeasurementToolButton'
       ],
     },
     [Feature.Annotations]: {

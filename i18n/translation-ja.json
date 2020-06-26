@@ -55,6 +55,7 @@
     "callout": "コールアウト",
     "crop": "切り抜きページ",
     "caret": "キャレット",
+    "countMeasurement": "カウント測定",
     "distanceMeasurement": "距離測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
@@ -196,6 +197,7 @@
       "all": "すべて",
       "current": "現在の",
       "pages": "ページ",
+      "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
       "addWatermarkSettings": "透かし設定を追加"
     },
@@ -237,7 +239,9 @@
       "distanceMeasurement": "距離測定",
       "perimeterMeasurement": "境界測定",
       "areaMeasurement": "面積測定",
-      "radius": "半径"
+      "countMeasurement": "カウント測定",
+      "radius": "半径",
+      "count": "カウント"
     },
     "measurementOption": {
       "scale": "スケール"

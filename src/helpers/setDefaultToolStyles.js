@@ -1,6 +1,5 @@
 import core from 'core';
 import defaultToolStylesMap from 'constants/defaultToolStylesMap';
-import localStorageManager from 'helpers/localStorageManager';
 
 const setDefaultToolStyles = () => {
   const toolModeMap = core.getToolModeMap();

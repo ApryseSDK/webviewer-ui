@@ -56,6 +56,7 @@
     "crop": "Crop Page",
     "caret": "Caret",
     "distanceMeasurement": "Distance",
+    "countMeasurement": "Count measurement",
     "ellipse": "Ellipse",
     "eraser": "Eraser",
     "fileattachment": "File Attachment",
@@ -137,7 +138,7 @@
     "passwordRequired": "Password required",
     "preparingToPrint": "Preparing to print...",
     "annotationReplyCount": "{{count}} Reply",
-    "annotationReplyCount_plural" : "{{count}} Replies",
+    "annotationReplyCount_plural": "{{count}} Replies",
     "printTotalPageCount": "Total: {{count}} page",
     "printTotalPageCount_plural": "Total: {{count}} pages",
     "processing": "Processing...",
@@ -194,6 +195,7 @@
       "all": "All",
       "current": "Current",
       "pages": "Pages to print",
+      "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
       "addWatermarkSettings": "Add Watermark"
     },
@@ -238,7 +240,9 @@
       "distanceMeasurement": "Distance Measurement",
       "perimeterMeasurement": "Perimeter Measurement",
       "areaMeasurement": "Area Measurement",
-      "radius": "Radius"
+      "countMeasurement": "Count measurement",
+      "radius": "Radius",
+      "count": "Count"
     },
     "measurementOption": {
       "scale": "Scale"
@@ -289,7 +293,6 @@
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
-
   "shortcut": {
     "arrow": "(A)",
     "callout": "(C)",
@@ -336,10 +339,39 @@
     "enterpage": "Select the page number you would like to link to"
   },
   "datePicker": {
-    "previousMonth" : "Previous Month",
-    "nextMonth"     : "Next Month",
-    "months"        : ["January","February","March","April","May","June","July","August","September","October","November","December"],
-    "weekdays"      : ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    "weekdaysShort" : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+    "previousMonth": "Previous Month",
+    "nextMonth": "Next Month",
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "weekdays": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "weekdaysShort": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ]
   }
 }
