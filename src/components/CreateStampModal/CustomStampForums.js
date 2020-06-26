@@ -2,23 +2,21 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import core from 'core';
 import './CustomStampForums.scss';
+import ColorPalette from 'components/ColorPalette';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
+const COLOR_CHOICES = window.Tools.RubberStampCreateTool['FILL_COLORS'];
+const DEFAULT_COLOR =  new window.Annotations.Color(COLOR_CHOICES[0]);
 
-
-const CustomStampForums = ({ state, setState }) => {
+const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) => {
   const [currentUser] = useState(core.getCurrentUser());
-  const [stampTextInputValue, setStampText] = useState('DRAFT');
+  const [stampTextInputValue, setStampText] = useState('Draft');
   const [t] = useTranslation();
   const [formatInput, setFormatInput] = useState(false);
+  const [colorInput, setColorInput] = useState(DEFAULT_COLOR);
   const stampTool = core.getTool(TOOL_NAME);
-  const timestampOptions = [
-    { id: '1', value: 'DD/MM/YYYY, h:mm a' },
-    { id: '2', value: '[By $currentUser at] h:mm a, MMMM D, YYYY' },
-    { id: '3', value: '[By $currentUser on] MMMM Do, YYYY' },
-    { id: '4', value: 'MMMM D, YYYY, h:mm a' },
-    { id: '5', value: 'other' },
-  ];
+  const timestampOptions =  window.Tools.RubberStampCreateTool['TIMESTAMP_CHOICHES'];
+
   const [timestampFormat, setTimestampFormat] = useState(timestampOptions[0].value);
 
   const canvasRef = useRef();
@@ -26,23 +24,25 @@ const CustomStampForums = ({ state, setState }) => {
   const inputRef = useRef();
   const customFormatInputRef = useRef();
 
-  const updateCanvas = (title, subtitle) => {
-
-    var parameters = {
+  const updateCanvas = (title, subtitle, color) => {
+    const parameters = {
       canvas: canvasRef.current,
       title,
       subtitle,
       width: 300,
       height: 100,
+      color,
       canvasParent: canvasContainerRef.current,
     };
 
     const width = stampTool.drawDynamicStamp(parameters);
-    var dataURL = canvasRef.current.toDataURL();
+    const dataURL = canvasRef.current.toDataURL();
+
     setState({
       ...state,
       width,
       title,
+      color,
       subtitle,
       height: parameters.height,
       dataURL,
@@ -50,15 +50,18 @@ const CustomStampForums = ({ state, setState }) => {
   };
 
   const handleInputChange = e => {
-    let value = e.target.value || '';
-    value = value.toUpperCase();
+    const value = e.target.value || '';
     setStampText(value);
-    updateCanvas(value, timestampFormat);
+    updateCanvas(value, timestampFormat, colorInput);
+  };
+  const handleColorInputChange = (property, value) => {
+    setColorInput(value);
+    updateCanvas(stampTextInputValue, timestampFormat, value);
   };
 
   const handleCustomTimeFormat = e => {
     setTimestampFormat(e.target.value);
-    updateCanvas(stampTextInputValue, e.target.value);
+    updateCanvas(stampTextInputValue, e.target.value, colorInput);
   };
 
   const changeTimeMode = () => {
@@ -138,7 +141,7 @@ const CustomStampForums = ({ state, setState }) => {
       <div style={{ marginTop: 10, display: 'flex' }}>
         <div style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.stampText')} </div>
         <input style={{ width: '80%' }}
-          className="text-customstamp-input txt-uppercase"
+          className="text-customstamp-input"
           ref={inputRef}
           type="text"
           value={stampTextInputValue}
@@ -146,11 +149,26 @@ const CustomStampForums = ({ state, setState }) => {
         />
       </div>
 
-      <div style={{ marginTop: 10, display: 'flex' }}>
+      <div style={{ marginTop: 10, marginBottom: 8, display: 'flex' }}>
         <div style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.timestampText')} </div>
         {formatDropdownElement}
         {formatInputElement}
         {cancelBtn}
+      </div>
+      <div className="divider-horizontal"></div>
+      <div className="footer">
+        <div className="stamp-close" onClick={closeModal}>
+          {t('action.cancel')}
+        </div>
+        <ColorPalette
+          color={colorInput}
+          property="StrokeColor"
+          onStyleChange={handleColorInputChange}
+          overridePalette2={COLOR_CHOICES}
+        />
+        <div className="stamp-create" onClick={createDynamicStamp}>
+          {t('action.create')}
+        </div>
       </div>
 
     </div>

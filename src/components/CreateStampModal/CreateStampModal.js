@@ -52,24 +52,21 @@ const CustomStampModal = () => {
     >
       <div className="container" onMouseDown={e => e.stopPropagation()}>
         <div className="header">
-
+          <p style={{ textAlign: 'center' }}>{t(`component.createStampButton`)}</p>
           {/* <ActionButton
             dataElement="customStampModalCloseButton"
             title="action.close"
             img="ic_close_black_24px"
             onClick={closeModal}
           /> */}
-
         </div>
-        <CustomStampForums isModalOpen={isOpen} state={state} setState={setState}/>
-        <div className="footer">
-          <div className="stamp-close" onClick={closeModal}>
-            {t('action.cancel')}
-          </div>
-          <div className="stamp-create" onClick={createDynamicStamp}>
-            {t('action.create')}
-          </div>
-        </div>
+        <CustomStampForums
+          isModalOpen={isOpen}
+          state={state}
+          setState={setState}
+          closeModal={closeModal}
+          createDynamicStamp={createDynamicStamp}
+        />
       </div>
     </div>
   );

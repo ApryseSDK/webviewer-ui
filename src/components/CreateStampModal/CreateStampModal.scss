@@ -12,13 +12,18 @@
     justify-content: center;
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-    padding: 8px 8px;
+    padding: 10px 10px;
     background: var(--component-background);
 
-
+    .divider-horizontal {
+      width: 100%;
+      height: 1px;
+      margin-bottom: 8px;
+      background: var(--divider);
+    }
     .footer {
       display: flex;
-      padding-top: 12px;
+      // padding-top: 12px;
       align-items: center;
       justify-content: space-between;
       width: 100%;
@@ -70,7 +75,7 @@
 
       .stamp-close {
         color: var(--secondary-button-text);
-        padding: 0 16px;
+        padding: 0 8px;
         height: 32px;
         display: flex;
         align-items: center;
@@ -103,6 +108,10 @@
         &:hover {
           background: var(--primary-button-hover);
         }
+      }
+
+      .ColorPalette {
+        width: 110px;
       }
     }
   }
