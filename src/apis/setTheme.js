@@ -5,6 +5,7 @@ import { parse } from 'helpers/cssVariablesParser';
 
 import lightModeString from '!!raw-loader!../constants/light.scss';
 import darkModeString from '!!raw-loader!../constants/dark.scss';
+import cssVars from 'css-vars-ponyfill';
 
 /**
  * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
@@ -51,4 +52,7 @@ const updateColours = store => {
   } else if (activeTheme === 'dark') {
     setVariables(darkModeString);
   }
+  cssVars({
+    onlyLegacy: false,
+  });
 };
