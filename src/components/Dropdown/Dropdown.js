@@ -2,10 +2,12 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
+
+const DEFAULT_WIDTH = 94;
 
 const propTypes = {
   onClickItem: PropTypes.func.isRequired,
@@ -22,11 +24,13 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [itemsWidth, setItemsWidth] = useState(94);
+  const [itemsWidth, setItemsWidth] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (overlayRef.current && overlayRef.current.clientWidth !== items.itemsWidth) {
-      setItemsWidth(overlayRef.current.clientWidth || 94);
+    // Default to 0 so it's always a number.
+    const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || 0;
+    if (clientWidth !== items.itemsWidth) {
+      setItemsWidth(overlayRef.current.clientWidth);
     }
   });
 
@@ -36,54 +40,67 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
   useArrowFocus(isOpen, onClose, overlayRef);
 
   const onClickOutside = useCallback(e => {
-    if (buttonRef.current.contains(e.target)) {
-      return;
+    if (!buttonRef.current.contains(e.target)) {
+      setIsOpen(false);
     }
-    setIsOpen(false);
   }, []);
   useOnClickOutside(overlayRef, onClickOutside);
 
-  const onClickDropdownItem = (e, key) => {
-    e.stopPropagation();
+  const onClickDropdownItem = useCallback(
+    (e, key) => {
+      e.stopPropagation();
+      onClickItem(key);
+      setIsOpen(false);
+      buttonRef.current.focus();
+    },
+    [onClickItem],
+  );
 
-    onClickItem(key);
-    setIsOpen(false);
-    buttonRef.current.focus();
-  };
-
-  const renderDropdownItems = () => {
-    return items.map(key => (
-      <button
-        key={key}
-        className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
-        onClick={e => onClickDropdownItem(e, key)}
-        tabIndex={isOpen ? undefined : -1} // Just to be safe.
-      >
-        {t(`${translationPrefix}.${key}`)}
-      </button>
-    ));
-  };
+  const dropdownItems = useMemo(
+    () =>
+      items.map(key => (
+        <button
+          key={key}
+          className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
+          onClick={e => onClickDropdownItem(e, key)}
+          tabIndex={isOpen ? undefined : -1} // Just to be safe.
+        >
+          {t(`${translationPrefix}.${key}`)}
+        </button>
+      )),
+    [currentSelectionKey, isOpen, items, onClickDropdownItem, t, translationPrefix],
+  );
 
   const optionIsSelected = items.some(key => key === currentSelectionKey);
+
+  const buttonStyle = useMemo(
+    () => ({ width: `${(itemsWidth || DEFAULT_WIDTH) + 2}px` }),
+    [itemsWidth],
+  );
 
   return (
     <div className="Dropdown__wrapper">
       <button
         className="Dropdown"
-        style={{ width: `${itemsWidth + 2}px` }}
+        style={buttonStyle}
         data-element="dropdown"
         onClick={onToggle}
         ref={buttonRef}
       >
         <div className="picked-option">
           {optionIsSelected && (
-            <div className="picked-option-text">{t(`${translationPrefix}.${currentSelectionKey}`)}</div>
+            <div className="picked-option-text">
+              {t(`${translationPrefix}.${currentSelectionKey}`)}
+            </div>
           )}
           <Icon className="down-arrow" glyph="icon-chevron-down" />
         </div>
       </button>
-      <div className={classNames('Dropdown__items', { 'hide': !isOpen })} ref={overlayRef}>
-        {renderDropdownItems()}
+      <div
+        className={classNames('Dropdown__items', { 'hide': !isOpen })}
+        ref={overlayRef}
+      >
+        {dropdownItems}
       </div>
     </div>
   );
