@@ -159,7 +159,7 @@ function LineMeasurementInput(props) {
       </div>
       <div className="angle_input">
         {t('option.measurementOverlay.angle')}: {' '}
-        <input className="lineMeasurementInput"
+        <input
           type="number"
           min="0"
           max="360"
