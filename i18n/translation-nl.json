@@ -117,52 +117,51 @@
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "measurementToolsButton": "Meetinstrumenten",
-    "calibration": "ijking",
-    "createStampButton": "Voeg een aangepaste stempel toe"
+    "calibration": "ijking"
   },
   "message": {
-    "badDocument": "Kan document niet laden. Het document is beschadigd of niet geldig.",
-    "customPrintPlaceholder": "b.v. 3, 4-10",
-    "encryptedAttemptsExceeded": "Kan gecodeerd document niet laden. Te veel pogingen.",
-    "encryptedUserCancelled": "Kan gecodeerd document niet laden. Wachtwoordinvoer geannuleerd.",
-    "enterPassword": "Dit document is beveiligd met een wachtwoord. voer een wachtwoord in alstublieft",
-    "incorrectPassword": "Onjuist wachtwoord, resterende pogingen: {{overblijvende pogingen}}",
+    "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
+    "customPrintPlaceholder": "bijv. 3, 4-10",
+    "encryptedAttemptsExceeded": "Fout bij het laden van versleuteld document. Te veel pogingen.",
+    "encryptedUserCancelled": "Fout bij het laden van versleuteld document. Wachtwoord invoer geannuleerd.",
+    "enterPassword": "Dit document heeft een wachtwoord beveiliging. Geen een wachtwoord",
+    "incorrectPassword": "Fout wachtwoord, overgebleven pogingen: {{ remainingAttempts }}",
     "noAnnotations": "Dit document heeft geen annotaties.",
-    "noOutlines": "Dit document heeft geen overzicht.",
-    "noResults": "Geen resultaten gevonden.",
-    "notSupported": "Dat bestandstype wordt niet ondersteund.",
-    "passwordRequired": "wachtwoord benodigd",
-    "preparingToPrint": "Afdrukken voorbereiden ...",
-    "annotationReplyCount": "{{count}} Beantwoorden",
+    "noOutlines": "Dit document heeft geen hoofdlijnen.",
+    "noResults": "Geen resultaten.",
+    "notSupported": "Dit bestandstype wordt niet ondersteund.",
+    "passwordRequired": "Wachtwoord vereist",
+    "preparingToPrint": "Printen voorbereiden...",
+    "annotationReplyCount": "{{count}} Antwoord",
     "annotationReplyCount_plural": "{{count}} Antwoorden",
-    "printTotalPageCount": "Totaal: {{count}} pagina",
-    "printTotalPageCount_plural": "Totaal: {{count}} pagina's",
-    "processing": "Verwerken...",
+    "printTotalPageCount": "{{count}} pagina",
+    "printTotalPageCount_plural": "{{count}} pagina's",
+    "processing": "Bezig...",
     "searching": "Zoeken...",
-    "searchPlaceholder": "Zoek opmerkingen ...",
-    "signHere": "Hier tekenen",
-    "insertTextHere": "Voeg hier tekst in",
-    "imageSignatureAcceptedFileTypes": "Alleen {{geaccepteerdFileTypes}} worden geaccepteerd",
+    "searchPlaceholder": "Zoek opmerkingen...",
+    "signHere": "Teken hier",
+    "insertTextHere": "Vul hier tekst in",
+    "imageSignatureAcceptedFileTypes": "Alleen {{AcceptFileTypes}} worden geaccepteerd",
     "enterMeasurement": "Voer de meting tussen de twee punten in",
     "linkURLorPage": "Link-URL of een pagina"
   },
   "option": {
     "annotationColor": {
       "StrokeColor": "Rand kleur",
-      "FillColor": "Opvulkleur",
+      "FillColor": "Vulling kleur",
       "TextColor": "Tekst kleur"
     },
     "displayMode": {
-      "layout": "Indeling",
-      "pageTransition": "Pagina-overgang"
+      "layout": "Layout",
+      "pageTransition": "Pagina overgang"
     },
     "documentControls": {
       "placeholder": "Voer pagina's in om te selecteren, d.w.z. 2, 5-9"
     },
     "layout": {
-      "cover": "Hoes",
-      "double": "Dubbele",
-      "single": "Single"
+      "cover": "Blad",
+      "double": "Dubbel",
+      "single": "Enkel"
     },
     "notesPanel": {
       "orderPosition": "Positie",
@@ -173,46 +172,42 @@
       }
     },
     "pageTransition": {
-      "continuous": "Continu",
+      "continuous": "Doorlopend",
       "default": "Pagina voor pagina"
     },
     "print": {
-      "all": "Allemaal",
-      "current": "Actueel",
+      "all": "Alles",
+      "current": "Huidige",
       "pages": "Pagina's",
-      "includeComments": "Voeg opmerkingen toe",
-      "addWatermarkSettings": "Voeg watermerkinstellingen toe"
+      "includeComments": "Inclusief commentaar",
+      "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
     "redaction": {
-      "markForRedaction": "Markeer voor redactie"
+      "markForRedaction": "Markeren voor redactie"
     },
     "searchPanel": {
       "caseSensitive": "Hoofdlettergevoelig",
-      "wholeWordOnly": "Hele wereld",
-      "wildcard": "Wildcard"
+      "wholeWordOnly": "Hele woorden",
+      "wildcard": "wildcard"
     },
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
     },
     "signatureModal": {
-      "saveSignature": "Handtekening opslaan",
-      "dragAndDrop": "Sleep je afbeelding hierheen",
+      "saveSignature": "Bewaar handtekening",
+      "dragAndDrop": "Sleep je afbeelding hiernaartoe",
       "or": "Of",
-      "pickImage": "Kies handtekeningafbeelding"
-    },
-    "customStampModal": {
-      "stampText": "Stempel tekst:",
-      "timestampText": " Tijdstempel tekst:"
+      "pickImage": "Kies handtekening afbeelding"
     },
     "status": {
-      "status": "Toestand"
+      "status": "staat"
     },
     "state": {
       "accepted": "Geaccepteerd",
       "rejected": "Afgekeurd",
       "completed": "Voltooid",
       "cancelled": "Geannuleerd",
-      "set": "Status instellen:",
+      "set": "Stel status in:",
       "setBy": "ingesteld door",
       "none": "Geen"
     },
@@ -221,10 +216,10 @@
       "angle": "Hoek",
       "distance": "Afstand",
       "perimeter": "Omtrek",
-      "area": "Oppervlakte",
-      "distanceMeasurement": "Afstandsmeting",
-      "perimeterMeasurement": "Omtrekmeting",
-      "areaMeasurement": "Oppervlaktemeting",
+      "area": "Gebied",
+      "distanceMeasurement": "Afstands meting",
+      "perimeterMeasurement": "Perimeter meting",
+      "areaMeasurement": "Gebieds meting",
       "radius": "Straal"
     },
     "measurementOption": {
@@ -237,12 +232,12 @@
     },
     "slider": {
       "opacity": "Dekking",
-      "thickness": "Dikte",
+      "thickness": "Randdikte",
       "text": "Lettergrootte"
     },
     "shared": {
-      "page": "Bladzijde",
-      "precision": "Precisie"
+      "page": "Pagina",
+      "precision": "precisie"
     },
     "watermark": {
       "size": "Grootte",
@@ -250,16 +245,15 @@
       "text": "Tekst",
       "style": "Stijl",
       "resetAllSettings": "Reset alle instellingen",
-      "font": "Lettertype"
+      "font": "doopvont"
     },
     "thumbnailPanel": {
-      "delete": "Verwijderen",
+      "delete": "Delete",
       "rotateClockwise": "Met de klok mee",
-      "rotateCounterClockwise": "Tegen de klok in",
-      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om te extraheren"
+      "rotateCounterClockwise": "Tegen de klok in"
     },
     "richText": {
-      "bold": "Stoutmoedig",
+      "bold": "Vet",
       "italic": "Cursief",
       "underline": "Onderstrepen",
       "strikeout": "Doorhalen"
@@ -269,20 +263,20 @@
     "deletePage": {
       "deleteTitle": "Pagina verwijderen",
       "deleteMessage": "Weet u zeker dat u de geselecteerde pagina ('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt",
-      "deleteLastPageMessage": "Dit zou ertoe leiden dat er geen pagina's meer over zijn. Laat ten minste één pagina achter"
+      "deleteLastPageMessage": "Hierdoor zouden er geen pagina's meer overblijven. Laat minstens één pagina achter"
     },
     "redaction": {
       "applyTile": "Redactie toepassen",
-      "applyMessage": "Met deze actie worden alle voor redactie geselecteerde items definitief verwijderd. Het kan niet ongedaan gemaakt worden."
+      "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden."
     }
   },
   "shortcut": {
-    "arrow": "(EEN)",
+    "arrow": "(A)",
     "callout": "(C)",
     "copy": "(Ctrl C)",
-    "delete": "(Van de)",
+    "delete": "(Del)",
     "ellipse": "(O)",
-    "eraser": "(IS)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -294,13 +288,12 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(IK)",
+    "stamp": "(I)",
     "stickyNote": "(N)",
-    "strikeout": "(NAAR)",
+    "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
-    "rubberStamp": "(Q)",
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
@@ -309,12 +302,10 @@
     }
   },
   "tool": {
-    "pan": "Pan",
-    "select": "Selecteer",
-    "Marquee": "Marquee Zoom",
-    "Link": "Link-URL of pagina",
-    "Standard": "Standaard",
-    "Dynamic": "Dynamisch"
+    "pan": "Schuiven",
+    "select": "Selecteren",
+    "Marquee": "Selectie zoom",
+    "Link": "Link URL of pagina"
   },
   "link": {
     "url": "URL",
@@ -336,7 +327,7 @@
       "7": "augustus",
       "8": "september",
       "9": "oktober",
-      "10": "November",
+      "10": "november",
       "11": "december"
     },
     "weekdays": {
@@ -349,13 +340,13 @@
       "6": "zaterdag"
     },
     "weekdaysShort": {
-      "0": "Zon",
-      "1": "Mijn",
-      "2": "jouw",
-      "3": "Wo",
-      "4": "Do",
-      "5": "vrij",
-      "6": "Za"
+      "0": "zo.",
+      "1": "ma.",
+      "2": "di.",
+      "3": "wo.",
+      "4": "do.",
+      "5": "vr.",
+      "6": "za."
     }
   }
 }

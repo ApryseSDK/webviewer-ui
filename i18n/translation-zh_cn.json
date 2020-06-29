@@ -117,31 +117,30 @@
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
     "measurementToolsButton": "测量工具",
-    "calibration": "校准",
-    "createStampButton": "添加自定义图章"
+    "calibration": "校准"
   },
   "message": {
-    "badDocument": "无法加载文档。该文档已损坏或无效。",
-    "customPrintPlaceholder": "例如3 4-10",
-    "encryptedAttemptsExceeded": "加载加密文档失败。太多的尝试。",
-    "encryptedUserCancelled": "加载加密文档失败。密码输入已取消。",
-    "enterPassword": "本文档受密码保护。请输入密码",
-    "incorrectPassword": "密码错误，尝试输入了以下次数：{{剩余尝试次数}}",
-    "noAnnotations": "该文档没有注释。",
-    "noOutlines": "该文档没有大纲。",
+    "badDocument": "无法加载文档，此文档已损坏或无效。",
+    "customPrintPlaceholder": "例如，3 4-10",
+    "encryptedAttemptsExceeded": "无法加载加密文档，尝试次数过多。",
+    "encryptedUserCancelled": "无法加载加密文档，密码输入已取消。",
+    "enterPassword": "此文档已被加密。请输入密码。",
+    "incorrectPassword": "密码错误，剩余输入机会：{{remainingAttempts}}",
+    "noAnnotations": "此文档没有注释。",
+    "noOutlines": "此文档没有大纲。",
     "noResults": "未找到结果。",
-    "notSupported": "该文件类型不支持。",
-    "passwordRequired": "需要密码",
-    "preparingToPrint": "正在准备打印...",
-    "annotationReplyCount": "{{count}}个回复",
-    "annotationReplyCount_plural": "{{count}}个回复",
-    "printTotalPageCount": "总计：{{count}}页",
-    "printTotalPageCount_plural": "总计：{{count}}页",
-    "processing": "处理中...",
-    "searching": "正在搜寻...",
-    "searchPlaceholder": "搜索评论...",
-    "signHere": "在这里签名",
-    "insertTextHere": "在此处插入文字",
+    "notSupported": "不支持该文件类型。",
+    "passwordRequired": "需要输入密码",
+    "preparingToPrint": "正在准备打印…",
+    "annotationReplyCount": "{{count}} 回复",
+    "annotationReplyCount_plural": "{{count}} 回复",
+    "printTotalPageCount": "{{count}} 页",
+    "printTotalPageCount_plural": "{{count}} 页",
+    "processing": "正在处理…",
+    "searching": "正在搜索…",
+    "searchPlaceholder": "在此处搜索注释…",
+    "signHere": "在此处签名",
+    "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在两点之间输入测量值",
     "linkURLorPage": "链接网址或页面"
@@ -149,24 +148,24 @@
   "option": {
     "annotationColor": {
       "StrokeColor": "边框颜色",
-      "FillColor": "填色",
-      "TextColor": "文字颜色"
+      "FillColor": "填充颜色",
+      "TextColor": "文本颜色"
     },
     "displayMode": {
       "layout": "布局",
-      "pageTransition": "页面过渡"
+      "pageTransition": "页面转换"
     },
     "documentControls": {
       "placeholder": "输入页面以选择2、5-9"
     },
     "layout": {
-      "cover": "覆盖",
-      "double": "双",
-      "single": "单"
+      "cover": "封面",
+      "double": "双页",
+      "single": "单页"
     },
     "notesPanel": {
-      "orderPosition": "位置",
-      "orderTime": "时间",
+      "orderPosition": "位置排序",
+      "orderTime": "时间排序",
       "separator": {
         "today": "今天",
         "yesterday": "昨天"
@@ -177,18 +176,18 @@
       "default": "逐页"
     },
     "print": {
-      "all": "所有",
+      "all": "全部",
       "current": "当前",
       "pages": "页数",
       "includeComments": "包括评论",
       "addWatermarkSettings": "添加水印设置"
     },
     "redaction": {
-      "markForRedaction": "标记为修订"
+      "markForRedaction": "标记为编辑"
     },
     "searchPanel": {
       "caseSensitive": "区分大小写",
-      "wholeWordOnly": "全字",
+      "wholeWordOnly": "整个词语",
       "wildcard": "通配符"
     },
     "signatureOverlay": {
@@ -199,10 +198,6 @@
       "dragAndDrop": "将图片拖放到此处",
       "or": "要么",
       "pickImage": "选择签名图像"
-    },
-    "customStampModal": {
-      "stampText": "印章文字：",
-      "timestampText": " 时间戳记文字："
     },
     "status": {
       "status": "状态"
@@ -217,18 +212,18 @@
       "none": "没有"
     },
     "measurementOverlay": {
-      "scale": "比例比",
+      "scale": "比例",
       "angle": "角度",
       "distance": "距离",
       "perimeter": "周长",
-      "area": "区域",
+      "area": "面积",
       "distanceMeasurement": "距离测量",
       "perimeterMeasurement": "周长测量",
       "areaMeasurement": "面积测量",
       "radius": "半径"
     },
     "measurementOption": {
-      "scale": "规模"
+      "scale": "比例"
     },
     "styleOption": {
       "style": "样式",
@@ -238,11 +233,11 @@
     "slider": {
       "opacity": "不透明度",
       "thickness": "厚度",
-      "text": "字体大小"
+      "text": "文字大小"
     },
     "shared": {
       "page": "页",
-      "precision": "精确"
+      "precision": "精准度"
     },
     "watermark": {
       "size": "尺寸",
@@ -255,14 +250,13 @@
     "thumbnailPanel": {
       "delete": "删除",
       "rotateClockwise": "顺时针",
-      "rotateCounterClockwise": "逆时针方向",
-      "extractZeroPageError": "没有选择要提取的页面"
+      "rotateCounterClockwise": "逆时针方向"
     },
     "richText": {
-      "bold": "胆大",
+      "bold": "粗体",
       "italic": "斜体",
-      "underline": "强调",
-      "strikeout": "淘汰赛"
+      "underline": "下划线",
+      "strikeout": "删除线"
     }
   },
   "warning": {
@@ -277,30 +271,29 @@
     }
   },
   "shortcut": {
-    "arrow": "（一个）",
-    "callout": "（C）",
-    "copy": "（Ctrl C）",
-    "delete": "（的）",
-    "ellipse": "（O）",
-    "eraser": "（IS）",
-    "freehand": "（F）",
-    "freetext": "（T）",
-    "highlight": "（H）",
-    "line": "（长）",
-    "pan": "（P）",
-    "rectangle": "（右）",
-    "rotateClockwise": "（Ctrl Shift +）",
-    "rotateCounterClockwise": "（Ctrl Shift-）",
-    "select": "（退出）",
-    "signature": "（S）",
-    "squiggly": "（G）",
-    "stamp": "（一世）",
-    "stickyNote": "（N）",
-    "strikeout": "（至）",
-    "underline": "（U）",
-    "zoomIn": "（Ctrl +）",
-    "zoomOut": "（Ctrl-）",
-    "rubberStamp": "（问）",
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "eraser": "(E)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)",
     "richText": {
       "bold": "（Ctrl B）",
       "italic": "（Ctrl I）",
@@ -309,12 +302,10 @@
     }
   },
   "tool": {
-    "pan": "泛",
+    "pan": "移动",
     "select": "选择",
     "Marquee": "选框缩放",
-    "Link": "链接网址或页面",
-    "Standard": "标准",
-    "Dynamic": "动态"
+    "Link": "链接网址或页面"
   },
   "link": {
     "url": "网址",
@@ -328,9 +319,9 @@
     "months": {
       "0": "一月",
       "1": "二月",
-      "2": "游行",
+      "2": "三月",
       "3": "四月",
-      "4": "可以",
+      "4": "五月",
       "5": "六月",
       "6": "七月",
       "7": "八月",
@@ -349,12 +340,12 @@
       "6": "星期六"
     },
     "weekdaysShort": {
-      "0": "太阳",
-      "1": "我的",
-      "2": "您的",
-      "3": "星期三",
+      "0": "周日",
+      "1": "周一",
+      "2": "周二",
+      "3": "周三",
       "4": "周四",
-      "5": "自由",
+      "5": "周五",
       "6": "周六"
     }
   }

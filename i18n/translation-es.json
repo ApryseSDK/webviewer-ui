@@ -117,40 +117,39 @@
     "redaction": "Modificación",
     "viewControlsOverlay": "Ver controles",
     "measurementToolsButton": "Herramientas de medición",
-    "calibration": "Calibración",
-    "createStampButton": "Agregar sello personalizado"
+    "calibration": "Calibración"
   },
   "message": {
     "badDocument": "Error al cargar el documento. El documento está dañado o no es válido.",
-    "customPrintPlaceholder": "p.ej. 3, 4-10",
-    "encryptedAttemptsExceeded": "No se pudo cargar el documento cifrado. Demasiados intentos.",
-    "encryptedUserCancelled": "No se pudo cargar el documento cifrado. Entrada de contraseña cancelada.",
-    "enterPassword": "Este documento está protegido por contraseña. porfavor ingrese una contraseña",
-    "incorrectPassword": "Contraseña incorrecta, intentos restantes: {{restantesAttempts}}",
+    "customPrintPlaceholder": "por ej. 3, 4-10",
+    "encryptedAttemptsExceeded": "Error al cargar el documento cifrado. Demasiados intentos.",
+    "encryptedUserCancelled": "Error al cargar el documento cifrado. Se ha cancelado la escritura de la contraseña.",
+    "enterPassword": "Este documento está protegido por contraseña. Introduce una contraseña",
+    "incorrectPassword": "Contraseña incorrecta, intentos restantes: {{ remainingAttempts }}",
     "noAnnotations": "Este documento no tiene anotaciones.",
-    "noOutlines": "Este documento no tiene bosquejo.",
+    "noOutlines": "Este documento no tiene esquema.",
     "noResults": "No se han encontrado resultados.",
-    "notSupported": "Ese tipo de archivo no está soportado.",
+    "notSupported": "Ese tipo de archivo no es compatible.",
     "passwordRequired": "Se requiere contraseña",
-    "preparingToPrint": "Preparando para imprimir ...",
+    "preparingToPrint": "Preparando para imprimir...",
     "annotationReplyCount": "{{count}} Respuesta",
-    "annotationReplyCount_plural": "{{count}} respuestas",
-    "printTotalPageCount": "Total: página {{count}}",
-    "printTotalPageCount_plural": "Total: {{count}} páginas",
+    "annotationReplyCount_plural": "{{count}} Respuestas",
+    "printTotalPageCount": "{{count}} página",
+    "printTotalPageCount_plural": "{{count}} páginas",
     "processing": "Procesando...",
     "searching": "Buscando...",
-    "searchPlaceholder": "Buscar comentarios ...",
-    "signHere": "Firma aqui",
-    "insertTextHere": "Insertar texto aquí",
+    "searchPlaceholder": "Buscar comentarios...",
+    "signHere": "Firma aquí",
+    "insertTextHere": "Inserta el texto aquí",
     "imageSignatureAcceptedFileTypes": "Solo se aceptan {{acceptFileTypes}}",
-    "enterMeasurement": "Ingrese la medida entre los dos puntos",
+    "enterMeasurement": "Ingrese la medición entre los dos puntos",
     "linkURLorPage": "URL de enlace o una página"
   },
   "option": {
     "annotationColor": {
       "StrokeColor": "Color del borde",
       "FillColor": "Color de relleno",
-      "TextColor": "Color de texto"
+      "TextColor": "Color del texto"
     },
     "displayMode": {
       "layout": "Diseño",
@@ -160,9 +159,9 @@
       "placeholder": "Ingrese las páginas para seleccionar, es decir, 2, 5-9"
     },
     "layout": {
-      "cover": "Cubrir",
+      "cover": "Portada",
       "double": "Doble",
-      "single": "Soltero"
+      "single": "Simple"
     },
     "notesPanel": {
       "orderPosition": "Posición",
@@ -173,36 +172,32 @@
       }
     },
     "pageTransition": {
-      "continuous": "Continuo",
-      "default": "Por páginas"
+      "continuous": "Continua",
+      "default": "Página a página"
     },
     "print": {
-      "all": "Todas",
+      "all": "Todo",
       "current": "Actual",
       "pages": "Páginas",
       "includeComments": "Incluir comentarios",
       "addWatermarkSettings": "Agregar configuraciones de marca de agua"
     },
     "redaction": {
-      "markForRedaction": "Marcar para redacción"
+      "markForRedaction": "Marcar para modificación"
     },
     "searchPanel": {
-      "caseSensitive": "Distingue mayúsculas y minúsculas",
-      "wholeWordOnly": "Toda palabra",
+      "caseSensitive": "Distinguir mayúsculas de minúsculas",
+      "wholeWordOnly": "Palabra completa",
       "wildcard": "Comodín"
     },
     "signatureOverlay": {
-      "addSignature": "Agregar una firma"
+      "addSignature": "Añadir una firma"
     },
     "signatureModal": {
       "saveSignature": "Guardar firma",
       "dragAndDrop": "Arrastra y suelta tu imagen aquí",
       "or": "O",
       "pickImage": "Elegir imagen de firma"
-    },
-    "customStampModal": {
-      "stampText": "Texto del sello:",
-      "timestampText": " Texto de marca de tiempo:"
     },
     "status": {
       "status": "Estado"
@@ -217,14 +212,14 @@
       "none": "Ninguna"
     },
     "measurementOverlay": {
-      "scale": "Ratio de escala",
+      "scale": "Relación de escala",
       "angle": "Ángulo",
       "distance": "Distancia",
       "perimeter": "Perímetro",
-      "area": "Zona",
-      "distanceMeasurement": "Medida de distancia",
-      "perimeterMeasurement": "Medida perimetral",
-      "areaMeasurement": "Medición de área",
+      "area": "Área",
+      "distanceMeasurement": "Medición de distancia",
+      "perimeterMeasurement": "Medición del perímetro",
+      "areaMeasurement": "Medición del área",
       "radius": "Radio"
     },
     "measurementOption": {
@@ -238,7 +233,7 @@
     "slider": {
       "opacity": "Opacidad",
       "thickness": "Grosor",
-      "text": "Tamano del texto"
+      "text": "Tamaño del texto"
     },
     "shared": {
       "page": "Página",
@@ -253,16 +248,15 @@
       "font": "Hacen"
     },
     "thumbnailPanel": {
-      "delete": "Eliminar",
+      "delete": "Borrar",
       "rotateClockwise": "Agujas del reloj",
-      "rotateCounterClockwise": "En sentido anti-horario",
-      "extractZeroPageError": "No se seleccionaron páginas para extraer"
+      "rotateCounterClockwise": "Sinistrórsum"
     },
     "richText": {
       "bold": "Negrita",
-      "italic": "Itálico",
+      "italic": "Cursiva",
       "underline": "Subrayar",
-      "strikeout": "Tachar"
+      "strikeout": "Tachado"
     }
   },
   "warning": {
@@ -277,30 +271,29 @@
     }
   },
   "shortcut": {
-    "arrow": "(UNA)",
+    "arrow": "(A)",
     "callout": "(C)",
     "copy": "(Ctrl C)",
     "delete": "(Del)",
     "ellipse": "(O)",
-    "eraser": "(ES)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
     "line": "(L)",
-    "pan": "(PAGS)",
+    "pan": "(P)",
     "rectangle": "(R)",
     "rotateClockwise": "(Ctrl Shift +)",
     "rotateCounterClockwise": "(Ctrl Shift -)",
     "select": "(Esc)",
     "signature": "(S)",
-    "squiggly": "(SOL)",
-    "stamp": "(YO)",
-    "stickyNote": "(NORTE)",
-    "strikeout": "(A)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
-    "rubberStamp": "(Q)",
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
@@ -309,12 +302,10 @@
     }
   },
   "tool": {
-    "pan": "Pan",
-    "select": "Seleccione",
-    "Marquee": "Zoom de marquesina",
-    "Link": "URL de enlace o página",
-    "Standard": "Estándar",
-    "Dynamic": "Dinámica"
+    "pan": "Panorámica",
+    "select": "Seleccionar",
+    "Marquee": "Zoom de selección",
+    "Link": "URL de enlace o página"
   },
   "link": {
     "url": "URL",
@@ -330,7 +321,7 @@
       "1": "febrero",
       "2": "marzo",
       "3": "abril",
-      "4": "Mayo",
+      "4": "mayo",
       "5": "junio",
       "6": "julio",
       "7": "agosto",
@@ -349,13 +340,13 @@
       "6": "sábado"
     },
     "weekdaysShort": {
-      "0": "Dom",
-      "1": "Mi",
-      "2": "tu",
-      "3": "Mie",
-      "4": "Jue",
-      "5": "gratis",
-      "6": "Se sentó"
+      "0": "dom.",
+      "1": "lun.",
+      "2": "mar.",
+      "3": "mié.",
+      "4": "jue.",
+      "5": "vie.",
+      "6": "sáb."
     }
   }
 }
