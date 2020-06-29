@@ -55,17 +55,14 @@
     "callout": "Вызыв",
     "crop": "Обрезать страницу",
     "caret": "Знак вставки",
-    "countMeasurement": "Измерение счета",
     "distanceMeasurement": "Дистанция",
+    "countMeasurement": "Измерение счета",
     "ellipse": "Эллипс",
     "eraser": "ластик",
     "fileattachment": "Файл вложения",
     "freehand": "От руки",
-    "freehand2": "От руки",
     "freetext": "Текст",
-    "freetext2": "Текст",
     "highlight": "Выделить",
-    "highlight2": "Выделить",
     "line": "Линия",
     "perimeterMeasurement": "Периметр",
     "polygon": "Многоугольник",
@@ -108,31 +105,23 @@
     "SBRejected": "Отклонено"
   },
   "component": {
-    "freehandToolsButton": "Инструменты",
-    "freeHandAndShapeToolsButton": "Инструменты Freehand / Shape",
     "leftPanel": "Панель",
     "toolsHeader": "инструменты",
     "searchOverlay": "Поиск",
     "searchPanel": "Поиск",
     "menuOverlay": "Меню",
-    "miscToolsButton": "Другие инструменты",
-    "signatureToolsButton": "Инструменты подписи",
     "notesPanel": "Заметки",
     "outlinesPanel": "Контуры",
     "bookmarksPanel": "закладки",
     "newBookmark": "Новая закладка",
     "bookmarkPage": "страница",
     "layersPanel": "Слои",
-    "shapeToolsButton": "Фигуры",
-    "textToolsButton": "Инструменты для работы с текстом",
-    "freeTextToolsButton": "Бесплатные текстовые инструменты",
-    "stickyToolsButton": "Инструменты комментариев",
     "thumbnailsPanel": "Эскизы",
     "toolsButton": "Инструменты",
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
-    "measurementToolsButton": "Инструменты для замерения",
-    "calibration": "калибровка"
+    "calibration": "калибровка",
+    "createStampButton": "Создать новую марку"
   },
   "message": {
     "toolsOverlayNoPresets": "Нет пресетов",
@@ -164,6 +153,18 @@
     "linkURLorPage": "Ссылка URL или страница"
   },
   "option": {
+    "notesOrder": {
+      "position": "Позиция",
+      "time": "Время"
+    },
+    "toolbarScreen": {
+      "View": "Посмотреть",
+      "Annotate": "Пометки",
+      "Draw": "Привлечь",
+      "Insert": "Вставить",
+      "Measure": "Мера",
+      "Edit": "редактировать"
+    },
     "annotationColor": {
       "StrokeColor": "Цвет границ",
       "FillColor": "Цвет заливки",
@@ -182,8 +183,6 @@
       "single": "Единый"
     },
     "notesPanel": {
-      "orderPosition": "Позиция",
-      "orderTime": "Время",
       "separator": {
         "today": "Сегодня",
         "yesterday": "Вчера"
@@ -208,6 +207,9 @@
       "caseSensitive": "С учетом регистра",
       "wholeWordOnly": "Всё слово",
       "wildcard": "Поиск по шаблону"
+    },
+    "stampOverlay": {
+      "addStamp": "Добавить новый штамп"
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"
@@ -279,6 +281,14 @@
       "italic": "курсивный",
       "underline": "Подчеркнутый",
       "strikeout": "Зачеркнутый"
+    },
+    "customStampModal": {
+      "stampText": "Штамп текст:",
+      "timestampText": "Текст метки времени:",
+      "stampColor": "Цвет марки:",
+      "Username": "имя пользователя",
+      "Date": "Дата",
+      "Time": "Время"
     }
   },
   "warning": {
@@ -329,7 +339,9 @@
     "pan": "Панорамирование",
     "select": "Выделить",
     "Marquee": "Увеличить выделение",
-    "Link": "Ссылка URL или Страница"
+    "Link": "Ссылка URL или Страница",
+    "Standard": "стандарт",
+    "Custom": "изготовленный на заказ"
   },
   "link": {
     "url": "URL",

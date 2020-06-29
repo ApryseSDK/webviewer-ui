@@ -55,17 +55,14 @@
     "callout": "コールアウト",
     "crop": "切り抜きページ",
     "caret": "キャレット",
-    "countMeasurement": "カウント測定",
     "distanceMeasurement": "距離測定",
+    "countMeasurement": "カウント測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
     "fileattachment": "添付ファイル",
     "freehand": "フリーハンド",
-    "freehand2": "フリーハンド",
     "freetext": "フリーテキスト",
-    "freetext2": "フリーテキスト",
     "highlight": "ハイライト",
-    "highlight2": "ハイライト",
     "line": "線",
     "perimeterMeasurement": "境界測定",
     "polygon": "ポリゴン",
@@ -108,31 +105,23 @@
     "SBRejected": "拒否されました"
   },
   "component": {
-    "freehandToolsButton": "フリーハンド ツール",
-    "freeHandAndShapeToolsButton": "フリーハンド/シェイプツール",
     "leftPanel": "パネル",
     "toolsHeader": "道具",
     "searchOverlay": "検索",
     "searchPanel": "探す",
     "menuOverlay": "メニュー",
-    "miscToolsButton": "その他のツール",
-    "signatureToolsButton": "署名ツール",
     "notesPanel": "備考",
     "outlinesPanel": "概要",
     "bookmarksPanel": "しおり",
     "newBookmark": "新しいブックマーク",
     "bookmarkPage": "ページ",
     "layersPanel": "レイヤー",
-    "shapeToolsButton": "シェイプ ツール",
-    "textToolsButton": "テキスト ツール",
-    "freeTextToolsButton": "フリーテキストツール",
-    "stickyToolsButton": "コメントツール",
     "thumbnailsPanel": "サムネイル",
     "toolsButton": "ツール",
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
-    "measurementToolsButton": "測定ツール",
-    "calibration": "較正"
+    "calibration": "較正",
+    "createStampButton": "新しいスタンプを作成"
   },
   "message": {
     "toolsOverlayNoPresets": "プリセットなし",
@@ -164,6 +153,18 @@
     "linkURLorPage": "リンクURLまたはページ"
   },
   "option": {
+    "notesOrder": {
+      "position": "ポジション",
+      "time": "時間"
+    },
+    "toolbarScreen": {
+      "View": "見る",
+      "Annotate": "注釈を付ける",
+      "Draw": "ドロー",
+      "Insert": "インサート",
+      "Measure": "測る",
+      "Edit": "編集する"
+    },
     "annotationColor": {
       "StrokeColor": "罫線の色",
       "FillColor": "塗りつぶしの色",
@@ -182,8 +183,6 @@
       "single": "シングル"
     },
     "notesPanel": {
-      "orderPosition": "位置",
-      "orderTime": "時間",
       "separator": {
         "today": "今日",
         "yesterday": "昨日"
@@ -208,6 +207,9 @@
       "caseSensitive": "大文字と小文字を区別",
       "wholeWordOnly": "単語全体",
       "wildcard": "ワイルドカード"
+    },
+    "stampOverlay": {
+      "addStamp": "新しいスタンプを追加"
     },
     "signatureOverlay": {
       "addSignature": "署名を追加"
@@ -279,6 +281,14 @@
       "italic": "イタリック",
       "underline": "下線",
       "strikeout": "取り消し線"
+    },
+    "customStampModal": {
+      "stampText": "スタンプテキスト：",
+      "timestampText": "タイムスタンプテキスト：",
+      "stampColor": "スタンプ色：",
+      "Username": "ユーザー名",
+      "Date": "日付",
+      "Time": "時間"
     }
   },
   "warning": {
@@ -329,7 +339,9 @@
     "pan": "パン",
     "select": "選択",
     "Marquee": "マーキーズーム",
-    "Link": "リンクURLまたはページ"
+    "Link": "リンクURLまたはページ",
+    "Standard": "標準",
+    "Custom": "カスタム"
   },
   "link": {
     "url": "URL",
