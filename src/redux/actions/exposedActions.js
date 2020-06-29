@@ -52,7 +52,7 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
   const state = getState();
   const toolbarGroupsToDisable = Object.keys(state.viewer.headers.tools)
     .filter(key => key !== 'View')
-    .map(key => `screen-${key}`);
+    .map(key => `${key}`);
 
   dispatch({
     type: 'DISABLE_ELEMENTS',
@@ -64,7 +64,7 @@ export const enableRibbons = () => (dispatch, getState) => {
   dispatch(setToolbarGroup('Annotate'));
   const state = getState();
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers.tools)
-    .map(key => `screen-${key}`);
+    .map(key => `${key}`);
 
   dispatch({
     type: 'ENABLE_ELEMENTS',
@@ -77,7 +77,7 @@ export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
     state.viewer.disabledElements[dataElement]?.disabled;
 
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
-    const toolGroups = state.viewer.headers.tools?.[_toolbarGroup];
+    const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
     if (toolGroups) {
       const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {
@@ -101,7 +101,7 @@ export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
     return firstTool;
   };
 
-  if (toolbarGroup === 'View') {
+  if (toolbarGroup === 'toolbarGroup-View') {
     dispatch(closeElements(['toolsHeader']));
     core.setToolMode(defaultTool);
     dispatch({

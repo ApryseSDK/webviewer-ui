@@ -33,10 +33,15 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
+const getToolbarGroupDataElements = state => {
+  return Object.keys(state.viewer.headers)
+    .filter(key => key.includes('toolbarGroup-'));
+};
+
 export const getEnabledToolbarGroups = state => {
-  const toolbarGroupKeys = Object.keys(state.viewer.headers.tools);
-  return toolbarGroupKeys.filter(key => {
-    return !isElementDisabled(state, `screen-${key}`);
+  const toolbarGroupDataElements = getToolbarGroupDataElements(state);
+  return toolbarGroupDataElements.filter(dateElement => {
+    return !isElementDisabled(state, `${dateElement}`);
   });
 };
 
@@ -55,7 +60,7 @@ export const getDisabledElementPriority = (state, dataElement) =>
 
 export const getToolsHeaderItems = state => {
   const toolbarGroup = getCurrentToolbarGroup(state);
-  return state.viewer.headers.tools[toolbarGroup];
+  return state.viewer.headers[toolbarGroup];
 };
 
 export const getToolButtonObjects = state => {

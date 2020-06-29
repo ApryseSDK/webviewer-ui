@@ -12,7 +12,7 @@ export default {
   viewer: {
     canUndo: false,
     canRedo: false,
-    toolbarGroup: 'Annotate',
+    toolbarGroup: 'toolbarGroup-Annotate',
     activeTheme: 'light',
     disabledElements: {},
     openElements: {
@@ -53,197 +53,194 @@ export default {
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
       ],
-      // second header
-      tools: {
-        View: [],
-        Annotate: [
-          { type: 'spacer' },
-          { type: 'toolGroupButton', toolGroup: 'highlightTools', dataElement: 'highlightToolGroupButton', title: 'annotation.highlight' },
-          { type: 'toolGroupButton', toolGroup: 'underlineTools', dataElement: 'underlineToolGroupButton', title: 'annotation.underline' },
-          { type: 'toolGroupButton', toolGroup: 'strikeoutTools', dataElement: 'strikeoutToolGroupButton', title: 'annotation.strikeout' },
-          { type: 'toolGroupButton', toolGroup: 'squigglyTools', dataElement: 'squigglyToolGroupButton', title: 'annotation.squiggly' },
-          { type: 'toolGroupButton', toolGroup: 'stickyTools', dataElement: 'stickyToolGroupButton', title: 'annotation.stickyNote' },
-          { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'annotation.freetext' },
-          { type: 'toolGroupButton', toolGroup: 'rectangleTools', dataElement: 'shapeToolGroupButton', title: 'annotation.rectangle' },
-          { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'annotation.freehand' },
-          { type: 'divider' },
-          {
-            type: 'customElement',
-            render: () => <ToolsOverlay />,
-            dataElement: 'toolsOverlay',
-            hidden: ['mobile'],
+      "toolbarGroup-View": [],
+      "toolbarGroup-Annotate": [
+        { type: 'spacer' },
+        { type: 'toolGroupButton', toolGroup: 'highlightTools', dataElement: 'highlightToolGroupButton', title: 'annotation.highlight' },
+        { type: 'toolGroupButton', toolGroup: 'underlineTools', dataElement: 'underlineToolGroupButton', title: 'annotation.underline' },
+        { type: 'toolGroupButton', toolGroup: 'strikeoutTools', dataElement: 'strikeoutToolGroupButton', title: 'annotation.strikeout' },
+        { type: 'toolGroupButton', toolGroup: 'squigglyTools', dataElement: 'squigglyToolGroupButton', title: 'annotation.squiggly' },
+        { type: 'toolGroupButton', toolGroup: 'stickyTools', dataElement: 'stickyToolGroupButton', title: 'annotation.stickyNote' },
+        { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'annotation.freetext' },
+        { type: 'toolGroupButton', toolGroup: 'rectangleTools', dataElement: 'shapeToolGroupButton', title: 'annotation.rectangle' },
+        { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'annotation.freehand' },
+        { type: 'divider' },
+        {
+          type: 'customElement',
+          render: () => <ToolsOverlay />,
+          dataElement: 'toolsOverlay',
+          hidden: ['mobile'],
+        },
+        {
+          type: 'actionButton',
+          style: { 'marginLeft': '0px' },
+          dataElement: 'undoButton',
+          title: 'action.undo',
+          img: 'icon-operation-undo',
+          onClick: () => {
+            core.undo();
           },
-          {
-            type: 'actionButton',
-            style: { 'marginLeft': '0px' },
-            dataElement: 'undoButton',
-            title: 'action.undo',
-            img: 'icon-operation-undo',
-            onClick: () => {
-              core.undo();
-            },
-            isNotClickableSelector: state => !state.viewer.canUndo,
+          isNotClickableSelector: state => !state.viewer.canUndo,
+        },
+        {
+          type: 'actionButton',
+          dataElement: 'redoButton',
+          title: 'action.redo',
+          img: 'icon-operation-redo',
+          onClick: () => {
+            core.redo();
           },
-          {
-            type: 'actionButton',
-            dataElement: 'redoButton',
-            title: 'action.redo',
-            img: 'icon-operation-redo',
-            onClick: () => {
-              core.redo();
-            },
-            isNotClickableSelector: state => !state.viewer.canRedo,
+          isNotClickableSelector: state => !state.viewer.canRedo,
+        },
+        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+      ],
+      "toolbarGroup-Draw": [
+        { type: 'spacer' },
+        { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'annotation.freehand' },
+        { type: 'toolGroupButton', toolGroup: 'rectangleTools', dataElement: 'shapeToolGroupButton', title: 'annotation.rectangle' },
+        { type: 'toolGroupButton', toolGroup: 'ellipseTools', dataElement: 'ellipseToolGroupButton', title: 'annotation.ellipse' },
+        { type: 'toolGroupButton', toolGroup: 'polygonTools', dataElement: 'polygonToolGroupButton', title: 'annotation.polygon' },
+        { type: 'toolGroupButton', toolGroup: 'cloudTools', dataElement: 'polygonCloudToolGroupButton', title: 'annotation.polygonCloud' },
+        { type: 'toolGroupButton', toolGroup: 'lineTools', dataElement: 'lineToolGroupButton', title: 'annotation.line' },
+        { type: 'toolGroupButton', toolGroup: 'polyLineTools', dataElement: 'polyLineToolGroupButton', title: 'annotation.polyline' },
+        { type: 'toolGroupButton', toolGroup: 'arrowTools', dataElement: 'arrowToolGroupButton', title: 'annotation.arrow' },
+        { type: 'divider' },
+        {
+          type: 'customElement',
+          render: () => <ToolsOverlay />,
+          dataElement: 'toolsOverlay',
+          hidden: ['mobile'],
+        },
+        {
+          type: 'actionButton',
+          style: { 'marginLeft': '0px' },
+          dataElement: 'undoButton',
+          title: 'action.undo',
+          img: 'icon-operation-undo',
+          onClick: () => {
+            core.undo();
           },
-          { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer', hidden: ['tablet', 'mobile'] },
-        ],
-        Draw: [
-          { type: 'spacer' },
-          { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'annotation.freehand' },
-          { type: 'toolGroupButton', toolGroup: 'rectangleTools', dataElement: 'shapeToolGroupButton', title: 'annotation.rectangle' },
-          { type: 'toolGroupButton', toolGroup: 'ellipseTools', dataElement: 'ellipseToolGroupButton', title: 'annotation.ellipse' },
-          { type: 'toolGroupButton', toolGroup: 'polygonTools', dataElement: 'polygonToolGroupButton', title: 'annotation.polygon' },
-          { type: 'toolGroupButton', toolGroup: 'cloudTools', dataElement: 'polygonCloudToolGroupButton', title: 'annotation.polygonCloud' },
-          { type: 'toolGroupButton', toolGroup: 'lineTools', dataElement: 'lineToolGroupButton', title: 'annotation.line' },
-          { type: 'toolGroupButton', toolGroup: 'polyLineTools', dataElement: 'polyLineToolGroupButton', title: 'annotation.polyline' },
-          { type: 'toolGroupButton', toolGroup: 'arrowTools', dataElement: 'arrowToolGroupButton', title: 'annotation.arrow' },
-          { type: 'divider' },
-          {
-            type: 'customElement',
-            render: () => <ToolsOverlay />,
-            dataElement: 'toolsOverlay',
-            hidden: ['mobile'],
+          isNotClickableSelector: state => !state.viewer.canUndo,
+        },
+        {
+          type: 'actionButton',
+          dataElement: 'redoButton',
+          title: 'action.redo',
+          img: 'icon-operation-redo',
+          onClick: () => {
+            core.redo();
           },
-          {
-            type: 'actionButton',
-            style: { 'marginLeft': '0px' },
-            dataElement: 'undoButton',
-            title: 'action.undo',
-            img: 'icon-operation-undo',
-            onClick: () => {
-              core.undo();
-            },
-            isNotClickableSelector: state => !state.viewer.canUndo,
+          isNotClickableSelector: state => !state.viewer.canRedo,
+        },
+        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+      ],
+      "toolbarGroup-Insert": [
+        { type: 'spacer' },
+        { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolButton', title: 'annotation.signature', showColor: 'never' },
+        { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp' },
+        { type: 'toolGroupButton', toolGroup: 'stampTools', img: 'icon-tool-image-line', dataElement: 'stampToolButton', title: 'annotation.stamp' },
+        { type: 'toolGroupButton', toolGroup: 'fileAttachmentTools', img: 'ic_fileattachment_24px', dataElement: 'fileAttachmentToolButton', title: 'annotation.fileattachment', showColor: 'never' },
+        { type: 'toolGroupButton', toolGroup: 'calloutTools', dataElement: 'calloutToolGroupButton', title: 'annotation.callout' },
+        { type: 'divider' },
+        {
+          type: 'customElement',
+          render: () => <ToolsOverlay />,
+          dataElement: 'toolsOverlay',
+          hidden: ['mobile'],
+        },
+        {
+          type: 'actionButton',
+          style: { 'marginLeft': '0px' },
+          dataElement: 'undoButton',
+          title: 'action.undo',
+          img: 'icon-operation-undo',
+          onClick: () => {
+            core.undo();
           },
-          {
-            type: 'actionButton',
-            dataElement: 'redoButton',
-            title: 'action.redo',
-            img: 'icon-operation-redo',
-            onClick: () => {
-              core.redo();
-            },
-            isNotClickableSelector: state => !state.viewer.canRedo,
+          isNotClickableSelector: state => !state.viewer.canUndo,
+        },
+        {
+          type: 'actionButton',
+          dataElement: 'redoButton',
+          title: 'action.redo',
+          img: 'icon-operation-redo',
+          onClick: () => {
+            core.redo();
           },
-          { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer', hidden: ['tablet', 'mobile'] },
-        ],
-        Insert: [
-          { type: 'spacer' },
-          { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolButton', title: 'annotation.signature', showColor: 'never' },
-          { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp' },
-          { type: 'toolGroupButton', toolGroup: 'stampTools', img: 'icon-tool-image-line', dataElement: 'stampToolButton', title: 'annotation.stamp' },
-          { type: 'toolGroupButton', toolGroup: 'fileAttachmentTools', img: 'ic_fileattachment_24px', dataElement: 'fileAttachmentToolButton', title: 'annotation.fileattachment', showColor: 'never' },
-          { type: 'toolGroupButton', toolGroup: 'calloutTools', dataElement: 'calloutToolGroupButton', title: 'annotation.callout' },
-          { type: 'divider' },
-          {
-            type: 'customElement',
-            render: () => <ToolsOverlay />,
-            dataElement: 'toolsOverlay',
-            hidden: ['mobile'],
+          isNotClickableSelector: state => !state.viewer.canRedo,
+        },
+        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+      ],
+      "toolbarGroup-Measure": [
+        { type: 'spacer' },
+        { type: 'toolGroupButton', toolGroup: 'distanceTools', dataElement: 'distanceToolGroupButton', title: 'annotation.distanceMeasurement' },
+        { type: 'toolGroupButton', toolGroup: 'perimeterTools', dataElement: 'perimeterToolGroupButton', title: 'annotation.perimeterMeasurement' },
+        { type: 'toolGroupButton', toolGroup: 'areaTools', dataElement: 'areaToolGroupButton', title: 'annotation.areaMeasurement' },
+        { type: 'toolGroupButton', toolGroup: 'ellipseAreaTools', dataElement: 'ellipseAreaToolGroupButton', title: 'annotation.areaMeasurement' },
+        { type: 'toolGroupButton', toolGroup: 'rectangleAreaTools', dataElement: 'rectangleAreaToolGroupButton', title: 'annotation.areaMeasurement' },
+        { type: 'divider' },
+        {
+          type: 'customElement',
+          render: () => <ToolsOverlay />,
+          dataElement: 'toolsOverlay',
+          hidden: ['mobile'],
+        },
+        {
+          type: 'actionButton',
+          style: { 'marginLeft': '0px' },
+          dataElement: 'undoButton',
+          title: 'action.undo',
+          img: 'icon-operation-undo',
+          onClick: () => {
+            core.undo();
           },
-          {
-            type: 'actionButton',
-            style: { 'marginLeft': '0px' },
-            dataElement: 'undoButton',
-            title: 'action.undo',
-            img: 'icon-operation-undo',
-            onClick: () => {
-              core.undo();
-            },
-            isNotClickableSelector: state => !state.viewer.canUndo,
+          isNotClickableSelector: state => !state.viewer.canUndo,
+        },
+        {
+          type: 'actionButton',
+          dataElement: 'redoButton',
+          title: 'action.redo',
+          img: 'icon-operation-redo',
+          onClick: () => {
+            core.redo();
           },
-          {
-            type: 'actionButton',
-            dataElement: 'redoButton',
-            title: 'action.redo',
-            img: 'icon-operation-redo',
-            onClick: () => {
-              core.redo();
-            },
-            isNotClickableSelector: state => !state.viewer.canRedo,
+          isNotClickableSelector: state => !state.viewer.canRedo,
+        },
+        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+      ],
+      "toolbarGroup-Edit": [
+        { type: 'spacer' },
+        { type: 'toolGroupButton', toolGroup: 'cropTools', dataElement: 'cropToolGroupButton', title: 'annotation.crop' },
+        { type: 'toolGroupButton', toolGroup: 'redactionTools', dataElement: 'redactionToolGroupButton', title: 'annotation.redact', showColor: 'never' },
+        { type: 'divider' },
+        {
+          type: 'actionButton',
+          style: { 'marginLeft': '0px' },
+          dataElement: 'undoButton',
+          title: 'action.undo',
+          img: 'icon-operation-undo',
+          onClick: () => {
+            core.undo();
           },
-          { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer', hidden: ['tablet', 'mobile'] },
-        ],
-        Measure: [
-          { type: 'spacer' },
-          { type: 'toolGroupButton', toolGroup: 'distanceTools', dataElement: 'distanceToolGroupButton', title: 'annotation.distanceMeasurement' },
-          { type: 'toolGroupButton', toolGroup: 'perimeterTools', dataElement: 'perimeterToolGroupButton', title: 'annotation.perimeterMeasurement' },
-          { type: 'toolGroupButton', toolGroup: 'areaTools', dataElement: 'areaToolGroupButton', title: 'annotation.areaMeasurement' },
-          { type: 'toolGroupButton', toolGroup: 'ellipseAreaTools', dataElement: 'ellipseAreaToolGroupButton', title: 'annotation.areaMeasurement' },
-          { type: 'toolGroupButton', toolGroup: 'rectangleAreaTools', dataElement: 'rectangleAreaToolGroupButton', title: 'annotation.areaMeasurement' },
-          { type: 'divider' },
-          {
-            type: 'customElement',
-            render: () => <ToolsOverlay />,
-            dataElement: 'toolsOverlay',
-            hidden: ['mobile'],
+          isNotClickableSelector: state => !state.viewer.canUndo,
+        },
+        {
+          type: 'actionButton',
+          dataElement: 'redoButton',
+          title: 'action.redo',
+          img: 'icon-operation-redo',
+          onClick: () => {
+            core.redo();
           },
-          {
-            type: 'actionButton',
-            style: { 'marginLeft': '0px' },
-            dataElement: 'undoButton',
-            title: 'action.undo',
-            img: 'icon-operation-undo',
-            onClick: () => {
-              core.undo();
-            },
-            isNotClickableSelector: state => !state.viewer.canUndo,
-          },
-          {
-            type: 'actionButton',
-            dataElement: 'redoButton',
-            title: 'action.redo',
-            img: 'icon-operation-redo',
-            onClick: () => {
-              core.redo();
-            },
-            isNotClickableSelector: state => !state.viewer.canRedo,
-          },
-          { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer', hidden: ['tablet', 'mobile'] },
-        ],
-        Edit: [
-          { type: 'spacer' },
-          { type: 'toolGroupButton', toolGroup: 'cropTools', dataElement: 'cropToolGroupButton', title: 'annotation.crop' },
-          { type: 'toolGroupButton', toolGroup: 'redactionTools', dataElement: 'redactionToolGroupButton', title: 'annotation.redact', showColor: 'never' },
-          { type: 'divider' },
-          {
-            type: 'actionButton',
-            style: { 'marginLeft': '0px' },
-            dataElement: 'undoButton',
-            title: 'action.undo',
-            img: 'icon-operation-undo',
-            onClick: () => {
-              core.undo();
-            },
-            isNotClickableSelector: state => !state.viewer.canUndo,
-          },
-          {
-            type: 'actionButton',
-            dataElement: 'redoButton',
-            title: 'action.redo',
-            img: 'icon-operation-redo',
-            onClick: () => {
-              core.redo();
-            },
-            isNotClickableSelector: state => !state.viewer.canRedo,
-          },
-          { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-          { type: 'spacer', hidden: ['mobile'] },
-        ],
-      },
+          isNotClickableSelector: state => !state.viewer.canRedo,
+        },
+        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        { type: 'spacer', hidden: ['mobile'] },
+      ],
     },
     annotationPopup: [
       { dataElement: 'annotationCommentButton' },

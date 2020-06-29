@@ -66,7 +66,7 @@ const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
                 {toolbarGroups.map(key =>
                   <button
                     key={key}
-                    data-element={`screen-${key}`}
+                    data-element={`${key}`}
                     className={classNames({
                       "ribbon-group": true,
                       "active": key === currentToolbarGroup,
