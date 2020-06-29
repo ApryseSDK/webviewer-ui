@@ -81,8 +81,7 @@ class SignatureOverlay extends React.PureComponent {
   }
 
   handleClickOutside = e => {
-    const clickedSignatureButton =
-      e.target.getAttribute('data-element') === 'signatureToolButton';
+    const clickedSignatureButton = e.target.getAttribute('data-element') === 'signatureToolButton';
 
     if (!clickedSignatureButton) {
       this.props.closeElement('signatureOverlay');
@@ -94,9 +93,7 @@ class SignatureOverlay extends React.PureComponent {
   };
 
   setOverlayPosition = () => {
-    const signatureToolButton = document.querySelector(
-      '[data-element="signatureToolButton"]',
-    );
+    const signatureToolButton = document.querySelector('[data-element="signatureToolButton"]');
 
     if (!signatureToolButton && this.overlay.current) {
       // the button has been disabled using instance.disableElements
@@ -105,17 +102,12 @@ class SignatureOverlay extends React.PureComponent {
       const { width } = this.overlay.current.getBoundingClientRect();
       this.setState({ left: (window.innerWidth - width) / 2, right: 'auto' });
     } else {
-      this.setState(
-        getOverlayPositionBasedOn('signatureToolButton', this.overlay, 'center'),
-      );
+      this.setState(getOverlayPositionBasedOn('signatureToolButton', this.overlay, 'center'));
     }
   };
 
   onSignatureSaved = async annotations => {
-    const numberOfSignaturesToRemove =
-      this.state.defaultSignatures.length +
-      annotations.length -
-      this.props.maxSignaturesCount;
+    const numberOfSignaturesToRemove = this.state.defaultSignatures.length + annotations.length - this.props.maxSignaturesCount;
     const defaultSignatures = [...this.state.defaultSignatures];
 
     if (numberOfSignaturesToRemove > 0) {
@@ -133,39 +125,32 @@ class SignatureOverlay extends React.PureComponent {
     });
   };
 
-  onSignatureDeleted = async () => {
-    let savedSignatures = this.signatureTool.getSavedSignatures();
-
-    // the saved signatures will have a different style than what we've saved in this component
-    // if a user changes the styles of a signature after it's added to the document
-    // here to sync up the styles we grab a saved signature in this component and use its styles to override the signatures saved in the tool
-    if (this.state.defaultSignatures.length) {
-      savedSignatures = savedSignatures.map(annotation =>
-        Object.assign(
-          annotation,
-          getAnnotationStyles(this.state.defaultSignatures[0].annotation),
-        ),
-      );
+  onSignatureDeleted = async(annotation, index) => {
+    if (!this.state.defaultSignatures.length) {
+      return;
     }
 
+    const savedSignatures = [...this.state.defaultSignatures];
+    savedSignatures.splice(index, 1);
+
     this.setState({
-      defaultSignatures: await this.getSignatureDataToStore(savedSignatures),
+      defaultSignatures: await this.getSignatureDataToStore(
+        savedSignatures.map(({ annotation }) => annotation)
+      ),
     });
   };
 
-  onAnnotationChanged = async (annotations, action) => {
+  onAnnotationChanged = async(annotations, action) => {
     if (
       action === 'modify' &&
       annotations.length === 1 &&
       annotations[0].ToolName === 'AnnotationCreateSignature'
     ) {
       const newStyles = getAnnotationStyles(annotations[0]);
-      let annotationsWithNewStyles = this.state.defaultSignatures.map(
-        ({ annotation }) => Object.assign(annotation, newStyles),
+      let annotationsWithNewStyles = this.state.defaultSignatures.map(({ annotation }) =>
+        Object.assign(annotation, newStyles)
       );
-      annotationsWithNewStyles = await this.getSignatureDataToStore(
-        annotationsWithNewStyles,
-      );
+      annotationsWithNewStyles = await this.getSignatureDataToStore(annotationsWithNewStyles);
 
       this.setState({
         defaultSignatures: annotationsWithNewStyles,
@@ -182,7 +167,7 @@ class SignatureOverlay extends React.PureComponent {
     // since it's been added to the canvas
     annotations = annotations.map(core.getAnnotationCopy);
     const previews = await Promise.all(
-      annotations.map(annotation => this.signatureTool.getPreview(annotation)),
+      annotations.map(annotation => this.signatureTool.getPreview(annotation))
     );
 
     return annotations.map((annotation, i) => ({
@@ -194,10 +179,7 @@ class SignatureOverlay extends React.PureComponent {
   setSignature = index => {
     this.currentSignatureIndex = index;
 
-    const { annotation } = this.state.defaultSignatures[
-      this.currentSignatureIndex
-    ];
-
+    const { annotation } = this.state.defaultSignatures[this.currentSignatureIndex];
     core.setToolMode('AnnotationCreateSignature');
     this.signatureTool.setSignature(annotation);
     this.props.closeElement('signatureOverlay');
@@ -244,10 +226,7 @@ class SignatureOverlay extends React.PureComponent {
         <div className="default-signatures-container">
           {defaultSignatures.map(({ imgSrc }, index) => (
             <div className="default-signature" key={index}>
-              <div
-                className="signature-image"
-                onClick={() => this.setSignature(index)}
-              >
+              <div className="signature-image" onClick={() => this.setSignature(index)}>
                 <img src={imgSrc} />
               </div>
               <ActionButton
@@ -259,9 +238,7 @@ class SignatureOverlay extends React.PureComponent {
           ))}
           <div
             className={`add-signature${
-              defaultSignatures.length >= maxSignaturesCount
-                ? ' disabled'
-                : ' enabled'
+              defaultSignatures.length >= maxSignaturesCount ? ' disabled' : ' enabled'
             }`}
             onClick={this.openSignatureModal}
           >
@@ -288,5 +265,5 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(withTranslation()(onClickOutside(SignatureOverlay)));
