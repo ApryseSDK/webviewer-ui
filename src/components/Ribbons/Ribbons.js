@@ -10,7 +10,7 @@ import Measure from 'react-measure';
 
 import "./Ribbons.scss";
 
-const Ribbons = ({ screens, currentScreen, setToolbarGroup }) => {
+const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
   const [t] = useTranslation();
   const [ribbonsWidth, setRibbonsWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -31,7 +31,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarGroup }) => {
     }
   }, [ribbonsWidth, containerWidth, ribbonsRef, containerRef]);
 
-  if (screens.length <= 1) {
+  if (toolbarGroups.length <= 1) {
     return null;
   }
 
@@ -63,13 +63,13 @@ const Ribbons = ({ screens, currentScreen, setToolbarGroup }) => {
                   "is-hidden": !hasEnoughSpace,
                 })}
               >
-                {screens.map(key =>
+                {toolbarGroups.map(key =>
                   <button
                     key={key}
                     data-element={`screen-${key}`}
                     className={classNames({
                       "ribbon-group": true,
-                      "active": key === currentScreen,
+                      "active": key === currentToolbarGroup,
                     })}
                     onClick={() => {
                       setToolbarGroup(key);
@@ -87,9 +87,9 @@ const Ribbons = ({ screens, currentScreen, setToolbarGroup }) => {
             })}
           >
             <Dropdown
-              items={screens}
+              items={toolbarGroups}
               translationPrefix="option.toolbarScreen"
-              currentSelectionKey={currentScreen}
+              currentSelectionKey={currentToolbarGroup}
               onClickItem={screen => {
                 setToolbarGroup(screen);
               }}
@@ -102,8 +102,8 @@ const Ribbons = ({ screens, currentScreen, setToolbarGroup }) => {
 };
 
 const mapStateToProps = state => ({
-  screens: selectors.getEnabledScreens(state),
-  currentScreen: selectors.getCurrentToolbarGroup(state),
+  toolbarGroups: selectors.getEnabledToolbarGroups(state),
+  currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
 });
 
 const mapDispatchToProps = {

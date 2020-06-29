@@ -33,9 +33,9 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const getEnabledScreens = state => {
-  const screenKeys = Object.keys(state.viewer.headers.tools);
-  return screenKeys.filter(key => {
+export const getEnabledToolbarGroups = state => {
+  const toolbarGroupKeys = Object.keys(state.viewer.headers.tools);
+  return toolbarGroupKeys.filter(key => {
     return !isElementDisabled(state, `screen-${key}`);
   });
 };
