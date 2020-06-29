@@ -35,13 +35,14 @@ export default (enable, store) => features => {
     },
     [Feature.Measurement]: {
       dataElements: [
-        'measurementToolGroupButton',
+        "toolbarGroup-Measure",
         'measurementOverlay',
-        'distanceMeasurementToolButton',
-        'perimeterMeasurementToolButton',
-        'areaMeasurementToolButton',
-        'ellipseMeasurementToolButton',
-        'countMeasurementToolButton'
+        'distanceToolGroupButton',
+        'perimeterToolGroupButton',
+        'areaToolGroupButton',
+        'rectangleAreaToolGroupButton',
+        'ellipseAreaToolGroupButton',
+        'countToolGroupButton'
       ],
     },
     [Feature.Annotations]: {
