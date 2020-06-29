@@ -94,7 +94,7 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile'] },
       ],
-      "toolbarGroup-Draw": [
+      "toolbarGroup-Shapes": [
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'annotation.freehand' },
         { type: 'toolGroupButton', toolGroup: 'rectangleTools', dataElement: 'shapeToolGroupButton', title: 'annotation.rectangle' },
