@@ -13,6 +13,11 @@ import disableTools from 'src/apis/disableTools';
 export default (enable, store) => features => {
   // map a feature to the dataElements that should be enabled/disabled and the function to run
   const map = {
+    [Feature.Ribbons]: {
+      dataElements: [
+        'ribbons',
+      ],
+    },
     [Feature.Annotating]: {
       dataElements: [
         'toolsHeader',

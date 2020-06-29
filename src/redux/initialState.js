@@ -46,7 +46,6 @@ export default {
         {
           type: 'customElement',
           render: () => <Ribbons />,
-          dataElement: 'ribbons',
           className: 'custom-ribbons-container',
         },
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },

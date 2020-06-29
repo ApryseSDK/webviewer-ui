@@ -8,15 +8,17 @@ const propTypes = {
   dataElement: PropTypes.string,
 };
 
-const DataElementWrapper = ({ children, dataElement, ...props }) => {
+
+
+const DataElementWrapper = React.forwardRef(({ children, dataElement, ...props }, ref) => {
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
 
   return isDisabled ? null : (
-    <div data-element={dataElement} {...props}>
+    <div ref={ref} data-element={dataElement} {...props}>
       {children}
     </div>
   );
-};
+});
 
 DataElementWrapper.propTypes = propTypes;
 export default DataElementWrapper;

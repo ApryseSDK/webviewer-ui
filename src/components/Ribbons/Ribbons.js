@@ -5,6 +5,7 @@ import Dropdown from 'components/Dropdown';
 import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
+import DataElementWrapper from 'components/DataElementWrapper';
 
 import Measure from 'react-measure';
 
@@ -44,7 +45,8 @@ const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
       }}
     >
       {({ measureRef }) => (
-        <div
+        <DataElementWrapper
+          dataElement="ribbons"
           className="ribbons-container"
           ref={measureRef}
         >
@@ -95,7 +97,7 @@ const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
               }}
             />
           </div>
-        </div>
+        </DataElementWrapper>
       )}
     </Measure>
   );
