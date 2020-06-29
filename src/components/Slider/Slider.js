@@ -20,7 +20,7 @@ class Slider extends React.PureComponent {
       PropTypes.number,
       PropTypes.string,
     ]),
-    dataElement: PropTypes.string.isRequired,
+    dataElement: PropTypes.string,
     getCirclePosition: PropTypes.func.isRequired,
     convertRelativeCirclePositionToValue: PropTypes.func.isRequired,
     onStyleChange: PropTypes.func.isRequired,
