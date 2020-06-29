@@ -75,7 +75,7 @@ const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
                       setToolbarGroup(key);
                     }}
                   >
-                    {t(`option.toolbarScreen.${key}`)}
+                    {t(`option.toolbarGroup.${key}`)}
                   </button>)}
               </div>
             )}
@@ -88,10 +88,10 @@ const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
           >
             <Dropdown
               items={toolbarGroups}
-              translationPrefix="option.toolbarScreen"
+              translationPrefix="option.toolbarGroup"
               currentSelectionKey={currentToolbarGroup}
-              onClickItem={screen => {
-                setToolbarGroup(screen);
+              onClickItem={toolbarGroup => {
+                setToolbarGroup(toolbarGroup);
               }}
             />
           </div>

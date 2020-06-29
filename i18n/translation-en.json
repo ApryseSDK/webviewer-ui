@@ -156,7 +156,7 @@
       "position": "Position",
       "time": "Time"
     },
-    "toolbarScreen": {
+    "toolbarGroup": {
       "View": "View",
       "Annotate": "Annotate",
       "Draw": "Draw",
