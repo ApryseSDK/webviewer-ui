@@ -341,7 +341,7 @@
     "Marquee": "Marquee Zoom",
     "Link": "Link URL or Page",
     "Standard": "Standard",
-    "Dynamic": "Dynamic"
+    "Custom": "Custom"
   },
   "link": {
     "url": "URL",

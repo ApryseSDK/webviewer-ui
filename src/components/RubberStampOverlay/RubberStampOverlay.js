@@ -63,7 +63,7 @@ class RubberStampOverlay extends React.Component {
     const { isMobile, standardStamps, dynamicStamps } = this.props;
 
     const StandardLabel =  this.props.t(`tool.Standard`);
-    const DynamicLabel = this.props.t(`tool.Dynamic`);
+    const CustomLabel = this.props.t(`tool.Custom`);
     const ButtonLabel = this.props.t(`component.createStampButton`);
 
     const rubberStamps = standardStamps.map(({ imgSrc, annotation }, index) =>
@@ -112,7 +112,7 @@ class RubberStampOverlay extends React.Component {
                   <div className="tab-options-divider" />
                   <Tab dataElement="dynamicStampPanelButton">
                     <div className="tab-options-button">
-                      {DynamicLabel}
+                      {CustomLabel}
                     </div>
                   </Tab>
                 </div>
