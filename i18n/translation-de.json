@@ -117,7 +117,8 @@
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
     "measurementToolsButton": "Messwerkzeuge",
-    "calibration": "Kalibrierung"
+    "calibration": "Kalibrierung",
+    "createStampButton": "Neuen Stempel erstellen"
   },
   "message": {
     "badDocument": "Fehler beim Laden des Dokuments. Das Dokument ist entweder defekt oder ungültig.",
@@ -199,6 +200,14 @@
       "or": "Oder",
       "pickImage": "Wählen Sie das Signaturbild"
     },
+    "customStampModal": {
+      "stampText": "Stempeltext:",
+      "timestampText": " Zeitstempeltext:",
+      "stampColor": "Stempelfarbe:",
+      "Username": "Nutzername",
+      "Date": "Datum",
+      "Time": "Zeit"
+    },
     "status": {
       "status": "Status"
     },
@@ -250,7 +259,8 @@
     "thumbnailPanel": {
       "delete": "Löschen",
       "rotateClockwise": "Im Uhrzeigersinn",
-      "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
+      "extractZeroPageError": "Es wurden keine Seiten zum Extrahieren ausgewählt"
     },
     "richText": {
       "bold": "Fett",
@@ -294,6 +304,7 @@
     "underline": "(U)",
     "zoomIn": "(Strg +)",
     "zoomOut": "(Strg -)",
+    "rubberStamp": "(Q)",
     "richText": {
       "bold": "(Strg B)",
       "italic": "(Strg I)",
@@ -305,7 +316,9 @@
     "pan": "Hand",
     "select": "Auswählen",
     "Marquee": "Auswahl Zoom",
-    "Link": "Link URL oder Seite"
+    "Link": "Link URL oder Seite",
+    "Standard": "Standard",
+    "Custom": "Benutzerdefiniert"
   },
   "link": {
     "url": "URL",

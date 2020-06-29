@@ -117,7 +117,8 @@
     "redaction": "Modificación",
     "viewControlsOverlay": "Ver controles",
     "measurementToolsButton": "Herramientas de medición",
-    "calibration": "Calibración"
+    "calibration": "Calibración",
+    "createStampButton": "Crear nuevo sello"
   },
   "message": {
     "badDocument": "Error al cargar el documento. El documento está dañado o no es válido.",
@@ -199,6 +200,14 @@
       "or": "O",
       "pickImage": "Elegir imagen de firma"
     },
+    "customStampModal": {
+      "stampText": "Texto de sello:",
+      "timestampText": " Texto de marca de tiempo:",
+      "stampColor": "Color del sello:",
+      "Username": "Nombre de usuario",
+      "Date": "Fecha",
+      "Time": "Hora"
+    },
     "status": {
       "status": "Estado"
     },
@@ -250,7 +259,8 @@
     "thumbnailPanel": {
       "delete": "Borrar",
       "rotateClockwise": "Agujas del reloj",
-      "rotateCounterClockwise": "Sinistrórsum"
+      "rotateCounterClockwise": "Sinistrórsum",
+      "extractZeroPageError": "No se seleccionaron páginas para extraer"
     },
     "richText": {
       "bold": "Negrita",
@@ -294,6 +304,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
+    "rubberStamp": "(Q)",
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
@@ -305,7 +316,9 @@
     "pan": "Panorámica",
     "select": "Seleccionar",
     "Marquee": "Zoom de selección",
-    "Link": "URL de enlace o página"
+    "Link": "URL de enlace o página",
+    "Standard": "Estándar",
+    "Custom": "Personalizado"
   },
   "link": {
     "url": "URL",

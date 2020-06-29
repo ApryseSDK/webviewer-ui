@@ -117,7 +117,8 @@
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
     "measurementToolsButton": "測定ツール",
-    "calibration": "較正"
+    "calibration": "較正",
+    "createStampButton": "新しいスタンプを作成"
   },
   "message": {
     "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
@@ -199,6 +200,14 @@
       "or": "または",
       "pickImage": "署名画像を選択"
     },
+    "customStampModal": {
+      "stampText": "スタンプテキスト：",
+      "timestampText": " タイムスタンプテキスト：",
+      "stampColor": "スタンプ色：",
+      "Username": "ユーザー名",
+      "Date": "日付",
+      "Time": "時間"
+    },
     "status": {
       "status": "状態"
     },
@@ -250,7 +259,8 @@
     "thumbnailPanel": {
       "delete": "削除する",
       "rotateClockwise": "時計回り",
-      "rotateCounterClockwise": "反時計回り"
+      "rotateCounterClockwise": "反時計回り",
+      "extractZeroPageError": "抽出するページが選択されていません"
     },
     "richText": {
       "bold": "太字",
@@ -294,6 +304,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
+    "rubberStamp": "（Q）",
     "richText": {
       "bold": "（Ctrl B）",
       "italic": "（Ctrl I）",
@@ -305,7 +316,9 @@
     "pan": "パン",
     "select": "選択",
     "Marquee": "マーキーズーム",
-    "Link": "リンクURLまたはページ"
+    "Link": "リンクURLまたはページ",
+    "Standard": "標準",
+    "Custom": "カスタム"
   },
   "link": {
     "url": "URL",

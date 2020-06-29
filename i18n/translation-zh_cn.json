@@ -117,7 +117,8 @@
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
     "measurementToolsButton": "测量工具",
-    "calibration": "校准"
+    "calibration": "校准",
+    "createStampButton": "创建新图章"
   },
   "message": {
     "badDocument": "无法加载文档，此文档已损坏或无效。",
@@ -199,6 +200,14 @@
       "or": "要么",
       "pickImage": "选择签名图像"
     },
+    "customStampModal": {
+      "stampText": "印章文字：",
+      "timestampText": " 时间戳记文字：",
+      "stampColor": "印章颜色：",
+      "Username": "用户名",
+      "Date": "日期",
+      "Time": "时间"
+    },
     "status": {
       "status": "状态"
     },
@@ -250,7 +259,8 @@
     "thumbnailPanel": {
       "delete": "删除",
       "rotateClockwise": "顺时针",
-      "rotateCounterClockwise": "逆时针方向"
+      "rotateCounterClockwise": "逆时针方向",
+      "extractZeroPageError": "没有选择要提取的页面"
     },
     "richText": {
       "bold": "粗体",
@@ -294,6 +304,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
+    "rubberStamp": "（问）",
     "richText": {
       "bold": "（Ctrl B）",
       "italic": "（Ctrl I）",
@@ -305,7 +316,9 @@
     "pan": "移动",
     "select": "选择",
     "Marquee": "选框缩放",
-    "Link": "链接网址或页面"
+    "Link": "链接网址或页面",
+    "Standard": "标准",
+    "Custom": "自订"
   },
   "link": {
     "url": "网址",
