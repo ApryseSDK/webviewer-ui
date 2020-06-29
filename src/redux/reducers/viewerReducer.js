@@ -12,10 +12,10 @@ export default initialState => (state = initialState, action) => {
         ...state,
         canRedo: payload.canRedo,
       };
-    case 'SET_TOOLBAR_SCREEN':
+    case 'SET_TOOLBAR_GROUP':
       return {
         ...state,
-        screen: payload.screen,
+        toolbarGroup: payload.toolbarGroup,
       };
     case 'SET_SELECTED_STAMP_INDEX':
       return {

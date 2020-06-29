@@ -10,7 +10,7 @@ import Measure from 'react-measure';
 
 import "./Ribbons.scss";
 
-const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
+const Ribbons = ({ screens, currentScreen, setToolbarGroup }) => {
   const [t] = useTranslation();
   const [ribbonsWidth, setRibbonsWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -72,7 +72,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
                       "active": key === currentScreen,
                     })}
                     onClick={() => {
-                      setToolbarScreen(key);
+                      setToolbarGroup(key);
                     }}
                   >
                     {t(`option.toolbarScreen.${key}`)}
@@ -91,7 +91,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
               translationPrefix="option.toolbarScreen"
               currentSelectionKey={currentScreen}
               onClickItem={screen => {
-                setToolbarScreen(screen);
+                setToolbarGroup(screen);
               }}
             />
           </div>
@@ -103,11 +103,11 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
 
 const mapStateToProps = state => ({
   screens: selectors.getEnabledScreens(state),
-  currentScreen: selectors.getCurrentScreen(state),
+  currentScreen: selectors.getCurrentToolbarGroup(state),
 });
 
 const mapDispatchToProps = {
-  setToolbarScreen: actions.setToolbarScreen,
+  setToolbarGroup: actions.setToolbarGroup,
 };
 
 const ConnectedRibbons = connect(

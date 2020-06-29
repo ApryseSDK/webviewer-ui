@@ -68,7 +68,7 @@ const App = ({ removeEventHandlers }) => {
     };
     tabletBreakpoint.addListener(onBreakpoint);
 
-    // dispatch(actions.setToolbarScreen('Annotate'));
+    dispatch(actions.setToolbarGroup('Annotate'));
     return removeEventHandlers;
     // eslint-disable-next-line
   }, []);

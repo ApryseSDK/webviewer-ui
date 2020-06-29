@@ -40,8 +40,8 @@ export const getEnabledScreens = state => {
   });
 };
 
-export const getCurrentScreen = state =>
-  state.viewer.screen;
+export const getCurrentToolbarGroup = state =>
+  state.viewer.toolbarGroup;
 
 export const getActiveTheme = state =>
   state.viewer.activeTheme;
@@ -54,8 +54,8 @@ export const getDisabledElementPriority = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.priority;
 
 export const getToolsHeaderItems = state => {
-  const screen = getCurrentScreen(state);
-  return state.viewer.headers.tools[screen];
+  const toolbarGroup = getCurrentToolbarGroup(state);
+  return state.viewer.headers.tools[toolbarGroup];
 };
 
 export const getToolButtonObjects = state => {

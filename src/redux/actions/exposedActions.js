@@ -48,46 +48,37 @@ export const setDefaultStamps = t => async dispatch => {
 };
 
 export const setReadOnlyRibbons = () => (dispatch, getState) => {
-  dispatch(setToolbarScreen('View'));
+  dispatch(setToolbarGroup('View'));
   const state = getState();
-  const screenKeys = Object.keys(state.viewer.headers.tools);
-  const screensToDisable = screenKeys
+  const toolbarGroupsToDisable = Object.keys(state.viewer.headers.tools)
     .filter(key => key !== 'View')
     .map(key => `screen-${key}`);
 
   dispatch({
     type: 'DISABLE_ELEMENTS',
-    payload: { dataElements: screensToDisable, priority: PRIORITY_THREE },
+    payload: { dataElements: toolbarGroupsToDisable, priority: PRIORITY_THREE },
   });
 };
 
 export const enableRibbons = () => (dispatch, getState) => {
-  dispatch(setToolbarScreen('Annotate'));
+  dispatch(setToolbarGroup('Annotate'));
   const state = getState();
-  const screenKeys = Object.keys(state.viewer.headers.tools);
-  const screensToEnable = screenKeys
+  const toolbarGroupsToEnable = Object.keys(state.viewer.headers.tools)
     .map(key => `screen-${key}`);
 
   dispatch({
     type: 'ENABLE_ELEMENTS',
-    payload: { dataElements: screensToEnable, priority: PRIORITY_THREE },
+    payload: { dataElements: toolbarGroupsToEnable, priority: PRIORITY_THREE },
   });
 };
 
-export const disableToolbarScreen = screen => dispatch => {
-  dispatch({
-    type: 'DISABLE_ELEMENTS',
-    payload: { dataElements: [`screen-${screen}`], priority: PRIORITY_THREE },
-  });
-};
-
-export const setToolbarScreen = screen => (dispatch, getState) => {
+export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
   const isElementDisabled = (state, dataElement) =>
     state.viewer.disabledElements[dataElement]?.disabled;
 
-  const getFirstToolGroupForScreen = (state, screen) => {
-    const toolGroups = state.viewer.headers.tools?.[screen];
-    let firstToolGroupForScreen = '';
+  const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
+    const toolGroups = state.viewer.headers.tools?.[_toolbarGroup];
+    let firstToolGroupForToolbarGroup = '';
     if (toolGroups) {
       const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {
         if (toolGroup && !isElementDisabled(state, dataElement)) {
@@ -96,10 +87,10 @@ export const setToolbarScreen = screen => (dispatch, getState) => {
         return false;
       });
       if (firstTool) {
-        firstToolGroupForScreen = firstTool.toolGroup;
+        firstToolGroupForToolbarGroup = firstTool.toolGroup;
       }
     }
-    return firstToolGroupForScreen;
+    return firstToolGroupForToolbarGroup;
   };
 
   const getFirstToolNameForGroup = (state, toolGroup) => {
@@ -110,7 +101,7 @@ export const setToolbarScreen = screen => (dispatch, getState) => {
     return firstTool;
   };
 
-  if (screen === 'View') {
+  if (toolbarGroup === 'View') {
     dispatch(closeElements(['toolsHeader']));
     core.setToolMode(defaultTool);
     dispatch({
@@ -119,8 +110,8 @@ export const setToolbarScreen = screen => (dispatch, getState) => {
     });
   } else {
     dispatch(openElements(['toolsHeader']));
-    const firstToolGroupForScreen = getFirstToolGroupForScreen(getState(), screen);
-    const toolName = getFirstToolNameForGroup(getState(), firstToolGroupForScreen);
+    const firstToolGroupForToolbarGroup = getFirstToolGroupForToolbarGroup(getState(), toolbarGroup);
+    const toolName = getFirstToolNameForGroup(getState(), firstToolGroupForToolbarGroup);
     if (toolName === 'AnnotationCreateSignature') {
       core.setToolMode(defaultTool);
     } else {
@@ -128,13 +119,13 @@ export const setToolbarScreen = screen => (dispatch, getState) => {
     }
     dispatch({
       type: 'SET_ACTIVE_TOOL_GROUP',
-      payload: { toolGroup: firstToolGroupForScreen },
+      payload: { toolGroup: firstToolGroupForToolbarGroup },
     });
   }
   dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
   dispatch({
-    type: 'SET_TOOLBAR_SCREEN',
-    payload: { screen },
+    type: 'SET_TOOLBAR_GROUP',
+    payload: { toolbarGroup },
   });
 };
 export const setSelectedStampIndex = index => ({
