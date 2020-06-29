@@ -55,14 +55,17 @@
     "callout": "Faire appel à",
     "crop": "Page de recadrage",
     "caret": "Caret",
-    "distanceMeasurement": "Mesure de distance",
     "countMeasurement": "Mesure de comptage",
+    "distanceMeasurement": "Mesure de distance",
     "ellipse": "Ellipse",
     "eraser": "La gomme",
     "fileattachment": "Pièce jointe",
     "freehand": "Stylo",
+    "freehand2": "Stylo",
     "freetext": "Texte libre",
+    "freetext2": "Texte libre",
     "highlight": "Surligne",
+    "highlight2": "Surligne",
     "line": "Ligne",
     "perimeterMeasurement": "Périmètre mesure",
     "polygon": "Polygone",
@@ -105,28 +108,36 @@
     "SBRejected": "Rejeté"
   },
   "component": {
+    "freehandToolsButton": "Outils de stylo",
+    "freeHandAndShapeToolsButton": "Outils à main levée / forme",
     "leftPanel": "Panneau de gauche",
     "toolsHeader": "Outils",
     "searchOverlay": "Recherche",
     "searchPanel": "Chercher",
     "menuOverlay": "Menu",
+    "miscToolsButton": "Outils divers",
+    "signatureToolsButton": "Outils de signature",
     "notesPanel": "Remarques",
     "outlinesPanel": "Contour",
     "bookmarksPanel": "Signets",
     "newBookmark": "Nouveau signet",
     "bookmarkPage": "Page",
     "layersPanel": "Couches",
+    "shapeToolsButton": "Outils de forme",
+    "textToolsButton": "Outils de texte",
+    "freeTextToolsButton": "Outils de texte gratuit",
+    "stickyToolsButton": "Outils de commentaires",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
-    "calibration": "Étalonnage",
-    "createStampButton": "Créer un nouveau tampon"
+    "measurementToolsButton": "Outils de mesure",
+    "calibration": "Étalonnage"
   },
   "message": {
     "toolsOverlayNoPresets": "Aucun préréglage",
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
-    "customPrintPlaceholder": "par ex. : 3 4-10",
+    "customPrintPlaceholder": "par ex. : 3 4-10",
     "encryptedAttemptsExceeded": "Échec du chargement du document chiffré. Trop de tentatives.",
     "encryptedUserCancelled": "Échec du chargement du document chiffré. Saisie du mot de passe annulée.",
     "enterPassword": "Ce document est protégé par un mot de passe. Veuillez saisir ce mot de passe.",
@@ -153,18 +164,6 @@
     "linkURLorPage": "Lien URL ou une page"
   },
   "option": {
-    "notesOrder": {
-      "position": "Position",
-      "time": "Temps"
-    },
-    "toolbarScreen": {
-      "View": "Vue",
-      "Annotate": "Annoter",
-      "Draw": "Dessiner",
-      "Insert": "Insérer",
-      "Measure": "Mesure",
-      "Edit": "Éditer"
-    },
     "annotationColor": {
       "StrokeColor": "Couleur de bordure",
       "FillColor": "Couleur de remplissage",
@@ -183,6 +182,8 @@
       "single": "Une"
     },
     "notesPanel": {
+      "orderPosition": "Position",
+      "orderTime": "Heure",
       "separator": {
         "today": "Aujourd'hui",
         "yesterday": "Hier"
@@ -207,9 +208,6 @@
       "caseSensitive": "Sensible à la casse",
       "wholeWordOnly": "Mot complet",
       "wildcard": "Caractère générique"
-    },
-    "stampOverlay": {
-      "addStamp": "Ajouter un nouveau tampon"
     },
     "signatureOverlay": {
       "addSignature": "Ajouter une signature"
@@ -281,14 +279,6 @@
       "italic": "Italique",
       "underline": "Souligner",
       "strikeout": "Barré"
-    },
-    "customStampModal": {
-      "stampText": "Texte du tampon:",
-      "timestampText": "Texte d'horodatage:",
-      "stampColor": "Couleur du tampon:",
-      "Username": "Nom d'utilisateur",
-      "Date": "Date",
-      "Time": "Temps"
     }
   },
   "warning": {
@@ -339,9 +329,7 @@
     "pan": "Panoramique",
     "select": "Sélection",
     "Marquee": "Marquee Zoom",
-    "Link": "URL de lien ou page",
-    "Standard": "la norme",
-    "Dynamic": "Dynamique"
+    "Link": "URL de lien ou page"
   },
   "link": {
     "url": "URL",

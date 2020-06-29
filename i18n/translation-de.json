@@ -55,14 +55,17 @@
     "callout": "Callout",
     "crop": "Seite zuschneiden",
     "caret": "Caret",
-    "distanceMeasurement": "Abstandsmessung",
     "countMeasurement": "Zählmessung",
+    "distanceMeasurement": "Abstandsmessung",
     "ellipse": "Ellipse",
     "eraser": "Radiergummi",
     "fileattachment": "Dateianhang",
     "freehand": "Freihandzeichnen",
+    "freehand2": "Freihandzeichnen",
     "freetext": "Freitext",
+    "freetext2": "Freitext",
     "highlight": "Hervorheben",
+    "highlight2": "Hervorheben",
     "line": "Linie",
     "perimeterMeasurement": "Umfangsmessung",
     "polygon": "Polygon",
@@ -105,23 +108,31 @@
     "SBRejected": "Abgelehnt"
   },
   "component": {
+    "freehandToolsButton": "Freihand-Werkzeuge",
+    "freeHandAndShapeToolsButton": "Freihand- / Formwerkzeuge",
     "leftPanel": "Linke Leiste",
     "toolsHeader": "Werkzeuge",
     "searchOverlay": "Suche",
     "searchPanel": "Suche",
     "menuOverlay": "Menü",
+    "miscToolsButton": "Verschiedene Werkzeuge",
+    "signatureToolsButton": "Signaturwerkzeuge",
     "notesPanel": "Annotationen",
     "outlinesPanel": "Gliederung",
     "bookmarksPanel": "Lesezeichen",
     "newBookmark": "Neues Lesezeichen",
     "bookmarkPage": "Seite",
     "layersPanel": "Schichten",
+    "shapeToolsButton": "Formwerkzeuge",
+    "textToolsButton": "Textwerkzeuge",
+    "freeTextToolsButton": "Freitext-Tools",
+    "stickyToolsButton": "Kommentare Tools",
     "thumbnailsPanel": "Miniaturansicht",
     "toolsButton": "Werkzeuge",
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
-    "calibration": "Kalibrierung",
-    "createStampButton": "Neuen Stempel erstellen"
+    "measurementToolsButton": "Messwerkzeuge",
+    "calibration": "Kalibrierung"
   },
   "message": {
     "toolsOverlayNoPresets": "Keine Voreinstellungen",
@@ -153,18 +164,6 @@
     "linkURLorPage": "Link URL oder eine Seite"
   },
   "option": {
-    "notesOrder": {
-      "position": "Position",
-      "time": "Zeit"
-    },
-    "toolbarScreen": {
-      "View": "Aussicht",
-      "Annotate": "Kommentieren",
-      "Draw": "Zeichnen",
-      "Insert": "Einfügen",
-      "Measure": "Messen",
-      "Edit": "Bearbeiten"
-    },
     "annotationColor": {
       "StrokeColor": "Randfarbe",
       "FillColor": "Füllfarbe",
@@ -183,6 +182,8 @@
       "single": "Einseitig"
     },
     "notesPanel": {
+      "orderPosition": "Position",
+      "orderTime": "Zeit",
       "separator": {
         "today": "Heute",
         "yesterday": "Gestern"
@@ -207,9 +208,6 @@
       "caseSensitive": "Groß-/Kleinschreibung beachten",
       "wholeWordOnly": "Ganzes Wort",
       "wildcard": "Platzhalter"
-    },
-    "stampOverlay": {
-      "addStamp": "Neuen Stempel hinzufügen"
     },
     "signatureOverlay": {
       "addSignature": "Eine Unterschrift hinzufügen"
@@ -281,14 +279,6 @@
       "italic": "Kursiv",
       "underline": "Unterstrichen",
       "strikeout": "Durchgestrichen"
-    },
-    "customStampModal": {
-      "stampText": "Stempeltext:",
-      "timestampText": "Zeitstempeltext:",
-      "stampColor": "Stempelfarbe:",
-      "Username": "Nutzername",
-      "Date": "Datum",
-      "Time": "Zeit"
     }
   },
   "warning": {
@@ -339,9 +329,7 @@
     "pan": "Hand",
     "select": "Auswählen",
     "Marquee": "Auswahl Zoom",
-    "Link": "Link URL oder Seite",
-    "Standard": "Standard",
-    "Dynamic": "Dynamisch"
+    "Link": "Link URL oder Seite"
   },
   "link": {
     "url": "URL",

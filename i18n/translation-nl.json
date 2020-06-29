@@ -55,14 +55,17 @@
     "callout": "Opmerking met pijl",
     "crop": "Pagina bijsnijden",
     "caret": "Dakje",
-    "distanceMeasurement": "Afstandsmeting",
     "countMeasurement": "Tel meting",
+    "distanceMeasurement": "Afstandsmeting",
     "ellipse": "Ellips",
     "eraser": "Gom",
     "fileattachment": "Bestandsbijlage",
     "freehand": "Vrije hand",
+    "freehand2": "Vrije hand",
     "freetext": "Tekst plaatsen",
+    "freetext2": "Tekst plaatsen",
     "highlight": "Arceren",
+    "highlight2": "Arceren",
     "line": "Lijn",
     "perimeterMeasurement": "Perimeter meting",
     "polygon": "Veelhoek",
@@ -105,23 +108,31 @@
     "SBRejected": "Afgekeurd"
   },
   "component": {
+    "freehandToolsButton": "Vrije hand tools",
+    "freeHandAndShapeToolsButton": "Uit de vrije hand / vormgereedschappen",
     "leftPanel": "Panel",
     "toolsHeader": "Gereedschap",
     "searchOverlay": "Zoeken",
     "searchPanel": "Zoeken",
     "menuOverlay": "Menu",
+    "miscToolsButton": "Diverse tools",
+    "signatureToolsButton": "Handtekening tools",
     "notesPanel": "Notities",
     "outlinesPanel": "Hoofdlijnen",
     "bookmarksPanel": "bladwijzers",
     "newBookmark": "Nieuwe bladwijzer",
     "bookmarkPage": "Pagina",
     "layersPanel": "Lagen",
+    "shapeToolsButton": "Vorm tools",
+    "textToolsButton": "Tekst tools",
+    "freeTextToolsButton": "Hulpmiddelen voor vrije tekst",
+    "stickyToolsButton": "Tools voor opmerkingen",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
-    "calibration": "ijking",
-    "createStampButton": "Maak een nieuwe stempel"
+    "measurementToolsButton": "Meetinstrumenten",
+    "calibration": "ijking"
   },
   "message": {
     "toolsOverlayNoPresets": "Geen voorinstellingen",
@@ -153,18 +164,6 @@
     "linkURLorPage": "Link-URL of een pagina"
   },
   "option": {
-    "notesOrder": {
-      "position": "Positie",
-      "time": "Tijd"
-    },
-    "toolbarScreen": {
-      "View": "Visie",
-      "Annotate": "Annoteren",
-      "Draw": "Trek",
-      "Insert": "Invoegen",
-      "Measure": "Meten",
-      "Edit": "Bewerk"
-    },
     "annotationColor": {
       "StrokeColor": "Rand kleur",
       "FillColor": "Vulling kleur",
@@ -183,6 +182,8 @@
       "single": "Enkel"
     },
     "notesPanel": {
+      "orderPosition": "Positie",
+      "orderTime": "Tijd",
       "separator": {
         "today": "Vandaag",
         "yesterday": "Gisteren"
@@ -207,9 +208,6 @@
       "caseSensitive": "Hoofdlettergevoelig",
       "wholeWordOnly": "Hele woorden",
       "wildcard": "wildcard"
-    },
-    "stampOverlay": {
-      "addStamp": "Nieuwe stempel toevoegen"
     },
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
@@ -281,14 +279,6 @@
       "italic": "Cursief",
       "underline": "Onderstrepen",
       "strikeout": "Doorhalen"
-    },
-    "customStampModal": {
-      "stampText": "Stempel tekst:",
-      "timestampText": "Tijdstempel tekst:",
-      "stampColor": "Stempelkleur:",
-      "Username": "Gebruikersnaam",
-      "Date": "Datum",
-      "Time": "Tijd"
     }
   },
   "warning": {
@@ -339,9 +329,7 @@
     "pan": "Schuiven",
     "select": "Selecteren",
     "Marquee": "Selectie zoom",
-    "Link": "Link URL of pagina",
-    "Standard": "Standaard",
-    "Dynamic": "Dynamisch"
+    "Link": "Link URL of pagina"
   },
   "link": {
     "url": "URL",
