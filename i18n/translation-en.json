@@ -202,7 +202,11 @@
     },
     "customStampModal": {
       "stampText": "Stamp text:",
-      "timestampText": " Timestamp text:"
+      "timestampText": " Timestamp text:",
+      "stampColor": "Stamp color:",
+      "Username": "Username",
+      "Date":"Date",
+      "Time":"Time"
     },
     "status": {
       "status": "Status"
