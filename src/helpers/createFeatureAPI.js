@@ -47,6 +47,7 @@ export default (enable, store) => features => {
     },
     [Feature.Annotations]: {
       dataElements: [
+        'ribbons',
         'notesPanel',
         'toggleNotesButton',
         'toggleToolsButton',
