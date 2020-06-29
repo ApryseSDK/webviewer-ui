@@ -220,7 +220,7 @@ class StampOverlay extends React.Component {
     }
 
     const StandardLabel =  this.props.t(`tool.Standard`);
-    const DynamicLabel = this.props.t(`tool.Dynamic`);
+    const CustomLabel = this.props.t(`tool.Custom`);
     const ButtonLabel = this.props.t(`component.createStampButton`);
 
     let imgs = null;
@@ -269,7 +269,7 @@ class StampOverlay extends React.Component {
                 <Button label={StandardLabel} />
               </Tab>
               <Tab dataElement="dynamicStampPanelButton">
-                <Button label={DynamicLabel} />
+                <Button label={CustomLabel} />
               </Tab>
             </div>
           </div>
