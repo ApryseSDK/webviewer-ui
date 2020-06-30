@@ -1,12 +1,8 @@
 import core from 'core';
+import actions from 'actions';
 
 
-export default () => (annotations, action) => {
-  // const canUndo= window.docViewer.getAnnotationHistoryManager().canUndo();
-  // dispatch(actions.setCanUndo(canUndo));
-  // const canRedo = window.docViewer.getAnnotationHistoryManager().canRedo();
-  // dispatch(actions.setCanRedo(canRedo));
-
+export default dispatch => (annotations, action) => {
   if (action === 'delete') {
     deleteReplies(annotations);
   }

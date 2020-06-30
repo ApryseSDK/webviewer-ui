@@ -102,7 +102,6 @@
             width: 12px;
           }
         }
-
       }
 
       .tool-group-button {
@@ -160,7 +159,7 @@
       width: 32px;
       height: 32px;
 
-      &:not(.disable) {
+      &:not(.disabled) {
         &:hover{
           border-radius: 4px;
           background: var(--tools-button-hover);

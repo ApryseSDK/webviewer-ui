@@ -13,6 +13,11 @@ import disableTools from 'src/apis/disableTools';
 export default (enable, store) => features => {
   // map a feature to the dataElements that should be enabled/disabled and the function to run
   const map = {
+    [Feature.Ribbons]: {
+      dataElements: [
+        'ribbons',
+      ],
+    },
     [Feature.Annotating]: {
       dataElements: [
         'toolsHeader',
@@ -21,22 +26,28 @@ export default (enable, store) => features => {
         'linkButton',
       ],
       fn: () => {
-        store.dispatch(actions.setReadOnlyRibbons());
+        if (enable) {
+          store.dispatch(actions.enableRibbons());
+        } else {
+          store.dispatch(actions.setReadOnlyRibbons());
+        }
       },
     },
     [Feature.Measurement]: {
       dataElements: [
-        'measurementToolGroupButton',
+        "toolbarGroup-Measure",
         'measurementOverlay',
-        'distanceMeasurementToolButton',
-        'perimeterMeasurementToolButton',
-        'areaMeasurementToolButton',
-        'ellipseMeasurementToolButton',
-        'countMeasurementToolButton'
+        'distanceToolGroupButton',
+        'perimeterToolGroupButton',
+        'areaToolGroupButton',
+        'rectangleAreaToolGroupButton',
+        'ellipseAreaToolGroupButton',
+        'countToolGroupButton'
       ],
     },
     [Feature.Annotations]: {
       dataElements: [
+        'ribbons',
         'notesPanel',
         'toggleNotesButton',
         'toggleToolsButton',

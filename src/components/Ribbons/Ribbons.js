@@ -5,12 +5,13 @@ import Dropdown from 'components/Dropdown';
 import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
+import DataElementWrapper from 'components/DataElementWrapper';
 
 import Measure from 'react-measure';
 
 import "./Ribbons.scss";
 
-const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
+const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
   const [t] = useTranslation();
   const [ribbonsWidth, setRibbonsWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -31,7 +32,7 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
     }
   }, [ribbonsWidth, containerWidth, ribbonsRef, containerRef]);
 
-  if (screens.length <= 1) {
+  if (toolbarGroups.length <= 1) {
     return null;
   }
 
@@ -44,7 +45,8 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
       }}
     >
       {({ measureRef }) => (
-        <div
+        <DataElementWrapper
+          dataElement="ribbons"
           className="ribbons-container"
           ref={measureRef}
         >
@@ -63,19 +65,19 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
                   "is-hidden": !hasEnoughSpace,
                 })}
               >
-                {screens.map(key =>
+                {toolbarGroups.map(key =>
                   <button
                     key={key}
-                    dataElement={`screen-${key}`}
+                    data-element={`${key}`}
                     className={classNames({
                       "ribbon-group": true,
-                      "active": key === currentScreen,
+                      "active": key === currentToolbarGroup,
                     })}
                     onClick={() => {
-                      setToolbarScreen(key);
+                      setToolbarGroup(key);
                     }}
                   >
-                    {t(`option.toolbarScreen.${key}`)}
+                    {t(`option.toolbarGroup.${key}`)}
                   </button>)}
               </div>
             )}
@@ -87,27 +89,27 @@ const Ribbons = ({ screens, currentScreen, setToolbarScreen }) => {
             })}
           >
             <Dropdown
-              items={screens}
-              translationPrefix="option.toolbarScreen"
-              currentSelectionKey={currentScreen}
-              onClickItem={screen => {
-                setToolbarScreen(screen);
+              items={toolbarGroups}
+              translationPrefix="option.toolbarGroup"
+              currentSelectionKey={currentToolbarGroup}
+              onClickItem={toolbarGroup => {
+                setToolbarGroup(toolbarGroup);
               }}
             />
           </div>
-        </div>
+        </DataElementWrapper>
       )}
     </Measure>
   );
 };
 
 const mapStateToProps = state => ({
-  screens: selectors.getEnabledScreens(state),
-  currentScreen: selectors.getCurrentScreen(state),
+  toolbarGroups: selectors.getEnabledToolbarGroups(state),
+  currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
 });
 
 const mapDispatchToProps = {
-  setToolbarScreen: actions.setToolbarScreen,
+  setToolbarGroup: actions.setToolbarGroup,
 };
 
 const ConnectedRibbons = connect(

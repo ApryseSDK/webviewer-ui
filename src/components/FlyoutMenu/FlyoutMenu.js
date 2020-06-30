@@ -1,7 +1,5 @@
-import { focusableElementDomString } from '@pdftron/webviewer-react-toolkit';
 import actions from 'actions';
 import classNames from 'classnames';
-import { findFocusableIndex } from 'helpers/accessibility';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import useMedia from 'hooks/useMedia';
 import useOnClickOutside from 'hooks/useOnClickOutside';
@@ -10,6 +8,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Swipeable } from 'react-swipeable';
 import selectors from 'selectors';
+import useArrowFocus from '../../hooks/useArrowFocus';
 import './FlyoutMenu.scss';
 
 const MENUS = [
@@ -41,11 +40,6 @@ function FlyoutMenu({ menu, trigger, onClose, children }) {
 
   const allOtherMenus = useMemo(() => MENUS.filter(m => m !== menu), [menu]);
 
-  const overlayRef = useRef();
-  const getFocusableElements = useCallback(() => {
-    return overlayRef.current.querySelectorAll(focusableElementDomString);
-  }, []);
-
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, menu));
   const isOpen = useSelector(state => selectors.isElementOpen(state, menu));
 
@@ -53,6 +47,9 @@ function FlyoutMenu({ menu, trigger, onClose, children }) {
     dispatch(actions.closeElements([menu]));
     onClose && onClose();
   }, [dispatch, menu, onClose]);
+
+  const overlayRef = useRef(null);
+  useArrowFocus(!isDisabled && isOpen, closeMenu, overlayRef);
 
   const onClickOutside = useCallback(
     e => {
@@ -82,42 +79,6 @@ function FlyoutMenu({ menu, trigger, onClose, children }) {
       return () => window.removeEventListener('resize', onResize);
     }
   }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger]);
-
-  // When menu opens, focus will be controlled internally with Up/Down arrows.
-  // Will return focus to button that opened it once it closes.
-  useEffect(() => {
-    if (!isDisabled && isOpen) {
-      const lastFocusedElement = document.activeElement;
-
-      const keydownListener = e => {
-        // Tab and Escape close the menu.
-        if (e.key === 'Tab' || e.key === 'Escape') {
-          closeMenu();
-          if (lastFocusedElement) {
-            lastFocusedElement.focus();
-          }
-          return;
-        }
-
-        // Up and Down keys used to navigate overlay menu.
-        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-          const focusable = getFocusableElements();
-
-          if (focusable.length === 0) {
-            return;
-          }
-
-          const focusIndex = findFocusableIndex(focusable, document.activeElement);
-
-          const vector = e.key === 'ArrowUp' ? -1 : 1;
-          focusable[(focusIndex + vector + focusable.length) % focusable.length].focus();
-        }
-      };
-
-      window.addEventListener('keydown', keydownListener);
-      return () => window.removeEventListener('keydown', keydownListener);
-    }
-  }, [closeMenu, getFocusableElements, isDisabled, isOpen]);
 
   if (isDisabled) {
     return null;
