@@ -46,12 +46,12 @@ export const setStandardStamps = t => async dispatch => {
   });
 };
 
-export const setDynamicStamps = t => async dispatch => {
+export const setCustomStamps = t => async dispatch => {
   const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
   const canvasWidth = 160;
   const canvasHeight = 58;
 
-  const annotations = await rubberStampTool.getDynamicStampAnnotations();
+  const annotations = await rubberStampTool.getCustomStampAnnotations();
   await Promise.all(
     annotations.map(annotation => {
       const text = t(`rubberStamp.${annotation['Icon']}`);

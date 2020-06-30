@@ -54,9 +54,9 @@ class RubberStampOverlay extends React.Component {
   }
 
   deleteDynamicStamp = index => {
-    const stamps = this.stampTool.getDynamicStamps();
+    const stamps = this.stampTool.getCustomStamps();
     stamps.splice(index, 1);
-    this.stampTool.setDynamicStamps(stamps);
+    this.stampTool.setCustomStamps(stamps);
   }
 
   render() {
@@ -150,7 +150,7 @@ const mapStateToProps = state => ({
   toolButtonObjects: selectors.getToolButtonObjects(state),
   dataElement: selectors.getToolButtonObjects(state)[TOOL_NAME].dataElement,
   standardStamps: selectors.getStandardStamps(state),
-  dynamicStamps: selectors.getDynamicStamps(state),
+  dynamicStamps: selectors.getCustomStamps(state),
 });
 
 const mapDispatchToProps = {
@@ -160,7 +160,7 @@ const mapDispatchToProps = {
   toggleElement: actions.toggleElement,
   setSelectedStampIndex: actions.setSelectedStampIndex,
   setStandardStamps: actions.setStandardStamps,
-  setDynamicStamps: actions.setDynamicStamps,
+  setCustomStamps: actions.setCustomStamps,
 };
 
 const ConnectedRubberStampOverlay = connect(

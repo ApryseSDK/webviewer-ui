@@ -57,7 +57,7 @@ const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) 
       canvasParent: canvasContainerRef.current,
     };
 
-    const width = stampTool.drawDynamicStamp(parameters);
+    const width = stampTool.drawCustomStamp(parameters);
     const dataURL = canvasRef.current.toDataURL();
 
     setState({

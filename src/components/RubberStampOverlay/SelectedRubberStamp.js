@@ -33,7 +33,7 @@ const SelectedSignatureRow = () => {
 
   useEffect(() => {
     dispatch(actions.setStandardStamps(t));
-    dispatch(actions.setDynamicStamps(t));
+    dispatch(actions.setCustomStamps(t));
     // eslint-disable-next-line
   }, []);
 
@@ -41,14 +41,14 @@ const SelectedSignatureRow = () => {
     const isLanguageChanged = prevLanguage !== i18n.language;
     if (isLanguageChanged) {
       dispatch(actions.setStandardStamps(t));
-      dispatch(actions.setDynamicStamps(t));
+      dispatch(actions.setCustomStamps(t));
     }
   });
 
   const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
   const onStampsAdded = () => {
     dispatch(actions.setStandardStamps(t));
-    dispatch(actions.setDynamicStamps(t));
+    dispatch(actions.setCustomStamps(t));
   };
 
   useEffect(() => {

@@ -34,13 +34,13 @@ const CustomStampModal = () => {
 
   const createDynamicStamp = () => {
     core.setToolMode(TOOL_NAME);
-    stampTool.addDynamicStamp(state);
-    const annot = stampTool.createDynamicStampAnnotation(state);
+    stampTool.addCustomStamp(state);
+    const annot = stampTool.createCustomStampAnnotation(state);
     stampTool.setRubberStamp(annot);
     stampTool.showPreview();
     dispatch(actions.closeElement('customStampModal'));
     const standardStampCount = stampTool.getStandardStamps().length;
-    const dynamicStampCount = stampTool.getDynamicStamps().length;
+    const dynamicStampCount = stampTool.getCustomStamps().length;
     dispatch(actions.setSelectedStampIndex(standardStampCount + dynamicStampCount - 1));
   };
 
