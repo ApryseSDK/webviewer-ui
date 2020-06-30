@@ -1,5 +1,4 @@
 import core from 'core';
-import actions from 'actions';
 
 
 export default () => (annotations, action) => {
