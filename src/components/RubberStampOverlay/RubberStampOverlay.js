@@ -16,6 +16,12 @@ import './RubberStampOverlay.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 
+const propTypes = {
+  standardStamps: PropTypes.array.isRequired,
+  dynamicStamps: PropTypes.array.isRequired,
+  setSelectedStampIndex: PropTypes.func.isRequired,
+};
+
 class RubberStampOverlay extends React.Component {
   static propTypes = {
     activeToolName: PropTypes.string,
@@ -39,7 +45,6 @@ class RubberStampOverlay extends React.Component {
   }
 
   setRubberStamp(annotation, index) {
-    const { closeElement, setSelectedStamp } = this.props;
     core.setToolMode(TOOL_NAME);
     this.props.closeElement("toolStylePopup");
     const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
@@ -61,10 +66,6 @@ class RubberStampOverlay extends React.Component {
 
   render() {
     const { isMobile, standardStamps, dynamicStamps } = this.props;
-
-    const StandardLabel =  this.props.t(`tool.Standard`);
-    const CustomLabel = this.props.t(`tool.Custom`);
-    const ButtonLabel = this.props.t(`component.createStampButton`);
 
     const rubberStamps = standardStamps.map(({ imgSrc, annotation }, index) =>
       <div key={index} className="rubber-stamp" onClick={() => this.setRubberStamp(annotation, index)}>
@@ -106,13 +107,13 @@ class RubberStampOverlay extends React.Component {
                 <div className="tab-list">
                   <Tab dataElement="standardStampPanelButton">
                     <div className="tab-options-button">
-                      {StandardLabel}
+                      {this.props.t(`tool.Standard`)}
                     </div>
                   </Tab>
                   <div className="tab-options-divider" />
                   <Tab dataElement="dynamicStampPanelButton">
                     <div className="tab-options-button">
-                      {CustomLabel}
+                      {this.props.t(`tool.Custom`)}
                     </div>
                   </Tab>
                 </div>
@@ -131,7 +132,7 @@ class RubberStampOverlay extends React.Component {
                     onClick={this.openCustomSampModal}
                     data-element={'add-dynamic-stamp-button'}
                   >
-                    {ButtonLabel}
+                    {this.props.t(`component.createStampButton`)}
                  </div>
               </TabPanel>
             </Tabs>
@@ -143,6 +144,7 @@ class RubberStampOverlay extends React.Component {
   }
 }
 
+RubberStampOverlay.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   activeToolName: selectors.getActiveToolName(state),

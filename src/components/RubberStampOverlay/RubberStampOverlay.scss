@@ -46,21 +46,21 @@
         width: 100%;
       }
     }
-    .rubber-stamp-2 {
-      border-radius: 4px;
-      flex-basis: 85%;
-      cursor: pointer;
-      display: flex;
-      align-items: baseline;
+    // .rubber-stamp-2 {
+    //   border-radius: 4px;
+    //   flex-basis: 85%;
+    //   cursor: pointer;
+    //   display: flex;
+    //   align-items: baseline;
 
-      &:hover {
-        background: var(--popup-button-hover);
-      }
+    //   &:hover {
+    //     background: var(--popup-button-hover);
+    //   }
 
-      img {
-        width: 100%;
-      }
-    }
+    //   img {
+    //     width: 100%;
+    //   }
+    // }
 
     .stamp-row {
       display: flex;
@@ -95,7 +95,6 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        // margin-right: 8px;
 
         img {
           max-width: 100%;
@@ -134,10 +133,6 @@
     cursor: pointer;
 
     .tab-options-button {
-      // flex breaks ellipsis text overflow for some reason
-      // display: flex;
-      // justify-content: center;
-      // align-items: center;
       text-align: center;
       vertical-align: middle;
       line-height: 24px;

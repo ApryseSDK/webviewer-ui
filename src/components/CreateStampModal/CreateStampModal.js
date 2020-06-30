@@ -5,7 +5,7 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
-import ActionButton from 'components/ActionButton';
+// import ActionButton from 'components/ActionButton'; /* Temporarily commented out */
 import CustomStampForums from './CustomStampForums';
 
 import './CreateStampModal.scss';
@@ -53,6 +53,7 @@ const CustomStampModal = () => {
       <div className="container" onMouseDown={e => e.stopPropagation()}>
         <div className="header">
           <p style={{ textAlign: 'center' }}>{t(`component.createStampButton`)}</p>
+          {/* Temporarily commented out */}
           {/* <ActionButton
             dataElement="customStampModalCloseButton"
             title="action.close"
