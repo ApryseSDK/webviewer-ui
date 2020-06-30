@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import actions from 'actions';
 import selectors from 'selectors';
 import HorizontalDivider from 'components/HorizontalDivider';
+import Tooltip from 'components/Tooltip';
 
 import './ColorPaletteHeader.scss';
 
@@ -47,15 +48,17 @@ class ColorPaletteHeader extends React.PureComponent {
         <div className="palette-options">
           {["StrokeColor", "FillColor"].map((palette, i) =>
             <React.Fragment key={i}>
-              <div
-                className={classNames({
-                  'palette-options-button': true,
-                  active: colorPalette === palette,
-                  disabled: palette === 'FillColor',
-                })}
-              >
-                {t(`option.annotationColor.${palette}`)}
-              </div>
+              <Tooltip content={`option.annotationColor.${palette}`}>
+                <div
+                  className={classNames({
+                    'palette-options-button': true,
+                    active: colorPalette === palette,
+                    disabled: palette === 'FillColor',
+                  })}
+                >
+                  {t(`option.annotationColor.${palette}`)}
+                </div>
+              </Tooltip>
               {i < 1 && <div className="palette-options-divider" />}
             </React.Fragment>,
           )}
@@ -76,15 +79,17 @@ class ColorPaletteHeader extends React.PureComponent {
       <div className="palette-options">
         {availablePalettes.map((pallette, i) =>
           <React.Fragment key={i}>
-            <div
-              className={classNames({
-                'palette-options-button': true,
-                active: colorPalette === pallette,
-              })}
-              onClick={() => this.setActivePalette(pallette)}
-            >
-              {t(`option.annotationColor.${pallette}`)}
-            </div>
+            <Tooltip content={`option.annotationColor.${pallette}`}>
+              <div
+                className={classNames({
+                  'palette-options-button': true,
+                  active: colorPalette === pallette,
+                })}
+                onClick={() => this.setActivePalette(pallette)}
+              >
+                {t(`option.annotationColor.${pallette}`)}
+              </div>
+            </Tooltip>
             {i < availablePalettes.length - 1 && <div className="palette-options-divider" />}
           </React.Fragment>,
         )}
