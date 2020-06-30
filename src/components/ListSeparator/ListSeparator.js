@@ -5,11 +5,13 @@ import './ListSeparator.scss';
 
 class ListSeparator extends React.PureComponent {
   static propTypes = {
-    renderContent: PropTypes.func.isRequired,
+    renderContent: PropTypes.func,
+    children: PropTypes.node,
   }
 
   render() {
-    return <div className="ListSeparator">{this.props.renderContent()}</div>;
+    const content = this.props.renderContent ? this.props.renderContent() : this.props.children;
+    return <div className="ListSeparator">{content}</div>;
   }
 }
 
