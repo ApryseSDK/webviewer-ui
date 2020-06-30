@@ -177,7 +177,11 @@ export default {
       linkModal: 'URLPanelButton',
       rubberStampTab: 'standardStampPanelButton',
     },
-    customElementOverrides: {},
+    customElementOverrides: {
+      colorPalette: {
+        customStamp: window.Tools.RubberStampCreateTool['FILL_COLORS']
+      },
+    },
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
