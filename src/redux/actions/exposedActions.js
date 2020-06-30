@@ -72,16 +72,26 @@ export const enableRibbons = () => (dispatch, getState) => {
   });
 };
 
-export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
-  const isElementDisabled = (state, dataElement) =>
-    state.viewer.disabledElements[dataElement]?.disabled;
+const isElementDisabled = (state, dataElement) =>
+state.viewer.disabledElements[dataElement]?.disabled;
 
+export const allButtonsInGroupDisabled = (state, toolGroup) => {
+  const dataElements = Object.values(state.viewer.toolButtonObjects)
+    .filter(({ group }) => group === toolGroup)
+    .map(({ dataElement }) => dataElement);
+
+  return dataElements.every(dataElement =>
+    isElementDisabled(state, dataElement),
+  );
+};
+
+export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
     if (toolGroups) {
       const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {
-        if (toolGroup && !isElementDisabled(state, dataElement)) {
+        if (toolGroup && !isElementDisabled(state, dataElement) && !allButtonsInGroupDisabled(state, toolGroup)) {
           return true;
         }
         return false;
