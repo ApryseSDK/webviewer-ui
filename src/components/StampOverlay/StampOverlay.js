@@ -146,7 +146,7 @@ class StampOverlay extends React.Component {
   getDynamicRubberStamps = async() => {
     let annotations = [];
     try {
-      annotations = await this.stampTool.getDynamicStampAnnotations();
+      annotations = await this.stampTool.getCustomStampAnnotations();
     } catch (error) {
       console.error(error);
     }
@@ -207,9 +207,9 @@ class StampOverlay extends React.Component {
   }
 
   deleteDynamicStamp = index => {
-    const stamps = this.stampTool.getDynamicStamps();
+    const stamps = this.stampTool.getCustomStamps();
     stamps.splice(index, 1);
-    this.stampTool.setDynamicStamps(stamps);
+    this.stampTool.setCustomStamps(stamps);
   }
 
   render() {

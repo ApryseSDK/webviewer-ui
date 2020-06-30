@@ -34,8 +34,8 @@ const CustomStampModal = () => {
 
   const createDynamicStamp = () => {
     core.setToolMode(TOOL_NAME);
-    stampTool.addDynamicStamp(state);
-    const annot = stampTool.createDynamicStampAnnotation(state);
+    stampTool.addCustomStamp(state);
+    const annot = stampTool.createCustomStampAnnotation(state);
     stampTool.setRubberStamp(annot);
     stampTool.showPreview();
     dispatch(actions.closeElement('customStampModal'));
