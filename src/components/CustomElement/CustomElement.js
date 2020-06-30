@@ -81,7 +81,6 @@ const CustomElement = ({
       ref={wrapperRef}
       data-element={dataElement}
       style={{ display }}
-
     >
       {reactComponent}
     </div>

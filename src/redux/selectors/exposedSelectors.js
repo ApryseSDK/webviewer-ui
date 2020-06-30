@@ -33,15 +33,20 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const getEnabledScreens = state => {
-  const screenKeys = Object.keys(state.viewer.headers.tools);
-  return screenKeys.filter(key => {
-    return !isElementDisabled(state, `screen-${key}`);
+const getToolbarGroupDataElements = state => {
+  return Object.keys(state.viewer.headers)
+    .filter(key => key.includes('toolbarGroup-'));
+};
+
+export const getEnabledToolbarGroups = state => {
+  const toolbarGroupDataElements = getToolbarGroupDataElements(state);
+  return toolbarGroupDataElements.filter(dateElement => {
+    return !isElementDisabled(state, `${dateElement}`);
   });
 };
 
-export const getCurrentScreen = state =>
-  state.viewer.screen;
+export const getCurrentToolbarGroup = state =>
+  state.viewer.toolbarGroup;
 
 export const getActiveTheme = state =>
   state.viewer.activeTheme;
@@ -54,12 +59,12 @@ export const getDisabledElementPriority = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.priority;
 
 export const getToolsHeaderItems = state => {
-  const screen = getCurrentScreen(state);
-  return state.viewer.headers.tools[screen];
+  const toolbarGroup = getCurrentToolbarGroup(state);
+  return state.viewer.headers[toolbarGroup];
 };
 
 export const getToolButtonObjects = state => {
-  return state.viewer.toolButtonObjects['default'];
+  return state.viewer.toolButtonObjects;
 };
 
 export const getActiveToolNamesForActiveToolGroup = state => {

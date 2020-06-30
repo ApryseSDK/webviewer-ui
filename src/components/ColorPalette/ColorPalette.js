@@ -14,7 +14,8 @@ class ColorPalette extends React.PureComponent {
     property: PropTypes.string.isRequired,
     color: PropTypes.object,
     onStyleChange: PropTypes.func.isRequired,
-    overridePalette: PropTypes.array,
+    overridePalette: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    colorMapKey: PropTypes.string
   }
 
   constructor(props) {
@@ -62,11 +63,19 @@ class ColorPalette extends React.PureComponent {
   }
 
   render() {
-    const { hasPadding, style = {}, property, color, overridePalette, overridePalette2 } = this.props;
+    const {
+      hasPadding,
+      style = {},
+      property,
+      color,
+      overridePalette,
+      overridePalette2,
+      colorMapKey
+    } = this.props;
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
 
-    const palette = overridePalette2 || overridePalette || this.palette;
+    const palette = overridePalette2 ||  overridePalette?.[colorMapKey] || overridePalette?.global || this.palette;
 
     return (
       <div

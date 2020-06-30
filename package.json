@@ -21,6 +21,7 @@
     "@pdftron/webviewer-react-toolkit": "^0.6.0-beta.8",
     "autolinker": "^3.11.1",
     "classnames": "^2.2.6",
+    "css-vars-ponyfill": "^2.3.2",
     "dayjs": "^1.8.19",
     "file-saver": "git+https://github.com/ZhijieZhang/FileSaver.js.git",
     "framer-motion": "^1.10.0",

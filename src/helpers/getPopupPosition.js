@@ -156,7 +156,7 @@ const getPopupDimensions = popup => {
 };
 
 const calcAnnotationPopupPosition = (annotationPosition, popupDimension) => {
-  const approximateHeight = 375;
+  const approximateHeight = 204;
   const top = calcPopupTop(annotationPosition, popupDimension, approximateHeight);
   const left = calcPopupLeft(annotationPosition, popupDimension);
 
@@ -215,6 +215,7 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHe
   } else if (annotTop - maxHeight > visibleRegion.top) {
     top = annotTop - height;
   } else {
+    console.log('bleh', visibleRegion.top + 5);
     // there's no room for it in the vertical axis, so just choose the top of the visible region
     top = visibleRegion.top + 5;
   }

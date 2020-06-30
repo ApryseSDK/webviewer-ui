@@ -44,6 +44,13 @@ const NotesPanel = () => {
   );
   const dispatch = useDispatch();
 
+  const inputRef = useRef(null);
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -346,6 +353,7 @@ const NotesPanel = () => {
                     type="text"
                     placeholder={t('message.searchCommentsPlaceholder')}
                     onChange={handleInputChange}
+                    ref={inputRef}
                   />
                 </div>
                 <div className="divider" />
