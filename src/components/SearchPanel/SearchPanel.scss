@@ -79,6 +79,12 @@
     &.wild-card-visible {
       margin-top: 110px !important;
     }
+
+    .ReactVirtualized__List{
+      &:focus{
+        outline: none;
+      }
+    }
   }
 
   .loader-wrapper {

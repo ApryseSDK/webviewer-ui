@@ -10,11 +10,16 @@
   padding-right: 12px;
   margin-left: 2px;
   margin-bottom: 8px;
+  margin-right: 18px;
   background: var(--component-background);
 
   &.selected {
     border: 1px solid var(--focus-border);
     box-shadow: none;
+  }
+
+  &:focus{
+    outline: none;
   }
 
   .search-value {
