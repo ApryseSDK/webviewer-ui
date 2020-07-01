@@ -48,11 +48,10 @@ export const setDefaultStamps = t => async dispatch => {
 };
 
 export const setReadOnlyRibbons = () => (dispatch, getState) => {
-  dispatch(setToolbarGroup('View'));
+  dispatch(setToolbarGroup('toolbarGroup-View'));
   const state = getState();
-  const toolbarGroupsToDisable = Object.keys(state.viewer.headers.tools)
-    .filter(key => key !== 'View')
-    .map(key => `${key}`);
+  const toolbarGroupsToDisable = Object.keys(state.viewer.headers)
+    .filter(key => key.includes('toolbarGroup-') && key !== 'toolbarGroup-View');
 
   dispatch({
     type: 'DISABLE_ELEMENTS',
@@ -61,10 +60,10 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
 };
 
 export const enableRibbons = () => (dispatch, getState) => {
-  dispatch(setToolbarGroup('Annotate'));
+  dispatch(setToolbarGroup('toolbarGroup-Annotate'));
   const state = getState();
-  const toolbarGroupsToEnable = Object.keys(state.viewer.headers.tools)
-    .map(key => `${key}`);
+  const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
+    .filter(key => key.includes('toolbarGroup-'));
 
   dispatch({
     type: 'ENABLE_ELEMENTS',

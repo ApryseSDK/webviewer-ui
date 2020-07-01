@@ -13,6 +13,11 @@
   height: 32px;
   color: var(--text-color);
 
+  img {
+    height: 24px;
+    width: 24px;
+  }
+
   // color for svgs
   &.active {
     path[fill=default] {
