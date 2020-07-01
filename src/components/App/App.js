@@ -65,13 +65,13 @@ const App = ({ removeEventHandlers }) => {
       <div className="App">
         <Accessibility />
 
-        <Header />
-
         <LeftPanel />
         <SearchPanel />
 
         <DocumentContainer />
 
+        <Header />
+        
         <SearchOverlay />
         <ViewControlsOverlay />
         <RedactionOverlay />
