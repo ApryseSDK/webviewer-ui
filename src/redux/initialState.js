@@ -1,11 +1,10 @@
 import React from 'react';
 
-import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import SignatureToolButton from 'components/SignatureToolButton';
+import PageNav from 'components/PageNav';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
-import { zoomIn, zoomOut } from 'helpers/zoom';
 import defaultTool from 'constants/defaultTool';
 import { copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
@@ -18,53 +17,18 @@ export default {
     },
     headers: {
       default: [
-        { type: 'toggleElementButton', img: 'ic_left_sidebar_black_24px', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
-        { type: 'divider', hidden: ['tablet', 'mobile'] },
+        { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchOverlay', img: 'ic_search_black_24px', title: 'component.searchOverlay' },
         { type: 'toggleElementButton', img: 'ic_viewer_settings_black_24px', element: 'viewControlsOverlay', dataElement: 'viewControlsButton', title: 'component.viewControlsOverlay' },
-        { type: 'toolButton', toolName: 'Pan' },
-        { type: 'toolButton', toolName: 'TextSelect' },
-        { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['tablet', 'mobile'] },
-        { type: 'actionButton', img: 'ic_zoom_out_black_24px', onClick: zoomOut, title: 'action.zoomOut', dataElement: 'zoomOutButton', hidden: ['mobile'] },
-        { type: 'actionButton', img: 'ic_zoom_in_black_24px', onClick: zoomIn, title: 'action.zoomIn', dataElement: 'zoomInButton', hidden: ['mobile'] },
+        { type: 'spacer' },
         {
           type: 'customElement',
-          render: () => <ToggleZoomOverlay />,
-          dataElement: 'zoomOverlayButton',
+          render: () => <PageNav />,
+          dataElement: 'pageNavButton',
           hidden: ['mobile'],
-          element: 'zoomOverlay',
+          element: 'pageNav',
         },
         { type: 'spacer' },
-        { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', hidden: ['tablet', 'mobile'], showColor: 'active' },
-        { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', hidden: ['tablet', 'mobile'], showColor: 'active' },
-        { type: 'toolGroupButton', toolGroup: 'textTools', dataElement: 'textToolGroupButton', title: 'component.textToolsButton', hidden: ['tablet', 'mobile'], showColor: 'active' },
-        { type: 'toolGroupButton', toolGroup: 'shapeTools', dataElement: 'shapeToolGroupButton', title: 'component.shapeToolsButton', hidden: ['tablet', 'mobile'], showColor: 'active' },
-        { type: 'toolButton', toolName: 'AnnotationEraserTool', hidden: ['tablet', 'mobile'] },
-        {
-          type: 'customElement',
-          render: () => <SignatureToolButton />,
-          dataElement: 'signatureToolButton',
-          hidden: ['tablet', 'mobile'],
-        },
-        // TODO: change this button to be a custom element so we don't need to have extra logic in ToggleElementButton.js to determine if the button should be highlighted
-        { type: 'toggleElementButton', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction', hidden: ['tablet', 'mobile'] },
-        { type: 'toolButton', toolName: 'AnnotationCreateFreeText', hidden: ['tablet', 'mobile'] },
-        { type: 'toolButton', toolName: 'AnnotationCreateSticky', hidden: ['tablet', 'mobile'] },
-        { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', hidden: ['tablet', 'mobile'], showColor: 'never' },
-        {
-          type: 'actionButton',
-          img: 'ic_edit_black_24px',
-          onClick: dispatch => {
-            dispatch(actions.setActiveHeaderGroup('tools'));
-            core.setToolMode(defaultTool);
-            dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'zoomOverlay', 'redactionOverlay']));
-          },
-          dataElement: 'toolsButton',
-          title: 'component.toolsButton',
-          hidden: ['desktop'],
-        },
-        { type: 'divider', hidden: ['tablet', 'mobile'] },
-        { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchOverlay', img: 'ic_search_black_24px', title: 'component.searchOverlay' },
-        { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'ic_overflow_black_24px', title: 'component.menuOverlay' },
+        { type: 'toggleElementButton', img: 'ic_left_sidebar_black_24px', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
       ],
       tools: [
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', showColor: 'active' },

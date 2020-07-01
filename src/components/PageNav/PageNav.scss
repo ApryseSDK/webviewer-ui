@@ -1,0 +1,27 @@
+@import '../../constants/styles';
+@import '../../constants/overlay';
+
+.PageNav {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  cursor: pointer;
+
+  @include mobile {
+    font-size: 14px;
+  }
+
+  input {
+    padding: 0;
+    border: none;
+    text-align: right;
+    font-size: 16px;
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+
+    @include mobile {
+      font-size: 14px;
+    }
+  }
+}
