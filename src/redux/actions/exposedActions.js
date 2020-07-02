@@ -48,11 +48,18 @@ export const setDefaultStamps = t => async dispatch => {
 };
 
 export const setReadOnlyRibbons = () => (dispatch, getState) => {
+<<<<<<< HEAD
   dispatch(setToolbarGroup('View'));
   const state = getState();
   const toolbarGroupsToDisable = Object.keys(state.viewer.headers.tools)
     .filter(key => key !== 'View')
     .map(key => `${key}`);
+=======
+  dispatch(setToolbarGroup('toolbarGroup-View'));
+  const state = getState();
+  const toolbarGroupsToDisable = Object.keys(state.viewer.headers)
+    .filter(key => key.includes('toolbarGroup-') && key !== 'toolbarGroup-View');
+>>>>>>> 02ea0023127689fe8942ed82dd9e1716a6e9b046
 
   dispatch({
     type: 'DISABLE_ELEMENTS',
@@ -61,10 +68,17 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
 };
 
 export const enableRibbons = () => (dispatch, getState) => {
+<<<<<<< HEAD
   dispatch(setToolbarGroup('Annotate'));
   const state = getState();
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers.tools)
     .map(key => `${key}`);
+=======
+  dispatch(setToolbarGroup('toolbarGroup-Annotate'));
+  const state = getState();
+  const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
+    .filter(key => key.includes('toolbarGroup-'));
+>>>>>>> 02ea0023127689fe8942ed82dd9e1716a6e9b046
 
   dispatch({
     type: 'ENABLE_ELEMENTS',
@@ -72,16 +86,33 @@ export const enableRibbons = () => (dispatch, getState) => {
   });
 };
 
+<<<<<<< HEAD
 export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
   const isElementDisabled = (state, dataElement) =>
     state.viewer.disabledElements[dataElement]?.disabled;
 
+=======
+const isElementDisabled = (state, dataElement) =>
+state.viewer.disabledElements[dataElement]?.disabled;
+
+export const allButtonsInGroupDisabled = (state, toolGroup) => {
+  const dataElements = Object.values(state.viewer.toolButtonObjects)
+    .filter(({ group }) => group === toolGroup)
+    .map(({ dataElement }) => dataElement);
+
+  return dataElements.every(dataElement =>
+    isElementDisabled(state, dataElement),
+  );
+};
+
+export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
+>>>>>>> 02ea0023127689fe8942ed82dd9e1716a6e9b046
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
     if (toolGroups) {
       const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {
-        if (toolGroup && !isElementDisabled(state, dataElement)) {
+        if (toolGroup && !isElementDisabled(state, dataElement) && !allButtonsInGroupDisabled(state, toolGroup)) {
           return true;
         }
         return false;

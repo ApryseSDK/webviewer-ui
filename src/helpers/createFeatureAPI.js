@@ -54,6 +54,7 @@ export default (enable, store) => features => {
         'toolsButton',
         'linkButton',
         'toolsHeader',
+        'toolsOverlay',
       ],
       fn: () => {
         if (enable) {
