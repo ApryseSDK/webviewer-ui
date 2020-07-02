@@ -140,7 +140,7 @@ const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) 
           label={t('option.customStampModal.Date')}
         />
         <Choice
-          id="default-time"
+          id="default-time-input"
           checked={timeCheckbox}
           onChange={handleTimeInputChange}
           label={t('option.customStampModal.Time')}
