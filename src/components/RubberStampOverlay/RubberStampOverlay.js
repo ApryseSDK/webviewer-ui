@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -86,59 +87,45 @@ class RubberStampOverlay extends React.Component {
 
     return (
       <div
-        className={classNames({
-          Popup: true,
-          StylePopup: true,
-          mobile: isMobile,
-        })}
-        data-element="stylePopup"
+        className="rubber-stamp-overlay"
+        data-element="rubberStampOverlay"
       >
-        <Swipeable
-          onSwipedUp={() => this.props.closeElement('toolsOverlay')}
-          onSwipedDown={() => this.props.closeElement('toolsOverlay')}
-          preventDefaultTouchmoveEvent
-        >
-          <div
-            className="rubber-stamp-overlay"
-            data-element="rubberStampOverlay"
-          >
-            <Tabs id="rubberStampTab">
-              <div className="header">
-                <div className="tab-list">
-                  <Tab dataElement="standardStampPanelButton">
-                    <div className="tab-options-button">
-                      {this.props.t(`tool.Standard`)}
-                    </div>
-                  </Tab>
-                  <div className="tab-options-divider" />
-                  <Tab dataElement="dynamicStampPanelButton">
-                    <div className="tab-options-button">
-                      {this.props.t(`tool.Custom`)}
-                    </div>
-                  </Tab>
+        <Tabs id="rubberStampTab">
+          <div className="header tab-header">
+            <div className="tab-list">
+              <Tab dataElement="standardStampPanelButton">
+                <div className="tab-options-button">
+                  {this.props.t(`tool.Standard`)}
                 </div>
-              </div>
-
-              <TabPanel dataElement="standardStampPanel">
-                <div className="stadard-stamp-panel">
-                  { rubberStamps }
+              </Tab>
+              <div className="tab-options-divider" />
+              <Tab dataElement="dynamicStampPanelButton">
+                <div className="tab-options-button">
+                  {this.props.t(`tool.Custom`)}
                 </div>
-              </TabPanel>
-              <TabPanel dataElement="dynamicStampPanel">
-                <div className="dynamic-stamp-panel">
-                  { customImgs }
-                </div>
-                  <div className={`add-dynamic-stamp-button enabled`}
-                    onClick={this.openCustomSampModal}
-                    data-element={'add-dynamic-stamp-button'}
-                  >
-                    {this.props.t(`component.createStampButton`)}
-                 </div>
-              </TabPanel>
-            </Tabs>
-
+              </Tab>
+            </div>
           </div>
-        </Swipeable>
+
+          <TabPanel dataElement="standardStampPanel">
+            <div className="standard-stamp-panel">
+              { rubberStamps }
+            </div>
+          </TabPanel>
+          <TabPanel dataElement="dynamicStampPanel">
+            <div className="dynamic-stamp-panel">
+              { customImgs }
+            </div>
+            <div className={classNames({
+                'stamp-row-content': true,
+                'add-btn': true,
+              })}
+              onClick={this.openCustomSampModal}
+            >
+              {this.props.t(`component.createStampButton`)}
+            </div>
+          </TabPanel>
+        </Tabs>
       </div>
     );
   }

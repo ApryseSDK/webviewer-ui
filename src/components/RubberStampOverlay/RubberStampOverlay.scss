@@ -4,18 +4,21 @@
 .rubber-stamp-overlay {
   margin-left: 0px;
   margin-bottom: 8px;
-  .tab-panel {
-    margin-right: -5px;
-  }
+  padding-left: 8px;
+  padding-right: 4px;
+
   @include mobile {
     margin-bottom: 0px;
     margin-right: 0px;
     padding-top: 12px;
   }
   .dynamic-stamp-panel {
-    height: 266px;
+    height: 270px;
+    overflow: auto;
+    margin-bottom: 8px;
+
   }
-  .stadard-stamp-panel {
+  .standard-stamp-panel {
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -25,87 +28,100 @@
     height: 300px;
     overflow-y: scroll;
   }
-  .stadard-stamp-panel, .dynamic-stamp-panel {
-
+  .standard-stamp-panel {
     @include mobile {
       height: 236px;
-      padding-right: 30px;
       width: 300px;
     }
+  }
+  .dynamic-stamp-panel {
+    @include mobile {
+      height: 188px;
+    }
+  }
+  .rubber-stamp {
+    border-radius: 4px;
+    flex-basis: 50%;
+    cursor: pointer;
 
-    .rubber-stamp {
+    &:hover {
+      background: var(--popup-button-hover);
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .stamp-row {
+    display: flex;
+    flex-direction: row;
+    height: 45px;
+    justify-content: space-between;
+    padding-bottom: 4px;
+
+    @include mobile {
+      justify-content: center;
+    }
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 45px;
       border-radius: 4px;
-      flex-basis: 50%;
       cursor: pointer;
 
       &:hover {
-        background: var(--popup-button-hover);
-      }
-
-      img {
-        width: 100%;
+        background: var(--tools-overlay-button-hover);
       }
     }
 
-    .stamp-row {
-      display: flex;
-      flex-direction: row;
-      height: 50px;
-      justify-content: space-between;
-
-
-      @include mobile {
-        justify-content: center;
-      }
-      .icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 34px;
-        height: 50px;
-        border-radius: 4px;
-        cursor: pointer;
-
-        &:hover {
-          background: var(--tools-overlay-button-hover);
-        }
-      }
-
-      .stamp-row-content {
-        width: 160px;
-        height: 50px;
-        border-radius: 4px;
-        padding: 2px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-
-        img {
-          max-width: 100%;
-          max-height: 100%;
-        }
-        &:hover {
-          background: var(--popup-button-hover);
-        }
-        &.interactable {
-          &:hover {
-            background: var(--tools-overlay-button-hover);
-          }
-          &.active {
-            background: var(--tools-overlay-button-active);
-          }
-        }
-
-        &.active {
-          background: var(--tools-overlay-button-active);
-        }
-      }
-    }
 
   }
+  .stamp-row-content {
+    width: 162px;
+    border-radius: 4px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 8px;
 
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    &:hover {
+      background: var(--popup-button-hover);
+    }
+    &.interactable {
+      &:hover {
+        background: var(--tools-overlay-button-hover);
+      }
+      &.active {
+        background: var(--tools-overlay-button-active);
+      }
+    }
 
+    &.active {
+      background: var(--tools-overlay-button-active);
+    }
+  }
+
+  .stamp-row-content.add-btn {
+    @include mobile {
+      width: 90vw;
+      margin-right: 0px;
+    }
+  }
+  .tab-header {
+    @include mobile {
+      width: 300px;
+      margin: auto;
+    }
+  }
   .tab-list {
     display: flex;
     margin-bottom: 16px;
@@ -113,7 +129,7 @@
     border: 1px solid var(--border);
     height: 28px;
     color: var(--text-color);
-    margin: 8px 0;
+    margin-bottom: 8px;
     width: 100%;
     cursor: pointer;
 
