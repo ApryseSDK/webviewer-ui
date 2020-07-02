@@ -17,7 +17,7 @@ class HeaderItems extends React.PureComponent {
   }
 
   render() {
-    const { items, isMobile } = this.props;
+    const { items } = this.props;
 
     const toolGroupButtonsItems = items.filter(({ type }) => type === 'toolGroupButton');
     let handledToolGroupButtons = false;
@@ -28,12 +28,6 @@ class HeaderItems extends React.PureComponent {
           const { type, dataElement, hidden, toolName } = item;
           const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
           const key = `${type}-${dataElement || i}`;
-
-          // if (isMobile) {
-          //   if (dataElement === 'undoButton' || dataElement === 'redoButton' || toolName === 'AnnotationEraserTool') {
-          //     return null;
-          //   }
-          // }
 
           switch (type) {
             case 'toolButton':

@@ -157,13 +157,13 @@
       "position": "ポジション",
       "time": "時間"
     },
-    "toolbarScreen": {
-      "View": "見る",
-      "Annotate": "注釈を付ける",
-      "Draw": "ドロー",
-      "Insert": "インサート",
-      "Measure": "測る",
-      "Edit": "編集する"
+    "toolbarGroup": {
+      "toolbarGroup-View": "見る",
+      "toolbarGroup-Annotate": "注釈を付ける",
+      "toolbarGroup-Shapes": "形",
+      "toolbarGroup-Insert": "インサート",
+      "toolbarGroup-Measure": "測る",
+      "toolbarGroup-Edit": "編集する"
     },
     "annotationColor": {
       "StrokeColor": "罫線の色",

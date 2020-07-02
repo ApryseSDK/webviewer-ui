@@ -157,13 +157,13 @@
       "position": "位置",
       "time": "時間"
     },
-    "toolbarScreen": {
-      "View": "視圖",
-      "Annotate": "註釋",
-      "Draw": "畫",
-      "Insert": "插",
-      "Measure": "測量",
-      "Edit": "編輯"
+    "toolbarGroup": {
+      "toolbarGroup-View": "視圖",
+      "toolbarGroup-Annotate": "註釋",
+      "toolbarGroup-Shapes": "形狀",
+      "toolbarGroup-Insert": "插",
+      "toolbarGroup-Measure": "測量",
+      "toolbarGroup-Edit": "編輯"
     },
     "annotationColor": {
       "StrokeColor": "邊框顏色",

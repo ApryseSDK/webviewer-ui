@@ -157,13 +157,13 @@
       "position": "Позиция",
       "time": "Время"
     },
-    "toolbarScreen": {
-      "View": "Посмотреть",
-      "Annotate": "Пометки",
-      "Draw": "Привлечь",
-      "Insert": "Вставить",
-      "Measure": "Мера",
-      "Edit": "редактировать"
+    "toolbarGroup": {
+      "toolbarGroup-View": "Посмотреть",
+      "toolbarGroup-Annotate": "Пометки",
+      "toolbarGroup-Shapes": "Формы",
+      "toolbarGroup-Insert": "Вставить",
+      "toolbarGroup-Measure": "Мера",
+      "toolbarGroup-Edit": "редактировать"
     },
     "annotationColor": {
       "StrokeColor": "Цвет границ",

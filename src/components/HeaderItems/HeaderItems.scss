@@ -118,6 +118,8 @@
     scroll-behavior: smooth;
     height: 100%;
     align-items: center;
+    // fixes https://trello.com/c/NpuvdJh2/1065-ie11-new-ui-squished-header
+    -ms-overflow-style: none;
 
     &::-webkit-scrollbar {
       display: none;  /* Safari and Chrome */

@@ -157,13 +157,13 @@
       "position": "Posição",
       "time": "Tempo"
     },
-    "toolbarScreen": {
-      "View": "Visão",
-      "Annotate": "Anotar",
-      "Draw": "Desenhar",
-      "Insert": "Inserir",
-      "Measure": "A medida",
-      "Edit": "Editar"
+    "toolbarGroup": {
+      "toolbarGroup-View": "Visão",
+      "toolbarGroup-Annotate": "Anotar",
+      "toolbarGroup-Shapes": "Formas",
+      "toolbarGroup-Insert": "Inserir",
+      "toolbarGroup-Measure": "A medida",
+      "toolbarGroup-Edit": "Editar"
     },
     "annotationColor": {
       "StrokeColor": "Cor da borda",

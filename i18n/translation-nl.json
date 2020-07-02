@@ -157,13 +157,13 @@
       "position": "Positie",
       "time": "Tijd"
     },
-    "toolbarScreen": {
-      "View": "Visie",
-      "Annotate": "Annoteren",
-      "Draw": "Trek",
-      "Insert": "Invoegen",
-      "Measure": "Meten",
-      "Edit": "Bewerk"
+    "toolbarGroup": {
+      "toolbarGroup-View": "Visie",
+      "toolbarGroup-Annotate": "Annoteren",
+      "toolbarGroup-Shapes": "Vormen",
+      "toolbarGroup-Insert": "Invoegen",
+      "toolbarGroup-Measure": "Meten",
+      "toolbarGroup-Edit": "Bewerk"
     },
     "annotationColor": {
       "StrokeColor": "Rand kleur",
