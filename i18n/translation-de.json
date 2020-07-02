@@ -55,17 +55,14 @@
     "callout": "Callout",
     "crop": "Seite zuschneiden",
     "caret": "Caret",
-    "countMeasurement": "Zählmessung",
     "distanceMeasurement": "Abstandsmessung",
+    "countMeasurement": "Zählmessung",
     "ellipse": "Ellipse",
     "eraser": "Radiergummi",
     "fileattachment": "Dateianhang",
     "freehand": "Freihandzeichnen",
-    "freehand2": "Freihandzeichnen",
     "freetext": "Freitext",
-    "freetext2": "Freitext",
     "highlight": "Hervorheben",
-    "highlight2": "Hervorheben",
     "line": "Linie",
     "perimeterMeasurement": "Umfangsmessung",
     "polygon": "Polygon",
@@ -108,30 +105,21 @@
     "SBRejected": "Abgelehnt"
   },
   "component": {
-    "freehandToolsButton": "Freihand-Werkzeuge",
-    "freeHandAndShapeToolsButton": "Freihand- / Formwerkzeuge",
     "leftPanel": "Linke Leiste",
     "toolsHeader": "Werkzeuge",
     "searchOverlay": "Suche",
     "searchPanel": "Suche",
     "menuOverlay": "Menü",
-    "miscToolsButton": "Verschiedene Werkzeuge",
-    "signatureToolsButton": "Signaturwerkzeuge",
     "notesPanel": "Annotationen",
     "outlinesPanel": "Gliederung",
     "bookmarksPanel": "Lesezeichen",
     "newBookmark": "Neues Lesezeichen",
     "bookmarkPage": "Seite",
     "layersPanel": "Schichten",
-    "shapeToolsButton": "Formwerkzeuge",
-    "textToolsButton": "Textwerkzeuge",
-    "freeTextToolsButton": "Freitext-Tools",
-    "stickyToolsButton": "Kommentare Tools",
     "thumbnailsPanel": "Miniaturansicht",
     "toolsButton": "Werkzeuge",
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
-    "measurementToolsButton": "Messwerkzeuge",
     "calibration": "Kalibrierung"
   },
   "message": {
@@ -164,6 +152,18 @@
     "linkURLorPage": "Link URL oder eine Seite"
   },
   "option": {
+    "notesOrder": {
+      "position": "Position",
+      "time": "Zeit"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "Aussicht",
+      "toolbarGroup-Annotate": "Kommentieren",
+      "toolbarGroup-Shapes": "Formen",
+      "toolbarGroup-Insert": "Einfügen",
+      "toolbarGroup-Measure": "Messen",
+      "toolbarGroup-Edit": "Bearbeiten"
+    },
     "annotationColor": {
       "StrokeColor": "Randfarbe",
       "FillColor": "Füllfarbe",
@@ -182,8 +182,6 @@
       "single": "Einseitig"
     },
     "notesPanel": {
-      "orderPosition": "Position",
-      "orderTime": "Zeit",
       "separator": {
         "today": "Heute",
         "yesterday": "Gestern"
@@ -208,6 +206,9 @@
       "caseSensitive": "Groß-/Kleinschreibung beachten",
       "wholeWordOnly": "Ganzes Wort",
       "wildcard": "Platzhalter"
+    },
+    "stampOverlay": {
+      "addStamp": "Neuen Stempel hinzufügen"
     },
     "signatureOverlay": {
       "addSignature": "Eine Unterschrift hinzufügen"
