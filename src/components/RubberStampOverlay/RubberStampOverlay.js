@@ -32,7 +32,6 @@ class RubberStampOverlay extends React.Component {
     isActive: PropTypes.bool,
     t: PropTypes.func.isRequired,
     i18n: PropTypes.any,
-    toolButtonObjects: PropTypes.object.isRequired,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
@@ -136,7 +135,6 @@ RubberStampOverlay.propTypes = propTypes;
 const mapStateToProps = state => ({
   activeToolName: selectors.getActiveToolName(state),
   isActive: selectors.getActiveToolName(state) === TOOL_NAME,
-  toolButtonObjects: selectors.getToolButtonObjects(state),
   dataElement: selectors.getToolButtonObjects(state)[TOOL_NAME].dataElement,
   standardStamps: selectors.getStandardStamps(state),
   dynamicStamps: selectors.getCustomStamps(state),
