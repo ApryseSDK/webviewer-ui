@@ -115,8 +115,8 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
       </div>
 
       <div style={{ marginTop: 10, display: 'flex' }}>
-        <div style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.stampText')} </div>
-        <input style={{ width: '80%' }}
+        <div className="stamp-label" style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.stampText')} </div>
+        <input
           className="text-customstamp-input"
           ref={inputRef}
           type="text"
@@ -126,7 +126,7 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
       </div>
 
       <div style={{ marginTop: 10, marginBottom: 8, display: 'flex' }}>
-        <div style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.timestampText')} </div>
+        <div className="stamp-sublabel" style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.timestampText')} </div>
         <Choice
           id="default-username"
           checked={usernameCheckbox}

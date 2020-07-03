@@ -11,6 +11,9 @@ $border-radius: 4px;
 
   .ui__choice {
     padding-right: 10px;
+    @include mobile {
+      padding-right: 20px;
+    }
   }
   &-input {
     outline: none;
@@ -137,6 +140,26 @@ $border-radius: 4px;
     label {
       display: flex;
       align-items: center;
+    }
+  }
+
+
+  .stamp-label {
+    @include mobile {
+      display: none;
+    }
+  }
+
+  .stamp-sublabel {
+    @include mobile {
+      display: none;
+    }
+  }
+
+  .text-customstamp-input {
+    width: 80%;
+    @include mobile {
+      width: 100%;
     }
   }
 }
