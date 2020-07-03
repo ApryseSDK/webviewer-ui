@@ -1,6 +1,7 @@
 import core from 'core';
 
-export default (/* dispatch */) => (annotations, action) => {
+
+export default () => (annotations, action) => {
   if (action === 'delete') {
     deleteReplies(annotations);
   }
