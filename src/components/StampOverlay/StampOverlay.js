@@ -9,6 +9,9 @@ import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
+import { Tabs, Tab, TabPanel } from 'components/Tabs';
+import Button from 'components/Button';
+import ActionButton from 'components/ActionButton';
 
 import './StampOverlay.scss';
 
@@ -16,6 +19,7 @@ const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const canvasWidth = 160;
 const canvasHeight = 58;
 
+let isFirstLoad = true;
 
 class StampOverlay extends React.Component {
   static propTypes = {
@@ -31,6 +35,7 @@ class StampOverlay extends React.Component {
     closeElements: PropTypes.func.isRequired,
     dataElement: PropTypes.string.isRequired,
     toggleElement: PropTypes.func.isRequired,
+    isModalOpen: PropTypes.bool,
   };
 
   constructor(props) {
@@ -40,28 +45,57 @@ class StampOverlay extends React.Component {
       left: 0,
       right: 'auto',
       top: 0,
-      defaultAnnotations: [],
+      standardAnnotations: [],
+      customAnnotations: [],
       language: props.i18n.language,
       isStampSelected: false,
     };
     this.stampTool = core.getTool(TOOL_NAME);
   }
+  componentDidMount() {
+    this.stampTool.on('stampsUpdated', this.onStampAdded);
+  }
+
+  componentWillUnmount() {
+    this.stampTool.off('stampsUpdated', this.onStampAdded);
+  }
+
+  onStampAdded = async() => {
+    this.getStandardRubberStamps();
+    this.getCustomRubberStamps();
+  }
 
   componentDidUpdate(prevProps) {
-    // if language changes while overlay is open we wanted update it
-    const isLanChanged = this.state.language && this.props.i18n.language !== this.state.language;
-
-    if (prevProps.activeToolName !== this.props.activeToolName && this.props.activeToolName === TOOL_NAME) {
-      this.setState({ isStampSelected: false });
-      this.props.openElement('stampOverlay');
+    if (!prevProps.isOpen && this.props.isOpen) {
+      this.props.closeElements([
+        'viewControlsOverlay',
+        'menuOverlay',
+        'toolsOverlay',
+        'zoomOverlay',
+        'toolStylePopup',
+      ]);
       this.setOverlayPosition();
-      this.getDefaultRubberStamps(isLanChanged);
-    } else if (this.props.isOpen && isLanChanged) {
-      this.getDefaultRubberStamps(isLanChanged);
+      if (isFirstLoad) {
+        this.onStampAdded();
+        isFirstLoad = false;
+      }
+    }
+
+
+    // if language changes while overlay is open we wanted update it
+    // for some reason we cannot use prevPros.i18n.language to check
+    // if language changed.
+    const isLanChanged = this.props.i18n.language !== this.state.language;
+    if (isLanChanged) {
+      this.setState({ language: this.props.i18n.language });
+      this.onStampAdded();
     }
   }
 
   handleClickOutside = e => {
+    if (this.props.isModalOpen) {
+      return;
+    }
     const toolStylePopup = document.querySelector('[data-element="toolStylePopup"]');
     const toolsOverlay = document.querySelector('[data-element="toolsOverlay"]');
     const isToolsOverlay = toolsOverlay?.contains(e.target);
@@ -74,7 +108,7 @@ class StampOverlay extends React.Component {
       this.props.toggleElement('stampOverlay');
     }
 
-    if (!rubberStampToolButton) {
+    if (this.props.isOpen && !rubberStampToolButton) {
       this.props.closeElement('stampOverlay');
 
       if (this.props.activeToolName === TOOL_NAME &&
@@ -108,47 +142,109 @@ class StampOverlay extends React.Component {
     this.setState({ isStampSelected: true });
   }
 
-  getDefaultRubberStamps = async isLanChanged => {
-    if (!this.state.defaultAnnotations.length || isLanChanged) {
-      const annotations = this.stampTool.getDefaultStampAnnotations();
-      const previews = await Promise.all(
-        annotations.map(annotation => {
-          const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
 
-          const options = {
-            canvasWidth,
-            canvasHeight,
-            text,
-          };
-
-          return this.stampTool.getPreview(annotation, options);
-        }),
-      );
-
-      const defaultAnnotations = annotations.map((annotation, i) => ({
-        annotation,
-        imgSrc: previews[i],
-      }));
-
-      this.setState({ defaultAnnotations, language: this.props.i18n.language });
+  getCustomRubberStamps = async() => {
+    let annotations = [];
+    try {
+      annotations = await this.stampTool.getCustomStampAnnotations();
+    } catch (error) {
+      console.error(error);
     }
+    await Promise.all(
+      annotations.map(annotation => {
+        const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
+
+        const options = {
+          canvasWidth,
+          canvasHeight,
+          text,
+        };
+
+        return this.stampTool.getPreview(annotation, options);
+      }),
+    );
+
+    const customAnnotations = annotations.map(annotation => ({
+      annotation,
+      imgSrc: annotation['ImageData'],
+    }));
+
+    this.setState({ customAnnotations });
+  }
+
+  getStandardRubberStamps = async() => {
+    let annotations = [];
+    try {
+      annotations = await this.stampTool.getStandardStampAnnotations();
+    } catch (error) {
+      console.error(error);
+    }
+
+    const previews = await Promise.all(
+      annotations.map(annotation => {
+        const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
+
+        const options = {
+          canvasWidth,
+          canvasHeight,
+          text,
+        };
+
+        return this.stampTool.getPreview(annotation, options);
+      }),
+    );
+
+    const standardAnnotations = annotations.map((annotation, i) => ({
+      annotation,
+      imgSrc: previews[i],
+    }));
+
+    this.setState({ standardAnnotations, language: this.props.i18n.language });
+  }
+  openCustomSampModal = () => {
+    const { openElement } = this.props;
+    openElement('customStampModal');
+  }
+
+  deleteCustomStamp = index => {
+    const stamps = this.stampTool.getCustomStamps();
+    stamps.splice(index, 1);
+    this.stampTool.setCustomStamps(stamps);
   }
 
   render() {
-    const { left, top, defaultAnnotations } = this.state;
+    const { left, top, standardAnnotations, customAnnotations } = this.state;
     const { isDisabled, isOpen } = this.props;
     if (isDisabled) {
       return null;
     }
 
+    const StandardLabel =  this.props.t(`tool.Standard`);
+    const CustomLabel = this.props.t(`tool.Custom`);
+    const ButtonLabel = this.props.t(`component.createStampButton`);
+
     let imgs = null;
+    let customStamps = null;
     if (isOpen) {
-      imgs = defaultAnnotations.map(({ imgSrc, annotation }, index) =>
+      imgs = standardAnnotations.map(({ imgSrc, annotation }, index) =>
         <div key={index}
           className="rubber-stamp"
           onClick={() => this.setRubberStamp(annotation)}
         >
           <img src={imgSrc} />
+        </div>,
+      );
+
+      customStamps = customAnnotations.map(({ imgSrc, annotation }, index) =>
+        <div key={index}  className="stamp-row">
+          <div className="stamp-row-content" onClick={() => this.setRubberStamp(annotation, standardAnnotations.length + index)}>
+            <img src={imgSrc} alt=""/>
+          </div>
+          <ActionButton
+            dataElement="customStampDeleteBtn"
+            img="ic_delete_black_24px"
+            onClick={() => this.deleteCustomStamp(index)}
+          />
         </div>,
       );
     }
@@ -166,11 +262,35 @@ class StampOverlay extends React.Component {
         style={{ left, top }}
         data-element="stampOverlay"
       >
-        <div className="default-stamp-container">
-          <div className="modal-body">
-            { imgs }
+        <Tabs id="rubberStampTab">
+          <div className="header">
+            <div className="tab-list">
+              <Tab dataElement="standardStampPanelButton">
+                <Button label={StandardLabel} />
+              </Tab>
+              <Tab dataElement="customStampPanelButton">
+                <Button label={CustomLabel} />
+              </Tab>
+            </div>
           </div>
-        </div>
+
+          <TabPanel dataElement="standardStampPanel">
+            <div className="standard-stamp-panel">
+              { imgs }
+            </div>
+          </TabPanel>
+          <TabPanel dataElement="customStampPanel">
+            <div className="custom-stamp-panel">
+              { customStamps }
+            </div>
+            <div className={`add-custom-stamp-button enabled`}
+              onClick={this.openCustomSampModal}
+              data-element={'add-custom-stamp-button'}
+            >
+              {ButtonLabel}
+            </div>
+          </TabPanel>
+        </Tabs>
       </div>
     );
   }
@@ -180,6 +300,7 @@ class StampOverlay extends React.Component {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'stampOverlay'),
   isOpen: selectors.isElementOpen(state, 'stampOverlay'),
+  isModalOpen: selectors.isElementOpen(state, 'customStampModal'),
   activeToolName: selectors.getActiveToolName(state),
   isActive: selectors.getActiveToolName(state) === TOOL_NAME,
   toolButtonObjects: selectors.getToolButtonObjects(state),

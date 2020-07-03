@@ -117,7 +117,8 @@
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "measurementToolsButton": "Meetinstrumenten",
-    "calibration": "ijking"
+    "calibration": "ijking",
+    "createStampButton": "Maak een nieuwe stempel"
   },
   "message": {
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
@@ -199,6 +200,14 @@
       "or": "Of",
       "pickImage": "Kies handtekening afbeelding"
     },
+    "customStampModal": {
+      "stampText": "Stempel tekst:",
+      "timestampText": " Tijdstempel tekst:",
+      "stampColor": "Stempelkleur:",
+      "Username": "Gebruikersnaam",
+      "Date": "Datum",
+      "Time": "Tijd"
+    },
     "status": {
       "status": "staat"
     },
@@ -250,7 +259,8 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Met de klok mee",
-      "rotateCounterClockwise": "Tegen de klok in"
+      "rotateCounterClockwise": "Tegen de klok in",
+      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om te extraheren"
     },
     "richText": {
       "bold": "Vet",
@@ -294,6 +304,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
+    "rubberStamp": "(Q)",
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
@@ -305,7 +316,9 @@
     "pan": "Schuiven",
     "select": "Selecteren",
     "Marquee": "Selectie zoom",
-    "Link": "Link URL of pagina"
+    "Link": "Link URL of pagina",
+    "Standard": "Standaard",
+    "Custom": "Op maat"
   },
   "link": {
     "url": "URL",

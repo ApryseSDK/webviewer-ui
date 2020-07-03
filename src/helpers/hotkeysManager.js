@@ -408,7 +408,11 @@ WebViewer(...)
         setToolModeAndGroup(store, 'AnnotationCreateRectangle');
       }),
       [`${Keys.Q}`]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateRubberStamp');
+        const stampToolButton = document.querySelector(
+          '[data-element="rubberStampToolButton"] .Button'
+        );
+
+        stampToolButton?.click();
       }),
       [`${Keys.T}`]: this.createToolHotkeyHandler(() => {
         setToolModeAndGroup(store, 'AnnotationCreateFreeText');
@@ -461,11 +465,14 @@ WebViewer(...)
     return (...args) => {
       const openElements = selectors.getOpenElements(getState());
       const currentToolName = core.getToolMode().name;
-    
+
       // disable changing tool when the signature overlay is opened.
       const isSignatureModalOpen = currentToolName === window.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
 
-      if (isFocusingElement() || isSignatureModalOpen) {
+      // disable changing tool when the stamp overlay is opened.
+      const isStampCreateModalOpen = currentToolName === window.Tools.ToolNames.RUBBER_STAMP && openElements['customStampModal'];
+
+      if (isFocusingElement() || isSignatureModalOpen || isStampCreateModalOpen) {
         return;
       }
 

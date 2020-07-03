@@ -117,7 +117,8 @@
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
     "measurementToolsButton": "測量工具",
-    "calibration": "校準"
+    "calibration": "校準",
+    "createStampButton": "創建新圖章"
   },
   "message": {
     "badDocument": "無法載入文件。此文件已損壞或無效。",
@@ -199,6 +200,14 @@
       "or": "要么",
       "pickImage": "選擇簽名圖像"
     },
+    "customStampModal": {
+      "stampText": "印章文字：",
+      "timestampText": " 時間戳記文字：",
+      "stampColor": "印章顏色：",
+      "Username": "用戶名",
+      "Date": "日期",
+      "Time": "時間"
+    },
     "status": {
       "status": "狀態"
     },
@@ -250,7 +259,8 @@
     "thumbnailPanel": {
       "delete": "刪除",
       "rotateClockwise": "順時針",
-      "rotateCounterClockwise": "逆時針方向"
+      "rotateCounterClockwise": "逆時針方向",
+      "extractZeroPageError": "沒有選擇要提取的頁面"
     },
     "richText": {
       "bold": "粗體",
@@ -294,6 +304,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
+    "rubberStamp": "（問）",
     "richText": {
       "bold": "（Ctrl B）",
       "italic": "（Ctrl I）",
@@ -305,7 +316,9 @@
     "pan": "移動瀏覽",
     "select": "選取",
     "Marquee": "跑馬燈縮放",
-    "Link": "鏈接網址或頁面"
+    "Link": "鏈接網址或頁面",
+    "Standard": "標準",
+    "Custom": "自訂"
   },
   "link": {
     "url": "網址",

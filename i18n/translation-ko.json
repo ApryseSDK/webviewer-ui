@@ -117,7 +117,8 @@
     "redaction": "개정",
     "viewControlsOverlay": "컨트롤 보기",
     "measurementToolsButton": "측정 도구",
-    "calibration": "구경 측정"
+    "calibration": "구경 측정",
+    "createStampButton": "새 스탬프 생성"
   },
   "message": {
     "badDocument": "문서를 로드하지 못했습니다. 문서가 손상되었거나 유효하지 않습니다.",
@@ -199,6 +200,14 @@
       "or": "또는",
       "pickImage": "서명 이미지 선택"
     },
+    "customStampModal": {
+      "stampText": "스탬프 텍스트 :",
+      "timestampText": " 타임 스탬프 텍스트 :",
+      "stampColor": "스탬프 색상 :",
+      "Username": "사용자 이름",
+      "Date": "데이트",
+      "Time": "시각"
+    },
     "status": {
       "status": "지위"
     },
@@ -250,7 +259,8 @@
     "thumbnailPanel": {
       "delete": "지우다",
       "rotateClockwise": "시계 방향",
-      "rotateCounterClockwise": "시계 반대 방향"
+      "rotateCounterClockwise": "시계 반대 방향",
+      "extractZeroPageError": "추출 할 페이지가 선택되지 않았습니다"
     },
     "richText": {
       "bold": "굵게",
@@ -294,6 +304,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
+    "rubberStamp": "(큐)",
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
@@ -305,7 +316,9 @@
     "pan": "이동",
     "select": "선택",
     "Marquee": "선택 윤곽 확대/축소",
-    "Link": "링크 URL 또는 페이지"
+    "Link": "링크 URL 또는 페이지",
+    "Standard": "표준",
+    "Custom": "커스텀"
   },
   "link": {
     "url": "URL",

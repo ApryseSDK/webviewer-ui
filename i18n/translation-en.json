@@ -117,7 +117,8 @@
     "redaction": "Redaction",
     "viewControlsOverlay": "View controls",
     "measurementToolsButton": "Measurement tools",
-    "calibration": "Calibration"
+    "calibration": "Calibration",
+    "createStampButton": "Create New Stamp"
   },
   "message": {
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
@@ -199,6 +200,14 @@
       "or": "Or",
       "pickImage": "Pick Signature Image"
     },
+    "customStampModal": {
+      "stampText": "Stamp text:",
+      "timestampText": " Timestamp text:",
+      "stampColor": "Stamp color:",
+      "Username": "Username",
+      "Date":"Date",
+      "Time":"Time"
+    },
     "status": {
       "status": "Status"
     },
@@ -271,7 +280,7 @@
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
-  
+
   "shortcut": {
     "arrow": "(A)",
     "callout": "(C)",
@@ -296,6 +305,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
+    "rubberStamp": "(Q)",
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
@@ -307,7 +317,9 @@
     "pan": "Pan",
     "select": "Select",
     "Marquee": "Marquee Zoom",
-    "Link": "Link URL or Page"
+    "Link": "Link URL or Page",
+    "Standard": "Standard",
+    "Custom": "Custom"
   },
   "link": {
     "url": "URL",
