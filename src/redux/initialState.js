@@ -180,6 +180,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'areaTools', dataElement: 'areaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'ellipseAreaTools', dataElement: 'ellipseAreaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'rectangleAreaTools', dataElement: 'rectangleAreaToolGroupButton', title: 'annotation.areaMeasurement' },
+        { type: 'toolGroupButton', toolGroup: 'countTools', dataElement: 'countMeasurementToolGroupButton', title: 'annotation.countMeasurement' },
         { type: 'divider' },
         {
           type: 'customElement',
@@ -290,6 +291,10 @@ export default {
       AnnotationCreateRectangularAreaMeasurement2: { dataElement: 'rectangularAreaMeasurementToolButton2', title: 'annotation.areaMeasurement', img: 'ic_annotation_rectangular_area_black_24px', group: 'rectangleAreaTools', showColor: 'always' },
       AnnotationCreateRectangularAreaMeasurement3: { dataElement: 'rectangularAreaMeasurementToolButton3', title: 'annotation.areaMeasurement', img: 'ic_annotation_rectangular_area_black_24px', group: 'rectangleAreaTools', showColor: 'always' },
       AnnotationCreateRectangularAreaMeasurement4: { dataElement: 'rectangularAreaMeasurementToolButton4', title: 'annotation.areaMeasurement', img: 'ic_annotation_rectangular_area_black_24px', group: 'rectangleAreaTools', showColor: 'always' },
+      AnnotationCreateCountMeasurement: { dataElement: 'countMeasurementToolButton', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'active' },
+      AnnotationCreateCountMeasurement2: { dataElement: 'countMeasurementToolButton2', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'active' },
+      AnnotationCreateCountMeasurement3: { dataElement: 'countMeasurementToolButton3', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'active' },
+      AnnotationCreateCountMeasurement4: { dataElement: 'countMeasurementToolButton4', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'active' },
       AnnotationCreateFreeHand: { dataElement: 'freeHandToolButton', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand2: { dataElement: 'freeHandToolButton2', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand3: { dataElement: 'freeHandToolButton3', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
