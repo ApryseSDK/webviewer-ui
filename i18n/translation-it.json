@@ -55,17 +55,14 @@
     "callout": "Chiamare",
     "crop": "Ritaglia pagina",
     "caret": "non",
-    "countMeasurement": "Misurazione del conteggio",
     "distanceMeasurement": "Misurazione della distanza",
+    "countMeasurement": "Misurazione del conteggio",
     "ellipse": "Ellisse",
     "eraser": "Gomma per cancellare",
     "fileattachment": "File allegato",
     "freehand": "Mano libera",
-    "freehand2": "Mano libera",
     "freetext": "Testo libero",
-    "freetext2": "Testo libero",
     "highlight": "Evidenziare",
-    "highlight2": "Evidenziare",
     "line": "Linea",
     "perimeterMeasurement": "Misurazione perimetrale",
     "polygon": "Poligono",
@@ -108,30 +105,21 @@
     "SBRejected": "Respinto"
   },
   "component": {
-    "freehandToolsButton": "Strumenti a mano libera",
-    "freeHandAndShapeToolsButton": "Strumenti a mano libera / forma",
     "leftPanel": "Pannello",
     "toolsHeader": "Utensili",
     "searchOverlay": "Ricerca",
     "searchPanel": "Ricerca",
     "menuOverlay": "Menù",
-    "miscToolsButton": "Strumenti vari",
-    "signatureToolsButton": "Strumenti di firma",
     "notesPanel": "Appunti",
     "outlinesPanel": "Lineamenti",
     "bookmarksPanel": "segnalibri",
     "newBookmark": "Nuovo segnalibro",
     "bookmarkPage": "Pagina",
     "layersPanel": "Livelli",
-    "shapeToolsButton": "Strumenti di forma",
-    "textToolsButton": "Strumenti di testo",
-    "freeTextToolsButton": "Strumenti di testo gratuiti",
-    "stickyToolsButton": "Strumenti per i commenti",
     "thumbnailsPanel": "miniature",
     "toolsButton": "Utensili",
     "redaction": "redazione",
     "viewControlsOverlay": "Visualizza i controlli",
-    "measurementToolsButton": "Strumenti di misura",
     "calibration": "Calibrazione"
   },
   "message": {
@@ -164,6 +152,18 @@
     "linkURLorPage": "Link URL o una pagina"
   },
   "option": {
+    "notesOrder": {
+      "position": "Posizione",
+      "time": "Tempo"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "Visualizza",
+      "toolbarGroup-Annotate": "Annotare",
+      "toolbarGroup-Shapes": "forme",
+      "toolbarGroup-Insert": "Inserire",
+      "toolbarGroup-Measure": "Misurare",
+      "toolbarGroup-Edit": "modificare"
+    },
     "annotationColor": {
       "StrokeColor": "Colore del bordo",
       "FillColor": "Colore di riempimento",
@@ -182,8 +182,6 @@
       "single": "singolo"
     },
     "notesPanel": {
-      "orderPosition": "Posizione",
-      "orderTime": "Tempo",
       "separator": {
         "today": "Oggi",
         "yesterday": "Ieri"
@@ -208,6 +206,9 @@
       "caseSensitive": "Che tiene conto del maiuscolo o minuscolo",
       "wholeWordOnly": "Parola intera",
       "wildcard": "Carta jolly"
+    },
+    "stampOverlay": {
+      "addStamp": "Aggiungi nuovo timbro"
     },
     "signatureOverlay": {
       "addSignature": "Aggiungi una firma"

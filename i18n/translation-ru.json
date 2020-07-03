@@ -55,17 +55,14 @@
     "callout": "Вызыв",
     "crop": "Обрезать страницу",
     "caret": "Знак вставки",
-    "countMeasurement": "Измерение счета",
     "distanceMeasurement": "Дистанция",
+    "countMeasurement": "Измерение счета",
     "ellipse": "Эллипс",
     "eraser": "ластик",
     "fileattachment": "Файл вложения",
     "freehand": "От руки",
-    "freehand2": "От руки",
     "freetext": "Текст",
-    "freetext2": "Текст",
     "highlight": "Выделить",
-    "highlight2": "Выделить",
     "line": "Линия",
     "perimeterMeasurement": "Периметр",
     "polygon": "Многоугольник",
@@ -108,30 +105,21 @@
     "SBRejected": "Отклонено"
   },
   "component": {
-    "freehandToolsButton": "Инструменты",
-    "freeHandAndShapeToolsButton": "Инструменты Freehand / Shape",
     "leftPanel": "Панель",
     "toolsHeader": "инструменты",
     "searchOverlay": "Поиск",
     "searchPanel": "Поиск",
     "menuOverlay": "Меню",
-    "miscToolsButton": "Другие инструменты",
-    "signatureToolsButton": "Инструменты подписи",
     "notesPanel": "Заметки",
     "outlinesPanel": "Контуры",
     "bookmarksPanel": "закладки",
     "newBookmark": "Новая закладка",
     "bookmarkPage": "страница",
     "layersPanel": "Слои",
-    "shapeToolsButton": "Фигуры",
-    "textToolsButton": "Инструменты для работы с текстом",
-    "freeTextToolsButton": "Бесплатные текстовые инструменты",
-    "stickyToolsButton": "Инструменты комментариев",
     "thumbnailsPanel": "Эскизы",
     "toolsButton": "Инструменты",
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
-    "measurementToolsButton": "Инструменты для замерения",
     "calibration": "калибровка"
   },
   "message": {
@@ -164,6 +152,18 @@
     "linkURLorPage": "Ссылка URL или страница"
   },
   "option": {
+    "notesOrder": {
+      "position": "Позиция",
+      "time": "Время"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "Посмотреть",
+      "toolbarGroup-Annotate": "Пометки",
+      "toolbarGroup-Shapes": "Формы",
+      "toolbarGroup-Insert": "Вставить",
+      "toolbarGroup-Measure": "Мера",
+      "toolbarGroup-Edit": "редактировать"
+    },
     "annotationColor": {
       "StrokeColor": "Цвет границ",
       "FillColor": "Цвет заливки",
@@ -182,8 +182,6 @@
       "single": "Единый"
     },
     "notesPanel": {
-      "orderPosition": "Позиция",
-      "orderTime": "Время",
       "separator": {
         "today": "Сегодня",
         "yesterday": "Вчера"
@@ -208,6 +206,9 @@
       "caseSensitive": "С учетом регистра",
       "wholeWordOnly": "Всё слово",
       "wildcard": "Поиск по шаблону"
+    },
+    "stampOverlay": {
+      "addStamp": "Добавить новый штамп"
     },
     "signatureOverlay": {
       "addSignature": "Добавить подпись"

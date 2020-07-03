@@ -55,17 +55,14 @@
     "callout": "标注",
     "crop": "裁剪页面",
     "caret": "插入符号",
-    "countMeasurement": "计数测量",
     "distanceMeasurement": "距离测量",
+    "countMeasurement": "计数测量",
     "ellipse": "椭圆",
     "eraser": "橡皮",
     "fileattachment": "文件附件",
     "freehand": "手绘",
-    "freehand2": "手绘",
     "freetext": "自由文本",
-    "freetext2": "自由文本",
     "highlight": "高亮",
-    "highlight2": "高亮",
     "line": "直线",
     "perimeterMeasurement": "周长测量",
     "polygon": "多边形",
@@ -108,30 +105,21 @@
     "SBRejected": "拒绝"
   },
   "component": {
-    "freehandToolsButton": "手绘工具",
-    "freeHandAndShapeToolsButton": "写意/形状工具",
     "leftPanel": "面板",
     "toolsHeader": "工具类",
     "searchOverlay": "搜索",
     "searchPanel": "搜索",
     "menuOverlay": "菜单",
-    "miscToolsButton": "其他工具",
-    "signatureToolsButton": "签名工具",
     "notesPanel": "备注",
     "outlinesPanel": "大纲",
     "bookmarksPanel": "书签",
     "newBookmark": "新书签",
     "bookmarkPage": "页",
     "layersPanel": "图层",
-    "shapeToolsButton": "形状工具",
-    "textToolsButton": "文本工具",
-    "freeTextToolsButton": "自由文本工具",
-    "stickyToolsButton": "评论工具",
     "thumbnailsPanel": "缩略图",
     "toolsButton": "工具",
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
-    "measurementToolsButton": "测量工具",
     "calibration": "校准"
   },
   "message": {
@@ -164,6 +152,18 @@
     "linkURLorPage": "链接网址或页面"
   },
   "option": {
+    "notesOrder": {
+      "position": "位置",
+      "time": "时间"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "视图",
+      "toolbarGroup-Annotate": "注释",
+      "toolbarGroup-Shapes": "形状",
+      "toolbarGroup-Insert": "插",
+      "toolbarGroup-Measure": "测量",
+      "toolbarGroup-Edit": "编辑"
+    },
     "annotationColor": {
       "StrokeColor": "边框颜色",
       "FillColor": "填充颜色",
@@ -182,8 +182,6 @@
       "single": "单页"
     },
     "notesPanel": {
-      "orderPosition": "位置排序",
-      "orderTime": "时间排序",
       "separator": {
         "today": "今天",
         "yesterday": "昨天"
@@ -208,6 +206,9 @@
       "caseSensitive": "区分大小写",
       "wholeWordOnly": "整个词语",
       "wildcard": "通配符"
+    },
+    "stampOverlay": {
+      "addStamp": "添加新邮票"
     },
     "signatureOverlay": {
       "addSignature": "添加签名"

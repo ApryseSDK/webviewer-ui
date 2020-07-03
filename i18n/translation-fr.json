@@ -55,17 +55,14 @@
     "callout": "Faire appel à",
     "crop": "Page de recadrage",
     "caret": "Caret",
-    "countMeasurement": "Mesure de comptage",
     "distanceMeasurement": "Mesure de distance",
+    "countMeasurement": "Mesure de comptage",
     "ellipse": "Ellipse",
     "eraser": "La gomme",
     "fileattachment": "Pièce jointe",
     "freehand": "Stylo",
-    "freehand2": "Stylo",
     "freetext": "Texte libre",
-    "freetext2": "Texte libre",
     "highlight": "Surligne",
-    "highlight2": "Surligne",
     "line": "Ligne",
     "perimeterMeasurement": "Périmètre mesure",
     "polygon": "Polygone",
@@ -108,30 +105,21 @@
     "SBRejected": "Rejeté"
   },
   "component": {
-    "freehandToolsButton": "Outils de stylo",
-    "freeHandAndShapeToolsButton": "Outils à main levée / forme",
     "leftPanel": "Panneau de gauche",
     "toolsHeader": "Outils",
     "searchOverlay": "Recherche",
     "searchPanel": "Chercher",
     "menuOverlay": "Menu",
-    "miscToolsButton": "Outils divers",
-    "signatureToolsButton": "Outils de signature",
     "notesPanel": "Remarques",
     "outlinesPanel": "Contour",
     "bookmarksPanel": "Signets",
     "newBookmark": "Nouveau signet",
     "bookmarkPage": "Page",
     "layersPanel": "Couches",
-    "shapeToolsButton": "Outils de forme",
-    "textToolsButton": "Outils de texte",
-    "freeTextToolsButton": "Outils de texte gratuit",
-    "stickyToolsButton": "Outils de commentaires",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
-    "measurementToolsButton": "Outils de mesure",
     "calibration": "Étalonnage"
   },
   "message": {
@@ -164,6 +152,18 @@
     "linkURLorPage": "Lien URL ou une page"
   },
   "option": {
+    "notesOrder": {
+      "position": "Position",
+      "time": "Temps"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "Vue",
+      "toolbarGroup-Annotate": "Annoter",
+      "toolbarGroup-Shapes": "Formes",
+      "toolbarGroup-Insert": "Insérer",
+      "toolbarGroup-Measure": "Mesure",
+      "toolbarGroup-Edit": "Éditer"
+    },
     "annotationColor": {
       "StrokeColor": "Couleur de bordure",
       "FillColor": "Couleur de remplissage",
@@ -182,8 +182,6 @@
       "single": "Une"
     },
     "notesPanel": {
-      "orderPosition": "Position",
-      "orderTime": "Heure",
       "separator": {
         "today": "Aujourd'hui",
         "yesterday": "Hier"
@@ -208,6 +206,9 @@
       "caseSensitive": "Sensible à la casse",
       "wholeWordOnly": "Mot complet",
       "wildcard": "Caractère générique"
+    },
+    "stampOverlay": {
+      "addStamp": "Ajouter un nouveau tampon"
     },
     "signatureOverlay": {
       "addSignature": "Ajouter une signature"
