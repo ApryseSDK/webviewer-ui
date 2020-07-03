@@ -124,7 +124,7 @@ const Note = ({ annotation }) => {
 
   return (
     // need tabIndex so that div can be tabbed to
-    <div tabIndex='0' ref={containerRef} className={noteClass} onClick={handleNoteClick} onKeyDown={handleNoteKeydown}>
+    <div tabIndex="0" ref={containerRef} className={noteClass} onClick={handleNoteClick} onKeyDown={handleNoteKeydown}>
       <NoteContent
         noteIndex={0}
         annotation={annotation}
