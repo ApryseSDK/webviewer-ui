@@ -32,7 +32,7 @@ const CustomStampModal = () => {
     closed: !isOpen,
   });
 
-  const createDynamicStamp = () => {
+  const createCustomStamp = () => {
     core.setToolMode(TOOL_NAME);
     stampTool.addCustomStamp(state);
     const annot = stampTool.createCustomStampAnnotation(state);
@@ -63,7 +63,7 @@ const CustomStampModal = () => {
           <div className="stamp-create" onClick={closeModal}>
             {t('action.cancel')}
           </div>
-          <div className="stamp-create" onClick={createDynamicStamp}>
+          <div className="stamp-create" onClick={createCustomStamp}>
             {t('action.create')}
           </div>
         </div>

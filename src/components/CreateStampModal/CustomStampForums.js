@@ -12,7 +12,7 @@ const CustomStampForums = ({ state, setState }) => {
   const updateTimestampLabel = (usernameChk, dateChk, timeChk) => {
     let tmpText = '';
     if (usernameChk) {
-      tmpText += '[$currentUser], ';
+      tmpText += '[$currentUser] ';
     }
     if (dateChk) {
       tmpText += 'DD/MM/YYYY ';

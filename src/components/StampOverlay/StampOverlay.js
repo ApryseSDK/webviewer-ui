@@ -46,7 +46,7 @@ class StampOverlay extends React.Component {
       right: 'auto',
       top: 0,
       standardAnnotations: [],
-      dynamicAnnotations: [],
+      customAnnotations: [],
       language: props.i18n.language,
       isStampSelected: false,
     };
@@ -62,7 +62,7 @@ class StampOverlay extends React.Component {
 
   onStampAdded = async() => {
     this.getStandardRubberStamps();
-    this.getDynamicRubberStamps();
+    this.getCustomRubberStamps();
   }
 
   componentDidUpdate(prevProps) {
@@ -143,7 +143,7 @@ class StampOverlay extends React.Component {
   }
 
 
-  getDynamicRubberStamps = async() => {
+  getCustomRubberStamps = async() => {
     let annotations = [];
     try {
       annotations = await this.stampTool.getCustomStampAnnotations();
@@ -164,12 +164,12 @@ class StampOverlay extends React.Component {
       }),
     );
 
-    const dynamicAnnotations = annotations.map(annotation => ({
+    const customAnnotations = annotations.map(annotation => ({
       annotation,
       imgSrc: annotation['ImageData'],
     }));
 
-    this.setState({ dynamicAnnotations });
+    this.setState({ customAnnotations });
   }
 
   getStandardRubberStamps = async() => {
@@ -206,14 +206,14 @@ class StampOverlay extends React.Component {
     openElement('customStampModal');
   }
 
-  deleteDynamicStamp = index => {
+  deleteCustomStamp = index => {
     const stamps = this.stampTool.getCustomStamps();
     stamps.splice(index, 1);
     this.stampTool.setCustomStamps(stamps);
   }
 
   render() {
-    const { left, top, standardAnnotations, dynamicAnnotations } = this.state;
+    const { left, top, standardAnnotations, customAnnotations } = this.state;
     const { isDisabled, isOpen } = this.props;
     if (isDisabled) {
       return null;
@@ -224,7 +224,7 @@ class StampOverlay extends React.Component {
     const ButtonLabel = this.props.t(`component.createStampButton`);
 
     let imgs = null;
-    let dynamicStamps = null;
+    let customStamps = null;
     if (isOpen) {
       imgs = standardAnnotations.map(({ imgSrc, annotation }, index) =>
         <div key={index}
@@ -235,15 +235,15 @@ class StampOverlay extends React.Component {
         </div>,
       );
 
-      dynamicStamps = dynamicAnnotations.map(({ imgSrc, annotation }, index) =>
+      customStamps = customAnnotations.map(({ imgSrc, annotation }, index) =>
         <div key={index}  className="stamp-row">
           <div className="stamp-row-content" onClick={() => this.setRubberStamp(annotation, standardAnnotations.length + index)}>
             <img src={imgSrc} alt=""/>
           </div>
           <ActionButton
-            dataElement="dynamicStampDeleteBtn"
+            dataElement="customStampDeleteBtn"
             img="ic_delete_black_24px"
-            onClick={() => this.deleteDynamicStamp(index)}
+            onClick={() => this.deleteCustomStamp(index)}
           />
         </div>,
       );
@@ -268,7 +268,7 @@ class StampOverlay extends React.Component {
               <Tab dataElement="standardStampPanelButton">
                 <Button label={StandardLabel} />
               </Tab>
-              <Tab dataElement="dynamicStampPanelButton">
+              <Tab dataElement="customStampPanelButton">
                 <Button label={CustomLabel} />
               </Tab>
             </div>
@@ -279,13 +279,13 @@ class StampOverlay extends React.Component {
               { imgs }
             </div>
           </TabPanel>
-          <TabPanel dataElement="dynamicStampPanel">
-            <div className="dynamic-stamp-panel">
-              { dynamicStamps }
+          <TabPanel dataElement="customStampPanel">
+            <div className="custom-stamp-panel">
+              { customStamps }
             </div>
-            <div className={`add-dynamic-stamp-button enabled`}
+            <div className={`add-custom-stamp-button enabled`}
               onClick={this.openCustomSampModal}
-              data-element={'add-dynamic-stamp-button'}
+              data-element={'add-custom-stamp-button'}
             >
               {ButtonLabel}
             </div>

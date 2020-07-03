@@ -53,7 +53,7 @@
   }
 
 
-  .add-dynamic-stamp-button {
+  .add-custom-stamp-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,13 +97,13 @@
   }
 }
 
-.dynamic-stamp-panel {
+.custom-stamp-panel {
   .rubber-stamp {
     padding: 5px;
   }
 }
 
-.dynamic-stamp-panel {
+.custom-stamp-panel {
   height: 458px;
   overflow: hidden;
   overflow-y: auto;
