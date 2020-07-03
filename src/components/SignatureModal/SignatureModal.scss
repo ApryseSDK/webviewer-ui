@@ -75,9 +75,8 @@
       align-items: center;
 
       .ColorPalette {
-        width: 138px;
-        min-width: unset;
-        max-width: unset;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
       }
     }
 
