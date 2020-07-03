@@ -1,0 +1,11 @@
+.resize-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: col-resize;
+  width: 14px;
+  background-color: var(--panel-background);
+  border-right: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  z-index: 65;
+}

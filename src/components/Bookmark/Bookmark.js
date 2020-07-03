@@ -33,6 +33,7 @@ class Bookmark extends React.PureComponent {
     if (this.state.isEditing) {
       return (
         <EditingBookmark
+          className="editing"
           bookmarkText={text}
           onSave={newText => {
             editBookmark(pageIndex, newText);

@@ -10,7 +10,7 @@ import i18next from 'i18next';
  */
 const map = {
   signature: {
-    icon: 'ic_annotation_signature_black_24px',
+    icon: 'icon-tool-signature',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -20,7 +20,7 @@ const map = {
       annotation.Subject === i18next.t('annotation.signature'),
   },
   freeHand: {
-    icon: 'ic_annotation_freehand_black_24px',
+    icon: 'icon-tool-pen-line',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -34,11 +34,16 @@ const map = {
       annotation instanceof window.Annotations.FreeHandAnnotation,
   },
   freeText: {
-    icon: 'ic_annotation_freetext_black_24px',
+    icon: 'icon-tool-text-free-text',
     iconColor: 'TextColor',
     currentPalette: 'TextColor',
     availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreateFreeText'],
+    toolNames: [
+      'AnnotationCreateFreeText',
+      'AnnotationCreateFreeText2',
+      'AnnotationCreateFreeText3',
+      'AnnotationCreateFreeText4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
@@ -49,7 +54,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateDistanceMeasurement'],
+    toolNames: [
+      'AnnotationCreateDistanceMeasurement',
+      'AnnotationCreateDistanceMeasurement2',
+      'AnnotationCreateDistanceMeasurement3',
+      'AnnotationCreateDistanceMeasurement4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.LineAnnotation &&
       annotation.IT === 'LineDimension' &&
@@ -60,7 +70,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreatePerimeterMeasurement'],
+    toolNames: [
+      'AnnotationCreatePerimeterMeasurement',
+      'AnnotationCreatePerimeterMeasurement2',
+      'AnnotationCreatePerimeterMeasurement3',
+      'AnnotationCreatePerimeterMeasurement4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolylineAnnotation &&
       annotation.IT === 'PolyLineDimension' &&
@@ -71,7 +86,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: [Tools.ToolNames.RECTANGULAR_AREA_MEASUREMENT],
+    toolNames: [
+      'AnnotationCreateRectangularAreaMeasurement',
+      'AnnotationCreateRectangularAreaMeasurement2',
+      'AnnotationCreateRectangularAreaMeasurement3',
+      'AnnotationCreateRectangularAreaMeasurement4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.IT === 'PolygonDimension' &&
@@ -83,7 +103,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreateAreaMeasurement'],
+    toolNames: [
+      'AnnotationCreateAreaMeasurement',
+      'AnnotationCreateAreaMeasurement2',
+      'AnnotationCreateAreaMeasurement3',
+      'AnnotationCreateAreaMeasurement4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.IT === 'PolygonDimension' &&
@@ -94,67 +119,107 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreateEllipseMeasurement'],
+    toolNames: [
+      'AnnotationCreateEllipseMeasurement',
+      'AnnotationCreateEllipseMeasurement2',
+      'AnnotationCreateEllipseMeasurement3',
+      'AnnotationCreateEllipseMeasurement4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.EllipseAnnotation &&
       annotation.IT === 'EllipseDimension' &&
       annotation.Measure,
   },
+  countMeasurement: {
+    icon: 'ic_check_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: ['AnnotationCreateCountMeasurement'],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.StickyAnnotation &&
+      annotation.getCustomData('trn-is-count')
+  },
   callout: {
-    icon: 'ic_annotation_callout_black_24px',
-    iconColor: 'TextColor',
+    icon: 'icon-tool-callout-line',
+    iconColor: 'StrokeColor',
     currentPalette: 'TextColor',
     availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreateCallout'],
+    toolNames: [
+      'AnnotationCreateCallout',
+      'AnnotationCreateCallout2',
+      'AnnotationCreateCallout3',
+      'AnnotationCreateCallout4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
         window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout,
   },
   line: {
-    icon: 'ic_annotation_line_black_24px',
+    icon: 'icon-tool-shape-line',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateLine'],
+    toolNames: [
+      'AnnotationCreateLine',
+      'AnnotationCreateLine2',
+      'AnnotationCreateLine3',
+      'AnnotationCreateLine4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.LineAnnotation &&
       annotation.getStartStyle() === 'None' &&
       annotation.getEndStyle() === 'None',
   },
   arrow: {
-    icon: 'ic_annotation_arrow_black_24px',
+    icon: 'icon-tool-shape-arrow',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateArrow'],
+    toolNames: [
+      'AnnotationCreateArrow',
+      'AnnotationCreateArrow2',
+      'AnnotationCreateArrow3',
+      'AnnotationCreateArrow4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.LineAnnotation &&
       (annotation.getStartStyle() !== 'None' ||
         annotation.getEndStyle() !== 'None'),
   },
   polygon: {
-    icon: 'ic_annotation_polygon_black_24px',
+    icon: 'icon-tool-shape-polygon',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreatePolygon'],
+    toolNames: [
+      'AnnotationCreatePolygon',
+      'AnnotationCreatePolygon2',
+      'AnnotationCreatePolygon3',
+      'AnnotationCreatePolygon4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.Style !== 'cloudy',
   },
   cloud: {
-    icon: 'ic_annotation_cloud_black_24px',
+    icon: 'icon-tool-shape-cloud',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreatePolygonCloud'],
+    toolNames: [
+      'AnnotationCreatePolygonCloud',
+      'AnnotationCreatePolygonCloud2',
+      'AnnotationCreatePolygonCloud3',
+      'AnnotationCreatePolygonCloud4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.Style === 'cloudy',
   },
   highlight: {
-    icon: 'ic_annotation_highlight_black_24px',
+    icon: 'icon-tool-text-manipulation-highlight',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
@@ -168,29 +233,44 @@ const map = {
       annotation instanceof window.Annotations.TextHighlightAnnotation,
   },
   underline: {
-    icon: 'ic_annotation_underline_black_24px',
+    icon: 'icon-tool-text-manipulation-underline',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateTextUnderline'],
+    toolNames: [
+      'AnnotationCreateTextUnderline',
+      'AnnotationCreateTextUnderline2',
+      'AnnotationCreateTextUnderline3',
+      'AnnotationCreateTextUnderline4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.TextUnderlineAnnotation,
   },
   squiggly: {
-    icon: 'ic_annotation_squiggly_black_24px',
+    icon: 'icon-tool-text-manipulation-squiggly',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateTextSquiggly'],
+    toolNames: [
+      'AnnotationCreateTextSquiggly',
+      'AnnotationCreateTextSquiggly2',
+      'AnnotationCreateTextSquiggly3',
+      'AnnotationCreateTextSquiggly4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.TextSquigglyAnnotation,
   },
   strikeout: {
-    icon: 'ic_annotation_strikeout_black_24px',
+    icon: 'icon-tool-text-manipulation-strikethrough',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateTextStrikeout'],
+    toolNames: [
+      'AnnotationCreateTextStrikeout',
+      'AnnotationCreateTextStrikeout2',
+      'AnnotationCreateTextStrikeout3',
+      'AnnotationCreateTextStrikeout4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.TextStrikeoutAnnotation,
   },
@@ -204,43 +284,63 @@ const map = {
       annotation instanceof window.Annotations.RedactionAnnotation,
   },
   rectangle: {
-    icon: 'ic_annotation_square_black_24px',
+    icon: 'icon-tool-shape-rectangle',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreateRectangle'],
+    toolNames: [
+      'AnnotationCreateRectangle',
+      'AnnotationCreateRectangle2',
+      'AnnotationCreateRectangle3',
+      'AnnotationCreateRectangle4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.RectangleAnnotation,
   },
   ellipse: {
-    icon: 'ic_annotation_circle_black_24px',
+    icon: 'icon-tool-shape-oval',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreateEllipse'],
+    toolNames: [
+      'AnnotationCreateEllipse',
+      'AnnotationCreateEllipse2',
+      'AnnotationCreateEllipse3',
+      'AnnotationCreateEllipse4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.EllipseAnnotation,
   },
   polyline: {
-    icon: 'ic_annotation_polyline_black_24px',
+    icon: 'icon-tool-shape-polyline',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreatePolyline'],
+    toolNames: [
+      'AnnotationCreatePolyline',
+      'AnnotationCreatePolyline2',
+      'AnnotationCreatePolyline3',
+      'AnnotationCreatePolyline4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolylineAnnotation,
   },
   stickyNote: {
-    icon: 'ic_annotation_sticky_note_black_24px',
+    icon: 'icon-tool-comment-line',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateSticky'],
+    toolNames: [
+      'AnnotationCreateSticky',
+      'AnnotationCreateSticky2',
+      'AnnotationCreateSticky3',
+      'AnnotationCreateSticky4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.StickyAnnotation,
   },
   stamp: {
-    icon: 'ic_annotation_stamp_black_24px',
+    icon: 'icon-tool-stamp-line',
     iconColor: null,
     currentPalette: null,
     availablePalettes: [],

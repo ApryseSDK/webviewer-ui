@@ -1,120 +1,103 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import onClickOutside from 'react-onclickoutside';
-
-import ActionButton from 'components/ActionButton';
-
-import core from 'core';
-import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import print from 'helpers/print';
-import getClassName from 'helpers/getClassName';
-import openFilePicker from 'helpers/openFilePicker';
-import toggleFullscreen from 'helpers/toggleFullscreen';
-import downloadPdf from 'helpers/downloadPdf';
-import { isIOS } from 'helpers/device';
-import { workerTypes } from 'constants/types';
 import actions from 'actions';
+import DataElementWrapper from 'components/DataElementWrapper';
+import Icon from 'components/Icon';
+import { workerTypes } from 'constants/types';
+import core from 'core';
+import { isIOS } from 'helpers/device';
+import downloadPdf from 'helpers/downloadPdf';
+import openFilePicker from 'helpers/openFilePicker';
+import print from 'helpers/print';
+import toggleFullscreen from 'helpers/toggleFullscreen';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
-
+import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import './MenuOverlay.scss';
 
-class MenuOverlay extends React.PureComponent {
-  static propTypes = {
-    isEmbedPrintSupported: PropTypes.bool,
-    isFullScreen: PropTypes.bool,
-    isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    closeElements: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired,
-  }
+function MenuOverlay() {
+  const dispatch = useDispatch();
+  const [t] = useTranslation();
 
-  constructor() {
-    super();
-    this.overlay = React.createRef();
-    this.state = {
-      left: 0,
-      right: 'auto',
-      documentType: null,
+  const [documentType, setDocumentType] = useState(null);
+
+  const activeTheme = useSelector(selectors.getActiveTheme);
+  const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
+  const isFullScreen = useSelector(selectors.isFullScreen);
+  const isFilePickerButtonDisabled = useSelector(state => selectors.isElementDisabled(state, 'filePickerButton'));
+
+  const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements(['menuOverlay'])), [dispatch]);
+  const setActiveLightTheme = useCallback(() => dispatch(actions.setActiveTheme('light')), [dispatch]);
+  const setActiveDarkTheme = useCallback(() => dispatch(actions.setActiveTheme('dark')), [dispatch]);
+
+  useEffect(() => {
+    const onDocumentLoaded = () => setDocumentType(core.getDocument().getType());
+    core.addEventListener('documentLoaded', onDocumentLoaded);
+    return () => {
+      core.removeEventListener('documentLoaded', onDocumentLoaded);
     };
-  }
+  }, []);
 
-  componentDidMount() {
-    core.addEventListener('documentLoaded', this.onDocumentLoaded);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      this.props.closeElements(['groupOverlay', 'viewControlsOverlay', 'toolStylePopup', 'signatureOverlay', 'zoomOverlay', 'redactionOverlay']);
-      this.setState(getOverlayPositionBasedOn('menuButton', this.overlay));
-    }
-  }
-
-  componentWillUnmount() {
-    core.removeEventListener('documentLoaded', this.onDocumentLoaded);
-  }
-
-  onDocumentLoaded = () => {
-    this.setState({
-      documentType: core.getDocument().getType(),
-    });
-  }
-
-  handlePrintButtonClick = () => {
-    const { dispatch, isEmbedPrintSupported } = this.props;
-
+  const handlePrintButtonClick = () => {
+    closeMenuOverlay();
     print(dispatch, isEmbedPrintSupported);
-  }
+  };
 
-  handleClickOutside = e => {
-    const clickedMenuButton = e.target.getAttribute('data-element') === 'menuButton';
+  const downloadDocument = () => {
+    downloadPdf(dispatch);
+  };
 
-    if (!clickedMenuButton) {
-      this.props.closeElements(['menuOverlay']);
-    }
-  }
-
-  downloadDocument = () => {
-    downloadPdf(this.props.dispatch);
-  }
-
-  render() {
-    const { left, right, documentType } = this.state;
-    const { isDisabled, isFullScreen, t } = this.props;
-
-    if (isDisabled) {
-      return null;
-    }
-
-    const className = getClassName('Overlay MenuOverlay', this.props);
-
-    return (
-      <div className={className} data-element="menuOverlay" style={{ left, right }} ref={this.overlay}>
-        <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
-        {!isIOS &&
-          <ActionButton dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
-        }
-        {documentType !== workerTypes.XOD &&
-          <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
-        }
-        <ActionButton dataElement="printButton" label={t('action.print')} onClick={this.handlePrintButtonClick} hidden={['mobile']} />
+  return (
+    <FlyoutMenu menu="menuOverlay" trigger="menuButton" onClose={undefined}>
+      {!isFilePickerButtonDisabled && (
+        <DataElementWrapper className="row" dataElement="filePickerButton">
+          <button className="MenuItem" onClick={openFilePicker} aria-label={t('action.openFile')}>
+            <Icon className="MenuIcon" glyph="icon-header-file-picker-line" />
+            <div className="MenuLabel">{t('action.openFile')}</div>
+          </button>
+        </DataElementWrapper>
+      )}
+      {!isIOS && (
+        <div className="row">
+          <button
+            className="MenuItem"
+            onClick={toggleFullscreen}
+            aria-label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+          >
+            <Icon
+              className="MenuIcon"
+              glyph={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+            />
+            <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+          </button>
+        </div>
+      )}
+      {documentType !== workerTypes.XOD && (
+        <DataElementWrapper className="row" dataElement="downloadButton">
+          <button className="MenuItem" onClick={downloadDocument} aria-label={t('action.download')}>
+            <Icon className="MenuIcon" glyph="icon-header-download" />
+            <div className="MenuLabel">{t('action.download')}</div>
+          </button>
+        </DataElementWrapper>
+      )}
+      <DataElementWrapper className="row" dataElement="printButton">
+        <button className="MenuItem" onClick={handlePrintButtonClick} aria-label={t('action.print')}>
+          <Icon className="MenuIcon" glyph="icon-header-print-line" />
+          <div className="MenuLabel">{t('action.print')}</div>
+        </button>
+      </DataElementWrapper>
+      <div className="row">
+        <button
+          className="MenuItem"
+          onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
+          aria-label={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
+        >
+          <Icon className="MenuIcon" glyph={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`} />
+          <div className="MenuLabel">{activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}</div>
+        </button>
       </div>
-    );
-  }
+    </FlyoutMenu>
+  );
 }
 
-const mapStateToProps = state => ({
-  isEmbedPrintSupported: selectors.isEmbedPrintSupported(state),
-  isFullScreen: selectors.isFullScreen(state),
-  isDisabled: selectors.isElementDisabled(state, 'menuOverlay'),
-  isOpen: selectors.isElementOpen(state, 'menuOverlay'),
-});
-
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(onClickOutside(MenuOverlay)));
+export default MenuOverlay;

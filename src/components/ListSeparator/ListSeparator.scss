@@ -1,7 +1,10 @@
 @import '../../constants/styles';
 
 .ListSeparator {
-  font-size: 14px;
-  margin: 10px 0px 10px 10px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-family: 'Lato';
+  font-weight: 500;
+  color: var(--list-separator-color);
   user-select: none;
 }

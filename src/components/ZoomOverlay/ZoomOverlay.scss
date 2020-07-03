@@ -1,32 +1,30 @@
 @import '../../constants/styles';
+@import '../../constants/overlay';
 
-.ZoomOverlay {
-  position: absolute;
-  top: 46px;
-  z-index: 100;
-  box-shadow: $md-shadow1;
+.ZoomItem {
+  @include button-reset;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px 6px;
+  padding-right: 19px;
+  cursor: pointer;
+  width: 100%;
 
-  &.open {
-    display: visible;
-  };
-  &.closed {
-    display: none;
+  &:hover {
+    background: var(--popup-button-hover);
   }
 
-  .spacer {
-    height: 1px;
-    background: #F0F0F0;
-    background: var(--button-active-color);
+  .ZoomIcon {
+    margin: 4px;
   }
-  
-  .ToolButton {
-    background-color: #FFFFFF;
-    background-color: var(--primary-color);
-    height: 35px;
 
-    &:hover {
-      background-color: #F6F6F6;
-      background-color: var(--button-hover-color);
-    }
+  .ZoomLabel {
+    margin: 0 4px;
   }
+}
+
+// High specificity to override ".tool-button.Button"
+button.tool-button.ZoomToolButton {
+  width: auto;
 }

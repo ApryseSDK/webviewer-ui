@@ -1,27 +1,21 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useStore } from 'react-redux';
+import { useStore, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
+import ToolsHeader from 'components/Header/ToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
-import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
-import RedactionOverlay from 'components/RedactionOverlay';
-import StampOverlay from 'components/StampOverlay';
-import PageNavOverlay from 'components/PageNavOverlay';
-import SignatureOverlay from 'components/SignatureOverlay';
-import MeasurementOverlay from 'components/MeasurementOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
-import ToolsOverlay from 'components/ToolsOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
+import NotesPanel from 'components/NotesPanel';
 import SearchPanel from 'components/SearchPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
 import ContextMenuPopup from 'components/ContextMenuPopup';
-import ToolStylePopup from 'components/ToolStylePopup';
 import RichTextPopup from 'components/RichTextPopup';
 import SignatureModal from 'components/SignatureModal';
 import PrintModal from 'components/PrintModal';
@@ -41,9 +35,12 @@ import ZoomOverlay from 'components/ZoomOverlay';
 import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
 
+import actions from 'actions';
+
 import './App.scss';
-import 'constants/pikaday.scss';
-import 'constants/quill.scss';
+
+// TODO: Use constants
+const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
@@ -51,14 +48,31 @@ const propTypes = {
 
 const App = ({ removeEventHandlers }) => {
   const store = useStore();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
+    const setTabletState = () => {
+      // TODO: Use constants
+      dispatch(actions.setLeftPanelWidth(251));
+      dispatch(actions.setNotesPanelWidth(293));
+      dispatch(actions.setSearchPanelWidth(293));
+    };
+
+    const onBreakpoint = () => {
+      if (tabletBreakpoint.matches) {
+        setTabletState();
+      }
+    };
+    tabletBreakpoint.addListener(onBreakpoint);
+
+    // dispatch(actions.setToolbarGroup('toolbarGroup-Annotate'));
     return removeEventHandlers;
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
+
 
   return (
     <React.Fragment>
@@ -66,30 +80,22 @@ const App = ({ removeEventHandlers }) => {
         <Accessibility />
 
         <Header />
-
-        <LeftPanel />
-        <SearchPanel />
-
-        <DocumentContainer />
-
-        <SearchOverlay />
+        <ToolsHeader />
+        <div className="content">
+          <LeftPanel />
+          <DocumentContainer />
+          <SearchPanel />
+          <NotesPanel />
+        </div>
         <ViewControlsOverlay />
-        <RedactionOverlay />
-        <StampOverlay />
         <MenuOverlay />
-        <SignatureOverlay />
-        <PageNavOverlay />
         <ZoomOverlay />
-        <MeasurementOverlay />
         <AnnotationContentOverlay />
-        <ToolsOverlay />
 
         <AnnotationPopup />
         <TextPopup />
         <ContextMenuPopup />
-        <ToolStylePopup />
         <RichTextPopup />
-
         <SignatureModal />
         <PrintModal />
         <LoadingModal />

@@ -1,35 +1,48 @@
-import React, { useEffect } from 'react';
-import classNames from 'classnames';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import actions from 'actions';
-import selectors from 'selectors';
+import React, { useEffect, useRef } from "react";
+import classNames from "classnames";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import actions from "actions";
+import selectors from "selectors";
 
-import './ProgressModal.scss';
+import "./ProgressModal.scss";
 
 const ProgressModal = () => {
   const [isDisabled, isOpen, loadingProgress] = useSelector(
     state => [
-      selectors.isElementDisabled(state, 'progressModal'),
-      selectors.isElementOpen(state, 'progressModal'),
+      selectors.isElementDisabled(state, "progressModal"),
+      selectors.isElementOpen(state, "progressModal"),
       selectors.getLoadingProgress(state),
     ],
     shallowEqual,
   );
   const dispatch = useDispatch();
+  const progressCircle = useRef(null);
 
   useEffect(() => {
     if (isOpen) {
       dispatch(
         actions.closeElements([
-          'signatureModal',
-          'printModal',
-          'errorModal',
-          'loadingModal',
-          'passwordModal',
+          "signatureModal",
+          "printModal",
+          "errorModal",
+          "loadingModal",
+          "passwordModal",
         ]),
       );
     }
   }, [dispatch, isOpen]);
+
+  useEffect(() => {
+    const circle = progressCircle.current;
+
+    if (circle) {
+      const radius = circle.r.baseVal.value;
+      const circumference = radius * 2 * Math.PI;
+      const offset = circumference - loadingProgress * circumference;
+      circle.style.strokeDasharray = `${circumference} ${circumference}`;
+      circle.style.strokeDashoffset = offset;
+    }
+  }, [loadingProgress]);
 
   return isDisabled ? null : (
     <div
@@ -42,14 +55,21 @@ const ProgressModal = () => {
       data-element="progressModal"
     >
       <div className="container">
-        <div className="progress-bar-wrapper">
-          <div
-            className="progress-bar"
-            style={{
-              transform: `translateX(${-(1 - loadingProgress) * 100}%)`,
-            }}
+        <svg className="progress-ring" width="54" height="54">
+          <circle
+            className="progress-ring__fill"
+            r="25"
+            cx="27"
+            cy="27"
           />
-        </div>
+          <circle
+            ref={progressCircle}
+            className="progress-ring__circle"
+            r="25"
+            cx="27"
+            cy="27"
+          />
+        </svg>
       </div>
     </div>
   );

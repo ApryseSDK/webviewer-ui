@@ -1,19 +1,25 @@
 @import '../../constants/styles';
 
 .Icon{
-  width: $icon-width;
-  height: $icon-height;
+  width: 22px;
+  height: 22px;
   pointer-events: none;
-  color: #757575;
   color: var(--icon-color);
 
-  @include mobile {
-    width: 18px;
-    height: 18px;
+  // color for svgs
+  path:not([fill*="#"]),
+  rect:not([fill*="#"]),
+  polygon:not([fill*="#"]) {
+    fill: currentColor;
   }
 
-  path:not([fill=none]),
-  polygon#Triangle {
-    fill: currentColor;
+  path[fill=default] {
+    fill: var(--icon-color);
+  }
+
+  path[fill=none],
+  rect[fill=none],
+  polygon[fill=none] {
+    fill: none;
   }
 }

@@ -4,10 +4,11 @@
 .MeasurementOverlay {
   @extend %overlay;
   flex-direction: column;
-  bottom: 20px;
-  right: 20px;
+  bottom: 60px;
+  right: 14px;
   font-size: 16px;
   min-width: 215px;
+  padding: 6px;
 
   @include mobile {
     bottom: 8px;
@@ -18,7 +19,12 @@
   }
 
   & > * {
-    margin: 3px;
+    margin: 6px;
+  }
+
+  &.transparent {
+    opacity: 0.5;
+    pointer-events: none;
   }
 }
 
@@ -38,7 +44,7 @@
 }
 
 .lineMeasurementInput {
-  width: 40px;
+  width: 50px;
 }
 
 .length_input {
@@ -47,4 +53,8 @@
 
 .angle_input {
   margin-top: 3px;
+}
+
+.angle_input input {
+  width: 65px;
 }

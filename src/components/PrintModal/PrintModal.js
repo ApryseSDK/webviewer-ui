@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
 import Input from 'components/Input';
-import ActionButton from 'components/ActionButton';
 import WatermarkModal from 'components/PrintModal/WatermarkModal';
 
 import core from 'core';
@@ -18,7 +17,11 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { isSafari, isChromeOniOS } from 'helpers/device';
 
+import { Swipeable } from 'react-swipeable';
+
 import './PrintModal.scss';
+import Choice from '../Choice/Choice';
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -52,6 +55,7 @@ class PrintModal extends React.PureComponent {
       isWatermarkModalVisible: false,
       watermarkModalOption: null,
       existingWatermarks: null,
+      includeAnnotations: true
     };
   }
 
@@ -95,11 +99,17 @@ class PrintModal extends React.PureComponent {
       switch (layoutMode) {
         case LayoutMode.FacingCover:
         case LayoutMode.FacingCoverContinuous:
-          if (currentPage === 1 || (currentPage === pageCount && pageCount % 2 === 0)) {
+          if (
+            currentPage === 1 ||
+            (currentPage === pageCount && pageCount % 2 === 0)
+          ) {
             // first page or last page if single page
             pagesToPrint.push(currentPage);
           } else {
-            pagesToPrint = currentPage % 2 ? [currentPage - 1, currentPage] : [currentPage, currentPage + 1];
+            pagesToPrint =
+              currentPage % 2
+                ? [currentPage - 1, currentPage]
+                : [currentPage, currentPage + 1];
           }
           break;
         case LayoutMode.FacingContinuous:
@@ -108,7 +118,10 @@ class PrintModal extends React.PureComponent {
             // last page if single page
             pagesToPrint.push(currentPage);
           } else {
-            pagesToPrint = currentPage % 2 ? [currentPage, currentPage + 1] : [currentPage - 1, currentPage];
+            pagesToPrint =
+              currentPage % 2
+                ? [currentPage, currentPage + 1]
+                : [currentPage - 1, currentPage];
           }
           break;
         default:
@@ -124,7 +137,7 @@ class PrintModal extends React.PureComponent {
   };
 
   onFocus = () => {
-    this.customPages.current.checked = true;
+    this.customPages.current.click();
     this.onChange();
   };
 
@@ -136,7 +149,6 @@ class PrintModal extends React.PureComponent {
     }
 
     this.setState({ count: 0 });
-    this.setPrintQuality();
 
     if (this.state.allowWatermarkModal) {
       core.setWatermark(this.state.watermarkModalOption);
@@ -148,7 +160,6 @@ class PrintModal extends React.PureComponent {
     Promise.all(creatingPages)
       .then(pages => {
         this.printPages(pages);
-        this.resetPrintQuality();
       })
       .catch(e => {
         console.error(e);
@@ -156,18 +167,14 @@ class PrintModal extends React.PureComponent {
       });
   };
 
-  setPrintQuality = () => {
-    window.utils.setCanvasMultiplier(this.props.printQuality);
-  };
-
   creatingPages = () => {
     const creatingPages = [];
 
     this.pendingCanvases = [];
     this.state.pagesToPrint.forEach(pageNumber => {
-      creatingPages.push(this.creatingImage(pageNumber));
-
       const printableAnnotations = this.getPrintableAnnotations(pageNumber);
+      creatingPages.push(this.creatingImage(pageNumber, printableAnnotations));
+
       if (this.includeComments.current.checked && printableAnnotations.length) {
         const sortedNotes = getSortStrategies()[
           this.props.sortStrategy
@@ -179,34 +186,42 @@ class PrintModal extends React.PureComponent {
     return creatingPages;
   };
 
-  creatingImage = pageNumber =>
+  creatingImage = (pageNumber, printableAnnotations) =>
     new Promise(resolve => {
       const pageIndex = pageNumber - 1;
       const zoom = 1;
       const printRotation = this.getPrintRotation(pageIndex);
-      const onCanvasLoaded = canvas => {
+      const onCanvasLoaded = async canvas => {
         this.pendingCanvases = this.pendingCanvases.filter(
           pendingCanvas => pendingCanvas !== id,
         );
         this.positionCanvas(canvas, pageIndex);
-        this.drawAnnotationsOnCanvas(canvas, pageNumber)
-          .then(() => {
-            const img = document.createElement('img');
-            img.src = canvas.toDataURL();
-            img.onload = () => {
-              this.setState(({ count }) => ({
-                count: count < 0 ? -1 : count + 1,
-              }));
-              resolve(img);
-            };
-          });
-      };
 
+        if (this.state.includeAnnotations) {
+          await this.drawAnnotationsOnCanvas(canvas, pageNumber);
+        } else {
+          // disable all printable annotations before draw
+          printableAnnotations.forEach(annot => annot.Printable = false);
+          await this.drawAnnotationsOnCanvas(canvas, pageNumber);
+          // enable all printable annotations after draw
+          printableAnnotations.forEach(annot => annot.Printable = true);
+        }
+
+        const img = document.createElement('img');
+        img.src = canvas.toDataURL();
+        img.onload = () => {
+          this.setState(({ count }) => ({
+            count: count < 0 ? -1 : count + 1,
+          }));
+          resolve(img);
+        };
+      };
       const id = core.getDocument().loadCanvasAsync({
         pageNumber,
         zoom,
         pageRotation: printRotation,
         drawComplete: onCanvasLoaded,
+        multiplier: this.props.printQuality,
       });
       this.pendingCanvases.push(id);
     });
@@ -255,17 +270,17 @@ class PrintModal extends React.PureComponent {
   };
 
   drawAnnotationsOnCanvas = (canvas, pageNumber) => {
-    const annotations = core
+    const widgetAnnotations = core
       .getAnnotationsList()
       .filter(
         annot =>
           annot.PageNumber === pageNumber && annot instanceof window.Annotations.WidgetAnnotation
       );
-
-    if (annotations.length === 0) {
+    // just draw markup annotations
+    if (widgetAnnotations.length === 0) {
       return core.drawAnnotations(pageNumber, canvas);
     }
-
+    // draw all annotations
     const widgetContainer = this.createWidgetContainer(pageNumber - 1);
     return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
       document.body.appendChild(widgetContainer);
@@ -375,7 +390,7 @@ class PrintModal extends React.PureComponent {
       if (icon) {
         const isInlineSvg = icon.indexOf('<svg') === 0;
         /* eslint-disable global-require */
-        innerHTML = isInlineSvg ? icon : require(`../../../assets/${icon}.svg`);
+        innerHTML = isInlineSvg ? icon : require(`../../../assets/icons/${icon}.svg`);
       } else {
         innerHTML = annotation.Subject;
       }
@@ -434,10 +449,6 @@ class PrintModal extends React.PureComponent {
     this.closePrintModal();
   };
 
-  resetPrintQuality = () => {
-    window.utils.unsetCanvasMultiplier();
-  };
-
   closePrintModal = () => {
     this.setState({ count: -1 });
     this.props.closeElement('printModal');
@@ -462,13 +473,13 @@ class PrintModal extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, t, isApplyWatermarkDisabled } = this.props;
+    const { isDisabled, t, isApplyWatermarkDisabled, isOpen } = this.props;
 
     if (isDisabled) {
       return null;
     }
 
-    const { count, pagesToPrint } = this.state;
+    const { count, pagesToPrint, includeAnnotations } = this.state;
     const isPrinting = count >= 0;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = (
@@ -482,123 +493,144 @@ class PrintModal extends React.PureComponent {
     );
 
     return (
-      <React.Fragment>
-        <WatermarkModal
-          isVisible={this.state.isWatermarkModalVisible}
-          // pageIndex starts at index 0 and getCurrPage number starts at index 1
-          pageIndexToView={this.props.currentPage - 1}
-          modalClosed={this.setWatermarkModalVisibility}
-          formSubmitted={this.setWatermarkModalOption}
-        />
-        <div
-          className={className}
-          data-element="printModal"
-          onClick={() => {
-            this.cancelPrint();
-            this.closePrintModal();
-          }}
-        >
-          <div className="container" onClick={e => e.stopPropagation()}>
-            <div className="header-container">
-              <div className="header">{t('action.print')}</div>
-              <ActionButton
-                dataElement="printModalCloseButton"
-                title="action.close"
-                img="ic_close_black_24px"
-                onClick={() => {
-                  this.cancelPrint();
-                  this.closePrintModal();
-                }}
-              />
-            </div>
-            <div className="settings">
-              <div className="col">{`${t('option.print.pages')}:`}</div>
-              <form
-                className="col"
-                onChange={this.onChange}
-                onSubmit={this.createPagesAndPrint}
-              >
-                <Input
-                  ref={this.allPages}
-                  id="all-pages"
-                  name="pages"
-                  type="radio"
-                  label={t('option.print.all')}
-                  defaultChecked
-                  disabled={isPrinting}
-                />
-                <Input
-                  ref={this.currentPage}
-                  id="current-page"
-                  name="pages"
-                  type="radio"
-                  label={t('option.print.current')}
-                  disabled={isPrinting}
-                />
-                <Input
-                  ref={this.customPages}
-                  id="custom-pages"
-                  name="pages"
-                  type="radio"
-                  label={customPagesLabelElement}
-                  disabled={isPrinting}
-                />
-                <Input
-                  ref={this.includeComments}
-                  id="include-comments"
-                  name="comments"
-                  type="checkbox"
-                  label={t('option.print.includeComments')}
-                  disabled={isPrinting}
-                />
-              </form>
-            </div>
-            {!isApplyWatermarkDisabled && (
-              <button
-                data-element="applyWatermark"
-                className="apply-watermark"
-                disabled={isPrinting}
-                onClick={() => {
-                  if (!isPrinting) {
-                    this.setWatermarkModalVisibility(true);
-                  }
-                }}
-              >
-                {t('option.print.addWatermarkSettings')}
-              </button>
-            )}
-            <div className="buttons">
-              <div className="total">
-                {isPrinting ? (
-                  <div>{`${t('message.processing')} ${count}/${
-                    pagesToPrint.length
-                  }`}</div>
-                ) : (
-                  <div>
-                    {t('message.printTotalPageCount', {
-                      count: pagesToPrint.length,
-                    })}
+      <Swipeable
+        onSwipedUp={this.closePrintModal}
+        onSwipedDown={this.closePrintModal}
+        preventDefaultTouchmoveEvent
+      >
+        <>
+          <WatermarkModal
+            isVisible={this.state.isWatermarkModalVisible}
+            // pageIndex starts at index 0 and getCurrPage number starts at index 1
+            pageIndexToView={this.props.currentPage - 1}
+            modalClosed={this.setWatermarkModalVisibility}
+            formSubmitted={this.setWatermarkModalOption}
+          />
+          <FocusTrap
+            locked={isOpen && !this.state.isWatermarkModalVisible}
+          >
+            <div
+              className={className}
+              data-element="printModal"
+              onClick={() => {
+                this.cancelPrint();
+                this.closePrintModal();
+              }}
+            >
+              <div className="container" onClick={e => e.stopPropagation()}>
+                <div className="swipe-indicator" />
+                <div className="settings">
+                  <div className="col">{`${t('option.print.pages')}:`}</div>
+                  <form
+                    className="settings-form"
+                    onChange={this.onChange}
+                    onSubmit={this.createPagesAndPrint}
+                  >
+                    <Choice
+                      dataElement="allPagesPrintOption"
+                      ref={this.allPages}
+                      id="all-pages"
+                      name="pages"
+                      radio
+                      label={t('option.print.all')}
+                      defaultChecked
+                      disabled={isPrinting}
+                      center
+                    />
+                    <Choice
+                      dataElement="currentPagePrintOption"
+                      ref={this.currentPage}
+                      id="current-page"
+                      name="pages"
+                      radio
+                      label={t('option.print.current')}
+                      disabled={isPrinting}
+                      center
+                    />
+                    <Choice
+                      dataElement="customPagesPrintOption"
+                      ref={this.customPages}
+                      id="custom-pages"
+                      name="pages"
+                      radio
+                      label={customPagesLabelElement}
+                      disabled={isPrinting}
+                      center
+                    />
+                    <Choice
+                      dataElement="commentsPrintOption"
+                      ref={this.includeComments}
+                      id="include-comments"
+                      name="comments"
+                      label={t('option.print.includeComments')}
+                      disabled={isPrinting}
+                      center
+                    />
+                    <Choice
+                      dataElement="annotationsPrintOption"
+                      id="include-annotations"
+                      name="annotations"
+                      label={t('option.print.includeAnnotations')}
+                      disabled={isPrinting}
+                      onChange = {() => this.setState(state => ({ includeAnnotations: !state.includeAnnotations }))}
+                      checked = {includeAnnotations}
+                      center
+                    />
+                  </form>
+                  <div className="total">
+                    {isPrinting ? (
+                      <div>{`${t('message.processing')} ${count}/${
+                        pagesToPrint.length
+                      }`}</div>
+                    ) : (
+                      <div>
+                        {t('message.printTotalPageCount', {
+                          count: pagesToPrint.length,
+                        })}
+                      </div>
+                    )}
                   </div>
-                )}
+                  {!isApplyWatermarkDisabled && (
+                    <button
+                      data-element="applyWatermark"
+                      className="apply-watermark"
+                      disabled={isPrinting}
+                      onClick={() => {
+                        if (!isPrinting) {
+                          this.setWatermarkModalVisibility(true);
+                        }
+                      }}
+                    >
+                      {t('option.print.addWatermarkSettings')}
+                    </button>
+                  )}
+                </div>
+
+                <div className="divider"></div>
+                <div className="buttons">
+                  <button
+                    className="button"
+                    onClick={this.createPagesAndPrint}
+                    disabled={count > -1}
+                  >
+                    {t('action.print')}
+                  </button>
+                </div>
               </div>
-              <button
-                className="button"
-                onClick={this.createPagesAndPrint}
-                disabled={count > -1}
-              >
-                {t('action.print')}
-              </button>
             </div>
-          </div>
-        </div>
-      </React.Fragment>
+          </FocusTrap>
+        </>
+      </Swipeable>
     );
   }
 }
 
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'printModal'),
-  isApplyWatermarkDisabled: selectors.isElementDisabled(state, 'applyWatermark'),
+  isApplyWatermarkDisabled: selectors.isElementDisabled(
+    state,
+    'applyWatermark',
+  ),
   isOpen: selectors.isElementOpen(state, 'printModal'),
   currentPage: selectors.getCurrentPage(state),
   printQuality: selectors.getPrintQuality(state),

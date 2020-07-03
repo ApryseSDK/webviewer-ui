@@ -63,6 +63,7 @@ class AnnotationStylePopup extends React.Component {
           style={style}
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}
+          disableSeparator
         />
       </div>
     );

@@ -1,37 +1,110 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
+
+.ToolsOverlayContainer {
+  @include desktop {
+    margin-right: 12px;
+  }
+  @include tablet {
+    margin-right: 18px;
+  }
+
+  // @include mobile {
+  //   position: fixed;
+  //   top: 0;
+  //   right: 0;
+  //   height: 100vh;
+  //   width: 100vw;
+  //   z-index: 1;
+  // }
+}
+
 .ToolsOverlay {
   @extend %overlay;
-
-  top: 46px;
-  padding: 0;
-  border-radius: 0;
+  box-shadow: none;
+  padding: 0px;
   flex-wrap: nowrap;
-  overflow: hidden;
+  border: 0px;
+  border-radius: 0px;
+  background: transparent;
+  position: relative;
+  border-radius: 4px 4px 0 0;
+  // Very important.
+  // This makes it so the toolstylepopup goes below the presets.
+  // It will overflow properly.
+  height: 32px;
+  align-items: center;
+  width: 220px;
 
-  @include tablet-and-mobile {
-    left: 0 !important;
-    right: 0 !important;
-    top: 0;
+  @include mobile {
     width: 100%;
-    border: none;
+    // height: 52px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--mobile-presets-background);
+    margin-top: -12px;
+    // margin-top: 0px;
   }
 
-  & > * {
-    &:first-child {
-      margin-left: 0;
-    }
+  &.shadow {
+    box-shadow: 0 0 5px 0 var(--box-shadow);
 
-    &:last-child {
-      margin-right: 0;
+    @include tablet-and-desktop {
+      .ToolStylePopup {
+        box-shadow: 0 -20px 0 var(--preset-background), 0 0 5px 0 var(--box-shadow);
+      }
     }
   }
 
-  .spacer {
-    @include tablet-and-mobile {
-      flex: 1;
-      height: 100%;
+  .no-presets {
+    color: var(--no-presets-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .tools-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: var(--preset-background);
+    height: 100%;
+    width: 100%;
+
+    @include mobile {
+      background: var(--mobile-presets-background);
+      height: 52px;
+
+      &.is-styling-open {
+        height: 78px;
+      }
+    }
+
+    .tool-buttons-container {
+      display: flex;
+      align-items: center;
+      height: 32px;
+      padding-left: 4px;
+
+      @include mobile {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  .close-icon-container {
+    @include button-reset;
+    position: absolute;
+    right: 18px;
+    cursor: pointer;
+    .close-icon {
+      width: 24px;
+      height: 24px;
     }
   }
 }

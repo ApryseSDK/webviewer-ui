@@ -6,6 +6,8 @@
     "cancel": "取消",
     "clear": "清除",
     "close": "关闭",
+    "undo": "撤消",
+    "redo": "准备",
     "comment": "注释",
     "copy": "复制",
     "delete": "删除",
@@ -27,6 +29,7 @@
     "rotateClockwise": "顺时针",
     "rotateCounterClockwise": "逆时针",
     "save": "保存",
+    "post": "发布",
     "create": "创建",
     "showMoreResults": "显示更多结果",
     "sign": "签名",
@@ -35,11 +38,16 @@
     "zoom": "缩放",
     "zoomIn": "放大",
     "zoomOut": "缩小",
+    "zoomControls": "缩放控制",
     "draw": "画",
     "type": "类型",
     "upload": "上载",
     "link": "链接",
-    "fileAttachmentDownload": "下载附件"
+    "darkMode": "暗模式",
+    "lightMode": "灯光模式",
+    "fileAttachmentDownload": "下载附件",
+    "prevResult": "先前的结果",
+    "nextResult": "下一个结果"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -48,15 +56,13 @@
     "crop": "裁剪页面",
     "caret": "插入符号",
     "distanceMeasurement": "距离测量",
+    "countMeasurement": "计数测量",
     "ellipse": "椭圆",
     "eraser": "橡皮",
     "fileattachment": "文件附件",
     "freehand": "手绘",
-    "freehand2": "手绘",
     "freetext": "自由文本",
-    "freetext2": "自由文本",
     "highlight": "高亮",
-    "highlight2": "高亮",
     "line": "直线",
     "perimeterMeasurement": "周长测量",
     "polygon": "多边形",
@@ -99,27 +105,25 @@
     "SBRejected": "拒绝"
   },
   "component": {
-    "freehandToolsButton": "手绘工具",
     "leftPanel": "面板",
+    "toolsHeader": "工具类",
     "searchOverlay": "搜索",
+    "searchPanel": "搜索",
     "menuOverlay": "菜单",
-    "miscToolsButton": "其他工具",
     "notesPanel": "备注",
     "outlinesPanel": "大纲",
     "bookmarksPanel": "书签",
     "newBookmark": "新书签",
     "bookmarkPage": "页",
     "layersPanel": "图层",
-    "shapeToolsButton": "形状工具",
-    "textToolsButton": "文本工具",
     "thumbnailsPanel": "缩略图",
     "toolsButton": "工具",
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
-    "measurementToolsButton": "测量工具",
     "calibration": "校准"
   },
   "message": {
+    "toolsOverlayNoPresets": "无预设",
     "badDocument": "无法加载文档，此文档已损坏或无效。",
     "customPrintPlaceholder": "例如，3 4-10",
     "encryptedAttemptsExceeded": "无法加载加密文档，尝试次数过多。",
@@ -129,6 +133,7 @@
     "noAnnotations": "此文档没有注释。",
     "noOutlines": "此文档没有大纲。",
     "noResults": "未找到结果。",
+    "numResultsFound": "找到结果",
     "notSupported": "不支持该文件类型。",
     "passwordRequired": "需要输入密码",
     "preparingToPrint": "正在准备打印…",
@@ -138,7 +143,8 @@
     "printTotalPageCount_plural": "{{count}} 页",
     "processing": "正在处理…",
     "searching": "正在搜索…",
-    "searchPlaceholder": "在此处搜索注释…",
+    "searchCommentsPlaceholder": "搜索评论",
+    "searchDocumentPlaceholder": "搜索文件",
     "signHere": "在此处签名",
     "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
@@ -146,6 +152,18 @@
     "linkURLorPage": "链接网址或页面"
   },
   "option": {
+    "notesOrder": {
+      "position": "位置",
+      "time": "时间"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "视图",
+      "toolbarGroup-Annotate": "注释",
+      "toolbarGroup-Shapes": "形状",
+      "toolbarGroup-Insert": "插",
+      "toolbarGroup-Measure": "测量",
+      "toolbarGroup-Edit": "编辑"
+    },
     "annotationColor": {
       "StrokeColor": "边框颜色",
       "FillColor": "填充颜色",
@@ -164,8 +182,6 @@
       "single": "单页"
     },
     "notesPanel": {
-      "orderPosition": "位置排序",
-      "orderTime": "时间排序",
       "separator": {
         "today": "今天",
         "yesterday": "昨天"
@@ -179,6 +195,7 @@
       "all": "全部",
       "current": "当前",
       "pages": "页数",
+      "includeAnnotations": "包括注释",
       "includeComments": "包括评论",
       "addWatermarkSettings": "添加水印设置"
     },
@@ -189,6 +206,9 @@
       "caseSensitive": "区分大小写",
       "wholeWordOnly": "整个词语",
       "wildcard": "通配符"
+    },
+    "stampOverlay": {
+      "addStamp": "添加新邮票"
     },
     "signatureOverlay": {
       "addSignature": "添加签名"
@@ -220,7 +240,9 @@
       "distanceMeasurement": "距离测量",
       "perimeterMeasurement": "周长测量",
       "areaMeasurement": "面积测量",
-      "radius": "半径"
+      "countMeasurement": "计数测量",
+      "radius": "半径",
+      "count": "计数"
     },
     "measurementOption": {
       "scale": "比例"
@@ -250,7 +272,8 @@
     "thumbnailPanel": {
       "delete": "删除",
       "rotateClockwise": "顺时针",
-      "rotateCounterClockwise": "逆时针方向"
+      "rotateCounterClockwise": "逆时针方向",
+      "extractZeroPageError": "没有选择要提取的页面"
     },
     "richText": {
       "bold": "粗体",
@@ -289,6 +312,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "（Ctrl Shift Z）",
+    "undo": "（Ctrl Z）",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

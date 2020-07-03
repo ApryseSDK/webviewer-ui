@@ -1,27 +1,23 @@
 @import '../../constants/styles';
 
 .SearchResult {
-  margin-top: -1px;
-  padding: 0.625rem;
-  box-sizing: border-box;
-  font-size: 0.9375rem;
   cursor: pointer;
-  background: white;
-  background: var(--primary-color);
-  border: 1px solid $gray12;
-  border: 1px solid var(--border-color);
-  overflow-wrap: break-word;
-  &.selected {
-    background: $gray10;
-    color: #333333;
+  border-radius: 4px;
+  box-shadow: 0px 0px 3px 0px var(--box-shadow);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 12px;
+  margin-left: 2px;
+  margin-bottom: 8px;
+  background: var(--component-background);
 
-    .search-value {
-      background: #fbcd9f;
-    }
+  &.selected {
+    border: 1px solid var(--focus-border);
+    box-shadow: none;
   }
 
   .search-value {
-    background: #fffc95;
-    color: #333333;
+    background: #face0080;
   }
 }

@@ -5,16 +5,23 @@ import { useTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
 import core from 'core';
-import ActionButton from 'components/ActionButton';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import { Swipeable } from 'react-swipeable';
+
 import './LinkModal.scss';
 
 const LinkModal = () => {
-  const [isDisabled, isOpen, totalPages, currentPage, tabSelected] = useSelector(state => [
+  const [
+    isDisabled,
+    isOpen,
+    totalPages,
+    currentPage,
+    tabSelected,
+  ] = useSelector(state => [
     selectors.isElementDisabled(state, 'linkModal'),
     selectors.isElementOpen(state, 'linkModal'),
     selectors.getTotalPages(state),
@@ -73,7 +80,11 @@ const LinkModal = () => {
             )
           );
         });
-        createHighlightAnnot(currPageLinks, quads[currPageNumber], selectedText);
+        createHighlightAnnot(
+          currPageLinks,
+          quads[currPageNumber],
+          selectedText,
+        );
         linksResults.push(...currPageLinks);
       }
     }
@@ -200,64 +211,72 @@ const LinkModal = () => {
   });
 
   return isDisabled ? null : (
-    <div className={modalClass} data-element="linkModal" onMouseDown={closeModal}>
-      <div className="container" onMouseDown={e => e.stopPropagation()}>
-        <Tabs id="linkModal">
-          <div className="header">
+    <Swipeable
+      onSwipedUp={closeModal}
+      onSwipedDown={closeModal}
+      preventDefaultTouchmoveEvent
+    >
+      <div
+        className={modalClass}
+        data-element="linkModal"
+        onMouseDown={closeModal}
+      >
+        <div className="container" onMouseDown={e => e.stopPropagation()}>
+          <div className="swipe-indicator" />
+          <Tabs id="linkModal">
             <div className="tab-list">
               <Tab dataElement="URLPanelButton">
-                <Button label={t('link.url')} />
+                <div className="tab-options-button">{t('link.url')}</div>
               </Tab>
+              <div className="divider" />
               <Tab dataElement="PageNumberPanelButton">
-                <Button label={t('link.page')} />
+                <div className="tab-options-button">{t('link.page')}</div>
               </Tab>
             </div>
-            <ActionButton
-              dataElement="linkModalCloseButton"
-              title="action.close"
-              img="ic_close_black_24px"
-              onClick={closeModal}
-            />
-          </div>
 
-          <TabPanel dataElement="URLPanel">
-            <form onSubmit={addURLLink}>
-              <div>{t('link.enterurl')}</div>
-              <input
-                className="urlInput"
-                type="url"
-                ref={urlInput}
-                value={url}
-                onChange={e => setURL(e.target.value)}
-              />
-              <Button
-                dataElement="linkSubmitButton"
-                label={t('action.link')}
-                onClick={addURLLink}
-              />
-            </form>
-          </TabPanel>
-          <TabPanel dataElement="PageNumberPanel">
-            <form onSubmit={addPageLink}>
-              <div>{t('link.enterpage')}</div>
-              <select
-                className="pageNumberSelect"
-                ref={pageNumberInput}
-                value={pageNumber}
-                onChange={e => setPageNumber(e.target.value)}
-              >
-                {setDropdownNumbers()}
-              </select>
-              <Button
-                dataElement="linkSubmitButton"
-                label={t('action.link')}
-                onClick={addPageLink}
-              />
-            </form>
-          </TabPanel>
-        </Tabs>
+            <TabPanel dataElement="URLPanel">
+              <form onSubmit={addURLLink}>
+                <div>{t('link.enterurl')}</div>
+                <div className="linkInput">
+                  <input
+                    className="urlInput"
+                    type="url"
+                    ref={urlInput}
+                    value={url}
+                    onChange={e => setURL(e.target.value)}
+                  />
+                  <Button
+                    dataElement="linkSubmitButton"
+                    label={t('action.link')}
+                    onClick={addURLLink}
+                  />
+                </div>
+              </form>
+            </TabPanel>
+            <TabPanel dataElement="PageNumberPanel">
+              <form onSubmit={addPageLink}>
+                <div>{t('link.enterpage')}</div>
+                <div className="linkInput">
+                  <select
+                    className="pageNumberSelect"
+                    ref={pageNumberInput}
+                    value={pageNumber}
+                    onChange={e => setPageNumber(e.target.value)}
+                  >
+                    {setDropdownNumbers()}
+                  </select>
+                  <Button
+                    dataElement="linkSubmitButton"
+                    label={t('action.link')}
+                    onClick={addPageLink}
+                  />
+                </div>
+              </form>
+            </TabPanel>
+          </Tabs>
+        </div>
       </div>
-    </div>
+    </Swipeable>
   );
 };
 

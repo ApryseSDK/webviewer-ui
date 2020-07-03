@@ -6,6 +6,8 @@
     "cancel": "取消",
     "clear": "清除",
     "close": "關閉",
+    "undo": "撤消",
+    "redo": "準備",
     "comment": "評論",
     "copy": "複製",
     "delete": "刪除",
@@ -27,6 +29,7 @@
     "rotateClockwise": "順時針",
     "rotateCounterClockwise": "逆時針",
     "save": "儲存",
+    "post": "發布",
     "create": "建立",
     "showMoreResults": "顯示更多結果",
     "sign": "簽署",
@@ -35,11 +38,16 @@
     "zoom": "縮放",
     "zoomIn": "放大",
     "zoomOut": "縮小",
+    "zoomControls": "縮放控制",
     "draw": "畫",
     "type": "類型",
     "upload": "上載",
     "link": "鏈接",
-    "fileAttachmentDownload": "下載附件"
+    "darkMode": "暗模式",
+    "lightMode": "燈光模式",
+    "fileAttachmentDownload": "下載附件",
+    "prevResult": "先前的結果",
+    "nextResult": "下一個結果"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -48,15 +56,13 @@
     "crop": "裁剪頁面",
     "caret": "插入號",
     "distanceMeasurement": "測量距離",
+    "countMeasurement": "計數測量",
     "ellipse": "橢圓",
     "eraser": "橡皮",
     "fileattachment": "文件附件",
     "freehand": "手繪",
-    "freehand2": "手繪",
     "freetext": "任意文字",
-    "freetext2": "任意文字",
     "highlight": "強調顯示",
-    "highlight2": "強調顯示",
     "line": "線條",
     "perimeterMeasurement": "測量周長",
     "polygon": "多邊形",
@@ -99,27 +105,25 @@
     "SBRejected": "拒絕"
   },
   "component": {
-    "freehandToolsButton": "手繪工具",
     "leftPanel": "面板",
+    "toolsHeader": "工具類",
     "searchOverlay": "搜尋",
+    "searchPanel": "搜索",
     "menuOverlay": "功能表",
-    "miscToolsButton": "其他工具",
     "notesPanel": "備忘稿",
     "outlinesPanel": "大綱",
     "bookmarksPanel": "書籤",
     "newBookmark": "新書籤",
     "bookmarkPage": "頁",
     "layersPanel": "圖層",
-    "shapeToolsButton": "圖形工具",
-    "textToolsButton": "文字工具",
     "thumbnailsPanel": "縮圖",
     "toolsButton": "工具",
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
-    "measurementToolsButton": "測量工具",
     "calibration": "校準"
   },
   "message": {
+    "toolsOverlayNoPresets": "無預設",
     "badDocument": "無法載入文件。此文件已損壞或無效。",
     "customPrintPlaceholder": "例如：3, 4-10",
     "encryptedAttemptsExceeded": "無法載入加密文件。嘗試次數過多。",
@@ -129,6 +133,7 @@
     "noAnnotations": "此文件沒有註釋。",
     "noOutlines": "此文件沒有大綱。",
     "noResults": "沒有找到結果。",
+    "numResultsFound": "找到結果",
     "notSupported": "不支援該檔案類型。",
     "passwordRequired": "需要密碼",
     "preparingToPrint": "正在準備列印...",
@@ -138,7 +143,8 @@
     "printTotalPageCount_plural": "{{count}} 頁",
     "processing": "正在處理...",
     "searching": "正在搜尋...",
-    "searchPlaceholder": "搜尋評論...",
+    "searchCommentsPlaceholder": "搜索評論",
+    "searchDocumentPlaceholder": "搜索文件",
     "signHere": "在這裡簽名",
     "insertTextHere": "在這裡插入文字",
     "imageSignatureAcceptedFileTypes": "僅接受{{acceptedFileTypes}}",
@@ -146,6 +152,18 @@
     "linkURLorPage": "鏈接網址或頁面"
   },
   "option": {
+    "notesOrder": {
+      "position": "位置",
+      "time": "時間"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "視圖",
+      "toolbarGroup-Annotate": "註釋",
+      "toolbarGroup-Shapes": "形狀",
+      "toolbarGroup-Insert": "插",
+      "toolbarGroup-Measure": "測量",
+      "toolbarGroup-Edit": "編輯"
+    },
     "annotationColor": {
       "StrokeColor": "邊框顏色",
       "FillColor": "填充顏色",
@@ -164,8 +182,6 @@
       "single": "單面"
     },
     "notesPanel": {
-      "orderPosition": "位置",
-      "orderTime": "時間",
       "separator": {
         "today": "今天",
         "yesterday": "昨天"
@@ -179,6 +195,7 @@
       "all": "全部",
       "current": "目前",
       "pages": "頁面",
+      "includeAnnotations": "包括註釋",
       "includeComments": "包括評論",
       "addWatermarkSettings": "添加水印設置"
     },
@@ -189,6 +206,9 @@
       "caseSensitive": "區分大小寫",
       "wholeWordOnly": "全字相符",
       "wildcard": "通配符"
+    },
+    "stampOverlay": {
+      "addStamp": "添加新郵票"
     },
     "signatureOverlay": {
       "addSignature": "新增簽名"
@@ -220,7 +240,9 @@
       "distanceMeasurement": "測量距離",
       "perimeterMeasurement": "測量周長",
       "areaMeasurement": "測量面積",
-      "radius": "半徑"
+      "countMeasurement": "計數測量",
+      "radius": "半徑",
+      "count": "計數"
     },
     "measurementOption": {
       "scale": "比例"
@@ -250,7 +272,8 @@
     "thumbnailPanel": {
       "delete": "刪除",
       "rotateClockwise": "順時針",
-      "rotateCounterClockwise": "逆時針方向"
+      "rotateCounterClockwise": "逆時針方向",
+      "extractZeroPageError": "沒有選擇要提取的頁面"
     },
     "richText": {
       "bold": "粗體",
@@ -289,6 +312,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "（Ctrl Shift Z）",
+    "undo": "（Ctrl Z）",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

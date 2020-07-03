@@ -1,9 +1,167 @@
 import core from 'core';
-import isDataElementPanel from 'helpers/isDataElementPanel';
+import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
-// viewer
+import defaultTool from 'constants/defaultTool';
+import { PRIORITY_THREE } from 'constants/actionPriority';
+
+export const setCanUndo = canUndo => ({
+  type: 'SET_CAN_UNDO',
+  payload: { canUndo },
+});
+
+export const setCanRedo = canRedo => ({
+  type: 'SET_CAN_REDO',
+  payload: { canRedo },
+});
+
+export const setDefaultStamps = t => async dispatch => {
+  const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
+  const canvasWidth = 160;
+  const canvasHeight = 58;
+
+  const annotations = rubberStampTool.getDefaultStampAnnotations();
+  const previews = await Promise.all(
+    annotations.map(annotation => {
+      const text = t(`rubberStamp.${annotation['Icon']}`);
+
+      const options = {
+        canvasWidth,
+        canvasHeight,
+        text,
+      };
+
+      return rubberStampTool.getPreview(annotation, options);
+    }),
+  );
+
+  const defaultStamps = annotations.map((annotation, i) => ({
+    annotation,
+    imgSrc: previews[i],
+  }));
+
+  dispatch({
+    type: 'SET_DEFAULT_STAMPS',
+    payload: { defaultStamps },
+  });
+};
+
+export const setReadOnlyRibbons = () => (dispatch, getState) => {
+  dispatch(setToolbarGroup('toolbarGroup-View'));
+  const state = getState();
+  const toolbarGroupsToDisable = Object.keys(state.viewer.headers)
+    .filter(key => key.includes('toolbarGroup-') && key !== 'toolbarGroup-View');
+
+  dispatch({
+    type: 'DISABLE_ELEMENTS',
+    payload: { dataElements: toolbarGroupsToDisable, priority: PRIORITY_THREE },
+  });
+};
+
+export const enableRibbons = () => (dispatch, getState) => {
+  dispatch(setToolbarGroup('toolbarGroup-Annotate'));
+  const state = getState();
+  const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
+    .filter(key => key.includes('toolbarGroup-'));
+
+  dispatch({
+    type: 'ENABLE_ELEMENTS',
+    payload: { dataElements: toolbarGroupsToEnable, priority: PRIORITY_THREE },
+  });
+};
+
+const isElementDisabled = (state, dataElement) =>
+state.viewer.disabledElements[dataElement]?.disabled;
+
+export const allButtonsInGroupDisabled = (state, toolGroup) => {
+  const dataElements = Object.values(state.viewer.toolButtonObjects)
+    .filter(({ group }) => group === toolGroup)
+    .map(({ dataElement }) => dataElement);
+
+  return dataElements.every(dataElement =>
+    isElementDisabled(state, dataElement),
+  );
+};
+
+export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
+  const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
+    const toolGroups = state.viewer.headers[_toolbarGroup];
+    let firstToolGroupForToolbarGroup = '';
+    if (toolGroups) {
+      const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {
+        if (toolGroup && !isElementDisabled(state, dataElement) && !allButtonsInGroupDisabled(state, toolGroup)) {
+          return true;
+        }
+        return false;
+      });
+      if (firstTool) {
+        firstToolGroupForToolbarGroup = firstTool.toolGroup;
+      }
+    }
+    return firstToolGroupForToolbarGroup;
+  };
+
+  const getFirstToolNameForGroup = (state, toolGroup) => {
+    const tools = state.viewer.toolButtonObjects;
+    const firstTool = Object.keys(tools).find(key => {
+      return tools[key].group === toolGroup;
+    });
+    return firstTool;
+  };
+
+  if (toolbarGroup === 'toolbarGroup-View') {
+    dispatch(closeElements(['toolsHeader']));
+    core.setToolMode(defaultTool);
+    dispatch({
+      type: 'SET_ACTIVE_TOOL_GROUP',
+      payload: { toolGroup: '' },
+    });
+  } else {
+    dispatch(openElements(['toolsHeader']));
+    const firstToolGroupForToolbarGroup = getFirstToolGroupForToolbarGroup(getState(), toolbarGroup);
+    const toolName = getFirstToolNameForGroup(getState(), firstToolGroupForToolbarGroup);
+    if (toolName === 'AnnotationCreateSignature') {
+      core.setToolMode(defaultTool);
+    } else {
+      core.setToolMode(toolName);
+    }
+    dispatch({
+      type: 'SET_ACTIVE_TOOL_GROUP',
+      payload: { toolGroup: firstToolGroupForToolbarGroup },
+    });
+  }
+  dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
+  dispatch({
+    type: 'SET_TOOLBAR_GROUP',
+    payload: { toolbarGroup },
+  });
+};
+export const setSelectedStampIndex = index => ({
+  type: 'SET_SELECTED_STAMP_INDEX',
+  payload: { index },
+});
+export const setSelectedSignatureIndex = index => ({
+  type: 'SET_SELECTED_SIGNATURE_INDEX',
+  payload: { index },
+});
+export const setSavedSignatures = savedSignatures => ({
+  type: 'SET_SAVED_SIGNATURES',
+  payload: { savedSignatures },
+});
+export const setLeftPanelWidth = width => ({
+  type: 'SET_LEFT_PANEL_WIDTH',
+  payload: { width },
+});
+export const setSearchPanelWidth = width => ({
+  type: 'SET_SEARCH_PANEL_WIDTH',
+  payload: { width },
+});
+export const setNotesPanelWidth = width => ({
+  type: 'SET_NOTES_PANEL_WIDTH',
+  payload: { width },
+});
+
 export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',
   payload: {},
@@ -14,7 +172,7 @@ export const openElement = dataElement => (dispatch, getState) => {
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
-  const isElementOpen = isDataElementPanel(dataElement, state)
+  const isElementOpen = isDataElementLeftPanel(dataElement, state)
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
     : state.viewer.openElements[dataElement];
 
@@ -22,7 +180,7 @@ export const openElement = dataElement => (dispatch, getState) => {
     return;
   }
 
-  if (isDataElementPanel(dataElement, state)) {
+  if (isDataElementLeftPanel(dataElement, state)) {
     if (!isLeftPanelOpen) {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
       fireEvent('visibilityChanged', { element: 'leftPanel', isVisible: true });
@@ -54,7 +212,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
 
   const isElementDisabled =
     state.viewer.disabledElements[dataElement]?.disabled;
-  const isElementClosed = isDataElementPanel(dataElement, state)
+  const isElementClosed = isDataElementLeftPanel(dataElement, state)
     ? state.viewer.activeLeftPanel !== dataElement
     : !state.viewer.openElements[dataElement];
 
@@ -63,7 +221,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
   }
 
   if (
-    isDataElementPanel(dataElement, state) &&
+    isDataElementLeftPanel(dataElement, state) &&
     state.viewer.openElements['leftPanel']
   ) {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
@@ -113,7 +271,7 @@ export const setActiveHeaderGroup = headerGroup => ({
 export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  if (isDataElementPanel(dataElement, state)) {
+  if (isDataElementLeftPanel(dataElement, state)) {
     if (state.viewer.activeLeftPanel !== dataElement) {
       dispatch({
         type: 'CLOSE_ELEMENT',
@@ -131,7 +289,6 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       ...state.viewer.customPanels.map(({ panel }) => panel.dataElement),
       'thumbnailsPanel',
       'outlinesPanel',
-      'notesPanel',
       'layersPanel',
       'bookmarksPanel',
     ].join(', ');
@@ -234,7 +391,23 @@ export const setCustomElementOverrides = (dataElement, overrides) => ({
   type: 'SET_CUSTOM_ELEMENT_OVERRIDES',
   payload: { dataElement, overrides },
 });
+export const setActiveTheme = theme => ({
+  type: 'SET_ACTIVE_THEME',
+  payload: { theme },
+});
 export const setSearchResults = searchResults => ({
   type: 'SET_SEARCH_RESULTS',
   payload: searchResults,
+});
+export const setActiveResult = (activeResult, index) => ({
+  type: 'SET_ACTIVE_RESULT',
+  payload: { activeResult },
+});
+export const setActiveResultIndex = index => ({
+  type: 'SET_ACTIVE_RESULT_INDEX',
+  payload: { index },
+});
+export const setAnnotationContentOverlayHandler = annotationContentOverlayHandler => ({
+  type: 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER',
+  payload: { annotationContentOverlayHandler }
 });

@@ -1,0 +1,10 @@
+@import '../../constants/styles';
+
+.tool-group-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  border-radius: 4px;
+  cursor: pointer;
+}

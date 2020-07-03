@@ -6,6 +6,8 @@
     "cancel": "Cancel",
     "clear": "Clear",
     "close": "Close",
+    "undo": "Undo",
+    "redo": "Redo",
     "comment": "Comment",
     "copy": "Copy",
     "delete": "Delete",
@@ -23,10 +25,11 @@
     "print": "Print",
     "ok": "OK",
     "reply": "Reply",
-    "rotate": "Rotate",
-    "rotateClockwise": "Clockwise",
-    "rotateCounterClockwise": "Counterclockwise",
+    "rotate": "Page Orientation",
+    "rotateClockwise": "Rotate Clockwise",
+    "rotateCounterClockwise": "Rotate Counterclockwise",
     "save": "Save",
+    "post": "Post",
     "create": "Create",
     "showMoreResults": "Show more results",
     "sign": "Sign",
@@ -35,30 +38,33 @@
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
+    "zoomControls": "Zoom Controls",
     "draw": "Draw",
     "type": "Type",
     "upload": "Upload",
     "link": "Link",
-    "fileAttachmentDownload": "Download attached file"
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
+    "fileAttachmentDownload": "Download attached file",
+    "prevResult": "Previous result",
+    "nextResult": "Next result"
   },
   "annotation": {
-    "areaMeasurement": "Area measurement",
+    "areaMeasurement": "Area",
     "arrow": "Arrow",
     "callout": "Callout",
     "crop": "Crop Page",
     "caret": "Caret",
-    "distanceMeasurement": "Distance measurement",
+    "distanceMeasurement": "Distance",
+    "countMeasurement": "Count measurement",
     "ellipse": "Ellipse",
     "eraser": "Eraser",
-    "fileattachment": "File attachment",
-    "freehand": "Free hand",
-    "freehand2": "Free hand",
-    "freetext": "Free text",
-    "freetext2": "Free text",
+    "fileattachment": "File Attachment",
+    "freehand": "Free Hand",
+    "freetext": "Free Text",
     "highlight": "Highlight",
-    "highlight2": "Highlight",
     "line": "Line",
-    "perimeterMeasurement": "Perimeter measurement",
+    "perimeterMeasurement": "Perimeter",
     "polygon": "Polygon",
     "polygonCloud": "Cloud",
     "polyline": "Polyline",
@@ -99,46 +105,46 @@
     "SBRejected": "Rejected"
   },
   "component": {
-    "freehandToolsButton": "Freehand tools",
     "leftPanel": "Panel",
+    "toolsHeader": "Tools",
     "searchOverlay": "Search",
+    "searchPanel": "Search",
     "menuOverlay": "Menu",
-    "miscToolsButton": "Misc tools",
     "notesPanel": "Notes",
     "outlinesPanel": "Outlines",
     "bookmarksPanel": "Bookmarks",
     "newBookmark": "New Bookmark",
     "bookmarkPage": "Page",
     "layersPanel": "Layers",
-    "shapeToolsButton": "Shape tools",
-    "textToolsButton": "Text tools",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
     "redaction": "Redaction",
-    "viewControlsOverlay": "View controls",
-    "measurementToolsButton": "Measurement tools",
+    "viewControlsOverlay": "View Controls",
     "calibration": "Calibration"
   },
   "message": {
+    "toolsOverlayNoPresets": "No Presets",
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
     "customPrintPlaceholder": "e.g. 3, 4-10",
     "encryptedAttemptsExceeded": "Failed to load encrypted document. Too many attempts.",
     "encryptedUserCancelled": "Failed to load encrypted document. Password entry cancelled.",
     "enterPassword": "This document is password protected. Please enter a password",
     "incorrectPassword": "Incorrect password, attempts left: {{ remainingAttempts }}",
-    "noAnnotations": "This document has no annotations.",
+    "noAnnotations": "Start making annotations to leave a comment.",
     "noOutlines": "This document has no outline.",
     "noResults": "No results found.",
+    "numResultsFound": "results found",
     "notSupported": "That file type is not supported.",
     "passwordRequired": "Password required",
     "preparingToPrint": "Preparing to print...",
     "annotationReplyCount": "{{count}} Reply",
-    "annotationReplyCount_plural" : "{{count}} Replies",
+    "annotationReplyCount_plural": "{{count}} Replies",
     "printTotalPageCount": "Total: {{count}} page",
     "printTotalPageCount_plural": "Total: {{count}} pages",
     "processing": "Processing...",
     "searching": "Searching...",
-    "searchPlaceholder": "Search comments...",
+    "searchCommentsPlaceholder": "Search comments",
+    "searchDocumentPlaceholder": "Search document",
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
     "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
@@ -146,41 +152,52 @@
     "linkURLorPage": "Link URL or a Page"
   },
   "option": {
+    "notesOrder": {
+      "position": "Position",
+      "time": "Time"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "View",
+      "toolbarGroup-Annotate": "Annotate",
+      "toolbarGroup-Shapes": "Shapes",
+      "toolbarGroup-Insert": "Insert",
+      "toolbarGroup-Measure": "Measure",
+      "toolbarGroup-Edit": "Edit"
+    },
     "annotationColor": {
-      "StrokeColor": "Border color",
-      "FillColor": "Fill color",
-      "TextColor": "Text color"
+      "StrokeColor": "Stroke",
+      "FillColor": "Fill",
+      "TextColor": "Text"
     },
     "displayMode": {
-      "layout": "Layout",
-      "pageTransition": "Page transition"
+      "layout": "Page Layout",
+      "pageTransition": "Page Transition"
     },
     "documentControls": {
-      "placeholder": "Enter pages to select i.e. 2, 5-9"
+      "placeholder": "Pages to select i.e. 2, 5-9"
     },
     "layout": {
-      "cover": "Cover",
-      "double": "Double",
-      "single": "Single"
+      "cover": "Cover Facing Page",
+      "double": "Double Page",
+      "single": "Single Page"
     },
     "notesPanel": {
-      "orderPosition": "Position",
-      "orderTime": "Time",
       "separator": {
         "today": "Today",
         "yesterday": "Yesterday"
       }
     },
     "pageTransition": {
-      "continuous": "Continuous",
-      "default": "Page by page"
+      "continuous": "Continuous Page",
+      "default": "Page by Page"
     },
     "print": {
       "all": "All",
       "current": "Current",
-      "pages": "Pages",
+      "pages": "Pages to print",
+      "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
-      "addWatermarkSettings": "Add Watermark Settings"
+      "addWatermarkSettings": "Add Watermark"
     },
     "redaction": {
       "markForRedaction": "Mark for redaction"
@@ -190,14 +207,17 @@
       "wholeWordOnly": "Whole word",
       "wildcard": "Wildcard"
     },
+    "stampOverlay": {
+      "addStamp": "Add New Stamp"
+    },
     "signatureOverlay": {
-      "addSignature": "Add a signature"
+      "addSignature": "Add New Signature"
     },
     "signatureModal": {
       "saveSignature": "Save signature",
       "dragAndDrop": "Drag & Drop your image here",
       "or": "Or",
-      "pickImage": "Pick Signature Image"
+      "pickImage": "Choose a signature"
     },
     "status": {
       "status": "Status"
@@ -220,7 +240,9 @@
       "distanceMeasurement": "Distance Measurement",
       "perimeterMeasurement": "Perimeter Measurement",
       "areaMeasurement": "Area Measurement",
-      "radius": "Radius"
+      "countMeasurement": "Count measurement",
+      "radius": "Radius",
+      "count": "Count"
     },
     "measurementOption": {
       "scale": "Scale"
@@ -232,7 +254,7 @@
     },
     "slider": {
       "opacity": "Opacity",
-      "thickness": "Thickness",
+      "thickness": "Stroke",
       "text": "Text Size"
     },
     "shared": {
@@ -271,7 +293,6 @@
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
     }
   },
-  
   "shortcut": {
     "arrow": "(A)",
     "callout": "(C)",
@@ -291,6 +312,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",
@@ -316,10 +339,39 @@
     "enterpage": "Select the page number you would like to link to"
   },
   "datePicker": {
-    "previousMonth" : "Previous Month",
-    "nextMonth"     : "Next Month",
-    "months"        : ["January","February","March","April","May","June","July","August","September","October","November","December"],
-    "weekdays"      : ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    "weekdaysShort" : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+    "previousMonth": "Previous Month",
+    "nextMonth": "Next Month",
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "weekdays": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "weekdaysShort": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ]
   }
 }

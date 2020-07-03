@@ -2,9 +2,11 @@ import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
+import { shortcutAria } from 'helpers/hotkeysManager';
 
 import selectors from 'selectors';
 
@@ -19,10 +21,10 @@ const propTypes = {
   color: PropTypes.string,
   dataElement: PropTypes.string,
   className: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  /** Will override translated title if both given. */
+  ariaLabel: PropTypes.string,
 };
-
-const NOOP = () => {};
 
 const Button = props => {
   const [removeElement, customOverrides = {}] = useSelector(
@@ -34,44 +36,58 @@ const Button = props => {
   );
 
   const {
-    disable,
+    disabled,
     isActive,
     mediaQueryClassName,
     img,
     label,
     color,
     dataElement,
-    onClick = NOOP,
+    onClick,
     className,
     title,
+    style,
+    ariaLabel,
   } = { ...props, ...customOverrides };
+  const [t] = useTranslation();
+
+  const aLabel = ariaLabel || title ? t(title) : undefined;
+
+  const shortcutKey = title ? title.slice(title.indexOf('.') + 1) : undefined;
+  const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
 
   const isBase64 = img?.trim().startsWith('data:');
+
+  const imgToShow = img;
+
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
     img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
-  const shouldRenderTooltip = title && !disable;
-
+  const shouldRenderTooltip = title;
   const children = (
-    <div
+    <button
       className={classNames({
         Button: true,
         active: isActive,
-        disable,
+        disabled,
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
       })}
+      disabled={disabled}
+      style={style}
       data-element={dataElement}
-      onClick={disable ? NOOP : onClick}
+      onClick={onClick}
+      aria-label={aLabel}
+      aria-keyshortcuts={ariaKeyshortcuts}
     >
-      {isGlyph && <Icon glyph={img} color={color} />}
-      {img && !isGlyph && <img src={img} />}
+      {isGlyph && <Icon glyph={imgToShow} color={color} />}
+      {imgToShow && !isGlyph && <img src={imgToShow} />}
       {label && <p>{label}</p>}
-    </div>
+    </button>
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title}>{children}</Tooltip>
+    <Tooltip content={title} hideShortcut={disabled}>{children}</Tooltip>
   ) : (
     children
   );

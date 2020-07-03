@@ -1,6 +1,20 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
+export const getDefaultStamps = state => state.viewer.defaultStamps;
+export const getSelectedStampIndex = state => state.viewer.selectedStampIndex;
+export const getSelectedStamp = state => getDefaultStamps(state)[getSelectedStampIndex(state)];
+export const getSavedSignatures = state => state.viewer.savedSignatures;
+export const getSelectedSignatureIndex = state => state.viewer.selectedSignatureIndex;
+export const getSelectedSignature = state => getSavedSignatures(state)[getSelectedSignatureIndex(state)];
+
+export const getLeftPanelWidth = state =>
+  state.viewer.panelWidths.leftPanel;
+export const getSearchPanelWidth = state =>
+  state.viewer.panelWidths.searchPanel;
+export const getNotesPanelWidth = state =>
+  state.viewer.panelWidths.notesPanel;
+
 export const isElementDisabled = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.disabled;
 
@@ -19,34 +33,79 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const getActiveHeaderItems = state =>
-  state.viewer.headers[state.viewer.activeHeaderGroup];
+const getToolbarGroupDataElements = state => {
+  return Object.keys(state.viewer.headers)
+    .filter(key => key.includes('toolbarGroup-'));
+};
+
+export const getEnabledToolbarGroups = state => {
+  const toolbarGroupDataElements = getToolbarGroupDataElements(state);
+  return toolbarGroupDataElements.filter(dateElement => {
+    return !isElementDisabled(state, `${dateElement}`);
+  });
+};
+
+export const getCurrentToolbarGroup = state =>
+  state.viewer.toolbarGroup;
+
+export const getActiveTheme = state =>
+  state.viewer.activeTheme;
+
+export const getDefaultHeaderItems = state => {
+  return state.viewer.headers.default;
+};
 
 export const getDisabledElementPriority = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.priority;
 
-export const getToolButtonObjects = state => state.viewer.toolButtonObjects;
+export const getToolsHeaderItems = state => {
+  const toolbarGroup = getCurrentToolbarGroup(state);
+  return state.viewer.headers[toolbarGroup];
+};
 
-export const getToolButtonDataElements = (state, toolNames) =>
-  toolNames
-    .map(toolName => state.viewer.toolButtonObjects[toolName]?.dataElement)
+export const getToolButtonObjects = state => {
+  return state.viewer.toolButtonObjects;
+};
+
+export const getActiveToolNamesForActiveToolGroup = state => {
+  const { activeToolGroup } = state.viewer;
+  const toolButtonObjects = getToolButtonObjects(state);
+  return Object.keys(toolButtonObjects).filter(
+    toolName => {
+      const toolButtonObject = toolButtonObjects[toolName];
+      const { group, dataElement } = toolButtonObject;
+      return group === activeToolGroup && !isElementDisabled(state, dataElement);
+    },
+  );
+};
+
+export const getToolButtonDataElements = (state, toolNames) => {
+  const toolButtonObjects = getToolButtonObjects(state);
+  return toolNames
+    .map(toolName => toolButtonObjects[toolName]?.dataElement)
     .filter(Boolean);
+};
 
 export const getToolButtonObject = (state, toolName) =>
-  state.viewer.toolButtonObjects[toolName];
+  getToolButtonObjects(state)[toolName];
 
 export const getToolButtonDataElement = (state, toolName) =>
-  state.viewer.toolButtonObjects[toolName]?.dataElement;
+  getToolButtonObject(state, toolName)?.dataElement;
 
-export const getToolNamesByGroup = (state, toolGroup) =>
-  Object.keys(state.viewer.toolButtonObjects).filter(
-    name => state.viewer.toolButtonObjects[name].group === toolGroup,
+export const getToolNamesByGroup = (state, toolGroup) => {
+  const toolButtonObjects = getToolButtonObjects(state);
+  return Object.keys(toolButtonObjects).filter(
+    name => toolButtonObjects[name].group === toolGroup,
   );
+};
 
-export const getToolNameByDataElement = (state, dataElement) =>
-  Object.keys(state.viewer.toolButtonObjects).find(
-    name => state.viewer.toolButtonObjects[name].dataElement === dataElement,
+export const getToolNameByDataElement = (state, dataElement) => {
+  const toolButtonObjects = getToolButtonObjects(state);
+  return Object.keys(toolButtonObjects).find(
+    name => toolButtonObjects[name].dataElement === dataElement,
   );
+};
+
 
 export const getActiveToolName = state => state.viewer.activeToolName;
 
@@ -55,8 +114,6 @@ export const getActiveToolStyles = state => state.viewer.activeToolStyles;
 export const getActiveLeftPanel = state => state.viewer.activeLeftPanel;
 
 export const getActiveToolGroup = state => state.viewer.activeToolGroup;
-
-export const getLeftPanelWidth = state => state.viewer.leftPanelWidth;
 
 export const getNotePopupId = state => state.viewer.notePopupId;
 
@@ -144,6 +201,8 @@ export const getIsMultipleViewerMerging = state => state.viewer.isMultipleViewer
 export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
 
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
+
+export const getAnnotationContentOverlayHandler = state => state.viewer.annotationContentOverlayHandler;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';

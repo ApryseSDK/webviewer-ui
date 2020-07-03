@@ -2,6 +2,7 @@
  * Contains string enums for all features for WebViewer UI
  * @name WebViewerInstance#Feature
  * @property {string} Measurement Measurement tools that can create annotations to measure distance, perimeter and area.
+ * @property {string} Ribbons A collection of toolbar groups to switch between.
  * @property {string} Annotations Render annotations in the document and be able to edit them.
  * @property {string} Download A download button to download the current document.
  * @property {string} FilePicker Ctrl/Cmd + O hotkey and a open file button that can be clicked to load local files.
@@ -27,6 +28,7 @@ WebViewer(...)
 
 export default {
   Measurement: 'Measurement',
+  Ribbons: 'Ribbons',
   Annotations: 'Annotations',
   Download: 'Download',
   FilePicker: 'FilePicker',

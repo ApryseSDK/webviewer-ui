@@ -1,0 +1,21 @@
+@import '../../constants/styles';
+
+.selected-signature-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-right: 4px;
+  align-items: center;
+
+  @include mobile {
+    width: auto;
+    padding-left: 0px;
+
+    .add-btn {
+      width: 190px;
+      height: 30px;
+    }
+  }
+}

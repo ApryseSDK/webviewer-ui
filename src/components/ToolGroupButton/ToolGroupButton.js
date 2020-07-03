@@ -4,13 +4,16 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
-import defaultTool from 'constants/defaultTool';
-import { mapToolNameToKey, getDataWithKey } from 'constants/map';
+import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
+
+import './ToolGroupButton.scss';
 
 class ToolGroupButton extends React.PureComponent {
   static propTypes = {
@@ -23,12 +26,14 @@ class ToolGroupButton extends React.PureComponent {
     toolNames: PropTypes.arrayOf(PropTypes.string),
     toolButtonObjects: PropTypes.object,
     allButtonsInGroupDisabled: PropTypes.bool,
+    isToolGroupButtonDisabled: PropTypes.bool,
     openElement: PropTypes.func.isRequired,
     toggleElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
     isActive: PropTypes.bool.isRequired,
     showColor: PropTypes.string,
+    iconColorKey: PropTypes.string,
   };
 
   constructor(props) {
@@ -56,6 +61,10 @@ class ToolGroupButton extends React.PureComponent {
       this.setState({ toolName: this.props.activeToolName });
       this.props.setActiveToolGroup(this.props.toolGroup);
     }
+
+    if (!this.props.isActive) {
+      this.setState({ toolName: this.props.toolNames[0] });
+    }
   }
 
   onClick = () => {
@@ -63,46 +72,26 @@ class ToolGroupButton extends React.PureComponent {
       setActiveToolGroup,
       isActive,
       closeElement,
-      toggleElement,
       openElement,
       toolGroup,
+      savedSignatures,
     } = this.props;
     const { toolName } = this.state;
 
-    setActiveToolGroup(toolGroup);
-    closeElement('toolStylePopup');
-
     if (isActive) {
-      toggleElement('toolsOverlay');
+      closeElement('toolStylePopup');
+      core.setToolMode(defaultTool);
+      setActiveToolGroup('');
     } else {
-      this.setToolMode(toolName);
+      closeElement('toolStylePopup');
+      if (toolGroup === 'signatureTools' || toolGroup === 'rubberStampTools') {
+        core.setToolMode(defaultTool);
+      } else {
+        core.setToolMode(toolName);
+      }
+      setActiveToolGroup(toolGroup);
       openElement('toolsOverlay');
     }
-  };
-
-  setToolMode = toolName => {
-    const { toolGroup } = this.props;
-
-    // This is based on the current design where click on misc tools shouldn't have any tool selected
-    if (toolGroup === 'miscTools') {
-      core.setToolMode(defaultTool);
-    } else {
-      core.setToolMode(toolName);
-    }
-  };
-
-  getColor = () => {
-    const { isActive, showColor } = this.props;
-    const { toolName } = this.state;
-    const { iconColor } = getDataWithKey(mapToolNameToKey(toolName));
-
-    let color = '';
-    if (showColor === 'always' || (showColor === 'active' && isActive)) {
-      const toolStyles = getToolStyles(toolName);
-      color = toolStyles?.[iconColor]?.toHexString?.();
-    }
-
-    return color;
   };
 
   render() {
@@ -111,36 +100,55 @@ class ToolGroupButton extends React.PureComponent {
       dataElement,
       toolButtonObjects,
       isActive,
+      isToolGroupButtonDisabled,
       allButtonsInGroupDisabled,
+      iconColorKey,
+      showColor,
       title,
     } = this.props;
     const { toolName } = this.state;
+    const img = this.props.img
+      ? this.props.img
+      : toolButtonObjects[toolName]?.img;
+    const color =
+      (showColor !== 'never' && isActive) && iconColorKey
+        ? getToolStyles(toolName)[iconColorKey] &&
+          getToolStyles(toolName)[iconColorKey].toHexString()
+        : '';
 
-    return allButtonsInGroupDisabled ? null : (
-      <Button
-        title={title}
+    return (isToolGroupButtonDisabled || allButtonsInGroupDisabled) ? null : (
+      <div
         className={classNames({
-          ToolGroupButton: true,
-          // if it's a misc tool group button or customized tool group button with a predefined image, then we don't want to have the down arrow
-          'down-arrow': !this.props.img,
+          'tool-group-button': true,
+          active: isActive,
         })}
-        mediaQueryClassName={mediaQueryClassName}
-        isActive={isActive}
+        data-element={dataElement}
         onClick={this.onClick}
-        dataElement={dataElement}
-        img={this.props.img || toolButtonObjects[toolName].img}
-        color={this.getColor()}
-      />
+      >
+        <Button
+          title={title}
+          mediaQueryClassName={mediaQueryClassName}
+          isActive={isActive}
+          img={img}
+          color={color}
+        />
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  savedSignatures: selectors.getSavedSignatures(state),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),
   toolNames: selectors.getToolNamesByGroup(state, ownProps.toolGroup),
   toolButtonObjects: selectors.getToolButtonObjects(state),
+  isToolGroupButtonDisabled: selectors.isElementDisabled(state, ownProps.dataElement),
   allButtonsInGroupDisabled: selectors.allButtonsInGroupDisabled(state, ownProps.toolGroup),
+  iconColorKey: selectors.getIconColor(
+    state,
+    mapToolNameToKey(selectors.getActiveToolName(state)),
+  ),
 });
 
 const mapDispatchToProps = {
@@ -150,4 +158,18 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
+const ConnectedToolGroupButton = connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
+
+export default props => {
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedToolGroupButton {...props} isTabletAndMobile={isTabletAndMobile} />
+  );
+};

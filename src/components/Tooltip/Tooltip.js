@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef, useImperativeHandle } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -10,11 +10,13 @@ import './Tooltip.scss';
 const propTypes = {
   children: PropTypes.element.isRequired,
   content: PropTypes.string,
+  hideShortcut: PropTypes.bool,
 };
 
-const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
+const Tooltip = forwardRef( ({ content = '', children, hideShortcut }, ref) => {
   const timeoutRef = useRef(null);
-  const childRef = forwardedRef ? forwardedRef : useRef(null);
+  const childRef = useRef(null);
+  useImperativeHandle(ref, () => childRef.current);
 
   const tooltipRef = useRef(null);
   const [show, setShow] = useState(false);
@@ -134,7 +136,7 @@ const Tooltip = forwardRef( ({ content = '', children }, forwardedRef) => {
           >
             <div className={`tooltip__content`}>
               {translatedContent}
-              {hasShortcut && (
+              {hasShortcut && !hideShortcut && (
                 <span className="tooltip__shortcut">{shortcut}</span>
               )}
             </div>

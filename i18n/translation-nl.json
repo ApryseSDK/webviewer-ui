@@ -6,6 +6,8 @@
     "cancel": "Annuleren",
     "clear": "Legen",
     "close": "Sluiten",
+    "undo": "Ongedaan maken",
+    "redo": "Klaar",
     "comment": "Opmerking",
     "copy": "Kopieer",
     "delete": "Verwijder",
@@ -27,6 +29,7 @@
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
     "save": "Bewaren",
+    "post": "Post",
     "create": "creëren",
     "showMoreResults": "Toon meer resultaten",
     "sign": "Ondertekenen",
@@ -35,11 +38,16 @@
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom uit",
+    "zoomControls": "Zoomregelaars",
     "draw": "Trek",
     "type": "Type",
     "upload": "Uploaden",
     "link": "Koppeling",
-    "fileAttachmentDownload": "Download bijgevoegd bestand"
+    "darkMode": "Donkere modus",
+    "lightMode": "Lichte modus",
+    "fileAttachmentDownload": "Download bijgevoegd bestand",
+    "prevResult": "Vorig resultaat",
+    "nextResult": "Volgend resultaat"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -48,15 +56,13 @@
     "crop": "Pagina bijsnijden",
     "caret": "Dakje",
     "distanceMeasurement": "Afstandsmeting",
+    "countMeasurement": "Tel meting",
     "ellipse": "Ellips",
     "eraser": "Gom",
     "fileattachment": "Bestandsbijlage",
     "freehand": "Vrije hand",
-    "freehand2": "Vrije hand",
     "freetext": "Tekst plaatsen",
-    "freetext2": "Tekst plaatsen",
     "highlight": "Arceren",
-    "highlight2": "Arceren",
     "line": "Lijn",
     "perimeterMeasurement": "Perimeter meting",
     "polygon": "Veelhoek",
@@ -99,27 +105,25 @@
     "SBRejected": "Afgekeurd"
   },
   "component": {
-    "freehandToolsButton": "Vrije hand tools",
     "leftPanel": "Panel",
+    "toolsHeader": "Gereedschap",
     "searchOverlay": "Zoeken",
+    "searchPanel": "Zoeken",
     "menuOverlay": "Menu",
-    "miscToolsButton": "Diverse tools",
     "notesPanel": "Notities",
     "outlinesPanel": "Hoofdlijnen",
     "bookmarksPanel": "bladwijzers",
     "newBookmark": "Nieuwe bladwijzer",
     "bookmarkPage": "Pagina",
     "layersPanel": "Lagen",
-    "shapeToolsButton": "Vorm tools",
-    "textToolsButton": "Tekst tools",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
-    "measurementToolsButton": "Meetinstrumenten",
     "calibration": "ijking"
   },
   "message": {
+    "toolsOverlayNoPresets": "Geen voorinstellingen",
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
     "customPrintPlaceholder": "bijv. 3, 4-10",
     "encryptedAttemptsExceeded": "Fout bij het laden van versleuteld document. Te veel pogingen.",
@@ -129,6 +133,7 @@
     "noAnnotations": "Dit document heeft geen annotaties.",
     "noOutlines": "Dit document heeft geen hoofdlijnen.",
     "noResults": "Geen resultaten.",
+    "numResultsFound": "gevonden resultaten",
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
     "passwordRequired": "Wachtwoord vereist",
     "preparingToPrint": "Printen voorbereiden...",
@@ -138,7 +143,8 @@
     "printTotalPageCount_plural": "{{count}} pagina's",
     "processing": "Bezig...",
     "searching": "Zoeken...",
-    "searchPlaceholder": "Zoek opmerkingen...",
+    "searchCommentsPlaceholder": "Zoek opmerkingen",
+    "searchDocumentPlaceholder": "Document zoeken",
     "signHere": "Teken hier",
     "insertTextHere": "Vul hier tekst in",
     "imageSignatureAcceptedFileTypes": "Alleen {{AcceptFileTypes}} worden geaccepteerd",
@@ -146,6 +152,18 @@
     "linkURLorPage": "Link-URL of een pagina"
   },
   "option": {
+    "notesOrder": {
+      "position": "Positie",
+      "time": "Tijd"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "Visie",
+      "toolbarGroup-Annotate": "Annoteren",
+      "toolbarGroup-Shapes": "Vormen",
+      "toolbarGroup-Insert": "Invoegen",
+      "toolbarGroup-Measure": "Meten",
+      "toolbarGroup-Edit": "Bewerk"
+    },
     "annotationColor": {
       "StrokeColor": "Rand kleur",
       "FillColor": "Vulling kleur",
@@ -164,8 +182,6 @@
       "single": "Enkel"
     },
     "notesPanel": {
-      "orderPosition": "Positie",
-      "orderTime": "Tijd",
       "separator": {
         "today": "Vandaag",
         "yesterday": "Gisteren"
@@ -179,6 +195,7 @@
       "all": "Alles",
       "current": "Huidige",
       "pages": "Pagina's",
+      "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Inclusief commentaar",
       "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
@@ -189,6 +206,9 @@
       "caseSensitive": "Hoofdlettergevoelig",
       "wholeWordOnly": "Hele woorden",
       "wildcard": "wildcard"
+    },
+    "stampOverlay": {
+      "addStamp": "Nieuwe stempel toevoegen"
     },
     "signatureOverlay": {
       "addSignature": "Voeg een handtekening toe"
@@ -220,7 +240,9 @@
       "distanceMeasurement": "Afstands meting",
       "perimeterMeasurement": "Perimeter meting",
       "areaMeasurement": "Gebieds meting",
-      "radius": "Straal"
+      "countMeasurement": "Tel meting",
+      "radius": "Straal",
+      "count": "Tel"
     },
     "measurementOption": {
       "scale": "Schaal"
@@ -250,7 +272,8 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Met de klok mee",
-      "rotateCounterClockwise": "Tegen de klok in"
+      "rotateCounterClockwise": "Tegen de klok in",
+      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om te extraheren"
     },
     "richText": {
       "bold": "Vet",
@@ -289,6 +312,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

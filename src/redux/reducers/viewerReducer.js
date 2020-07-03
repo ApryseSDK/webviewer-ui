@@ -2,6 +2,70 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_CAN_UNDO':
+      return {
+        ...state,
+        canUndo: payload.canUndo,
+      };
+    case 'SET_CAN_REDO':
+      return {
+        ...state,
+        canRedo: payload.canRedo,
+      };
+    case 'SET_TOOLBAR_GROUP':
+      return {
+        ...state,
+        toolbarGroup: payload.toolbarGroup,
+      };
+    case 'SET_SELECTED_STAMP_INDEX':
+      return {
+        ...state,
+        selectedStampIndex: payload.index,
+      };
+    case 'SET_SELECTED_SIGNATURE_INDEX':
+      return {
+        ...state,
+        selectedSignatureIndex: payload.index,
+      };
+    case 'SET_DEFAULT_STAMPS':
+      return {
+        ...state,
+        defaultStamps: payload.defaultStamps,
+      };
+    case 'SET_SAVED_SIGNATURES':
+      return {
+        ...state,
+        savedSignatures: payload.savedSignatures,
+      };
+    case 'SET_LEFT_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          leftPanel: payload.width,
+        }
+      };
+    case 'SET_SEARCH_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          searchPanel: payload.width,
+        }
+      };
+    case 'SET_NOTES_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          notesPanel: payload.width,
+        }
+      };
+    case 'SET_ACTIVE_THEME':
+      return {
+        ...state,
+        activeTheme: payload.theme,
+      };
     case 'DISABLE_ELEMENT':
       return {
         ...state,
@@ -158,8 +222,6 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isMultipleViewerMerging: payload.isMultipleViewerMerging };
     case 'SET_ALLOW_PAGE_NAVIGATION':
       return { ...state, allowPageNavigation: payload.allowPageNavigation };
-    case 'SET_TOOL_BUTTON_OBJECTS':
-      return { ...state, toolButtonObjects: { ...payload.toolButtonObjects } };
     case 'SET_READ_ONLY':
       return { ...state, isReadOnly: payload.isReadOnly };
     case 'SET_CUSTOM_PANEL':
@@ -216,8 +278,6 @@ export default initialState => (state = initialState, action) => {
     case 'SET_MEASUREMENT_UNITS': {
       return { ...state, measurementUnits: payload };
     }
-    case 'SET_LEFT_PANEL_WIDTH':
-      return { ...state, leftPanelWidth: payload.width };
     case 'SET_MAX_SIGNATURES_COUNT':
       return { ...state, maxSignaturesCount: payload.maxSignaturesCount };
     case 'SET_USER_DATA':
@@ -232,6 +292,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
     case 'SET_NOTE_TRANSFORM_FUNCTION':
       return { ...state, noteTransformFunction: payload.noteTransformFunction };
+    case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
+      return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     default:
       return state;
   }

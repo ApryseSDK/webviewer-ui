@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 
 import Icon from 'components/Icon';
@@ -16,13 +17,12 @@ const propTypes = {
   setIsEditing: PropTypes.func.isRequired,
 };
 
-const NotePopup = ({ annotation, setIsEditing }) => {
+const NotePopup = ({ annotation, setIsEditing, noteIndex }) => {
   const [
     notePopupId,
     isDisabled,
     isEditDisabled,
     isDeleteDisabled,
-    isStateDisabled,
   ] = useSelector(
     state => [
       selectors.getNotePopupId(state),
@@ -40,6 +40,11 @@ const NotePopup = ({ annotation, setIsEditing }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const isOpen = notePopupId === annotation.Id;
+  const popupRef = useRef();
+
+  useOnClickOutside(popupRef, () => {
+    closePopup();
+  });
 
   useEffect(() => {
     const onUpdateAnnotationPermission = () => {
@@ -58,7 +63,8 @@ const NotePopup = ({ annotation, setIsEditing }) => {
       );
   }, [annotation]);
 
-  const togglePopup = () => {
+  const togglePopup = e => {
+    e.stopPropagation();
     if (isOpen) {
       closePopup();
     } else {
@@ -76,7 +82,7 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     if (isFreeText) {
       core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
     } else {
-      setIsEditing(true);
+      setIsEditing(true, noteIndex);
     }
   };
 
@@ -84,16 +90,6 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     core.deleteAnnotations([annotation]);
   };
 
-  const handleStateUpdate = state => {
-    const stateModel = 'Review';
-    const stateAnnot = core.updateAnnotationState(annotation, state, stateModel);
-    const author = core.getDisplayAuthor(stateAnnot);
-    const stateMessage = t(`option.state.${state.toLowerCase()}`);
-    const message = `${stateMessage} ${t('option.state.setBy')} ${author}`;
-    core.setNoteContents(stateAnnot, message);
-  };
-
-  const isReply = annotation.isReply();
   const isEditable = !isEditDisabled && canModifyContents;
   const isDeletable = !isDeleteDisabled && canModify;
 
@@ -101,56 +97,23 @@ const NotePopup = ({ annotation, setIsEditing }) => {
     <div
       className="NotePopup"
       data-element="notePopup"
-      onMouseDown={e => e.stopPropagation()}
     >
-      <div className="overflow" onClick={togglePopup}>
-        <Icon glyph="ic_overflow_black_24px" />
+      <div
+        className="overflow"
+        onClick={togglePopup}
+      >
+        <Icon glyph="icon-tools-more" />
       </div>
       {isOpen && (
-        <div className="options" onClick={closePopup}>
+        <div ref={popupRef} className="options" onClick={closePopup}>
           {isEditable && (
-            <div data-element="notePopupEdit" onClick={handleEdit}>
+            <div className="option" data-element="notePopupEdit" onClick={handleEdit}>
               {t('action.edit')}
             </div>
           )}
           {isDeletable && (
-            <div data-element="notePopupDelete" onClick={handleDelete}>
+            <div className="option" data-element="notePopupDelete" onClick={handleDelete}>
               {t('action.delete')}
-            </div>
-          )}
-          {!isStateDisabled && !isReply && (
-            <div data-element="notePopupState">
-              <p data-element="notePopupSetStatus">{t('option.state.set')}</p>
-              <div
-                data-element="notePopupStateAccepted"
-                onClick={() => handleStateUpdate('Accepted')}
-              >
-                {t('option.state.accepted')}
-              </div>
-              <div
-                data-element="notePopupStateRejected"
-                onClick={() => handleStateUpdate('Rejected')}
-              >
-                {t('option.state.rejected')}
-              </div>
-              <div
-                data-element="notePopupStateCancelled"
-                onClick={() => handleStateUpdate('Cancelled')}
-              >
-                {t('option.state.cancelled')}
-              </div>
-              <div
-                data-element="notePopupStateCompleted"
-                onClick={() => handleStateUpdate('Completed')}
-              >
-                {t('option.state.completed')}
-              </div>
-              <div
-                data-element="notePopupStateNone"
-                onClick={() => handleStateUpdate('None')}
-              >
-                {t('option.state.none')}
-              </div>
             </div>
           )}
         </div>

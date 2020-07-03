@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -11,8 +12,14 @@ import touchEventManager from 'helpers/TouchEventManager';
 import getHashParams from 'helpers/getHashParams';
 import setCurrentPage from 'helpers/setCurrentPage';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import MeasurementOverlay from 'components/MeasurementOverlay';
+import PageNavOverlay from 'components/PageNavOverlay';
+import ToolsOverlay from 'components/ToolsOverlay';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
+
+import Measure from 'react-measure';
 
 import './DocumentContainer.scss';
 
@@ -169,10 +176,6 @@ class DocumentContainer extends React.PureComponent {
     core.zoomToMouse(newZoomFactor);
   }
 
-  onTransitionEnd = () => {
-    core.scrollViewUpdated();
-  }
-
   handleScroll = () => {
     this.props.closeElements([
       'annotationPopup',
@@ -182,16 +185,13 @@ class DocumentContainer extends React.PureComponent {
 
   getClassName = props => {
     const {
-      isLeftPanelOpen, isRightPanelOpen, isHeaderOpen, isSearchOverlayOpen,
+      isSearchOverlayOpen,
     } = props;
 
-    return [
-      'DocumentContainer',
-      isLeftPanelOpen ? 'left-panel' : '',
-      isRightPanelOpen ? 'right-panel' : '',
-      isHeaderOpen ? '' : 'no-header',
-      isSearchOverlayOpen ? 'search-overlay' : '',
-    ].join(' ').trim();
+    return classNames({
+      DocumentContainer: true,
+      'search-overlay': isSearchOverlayOpen,
+    });
   }
 
   render() {
@@ -204,16 +204,40 @@ class DocumentContainer extends React.PureComponent {
     }
 
     return (
-      <div className={className} ref={this.container} data-element="documentContainer" onScroll={this.handleScroll} onTransitionEnd={this.onTransitionEnd}>
-        <div className="document" ref={this.document} tabIndex="-1"></div>
-      </div>
+      <Measure
+        onResize={() => {
+          core.setScrollViewElement(this.container.current);
+          core.scrollViewUpdated();
+        }}
+      >
+        {({ measureRef }) => (
+          <div
+            className="measurement-container"
+            ref={measureRef}
+          >
+            <div
+              className={className}
+              ref={this.container}
+              data-element="documentContainer"
+              onScroll={this.handleScroll}
+            >
+              <div className="document" ref={this.document}/>
+            </div>
+            <MeasurementOverlay />
+            <div className="footer">
+              <PageNavOverlay />
+              {this.props.isMobile && <ToolsOverlay />}
+            </div>
+          </div>
+        )}
+      </Measure>
     );
   }
 }
 
 const mapStateToProps = state => ({
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
-  isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
   doesDocumentAutoLoad: selectors.doesDocumentAutoLoad(state),
   zoom: selectors.getZoom(state),
@@ -221,8 +245,6 @@ const mapStateToProps = state => ({
   isHeaderOpen: selectors.isElementOpen(state, 'header') && !selectors.isElementDisabled(state, 'header'),
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
-  // using leftPanelWidth to trigger render
-  leftPanelWidth: selectors.getLeftPanelWidth(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
 });
 
@@ -232,4 +254,19 @@ const mapDispatchToProps = dispatch => ({
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
+const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
+
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedDocumentContainer {...props} isMobile={isMobile} />
+  );
+};

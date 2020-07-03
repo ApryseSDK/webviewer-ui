@@ -6,6 +6,8 @@
     "cancel": "キャンセル",
     "clear": "クリア",
     "close": "閉じる",
+    "undo": "元に戻す",
+    "redo": "準備ができて",
     "comment": "コメント",
     "copy": "コピー",
     "delete": "削除",
@@ -27,6 +29,7 @@
     "rotateClockwise": "時計回り",
     "rotateCounterClockwise": "反時計回り",
     "save": "保存",
+    "post": "役職",
     "create": "作成",
     "showMoreResults": "より多くの結果を表示",
     "sign": "署名",
@@ -35,11 +38,16 @@
     "zoom": "ズーム",
     "zoomIn": "ズームイン",
     "zoomOut": "ズームアウト",
+    "zoomControls": "ズームコントロール",
     "draw": "ドロー",
     "type": "タイプ",
     "upload": "アップロードする",
     "link": "リンク",
-    "fileAttachmentDownload": "添付ファイルをダウンロード"
+    "darkMode": "ダークモード",
+    "lightMode": "ライトモード",
+    "fileAttachmentDownload": "添付ファイルをダウンロード",
+    "prevResult": "前の結果",
+    "nextResult": "次の結果"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -48,15 +56,13 @@
     "crop": "切り抜きページ",
     "caret": "キャレット",
     "distanceMeasurement": "距離測定",
+    "countMeasurement": "カウント測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
     "fileattachment": "添付ファイル",
     "freehand": "フリーハンド",
-    "freehand2": "フリーハンド",
     "freetext": "フリーテキスト",
-    "freetext2": "フリーテキスト",
     "highlight": "ハイライト",
-    "highlight2": "ハイライト",
     "line": "線",
     "perimeterMeasurement": "境界測定",
     "polygon": "ポリゴン",
@@ -99,27 +105,25 @@
     "SBRejected": "拒否されました"
   },
   "component": {
-    "freehandToolsButton": "フリーハンド ツール",
     "leftPanel": "パネル",
+    "toolsHeader": "道具",
     "searchOverlay": "検索",
+    "searchPanel": "探す",
     "menuOverlay": "メニュー",
-    "miscToolsButton": "その他のツール",
     "notesPanel": "備考",
     "outlinesPanel": "概要",
     "bookmarksPanel": "しおり",
     "newBookmark": "新しいブックマーク",
     "bookmarkPage": "ページ",
     "layersPanel": "レイヤー",
-    "shapeToolsButton": "シェイプ ツール",
-    "textToolsButton": "テキスト ツール",
     "thumbnailsPanel": "サムネイル",
     "toolsButton": "ツール",
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
-    "measurementToolsButton": "測定ツール",
     "calibration": "較正"
   },
   "message": {
+    "toolsOverlayNoPresets": "プリセットなし",
     "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
     "customPrintPlaceholder": "例：3, 4-10",
     "encryptedAttemptsExceeded": "暗号化されたドキュメントを読み込めませんでした。試行回数が多すぎます。",
@@ -129,6 +133,7 @@
     "noAnnotations": "このドキュメントには注釈がありません。",
     "noOutlines": "このドキュメントには概要がありません。",
     "noResults": "結果が見つかりませんでした。",
+    "numResultsFound": "結果が見つかりました",
     "notSupported": "このファイルの種類はサポートされていません。",
     "passwordRequired": "パスワードが必要です",
     "preparingToPrint": "印刷の準備をしています...",
@@ -138,7 +143,8 @@
     "printTotalPageCount_plural": "{{count}} ページ",
     "processing": "処理中...",
     "searching": "検索中...",
-    "searchPlaceholder": "コメントを検索...",
+    "searchCommentsPlaceholder": "コメントを検索",
+    "searchDocumentPlaceholder": "ドキュメントを検索",
     "signHere": "ここに署名",
     "insertTextHere": "ここにテキストを挿入",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが受け入れられます",
@@ -146,6 +152,18 @@
     "linkURLorPage": "リンクURLまたはページ"
   },
   "option": {
+    "notesOrder": {
+      "position": "ポジション",
+      "time": "時間"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "見る",
+      "toolbarGroup-Annotate": "注釈を付ける",
+      "toolbarGroup-Shapes": "形",
+      "toolbarGroup-Insert": "インサート",
+      "toolbarGroup-Measure": "測る",
+      "toolbarGroup-Edit": "編集する"
+    },
     "annotationColor": {
       "StrokeColor": "罫線の色",
       "FillColor": "塗りつぶしの色",
@@ -164,8 +182,6 @@
       "single": "シングル"
     },
     "notesPanel": {
-      "orderPosition": "位置",
-      "orderTime": "時間",
       "separator": {
         "today": "今日",
         "yesterday": "昨日"
@@ -179,6 +195,7 @@
       "all": "すべて",
       "current": "現在の",
       "pages": "ページ",
+      "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
       "addWatermarkSettings": "透かし設定を追加"
     },
@@ -189,6 +206,9 @@
       "caseSensitive": "大文字と小文字を区別",
       "wholeWordOnly": "単語全体",
       "wildcard": "ワイルドカード"
+    },
+    "stampOverlay": {
+      "addStamp": "新しいスタンプを追加"
     },
     "signatureOverlay": {
       "addSignature": "署名を追加"
@@ -220,7 +240,9 @@
       "distanceMeasurement": "距離測定",
       "perimeterMeasurement": "境界測定",
       "areaMeasurement": "面積測定",
-      "radius": "半径"
+      "countMeasurement": "カウント測定",
+      "radius": "半径",
+      "count": "カウント"
     },
     "measurementOption": {
       "scale": "スケール"
@@ -250,7 +272,8 @@
     "thumbnailPanel": {
       "delete": "削除する",
       "rotateClockwise": "時計回り",
-      "rotateCounterClockwise": "反時計回り"
+      "rotateCounterClockwise": "反時計回り",
+      "extractZeroPageError": "抽出するページが選択されていません"
     },
     "richText": {
       "bold": "太字",
@@ -289,6 +312,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "（Ctrl Shift Z）",
+    "undo": "（Ctrl Z）",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

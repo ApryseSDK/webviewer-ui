@@ -13,22 +13,48 @@ import disableTools from 'src/apis/disableTools';
 export default (enable, store) => features => {
   // map a feature to the dataElements that should be enabled/disabled and the function to run
   const map = {
+    [Feature.Ribbons]: {
+      dataElements: [
+        'ribbons',
+      ],
+    },
+    [Feature.Annotating]: {
+      dataElements: [
+        'toolsHeader',
+        'toggleToolsButton',
+        'annotationPopup',
+        'linkButton',
+      ],
+      fn: () => {
+        if (enable) {
+          store.dispatch(actions.enableRibbons());
+        } else {
+          store.dispatch(actions.setReadOnlyRibbons());
+        }
+      },
+    },
     [Feature.Measurement]: {
       dataElements: [
-        'measurementToolGroupButton',
+        "toolbarGroup-Measure",
         'measurementOverlay',
-        'distanceMeasurementToolButton',
-        'perimeterMeasurementToolButton',
-        'areaMeasurementToolButton',
-        'ellipseMeasurementToolButton',
+        'distanceToolGroupButton',
+        'perimeterToolGroupButton',
+        'areaToolGroupButton',
+        'rectangleAreaToolGroupButton',
+        'ellipseAreaToolGroupButton',
+        'countToolGroupButton'
       ],
     },
     [Feature.Annotations]: {
       dataElements: [
+        'ribbons',
         'notesPanel',
-        'notesPanelButton',
+        'toggleNotesButton',
+        'toggleToolsButton',
         'toolsButton',
         'linkButton',
+        'toolsHeader',
+        'toolsOverlay',
       ],
       fn: () => {
         if (enable) {
@@ -67,6 +93,7 @@ export default (enable, store) => features => {
         'annotationCommentButton',
         'notesPanelButton',
         'notesPanel',
+        'toggleNotesButton',
       ],
     },
     [Feature.Print]: {

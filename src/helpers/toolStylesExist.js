@@ -3,7 +3,7 @@ import core from 'core';
 export default toolName => {
   // we don't want to show the style popup for this tool
   // TODO: there might be a better way to handle this. We can potentially have an API for hiding style popup for certain tools
-  if (toolName === 'CropPage' || toolName === 'AnnotationCreateRubberStamp') {
+  if (toolName === 'CropPage') {
     return false;
   }
 

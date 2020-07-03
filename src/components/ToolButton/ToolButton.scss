@@ -1,24 +1,67 @@
 @import '../../constants/styles';
 
-.ToolButton {
-  &.hasStyles.active {
-    &:after {
-      position: absolute;
-      right: 0;
-      bottom: 0;
+.tool-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 26px;
+  margin: 0 6px;
 
-      display: block;
-      content: '';
-      width: 0;
-      height: 0;
-      border-left: 8px solid transparent;
-      border-bottom: 8px solid  #757575;
-      border-bottom: 8px solid var(--icon-color);
+  @include mobile {
+    margin: 0 10px;
+  }
 
-      @include mobile {
-        border-left: 8px solid transparent;
-        border-bottom: 8px solid  #757575;
-        border-bottom: 8px solid var(--icon-color);
+  .tool-button-arrow-container {
+    width: 13px;
+    height: 100%;
+    margin-right: 2px;
+
+    .tool-button-arrow-inner-container {
+      font-size: 13px; // chevron position depends on font-size. mobile changes it to 16.
+      display: flex;
+      align-items: center;
+      height: 100%;
+      cursor: pointer;
+
+      .tool-button-arrow-down, .tool-button-arrow-up {
+        width: 13px;
+        height: 13px;
+      }
+
+      .tool-button-arrow-up {
+        margin-top: -1px;
+      }
+    }
+  }
+
+  .tool-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 4px;
+    margin-right: 1px;
+
+    &.Button {
+      width: 26px;
+      height: 26px;
+
+      &:hover {
+        background: var(--tools-overlay-button-hover);
+      }
+      &.active {
+        background: var(--tools-overlay-button-active);
+      }
+    }
+
+    &.active {
+      background: var(--tools-overlay-button-active);
+
+      .Icon {
+        color: var(--selected-icon-color);
+      }
+
+      div:hover {
+        background: none;
       }
     }
   }

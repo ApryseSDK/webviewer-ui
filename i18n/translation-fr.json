@@ -6,6 +6,8 @@
     "cancel": "Annuler",
     "clear": "Effacer",
     "close": "Fermer",
+    "undo": "annuler",
+    "redo": "Prêt",
     "comment": "Commenter",
     "copy": "Copier",
     "delete": "Supprimer",
@@ -27,6 +29,7 @@
     "rotateClockwise": "Tourner horaire",
     "rotateCounterClockwise": "Tourner antihoraire",
     "save": "Enregistrer",
+    "post": "Publier",
     "create": "Créer",
     "showMoreResults": "Montrer plus de résultats",
     "sign": "Signer",
@@ -35,11 +38,16 @@
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
     "zoomOut": "Dézoomer",
+    "zoomControls": "Commandes de zoom",
     "draw": "Dessiner",
     "type": "Type",
     "upload": "Télécharger",
     "link": "Lien",
-    "fileAttachmentDownload": "Télécharger le fichier joint"
+    "darkMode": "Mode sombre",
+    "lightMode": "Mode lumière",
+    "fileAttachmentDownload": "Télécharger le fichier joint",
+    "prevResult": "Résultat précédent",
+    "nextResult": "Résultat suivant"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -48,15 +56,13 @@
     "crop": "Page de recadrage",
     "caret": "Caret",
     "distanceMeasurement": "Mesure de distance",
+    "countMeasurement": "Mesure de comptage",
     "ellipse": "Ellipse",
     "eraser": "La gomme",
     "fileattachment": "Pièce jointe",
     "freehand": "Stylo",
-    "freehand2": "Stylo",
     "freetext": "Texte libre",
-    "freetext2": "Texte libre",
     "highlight": "Surligne",
-    "highlight2": "Surligne",
     "line": "Ligne",
     "perimeterMeasurement": "Périmètre mesure",
     "polygon": "Polygone",
@@ -99,27 +105,25 @@
     "SBRejected": "Rejeté"
   },
   "component": {
-    "freehandToolsButton": "Outils de stylo",
     "leftPanel": "Panneau de gauche",
+    "toolsHeader": "Outils",
     "searchOverlay": "Recherche",
+    "searchPanel": "Chercher",
     "menuOverlay": "Menu",
-    "miscToolsButton": "Outils divers",
     "notesPanel": "Remarques",
     "outlinesPanel": "Contour",
     "bookmarksPanel": "Signets",
     "newBookmark": "Nouveau signet",
     "bookmarkPage": "Page",
     "layersPanel": "Couches",
-    "shapeToolsButton": "Outils de forme",
-    "textToolsButton": "Outils de texte",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
-    "measurementToolsButton": "Outils de mesure",
     "calibration": "Étalonnage"
   },
   "message": {
+    "toolsOverlayNoPresets": "Aucun préréglage",
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
     "customPrintPlaceholder": "par ex. : 3 4-10",
     "encryptedAttemptsExceeded": "Échec du chargement du document chiffré. Trop de tentatives.",
@@ -129,6 +133,7 @@
     "noAnnotations": "Ce document n'a pas d'annotations.",
     "noOutlines": "Ce document n'a pas de plan.",
     "noResults": "Aucun résultat trouvé.",
+    "numResultsFound": "résultats trouvés",
     "notSupported": "Ce type de fichier n'est pas pris en charge.",
     "passwordRequired": "Mot de passe requis",
     "preparingToPrint": "Préparation à l'impression...",
@@ -138,7 +143,8 @@
     "printTotalPageCount_plural": "{{count}} pages",
     "processing": "Traitement...",
     "searching": "Recherche...",
-    "searchPlaceholder": "Rechercher des commentaires ici...",
+    "searchCommentsPlaceholder": "Rechercher des commentaires",
+    "searchDocumentPlaceholder": "Rechercher un document",
     "signHere": "Signer ici",
     "insertTextHere": "Insérer du texte ici",
     "imageSignatureAcceptedFileTypes": "Seuls {{acceptedFileTypes}} sont acceptés",
@@ -146,6 +152,18 @@
     "linkURLorPage": "Lien URL ou une page"
   },
   "option": {
+    "notesOrder": {
+      "position": "Position",
+      "time": "Temps"
+    },
+    "toolbarGroup": {
+      "toolbarGroup-View": "Vue",
+      "toolbarGroup-Annotate": "Annoter",
+      "toolbarGroup-Shapes": "Formes",
+      "toolbarGroup-Insert": "Insérer",
+      "toolbarGroup-Measure": "Mesure",
+      "toolbarGroup-Edit": "Éditer"
+    },
     "annotationColor": {
       "StrokeColor": "Couleur de bordure",
       "FillColor": "Couleur de remplissage",
@@ -164,8 +182,6 @@
       "single": "Une"
     },
     "notesPanel": {
-      "orderPosition": "Position",
-      "orderTime": "Heure",
       "separator": {
         "today": "Aujourd'hui",
         "yesterday": "Hier"
@@ -179,6 +195,7 @@
       "all": "Toutes",
       "current": "Actuelle",
       "pages": "Pages",
+      "includeAnnotations": "Inclure des annotations",
       "includeComments": "Inclure les commentaires",
       "addWatermarkSettings": "Ajouter des paramètres de filigrane"
     },
@@ -189,6 +206,9 @@
       "caseSensitive": "Sensible à la casse",
       "wholeWordOnly": "Mot complet",
       "wildcard": "Caractère générique"
+    },
+    "stampOverlay": {
+      "addStamp": "Ajouter un nouveau tampon"
     },
     "signatureOverlay": {
       "addSignature": "Ajouter une signature"
@@ -220,7 +240,9 @@
       "distanceMeasurement": "Mesure de distance",
       "perimeterMeasurement": "Mesure du périmètre",
       "areaMeasurement": "Mesure du surface",
-      "radius": "Rayon"
+      "countMeasurement": "Mesure de comptage",
+      "radius": "Rayon",
+      "count": "Compter"
     },
     "measurementOption": {
       "scale": "Échelle"
@@ -250,7 +272,8 @@
     "thumbnailPanel": {
       "delete": "Supprimer",
       "rotateClockwise": "Dans le sens horaire",
-      "rotateCounterClockwise": "Dans le sens antihoraire"
+      "rotateCounterClockwise": "Dans le sens antihoraire",
+      "extractZeroPageError": "Aucune page n'a été sélectionnée pour l'extraction"
     },
     "richText": {
       "bold": "Audacieux",
@@ -289,6 +312,8 @@
     "signature": "(S)",
     "squiggly": "(G)",
     "stamp": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",

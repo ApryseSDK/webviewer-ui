@@ -2,44 +2,76 @@
 @import '../../constants/overlay';
 
 .PageNavOverlay {
-  @extend %overlay;
-  bottom: 10px;
-  left: 10px;
-  padding: 10px;
-  font-size: 16px;
+  height: 32px;
+  @include mobile {
+    height: 36px;
+  }
+  font-family: 'Lato';
+  font-weight: bold;
+  color: var(--text-color);
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
 
-  @include mobile {
-    bottom: 8px;
-    left: 8px;
-    padding: 8px;
-    font-size: 14px;
-    z-index: 50;
-  }
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  background: var(--component-background);
+  border-radius: 4px;
+  box-shadow: 0px 0px 3px 0px var(--box-shadow);
+  z-index: 0;
+  bottom: 20px;
 
-  &.open {
-    transition: opacity .3s ease, transform .3s ease, font-size .3s ease, padding .3s ease;
-  }
 
-  &.shifted {
-    transform: translateX($left-panel-width);
-
+  .side-arrow-container {
+    @include button-reset;
+    width: 24px;
+    height: 24px;
     @include mobile {
-      transform: none;
+      width: 40px;
+      height: 28px;
+    }
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+
+    &:hover {
+      background: var(--view-header-button-hover);
+    }
+
+    .side-arrow {
+      width: 16px;
+      height: 16px;
     }
   }
 
-  input {
-    padding: 0;
-    border: none;
-    text-align: right;
-    font-size: 16px;
-    background: transparent;
-    color: var(--text-color);
-    cursor: pointer;
+  .formContainer {
+    height: 100%;
+    display: flex;
+    align-items: center;
 
-    @include mobile {
-      font-size: 14px;
+    form {
+      top: -1px;
+      position: relative;
+      input {
+        min-width: 8px;
+        padding: 0;
+        border: none;
+        text-align: right;
+        font-family: 'Lato';
+        font-weight: bold;
+        background: transparent;
+        color: var(--text-color);
+        cursor: pointer;
+        outline: none;
+        border-bottom: 1px solid var(--icon-color);
+        border-radius: 0px;
+      }
     }
   }
 }

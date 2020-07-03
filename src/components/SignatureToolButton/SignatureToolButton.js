@@ -3,14 +3,18 @@ import classNames from 'classnames';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Button from 'components/Button';
+import defaultTool from 'constants/defaultTool';
+import '../ToolGroupButton/ToolGroupButton.scss';
 
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 
 const SignatureToolButton = () => {
-  const [isSignatureModalOpen, isSignatureOverlayOpen] = useSelector(
+  const [isActive, isSignatureModalOpen, isSignatureOverlayOpen] = useSelector(
     state => [
+      selectors.getActiveToolName(state) === 'AnnotationCreateSignature',
       selectors.isElementOpen(state, 'signatureModal'),
       selectors.isElementOpen(state, 'signatureOverlay'),
     ],
@@ -18,6 +22,14 @@ const SignatureToolButton = () => {
   );
   const dispatch = useDispatch();
   const [hasSavedSignature, setHasSavedSignature] = useState(false);
+
+  const isTabletAndMobile = useMedia(
+    // Media queries
+    ['(max-width: 900px)'],
+    [true],
+    // Default value
+    false,
+  );
 
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -34,25 +46,33 @@ const SignatureToolButton = () => {
   }, []);
 
   const handleClick = () => {
-    if (hasSavedSignature) {
-      dispatch(actions.toggleElement('signatureOverlay'));
+    if (isActive) {
+      core.setToolMode(defaultTool);
+      dispatch(actions.closeElement('signatureOverlay'));
     } else {
-      dispatch(actions.openElement('signatureModal'));
+      core.setToolMode('AnnotationCreateSignature');
+      // if (isTabletAndMobile) {
+        dispatch(actions.setActiveToolGroup(''));
+      // }
+      dispatch(actions.openElement('signatureOverlay'));
     }
   };
 
-  const buttonClass = classNames({
-    'down-arrow': hasSavedSignature,
-  });
-
   return (
-    <Button
-      className={buttonClass}
-      isActive={isSignatureModalOpen || isSignatureOverlayOpen}
-      img="ic_annotation_signature_black_24px"
+    <div
+      className={classNames({
+        'tool-group-button': true,
+        active: isActive,
+        signature: true,
+      })}
+      data-element="signatureToolButton"
       onClick={handleClick}
-      title="annotation.signature"
-    />
+    >
+      <Button
+        img="icon-tool-signature"
+        title="annotation.signature"
+      />
+    </div>
   );
 };
 
