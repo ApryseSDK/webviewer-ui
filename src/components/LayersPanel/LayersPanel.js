@@ -28,11 +28,11 @@ class LayersPanel extends React.PureComponent {
     }
   }
   componentDidMount() {
-    core.addEventListener('layersUpdated', this.onLayersUpdated);
+    core.getDocument().on('layersUpdated', this.onLayersUpdated);
   }
 
   componentWillUnmount() {
-    core.removeEventListener('layersUpdated', this.onLayersUpdated);
+    core.getDocument().off('layersUpdated', this.onLayersUpdated);
   }
 
   onLayersUpdated = () => {
