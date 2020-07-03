@@ -25,7 +25,7 @@
     flex-wrap: wrap;
     flex-flow: row wrap;
     align-content: flex-start;
-    height: 300px;
+    max-height: 300px;
     overflow-y: scroll;
   }
   .standard-stamp-panel {
