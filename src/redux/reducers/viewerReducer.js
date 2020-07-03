@@ -32,10 +32,10 @@ export default initialState => (state = initialState, action) => {
         ...state,
         standardStamps: payload.standardStamps,
       };
-    case 'SET_DYNAMIC_STAMPS':
+    case 'SET_CUSTOM_STAMPS':
       return {
         ...state,
-        dynamicStamps: payload.dynamicStamps,
+        customStamps: payload.customStamps,
       };
     case 'SET_SAVED_SIGNATURES':
       return {

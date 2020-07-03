@@ -2,16 +2,16 @@ import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
 export const getStandardStamps = state => state.viewer.standardStamps;
-export const getCustomStamps = state => state.viewer.dynamicStamps;
+export const getCustomStamps = state => state.viewer.customStamps;
 export const getSelectedStampIndex = state => state.viewer.selectedStampIndex;
 export const getSelectedStamp = state => {
   const standardStamps = getStandardStamps(state);
-  const dynamicStamps = getCustomStamps(state);
+  const customStamps = getCustomStamps(state);
   const index = getSelectedStampIndex(state);
   let selectedStamp = standardStamps[index];
   // selected stamp is not found in standard stamps, search dyamic stamps
   if (!selectedStamp && standardStamps.length) {
-    selectedStamp = dynamicStamps[index - standardStamps.length];
+    selectedStamp = customStamps[index - standardStamps.length];
   }
   return selectedStamp;
 };

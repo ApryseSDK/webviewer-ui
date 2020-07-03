@@ -12,7 +12,7 @@
     margin-right: 0px;
     padding-top: 12px;
   }
-  .dynamic-stamp-panel {
+  .custom-stamp-panel {
     height: 270px;
     overflow: auto;
     margin-bottom: 8px;
@@ -34,7 +34,7 @@
       width: 300px;
     }
   }
-  .dynamic-stamp-panel {
+  .custom-stamp-panel {
     @include mobile {
       height: 188px;
     }
@@ -169,7 +169,7 @@
   }
 
 
-  .add-dynamic-stamp-button {
+  .add-custom-stamp-button {
     border: 1px solid var(--icon-color);
     color: var(--text-color);
     display: flex;

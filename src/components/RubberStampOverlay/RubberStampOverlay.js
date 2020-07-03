@@ -19,7 +19,7 @@ const TOOL_NAME = 'AnnotationCreateRubberStamp';
 
 const propTypes = {
   standardStamps: PropTypes.array.isRequired,
-  dynamicStamps: PropTypes.array.isRequired,
+  customStamps: PropTypes.array.isRequired,
   setSelectedStampIndex: PropTypes.func.isRequired,
 };
 
@@ -58,14 +58,14 @@ class RubberStampOverlay extends React.Component {
     openElement('customStampModal');
   }
 
-  deleteDynamicStamp = index => {
+  deleteCustomStamp = index => {
     const stamps = this.stampTool.getCustomStamps();
     stamps.splice(index, 1);
     this.stampTool.setCustomStamps(stamps);
   }
 
   render() {
-    const { isMobile, standardStamps, dynamicStamps } = this.props;
+    const { isMobile, standardStamps, customStamps } = this.props;
 
     const rubberStamps = standardStamps.map(({ imgSrc, annotation }, index) =>
       <div key={index} className="rubber-stamp" onClick={() => this.setRubberStamp(annotation, index)}>
@@ -73,12 +73,12 @@ class RubberStampOverlay extends React.Component {
       </div>,
     );
 
-    const customImgs = dynamicStamps.map(({ imgSrc, annotation }, index) =>
+    const customImgs = customStamps.map(({ imgSrc, annotation }, index) =>
       <div key={index}  className="stamp-row">
         <div className="stamp-row-content" onClick={() => this.setRubberStamp(annotation, standardStamps.length + index)}>
           <img src={imgSrc} alt=""/>
         </div>
-        <div className="icon" onClick={() => this.deleteDynamicStamp(index)}>
+        <div className="icon" onClick={() => this.deleteCustomStamp(index)}>
           <Icon glyph="icon-delete-line"/>
         </div>
       </div>,
@@ -98,7 +98,7 @@ class RubberStampOverlay extends React.Component {
                 </div>
               </Tab>
               <div className="tab-options-divider" />
-              <Tab dataElement="dynamicStampPanelButton">
+              <Tab dataElement="customStampPanelButton">
                 <div className="tab-options-button">
                   {this.props.t(`tool.Custom`)}
                 </div>
@@ -111,8 +111,8 @@ class RubberStampOverlay extends React.Component {
               { rubberStamps }
             </div>
           </TabPanel>
-          <TabPanel dataElement="dynamicStampPanel">
-            <div className="dynamic-stamp-panel">
+          <TabPanel dataElement="customStampPanel">
+            <div className="custom-stamp-panel">
               { customImgs }
             </div>
             <div className={classNames({
@@ -137,7 +137,7 @@ const mapStateToProps = state => ({
   isActive: selectors.getActiveToolName(state) === TOOL_NAME,
   dataElement: selectors.getToolButtonObjects(state)[TOOL_NAME].dataElement,
   standardStamps: selectors.getStandardStamps(state),
-  dynamicStamps: selectors.getCustomStamps(state),
+  customStamps: selectors.getCustomStamps(state),
 });
 
 const mapDispatchToProps = {

@@ -32,7 +32,7 @@ const CustomStampModal = () => {
     closed: !isOpen,
   });
 
-  const createDynamicStamp = () => {
+  const createCustomStamp = () => {
     core.setToolMode(TOOL_NAME);
     stampTool.addCustomStamp(state);
     const annot = stampTool.createCustomStampAnnotation(state);
@@ -40,8 +40,8 @@ const CustomStampModal = () => {
     stampTool.showPreview();
     dispatch(actions.closeElement('customStampModal'));
     const standardStampCount = stampTool.getStandardStamps().length;
-    const dynamicStampCount = stampTool.getCustomStamps().length;
-    dispatch(actions.setSelectedStampIndex(standardStampCount + dynamicStampCount - 1));
+    const customStampCount = stampTool.getCustomStamps().length;
+    dispatch(actions.setSelectedStampIndex(standardStampCount + customStampCount - 1));
   };
 
   return (
@@ -66,7 +66,7 @@ const CustomStampModal = () => {
           state={state}
           setState={setState}
           closeModal={closeModal}
-          createDynamicStamp={createDynamicStamp}
+          createCustomStamp={createCustomStamp}
         />
       </div>
     </div>

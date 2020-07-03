@@ -410,7 +410,7 @@ export default {
     customMeasurementOverlay: [],
     noteTransformFunction: null,
     standardStamps: [],
-    dynamicStamps: [],
+    customStamps: [],
     selectedStampIndex: 0,
     savedSignatures: [],
     selectedSignatureIndex: 0,

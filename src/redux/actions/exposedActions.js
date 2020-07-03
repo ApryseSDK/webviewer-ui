@@ -67,14 +67,14 @@ export const setCustomStamps = t => async dispatch => {
     }),
   );
 
-  const dynamicStamps = annotations.map(annotation => ({
+  const customStamps = annotations.map(annotation => ({
     annotation,
     imgSrc: annotation['ImageData'],
   }));
 
   dispatch({
-    type: 'SET_DYNAMIC_STAMPS',
-    payload: { dynamicStamps },
+    type: 'SET_CUSTOM_STAMPS',
+    payload: { customStamps },
   });
 };
 

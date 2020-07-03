@@ -10,11 +10,11 @@ const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const COLOR_CHOICES = window.Tools.RubberStampCreateTool['FILL_COLORS'];
 const DEFAULT_COLOR =  new window.Annotations.Color(COLOR_CHOICES[0]);
 
-const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) => {
+const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) => {
   const updateTimestampLabel = (usernameChk, dateChk, timeChk) => {
     let tmpText = '';
     if (usernameChk) {
-      tmpText += '[$currentUser], ';
+      tmpText += '[$currentUser] ';
     }
     if (dateChk) {
       tmpText += 'DD/MM/YYYY ';
@@ -157,7 +157,7 @@ const CustomStampForums = ({ state, setState, closeModal, createDynamicStamp }) 
           onStyleChange={handleColorInputChange}
           overridePalette2={COLOR_CHOICES}
         />
-        <div className="stamp-create" onClick={createDynamicStamp}>
+        <div className="stamp-create" onClick={createCustomStamp}>
           {t('action.create')}
         </div>
       </div>
