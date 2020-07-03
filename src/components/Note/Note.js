@@ -123,7 +123,8 @@ const Note = ({ annotation }) => {
   );
 
   return (
-    <button ref={containerRef} className={noteClass} onClick={handleNoteClick} onKeyDown={handleNoteKeydown}>
+    // need tabIndex so that div can be tabbed to
+    <div tabIndex='0' ref={containerRef} className={noteClass} onClick={handleNoteClick} onKeyDown={handleNoteKeydown}>
       <NoteContent
         noteIndex={0}
         annotation={annotation}
@@ -148,7 +149,7 @@ const Note = ({ annotation }) => {
           </div>
         </React.Fragment>
       )}
-    </button>
+    </div>
   );
 };
 
