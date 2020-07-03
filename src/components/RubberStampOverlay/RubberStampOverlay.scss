@@ -93,8 +93,11 @@
       max-width: 100%;
       max-height: 100%;
     }
-    &:hover {
-      background: var(--popup-button-hover);
+
+    &:not(.add-btn) {
+      &:hover {
+        background: var(--popup-button-hover);
+      }
     }
     &.interactable {
       &:hover {
@@ -165,33 +168,6 @@
     .tab-options-divider {
       width: 1px;
       background: var(--divider);
-    }
-  }
-
-
-  .add-custom-stamp-button {
-    border: 1px solid var(--icon-color);
-    color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 32px;
-    width: 196px;
-    border-radius: 4px 4px 4px 4px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 10px;
-
-    &.disabled {
-      border: 1px solid #E1E1E3;
-      color: #E1E1E3;
-      cursor: default;
-    }
-
-    &.enabled:hover {
-      background: #17324C;
-      border: 1px solid #17324C;
-      color: #FFFFFF;
     }
   }
 }
