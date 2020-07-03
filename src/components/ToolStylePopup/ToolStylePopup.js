@@ -152,6 +152,7 @@ const mapStateToProps = state => {
     activeToolStyle: selectors.getActiveToolStyles(state),
     isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
     isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
+    toolButtonObjects: selectors.getToolButtonObjects(state),
   };
 };
 

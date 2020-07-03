@@ -120,7 +120,8 @@
     "toolsButton": "Utensili",
     "redaction": "redazione",
     "viewControlsOverlay": "Visualizza i controlli",
-    "calibration": "Calibrazione"
+    "calibration": "Calibrazione",
+    "createStampButton": "Crea nuovo timbro"
   },
   "message": {
     "toolsOverlayNoPresets": "Nessun preset",
@@ -280,6 +281,14 @@
       "italic": "Corsivo",
       "underline": "Sottolineato",
       "strikeout": "Barrato"
+    },
+    "customStampModal": {
+      "stampText": "Testo del timbro:",
+      "timestampText": "Testo data / ora:",
+      "stampColor": "Colore del timbro:",
+      "Username": "Nome utente",
+      "Date": "Data",
+      "Time": "Tempo"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "Padella",
     "select": "Selezionare",
     "Marquee": "Zoom tendone",
-    "Link": "Link URL o Pagina"
+    "Link": "Link URL o Pagina",
+    "Standard": "Standard",
+    "Custom": "costume"
   },
   "link": {
     "url": "URL",

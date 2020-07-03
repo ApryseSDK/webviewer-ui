@@ -120,12 +120,13 @@
     "toolsButton": "Outils",
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
-    "calibration": "Étalonnage"
+    "calibration": "Étalonnage",
+    "createStampButton": "Créer un nouveau tampon"
   },
   "message": {
     "toolsOverlayNoPresets": "Aucun préréglage",
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
-    "customPrintPlaceholder": "par ex. : 3 4-10",
+    "customPrintPlaceholder": "par ex. : 3 4-10",
     "encryptedAttemptsExceeded": "Échec du chargement du document chiffré. Trop de tentatives.",
     "encryptedUserCancelled": "Échec du chargement du document chiffré. Saisie du mot de passe annulée.",
     "enterPassword": "Ce document est protégé par un mot de passe. Veuillez saisir ce mot de passe.",
@@ -280,6 +281,14 @@
       "italic": "Italique",
       "underline": "Souligner",
       "strikeout": "Barré"
+    },
+    "customStampModal": {
+      "stampText": "Texte du tampon:",
+      "timestampText": "Texte d'horodatage:",
+      "stampColor": "Couleur du tampon:",
+      "Username": "Nom d'utilisateur",
+      "Date": "Date",
+      "Time": "Temps"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "Panoramique",
     "select": "Sélection",
     "Marquee": "Marquee Zoom",
-    "Link": "URL de lien ou page"
+    "Link": "URL de lien ou page",
+    "Standard": "la norme",
+    "Custom": "Douane"
   },
   "link": {
     "url": "URL",

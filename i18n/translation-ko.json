@@ -120,7 +120,8 @@
     "toolsButton": "도구",
     "redaction": "개정",
     "viewControlsOverlay": "컨트롤 보기",
-    "calibration": "구경 측정"
+    "calibration": "구경 측정",
+    "createStampButton": "새 스탬프 생성"
   },
   "message": {
     "toolsOverlayNoPresets": "사전 설정 없음",
@@ -280,6 +281,14 @@
       "italic": "이탤릭체",
       "underline": "밑줄",
       "strikeout": "취소 선"
+    },
+    "customStampModal": {
+      "stampText": "스탬프 텍스트 :",
+      "timestampText": "타임 스탬프 텍스트 :",
+      "stampColor": "스탬프 색상 :",
+      "Username": "사용자 이름",
+      "Date": "데이트",
+      "Time": "시각"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "이동",
     "select": "선택",
     "Marquee": "선택 윤곽 확대/축소",
-    "Link": "링크 URL 또는 페이지"
+    "Link": "링크 URL 또는 페이지",
+    "Standard": "표준",
+    "Custom": "커스텀"
   },
   "link": {
     "url": "URL",

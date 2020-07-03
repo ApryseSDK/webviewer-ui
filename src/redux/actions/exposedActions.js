@@ -16,12 +16,12 @@ export const setCanRedo = canRedo => ({
   payload: { canRedo },
 });
 
-export const setDefaultStamps = t => async dispatch => {
+export const setStandardStamps = t => async dispatch => {
   const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
   const canvasWidth = 160;
   const canvasHeight = 58;
 
-  const annotations = rubberStampTool.getDefaultStampAnnotations();
+  const annotations = await rubberStampTool.getStandardStampAnnotations();
   const previews = await Promise.all(
     annotations.map(annotation => {
       const text = t(`rubberStamp.${annotation['Icon']}`);
@@ -36,14 +36,45 @@ export const setDefaultStamps = t => async dispatch => {
     }),
   );
 
-  const defaultStamps = annotations.map((annotation, i) => ({
+  const standardStamps = annotations.map((annotation, i) => ({
     annotation,
     imgSrc: previews[i],
   }));
 
   dispatch({
-    type: 'SET_DEFAULT_STAMPS',
-    payload: { defaultStamps },
+    type: 'SET_STANDARD_STAMPS',
+    payload: { standardStamps },
+  });
+};
+
+export const setCustomStamps = t => async dispatch => {
+  const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
+  const canvasWidth = 160;
+  const canvasHeight = 58;
+
+  const annotations = await rubberStampTool.getCustomStampAnnotations();
+  await Promise.all(
+    annotations.map(annotation => {
+      const text = t(`rubberStamp.${annotation['Icon']}`);
+
+      const options = {
+        canvasWidth,
+        canvasHeight,
+        text,
+      };
+
+      return rubberStampTool.getPreview(annotation, options);
+    }),
+  );
+
+  const customStamps = annotations.map(annotation => ({
+    annotation,
+    imgSrc: annotation['ImageData'],
+  }));
+
+  dispatch({
+    type: 'SET_CUSTOM_STAMPS',
+    payload: { customStamps },
   });
 };
 
