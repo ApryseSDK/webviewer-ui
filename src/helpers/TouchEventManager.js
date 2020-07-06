@@ -73,11 +73,12 @@ const TouchEventManager = {
         const t2 = e.touches[1];
         const clientX = (t1.clientX + t2.clientX) / 2;
         const clientY = (t1.clientY + t2.clientY) / 2;
-        const docX = clientX - this.document.offsetLeft + this.container.scrollLeft;
-        const docY = clientY - this.document.offsetTop + this.container.scrollTop;
+        const boundsDocument = this.document.getBoundingClientRect();
+        const docX = clientX - boundsDocument.left + this.container.scrollLeft;
+        const docY = clientY - boundsDocument.top + this.container.scrollTop;
         this.touch = {
           previousPinchScale: 0,
-          marginLeft: this.document.offsetLeft,
+          marginLeft: boundsDocument.left,
           marginTop: parseFloat(window.getComputedStyle(this.document).marginTop),
           clientX,
           clientY,
@@ -347,8 +348,10 @@ const TouchEventManager = {
     return Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
   },
   getPointAfterScale() {
-    const x = (this.touch.clientX + this.container.scrollLeft - this.document.offsetLeft) * this.touch.scale - this.touch.clientX + this.container.offsetLeft;
-    const y = (this.touch.clientY + this.container.scrollTop - this.document.offsetTop) * this.touch.scale - this.touch.clientY + this.container.offsetTop;
+    const boundsContainer = this.container.getBoundingClientRect();
+    const boundsDocument = this.document.getBoundingClientRect();
+    const x = (this.touch.clientX + this.container.scrollLeft - boundsDocument.left) * this.touch.scale - this.touch.clientX + boundsContainer.left;
+    const y = (this.touch.clientY + this.container.scrollTop - boundsDocument.top) * this.touch.scale - this.touch.clientY + boundsContainer.top;
 
     return { x, y };
   },
