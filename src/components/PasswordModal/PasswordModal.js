@@ -59,6 +59,12 @@ const PasswordModal = () => {
     return renderEnterPasswordContent();
   };
 
+  const onKeyDown = e => {
+    if (e.which === 13) {
+      handleSubmit(e);
+    }
+  };
+
   const renderEnterPasswordContent = () => {
     const wrongPassword = attempt !== 0;
 
@@ -73,6 +79,7 @@ const PasswordModal = () => {
               type="password"
               ref={passwordInput}
               value={password}
+              onKeyDown={onKeyDown}
               onChange={e => setPassword(e.target.value)}
             />
           </div>
@@ -83,16 +90,20 @@ const PasswordModal = () => {
               })}
             </div>
           )}
-          <div className="buttons">
+          <div className="footer">
             <Button
+              className="cancel-button"
+              dataElement="passwordCancelButton"
+              label={t('action.cancel')}
+              onClick={() => {
+                setUserCancelled(true);
+              }}
+            />
+            <Button
+              className="confirm-button "
               dataElement="passwordSubmitButton"
               label={t('action.submit')}
               onClick={handleSubmit}
-            />
-            <Button
-              dataElement="passwordCancelButton"
-              label={t('action.cancel')}
-              onClick={() => setUserCancelled(true)}
             />
           </div>
         </form>
