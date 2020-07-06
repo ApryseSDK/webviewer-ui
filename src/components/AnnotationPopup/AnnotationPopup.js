@@ -162,22 +162,15 @@ const AnnotationPopup = () => {
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
   const commentOnAnnotation = () => {
-    // if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
-    //   core
-    //     .getAnnotationManager()
-    //     .trigger('annotationDoubleClicked', firstAnnotation);
-    // } else if (!isLeftPanelOpen) {
-    //   dispatch(actions.openElement('notesPanel'));
-    //   // wait for the notes panel to be fully opened before focusing
-    //   setTimeout(() => {
-    //     dispatch(actions.triggerNoteEditing());
-    //   }, 400);
-    // } else {
-    //   dispatch(actions.setActiveLeftPanel('notesPanel'));
-    //   dispatch(actions.triggerNoteEditing());
-    // }
-    window.readerControl.focusNote(firstAnnotation.Id);
-    dispatch(actions.closeElement('searchPanel'));
+    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
+      core
+        .getAnnotationManager()
+        .trigger('annotationDoubleClicked', firstAnnotation);
+    } else {
+      dispatch(actions.openElement('notesPanel'));
+      dispatch(actions.closeElement('searchPanel'));
+      dispatch(actions.triggerNoteEditing());
+    }
     dispatch(actions.closeElement('annotationPopup'));
   };
 
