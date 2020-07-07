@@ -49,9 +49,7 @@ function SearchResultListItem(props) {
   const searchValue = ambientStr === '' ? resultStr : ambientStr.slice(resultStrStart, resultStrEnd);
   const textAfterSearchValue = ambientStr.slice(resultStrEnd);
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div
-      role="button" tabIndex="-1"
+    <button
       className={`SearchResult ${currentResultIndex === activeResultIndex ? 'selected' : ''}`}
       onClick={() => {
         if (onSearchResultClick) {
@@ -62,7 +60,7 @@ function SearchResultListItem(props) {
       {textBeforeSearchValue}
       <span className="search-value">{searchValue}</span>
       {textAfterSearchValue}
-    </div>
+    </button>
   );
 }
 SearchResultListItem.propTypes = SearchResultListItemPropTypes;
