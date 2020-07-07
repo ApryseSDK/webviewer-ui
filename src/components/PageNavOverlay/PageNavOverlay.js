@@ -6,6 +6,7 @@ import core from "core";
 import classNames from 'classnames';
 import selectors from "selectors";
 import { isIOS } from "helpers/device";
+import useMedia from 'hooks/useMedia';
 
 import Icon from "components/Icon";
 
@@ -89,12 +90,12 @@ class PageNavOverlay extends React.PureComponent {
   };
 
   render() {
-    const { isDisabled, currentPage, totalPages, allowPageNavigation } = this.props;
+    const { isDisabled, currentPage, totalPages, allowPageNavigation, isMobile } = this.props;
     if (isDisabled) {
       return null;
     }
 
-    const inputWidth = this.state.input ? (this.state.input.length) * 8 : 0;
+    const inputWidth = this.state.input ? (this.state.input.length) * (isMobile ? 10: 8) : 0;
 
     return (
       <div
@@ -157,4 +158,19 @@ const mapStateToProps = state => ({
   allowPageNavigation: selectors.getAllowPageNavigation(state),
 });
 
-export default connect(mapStateToProps)(PageNavOverlay);
+const ConnectedPageNavOverlay = connect(mapStateToProps)(PageNavOverlay);
+
+
+export default props => {
+  const isMobile = useMedia(
+    // Media queries
+    ['(max-width: 640px)'],
+    [true],
+    // Default value
+    false,
+  );
+
+  return (
+    <ConnectedPageNavOverlay {...props} isMobile={isMobile} />
+  );
+};
