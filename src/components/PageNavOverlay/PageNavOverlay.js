@@ -28,7 +28,7 @@ class PageNavOverlay extends React.PureComponent {
     super(props);
     this.textInput = React.createRef();
     this.state = {
-      input: "",
+      input: null,
       isCustomPageLabels: false
     };
   }
@@ -91,7 +91,7 @@ class PageNavOverlay extends React.PureComponent {
 
   render() {
     const { isDisabled, currentPage, totalPages, allowPageNavigation, isMobile } = this.props;
-    if (isDisabled || this.state.input === "") {
+    if (isDisabled || this.state.input === null) {
       return null;
     }
 
