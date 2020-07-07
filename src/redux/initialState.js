@@ -53,6 +53,7 @@ export default {
           type: 'customElement',
           render: () => <RubberStampToolButton />,
           dataElement: 'rubberStampToolButton',
+          hidden: ['tablet', 'mobile'],
         },
         { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', hidden: ['tablet', 'mobile'], showColor: 'never' },
         {
@@ -80,16 +81,16 @@ export default {
           render: () => <SignatureToolButton />,
           dataElement: 'signatureToolButton',
         },
-        {
-          type: 'customElement',
-          render: () => <RubberStampToolButton />,
-          dataElement: 'rubberStampToolButton',
-        },
         { type: 'toolGroupButton', toolGroup: 'measurementTools', dataElement: 'measurementToolGroupButton', title: 'component.measurementToolsButton', showColor: 'active' },
         { type: 'toggleElementButton', toolName: 'AnnotationCreateRedaction', className: 'redactHeader', dataElement: 'redactionButton', element: 'redactionOverlay', img: 'ic_annotation_add_redact_black_24px', title: 'component.redaction' },
         { type: 'toolButton', toolName: 'AnnotationCreateFreeText' },
         { type: 'toolButton', toolName: 'AnnotationCreateSticky' },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        {
+          type: 'customElement',
+          render: () => <RubberStampToolButton />,
+          dataElement: 'rubberStampToolButton',
+        },
         { type: 'toolGroupButton', toolGroup: 'miscTools', img: 'ic_more_black_24px', dataElement: 'miscToolGroupButton', title: 'component.miscToolsButton', showColor: 'never' },
         { type: 'spacer' },
         {
