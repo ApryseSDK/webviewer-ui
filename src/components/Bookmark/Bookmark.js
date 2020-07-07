@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import EditingBookmark from 'components/Bookmark/EditingBookmark';
 import Icon from 'components/Icon';
+import Element from 'components/Element';
 
 import actions from 'actions';
 
@@ -60,7 +61,7 @@ class Bookmark extends React.PureComponent {
           {text}
         </div>
         {this.state.isHovered &&
-          <div className="bookmark-controls bookmark-button">
+          <Element dataElement="bookmarkControls" className="bookmark-controls bookmark-button">
             <div
               onClick={() => this.setState({ isEditing: true })}
             >
@@ -75,7 +76,7 @@ class Bookmark extends React.PureComponent {
                 glyph="cancel-24px"
               />
             </div>
-          </div>
+          </Element>
         }
       </div>
     );
