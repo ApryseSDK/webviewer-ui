@@ -91,7 +91,7 @@ class PageNavOverlay extends React.PureComponent {
 
   render() {
     const { isDisabled, currentPage, totalPages, allowPageNavigation, isMobile } = this.props;
-    if (isDisabled) {
+    if (isDisabled || this.state.input === "") {
       return null;
     }
 
