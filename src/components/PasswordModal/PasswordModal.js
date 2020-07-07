@@ -92,7 +92,7 @@ const PasswordModal = () => {
           )}
           <div className="footer">
             <Button
-              className="cancel-button"
+              className="cancel modal-button"
               dataElement="passwordCancelButton"
               label={t('action.cancel')}
               onClick={() => {
@@ -100,7 +100,7 @@ const PasswordModal = () => {
               }}
             />
             <Button
-              className="confirm-button "
+              className="confirm modal-button"
               dataElement="passwordSubmitButton"
               label={t('action.submit')}
               onClick={handleSubmit}
