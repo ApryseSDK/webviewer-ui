@@ -37,6 +37,7 @@ export default {
           style: {
             height: '100%',
           },
+          hiddenOnMobileDevice: true,
         },
         { type: 'divider', hidden: ['mobile', 'tablet'] },
         { type: 'toolButton', toolName: 'Pan', hidden: ['mobile'] },

@@ -10,6 +10,7 @@ const checkForIOS13 = (navigator.platform === 'MacIntel' && navigator.maxTouchPo
 export const isIOS = window.navigator.userAgent.match(/(iPad|iPhone|iPod)/i) || checkForIOS13;
 export const isAndroid = window.navigator.userAgent.match(/Android/i);
 export const isMobileDevice = isIOS || isAndroid || window.navigator.userAgent.match(/webOS|BlackBerry|IEMobile|Opera Mini/i);
+export const isMobileDeviceFunc = () => isIOS || isAndroid || window.navigator.userAgent.match(/webOS|BlackBerry|IEMobile|Opera Mini/i);
 export const isMac = navigator.appVersion.indexOf('Mac') > -1;
 
 export const isChrome = (function() {
