@@ -1,9 +1,12 @@
 @import '../../constants/styles';
+@import '../../constants/overlay';
 
 .ToggleZoomOverlay{
-  height: $button-height;  
+  @extend %overlay;
   width: auto;
-  top:0;
+  top:20px;
+  left: 50%;
+  margin-left: -102.12px;
 
   .textarea{
     resize: none;

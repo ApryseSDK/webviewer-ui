@@ -53,6 +53,11 @@ $signature-modal-shared-color: #E1E1E3;
   }
 }
 
+.row {
+  display: flex;
+  align-items: center;
+}
+
 .text-input {
   border: 1px solid grey;
   &::placeholder {

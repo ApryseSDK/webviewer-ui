@@ -37,6 +37,7 @@ import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
+import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 
 import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
@@ -67,6 +68,7 @@ const App = ({ removeEventHandlers }) => {
 
         <LeftPanel />
         <SearchPanel />
+        <ToggleZoomOverlay />
 
         <DocumentContainer />
 

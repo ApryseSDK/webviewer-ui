@@ -4,7 +4,9 @@ import core from 'core';
 import classNames from 'classnames';
 
 import ToggleElementButton from 'components/ToggleElementButton';
-import { zoomTo } from 'helpers/zoom';
+import Element from 'components/Element';
+import ActionButton from 'components/ActionButton';
+import { zoomIn, zoomOut, zoomTo } from 'helpers/zoom';
 import selectors from 'selectors';
 import actions from 'actions';
 import zoomFactors from 'constants/zoomFactors';
@@ -71,7 +73,24 @@ const ToggleZoomOverlay = () => {
   };
 
   return (
-    <div className="ToggleZoomOverlay">
+    <div className="Overlay ToggleZoomOverlay hide-in-mobile" data-element="zoomOverlayButton">
+      <Element
+          className="row"
+          dataElement="zoomButtons"
+      >
+        <ActionButton
+          dataElement="zoomOutButton"
+          title="action.zoomOut"
+          img="ic_zoom_out_black_24px"
+          onClick={zoomOut}
+        />
+        <ActionButton
+          dataElement="zoomInButton"
+          title="action.zoomIn"
+          img="ic_zoom_in_black_24px"
+          onClick={zoomIn}
+        />
+      </Element>
       <div className={classNames({
         OverlayContainer: true,
         'active': isActive,
