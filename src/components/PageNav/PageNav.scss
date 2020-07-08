@@ -20,8 +20,18 @@
     color: var(--text-color);
     cursor: pointer;
 
+    &:focus {
+      outline: none;
+      border-width: 0 0 2px;
+      border-style: dashed;
+    }
+
     @include mobile {
       font-size: 14px;
     }
+  }
+
+  form {
+    padding: 6px;
   }
 }
