@@ -156,16 +156,14 @@ const getPopupDimensions = popup => {
 };
 
 const calcAnnotationPopupPosition = (annotationPosition, popupDimension) => {
-  const approximateHeight = 204;
-  const top = calcPopupTop(annotationPosition, popupDimension, approximateHeight);
+  const top = calcPopupTop(annotationPosition, popupDimension);
   const left = calcPopupLeft(annotationPosition, popupDimension);
 
   return { left, top };
 };
 
 const calcTextPopupPosition = (selectedTextPosition, popupDimension) => {
-  const approximateHeight = 50;
-  const top = calcPopupTop(selectedTextPosition, popupDimension, approximateHeight);
+  const top = calcPopupTop(selectedTextPosition, popupDimension);
   const left = calcPopupLeft(selectedTextPosition, popupDimension);
 
   return { left, top };
@@ -190,7 +188,7 @@ export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
  * @param {number} approximateHeight The max height of the popup element.
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
-export const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHeight) => {
+export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
   const scrollContainer = core.getScrollViewElement();
   const boundingBox = scrollContainer.getBoundingClientRect();
   const visibleRegion = {
@@ -206,13 +204,9 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }, approximateHe
   const annotBottom = bottomRight.y + gap;
 
   let top;
-  // in the current design the height of the annotation popup changes when the style edit button is clicked
-  // however we don't know the height of it when an annotation is selected
-  // if we just use `height` instead of `maxHeight` then we might see the case where the style picker shows on the other side of the annotation
-  const maxHeight = Math.max(approximateHeight, height);
-  if (annotBottom + maxHeight < visibleRegion.bottom) {
+  if (annotBottom + height < visibleRegion.bottom) {
     top = annotBottom;
-  } else if (annotTop - maxHeight > visibleRegion.top) {
+  } else if (annotTop - height > visibleRegion.top) {
     top = annotTop - height;
   } else {
     // there's no room for it in the vertical axis, so just choose the top of the visible region
