@@ -43,7 +43,7 @@ Webviewer(...)
   .then(instance => {
     instance.dangerouslySetNoteTransformFunction((wrapper, state, createElement) => {
       // Change the title of every note
-      wrapper.querySelector('.title>span').innerHTML = 'My custom note title';
+      wrapper.querySelector('.author-and-time>span').innerHTML = 'My custom note title';
 
       // Add a button that alerts the user when clicked
       const button = createElement('button');
