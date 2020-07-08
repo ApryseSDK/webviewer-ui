@@ -74,10 +74,6 @@ class SearchOverlay extends React.PureComponent {
     this.searchTextInput.current.focus();
   }
 
-  componentWillUnmount() {
-    this.clearSearchResults();
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.isProgrammaticSearch) {
       this.clearSearchResults();
@@ -353,16 +349,14 @@ class SearchOverlay extends React.PureComponent {
   };
 
   search = () => {
-    const { searchValue, isSearchPanelOpen } = this.props;
+    const { isSearchPanelOpen } = this.props;
 
-    if (searchValue.trim()) {
-      this.searchTextInput.current.blur();
-      if (isSearchPanelOpen) {
-        this.clearSearchResults();
-        this.executeDebouncedFullSearch();
-      } else {
-        this.executeDebouncedSingleSearch();
-      }
+    this.searchTextInput.current.blur();
+    if (isSearchPanelOpen) {
+      this.clearSearchResults();
+      this.executeDebouncedFullSearch();
+    } else {
+      this.executeDebouncedSingleSearch();
     }
   }
 
