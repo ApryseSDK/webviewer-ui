@@ -76,6 +76,19 @@ class ColorPalette extends React.PureComponent {
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
 
     const palette = overridePalette2 ||  overridePalette?.[colorMapKey] || overridePalette?.global || this.palette;
+    const hasTransparentPalette = palette.some(bg => bg?.toLowerCase() === 'transparency');
+
+    const transparentIcon = (
+      <svg
+        width="100%"
+        height="100%"
+        className={classNames({
+          transparent: true,
+        })}
+      >
+        <line stroke="#d82e28" x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    );
 
     return (
       <div
@@ -86,31 +99,35 @@ class ColorPalette extends React.PureComponent {
         })}
         style={style}
       >
-        {palette.map((bg, i) => (
-          <button
-            key={i}
-            className="cell-container"
-            onClick={() => {
-              this.setColor(bg);
-            }}
-          >
-            <div
-              className={classNames({
-                'cell-outer': true,
-                active: color?.toHexString()?.toLowerCase() === bg?.toLowerCase(),
-              })}
+        {palette.map(bg => bg?.toLowerCase()).map((bg, i) => (
+          !bg 
+          ? <div key={i} className="dummy-cell" /> 
+          : <button
+              key={i}
+              className="cell-container"
+              onClick={() => {
+                this.setColor(bg === 'transparency' ? null : bg);
+              }}
             >
               <div
                 className={classNames({
-                  cell: true,
-                  border: bg.toLowerCase() === '#ffffff',
+                  'cell-outer': true,
+                  active: color?.toHexString()?.toLowerCase() === bg || (!color?.toHexString() && bg === 'transparency'),
                 })}
-                style={{ backgroundColor: bg }}
-              />
-            </div>
-          </button>
+              >
+                <div
+                  className={classNames({
+                    cell: true,
+                    border: bg === '#ffffff' || bg === 'transparency',
+                  })}
+                  style={{ backgroundColor: bg }}
+                >
+                  { bg === 'transparency' && transparentIcon}
+                </div>
+              </div>
+            </button>
         ))}
-        {allowTransparent && (
+        {allowTransparent &&!hasTransparentPalette && (
           <button
             className="cell-container"
             onClick={() => this.setColor(null)}
@@ -126,15 +143,9 @@ class ColorPalette extends React.PureComponent {
                   cell: true,
                 })}
               >
-                <svg
-                  width="100%"
-                  height="100%"
-                  className={classNames({
-                    transparent: true,
-                  })}
-                >
-                  <line stroke="#d82e28" x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
-                </svg>
+              {
+                transparentIcon
+              }
               </div>
             </div>
           </button>)}
