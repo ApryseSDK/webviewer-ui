@@ -10,7 +10,6 @@ import SearchOverlay from 'components/SearchOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import RedactionOverlay from 'components/RedactionOverlay';
 import StampOverlay from 'components/StampOverlay';
-import PageNavOverlay from 'components/PageNavOverlay';
 import SignatureOverlay from 'components/SignatureOverlay';
 import MeasurementOverlay from 'components/MeasurementOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
@@ -37,7 +36,6 @@ import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
-import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 
 import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
@@ -68,7 +66,6 @@ const App = ({ removeEventHandlers }) => {
 
         <LeftPanel />
         <SearchPanel />
-        <ToggleZoomOverlay />
 
         <DocumentContainer />
 

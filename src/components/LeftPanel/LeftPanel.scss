@@ -2,7 +2,7 @@
 @import '../../constants/panel';
 
 .LeftPanel {
-  @extend %left-panel;
+  @extend %right-panel;
 
   .left-panel-header {
     display: flex;

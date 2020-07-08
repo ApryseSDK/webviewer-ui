@@ -14,6 +14,7 @@ export default {
     disabledElements: {},
     openElements: {
       header: true,
+      leftPanel: true
     },
     headers: {
       default: [

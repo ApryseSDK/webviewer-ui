@@ -13,6 +13,7 @@ import setCurrentPage from 'helpers/setCurrentPage';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import actions from 'actions';
 import selectors from 'selectors';
+import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 
 import './DocumentContainer.scss';
 
@@ -205,6 +206,8 @@ class DocumentContainer extends React.PureComponent {
 
     return (
       <div className={className} ref={this.container} data-element="documentContainer" onScroll={this.handleScroll} onTransitionEnd={this.onTransitionEnd}>
+        <ToggleZoomOverlay />
+
         <div className="document" ref={this.document} tabIndex="-1"></div>
       </div>
     );

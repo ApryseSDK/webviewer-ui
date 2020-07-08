@@ -25,7 +25,7 @@
 
   &.left-panel {
     width: calc(100% - #{$left-panel-width});
-    margin-left: $left-panel-width;
+    margin-right: $left-panel-width;
 
     @include mobile {
       width: 100%;
