@@ -170,7 +170,7 @@ const AnnotationPopup = () => {
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
   const commentOnAnnotation = () => {
-    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
+    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation && core.getAnnotationManager().useFreeTextEditing()) {
       core
         .getAnnotationManager()
         .trigger('annotationDoubleClicked', firstAnnotation);
