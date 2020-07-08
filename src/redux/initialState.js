@@ -358,7 +358,7 @@ export default {
       CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'cropTools' },
       AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'icon-tool-redaction-area', group: 'redactionTools', showColor: 'never' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
-      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
+      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'multi select', showColor: 'never' },
       TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
       AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'icon-operation-eraser', showColor: 'never' },
