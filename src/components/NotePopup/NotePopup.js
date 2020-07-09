@@ -79,7 +79,7 @@ const NotePopup = ({ annotation, setIsEditing, noteIndex }) => {
   const handleEdit = () => {
     const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation;
 
-    if (isFreeText) {
+    if (isFreeText && core.getAnnotationManager().useFreeTextEditing()) {
       core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
     } else {
       setIsEditing(true, noteIndex);

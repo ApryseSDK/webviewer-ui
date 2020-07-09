@@ -79,13 +79,13 @@ class WarningModal extends React.PureComponent {
             <div className="body">{message}</div>
             <div className="footer">
               <Button
-                className="warningMessageCancel"
+                className="cancel modal-button"
                 dataElement="WarningModalClearButton"
                 label={cancelBtnText}
                 onClick={this.onCancel}
               />
               <Button
-                className="warningMessageConfirm"
+                className="confirm modal-button"
                 dataElement="WarningModalSignButton"
                 label={label}
                 onClick={this.onConfirm}

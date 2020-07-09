@@ -6,7 +6,7 @@ import defaultTool from 'constants/defaultTool';
 export default ({ dispatch, getState }) => annotation => {
   const state = getState();
   const isNotesPanelDisabled = selectors.isElementDisabled(state, 'notesPanel');
-
+  const isNotesPanelOpen = selectors.isElementOpen(state, 'notesPanel');
   if (isNotesPanelDisabled) {
     return;
   }
@@ -15,6 +15,8 @@ export default ({ dispatch, getState }) => annotation => {
   dispatch(actions.setActiveToolGroup(''));
   dispatch(actions.closeElement('searchPanel'));
   dispatch(actions.openElement('notesPanel'));
-  core.selectAnnotation(annotation);
-  dispatch(actions.triggerNoteEditing());
+  // wait for the notes panel to be fully opened before focusing
+  setTimeout(() => {
+    core.selectAnnotation(annotation);
+  }, isNotesPanelOpen ? 0 : 400);
 };

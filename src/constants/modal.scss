@@ -15,6 +15,45 @@ $modal-z-index: 100;
   justify-content: center;
   align-items: center;
   background: var(--modal-negative-space);
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 13px;
+
+    .modal-button {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 6px 18px;
+      margin-top: 8px;
+      width: fit-content;
+      border-radius: 4px;
+      height: 30px;
+      cursor: pointer;
+
+      &.cancel {
+        color: var(--secondary-button-text);
+        &:hover {
+          color: var(--secondary-button-hover);
+        }
+      }
+
+      &.confirm {
+        margin-left: 4px;
+        color: var(--primary-button-text);
+        font-weight: 600;
+        background: var(--primary-button);
+
+        &:hover {
+          background: var(--primary-button-hover);
+        }
+      }
+    }
+  }
 }
 
 %modal-shared-container-style {

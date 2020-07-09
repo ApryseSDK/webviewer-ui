@@ -8,6 +8,7 @@ import StatefulButton from 'components/StatefulButton';
 import CustomElement from 'components/CustomElement';
 import ToolGroupButtonsScroll from './ToolGroupButtonsScroll';
 import useMedia from 'hooks/useMedia';
+import { isMobileDeviceFunc } from 'helpers/device';
 
 import './HeaderItems.scss';
 
@@ -25,8 +26,11 @@ class HeaderItems extends React.PureComponent {
     return (
       <div className="HeaderItems">
         {items.map((item, i) => {
-          const { type, dataElement, hidden, toolName } = item;
-          const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
+          const { type, dataElement, hidden, toolName, hiddenOnMobileDevice } = item;
+          let mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
+          if (hiddenOnMobileDevice && isMobileDeviceFunc()) {
+            mediaQueryClassName += ' hide-in-mobile';
+          }
           const key = `${type}-${dataElement || i}`;
 
           switch (type) {
