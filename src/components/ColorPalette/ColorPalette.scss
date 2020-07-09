@@ -1,10 +1,9 @@
 @import '../../constants/styles.scss';
 
 .ColorPalette {
-  // display: flex;
-  // flex-wrap: wrap;
+  display: flex;  // fallback for ie11, grid not available
+  flex-wrap: wrap; // fallback for ie11, grid not available
   display: grid;
-  // grid-gap: 10px;
   grid-template-columns: repeat(7, 1fr);
 
   &.padding {
@@ -21,7 +20,7 @@
 
   .cell-container {
     @include button-reset;
-    // flex: 1 0 14%;
+    flex: 1 0 14%; // fallback for ie11, grid not available
 
     cursor: pointer;
     width: 28px;
