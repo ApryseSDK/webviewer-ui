@@ -355,6 +355,7 @@ const NotesPanel = () => {
                     placeholder={t('message.searchCommentsPlaceholder')}
                     onChange={handleInputChange}
                     ref={inputRef}
+                    id="NotesPanel__input"
                   />
                 </div>
                 <div className="divider" />
