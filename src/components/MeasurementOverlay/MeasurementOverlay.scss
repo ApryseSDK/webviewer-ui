@@ -45,6 +45,7 @@
 
 .lineMeasurementInput {
   width: 50px;
+  margin-left: 4px;
 }
 
 .length_input {
@@ -53,8 +54,9 @@
 
 .angle_input {
   margin-top: 3px;
+
+  .lineMeasurementInput {
+    width: 65px;
+  }
 }
 
-.angle_input input {
-  width: 65px;
-}
