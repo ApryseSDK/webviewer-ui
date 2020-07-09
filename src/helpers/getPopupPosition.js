@@ -204,19 +204,7 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
   const annotBottom = bottomRight.y + gap;
 
   let top;
-<<<<<<< HEAD
-  // in the current design the height of the annotation popup changes when the style edit button is clicked
-  // however we don't know the height of it when an annotation is selected
-  // if we instead use `height` then we might see the case where the style picker shows on the other side of the annotation
-  if (annotBottom + approximateHeight < visibleRegion.bottom) {
-    top = annotBottom;
-  } else if (annotTop - approximateHeight > visibleRegion.top) {
-    top = annotTop - height;
-  } else if (annotBottom + height < visibleRegion.bottom) {
-    // either side doesn't have enough space for the approximate height, we try to use the actual height of the popup element
-=======
   if (annotBottom + height < visibleRegion.bottom) {
->>>>>>> f1379f49... fix: weird popup position in mobile devices when an annotation is selected
     top = annotBottom;
   } else if (annotTop - height > visibleRegion.top) {
     top = annotTop - height;
