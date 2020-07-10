@@ -388,15 +388,6 @@ WebViewer(...)
         e.preventDefault();
         setToolModeAndGroup(store, 'AnnotationEdit', '');
 
-        const el = document.activeElement;
-        if (el?.tabIndex === 0) {
-          const hackEl = document.querySelector('.skip-to-hack');
-          if (hackEl) {
-            hackEl.focus();
-            hackEl.blur();
-          }
-        }
-
         dispatch(
           actions.closeElements([
             'annotationPopup',
