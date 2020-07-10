@@ -79,7 +79,7 @@ const Note = ({ annotation }) => {
   const handleNoteClick = e => {
     // stop bubbling up otherwise the note will be closed
     // due to annotation deselection
-    e.stopPropagation();
+    e && e.stopPropagation();
 
     if (!isSelected) {
       core.deselectAllAnnotations();
@@ -105,10 +105,11 @@ const Note = ({ annotation }) => {
   const showReplyArea = !Object.values(isEditingMap).some(val => val);
 
   const handleNoteKeydown = e => {
-    // Stop enter/space key on Note from being submitted into field.
+    // Click if enter or space is pressed and is current target.
     const isNote = e.target === e.currentTarget;
     if (isNote && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault();
+      e.preventDefault(); // Stop from being entered in field
+      handleNoteClick();
     }
   };
 
@@ -123,7 +124,14 @@ const Note = ({ annotation }) => {
   );
 
   return (
-    <div ref={containerRef} className={noteClass} onClick={handleNoteClick} onKeyDown={handleNoteKeydown}>
+    <div
+      role="button"
+      tabIndex={0}
+      ref={containerRef}
+      className={noteClass}
+      onClick={handleNoteClick}
+      onKeyDown={handleNoteKeydown}
+    >
       <NoteContent
         noteIndex={0}
         annotation={annotation}
@@ -137,7 +145,7 @@ const Note = ({ annotation }) => {
           <div className={repliesClass}>
             {replies.map((reply, i) => (
               <NoteContent
-                noteIndex={i+1}
+                noteIndex={i + 1}
                 key={reply.Id}
                 annotation={reply}
                 setIsEditing={setIsEditing}
