@@ -73,7 +73,7 @@
     "signature": "Signature",
     "squiggly": "Squiggly",
     "stamp": "Stamp",
-    "stickyNote": "Comment",
+    "stickyNote": "Note",
     "strikeout": "Strikeout",
     "underline": "Underline",
     "custom": "Custom",
@@ -110,7 +110,7 @@
     "searchOverlay": "Search",
     "searchPanel": "Search",
     "menuOverlay": "Menu",
-    "notesPanel": "Notes",
+    "notesPanel": "Comments",
     "outlinesPanel": "Outlines",
     "bookmarksPanel": "Bookmarks",
     "newBookmark": "New Bookmark",
@@ -120,7 +120,8 @@
     "toolsButton": "Tools",
     "redaction": "Redaction",
     "viewControlsOverlay": "View Controls",
-    "calibration": "Calibration"
+    "calibration": "Calibration",
+    "createStampButton": "Create New Stamp"
   },
   "message": {
     "toolsOverlayNoPresets": "No Presets",
@@ -280,6 +281,14 @@
       "italic": "Italic",
       "underline": "Underline",
       "strikeout": "Strikeout"
+    },
+    "customStampModal" : {
+      "stampText": "Stamp text:",
+      "timestampText": "Timestamp text:",
+      "stampColor": "Stamp color:",
+      "Username": "Username",
+      "Date":"Date",
+      "Time":"Time"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "Pan",
     "select": "Select",
     "Marquee": "Marquee Zoom",
-    "Link": "Link URL or Page"
+    "Link": "Link URL or Page",
+    "Standard": "Standard",
+    "Custom": "Custom"
   },
   "link": {
     "url": "URL",

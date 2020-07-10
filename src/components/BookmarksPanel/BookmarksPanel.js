@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 
 import Bookmark from 'components/Bookmark';
 import EditingBookmark from 'components/Bookmark/EditingBookmark';
-import Icon from 'components/Icon';
+import Button from 'components/Button';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -63,14 +63,14 @@ class BookmarksPanel extends React.PureComponent {
               }}
             /> :
             <div className="bookmarks-panel-header ">
-              <div
+              <Button
+                dataElement="newBookmarkButton"
                 className="bookmarks-panel-button"
+                label={t('component.newBookmark')}
                 onClick={() => {
                   this.setState({ isAdding: true });
                 }}
-              >
-                {t('component.newBookmark')}
-              </div>
+              />
             </div>
         }
         <div className="bookmarks-panel-row">

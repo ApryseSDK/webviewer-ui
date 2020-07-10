@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import i18next from 'i18next';
+import core from 'core';
 
 import Button from 'components/Button';
 
@@ -29,12 +30,20 @@ class WarningModal extends React.PureComponent {
     onCancel: PropTypes.func,
   };
 
+  componentDidMount() {
+    core.addEventListener('documentUnloaded', this.onCancel);
+  }
+
   componentDidUpdate(prevProps) {
     const { isOpen, closeElements } = this.props;
 
     // if (!prevProps.isOpen && isOpen) {
     //   closeElements(getPopupElements());
     // }
+  }
+
+  componentWillUnmount() {
+    core.removeEventListener('documentUnloaded', this.onCancel);
   }
 
   onCancel = () => {
@@ -79,13 +88,13 @@ class WarningModal extends React.PureComponent {
             <div className="body">{message}</div>
             <div className="footer">
               <Button
-                className="warningMessageCancel"
+                className="cancel modal-button"
                 dataElement="WarningModalClearButton"
                 label={cancelBtnText}
                 onClick={this.onCancel}
               />
               <Button
-                className="warningMessageConfirm"
+                className="confirm modal-button"
                 dataElement="WarningModalSignButton"
                 label={label}
                 onClick={this.onConfirm}

@@ -120,7 +120,8 @@
     "toolsButton": "ツール",
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
-    "calibration": "較正"
+    "calibration": "較正",
+    "createStampButton": "新しいスタンプを作成"
   },
   "message": {
     "toolsOverlayNoPresets": "プリセットなし",
@@ -280,6 +281,14 @@
       "italic": "イタリック",
       "underline": "下線",
       "strikeout": "取り消し線"
+    },
+    "customStampModal": {
+      "stampText": "スタンプテキスト：",
+      "timestampText": "タイムスタンプテキスト：",
+      "stampColor": "スタンプ色：",
+      "Username": "ユーザー名",
+      "Date": "日付",
+      "Time": "時間"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "パン",
     "select": "選択",
     "Marquee": "マーキーズーム",
-    "Link": "リンクURLまたはページ"
+    "Link": "リンクURLまたはページ",
+    "Standard": "標準",
+    "Custom": "カスタム"
   },
   "link": {
     "url": "URL",

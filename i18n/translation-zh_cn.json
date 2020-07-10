@@ -120,7 +120,8 @@
     "toolsButton": "工具",
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
-    "calibration": "校准"
+    "calibration": "校准",
+    "createStampButton": "创建新图章"
   },
   "message": {
     "toolsOverlayNoPresets": "无预设",
@@ -280,6 +281,14 @@
       "italic": "斜体",
       "underline": "下划线",
       "strikeout": "删除线"
+    },
+    "customStampModal": {
+      "stampText": "印章文字：",
+      "timestampText": "时间戳记文字：",
+      "stampColor": "印章颜色：",
+      "Username": "用户名",
+      "Date": "日期",
+      "Time": "时间"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "移动",
     "select": "选择",
     "Marquee": "选框缩放",
-    "Link": "链接网址或页面"
+    "Link": "链接网址或页面",
+    "Standard": "标准",
+    "Custom": "自订"
   },
   "link": {
     "url": "网址",

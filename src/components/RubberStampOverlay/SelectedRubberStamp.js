@@ -32,23 +32,37 @@ const SelectedSignatureRow = () => {
   ]);
 
   useEffect(() => {
-    dispatch(actions.setDefaultStamps(t));
+    dispatch(actions.setStandardStamps(t));
+    dispatch(actions.setCustomStamps(t));
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     const isLanguageChanged = prevLanguage !== i18n.language;
     if (isLanguageChanged) {
-      dispatch(actions.setDefaultStamps(t));
+      dispatch(actions.setStandardStamps(t));
+      dispatch(actions.setCustomStamps(t));
     }
   });
+
+  const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
+  const onStampsAdded = () => {
+    dispatch(actions.setStandardStamps(t));
+    dispatch(actions.setCustomStamps(t));
+  };
+
+  useEffect(() => {
+    rubberStampTool.on('stampsUpdated', onStampsAdded);
+    return () => {
+      rubberStampTool.off('stampsUpdated', onStampsAdded);
+    };
+  }, []);
 
   const [isToolStyleOpen] = useSelector(
     state => [
       selectors.isElementOpen(state, 'toolStylePopup'),
     ],
   );
-  const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
   return (
     <div
       className="selected-rubber-stamp-container"

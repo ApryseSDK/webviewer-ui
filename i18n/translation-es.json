@@ -120,7 +120,8 @@
     "toolsButton": "Herramientas",
     "redaction": "Modificación",
     "viewControlsOverlay": "Ver controles",
-    "calibration": "Calibración"
+    "calibration": "Calibración",
+    "createStampButton": "Crear nuevo sello"
   },
   "message": {
     "toolsOverlayNoPresets": "Sin preajustes",
@@ -280,6 +281,14 @@
       "italic": "Cursiva",
       "underline": "Subrayar",
       "strikeout": "Tachado"
+    },
+    "customStampModal": {
+      "stampText": "Texto de sello:",
+      "timestampText": "Texto de marca de tiempo:",
+      "stampColor": "Color del sello:",
+      "Username": "Nombre de usuario",
+      "Date": "Fecha",
+      "Time": "Hora"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "Panorámica",
     "select": "Seleccionar",
     "Marquee": "Zoom de selección",
-    "Link": "URL de enlace o página"
+    "Link": "URL de enlace o página",
+    "Standard": "Estándar",
+    "Custom": "Personalizado"
   },
   "link": {
     "url": "URL",

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,12 +8,20 @@ import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 import useMedia from 'hooks/useMedia';
+import { Tabs, Tab, TabPanel } from 'components/Tabs';
+import Icon from 'components/Icon';
 
 import { Swipeable } from 'react-swipeable';
 
 import './RubberStampOverlay.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
+
+const propTypes = {
+  standardStamps: PropTypes.array.isRequired,
+  customStamps: PropTypes.array.isRequired,
+  setSelectedStampIndex: PropTypes.func.isRequired,
+};
 
 class RubberStampOverlay extends React.Component {
   static propTypes = {
@@ -23,7 +32,6 @@ class RubberStampOverlay extends React.Component {
     isActive: PropTypes.bool,
     t: PropTypes.func.isRequired,
     i18n: PropTypes.any,
-    toolButtonObjects: PropTypes.object.isRequired,
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
@@ -37,7 +45,6 @@ class RubberStampOverlay extends React.Component {
   }
 
   setRubberStamp(annotation, index) {
-    const { closeElement, setSelectedStamp } = this.props;
     core.setToolMode(TOOL_NAME);
     this.props.closeElement("toolStylePopup");
     const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
@@ -46,55 +53,91 @@ class RubberStampOverlay extends React.Component {
     this.props.setSelectedStampIndex(index);
   }
 
-  render() {
-    const { isMobile, defaultStamps } = this.props;
+  openCustomSampModal = () => {
+    const { openElement } = this.props;
+    openElement('customStampModal');
+  }
 
-    const rubberStamps = defaultStamps.map(({ imgSrc, annotation }, index) =>
-      <div key={index}
-        className="rubber-stamp"
-        onClick={() => {
-          this.setRubberStamp(annotation, index);
-        }}
-      >
-        <img src={imgSrc} />
+  deleteCustomStamp = index => {
+    const stamps = this.stampTool.getCustomStamps();
+    stamps.splice(index, 1);
+    this.stampTool.setCustomStamps(stamps);
+  }
+
+  render() {
+    const { isMobile, standardStamps, customStamps } = this.props;
+
+    const rubberStamps = standardStamps.map(({ imgSrc, annotation }, index) =>
+      <div key={index} className="rubber-stamp" onClick={() => this.setRubberStamp(annotation, index)}>
+        <img src={imgSrc} alt="" />
+      </div>,
+    );
+
+    const customImgs = customStamps.map(({ imgSrc, annotation }, index) =>
+      <div key={index}  className="stamp-row">
+        <div className="stamp-row-content" onClick={() => this.setRubberStamp(annotation, standardStamps.length + index)}>
+          <img src={imgSrc} alt=""/>
+        </div>
+        <div className="icon" onClick={() => this.deleteCustomStamp(index)}>
+          <Icon glyph="icon-delete-line"/>
+        </div>
       </div>,
     );
 
     return (
       <div
-        className={classNames({
-          Popup: true,
-          StylePopup: true,
-          mobile: isMobile,
-        })}
-        data-element="stylePopup"
+        className="rubber-stamp-overlay"
+        data-element="rubberStampOverlay"
       >
-        <Swipeable
-          onSwipedUp={() => this.props.closeElement('toolsOverlay')}
-          onSwipedDown={() => this.props.closeElement('toolsOverlay')}
-          preventDefaultTouchmoveEvent
-        >
-          <div
-            className="rubber-stamp-overlay"
-            data-element="rubberStampOverlay"
-          >
-            <div className="default-stamps-container">
-              {rubberStamps}
+        <Tabs id="rubberStampTab">
+          <div className="header tab-header">
+            <div className="tab-list">
+              <Tab dataElement="standardStampPanelButton">
+                <div className="tab-options-button">
+                  {this.props.t(`tool.Standard`)}
+                </div>
+              </Tab>
+              <div className="tab-options-divider" />
+              <Tab dataElement="customStampPanelButton">
+                <div className="tab-options-button">
+                  {this.props.t(`tool.Custom`)}
+                </div>
+              </Tab>
             </div>
           </div>
-        </Swipeable>
+
+          <TabPanel dataElement="standardStampPanel">
+            <div className="standard-stamp-panel">
+              { rubberStamps }
+            </div>
+          </TabPanel>
+          <TabPanel dataElement="customStampPanel">
+            <div className="custom-stamp-panel">
+              { customImgs }
+            </div>
+            <div className={classNames({
+                'stamp-row-content': true,
+                'add-btn': true,
+              })}
+              onClick={this.openCustomSampModal}
+            >
+              {this.props.t(`component.createStampButton`)}
+            </div>
+          </TabPanel>
+        </Tabs>
       </div>
     );
   }
 }
 
+RubberStampOverlay.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   activeToolName: selectors.getActiveToolName(state),
   isActive: selectors.getActiveToolName(state) === TOOL_NAME,
-  toolButtonObjects: selectors.getToolButtonObjects(state),
   dataElement: selectors.getToolButtonObjects(state)[TOOL_NAME].dataElement,
-  defaultStamps: selectors.getDefaultStamps(state),
+  standardStamps: selectors.getStandardStamps(state),
+  customStamps: selectors.getCustomStamps(state),
 });
 
 const mapDispatchToProps = {
@@ -103,6 +146,8 @@ const mapDispatchToProps = {
   openElement: actions.openElement,
   toggleElement: actions.toggleElement,
   setSelectedStampIndex: actions.setSelectedStampIndex,
+  setStandardStamps: actions.setStandardStamps,
+  setCustomStamps: actions.setCustomStamps,
 };
 
 const ConnectedRubberStampOverlay = connect(

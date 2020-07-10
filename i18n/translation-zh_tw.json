@@ -120,7 +120,8 @@
     "toolsButton": "工具",
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
-    "calibration": "校準"
+    "calibration": "校準",
+    "createStampButton": "創建新圖章"
   },
   "message": {
     "toolsOverlayNoPresets": "無預設",
@@ -280,6 +281,14 @@
       "italic": "斜體",
       "underline": "下劃綫",
       "strikeout": "刪除綫"
+    },
+    "customStampModal": {
+      "stampText": "印章文字：",
+      "timestampText": "時間戳記文字：",
+      "stampColor": "印章顏色：",
+      "Username": "用戶名",
+      "Date": "日期",
+      "Time": "時間"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "移動瀏覽",
     "select": "選取",
     "Marquee": "跑馬燈縮放",
-    "Link": "鏈接網址或頁面"
+    "Link": "鏈接網址或頁面",
+    "Standard": "標準",
+    "Custom": "自訂"
   },
   "link": {
     "url": "網址",

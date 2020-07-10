@@ -120,7 +120,8 @@
     "toolsButton": "Tools",
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
-    "calibration": "ijking"
+    "calibration": "ijking",
+    "createStampButton": "Maak een nieuwe stempel"
   },
   "message": {
     "toolsOverlayNoPresets": "Geen voorinstellingen",
@@ -280,6 +281,14 @@
       "italic": "Cursief",
       "underline": "Onderstrepen",
       "strikeout": "Doorhalen"
+    },
+    "customStampModal": {
+      "stampText": "Stempel tekst:",
+      "timestampText": "Tijdstempel tekst:",
+      "stampColor": "Stempelkleur:",
+      "Username": "Gebruikersnaam",
+      "Date": "Datum",
+      "Time": "Tijd"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "Schuiven",
     "select": "Selecteren",
     "Marquee": "Selectie zoom",
-    "Link": "Link URL of pagina"
+    "Link": "Link URL of pagina",
+    "Standard": "Standaard",
+    "Custom": "Op maat"
   },
   "link": {
     "url": "URL",

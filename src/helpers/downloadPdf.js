@@ -10,6 +10,7 @@ export default (dispatch, options = {}) => {
     filename = core.getDocument()?.getFilename() || 'document',
     includeAnnotations = true,
     externalURL,
+    useDisplayAuthor = false,
   } = options;
 
   if (!options.downloadType) {
@@ -18,7 +19,7 @@ export default (dispatch, options = {}) => {
 
   dispatch(actions.openElement('loadingModal'));
 
-  const annotationsPromise = (includeAnnotations && !options.xfdfString) ? core.exportAnnotations() : Promise.resolve('<xfdf></xfdf>');
+  const annotationsPromise = (includeAnnotations && !options.xfdfString) ? core.exportAnnotations({ useDisplayAuthor }) : Promise.resolve('<xfdf></xfdf>');
 
   return annotationsPromise.then(xfdfString => {
     options.xfdfString = options.xfdfString || xfdfString;

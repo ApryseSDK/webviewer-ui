@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { motion, AnimatePresence } from "framer-motion";
+import { isSafari } from 'src/helpers/device';
 
 import SearchResult from 'components/SearchResult';
 import ResizeBar from 'components/ResizeBar';
@@ -88,7 +89,7 @@ class SearchPanel extends React.PureComponent {
             initial={{ width: '0px' }}
             animate={animate}
             exit={{ width: '0px' }}
-            transition={{ ease: "easeOut", duration: 0.25 }}
+            transition={{ ease: "easeOut", duration: isSafari ? 0 : 0.25 }}
           >
             {!isTabletAndMobile &&
               <ResizeBar

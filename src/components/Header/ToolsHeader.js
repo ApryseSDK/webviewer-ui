@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import actions from 'actions';
 
 import HeaderItems from 'components/HeaderItems';
-import ToolsOverlay from 'components/ToolsOverlay';
 import useMedia from 'hooks/useMedia';
 
 import selectors from 'selectors';

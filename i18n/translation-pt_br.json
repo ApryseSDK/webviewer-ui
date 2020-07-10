@@ -120,7 +120,8 @@
     "toolsButton": "Ferramentas",
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
-    "calibration": "Calibração"
+    "calibration": "Calibração",
+    "createStampButton": "Criar novo carimbo"
   },
   "message": {
     "toolsOverlayNoPresets": "Sem predefinições",
@@ -280,6 +281,14 @@
       "italic": "itálico",
       "underline": "Sublinhar",
       "strikeout": "Tachado"
+    },
+    "customStampModal": {
+      "stampText": "Texto do carimbo:",
+      "timestampText": "Texto do carimbo de data / hora:",
+      "stampColor": "Cor do carimbo:",
+      "Username": "Nome do usuário",
+      "Date": "Encontro",
+      "Time": "Tempo"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "Pan",
     "select": "Selecionar",
     "Marquee": "Zoom Marquee",
-    "Link": "URL ou página do link"
+    "Link": "URL ou página do link",
+    "Standard": "Padrão",
+    "Custom": "personalizadas"
   },
   "link": {
     "url": "URL",

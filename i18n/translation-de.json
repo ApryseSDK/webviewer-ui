@@ -120,7 +120,8 @@
     "toolsButton": "Werkzeuge",
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
-    "calibration": "Kalibrierung"
+    "calibration": "Kalibrierung",
+    "createStampButton": "Neuen Stempel erstellen"
   },
   "message": {
     "toolsOverlayNoPresets": "Keine Voreinstellungen",
@@ -280,6 +281,14 @@
       "italic": "Kursiv",
       "underline": "Unterstrichen",
       "strikeout": "Durchgestrichen"
+    },
+    "customStampModal": {
+      "stampText": "Stempeltext:",
+      "timestampText": "Zeitstempeltext:",
+      "stampColor": "Stempelfarbe:",
+      "Username": "Nutzername",
+      "Date": "Datum",
+      "Time": "Zeit"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "Hand",
     "select": "Auswählen",
     "Marquee": "Auswahl Zoom",
-    "Link": "Link URL oder Seite"
+    "Link": "Link URL oder Seite",
+    "Standard": "Standard",
+    "Custom": "Benutzerdefiniert"
   },
   "link": {
     "url": "URL",
