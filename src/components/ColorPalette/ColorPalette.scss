@@ -3,6 +3,9 @@
 .ColorPalette {
   display: flex;  // fallback for ie11, grid not available
   flex-wrap: wrap; // fallback for ie11, grid not available
+  @include ie11 {
+    width: 196px; // hack for ie11
+  }
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 
