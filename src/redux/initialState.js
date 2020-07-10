@@ -40,7 +40,7 @@ export default {
           hiddenOnMobileDevice: true,
         },
         { type: 'divider', hidden: ['mobile', 'tablet'] },
-        { type: 'toolButton', toolName: 'Pan', hidden: ['mobile'] },
+        { type: 'toolButton', toolName: 'Pan' },
         // For mobile
         { type: 'toolButton', toolName: 'TextSelect' },
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['mobile'] },
