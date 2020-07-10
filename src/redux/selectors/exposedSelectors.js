@@ -1,9 +1,20 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
-export const getDefaultStamps = state => state.viewer.defaultStamps;
+export const getStandardStamps = state => state.viewer.standardStamps;
+export const getCustomStamps = state => state.viewer.customStamps;
 export const getSelectedStampIndex = state => state.viewer.selectedStampIndex;
-export const getSelectedStamp = state => getDefaultStamps(state)[getSelectedStampIndex(state)];
+export const getSelectedStamp = state => {
+  const standardStamps = getStandardStamps(state);
+  const customStamps = getCustomStamps(state);
+  const index = getSelectedStampIndex(state);
+  let selectedStamp = standardStamps[index];
+  // selected stamp is not found in standard stamps, search dyamic stamps
+  if (!selectedStamp && standardStamps.length) {
+    selectedStamp = customStamps[index - standardStamps.length];
+  }
+  return selectedStamp;
+};
 export const getSavedSignatures = state => state.viewer.savedSignatures;
 export const getSelectedSignatureIndex = state => state.viewer.selectedSignatureIndex;
 export const getSelectedSignature = state => getSavedSignatures(state)[getSelectedSignatureIndex(state)];

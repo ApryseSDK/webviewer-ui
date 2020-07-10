@@ -19,10 +19,9 @@ export default (annotation, popup) => {
     },
   };
   const pBox = popup.current.getBoundingClientRect();
-  const approximateHeight = 200;
 
   return {
     left: calcPopupLeft(cBox, pBox),
-    top: calcPopupTop(cBox, pBox, approximateHeight),
+    top: calcPopupTop(cBox, pBox),
   };
 };

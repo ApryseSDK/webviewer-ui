@@ -120,7 +120,8 @@
     "toolsButton": "Инструменты",
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
-    "calibration": "калибровка"
+    "calibration": "калибровка",
+    "createStampButton": "Создать новую марку"
   },
   "message": {
     "toolsOverlayNoPresets": "Нет пресетов",
@@ -280,6 +281,14 @@
       "italic": "курсивный",
       "underline": "Подчеркнутый",
       "strikeout": "Зачеркнутый"
+    },
+    "customStampModal": {
+      "stampText": "Штамп текст:",
+      "timestampText": "Текст метки времени:",
+      "stampColor": "Цвет марки:",
+      "Username": "имя пользователя",
+      "Date": "Дата",
+      "Time": "Время"
     }
   },
   "warning": {
@@ -330,7 +339,9 @@
     "pan": "Панорамирование",
     "select": "Выделить",
     "Marquee": "Увеличить выделение",
-    "Link": "Ссылка URL или Страница"
+    "Link": "Ссылка URL или Страница",
+    "Standard": "стандарт",
+    "Custom": "изготовленный на заказ"
   },
   "link": {
     "url": "URL",

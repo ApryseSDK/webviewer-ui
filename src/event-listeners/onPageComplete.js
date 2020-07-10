@@ -8,12 +8,12 @@ export default store => pageNumber => {
       textContainer.tabIndex = 0;
       // TODO: page-num
       textContainer.textContent = `Page ${pageNumber}.\n${text}\nEnd of page ${pageNumber}.`;
-      textContainer.style = 'font-size: 5px; overflow: auto; position: relative; z-index: -99999';
+      textContainer.style = 'font-size: 5px; overflow: auto; position: absolute; z-index: -99999; top: 0; bottom: 0;';
       const id = `pageText${pageNumber}`;
       textContainer.id = id;
       // remove duplicate / pre-existing divs first before appending again
       // TODO: page-num
-      const pageContainerElement = document.getElementById(`pageContainer${pageNumber - 1}`);
+      const pageContainerElement = document.getElementById(`pageContainer${pageNumber}`);
       const existingTextContainer = pageContainerElement.querySelector(`#${id}`);
       if (existingTextContainer) {
         pageContainerElement.removeChild(existingTextContainer);

@@ -24,7 +24,7 @@
     "css-vars-ponyfill": "^2.3.2",
     "dayjs": "^1.8.19",
     "file-saver": "git+https://github.com/ZhijieZhang/FileSaver.js.git",
-    "framer-motion": "^1.10.0",
+    "framer-motion": "^1.11.1",
     "hotkeys-js": "^3.7.3",
     "html2canvas": "git+https://github.com/mparizeau/html2canvas.git",
     "i18next": "^19.0.3",

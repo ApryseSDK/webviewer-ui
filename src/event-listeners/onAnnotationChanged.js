@@ -1,5 +1,6 @@
 import core from 'core';
 
+
 export default () => (annotations, action) => {
   if (action === 'delete') {
     deleteReplies(annotations);

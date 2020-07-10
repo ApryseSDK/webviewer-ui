@@ -20,6 +20,7 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 
 import { motion, AnimatePresence } from "framer-motion";
+import { isSafari } from 'src/helpers/device';
 
 import './NotesPanel.scss';
 
@@ -311,7 +312,7 @@ const NotesPanel = () => {
           initial={{ width: '0px' }}
           animate={animate}
           exit={{ width: '0px' }}
-          transition={{ ease: "easeOut", duration: .25 }}
+          transition={{ ease: "easeOut", duration: isSafari ? 0 : 0.25 }}
         >
           {!isTabletAndMobile &&
             <ResizeBar
