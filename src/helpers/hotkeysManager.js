@@ -330,19 +330,6 @@ WebViewer(...)
 
         print(dispatch, selectors.isEmbedPrintSupported(getState()));
       },
-      [`${Keys.ENTER}`]: () => {
-        if (document.activeElement.className.includes('Note')) {
-          document.activeElement.click();
-        } else if (document.activeElement.className === 'skip-to-document') {
-          document.getElementById('pageText0').focus();
-        } else if (document.activeElement.className === 'skip-to-notes') {
-          dispatch(actions.openElement('notesPanel'));
-          const noteEl = document.querySelector('.Note');
-          if (noteEl) {
-            noteEl.focus();
-          }
-        }
-      },
       [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();
 
@@ -400,15 +387,6 @@ WebViewer(...)
       [`${Keys.ESCAPE}`]: e => {
         e.preventDefault();
         setToolModeAndGroup(store, 'AnnotationEdit', '');
-
-        const el = document.activeElement;
-        if (el?.tabIndex === 0) {
-          const hackEl = document.querySelector('.skip-to-hack');
-          if (hackEl) {
-            hackEl.focus();
-            hackEl.blur();
-          }
-        }
 
         dispatch(
           actions.closeElements([
