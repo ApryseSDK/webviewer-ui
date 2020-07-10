@@ -47,8 +47,8 @@ const LeftPanel = () => {
       className={classNames({
         Panel: true,
         LeftPanel: true,
-        open: isOpen,
-        closed: !isOpen,
+        open: true,
+        closed: false,
       })}
       onDrop={onDrop}
       onDragOver={onDragOver}

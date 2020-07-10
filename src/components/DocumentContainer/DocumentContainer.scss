@@ -15,25 +15,12 @@
     height: calc(100% - #{$top-bar-height-m} - #{$left-panel-width});
   }
 
-  &.right-panel {
-    width: calc(100% - #{$right-panel-width});
-  }
-
   &.left-panel {
     width: calc(100% - #{$left-panel-width});
 
     @include mobile {
       width: 100%;
       margin-top: $right-panel-width;
-    }
-  }
-
-  &.search-overlay {
-    @include mobile {
-      width: 100%;
-      margin-left: 0;
-      margin-top: $search-overlay-height-m;
-      height: calc(100% - #{$top-bar-height-m} - #{$search-overlay-height-m});
     }
   }
 
