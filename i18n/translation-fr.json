@@ -338,7 +338,7 @@
   "tool": {
     "pan": "Panoramique",
     "select": "Sélection",
-    "Marquee": "Marquee Zoom",
+    "Marquee": "Zoom sur la sélection",
     "Link": "URL de lien ou page",
     "Standard": "la norme",
     "Custom": "Douane"
