@@ -9,6 +9,10 @@
   border: 1px solid var(--border-color);
   overflow: hidden;
 
+  @include mobile {
+    flex-direction: column;
+  }
+
   .Button {
     flex-grow: 1;
     background: $white;

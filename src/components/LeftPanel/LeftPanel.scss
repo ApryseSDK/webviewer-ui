@@ -4,6 +4,14 @@
 .LeftPanel {
   @extend %right-panel;
 
+  @include mobile {
+    flex-direction: row;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: $right-panel-width;
+  }
+
   .left-panel-header {
     display: flex;
     align-items: center;
@@ -15,8 +23,8 @@
     }
 
     @include mobile {
+      flex-direction: column;
       margin: 0px;
-      padding: 13px 17px;
       background-color: $white;
       background-color: var(--primary-color);
     }

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { List } from 'react-virtualized';
+import { List, Grid, AutoSizer } from 'react-virtualized';
 import Measure from 'react-measure';
 import classNames from 'classnames';
+import { isMobile } from 'helpers/device';
 
 import Thumbnail, { THUMBNAIL_SIZE } from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
@@ -453,6 +454,34 @@ class ThumbnailsPanel extends React.PureComponent {
     );
   };
 
+  renderThumbnailsHorizontally = ({ columnIndex, key, style }) => {
+    const {
+      canLoad,
+    } = this.state;
+    const {
+      selectedPageIndexes,
+    } = this.props;
+
+    return (
+      <div key={key} style={style} onDragEnd={this.onDragEnd}>
+        <Thumbnail
+          isDraggable={false}
+          isSelected={selectedPageIndexes.includes(columnIndex)}
+          index={columnIndex}
+          canLoad={canLoad}
+          onLoad={this.onLoad}
+          onCancel={this.onCancel}
+          onRemove={this.onRemove}
+          onDragStart={this.onDragStart}
+          onDragOver={this.onDragOver}
+          onFinishLoading={this.removeFromPendingThumbs}
+          updateAnnotations={this.updateAnnotations}
+          shouldShowControls={false}
+        />
+      </div>
+    );
+  };
+
   toggleDocumentControl = shouldShowControls => {
     this.props.setSelectedPageThumbnails([]);
     this.setState({
@@ -475,6 +504,11 @@ class ThumbnailsPanel extends React.PureComponent {
       isThumbnailControlDisabled,
       selectedPageIndexes,
     } = this.props;
+
+    if (isDisabled) {
+      return null;
+    }
+
     const {
       height,
       width,
@@ -488,58 +522,84 @@ class ThumbnailsPanel extends React.PureComponent {
     const shouldShowControls =
       (allowPageOperations && !isDocumentControlHidden) || selectedPageIndexes.length > 0;
 
-    return isDisabled ? null : (
-      <div
-        className="Panel ThumbnailsPanel"
-        style={{ display }}
-        data-element="thumbnailsPanel"
-        onDrop={this.onDrop}
-      >
-        <Measure bounds onResize={this.onPanelResize}>
-          {({ measureRef }) => (
-            <div
-              ref={measureRef}
-              className="virtualized-thumbnails-container"
-              style={{
-                // when 'shouldShowControls' is true but documentControlHeight isn't set yet, add a maxHeight to keep the height from re-measuring
-                maxHeight: shouldShowControls && !documentControlHeight ? height : null,
-              }}
-            >
-              <List
-                ref={this.listRef}
-                height={shouldShowControls ? height - documentControlHeight : height}
-                width={width}
+    if (isMobile()) {
+      return (
+        <div
+          className="Panel ThumbnailsPanel"
+          style={{ display }}
+          data-element="thumbnailsPanel"
+          onDrop={this.onDrop}
+        >
+          <AutoSizer disableHeight>
+            {({width}) => (
+              <Grid
+                cellRenderer={this.renderThumbnailsHorizontally}
+                columnWidth={115}
+                columnCount={totalPages}
+                height={300}
+                overscanColumnCount={2}
                 rowHeight={thumbnailHeight}
-                // Round it to a whole number because React-Virtualized list library doesn't round it for us and throws errors when rendering non whole number rows
-                // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
-                rowCount={Math.ceil(totalPages / numberOfColumns)}
-                rowRenderer={this.renderThumbnails}
-                overscanRowCount={10}
-                className={'thumbnailsList'}
-                style={{ outline: 'none' }}
+                rowCount={1}
+                width={width}
               />
-              <Measure
-                bounds
-                onResize={({ bounds }) => {
-                  this.setState({
-                    documentControlHeight: Math.ceil(bounds.height),
-                  });
+            )}
+          </AutoSizer>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className="Panel ThumbnailsPanel"
+          style={{ display }}
+          data-element="thumbnailsPanel"
+          onDrop={this.onDrop}
+        >
+          <Measure bounds onResize={this.onPanelResize}>
+            {({ measureRef }) => (
+              <div
+                ref={measureRef}
+                className="virtualized-thumbnails-container"
+                style={{
+                  // when 'shouldShowControls' is true but documentControlHeight isn't set yet, add a maxHeight to keep the height from re-measuring
+                  maxHeight: shouldShowControls && !documentControlHeight ? height : null,
                 }}
               >
-                {({ measureRef: innerMeasureRef }) => (
-                  <div ref={innerMeasureRef}>
-                    <DocumentControls
-                      toggleDocumentControl={this.toggleDocumentControl}
-                      shouldShowControls={shouldShowControls}
-                    />
-                  </div>
-                )}
-              </Measure>
-            </div>
-          )}
-        </Measure>
-      </div>
-    );
+                <List
+                  ref={this.listRef}
+                  height={shouldShowControls ? height - documentControlHeight : height}
+                  width={width}
+                  rowHeight={thumbnailHeight}
+                  // Round it to a whole number because React-Virtualized list library doesn't round it for us and throws errors when rendering non whole number rows
+                  // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
+                  rowCount={Math.ceil(totalPages / numberOfColumns)}
+                  rowRenderer={this.renderThumbnails}
+                  overscanRowCount={10}
+                  className={'thumbnailsList'}
+                  style={{ outline: 'none' }}
+                />
+                <Measure
+                  bounds
+                  onResize={({ bounds }) => {
+                    this.setState({
+                      documentControlHeight: Math.ceil(bounds.height),
+                    });
+                  }}
+                >
+                  {({ measureRef: innerMeasureRef }) => (
+                    <div ref={innerMeasureRef}>
+                      <DocumentControls
+                        toggleDocumentControl={this.toggleDocumentControl}
+                        shouldShowControls={shouldShowControls}
+                      />
+                    </div>
+                  )}
+                </Measure>
+              </div>
+            )}
+          </Measure>
+        </div>
+      );
+    }
   }
 }
 

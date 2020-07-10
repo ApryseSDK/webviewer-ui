@@ -29,7 +29,6 @@ export default {
           element: 'pageNav',
         },
         { type: 'spacer' },
-        { type: 'toggleElementButton', img: 'ic_left_sidebar_black_24px', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
       ],
       tools: [
         { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'component.freehandToolsButton', showColor: 'active' },
