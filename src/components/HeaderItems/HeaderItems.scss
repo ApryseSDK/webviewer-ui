@@ -60,6 +60,12 @@
       pointer-events: none;
       width: 64px;
       background: var(--tools-header-background);
+      @include ie11 {
+        background: none; // hack for ie11. Gradient does not work
+      }
+      top: 0px; // hack for ie11. centers vertically.
+      bottom: 0px; // hack for ie11. centers vertically.
+      margin: auto; // hack for ie11. centers vertically.
 
       .Icon {
         color: var(--scroll-chevron-color);
