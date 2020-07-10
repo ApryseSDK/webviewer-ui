@@ -40,6 +40,8 @@ class LayersPanel extends React.PureComponent {
     doc.getLayersArray().then(layers => {
       if (layers.length) {
         this.props.setLayers(layers);
+        // since the "layersUpdate" event is coming from backend
+        // and we need to update UI somehow, here we fo force update
         this.forceUpdate();
       }
     });
