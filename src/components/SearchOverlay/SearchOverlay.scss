@@ -33,7 +33,8 @@
   }
   
   &.transformed {
-    right: 0;
+    bottom: initial;
+    top: 0;
     width: 300px;
     border-color: transparent;
     border-radius: 0;

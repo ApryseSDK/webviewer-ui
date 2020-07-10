@@ -2,7 +2,7 @@
 @import '../../constants/panel';
 
 .SearchPanel {
-  @extend %right-panel;
+  @extend %left-panel;
 
   .results {
     flex: 1;
