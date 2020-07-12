@@ -181,6 +181,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'areaTools', dataElement: 'areaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'ellipseAreaTools', dataElement: 'ellipseAreaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'rectangleAreaTools', dataElement: 'rectangleAreaToolGroupButton', title: 'annotation.areaMeasurement' },
+        { type: 'toolGroupButton', toolGroup: 'countTools', dataElement: 'countToolGroupButton', title: 'annotation.countMeasurement' },
         { type: 'divider' },
         {
           type: 'customElement',
@@ -271,6 +272,10 @@ export default {
       { dataElement: 'freeTextToolButton' },
     ],
     toolButtonObjects: {
+      AnnotationCreateCountMeasurement: { dataElement: 'countMeasurementToolButton', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
+      AnnotationCreateCountMeasurement2: { dataElement: 'countMeasurementToolButton2', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
+      AnnotationCreateCountMeasurement3: { dataElement: 'countMeasurementToolButton3', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
+      AnnotationCreateCountMeasurement4: { dataElement: 'countMeasurementToolButton4', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
       AnnotationCreateDistanceMeasurement: { dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'distanceTools', showColor: 'always' },
       AnnotationCreateDistanceMeasurement2: { dataElement: 'distanceMeasurementToolButton2', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'distanceTools', showColor: 'always' },
       AnnotationCreateDistanceMeasurement3: { dataElement: 'distanceMeasurementToolButton3', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'distanceTools', showColor: 'always' },
