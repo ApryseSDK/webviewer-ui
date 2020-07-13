@@ -12,11 +12,11 @@
 
   @include mobile {
     width: 100%;
-    height: calc(100% - #{$top-bar-height-m} - #{$left-panel-width});
+    height: calc(100% - #{$top-bar-height-m} - #{$right-panel-width});
   }
 
   &.left-panel {
-    width: calc(100% - #{$left-panel-width});
+    width: calc(100% - #{$right-panel-width});
 
     @include mobile {
       width: 100%;
