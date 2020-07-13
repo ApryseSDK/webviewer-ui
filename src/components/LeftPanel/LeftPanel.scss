@@ -15,7 +15,6 @@
   .left-panel-header {
     display: flex;
     align-items: center;
-    margin: 16px;
 
     .close-btn {
       cursor: pointer;
@@ -23,10 +22,7 @@
     }
 
     @include mobile {
-      flex-direction: column;
-      margin: 0px;
-      background-color: $white;
-      background-color: var(--primary-color);
+      display: none;
     }
   }
 
