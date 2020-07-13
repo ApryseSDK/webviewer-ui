@@ -536,7 +536,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 cellRenderer={this.renderThumbnailsHorizontally}
                 columnWidth={150}
                 columnCount={totalPages}
-                height={300}
+                height={thumbnailHeight}
                 overscanColumnCount={2}
                 rowHeight={thumbnailHeight}
                 rowCount={1}
