@@ -195,6 +195,11 @@ export default (enable, store) => features => {
         store.dispatch(actions.setAllowPageNavigation(enable));
       },
     },
+    [Feature.MouseWheelZoom]: {
+      fn: () => {
+        store.dispatch(actions.setMouseWheelZoom(enable));
+      }
+    },
   };
 
   if (!Array.isArray(features)) {
