@@ -232,6 +232,10 @@ export const disableReplyForAnnotations = func => ({
   type: 'SET_REPLY_DISABLED_FUNC',
   payload: { func },
 });
+export const setMouseWheelZoom = (enableMouseWheelZoom = true) => ({
+  type: 'SET_MOUSE_WHEEL_ZOOM',
+  payload: { enableMouseWheelZoom },
+});
 
 // document
 export const setTotalPages = totalPages => ({

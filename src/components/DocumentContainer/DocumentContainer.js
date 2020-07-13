@@ -32,6 +32,7 @@ class DocumentContainer extends React.PureComponent {
     displayMode: PropTypes.string.isRequired,
     leftPanelWidth: PropTypes.number,
     allowPageNavigation: PropTypes.bool.isRequired,
+    isMouseWheelZoomEnabled: PropTypes.bool.isRequired,
   }
 
   constructor(props) {
@@ -114,7 +115,8 @@ class DocumentContainer extends React.PureComponent {
   }
 
   onWheel = e => {
-    if (e.metaKey || e.ctrlKey) {
+    const { isMouseWheelZoomEnabled } = this.props;
+    if (isMouseWheelZoomEnabled && e.metaKey || e.ctrlKey) {
       e.preventDefault();
       this.wheelToZoom(e);
     } else if (!core.isContinuousDisplayMode() && this.props.allowPageNavigation) {
@@ -224,6 +226,7 @@ const mapStateToProps = state => ({
   // using leftPanelWidth to trigger render
   leftPanelWidth: selectors.getLeftPanelWidth(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
+  isMouseWheelZoomEnabled: selectors.getEnableMouseWheelZoom(state),
 });
 
 const mapDispatchToProps = dispatch => ({
