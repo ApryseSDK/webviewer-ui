@@ -189,9 +189,10 @@ class Thumbnail extends React.PureComponent {
           onDragStart={this.onDragStart}
           draggable={isDraggable}
         >
-          <div ref={this.thumbContainer} className="thumbnail" />
+          <div ref={this.thumbContainer} className="thumbnail">
+            <div className="page-label">{pageLabel}</div>
+          </div>
         </div>
-        <div className="page-label">{pageLabel}</div>
         {isActive && shouldShowControls && <ThumbnailControls index={index} />}
       </div>
     );

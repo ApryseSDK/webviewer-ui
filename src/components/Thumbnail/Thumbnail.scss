@@ -11,6 +11,10 @@
   text-align: center;
   cursor: pointer;
 
+  @include mobile {
+    margin: 2.5px;
+  }
+
   &:hover {
     background-color: $gray10;
   }
@@ -49,10 +53,20 @@
       top: 50%;
       transform: translate(-50%, -50%);
     }
-  }
 
-  .page-label {
-    margin-top: 5px;
+    .thumbnail {
+      position: relative;
+      .page-label {
+        position: absolute;
+        right: 0;
+        bottom: 3px;
+        padding: 2.5px 5px;
+        background-color: #979797;
+        opacity: 0.8;
+        color: white;
+        font-weight: bold;
+      }
+    }
   }
 
   &.selected {

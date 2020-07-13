@@ -534,7 +534,7 @@ class ThumbnailsPanel extends React.PureComponent {
             {({width}) => (
               <Grid
                 cellRenderer={this.renderThumbnailsHorizontally}
-                columnWidth={115}
+                columnWidth={150}
                 columnCount={totalPages}
                 height={300}
                 overscanColumnCount={2}
