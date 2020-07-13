@@ -11,10 +11,6 @@
   text-align: center;
   cursor: pointer;
 
-  @include mobile {
-    margin: 2.5px;
-  }
-
   &:hover {
     background-color: $gray10;
   }
