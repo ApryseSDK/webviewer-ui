@@ -265,7 +265,12 @@ class ThumbnailsPanel extends React.PureComponent {
   onPageNumberUpdated = pageNumber => {
     const numberOfColumns = this.getNumberOfColumns(this.state.width);
     const pageIndex = pageNumber - 1;
-    this.listRef.current?.scrollToRow(Math.floor(pageIndex / numberOfColumns));
+
+    if (isMobile()) {
+      this.listRef.current?.scrollToCell({columnIndex: pageIndex, rowIndex: 0});
+    } else {
+      this.listRef.current?.scrollToRow(Math.floor(pageIndex / numberOfColumns));
+    }
   };
 
   getNumberOfColumns = width => {
@@ -533,6 +538,7 @@ class ThumbnailsPanel extends React.PureComponent {
           <AutoSizer disableHeight>
             {({width}) => (
               <Grid
+                ref={this.listRef}
                 cellRenderer={this.renderThumbnailsHorizontally}
                 columnWidth={150}
                 columnCount={totalPages}
