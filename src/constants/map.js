@@ -135,7 +135,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateCountMeasurement'],
+    toolNames: [
+      'AnnotationCreateCountMeasurement',
+      'AnnotationCreateCountMeasurement2',
+      'AnnotationCreateCountMeasurement3',
+      'AnnotationCreateCountMeasurement4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.StickyAnnotation &&
       annotation.getCustomData('trn-is-count')

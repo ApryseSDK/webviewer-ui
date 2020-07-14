@@ -2,6 +2,18 @@
 // following are the tools that we want to change the default styles due to design
 // we could change the default styles in core but we don't want the legacy UI to be affected, so we do it here
 export default {
+  AnnotationCreateCountMeasurement: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateCountMeasurement2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateCountMeasurement3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateCountMeasurement4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
   AnnotationCreateRectangularAreaMeasurement: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },

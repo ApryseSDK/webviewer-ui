@@ -36,6 +36,7 @@ export default (enable, store) => features => {
     [Feature.Measurement]: {
       dataElements: [
         "toolbarGroup-Measure",
+        // everything below this is probably outdated
         'measurementOverlay',
         'distanceToolGroupButton',
         'perimeterToolGroupButton',
