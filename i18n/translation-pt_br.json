@@ -336,9 +336,9 @@
     }
   },
   "tool": {
-    "pan": "Pan",
+    "pan": "Arrastar",
     "select": "Selecionar",
-    "Marquee": "Zoom Marquee",
+    "Marquee": "Marcar área",
     "Link": "URL ou página do link",
     "Standard": "Padrão",
     "Custom": "personalizadas"
