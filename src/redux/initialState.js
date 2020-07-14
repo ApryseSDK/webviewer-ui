@@ -422,6 +422,7 @@ export default {
     isThumbnailReordering: true,
     isThumbnailMultiselect: true,
     allowPageNavigation: true,
+    enableMouseWheelZoom: true,
     doesAutoLoad: getHashParams('auto_load', true),
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],

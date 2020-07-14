@@ -219,6 +219,8 @@ export const getCustomMeasurementOverlay = state => state.viewer.customMeasureme
 
 export const getAnnotationContentOverlayHandler = state => state.viewer.annotationContentOverlayHandler;
 
+export const getEnableMouseWheelZoom = state => state.viewer.enableMouseWheelZoom;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 
