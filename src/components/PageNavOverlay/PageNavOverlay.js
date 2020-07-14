@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withTranslation } from 'react-i18next';
 
 import core from "core";
 import classNames from 'classnames';
@@ -90,7 +91,7 @@ class PageNavOverlay extends React.PureComponent {
   };
 
   render() {
-    const { isOpen, isDisabled, currentPage, totalPages, allowPageNavigation, isMobile } = this.props;
+    const { isOpen, isDisabled, currentPage, totalPages, allowPageNavigation, isMobile, t } = this.props;
     if (isDisabled || !isOpen) {
       return null;
     }
@@ -112,6 +113,7 @@ class PageNavOverlay extends React.PureComponent {
               Math.max(window.docViewer.getCurrentPage() - 1, 1),
             )
           }
+          aria-label={t('action.pagePrev')}
         >
           <Icon className="side-arrow" glyph="icon-chevron-left" />
         </button>
@@ -125,6 +127,7 @@ class PageNavOverlay extends React.PureComponent {
               tabIndex={-1}
               disabled={!allowPageNavigation}
               style={{ width: inputWidth }}
+              aria-label={t('action.pageSet')}
             />
             {this.state.isCustomPageLabels
               ? ` (${currentPage}/${totalPages})`
@@ -141,6 +144,7 @@ class PageNavOverlay extends React.PureComponent {
               ),
             )
           }
+          aria-label={t('action.pageNext')}
         >
           <Icon className="side-arrow" glyph="icon-chevron-right" />
         </button>
@@ -158,7 +162,7 @@ const mapStateToProps = state => ({
   allowPageNavigation: selectors.getAllowPageNavigation(state),
 });
 
-const ConnectedPageNavOverlay = connect(mapStateToProps)(PageNavOverlay);
+const ConnectedPageNavOverlay = connect(mapStateToProps)(withTranslation()(PageNavOverlay));
 
 
 export default props => {
