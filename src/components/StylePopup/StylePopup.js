@@ -186,7 +186,7 @@ class StylePopup extends React.PureComponent {
             />
           </React.Fragment>
         )}
-        {false && !isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
+        {!isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
       </div>
     );
   }
