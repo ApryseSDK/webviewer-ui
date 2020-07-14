@@ -60,9 +60,9 @@ export default {
           img: 'icon-tools-more',
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('more'));
-            // dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'redactionOverlay']));
+            // dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'redactionOverlay']));
           },
-          hidden: ['mobile', 'tablet, desktop'],
+          hidden: ['mobile', 'tablet', 'desktop'],
         },
       ],
       more: [
