@@ -3,6 +3,7 @@ import React from 'react';
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import actions from 'actions';
+import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
@@ -60,15 +61,26 @@ export default {
           img: 'icon-tools-more',
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('more'));
-            // dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'redactionOverlay']));
+            core.setToolMode(defaultTool);
           },
           hidden: ['mobile', 'tablet', 'desktop'],
         },
       ],
       more: [
-        { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
-        { type: 'divider' },
-        { type: 'toggleElementButton', img: 'icon-header-page manipulation-line', element: 'viewControlsOverlay', dataElement: 'viewControlsButton', title: 'component.viewControlsOverlay' },
+        { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },
+        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
+        { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
+        { type: 'spacer' },
+        {
+          type: 'actionButton',
+          dataElement: 'defaultHeaderButton',
+          titile: 'action.close',
+          img: 'ic_close_black_24px',
+          onClick: dispatch => {
+            dispatch(actions.setActiveHeaderGroup('default'));
+            core.setToolMode(defaultTool);
+          },
+        },
       ],
       "toolbarGroup-View": [],
       "toolbarGroup-Annotate": [
