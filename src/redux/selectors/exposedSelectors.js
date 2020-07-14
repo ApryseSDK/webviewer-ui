@@ -66,6 +66,10 @@ export const getDefaultHeaderItems = state => {
   return state.viewer.headers.default;
 };
 
+export const getActiveHeaderItems = state => {
+  return state.viewer.headers[state.viewer.activeHeaderGroup];
+};
+
 export const getDisabledElementPriority = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.priority;
 

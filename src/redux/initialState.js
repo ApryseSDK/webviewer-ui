@@ -2,6 +2,7 @@ import React from 'react';
 
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
+import actions from 'actions';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
@@ -57,8 +58,9 @@ export default {
           dataElement: 'moreButton',
           title: 'action.redo',
           img: 'icon-tools-more',
-          onClick: () => {
-            console.log('blejhrklwejrlkewrj');
+          onClick: dispatch => {
+            dispatch(actions.setActiveHeaderGroup('more'));
+            // dispatch(actions.closeElements(['viewControlsOverlay', 'searchOverlay', 'menuOverlay', 'searchPanel', 'leftPanel', 'redactionOverlay']));
           },
           hidden: ['mobile', 'tablet, desktop'],
         },
