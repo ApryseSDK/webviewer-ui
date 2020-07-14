@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import XHR from 'i18next-xhr-backend';
+import HttpApi from 'i18next-http-backend';
 
 export default state => {
   const options = {
@@ -26,7 +26,7 @@ export default state => {
   if (state.advanced.disableI18n) {
     i18next.init(options, callback);
   } else {
-    i18next.use(XHR).init(
+    i18next.use(HttpApi).init(
       {
         ...options,
         backend: {
