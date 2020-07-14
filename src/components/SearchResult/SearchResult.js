@@ -117,7 +117,7 @@ function SearchResult(props) {
         )}
       </CellMeasurer>
     );
-  }, [cellMeasureCache, searchResults, activeResultIndex]);
+  }, [cellMeasureCache, searchResults, activeResultIndex, translate, pageLabels]);
 
   if (width == null || height == null) { // eslint-disable-line eqeqeq
     // VirtualizedList requires width and height of the component which is calculated by withContentRect HOC.
