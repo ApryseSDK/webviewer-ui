@@ -2,6 +2,8 @@ import React from 'react';
 
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
+import actions from 'actions';
+import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
@@ -39,19 +41,46 @@ export default {
           },
           hiddenOnMobileDevice: true,
         },
-        { type: 'divider', hidden: ['mobile', 'tablet'] },
+        { type: 'divider', hidden: ['small-mobile', 'mobile', 'tablet'] },
         { type: 'toolButton', toolName: 'Pan' },
         // For mobile
         { type: 'toolButton', toolName: 'TextSelect' },
-        { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['mobile'] },
+        { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['small-mobile', 'mobile'] },
         {
           type: 'customElement',
           render: () => <Ribbons />,
           className: 'custom-ribbons-container',
         },
+        { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel', hidden: ['small-mobile'] },
+        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel', hidden: ['small-mobile'] },
+        { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay', hidden: ['small-mobile'] },
+        {
+          type: 'actionButton',
+          dataElement: 'moreButton',
+          title: 'action.redo',
+          img: 'icon-tools-more',
+          onClick: dispatch => {
+            dispatch(actions.setActiveHeaderGroup('small-mobile-more-buttons'));
+            core.setToolMode(defaultTool);
+          },
+          hidden: ['mobile', 'tablet', 'desktop'],
+        },
+      ],
+      'small-mobile-more-buttons': [
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
+        { type: 'spacer' },
+        {
+          type: 'actionButton',
+          dataElement: 'defaultHeaderButton',
+          titile: 'action.close',
+          img: 'ic_close_black_24px',
+          onClick: dispatch => {
+            dispatch(actions.setActiveHeaderGroup('default'));
+            core.setToolMode(defaultTool);
+          },
+        },
       ],
       "toolbarGroup-View": [],
       "toolbarGroup-Annotate": [
@@ -69,7 +98,7 @@ export default {
           type: 'customElement',
           render: () => <ToolsOverlay />,
           dataElement: 'toolsOverlay',
-          hidden: ['mobile'],
+          hidden: ['small-mobile', 'mobile'],
         },
         {
           type: 'actionButton',
@@ -93,7 +122,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
       "toolbarGroup-Shapes": [
         { type: 'spacer' },
@@ -110,7 +139,7 @@ export default {
           type: 'customElement',
           render: () => <ToolsOverlay />,
           dataElement: 'toolsOverlay',
-          hidden: ['mobile'],
+          hidden: ['small-mobile', 'mobile'],
         },
         {
           type: 'actionButton',
@@ -134,7 +163,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
       "toolbarGroup-Insert": [
         { type: 'spacer' },
@@ -148,7 +177,7 @@ export default {
           type: 'customElement',
           render: () => <ToolsOverlay />,
           dataElement: 'toolsOverlay',
-          hidden: ['mobile'],
+          hidden: ['small-mobile', 'mobile'],
         },
         {
           type: 'actionButton',
@@ -172,7 +201,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
       "toolbarGroup-Measure": [
         { type: 'spacer' },
@@ -187,7 +216,7 @@ export default {
           type: 'customElement',
           render: () => <ToolsOverlay />,
           dataElement: 'toolsOverlay',
-          hidden: ['mobile'],
+          hidden: ['small-mobile', 'mobile'],
         },
         {
           type: 'actionButton',
@@ -211,7 +240,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
       "toolbarGroup-Edit": [
         { type: 'spacer' },
@@ -240,7 +269,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['mobile'] },
+        { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
     },
     annotationPopup: [

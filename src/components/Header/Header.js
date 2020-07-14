@@ -13,11 +13,11 @@ class Header extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    defaultHeaderItems: PropTypes.array.isRequired,
+    activeHeaderItems: PropTypes.array.isRequired,
   }
 
   render() {
-    const { isDisabled, defaultHeaderItems, isOpen, isToolsHeaderOpen } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen, isToolsHeaderOpen } = this.props;
 
     if (isDisabled || !isOpen) {
       return null;
@@ -31,7 +31,7 @@ class Header extends React.PureComponent {
           })}
           data-element="header"
         >
-          <HeaderItems items={defaultHeaderItems} />
+          <HeaderItems items={activeHeaderItems} />
         </div>
         {!isToolsHeaderOpen && <div className="view-header-border" />}
       </React.Fragment>
@@ -43,7 +43,7 @@ const mapStateToProps = state => ({
   isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
   isDisabled: selectors.isElementDisabled(state, 'header'),
   isOpen: selectors.isElementOpen(state, 'header'),
-  defaultHeaderItems: selectors.getDefaultHeaderItems(state),
+  activeHeaderItems: selectors.getActiveHeaderItems(state),
 });
 
 export default connect(mapStateToProps)(Header);
