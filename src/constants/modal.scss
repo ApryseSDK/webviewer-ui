@@ -58,4 +58,7 @@ $modal-z-index: 100;
 
 %modal-shared-container-style {
   border-radius: 4px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+  background: var(--component-background);
 }

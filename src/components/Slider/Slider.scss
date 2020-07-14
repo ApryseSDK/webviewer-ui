@@ -33,7 +33,7 @@
     svg {
       // Actual width of svg
       // Very important. CSS behaves strangely without it.
-      width: 170px;
+      width: 148px;
       flex: 7;
       circle {
         fill: var(--slider-filled);

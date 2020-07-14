@@ -2,37 +2,33 @@
 
 .Accessibility {
   position: fixed;
-  left: 50%;
-  transform: translate(-50%);
-  z-index: 30;
+  z-index: 9999;
 
   display: flex;
+  align-items: center;
   overflow: hidden;
 
   background: white;
-  color: $pdftron-blue;
-  font-style: italic;
+  color: black;
   font-size: 1.2em;
-  border-bottom: 1px solid var(--border);
+  border: 1px solid var(--border);
+  
+  height: $top-bar-height;
+  padding: 0 10px;
 
   &.visible {
-    height: $top-bar-height;
-    padding: 10px;
+    transform: translateY(0%);
   }
 
   &.hidden {
-    height: 0;
-    padding: 0;
+    transform: translateY(-100%);
   }
 
-  div {
-    margin: 2px 7px;
-    padding: 1px;
-  }
-
-  .skip-to-hack {
-    width: 0;
-    height: 0;
+  button {
     border: none;
+    background-color: transparent;
+    color: black;
+    margin: 0 7px;
+    padding: 2px 6px;
   }
 }

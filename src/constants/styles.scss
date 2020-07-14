@@ -34,6 +34,7 @@ $md-shadow1: 0 0 2px 0 rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.12),
 // Screens
 $tablet-width: 900px;
 $mobile-width: 640px;
+$small-mobile-width: 430px;
 
 $signature-modal-shared-color: #e1e1e3;
 
@@ -76,6 +77,12 @@ $gray-3: #343A40;
   }
 }
 
+@mixin small-mobile {
+  @media (max-width: #{$small-mobile-width}) {
+    @content;
+  }
+}
+
 @mixin tablet-and-mobile {
   @media (max-width: #{$tablet-width}) {
     @content;
@@ -101,7 +108,13 @@ $gray-3: #343A40;
 }
 
 .hide-in-mobile {
-  @include mobile {
+  @media (max-width: #{$mobile-width}) and (min-width: #{$small-mobile-width + 1}) {
+    display: none;
+  }
+}
+
+.hide-in-small-mobile {
+  @include small-mobile {
     display: none;
   }
 }

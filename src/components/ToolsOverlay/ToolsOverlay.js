@@ -109,6 +109,7 @@ class ToolsOverlay extends React.PureComponent {
   render() {
     const {
       t,
+      tReady,
       isDisabled,
       isOpen,
       toolNames,
@@ -119,10 +120,12 @@ class ToolsOverlay extends React.PureComponent {
     } = this.props;
 
     const isVisible = (isOpen || true) && !isDisabled;
-    if (!isVisible) {
+    // if translation file is not ready, don't render else it looks weird and bad to see untranslated text
+    if (!isVisible || !tReady) {
       return null;
     }
 
+    // TODO: There should be a better way to do this...
     const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools' || activeToolGroup === 'fileAttachmentTools';
 
     let Component = (

@@ -33,9 +33,9 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      @include ie11 {
-        top: 4px;
-      }
+      top: 0px; // hack for ie11. centers vertically.
+      bottom: 0px; // hack for ie11. centers vertically.
+      margin: auto; // hack for ie11. centers vertically.
 
       .ribbon-group {
         @include button-reset;

@@ -200,7 +200,7 @@ const TouchEventManager = {
         }
 
         const { reachedLeft, reachedTop, reachedRight, reachedBottom } = this.reachedBoundary();
-        const threshold = 0.35 * this.container.clientWidth;
+        const threshold = 0.1 * this.container.clientWidth;
         const swipedToBottom = reachedBottom && this.touch.verticalDistance > threshold;
         const swipedToTop = reachedTop && this.touch.verticalDistance < -threshold;
         const swipedToRight = reachedRight && this.touch.horizontalDistance > threshold;
