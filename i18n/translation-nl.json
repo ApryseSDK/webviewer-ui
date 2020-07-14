@@ -47,7 +47,9 @@
     "lightMode": "Lichte modus",
     "fileAttachmentDownload": "Download bijgevoegd bestand",
     "prevResult": "Vorig resultaat",
-    "nextResult": "Volgend resultaat"
+    "nextResult": "Volgend resultaat",
+    "prev": "Vorige",
+    "next": "De volgende"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",

@@ -47,7 +47,9 @@
     "lightMode": "Легкий режим",
     "fileAttachmentDownload": "Скачать прикрепленный файл",
     "prevResult": "Предыдущий результат",
-    "nextResult": "Следующий результат"
+    "nextResult": "Следующий результат",
+    "prev": "предыдущий",
+    "next": "следующий"
   },
   "annotation": {
     "areaMeasurement": "Площадь",

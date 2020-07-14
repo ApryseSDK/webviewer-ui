@@ -47,7 +47,9 @@
     "lightMode": "Modo de luz",
     "fileAttachmentDownload": "Baixar arquivo anexado",
     "prevResult": "Resultado anterior",
-    "nextResult": "Próximo resultado"
+    "nextResult": "Próximo resultado",
+    "prev": "Anterior",
+    "next": "Próximo"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",

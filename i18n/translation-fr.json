@@ -47,7 +47,9 @@
     "lightMode": "Mode lumière",
     "fileAttachmentDownload": "Télécharger le fichier joint",
     "prevResult": "Résultat précédent",
-    "nextResult": "Résultat suivant"
+    "nextResult": "Résultat suivant",
+    "prev": "précédent",
+    "next": "Prochain"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
