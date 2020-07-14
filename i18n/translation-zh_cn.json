@@ -47,7 +47,9 @@
     "lightMode": "灯光模式",
     "fileAttachmentDownload": "下载附件",
     "prevResult": "先前的结果",
-    "nextResult": "下一个结果"
+    "nextResult": "下一个结果",
+    "prev": "以前",
+    "next": "下一个"
   },
   "annotation": {
     "areaMeasurement": "面积测量",

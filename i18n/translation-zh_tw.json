@@ -47,7 +47,9 @@
     "lightMode": "燈光模式",
     "fileAttachmentDownload": "下載附件",
     "prevResult": "先前的結果",
-    "nextResult": "下一個結果"
+    "nextResult": "下一個結果",
+    "prev": "以前",
+    "next": "下一個"
   },
   "annotation": {
     "areaMeasurement": "測量面積",

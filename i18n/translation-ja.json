@@ -47,7 +47,9 @@
     "lightMode": "ライトモード",
     "fileAttachmentDownload": "添付ファイルをダウンロード",
     "prevResult": "前の結果",
-    "nextResult": "次の結果"
+    "nextResult": "次の結果",
+    "prev": "前",
+    "next": "次"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
