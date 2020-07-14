@@ -60,13 +60,13 @@ export default {
           title: 'action.redo',
           img: 'icon-tools-more',
           onClick: dispatch => {
-            dispatch(actions.setActiveHeaderGroup('more'));
+            dispatch(actions.setActiveHeaderGroup('small-mobile-more-buttons'));
             core.setToolMode(defaultTool);
           },
           hidden: ['mobile', 'tablet', 'desktop'],
         },
       ],
-      more: [
+      'small-mobile-more-buttons': [
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
