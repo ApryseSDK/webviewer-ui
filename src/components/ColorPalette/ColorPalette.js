@@ -75,7 +75,11 @@ class ColorPalette extends React.PureComponent {
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
 
-    const palette = overridePalette2 ||  overridePalette?.[colorMapKey] || overridePalette?.global || this.palette;
+    let palette = overridePalette2 ||  overridePalette?.[colorMapKey] || overridePalette?.global || this.palette;
+    if (!allowTransparent) {
+      palette = palette.filter(p => p?.toLowerCase() !== 'transparency');
+    } 
+
     const hasTransparentPalette = palette.some(bg => bg?.toLowerCase() === 'transparency');
 
     const transparentIcon = (
