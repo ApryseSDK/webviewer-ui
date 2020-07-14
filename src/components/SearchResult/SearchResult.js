@@ -134,7 +134,7 @@ function SearchResult(props) {
 
   return (
     <VirtualizedList
-      width={width}
+      width={width - 16}
       height={height}
       overscanRowCount={10}
       rowCount={searchResults.length}
