@@ -54,6 +54,7 @@ const AutoResizeTextarea = React.forwardRef(
         onBlur={onBlur}
         value={value}
         placeholder={placeholder}
+        aria-label={placeholder}
       />
     );
   },
