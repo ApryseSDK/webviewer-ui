@@ -180,6 +180,7 @@
       "all": "Все",
       "current": "Текущий",
       "pages": "Страницы",
+      "includeAnnotations": "Включить аннотации",
       "includeComments": "Приложить комментарии",
       "addWatermarkSettings": "Добавить настройки водяного знака"
     },
