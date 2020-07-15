@@ -299,6 +299,15 @@ export default initialState => (state = initialState, action) => {
       return { ...state, noteTransformFunction: payload.noteTransformFunction };
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
+    case 'SET_CUSTOM_MODAL': {
+      const existingDataElementFiltered = state.customModals.filter(function(modal) {
+        return modal.dataElement !== payload.dataElement;
+      });
+      return {
+        ...state,
+        customModals: [...existingDataElementFiltered, payload],
+      };
+    }
     case 'SET_MOUSE_WHEEL_ZOOM':
       return { ...state, enableMouseWheelZoom: payload.enableMouseWheelZoom };
     default:
