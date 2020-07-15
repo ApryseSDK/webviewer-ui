@@ -308,6 +308,8 @@ export default initialState => (state = initialState, action) => {
         customModals: [...existingDataElementFiltered, payload],
       };
     }
+    case 'SET_MOUSE_WHEEL_ZOOM':
+      return { ...state, enableMouseWheelZoom: payload.enableMouseWheelZoom };
     default:
       return state;
   }
