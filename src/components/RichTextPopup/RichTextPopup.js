@@ -135,7 +135,7 @@ const RichTextPopup = () => {
   const syncDraggablePosition = (e, { x, y }) => {
     setDraggablePosition({ x, y });
   };
-
+  // TODO for now don't show it in mobile
   return isDisabled || isMobile() ? null : (
     <Draggable
       position={draggablePosition}
