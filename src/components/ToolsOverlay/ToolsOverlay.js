@@ -123,6 +123,7 @@ class ToolsOverlay extends React.PureComponent {
       return null;
     }
 
+    // TODO: There should be a better way to do this...
     const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools' || activeToolGroup === 'fileAttachmentTools';
 
     let Component = (

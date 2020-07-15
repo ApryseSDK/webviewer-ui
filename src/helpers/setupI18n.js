@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import XHR from 'i18next-xhr-backend';
+import HttpApi from 'i18next-http-backend';
 
 // https://github.com/isaachinman/next-i18next/issues/562
 // the values in this array should match the language codes of the json files inside the i18n folder
@@ -43,7 +43,7 @@ export default state => {
   if (state.advanced.disableI18n) {
     i18next.init(options, callback);
   } else {
-    i18next.use(XHR).init(
+    i18next.use(HttpApi).init(
       {
         ...options,
         backend: {

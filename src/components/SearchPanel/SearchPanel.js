@@ -10,7 +10,6 @@ import SearchOverlay from 'components/SearchOverlay';
 import Icon from 'components/Icon';
 
 import core from 'core';
-// import { isMobile, isTabletOrMobile } from 'helpers/device';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -18,6 +17,7 @@ import useMedia from 'hooks/useMedia';
 
 import './SearchPanel.scss';
 import { motion, AnimatePresence } from "framer-motion";
+import { isSafari } from 'src/helpers/device';
 
 const minWidth = 293;
 
@@ -106,7 +106,7 @@ class SearchPanel extends React.PureComponent {
             initial={{ width: '0px' }}
             animate={animate}
             exit={{ width: '0px' }}
-            transition={{ ease: "easeOut", duration: 0.25 }}
+            transition={{ ease: "easeOut", duration: isSafari ? 0 : 0.25 }}
           >
             {!isTabletAndMobile &&
               <ResizeBar
