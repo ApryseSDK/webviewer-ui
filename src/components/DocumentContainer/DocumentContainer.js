@@ -228,7 +228,7 @@ class DocumentContainer extends React.PureComponent {
             <MeasurementOverlay />
             <div className="footer">
               <PageNavOverlay />
-              {this.props.isMobile && <ToolsOverlay />}
+              {/* {this.props.isMobile && <ToolsOverlay />} */}
             </div>
           </div>
         )}
