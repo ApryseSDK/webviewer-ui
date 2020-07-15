@@ -22,7 +22,11 @@
     "fitToPage": "Fit to page",
     "fitToWidth": "Fit to width",
     "openFile": "Open file",
+    "pagePrev": "Previous page",
+    "pageNext": "Next page",
+    "pageSet": "Set page",
     "print": "Print",
+    "name": "Name",
     "ok": "OK",
     "reply": "Reply",
     "rotate": "Page Orientation",
@@ -38,6 +42,7 @@
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
+    "zoomSet": "Set zoom",
     "zoomControls": "Zoom Controls",
     "draw": "Draw",
     "type": "Type",
@@ -47,7 +52,9 @@
     "lightMode": "Light mode",
     "fileAttachmentDownload": "Download attached file",
     "prevResult": "Previous result",
-    "nextResult": "Next result"
+    "nextResult": "Next result",
+    "prev": "Previous",
+    "next": "Next"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -282,13 +289,13 @@
       "underline": "Underline",
       "strikeout": "Strikeout"
     },
-    "customStampModal" : {
+    "customStampModal": {
       "stampText": "Stamp text:",
       "timestampText": "Timestamp text:",
       "stampColor": "Stamp color:",
       "Username": "Username",
-      "Date":"Date",
-      "Time":"Time"
+      "Date": "Date",
+      "Time": "Time"
     }
   },
   "warning": {
@@ -366,23 +373,7 @@
       "November",
       "December"
     ],
-    "weekdays": [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ],
-    "weekdaysShort": [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat"
-    ]
+    "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "weekdaysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   }
 }

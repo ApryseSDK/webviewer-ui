@@ -104,6 +104,7 @@ const ReplyArea = ({ annotation }) => {
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}
+        aria-label={`${t('action.reply')}...`}
       />
       <button
         className="reply-button"

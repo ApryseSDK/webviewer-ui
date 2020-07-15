@@ -22,7 +22,11 @@
     "fitToPage": "ページに合わせる",
     "fitToWidth": "幅に合わせる",
     "openFile": "ファイルを開く",
+    "pagePrev": "前のページ",
+    "pageNext": "次のページ",
+    "pageSet": "ページを設定",
     "print": "印刷",
+    "name": "名前",
     "ok": "OK",
     "reply": "返信",
     "rotate": "回転",
@@ -38,6 +42,7 @@
     "zoom": "ズーム",
     "zoomIn": "ズームイン",
     "zoomOut": "ズームアウト",
+    "zoomSet": "ズームを設定",
     "zoomControls": "ズームコントロール",
     "draw": "ドロー",
     "type": "タイプ",
@@ -47,7 +52,9 @@
     "lightMode": "ライトモード",
     "fileAttachmentDownload": "添付ファイルをダウンロード",
     "prevResult": "前の結果",
-    "nextResult": "次の結果"
+    "nextResult": "次の結果",
+    "prev": "前",
+    "next": "次"
   },
   "annotation": {
     "areaMeasurement": "面積測定",

@@ -353,6 +353,7 @@ const NotesPanel = () => {
                   <input
                     type="text"
                     placeholder={t('message.searchCommentsPlaceholder')}
+                    aria-label={t('message.searchCommentsPlaceholder')}
                     onChange={handleInputChange}
                     ref={inputRef}
                     id="NotesPanel__input"
