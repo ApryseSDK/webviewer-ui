@@ -8,10 +8,6 @@
     font-size: 14px; // hack for extra area in the tab list. 13px looks bad.
   }
 
-  @include mobile {
-    background: none;
-  }
-
   .ColorPalette {
     margin-bottom: 8px;
     width: auto;
