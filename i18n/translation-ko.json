@@ -22,7 +22,11 @@
     "fitToPage": "페이지에 맞추기",
     "fitToWidth": "너비에 맞추기",
     "openFile": "파일 열기",
+    "pagePrev": "이전 페이지",
+    "pageNext": "다음 페이지",
+    "pageSet": "페이지 설정",
     "print": "인쇄",
+    "name": "이름",
     "ok": "확인",
     "reply": "회신",
     "rotate": "회전",
@@ -38,6 +42,7 @@
     "zoom": "확대/축소",
     "zoomIn": "확대",
     "zoomOut": "축소",
+    "zoomSet": "줌 설정",
     "zoomControls": "줌 컨트롤",
     "draw": "무승부",
     "type": "유형",
@@ -47,7 +52,9 @@
     "lightMode": "라이트 모드",
     "fileAttachmentDownload": "첨부 파일 다운로드",
     "prevResult": "이전 결과",
-    "nextResult": "다음 결과"
+    "nextResult": "다음 결과",
+    "prev": "이전",
+    "next": "다음"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",

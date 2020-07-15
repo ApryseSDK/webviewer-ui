@@ -487,6 +487,7 @@ class PrintModal extends React.PureComponent {
         ref={this.customInput}
         type="text"
         placeholder={t('message.customPrintPlaceholder')}
+        aria-label={t('message.customPrintPlaceholder')}
         onFocus={this.onFocus}
         disabled={isPrinting}
       />

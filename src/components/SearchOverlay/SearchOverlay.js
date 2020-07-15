@@ -479,6 +479,7 @@ class SearchOverlay extends React.PureComponent {
             onKeyDown={this.onKeyDown}
             value={searchValue}
             placeholder={t('message.searchDocumentPlaceholder')}
+            aria-label={t('message.searchDocumentPlaceholder')}
             id="SearchPanel__input"
           />
           <button

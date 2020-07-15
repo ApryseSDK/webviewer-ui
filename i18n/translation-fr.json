@@ -22,7 +22,11 @@
     "fitToPage": "Fit à la page",
     "fitToWidth": "Fit à la largeur",
     "openFile": "Ouvrir un fichier",
+    "pagePrev": "Page précédente",
+    "pageNext": "Page suivante",
+    "pageSet": "Mettre en place la page",
     "print": "Imprimer",
+    "name": "Nom",
     "ok": "OK",
     "reply": "Répondre",
     "rotate": "Tourner",
@@ -38,6 +42,7 @@
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
     "zoomOut": "Dézoomer",
+    "zoomSet": "Définir le zoom",
     "zoomControls": "Commandes de zoom",
     "draw": "Dessiner",
     "type": "Type",
@@ -47,7 +52,9 @@
     "lightMode": "Mode lumière",
     "fileAttachmentDownload": "Télécharger le fichier joint",
     "prevResult": "Résultat précédent",
-    "nextResult": "Résultat suivant"
+    "nextResult": "Résultat suivant",
+    "prev": "précédent",
+    "next": "Prochain"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",

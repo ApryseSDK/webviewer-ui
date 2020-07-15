@@ -147,6 +147,7 @@ const DocumentControls = props => {
               onChange={pageStringUpdate}
               value={pageString}
               placeholder={t('option.documentControls.placeholder')}
+              aria-label={t('option.documentControls.placeholder')}
               className="pagesInput"
               type="text"
             />

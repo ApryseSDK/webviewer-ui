@@ -22,7 +22,11 @@
     "fitToPage": "页面尺寸",
     "fitToWidth": "自身尺寸",
     "openFile": "打开文件",
+    "pagePrev": "上一页",
+    "pageNext": "下一页",
+    "pageSet": "设定页面",
     "print": "打印",
+    "name": "名称",
     "ok": "好的",
     "reply": "回复",
     "rotate": "旋转",
@@ -38,6 +42,7 @@
     "zoom": "缩放",
     "zoomIn": "放大",
     "zoomOut": "缩小",
+    "zoomSet": "设定缩放",
     "zoomControls": "缩放控制",
     "draw": "画",
     "type": "类型",
@@ -47,7 +52,9 @@
     "lightMode": "灯光模式",
     "fileAttachmentDownload": "下载附件",
     "prevResult": "先前的结果",
-    "nextResult": "下一个结果"
+    "nextResult": "下一个结果",
+    "prev": "以前",
+    "next": "下一个"
   },
   "annotation": {
     "areaMeasurement": "面积测量",

@@ -22,7 +22,11 @@
     "fitToPage": "Vensterhoogte",
     "fitToWidth": "Vensterbreedte",
     "openFile": "Open bestand",
+    "pagePrev": "Vorige pagina",
+    "pageNext": "Volgende bladzijde",
+    "pageSet": "Zet pagina",
     "print": "Printen",
+    "name": "Naam",
     "ok": "OK",
     "reply": "Antwoorden",
     "rotate": "Roteren",
@@ -38,6 +42,7 @@
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom uit",
+    "zoomSet": "Zoom instellen",
     "zoomControls": "Zoomregelaars",
     "draw": "Trek",
     "type": "Type",
@@ -47,7 +52,9 @@
     "lightMode": "Lichte modus",
     "fileAttachmentDownload": "Download bijgevoegd bestand",
     "prevResult": "Vorig resultaat",
-    "nextResult": "Volgend resultaat"
+    "nextResult": "Volgend resultaat",
+    "prev": "Vorige",
+    "next": "De volgende"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
