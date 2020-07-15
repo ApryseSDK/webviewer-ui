@@ -6,7 +6,7 @@ import Measure from 'react-measure';
 import classNames from 'classnames';
 import { isMobile } from 'helpers/device';
 
-import Thumbnail, { THUMBNAIL_SIZE } from 'components/Thumbnail';
+import Thumbnail, { getThumbnailSize } from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
 
 import core from 'core';
@@ -293,8 +293,11 @@ class ThumbnailsPanel extends React.PureComponent {
     const annotCanvas =
       thumbContainer.querySelector('.annotation-image') || document.createElement('canvas');
     annotCanvas.className = 'annotation-image';
-    annotCanvas.style.maxWidth = `${THUMBNAIL_SIZE}px`;
-    annotCanvas.style.maxHeight = `${THUMBNAIL_SIZE}px`;
+
+    const thumbnailSize = getThumbnailSize();
+
+    annotCanvas.style.maxWidth = `${thumbnailSize}px`;
+    annotCanvas.style.maxHeight = `${thumbnailSize}px`;
     const ctx = annotCanvas.getContext('2d');
 
     let zoom = 1;
@@ -346,14 +349,16 @@ class ThumbnailsPanel extends React.PureComponent {
     let height;
     let ratio;
 
+    const thumbnailSize = getThumbnailSize();
+
     if (pageWidth > pageHeight) {
-      ratio = pageWidth / THUMBNAIL_SIZE;
-      width = THUMBNAIL_SIZE;
+      ratio = pageWidth / thumbnailSize;
+      width = thumbnailSize;
       height = Math.round(pageHeight / ratio);
     } else {
-      ratio = pageHeight / THUMBNAIL_SIZE;
+      ratio = pageHeight / thumbnailSize;
       width = Math.round(pageWidth / ratio); // Chrome has trouble displaying borders of non integer width canvases.
-      height = THUMBNAIL_SIZE;
+      height = thumbnailSize;
     }
 
     return {
@@ -540,11 +545,11 @@ class ThumbnailsPanel extends React.PureComponent {
               <Grid
                 ref={this.listRef}
                 cellRenderer={this.renderThumbnailsHorizontally}
-                columnWidth={150}
+                columnWidth={100}
                 columnCount={totalPages}
-                height={thumbnailHeight}
+                height={120}
                 overscanColumnCount={2}
-                rowHeight={thumbnailHeight}
+                rowHeight={120}
                 rowCount={1}
                 width={width}
               />

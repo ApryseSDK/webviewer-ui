@@ -6,7 +6,6 @@
   justify-content: center;
   align-items: center;
   height: calc(100% - 5px);
-  margin: 2.5px 0px;
   font-size: 12px;
   text-align: center;
   cursor: pointer;
@@ -24,7 +23,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 13px 10px 5px 10px;
+    margin: 10px 0;
 
     img.page-image {
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -57,8 +56,7 @@
         right: 0;
         bottom: 3px;
         padding: 2.5px 5px;
-        background-color: #979797;
-        opacity: 0.8;
+        background-color: rgba(151,151,151,0.8);
         color: white;
         font-weight: bold;
       }

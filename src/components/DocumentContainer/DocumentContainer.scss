@@ -11,7 +11,7 @@
 
   @include mobile {
     width: 100%;
-    height: calc(100% - #{$top-bar-height-m} - #{$right-panel-width});
+    height: calc(100% - #{$top-bar-height-m} - #{$panel-height});
   }
 
   &.left-panel {
@@ -19,7 +19,7 @@
 
     @include mobile {
       width: 100%;
-      margin-top: $right-panel-width;
+      margin-top: $panel-height;
     }
   }
 

@@ -11,7 +11,10 @@ import ThumbnailControls from 'components/ThumbnailControls';
 
 import './Thumbnail.scss';
 
-export const THUMBNAIL_SIZE = 150;
+const THUMBNAIL_SIZE = 150;
+const THUMBNAIL_SIZE_M = 100;
+
+export const getThumbnailSize = () => isMobile() ? THUMBNAIL_SIZE_M : THUMBNAIL_SIZE;
 
 class Thumbnail extends React.PureComponent {
   static propTypes = {
@@ -109,7 +112,9 @@ class Thumbnail extends React.PureComponent {
     const id = core.loadThumbnailAsync(index, thumb => {
       thumb.className = 'page-image';
 
-      const ratio = Math.min(THUMBNAIL_SIZE / thumb.width, THUMBNAIL_SIZE / thumb.height);
+      const thumbnailSize = getThumbnailSize();
+
+      const ratio = Math.min(thumbnailSize / thumb.width, thumbnailSize / thumb.height);
       thumb.style.width = `${thumb.width * ratio}px`;
       thumb.style.height = `${thumb.height * ratio}px`;
 
@@ -168,6 +173,7 @@ class Thumbnail extends React.PureComponent {
     const { index, currentPage, pageLabels, isDraggable, isSelected, shouldShowControls } = this.props;
     const isActive = currentPage === index + 1;
     const pageLabel = pageLabels[index];
+    const thumbnailSize = getThumbnailSize();
 
     return (
       <div
@@ -182,8 +188,8 @@ class Thumbnail extends React.PureComponent {
         <div
           className="container"
           style={{
-            width: THUMBNAIL_SIZE,
-            height: THUMBNAIL_SIZE,
+            width: thumbnailSize,
+            height: thumbnailSize,
           }}
 
           onDragStart={this.onDragStart}

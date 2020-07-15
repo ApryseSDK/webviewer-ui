@@ -1,4 +1,4 @@
-import Thumbnail, { THUMBNAIL_SIZE } from './Thumbnail';
+import Thumbnail, { getThumbnailSize } from './Thumbnail';
 
-export { THUMBNAIL_SIZE };
+export { getThumbnailSize };
 export default Thumbnail;
