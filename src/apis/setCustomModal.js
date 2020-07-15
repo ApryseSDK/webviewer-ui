@@ -12,6 +12,9 @@ function generateSetCustomModal(store) {
    * Modal with identical <em>options.dataElement</em> will get replaced by the latest modal options.
    * <br /><br />
    * For styling these components, see <a href="https://www.pdftron.com/documentation/web/guides/customizing-styles/" target="_blank">Customizing WebViewer UI Styles</a>
+   *<br /><br />
+   * Note that in most cases WebViewer is ran in iframe and making <i>options.disableEscapeKeyDown</i> automatically work, iframe must be the
+   * active element. This can be done by setting focus to iframe programmatically.
    *
    * @example
 WebWiewer(...).then(function(instance) {
@@ -33,6 +36,8 @@ WebWiewer(...).then(function(instance) {
    * @method WebViewerInstance#setCustomModal
    * @param {object} options
    * @param {string} options.dataElement Unique name of custom modal.
+   * @param {boolean} [options.disableBackdropClick=false] Disable closing modal when user clicks outside of content area
+   * @param {boolean} [options.disableEscapeKeyDown=false] Disable closing modal when user hit escape from keyboard
    * @param {WebViewerInstance.renderCustomModal} options.render Function rendering custom model contents
    */
   /**
