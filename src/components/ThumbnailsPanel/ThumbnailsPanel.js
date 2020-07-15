@@ -5,6 +5,8 @@ import { List } from 'react-virtualized';
 import Measure from 'react-measure';
 import classNames from 'classnames';
 
+import { isIE11 } from 'helpers/device';
+
 import Thumbnail, { THUMBNAIL_SIZE } from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
 
@@ -171,7 +173,12 @@ class ThumbnailsPanel extends React.PureComponent {
     const insertTo = isDraggingToPreviousPage
       ? draggingOverPageIndex + 1
       : draggingOverPageIndex + 2;
-    const externalPageWebViewerFrameId = e.dataTransfer.getData(dataTransferWebViewerFrameKey);
+
+    let externalPageWebViewerFrameId;
+    if (!isIE11) {
+      // at this time of writing, IE11 does not really have support for getData
+      externalPageWebViewerFrameId = e.dataTransfer.getData(dataTransferWebViewerFrameKey);
+    }
     const mergingDocument =
       (externalPageWebViewerFrameId && window.frameElement.id !== externalPageWebViewerFrameId) ||
       files.length;
