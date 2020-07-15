@@ -172,7 +172,10 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     return (
-      <div
+      <Swipeable
+        onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+        onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+        preventDefaultTouchmoveEvent
         className="ToolsOverlayContainer"
       >
         <div
@@ -207,18 +210,10 @@ class ToolsOverlay extends React.PureComponent {
                 />
               </button>}
           </div>
-          {(isToolStyleOpen) && (
-            <Swipeable
-              onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-              onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-              preventDefaultTouchmoveEvent
-              className="swipeable-container"
-            >
-              <ToolStylePopup/>
-            </Swipeable>
-          )}
+          {isToolStyleOpen &&
+            <ToolStylePopup/>}
         </div>
-      </div>
+      </Swipeable>
     );
   }
 }
