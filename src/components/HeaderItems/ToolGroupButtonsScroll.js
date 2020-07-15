@@ -65,7 +65,9 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
                 )}
                 onClick={() => {
                   // Move two tools over
-                  scrollRef.current.scrollTo(scrollRef.current.scrollLeft - 54 * 2, 0);
+                  // don't use scrollTo as it doesn't work in IE11
+                  scrollRef.current.scrollTop = 0;
+                  scrollRef.current.scrollLeft = scrollRef.current.scrollLeft - 54 * 2;
                 }}
               >
                 <Icon  glyph="icon-chevron-left" />
@@ -84,7 +86,9 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
                 )}
                 onClick={() => {
                   // Move two tools over
-                  scrollRef.current.scrollTo(scrollRef.current.scrollLeft + 54 * 2, 0);
+                  // don't use scrollTo as it doesn't work in IE11
+                  scrollRef.current.scrollTop = 0;
+                  scrollRef.current.scrollLeft = scrollRef.current.scrollLeft + 54 * 2;
                 }}
               >
                 <Icon  glyph="icon-chevron-right" />
