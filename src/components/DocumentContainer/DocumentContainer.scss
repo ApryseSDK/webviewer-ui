@@ -8,7 +8,6 @@
   overflow: auto;
   transition: all .3s ease;
   user-select: none;
-  position: relative;
 
   @include mobile {
     width: 100%;

@@ -4,9 +4,9 @@
 .ToggleZoomOverlay{
   @extend %overlay;
   width: auto;
-  top:20px;
+  top: 20px;
   left: 50%;
-  margin-left: -102.12px;
+  margin-left: calc(-#{$right-panel-width} / 2 - 102.12px);
   border-radius: 5px;
 
   .textarea{
