@@ -295,6 +295,11 @@ export const toggleElement = dataElement => (dispatch, getState) => {
   }
 };
 
+export const setCustomModal = modalOptions => ({
+  type: 'SET_CUSTOM_MODAL',
+  payload: modalOptions,
+});
+
 export const setActiveHeaderGroup = headerGroup => ({
   type: 'SET_ACTIVE_HEADER_GROUP',
   payload: { headerGroup },

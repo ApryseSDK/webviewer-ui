@@ -12,7 +12,7 @@ import Measure from 'react-measure';
 import "./Ribbons.scss";
 
 const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
-  const [t] = useTranslation();
+  const { t, ready } = useTranslation();
   const [ribbonsWidth, setRibbonsWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const [hasEnoughSpace, setHasEnoughSpace] = useState(false);
@@ -31,8 +31,9 @@ const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
       }
     }
   }, [ribbonsWidth, containerWidth, ribbonsRef, containerRef]);
-
-  if (toolbarGroups.length <= 1) {
+  // if translation file is not loaded, don't render component
+  // else it will show untranslated text
+  if (toolbarGroups.length <= 1 || !ready ) {
     return null;
   }
 

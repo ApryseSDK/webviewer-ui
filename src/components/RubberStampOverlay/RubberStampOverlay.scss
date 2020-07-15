@@ -35,9 +35,7 @@
     }
   }
   .custom-stamp-panel {
-    @include mobile {
-      height: 188px;
-    }
+
   }
   .rubber-stamp {
     border-radius: 4px;

@@ -29,7 +29,7 @@ class HeaderItems extends React.PureComponent {
           const { type, dataElement, hidden, toolName, hiddenOnMobileDevice } = item;
           let mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
           if (hiddenOnMobileDevice && isMobileDeviceFunc()) {
-            mediaQueryClassName += ' hide-in-mobile';
+            mediaQueryClassName += ' hide-in-mobile hide-in-small-mobile';
           }
           const key = `${type}-${dataElement || i}`;
 

@@ -32,6 +32,7 @@ import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 import CreateStampModal from 'components/CreateStampModal';
+import CustomModal from 'components/CustomModal';
 
 import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
@@ -107,6 +108,7 @@ const App = ({ removeEventHandlers }) => {
         <CalibrationModal />
         <CreateStampModal />
         <LinkModal />
+        <CustomModal />
       </div>
 
       <PrintHandler />
