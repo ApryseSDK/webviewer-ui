@@ -38,6 +38,10 @@ export default state => {
     window.Tools.FreeTextCreateTool.setTextHandler(() =>
       t('message.insertTextHere'),
     );
+
+    window.Tools.CalloutCreateTool.setTextHandler(() =>
+      t('message.insertTextHere'),
+    );
   };
 
   if (state.advanced.disableI18n) {
