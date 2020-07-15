@@ -1,6 +1,23 @@
 import i18next from 'i18next';
 import HttpApi from 'i18next-http-backend';
 
+// https://github.com/isaachinman/next-i18next/issues/562
+// the values in this array should match the language codes of the json files inside the i18n folder
+i18next.languages = [
+  'en',
+  'de',
+  'es',
+  'fr',
+  'it',
+  'ja',
+  'ko',
+  'nl',
+  'pt_br',
+  'ru',
+  'zh_cn',
+  'zh_tw'
+];
+
 export default state => {
   const options = {
     fallbackLng: 'en',
