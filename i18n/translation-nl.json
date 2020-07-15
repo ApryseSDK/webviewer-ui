@@ -180,6 +180,7 @@
       "all": "Alles",
       "current": "Huidige",
       "pages": "Pagina's",
+      "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Inclusief commentaar",
       "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
