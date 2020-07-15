@@ -179,6 +179,7 @@
       "all": "Alles",
       "current": "Huidige",
       "pages": "Pagina's",
+      "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Inclusief commentaar",
       "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
@@ -250,7 +251,8 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Met de klok mee",
-      "rotateCounterClockwise": "Tegen de klok in"
+      "rotateCounterClockwise": "Tegen de klok in",
+      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om te extraheren"
     },
     "richText": {
       "bold": "Vet",

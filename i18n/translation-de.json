@@ -179,6 +179,7 @@
       "all": "Alle",
       "current": "Aktuelle Seite",
       "pages": "Seiten",
+      "includeAnnotations": "Fügen Sie Anmerkungen hinzu",
       "includeComments": "Kommentare einfügen",
       "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"
     },
@@ -250,7 +251,8 @@
     "thumbnailPanel": {
       "delete": "Löschen",
       "rotateClockwise": "Im Uhrzeigersinn",
-      "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
+      "extractZeroPageError": "Es wurden keine Seiten zum Extrahieren ausgewählt"
     },
     "richText": {
       "bold": "Fett",
