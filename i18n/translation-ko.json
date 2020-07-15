@@ -179,6 +179,7 @@
       "all": "모두",
       "current": "현재",
       "pages": "페이지",
+      "includeAnnotations": "주석 포함",
       "includeComments": "코멘트 포함",
       "addWatermarkSettings": "워터 마크 설정 추가"
     },
@@ -250,7 +251,8 @@
     "thumbnailPanel": {
       "delete": "지우다",
       "rotateClockwise": "시계 방향",
-      "rotateCounterClockwise": "시계 반대 방향"
+      "rotateCounterClockwise": "시계 반대 방향",
+      "extractZeroPageError": "추출 할 페이지가 선택되지 않았습니다"
     },
     "richText": {
       "bold": "굵게",

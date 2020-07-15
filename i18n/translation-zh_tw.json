@@ -179,6 +179,7 @@
       "all": "全部",
       "current": "目前",
       "pages": "頁面",
+      "includeAnnotations": "包括註釋",
       "includeComments": "包括評論",
       "addWatermarkSettings": "添加水印設置"
     },
@@ -250,7 +251,8 @@
     "thumbnailPanel": {
       "delete": "刪除",
       "rotateClockwise": "順時針",
-      "rotateCounterClockwise": "逆時針方向"
+      "rotateCounterClockwise": "逆時針方向",
+      "extractZeroPageError": "沒有選擇要提取的頁面"
     },
     "richText": {
       "bold": "粗體",

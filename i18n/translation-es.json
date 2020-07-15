@@ -179,6 +179,7 @@
       "all": "Todo",
       "current": "Actual",
       "pages": "Páginas",
+      "includeAnnotations": "Incluir anotaciones",
       "includeComments": "Incluir comentarios",
       "addWatermarkSettings": "Agregar configuraciones de marca de agua"
     },
@@ -250,7 +251,8 @@
     "thumbnailPanel": {
       "delete": "Borrar",
       "rotateClockwise": "Agujas del reloj",
-      "rotateCounterClockwise": "Sinistrórsum"
+      "rotateCounterClockwise": "Sinistrórsum",
+      "extractZeroPageError": "No se seleccionaron páginas para extraer"
     },
     "richText": {
       "bold": "Negrita",
