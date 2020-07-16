@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
@@ -26,13 +26,13 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
 
   const [itemsWidth, setItemsWidth] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // useEffect(() => {
-  //   // Default to 0 so it's always a number.
-  //   const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || 0;
-  //   if (clientWidth !== items.itemsWidth) {
-  //     setItemsWidth(overlayRef.current.clientWidth);
-  //   }
-  // });
+  useLayoutEffect(() => {
+    // Default to 0 so it's always a number.
+    const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || 0;
+    if (clientWidth !== items.itemsWidth) {
+      setItemsWidth(overlayRef.current.clientWidth);
+    }
+  });
 
   const onClose = useCallback(() => setIsOpen(false), []);
   const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
