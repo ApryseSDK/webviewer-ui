@@ -17,7 +17,7 @@ const propTypes = {
 };
 
 function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }) {
-  const [t] = useTranslation();
+  const  { t, ready: tReady } = useTranslation();
 
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
@@ -90,7 +90,7 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
         <div className="picked-option">
           {optionIsSelected && (
             <div className="picked-option-text">
-              {t(`${translationPrefix}.${currentSelectionKey}`)}
+              {tReady? t(`${translationPrefix}.${currentSelectionKey}`) : ''}
             </div>
           )}
           <Icon className="down-arrow" glyph="icon-chevron-down" />

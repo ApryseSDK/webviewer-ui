@@ -120,8 +120,7 @@ class ToolsOverlay extends React.PureComponent {
     } = this.props;
 
     const isVisible = (isOpen || true) && !isDisabled;
-    // if translation file is not ready, don't render else it looks weird and bad to see untranslated text
-    if (!isVisible || !tReady) {
+    if (!isVisible) {
       return null;
     }
 
@@ -162,7 +161,7 @@ class ToolsOverlay extends React.PureComponent {
     } else if (noPresets) {
       Component = (
         <div className="no-presets">
-          {t('message.toolsOverlayNoPresets')}
+          {tReady? t('message.toolsOverlayNoPresets') : ''}
         </div>
       );
     }
