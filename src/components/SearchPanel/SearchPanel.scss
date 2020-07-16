@@ -84,6 +84,12 @@
       &:focus{
         outline: none;
       }
+
+      width: auto !important;
+
+      .ReactVirtualized__Grid__innerScrollContainer {
+        max-width: unset !important;
+      }
     }
   }
 
