@@ -9,7 +9,6 @@ import selectors from 'selectors';
 import actions from 'actions';
 
 import './ThumbnailControls.scss';
-import { workerTypes } from "constants/types";
 
 const propTypes = {
   index: PropTypes.number.isRequired,
@@ -20,7 +19,7 @@ const dataElementName = 'thumbnailControl';
 const ThumbnailControls = ({
   index,
 }) => {
-  let [isElementDisabled] = useSelector(state => [
+  const [isElementDisabled] = useSelector(state => [
     selectors.isElementDisabled(state, dataElementName),
   ]);
 
@@ -61,28 +60,33 @@ const ThumbnailControls = ({
     dispatch(actions.showWarningMessage(warning));
   };
 
-  if (!isElementDisabled) {
-    const docType = core.getDocument().getType();
-    isElementDisabled = !(docType === workerTypes.PDF || (docType === workerTypes.BLACKBOX && !core.isWebViewerServerDocument()));
-  }
+  const isWVSDocument = core.getDocument().isWebViewerServerDocument();
 
   return isElementDisabled ? null : (
     <div className="thumbnailControls" data-element={dataElementName}>
-      <Button
-        img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
-        onClick={rotateCounterClockwise}
-        title="option.thumbnailPanel.rotateCounterClockwise"
-      />
+      {
+        !isWVSDocument && (
+          <Button
+            img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
+            onClick={rotateCounterClockwise}
+            title="option.thumbnailPanel.rotateCounterClockwise"
+          />
+        )
+      }
       <Button
         img="icon-delete-line"
         onClick={handleDelete}
         title="option.thumbnailPanel.delete"
       />
-      <Button
-        img="icon-header-page-manipulation-page-rotation-clockwise-line"
-        onClick={rotateClockwise}
-        title="option.thumbnailPanel.rotateClockwise"
-      />
+      {
+        !isWVSDocument && (
+          <Button
+            img="icon-header-page-manipulation-page-rotation-clockwise-line"
+            onClick={rotateClockwise}
+            title="option.thumbnailPanel.rotateClockwise"
+          />
+        )
+      }
     </div>
   );
 };
