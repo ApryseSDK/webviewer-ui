@@ -73,11 +73,25 @@
   .results {
     overflow-y: auto;
     overflow-y: overlay;
-    padding-right: 18px;
     flex: 1;
 
     &.wild-card-visible {
       margin-top: 110px !important;
+    }
+
+    .ReactVirtualized__List{
+      overflow: overlay !important;
+      padding-right: 16px;
+
+      &:focus{
+        outline: none;
+      }
+
+      width: auto !important;
+
+      .ReactVirtualized__Grid__innerScrollContainer {
+        max-width: unset !important;
+      }
     }
   }
 

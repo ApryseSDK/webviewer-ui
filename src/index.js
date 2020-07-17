@@ -34,15 +34,22 @@ import './index.scss';
 
 const middleware = [thunk];
 
+let composeEnhancer = function noopStoreComposeEnhancer(middleware) {
+  return middleware;
+};
+
 if (process.env.NODE_ENV === 'development') {
   const isSpamDisabled = localStorage.getItem('spamDisabled') === 'true';
   if (!isSpamDisabled) {
     const { createLogger } = require('redux-logger');
     middleware.push(createLogger({ collapsed: true }));
   }
+  const { composeWithDevTools } = require('redux-devtools-extension/logOnlyInProduction');
+  composeEnhancer = composeWithDevTools({});
 }
 
-const store = createStore(rootReducer, applyMiddleware(...middleware));
+
+const store = createStore(rootReducer, composeEnhancer(applyMiddleware(...middleware)));
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {

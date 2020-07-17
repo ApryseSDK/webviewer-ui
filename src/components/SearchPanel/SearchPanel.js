@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { motion, AnimatePresence } from "framer-motion";
+import { isSafari } from 'src/helpers/device';
 
 import SearchResult from 'components/SearchResult';
-import ListSeparator from 'components/ListSeparator';
 import ResizeBar from 'components/ResizeBar';
 import SearchOverlay from 'components/SearchOverlay';
 import Icon from 'components/Icon';
-
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
@@ -16,8 +16,6 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 
 import './SearchPanel.scss';
-import { motion, AnimatePresence } from "framer-motion";
-import { isSafari } from 'src/helpers/device';
 
 const minWidth = 293;
 
@@ -33,17 +31,12 @@ class SearchPanel extends React.PureComponent {
     t: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
     pageLabels: PropTypes.array.isRequired,
+    setSearchPanelWidth: PropTypes.func,
+    currentWidth: PropTypes.number,
+    activeResultIndex: PropTypes.number,
+    isMobile: PropTypes.bool,
+    isTabletAndMobile: PropTypes.bool,
   };
-
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      // if (isTabletOrMobile()) {
-      //   this.props.closeElements(['leftPanel']);
-      // }
-
-      // this.props.closeElements(['notesPanel']);
-    }
-  }
 
   onClickResult = (resultIndex, result) => {
     const { setActiveResultIndex, closeElements, isMobile } = this.props;
@@ -56,31 +49,21 @@ class SearchPanel extends React.PureComponent {
     }
   };
 
-  onClickClose = () => {
-    this.props.closeElements('searchPanel');
-  };
-
-  renderListSeparator = (prevResult, currResult) => {
-    const isFirstResult = prevResult === currResult;
-    const isInDifferentPage = prevResult.pageNum !== currResult.pageNum;
-
-    if (isFirstResult || isInDifferentPage) {
-      return (
-        <ListSeparator
-          renderContent={() =>
-            `${this.props.t('option.shared.page')} ${
-              this.props.pageLabels[currResult.pageNum - 1]
-            }`
-          }
-        />
-      );
-    }
-
-    return null;
-  };
-
   render() {
-    const { setSearchPanelWidth, currentWidth, isOpen, isDisabled, t, results, noResult, isMobile, isTabletAndMobile, closeElements } = this.props;
+    const {
+      setSearchPanelWidth,
+      currentWidth,
+      isOpen,
+      isDisabled,
+      t,
+      results,
+      noResult,
+      isMobile,
+      isTabletAndMobile,
+      closeElements,
+      activeResultIndex,
+      pageLabels
+    } = this.props;
 
     if (isDisabled) {
       return null;
@@ -138,23 +121,14 @@ class SearchPanel extends React.PureComponent {
                   </button>
                 </div>}
               <SearchOverlay />
-              <div className={`results`}>
-                {noResult && <div className="info">{t('message.noResults')}</div>}
-                {results.map((result, i) => {
-                  const prevResult = i === 0 ? results[0] : results[i - 1];
-
-                  return (
-                    <React.Fragment key={i}>
-                      {this.renderListSeparator(prevResult, result)}
-                      <SearchResult
-                        result={result}
-                        index={i}
-                        onClickResult={this.onClickResult}
-                      />
-                    </React.Fragment>
-                  );
-                })}
-              </div>
+              <SearchResult
+                translate={t}
+                noSearchResult={noResult}
+                searchResults={results}
+                activeResultIndex={activeResultIndex}
+                onClickResult={this.onClickResult}
+                pageLabels={pageLabels}
+              />
             </div>
           </motion.div>
         )}
@@ -167,6 +141,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'searchPanel'),
   isOpen: selectors.isElementOpen(state, 'searchPanel'),
   results: selectors.getResults(state),
+  activeResultIndex: selectors.getActiveResultIndex(state),
   isSearching: selectors.isSearching(state),
   noResult: selectors.isNoResult(state),
   errorMessage: selectors.getSearchErrorMessage(state),
@@ -201,7 +176,6 @@ export default props => {
     // Default value
     false,
   );
-
 
   return (
     <ConnectedSearchPanel {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />

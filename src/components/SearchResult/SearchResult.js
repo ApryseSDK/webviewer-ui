@@ -1,55 +1,166 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { withContentRect } from 'react-measure';
 import PropTypes from 'prop-types';
 
-import selectors from 'selectors';
-
 import './SearchResult.scss';
+import VirtualizedList from "react-virtualized/dist/commonjs/List";
+import CellMeasurer, { CellMeasurerCache } from "react-virtualized/dist/commonjs/CellMeasurer";
+import ListSeparator from "components/ListSeparator";
 
-class SearchResult extends React.PureComponent {
-  static propTypes = {
-    index: PropTypes.number.isRequired,
-    result: PropTypes.object.isRequired,
-    activeResultIndex: PropTypes.number.isRequired,
-    onClickResult: PropTypes.func.isRequired,
-  };
+const SearchResultListSeparatorPropTypes = {
+  currentResultIndex: PropTypes.number.isRequired,
+  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  translate: PropTypes.func.isRequired,
+  pageLabels: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
 
-  onClick = () => {
-    const { onClickResult, index, result } = this.props;
+function SearchResultListSeparator(props) {
+  const { currentResultIndex, searchResults, translate, pageLabels } = props;
 
-    onClickResult(index, result);
-  }
+  const previousIndex = currentResultIndex === 0 ? currentResultIndex : currentResultIndex - 1;
+  const currentListItem = searchResults[currentResultIndex];
+  const previousListItem = searchResults[previousIndex];
 
-  renderContent = () => {
-    const { ambientStr, resultStrStart, resultStrEnd, resultStr } = this.props.result;
-    const textBeforeSearchValue = ambientStr.slice(0, resultStrStart);
-    const searchValue = ambientStr === '' ? resultStr : ambientStr.slice(resultStrStart, resultStrEnd);
-    const textAfterSearchValue = ambientStr.slice(resultStrEnd);
+  const isFirstListItem = previousListItem === currentListItem;
+  const isInDifferentPage = previousListItem.pageNum !== currentListItem.pageNum;
 
+  if (isFirstListItem || isInDifferentPage) {
+    const listSeparatorText = `${translate('option.shared.page')} ${pageLabels[currentListItem.pageNum - 1]}`;
     return (
-      <React.Fragment>
-        {textBeforeSearchValue}
-        <span className="search-value">
-          {searchValue}
-        </span>
-        {textAfterSearchValue}
-      </React.Fragment>
+      <ListSeparator>{listSeparatorText}</ListSeparator>
     );
   }
-
-  render() {
-    const { activeResultIndex, index } = this.props;
-
-    return (
-      <div className={`SearchResult ${index === activeResultIndex ? 'selected' : ''}`} onClick={this.onClick}>
-        {this.renderContent()}
-      </div>
-    );
-  }
+  return null;
 }
 
-const mapStateToProps = state => ({
-  activeResultIndex: selectors.getActiveResultIndex(state),
-});
+SearchResultListSeparator.propTypes = SearchResultListSeparatorPropTypes;
 
-export default connect(mapStateToProps)(SearchResult);
+const SearchResultListItemPropTypes = {
+  result: PropTypes.object.isRequired,
+  currentResultIndex: PropTypes.number.isRequired,
+  activeResultIndex: PropTypes.number.isRequired,
+  onSearchResultClick: PropTypes.func,
+};
+
+function SearchResultListItem(props) {
+  const { result, currentResultIndex, activeResultIndex, onSearchResultClick } = props;
+  const { ambientStr, resultStrStart, resultStrEnd, resultStr } = result;
+  const textBeforeSearchValue = ambientStr.slice(0, resultStrStart);
+  const searchValue = ambientStr === '' ? resultStr : ambientStr.slice(resultStrStart, resultStrEnd);
+  const textAfterSearchValue = ambientStr.slice(resultStrEnd);
+  return (
+    <button
+      className={`SearchResult ${currentResultIndex === activeResultIndex ? 'selected' : ''}`}
+      onClick={() => {
+        if (onSearchResultClick) {
+          onSearchResultClick(currentResultIndex, result);
+        }
+      }}
+    >
+      {textBeforeSearchValue}
+      <span className="search-value">{searchValue}</span>
+      {textAfterSearchValue}
+    </button>
+  );
+}
+SearchResultListItem.propTypes = SearchResultListItemPropTypes;
+
+const SearchResultPropTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number,
+  activeResultIndex: PropTypes.number,
+  noSearchResult: PropTypes.bool,
+  searchResults: PropTypes.arrayOf(PropTypes.object),
+  translate: PropTypes.func.isRequired,
+  onClickResult: PropTypes.func,
+  pageLabels: PropTypes.arrayOf(PropTypes.any),
+};
+
+function SearchResult(props) {
+  const { height, activeResultIndex, noSearchResult, searchResults = [], translate, onClickResult, pageLabels } = props;
+  const cellMeasureCache = React.useMemo(() => {
+    return new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
+  }, []);
+
+  if (searchResults.length === 0) {
+    // clear measure cache, when doing a new search
+    cellMeasureCache.clearAll();
+  }
+
+  const rowRenderer = React.useCallback(function rowRendererCallback(rendererOptions) {
+    const { index, key, parent, style } = rendererOptions;
+    const result = searchResults[index];
+
+    return (
+      <CellMeasurer
+        cache={cellMeasureCache}
+        columnIndex={0}
+        key={key}
+        parent={parent}
+        rowIndex={index}
+      >
+        {({ registerChild }) => (
+          <div ref={registerChild} style={style}>
+            <SearchResultListSeparator
+              currentResultIndex={index}
+              searchResults={searchResults}
+              pageLabels={pageLabels}
+              translate={translate}
+            />
+            <SearchResultListItem
+              result={result}
+              currentResultIndex={index}
+              activeResultIndex={activeResultIndex}
+              onSearchResultClick={onClickResult}
+            />
+          </div>
+        )}
+      </CellMeasurer>
+    );
+  }, [cellMeasureCache, searchResults, activeResultIndex, translate, pageLabels]);
+
+  if (height == null) { // eslint-disable-line eqeqeq
+    // VirtualizedList requires width and height of the component which is calculated by withContentRect HOC.
+    // On first render when HOC haven't yet set these values, both are undefined, thus having this check here
+    // and skip rendering if values are missing
+    return null;
+  }
+
+  if (noSearchResult) {
+    return (
+      <div className="info">{translate('message.noResults')}</div>
+    );
+  }
+
+  return (
+    <VirtualizedList
+      width={200}
+      height={height}
+      overscanRowCount={10}
+      rowCount={searchResults.length}
+      deferredMeasurementCache={cellMeasureCache}
+      rowHeight={cellMeasureCache.rowHeight}
+      rowRenderer={rowRenderer}
+    />
+  );
+}
+SearchResult.propTypes = SearchResultPropTypes;
+
+function SearchResultWithContentRectHOC(props) {
+  const { measureRef, contentRect, ...rest } = props;
+  const { height } = contentRect.bounds;
+  return (
+    <div className="results" ref={measureRef}>
+      <SearchResult height={height} {...rest} />
+    </div>
+  );
+}
+SearchResultWithContentRectHOC.propTypes = {
+  contentRect: PropTypes.object,
+  measureRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any })
+  ])
+};
+
+export default withContentRect('bounds')(SearchResultWithContentRectHOC);
