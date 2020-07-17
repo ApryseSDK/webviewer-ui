@@ -24,12 +24,12 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [itemsWidth, setItemsWidth] = useState(0);
+  const [itemsWidth, setItemsWidth] = useState(DEFAULT_WIDTH);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useLayoutEffect(() => {
-    // Default to 0 so it's always a number.
-    const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || 0;
-    if (clientWidth !== items.itemsWidth) {
+    // Default to always a number.
+    const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || DEFAULT_WIDTH;
+    if (clientWidth !== itemsWidth) {
       setItemsWidth(overlayRef.current.clientWidth);
     }
   });
