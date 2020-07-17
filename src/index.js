@@ -24,10 +24,11 @@ import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
-import setDefaultToolPositions from 'helpers/setDefaultToolPositions';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 import getHashParams from 'helpers/getHashParams';
 
 import './index.scss';
@@ -50,6 +51,7 @@ if (process.env.NODE_ENV === 'development') {
 
 
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(...middleware)));
+const persistor = persistStore(store);
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
@@ -158,14 +160,15 @@ if (window.CanvasRenderingContext2D) {
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
     setDefaultToolStyles();
-    // setDefaultToolPositions(store);
     core.setToolMode(defaultTool);
 
     ReactDOM.render(
       <Provider store={store}>
-        <I18nextProvider i18n={i18next}>
-          <App removeEventHandlers={removeEventHandlers} />
-        </I18nextProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <I18nextProvider i18n={i18next}>
+            <App removeEventHandlers={removeEventHandlers} />
+          </I18nextProvider>
+        </PersistGate>
       </Provider>,
       document.getElementById('app'),
     );

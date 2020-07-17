@@ -75,7 +75,7 @@ export const getDisabledElementPriority = (state, dataElement) =>
 
 export const getToolsHeaderItems = state => {
   const toolbarGroup = getCurrentToolbarGroup(state);
-  return state.viewer.headers[toolbarGroup];
+  return state.viewer.headers[toolbarGroup] || [];
 };
 
 export const getToolButtonObjects = state => {

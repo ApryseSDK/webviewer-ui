@@ -45,26 +45,26 @@ class ToolGroupButton extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const activeToolNameChanged = prevProps.activeToolName !== this.props.activeToolName;
-    const wasActiveToolNameInGroup = prevProps.toolNames.includes(prevProps.activeToolName);
+    // const wasActiveToolNameInGroup = prevProps.toolNames.includes(prevProps.activeToolName);
     const isActiveToolNameInGroup = this.props.toolNames.includes(this.props.activeToolName);
-    const toolNamesLengthChanged = prevProps.toolNames.length !== this.props.toolNames.length;
+    // const toolNamesLengthChanged = prevProps.toolNames.length !== this.props.toolNames.length;
 
     if (activeToolNameChanged && isActiveToolNameInGroup) {
       this.setState({ toolName: this.props.activeToolName });
     }
 
-    if (toolNamesLengthChanged && !this.props.toolNames.includes(this.state.toolName)) {
-      this.setState({ toolName: this.props.toolNames[0] });
-    }
+    // if (toolNamesLengthChanged && !this.props.toolNames.includes(this.state.toolName)) {
+    //   this.setState({ toolName: this.props.toolNames[0] });
+    // }
 
-    if (toolNamesLengthChanged && !wasActiveToolNameInGroup && isActiveToolNameInGroup) {
-      this.setState({ toolName: this.props.activeToolName });
-      this.props.setActiveToolGroup(this.props.toolGroup);
-    }
+    // if (toolNamesLengthChanged && !wasActiveToolNameInGroup && isActiveToolNameInGroup) {
+    //   this.setState({ toolName: this.props.activeToolName });
+    //   this.props.setActiveToolGroup(this.props.toolGroup);
+    // }
 
-    if (!this.props.isActive) {
-      this.setState({ toolName: this.props.toolNames[0] });
-    }
+    // if (!this.props.isActive) {
+    //   this.setState({ toolName: this.props.toolNames[0] });
+    // }
   }
 
   onClick = () => {
