@@ -49,7 +49,17 @@ WebViewer(...)
       });
     });
   });
+ * @example
+// Moving the line tool from the 'Shapes' toolbar group to the 'Annotate' toolbar group
+WebViewer(...)
+  .then(function(instance) {
+    instance.setHeaderItems(function(header) {
+      header.getHeader('toolbarGroup-Annotate').push({ type: 'toolGroupButton', toolGroup: 'lineTools', dataElement: 'lineToolGroupButton', title: 'annotation.line' });
+      header.getHeader('toolbarGroup-Shapes').delete(6);
+    });
+  });
  */
+
 /**
  * Callback that gets passed to {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems}.
  * @callback WebViewerInstance.headerCallback
