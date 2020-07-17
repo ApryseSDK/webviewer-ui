@@ -8,7 +8,14 @@ WebViewer(...)
     // remove left panel and left panel button from the DOM
     instance.disableElements([ 'leftPanel', 'leftPanelButton' ]);
   });
+ * @example
+WebViewer(...)
+  .then(function(instance) {
+    // remove the 'Edit' toolbar group
+    instance.disableElements(['toolbarGroup-Edit']);
+  });
  */
+
 
 import actions from 'actions';
 import { PRIORITY_THREE } from 'constants/actionPriority';
