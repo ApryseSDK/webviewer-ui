@@ -77,10 +77,10 @@ const SearchResultPropTypes = {
 };
 
 function SearchResult(props) {
-  const { width, height, activeResultIndex, noSearchResult, searchResults = [], translate, onClickResult, pageLabels } = props;
+  const { height, activeResultIndex, noSearchResult, searchResults = [], translate, onClickResult, pageLabels } = props;
   const cellMeasureCache = React.useMemo(() => {
     return new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
-  }, [width]);
+  }, []);
 
   if (searchResults.length === 0) {
     // clear measure cache, when doing a new search
@@ -119,7 +119,7 @@ function SearchResult(props) {
     );
   }, [cellMeasureCache, searchResults, activeResultIndex, translate, pageLabels]);
 
-  if (width == null || height == null) { // eslint-disable-line eqeqeq
+  if (height == null) { // eslint-disable-line eqeqeq
     // VirtualizedList requires width and height of the component which is calculated by withContentRect HOC.
     // On first render when HOC haven't yet set these values, both are undefined, thus having this check here
     // and skip rendering if values are missing
@@ -148,10 +148,10 @@ SearchResult.propTypes = SearchResultPropTypes;
 
 function SearchResultWithContentRectHOC(props) {
   const { measureRef, contentRect, ...rest } = props;
-  const { width, height } = contentRect.bounds;
+  const { height } = contentRect.bounds;
   return (
     <div className="results" ref={measureRef}>
-      <SearchResult width={width} height={height} {...rest} />
+      <SearchResult height={height} {...rest} />
     </div>
   );
 }
