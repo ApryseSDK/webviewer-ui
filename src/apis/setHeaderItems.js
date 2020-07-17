@@ -3,7 +3,7 @@
  * @method WebViewerInstance#setHeaderItems
  * @param {WebViewerInstance.headerCallback} headerCallback Callback function to perform different operations on the header.
  * @example
-// Adding save annotations button
+// Adding save annotations button to the end of the top header
 WebViewer(...)
   .then(function(instance) {
     instance.setHeaderItems(function(header) {
@@ -19,12 +19,11 @@ WebViewer(...)
     });
   });
  * @example
-// Removing existing buttons
+// Removing existing buttons from the top header
 WebViewer(...)
   .then(function(instance) {
     instance.setHeaderItems(function(header) {
-      var items = header.getItems().slice(9, -3);
-      header.update(items);
+      header.update([]);
     });
   });
  * @example
@@ -32,7 +31,7 @@ WebViewer(...)
 WebViewer(...)
   .then(function(instance) {
     instance.setHeaderItems(function(header) {
-      header.unshift({
+      header.getHeader('toolbarGroup-Annotate').unshift({
         type: 'customElement',
         render: function() {
           var logo = document.createElement('img');
