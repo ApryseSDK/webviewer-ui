@@ -3,7 +3,7 @@
 .SearchResult {
   @include button-reset;
   display: block;
-  width: calc(100% - 5px);
+  width: calc(100% - 4px);
   text-align: left;
 
   cursor: pointer;
@@ -15,7 +15,6 @@
   padding-right: 12px;
   margin-left: 2px;
   margin-bottom: 8px;
-  margin-right: 2px;
   background: var(--component-background);
 
   &.selected {
