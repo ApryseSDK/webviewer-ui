@@ -28,11 +28,10 @@ WebViewer(...)
     });
   });
  * @example
-// Appending logo and shifting existing buttons to the right
+// Appending logo to the 'Annotate' toolbar group and shifting existing buttons to the right
 WebViewer(...)
   .then(function(instance) {
     instance.setHeaderItems(function(header) {
-      header.delete(9);
       header.unshift({
         type: 'customElement',
         render: function() {
