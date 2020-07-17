@@ -26,13 +26,13 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
 
   const [itemsWidth, setItemsWidth] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useLayoutEffect(() => {
-    // Default to 0 so it's always a number.
-    const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || 0;
-    if (clientWidth !== items.itemsWidth) {
-      setItemsWidth(overlayRef.current.clientWidth);
-    }
-  });
+  // useLayoutEffect(() => {
+  //   // Default to 0 so it's always a number.
+  //   const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || 0;
+  //   if (clientWidth !== items.itemsWidth) {
+  //     setItemsWidth(overlayRef.current.clientWidth);
+  //   }
+  // });
 
   const onClose = useCallback(() => setIsOpen(false), []);
   const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
