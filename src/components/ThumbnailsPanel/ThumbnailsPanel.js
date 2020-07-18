@@ -68,7 +68,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('pageComplete', this.onPageComplete);
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
 
-    // If document is alraedy loaded, call 'onDocumentLoaded()' manually.
+    // If document is already loaded, call 'onDocumentLoaded()' manually.
     if (core.getDocument()) {
       this.onDocumentLoaded();
     }
