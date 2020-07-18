@@ -151,7 +151,8 @@ export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
   } else {
     dispatch(openElements(['toolsHeader']));
     const firstToolGroupForToolbarGroup = getFirstToolGroupForToolbarGroup(getState(), toolbarGroup);
-    const toolName = getFirstToolNameForGroup(getState(), firstToolGroupForToolbarGroup);
+    const toolName = getState().viewer.lastPickedToolForGroup[firstToolGroupForToolbarGroup]
+      || getFirstToolNameForGroup(getState(), firstToolGroupForToolbarGroup);
     if (toolName === 'AnnotationCreateSignature') {
       core.setToolMode(defaultTool);
     } else {

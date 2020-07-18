@@ -12,6 +12,14 @@ export default initialState => (state = initialState, action) => {
         ...state,
         canRedo: payload.canRedo,
       };
+    case 'SET_LAST_PICKED_TOOL_FOR_GROUP':
+      return {
+        ...state,
+        lastPickedToolForGroup: {
+          ...state.lastPickedToolForGroup,
+          [payload.group]: payload.toolName,
+        }
+      }
     case 'SET_TOOLBAR_GROUP':
       return {
         ...state,

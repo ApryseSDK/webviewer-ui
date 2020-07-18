@@ -1,6 +1,7 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
+export const getLastPickedToolForGroup = (state, group) => state.viewer.lastPickedToolForGroup[group];
 export const getStandardStamps = state => state.viewer.standardStamps;
 export const getCustomStamps = state => state.viewer.customStamps;
 export const getSelectedStampIndex = state => state.viewer.selectedStampIndex;
