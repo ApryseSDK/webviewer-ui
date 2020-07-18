@@ -21,6 +21,7 @@ import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServ
 import eventHandler from 'helpers/eventHandler';
 import setupI18n from 'helpers/setupI18n';
 import setAutoSwitch from 'helpers/setAutoSwitch';
+import setPrintHandler from './apis/print';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
@@ -147,6 +148,7 @@ if (window.CanvasRenderingContext2D) {
     setupI18n(state);
     setUserPermission(state);
     setAutoSwitch();
+    setPrintHandler(store);
     addEventHandlers();
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
