@@ -150,17 +150,18 @@ export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
     });
   } else {
     dispatch(openElements(['toolsHeader']));
-    const firstToolGroupForToolbarGroup = getFirstToolGroupForToolbarGroup(getState(), toolbarGroup);
-    const toolName = getState().viewer.lastPickedToolForGroup[firstToolGroupForToolbarGroup]
-      || getFirstToolNameForGroup(getState(), firstToolGroupForToolbarGroup);
-    if (toolName === 'AnnotationCreateSignature') {
+    const state = getState();
+    const lastPickedToolGroup = state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
+    const lastPickedToolName = state.viewer.lastPickedToolForGroup[lastPickedToolGroup]
+      || getFirstToolNameForGroup(state, lastPickedToolGroup);
+    if (lastPickedToolName === 'AnnotationCreateSignature') {
       core.setToolMode(defaultTool);
     } else {
-      core.setToolMode(toolName);
+      core.setToolMode(lastPickedToolName);
     }
     dispatch({
       type: 'SET_ACTIVE_TOOL_GROUP',
-      payload: { toolGroup: firstToolGroupForToolbarGroup },
+      payload: { toolGroup: lastPickedToolGroup },
     });
   }
   dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));

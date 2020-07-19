@@ -12,7 +12,7 @@ import storage from 'redux-persist/lib/storage';
 const viewerPersistConfig = {
   key: 'viewer',
   storage,
-  whitelist: ['toolbarGroup', 'lastPickedToolForGroup'],
+  whitelist: ['toolbarGroup', 'lastPickedToolForGroup', 'lastPickedToolGroup'],
 };
 
 export default combineReducers({

@@ -143,6 +143,7 @@ export const setActiveToolStyles = (toolStyles = {}) => ({
 });
 export const setActiveToolGroup = toolGroup => (dispatch, getState) => {
   const currentActiveToolGroup = selectors.getActiveToolGroup(getState());
+  const toolbarGroup = selectors.getCurrentToolbarGroup(getState());
 
   if (currentActiveToolGroup === toolGroup) {
     return;
@@ -150,7 +151,7 @@ export const setActiveToolGroup = toolGroup => (dispatch, getState) => {
 
   dispatch({
     type: 'SET_ACTIVE_TOOL_GROUP',
-    payload: { toolGroup },
+    payload: { toolGroup, toolbarGroup },
   });
 };
 export const setNotePopupId = id => ({
