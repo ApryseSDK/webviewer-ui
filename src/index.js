@@ -21,6 +21,7 @@ import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
+import setPrintHandler from './apis/print';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
@@ -83,7 +84,7 @@ if (window.CanvasRenderingContext2D) {
       if (workerTransportPromise.pdf || workerTransportPromise.office) {
         window.CoreControls.setWorkerTransportPromise(workerTransportPromise);
       } else {
-        window.CoreControls.setWorkerTransportPromise({ 'pdf': workerTransportPromise });
+        window.CoreControls.setWorkerTransportPromise({ pdf: workerTransportPromise });
       }
     }
   } catch (e) {
@@ -98,64 +99,74 @@ if (window.CanvasRenderingContext2D) {
   function initTransports() {
     const { PDF, OFFICE, ALL } = workerTypes;
     if (preloadWorker === PDF || preloadWorker === ALL) {
-      getBackendPromise(getHashParams('pdf', 'auto')).then(pdfType => {
-        window.CoreControls.initPDFWorkerTransports(pdfType, {
-          workerLoadingProgress: percent => {
-            store.dispatch(actions.setLoadingProgress(percent));
+      getBackendPromise(getHashParams('pdf', 'auto')).then((pdfType) => {
+        window.CoreControls.initPDFWorkerTransports(
+          pdfType,
+          {
+            workerLoadingProgress: (percent) => {
+              store.dispatch(actions.setLoadingProgress(percent));
+            },
           },
-        }, window.sampleL);
+          window.sampleL
+        );
       });
     }
 
     if (preloadWorker === OFFICE || preloadWorker === ALL) {
-      getBackendPromise(getHashParams('office', 'auto')).then(officeType => {
-        window.CoreControls.initOfficeWorkerTransports(officeType, {
-          workerLoadingProgress: percent => {
-            store.dispatch(actions.setLoadingProgress(percent));
+      getBackendPromise(getHashParams('office', 'auto')).then((officeType) => {
+        window.CoreControls.initOfficeWorkerTransports(
+          officeType,
+          {
+            workerLoadingProgress: (percent) => {
+              store.dispatch(actions.setLoadingProgress(percent));
+            },
           },
-        }, window.sampleL);
+          window.sampleL
+        );
       });
     }
   }
-
 
   loadCustomCSS(state.advanced.customCSS);
 
   logDebugInfo();
 
-  fullAPIReady.then(() => loadConfig()).then(() => {
-    if (preloadWorker) {
-      initTransports();
-    }
+  fullAPIReady
+    .then(() => loadConfig())
+    .then(() => {
+      if (preloadWorker) {
+        initTransports();
+      }
 
-    const { addEventHandlers, removeEventHandlers } = eventHandler(store);
-    const docViewer = new window.CoreControls.DocumentViewer();
+      const { addEventHandlers, removeEventHandlers } = eventHandler(store);
+      const docViewer = new window.CoreControls.DocumentViewer();
 
-    window.docViewer = docViewer;
-    if (getHashParams('enableViewStateAnnotations', false)) {
-      const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
-      tool?.setSaveViewState(true);
-    }
+      window.docViewer = docViewer;
+      if (getHashParams('enableViewStateAnnotations', false)) {
+        const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
+        tool?.setSaveViewState(true);
+      }
 
-    setupDocViewer();
-    setupI18n(state);
-    setUserPermission(state);
-    setAutoSwitch();
-    addEventHandlers();
-    setDefaultDisabledElements(store);
-    setupLoadAnnotationsFromServer(store);
-    setDefaultToolStyles();
-    core.setToolMode(defaultTool);
+      setupDocViewer();
+      setupI18n(state);
+      setUserPermission(state);
+      setAutoSwitch();
+      addEventHandlers();
+      setDefaultDisabledElements(store);
+      setupLoadAnnotationsFromServer(store);
+      setDefaultToolStyles();
+      core.setToolMode(defaultTool);
+      setPrintHandler(store);
 
-    ReactDOM.render(
-      <Provider store={store}>
-        <I18nextProvider i18n={i18next}>
-          <App removeEventHandlers={removeEventHandlers} />
-        </I18nextProvider>
-      </Provider>,
-      document.getElementById('app'),
-    );
-  });
+      ReactDOM.render(
+        <Provider store={store}>
+          <I18nextProvider i18n={i18next}>
+            <App removeEventHandlers={removeEventHandlers} />
+          </I18nextProvider>
+        </Provider>,
+        document.getElementById('app')
+      );
+    });
 }
 
 window.addEventListener('hashchange', () => {
