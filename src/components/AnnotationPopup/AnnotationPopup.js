@@ -45,6 +45,7 @@ const AnnotationPopup = () => {
   // first annotation in the array when there're multiple annotations selected
   const [firstAnnotation, setFirstAnnotation] = useState(null);
   const [canModify, setCanModify] = useState(false);
+  const [isSnapModeEnabled, setSnapModeEnabled] = useState(false);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
   const popupRef = useRef();
 
@@ -197,6 +198,8 @@ const AnnotationPopup = () => {
         annotation={firstAnnotation}
         style={style}
         isOpen={isOpen}
+        isSnapModeEnabled={isSnapModeEnabled}
+        onSnapModeChange={isSnapModeEnabled => setSnapModeEnabled(isSnapModeEnabled)}
       />
     ) : (
       <CustomizablePopup dataElement="annotationPopup">

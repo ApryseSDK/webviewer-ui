@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 import { isFirefox } from 'helpers/device';
 import i18next from 'i18next';
 
-import Input from 'components/Input';
 import Choice from 'components/Choice/Choice';
 
 import core from 'core';
@@ -34,6 +33,9 @@ class MeasurementOption extends React.Component {
     onStyleChange: PropTypes.func.isRequired,
     isScaleInputDisabled: PropTypes.bool,
     isPrecisionInputDisabled: PropTypes.bool,
+    isSnapModeEnabled: PropTypes.bool,
+    showSnapModeCheckbox: PropTypes.bool,
+    onSnapModeChange: PropTypes.func,
   };
 
   constructor(props) {
@@ -47,7 +49,6 @@ class MeasurementOption extends React.Component {
       isEditing: false,
       documentType: core.getDocument()?.getType(),
     };
-    this.enableSnappingRef = React.createRef();
   }
 
   componentDidMount() {
@@ -118,6 +119,8 @@ class MeasurementOption extends React.Component {
     measurementTools.forEach(tool => {
       tool.setSnapMode?.(mode);
     });
+
+    this.props.onSnapModeChange(enableSnapping);
   }
 
   getLanguage = () => {
@@ -185,7 +188,7 @@ class MeasurementOption extends React.Component {
   };
 
   render() {
-    const { measurementUnits, t, isScaleInputDisabled, isPrecisionInputDisabled } = this.props;
+    const { measurementUnits, t, isScaleInputDisabled, isPrecisionInputDisabled, isSnapModeEnabled, showSnapModeCheckbox } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
     const precisionOptions = [
       { value: 0.1, name: '0.1' },
@@ -250,13 +253,14 @@ class MeasurementOption extends React.Component {
             </div>
           </div>
         )}
-        {this.state.documentType === workerTypes.PDF &&
+        {this.state.documentType === workerTypes.PDF && showSnapModeCheckbox &&
           <div className="options">
             <Choice
               dataElement="measurementSnappingOption"
               id="measurement-snapping"
               type="checkbox"
-              label="Enable Snapping"
+              label={t('option.shared.enableSnapping')}
+              checked={isSnapModeEnabled}
               onChange={this.onSnappingChange}
             />
           </div>

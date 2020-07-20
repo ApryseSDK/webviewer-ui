@@ -17,9 +17,11 @@ import './AnnotationStylePopup.scss';
 class AnnotationStylePopup extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
+    isSnapModeEnabled: PropTypes.bool,
     annotation: PropTypes.object.isRequired,
     style: PropTypes.object.isRequired,
     closeElement: PropTypes.func.isRequired,
+    onSnapModeChange: PropTypes.func,
   };
 
   handleStyleChange = (property, value) => {
@@ -40,7 +42,7 @@ class AnnotationStylePopup extends React.Component {
   }
 
   render() {
-    const { isDisabled, annotation, style } = this.props;
+    const { isDisabled, annotation, style, isSnapModeEnabled, onSnapModeChange } = this.props;
     const isFreeText =
       annotation instanceof window.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
@@ -59,10 +61,13 @@ class AnnotationStylePopup extends React.Component {
         onClick={this.handleClick}
       >
         <StylePopup
+          showSnapModeCheckbox={!(annotation instanceof window.Annotations.EllipseAnnotation)}
           colorMapKey={colorMapKey}
           style={style}
           isFreeText={isFreeText}
+          isSnapModeEnabled={isSnapModeEnabled}
           onStyleChange={this.handleStyleChange}
+          onSnapModeChange={onSnapModeChange}
           disableSeparator
         />
       </div>

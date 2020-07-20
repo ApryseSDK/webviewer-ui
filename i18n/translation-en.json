@@ -267,7 +267,8 @@
     },
     "shared": {
       "page": "Page",
-      "precision": "Precision"
+      "precision": "Precision",
+      "enableSnapping": "Enable Snapping"
     },
     "watermark": {
       "size": "Size",
