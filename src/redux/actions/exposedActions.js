@@ -91,8 +91,8 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
 };
 
 export const enableRibbons = () => (dispatch, getState) => {
-  dispatch(setToolbarGroup('toolbarGroup-Annotate'));
   const state = getState();
+  dispatch(setToolbarGroup(state.viewer.toolbarGroup || 'toolbarGroup-Annotate', false));
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-'));
 
@@ -115,7 +115,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
+export const setToolbarGroup = (toolbarGroup, pickGroup = false) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
@@ -154,15 +154,23 @@ export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
     const lastPickedToolGroup = state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
     const lastPickedToolName = state.viewer.lastPickedToolForGroup[lastPickedToolGroup]
       || getFirstToolNameForGroup(state, lastPickedToolGroup);
-    if (lastPickedToolName === 'AnnotationCreateSignature') {
-      core.setToolMode(defaultTool);
+    if (pickGroup) {
+      if (lastPickedToolName === 'AnnotationCreateSignature') {
+        core.setToolMode(defaultTool);
+      } else {
+        core.setToolMode(lastPickedToolName);
+      }
+      dispatch({
+        type: 'SET_ACTIVE_TOOL_GROUP',
+        payload: { toolGroup: lastPickedToolGroup },
+      });
     } else {
-      core.setToolMode(lastPickedToolName);
+      core.setToolMode(defaultTool);
+      dispatch({
+        type: 'SET_ACTIVE_TOOL_GROUP',
+        payload: { toolGroup: '' },
+      });
     }
-    dispatch({
-      type: 'SET_ACTIVE_TOOL_GROUP',
-      payload: { toolGroup: lastPickedToolGroup },
-    });
   }
   dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
   dispatch({
