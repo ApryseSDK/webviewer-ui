@@ -16,6 +16,8 @@ WebViewer(...)
 import print from 'helpers/print';
 import selectors from 'selectors';
 
-export default store => () => {
-  print(store.dispatch, selectors.isEmbedPrintSupported(store.getState()));
+export default store => {
+  window.docViewer.getAnnotationManager().getFieldManager().setPrintHandler(() => {
+    print(store.dispatch, selectors.isEmbedPrintSupported(store.getState()));
+  });
 };

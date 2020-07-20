@@ -22,6 +22,7 @@ import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import setUserPermission from 'helpers/setUserPermission';
+import setPrintHandler from './apis/print';
 import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
 import getHashParams from 'helpers/getHashParams';
@@ -146,6 +147,7 @@ if (window.CanvasRenderingContext2D) {
     setupLoadAnnotationsFromServer(store);
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
+    setPrintHandler(store);
 
     ReactDOM.render(
       <Provider store={store}>
