@@ -6,6 +6,7 @@ import { isFirefox } from 'helpers/device';
 import i18next from 'i18next';
 
 import Input from 'components/Input';
+import Choice from 'components/Choice/Choice';
 
 import core from 'core';
 import { MEASUREMENT_TOOL_NAMES } from 'helpers/setToolStyles';
@@ -46,6 +47,7 @@ class MeasurementOption extends React.Component {
       isEditing: false,
       documentType: core.getDocument()?.getType(),
     };
+    this.enableSnappingRef = React.createRef();
   }
 
   componentDidMount() {
@@ -249,14 +251,15 @@ class MeasurementOption extends React.Component {
           </div>
         )}
         {this.state.documentType === workerTypes.PDF &&
-          <Input
-            dataElement="measurementSnappingOption"
-            id="measurement-snapping"
-            name="measurement-snapping"
-            type="checkbox"
-            label="Enable Snapping"
-            onChange={this.onSnappingChange}
-          />
+          <div className="options">
+            <Choice
+              dataElement="measurementSnappingOption"
+              id="measurement-snapping"
+              type="checkbox"
+              label="Enable Snapping"
+              onChange={this.onSnappingChange}
+            />
+          </div>
         }
       </div>
     );

@@ -1,6 +1,7 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
+export const getLastPickedToolForGroup = (state, group) => state.viewer.lastPickedToolForGroup[group];
 export const getStandardStamps = state => state.viewer.standardStamps;
 export const getCustomStamps = state => state.viewer.customStamps;
 export const getSelectedStampIndex = state => state.viewer.selectedStampIndex;
@@ -75,7 +76,7 @@ export const getDisabledElementPriority = (state, dataElement) =>
 
 export const getToolsHeaderItems = state => {
   const toolbarGroup = getCurrentToolbarGroup(state);
-  return state.viewer.headers[toolbarGroup];
+  return state.viewer.headers[toolbarGroup] || [];
 };
 
 export const getToolButtonObjects = state => {

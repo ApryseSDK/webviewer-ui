@@ -7,7 +7,7 @@ import Element from 'components/Element';
 import ColorPalette from 'components/ColorPalette';
 import Button from 'components/Button';
 import HorizontalDivider from 'components/HorizontalDivider';
-
+import { isMobile } from 'helpers/device';
 import core from 'core';
 import getRichTextPopupPosition from 'helpers/getRichTextPopupPosition';
 import actions from 'actions';
@@ -45,7 +45,7 @@ const RichTextPopup = () => {
 
   useEffect(() => {
     const handleTextChange = () => {
-      if (annotationRef.current?.isAutoSized()) {
+      if (annotationRef.current?.isAutoSized() && popupRef.current) {
         const position = getRichTextPopupPosition(annotationRef.current, popupRef);
         setCssPosition(position);
       }
@@ -59,7 +59,7 @@ const RichTextPopup = () => {
 
   useEffect(() => {
     const handleEditorFocus = (editor, annotation) => {
-      if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+      if (annotation instanceof window.Annotations.FreeTextAnnotation && popupRef.current) {
         const position = getRichTextPopupPosition(annotation, popupRef);
         setCssPosition(position);
         // when the editor is focused, we want to reset any previous drag movements so that
@@ -135,8 +135,8 @@ const RichTextPopup = () => {
   const syncDraggablePosition = (e, { x, y }) => {
     setDraggablePosition({ x, y });
   };
-
-  return isDisabled ? null : (
+  // TODO for now don't show it in mobile
+  return isDisabled || isMobile() ? null : (
     <Draggable
       position={draggablePosition}
       onDrag={syncDraggablePosition}

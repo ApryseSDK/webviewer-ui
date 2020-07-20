@@ -120,8 +120,7 @@ class ToolsOverlay extends React.PureComponent {
     } = this.props;
 
     const isVisible = (isOpen || true) && !isDisabled;
-    // if translation file is not ready, don't render else it looks weird and bad to see untranslated text
-    if (!isVisible || !tReady) {
+    if (!isVisible) {
       return null;
     }
 
@@ -162,7 +161,7 @@ class ToolsOverlay extends React.PureComponent {
     } else if (noPresets) {
       Component = (
         <div className="no-presets">
-          {t('message.toolsOverlayNoPresets')}
+          {tReady? t('message.toolsOverlayNoPresets') : ''}
         </div>
       );
     }
@@ -172,7 +171,10 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     return (
-      <div
+      <Swipeable
+        onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+        onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+        preventDefaultTouchmoveEvent
         className="ToolsOverlayContainer"
       >
         <div
@@ -207,18 +209,10 @@ class ToolsOverlay extends React.PureComponent {
                 />
               </button>}
           </div>
-          {(isToolStyleOpen) && (
-            <Swipeable
-              onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-              onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-              preventDefaultTouchmoveEvent
-              className="swipeable-container"
-            >
-              <ToolStylePopup/>
-            </Swipeable>
-          )}
+          {isToolStyleOpen &&
+            <ToolStylePopup/>}
         </div>
-      </div>
+      </Swipeable>
     );
   }
 }

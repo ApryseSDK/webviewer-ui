@@ -81,6 +81,7 @@ const ToolButton = ({
 
       core.setToolMode(toolName);
       dispatch(actions.setActiveToolGroup(group));
+      dispatch(actions.setLastPickedToolForGroup(group, toolName));
       if (toolName === "AnnotationCreateRubberStamp") {
         dispatch(actions.openElement("toolStylePopup"));
       }

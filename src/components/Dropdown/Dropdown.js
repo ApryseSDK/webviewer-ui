@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
@@ -17,19 +17,19 @@ const propTypes = {
 };
 
 function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }) {
-  const [t] = useTranslation();
+  const  { t, ready: tReady } = useTranslation();
 
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [itemsWidth, setItemsWidth] = useState(0);
+  const [itemsWidth, setItemsWidth] = useState(DEFAULT_WIDTH);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // useEffect(() => {
-  //   // Default to 0 so it's always a number.
-  //   const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || 0;
-  //   if (clientWidth !== items.itemsWidth) {
+  // useLayoutEffect(() => {
+  //   // Default to always a number.
+  //   const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || DEFAULT_WIDTH;
+  //   if (clientWidth !== itemsWidth) {
   //     setItemsWidth(overlayRef.current.clientWidth);
   //   }
   // });
@@ -90,7 +90,7 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
         <div className="picked-option">
           {optionIsSelected && (
             <div className="picked-option-text">
-              {t(`${translationPrefix}.${currentSelectionKey}`)}
+              {tReady? t(`${translationPrefix}.${currentSelectionKey}`) : ''}
             </div>
           )}
           <Icon className="down-arrow" glyph="icon-chevron-down" />

@@ -3,7 +3,7 @@
  * @method WebViewerInstance#setHeaderItems
  * @param {WebViewerInstance.headerCallback} headerCallback Callback function to perform different operations on the header.
  * @example
-// Adding save annotations button
+// Adding save annotations button to the end of the top header
 WebViewer(...)
   .then(function(instance) {
     instance.setHeaderItems(function(header) {
@@ -19,21 +19,19 @@ WebViewer(...)
     });
   });
  * @example
-// Removing existing buttons
+// Removing existing buttons from the top header
 WebViewer(...)
   .then(function(instance) {
     instance.setHeaderItems(function(header) {
-      var items = header.getItems().slice(9, -3);
-      header.update(items);
+      header.update([]);
     });
   });
  * @example
-// Appending logo and shifting existing buttons to the right
+// Appending logo to the 'Annotate' toolbar group and shifting existing buttons to the right
 WebViewer(...)
   .then(function(instance) {
     instance.setHeaderItems(function(header) {
-      header.delete(9);
-      header.unshift({
+      header.getHeader('toolbarGroup-Annotate').unshift({
         type: 'customElement',
         render: function() {
           var logo = document.createElement('img');
@@ -51,7 +49,17 @@ WebViewer(...)
       });
     });
   });
+ * @example
+// Moving the line tool from the 'Shapes' toolbar group to the 'Annotate' toolbar group
+WebViewer(...)
+  .then(function(instance) {
+    instance.setHeaderItems(function(header) {
+      header.getHeader('toolbarGroup-Annotate').push({ type: 'toolGroupButton', toolGroup: 'lineTools', dataElement: 'lineToolGroupButton', title: 'annotation.line' });
+      header.getHeader('toolbarGroup-Shapes').delete(6);
+    });
+  });
  */
+
 /**
  * Callback that gets passed to {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems}.
  * @callback WebViewerInstance.headerCallback
