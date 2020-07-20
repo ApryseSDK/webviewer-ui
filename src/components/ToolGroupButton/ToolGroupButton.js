@@ -65,6 +65,8 @@ class ToolGroupButton extends React.PureComponent {
 
   render() {
     const {
+      toolNames,
+      lastPickedToolForGroup,
       isActive,
       mediaQueryClassName,
       dataElement,
@@ -75,7 +77,7 @@ class ToolGroupButton extends React.PureComponent {
       showColor,
       title,
     } = this.props;
-    const { toolName } = this.state;
+    const toolName = lastPickedToolForGroup || toolNames[0];
     const img = this.props.img
       ? this.props.img
       : toolButtonObjects[toolName]?.img;
