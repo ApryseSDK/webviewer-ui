@@ -42,7 +42,7 @@ class AnnotationStylePopup extends React.Component {
   }
 
   render() {
-    const { isDisabled, annotation, style, isSnapModeEnabled, onSnapModeChange } = this.props;
+    const { isDisabled, annotation, style } = this.props;
     const isFreeText =
       annotation instanceof window.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
@@ -66,9 +66,7 @@ class AnnotationStylePopup extends React.Component {
           colorMapKey={colorMapKey}
           style={style}
           isFreeText={isFreeText}
-          isSnapModeEnabled={isSnapModeEnabled}
           onStyleChange={this.handleStyleChange}
-          onSnapModeChange={onSnapModeChange}
           disableSeparator
         />
       </div>
