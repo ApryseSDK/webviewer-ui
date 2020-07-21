@@ -30,11 +30,6 @@ const VirtualizedList = React.forwardRef(
       listRef.current.scrollToPosition(initialScrollTop);
     }, [initialScrollTop]);
 
-    useEffect(() => {
-      cache.clearAll();
-      listRef?.current?.recomputeRowHeights();
-    }, [notes.length]);
-
     const _resize = index => {
       cache.clear(index);
       listRef.current?.recomputeRowHeights(index);
