@@ -26,7 +26,7 @@ class ToolStylePopup extends React.PureComponent {
     toolButtonObjects: PropTypes.object.isRequired,
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
+    closeElements: PropTypes.func.isRequired
   };
 
   constructor(props) {

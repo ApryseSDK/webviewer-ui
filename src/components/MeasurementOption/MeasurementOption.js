@@ -12,6 +12,7 @@ import { MEASUREMENT_TOOL_NAMES } from 'helpers/setToolStyles';
 import { workerTypes } from 'constants/types';
 import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
+import actions from 'actions';
 
 import './MeasurementOption.scss';
 
@@ -278,6 +279,11 @@ const mapStateToProps = state => ({
     state,
     DataElements.PRECISION_INPUT_CONTAINER
   ),
+  isSnapModeEnabled: selectors.isSnapModeEnabled(state)
 });
 
-export default connect(mapStateToProps)(withTranslation()(MeasurementOption));
+const mapDispatchToProps = {
+  onSnapModeChange: actions.setEnableSnapMode,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(MeasurementOption));
