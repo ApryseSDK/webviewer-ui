@@ -179,6 +179,7 @@
       "all": "Tutti",
       "current": "attuale",
       "pages": "pagine",
+      "includeAnnotations": "Includi annotazioni",
       "includeComments": "Includi commenti",
       "addWatermarkSettings": "Aggiungi impostazioni filigrana"
     },
@@ -250,7 +251,8 @@
     "thumbnailPanel": {
       "delete": "Elimina",
       "rotateClockwise": "Senso orario",
-      "rotateCounterClockwise": "Antiorario"
+      "rotateCounterClockwise": "Antiorario",
+      "extractZeroPageError": "Nessuna pagina selezionata per l'estrazione"
     },
     "richText": {
       "bold": "Grassetto",

@@ -26,20 +26,7 @@
     align-items: center;
     margin: 13px 10px 5px 10px;
 
-    img.page-image {
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        /* only for XOD in IE*/
-        height: auto !important;
-        width: auto !important;
-      }
-    }
-
     .page-image {
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        /* only for IE*/
-        height: auto !important;
-        width: auto !important;
-      }
       border: 1px solid $gray20;
     }
 

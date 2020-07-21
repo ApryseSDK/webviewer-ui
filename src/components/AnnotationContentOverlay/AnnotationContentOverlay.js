@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -30,7 +30,8 @@ const AnnotationContentOverlay = () => {
     selectors.getAnnotationContentOverlayHandler(state),
   );
   const isUsingCustomHandler = customHandler !== null;
-
+  const overlayRef = useRef(null);
+  const contents = annotation?.getContents();
   useEffect(() => {
     const onMouseHover = e => {
       const viewElement = core.getViewerElement();
@@ -44,12 +45,22 @@ const AnnotationContentOverlay = () => {
         const ungroupedAnnots = groupedAnnots.filter(annot => !annot.isGrouped());
         annotation = ungroupedAnnots.length > 0 ? ungroupedAnnots[0] : annotation;
 
-        if (!(annotation instanceof Annotations.FreeTextAnnotation)) {
+        if (isUsingCustomHandler || !(annotation instanceof Annotations.FreeTextAnnotation)) {
           setAnnotation(annotation);
-          setOverlayPosition({
-            left: e.clientX + 20,
-            top: e.clientY + 20,
-          });
+          if (overlayRef.current) {
+            const overlayRect = overlayRef.current.getBoundingClientRect();
+            if (e.clientX + 215 > window.innerWidth) {
+              setOverlayPosition({
+                left: e.clientX - overlayRect.width,
+                top: e.clientY + 20,
+              });
+            } else {
+              setOverlayPosition({
+                left: e.clientX + 20,
+                top: e.clientY + 20,
+              });
+            }
+          }
         }
       } else {
         setAnnotation(null);
@@ -60,63 +71,51 @@ const AnnotationContentOverlay = () => {
     return () => {
       core.removeEventListener('mouseMove', onMouseHover);
     };
-  }, []);
+  }, [annotation, isUsingCustomHandler]);
 
-  const contents = annotation?.getContents();
   const numberOfReplies = annotation?.getReplies().length;
 
-  const OverlayWrapper = props => (
-    <div
-      className="Overlay AnnotationContentOverlay"
-      data-element="annotationContentOverlay"
-      style={{ ...overlayPosition }}
-    >
-      {props.children}
-    </div>
-  );
+  const customRender = useCallback(() => {
+    return customHandler(annotation);
+  }, [customHandler, annotation]);
 
-  const CustomOverlay = () => {
-    if (annotation) {
-      return (
-        <OverlayWrapper>
-          <CustomElement render={() => customHandler(annotation)} />
-        </OverlayWrapper>
-      );
-    } else {
-      return null;
-    }
-  };
-
-  const DefaultOverlay = () => {
-    if (contents) {
-      return (
-        <OverlayWrapper>
-          <div className="author">{core.getDisplayAuthor(annotation)}</div>
-          <div className="contents">
-            {contents.length > MAX_CHARACTERS
-              ? `${contents.slice(0, MAX_CHARACTERS)}...`
-              : contents}
-          </div>
-          {numberOfReplies > 0 && (
-            <div className="replies">
-              {t('message.annotationReplyCount', { count: numberOfReplies })}
-            </div>
-          )}
-        </OverlayWrapper>
-      );
-    } else {
-      return null;
-    }
-  };
-
-  if (isDisabled || isMobileDevice) {
+  if (isDisabled || isMobileDevice || !annotation) {
     return null;
   } else if (isUsingCustomHandler) {
-    return <CustomOverlay />;
+    return (
+      <div
+        className="Overlay AnnotationContentOverlay"
+        data-element="annotationContentOverlay"
+        style={{ ...overlayPosition }}
+        ref={overlayRef}
+      >
+        <CustomElement render={customRender} />
+      </div>
+    );
+  } else if (contents) {
+    return (
+      <div
+        className="Overlay AnnotationContentOverlay"
+        data-element="annotationContentOverlay"
+        style={{ ...overlayPosition }}
+        ref={overlayRef}
+      >
+        <div className="author">{core.getDisplayAuthor(annotation)}</div>
+        <div className="contents">
+          {contents.length > MAX_CHARACTERS
+            ? `${contents.slice(0, MAX_CHARACTERS)}...`
+            : contents}
+        </div>
+        {numberOfReplies > 0 && (
+          <div className="replies">
+            {t('message.annotationReplyCount', { count: numberOfReplies })}
+          </div>
+        )}
+      </div>
+    );
   } else {
-    return <DefaultOverlay />;
+    return null;
   }
-
 };
 
 export default AnnotationContentOverlay;

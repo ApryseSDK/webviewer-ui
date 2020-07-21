@@ -85,7 +85,7 @@ export default {
         {
           type: 'actionButton',
           dataElement: 'defaultHeaderButton',
-          titile: 'action.close',
+          title: 'action.close',
           img: 'ic_close_black_24px',
           onClick: dispatch => {
             dispatch(actions.setActiveHeaderGroup('default'));
@@ -186,6 +186,7 @@ export default {
     isThumbnailReordering: true,
     isThumbnailMultiselect: true,
     allowPageNavigation: true,
+    enableMouseWheelZoom: true,
     doesAutoLoad: getHashParams('auto_load', true),
     isReadOnly: getHashParams('readonly', false),
     customPanels: [],

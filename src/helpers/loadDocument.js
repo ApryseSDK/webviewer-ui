@@ -75,6 +75,10 @@ const extractXodOptions = options => {
     xodOptions.decryptOptions = options.decryptOptions;
   }
 
+  if (options.decrypt) {
+    xodOptions.decrypt = options.decrypt;
+  }
+
   if (options.streaming !== null) {
     xodOptions.streaming = options.streaming === 'true';
   }
