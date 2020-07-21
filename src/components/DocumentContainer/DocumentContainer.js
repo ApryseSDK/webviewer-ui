@@ -197,6 +197,8 @@ class DocumentContainer extends React.PureComponent {
   }
 
   render() {
+    const { isToolsHeaderOpen } = this.props;
+
     let className;
 
     if (isIE) {
@@ -226,9 +228,16 @@ class DocumentContainer extends React.PureComponent {
               <div className="document" ref={this.document}/>
             </div>
             <MeasurementOverlay />
-            <div className="footer">
-              <PageNavOverlay />
-              {this.props.isMobile && <ToolsOverlay />}
+            <div
+              className={classNames({
+                'footer-container': true,
+                'tools-header-open': isToolsHeaderOpen,
+              })}
+            >
+              <div className="footer">
+                <PageNavOverlay />
+                {this.props.isMobile && <ToolsOverlay />}
+              </div>
             </div>
           </div>
         )}
@@ -238,6 +247,7 @@ class DocumentContainer extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
