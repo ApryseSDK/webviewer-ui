@@ -8,7 +8,10 @@ import useMedia from 'hooks/useMedia';
 
 import selectors from 'selectors';
 
+import { motion, AnimatePresence } from "framer-motion";
+
 import './Header.scss';
+
 
 class ToolsHeader extends React.PureComponent {
   static propTypes = {
@@ -18,30 +21,37 @@ class ToolsHeader extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen, currentToolbarGroup } = this.props;
 
-    const isVisible = !isDisabled && isOpen;
-
-    if (!isVisible) {
-      return null;
-    }
+    const isVisible = !isDisabled && isOpen && currentToolbarGroup !== 'toolbarGroup-View';
 
     return (
-      <div
-        className="HeaderToolsContainer"
-        data-element="toolsHeader"
-      >
-        <div
-          className="Header Tools"
-        >
-          <HeaderItems items={activeHeaderItems} />
-        </div>
-      </div>
+      <React.Fragment>
+        <AnimatePresence>
+          {isVisible && (
+            <motion.div
+              className="HeaderToolsContainer"
+              data-element="toolsHeader"
+              initial={{ height: '0px' }}
+              animate={{ height: 'auto' }}
+              exit={{ height: '0px' }}
+              transition={{ ease: "easeOut", duration: 0.25 }}
+            >
+              <div
+                className="Header Tools"
+              >
+                <HeaderItems items={activeHeaderItems} />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isDisabled: selectors.isElementDisabled(state, 'toolsHeader'),
   isOpen: selectors.isElementOpen(state, 'toolsHeader'),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
@@ -54,6 +64,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(ToolsHeader);
 
 const ConnectedToolsHeader = connect(
   mapStateToProps,
