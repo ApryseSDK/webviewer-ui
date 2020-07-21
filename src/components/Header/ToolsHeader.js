@@ -8,8 +8,6 @@ import useMedia from 'hooks/useMedia';
 
 import selectors from 'selectors';
 
-import { motion, AnimatePresence } from "framer-motion";
-
 import './Header.scss';
 
 class ToolsHeader extends React.PureComponent {
@@ -20,31 +18,25 @@ class ToolsHeader extends React.PureComponent {
   }
 
   render() {
-    const { isTabletAndMobile, isDisabled, activeHeaderItems, isOpen, isToolsOverlayOpen, isToolsOverlayDisabled } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen } = this.props;
 
     const isVisible = !isDisabled && isOpen;
 
+    if (!isVisible) {
+      return null;
+    }
+
     return (
-      <React.Fragment>
-        <AnimatePresence>
-          {isVisible && (
-            <motion.div
-              className="HeaderToolsContainer"
-              data-element="toolsHeader"
-              initial={{ height: '0px' }}
-              animate={{ height: 'auto' }}
-              exit={{ height: '0px' }}
-              transition={{ ease: "easeOut", duration: 0.25 }}
-            >
-              <div
-                className="Header Tools"
-              >
-                <HeaderItems items={activeHeaderItems} />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </React.Fragment>
+      <div
+        className="HeaderToolsContainer"
+        data-element="toolsHeader"
+      >
+        <div
+          className="Header Tools"
+        >
+          <HeaderItems items={activeHeaderItems} />
+        </div>
+      </div>
     );
   }
 }

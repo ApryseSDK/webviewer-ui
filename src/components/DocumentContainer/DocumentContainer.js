@@ -209,7 +209,7 @@ class DocumentContainer extends React.PureComponent {
       <Measure
         onResize={() => {
           core.setScrollViewElement(this.container.current);
-          core.scrollViewUpdated();
+          // core.scrollViewUpdated();
         }}
       >
         {({ measureRef }) => (
