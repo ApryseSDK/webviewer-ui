@@ -17,11 +17,9 @@ import './AnnotationStylePopup.scss';
 class AnnotationStylePopup extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
-    isSnapModeEnabled: PropTypes.bool,
     annotation: PropTypes.object.isRequired,
     style: PropTypes.object.isRequired,
     closeElement: PropTypes.func.isRequired,
-    onSnapModeChange: PropTypes.func,
   };
 
   handleStyleChange = (property, value) => {
