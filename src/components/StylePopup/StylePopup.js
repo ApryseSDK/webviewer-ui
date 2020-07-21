@@ -32,7 +32,7 @@ class StylePopup extends React.PureComponent {
     isStyleOptionDisabled: PropTypes.bool,
     isStylePopupDisabled: PropTypes.bool,
     isSnapModeEnabled: PropTypes.bool,
-    showSnapModeCheckbox: PropTypes.bool,
+    hideSnapModeCheckbox: PropTypes.bool,
     onSnapModeChange: PropTypes.func,
   };
 
@@ -150,7 +150,7 @@ class StylePopup extends React.PureComponent {
       disableSeparator,
       isSnapModeEnabled,
       onSnapModeChange,
-      showSnapModeCheckbox
+      hideSnapModeCheckbox
     } = this.props;
 
 
@@ -188,7 +188,7 @@ class StylePopup extends React.PureComponent {
             <MeasurementOption
               scale={Scale}
               precision={Precision}
-              showSnapModeCheckbox={showSnapModeCheckbox}
+              hideSnapModeCheckbox={hideSnapModeCheckbox}
               isSnapModeEnabled={isSnapModeEnabled}
               onStyleChange={onStyleChange}
               onSnapModeChange={onSnapModeChange}

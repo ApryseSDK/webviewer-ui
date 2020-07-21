@@ -34,7 +34,7 @@ class MeasurementOption extends React.Component {
     isScaleInputDisabled: PropTypes.bool,
     isPrecisionInputDisabled: PropTypes.bool,
     isSnapModeEnabled: PropTypes.bool,
-    showSnapModeCheckbox: PropTypes.bool,
+    hideSnapModeCheckbox: PropTypes.bool,
     onSnapModeChange: PropTypes.func,
   };
 
@@ -119,8 +119,9 @@ class MeasurementOption extends React.Component {
     measurementTools.forEach(tool => {
       tool.setSnapMode?.(mode);
     });
-
-    this.props.onSnapModeChange(enableSnapping);
+    if (this.props.onSnapModeChange) {
+      this.props.onSnapModeChange(enableSnapping);
+    }
   }
 
   getLanguage = () => {
@@ -188,7 +189,7 @@ class MeasurementOption extends React.Component {
   };
 
   render() {
-    const { measurementUnits, t, isScaleInputDisabled, isPrecisionInputDisabled, isSnapModeEnabled, showSnapModeCheckbox } = this.props;
+    const { measurementUnits, t, isScaleInputDisabled, isPrecisionInputDisabled, isSnapModeEnabled, hideSnapModeCheckbox } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
     const precisionOptions = [
       { value: 0.1, name: '0.1' },
@@ -253,7 +254,7 @@ class MeasurementOption extends React.Component {
             </div>
           </div>
         )}
-        {this.state.documentType === workerTypes.PDF && showSnapModeCheckbox &&
+        {this.state.documentType === workerTypes.PDF && !hideSnapModeCheckbox &&
           <div className="options">
             <Choice
               dataElement="measurementSnappingOption"

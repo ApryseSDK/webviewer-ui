@@ -60,8 +60,9 @@ class AnnotationStylePopup extends React.Component {
         data-element="annotationStylePopup"
         onClick={this.handleClick}
       >
+        {/* Do not show checkbox for ellipse as snap mode does not exist for it */}
         <StylePopup
-          showSnapModeCheckbox={!(annotation instanceof window.Annotations.EllipseAnnotation)}
+          hideSnapModeCheckbox={(annotation instanceof window.Annotations.EllipseAnnotation)}
           colorMapKey={colorMapKey}
           style={style}
           isFreeText={isFreeText}
