@@ -9,7 +9,7 @@
   top: 46px;
   border-radius: 4px 0 0 4px;
   box-shadow: 0 2px 16px 0 #E1E1E3;
-  width: 354px;
+  width: 300px;
   max-height: calc(100% - #{$top-bar-height} - 46px);
   padding: 16px 16px 16px;
 
@@ -28,14 +28,130 @@
     background: #f6f6f6;
     background: var(--button-hover-color);
   }
+
+  .tab-panel {
+    min-height: 500px;
+  }
+
+  .header {
+    margin: 0px 0px 10px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    .tab-list {
+      display: flex;
+
+      .Button {
+        padding: 0 12px;
+        border-bottom: 3px solid transparent;
+        &.selected {
+          border-bottom: 3px solid #00a5e4;
+        }
+      }
+    }
+  }
+
+
+  .add-custom-stamp-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    width: 200px;
+    border-radius: 4px 4px 4px 4px;
+    border: 1px solid #00A4E4;
+    font-size: 16px;
+    color: #00A4E4;
+    cursor: pointer;
+    // margin-bottom: 10px;
+
+    &.disabled {
+      border: 1px solid #E1E1E3;
+      color: #E1E1E3;
+      cursor: default;
+    }
+
+    &.enabled:hover {
+      background: #17324C;
+      border: 1px solid #17324C;
+      color: #FFFFFF;
+    }
+  }
+
+
+
+
 }
 
-.default-stamp-container {
+.standard-stamp-panel {
+  height: 500px;
+  overflow: hidden;
+  overflow-y: auto;
   .column {
     padding: 10px;
   }
   .column:hover {
     background: #f6f6f6;
     background: var(--button-hover-color);
+  }
+}
+
+.custom-stamp-panel {
+  .rubber-stamp {
+    padding: 5px;
+  }
+}
+
+.custom-stamp-panel {
+  height: 458px;
+  overflow: hidden;
+  overflow-y: auto;
+  margin-bottom: 5px;
+  .stamp-row {
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    justify-content: space-between;
+    align-items: center;
+
+
+    @include mobile {
+      justify-content: center;
+    }
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 50px;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--tools-overlay-button-hover);
+      }
+    }
+
+    .stamp-row-content {
+      height: 70px;
+      width: 220px;
+      border-radius: 4px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      &:hover {
+        background: #f6f6f6;
+        background: var(--button-hover-color);
+      }
+
+    }
   }
 }

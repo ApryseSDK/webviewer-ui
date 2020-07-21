@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
+import Button from 'components/Button';
 import Bookmark from 'components/Bookmark';
 import EditingBookmark from 'components/Bookmark/EditingBookmark';
 import Icon from 'components/Icon';
@@ -66,14 +67,14 @@ class BookmarksPanel extends React.PureComponent {
               <Icon glyph="ic_bookmarks_black_24px" />
               <div className="label">{t('component.bookmarksPanel')}</div>
             </div>
-            <div
+            <Button
+              dataElement="newBookmarkButton"
               className="bookmarks-panel-button"
+              label={t('component.newBookmark')}
               onClick={() => {
                 this.setState({ isAdding: true });
               }}
-            >
-              {t('component.newBookmark')}
-            </div>
+            />
           </div>
         )}
         <div className="bookmarks-panel-row">

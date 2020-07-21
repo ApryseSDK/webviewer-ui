@@ -117,7 +117,8 @@
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
     "measurementToolsButton": "Ferramentas de medição",
-    "calibration": "Calibração"
+    "calibration": "Calibração",
+    "createStampButton": "Criar novo carimbo"
   },
   "message": {
     "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
@@ -179,6 +180,7 @@
       "all": "Todas",
       "current": "Atual",
       "pages": "Páginas",
+      "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
       "addWatermarkSettings": "Adicionar configurações de marca d'água"
     },
@@ -198,6 +200,14 @@
       "dragAndDrop": "Arraste e solte sua imagem aqui",
       "or": "Ou",
       "pickImage": "Escolher imagem da assinatura"
+    },
+    "customStampModal": {
+      "stampText": "Texto do carimbo:",
+      "timestampText": " Texto do carimbo de data / hora:",
+      "stampColor": "Cor do carimbo:",
+      "Username": "Nome do usuário",
+      "Date": "Encontro",
+      "Time": "Tempo"
     },
     "status": {
       "status": "Status"
@@ -250,7 +260,8 @@
     "thumbnailPanel": {
       "delete": "Excluir",
       "rotateClockwise": "Sentido horário",
-      "rotateCounterClockwise": "Sentido anti-horário"
+      "rotateCounterClockwise": "Sentido anti-horário",
+      "extractZeroPageError": "Nenhuma página foi selecionada para extrair"
     },
     "richText": {
       "bold": "Negrito",
@@ -294,6 +305,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
+    "rubberStamp": "(Q)",
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
@@ -302,10 +314,12 @@
     }
   },
   "tool": {
-    "pan": "Pan",
+    "pan": "Arrastar",
     "select": "Selecionar",
-    "Marquee": "Zoom Marquee",
-    "Link": "URL ou página do link"
+    "Marquee": "Marcar área",
+    "Link": "URL ou página do link",
+    "Standard": "Padrão",
+    "Custom": "personalizadas"
   },
   "link": {
     "url": "URL",

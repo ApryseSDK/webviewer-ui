@@ -1,0 +1,107 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+.CustomStampModal {
+  @extend %modal;
+  font-size: 0.9em;
+
+  .container {
+    @extend %modal-shared-container-style;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
+    box-shadow: 0 2px 16px 0 $signature-modal-shared-color;
+
+    .header {
+      margin: 11px 24px 0px 24px;
+      display: flex;
+      justify-content: flex-end;
+
+      .ActionButton {
+        margin-right: -13px;
+
+        &:hover {
+          background: transparent;
+
+          svg {
+            color: $pdftron-blue;
+          }
+        }
+      }
+    }
+
+    .footer {
+      display: flex;
+      margin: 20px 16px;
+      align-items: center;
+      justify-content: flex-end;
+      .signature-save {
+        position: relative;
+        margin-left: 8px;
+        user-select: none;
+
+        input {
+          display: none;
+
+          & + label:before {
+            cursor: pointer;
+            content: '';
+            margin: 1px 10px 0px 0px;
+            display: inline-block;
+            vertical-align: text-top;
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 1px solid #979797;
+          }
+
+          &:checked + label:before {
+            background: $pdftron-blue;
+            border: 1px solid transparent;
+          }
+
+          &:checked + label:after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 9px;
+            background: #ffffff;
+            width: 2px;
+            height: 2px;
+            box-shadow: 2px 0 0 #ffffff, 4px 0 0 #ffffff, 4px -2px 0 #ffffff,
+              4px -4px 0 #ffffff, 4px -6px 0 #ffffff, 4px -8px 0 #ffffff;
+            transform: rotate(45deg);
+          }
+        }
+
+        label {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .stamp-create {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 6px 18px;
+        margin-right: 8px;
+        background: $pdftron-blue;
+        border-radius: 4px 4px 4px 4px;
+        border: 1px solid $pdftron-blue;
+        height: 32px;
+        cursor: pointer;
+
+        &:hover {
+          background: #17324c;
+          border: 1px solid #17324c;
+        }
+      }
+    }
+  }
+
+}

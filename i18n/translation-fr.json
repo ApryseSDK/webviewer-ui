@@ -117,11 +117,12 @@
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
     "measurementToolsButton": "Outils de mesure",
-    "calibration": "Étalonnage"
+    "calibration": "Étalonnage",
+    "createStampButton": "Créer un nouveau tampon"
   },
   "message": {
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
-    "customPrintPlaceholder": "par ex. : 3 4-10",
+    "customPrintPlaceholder": "par ex. : 3 4-10",
     "encryptedAttemptsExceeded": "Échec du chargement du document chiffré. Trop de tentatives.",
     "encryptedUserCancelled": "Échec du chargement du document chiffré. Saisie du mot de passe annulée.",
     "enterPassword": "Ce document est protégé par un mot de passe. Veuillez saisir ce mot de passe.",
@@ -179,6 +180,7 @@
       "all": "Toutes",
       "current": "Actuelle",
       "pages": "Pages",
+      "includeAnnotations": "Inclure des annotations",
       "includeComments": "Inclure les commentaires",
       "addWatermarkSettings": "Ajouter des paramètres de filigrane"
     },
@@ -198,6 +200,14 @@
       "dragAndDrop": "Faites glisser et déposez votre image ici",
       "or": "Ou",
       "pickImage": "Choisir l'image de signature"
+    },
+    "customStampModal": {
+      "stampText": "Texte du tampon:",
+      "timestampText": " Texte d'horodatage:",
+      "stampColor": "Couleur du tampon:",
+      "Username": "Nom d'utilisateur",
+      "Date": "Date",
+      "Time": "Temps"
     },
     "status": {
       "status": "Statut"
@@ -250,7 +260,8 @@
     "thumbnailPanel": {
       "delete": "Supprimer",
       "rotateClockwise": "Dans le sens horaire",
-      "rotateCounterClockwise": "Dans le sens antihoraire"
+      "rotateCounterClockwise": "Dans le sens antihoraire",
+      "extractZeroPageError": "Aucune page n'a été sélectionnée pour l'extraction"
     },
     "richText": {
       "bold": "Audacieux",
@@ -294,6 +305,7 @@
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
+    "rubberStamp": "(Q)",
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
@@ -304,8 +316,10 @@
   "tool": {
     "pan": "Panoramique",
     "select": "Sélection",
-    "Marquee": "Marquee Zoom",
-    "Link": "URL de lien ou page"
+    "Marquee": "Zoom sur la sélection",
+    "Link": "URL de lien ou page",
+    "Standard": "la norme",
+    "Custom": "Douane"
   },
   "link": {
     "url": "URL",
