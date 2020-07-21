@@ -62,7 +62,7 @@ class AnnotationStylePopup extends React.Component {
       >
         {/* Do not show checkbox for ellipse as snap mode does not exist for it */}
         <StylePopup
-          hideSnapModeCheckbox={(annotation instanceof window.Annotations.EllipseAnnotation)}
+          hideSnapModeCheckbox={(annotation instanceof window.Annotations.EllipseAnnotation || !core.isFullPDFEnabled())}
           colorMapKey={colorMapKey}
           style={style}
           isFreeText={isFreeText}
