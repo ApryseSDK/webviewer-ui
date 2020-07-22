@@ -267,7 +267,8 @@
     },
     "shared": {
       "page": "Page",
-      "precision": "Précision"
+      "precision": "Précision",
+      "enableSnapping": "Activer la capture pour les outils de mesure"
     },
     "watermark": {
       "size": "Taille",

@@ -267,7 +267,8 @@
     },
     "shared": {
       "page": "Seite",
-      "precision": "Genauigkeit"
+      "precision": "Genauigkeit",
+      "enableSnapping": "Aktivieren Sie das Einrasten für Messwerkzeuge"
     },
     "watermark": {
       "size": "Größe",
