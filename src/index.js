@@ -137,7 +137,9 @@ if (window.CanvasRenderingContext2D) {
       const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
     }
-
+    docViewer.on('documentLoaded', () => {
+      setPrintHandler(store);
+    });
     setupDocViewer();
     setupI18n(state);
     setUserPermission(state);
@@ -147,7 +149,6 @@ if (window.CanvasRenderingContext2D) {
     setupLoadAnnotationsFromServer(store);
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
-    setPrintHandler(store);
 
     ReactDOM.render(
       <Provider store={store}>
