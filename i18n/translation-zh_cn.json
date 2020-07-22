@@ -267,7 +267,8 @@
     },
     "shared": {
       "page": "页",
-      "precision": "精准度"
+      "precision": "精准度",
+      "enableSnapping": "启用测量工具的捕捉"
     },
     "watermark": {
       "size": "尺寸",

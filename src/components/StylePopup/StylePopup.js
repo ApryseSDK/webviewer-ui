@@ -31,6 +31,7 @@ class StylePopup extends React.PureComponent {
     isFontSizeSliderDisabled: PropTypes.bool,
     isStyleOptionDisabled: PropTypes.bool,
     isStylePopupDisabled: PropTypes.bool,
+    hideSnapModeCheckbox: PropTypes.bool,
   };
 
   renderSliders = () => {
@@ -145,6 +146,7 @@ class StylePopup extends React.PureComponent {
       onStyleChange,
       isStyleOptionDisabled,
       disableSeparator,
+      hideSnapModeCheckbox
     } = this.props;
 
 
@@ -182,6 +184,7 @@ class StylePopup extends React.PureComponent {
             <MeasurementOption
               scale={Scale}
               precision={Precision}
+              hideSnapModeCheckbox={hideSnapModeCheckbox}
               onStyleChange={onStyleChange}
             />
           </React.Fragment>

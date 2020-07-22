@@ -267,7 +267,8 @@
     },
     "shared": {
       "page": "Página",
-      "precision": "Precisão"
+      "precision": "Precisão",
+      "enableSnapping": "Ativar encaixe para ferramentas de medição"
     },
     "watermark": {
       "size": "Tamanho",

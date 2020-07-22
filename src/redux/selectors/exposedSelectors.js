@@ -299,3 +299,5 @@ export const isProgrammaticSearchFull = state =>
   state.search.isProgrammaticSearchFull;
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
+
+export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;

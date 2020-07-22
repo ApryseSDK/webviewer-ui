@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 import { isFirefox } from 'helpers/device';
 import i18next from 'i18next';
 
-import Input from 'components/Input';
 import Choice from 'components/Choice/Choice';
 
 import core from 'core';
@@ -13,6 +12,7 @@ import { MEASUREMENT_TOOL_NAMES } from 'helpers/setToolStyles';
 import { workerTypes } from 'constants/types';
 import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
+import actions from 'actions';
 
 import './MeasurementOption.scss';
 
@@ -34,6 +34,9 @@ class MeasurementOption extends React.Component {
     onStyleChange: PropTypes.func.isRequired,
     isScaleInputDisabled: PropTypes.bool,
     isPrecisionInputDisabled: PropTypes.bool,
+    isSnapModeEnabled: PropTypes.bool,
+    hideSnapModeCheckbox: PropTypes.bool,
+    onSnapModeChange: PropTypes.func,
   };
 
   constructor(props) {
@@ -47,7 +50,6 @@ class MeasurementOption extends React.Component {
       isEditing: false,
       documentType: core.getDocument()?.getType(),
     };
-    this.enableSnappingRef = React.createRef();
   }
 
   componentDidMount() {
@@ -118,6 +120,9 @@ class MeasurementOption extends React.Component {
     measurementTools.forEach(tool => {
       tool.setSnapMode?.(mode);
     });
+    if (this.props.onSnapModeChange) {
+      this.props.onSnapModeChange(enableSnapping);
+    }
   }
 
   getLanguage = () => {
@@ -185,7 +190,7 @@ class MeasurementOption extends React.Component {
   };
 
   render() {
-    const { measurementUnits, t, isScaleInputDisabled, isPrecisionInputDisabled } = this.props;
+    const { measurementUnits, t, isScaleInputDisabled, isPrecisionInputDisabled, isSnapModeEnabled, hideSnapModeCheckbox } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
     const precisionOptions = [
       { value: 0.1, name: '0.1' },
@@ -250,13 +255,14 @@ class MeasurementOption extends React.Component {
             </div>
           </div>
         )}
-        {this.state.documentType === workerTypes.PDF &&
+        {this.state.documentType === workerTypes.PDF && !hideSnapModeCheckbox &&
           <div className="options">
             <Choice
               dataElement="measurementSnappingOption"
               id="measurement-snapping"
               type="checkbox"
-              label="Enable Snapping"
+              label={t('option.shared.enableSnapping')}
+              checked={isSnapModeEnabled}
               onChange={this.onSnappingChange}
             />
           </div>
@@ -273,6 +279,11 @@ const mapStateToProps = state => ({
     state,
     DataElements.PRECISION_INPUT_CONTAINER
   ),
+  isSnapModeEnabled: selectors.isSnapModeEnabled(state)
 });
 
-export default connect(mapStateToProps)(withTranslation()(MeasurementOption));
+const mapDispatchToProps = {
+  onSnapModeChange: actions.setEnableSnapMode,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(MeasurementOption));
