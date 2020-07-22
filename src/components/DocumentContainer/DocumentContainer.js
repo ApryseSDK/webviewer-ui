@@ -197,7 +197,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   render() {
-    const { isToolsHeaderOpen } = this.props;
+    const { isToolsHeaderOpen, isMobile } = this.props;
 
     let className;
 
@@ -236,7 +236,7 @@ class DocumentContainer extends React.PureComponent {
             >
               <div className="footer">
                 <PageNavOverlay />
-                {this.props.isMobile && <ToolsOverlay />}
+                {isMobile && <ToolsOverlay />}
               </div>
             </div>
           </div>

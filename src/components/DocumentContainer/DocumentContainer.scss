@@ -16,10 +16,18 @@
     // flex: 1;
     width: 100%;
     // https://stackoverflow.com/questions/12070759/make-absolute-positioned-div-expand-parent-div-height
-    height: calc(100% - 37px); // 37px is the height of the top header;
+    height: calc(100% - 37px); // minus the height of the top header;
+
+    @include tablet-and-mobile {
+      height: calc(100% - 53px); // minus the height of the top header;
+    }
 
     &.tools-header-open {
-      height: calc(100% - 76px); // 76px is the height of both headers;
+      height: calc(100% - 76px); // minus the height of both headers;
+
+      @include tablet-and-mobile {
+        height: calc(100% - 104px); // minus the height of both headers;
+      }
     }
 
     .footer {
