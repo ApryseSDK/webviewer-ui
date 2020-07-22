@@ -143,12 +143,14 @@ if (window.CanvasRenderingContext2D) {
       const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
     }
+    docViewer.on('documentLoaded', () => {
+      setPrintHandler(store);
+    });
 
     setupDocViewer();
     setupI18n(state);
     setUserPermission(state);
     setAutoSwitch();
-    setPrintHandler(store);
     addEventHandlers();
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
