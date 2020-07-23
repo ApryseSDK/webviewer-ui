@@ -63,7 +63,7 @@ const Button = props => {
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
     img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
-  const shouldRenderTooltip = title;
+  const shouldRenderTooltip = !!title && !disabled;
   const children = (
     <button
       className={classNames({
