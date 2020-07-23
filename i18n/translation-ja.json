@@ -267,7 +267,8 @@
     },
     "shared": {
       "page": "ページ",
-      "precision": "精度"
+      "precision": "精度",
+      "enableSnapping": "測定ツールのスナップを有効にする"
     },
     "watermark": {
       "size": "サイズ",

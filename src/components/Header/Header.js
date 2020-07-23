@@ -17,7 +17,7 @@ class Header extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen, isToolsHeaderOpen } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen, isToolsHeaderOpen, currentToolbarGroup } = this.props;
 
     if (isDisabled || !isOpen) {
       return null;
@@ -33,13 +33,15 @@ class Header extends React.PureComponent {
         >
           <HeaderItems items={activeHeaderItems} />
         </div>
-        {!isToolsHeaderOpen && <div className="view-header-border" />}
+        {(!isToolsHeaderOpen || currentToolbarGroup === 'toolbarGroup-View')
+          && <div className="view-header-border" />}
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
   isDisabled: selectors.isElementDisabled(state, 'header'),
   isOpen: selectors.isElementOpen(state, 'header'),

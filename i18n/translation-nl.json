@@ -267,7 +267,8 @@
     },
     "shared": {
       "page": "Pagina",
-      "precision": "precisie"
+      "precision": "precisie",
+      "enableSnapping": "Schakel snappen in voor meetinstrumenten"
     },
     "watermark": {
       "size": "Grootte",

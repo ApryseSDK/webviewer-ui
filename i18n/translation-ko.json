@@ -267,7 +267,8 @@
     },
     "shared": {
       "page": "페이지",
-      "precision": "정밀도"
+      "precision": "정밀도",
+      "enableSnapping": "측정 도구에 스냅 가능"
     },
     "watermark": {
       "size": "크기",

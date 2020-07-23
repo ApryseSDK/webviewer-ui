@@ -374,3 +374,8 @@ export const setNoteTransformFunction = noteTransformFunction => ({
   type: 'SET_NOTE_TRANSFORM_FUNCTION',
   payload: { noteTransformFunction },
 });
+
+export const setEnableSnapMode = enable => ({
+  type: 'SET_ENABLE_SNAP_MODE',
+  payload: { enable },
+});

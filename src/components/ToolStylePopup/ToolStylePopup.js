@@ -26,7 +26,7 @@ class ToolStylePopup extends React.PureComponent {
     toolButtonObjects: PropTypes.object.isRequired,
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
+    closeElements: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -98,6 +98,7 @@ class ToolStylePopup extends React.PureComponent {
     }
 
     const { availablePalettes } = getDataWithKey(colorMapKey);
+    const isEllipseMeasurementTool = activeToolName.includes('AnnotationCreateEllipseMeasurement');
 
     let Component = (
       <StylePopup
@@ -106,6 +107,7 @@ class ToolStylePopup extends React.PureComponent {
         colorMapKey={colorMapKey}
         style={activeToolStyle}
         isFreeText={isFreeText}
+        hideSnapModeCheckbox={isEllipseMeasurementTool || !core.isFullPDFEnabled()}
         onStyleChange={this.handleStyleChange}
       />
     );
