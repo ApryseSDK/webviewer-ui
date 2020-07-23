@@ -21,6 +21,7 @@ WebViewer(...)
 
 export default store => {
   let previousActiveTheme = 'light'; // default
+  cssVars({});
   store.subscribe(() => {
     const activeTheme = selectors.getActiveTheme(store.getState());
     if (previousActiveTheme !== activeTheme) {
