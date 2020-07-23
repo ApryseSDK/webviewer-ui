@@ -106,6 +106,10 @@ class MeasurementOverlay extends React.PureComponent {
   };
 
   isMouseInsideRect = (e, overlayElement) => {
+    if (overlayElement === null) {
+      return false;
+    }
+
     const overlayRect = overlayElement.getBoundingClientRect();
     const { clientX: x, clientY: y } = e;
 
