@@ -65,6 +65,14 @@ const TextPopup = () => {
     >
       <CustomizablePopup dataElement="textPopup">
         <ActionButton
+          dataElement="editTextButton"
+          title="action.edit"
+          img="ic_edit_black_24px"
+          onClick={() =>
+            dispatch(actions.openElement('editTextModal'))
+          }
+        />
+        <ActionButton
           dataElement="copyTextButton"
           title="action.copy"
           img="ic_copy_black_24px"

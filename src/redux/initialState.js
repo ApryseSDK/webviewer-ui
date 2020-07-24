@@ -288,6 +288,7 @@ export default {
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
+      { dataElement: 'editTextButton' },
       { dataElement: 'textHighlightToolButton' },
       { dataElement: 'textUnderlineToolButton' },
       { dataElement: 'textSquigglyToolButton' },
