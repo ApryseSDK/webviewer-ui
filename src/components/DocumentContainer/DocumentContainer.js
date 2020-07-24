@@ -18,6 +18,7 @@ import ToolsOverlay from 'components/ToolsOverlay';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
+import ReaderModeViewer from 'components/ReaderModeViewer';
 
 import Measure from 'react-measure';
 
@@ -40,6 +41,7 @@ class DocumentContainer extends React.PureComponent {
     leftPanelWidth: PropTypes.number,
     allowPageNavigation: PropTypes.bool.isRequired,
     isMouseWheelZoomEnabled: PropTypes.bool.isRequired,
+    isReaderMode: PropTypes.bool
   }
 
   constructor(props) {
@@ -197,13 +199,11 @@ class DocumentContainer extends React.PureComponent {
   }
 
   render() {
-    let className;
-
-    if (isIE) {
-      className = getClassNameInIE(this.props);
-    } else {
-      className = this.getClassName(this.props);
-    }
+    const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
+    const documentClassName = classNames({
+      document: true,
+      hidden: this.props.isReaderMode
+    });
 
     return (
       <Measure
@@ -218,12 +218,15 @@ class DocumentContainer extends React.PureComponent {
             ref={measureRef}
           >
             <div
-              className={className}
+              className={documentContainerClassName}
               ref={this.container}
               data-element="documentContainer"
               onScroll={this.handleScroll}
             >
-              <div className="document" ref={this.document}/>
+              <div className={documentClassName} ref={this.document}/>
+              {this.props.isReaderMode && (
+                <ReaderModeViewer />
+              )}
             </div>
             <MeasurementOverlay />
             <div className="footer">
@@ -249,6 +252,7 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
   isMouseWheelZoomEnabled: selectors.getEnableMouseWheelZoom(state),
+  isReaderMode: selectors.isReaderMode(state)
 });
 
 const mapDispatchToProps = dispatch => ({

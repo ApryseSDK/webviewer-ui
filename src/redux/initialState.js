@@ -451,7 +451,8 @@ export default {
     selectedStampIndex: 0,
     savedSignatures: [],
     selectedSignatureIndex: 0,
-    annotationContentOverlayHandler: null
+    annotationContentOverlayHandler: null,
+    isReaderMode: false
   },
   search: {
     listeners: [],
