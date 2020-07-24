@@ -12,6 +12,14 @@ export default initialState => (state = initialState, action) => {
         ...state,
         canRedo: payload.canRedo,
       };
+    case 'SET_LAST_PICKED_TOOL_FOR_GROUP':
+      return {
+        ...state,
+        lastPickedToolForGroup: {
+          ...state.lastPickedToolForGroup,
+          [payload.group]: payload.toolName,
+        }
+      };
     case 'SET_TOOLBAR_GROUP':
       return {
         ...state,
@@ -146,7 +154,14 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ACTIVE_LEFT_PANEL':
       return { ...state, activeLeftPanel: payload.dataElement };
     case 'SET_ACTIVE_TOOL_GROUP':
-      return { ...state, activeToolGroup: payload.toolGroup };
+      return {
+        ...state,
+        activeToolGroup: payload.toolGroup,
+        lastPickedToolGroup: {
+          ...state.lastPickedToolGroup,
+          [payload.toolbarGroup]: payload.toolGroup,
+        },
+      };
     case 'SET_NOTE_POPUP_ID':
       return { ...state, notePopupId: payload.id };
     case 'SET_NOTE_EDITING':
@@ -310,6 +325,8 @@ export default initialState => (state = initialState, action) => {
     }
     case 'SET_MOUSE_WHEEL_ZOOM':
       return { ...state, enableMouseWheelZoom: payload.enableMouseWheelZoom };
+    case 'SET_ENABLE_SNAP_MODE':
+      return { ...state, isSnapModeEnabled: payload.enable };
     case 'SET_READER_MODE':
       return { ...state, isReaderMode: payload.isReaderMode };
     default:

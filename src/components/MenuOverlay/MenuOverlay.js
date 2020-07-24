@@ -3,7 +3,7 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
 import { workerTypes } from 'constants/types';
 import core from 'core';
-import { isIOS } from 'helpers/device';
+import { isIOS, isIE } from 'helpers/device';
 import downloadPdf from 'helpers/downloadPdf';
 import openFilePicker from 'helpers/openFilePicker';
 import print from 'helpers/print';
@@ -86,16 +86,17 @@ function MenuOverlay() {
           <div className="MenuLabel">{t('action.print')}</div>
         </button>
       </DataElementWrapper>
-      <div className="row">
-        <button
-          className="MenuItem"
-          onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
-          aria-label={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
-        >
-          <Icon className="MenuIcon" glyph={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`} />
-          <div className="MenuLabel">{activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}</div>
-        </button>
-      </div>
+      {!isIE && (
+        <div className="row">
+          <button
+            className="MenuItem"
+            onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
+            aria-label={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
+          >
+            <Icon className="MenuIcon" glyph={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`} />
+            <div className="MenuLabel">{activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}</div>
+          </button>
+        </div>)}
     </FlyoutMenu>
   );
 }

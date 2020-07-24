@@ -267,7 +267,8 @@
     },
     "shared": {
       "page": "Pagina",
-      "precision": "Precisione"
+      "precision": "Precisione",
+      "enableSnapping": "Abilita snap per strumenti di misurazione"
     },
     "watermark": {
       "size": "Taglia",
