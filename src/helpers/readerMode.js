@@ -4,8 +4,8 @@ import disableFeatures from 'src/apis/disableFeatures';
 import Feature from 'constants/feature';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 
-const features = [Feature.Annotations, Feature.Download, Feature.Print];
-const dataElements = ['searchButton', 'panToolButton', 'selectToolButton', 'outlinesPanelButton', 'bookmarksPanelButton'];
+const features = [Feature.Annotations, Feature.Download, Feature.Print, Feature.Search];
+const dataElements = ['panToolButton', 'selectToolButton', 'outlinesPanelButton', 'bookmarksPanelButton'];
 
 export const enterReaderMode = (store) => {
   store.dispatch(actions.setReaderMode(true));
