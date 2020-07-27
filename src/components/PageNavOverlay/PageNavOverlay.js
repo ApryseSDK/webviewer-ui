@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import selectors from 'selectors';
-import { isIOS } from 'helpers/device';
+import { isIOS, isIE11 } from 'helpers/device';
 
 import './PageNavOverlay.scss';
 
@@ -92,15 +92,20 @@ class PageNavOverlay extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, isLeftPanelOpen, isLeftPanelDisabled, currentPage, totalPages, allowPageNavigation } = this.props;
+    const { isDisabled, isLeftPanelOpen, isLeftPanelDisabled, currentPage, totalPages, allowPageNavigation, leftPanelWidth } = this.props;
     if (isDisabled) {
       return null;
+    }
+
+    let style = {};
+    if (isIE11 && isLeftPanelOpen && leftPanelWidth ) {
+      style = { transform: `translateX(${leftPanelWidth}px)` };
     }
 
     const className = getClassName(`Overlay PageNavOverlay ${isLeftPanelOpen && !isLeftPanelDisabled ? 'shifted' : ''}`, this.props);
 
     return (
-      <div className={className} data-element="pageNavOverlay" onClick={this.onClick}>
+      <div className={className} data-element="pageNavOverlay" style={style} onClick={this.onClick}>
         <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
           <input ref={this.textInput} disabled={!allowPageNavigation} type="text" value={this.state.input} onChange={this.onChange} tabIndex={-1} />
           {this.state.isCustomPageLabels
@@ -122,6 +127,7 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
   pageLabels: selectors.getPageLabels(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
+  leftPanelWidth: selectors.getLeftPanelWidth(state),
 });
 
 export default connect(mapStateToProps)(PageNavOverlay);
