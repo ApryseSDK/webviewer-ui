@@ -156,7 +156,6 @@ class PrintModal extends React.PureComponent {
     const createPages = creatingPages(this.state.pagesToPrint, this.state.includeComments, this.state.includeAnnotations, this.props.printQuality, this.props.sortStrategy, this.props.colorMap);
     Promise.all(createPages)
       .then(pages => {
-        debugger;
         printPages(pages);
         this.closePrintModal();
       })
