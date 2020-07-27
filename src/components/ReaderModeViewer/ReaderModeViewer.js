@@ -39,7 +39,8 @@ class ReaderModeViewer extends React.PureComponent {
     WebViewerReadingMode.render(
       core.getDocumentViewer().getDocument().getPDFDoc(),
       this.viewer.current,
-      PDFNet
+      PDFNet,
+      core.setCurrentPage
     );
   }
 
