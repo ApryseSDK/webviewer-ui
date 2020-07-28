@@ -21,11 +21,12 @@ import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
-import setPrintHandler from './apis/print';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
 import getHashParams from 'helpers/getHashParams';
+import selectors from 'selectors';
+import print from 'helpers/print';
 
 const middleware = [thunk];
 
@@ -138,7 +139,9 @@ if (window.CanvasRenderingContext2D) {
       tool?.setSaveViewState(true);
     }
     docViewer.on('documentLoaded', () => {
-      setPrintHandler(store);
+      window.docViewer.getAnnotationManager().getFieldManager().setPrintHandler(() => {
+        print(store.dispatch, selectors.isEmbedPrintSupported(store.getState()));
+      });
     });
     setupDocViewer();
     setupI18n(state);
