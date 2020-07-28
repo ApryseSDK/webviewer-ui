@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
+import getHashParams from 'helpers/getHashParams';
 
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
@@ -16,6 +17,8 @@ import selectors from 'selectors';
 import './TextPopup.scss';
 
 const TextPopup = () => {
+  const fullAPI = !!getHashParams('pdfnet', false);
+
   const [isDisabled, isOpen, popupItems] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'textPopup'),
@@ -72,12 +75,14 @@ const TextPopup = () => {
             dispatch(actions.openElement('editTextModal'))
           }
         />
-        <ActionButton
-          dataElement="copyTextButton"
-          title="action.copy"
-          img="ic_copy_black_24px"
-          onClick={copyText}
-        />
+        {fullAPI && (
+          <ActionButton
+            dataElement="copyTextButton"
+            title="action.copy"
+            img="ic_copy_black_24px"
+            onClick={copyText}
+          />
+        )}
         <ActionButton
           dataElement="textHighlightToolButton"
           title="annotation.highlight"
