@@ -84,10 +84,12 @@ class ThumbnailsPanel extends React.PureComponent {
   }
 
   onWindowResize = () => {
-    this.setState({
-      height: this.containerRef.current.clientHeight,
-      width: this.containerRef.current.clientWidth,
-    });
+    if (this.containerRef && this.containerRef.current) {
+      this.setState({
+        height: this.containerRef.current.clientHeight,
+        width: this.containerRef.current.clientWidth,
+      });
+    }
   }
 
   onBeginRendering = () => {
