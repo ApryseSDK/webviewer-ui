@@ -26,8 +26,11 @@ function useSearch() {
       }
     }
 
-    function searchInProgressEventHandler(isSearching, isFullSearch) {
-      if (isSearching) {
+    function searchInProgressEventHandler(isSearching) {
+      if (isSearching === undefined || isSearching === null) {
+        // if isSearching is not passed at all, we consider that to mean that search was reset to original state
+        setSearchStatus('SEARCH_NOT_INITIATED');
+      } else if (isSearching) {
         setSearchStatus('SEARCH_IN_PROGRESS');
       } else {
         setSearchStatus('SEARCH_DONE');
