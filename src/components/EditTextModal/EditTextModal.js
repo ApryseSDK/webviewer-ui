@@ -62,7 +62,7 @@ const EditTextModal = () => {
     //   ]
     // }
 
-    textCoordinates[1].forEach(rect => {
+    textCoordinates[currentPage].forEach(rect => {
       const point1 = window.docViewer.getDocument().getPDFCoordinates(currentPage, rect.x1, rect.y1);
       const point2 = window.docViewer.getDocument().getPDFCoordinates(currentPage, rect.x3, rect.y3);
       rect.x1 = point1.x;
@@ -70,7 +70,7 @@ const EditTextModal = () => {
       rect.y1 = point1.y;
       rect.y2 = point2.y;
     });
-    setTextCoordinates(textCoordinates[1]);
+    setTextCoordinates(textCoordinates[currentPage]);
 
   };
 
