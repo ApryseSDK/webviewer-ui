@@ -13,6 +13,7 @@ function ZoomOverlay() {
   const [t] = useTranslation();
 
   const zoomList = useSelector(selectors.getZoomList);
+  const isReaderMode = useSelector(selectors.isReaderMode);
 
   return (
     <FlyoutMenu menu="zoomOverlay" trigger="zoomOverlayButton">
@@ -28,11 +29,15 @@ function ZoomOverlay() {
       {zoomList.map((zoomValue, i) => (
         <OverlayItem key={i} onClick={() => zoomTo(zoomValue)} buttonName={`${zoomValue * 100}%`} />
       ))}
-      <div className="dividerSmall" />
-      <div className="ZoomItem">
-        <Icon className="ZoomIcon" glyph="icon-header-zoom-marquee" />
-        <ToolButton className="ZoomToolButton" toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
-      </div>
+      {!isReaderMode && (
+        <>
+          <div className="dividerSmall" />
+          <div className="ZoomItem">
+            <Icon className="ZoomIcon" glyph="icon-header-zoom-marquee" />
+            <ToolButton className="ZoomToolButton" toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
+          </div>
+        </>
+      )}
     </FlyoutMenu>
   );
 }
