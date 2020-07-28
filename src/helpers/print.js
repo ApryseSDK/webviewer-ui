@@ -11,7 +11,6 @@ import core from 'core';
 let pendingCanvases = [];
 let includeAnnotations = false;
 let printQuality = 1;
-let count = -1;
 let colorMap;
 
 export const print = (dispatch, isEmbedPrintSupported) => {
@@ -106,7 +105,6 @@ export const printPages = pages => {
 export const cancelPrint = () => {
   const doc = core.getDocument();
   pendingCanvases.forEach(id => doc.cancelLoadCanvas(id));
-  count = -1;
 };
 
 
@@ -144,7 +142,6 @@ const creatingImage = (pageNumber, printableAnnotations) =>
       const img = document.createElement('img');
       img.src = canvas.toDataURL();
       img.onload = () => {
-        count = count < 0 ? -1 : count + 1;
         resolve(img);
       };
     };

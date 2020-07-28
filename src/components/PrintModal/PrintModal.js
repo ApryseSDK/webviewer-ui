@@ -153,7 +153,16 @@ class PrintModal extends React.PureComponent {
       core.setWatermark(this.state.existingWatermarks);
     }
 
-    const createPages = creatingPages(this.state.pagesToPrint, this.state.includeComments, this.state.includeAnnotations, this.props.printQuality, this.props.sortStrategy, this.props.colorMap);
+    const createPages = creatingPages(this.state.pagesToPrint,
+      this.state.includeComments,
+      this.state.includeAnnotations,
+      this.props.printQuality,
+      this.props.sortStrategy,
+      this.props.colorMap);
+    createPages.forEach(async pagePromise => {
+      await pagePromise;
+      this.setState({ count: this.state.count < this.state.pagesToPrint.length ? this.state.count+1 : this.state.count });
+    });
     Promise.all(createPages)
       .then(pages => {
         printPages(pages);
