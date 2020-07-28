@@ -13,7 +13,7 @@ WebViewer(...)
   });
  */
 
-import print from 'helpers/print';
+import { print } from 'helpers/print';
 import selectors from 'selectors';
 
 export default store => () => {
