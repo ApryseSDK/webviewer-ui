@@ -93,6 +93,7 @@ const EditTextModal = () => {
         replacer.addText(region, lines[i]);
         replacer.process(page);
       }
+      replacer.destroy();
 
       // clear the cache
       window.docViewer.refreshAll();
