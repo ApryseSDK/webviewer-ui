@@ -183,7 +183,7 @@ const HotkeysManager = {
   },
   /**
    * Add an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys#on
+   * @method WebViewerInstance.Hotkeys.on
    * @param {string} key A keyboard key <br/>
    * If a hotkey is consisted of more than one key. Those keys should be connected using '+'.
    * @param {function|object} [handler] An optional argument <br/>
@@ -240,7 +240,7 @@ WebViewer(...)
   },
   /**
    * Remove an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys#off
+   * @method WebViewerInstance.Hotkeys.off
    * @param {string} [key] An optional keyboard key. If not passed, all handlers will be removed
    * @param {function} [handler] An optional function. If not passed, all handlers of the given key will be removed
    * @example
