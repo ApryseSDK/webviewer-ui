@@ -349,10 +349,15 @@ WebViewer(...)
         const scrollViewElement = core.getScrollViewElement();
         const { scrollHeight, clientHeight } = scrollViewElement;
         const reachedTop = scrollViewElement.scrollTop === 0;
+
         if (reachedTop) {
-          setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
-          // set the scrollbar to be at the bottom of the page
-          scrollViewElement.scrollTop = scrollHeight - clientHeight;
+          const currentPage = core.getCurrentPage();
+          setCurrentPage(currentPage - getNumberOfPagesToNavigate());
+
+          // set the scrollbar to be at the bottom of the page only if the previous page is bigger than 1
+          if (currentPage > 1) {
+            scrollViewElement.scrollTop = scrollHeight - clientHeight;
+          }
         }
       },
       [`${Keys.DOWN}`]: () => {
