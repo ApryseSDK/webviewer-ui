@@ -269,12 +269,6 @@ export const getSearchListeners = state => state.search.listeners;
 
 export const getSearchValue = state => state.search.value;
 
-export const getActiveResult = state => state.search.activeResult;
-
-export const getActiveResultIndex = state => state.search.activeResultIndex;
-
-export const getResults = state => state.search.results;
-
 export const isCaseSensitive = state => state.search.isCaseSensitive;
 
 export const isWholeWord = state => state.search.isWholeWord;
@@ -286,10 +280,6 @@ export const isSearchUp = state => state.search.isSearchUp;
 export const isAmbientString = state => state.search.isAmbientString;
 
 export const isRegex = state => state.search.isRegex;
-
-export const isSearching = state => state.search.isSearching;
-
-export const isNoResult = state => state.search.noResult;
 
 export const getSearchErrorMessage = state => state.search.errorMessage;
 

@@ -445,14 +445,6 @@ export const setSearchResults = searchResults => ({
   type: 'SET_SEARCH_RESULTS',
   payload: searchResults,
 });
-export const setActiveResult = (activeResult, index) => ({
-  type: 'SET_ACTIVE_RESULT',
-  payload: { activeResult },
-});
-export const setActiveResultIndex = index => ({
-  type: 'SET_ACTIVE_RESULT_INDEX',
-  payload: { index },
-});
 export const setAnnotationContentOverlayHandler = annotationContentOverlayHandler => ({
   type: 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER',
   payload: { annotationContentOverlayHandler }
