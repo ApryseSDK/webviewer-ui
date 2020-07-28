@@ -77,8 +77,7 @@ class SearchPanel extends React.PureComponent {
     if (isMobile) {
       animate = { width: '100vw' };
     }
-
-    //console.log(JSON.stringify(searchResults));
+    
     return (
       <AnimatePresence>
         {isOpen && (
