@@ -184,6 +184,12 @@
       &:hover {
         background: var(--primary-button-hover);
       }
+
+      &.disabled {
+        background: var(--gray-6);
+        border-color: var(--gray-6);
+        cursor: not-allowed;
+      }
     }
   }
 }
