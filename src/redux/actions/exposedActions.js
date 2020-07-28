@@ -115,7 +115,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const setToolbarGroup = (toolbarGroup, pickGroup = true) => (dispatch, getState) => {
+export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
@@ -154,7 +154,7 @@ export const setToolbarGroup = (toolbarGroup, pickGroup = true) => (dispatch, ge
     const lastPickedToolGroup = state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
     const lastPickedToolName = state.viewer.lastPickedToolForGroup[lastPickedToolGroup]
       || getFirstToolNameForGroup(state, lastPickedToolGroup);
-    if (pickGroup) {
+    if (pickTool) {
       if (lastPickedToolName === 'AnnotationCreateSignature') {
         core.setToolMode(defaultTool);
       } else {
