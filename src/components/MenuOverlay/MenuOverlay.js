@@ -6,7 +6,7 @@ import core from 'core';
 import { isIOS, isIE } from 'helpers/device';
 import downloadPdf from 'helpers/downloadPdf';
 import openFilePicker from 'helpers/openFilePicker';
-import print from 'helpers/print';
+import { print } from 'helpers/print';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
