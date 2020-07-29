@@ -87,11 +87,13 @@ const EditTextModal = () => {
       const replacer = await PDFNet.ContentReplacer.create();
 
       // Treat each line as a rectangle region and update them separately
-      const lines = newText.split("\n");
+      const lines = newText.split(/\r?\n/);
       for (let i=0; i<lines.length; i++) {
-        const region = await PDFNet.Rect.init(textCoordinates[i].x1, textCoordinates[i].y1, textCoordinates[i].x2, textCoordinates[i].y2);
-        replacer.addText(region, lines[i]);
-        replacer.process(page);
+        if (i < textCoordinates.length) {
+          const region = await PDFNet.Rect.init(textCoordinates[i].x1, textCoordinates[i].y1, textCoordinates[i].x2, textCoordinates[i].y2);
+          replacer.addText(region, lines[i]);
+          replacer.process(page);
+        }
       }
       replacer.destroy();
 
