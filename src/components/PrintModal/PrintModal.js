@@ -571,6 +571,7 @@ class PrintModal extends React.PureComponent {
                   type="checkbox"
                   label={t('option.print.includeAnnotations')}
                   disabled={isPrinting}
+                  defaultChecked
                 />
               </form>
             </div>
