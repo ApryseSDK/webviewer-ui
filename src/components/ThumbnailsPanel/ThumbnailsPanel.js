@@ -44,6 +44,7 @@ class ThumbnailsPanel extends React.PureComponent {
     this.pendingThumbs = [];
     this.thumbs = [];
     this.listRef = React.createRef();
+    this.containerRef = React.createRef();
     this.afterMovePageNumber = null;
     this.isDraggingGroup = false;
     this.state = {
@@ -67,6 +68,7 @@ class ThumbnailsPanel extends React.PureComponent {
     core.addEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.addEventListener('pageComplete', this.onPageComplete);
     core.addEventListener('annotationHidden', this.onAnnotationChanged);
+    window.addEventListener('resize', this.onWindowResize);
   }
 
   componentWillUnmount() {
@@ -78,6 +80,16 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.removeEventListener('pageComplete', this.onPageComplete);
     core.removeEventListener('annotationHidden', this.onAnnotationChanged);
+    window.removeEventListener('resize', this.onWindowResize);
+  }
+
+  onWindowResize = () => {
+    if (this.containerRef && this.containerRef.current) {
+      this.setState({
+        height: this.containerRef.current.clientHeight,
+        width: this.containerRef.current.clientWidth,
+      });
+    }
   }
 
   onBeginRendering = () => {
@@ -494,6 +506,7 @@ class ThumbnailsPanel extends React.PureComponent {
         style={{ display }}
         data-element="thumbnailsPanel"
         onDrop={this.onDrop}
+        ref={this.containerRef}
       >
         <Measure bounds onResize={this.onPanelResize}>
           {({ measureRef }) => (
