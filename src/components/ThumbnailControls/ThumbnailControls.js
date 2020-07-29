@@ -66,16 +66,19 @@ const ThumbnailControls = ({
         img="ic_rotate_left_black_24px"
         onClick={rotateCounterClockwise}
         title="option.thumbnailPanel.rotateCounterClockwise"
+        dataElement="thumbRotateCounterClockwise"
       />
       <Button
         img="ic_delete_black_24px"
         onClick={handleDelete}
         title="option.thumbnailPanel.delete"
+        dataElement="thumbDelete"
       />
       <Button
         img="ic_rotate_right_black_24px"
         onClick={rotateClockwise}
         title="option.thumbnailPanel.rotateClockwise"
+        dataElement="thumbRotateClockwise"
       />
     </div>
   );
