@@ -13,10 +13,9 @@ import AutoResizeTextarea from 'components/NoteTextarea/AutoResizeTextarea';
 import './EditTextModal.scss';
 
 const EditTextModal = () => {
-  const [isDisabled, isOpen, currentPage] = useSelector(state => [
+  const [isDisabled, isOpen] = useSelector(state => [
     selectors.isElementDisabled(state, 'editTextModal'),
     selectors.isElementOpen(state, 'editTextModal'),
-    selectors.getCurrentPage(state),
   ]);
 
   const [t] = useTranslation();
@@ -50,60 +49,65 @@ const EditTextModal = () => {
   // (x4,y4)---(x3,y3)
   //   |          |
   // (x1,y1)---(x2,y2)
-  // we need to first convert it to PDF coordinates and then store it.
+  // Firstly convert it to PDF coordinates and then store it in a flat structure
   const storeConvertedPDFCoordinates = () => {
     const textCoordinates = core.getSelectedTextQuads();
+
     // Example:
     // textCoordinates = {
     //   1: [
     //     {x1: 32, y1: 582, x2: 67.28, y2: 582, x3: 67.28,4: 32, y1: 582, y2: 582, y3: 565, y4: 565},
     //     {x1: 32, x2: 68, x3: 68, x4: 32, y1: 595, y2: 595, y3: 579, y4: 579},
-    //     {...}
     //   ]
     // }
+    // convert to a flat structure
+    // textCoordinates = [{x1:32, x2:1, y1:582, y2:2, pageNum:1}, {x1:1, x2:1, y1:2, y2:2, pageNum:1}]
 
-    textCoordinates[currentPage].forEach(rect => {
-      const point1 = window.docViewer.getDocument().getPDFCoordinates(currentPage, rect.x1, rect.y1);
-      const point2 = window.docViewer.getDocument().getPDFCoordinates(currentPage, rect.x3, rect.y3);
-      rect.x1 = point1.x;
-      rect.x2 = point2.x;
-      rect.y1 = point1.y;
-      rect.y2 = point2.y;
-    });
-    setTextCoordinates(textCoordinates[currentPage]);
-
+    if (textCoordinates) {
+      const convertedTextCoordinates = [];
+      Object.keys(textCoordinates).forEach(pageNum => {
+        textCoordinates[pageNum].forEach(rect => {
+          const point1 = window.docViewer.getDocument().getPDFCoordinates(pageNum, rect.x1, rect.y1);
+          const point2 = window.docViewer.getDocument().getPDFCoordinates(pageNum, rect.x3, rect.y3);
+          convertedTextCoordinates.push({ x1: point1.x, x2: point2.x, y1: point1.y, y2: point2.y,pageNum:Number(pageNum) });
+        });
+      });
+      setTextCoordinates(convertedTextCoordinates);
+    }
   };
 
   const updateText = e => {
     e.preventDefault();
-    // update page content
     window.PDFNet.runWithCleanup(async() => {
       const doc = await window.docViewer.getDocument().getPDFDoc();
-      doc.initSecurityHandler();
-      doc.lock();
-
-      const page = await doc.getPage(currentPage);
-      const PDFNet = window.PDFNet;
-      const replacer = await PDFNet.ContentReplacer.create();
-
       // Treat each line as a rectangle region and update them separately
       const lines = newText.split(/\r?\n/);
-      for (let i=0; i<lines.length; i++) {
-        if (i < textCoordinates.length) {
-          const region = await PDFNet.Rect.init(textCoordinates[i].x1, textCoordinates[i].y1, textCoordinates[i].x2, textCoordinates[i].y2);
+      doc.initSecurityHandler();
+      doc.lock();
+      const PDFNet = window.PDFNet;
+      // Note: If the number of lines are more than number of rects defined in textCoordinates, then we just ignore the rest
+      if (textCoordinates && textCoordinates.length > 0) {
+        for (let i=0; i<textCoordinates.length; i++) {
+          const { x1, x2, y1, y2, pageNum } = textCoordinates[i];
+          const [page, replacer, region] = await Promise.all([
+            doc.getPage(pageNum),
+            PDFNet.ContentReplacer.create(),
+            PDFNet.Rect.init(x1, y1, x2, y2)
+          ]);
           replacer.addText(region, lines[i]);
           replacer.process(page);
+          replacer.destroy();
         }
-      }
-      replacer.destroy();
 
-      // clear the cache
-      window.docViewer.refreshAll();
-      // update viewer with new document
-      window.docViewer.updateView();
-      // Annotations may contain text so we need to regenerate
-      // our text representation
-      window.docViewer.getDocument().refreshTextData();
+        // clear the cache
+        window.docViewer.refreshAll();
+        // update viewer with new document
+        window.docViewer.updateView();
+        // Annotations may contain text so we need to regenerate
+        // our text representation
+        window.docViewer.getDocument().refreshTextData();
+      }
+      // doc.unlock();
     });
     closeModal();
   };
