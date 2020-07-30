@@ -119,7 +119,9 @@ const LinkModal = () => {
     core.addAnnotations([highlight]);
   };
 
-  const addURLLink = () => {
+  const addURLLink = e => {
+    e.preventDefault();
+
     const links = createLink();
 
     const action = new window.Actions.URI({ uri: url });
@@ -137,7 +139,9 @@ const LinkModal = () => {
     closeModal();
   };
 
-  const addPageLink = () => {
+  const addPageLink = e => {
+    e.preventDefault();
+
     const links = createLink();
 
     const Dest = window.Actions.GoTo.Dest;
