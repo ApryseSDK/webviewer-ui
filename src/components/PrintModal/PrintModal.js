@@ -136,9 +136,11 @@ class PrintModal extends React.PureComponent {
     this.setState({ pagesToPrint });
   };
 
-  onFocus = () => {
-    this.customPages.current.click();
-    this.onChange();
+  onInputChange = () => {
+    if (!this.customPages.current.checked) {
+      this.customPages.current.click();
+      this.onChange();
+    }
   };
 
   createPagesAndPrint = e => {
@@ -488,7 +490,7 @@ class PrintModal extends React.PureComponent {
         type="text"
         placeholder={t('message.customPrintPlaceholder')}
         aria-label={t('message.customPrintPlaceholder')}
-        onFocus={this.onFocus}
+        onChange={this.onInputChange}
         disabled={isPrinting}
       />
     );
