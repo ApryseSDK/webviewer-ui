@@ -10,18 +10,18 @@ WebViewer(...)
  */
 
 import actions from 'actions';
-import selectors from 'selectors';
-import zoomFactors from 'constants/zoomFactors';
+import zoomFactors, { defaultZoomList } from 'constants/zoomFactors';
 import getActualZoomLevel from 'helpers/getActualZoomLevel';
 
 export default store => zoomLevel => {
-  zoomLevel = getActualZoomLevel(zoomLevel);
-  const zoomList = selectors.getZoomList(store.getState()).filter(zoom => zoom >= zoomLevel);
+  const minZoom = getActualZoomLevel(zoomLevel);
 
-  if (zoomLevel) {
-    zoomFactors.setMinZoomLevel(zoomLevel);
+  if (minZoom) {
+    const maxZoom = zoomFactors.getMaxZoomLevel();
+    const zoomList = defaultZoomList.filter(zoom => zoom <= maxZoom && zoom >= minZoom);
+    zoomFactors.setMinZoomLevel(minZoom);
     store.dispatch(actions.setZoomList(zoomList));
-    window.Tools.MarqueeZoomTool.setMinZoomLevel(zoomLevel);
+    window.Tools.MarqueeZoomTool.setMinZoomLevel(minZoom);
   } else {
     console.warn('Type of the argument for setMinZoomLevel must be either string or number');
   }
