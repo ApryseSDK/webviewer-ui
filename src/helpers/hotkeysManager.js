@@ -398,6 +398,7 @@ WebViewer(...)
             'signatureModal',
             'printModal',
             'rubberStampOverlay',
+            'editTextModal',
           ])
         );
       },
