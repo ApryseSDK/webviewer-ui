@@ -240,7 +240,7 @@ const LinkModal = () => {
                 dataElement="linkSubmitButton"
                 label={t('action.link')}
                 onClick={addPageLink}
-                disable={pageNumber < 0 || pageNumber > totalPages}
+                disable={pageNumber < 1 || pageNumber > totalPages}
               />
             </form>
           </TabPanel>
