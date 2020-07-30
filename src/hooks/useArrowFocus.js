@@ -13,10 +13,6 @@ export default function useArrowFocus(isOpen, onClose, overlayRef) {
     return overlayRef.current.querySelectorAll(focusableElementDomString);
   }, [overlayRef]);
 
-  const setDocumentTabbing = useCallback(() => {
-    document.documentElement.setAttribute('data-tabbing', 'true');
-  }, []);
-
   useEffect(() => {
     if (isOpen) {
       const lastFocusedElement = document.activeElement;
@@ -46,12 +42,13 @@ export default function useArrowFocus(isOpen, onClose, overlayRef) {
 
           const vector = e.key === 'ArrowUp' ? -1 : 1;
           focusable[(focusIndex + vector + focusable.length) % focusable.length].focus();
-          setDocumentTabbing();
+          // User is "tabbing", so show button outlines.
+          document.documentElement.setAttribute('data-tabbing', 'true');
         }
       };
 
       window.addEventListener('keydown', keydownListener);
       return () => window.removeEventListener('keydown', keydownListener);
     }
-  }, [getFocusableElements, isOpen, onClose, setDocumentTabbing]);
+  }, [getFocusableElements, isOpen, onClose]);
 }
