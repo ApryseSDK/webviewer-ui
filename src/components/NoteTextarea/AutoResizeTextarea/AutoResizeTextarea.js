@@ -1,7 +1,4 @@
-import React, {
-  useRef,
-  useLayoutEffect,
-} from 'react';
+import React, { useRef, useLayoutEffect, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
@@ -14,18 +11,10 @@ const propTypes = {
 };
 
 const AutoResizeTextarea = React.forwardRef(
-  (
-    {
-      value = '',
-      onChange,
-      onKeyDown = () => {},
-      onBlur = () => {},
-      onFocus = () => {},
-      placeholder = '',
-    },
-    forwardedRef,
-  ) => {
+  ({ value, onChange, onKeyDown, onBlur, onFocus, placeholder }, ref) => {
     const textareaRef = useRef();
+    useImperativeHandle(ref, () => textareaRef.current);
+
     const TEXTAREA_HEIGHT = '28px';
 
     useLayoutEffect(() => {
@@ -44,10 +33,7 @@ const AutoResizeTextarea = React.forwardRef(
 
     return (
       <textarea
-        ref={el => {
-          textareaRef.current = el;
-          forwardedRef(el);
-        }}
+        ref={textareaRef}
         onChange={onChange}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
