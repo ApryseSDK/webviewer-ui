@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Swipeable } from 'react-swipeable';
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import defaultTool from 'constants/defaultTool';
 import core from 'core';
@@ -20,7 +21,6 @@ const EditTextModal = () => {
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const newTextInput = React.createRef();
   const [newText, setNewText] = useState('');
   // Note: core.getSelectedTextQuads() to store selected text coordinates in the following format
   // ie. {1:[{x1: 81, x2: 553, x3: 553, x4: 81, y1: 608, y2: 608, y3: 592, y4: 592, }, {...}]}
@@ -130,31 +130,27 @@ const EditTextModal = () => {
     closed: !isOpen,
   });
 
-  return isDisabled
-    ? null
-    : <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <div className={modalClass} data-element="editTextModal" onMouseDown={closeModal}>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
-          <div className="swipe-indicator" />
-          <p>Enter the text you want to replaced</p>
-          <AutoResizeTextarea ref={el => {
-            newTextInput.current = el;
-          }}
-          value={newText}
-          onChange={changeHandler}
-          onKeyDown={keyDownHandler}
-          />
-          <div className="editing-controls">
-            <div className="cancel-button editing-pad" onClick={closeModal}>
-              {t('action.cancel')}
-            </div>
-            <div className="editing-button" onClick={updateText}>
-              {t('action.save')}
+  return isDisabled ? null : (
+    <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
+      <FocusTrap locked={isOpen}>
+        <div className={modalClass} data-element="editTextModal" onMouseDown={closeModal}>
+          <div className="container" onMouseDown={e => e.stopPropagation()}>
+            <div className="swipe-indicator" />
+            <p>Enter the text you want to replaced</p>
+            <AutoResizeTextarea value={newText} onChange={changeHandler} onKeyDown={keyDownHandler} />
+            <div className="editing-controls">
+              <button className="button cancel-button editing-pad" onClick={closeModal}>
+                {t('action.cancel')}
+              </button>
+              <button className="button editing-button" onClick={updateText}>
+                {t('action.save')}
+              </button>
             </div>
           </div>
         </div>
-      </div>
-    </Swipeable>;
+      </FocusTrap>
+    </Swipeable>
+  );
 };
 
 export default EditTextModal;

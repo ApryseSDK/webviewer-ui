@@ -27,18 +27,18 @@
       flex-direction: row;
       margin-top: 13px;
     }
-  
-    .editing-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--primary-button-text);
-      padding: 6px 18px;
-      width: fit-content;
-      background: var(--primary-button);
+
+    .button {
+      @include button-reset;
+      padding: 0 18px;
       border-radius: 4px;
       height: 32px;
       cursor: pointer;
+    }
+    
+    .editing-button {
+      color: var(--primary-button-text);
+      background: var(--primary-button);
   
       &:hover {
         background: var(--primary-button-hover);
@@ -47,12 +47,7 @@
   
     .cancel-button {
       color: var(--secondary-button-text);
-      padding: 0 16px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+      margin-right: 6px;
   
       &:hover {
         color: var(--secondary-button-hover);
