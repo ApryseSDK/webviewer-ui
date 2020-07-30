@@ -197,7 +197,8 @@
     },
     "pageTransition": {
       "continuous": "连续",
-      "default": "逐页"
+      "default": "逐页",
+      "reader": "阅读"
     },
     "print": {
       "all": "全部",

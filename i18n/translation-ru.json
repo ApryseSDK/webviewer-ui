@@ -197,7 +197,8 @@
     },
     "pageTransition": {
       "continuous": "Непрерывный",
-      "default": "Страница за страницей"
+      "default": "Страница за страницей",
+      "reader": "читатель"
     },
     "print": {
       "all": "Все",
