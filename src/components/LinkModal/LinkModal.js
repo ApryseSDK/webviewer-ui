@@ -261,7 +261,7 @@ const LinkModal = () => {
                     dataElement="linkSubmitButton"
                     label={t('action.link')}
                     onClick={addPageLink}
-                    disabled={pageNumber < 0 || pageNumber > totalPages}
+                    disabled={pageNumber < 1 || pageNumber > totalPages}
                   />
                 </div>
               </form>
