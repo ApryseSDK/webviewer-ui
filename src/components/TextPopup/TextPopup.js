@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import getHashParams from 'helpers/getHashParams';
@@ -11,6 +11,7 @@ import { getTextPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import copyText from 'helpers/copyText';
 import useOnClickOutside from 'hooks/useOnClickOutside';
+import useArrowFocus from 'hooks/useArrowFocus';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -53,6 +54,10 @@ const TextPopup = () => {
     return () => textSelectTool.off('selectionComplete', onSelectionComplete);
   }, [dispatch, popupItems]);
 
+
+  const onClose = useCallback(() => dispatch(actions.closeElement('textPopup')), [dispatch]);
+  useArrowFocus(!isDisabled && isOpen, onClose, popupRef);
+
   return isDisabled ? null : (
     <div
       className={classNames({
@@ -64,7 +69,7 @@ const TextPopup = () => {
       data-element="textPopup"
       ref={popupRef}
       style={{ ...position }}
-      onClick={() => dispatch(actions.closeElement('textPopup'))}
+      onClick={onClose}
     >
       <CustomizablePopup dataElement="textPopup">
         <ActionButton
