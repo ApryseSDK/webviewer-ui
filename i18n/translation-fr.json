@@ -18,7 +18,7 @@
     "exitFullscreen": "Quitter le plein écran",
     "fit": "Fit",
     "fitToPage": "Fit à la page",
-    "fitToWidth": "Fit à la largeur",
+    "fitToWidth": "Ajuster à la largeur",
     "openFile": "Ouvrir un fichier",
     "print": "Imprimer",
     "ok": "OK",
@@ -306,7 +306,7 @@
   "tool": {
     "pan": "Panoramique",
     "select": "Sélection",
-    "Marquee": "Marquee Zoom",
+    "Marquee": "Zoom sur la sélection",
     "Link": "URL de lien ou page"
   },
   "link": {
