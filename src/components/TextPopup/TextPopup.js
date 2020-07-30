@@ -72,22 +72,22 @@ const TextPopup = () => {
       onClick={onClose}
     >
       <CustomizablePopup dataElement="textPopup">
-        <ActionButton
-          dataElement="editTextButton"
-          title="action.edit"
-          img="ic_edit_black_24px"
-          onClick={() =>
-            dispatch(actions.openElement('editTextModal'))
-          }
-        />
         {fullAPI && (
           <ActionButton
-            dataElement="copyTextButton"
-            title="action.copy"
-            img="ic_copy_black_24px"
-            onClick={copyText}
+            dataElement="editTextButton"
+            title="action.edit"
+            img="ic_edit_black_24px"
+            onClick={() =>
+              dispatch(actions.openElement('editTextModal'))
+            }
           />
         )}
+        <ActionButton
+          dataElement="copyTextButton"
+          title="action.copy"
+          img="ic_copy_black_24px"
+          onClick={copyText}
+        />
         <ActionButton
           dataElement="textHighlightToolButton"
           title="annotation.highlight"
