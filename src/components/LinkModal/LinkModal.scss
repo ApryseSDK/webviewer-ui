@@ -105,6 +105,12 @@
           background: #17324c;
           border: 1px solid #17324c;
         }
+
+        &.disable {
+          background: $gray20;
+          border-color: $gray20;
+          cursor: not-allowed;
+        }
       }
     }
   }
