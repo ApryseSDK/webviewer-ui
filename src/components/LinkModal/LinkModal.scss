@@ -144,21 +144,14 @@
       }
     }
 
-    select {
-      margin-top: 8px;
-      width: 100px;
-      height: 30px;
-      border-radius: 5px;
-      border: 1px solid #e0e0e0;
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 
-      &:focus {
-        outline: none;
-        border: 1px solid var(--focus-border);
-      }
-
-      &::placeholder {
-        color: var(--placeholder-text);
-      }
+    input[type=number] {
+      -moz-appearance: textfield;
     }
 
     form {
@@ -183,6 +176,12 @@
 
       &:hover {
         background: var(--primary-button-hover);
+      }
+
+      &.disabled {
+        background: var(--gray-6);
+        border-color: var(--gray-6);
+        cursor: not-allowed;
       }
     }
   }

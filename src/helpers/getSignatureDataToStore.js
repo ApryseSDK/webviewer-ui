@@ -11,8 +11,12 @@ export default async annotations => {
   const newAnnotations = annotations.map(core.getAnnotationCopy);
   const previews = await Promise.all(
     annotations.map(annotation => {
+      const oldStrokeThickness = annotation['StrokeThickness'];
+      // Temporarily changing stroke thickness to 6 because it looks better in the preview image
       annotation['StrokeThickness'] = 6;
-      return signatureTool.getPreview(annotation);
+      const preview = signatureTool.getPreview(annotation);
+      annotation['StrokeThickness'] = oldStrokeThickness;
+      return preview;
     }),
   );
 
