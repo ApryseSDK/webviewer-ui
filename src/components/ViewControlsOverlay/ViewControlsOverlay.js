@@ -20,6 +20,8 @@ function ViewControlsOverlay() {
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, 'viewControlsOverlay'));
   const isReaderMode = useSelector(selectors.isReaderMode);
 
+  const totalPageThreshold = 1000;
+
   const handleClick = (pageTransition, layout) => {
     if (isReaderMode) {
       exitReaderMode(store);
@@ -45,7 +47,7 @@ function ViewControlsOverlay() {
   return (
     <FlyoutMenu menu="viewControlsOverlay" trigger="viewControlsButton" onClose={undefined}>
       <div className="type">{t('option.displayMode.pageTransition')}</div>
-      {totalPages < 1000 && (
+      {totalPages < totalPageThreshold && (
         <>
           <DataElementWrapper
             className={classNames({ row: true, active: (pageTransition === 'continuous' && !isReaderMode) })}
@@ -85,7 +87,7 @@ function ViewControlsOverlay() {
           </DataElementWrapper>
         </>
       )}
-      {totalPages < 1000 && !isReaderMode && (
+      {totalPages < totalPageThreshold && !isReaderMode && (
         <div className="divider" />
       )}
       {!isReaderMode && (

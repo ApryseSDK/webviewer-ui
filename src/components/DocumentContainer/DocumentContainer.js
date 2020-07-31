@@ -46,10 +46,16 @@ class DocumentContainer extends React.PureComponent {
 
   constructor(props) {
     super(props);
+
     this.document = React.createRef();
     this.container = React.createRef();
     this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
     this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
+    this.handleResize = _.throttle(this.handleResize.bind(this), 200);
+
+    this.state = {
+      containerWidth: 0
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -198,6 +204,18 @@ class DocumentContainer extends React.PureComponent {
     });
   }
 
+  handleResize() {
+    if (!this.props.isReaderMode) {
+      // Skip when in reader mode, otherwise will cause error.
+      core.setScrollViewElement(this.container.current);
+      core.scrollViewUpdated();
+    } else {
+      this.setState({
+        containerWidth: this.container.current.clientWidth
+      });
+    }
+  }
+
   render() {
     const { isToolsHeaderOpen, isMobile } = this.props;
 
@@ -209,10 +227,7 @@ class DocumentContainer extends React.PureComponent {
 
     return (
       <Measure
-        onResize={() => {
-          core.setScrollViewElement(this.container.current);
-          core.scrollViewUpdated();
-        }}
+        onResize={this.handleResize}
       >
         {({ measureRef }) => (
           <div
@@ -227,7 +242,7 @@ class DocumentContainer extends React.PureComponent {
             >
               <div className={documentClassName} ref={this.document}/>
               {this.props.isReaderMode && (
-                <ReaderModeViewer />
+                <ReaderModeViewer containerWidth={this.state.containerWidth} />
               )}
             </div>
             <MeasurementOverlay />
