@@ -18,7 +18,7 @@ function useSearch() {
       setActiveSearchResultIndex(newActiveSearchResultIndex);
     }
 
-    function searchResultChanged(newSearchResults = []) {
+    function searchResultsChanged(newSearchResults = []) {
       setSearchResults(newSearchResults);
       if (newSearchResults && newSearchResults.length === 0) {
         setActiveSearchResult(undefined);
@@ -37,11 +37,11 @@ function useSearch() {
       }
     }
     core.addEventListener('activeSearchResultChanged', activeSearchResultChanged);
-    core.addEventListener('searchResultChanged', searchResultChanged);
+    core.addEventListener('searchResultsChanged', searchResultsChanged);
     core.addEventListener('searchInProgress', searchInProgressEventHandler);
     return function useSearchEffectCleanup() {
       core.removeEventListener('activeSearchResultChanged', activeSearchResultChanged);
-      core.removeEventListener('searchResultChanged', searchResultChanged);
+      core.removeEventListener('searchResultsChanged', searchResultsChanged);
       core.removeEventListener('searchInProgress', searchInProgressEventHandler);
     };
   }, [setActiveSearchResult, setActiveSearchResultIndex, setSearchStatus]);
