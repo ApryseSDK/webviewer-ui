@@ -6,7 +6,7 @@ import openFilePicker from 'helpers/openFilePicker';
 import copyText from 'helpers/copyText';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import { zoomIn, zoomOut } from 'helpers/zoom';
-import { print } from 'helpers/print';
+import print from 'src/apis/print';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import { isMobile } from 'helpers/device';
 import isFocusingElement from 'helpers/isFocusingElement';
@@ -328,7 +328,7 @@ WebViewer(...)
       [`${Keys.CTRL_P}, ${Keys.COMMAND_P}`]: e => {
         e.preventDefault();
 
-        print(dispatch, selectors.isEmbedPrintSupported(getState()));
+        print(store)();
       },
       [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();

@@ -13,7 +13,10 @@ let includeAnnotations = false;
 let printQuality = 1;
 let colorMap;
 
-export const print = (dispatch, isEmbedPrintSupported) => {
+export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options) => {
+  const { allPages, includeAnnotations, includeComments } = options;
+  let { pagesToPrint } = options;
+
   if (!core.getDocument()) {
     return;
   }
@@ -32,6 +35,29 @@ export const print = (dispatch, isEmbedPrintSupported) => {
     printPdf().then(() => {
       dispatch(actions.closeElement('loadingModal'));
     });
+  } else if (allPages || includeAnnotations || includeComments || pagesToPrint.length > 0) {
+    if (allPages || pagesToPrint.length === 0) {
+      pagesToPrint = [];
+      for (let i = 1; i <= core.getTotalPages(); i++) {
+        pagesToPrint.push(i);
+      }
+    }
+
+    const createPages = creatingPages(
+      pagesToPrint,
+      includeComments,
+      includeAnnotations,
+      printQuality,
+      sortStrategy,
+      colorMap,
+    );
+    Promise.all(createPages)
+      .then(pages => {
+        printPages(pages);
+      })
+      .catch(e => {
+        console.error(e);
+      });
   } else {
     dispatch(actions.openElement('printModal'));
   }
@@ -106,7 +132,6 @@ export const cancelPrint = () => {
   const doc = core.getDocument();
   pendingCanvases.forEach(id => doc.cancelLoadCanvas(id));
 };
-
 
 const getPrintableAnnotations = pageNumber =>
   core
@@ -243,7 +268,6 @@ const getDocumentRotation = pageIndex => {
   return (completeRotation - viewerRotation + 4) % 4;
 };
 
-
 const getNote = annotation => {
   const note = document.createElement('div');
   note.className = 'note';
@@ -340,4 +364,3 @@ const createWidgetContainer = pageIndex => {
 
   return widgetContainer;
 };
-

@@ -6,11 +6,11 @@ import core from 'core';
 import { isIOS, isIE } from 'helpers/device';
 import downloadPdf from 'helpers/downloadPdf';
 import openFilePicker from 'helpers/openFilePicker';
-import { print } from 'helpers/print';
+import print from 'src/apis/print';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import './MenuOverlay.scss';
@@ -22,7 +22,7 @@ function MenuOverlay() {
   const [documentType, setDocumentType] = useState(null);
 
   const activeTheme = useSelector(selectors.getActiveTheme);
-  const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
+  const store = useStore();
   const isFullScreen = useSelector(selectors.isFullScreen);
   const isFilePickerButtonDisabled = useSelector(state => selectors.isElementDisabled(state, 'filePickerButton'));
 
@@ -40,7 +40,7 @@ function MenuOverlay() {
 
   const handlePrintButtonClick = () => {
     closeMenuOverlay();
-    print(dispatch, isEmbedPrintSupported);
+    print(store)();
   };
 
   const downloadDocument = () => {
