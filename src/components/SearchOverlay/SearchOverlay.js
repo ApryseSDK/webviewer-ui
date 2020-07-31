@@ -115,7 +115,8 @@ class SearchOverlay extends React.PureComponent {
 
       if (foundResult) {
         core.displayAdditionalSearchResult(result);
-        if (activeResultIndex < 0) { // -1 if no active results are set
+        const noActiveResult = activeResultIndex === -1;
+        if (noActiveResult) {
           core.setActiveSearchResult(result);
         }
       }
