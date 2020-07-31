@@ -267,7 +267,7 @@ WebViewer(...)
     hotkeys.unbind(key, handler);
   },
   createKeyHandlerMap(store) {
-    const { dispatch, getState } = store;
+    const { dispatch } = store;
 
     return {
       [`${Keys.CTRL_SHIFT_EQUAL}, ${Keys.COMMAND_SHIFT_EQUAL}`]: e => {
