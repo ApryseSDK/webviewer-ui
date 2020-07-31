@@ -1,12 +1,15 @@
 import React from 'react';
 import core from 'core';
-import WebViewerReadingMode from '@pdftron/webviewer-reading-mode';
 
 class ReaderModeViewer extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.viewer = React.createRef();
+    this.originalMaxZoom = window.readerControl.getMaxZoomLevel();
+    if (props.containerWidth > 0) {
+      this.updateMaxZoom();
+    }
 
     this.renderDocument = this.renderDocument.bind(this);
     this.goToPage = this.goToPage.bind(this);
@@ -16,15 +19,23 @@ class ReaderModeViewer extends React.PureComponent {
   componentDidMount() {
     this.renderDocument();
 
-    core.getDocumentViewer().on('documentLoaded', this.renderDocument);
-    core.getDocumentViewer().on('pageNumberUpdated', this.goToPage);
-    core.getDocumentViewer().on('zoomUpdated', this.setZoom);
+    core.addEventListener('documentLoaded', this.renderDocument);
+    core.addEventListener('pageNumberUpdated', this.goToPage);
+    core.addEventListener('zoomUpdated', this.setZoom);
   }
 
   componentWillUnmount() {
-    core.getDocumentViewer().off('documentLoaded', this.renderDocument);
-    core.getDocumentViewer().off('pageNumberUpdated', this.goToPage);
-    core.getDocumentViewer().off('zoomUpdated', this.setZoom);
+    core.removeEventListener('documentLoaded', this.renderDocument);
+    core.removeEventListener('pageNumberUpdated', this.goToPage);
+    core.removeEventListener('zoomUpdated', this.setZoom);
+
+    window.readerControl.setMaxZoomLevel(this.originalMaxZoom);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.containerWidth > 0 && prevProps.containerWidth !== this.props.containerWidth) {
+      this.updateMaxZoom();
+    }
   }
 
   render() {
@@ -32,30 +43,46 @@ class ReaderModeViewer extends React.PureComponent {
       <div
         className="reader-mode-viewer"
         ref={this.viewer}
-        style={{ height: "100%", width: "500px" }}
+        style={{ height: "100%" }}
       >
       </div>
     );
   }
 
   renderDocument() {
-    WebViewerReadingMode.render(
-      core.getDocumentViewer().getDocument().getPDFDoc(),
-      this.viewer.current,
-      PDFNet,
-      core.setCurrentPage
-    );
+    import('@pdftron/webviewer-reading-mode').then(({ default: WebViewerReadingMode }) => {
+      if (!this.WebViewerReadingMode) {
+        this.WebViewerReadingMode = WebViewerReadingMode;
+      }
+      this.WebViewerReadingMode.render(
+        core.getDocumentViewer().getDocument().getPDFDoc(),
+        this.viewer.current,
+        PDFNet,
+        core.setCurrentPage
+      );
+      this.setZoom(window.readerControl.getZoomLevel());
+    });
   }
 
   goToPage(pageNum) {
-    WebViewerReadingMode.goToPage(this.viewer.current, pageNum);
+    this.WebViewerReadingMode.goToPage(this.viewer.current, pageNum);
   }
 
   setZoom(zoom) {
-    WebViewerReadingMode.setZoom(this.viewer.current, zoom);
+    this.WebViewerReadingMode.setZoom(this.viewer.current, zoom);
     const pageWidth = core.getDocumentViewer().getDocument().getPageWidth(1);
     if (pageWidth) {
       this.viewer.current.style.width = `${pageWidth * zoom}px`;
+    }
+  }
+
+  updateMaxZoom() {
+    const maxZoomLevel = core.getDocumentViewer().FitMode.FitWidth.call(core.getDocumentViewer());
+    window.readerControl.setMaxZoomLevel(maxZoomLevel);
+
+    const zoomLevel = window.readerControl.getZoomLevel();
+    if (maxZoomLevel < zoomLevel) {
+      window.readerControl.setZoomLevel(maxZoomLevel);
     }
   }
 }
