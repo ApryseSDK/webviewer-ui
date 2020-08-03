@@ -306,7 +306,7 @@
   "tool": {
     "pan": "Pan",
     "select": "Selecionar",
-    "Marquee": "Zoom Marquee",
+    "Marquee": "Zoom na seleção",
     "Link": "URL ou página do link"
   },
   "link": {
