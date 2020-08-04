@@ -162,7 +162,10 @@
   "option": {
     "notesOrder": {
       "position": "Позиция",
-      "time": "Время"
+      "time": "Время",
+      "status": "Статус",
+      "author": "Автор",
+      "type": "Тип"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Посмотреть",

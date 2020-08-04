@@ -162,7 +162,10 @@
   "option": {
     "notesOrder": {
       "position": "위치",
-      "time": "시각"
+      "time": "시각",
+      "status": "상태",
+      "author": "저자",
+      "type": "유형"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "전망",
