@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import dayjs from 'dayjs';
 import orientationManager from 'helpers/orientationManager';
+import core from 'core';
 import { rotateRad } from 'helpers/rotate';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
@@ -76,6 +77,18 @@ const sortStrategies = {
       return currNote.getStatus() === ''
         ? i18next.t('option.state.none')
         : i18next.t(`option.state.${currNote.getStatus().toLowerCase()}`);
+    },
+  },
+  author: {
+    getSortedNotes: notes =>
+      notes.sort((a, b) => {
+        const authorA = core.getDisplayAuthor(a).toUpperCase();
+        const authorB = core.getDisplayAuthor(b).toUpperCase();
+        return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
+      }),
+    shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote) !== core.getDisplayAuthor(currNote),
+    getSeparatorContent: (prevNote, currNote) => {
+      return core.getDisplayAuthor(currNote);
     },
   },
 };

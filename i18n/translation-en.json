@@ -163,7 +163,8 @@
     "notesOrder": {
       "position": "Position",
       "time": "Time",
-      "status": "Status"
+      "status": "Status",
+      "author": "Author"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "View",
