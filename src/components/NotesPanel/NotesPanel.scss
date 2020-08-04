@@ -96,8 +96,22 @@
 
     .sort-row {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       margin-bottom: 16px;
+
+      .filter-annotation-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--icon-color);
+        color: var(--text-color);
+        padding: 6px 18px;
+        width: auto;
+        width: fit-content;
+        border-radius: 4px;
+        height: 28px;
+        cursor: pointer;
+      }
 
       .sort-container {
         display: flex;

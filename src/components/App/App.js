@@ -40,6 +40,7 @@ import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 
 import './App.scss';
+import FilterAnnotModal from '../FilterAnnotMondal';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -107,6 +108,7 @@ const App = ({ removeEventHandlers }) => {
         <CalibrationModal />
         <CreateStampModal />
         <LinkModal />
+        <FilterAnnotModal />
         <CustomModal />
       </div>
 

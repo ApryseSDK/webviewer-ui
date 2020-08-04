@@ -128,7 +128,8 @@
     "redaction": "Redaction",
     "viewControlsOverlay": "View Controls",
     "calibration": "Calibration",
-    "createStampButton": "Create New Stamp"
+    "createStampButton": "Create New Stamp",
+    "filter": "Filter"
   },
   "message": {
     "toolsOverlayNoPresets": "No Presets",

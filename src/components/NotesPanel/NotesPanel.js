@@ -8,10 +8,10 @@ import NormalList from 'components/NotesPanel/NormalList';
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
 import Icon from 'components/Icon';
-
 import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
 import ResizeBar from 'components/ResizeBar';
+import Button from 'components/Button';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
@@ -19,20 +19,13 @@ import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from 'framer-motion';
 import { isSafari } from 'src/helpers/device';
 
 import './NotesPanel.scss';
 
 const NotesPanel = () => {
-  const [
-    sortStrategy,
-    isOpen,
-    isDisabled,
-    pageLabels,
-    customNoteFilter,
-    currentWidth,
-  ] = useSelector(
+  const [sortStrategy, isOpen, isDisabled, pageLabels, customNoteFilter, currentWidth] = useSelector(
     state => [
       selectors.getSortStrategy(state),
       selectors.isElementOpen(state, 'notesPanel'),
@@ -68,7 +61,6 @@ const NotesPanel = () => {
     false,
   );
 
-
   const [notes, setNotes] = useState([]);
   const minWidth = 293;
 
@@ -91,8 +83,7 @@ const NotesPanel = () => {
       setSearchInput('');
     };
     core.addEventListener('documentUnloaded', onDocumentUnloaded);
-    return () =>
-      core.removeEventListener('documentUnloaded', onDocumentUnloaded);
+    return () => core.removeEventListener('documentUnloaded', onDocumentUnloaded);
   }, []);
 
   useEffect(() => {
@@ -100,13 +91,7 @@ const NotesPanel = () => {
       setNotes(
         core
           .getAnnotationsList()
-          .filter(
-            annot =>
-              annot.Listable &&
-              !annot.isReply() &&
-              !annot.Hidden &&
-              !annot.isGrouped(),
-          ),
+          .filter(annot => annot.Listable && !annot.isReply() && !annot.Hidden && !annot.isGrouped()),
       );
     };
 
@@ -133,8 +118,7 @@ const NotesPanel = () => {
     onAnnotationSelected();
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
-    return () =>
-      core.removeEventListener('annotationSelected', onAnnotationSelected);
+    return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
   }, []);
 
   let singleSelectedNoteIndex = -1;
@@ -210,24 +194,12 @@ const NotesPanel = () => {
     resize = () => {},
   ) => {
     let listSeparator = null;
-    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
-      sortStrategy
-    ];
+    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
     const prevNote = index === 0 ? null : notes[index - 1];
     const currNote = notes[index];
 
-    if (
-      shouldRenderSeparator &&
-      getSeparatorContent &&
-      (!prevNote || shouldRenderSeparator(prevNote, currNote))
-    ) {
-      listSeparator = (
-        <ListSeparator
-          renderContent={() =>
-            getSeparatorContent(prevNote, currNote, { pageLabels })
-          }
-        />
-      );
+    if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote))) {
+      listSeparator = <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, { pageLabels })} />;
     }
 
     // can potentially optimize this a bit since a new reference will cause consumers to rerender
@@ -258,28 +230,18 @@ const NotesPanel = () => {
   const NoResults = (
     <div className="no-results">
       <div>
-        <Icon
-          className="empty-icon"
-          glyph="illustration - empty state - outlines"
-        />
+        <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
       </div>
-      <div className="msg">
-        {t('message.noResults')}
-      </div>
+      <div className="msg">{t('message.noResults')}</div>
     </div>
   );
 
   const NoAnnotations = (
     <div className="no-annotations">
       <div>
-        <Icon
-          className="empty-icon"
-          glyph="illustration - empty state - outlines"
-        />
+        <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
       </div>
-      <div className="msg">
-        {t('message.noAnnotations')}
-      </div>
+      <div className="msg">{t('message.noAnnotations')}</div>
     </div>
   );
 
@@ -287,9 +249,7 @@ const NotesPanel = () => {
   // in order to scroll it into view in this render effect
   const ids = Object.keys(selectedNoteIds);
   if (ids.length === 1) {
-    singleSelectedNoteIndex = notesToRender.findIndex(
-      note => note.Id === ids[0],
-    );
+    singleSelectedNoteIndex = notesToRender.findIndex(note => note.Id === ids[0]);
   }
 
   let style = {};
@@ -312,16 +272,17 @@ const NotesPanel = () => {
           initial={{ width: '0px' }}
           animate={animate}
           exit={{ width: '0px' }}
-          transition={{ ease: "easeOut", duration: isSafari ? 0 : 0.25 }}
+          transition={{ ease: 'easeOut', duration: isSafari ? 0 : 0.25 }}
         >
-          {!isTabletAndMobile &&
+          {!isTabletAndMobile && (
             <ResizeBar
               minWidth={minWidth}
               onResize={_width => {
                 dispatch(actions.setNotesPanelWidth(_width));
               }}
               leftDirection
-            />}
+            />
+          )}
           <div
             className={classNames({
               Panel: true,
@@ -331,22 +292,18 @@ const NotesPanel = () => {
             data-element="notesPanel"
             onClick={core.deselectAllAnnotations}
           >
-            {isMobile &&
-              <div
-                className="close-container"
-              >
+            {isMobile && (
+              <div className="close-container">
                 <div
                   className="close-icon-container"
                   onClick={() => {
                     dispatch(actions.closeElements(['notesPanel']));
                   }}
                 >
-                  <Icon
-                    glyph="ic_close_black_24px"
-                    className="close-icon"
-                  />
+                  <Icon glyph="ic_close_black_24px" className="close-icon" />
                 </div>
-              </div>}
+              </div>
+            )}
             <React.Fragment>
               <div className="header">
                 <div className="input-container">
@@ -361,6 +318,12 @@ const NotesPanel = () => {
                 </div>
                 <div className="divider" />
                 <div className="sort-row">
+                  <Button
+                    dataElement="filterAnnotationButton"
+                    className="filter-annotation-button"
+                    label={t('component.filter')}
+                    onClick={() => dispatch(actions.openElement('filterModal'))}
+                  />
                   <div className="sort-container">
                     <div className="label">{`Sort by:`}</div>
                     <Dropdown
@@ -374,7 +337,13 @@ const NotesPanel = () => {
                   </div>
                 </div>
               </div>
-              {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
+              {notesToRender.length === 0 ? (
+                notes.length === 0 ? (
+                  NoAnnotations
+                ) : (
+                  NoResults
+                )
+              ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
                 <NormalList
                   ref={listRef}
                   notes={notesToRender}
