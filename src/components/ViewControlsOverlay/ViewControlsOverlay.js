@@ -73,22 +73,24 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('option.pageTransition.default')}</div>
           </DataElementWrapper>
-          <DataElementWrapper
-            className={classNames({ row: true, active: isReaderMode })}
-            onClick={() => handleReaderModeClick()}
-            dataElement="readerPageTransitionButton"
-          >
-            <Button
-              title="option.pageTransition.reader"
-              img="icon-header-page-manipulation-page-transition-reader"
-              isActive={isReaderMode}
-            />
-            <div className="title">{t('option.pageTransition.reader')}</div>
-          </DataElementWrapper>
+          {core.isFullPDFEnabled() && (
+            <DataElementWrapper
+              className={classNames({ row: true, active: isReaderMode })}
+              onClick={() => handleReaderModeClick()}
+              dataElement="readerPageTransitionButton"
+            >
+              <Button
+                title="option.pageTransition.reader"
+                img="icon-header-page-manipulation-page-transition-reader"
+                isActive={isReaderMode}
+              />
+              <div className="title">{t('option.pageTransition.reader')}</div>
+            </DataElementWrapper>
+          )}
+          {!isReaderMode && (
+            <div className="divider" />
+          )}
         </>
-      )}
-      {totalPages < totalPageThreshold && !isReaderMode && (
-        <div className="divider" />
       )}
       {!isReaderMode && (
         <>
