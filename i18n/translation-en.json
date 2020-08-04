@@ -164,7 +164,8 @@
       "position": "Position",
       "time": "Time",
       "status": "Status",
-      "author": "Author"
+      "author": "Author",
+      "type": "Type"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "View",
