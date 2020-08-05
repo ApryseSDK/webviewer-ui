@@ -46,105 +46,90 @@
       }
     }
 
-    .filter-options {
+    .message {
+      font-size: 14px;
+      @include mobile {
+        font-size: 16px;
+      }
+    }
+
+    .filter-modal {
       display: flex;
       flex-direction: column;
       width: 100%;
 
-      .filter {
+      .filter-options {
         display: flex;
         flex-direction: column;
+        width: 100%;
 
-        .heading {
-          font-size: 14px;
-          @include mobile {
-            font-size: 16px;
-          }
-        }
-
-        .buttons {
+        .filter {
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          padding-top: 8px;
-          padding-bottom: 8px;
+          flex-direction: column;
 
-          .ui__choice {
-            flex: 1 1 calc(33.33% - 40px);
+          .heading {
+            font-size: 14px;
+            @include mobile {
+              font-size: 16px;
+            }
+          }
+
+          .buttons {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-top: 8px;
+            padding-bottom: 8px;
+
+            .ui__choice {
+              flex: 1 1 calc(33.33% - 40px);
+            }
           }
         }
       }
-    }
 
-    .footer {
-      display: flex;
-      padding-top: 12px;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-
-      .filter-annot-clear {
-        color: var(--secondary-button-text);
-        padding: 0 16px;
-        height: 32px;
+      .footer {
         display: flex;
         align-items: center;
-        justify-content: center;
-        cursor: pointer;
+        justify-content: space-between;
+        width: 100%;
 
-        &:hover {
-          color: var(--secondary-button-hover);
-        }
-      }
+        .filter-annot-clear {
+          color: var(--secondary-button-text);
+          padding: 0 16px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
 
-      .filter-annot-apply {
-        background: var(--primary-button);
-        border-radius: 4px;
-        padding: 0 8px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        color: var(--primary-button-text);
-        font-weight: bold;
-        cursor: pointer;
-
-        @include mobile {
-          height: 40px;
-          width: 128px;
+          &:hover {
+            color: var(--secondary-button-hover);
+          }
         }
 
-        &:hover {
-          background: var(--primary-button-hover);
+        .filter-annot-apply {
+          background: var(--primary-button);
+          border-radius: 4px;
+          padding: 0 8px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          color: var(--primary-button-text);
+          font-weight: bold;
+          cursor: pointer;
+
+          @include mobile {
+            height: 40px;
+            width: 128px;
+          }
+
+          &:hover {
+            background: var(--primary-button-hover);
+          }
         }
-      }
-    }
-
-    .button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--primary-button-text);
-      font-weight: 600;
-      padding: 6px 18px;
-      margin-top: 8px;
-      margin-left: 5px;
-      width: auto;
-      width: fit-content;
-      background: var(--primary-button);
-      border-radius: 4px;
-      height: 30px;
-      cursor: pointer;
-
-      &:hover {
-        background: var(--primary-button-hover);
-      }
-
-      &.disabled {
-        background: var(--gray-6);
-        border-color: var(--gray-6);
-        cursor: not-allowed;
       }
     }
   }
