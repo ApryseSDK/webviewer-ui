@@ -1,10 +1,10 @@
 /**
  * Print the current document.
  * @method WebViewerInstance#printInBackground
- * @param {boolean} [allPages] If true, all pages will be printed
- * @param {Array.<number>} [pagesToPrint] If allPages is false and pagesToPrint is passed in, will print only the pages passed in
- * @param {boolean} [includeAnnotations] If true, will print the documents with the annotations
- * @param {boolean} [includeComments] If true, will append comments to the document printed
+ * @param {boolean} [allPages=false] If true, all pages will be printed
+ * @param {Array.<number>} [pagesToPrint=[]] If allPages is false and pagesToPrint is passed in, will print only the pages passed in
+ * @param {boolean} [includeAnnotations=false] If true, will print the documents with the annotations
+ * @param {boolean} [includeComments=false] If true, will append comments to the document printed
  * @example
 WebViewer(...)
   .then(function(instance) {
