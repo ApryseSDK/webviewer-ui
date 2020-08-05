@@ -6,7 +6,7 @@ import openFilePicker from 'helpers/openFilePicker';
 import copyText from 'helpers/copyText';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import { zoomIn, zoomOut } from 'helpers/zoom';
-import print from 'src/apis/print';
+import { print } from 'helpers/print';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import { isMobile } from 'helpers/device';
 import isFocusingElement from 'helpers/isFocusingElement';
@@ -267,7 +267,7 @@ WebViewer(...)
     hotkeys.unbind(key, handler);
   },
   createKeyHandlerMap(store) {
-    const { dispatch } = store;
+    const { dispatch, getState } = store;
 
     return {
       [`${Keys.CTRL_SHIFT_EQUAL}, ${Keys.COMMAND_SHIFT_EQUAL}`]: e => {
@@ -328,7 +328,7 @@ WebViewer(...)
       [`${Keys.CTRL_P}, ${Keys.COMMAND_P}`]: e => {
         e.preventDefault();
 
-        print(store)();
+        print(dispatch, selectors.isEmbedPrintSupported(getState()), selectors.getSortStrategy(getState()), selectors.getColorMap(getState()));
       },
       [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();

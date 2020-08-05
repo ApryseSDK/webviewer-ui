@@ -74,6 +74,7 @@ import mentions from './mentions';
 import openElement from './openElement';
 import openElements from './openElements';
 import print from './print';
+import printInBackground from './printInBackground';
 import registerTool from './registerTool';
 import removeSearchListener from './removeSearchListener';
 import rotateClockwise from './rotateClockwise';
@@ -173,6 +174,7 @@ export default store => {
     loadDocument: loadDocument(store),
     openElements: openElements(store),
     print: print(store),
+    printInBackground: printInBackground(store),
     registerTool: registerTool(store),
     removeSearchListener: removeSearchListener(store),
     searchText: searchText(store),
