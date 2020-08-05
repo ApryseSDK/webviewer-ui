@@ -162,7 +162,10 @@
   "option": {
     "notesOrder": {
       "position": "ポジション",
-      "time": "時間"
+      "time": "時間",
+      "status": "状態",
+      "author": "著者",
+      "type": "タイプ"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "見る",
