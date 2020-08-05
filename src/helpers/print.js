@@ -38,7 +38,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       dispatch(actions.closeElement('loadingModal'));
     });
   } else if (allPages || includeAnnotations || includeComments || (pagesToPrint && pagesToPrint.length > 0)) {
-    if (allPages || pagesToPrint.length === 0) {
+    if (allPages) {
       pagesToPrint = [];
       for (let i = 1; i <= core.getTotalPages(); i++) {
         pagesToPrint.push(i);
