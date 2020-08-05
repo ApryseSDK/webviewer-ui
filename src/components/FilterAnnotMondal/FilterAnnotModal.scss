@@ -1,5 +1,5 @@
-@import "../../constants/styles";
-@import "../../constants/modal";
+@import '../../constants/styles';
+@import '../../constants/modal';
 
 .LinkModal {
   @extend %modal;
@@ -46,116 +46,49 @@
       }
     }
 
-    .StylePopup {
-      border-radius: 0px;
-      box-shadow: none;
-    }
-
-    .divider-horizontal {
-      width: 100%;
-      height: 1px;
-      margin-bottom: 8px;
-      background: var(--divider);
-    }
-
-    .tab-panel {
-      width: 100%;
+    .footer {
       display: flex;
-      flex-direction: column;
+      padding-top: 12px;
       align-items: center;
-    }
-
-    .tab-list {
-      display: flex;
-      margin-bottom: 16px;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      height: 28px;
-      color: var(--text-color);
-      margin: 8px 0;
+      justify-content: space-between;
       width: 100%;
-      cursor: pointer;
 
-      .divider {
-        width: 1px;
-        background: var(--divider);
+      .filter-annot-clear {
+        color: var(--secondary-button-text);
+        padding: 0 16px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        &:hover {
+          color: var(--secondary-button-hover);
+        }
       }
 
-      .tab-options-button {
-        text-align: center;
-        vertical-align: middle;
-        line-height: 24px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        flex: 1;
-        border-radius: 0px;
+      .filter-annot-apply {
+        background: var(--primary-button);
+        border-radius: 4px;
+        padding: 0 8px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: var(--primary-button-text);
+        font-weight: bold;
+        cursor: pointer;
 
-        &:first-child {
-          border-bottom-left-radius: 4px;
-          border-top-left-radius: 4px;
-        }
-
-        &:last-child {
-          border-bottom-right-radius: 4px;
-          border-top-right-radius: 4px;
+        @include mobile {
+          height: 40px;
+          width: 128px;
         }
 
         &:hover {
-          background: var(--popup-button-hover);
-        }
-
-        &.selected {
-          background: var(--popup-button-active);
+          background: var(--primary-button-hover);
         }
       }
-
-      .tab-options-divider {
-        width: 1px;
-        background: var(--divider);
-      }
-    }
-
-    .linkInput {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-
-    input {
-      margin-top: 8px;
-      width: 100%;
-      height: 30px;
-      padding-left: 8px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: var(--text-color);
-      padding-bottom: 6px;
-      padding-right: 42px;
-      padding-top: 4px;
-
-      &:focus {
-        outline: none;
-        border: 1px solid var(--focus-border);
-      }
-
-      &::placeholder {
-        color: var(--placeholder-text);
-      }
-    }
-
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-    form {
-      width: 100%;
     }
 
     .Button {

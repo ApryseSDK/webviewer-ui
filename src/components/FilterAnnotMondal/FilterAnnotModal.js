@@ -14,21 +14,12 @@ import { Swipeable } from 'react-swipeable';
 import './FilterAnnotModal.scss';
 
 const FilterAnnotModal = () => {
-  const [isDisabled, isOpen, totalPages, tabSelected] = useSelector(state => [
+  const [isDisabled, isOpen] = useSelector(state => [
     selectors.isElementDisabled(state, 'filterModal'),
     selectors.isElementOpen(state, 'filterModal'),
-    selectors.getTotalPages(state),
-    selectors.getCurrentPage(state),
-    selectors.getSelectedTab(state, 'filterModal'),
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
-
-  const urlInput = React.createRef();
-  const pageNumberInput = React.createRef();
-
-  const [url, setURL] = useState('');
-  const [pageNumber, setPageNumber] = useState(1);
 
   const filterApply = () => {
 
@@ -40,32 +31,12 @@ const FilterAnnotModal = () => {
 
   const closeModal = () => {
     dispatch(actions.closeElement('filterModal'));
-    setURL('');
-    setPageNumber(1);
     core.setToolMode(defaultTool);
   };
 
   useEffect(() => {
-    if (isOpen) {
-      //  prepopulate URL if URL is selected
-      const selectedText = core.getSelectedText();
-      if (selectedText) {
-        const urlRegex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
-        const urls = selectedText.match(urlRegex);
-        if (urls && urls.length > 0) {
-          setURL(urls[0]);
-        }
-      }
-    }
-  }, [totalPages, isOpen]);
 
-  useEffect(() => {
-    if (tabSelected === 'PageNumberPanelButton' && isOpen) {
-      pageNumberInput.current.focus();
-    } else if (tabSelected === 'URLPanelButton' && isOpen) {
-      urlInput.current.focus();
-    }
-  }, [tabSelected, isOpen, pageNumberInput, urlInput]);
+  }, [isOpen]);
 
   const modalClass = classNames({
     Modal: true,
