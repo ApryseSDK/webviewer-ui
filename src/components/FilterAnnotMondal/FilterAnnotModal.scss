@@ -46,6 +46,36 @@
       }
     }
 
+    .filter-options {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .filter {
+        display: flex;
+        flex-direction: column;
+
+        .heading {
+          font-size: 14px;
+          @include mobile {
+            font-size: 16px;
+          }
+        }
+
+        .buttons {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          padding-top: 8px;
+          padding-bottom: 8px;
+
+          .ui__choice {
+            flex: 1 1 calc(33.33% - 40px);
+          }
+        }
+      }
+    }
+
     .footer {
       display: flex;
       padding-top: 12px;
@@ -91,7 +121,7 @@
       }
     }
 
-    .Button {
+    .button {
       display: flex;
       justify-content: center;
       align-items: center;

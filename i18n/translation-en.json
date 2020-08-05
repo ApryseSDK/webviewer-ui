@@ -84,7 +84,8 @@
     "strikeout": "Strikeout",
     "underline": "Underline",
     "custom": "Custom",
-    "rubberStamp": "Rubber Stamp"
+    "rubberStamp": "Rubber Stamp",
+    "note": "Note"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -227,6 +228,10 @@
       "dragAndDrop": "Drag & Drop your image here",
       "or": "Or",
       "pickImage": "Choose a signature"
+    },
+    "filterAnnotModal": {
+      "commentBy": "Comment by",
+      "types": "Types"
     },
     "status": {
       "status": "Status"
