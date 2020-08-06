@@ -23,7 +23,7 @@ const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
   useEffect(() => {
     if (ribbonsRef?.current && containerRef?.current) {
       // const ribbonsRight = ribbonsRef.current.getBoundingClientRect().right;
-      const ribbonsWidth = ribbonsRef.current.getBoundingClientRect().width;
+      const ribbonsWidth = ribbonsRef.current.getBoundingClientRect().width + 4;
       const containerLeft = containerRef.current.getBoundingClientRect().left;
       const containerWidth = containerRef.current.getBoundingClientRect().width;
       const ribbonsRight = ((window.innerWidth - ribbonsWidth) / 2) + ribbonsWidth;
@@ -43,7 +43,7 @@ const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
     }
   }, [ribbonsWidth, containerWidth, ribbonsRef, containerRef]);
 
-  if (toolbarGroups.length <= 1) {
+  if (toolbarGroups.length <= 1 || !tReady) {
     return null;
   }
 
@@ -91,7 +91,7 @@ const Ribbons = ({ toolbarGroups, currentToolbarGroup, setToolbarGroup }) => {
                       setToolbarGroup(key);
                     }}
                   >
-                    {tReady? t(`option.toolbarGroup.${key}`) : ''}
+                    {t(`option.toolbarGroup.${key}`)}
                   </button>)}
               </div>
             )}
