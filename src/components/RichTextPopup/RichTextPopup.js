@@ -10,6 +10,7 @@ import HorizontalDivider from 'components/HorizontalDivider';
 import { isMobile } from 'helpers/device';
 import core from 'core';
 import getRichTextPopupPosition from 'helpers/getRichTextPopupPosition';
+import MathSymbolsPicker from '../MathSymbolsPicker';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -24,6 +25,7 @@ const RichTextPopup = () => {
     ],
     shallowEqual
   );
+  const [symbolsVisible, setSymbolsVisible] = useState(false);
   const [cssPosition, setCssPosition] = useState({ left: 0, top: 0 });
   const [draggablePosition, setDraggablePosition] = useState({ x: 0, y: 0 });
   const [format, setFormat] = useState({});
@@ -107,11 +109,15 @@ const RichTextPopup = () => {
     return format;
   };
 
-  const handleClick = format => () => {
+  const handleClick = operation => () => {
+    if (operation === "showSymbols") {
+      setSymbolsVisible(!symbolsVisible);
+      return;
+    }
     const { index, length } = editorRef.current.getSelection();
     const currentFormat = editorRef.current.getFormat(index, length);
 
-    applyFormat(format, !currentFormat[format]);
+    applyFormat(operation, !currentFormat[operation]);
   };
 
   const handleColorChange = (_, color) => {
@@ -135,6 +141,17 @@ const RichTextPopup = () => {
   const syncDraggablePosition = (e, { x, y }) => {
     setDraggablePosition({ x, y });
   };
+
+
+  const insertSymbols = symbol => {
+    const contents = editorRef.current.getContents();
+    const { index, length } = editorRef.current.editor.getSelection();
+    // only update the selected word (defined by index)
+    editorRef.current.editor.setText(`${contents.slice(0, index)}${symbol}${contents.slice(index + length)}`);
+    editorRef.current.editor.setSelection(index+1);
+  };
+
+
   // TODO for now don't show it in mobile
   return isDisabled || isMobile() ? null : (
     <Draggable
@@ -192,6 +209,12 @@ const RichTextPopup = () => {
             img="ic_annotation_strikeout_black_24px"
             title="option.richText.strikeout"
           />
+          <Button
+            dataElement="richTextShowMathSymbols"
+            onClick={handleClick('showSymbols')}
+            img="ic_thumbnails_grid_black_24px"
+            title="option.mathSymbols"
+          />
         </Element>
         <HorizontalDivider style={{ paddingTop: 0 }} />
         {!isPaletteDisabled && (
@@ -203,6 +226,7 @@ const RichTextPopup = () => {
             hasPadding
           />
         )}
+        {symbolsVisible && <MathSymbolsPicker onClickHandler={insertSymbols}/>}
       </div>
     </Draggable>
   );
