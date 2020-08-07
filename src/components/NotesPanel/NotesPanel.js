@@ -11,16 +11,12 @@ import Icon from 'components/Icon';
 
 import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
-import ResizeBar from 'components/ResizeBar';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
-
-import { motion, AnimatePresence } from "framer-motion";
-import { isSafari } from 'src/helpers/device';
 
 import './NotesPanel.scss';
 
@@ -297,107 +293,80 @@ const NotesPanel = () => {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
-  const isVisible = !(!isOpen || isDisabled);
-
-  let animate = { width: 'auto' };
-  if (isMobile) {
-    animate = { width: '100vw' };
-  }
-
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          className="notes-panel-container"
-          initial={{ width: '0px' }}
-          animate={animate}
-          exit={{ width: '0px' }}
-          transition={{ ease: "easeOut", duration: isSafari ? 0 : 0.25 }}
+    <div
+      className={classNames({
+        Panel: true,
+        NotesPanel: true,
+      })}
+      style={style}
+      data-element="notesPanel"
+      onClick={core.deselectAllAnnotations}
+    >
+      {isMobile &&
+        <div
+          className="close-container"
         >
-          {!isTabletAndMobile &&
-            <ResizeBar
-              minWidth={minWidth}
-              onResize={_width => {
-                dispatch(actions.setNotesPanelWidth(_width));
-              }}
-              leftDirection
-            />}
           <div
-            className={classNames({
-              Panel: true,
-              NotesPanel: true,
-            })}
-            style={style}
-            data-element="notesPanel"
-            onClick={core.deselectAllAnnotations}
+            className="close-icon-container"
+            onClick={() => {
+              dispatch(actions.closeElements(['notesPanel']));
+            }}
           >
-            {isMobile &&
-              <div
-                className="close-container"
-              >
-                <div
-                  className="close-icon-container"
-                  onClick={() => {
-                    dispatch(actions.closeElements(['notesPanel']));
-                  }}
-                >
-                  <Icon
-                    glyph="ic_close_black_24px"
-                    className="close-icon"
-                  />
-                </div>
-              </div>}
-            <React.Fragment>
-              <div className="header">
-                <div className="input-container">
-                  <input
-                    type="text"
-                    placeholder={t('message.searchCommentsPlaceholder')}
-                    aria-label={t('message.searchCommentsPlaceholder')}
-                    onChange={handleInputChange}
-                    ref={inputRef}
-                    id="NotesPanel__input"
-                  />
-                </div>
-                <div className="divider" />
-                <div className="sort-row">
-                  <div className="sort-container">
-                    <div className="label">{`Sort by:`}</div>
-                    <Dropdown
-                      items={Object.keys(getSortStrategies())}
-                      translationPrefix="option.notesOrder"
-                      currentSelectionKey={sortStrategy}
-                      onClickItem={sortStrategy => {
-                        dispatch(actions.setSortStrategy(sortStrategy));
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-              {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
-                <NormalList
-                  ref={listRef}
-                  notes={notesToRender}
-                  onScroll={handleScroll}
-                  initialScrollTop={scrollTopRef.current}
-                >
-                  {renderChild}
-                </NormalList>
-              ) : (
-                <VirtualizedList
-                  ref={listRef}
-                  notes={notesToRender}
-                  onScroll={handleScroll}
-                  initialScrollTop={scrollTopRef.current}
-                >
-                  {renderChild}
-                </VirtualizedList>
-              )}
-            </React.Fragment>
+            <Icon
+              glyph="ic_close_black_24px"
+              className="close-icon"
+            />
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>}
+      <React.Fragment>
+        <div className="header">
+          <div className="input-container">
+            <input
+              type="text"
+              placeholder={t('message.searchCommentsPlaceholder')}
+              aria-label={t('message.searchCommentsPlaceholder')}
+              onChange={handleInputChange}
+              ref={inputRef}
+              id="NotesPanel__input"
+            />
+          </div>
+          <div className="divider" />
+          <div className="sort-row">
+            <div className="sort-container">
+              <div className="label">{`Sort by:`}</div>
+              <Dropdown
+                items={Object.keys(getSortStrategies())}
+                translationPrefix="option.notesOrder"
+                currentSelectionKey={sortStrategy}
+                onClickItem={sortStrategy => {
+                  dispatch(actions.setSortStrategy(sortStrategy));
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
+          <NormalList
+            ref={listRef}
+            notes={notesToRender}
+            onScroll={handleScroll}
+            initialScrollTop={scrollTopRef.current}
+          >
+            {renderChild}
+          </NormalList>
+        ) : (
+          <VirtualizedList
+            ref={listRef}
+            notes={notesToRender}
+            onScroll={handleScroll}
+            initialScrollTop={scrollTopRef.current}
+          >
+            {renderChild}
+          </VirtualizedList>
+        )}
+      </React.Fragment>
+    </div>
   );
 };
 

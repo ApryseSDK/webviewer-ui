@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import ResizeBar from 'components/ResizeBar';
+import NotesPanel from 'components/NotesPanel';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
@@ -64,7 +65,7 @@ const RightPanel = () => {
               }}
               leftDirection
             />}
-          <div>hello</div>
+          <NotesPanel />
         </motion.div>
       )}
     </AnimatePresence>

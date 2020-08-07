@@ -11,7 +11,6 @@ import MenuOverlay from 'components/MenuOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
-import NotesPanel from 'components/NotesPanel';
 import RightPanel from 'components/RightPanel';
 import SearchPanel from 'components/SearchPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
@@ -87,7 +86,6 @@ const App = ({ removeEventHandlers }) => {
           <LeftPanel />
           <DocumentContainer />
           <SearchPanel />
-          <NotesPanel />
           <RightPanel />
         </div>
         <ViewControlsOverlay />
