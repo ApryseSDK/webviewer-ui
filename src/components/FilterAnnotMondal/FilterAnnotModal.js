@@ -7,10 +7,12 @@ import defaultTool from 'constants/defaultTool';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
+
 import Choice from 'components/Choice';
 import Button from 'components/Button';
 
 import { Swipeable } from 'react-swipeable';
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import './FilterAnnotModal.scss';
 
@@ -87,78 +89,80 @@ const FilterAnnotModal = () => {
 
   return isDisabled ? null : (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <div className={modalClass} data-element="filterModal" onMouseDown={closeModal}>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
-          {core.getAnnotationsList().length > 0 ? (
-            <div className="filter-modal">
-              <div className="swipe-indicator" />
-              <div className="filter-options">
-                <div className="filter">
-                  <div className="heading">{t('option.filterAnnotModal.commentBy')}</div>
-                  <div className="buttons">
-                    {[...authors].map((val, index) => {
-                      return (
-                        <Choice
-                          type="checkbox"
-                          key={index}
-                          label={val}
-                          checked={authorFilter.includes(val)}
-                          id={val}
-                          onChange={e => {
-                            if (authorFilter.indexOf(e.target.getAttribute('id')) === -1) {
-                              setAuthorFilter([...authorFilter, e.target.getAttribute('id')]);
-                            } else {
-                              setAuthorFilter(authorFilter.filter(author => author !== e.target.getAttribute('id')));
-                            }
-                          }}
-                        />
-                      );
-                    })}
+      <FocusTrap locked={isOpen}>
+        <div className={modalClass} data-element="filterModal" onMouseDown={closeModal}>
+          <div className="container" onMouseDown={e => e.stopPropagation()}>
+            {core.getAnnotationsList().length > 0 ? (
+              <div className="filter-modal">
+                <div className="swipe-indicator" />
+                <div className="filter-options">
+                  <div className="filter">
+                    <div className="heading">{t('option.filterAnnotModal.commentBy')}</div>
+                    <div className="buttons">
+                      {[...authors].map((val, index) => {
+                        return (
+                          <Choice
+                            type="checkbox"
+                            key={index}
+                            label={val}
+                            checked={authorFilter.includes(val)}
+                            id={val}
+                            onChange={e => {
+                              if (authorFilter.indexOf(e.target.getAttribute('id')) === -1) {
+                                setAuthorFilter([...authorFilter, e.target.getAttribute('id')]);
+                              } else {
+                                setAuthorFilter(authorFilter.filter(author => author !== e.target.getAttribute('id')));
+                              }
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="filter">
+                    <div className="heading">{t('option.filterAnnotModal.types')}</div>
+                    <div className="buttons">
+                      {[...annotTypes].map((val, index) => {
+                        return (
+                          <Choice
+                            type="checkbox"
+                            key={index}
+                            label={
+                              t(`annotation.${val}`)
+                                .toLowerCase()
+                                .replace(/\s/g, '') === val
+                                ? t(`annotation.${val}`)
+                                : val.charAt(0).toUpperCase() + val.slice(1)
+                            } // if there is no translation, just use the original subject
+                            checked={typesFilter.includes(val)}
+                            id={val}
+                            onChange={e => {
+                              if (typesFilter.indexOf(e.target.getAttribute('id')) === -1) {
+                                setTypesFilter([...typesFilter, e.target.getAttribute('id')]);
+                              } else {
+                                setTypesFilter(typesFilter.filter(type => type !== e.target.getAttribute('id')));
+                              }
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
-                <div className="filter">
-                  <div className="heading">{t('option.filterAnnotModal.types')}</div>
-                  <div className="buttons">
-                    {[...annotTypes].map((val, index) => {
-                      return (
-                        <Choice
-                          type="checkbox"
-                          key={index}
-                          label={
-                            t(`annotation.${val}`)
-                              .toLowerCase()
-                              .replace(/\s/g, '') === val
-                              ? t(`annotation.${val}`)
-                              : val.charAt(0).toUpperCase() + val.slice(1)
-                          } // if there is no translation, just use the original subject
-                          checked={typesFilter.includes(val)}
-                          id={val}
-                          onChange={e => {
-                            if (typesFilter.indexOf(e.target.getAttribute('id')) === -1) {
-                              setTypesFilter([...typesFilter, e.target.getAttribute('id')]);
-                            } else {
-                              setTypesFilter(typesFilter.filter(type => type !== e.target.getAttribute('id')));
-                            }
-                          }}
-                        />
-                      );
-                    })}
-                  </div>
+                <div className="footer">
+                  <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clear')} />
+                  <Button className="filter-annot-apply" onClick={filterApply} label={t('action.apply')} />
                 </div>
               </div>
-              <div className="footer">
-                <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clear')} />
-                <Button className="filter-annot-apply" onClick={filterApply} label={t('action.apply')} />
+            ) : (
+              <div>
+                <div className="swipe-indicator" />
+                <div className="message">{t('message.noAnnotationsFilter')}</div>
               </div>
-            </div>
-          ) : (
-            <div>
-              <div className="swipe-indicator" />
-              <div className="message">{t('message.noAnnotationsFilter')}</div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      </FocusTrap>
     </Swipeable>
   );
 };
