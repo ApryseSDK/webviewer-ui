@@ -1,27 +1,27 @@
-import React, { useState, useEffect, useRef } from "react";
-import Draggable from "react-draggable";
-import classNames from "classnames";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import React, { useState, useEffect, useRef } from 'react';
+import Draggable from 'react-draggable';
+import classNames from 'classnames';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-import Element from "components/Element";
-import ColorPalette from "components/ColorPalette";
-import Button from "components/Button";
-import HorizontalDivider from "components/HorizontalDivider";
-import { isMobile } from "helpers/device";
-import core from "core";
-import getRichTextPopupPosition from "helpers/getRichTextPopupPosition";
-import MathSymbolsPicker from "../MathSymbolsPicker";
-import actions from "actions";
-import selectors from "selectors";
+import Element from 'components/Element';
+import ColorPalette from 'components/ColorPalette';
+import Button from 'components/Button';
+import HorizontalDivider from 'components/HorizontalDivider';
+import { isMobile } from 'helpers/device';
+import core from 'core';
+import getRichTextPopupPosition from 'helpers/getRichTextPopupPosition';
+import MathSymbolsPicker from '../MathSymbolsPicker';
+import actions from 'actions';
+import selectors from 'selectors';
 
-import "./RichTextPopup.scss";
+import './RichTextPopup.scss';
 
 const RichTextPopup = () => {
   const [isDisabled, isOpen, isPaletteDisabled] = useSelector(
     state => [
-      selectors.isElementDisabled(state, "richTextPopup"),
-      selectors.isElementOpen(state, "richTextPopup"),
-      selectors.isElementDisabled(state, "richTextColorPalette")
+      selectors.isElementDisabled(state, 'richTextPopup'),
+      selectors.isElementOpen(state, 'richTextPopup'),
+      selectors.isElementDisabled(state, 'richTextColorPalette')
     ],
     shallowEqual
   );
@@ -41,9 +41,9 @@ const RichTextPopup = () => {
       }
     };
 
-    core.addEventListener("editorSelectionChanged", handleSelectionChange);
+    core.addEventListener('editorSelectionChanged', handleSelectionChange);
     return () =>
-      core.removeEventListener("editorSelectionChanged", handleSelectionChange);
+      core.removeEventListener('editorSelectionChanged', handleSelectionChange);
   }, []);
 
   useEffect(() => {
@@ -59,9 +59,9 @@ const RichTextPopup = () => {
       setFormat(getFormat(editorRef.current?.getSelection()));
     };
 
-    core.addEventListener("editorTextChanged", handleTextChange);
+    core.addEventListener('editorTextChanged', handleTextChange);
     return () =>
-      core.removeEventListener("editorTextChanged", handleTextChange);
+      core.removeEventListener('editorTextChanged', handleTextChange);
   }, []);
 
   useEffect(() => {
@@ -79,23 +79,23 @@ const RichTextPopup = () => {
         editorRef.current = editor;
         annotationRef.current = annotation;
 
-        dispatch(actions.openElements(["richTextPopup"]));
+        dispatch(actions.openElements(['richTextPopup']));
       }
     };
 
-    core.addEventListener("editorFocus", handleEditorFocus);
-    return () => core.removeEventListener("editorFocus", handleEditorFocus);
+    core.addEventListener('editorFocus', handleEditorFocus);
+    return () => core.removeEventListener('editorFocus', handleEditorFocus);
   }, [dispatch]);
 
   useEffect(() => {
     const handleEditorBlur = () => {
-      dispatch(actions.closeElements(["richTextPopup"]));
+      dispatch(actions.closeElements(['richTextPopup']));
       editorRef.current = null;
       annotationRef.current = null;
     };
 
-    core.addEventListener("editorBlur", handleEditorBlur);
-    return () => core.removeEventListener("editorBlur", handleEditorBlur);
+    core.addEventListener('editorBlur', handleEditorBlur);
+    return () => core.removeEventListener('editorBlur', handleEditorBlur);
   }, [dispatch]);
 
   const getFormat = range => {
@@ -105,7 +105,7 @@ const RichTextPopup = () => {
 
     const format = editorRef.current.getFormat(range.index, range.length);
 
-    if (typeof format.color === "string") {
+    if (typeof format.color === 'string') {
       format.color = new window.Annotations.Color(format.color);
     } else if (Array.isArray(format.color)) {
       // the selection contains multiple color, so we set the current color to null
@@ -129,13 +129,13 @@ const RichTextPopup = () => {
   };
 
   const handleColorChange = (_, color) => {
-    applyFormat("color", color.toHexString());
+    applyFormat('color', color.toHexString());
   };
 
   const applyFormat = (formatKey, value) => {
     editorRef.current.format(formatKey, value);
 
-    if (formatKey === "color") {
+    if (formatKey === 'color') {
       value = new window.Annotations.Color(value);
     }
 
@@ -151,12 +151,13 @@ const RichTextPopup = () => {
   };
 
   const insertSymbols = symbol => {
-    const contents = editorRef.current.getContents();
     const { index, length } = editorRef.current.getSelection();
-    // only update the selected word (defined by index)
-    editorRef.current.setText(
-      `${contents.slice(0, index)}${symbol}${contents.slice(index + length)}`
-    );
+    // if user selected some text, then we want to first delete the selected content
+    if (length > 0) {
+      editorRef.current.deleteText(index, length);
+    }
+    // insert symbol at the selected index
+    editorRef.current.insertText(index, symbol);
     editorRef.current.setSelection(index + 1);
   };
 
@@ -172,7 +173,7 @@ const RichTextPopup = () => {
       // prevent the blur event from being triggered when clicking on toolbar buttons
       // otherwise we can't style the text since a blur event is triggered before a click event
       onMouseDown={e => {
-        if (e.type !== "touchstart") {
+        if (e.type !== 'touchstart') {
           e.preventDefault();
         }
       }}
@@ -192,28 +193,28 @@ const RichTextPopup = () => {
           <Button
             isActive={format.bold}
             dataElement="richTextBoldButton"
-            onClick={handleTextFormatChange("bold")}
+            onClick={handleTextFormatChange('bold')}
             img="icon-text-bold"
             title="option.richText.bold"
           />
           <Button
             isActive={format.italic}
             dataElement="richTextItalicButton"
-            onClick={handleTextFormatChange("italic")}
+            onClick={handleTextFormatChange('italic')}
             img="icon-text-italic"
             title="option.richText.italic"
           />
           <Button
             isActive={format.underline}
             dataElement="richTextUnderlineButton"
-            onClick={handleTextFormatChange("underline")}
+            onClick={handleTextFormatChange('underline')}
             img="ic_annotation_underline_black_24px"
             title="option.richText.underline"
           />
           <Button
             isActive={format.strike}
             dataElement="richTextStrikeButton"
-            onClick={handleTextFormatChange("strike")}
+            onClick={handleTextFormatChange('strike')}
             img="ic_annotation_strikeout_black_24px"
             title="option.richText.strikeout"
           />
