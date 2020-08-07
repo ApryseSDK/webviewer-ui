@@ -53,13 +53,11 @@ class SearchPanel extends React.PureComponent {
     const {
       setSearchPanelWidth,
       currentWidth,
-      isOpen,
       isDisabled,
       t,
       results,
       noResult,
       isMobile,
-      isTabletAndMobile,
       closeElements,
       activeResultIndex,
       pageLabels
@@ -76,63 +74,38 @@ class SearchPanel extends React.PureComponent {
       style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
     }
 
-    let animate = { width: 'auto' };
-    if (isMobile) {
-      animate = { width: '100vw' };
-    }
-
     return (
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="search-panel-container"
-            initial={{ width: '0px' }}
-            animate={animate}
-            exit={{ width: '0px' }}
-            transition={{ ease: "easeOut", duration: isSafari ? 0 : 0.25 }}
+      <div
+        className={className}
+        data-element="searchPanel"
+        style={style}
+      >
+        {isMobile &&
+          <div
+            className="close-container"
           >
-            {!isTabletAndMobile &&
-              <ResizeBar
-                minWidth={minWidth}
-                onResize={_width => {
-                  setSearchPanelWidth(_width);
-                }}
-                leftDirection
-              />}
-            <div
-              className={className}
-              data-element="searchPanel"
-              style={style}
+            <button
+              className="close-icon-container"
+              onClick={() => {
+                closeElements(['searchPanel']);
+              }}
             >
-              {isMobile &&
-                <div
-                  className="close-container"
-                >
-                  <button
-                    className="close-icon-container"
-                    onClick={() => {
-                      closeElements(['searchPanel']);
-                    }}
-                  >
-                    <Icon
-                      glyph="ic_close_black_24px"
-                      className="close-icon"
-                    />
-                  </button>
-                </div>}
-              <SearchOverlay />
-              <SearchResult
-                translate={t}
-                noSearchResult={noResult}
-                searchResults={results}
-                activeResultIndex={activeResultIndex}
-                onClickResult={this.onClickResult}
-                pageLabels={pageLabels}
+              <Icon
+                glyph="ic_close_black_24px"
+                className="close-icon"
               />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </button>
+          </div>}
+        <SearchOverlay />
+        <SearchResult
+          translate={t}
+          noSearchResult={noResult}
+          searchResults={results}
+          activeResultIndex={activeResultIndex}
+          onClickResult={this.onClickResult}
+          pageLabels={pageLabels}
+        />
+      </div>
     );
   }
 }

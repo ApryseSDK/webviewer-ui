@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import ResizeBar from 'components/ResizeBar';
-import NotesPanel from 'components/NotesPanel';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
@@ -11,7 +10,7 @@ import { isSafari } from 'src/helpers/device';
 
 import './RightPanel.scss';
 
-const RightPanel = () => {
+const RightPanel = ({ children }) => {
   const [
     isOpen,
     isDisabled,
@@ -65,7 +64,7 @@ const RightPanel = () => {
               }}
               leftDirection
             />}
-          <NotesPanel />
+          {children}
         </motion.div>
       )}
     </AnimatePresence>

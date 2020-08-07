@@ -11,8 +11,11 @@ import MenuOverlay from 'components/MenuOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
-import RightPanel from 'components/RightPanel';
+import NotesPanel from 'components/NotesPanel';
 import SearchPanel from 'components/SearchPanel';
+// import DetachedNotesPanel from 'components/DetachedNotesPanel';
+// import DetachedSearchPanel from 'components/DetachedSearchPanel';
+import RightPanel from 'components/RightPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
 import ContextMenuPopup from 'components/ContextMenuPopup';
@@ -85,8 +88,14 @@ const App = ({ removeEventHandlers }) => {
         <div className="content">
           <LeftPanel />
           <DocumentContainer />
-          <SearchPanel />
-          <RightPanel />
+          {/* <DetachedSearchPanel /> */}
+          {/* <DetachedNotesPanel /> */}
+          <RightPanel>
+            <SearchPanel />
+          </RightPanel>
+          <RightPanel>
+            <NotesPanel />
+          </RightPanel>
         </div>
         <ViewControlsOverlay />
         <MenuOverlay />
