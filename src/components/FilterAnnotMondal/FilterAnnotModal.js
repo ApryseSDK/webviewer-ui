@@ -8,6 +8,7 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import Choice from 'components/Choice';
+import Button from 'components/Button';
 
 import { Swipeable } from 'react-swipeable';
 
@@ -30,9 +31,15 @@ const FilterAnnotModal = () => {
   const filterApply = () => {
     dispatch(
       actions.setCustomNoteFilter(annot => {
-        return (
-          typesFilter.includes(annot.Subject.toLowerCase().replace(/\s/g, '')) && authorFilter.includes(annot.Author)
-        );
+        let type = true;
+        let author = true;
+        if (typesFilter.length > 0) {
+          type = typesFilter.includes(annot.Subject.toLowerCase().replace(/\s/g, ''));
+        }
+        if (authorFilter.length > 0) {
+          author = authorFilter.includes(annot.Author);
+        }
+        return type && author;
       }),
     );
     closeModal();
@@ -59,8 +66,13 @@ const FilterAnnotModal = () => {
     let authorsToBeAdded = new Set();
     let annotTypesToBeAdded = new Set();
     annots.forEach(annot => {
-      authorsToBeAdded.add(core.getDisplayAuthor(annot));
-      annotTypesToBeAdded.add(annot.Subject.toLowerCase().replace(/\s/g, ''));
+      if (core.getDisplayAuthor(annot) && core.getDisplayAuthor(annot) !== '') {
+        authorsToBeAdded.add(core.getDisplayAuthor(annot));
+      }
+      if (annot.Subject !== '') {
+        // we want to lowercase it and remove spaces to get i18n translations
+        annotTypesToBeAdded.add(annot.Subject.toLowerCase().replace(/\s/g, ''));
+      }
     });
     setAuthors([...authorsToBeAdded]);
     setAnnotTypes([...annotTypesToBeAdded]);
@@ -112,7 +124,13 @@ const FilterAnnotModal = () => {
                         <Choice
                           type="checkbox"
                           key={index}
-                          label={t(`annotation.${val}`)}
+                          label={
+                            t(`annotation.${val}`)
+                              .toLowerCase()
+                              .replace(/\s/g, '') === val
+                              ? t(`annotation.${val}`)
+                              : val.charAt(0).toUpperCase() + val.slice(1)
+                          } // if there is no translation, just use the original subject
                           checked={typesFilter.includes(val)}
                           id={val}
                           onChange={e => {
@@ -129,12 +147,8 @@ const FilterAnnotModal = () => {
                 </div>
               </div>
               <div className="footer">
-                <div className="filter-annot-clear" onClick={filterClear}>
-                  {t('action.clear')}
-                </div>
-                <div className="filter-annot-apply" onClick={filterApply}>
-                  {t('action.apply')}
-                </div>
+                <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clear')} />
+                <Button className="filter-annot-apply" onClick={filterApply} label={t('action.apply')} />
               </div>
             </div>
           ) : (

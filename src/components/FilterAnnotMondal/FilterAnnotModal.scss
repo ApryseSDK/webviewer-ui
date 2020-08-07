@@ -96,40 +96,15 @@
 
         .filter-annot-clear {
           color: var(--secondary-button-text);
-          padding: 0 16px;
-          height: 32px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
+          background: var(--secondary-button);
 
           &:hover {
             color: var(--secondary-button-hover);
+            background: var(--secondary-button);
           }
         }
 
-        .filter-annot-apply {
-          background: var(--primary-button);
-          border-radius: 4px;
-          padding: 0 8px;
-          height: 32px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-          color: var(--primary-button-text);
-          font-weight: bold;
-          cursor: pointer;
 
-          @include mobile {
-            height: 40px;
-            width: 128px;
-          }
-
-          &:hover {
-            background: var(--primary-button-hover);
-          }
-        }
       }
     }
   }
