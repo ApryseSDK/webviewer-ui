@@ -73,7 +73,7 @@ const FilterAnnotModal = () => {
       if (core.getDisplayAuthor(annot) && core.getDisplayAuthor(annot) !== '') {
         authorsToBeAdded.add(core.getDisplayAuthor(annot));
       }
-      if (annot.Subject !== '') {
+      if (annot.Subject && annot.Subject !== '') {
         // we want to lowercase it and remove spaces to get i18n translations
         annotTypesToBeAdded.add(annot.Subject.toLowerCase().replace(/\s/g, ''));
       }
