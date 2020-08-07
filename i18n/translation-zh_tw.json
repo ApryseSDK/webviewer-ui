@@ -84,7 +84,8 @@
     "strikeout": "刪除線",
     "underline": "底線",
     "custom": "自訂",
-    "rubberStamp": "橡皮圖章"
+    "rubberStamp": "橡皮圖章",
+    "note": "注意"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -128,7 +129,8 @@
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
     "calibration": "校準",
-    "createStampButton": "創建新圖章"
+    "createStampButton": "創建新圖章",
+    "filter": "過濾"
   },
   "message": {
     "toolsOverlayNoPresets": "無預設",
@@ -139,6 +141,7 @@
     "enterPassword": "文件有密碼保護。請輸入密碼",
     "incorrectPassword": "密碼不正確，剩下 {{ remainingAttempts }} 次嘗試機會",
     "noAnnotations": "此文件沒有註釋。",
+    "noAnnotationsFilter": "開始製作註釋，過濾器將顯示在此處。",
     "noOutlines": "此文件沒有大綱。",
     "noResults": "沒有找到結果。",
     "numResultsFound": "找到結果",
@@ -226,6 +229,10 @@
       "dragAndDrop": "將圖片拖放到此處",
       "or": "要么",
       "pickImage": "選擇簽名圖像"
+    },
+    "filterAnnotModal": {
+      "commentBy": "評論者",
+      "types": "種類"
     },
     "status": {
       "status": "狀態"

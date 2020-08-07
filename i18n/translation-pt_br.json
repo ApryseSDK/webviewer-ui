@@ -84,7 +84,8 @@
     "strikeout": "Riscar",
     "underline": "Sublinhar",
     "custom": "Personalizado",
-    "rubberStamp": "Carimbo de borracha"
+    "rubberStamp": "Carimbo de borracha",
+    "note": "Nota"
   },
   "rubberStamp": {
     "Approved": "Aprovado",
@@ -128,7 +129,8 @@
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
     "calibration": "Calibração",
-    "createStampButton": "Criar novo carimbo"
+    "createStampButton": "Criar novo carimbo",
+    "filter": "Filtro"
   },
   "message": {
     "toolsOverlayNoPresets": "Sem predefinições",
@@ -139,6 +141,7 @@
     "enterPassword": "Esse documento é protegido por senha. Digite uma senha",
     "incorrectPassword": "Senha incorreta, tentativas restantes: {{ remainingAttempts }}",
     "noAnnotations": "Esse documento não tem anotações.",
+    "noAnnotationsFilter": "Comece a fazer anotações e filtros aparecerão aqui.",
     "noOutlines": "Esse documento não tem esquema.",
     "noResults": "Nenhum resultado encontrado.",
     "numResultsFound": "resultados encontrados",
@@ -226,6 +229,10 @@
       "dragAndDrop": "Arraste e solte sua imagem aqui",
       "or": "Ou",
       "pickImage": "Escolher imagem da assinatura"
+    },
+    "filterAnnotModal": {
+      "commentBy": "Comentado por",
+      "types": "Tipos"
     },
     "status": {
       "status": "Status"

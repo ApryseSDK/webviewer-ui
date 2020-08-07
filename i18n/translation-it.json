@@ -84,7 +84,8 @@
     "strikeout": "strikeout",
     "underline": "Sottolineare",
     "custom": "costume",
-    "rubberStamp": "Timbro"
+    "rubberStamp": "Timbro",
+    "note": "Nota"
   },
   "rubberStamp": {
     "Approved": "Approvato",
@@ -128,7 +129,8 @@
     "redaction": "redazione",
     "viewControlsOverlay": "Visualizza i controlli",
     "calibration": "Calibrazione",
-    "createStampButton": "Crea nuovo timbro"
+    "createStampButton": "Crea nuovo timbro",
+    "filter": "Filtro"
   },
   "message": {
     "toolsOverlayNoPresets": "Nessun preset",
@@ -139,6 +141,7 @@
     "enterPassword": "Questo documento è protetto da password. Per favore inserire una password",
     "incorrectPassword": "Password errata, tentativi rimasti: {{rimanendo tentativi}}",
     "noAnnotations": "Questo documento non ha annotazioni.",
+    "noAnnotationsFilter": "Inizia a creare annotazioni e filtri verranno visualizzati qui.",
     "noOutlines": "Questo documento non ha contorni.",
     "noResults": "Nessun risultato trovato.",
     "numResultsFound": "risultati trovati",
@@ -226,6 +229,10 @@
       "dragAndDrop": "Trascina e rilascia l'immagine qui",
       "or": "O",
       "pickImage": "Scegli l'immagine della firma"
+    },
+    "filterAnnotModal": {
+      "commentBy": "Commento di",
+      "types": "tipi"
     },
     "status": {
       "status": "Stato"
