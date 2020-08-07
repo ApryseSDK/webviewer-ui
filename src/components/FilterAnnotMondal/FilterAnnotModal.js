@@ -65,6 +65,8 @@ const FilterAnnotModal = () => {
 
   useEffect(() => {
     const annots = core.getAnnotationsList();
+    // set is a great way to remove any duplicate additions and ensure the unique items are present
+    // the only gotcha that it should not be used by state since not always it will trigger a rerender
     let authorsToBeAdded = new Set();
     let annotTypesToBeAdded = new Set();
     annots.forEach(annot => {

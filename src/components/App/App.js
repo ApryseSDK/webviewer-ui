@@ -26,6 +26,7 @@ import PasswordModal from 'components/PasswordModal';
 import ProgressModal from 'components/ProgressModal';
 import CalibrationModal from 'components/CalibrationModal';
 import LinkModal from 'components/LinkModal';
+import FilterAnnotModal from '../FilterAnnotMondal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
@@ -40,7 +41,7 @@ import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 
 import './App.scss';
-import FilterAnnotModal from '../FilterAnnotMondal';
+
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
