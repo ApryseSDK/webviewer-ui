@@ -33,6 +33,7 @@ const RichTextPopup = () => {
   const editorRef = useRef(null);
   const annotationRef = useRef(null);
   const dispatch = useDispatch();
+  const symbolsAreaHeight = 150; // max height for the math symbols area
 
   useEffect(() => {
     const handleSelectionChange = range => {
@@ -49,9 +50,11 @@ const RichTextPopup = () => {
   useEffect(() => {
     const handleTextChange = () => {
       if (annotationRef.current?.isAutoSized() && popupRef.current) {
+        const spaceAdjustment = symbolsVisible ? symbolsAreaHeight : 0;
         const position = getRichTextPopupPosition(
           annotationRef.current,
-          popupRef
+          popupRef,
+          spaceAdjustment
         );
         setCssPosition(position);
       }
@@ -70,7 +73,13 @@ const RichTextPopup = () => {
         annotation instanceof window.Annotations.FreeTextAnnotation &&
         popupRef.current
       ) {
-        const position = getRichTextPopupPosition(annotation, popupRef);
+        const spaceAdjustment = symbolsVisible ? symbolsAreaHeight : 0;
+        const position = getRichTextPopupPosition(
+          annotation,
+          popupRef,
+          spaceAdjustment
+        );
+
         setCssPosition(position);
         // when the editor is focused, we want to reset any previous drag movements so that
         // the popup will be positioned centered to the editor
@@ -235,7 +244,12 @@ const RichTextPopup = () => {
             hasPadding
           />
         )}
-        {symbolsVisible && <MathSymbolsPicker onClickHandler={insertSymbols} />}
+        {symbolsVisible && (
+          <MathSymbolsPicker
+            onClickHandler={insertSymbols}
+            maxHeight={symbolsAreaHeight}
+          />
+        )}
       </div>
     </Draggable>
   );

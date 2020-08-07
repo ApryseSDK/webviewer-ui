@@ -18,3 +18,6 @@ test/cypress/screenshotsFolder
 test/cypress/snapshots/**/__diff_output__/*
 package-lock.json
 .idea
+# All the files under the assets folder are available to clients in the download package. 
+# This preview.html give us a way to preview all svg image in a HTML page
+assets/icons/preview.html

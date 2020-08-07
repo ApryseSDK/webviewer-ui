@@ -1,10 +1,9 @@
 @import '../../constants/styles.scss';
 
 .mathSymbolsContainer {
-  display: flex;  // fallback for ie11, grid not available
+  display: flex; // fallback for ie11, grid not available
   flex-wrap: wrap; // fallback for ie11, grid not available
-  max-height:200px;
-  overflow-y:auto;
+  overflow-y: auto;
   @include ie11 {
     width: 196px; // hack for ie11. Have to define width for flex basis to work.
   }
@@ -52,7 +51,7 @@
         align-items: center;
         justify-content: center;
 
-        @include mobile  {
+        @include mobile {
           width: 36px;
           height: 36px;
         }
@@ -68,11 +67,11 @@
           border-radius: 10000000px;
         }
 
-        &.border{
+        &.border {
           border: 1px solid var(--white-color-palette-border);
         }
 
-        @include mobile  {
+        @include mobile {
           width: 24px;
           height: 24px;
         }

@@ -101,9 +101,12 @@ const symbols = [
   '\u224C'
 ];
 
-const MathSymbolsPicker = ({ onClickHandler }) => {
+const MathSymbolsPicker = ({ onClickHandler, maxHeight }) => {
   return (
-    <div className="mathSymbolsContainer padding">
+    <div
+      className="mathSymbolsContainer padding"
+      style={{ maxHeight: maxHeight + 'px' }}
+    >
       {symbols.map((symbol, i) => (
         <button
           key={i}
