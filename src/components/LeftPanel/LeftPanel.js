@@ -7,6 +7,7 @@ import ThumbnailsPanel from 'components/ThumbnailsPanel';
 import OutlinesPanel from 'components/OutlinesPanel';
 import BookmarksPanel from 'components/BookmarksPanel';
 import LayersPanel from 'components/LayersPanel';
+import NotesPanel from 'components/NotesPanel';
 import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
 import Icon from 'components/Icon';
@@ -118,7 +119,7 @@ const LeftPanel = () => {
             <OutlinesPanel display={getDisplay('outlinesPanel')} />
             <BookmarksPanel display={getDisplay('bookmarksPanel')} />
             <LayersPanel display={getDisplay('layersPanel')} />
-
+            {/* <NotesPanel display={getDisplay('notesPanel')} /> */}
             {customPanels.map(({ panel }, index) => (
               <CustomElement
                 key={panel.dataElement || index}
