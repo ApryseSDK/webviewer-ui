@@ -1,6 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useStore, useDispatch } from 'react-redux';
+import { useSelector, useStore, useDispatch } from 'react-redux';
+import selectors from 'selectors';
 import PropTypes from 'prop-types';
 
 import Accessibility from 'components/Accessibility';
@@ -52,6 +53,14 @@ const propTypes = {
 };
 
 const App = ({ removeEventHandlers }) => {
+  const [
+    notesInLeftPanel,
+  ] = useSelector(
+    state => [
+      selectors.getAreNotesInLeftPanel(state),
+    ]
+  );
+
   const store = useStore();
   const dispatch = useDispatch();
 
@@ -90,12 +99,16 @@ const App = ({ removeEventHandlers }) => {
           <DocumentContainer />
           {/* <DetachedSearchPanel /> */}
           {/* <DetachedNotesPanel /> */}
-          <RightPanel>
+          <RightPanel
+            dataElement="detachedSearchPanel"
+          >
             <SearchPanel />
           </RightPanel>
-          <RightPanel>
-            <NotesPanel />
-          </RightPanel>
+        {/* <RightPanel
+          dataElement="detachedNotesPanel"
+        >
+          <NotesPanel />
+        </RightPanel> */}
         </div>
         <ViewControlsOverlay />
         <MenuOverlay />

@@ -24,6 +24,18 @@ export default store => {
     core.setReadOnly(state.viewer.isReadOnly);
   }
 
+  const notesInLeftPanel = getHashParams('notesInLeftPanel', false);
+  if (notesInLeftPanel) {
+    dispatch(
+      actions.disableElements(
+        [
+          'toggleNotesButton',
+        ]
+      )
+    );
+  }
+  // debugger;
+
   const annotationDisabled = !getHashParams('a', false);
   if (annotationDisabled) {
     disableFeatures([Feature.Annotations]);

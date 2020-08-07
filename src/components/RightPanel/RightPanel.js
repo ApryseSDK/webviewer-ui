@@ -10,14 +10,14 @@ import { isSafari } from 'src/helpers/device';
 
 import './RightPanel.scss';
 
-const RightPanel = ({ children }) => {
+const RightPanel = ({ children, dataElement }) => {
   const [
     isOpen,
     isDisabled,
   ] = useSelector(
     state => [
-      selectors.isElementOpen(state, 'rightPanel'),
-      selectors.isElementDisabled(state, 'rightPanel'),
+      selectors.isElementOpen(state, dataElement),
+      selectors.isElementDisabled(state, dataElement),
     ],
     shallowEqual,
   );
@@ -39,7 +39,7 @@ const RightPanel = ({ children }) => {
     false,
   );
 
-  const isVisible = !(!isOpen || isDisabled) || true;
+  const isVisible = isOpen && !isDisabled;
 
   let animate = { width: 'auto' };
   if (isMobile) {
@@ -58,9 +58,9 @@ const RightPanel = ({ children }) => {
         >
           {!isTabletAndMobile &&
             <ResizeBar
-              minWidth={100}
+              minWidth={293}
               onResize={_width => {
-                dispatch(actions.setNotesPanelWidth(_width));
+                dispatch(actions.setSearchPanelWidth(_width));
               }}
               leftDirection
             />}
