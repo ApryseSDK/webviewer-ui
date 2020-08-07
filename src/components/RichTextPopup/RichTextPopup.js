@@ -1,27 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Draggable from 'react-draggable';
-import classNames from 'classnames';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import React, { useState, useEffect, useRef } from "react";
+import Draggable from "react-draggable";
+import classNames from "classnames";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
-import Element from 'components/Element';
-import ColorPalette from 'components/ColorPalette';
-import Button from 'components/Button';
-import HorizontalDivider from 'components/HorizontalDivider';
-import { isMobile } from 'helpers/device';
-import core from 'core';
-import getRichTextPopupPosition from 'helpers/getRichTextPopupPosition';
-import MathSymbolsPicker from '../MathSymbolsPicker';
-import actions from 'actions';
-import selectors from 'selectors';
+import Element from "components/Element";
+import ColorPalette from "components/ColorPalette";
+import Button from "components/Button";
+import HorizontalDivider from "components/HorizontalDivider";
+import { isMobile } from "helpers/device";
+import core from "core";
+import getRichTextPopupPosition from "helpers/getRichTextPopupPosition";
+import MathSymbolsPicker from "../MathSymbolsPicker";
+import actions from "actions";
+import selectors from "selectors";
 
-import './RichTextPopup.scss';
+import "./RichTextPopup.scss";
 
 const RichTextPopup = () => {
   const [isDisabled, isOpen, isPaletteDisabled] = useSelector(
     state => [
-      selectors.isElementDisabled(state, 'richTextPopup'),
-      selectors.isElementOpen(state, 'richTextPopup'),
-      selectors.isElementDisabled(state, 'richTextColorPalette'),
+      selectors.isElementDisabled(state, "richTextPopup"),
+      selectors.isElementOpen(state, "richTextPopup"),
+      selectors.isElementDisabled(state, "richTextColorPalette")
     ],
     shallowEqual
   );
@@ -41,27 +41,35 @@ const RichTextPopup = () => {
       }
     };
 
-    core.addEventListener('editorSelectionChanged', handleSelectionChange);
-    return () => core.removeEventListener('editorSelectionChanged', handleSelectionChange);
+    core.addEventListener("editorSelectionChanged", handleSelectionChange);
+    return () =>
+      core.removeEventListener("editorSelectionChanged", handleSelectionChange);
   }, []);
 
   useEffect(() => {
     const handleTextChange = () => {
       if (annotationRef.current?.isAutoSized() && popupRef.current) {
-        const position = getRichTextPopupPosition(annotationRef.current, popupRef);
+        const position = getRichTextPopupPosition(
+          annotationRef.current,
+          popupRef
+        );
         setCssPosition(position);
       }
 
       setFormat(getFormat(editorRef.current?.getSelection()));
     };
 
-    core.addEventListener('editorTextChanged', handleTextChange);
-    return () => core.removeEventListener('editorTextChanged', handleTextChange);
+    core.addEventListener("editorTextChanged", handleTextChange);
+    return () =>
+      core.removeEventListener("editorTextChanged", handleTextChange);
   }, []);
 
   useEffect(() => {
     const handleEditorFocus = (editor, annotation) => {
-      if (annotation instanceof window.Annotations.FreeTextAnnotation && popupRef.current) {
+      if (
+        annotation instanceof window.Annotations.FreeTextAnnotation &&
+        popupRef.current
+      ) {
         const position = getRichTextPopupPosition(annotation, popupRef);
         setCssPosition(position);
         // when the editor is focused, we want to reset any previous drag movements so that
@@ -71,23 +79,23 @@ const RichTextPopup = () => {
         editorRef.current = editor;
         annotationRef.current = annotation;
 
-        dispatch(actions.openElements(['richTextPopup']));
+        dispatch(actions.openElements(["richTextPopup"]));
       }
     };
 
-    core.addEventListener('editorFocus', handleEditorFocus);
-    return () => core.removeEventListener('editorFocus', handleEditorFocus);
+    core.addEventListener("editorFocus", handleEditorFocus);
+    return () => core.removeEventListener("editorFocus", handleEditorFocus);
   }, [dispatch]);
 
   useEffect(() => {
     const handleEditorBlur = () => {
-      dispatch(actions.closeElements(['richTextPopup']));
+      dispatch(actions.closeElements(["richTextPopup"]));
       editorRef.current = null;
       annotationRef.current = null;
     };
 
-    core.addEventListener('editorBlur', handleEditorBlur);
-    return () => core.removeEventListener('editorBlur', handleEditorBlur);
+    core.addEventListener("editorBlur", handleEditorBlur);
+    return () => core.removeEventListener("editorBlur", handleEditorBlur);
   }, [dispatch]);
 
   const getFormat = range => {
@@ -97,7 +105,7 @@ const RichTextPopup = () => {
 
     const format = editorRef.current.getFormat(range.index, range.length);
 
-    if (typeof format.color === 'string') {
+    if (typeof format.color === "string") {
       format.color = new window.Annotations.Color(format.color);
     } else if (Array.isArray(format.color)) {
       // the selection contains multiple color, so we set the current color to null
@@ -109,32 +117,32 @@ const RichTextPopup = () => {
     return format;
   };
 
-  const handleClick = operation => () => {
-    if (operation === "showSymbols") {
-      setSymbolsVisible(!symbolsVisible);
-      return;
-    }
+  const handleTextFormatChange = format => () => {
     const { index, length } = editorRef.current.getSelection();
     const currentFormat = editorRef.current.getFormat(index, length);
 
-    applyFormat(operation, !currentFormat[operation]);
+    applyFormat(format, !currentFormat[format]);
+  };
+
+  const handleSymbolsClick = () => {
+    setSymbolsVisible(!symbolsVisible);
   };
 
   const handleColorChange = (_, color) => {
-    applyFormat('color', color.toHexString());
+    applyFormat("color", color.toHexString());
   };
 
   const applyFormat = (formatKey, value) => {
     editorRef.current.format(formatKey, value);
 
-    if (formatKey === 'color') {
+    if (formatKey === "color") {
       value = new window.Annotations.Color(value);
     }
 
     // format the entire editor doesn't trigger the editorTextChanged event, so we set the format state here
     setFormat({
       ...format,
-      [formatKey]: value,
+      [formatKey]: value
     });
   };
 
@@ -142,15 +150,15 @@ const RichTextPopup = () => {
     setDraggablePosition({ x, y });
   };
 
-
   const insertSymbols = symbol => {
     const contents = editorRef.current.getContents();
-    const { index, length } = editorRef.current.editor.getSelection();
+    const { index, length } = editorRef.current.getSelection();
     // only update the selected word (defined by index)
-    editorRef.current.editor.setText(`${contents.slice(0, index)}${symbol}${contents.slice(index + length)}`);
-    editorRef.current.editor.setSelection(index+1);
+    editorRef.current.setText(
+      `${contents.slice(0, index)}${symbol}${contents.slice(index + length)}`
+    );
+    editorRef.current.setSelection(index + 1);
   };
-
 
   // TODO for now don't show it in mobile
   return isDisabled || isMobile() ? null : (
@@ -164,7 +172,7 @@ const RichTextPopup = () => {
       // prevent the blur event from being triggered when clicking on toolbar buttons
       // otherwise we can't style the text since a blur event is triggered before a click event
       onMouseDown={e => {
-        if (e.type !== 'touchstart') {
+        if (e.type !== "touchstart") {
           e.preventDefault();
         }
       }}
@@ -174,7 +182,7 @@ const RichTextPopup = () => {
           Popup: true,
           RichTextPopup: true,
           open: isOpen,
-          closed: !isOpen,
+          closed: !isOpen
         })}
         ref={popupRef}
         data-element="richTextPopup"
@@ -184,34 +192,34 @@ const RichTextPopup = () => {
           <Button
             isActive={format.bold}
             dataElement="richTextBoldButton"
-            onClick={handleClick('bold')}
+            onClick={handleTextFormatChange("bold")}
             img="icon-text-bold"
             title="option.richText.bold"
           />
           <Button
             isActive={format.italic}
             dataElement="richTextItalicButton"
-            onClick={handleClick('italic')}
+            onClick={handleTextFormatChange("italic")}
             img="icon-text-italic"
             title="option.richText.italic"
           />
           <Button
             isActive={format.underline}
             dataElement="richTextUnderlineButton"
-            onClick={handleClick('underline')}
+            onClick={handleTextFormatChange("underline")}
             img="ic_annotation_underline_black_24px"
             title="option.richText.underline"
           />
           <Button
             isActive={format.strike}
             dataElement="richTextStrikeButton"
-            onClick={handleClick('strike')}
+            onClick={handleTextFormatChange("strike")}
             img="ic_annotation_strikeout_black_24px"
             title="option.richText.strikeout"
           />
           <Button
             dataElement="richTextShowMathSymbols"
-            onClick={handleClick('showSymbols')}
+            onClick={handleSymbolsClick}
             img="ic_thumbnails_grid_black_24px"
             title="option.mathSymbols"
           />
@@ -226,7 +234,7 @@ const RichTextPopup = () => {
             hasPadding
           />
         )}
-        {symbolsVisible && <MathSymbolsPicker onClickHandler={insertSymbols}/>}
+        {symbolsVisible && <MathSymbolsPicker onClickHandler={insertSymbols} />}
       </div>
     </Draggable>
   );
