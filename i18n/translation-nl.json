@@ -206,39 +206,40 @@
       "all": "Alles",
       "current": "Huidige",
       "pages": "Pagina's",
+      "pageQuality": "Print kwaliteit",
       "includeAnnotations": "Voeg annotaties toe",
-      "includeComments": "Inclusief commentaar",
-      "addWatermarkSettings": "Watermerkinstellingen toevoegen"
+      "includeComments": "Voeg opmerkingen toe",
+      "addWatermarkSettings": "Voeg een watermerk toe"
     },
     "redaction": {
-      "markForRedaction": "Markeren voor redactie"
+      "markForRedaction": "Markeer voor redactie"
     },
     "searchPanel": {
       "caseSensitive": "Hoofdlettergevoelig",
-      "wholeWordOnly": "Hele woorden",
-      "wildcard": "wildcard"
+      "wholeWordOnly": "Hele wereld",
+      "wildcard": "Jokerteken"
     },
     "stampOverlay": {
       "addStamp": "Nieuwe stempel toevoegen"
     },
     "signatureOverlay": {
-      "addSignature": "Voeg een handtekening toe"
+      "addSignature": "Voeg nieuwe handtekening toe"
     },
     "signatureModal": {
-      "saveSignature": "Bewaar handtekening",
-      "dragAndDrop": "Sleep je afbeelding hiernaartoe",
+      "saveSignature": "Handtekening opslaan",
+      "dragAndDrop": "Sleep uw afbeelding hierheen",
       "or": "Of",
-      "pickImage": "Kies handtekening afbeelding"
+      "pickImage": "Kies een handtekening"
     },
     "status": {
-      "status": "staat"
+      "status": "Toestand"
     },
     "state": {
       "accepted": "Geaccepteerd",
       "rejected": "Afgekeurd",
       "completed": "Voltooid",
       "cancelled": "Geannuleerd",
-      "set": "Stel status in:",
+      "set": "Status instellen:",
       "setBy": "ingesteld door",
       "none": "Geen"
     },
@@ -247,13 +248,13 @@
       "angle": "Hoek",
       "distance": "Afstand",
       "perimeter": "Omtrek",
-      "area": "Gebied",
-      "distanceMeasurement": "Afstands meting",
-      "perimeterMeasurement": "Perimeter meting",
-      "areaMeasurement": "Gebieds meting",
-      "countMeasurement": "Tel meting",
+      "area": "Oppervlakte",
+      "distanceMeasurement": "Afstandsmeting",
+      "perimeterMeasurement": "Omtrekmeting",
+      "areaMeasurement": "Oppervlaktemeting",
+      "countMeasurement": "Tel de meting",
       "radius": "Straal",
-      "count": "Tel"
+      "count": "Tellen"
     },
     "measurementOption": {
       "scale": "Schaal"
@@ -264,14 +265,14 @@
       "cloudy": "Bewolkt"
     },
     "slider": {
-      "opacity": "Dekking",
-      "thickness": "Randdikte",
+      "opacity": "Ondoorzichtigheid",
+      "thickness": "Beroerte",
       "text": "Lettergrootte"
     },
     "shared": {
-      "page": "Pagina",
-      "precision": "precisie",
-      "enableSnapping": "Schakel snappen in voor meetinstrumenten"
+      "page": "Bladzijde",
+      "precision": "Precisie",
+      "enableSnapping": "Schakel snappen in voor meethulpmiddelen"
     },
     "watermark": {
       "size": "Grootte",
@@ -279,24 +280,24 @@
       "text": "Tekst",
       "style": "Stijl",
       "resetAllSettings": "Reset alle instellingen",
-      "font": "doopvont"
+      "font": "Lettertype"
     },
     "thumbnailPanel": {
-      "delete": "Delete",
+      "delete": "Verwijderen",
       "rotateClockwise": "Met de klok mee",
       "rotateCounterClockwise": "Tegen de klok in",
-      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om te extraheren"
+      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om uit te pakken"
     },
     "richText": {
-      "bold": "Vet",
+      "bold": "Stoutmoedig",
       "italic": "Cursief",
       "underline": "Onderstrepen",
       "strikeout": "Doorhalen"
     },
     "customStampModal": {
       "stampText": "Stempel tekst:",
-      "timestampText": "Tijdstempel tekst:",
-      "stampColor": "Stempelkleur:",
+      "timestampText": "Tijdstempeltekst:",
+      "stampColor": "Stempel kleur:",
       "Username": "Gebruikersnaam",
       "Date": "Datum",
       "Time": "Tijd"
@@ -305,21 +306,21 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Pagina verwijderen",
-      "deleteMessage": "Weet u zeker dat u de geselecteerde pagina ('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt",
-      "deleteLastPageMessage": "Hierdoor zouden er geen pagina's meer overblijven. Laat minstens één pagina achter"
+      "deleteMessage": "Weet u zeker dat u de geselecteerde pagina ('s) wilt verwijderen? Dit kan niet ongedaan worden gemaakt",
+      "deleteLastPageMessage": "Hierdoor blijven er geen pagina's over. Laat tenminste één pagina achter"
     },
     "redaction": {
-      "applyTile": "Redactie toepassen",
-      "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden."
+      "applyTile": "Pas redactie toe",
+      "applyMessage": "Met deze actie worden alle items die voor redactie zijn geselecteerd, definitief verwijderd. Het kan niet ongedaan gemaakt worden."
     }
   },
   "shortcut": {
-    "arrow": "(A)",
+    "arrow": "(EEN)",
     "callout": "(C)",
     "copy": "(Ctrl C)",
-    "delete": "(Del)",
-    "ellipse": "(O)",
-    "eraser": "(E)",
+    "delete": "(Van de)",
+    "ellipse": "(DE)",
+    "eraser": "(IS)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
@@ -331,11 +332,11 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(I)",
+    "stamp": "(IK)",
     "redo": "(Ctrl Shift Z)",
     "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
-    "strikeout": "(K)",
+    "strikeout": "(NAAR)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
@@ -347,10 +348,10 @@
     }
   },
   "tool": {
-    "pan": "Schuiven",
-    "select": "Selecteren",
-    "Marquee": "Selectie zoom",
-    "Link": "Link URL of pagina",
+    "pan": "Pan",
+    "select": "Selecteer",
+    "Marquee": "Selectiekader Zoom",
+    "Link": "Link-URL of pagina",
     "Standard": "Standaard",
     "Custom": "Op maat"
   },
@@ -374,7 +375,7 @@
       "7": "augustus",
       "8": "september",
       "9": "oktober",
-      "10": "november",
+      "10": "November",
       "11": "december"
     },
     "weekdays": {
@@ -387,13 +388,13 @@
       "6": "zaterdag"
     },
     "weekdaysShort": {
-      "0": "zo.",
-      "1": "ma.",
-      "2": "di.",
-      "3": "wo.",
-      "4": "do.",
-      "5": "vr.",
-      "6": "za."
+      "0": "Zon",
+      "1": "Mijn",
+      "2": "uw",
+      "3": "Wo",
+      "4": "Do",
+      "5": "vrij",
+      "6": "Za"
     }
   }
 }

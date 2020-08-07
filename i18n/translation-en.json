@@ -206,6 +206,7 @@
       "all": "All",
       "current": "Current",
       "pages": "Pages to print",
+      "pageQuality": "Print Quality",
       "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
       "addWatermarkSettings": "Add Watermark"

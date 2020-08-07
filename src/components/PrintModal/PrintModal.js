@@ -18,6 +18,7 @@ import { Swipeable } from 'react-swipeable';
 import './PrintModal.scss';
 import Choice from '../Choice/Choice';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import setPrintQuality from 'src/apis/setPrintQuality';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -33,7 +34,7 @@ class PrintModal extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     colorMap: PropTypes.object.isRequired,
     layoutMode: PropTypes.string.isRequired,
-    isApplyWatermarkDisabled: PropTypes.bool,
+    isApplyWatermarkDisabled: PropTypes.bool
   };
 
   constructor() {
@@ -52,7 +53,7 @@ class PrintModal extends React.PureComponent {
       watermarkModalOption: null,
       existingWatermarks: null,
       includeAnnotations: true,
-      includeComments: false,
+      includeComments: false
     };
   }
 
@@ -63,7 +64,7 @@ class PrintModal extends React.PureComponent {
         'signatureModal',
         'loadingModal',
         'progressModal',
-        'errorModal',
+        'errorModal'
       ]);
       core.getWatermark().then(watermark => {
         this.setState({
@@ -71,7 +72,7 @@ class PrintModal extends React.PureComponent {
             watermark === undefined ||
             watermark === null ||
             Object.keys(watermark).length === 0,
-          existingWatermarks: watermark,
+          existingWatermarks: watermark
         });
       });
     }
@@ -153,15 +154,22 @@ class PrintModal extends React.PureComponent {
       core.setWatermark(this.state.existingWatermarks);
     }
 
-    const createPages = creatingPages(this.state.pagesToPrint,
+    const createPages = creatingPages(
+      this.state.pagesToPrint,
       this.state.includeComments,
       this.state.includeAnnotations,
       this.props.printQuality,
       this.props.sortStrategy,
-      this.props.colorMap);
+      this.props.colorMap
+    );
     createPages.forEach(async pagePromise => {
       await pagePromise;
-      this.setState({ count: this.state.count < this.state.pagesToPrint.length ? this.state.count+1 : this.state.count });
+      this.setState({
+        count:
+          this.state.count < this.state.pagesToPrint.length
+            ? this.state.count + 1
+            : this.state.count
+      });
     });
     Promise.all(createPages)
       .then(pages => {
@@ -181,13 +189,13 @@ class PrintModal extends React.PureComponent {
 
   setWatermarkModalVisibility = visible => {
     this.setState({
-      isWatermarkModalVisible: visible,
+      isWatermarkModalVisible: visible
     });
   };
 
   setWatermarkModalOption = watermarkOptions => {
     this.setState({
-      watermarkModalOption: watermarkOptions,
+      watermarkModalOption: watermarkOptions
     });
   };
 
@@ -226,9 +234,7 @@ class PrintModal extends React.PureComponent {
             modalClosed={this.setWatermarkModalVisibility}
             formSubmitted={this.setWatermarkModalOption}
           />
-          <FocusTrap
-            locked={isOpen && !this.state.isWatermarkModalVisible}
-          >
+          <FocusTrap locked={isOpen && !this.state.isWatermarkModalVisible}>
             <div
               className={className}
               data-element="printModal"
@@ -283,7 +289,11 @@ class PrintModal extends React.PureComponent {
                       id="include-comments"
                       name="comments"
                       label={t('option.print.includeComments')}
-                      onChange = {() => this.setState(state => ({ includeComments: !state.includeComments }))}
+                      onChange={() =>
+                        this.setState(state => ({
+                          includeComments: !state.includeComments
+                        }))
+                      }
                       disabled={isPrinting}
                       center
                     />
@@ -293,11 +303,24 @@ class PrintModal extends React.PureComponent {
                       name="annotations"
                       label={t('option.print.includeAnnotations')}
                       disabled={isPrinting}
-                      onChange = {() => this.setState(state => ({ includeAnnotations: !state.includeAnnotations }))}
-                      checked = {includeAnnotations}
+                      onChange={() =>
+                        this.setState(state => ({
+                          includeAnnotations: !state.includeAnnotations
+                        }))
+                      }
+                      checked={includeAnnotations}
                       center
                     />
                   </form>
+                  <div>
+                    <div className="col">{`${t('option.print.pageQuality')}:`}</div>
+                    <div className="col">
+                      <select onChange={e => setPrintQuality(e.target.value)}>
+                        <option value="1">Normal</option>
+                        <option value="2">High</option>
+                      </select>
+                    </div>
+                  </div>
                   <div className="total">
                     {isPrinting ? (
                       <div>{`${t('message.processing')} ${count}/${
@@ -306,7 +329,7 @@ class PrintModal extends React.PureComponent {
                     ) : (
                       <div>
                         {t('message.printTotalPageCount', {
-                          count: pagesToPrint.length,
+                          count: pagesToPrint.length
                         })}
                       </div>
                     )}
@@ -350,7 +373,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'printModal'),
   isApplyWatermarkDisabled: selectors.isElementDisabled(
     state,
-    'applyWatermark',
+    'applyWatermark'
   ),
   isOpen: selectors.isElementOpen(state, 'printModal'),
   currentPage: selectors.getCurrentPage(state),
@@ -358,16 +381,16 @@ const mapStateToProps = state => ({
   pageLabels: selectors.getPageLabels(state),
   sortStrategy: selectors.getSortStrategy(state),
   colorMap: selectors.getColorMap(state),
-  layoutMode: selectors.getDisplayMode(state),
+  layoutMode: selectors.getDisplayMode(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
   closeElement: dataElement => dispatch(actions.closeElement(dataElement)),
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
+  closeElements: dataElements => dispatch(actions.closeElements(dataElements))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(withTranslation()(PrintModal));

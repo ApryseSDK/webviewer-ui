@@ -206,12 +206,13 @@
       "all": "Tutti",
       "current": "attuale",
       "pages": "pagine",
+      "pageQuality": "Qualità di stampa",
       "includeAnnotations": "Includi annotazioni",
-      "includeComments": "Includi commenti",
-      "addWatermarkSettings": "Aggiungi impostazioni filigrana"
+      "includeComments": "Includere commenti",
+      "addWatermarkSettings": "Aggiungi filigrana"
     },
     "redaction": {
-      "markForRedaction": "Contrassegna per redazione"
+      "markForRedaction": "Segna per la redazione"
     },
     "searchPanel": {
       "caseSensitive": "Che tiene conto del maiuscolo o minuscolo",
@@ -222,13 +223,13 @@
       "addStamp": "Aggiungi nuovo timbro"
     },
     "signatureOverlay": {
-      "addSignature": "Aggiungi una firma"
+      "addSignature": "Aggiungi nuova firma"
     },
     "signatureModal": {
       "saveSignature": "Salva firma",
-      "dragAndDrop": "Trascina e rilascia l'immagine qui",
+      "dragAndDrop": "Trascina e rilascia qui la tua immagine",
       "or": "O",
-      "pickImage": "Scegli l'immagine della firma"
+      "pickImage": "Scegli una firma"
     },
     "status": {
       "status": "Stato"
@@ -249,9 +250,9 @@
       "perimeter": "Perimetro",
       "area": "La zona",
       "distanceMeasurement": "Misurazione della distanza",
-      "perimeterMeasurement": "Misura perimetrale",
-      "areaMeasurement": "Misura dell'area",
-      "countMeasurement": "Misurazione del conteggio",
+      "perimeterMeasurement": "Misurazione del perimetro",
+      "areaMeasurement": "Misurazione dell'area",
+      "countMeasurement": "Contare la misurazione",
       "radius": "Raggio",
       "count": "Contare"
     },
@@ -265,13 +266,13 @@
     },
     "slider": {
       "opacity": "Opacità",
-      "thickness": "Spessore",
+      "thickness": "Ictus",
       "text": "Dimensione del testo"
     },
     "shared": {
       "page": "Pagina",
       "precision": "Precisione",
-      "enableSnapping": "Abilita snap per strumenti di misurazione"
+      "enableSnapping": "Abilita lo snap per gli strumenti di misurazione"
     },
     "watermark": {
       "size": "Taglia",
@@ -279,7 +280,7 @@
       "text": "Testo",
       "style": "Stile",
       "resetAllSettings": "Resettare tutte le impostazioni",
-      "font": "font"
+      "font": "Font"
     },
     "thumbnailPanel": {
       "delete": "Elimina",
@@ -290,13 +291,13 @@
     "richText": {
       "bold": "Grassetto",
       "italic": "Corsivo",
-      "underline": "Sottolineato",
-      "strikeout": "Barrato"
+      "underline": "Sottolineare",
+      "strikeout": "strikeout"
     },
     "customStampModal": {
-      "stampText": "Testo del timbro:",
-      "timestampText": "Testo data / ora:",
-      "stampColor": "Colore del timbro:",
+      "stampText": "Testo timbro:",
+      "timestampText": "Testo timestamp:",
+      "stampColor": "Colore timbro:",
       "Username": "Nome utente",
       "Date": "Data",
       "Time": "Tempo"
@@ -306,19 +307,19 @@
     "deletePage": {
       "deleteTitle": "Elimina pagina",
       "deleteMessage": "Sei sicuro di voler eliminare le pagine selezionate. Questo non può essere annullato",
-      "deleteLastPageMessage": "Ciò comporterebbe che non restino pagine. Si prega di lasciare almeno una pagina"
+      "deleteLastPageMessage": "Ciò comporterebbe nessuna pagina rimanente. Si prega di lasciare almeno una pagina"
     },
     "redaction": {
-      "applyTile": "Applica redazione",
-      "applyMessage": "Questa azione rimuoverà permanentemente tutti gli elementi selezionati per la redazione. Non può essere annullato."
+      "applyTile": "Applica la redazione",
+      "applyMessage": "Questa azione rimuoverà definitivamente tutti gli elementi selezionati per la redazione. Non può essere annullato."
     }
   },
   "shortcut": {
     "arrow": "(UN)",
     "callout": "(C)",
     "copy": "(Ctrl C)",
-    "delete": "(In)",
-    "ellipse": "(O)",
+    "delete": "(Del)",
+    "ellipse": "(IL)",
     "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
@@ -326,8 +327,8 @@
     "line": "(L)",
     "pan": "(P)",
     "rectangle": "(R)",
-    "rotateClockwise": "(Ctrl Shift +)",
-    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "rotateClockwise": "(Ctrl Maiusc +)",
+    "rotateCounterClockwise": "(Ctrl Maiusc -)",
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
@@ -335,7 +336,7 @@
     "redo": "(Ctrl Maiusc Z)",
     "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
-    "strikeout": "(K)",
+    "strikeout": "(PER)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
@@ -349,16 +350,16 @@
   "tool": {
     "pan": "Padella",
     "select": "Selezionare",
-    "Marquee": "Zoom tendone",
-    "Link": "Link URL o Pagina",
+    "Marquee": "Marquee Zoom",
+    "Link": "URL o pagina del collegamento",
     "Standard": "Standard",
     "Custom": "costume"
   },
   "link": {
     "url": "URL",
     "page": "Pagina",
-    "enterurl": "Inserisci l'URL che desideri collegare",
-    "enterpage": "Seleziona il numero di pagina che desideri collegare"
+    "enterurl": "Inserisci l'URL a cui desideri collegarti",
+    "enterpage": "Seleziona il numero di pagina a cui desideri collegarti"
   },
   "datePicker": {
     "previousMonth": "Il mese scorso",
@@ -368,7 +369,7 @@
       "1": "febbraio",
       "2": "marzo",
       "3": "aprile",
-      "4": "maggio",
+      "4": "Maggio",
       "5": "giugno",
       "6": "luglio",
       "7": "agosto",
@@ -378,22 +379,22 @@
       "11": "dicembre"
     },
     "weekdays": {
-      "0": "domenica",
-      "1": "lunedì",
+      "0": "Domenica",
+      "1": "Lunedi",
       "2": "martedì",
       "3": "mercoledì",
-      "4": "giovedì",
-      "5": "venerdì",
-      "6": "sabato"
+      "4": "giovedi",
+      "5": "Venerdì",
+      "6": "Sabato"
     },
     "weekdaysShort": {
-      "0": "dom",
-      "1": "lun",
-      "2": "mar",
-      "3": "mer",
+      "0": "Sole",
+      "1": "Mio",
+      "2": "Tue",
+      "3": "sposare",
       "4": "gio",
-      "5": "ven",
-      "6": "sab"
+      "5": "gratuito",
+      "6": "Sat"
     }
   }
 }

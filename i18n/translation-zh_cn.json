@@ -206,36 +206,37 @@
       "all": "全部",
       "current": "当前",
       "pages": "页数",
+      "pageQuality": "打印质量",
       "includeAnnotations": "包括注释",
       "includeComments": "包括评论",
-      "addWatermarkSettings": "添加水印设置"
+      "addWatermarkSettings": "加水印"
     },
     "redaction": {
-      "markForRedaction": "标记为编辑"
+      "markForRedaction": "标记为修订"
     },
     "searchPanel": {
       "caseSensitive": "区分大小写",
-      "wholeWordOnly": "整个词语",
+      "wholeWordOnly": "全字",
       "wildcard": "通配符"
     },
     "stampOverlay": {
       "addStamp": "添加新邮票"
     },
     "signatureOverlay": {
-      "addSignature": "添加签名"
+      "addSignature": "添加新签名"
     },
     "signatureModal": {
       "saveSignature": "保存签名",
       "dragAndDrop": "将图片拖放到此处",
       "or": "要么",
-      "pickImage": "选择签名图像"
+      "pickImage": "选择签名"
     },
     "status": {
       "status": "状态"
     },
     "state": {
       "accepted": "公认",
-      "rejected": "被拒绝",
+      "rejected": "拒绝",
       "completed": "已完成",
       "cancelled": "取消",
       "set": "设定状态：",
@@ -243,11 +244,11 @@
       "none": "没有"
     },
     "measurementOverlay": {
-      "scale": "比例",
+      "scale": "比例比",
       "angle": "角度",
       "distance": "距离",
       "perimeter": "周长",
-      "area": "面积",
+      "area": "区",
       "distanceMeasurement": "距离测量",
       "perimeterMeasurement": "周长测量",
       "areaMeasurement": "面积测量",
@@ -256,7 +257,7 @@
       "count": "计数"
     },
     "measurementOption": {
-      "scale": "比例"
+      "scale": "规模"
     },
     "styleOption": {
       "style": "样式",
@@ -265,12 +266,12 @@
     },
     "slider": {
       "opacity": "不透明度",
-      "thickness": "厚度",
-      "text": "文字大小"
+      "thickness": "中风",
+      "text": "字体大小"
     },
     "shared": {
       "page": "页",
-      "precision": "精准度",
+      "precision": "精确",
       "enableSnapping": "启用测量工具的捕捉"
     },
     "watermark": {
@@ -288,10 +289,10 @@
       "extractZeroPageError": "没有选择要提取的页面"
     },
     "richText": {
-      "bold": "粗体",
+      "bold": "胆大",
       "italic": "斜体",
-      "underline": "下划线",
-      "strikeout": "删除线"
+      "underline": "强调",
+      "strikeout": "淘汰赛"
     },
     "customStampModal": {
       "stampText": "印章文字：",
@@ -314,31 +315,31 @@
     }
   },
   "shortcut": {
-    "arrow": "(A)",
-    "callout": "(C)",
-    "copy": "(Ctrl C)",
-    "delete": "(Del)",
-    "ellipse": "(O)",
-    "eraser": "(E)",
-    "freehand": "(F)",
-    "freetext": "(T)",
-    "highlight": "(H)",
-    "line": "(L)",
-    "pan": "(P)",
-    "rectangle": "(R)",
-    "rotateClockwise": "(Ctrl Shift +)",
-    "rotateCounterClockwise": "(Ctrl Shift -)",
-    "select": "(Esc)",
-    "signature": "(S)",
-    "squiggly": "(G)",
-    "stamp": "(I)",
+    "arrow": "（一个）",
+    "callout": "（C）",
+    "copy": "（Ctrl C）",
+    "delete": "（的）",
+    "ellipse": "（THE）",
+    "eraser": "（IS）",
+    "freehand": "（F）",
+    "freetext": "（T）",
+    "highlight": "（H）",
+    "line": "（长）",
+    "pan": "（P）",
+    "rectangle": "（右）",
+    "rotateClockwise": "（Ctrl Shift +）",
+    "rotateCounterClockwise": "（Ctrl Shift-）",
+    "select": "（退出）",
+    "signature": "（S）",
+    "squiggly": "（G）",
+    "stamp": "（一世）",
     "redo": "（Ctrl Shift Z）",
     "undo": "（Ctrl Z）",
-    "stickyNote": "(N)",
-    "strikeout": "(K)",
-    "underline": "(U)",
-    "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl -)",
+    "stickyNote": "（N）",
+    "strikeout": "（至）",
+    "underline": "（U）",
+    "zoomIn": "（Ctrl +）",
+    "zoomOut": "（Ctrl-）",
     "richText": {
       "bold": "（Ctrl B）",
       "italic": "（Ctrl I）",
@@ -347,7 +348,7 @@
     }
   },
   "tool": {
-    "pan": "移动",
+    "pan": "泛",
     "select": "选择",
     "Marquee": "选框缩放",
     "Link": "链接网址或页面",
@@ -366,9 +367,9 @@
     "months": {
       "0": "一月",
       "1": "二月",
-      "2": "三月",
+      "2": "游行",
       "3": "四月",
-      "4": "五月",
+      "4": "可能",
       "5": "六月",
       "6": "七月",
       "7": "八月",
@@ -387,12 +388,12 @@
       "6": "星期六"
     },
     "weekdaysShort": {
-      "0": "周日",
-      "1": "周一",
-      "2": "周二",
-      "3": "周三",
+      "0": "太阳",
+      "1": "我的",
+      "2": "你的",
+      "3": "星期三",
       "4": "周四",
-      "5": "周五",
+      "5": "自由",
       "6": "周六"
     }
   }

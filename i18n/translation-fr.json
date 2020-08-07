@@ -206,29 +206,30 @@
       "all": "Toutes",
       "current": "Actuelle",
       "pages": "Pages",
-      "includeAnnotations": "Inclure des annotations",
+      "pageQuality": "Qualité d'impression",
+      "includeAnnotations": "Inclure les annotations",
       "includeComments": "Inclure les commentaires",
-      "addWatermarkSettings": "Ajouter des paramètres de filigrane"
+      "addWatermarkSettings": "Ajouter un filigrane"
     },
     "redaction": {
-      "markForRedaction": "Repérer les biffures"
+      "markForRedaction": "Marquer pour rédaction"
     },
     "searchPanel": {
-      "caseSensitive": "Sensible à la casse",
-      "wholeWordOnly": "Mot complet",
+      "caseSensitive": "Sensible aux majuscules et minuscules",
+      "wholeWordOnly": "Mot entier",
       "wildcard": "Caractère générique"
     },
     "stampOverlay": {
       "addStamp": "Ajouter un nouveau tampon"
     },
     "signatureOverlay": {
-      "addSignature": "Ajouter une signature"
+      "addSignature": "Ajouter une nouvelle signature"
     },
     "signatureModal": {
       "saveSignature": "Enregistrer la signature",
       "dragAndDrop": "Faites glisser et déposez votre image ici",
       "or": "Ou",
-      "pickImage": "Choisir l'image de signature"
+      "pickImage": "Choisissez une signature"
     },
     "status": {
       "status": "Statut"
@@ -247,10 +248,10 @@
       "angle": "Angle",
       "distance": "Distance",
       "perimeter": "Périmètre",
-      "area": "Surface",
+      "area": "Zone",
       "distanceMeasurement": "Mesure de distance",
       "perimeterMeasurement": "Mesure du périmètre",
-      "areaMeasurement": "Mesure du surface",
+      "areaMeasurement": "Mesure de surface",
       "countMeasurement": "Mesure de comptage",
       "radius": "Rayon",
       "count": "Compter"
@@ -265,7 +266,7 @@
     },
     "slider": {
       "opacity": "Opacité",
-      "thickness": "Épaisseur",
+      "thickness": "Accident vasculaire cérébral",
       "text": "Taille du texte"
     },
     "shared": {
@@ -283,15 +284,15 @@
     },
     "thumbnailPanel": {
       "delete": "Supprimer",
-      "rotateClockwise": "Dans le sens horaire",
-      "rotateCounterClockwise": "Dans le sens antihoraire",
+      "rotateClockwise": "Dans le sens des aiguilles d'une montre",
+      "rotateCounterClockwise": "Sens antihoraire",
       "extractZeroPageError": "Aucune page n'a été sélectionnée pour l'extraction"
     },
     "richText": {
       "bold": "Audacieux",
       "italic": "Italique",
       "underline": "Souligner",
-      "strikeout": "Barré"
+      "strikeout": "Grève"
     },
     "customStampModal": {
       "stampText": "Texte du tampon:",
@@ -305,37 +306,37 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Supprimer la page",
-      "deleteMessage": "Voulez-vous vraiment supprimer les pages sélectionnées? Cela ne peut pas être annulé",
-      "deleteLastPageMessage": "Il en résulterait aucune page restante. Veuillez laisser au moins une page"
+      "deleteMessage": "Êtes-vous sûr de vouloir supprimer la ou les pages sélectionnées. Cela ne peut pas être annulé",
+      "deleteLastPageMessage": "Cela n'entraînerait aucune page restante. Veuillez laisser au moins une page"
     },
     "redaction": {
       "applyTile": "Appliquer la rédaction",
-      "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait."
+      "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la biffure. Ça ne peut pas être défait."
     }
   },
   "shortcut": {
-    "arrow": "(A)",
+    "arrow": "(UNE)",
     "callout": "(C)",
     "copy": "(Ctrl C)",
-    "delete": "(Del)",
-    "ellipse": "(O)",
-    "eraser": "(E)",
+    "delete": "(Du)",
+    "ellipse": "(LES)",
+    "eraser": "(EST)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
     "line": "(L)",
     "pan": "(P)",
     "rectangle": "(R)",
-    "rotateClockwise": "(Ctrl Shift +)",
-    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "rotateClockwise": "(Ctrl Maj +)",
+    "rotateCounterClockwise": "(Ctrl Maj -)",
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(I)",
-    "redo": "(Ctrl Shift Z)",
+    "stamp": "(JE)",
+    "redo": "(Ctrl Maj Z)",
     "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
-    "strikeout": "(K)",
+    "strikeout": "(À)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
@@ -347,18 +348,18 @@
     }
   },
   "tool": {
-    "pan": "Panoramique",
-    "select": "Sélection",
-    "Marquee": "Zoom sur la sélection",
-    "Link": "URL de lien ou page",
+    "pan": "La poêle",
+    "select": "Sélectionner",
+    "Marquee": "Zoom de sélection",
+    "Link": "Lien URL ou page",
     "Standard": "la norme",
     "Custom": "Douane"
   },
   "link": {
     "url": "URL",
     "page": "Page",
-    "enterurl": "Entrez l'URL à laquelle vous souhaitez créer un lien",
-    "enterpage": "Sélectionnez le numéro de page auquel vous souhaitez lier"
+    "enterurl": "Saisissez l'URL vers laquelle vous souhaitez créer un lien",
+    "enterpage": "Sélectionnez le numéro de page vers lequel vous souhaitez créer un lien"
   },
   "datePicker": {
     "previousMonth": "Le mois précédent",
@@ -366,9 +367,9 @@
     "months": {
       "0": "janvier",
       "1": "février",
-      "2": "mars",
+      "2": "Mars",
       "3": "avril",
-      "4": "mai",
+      "4": "Mai",
       "5": "juin",
       "6": "juillet",
       "7": "août",
@@ -379,21 +380,21 @@
     },
     "weekdays": {
       "0": "dimanche",
-      "1": "lundi",
-      "2": "mardi",
-      "3": "mercredi",
-      "4": "jeudi",
-      "5": "vendredi",
+      "1": "Lundi",
+      "2": "Mardi",
+      "3": "Mercredi",
+      "4": "Jeudi",
+      "5": "Vendredi",
       "6": "samedi"
     },
     "weekdaysShort": {
-      "0": "dim.",
-      "1": "lun.",
-      "2": "mar.",
-      "3": "mer.",
-      "4": "jeu.",
-      "5": "ven.",
-      "6": "sam."
+      "0": "Soleil",
+      "1": "Mon",
+      "2": "votre",
+      "3": "mer",
+      "4": "jeu",
+      "5": "libre",
+      "6": "Sam"
     }
   }
 }
