@@ -20,14 +20,14 @@ import useMedia from 'hooks/useMedia';
 
 import './NotesPanel.scss';
 
-const NotesPanel = () => {
+const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [
     sortStrategy,
     isOpen,
     isDisabled,
     pageLabels,
     customNoteFilter,
-    currentWidth,
+    currentNotesPanelWidth,
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -39,6 +39,8 @@ const NotesPanel = () => {
     ],
     shallowEqual,
   );
+  const currentWidth = currentLeftPanelWidth || currentNotesPanelWidth;
+
   const dispatch = useDispatch();
 
   const inputRef = useRef(null);
@@ -56,17 +58,7 @@ const NotesPanel = () => {
     false,
   );
 
-  const isTabletAndMobile = useMedia(
-    // Media queries
-    ['(max-width: 900px)'],
-    [true],
-    // Default value
-    false,
-  );
-
-
   const [notes, setNotes] = useState([]);
-  const minWidth = 293;
 
   // the object will be in a shape of { [note.Id]: true }
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
