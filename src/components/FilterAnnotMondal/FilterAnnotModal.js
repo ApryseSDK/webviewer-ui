@@ -84,7 +84,7 @@ const FilterAnnotModal = () => {
 
   const modalClass = classNames({
     Modal: true,
-    LinkModal: true,
+    FilterAnnotModal: true,
     open: isOpen,
     closed: !isOpen,
   });

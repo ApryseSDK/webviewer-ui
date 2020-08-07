@@ -1,7 +1,7 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
 
-.LinkModal {
+.FilterAnnotModal {
   @extend %modal;
   font-size: 0.9em;
 
@@ -11,7 +11,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-width: 400px;
+    width: 400px;
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
     padding: 8px 8px;
@@ -22,6 +22,7 @@
       position: fixed;
       left: 0;
       bottom: 0;
+      min-width: 400px;
       padding-top: 24px;
       padding-bottom: 16px;
       padding-left: 24px;
@@ -68,9 +69,9 @@
           flex-direction: column;
 
           .heading {
-            font-size: 14px;
+            font-size: 15px;
             @include mobile {
-              font-size: 16px;
+              font-size: 18px;
             }
           }
 
@@ -82,7 +83,7 @@
             padding-bottom: 8px;
 
             .ui__choice {
-              flex: 1 1 calc(33.33% - 40px);
+              flex: 0 0 40%;
             }
           }
         }
@@ -90,9 +91,37 @@
 
       .footer {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
         width: 100%;
+
+        .Button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: var(--primary-button-text);
+          padding: 6px 18px;
+          margin-top: 8px;
+          margin-left: 5px;
+          width: auto;
+          width: fit-content;
+          background: var(--primary-button);
+          border-radius: 4px;
+          height: 30px;
+          cursor: pointer;
+    
+          &:hover {
+            background: var(--primary-button-hover);
+          }
+    
+          &.disabled {
+            background: var(--gray-6);
+            border-color: var(--gray-6);
+            cursor: not-allowed;
+          }
+        }
+
+        .filter-annot-apply {
+          font-weight: 600;
+        }
 
         .filter-annot-clear {
           color: var(--secondary-button-text);
