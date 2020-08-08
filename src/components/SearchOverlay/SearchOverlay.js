@@ -374,6 +374,7 @@ class SearchOverlay extends React.PureComponent {
     } else if (e.which === 13) {
       // Enter
       // this.onClickNext(e);
+      debugger;
       this.search();
     }
   };
@@ -540,7 +541,7 @@ class SearchOverlay extends React.PureComponent {
 
 const mapStateToProps = state => ({
   isSearching: selectors.isSearching(state),
-  isSearchPanelOpen: selectors.isElementOpen(state, 'searchPanel'),
+  isSearchPanelOpen: selectors.isElementOpen(state, 'detachedSearchPanel'),
   isSearchPanelDisabled: selectors.isElementDisabled(state, 'searchPanel'),
   searchValue: selectors.getSearchValue(state),
   isCaseSensitive: selectors.isCaseSensitive(state),
