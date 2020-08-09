@@ -14,8 +14,6 @@ import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import NotesPanel from 'components/NotesPanel';
 import SearchPanel from 'components/SearchPanel';
-// import DetachedNotesPanel from 'components/DetachedNotesPanel';
-// import DetachedSearchPanel from 'components/DetachedSearchPanel';
 import RightPanel from 'components/RightPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
@@ -53,14 +51,6 @@ const propTypes = {
 };
 
 const App = ({ removeEventHandlers }) => {
-  const [
-    notesInLeftPanel,
-  ] = useSelector(
-    state => [
-      selectors.getAreNotesInLeftPanel(state),
-    ]
-  );
-
   const store = useStore();
   const dispatch = useDispatch();
 
@@ -97,8 +87,6 @@ const App = ({ removeEventHandlers }) => {
         <div className="content">
           <LeftPanel />
           <DocumentContainer />
-          {/* <DetachedSearchPanel /> */}
-          {/* <DetachedNotesPanel /> */}
           <RightPanel
             dataElement="detachedSearchPanel"
             onResize={width => dispatch(actions.setSearchPanelWidth(width))}
