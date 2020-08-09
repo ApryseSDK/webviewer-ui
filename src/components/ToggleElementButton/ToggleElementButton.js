@@ -39,11 +39,11 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: () => {
     // hack for new ui
-    // if (ownProps.element === 'detachedSearchPanel') {
-    //   dispatch(actions.closeElement('detachedNotesPanel'));
-    // } else if (ownProps.element === 'detachedNotesPanel') {
-    //   dispatch(actions.closeElement('detachedSearchPanel'));
-    // }
+    if (ownProps.element === 'detachedSearchPanel') {
+      dispatch(actions.closeElement('detachedNotesPanel'));
+    } else if (ownProps.element === 'detachedNotesPanel') {
+      dispatch(actions.closeElement('detachedSearchPanel'));
+    }
     dispatch(actions.toggleElement(ownProps.element));
   },
 });
