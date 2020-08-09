@@ -88,7 +88,7 @@ const App = ({ removeEventHandlers }) => {
           <LeftPanel />
           <DocumentContainer />
           <RightPanel
-            dataElement="detachedSearchPanel"
+            dataElement="searchPanel"
             onResize={width => dispatch(actions.setSearchPanelWidth(width))}
           >
             <SearchPanel />

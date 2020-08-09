@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { motion, AnimatePresence } from "framer-motion";
-import { isSafari } from 'src/helpers/device';
 
 import SearchResult from 'components/SearchResult';
-import ResizeBar from 'components/ResizeBar';
 import SearchOverlay from 'components/SearchOverlay';
 import Icon from 'components/Icon';
 import core from 'core';
@@ -16,8 +13,6 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 
 import './SearchPanel.scss';
-
-const minWidth = 293;
 
 class SearchPanel extends React.PureComponent {
   static propTypes = {
@@ -51,7 +46,6 @@ class SearchPanel extends React.PureComponent {
 
   render() {
     const {
-      setSearchPanelWidth,
       currentWidth,
       isDisabled,
       t,
@@ -125,7 +119,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setActiveResultIndex: actions.setActiveResultIndex,
   closeElements: actions.closeElements,
-  setSearchPanelWidth: actions.setSearchPanelWidth,
 };
 
 const ConnectedSearchPanel = connect(
