@@ -28,6 +28,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     pageLabels,
     customNoteFilter,
     currentNotesPanelWidth,
+    notesInLeftPanel,
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -36,6 +37,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.getPageLabels(state),
       selectors.getCustomNoteFilter(state),
       selectors.getNotesPanelWidth(state),
+      selectors.getNotesInLeftPanel(state),
     ],
     shallowEqual,
   );
@@ -295,14 +297,14 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       data-element="notesPanel"
       onClick={core.deselectAllAnnotations}
     >
-      {isMobile &&
+      {isMobile && !notesInLeftPanel &&
         <div
           className="close-container"
         >
           <div
             className="close-icon-container"
             onClick={() => {
-              dispatch(actions.closeElements(['notesPanel']));
+              dispatch(actions.closeElements(['detachedNotesPanel']));
             }}
           >
             <Icon
