@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import ResizeBar from 'components/ResizeBar';
-import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 
@@ -10,7 +9,7 @@ import { isSafari } from 'src/helpers/device';
 
 import './RightPanel.scss';
 
-const RightPanel = ({ children, dataElement }) => {
+const RightPanel = ({ children, dataElement, onResize }) => {
   const [
     isOpen,
     isDisabled,
@@ -21,7 +20,6 @@ const RightPanel = ({ children, dataElement }) => {
     ],
     shallowEqual,
   );
-  const dispatch = useDispatch();
 
   const isMobile = useMedia(
     // Media queries
@@ -59,9 +57,7 @@ const RightPanel = ({ children, dataElement }) => {
           {!isTabletAndMobile &&
             <ResizeBar
               minWidth={293}
-              onResize={_width => {
-                dispatch(actions.setSearchPanelWidth(_width));
-              }}
+              onResize={onResize}
               leftDirection
             />}
           {children}

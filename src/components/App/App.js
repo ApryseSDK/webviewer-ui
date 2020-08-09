@@ -101,14 +101,16 @@ const App = ({ removeEventHandlers }) => {
           {/* <DetachedNotesPanel /> */}
           <RightPanel
             dataElement="detachedSearchPanel"
+            onResize={width => dispatch(actions.setSearchPanelWidth(width))}
           >
             <SearchPanel />
           </RightPanel>
-        {/* <RightPanel
-          dataElement="detachedNotesPanel"
-        >
-          <NotesPanel />
-        </RightPanel> */}
+          <RightPanel
+            dataElement="detachedNotesPanel"
+            onResize={width => dispatch(actions.setNotesPanelWidth(width))}
+          >
+            <NotesPanel />
+          </RightPanel>
         </div>
         <ViewControlsOverlay />
         <MenuOverlay />
