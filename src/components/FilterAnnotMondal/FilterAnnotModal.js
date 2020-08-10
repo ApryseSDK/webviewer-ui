@@ -67,8 +67,8 @@ const FilterAnnotModal = () => {
     const annots = core.getAnnotationsList();
     // set is a great way to remove any duplicate additions and ensure the unique items are present
     // the only gotcha that it should not be used by state since not always it will trigger a rerender
-    let authorsToBeAdded = new Set();
-    let annotTypesToBeAdded = new Set();
+    const authorsToBeAdded = new Set();
+    const annotTypesToBeAdded = new Set();
     annots.forEach(annot => {
       if (core.getDisplayAuthor(annot) && core.getDisplayAuthor(annot) !== '') {
         authorsToBeAdded.add(core.getDisplayAuthor(annot));
@@ -91,8 +91,8 @@ const FilterAnnotModal = () => {
 
   return isDisabled ? null : (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <FocusTrap locked={isOpen}>
-        <div className={modalClass} data-element="filterModal" onMouseDown={closeModal}>
+      <div className={modalClass} data-element="filterModal" onMouseDown={closeModal}>
+        <FocusTrap locked={isOpen} focusLastOnUnlock>
           <div className="container" onMouseDown={e => e.stopPropagation()}>
             {core.getAnnotationsList().length > 0 ? (
               <div className="filter-modal">
@@ -163,8 +163,8 @@ const FilterAnnotModal = () => {
               </div>
             )}
           </div>
-        </div>
-      </FocusTrap>
+        </FocusTrap>
+      </div>
     </Swipeable>
   );
 };
