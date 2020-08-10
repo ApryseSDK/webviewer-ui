@@ -332,7 +332,7 @@ WebViewer(...)
       [concatKeys(Keys.CTRL_P, Keys.COMMAND_P)]: e => {
         e.preventDefault();
 
-        print(dispatch, selectors.isEmbedPrintSupported(getState()));
+        print(dispatch, selectors.isEmbedPrintSupported(getState()), selectors.getSortStrategy(getState()), selectors.getColorMap(getState()));
       },
       [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();

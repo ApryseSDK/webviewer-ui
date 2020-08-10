@@ -23,6 +23,8 @@ function MenuOverlay() {
 
   const activeTheme = useSelector(selectors.getActiveTheme);
   const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
+  const colorMap = useSelector(selectors.getColorMap);
+  const sortStrategy = useSelector(selectors.getSortStrategy);
   const isFullScreen = useSelector(selectors.isFullScreen);
   const isFilePickerButtonDisabled = useSelector(state => selectors.isElementDisabled(state, 'filePickerButton'));
 
@@ -40,7 +42,7 @@ function MenuOverlay() {
 
   const handlePrintButtonClick = () => {
     closeMenuOverlay();
-    print(dispatch, isEmbedPrintSupported);
+    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap);
   };
 
   const downloadDocument = () => {

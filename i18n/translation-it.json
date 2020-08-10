@@ -162,7 +162,10 @@
   "option": {
     "notesOrder": {
       "position": "Posizione",
-      "time": "Tempo"
+      "time": "Tempo",
+      "status": "Stato",
+      "author": "Autore",
+      "type": "genere"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Visualizza",

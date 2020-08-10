@@ -162,7 +162,10 @@
   "option": {
     "notesOrder": {
       "position": "Positie",
-      "time": "Tijd"
+      "time": "Tijd",
+      "status": "Toestand",
+      "author": "Auteur",
+      "type": "Type"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Visie",

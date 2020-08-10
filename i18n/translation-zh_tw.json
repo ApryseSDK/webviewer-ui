@@ -162,7 +162,10 @@
   "option": {
     "notesOrder": {
       "position": "位置",
-      "time": "時間"
+      "time": "時間",
+      "status": "狀態",
+      "author": "作者",
+      "type": "類型"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "視圖",
