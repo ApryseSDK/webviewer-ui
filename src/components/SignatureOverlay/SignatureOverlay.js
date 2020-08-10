@@ -37,6 +37,11 @@ class SignatureOverlay extends React.PureComponent {
       left: 0,
       right: 'auto',
     };
+    /**
+     * a flag promise that's used to make sure that function calls to getSignatureDataToStore
+     * will resolve in the same order as they were called
+     */
+    this.previewsPromise = Promise.resolve();
   }
 
   componentDidMount() {
@@ -106,37 +111,34 @@ class SignatureOverlay extends React.PureComponent {
     }
   };
 
-  onSignatureSaved = async annotations => {
-    const numberOfSignaturesToRemove = this.state.defaultSignatures.length + annotations.length - this.props.maxSignaturesCount;
-    const defaultSignatures = [...this.state.defaultSignatures];
+  onSignatureSaved = async() => {
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+    let savedSignatures = signatureTool.getSavedSignatures();
+    const numberOfSignaturesToRemove = savedSignatures.length - this.props.maxSignaturesCount;
 
     if (numberOfSignaturesToRemove > 0) {
       // to keep the UI sync with the signatures saved in the tool
       for (let i = 0; i < numberOfSignaturesToRemove; i++) {
         this.signatureTool.deleteSavedSignature(0);
       }
-
-      defaultSignatures.splice(0, numberOfSignaturesToRemove);
     }
 
-    const savedSignatures = await this.getSignatureDataToStore(annotations);
+    savedSignatures = signatureTool.getSavedSignatures();
     this.setState({
-      defaultSignatures: defaultSignatures.concat(savedSignatures),
+      defaultSignatures: await this.getSignatureDataToStore(savedSignatures),
     });
   };
 
-  onSignatureDeleted = async(annotation, index) => {
+  onSignatureDeleted = async() => {
     if (!this.state.defaultSignatures.length) {
       return;
     }
 
-    const savedSignatures = [...this.state.defaultSignatures];
-    savedSignatures.splice(index, 1);
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+    const savedSignatures = signatureTool.getSavedSignatures();
 
     this.setState({
-      defaultSignatures: await this.getSignatureDataToStore(
-        savedSignatures.map(({ annotation }) => annotation)
-      ),
+      defaultSignatures: await this.getSignatureDataToStore(savedSignatures),
     });
   };
 
@@ -162,14 +164,17 @@ class SignatureOverlay extends React.PureComponent {
   // annotation: a copy of the annotation passed in
   // imgSrc: preview of the annotation, a base64 string
   getSignatureDataToStore = async annotations => {
+    await this.previewsPromise;
+
     // copy the annotation because we need to mutate the annotation object later if there're any styles changes
     // and we don't want the original annotation to be mutated as well
     // since it's been added to the canvas
     annotations = annotations.map(core.getAnnotationCopy);
-    const previews = await Promise.all(
+    this.previewsPromise = Promise.all(
       annotations.map(annotation => this.signatureTool.getPreview(annotation))
     );
 
+    const previews = await this.previewsPromise;
     return annotations.map((annotation, i) => ({
       annotation,
       imgSrc: previews[i],
