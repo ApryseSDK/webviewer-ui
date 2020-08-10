@@ -374,6 +374,7 @@ class SearchOverlay extends React.PureComponent {
     } else if (e.which === 13) {
       // Enter
       // this.onClickNext(e);
+      debugger;
       this.search();
     }
   };

@@ -43,7 +43,6 @@ class LeftPanelTabs extends React.Component {
           onClick={() => setActiveLeftPanel('thumbnailsPanel')}
           title="component.thumbnailsPanel"
         />
-        <div className="divider" />
         <Button
           isActive={this.isActive('outlinesPanel')}
           dataElement="outlinesPanelButton"
@@ -64,6 +63,13 @@ class LeftPanelTabs extends React.Component {
           img="ic_bookmarks_black_24px"
           onClick={() => setActiveLeftPanel('bookmarksPanel')}
           title="component.bookmarksPanel"
+        />
+        <Button
+          isActive={this.isActive('notesPanel')}
+          dataElement="notesPanelButton"
+          img="icon-header-chat-line"
+          onClick={() => setActiveLeftPanel('notesPanel')}
+          title="component.notesPanel"
         />
         {customPanels.map(({ panel, tab }, index) =>
           <React.Fragment key={index}>

@@ -20,6 +20,8 @@ export const getSavedSignatures = state => state.viewer.savedSignatures;
 export const getSelectedSignatureIndex = state => state.viewer.selectedSignatureIndex;
 export const getSelectedSignature = state => getSavedSignatures(state)[getSelectedSignatureIndex(state)];
 
+export const getNotesInLeftPanel = state =>
+  state.viewer.notesInLeftPanel;
 export const getLeftPanelWidth = state =>
   state.viewer.panelWidths.leftPanel;
 export const getSearchPanelWidth = state =>
