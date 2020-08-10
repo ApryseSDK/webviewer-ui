@@ -40,6 +40,7 @@ class SignatureOverlay extends React.PureComponent {
     /**
      * a flag promise that's used to make sure that function calls to getSignatureDataToStore
      * will resolve in the same order as they were called
+     * @ignore
      */
     this.previewsPromise = Promise.resolve();
   }
