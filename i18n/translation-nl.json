@@ -207,6 +207,8 @@
       "current": "Huidige",
       "pages": "Pagina's",
       "pageQuality": "Print kwaliteit",
+      "qualityNormal": "Normaal",
+      "qualityHigh": "Hoog",
       "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Voeg opmerkingen toe",
       "addWatermarkSettings": "Voeg een watermerk toe"

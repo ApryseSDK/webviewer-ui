@@ -207,6 +207,8 @@
       "current": "attuale",
       "pages": "pagine",
       "pageQuality": "Qualità di stampa",
+      "qualityNormal": "Normale",
+      "qualityHigh": "alto",
       "includeAnnotations": "Includi annotazioni",
       "includeComments": "Includere commenti",
       "addWatermarkSettings": "Aggiungi filigrana"

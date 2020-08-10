@@ -207,6 +207,8 @@
       "current": "Atual",
       "pages": "Páginas",
       "pageQuality": "Qualidade de impressão",
+      "qualityNormal": "Normal",
+      "qualityHigh": "Alto",
       "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
       "addWatermarkSettings": "Adicione uma Marca D'água"

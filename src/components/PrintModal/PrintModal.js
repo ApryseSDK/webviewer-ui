@@ -316,8 +316,8 @@ class PrintModal extends React.PureComponent {
                     <div className="col">{`${t('option.print.pageQuality')}:`}</div>
                     <div className="col">
                       <select onChange={e => setPrintQuality(e.target.value)}>
-                        <option value="1">Normal</option>
-                        <option value="2">High</option>
+                        <option value="1">{`${t('option.print.qualityNormal')}`}</option>
+                        <option value="2">{`${t('option.print.qualityHigh')}`}</option>
                       </select>
                     </div>
                   </div>

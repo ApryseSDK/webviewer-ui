@@ -207,6 +207,8 @@
       "current": "現在の",
       "pages": "ページ",
       "pageQuality": "印刷品質",
+      "qualityNormal": "正常",
+      "qualityHigh": "高い",
       "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
       "addWatermarkSettings": "透かしを追加"
