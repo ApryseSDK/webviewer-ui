@@ -18,6 +18,8 @@ import { Swipeable } from 'react-swipeable';
 import './PrintModal.scss';
 import Choice from '../Choice/Choice';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import { setPrintQuality } from 'src/apis/setPrintQuality';
+
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -29,6 +31,7 @@ class PrintModal extends React.PureComponent {
     closeElement: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     closeElements: PropTypes.func.isRequired,
+    setPrintQuality: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     sortStrategy: PropTypes.string.isRequired,
     colorMap: PropTypes.object.isRequired,
@@ -312,9 +315,9 @@ class PrintModal extends React.PureComponent {
                     />
                   </form>
                   <div>
-                    <div className="col">{`${t('option.print.pageQuality')}:`}</div>
                     <div className="col">
-                      <select onChange={e => store.dispatch(actions.setPrintQuality(e.target.value))}>
+                      <div>{`${t('option.print.pageQuality')}:`}</div>
+                      <select className="printQualitySelect" onChange={e => this.props.setPrintQuality(Number(e.target.value))}>
                         <option value="1">{`${t('option.print.qualityNormal')}`}</option>
                         <option value="2">{`${t('option.print.qualityHigh')}`}</option>
                       </select>
@@ -386,7 +389,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   dispatch,
   closeElement: dataElement => dispatch(actions.closeElement(dataElement)),
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements))
+  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
+  setPrintQuality: dataElements => dispatch(actions.setPrintQuality(dataElements)),
 });
 
 export default connect(
