@@ -55,7 +55,7 @@ export default {
           className: 'custom-ribbons-container',
         },
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel', hidden: ['small-mobile'] },
-        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'detachedNotesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel', hidden: ['small-mobile'] },
+        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel', hidden: ['small-mobile'] },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay', hidden: ['small-mobile'] },
         {
           type: 'actionButton',
