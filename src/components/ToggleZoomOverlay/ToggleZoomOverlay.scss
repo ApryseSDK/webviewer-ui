@@ -3,6 +3,7 @@
 .zoom-overlay {
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: var(--toggle-zoom-overlay-background);
   border-radius: 4px;
   height: 28px;
@@ -51,6 +52,8 @@
 .OverlayContainer {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  min-width: 68px;
   height: 100%;
   border-radius: 4px;
   position: relative;

@@ -6,7 +6,7 @@ import openFilePicker from 'helpers/openFilePicker';
 import copyText from 'helpers/copyText';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import { zoomIn, zoomOut } from 'helpers/zoom';
-import print from 'helpers/print';
+import { print } from 'helpers/print';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import { isMobile } from 'helpers/device';
 import isFocusingElement from 'helpers/isFocusingElement';
@@ -183,7 +183,7 @@ const HotkeysManager = {
   },
   /**
    * Add an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys#on
+   * @method WebViewerInstance.Hotkeys.on
    * @param {string} key A keyboard key <br/>
    * If a hotkey is consisted of more than one key. Those keys should be connected using '+'.
    * @param {function|object} [handler] An optional argument <br/>
@@ -240,7 +240,7 @@ WebViewer(...)
   },
   /**
    * Remove an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys#off
+   * @method WebViewerInstance.Hotkeys.off
    * @param {string} [key] An optional keyboard key. If not passed, all handlers will be removed
    * @param {function} [handler] An optional function. If not passed, all handlers of the given key will be removed
    * @example
@@ -328,7 +328,7 @@ WebViewer(...)
       [`${Keys.CTRL_P}, ${Keys.COMMAND_P}`]: e => {
         e.preventDefault();
 
-        print(dispatch, selectors.isEmbedPrintSupported(getState()));
+        print(dispatch, selectors.isEmbedPrintSupported(getState()), selectors.getSortStrategy(getState()), selectors.getColorMap(getState()));
       },
       [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();

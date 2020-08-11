@@ -20,7 +20,7 @@
     "exitFullscreen": "Quitter le plein écran",
     "fit": "Fit",
     "fitToPage": "Fit à la page",
-    "fitToWidth": "Fit à la largeur",
+    "fitToWidth": "Ajuster à la largeur",
     "openFile": "Ouvrir un fichier",
     "pagePrev": "Page précédente",
     "pageNext": "Page suivante",
@@ -162,7 +162,10 @@
   "option": {
     "notesOrder": {
       "position": "Position",
-      "time": "Temps"
+      "time": "Temps",
+      "status": "Statut",
+      "author": "Auteur",
+      "type": "Type"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Vue",

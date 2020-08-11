@@ -162,7 +162,10 @@
   "option": {
     "notesOrder": {
       "position": "Posição",
-      "time": "Tempo"
+      "time": "Tempo",
+      "status": "Status",
+      "author": "Autor",
+      "type": "Tipo"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Visão",
@@ -346,7 +349,7 @@
   "tool": {
     "pan": "Arrastar",
     "select": "Selecionar",
-    "Marquee": "Marcar área",
+    "Marquee": "Zoom na seleção",
     "Link": "URL ou página do link",
     "Standard": "Padrão",
     "Custom": "personalizadas"

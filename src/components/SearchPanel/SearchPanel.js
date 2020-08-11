@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { motion, AnimatePresence } from "framer-motion";
-import { isSafari } from 'src/helpers/device';
 
 import SearchResult from 'components/SearchResult';
-import ResizeBar from 'components/ResizeBar';
 import SearchOverlay from 'components/SearchOverlay';
 import Icon from 'components/Icon';
 import core from 'core';
@@ -17,8 +14,6 @@ import useMedia from 'hooks/useMedia';
 
 import './SearchPanel.scss';
 import useSearch from "hooks/useSearch";
-
-const minWidth = 293;
 
 class SearchPanel extends React.PureComponent {
   static propTypes = {
@@ -48,15 +43,12 @@ class SearchPanel extends React.PureComponent {
 
   render() {
     const {
-      setSearchPanelWidth,
       currentWidth,
-      isOpen,
       isDisabled,
       t,
       searchStatus,
       searchResults,
       isMobile,
-      isTabletAndMobile,
       closeElements,
       activeSearchResultIndex,
       pageLabels
@@ -73,67 +65,42 @@ class SearchPanel extends React.PureComponent {
       style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
     }
 
-    let animate = { width: 'auto' };
-    if (isMobile) {
-      animate = { width: '100vw' };
-    }
-    
     return (
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="search-panel-container"
-            initial={{ width: '0px' }}
-            animate={animate}
-            exit={{ width: '0px' }}
-            transition={{ ease: "easeOut", duration: isSafari ? 0 : 0.25 }}
+      <div
+        className={className}
+        data-element="searchPanel"
+        style={style}
+      >
+        {isMobile &&
+          <div
+            className="close-container"
           >
-            {!isTabletAndMobile &&
-              <ResizeBar
-                minWidth={minWidth}
-                onResize={_width => {
-                  setSearchPanelWidth(_width);
-                }}
-                leftDirection
-              />}
-            <div
-              className={className}
-              data-element="searchPanel"
-              style={style}
+            <button
+              className="close-icon-container"
+              onClick={() => {
+                closeElements(['searchPanel']);
+              }}
             >
-              {isMobile &&
-                <div
-                  className="close-container"
-                >
-                  <button
-                    className="close-icon-container"
-                    onClick={() => {
-                      closeElements(['searchPanel']);
-                    }}
-                  >
-                    <Icon
-                      glyph="ic_close_black_24px"
-                      className="close-icon"
-                    />
-                  </button>
-                </div>}
-              <SearchOverlay
-                t={t}
-                searchResults={searchResults}
-                activeResultIndex={activeSearchResultIndex}
+              <Icon
+                glyph="ic_close_black_24px"
+                className="close-icon"
               />
-              <SearchResult
-                t={t}
-                searchStatus={searchStatus}
-                searchResults={searchResults}
-                activeResultIndex={activeSearchResultIndex}
-                onClickResult={this.onClickResult}
-                pageLabels={pageLabels}
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </button>
+          </div>}
+        <SearchOverlay
+          t={t}
+          searchResults={searchResults}
+          activeResultIndex={activeSearchResultIndex}
+        />
+        <SearchResult
+          t={t}
+          searchStatus={searchStatus}
+          searchResults={searchResults}
+          activeResultIndex={activeSearchResultIndex}
+          onClickResult={this.onClickResult}
+          pageLabels={pageLabels}
+        />
+      </div>
     );
   }
 }
@@ -148,7 +115,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   closeElements: actions.closeElements,
-  setSearchPanelWidth: actions.setSearchPanelWidth,
 };
 
 const SearchPanelRedux = connect(
