@@ -210,48 +210,48 @@
       "qualityNormal": "Normal",
       "qualityHigh": "Hoch",
       "includeAnnotations": "Fügen Sie Anmerkungen hinzu",
-      "includeComments": "Fügen Sie Kommentare hinzu",
-      "addWatermarkSettings": "Wasserzeichen hinzufügen"
+      "includeComments": "Kommentare einfügen",
+      "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"
     },
     "redaction": {
-      "markForRedaction": "Zur Redaktion markieren"
+      "markForRedaction": "Zum Schwärzen markieren"
     },
     "searchPanel": {
-      "caseSensitive": "Groß- und Kleinschreibung beachten",
-      "wholeWordOnly": "Ganze Welt",
+      "caseSensitive": "Groß-/Kleinschreibung beachten",
+      "wholeWordOnly": "Ganzes Wort",
       "wildcard": "Platzhalter"
     },
     "stampOverlay": {
       "addStamp": "Neuen Stempel hinzufügen"
     },
     "signatureOverlay": {
-      "addSignature": "Neue Signatur hinzufügen"
+      "addSignature": "Eine Unterschrift hinzufügen"
     },
     "signatureModal": {
       "saveSignature": "Unterschrift speichern",
-      "dragAndDrop": "Ziehen Sie Ihr Bild hier per Drag & Drop",
+      "dragAndDrop": "Ziehen Sie Ihr Bild per Drag & Drop hierher",
       "or": "Oder",
-      "pickImage": "Wählen Sie eine Unterschrift"
+      "pickImage": "Wählen Sie das Signaturbild"
     },
     "status": {
       "status": "Status"
     },
     "state": {
-      "accepted": "Akzeptiert",
+      "accepted": "Angenommen",
       "rejected": "Abgelehnt",
       "completed": "Abgeschlossen",
-      "cancelled": "Abgesagt",
-      "set": "Status einstellen:",
+      "cancelled": "Abgebrochen",
+      "set": "Status setzen:",
       "setBy": "eingestellt von",
       "none": "Keiner"
     },
     "measurementOverlay": {
-      "scale": "Skalierungsverhältnis",
+      "scale": "Maßstab",
       "angle": "Winkel",
-      "distance": "Entfernung",
+      "distance": "Abstand",
       "perimeter": "Umfang",
-      "area": "Bereich",
-      "distanceMeasurement": "Entfernungsmessung",
+      "area": "Fläche",
+      "distanceMeasurement": "Abstandsmessung",
       "perimeterMeasurement": "Umfangsmessung",
       "areaMeasurement": "Flächenmessung",
       "countMeasurement": "Zählmessung",
@@ -259,21 +259,21 @@
       "count": "Anzahl"
     },
     "measurementOption": {
-      "scale": "Rahmen"
+      "scale": "Maßstab"
     },
     "styleOption": {
       "style": "Stil",
-      "solid": "Solide",
+      "solid": "Regulär",
       "cloudy": "Wolkig"
     },
     "slider": {
-      "opacity": "Opazität",
-      "thickness": "Schlaganfall",
+      "opacity": "Deckkraft",
+      "thickness": "Dicke",
       "text": "Textgröße"
     },
     "shared": {
       "page": "Seite",
-      "precision": "Präzision",
+      "precision": "Genauigkeit",
       "enableSnapping": "Aktivieren Sie das Einrasten für Messwerkzeuge"
     },
     "watermark": {
@@ -291,10 +291,10 @@
       "extractZeroPageError": "Es wurden keine Seiten zum Extrahieren ausgewählt"
     },
     "richText": {
-      "bold": "Fett gedruckt",
+      "bold": "Fett",
       "italic": "Kursiv",
-      "underline": "Unterstreichen",
-      "strikeout": "Strikeout"
+      "underline": "Unterstrichen",
+      "strikeout": "Durchgestrichen"
     },
     "customStampModal": {
       "stampText": "Stempeltext:",
@@ -309,36 +309,36 @@
     "deletePage": {
       "deleteTitle": "Seite löschen",
       "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden",
-      "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten mehr übrig sind. Bitte hinterlassen Sie mindestens eine Seite"
+      "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten verbleiben. Bitte hinterlassen Sie mindestens eine Seite"
     },
     "redaction": {
-      "applyTile": "Redaktion anwenden",
-      "applyMessage": "Diese Aktion entfernt dauerhaft alle zur Redaktion ausgewählten Elemente. Es kann nicht ungeschehen gemacht werden."
+      "applyTile": "Schwärzung anwenden",
+      "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht rückgängig gemacht werden."
     }
   },
   "shortcut": {
-    "arrow": "(EIN)",
+    "arrow": "(A)",
     "callout": "(C)",
     "copy": "(Strg C)",
-    "delete": "(Des)",
-    "ellipse": "(DAS)",
-    "eraser": "(IS)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
     "line": "(L)",
     "pan": "(P)",
     "rectangle": "(R)",
-    "rotateClockwise": "(Strg Umschalt +)",
-    "rotateCounterClockwise": "(Strg-Umschalt -)",
+    "rotateClockwise": "(Strg Shift +)",
+    "rotateCounterClockwise": "(Strg Shift -)",
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(ICH)",
+    "stamp": "(I)",
     "redo": "(Strg-Umschalttaste Z)",
     "undo": "(Strg Z)",
     "stickyNote": "(N)",
-    "strikeout": "(ZU)",
+    "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Strg +)",
     "zoomOut": "(Strg -)",
@@ -350,9 +350,9 @@
     }
   },
   "tool": {
-    "pan": "Pfanne",
-    "select": "Wählen",
-    "Marquee": "Festzelt Zoom",
+    "pan": "Hand",
+    "select": "Auswählen",
+    "Marquee": "Auswahl Zoom",
     "Link": "Link URL oder Seite",
     "Standard": "Standard",
     "Custom": "Benutzerdefiniert"
@@ -361,17 +361,17 @@
     "url": "URL",
     "page": "Seite",
     "enterurl": "Geben Sie die URL ein, zu der Sie einen Link erstellen möchten",
-    "enterpage": "Wählen Sie die Seitenzahl aus, zu der Sie einen Link erstellen möchten"
+    "enterpage": "Wählen Sie die Seitennummer aus, zu der Sie einen Link erstellen möchten"
   },
   "datePicker": {
     "previousMonth": "Vorheriger Monat",
-    "nextMonth": "Nächsten Monat",
+    "nextMonth": "Nächster Monat",
     "months": {
       "0": "Januar",
       "1": "Februar",
       "2": "März",
       "3": "April",
-      "4": "Kann",
+      "4": "Mai",
       "5": "Juni",
       "6": "Juli",
       "7": "August",
@@ -390,12 +390,12 @@
       "6": "Samstag"
     },
     "weekdaysShort": {
-      "0": "Sonne",
-      "1": "Meine",
-      "2": "Ihre",
-      "3": "Heiraten",
+      "0": "So.",
+      "1": "Mo.",
+      "2": "Di.",
+      "3": "Mi.",
       "4": "Do.",
-      "5": "frei",
+      "5": "Fr.",
       "6": "Sa."
     }
   }

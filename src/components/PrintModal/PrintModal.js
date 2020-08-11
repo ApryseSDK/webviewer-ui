@@ -18,7 +18,6 @@ import { Swipeable } from 'react-swipeable';
 import './PrintModal.scss';
 import Choice from '../Choice/Choice';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
-import setPrintQuality from 'src/apis/setPrintQuality';
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -315,7 +314,7 @@ class PrintModal extends React.PureComponent {
                   <div>
                     <div className="col">{`${t('option.print.pageQuality')}:`}</div>
                     <div className="col">
-                      <select onChange={e => setPrintQuality(e.target.value)}>
+                      <select onChange={e => store.dispatch(actions.setPrintQuality(e.target.value))}>
                         <option value="1">{`${t('option.print.qualityNormal')}`}</option>
                         <option value="2">{`${t('option.print.qualityHigh')}`}</option>
                       </select>

@@ -210,56 +210,56 @@
       "qualityNormal": "표준",
       "qualityHigh": "높은",
       "includeAnnotations": "주석 포함",
-      "includeComments": "주석 포함",
-      "addWatermarkSettings": "워터 마크를 추가"
+      "includeComments": "코멘트 포함",
+      "addWatermarkSettings": "워터 마크 설정 추가"
     },
     "redaction": {
-      "markForRedaction": "수정 표시"
+      "markForRedaction": "개정 표시"
     },
     "searchPanel": {
-      "caseSensitive": "대소 문자 구분",
-      "wholeWordOnly": "전체 단어",
+      "caseSensitive": "대/소문자 구분",
+      "wholeWordOnly": "단어 단위로",
       "wildcard": "와일드 카드"
     },
     "stampOverlay": {
       "addStamp": "새 스탬프 추가"
     },
     "signatureOverlay": {
-      "addSignature": "새 서명 추가"
+      "addSignature": "서명 추가"
     },
     "signatureModal": {
       "saveSignature": "서명 저장",
-      "dragAndDrop": "여기에 이미지를 드래그 앤 드롭하세요",
+      "dragAndDrop": "여기에 이미지를 드래그 앤 드롭",
       "or": "또는",
-      "pickImage": "서명 선택"
+      "pickImage": "서명 이미지 선택"
     },
     "status": {
-      "status": "상태"
+      "status": "지위"
     },
     "state": {
-      "accepted": "수락 됨",
+      "accepted": "받아 들여",
       "rejected": "거부",
       "completed": "완료",
       "cancelled": "취소 된",
       "set": "상태 설정 :",
-      "setBy": "설정",
+      "setBy": "에 의해 설정",
       "none": "없음"
     },
     "measurementOverlay": {
-      "scale": "스케일 비율",
+      "scale": "배율",
       "angle": "각도",
       "distance": "거리",
       "perimeter": "둘레",
-      "area": "지역",
+      "area": "면적",
       "distanceMeasurement": "거리 측정",
-      "perimeterMeasurement": "주변 측정",
+      "perimeterMeasurement": "둘레 측정",
       "areaMeasurement": "면적 측정",
-      "countMeasurement": "계수 측정",
+      "countMeasurement": "카운트 측정",
       "radius": "반지름",
       "count": "카운트"
     },
     "measurementOption": {
-      "scale": "규모"
+      "scale": "배율"
     },
     "styleOption": {
       "style": "스타일",
@@ -267,34 +267,34 @@
       "cloudy": "흐림"
     },
     "slider": {
-      "opacity": "불투명",
-      "thickness": "뇌졸중",
+      "opacity": "불투명도",
+      "thickness": "두께",
       "text": "텍스트 크기"
     },
     "shared": {
       "page": "페이지",
-      "precision": "정도",
-      "enableSnapping": "측정 도구에 스냅 사용"
+      "precision": "정밀도",
+      "enableSnapping": "측정 도구에 스냅 가능"
     },
     "watermark": {
       "size": "크기",
       "location": "워터 마크를 편집 할 위치를 선택하십시오",
       "text": "본문",
       "style": "스타일",
-      "resetAllSettings": "모든 설정 재설정",
-      "font": "폰트"
+      "resetAllSettings": "모든 설정 초기화",
+      "font": "글꼴"
     },
     "thumbnailPanel": {
       "delete": "지우다",
       "rotateClockwise": "시계 방향",
-      "rotateCounterClockwise": "반 시계 방향",
-      "extractZeroPageError": "추출 할 페이지가 선택되지 않았습니다."
+      "rotateCounterClockwise": "시계 반대 방향",
+      "extractZeroPageError": "추출 할 페이지가 선택되지 않았습니다"
     },
     "richText": {
       "bold": "굵게",
       "italic": "이탤릭체",
       "underline": "밑줄",
-      "strikeout": "삼진"
+      "strikeout": "취소 선"
     },
     "customStampModal": {
       "stampText": "스탬프 텍스트 :",
@@ -308,40 +308,40 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "페이지 삭제",
-      "deleteMessage": "선택한 페이지를 삭제 하시겠습니까? 이 작업은 취소 할 수 없습니다.",
-      "deleteLastPageMessage": "이로 인해 남은 페이지가 없습니다. 한 페이지 이상 남겨주세요"
+      "deleteMessage": "선택한 페이지를 삭제 하시겠습니까? 취소 할 수 없습니다",
+      "deleteLastPageMessage": "그러면 페이지가 남아 있지 않습니다. 한 페이지 이상 남겨주세요"
     },
     "redaction": {
       "applyTile": "수정 적용",
-      "applyMessage": "이 작업은 교정을 위해 선택한 모든 항목을 영구적으로 제거합니다. 취소 할 수 없습니다."
+      "applyMessage": "이 작업은 편집을 위해 선택된 모든 항목을 영구적으로 제거합니다. 취소 할 수 없습니다."
     }
   },
   "shortcut": {
-    "arrow": "(ㅏ)",
-    "callout": "(씨)",
+    "arrow": "(A)",
+    "callout": "(C)",
     "copy": "(Ctrl C)",
-    "delete": "(중)",
-    "ellipse": "(그만큼)",
-    "eraser": "(IS)",
-    "freehand": "(에프)",
-    "freetext": "(티)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "eraser": "(E)",
+    "freehand": "(F)",
+    "freetext": "(T)",
     "highlight": "(H)",
-    "line": "(엘)",
-    "pan": "(피)",
-    "rectangle": "(아르 자형)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
     "rotateClockwise": "(Ctrl Shift +)",
-    "rotateCounterClockwise": "(Ctrl Shift-)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
     "select": "(Esc)",
-    "signature": "(에스)",
-    "squiggly": "(지)",
-    "stamp": "(나는)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
     "redo": "(Ctrl Shift Z)",
     "undo": "(Ctrl Z)",
-    "stickyNote": "(엔)",
-    "strikeout": "(에)",
-    "underline": "(유)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
     "zoomIn": "(Ctrl +)",
-    "zoomOut": "(Ctrl-)",
+    "zoomOut": "(Ctrl -)",
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
@@ -350,9 +350,9 @@
     }
   },
   "tool": {
-    "pan": "팬",
-    "select": "고르다",
-    "Marquee": "Marquee Zoom",
+    "pan": "이동",
+    "select": "선택",
+    "Marquee": "선택 윤곽 확대/축소",
     "Link": "링크 URL 또는 페이지",
     "Standard": "표준",
     "Custom": "커스텀"
@@ -360,25 +360,25 @@
   "link": {
     "url": "URL",
     "page": "페이지",
-    "enterurl": "링크 할 URL을 입력하세요.",
-    "enterpage": "연결하려는 페이지 번호를 선택하십시오."
+    "enterurl": "연결할 URL을 입력하십시오",
+    "enterpage": "연결하려는 페이지 번호를 선택하십시오"
   },
   "datePicker": {
     "previousMonth": "지난달",
     "nextMonth": "다음 달",
     "months": {
-      "0": "일월",
-      "1": "이월",
-      "2": "행진",
-      "3": "4 월",
-      "4": "할 수있다",
-      "5": "유월",
-      "6": "칠월",
-      "7": "팔월",
-      "8": "구월",
-      "9": "십월",
-      "10": "십일월",
-      "11": "12 월"
+      "0": "1월",
+      "1": "2월",
+      "2": "3월",
+      "3": "4월",
+      "4": "5월",
+      "5": "6월",
+      "6": "7월",
+      "7": "8월",
+      "8": "9월",
+      "9": "10월",
+      "10": "11월",
+      "11": "12월"
     },
     "weekdays": {
       "0": "일요일",
@@ -390,13 +390,13 @@
       "6": "토요일"
     },
     "weekdaysShort": {
-      "0": "태양",
-      "1": "나의",
-      "2": "너의",
-      "3": "수요일",
+      "0": "일",
+      "1": "월",
+      "2": "화",
+      "3": "수",
       "4": "목",
-      "5": "비어 있는",
-      "6": "수능"
+      "5": "금",
+      "6": "토"
     }
   }
 }

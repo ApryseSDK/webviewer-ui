@@ -211,10 +211,10 @@
       "qualityHigh": "高い",
       "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
-      "addWatermarkSettings": "透かしを追加"
+      "addWatermarkSettings": "透かし設定を追加"
     },
     "redaction": {
-      "markForRedaction": "編集のためにマーク"
+      "markForRedaction": "改訂マーク"
     },
     "searchPanel": {
       "caseSensitive": "大文字と小文字を区別",
@@ -225,41 +225,41 @@
       "addStamp": "新しいスタンプを追加"
     },
     "signatureOverlay": {
-      "addSignature": "新しい署名を追加"
+      "addSignature": "署名を追加"
     },
     "signatureModal": {
       "saveSignature": "署名を保存",
-      "dragAndDrop": "ここに画像をドラッグアンドドロップ",
+      "dragAndDrop": "ここに画像をドラッグアンドドロップします",
       "or": "または",
-      "pickImage": "署名を選択してください"
+      "pickImage": "署名画像を選択"
     },
     "status": {
       "status": "状態"
     },
     "state": {
-      "accepted": "受け入れた",
+      "accepted": "受け入れられた",
       "rejected": "拒否されました",
-      "completed": "完成した",
+      "completed": "完了しました",
       "cancelled": "キャンセル",
       "set": "ステータスを設定：",
       "setBy": "によって設定されました",
-      "none": "なし"
+      "none": "無し"
     },
     "measurementOverlay": {
       "scale": "スケール比",
       "angle": "角度",
       "distance": "距離",
       "perimeter": "境界",
-      "area": "範囲",
+      "area": "領域",
       "distanceMeasurement": "距離測定",
-      "perimeterMeasurement": "周長測定",
+      "perimeterMeasurement": "境界測定",
       "areaMeasurement": "面積測定",
       "countMeasurement": "カウント測定",
       "radius": "半径",
       "count": "カウント"
     },
     "measurementOption": {
-      "scale": "規模"
+      "scale": "スケール"
     },
     "styleOption": {
       "style": "スタイル",
@@ -268,8 +268,8 @@
     },
     "slider": {
       "opacity": "不透明度",
-      "thickness": "脳卒中",
-      "text": "文字サイズ"
+      "thickness": "厚さ",
+      "text": "テキスト サイズ"
     },
     "shared": {
       "page": "ページ",
@@ -291,10 +291,10 @@
       "extractZeroPageError": "抽出するページが選択されていません"
     },
     "richText": {
-      "bold": "大胆な",
+      "bold": "太字",
       "italic": "イタリック",
       "underline": "下線",
-      "strikeout": "三振"
+      "strikeout": "取り消し線"
     },
     "customStampModal": {
       "stampText": "スタンプテキスト：",
@@ -309,39 +309,39 @@
     "deletePage": {
       "deleteTitle": "ページを削除",
       "deleteMessage": "選択したページを削除してもよろしいですか？これは元に戻せません",
-      "deleteLastPageMessage": "これにより、残りのページがなくなります。少なくとも1ページ残してください"
+      "deleteLastPageMessage": "これにより、ページが残りません。少なくとも1ページ残してください"
     },
     "redaction": {
-      "applyTile": "編集を適用",
-      "applyMessage": "このアクションにより、編集用に選択されたすべてのアイテムが完全に削除されます。元に戻すことはできません。"
+      "applyTile": "リダクションを適用",
+      "applyMessage": "この操作により、編集用に選択されたすべてのアイテムが完全に削除されます。元に戻すことはできません。"
     }
   },
   "shortcut": {
-    "arrow": "（A）",
-    "callout": "（C）",
-    "copy": "（Ctrl C）",
-    "delete": "（の）",
-    "ellipse": "（THE）",
-    "eraser": "（IS）",
-    "freehand": "（F）",
-    "freetext": "（T）",
-    "highlight": "（H）",
-    "line": "（L）",
-    "pan": "（P）",
-    "rectangle": "（R）",
-    "rotateClockwise": "（Ctrl Shift +）",
-    "rotateCounterClockwise": "（Ctrl Shift-）",
-    "select": "（ESC）",
-    "signature": "（S）",
-    "squiggly": "（G）",
-    "stamp": "（私）",
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "eraser": "(E)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
     "redo": "（Ctrl Shift Z）",
     "undo": "（Ctrl Z）",
-    "stickyNote": "（N）",
-    "strikeout": "（に）",
-    "underline": "（U）",
-    "zoomIn": "（Ctrl +）",
-    "zoomOut": "（Ctrl-）",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)",
     "richText": {
       "bold": "（Ctrl B）",
       "italic": "（Ctrl I）",
@@ -351,7 +351,7 @@
   },
   "tool": {
     "pan": "パン",
-    "select": "選択する",
+    "select": "選択",
     "Marquee": "マーキーズーム",
     "Link": "リンクURLまたはページ",
     "Standard": "標準",
@@ -361,28 +361,28 @@
     "url": "URL",
     "page": "ページ",
     "enterurl": "リンクするURLを入力してください",
-    "enterpage": "リンクしたいページ番号を選択してください"
+    "enterpage": "リンクするページ番号を選択します"
   },
   "datePicker": {
     "previousMonth": "前月",
     "nextMonth": "来月",
     "months": {
-      "0": "1月",
-      "1": "2月",
-      "2": "行進",
-      "3": "4月",
+      "0": "一月",
+      "1": "二月",
+      "2": "三月",
+      "3": "四月",
       "4": "五月",
       "5": "六月",
       "6": "七月",
       "7": "八月",
       "8": "九月",
-      "9": "10月",
-      "10": "11月",
-      "11": "12月"
+      "9": "十月",
+      "10": "十一月",
+      "11": "十二月"
     },
     "weekdays": {
       "0": "日曜日",
-      "1": "月曜",
+      "1": "月曜日",
       "2": "火曜日",
       "3": "水曜日",
       "4": "木曜日",
@@ -390,12 +390,12 @@
       "6": "土曜日"
     },
     "weekdaysShort": {
-      "0": "太陽",
-      "1": "ぼくの",
-      "2": "きみの",
-      "3": "結婚した",
+      "0": "日",
+      "1": "月",
+      "2": "火",
+      "3": "水",
       "4": "木",
-      "5": "自由",
+      "5": "金",
       "6": "土"
     }
   }

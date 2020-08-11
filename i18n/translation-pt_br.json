@@ -211,27 +211,27 @@
       "qualityHigh": "Alto",
       "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
-      "addWatermarkSettings": "Adicione uma Marca D'água"
+      "addWatermarkSettings": "Adicionar configurações de marca d'água"
     },
     "redaction": {
-      "markForRedaction": "Marcar para redação"
+      "markForRedaction": "Marcar para supressão"
     },
     "searchPanel": {
-      "caseSensitive": "Maiúsculas e Minúsculas",
+      "caseSensitive": "Diferenciar maiúsculas e minúsculas",
       "wholeWordOnly": "Palavra inteira",
       "wildcard": "Curinga"
     },
     "stampOverlay": {
-      "addStamp": "Adicionar Novo Selo"
+      "addStamp": "Adicionar novo carimbo"
     },
     "signatureOverlay": {
-      "addSignature": "Adicionar nova assinatura"
+      "addSignature": "Adicionar assinatura"
     },
     "signatureModal": {
       "saveSignature": "Salvar assinatura",
       "dragAndDrop": "Arraste e solte sua imagem aqui",
       "or": "Ou",
-      "pickImage": "Escolha uma assinatura"
+      "pickImage": "Escolher imagem da assinatura"
     },
     "status": {
       "status": "Status"
@@ -246,14 +246,14 @@
       "none": "Nenhum"
     },
     "measurementOverlay": {
-      "scale": "Razão de Escala",
+      "scale": "Razão de escala",
       "angle": "Ângulo",
       "distance": "Distância",
       "perimeter": "Perímetro",
       "area": "Área",
       "distanceMeasurement": "Medição de distância",
-      "perimeterMeasurement": "Medição de Perímetro",
-      "areaMeasurement": "Medição de Área",
+      "perimeterMeasurement": "Medição de perímetro",
+      "areaMeasurement": "Medição de área",
       "countMeasurement": "Medição de contagem",
       "radius": "Raio",
       "count": "Contagem"
@@ -268,21 +268,21 @@
     },
     "slider": {
       "opacity": "Opacidade",
-      "thickness": "Derrame",
+      "thickness": "Espessura",
       "text": "Tamanho do texto"
     },
     "shared": {
       "page": "Página",
       "precision": "Precisão",
-      "enableSnapping": "Habilitar ajuste para ferramentas de medição"
+      "enableSnapping": "Ativar encaixe para ferramentas de medição"
     },
     "watermark": {
       "size": "Tamanho",
-      "location": "Escolha um local para editar as marcas d'água",
+      "location": "Escolha um local para editar marcas d'água",
       "text": "Texto",
       "style": "Estilo",
       "resetAllSettings": "Redefinir todas as configurações",
-      "font": "Fonte"
+      "font": "fonte"
     },
     "thumbnailPanel": {
       "delete": "Excluir",
@@ -293,8 +293,8 @@
     "richText": {
       "bold": "Negrito",
       "italic": "itálico",
-      "underline": "Sublinhado",
-      "strikeout": "Strikeout"
+      "underline": "Sublinhar",
+      "strikeout": "Tachado"
     },
     "customStampModal": {
       "stampText": "Texto do carimbo:",
@@ -308,7 +308,7 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Excluir página",
-      "deleteMessage": "Tem certeza de que deseja excluir a (s) página (s) selecionada (s). Isso não pode ser desfeito",
+      "deleteMessage": "Tem certeza de que deseja excluir as páginas selecionadas. Isso não pode ser desfeito",
       "deleteLastPageMessage": "Isso resultaria em nenhuma página restante. Deixe pelo menos uma página"
     },
     "redaction": {
@@ -317,16 +317,16 @@
     }
   },
   "shortcut": {
-    "arrow": "(UMA)",
+    "arrow": "(A)",
     "callout": "(C)",
     "copy": "(Ctrl C)",
-    "delete": "(Do)",
+    "delete": "(Del)",
     "ellipse": "(O)",
-    "eraser": "(É)",
+    "eraser": "(E)",
     "freehand": "(F)",
     "freetext": "(T)",
     "highlight": "(H)",
-    "line": "(EU)",
+    "line": "(L)",
     "pan": "(P)",
     "rectangle": "(R)",
     "rotateClockwise": "(Ctrl Shift +)",
@@ -334,12 +334,12 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(EU)",
+    "stamp": "(I)",
     "redo": "(Ctrl Shift Z)",
     "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
-    "strikeout": "(PARA)",
-    "underline": "(VOCÊ)",
+    "strikeout": "(K)",
+    "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
     "richText": {
@@ -350,9 +350,9 @@
     }
   },
   "tool": {
-    "pan": "Pan",
-    "select": "Selecione",
-    "Marquee": "Zoom do letreiro",
+    "pan": "Arrastar",
+    "select": "Selecionar",
+    "Marquee": "Zoom na seleção",
     "Link": "URL ou página do link",
     "Standard": "Padrão",
     "Custom": "personalizadas"
@@ -360,43 +360,43 @@
   "link": {
     "url": "URL",
     "page": "Página",
-    "enterurl": "Insira o URL que deseja vincular",
-    "enterpage": "Selecione o número da página que deseja vincular"
+    "enterurl": "Digite o URL para o qual você deseja vincular",
+    "enterpage": "Selecione o número da página que você deseja vincular"
   },
   "datePicker": {
     "previousMonth": "Mês anterior",
     "nextMonth": "Próximo mês",
     "months": {
-      "0": "janeiro",
-      "1": "fevereiro",
+      "0": "Janeiro",
+      "1": "Fevereiro",
       "2": "Março",
-      "3": "abril",
-      "4": "Posso",
+      "3": "Abril",
+      "4": "Maio",
       "5": "Junho",
       "6": "Julho",
-      "7": "agosto",
-      "8": "setembro",
+      "7": "Agosto",
+      "8": "Setembro",
       "9": "Outubro",
-      "10": "novembro",
-      "11": "dezembro"
+      "10": "Novembro",
+      "11": "Dezembro"
     },
     "weekdays": {
-      "0": "domingo",
+      "0": "Domingo",
       "1": "Segunda-feira",
-      "2": "terça",
+      "2": "Terça-feira",
       "3": "Quarta-feira",
       "4": "Quinta-feira",
       "5": "Sexta-feira",
-      "6": "sábado"
+      "6": "Sábado"
     },
     "weekdaysShort": {
-      "0": "Sol",
-      "1": "Minhas",
-      "2": "seu",
-      "3": "Casar",
-      "4": "qui",
-      "5": "livre",
-      "6": "Sentou"
+      "0": "Dom",
+      "1": "Seg",
+      "2": "Ter",
+      "3": "Qua",
+      "4": "Qui",
+      "5": "Sex",
+      "6": "Sáb"
     }
   }
 }

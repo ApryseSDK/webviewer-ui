@@ -211,34 +211,34 @@
       "qualityHigh": "高",
       "includeAnnotations": "包括註釋",
       "includeComments": "包括評論",
-      "addWatermarkSettings": "加水印"
+      "addWatermarkSettings": "添加水印設置"
     },
     "redaction": {
-      "markForRedaction": "標記為修訂"
+      "markForRedaction": "標示為修訂"
     },
     "searchPanel": {
       "caseSensitive": "區分大小寫",
-      "wholeWordOnly": "全字",
+      "wholeWordOnly": "全字相符",
       "wildcard": "通配符"
     },
     "stampOverlay": {
       "addStamp": "添加新郵票"
     },
     "signatureOverlay": {
-      "addSignature": "添加新簽名"
+      "addSignature": "新增簽名"
     },
     "signatureModal": {
       "saveSignature": "保存簽名",
       "dragAndDrop": "將圖片拖放到此處",
       "or": "要么",
-      "pickImage": "選擇簽名"
+      "pickImage": "選擇簽名圖像"
     },
     "status": {
       "status": "狀態"
     },
     "state": {
       "accepted": "公認",
-      "rejected": "拒絕",
+      "rejected": "被拒絕",
       "completed": "已完成",
       "cancelled": "取消",
       "set": "設定狀態：",
@@ -246,20 +246,20 @@
       "none": "沒有"
     },
     "measurementOverlay": {
-      "scale": "比例比",
+      "scale": "比例",
       "angle": "角度",
       "distance": "距離",
       "perimeter": "周長",
-      "area": "區",
-      "distanceMeasurement": "距離測量",
-      "perimeterMeasurement": "周長測量",
-      "areaMeasurement": "面積測量",
+      "area": "面積",
+      "distanceMeasurement": "測量距離",
+      "perimeterMeasurement": "測量周長",
+      "areaMeasurement": "測量面積",
       "countMeasurement": "計數測量",
       "radius": "半徑",
       "count": "計數"
     },
     "measurementOption": {
-      "scale": "規模"
+      "scale": "比例"
     },
     "styleOption": {
       "style": "樣式",
@@ -268,12 +268,12 @@
     },
     "slider": {
       "opacity": "不透明度",
-      "thickness": "中風",
-      "text": "字體大小"
+      "thickness": "厚度",
+      "text": "文字大小"
     },
     "shared": {
-      "page": "頁",
-      "precision": "精確",
+      "page": "頁面",
+      "precision": "精確度",
       "enableSnapping": "啟用測量工具的捕捉"
     },
     "watermark": {
@@ -291,10 +291,10 @@
       "extractZeroPageError": "沒有選擇要提取的頁面"
     },
     "richText": {
-      "bold": "膽大",
+      "bold": "粗體",
       "italic": "斜體",
-      "underline": "強調",
-      "strikeout": "淘汰賽"
+      "underline": "下劃綫",
+      "strikeout": "刪除綫"
     },
     "customStampModal": {
       "stampText": "印章文字：",
@@ -317,31 +317,31 @@
     }
   },
   "shortcut": {
-    "arrow": "（一個）",
-    "callout": "（C）",
-    "copy": "（Ctrl C）",
-    "delete": "（的）",
-    "ellipse": "（THE）",
-    "eraser": "（IS）",
-    "freehand": "（F）",
-    "freetext": "（T）",
-    "highlight": "（H）",
-    "line": "（長）",
-    "pan": "（P）",
-    "rectangle": "（右）",
-    "rotateClockwise": "（Ctrl Shift +）",
-    "rotateCounterClockwise": "（Ctrl Shift-）",
-    "select": "（退出）",
-    "signature": "（S）",
-    "squiggly": "（G）",
-    "stamp": "（一世）",
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "eraser": "(E)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
     "redo": "（Ctrl Shift Z）",
     "undo": "（Ctrl Z）",
-    "stickyNote": "（N）",
-    "strikeout": "（至）",
-    "underline": "（U）",
-    "zoomIn": "（Ctrl +）",
-    "zoomOut": "（Ctrl-）",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)",
     "richText": {
       "bold": "（Ctrl B）",
       "italic": "（Ctrl I）",
@@ -350,9 +350,9 @@
     }
   },
   "tool": {
-    "pan": "泛",
-    "select": "選擇",
-    "Marquee": "選框縮放",
+    "pan": "移動瀏覽",
+    "select": "選取",
+    "Marquee": "跑馬燈縮放",
     "Link": "鏈接網址或頁面",
     "Standard": "標準",
     "Custom": "自訂"
@@ -369,9 +369,9 @@
     "months": {
       "0": "一月",
       "1": "二月",
-      "2": "遊行",
+      "2": "三月",
       "3": "四月",
-      "4": "可能",
+      "4": "五月",
       "5": "六月",
       "6": "七月",
       "7": "八月",
@@ -390,12 +390,12 @@
       "6": "星期六"
     },
     "weekdaysShort": {
-      "0": "太陽",
-      "1": "我的",
-      "2": "你的",
-      "3": "星期三",
+      "0": "週日",
+      "1": "週一",
+      "2": "週二",
+      "3": "週三",
       "4": "週四",
-      "5": "自由",
+      "5": "週五",
       "6": "週六"
     }
   }
