@@ -33,15 +33,6 @@ export default store => {
         ]
       )
     );
-  } else {
-    dispatch(
-      actions.disableElements(
-        [
-          'notesPanel',
-          'notesPanelButton',
-        ]
-      )
-    );
   }
 
   const annotationDisabled = !getHashParams('a', false);

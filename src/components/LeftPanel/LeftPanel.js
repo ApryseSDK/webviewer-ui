@@ -37,13 +37,14 @@ const LeftPanel = () => {
     false,
   );
 
-  const [isOpen, isDisabled, activePanel, customPanels, currentWidth] = useSelector(
+  const [isOpen, isDisabled, activePanel, customPanels, currentWidth, notesInLeftPanel] = useSelector(
     state => [
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementDisabled(state, 'leftPanel'),
       selectors.getActiveLeftPanel(state),
       selectors.getCustomPanels(state),
       selectors.getLeftPanelWidth(state),
+      selectors.getNotesInLeftPanel(state),
     ],
     shallowEqual,
   );
@@ -118,7 +119,7 @@ const LeftPanel = () => {
             {activePanel === 'outlinesPanel' && <OutlinesPanel />}
             {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
             {activePanel === 'layersPanel' && <LayersPanel />}
-            {activePanel === 'notesPanel' && <NotesPanel currentLeftPanelWidth={currentWidth} />}
+            {notesInLeftPanel && activePanel === 'notesPanel' && <NotesPanel currentLeftPanelWidth={currentWidth} />}
             {customPanels.map(({ panel }, index) => (
               <CustomElement
                 key={panel.dataElement || index}

@@ -304,7 +304,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           <div
             className="close-icon-container"
             onClick={() => {
-              dispatch(actions.closeElements(['detachedNotesPanel']));
+              dispatch(actions.closeElements(['notesPanel']));
             }}
           >
             <Icon
