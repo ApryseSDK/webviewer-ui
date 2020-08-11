@@ -25,7 +25,7 @@
 
   &:not(.Tools) {
     .Button {
-      &:hover {
+      &:hover:enabled {
         background: var(--view-header-button-hover);
       }
 
