@@ -40,8 +40,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: () => {
     // hack for new ui
     if (ownProps.element === 'searchPanel') {
-      dispatch(actions.closeElement('detachedNotesPanel'));
-    } else if (ownProps.element === 'detachedNotesPanel') {
+      dispatch(actions.closeElement('notesPanel'));
+    } else if (ownProps.element === 'notesPanel') {
       dispatch(actions.closeElement('searchPanel'));
     }
     dispatch(actions.toggleElement(ownProps.element));

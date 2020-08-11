@@ -94,7 +94,7 @@ const App = ({ removeEventHandlers }) => {
             <SearchPanel />
           </RightPanel>
           <RightPanel
-            dataElement="detachedNotesPanel"
+            dataElement="notesPanel"
             onResize={width => dispatch(actions.setNotesPanelWidth(width))}
           >
             <NotesPanel />
