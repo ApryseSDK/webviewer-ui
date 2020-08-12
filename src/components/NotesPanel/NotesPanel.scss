@@ -118,6 +118,8 @@
         flex-direction: row;
         align-items: center;
         justify-content: flex-end;
+        align-self: flex-end;
+        margin-left: auto;
 
         .label {
           margin-right: 8px;
