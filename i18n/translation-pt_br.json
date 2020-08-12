@@ -157,7 +157,8 @@
     "insertTextHere": "Insira texto aqui",
     "imageSignatureAcceptedFileTypes": "Somente {{acceptFileTypes}} são aceitos",
     "enterMeasurement": "Digite a medição entre os dois pontos",
-    "linkURLorPage": "URL do link ou uma página"
+    "linkURLorPage": "URL do link ou uma página",
+    "sortBy": "Ordenar por"
   },
   "option": {
     "notesOrder": {

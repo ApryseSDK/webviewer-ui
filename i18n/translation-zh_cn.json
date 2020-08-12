@@ -157,7 +157,8 @@
     "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在两点之间输入测量值",
-    "linkURLorPage": "链接网址或页面"
+    "linkURLorPage": "链接网址或页面",
+    "sortBy": "排序方式"
   },
   "option": {
     "notesOrder": {

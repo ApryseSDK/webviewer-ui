@@ -157,7 +157,8 @@
     "insertTextHere": "在這裡插入文字",
     "imageSignatureAcceptedFileTypes": "僅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在兩點之間輸入測量值",
-    "linkURLorPage": "鏈接網址或頁面"
+    "linkURLorPage": "鏈接網址或頁面",
+    "sortBy": "排序方式"
   },
   "option": {
     "notesOrder": {
