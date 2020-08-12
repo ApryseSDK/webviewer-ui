@@ -107,9 +107,17 @@ class RubberStampOverlay extends React.Component {
           </div>
 
           <TabPanel dataElement="standardStampPanel">
-            <div className="standard-stamp-panel">
+            {/* Using Swipeable to stop the bubbling of swiping events when scrolling
+              * Don't know a better way of doing this
+              */}
+            <Swipeable
+              className="standard-stamp-panel"
+              onSwiped={({ event }) => {
+                event.stopPropagation();
+              }}
+            >
               { rubberStamps }
-            </div>
+            </Swipeable>
           </TabPanel>
           <TabPanel dataElement="customStampPanel">
             <div className="custom-stamp-panel">

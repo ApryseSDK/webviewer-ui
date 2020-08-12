@@ -109,6 +109,7 @@ const ToggleZoomOverlay = () => {
                 onBlur={onBlur}
                 tabIndex={-1}
                 style={{ width: inputWidth }}
+                aria-label={t('action.zoomSet')}
               />
               <span>%</span>
             </div>

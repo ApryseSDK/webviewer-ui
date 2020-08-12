@@ -7,13 +7,13 @@ import selectors from 'selectors';
 import './Choice.scss';
 
 const propTypes = {
-  dataElement: PropTypes.string.isRequired,
+  dataElement: PropTypes.string,
 };
 
 const Choice = React.forwardRef(({ dataElement, ...props }, ref) => {
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
+  const isDisabled = useSelector(state => (dataElement ? selectors.isElementDisabled(state, dataElement) : false));
 
-  return isDisabled ? null : <ChoiceComponent {...props} ref={ref} center/>;
+  return isDisabled ? null : <ChoiceComponent {...props} ref={ref} center />;
 });
 
 Choice.propTypes = propTypes;

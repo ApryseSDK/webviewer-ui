@@ -74,6 +74,7 @@ import mentions from './mentions';
 import openElement from './openElement';
 import openElements from './openElements';
 import print from './print';
+import printInBackground from './printInBackground';
 import registerTool from './registerTool';
 import removeSearchListener from './removeSearchListener';
 import rotateClockwise from './rotateClockwise';
@@ -88,6 +89,7 @@ import setAnnotationUser from './setAnnotationUser';
 import setActivePalette from './setActivePalette';
 import setColorPalette from './setColorPalette';
 import setCurrentPageNumber from './setCurrentPageNumber';
+import setCustomModal from './setCustomModal';
 import setCustomNoteFilter from './setCustomNoteFilter';
 import setCustomPanel from './setCustomPanel';
 import exportBookmarks from './exportBookmarks';
@@ -172,12 +174,14 @@ export default store => {
     loadDocument: loadDocument(store),
     openElements: openElements(store),
     print: print(store),
+    printInBackground: printInBackground(store),
     registerTool: registerTool(store),
     removeSearchListener: removeSearchListener(store),
     searchText: searchText(store),
     searchTextFull: searchTextFull(store),
     setActiveHeaderGroup: setActiveHeaderGroup(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
+    setCustomModal: setCustomModal(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
     exportBookmarks: exportBookmarks(store),

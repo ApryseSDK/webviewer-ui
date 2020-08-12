@@ -3,8 +3,10 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import ToolGroupButton from 'components/ToolGroupButton';
 import Measure from 'react-measure';
+import { useTranslation } from 'react-i18next';
 
 const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
+  const [t] = useTranslation();
   const scrollRef = useRef();
   const [isScrolledToEnd, setIsScrolledToEnd] = useState(false);
   const [isScrolledToStart, setIsScrolledToStart] = useState(false);
@@ -65,8 +67,11 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
                 )}
                 onClick={() => {
                   // Move two tools over
-                  scrollRef.current.scrollTo(scrollRef.current.scrollLeft - 54 * 2, 0);
+                  // don't use scrollTo as it doesn't work in IE11
+                  scrollRef.current.scrollTop = 0;
+                  scrollRef.current.scrollLeft = scrollRef.current.scrollLeft - 54 * 2;
                 }}
+                aria-label={t('action.prev')}
               >
                 <Icon  glyph="icon-chevron-left" />
               </button>
@@ -84,8 +89,11 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
                 )}
                 onClick={() => {
                   // Move two tools over
-                  scrollRef.current.scrollTo(scrollRef.current.scrollLeft + 54 * 2, 0);
+                  // don't use scrollTo as it doesn't work in IE11
+                  scrollRef.current.scrollTop = 0;
+                  scrollRef.current.scrollLeft = scrollRef.current.scrollLeft + 54 * 2;
                 }}
+                aria-label={t('action.next')}
               >
                 <Icon  glyph="icon-chevron-right" />
               </button>

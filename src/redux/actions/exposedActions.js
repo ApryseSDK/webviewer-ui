@@ -91,8 +91,8 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
 };
 
 export const enableRibbons = () => (dispatch, getState) => {
-  dispatch(setToolbarGroup('toolbarGroup-Annotate'));
   const state = getState();
+  dispatch(setToolbarGroup(state.viewer.toolbarGroup || 'toolbarGroup-Annotate', false));
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-'));
 
@@ -115,7 +115,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
+export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
@@ -150,17 +150,27 @@ export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
     });
   } else {
     dispatch(openElements(['toolsHeader']));
-    const firstToolGroupForToolbarGroup = getFirstToolGroupForToolbarGroup(getState(), toolbarGroup);
-    const toolName = getFirstToolNameForGroup(getState(), firstToolGroupForToolbarGroup);
-    if (toolName === 'AnnotationCreateSignature') {
-      core.setToolMode(defaultTool);
+    const state = getState();
+    const lastPickedToolGroup = state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
+    const lastPickedToolName = state.viewer.lastPickedToolForGroup[lastPickedToolGroup]
+      || getFirstToolNameForGroup(state, lastPickedToolGroup);
+    if (pickTool) {
+      if (lastPickedToolName === 'AnnotationCreateSignature') {
+        core.setToolMode(defaultTool);
+      } else {
+        core.setToolMode(lastPickedToolName);
+      }
+      dispatch({
+        type: 'SET_ACTIVE_TOOL_GROUP',
+        payload: { toolGroup: lastPickedToolGroup },
+      });
     } else {
-      core.setToolMode(toolName);
+      core.setToolMode(defaultTool);
+      dispatch({
+        type: 'SET_ACTIVE_TOOL_GROUP',
+        payload: { toolGroup: '' },
+      });
     }
-    dispatch({
-      type: 'SET_ACTIVE_TOOL_GROUP',
-      payload: { toolGroup: firstToolGroupForToolbarGroup },
-    });
   }
   dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
   dispatch({
@@ -295,6 +305,11 @@ export const toggleElement = dataElement => (dispatch, getState) => {
   }
 };
 
+export const setCustomModal = modalOptions => ({
+  type: 'SET_CUSTOM_MODAL',
+  payload: modalOptions,
+});
+
 export const setActiveHeaderGroup = headerGroup => ({
   type: 'SET_ACTIVE_HEADER_GROUP',
   payload: { headerGroup },
@@ -322,6 +337,7 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       'outlinesPanel',
       'layersPanel',
       'bookmarksPanel',
+      'notesPanel',
     ].join(', ');
     console.warn(
       `${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`,

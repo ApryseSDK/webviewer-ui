@@ -30,7 +30,8 @@ class EditingBookmark extends React.PureComponent {
           type="text"
           name="bookmark"
           className="editing-input"
-          placeholder="Name"
+          placeholder={t('action.name')}
+          aria-label={t('action.name')}
           value={this.state.bookmarkText}
           onChange={e => {
             this.setState({ bookmarkText: e.target.value });

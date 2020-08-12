@@ -28,6 +28,7 @@ class LeftPanelTabs extends React.Component {
       customPanels,
       isLeftPanelTabsDisabled,
       setActiveLeftPanel,
+      notesInLeftPanel,
     } = this.props;
 
     if (isLeftPanelTabsDisabled) {
@@ -43,7 +44,6 @@ class LeftPanelTabs extends React.Component {
           onClick={() => setActiveLeftPanel('thumbnailsPanel')}
           title="component.thumbnailsPanel"
         />
-        <div className="divider" />
         <Button
           isActive={this.isActive('outlinesPanel')}
           dataElement="outlinesPanelButton"
@@ -65,6 +65,14 @@ class LeftPanelTabs extends React.Component {
           onClick={() => setActiveLeftPanel('bookmarksPanel')}
           title="component.bookmarksPanel"
         />
+        {notesInLeftPanel &&
+          <Button
+            isActive={this.isActive('notesPanel')}
+            dataElement="notesPanelButton"
+            img="icon-header-chat-line"
+            onClick={() => setActiveLeftPanel('notesPanel')}
+            title="component.notesPanel"
+          />}
         {customPanels.map(({ panel, tab }, index) =>
           <React.Fragment key={index}>
             <Button
@@ -88,6 +96,7 @@ const mapStateToProps = state => ({
   customPanels: selectors.getCustomPanels(state),
   disabledCustomPanelTabs: selectors.getDisabledCustomPanelTabs(state),
   isLeftPanelTabsDisabled: selectors.isElementDisabled(state, 'leftPanelTabs'),
+  notesInLeftPanel: selectors.getNotesInLeftPanel(state),
 });
 
 const mapDispatchToProps = {

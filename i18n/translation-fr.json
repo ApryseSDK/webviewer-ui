@@ -20,9 +20,13 @@
     "exitFullscreen": "Quitter le plein écran",
     "fit": "Fit",
     "fitToPage": "Fit à la page",
-    "fitToWidth": "Fit à la largeur",
+    "fitToWidth": "Ajuster à la largeur",
     "openFile": "Ouvrir un fichier",
+    "pagePrev": "Page précédente",
+    "pageNext": "Page suivante",
+    "pageSet": "Mettre en place la page",
     "print": "Imprimer",
+    "name": "Nom",
     "ok": "OK",
     "reply": "Répondre",
     "rotate": "Tourner",
@@ -38,6 +42,7 @@
     "zoom": "Zoom",
     "zoomIn": "Zoomer",
     "zoomOut": "Dézoomer",
+    "zoomSet": "Définir le zoom",
     "zoomControls": "Commandes de zoom",
     "draw": "Dessiner",
     "type": "Type",
@@ -47,7 +52,9 @@
     "lightMode": "Mode lumière",
     "fileAttachmentDownload": "Télécharger le fichier joint",
     "prevResult": "Résultat précédent",
-    "nextResult": "Résultat suivant"
+    "nextResult": "Résultat suivant",
+    "prev": "précédent",
+    "next": "Prochain"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -150,12 +157,16 @@
     "insertTextHere": "Insérer du texte ici",
     "imageSignatureAcceptedFileTypes": "Seuls {{acceptedFileTypes}} sont acceptés",
     "enterMeasurement": "Entrez la mesure entre les deux points",
-    "linkURLorPage": "Lien URL ou une page"
+    "linkURLorPage": "Lien URL ou une page",
+    "sortBy": "Trier par"
   },
   "option": {
     "notesOrder": {
       "position": "Position",
-      "time": "Temps"
+      "time": "Temps",
+      "status": "Statut",
+      "author": "Auteur",
+      "type": "Type"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Vue",
@@ -260,7 +271,8 @@
     },
     "shared": {
       "page": "Page",
-      "precision": "Précision"
+      "precision": "Précision",
+      "enableSnapping": "Activer la capture pour les outils de mesure"
     },
     "watermark": {
       "size": "Taille",
@@ -338,7 +350,7 @@
   "tool": {
     "pan": "Panoramique",
     "select": "Sélection",
-    "Marquee": "Marquee Zoom",
+    "Marquee": "Zoom sur la sélection",
     "Link": "URL de lien ou page",
     "Standard": "la norme",
     "Custom": "Douane"

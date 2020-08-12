@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 
 import Bookmark from 'components/Bookmark';
 import EditingBookmark from 'components/Bookmark/EditingBookmark';
-import Icon from 'components/Icon';
+import Button from 'components/Button';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -23,7 +23,6 @@ class BookmarksPanel extends React.PureComponent {
   static propTypes = {
     bookmarks: PropTypes.object,
     addBookmark: PropTypes.func.isRequired,
-    display: PropTypes.string.isRequired,
     currentPage: PropTypes.number.isRequired,
     isDisabled: PropTypes.bool,
     t: PropTypes.func.isRequired,
@@ -33,7 +32,6 @@ class BookmarksPanel extends React.PureComponent {
   render() {
     const {
       isDisabled,
-      display,
       bookmarks,
       addBookmark,
       currentPage,
@@ -47,7 +45,7 @@ class BookmarksPanel extends React.PureComponent {
 
     const pageIndexes = Object.keys(bookmarks).map(pageIndex => parseInt(pageIndex, 10));
     return (
-      <div className="Panel BookmarksPanel" style={{ display }} data-element="bookmarksPanel">
+      <div className="Panel BookmarksPanel" data-element="bookmarksPanel">
         {
           this.state.isAdding ?
             <EditingBookmark
@@ -63,14 +61,14 @@ class BookmarksPanel extends React.PureComponent {
               }}
             /> :
             <div className="bookmarks-panel-header ">
-              <div
+              <Button
+                dataElement="newBookmarkButton"
                 className="bookmarks-panel-button"
+                label={t('component.newBookmark')}
                 onClick={() => {
                   this.setState({ isAdding: true });
                 }}
-              >
-                {t('component.newBookmark')}
-              </div>
+              />
             </div>
         }
         <div className="bookmarks-panel-row">

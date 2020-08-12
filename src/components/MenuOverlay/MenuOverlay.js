@@ -3,10 +3,10 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
 import { workerTypes } from 'constants/types';
 import core from 'core';
-import { isIOS } from 'helpers/device';
+import { isIOS, isIE } from 'helpers/device';
 import downloadPdf from 'helpers/downloadPdf';
 import openFilePicker from 'helpers/openFilePicker';
-import print from 'helpers/print';
+import { print } from 'helpers/print';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +23,8 @@ function MenuOverlay() {
 
   const activeTheme = useSelector(selectors.getActiveTheme);
   const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
+  const colorMap = useSelector(selectors.getColorMap);
+  const sortStrategy = useSelector(selectors.getSortStrategy);
   const isFullScreen = useSelector(selectors.isFullScreen);
   const isFilePickerButtonDisabled = useSelector(state => selectors.isElementDisabled(state, 'filePickerButton'));
 
@@ -40,7 +42,7 @@ function MenuOverlay() {
 
   const handlePrintButtonClick = () => {
     closeMenuOverlay();
-    print(dispatch, isEmbedPrintSupported);
+    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap);
   };
 
   const downloadDocument = () => {
@@ -58,7 +60,7 @@ function MenuOverlay() {
         </DataElementWrapper>
       )}
       {!isIOS && (
-        <div className="row">
+        <DataElementWrapper className="row" dataElement="fullscreenButton">
           <button
             className="MenuItem"
             onClick={toggleFullscreen}
@@ -70,7 +72,7 @@ function MenuOverlay() {
             />
             <div className="MenuLabel">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
           </button>
-        </div>
+        </DataElementWrapper>
       )}
       {documentType !== workerTypes.XOD && (
         <DataElementWrapper className="row" dataElement="downloadButton">
@@ -86,16 +88,17 @@ function MenuOverlay() {
           <div className="MenuLabel">{t('action.print')}</div>
         </button>
       </DataElementWrapper>
-      <div className="row">
-        <button
-          className="MenuItem"
-          onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
-          aria-label={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
-        >
-          <Icon className="MenuIcon" glyph={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`} />
-          <div className="MenuLabel">{activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}</div>
-        </button>
-      </div>
+      {!isIE && (
+        <DataElementWrapper className="row" dataElement="themeChangeButton">
+          <button
+            className="MenuItem"
+            onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
+            aria-label={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
+          >
+            <Icon className="MenuIcon" glyph={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`} />
+            <div className="MenuLabel">{activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}</div>
+          </button>
+        </DataElementWrapper>)}
     </FlyoutMenu>
   );
 }

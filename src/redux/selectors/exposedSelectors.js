@@ -1,6 +1,7 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
+export const getLastPickedToolForGroup = (state, group) => state.viewer.lastPickedToolForGroup[group];
 export const getStandardStamps = state => state.viewer.standardStamps;
 export const getCustomStamps = state => state.viewer.customStamps;
 export const getSelectedStampIndex = state => state.viewer.selectedStampIndex;
@@ -19,6 +20,8 @@ export const getSavedSignatures = state => state.viewer.savedSignatures;
 export const getSelectedSignatureIndex = state => state.viewer.selectedSignatureIndex;
 export const getSelectedSignature = state => getSavedSignatures(state)[getSelectedSignatureIndex(state)];
 
+export const getNotesInLeftPanel = state =>
+  state.viewer.notesInLeftPanel;
 export const getLeftPanelWidth = state =>
   state.viewer.panelWidths.leftPanel;
 export const getSearchPanelWidth = state =>
@@ -51,8 +54,15 @@ const getToolbarGroupDataElements = state => {
 
 export const getEnabledToolbarGroups = state => {
   const toolbarGroupDataElements = getToolbarGroupDataElements(state);
-  return toolbarGroupDataElements.filter(dateElement => {
-    return !isElementDisabled(state, `${dateElement}`);
+  return toolbarGroupDataElements.filter(dataElement => {
+    const headerItems = state.viewer.headers[dataElement];
+    const toolGroupButtons = headerItems.filter(({ dataElement }) => {
+      return dataElement && dataElement.includes('ToolGroupButton');
+    });
+    const isEveryToolGroupButtonDisabled  = !dataElement.includes('toolbarGroup-View') && toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
+      return isElementDisabled(state, toolGroupDataElement);
+    });
+    return !isElementDisabled(state, `${dataElement}`) && !isEveryToolGroupButtonDisabled;
   });
 };
 
@@ -66,12 +76,16 @@ export const getDefaultHeaderItems = state => {
   return state.viewer.headers.default;
 };
 
+export const getActiveHeaderItems = state => {
+  return state.viewer.headers[state.viewer.activeHeaderGroup];
+};
+
 export const getDisabledElementPriority = (state, dataElement) =>
   state.viewer.disabledElements[dataElement]?.priority;
 
 export const getToolsHeaderItems = state => {
   const toolbarGroup = getCurrentToolbarGroup(state);
-  return state.viewer.headers[toolbarGroup];
+  return state.viewer.headers[toolbarGroup] || [];
 };
 
 export const getToolButtonObjects = state => {
@@ -150,6 +164,8 @@ export const isDocumentReadOnly = state => state.viewer.isReadOnly;
 
 export const getCustomPanels = state => state.viewer.customPanels;
 
+export const getCustomModals = state => state.viewer.customModals;
+
 export const getPageLabels = state => state.viewer.pageLabels;
 
 export const getSelectedThumbnailPageIndexes = state => state.viewer.selectedThumbnailPageIndexes;
@@ -169,6 +185,8 @@ export const getColorMap = state => state.viewer.colorMap;
 export const getCursorOverlayData = state => state.viewer.cursorOverlay;
 
 export const getOpenElements = state => state.viewer.openElements;
+
+export const getDisabledElements = state => state.viewer.disabledElements;
 
 export const getCurrentPalette = (state, colorMapKey) =>
   state.viewer.colorMap[colorMapKey]?.currentPalette;
@@ -214,6 +232,8 @@ export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
 
 export const getAnnotationContentOverlayHandler = state => state.viewer.annotationContentOverlayHandler;
+
+export const getEnableMouseWheelZoom = state => state.viewer.enableMouseWheelZoom;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
@@ -288,3 +308,5 @@ export const isProgrammaticSearchFull = state =>
   state.search.isProgrammaticSearchFull;
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
+
+export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;

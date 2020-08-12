@@ -1,6 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useStore, useDispatch } from 'react-redux';
+import { useSelector, useStore, useDispatch } from 'react-redux';
+import selectors from 'selectors';
 import PropTypes from 'prop-types';
 
 import Accessibility from 'components/Accessibility';
@@ -13,6 +14,7 @@ import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import NotesPanel from 'components/NotesPanel';
 import SearchPanel from 'components/SearchPanel';
+import RightPanel from 'components/RightPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
 import ContextMenuPopup from 'components/ContextMenuPopup';
@@ -32,6 +34,7 @@ import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 import CreateStampModal from 'components/CreateStampModal';
+import CustomModal from 'components/CustomModal';
 
 import defineReaderControlAPIs from 'src/apis';
 import fireEvent from 'helpers/fireEvent';
@@ -69,7 +72,6 @@ const App = ({ removeEventHandlers }) => {
     };
     tabletBreakpoint.addListener(onBreakpoint);
 
-    // dispatch(actions.setToolbarGroup('toolbarGroup-Annotate'));
     return removeEventHandlers;
     // eslint-disable-next-line
   }, []);
@@ -85,8 +87,18 @@ const App = ({ removeEventHandlers }) => {
         <div className="content">
           <LeftPanel />
           <DocumentContainer />
-          <SearchPanel />
-          <NotesPanel />
+          <RightPanel
+            dataElement="searchPanel"
+            onResize={width => dispatch(actions.setSearchPanelWidth(width))}
+          >
+            <SearchPanel />
+          </RightPanel>
+          <RightPanel
+            dataElement="notesPanel"
+            onResize={width => dispatch(actions.setNotesPanelWidth(width))}
+          >
+            <NotesPanel />
+          </RightPanel>
         </div>
         <ViewControlsOverlay />
         <MenuOverlay />
@@ -107,6 +119,7 @@ const App = ({ removeEventHandlers }) => {
         <CalibrationModal />
         <CreateStampModal />
         <LinkModal />
+        <CustomModal />
       </div>
 
       <PrintHandler />

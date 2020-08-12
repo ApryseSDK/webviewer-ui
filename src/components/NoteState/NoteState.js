@@ -4,6 +4,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 
+import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
 
 import core from 'core';
@@ -96,9 +97,9 @@ const NoteState = ({ annotation, isSelected }) => {
   }
 
   return (isEditDisabled || isDisabled) ? null : (
-    <div
+    <DataElementWrapper
       className="NoteState"
-      data-element="noteState"
+      dataElement="noteState"
       onClick={togglePopup}
     >
       <div className="overflow">
@@ -152,7 +153,7 @@ const NoteState = ({ annotation, isSelected }) => {
           )}
         </div>
       )}
-    </div>
+    </DataElementWrapper>
   );
 };
 
