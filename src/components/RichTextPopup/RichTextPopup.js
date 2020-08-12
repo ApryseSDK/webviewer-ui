@@ -50,11 +50,9 @@ const RichTextPopup = () => {
   useEffect(() => {
     const handleTextChange = () => {
       if (annotationRef.current?.isAutoSized() && popupRef.current) {
-        const spaceAdjustment = symbolsVisible ? symbolsAreaHeight : 0;
         const position = getRichTextPopupPosition(
           annotationRef.current,
           popupRef,
-          spaceAdjustment
         );
         setCssPosition(position);
       }
@@ -73,11 +71,9 @@ const RichTextPopup = () => {
         annotation instanceof window.Annotations.FreeTextAnnotation &&
         popupRef.current
       ) {
-        const spaceAdjustment = symbolsVisible ? symbolsAreaHeight : 0;
         const position = getRichTextPopupPosition(
           annotation,
           popupRef,
-          spaceAdjustment
         );
 
         setCssPosition(position);
@@ -135,6 +131,15 @@ const RichTextPopup = () => {
 
   const handleSymbolsClick = () => {
     setSymbolsVisible(!symbolsVisible);
+    setTimeout(() => {
+      if (popupRef.current) {
+        const position = getRichTextPopupPosition(
+          annotationRef.current,
+          popupRef,
+        );
+        setCssPosition(position);
+      }
+    },0);
   };
 
   const handleColorChange = (_, color) => {

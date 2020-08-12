@@ -1,7 +1,7 @@
 import { calcPopupLeft, calcPopupTop } from 'helpers/getPopupPosition';
 import core from 'core';
 
-export default (annotation, popup, adjustment = 0) => {
+export default (annotation, popup) => {
   const editorContainer = document.querySelector(
     `#pageWidgetContainer${annotation.PageNumber} [id="freetext-editor-${annotation.Id}"]`
   );
@@ -11,7 +11,7 @@ export default (annotation, popup, adjustment = 0) => {
   cBox = {
     topLeft: {
       x: cBox.left + scrollContainer.scrollLeft - padding,
-      y: cBox.top + scrollContainer.scrollTop - padding - adjustment
+      y: cBox.top + scrollContainer.scrollTop - padding
     },
     bottomRight: {
       x: cBox.right + scrollContainer.scrollLeft + padding,
@@ -19,7 +19,6 @@ export default (annotation, popup, adjustment = 0) => {
     }
   };
   const pBox = popup.current.getBoundingClientRect();
-
   return {
     left: calcPopupLeft(cBox, pBox),
     top: calcPopupTop(cBox, pBox)
