@@ -160,12 +160,16 @@
     "insertTextHere": "여기에 텍스트를 삽입하세요",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}} 만 허용됩니다",
     "enterMeasurement": "두 지점 사이에 측정 값을 입력하십시오",
-    "linkURLorPage": "링크 URL 또는 페이지"
+    "linkURLorPage": "링크 URL 또는 페이지",
+    "sortBy": "정렬 기준"
   },
   "option": {
     "notesOrder": {
       "position": "위치",
-      "time": "시각"
+      "time": "시각",
+      "status": "상태",
+      "author": "저자",
+      "type": "유형"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "전망",

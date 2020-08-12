@@ -160,12 +160,16 @@
     "insertTextHere": "Hier Text eingeben",
     "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
     "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein",
-    "linkURLorPage": "Link URL oder eine Seite"
+    "linkURLorPage": "Link URL oder eine Seite",
+    "sortBy": "Sortiere nach"
   },
   "option": {
     "notesOrder": {
       "position": "Position",
-      "time": "Zeit"
+      "time": "Zeit",
+      "status": "Status",
+      "author": "Autor",
+      "type": "Art"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Aussicht",

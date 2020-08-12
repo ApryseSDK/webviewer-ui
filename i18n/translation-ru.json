@@ -160,12 +160,16 @@
     "insertTextHere": "Вставьте текст здесь",
     "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",
     "enterMeasurement": "Введите измерение между двумя точками",
-    "linkURLorPage": "Ссылка URL или страница"
+    "linkURLorPage": "Ссылка URL или страница",
+    "sortBy": "Сортировать по"
   },
   "option": {
     "notesOrder": {
       "position": "Позиция",
-      "time": "Время"
+      "time": "Время",
+      "status": "Статус",
+      "author": "Автор",
+      "type": "Тип"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Посмотреть",
