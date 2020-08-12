@@ -157,7 +157,8 @@
     "insertTextHere": "ここにテキストを挿入",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが受け入れられます",
     "enterMeasurement": "2点間の測定値を入力します",
-    "linkURLorPage": "リンクURLまたはページ"
+    "linkURLorPage": "リンクURLまたはページ",
+    "enterReplacementText": "置き換えるテキストを入力してください"
   },
   "option": {
     "notesOrder": {

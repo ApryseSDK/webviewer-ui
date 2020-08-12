@@ -136,7 +136,7 @@ const EditTextModal = () => {
         <div className={modalClass} data-element="editTextModal" onMouseDown={closeModal}>
           <div className="container" onMouseDown={e => e.stopPropagation()}>
             <div className="swipe-indicator" />
-            <p>Enter the text you want to replaced</p>
+            <p>{t('message.enterReplacementText')}</p>
             <AutoResizeTextarea value={newText} onChange={changeHandler} onKeyDown={keyDownHandler} />
             <div className="editing-controls">
               <button className="button cancel-button editing-pad" onClick={closeModal}>
