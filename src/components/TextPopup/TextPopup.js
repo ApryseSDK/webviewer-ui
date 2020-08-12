@@ -58,6 +58,10 @@ const TextPopup = () => {
   const onClose = useCallback(() => dispatch(actions.closeElement('textPopup')), [dispatch]);
   useArrowFocus(!isDisabled && isOpen, onClose, popupRef);
 
+  const textEditingHandler = useCallback(() => {
+    dispatch(actions.openElement('editTextModal'));
+  }, [dispatch]);
+
   return isDisabled ? null : (
     <div
       className={classNames({
@@ -77,9 +81,7 @@ const TextPopup = () => {
             dataElement="editTextButton"
             title="action.edit"
             img="ic_edit_black_24px"
-            onClick={() =>
-              dispatch(actions.openElement('editTextModal'))
-            }
+            onClick={textEditingHandler}
           />
         )}
         <ActionButton

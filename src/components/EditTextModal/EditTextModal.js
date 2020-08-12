@@ -13,7 +13,7 @@ import AutoResizeTextarea from 'components/NoteTextarea/AutoResizeTextarea';
 
 import './EditTextModal.scss';
 
-const EditTextModal = () => {
+function EditTextModal() {
   const [isDisabled, isOpen] = useSelector(state => [
     selectors.isElementDisabled(state, 'editTextModal'),
     selectors.isElementOpen(state, 'editTextModal'),
@@ -35,6 +35,37 @@ const EditTextModal = () => {
 
   useEffect(
     () => {
+
+      const storeConvertedPDFCoordinates = () => {
+        // core.getSelectedTextQuads() returns 4 coordinates pair
+        // (x4,y4)---(x3,y3)
+        //   |          |
+        // (x1,y1)---(x2,y2)
+        // Firstly convert it to PDF coordinates and then store it in a flat structure
+        const textCoordinates = core.getSelectedTextQuads();
+        // Example:
+        // textCoordinates = {
+        //   1: [
+        //     {x1: 32, y1: 582, x2: 67.28, y2: 582, x3: 67.28,4: 32, y1: 582, y2: 582, y3: 565, y4: 565},
+        //     {x1: 32, x2: 68, x3: 68, x4: 32, y1: 595, y2: 595, y3: 579, y4: 579},
+        //   ]
+        // }
+        // convert to a flat structure
+        // textCoordinates = [{x1:32, x2:1, y1:582, y2:2, pageNum:1}, {x1:1, x2:1, y1:2, y2:2, pageNum:1}]
+
+        if (textCoordinates) {
+          const convertedTextCoordinates = [];
+          Object.keys(textCoordinates).forEach(pageNum => {
+            textCoordinates[pageNum].forEach(rect => {
+              const point1 = window.docViewer.getDocument().getPDFCoordinates(pageNum, rect.x1, rect.y1);
+              const point2 = window.docViewer.getDocument().getPDFCoordinates(pageNum, rect.x3, rect.y3);
+              convertedTextCoordinates.push({ x1: point1.x, x2: point2.x, y1: point1.y, y2: point2.y,pageNum:Number(pageNum) });
+            });
+          });
+          setTextCoordinates(convertedTextCoordinates);
+        }
+      };
+
       if (isOpen) {
         //  prepopulate selected text
         setNewText(core.getSelectedText());
@@ -45,36 +76,7 @@ const EditTextModal = () => {
     [isOpen]
   );
 
-  // core.getSelectedTextQuads() returns 4 coordinates pair
-  // (x4,y4)---(x3,y3)
-  //   |          |
-  // (x1,y1)---(x2,y2)
-  // Firstly convert it to PDF coordinates and then store it in a flat structure
-  const storeConvertedPDFCoordinates = () => {
-    const textCoordinates = core.getSelectedTextQuads();
 
-    // Example:
-    // textCoordinates = {
-    //   1: [
-    //     {x1: 32, y1: 582, x2: 67.28, y2: 582, x3: 67.28,4: 32, y1: 582, y2: 582, y3: 565, y4: 565},
-    //     {x1: 32, x2: 68, x3: 68, x4: 32, y1: 595, y2: 595, y3: 579, y4: 579},
-    //   ]
-    // }
-    // convert to a flat structure
-    // textCoordinates = [{x1:32, x2:1, y1:582, y2:2, pageNum:1}, {x1:1, x2:1, y1:2, y2:2, pageNum:1}]
-
-    if (textCoordinates) {
-      const convertedTextCoordinates = [];
-      Object.keys(textCoordinates).forEach(pageNum => {
-        textCoordinates[pageNum].forEach(rect => {
-          const point1 = window.docViewer.getDocument().getPDFCoordinates(pageNum, rect.x1, rect.y1);
-          const point2 = window.docViewer.getDocument().getPDFCoordinates(pageNum, rect.x3, rect.y3);
-          convertedTextCoordinates.push({ x1: point1.x, x2: point2.x, y1: point1.y, y2: point2.y,pageNum:Number(pageNum) });
-        });
-      });
-      setTextCoordinates(convertedTextCoordinates);
-    }
-  };
 
   const updateText = e => {
     e.preventDefault();
@@ -136,7 +138,7 @@ const EditTextModal = () => {
         <div className={modalClass} data-element="editTextModal" onMouseDown={closeModal}>
           <div className="container" onMouseDown={e => e.stopPropagation()}>
             <div className="swipe-indicator" />
-            <p>{t('message.enterReplacementText')}</p>
+            <p className="textareaLabel">{t('message.enterReplacementText')}</p>
             <AutoResizeTextarea value={newText} onChange={changeHandler} onKeyDown={keyDownHandler} />
             <div className="editing-controls">
               <button className="button cancel-button editing-pad" onClick={closeModal}>
@@ -151,6 +153,6 @@ const EditTextModal = () => {
       </FocusTrap>
     </Swipeable>
   );
-};
+}
 
 export default EditTextModal;
