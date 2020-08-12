@@ -84,7 +84,8 @@
     "strikeout": "Strikeout",
     "underline": "Underline",
     "custom": "Custom",
-    "rubberStamp": "Rubber Stamp"
+    "rubberStamp": "Rubber Stamp",
+    "note": "Note"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -128,7 +129,8 @@
     "redaction": "Redaction",
     "viewControlsOverlay": "View Controls",
     "calibration": "Calibration",
-    "createStampButton": "Create New Stamp"
+    "createStampButton": "Create New Stamp",
+    "filter": "Filter"
   },
   "message": {
     "toolsOverlayNoPresets": "No Presets",
@@ -139,6 +141,7 @@
     "enterPassword": "This document is password protected. Please enter a password",
     "incorrectPassword": "Incorrect password, attempts left: {{ remainingAttempts }}",
     "noAnnotations": "Start making annotations to leave a comment.",
+    "noAnnotationsFilter": "Start making annotations and filters will appear here.",
     "noOutlines": "This document has no outline.",
     "noResults": "No results found.",
     "numResultsFound": "results found",
@@ -230,6 +233,10 @@
       "dragAndDrop": "Drag & Drop your image here",
       "or": "Or",
       "pickImage": "Choose a signature"
+    },
+    "filterAnnotModal": {
+      "commentBy": "Comment by",
+      "types": "Types"
     },
     "status": {
       "status": "Status"

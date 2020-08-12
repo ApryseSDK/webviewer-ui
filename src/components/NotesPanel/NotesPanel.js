@@ -8,9 +8,9 @@ import NormalList from 'components/NotesPanel/NormalList';
 import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
 import Icon from 'components/Icon';
-
 import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
+import Button from 'components/Button';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
@@ -81,8 +81,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       setSearchInput('');
     };
     core.addEventListener('documentUnloaded', onDocumentUnloaded);
-    return () =>
-      core.removeEventListener('documentUnloaded', onDocumentUnloaded);
+    return () => core.removeEventListener('documentUnloaded', onDocumentUnloaded);
   }, []);
 
   useEffect(() => {
@@ -90,13 +89,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       setNotes(
         core
           .getAnnotationsList()
-          .filter(
-            annot =>
-              annot.Listable &&
-              !annot.isReply() &&
-              !annot.Hidden &&
-              !annot.isGrouped(),
-          ),
+          .filter(annot => annot.Listable && !annot.isReply() && !annot.Hidden && !annot.isGrouped()),
       );
     };
 
@@ -123,8 +116,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     onAnnotationSelected();
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
-    return () =>
-      core.removeEventListener('annotationSelected', onAnnotationSelected);
+    return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
   }, []);
 
   let singleSelectedNoteIndex = -1;
@@ -200,24 +192,12 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     resize = () => {},
   ) => {
     let listSeparator = null;
-    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[
-      sortStrategy
-    ];
+    const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
     const prevNote = index === 0 ? null : notes[index - 1];
     const currNote = notes[index];
 
-    if (
-      shouldRenderSeparator &&
-      getSeparatorContent &&
-      (!prevNote || shouldRenderSeparator(prevNote, currNote))
-    ) {
-      listSeparator = (
-        <ListSeparator
-          renderContent={() =>
-            getSeparatorContent(prevNote, currNote, { pageLabels })
-          }
-        />
-      );
+    if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote))) {
+      listSeparator = <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, { pageLabels })} />;
     }
 
     // can potentially optimize this a bit since a new reference will cause consumers to rerender
@@ -248,28 +228,18 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const NoResults = (
     <div className="no-results">
       <div>
-        <Icon
-          className="empty-icon"
-          glyph="illustration - empty state - outlines"
-        />
+        <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
       </div>
-      <div className="msg">
-        {t('message.noResults')}
-      </div>
+      <div className="msg">{t('message.noResults')}</div>
     </div>
   );
 
   const NoAnnotations = (
     <div className="no-annotations">
       <div>
-        <Icon
-          className="empty-icon"
-          glyph="illustration - empty state - outlines"
-        />
+        <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
       </div>
-      <div className="msg">
-        {t('message.noAnnotations')}
-      </div>
+      <div className="msg">{t('message.noAnnotations')}</div>
     </div>
   );
 
@@ -277,9 +247,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   // in order to scroll it into view in this render effect
   const ids = Object.keys(selectedNoteIds);
   if (ids.length === 1) {
-    singleSelectedNoteIndex = notesToRender.findIndex(
-      note => note.Id === ids[0],
-    );
+    singleSelectedNoteIndex = notesToRender.findIndex(note => note.Id === ids[0]);
   }
 
   let style = {};
@@ -288,6 +256,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   }
 
   return (
+
     <div
       className={classNames({
         Panel: true,
@@ -327,18 +296,24 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           </div>
           <div className="divider" />
           <div className="sort-row">
-            <div className="sort-container">
-              <div className="label">{t('message.sortBy')}</div>
-              <Dropdown
-                items={Object.keys(getSortStrategies())}
-                translationPrefix="option.notesOrder"
-                currentSelectionKey={sortStrategy}
-                onClickItem={sortStrategy => {
-                  dispatch(actions.setSortStrategy(sortStrategy));
-                }}
-              />
-            </div>
-          </div>
+                  <Button
+                    dataElement="filterAnnotationButton"
+                    className="filter-annotation-button"
+                    label={t('component.filter')}
+                    onClick={() => dispatch(actions.openElement('filterModal'))}
+                  />
+                  <div className="sort-container">
+                    <div className="label">{`Sort by:`}</div>
+                    <Dropdown
+                      items={Object.keys(getSortStrategies())}
+                      translationPrefix="option.notesOrder"
+                      currentSelectionKey={sortStrategy}
+                      onClickItem={sortStrategy => {
+                        dispatch(actions.setSortStrategy(sortStrategy));
+                      }}
+                    />
+                  </div>
+                </div>
         </div>
         {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
           <NormalList

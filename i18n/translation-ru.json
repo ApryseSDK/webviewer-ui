@@ -84,7 +84,8 @@
     "strikeout": "Зачеркнуть",
     "underline": "Подчеркнуть",
     "custom": "Свой стиль",
-    "rubberStamp": "Штамп"
+    "rubberStamp": "Штамп",
+    "note": "Заметка"
   },
   "rubberStamp": {
     "Approved": "Одобренный",
@@ -128,7 +129,8 @@
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
     "calibration": "калибровка",
-    "createStampButton": "Создать новую марку"
+    "createStampButton": "Создать новую марку",
+    "filter": "Фильтр"
   },
   "message": {
     "toolsOverlayNoPresets": "Нет пресетов",
@@ -139,6 +141,7 @@
     "enterPassword": "Документ защищен паролем. Пожалуйста введите пароль.",
     "incorrectPassword": "Пароль неверный, {{ remainingAttempts }} попыток осталось.",
     "noAnnotations": "Документ не имеет аннотаций.",
+    "noAnnotationsFilter": "Начните делать аннотации и фильтры появятся здесь.",
     "noOutlines": "Документ не имеет оглавления.",
     "noResults": "Поиск не вернул результатов.",
     "numResultsFound": "найдены результаты",
@@ -230,6 +233,10 @@
       "dragAndDrop": "Перетащите изображение сюда",
       "or": "Или",
       "pickImage": "Выберите Подпись Изображение"
+    },
+    "filterAnnotModal": {
+      "commentBy": "Комментарий от",
+      "types": "Типы"
     },
     "status": {
       "status": "Статус"

@@ -84,7 +84,8 @@
     "strikeout": "Barré",
     "underline": "Soulignage",
     "custom": "personnalisation",
-    "rubberStamp": "Rubber Stamp"
+    "rubberStamp": "Rubber Stamp",
+    "note": "Remarque"
   },
   "rubberStamp": {
     "Approved": "Approuvée",
@@ -128,7 +129,8 @@
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
     "calibration": "Étalonnage",
-    "createStampButton": "Créer un nouveau tampon"
+    "createStampButton": "Créer un nouveau tampon",
+    "filter": "Filtre"
   },
   "message": {
     "toolsOverlayNoPresets": "Aucun préréglage",
@@ -139,6 +141,7 @@
     "enterPassword": "Ce document est protégé par un mot de passe. Veuillez saisir ce mot de passe.",
     "incorrectPassword": "Mot de passe incorrect. Tentatives restantes: {{remainingAttempts}}",
     "noAnnotations": "Ce document n'a pas d'annotations.",
+    "noAnnotationsFilter": "Commencez à créer des annotations et des filtres apparaîtront ici.",
     "noOutlines": "Ce document n'a pas de plan.",
     "noResults": "Aucun résultat trouvé.",
     "numResultsFound": "résultats trouvés",
@@ -230,6 +233,10 @@
       "dragAndDrop": "Faites glisser et déposez votre image ici",
       "or": "Ou",
       "pickImage": "Choisir l'image de signature"
+    },
+    "filterAnnotModal": {
+      "commentBy": "Commentaire de",
+      "types": "Les types"
     },
     "status": {
       "status": "Statut"

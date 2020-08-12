@@ -84,7 +84,8 @@
     "strikeout": "删除线",
     "underline": "下划线",
     "custom": "自定义",
-    "rubberStamp": "橡皮图章"
+    "rubberStamp": "橡皮图章",
+    "note": "注意"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -128,7 +129,8 @@
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
     "calibration": "校准",
-    "createStampButton": "创建新图章"
+    "createStampButton": "创建新图章",
+    "filter": "过滤"
   },
   "message": {
     "toolsOverlayNoPresets": "无预设",
@@ -139,6 +141,7 @@
     "enterPassword": "此文档已被加密。请输入密码。",
     "incorrectPassword": "密码错误，剩余输入机会：{{remainingAttempts}}",
     "noAnnotations": "此文档没有注释。",
+    "noAnnotationsFilter": "开始制作注释，过滤器将显示在此处。",
     "noOutlines": "此文档没有大纲。",
     "noResults": "未找到结果。",
     "numResultsFound": "找到结果",
@@ -230,6 +233,10 @@
       "dragAndDrop": "将图片拖放到此处",
       "or": "要么",
       "pickImage": "选择签名图像"
+    },
+    "filterAnnotModal": {
+      "commentBy": "评论者",
+      "types": "种类"
     },
     "status": {
       "status": "状态"

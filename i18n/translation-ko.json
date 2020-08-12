@@ -84,7 +84,8 @@
     "strikeout": "취소선",
     "underline": "밑줄",
     "custom": "사용자 지정",
-    "rubberStamp": "고무 도장"
+    "rubberStamp": "고무 도장",
+    "note": "노트"
   },
   "rubberStamp": {
     "Approved": "승인",
@@ -128,7 +129,8 @@
     "redaction": "개정",
     "viewControlsOverlay": "컨트롤 보기",
     "calibration": "구경 측정",
-    "createStampButton": "새 스탬프 생성"
+    "createStampButton": "새 스탬프 생성",
+    "filter": "필터"
   },
   "message": {
     "toolsOverlayNoPresets": "사전 설정 없음",
@@ -139,6 +141,7 @@
     "enterPassword": "이 문서는 비밀번호로 보호되어 있습니다. 비밀번호를 입력하세요",
     "incorrectPassword": "비밀번호가 잘못되었습니다. 남은 시도: {{ remainingAttempts }}",
     "noAnnotations": "이 문서에는 주석이 없습니다.",
+    "noAnnotationsFilter": "주석 만들기를 시작하면 여기에 필터가 표시됩니다.",
     "noOutlines": "이 문서에는 개요가 없습니다.",
     "noResults": "결과를 찾을 수 없습니다.",
     "numResultsFound": "찾은 결과",
@@ -230,6 +233,10 @@
       "dragAndDrop": "여기에 이미지를 드래그 앤 드롭",
       "or": "또는",
       "pickImage": "서명 이미지 선택"
+    },
+    "filterAnnotModal": {
+      "commentBy": "의 댓글",
+      "types": "종류"
     },
     "status": {
       "status": "지위"
