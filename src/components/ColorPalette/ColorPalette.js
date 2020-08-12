@@ -131,7 +131,7 @@ class ColorPalette extends React.PureComponent {
               </div>
             </button>
         ))}
-        {allowTransparent &&!hasTransparentPalette && (
+        {allowTransparent && !hasTransparentPalette && (
           <button
             className="cell-container"
             onClick={() => this.setColor(null)}
