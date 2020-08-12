@@ -36,10 +36,10 @@ const FilterAnnotModal = () => {
         let type = true;
         let author = true;
         if (typesFilter.length > 0) {
-          type = typesFilter.includes(annot.Subject.toLowerCase().replace(/\s/g, ''));
+          type = typesFilter.includes(annot.Subject);
         }
         if (authorFilter.length > 0) {
-          author = authorFilter.includes(annot.Author);
+          author = authorFilter.includes(core.getDisplayAuthor(annot));
         }
         return type && author;
       }),
@@ -73,8 +73,7 @@ const FilterAnnotModal = () => {
         authorsToBeAdded.add(core.getDisplayAuthor(annot));
       }
       if (annot.Subject && annot.Subject !== '') {
-        // we want to lowercase it and remove spaces to get i18n translations
-        annotTypesToBeAdded.add(annot.Subject.toLowerCase().replace(/\s/g, ''));
+        annotTypesToBeAdded.add(annot.Subject);
       }
     });
     setAuthors([...authorsToBeAdded]);
@@ -128,13 +127,7 @@ const FilterAnnotModal = () => {
                           <Choice
                             type="checkbox"
                             key={index}
-                            label={
-                              t(`annotation.${val}`)
-                                .toLowerCase()
-                                .replace(/\s/g, '') === val
-                                ? t(`annotation.${val}`)
-                                : val.charAt(0).toUpperCase() + val.slice(1)
-                            } // if there is no translation, just use the original subject
+                            label={val}
                             checked={typesFilter.includes(val)}
                             id={val}
                             onChange={e => {
