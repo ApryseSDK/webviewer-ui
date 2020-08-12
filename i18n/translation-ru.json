@@ -157,7 +157,8 @@
     "insertTextHere": "Вставьте текст здесь",
     "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",
     "enterMeasurement": "Введите измерение между двумя точками",
-    "linkURLorPage": "Ссылка URL или страница"
+    "linkURLorPage": "Ссылка URL или страница",
+    "sortBy": "Сортировать по"
   },
   "option": {
     "notesOrder": {
