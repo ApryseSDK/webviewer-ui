@@ -1,16 +1,84 @@
 import React, { useEffect, useRef, useContext, useState, useCallback } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 import ReplyArea from 'components/Note/ReplyArea';
 
 import selectors from 'selectors';
+import actions from 'actions';
 import core from 'core';
 
+import { createPortal } from 'react-dom';
+
 import './Note.scss';
+
+const Portal = ({ children }) => {
+  const mount = document.getElementById("portal-root");
+  const el = document.createElement("div");
+
+  useEffect(() => {
+    mount.appendChild(el);
+    return () => mount.removeChild(el);
+  }, [el, mount]);
+
+  return createPortal(children, el);
+};
+
+const AnnotationLine = ({ annotation, noteContainerRef }) => {
+  const [notePanelWidth, zoom, isLineOpen] = useSelector(
+    state => [
+      selectors.getNotesPanelWidth(state),
+      selectors.getZoom(state),
+      selectors.isElementOpen(state, 'linePortal')
+    ],
+    shallowEqual,
+  );
+  const [width, setWidth] = useState(0);
+  const [top, setTop] = useState(0);
+  const [left, setLeft] = useState(0);
+  const displayMode = core.getDisplayModeObject();
+  const { isSelected } = useContext(NoteContext);
+  const x = annotation.getX();
+  const y = annotation.getY();
+  console.log({ zoom });
+  console.log( { isLineOpen });
+
+  useEffect(() => {
+    console.log({ annotation });
+    console.log({ x, y });
+
+    const pageToWindowCoords  = displayMode.pageToWindow({ x, y }, 1);
+    //left is the X
+    /// top is the Y
+    // console.log({ pageToWindowCoords });
+    setLeft(pageToWindowCoords.x + annotation.Width);
+    // console.log(noteContainerRef.current.getBoundingClientRect());
+    setTop(noteContainerRef.current.getBoundingClientRect().top);
+    console.log({ notePanelWidth });
+
+    const lineWidth = window.innerWidth - notePanelWidth - pageToWindowCoords.x - annotation.Width + 16;
+    console.log( { lineWidth });
+    setWidth(lineWidth);
+    window.addEventListener('resize', () => console.log('resize'));
+
+  }, [annotation, displayMode, noteContainerRef, notePanelWidth, x, y]);
+
+
+  console.log('render');
+  if (isSelected && isLineOpen) {
+    return (
+      <Portal>
+        <div className="line" data-element="linePortal"
+          style={{ width, left, top }}
+        />
+      </Portal>);
+  } else {
+    return null;
+  }
+};
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -24,6 +92,7 @@ const Note = ({ annotation }) => {
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
   const ids = useRef([]);
+  const dispatch = useDispatch();
 
   const [noteTransformFunction] = useSelector(
     state => [
@@ -85,6 +154,7 @@ const Note = ({ annotation }) => {
       core.deselectAllAnnotations();
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
+      dispatch(actions.openElement('linePortal'));
     }
   };
 
@@ -156,6 +226,7 @@ const Note = ({ annotation }) => {
           </div>
         </React.Fragment>
       )}
+      <AnnotationLine annotation={annotation} noteContainerRef={containerRef}/>
     </div>
   );
 };
