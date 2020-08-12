@@ -55,7 +55,6 @@ const FilterAnnotModal = () => {
     );
     setAuthorFilter([]);
     setTypesFilter([]);
-    closeModal();
   };
 
   const closeModal = () => {
