@@ -311,6 +311,10 @@
     "redaction": {
       "applyTile": "リダクションを適用",
       "applyMessage": "この操作により、編集用に選択されたすべてのアイテムが完全に削除されます。元に戻すことはできません。"
+    },
+    "selectPage": {
+      "selectTitle": "ページが選択されていません",
+      "selectMessage": "ページを選択して、もう一度お試しください。"
     }
   },
   "shortcut": {

@@ -311,6 +311,10 @@
     "redaction": {
       "applyTile": "Schwärzung anwenden",
       "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht rückgängig gemacht werden."
+    },
+    "selectPage": {
+      "selectTitle": "Keine Seiten ausgewählt",
+      "selectMessage": "Bitte wählen Sie Seiten aus und versuchen Sie es erneut."
     }
   },
   "shortcut": {

@@ -311,6 +311,10 @@
     "redaction": {
       "applyTile": "Appliquer la rédaction",
       "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait."
+    },
+    "selectPage": {
+      "selectTitle": "Aucune page sélectionnée",
+      "selectMessage": "Veuillez sélectionner des pages et réessayer."
     }
   },
   "shortcut": {

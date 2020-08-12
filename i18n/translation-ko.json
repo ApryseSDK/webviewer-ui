@@ -311,6 +311,10 @@
     "redaction": {
       "applyTile": "수정 적용",
       "applyMessage": "이 작업은 편집을 위해 선택된 모든 항목을 영구적으로 제거합니다. 취소 할 수 없습니다."
+    },
+    "selectPage": {
+      "selectTitle": "선택된 페이지 없음",
+      "selectMessage": "페이지를 선택하고 다시 시도하십시오."
     }
   },
   "shortcut": {

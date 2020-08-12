@@ -311,6 +311,10 @@
     "redaction": {
       "applyTile": "Redactie toepassen",
       "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden."
+    },
+    "selectPage": {
+      "selectTitle": "Geen pagina's geselecteerd",
+      "selectMessage": "Selecteer pagina's en probeer het opnieuw."
     }
   },
   "shortcut": {

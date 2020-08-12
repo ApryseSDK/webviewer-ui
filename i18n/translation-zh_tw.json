@@ -311,6 +311,10 @@
     "redaction": {
       "applyTile": "應用編輯",
       "applyMessage": "此操作將永久刪除所有要編輯的項目。無法撤消。"
+    },
+    "selectPage": {
+      "selectTitle": "未選擇頁面",
+      "selectMessage": "請選擇頁面，然後重試。"
     }
   },
   "shortcut": {

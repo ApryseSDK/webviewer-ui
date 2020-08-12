@@ -311,6 +311,10 @@
     "redaction": {
       "applyTile": "Aplicar redacción",
       "applyMessage": "Esta acción eliminará permanentemente todos los elementos seleccionados para su redacción. No se puede deshacer."
+    },
+    "selectPage": {
+      "selectTitle": "No hay páginas seleccionadas",
+      "selectMessage": "Seleccione las páginas y vuelva a intentarlo."
     }
   },
   "shortcut": {

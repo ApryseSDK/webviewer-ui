@@ -311,6 +311,10 @@
     "redaction": {
       "applyTile": "Applica redazione",
       "applyMessage": "Questa azione rimuoverà permanentemente tutti gli elementi selezionati per la redazione. Non può essere annullato."
+    },
+    "selectPage": {
+      "selectTitle": "Nessuna pagina selezionata",
+      "selectMessage": "Seleziona le pagine e riprova."
     }
   },
   "shortcut": {
