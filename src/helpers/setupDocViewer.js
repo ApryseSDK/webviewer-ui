@@ -56,6 +56,9 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateArrow2 = new window.Tools.ArrowCreateTool(docViewer, 'AnnotationCreateArrow2');
   toolModeMap.AnnotationCreateArrow3 = new window.Tools.ArrowCreateTool(docViewer, 'AnnotationCreateArrow3');
   toolModeMap.AnnotationCreateArrow4 = new window.Tools.ArrowCreateTool(docViewer, 'AnnotationCreateArrow4');
+  toolModeMap.AnnotationCreateCountMeasurement2 = new window.Tools.CountMeasurementCreateTool(docViewer, 'AnnotationCreateCountMeasurement2');
+  toolModeMap.AnnotationCreateCountMeasurement3 = new window.Tools.CountMeasurementCreateTool(docViewer, 'AnnotationCreateCountMeasurement3');
+  toolModeMap.AnnotationCreateCountMeasurement4 = new window.Tools.CountMeasurementCreateTool(docViewer, 'AnnotationCreateCountMeasurement4');
   toolModeMap.AnnotationCreateDistanceMeasurement2 = new window.Tools.DistanceMeasurementCreateTool(docViewer, 'AnnotationCreateDistanceMeasurement2');
   toolModeMap.AnnotationCreateDistanceMeasurement3 = new window.Tools.DistanceMeasurementCreateTool(docViewer, 'AnnotationCreateDistanceMeasurement3');
   toolModeMap.AnnotationCreateDistanceMeasurement4 = new window.Tools.DistanceMeasurementCreateTool(docViewer, 'AnnotationCreateDistanceMeasurement4');

@@ -135,7 +135,12 @@ const map = {
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
-    toolNames: ['AnnotationCreateCountMeasurement'],
+    toolNames: [
+      'AnnotationCreateCountMeasurement',
+      'AnnotationCreateCountMeasurement2',
+      'AnnotationCreateCountMeasurement3',
+      'AnnotationCreateCountMeasurement4',
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.StickyAnnotation &&
       annotation.getCustomData('trn-is-count')
@@ -453,4 +458,4 @@ export const register = (tool, annotationConstructor, customAnnotCheckFunc) => {
 
 // we return an empty object here to prevent some components from accessing undefined
 // if the map doesn't have a key for some annotations
-export const getDataWithKey = key => map[key] || {};
+export const getDataWithKey = key => map[key] || { icon: 'icon - tool - pen and shape - phone - line' };

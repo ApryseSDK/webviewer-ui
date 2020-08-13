@@ -12,6 +12,7 @@ const propTypes = {
   onFocus: PropTypes.func,
   onKeyDown: PropTypes.func,
   userData: PropTypes.arrayOf(PropTypes.object),
+  'aria-label': PropTypes.string,
 };
 
 const MentionsTextarea = React.forwardRef(
@@ -19,11 +20,12 @@ const MentionsTextarea = React.forwardRef(
     {
       value = '',
       onChange,
-      onKeyDown = () => {},
-      onBlur = () => {},
-      onFocus = () => {},
-      placeholder = '',
+      onKeyDown,
+      onBlur,
+      onFocus,
+      placeholder,
       userData,
+      'aria-label': ariaLabel,
     },
     forwardedRef
   ) => {
@@ -52,6 +54,7 @@ const MentionsTextarea = React.forwardRef(
           onBlur={onBlur}
           onFocus={onFocus}
           placeholder={placeholder}
+          aria-label={ariaLabel}
           allowSpaceInQuery
         >
           <Mention

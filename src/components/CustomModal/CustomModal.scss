@@ -1,0 +1,6 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+.CustomModal {
+  @extend %modal;
+}

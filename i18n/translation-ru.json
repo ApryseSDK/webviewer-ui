@@ -22,7 +22,11 @@
     "fitToPage": "Уместить страницу",
     "fitToWidth": "Уместить по ширине",
     "openFile": "Открыть документ",
+    "pagePrev": "Предыдущая страница",
+    "pageNext": "Следующая страница",
+    "pageSet": "Установить страницу",
     "print": "Распечатать",
+    "name": "название",
     "ok": "OK",
     "reply": "Ответить",
     "rotate": "Повернуть",
@@ -38,6 +42,7 @@
     "zoom": "Увеличить",
     "zoomIn": "Увеличить",
     "zoomOut": "Уменьшить",
+    "zoomSet": "Установить зум",
     "zoomControls": "Управление масштабированием",
     "draw": "Привлечь",
     "type": "Тип",
@@ -47,7 +52,9 @@
     "lightMode": "Легкий режим",
     "fileAttachmentDownload": "Скачать прикрепленный файл",
     "prevResult": "Предыдущий результат",
-    "nextResult": "Следующий результат"
+    "nextResult": "Следующий результат",
+    "prev": "предыдущий",
+    "next": "следующий"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -150,12 +157,16 @@
     "insertTextHere": "Вставьте текст здесь",
     "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",
     "enterMeasurement": "Введите измерение между двумя точками",
-    "linkURLorPage": "Ссылка URL или страница"
+    "linkURLorPage": "Ссылка URL или страница",
+    "sortBy": "Сортировать по"
   },
   "option": {
     "notesOrder": {
       "position": "Позиция",
-      "time": "Время"
+      "time": "Время",
+      "status": "Статус",
+      "author": "Автор",
+      "type": "Тип"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Посмотреть",
@@ -260,7 +271,8 @@
     },
     "shared": {
       "page": "Страница",
-      "precision": "Точность"
+      "precision": "Точность",
+      "enableSnapping": "Включить привязку для измерительных инструментов"
     },
     "watermark": {
       "size": "Размер",

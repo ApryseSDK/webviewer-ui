@@ -11,7 +11,7 @@ import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
-import { isMobile } from 'helpers/device';
+import { isMobile, isIE } from 'helpers/device';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -162,7 +162,7 @@ const AnnotationPopup = () => {
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
   const commentOnAnnotation = () => {
-    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation) {
+    if (firstAnnotation instanceof window.Annotations.FreeTextAnnotation && core.getAnnotationManager().useFreeTextEditing()) {
       core
         .getAnnotationManager()
         .trigger('annotationDoubleClicked', firstAnnotation);
@@ -327,7 +327,7 @@ const AnnotationPopup = () => {
   </div>;
 
   return (
-    isMobile() ?
+    isIE || isMobile() ?
     annotationPopup
     :
     <Draggable cancel=".Button, .cell, .sliders-container svg">

@@ -22,7 +22,11 @@
     "fitToPage": "Ajustar à página",
     "fitToWidth": "Ajustar à largura",
     "openFile": "Abrir arquivo",
+    "pagePrev": "Página anterior",
+    "pageNext": "Próxima página",
+    "pageSet": "Definir página",
     "print": "Imprimir",
+    "name": "Nome",
     "ok": "OK",
     "reply": "Responder",
     "rotate": "Girar",
@@ -38,6 +42,7 @@
     "zoom": "Zoom",
     "zoomIn": "Aproximar",
     "zoomOut": "Afastar",
+    "zoomSet": "Definir zoom",
     "zoomControls": "Controles de zoom",
     "draw": "Desenhar",
     "type": "Tipo",
@@ -47,7 +52,9 @@
     "lightMode": "Modo de luz",
     "fileAttachmentDownload": "Baixar arquivo anexado",
     "prevResult": "Resultado anterior",
-    "nextResult": "Próximo resultado"
+    "nextResult": "Próximo resultado",
+    "prev": "Anterior",
+    "next": "Próximo"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -150,12 +157,16 @@
     "insertTextHere": "Insira texto aqui",
     "imageSignatureAcceptedFileTypes": "Somente {{acceptFileTypes}} são aceitos",
     "enterMeasurement": "Digite a medição entre os dois pontos",
-    "linkURLorPage": "URL do link ou uma página"
+    "linkURLorPage": "URL do link ou uma página",
+    "sortBy": "Ordenar por"
   },
   "option": {
     "notesOrder": {
       "position": "Posição",
-      "time": "Tempo"
+      "time": "Tempo",
+      "status": "Status",
+      "author": "Autor",
+      "type": "Tipo"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Visão",
@@ -260,7 +271,8 @@
     },
     "shared": {
       "page": "Página",
-      "precision": "Precisão"
+      "precision": "Precisão",
+      "enableSnapping": "Ativar encaixe para ferramentas de medição"
     },
     "watermark": {
       "size": "Tamanho",
@@ -336,9 +348,9 @@
     }
   },
   "tool": {
-    "pan": "Pan",
+    "pan": "Arrastar",
     "select": "Selecionar",
-    "Marquee": "Zoom Marquee",
+    "Marquee": "Zoom na seleção",
     "Link": "URL ou página do link",
     "Standard": "Padrão",
     "Custom": "personalizadas"

@@ -252,6 +252,7 @@ const ContentArea = ({
         onChange={onTextAreaValueChange}
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
+        aria-label={`${t('action.comment')}...`}
       />
       <div className="edit-buttons">
         <div

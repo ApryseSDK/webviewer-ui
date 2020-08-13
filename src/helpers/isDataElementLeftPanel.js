@@ -7,6 +7,11 @@ export const getLeftPanelDataElements = state => {
     'layersPanel',
     'bookmarksPanel',
   ];
+
+  if (state.viewer.notesInLeftPanel) {
+    defaultLeftPanels.push('notesPanel');
+  }
+
   const customPanels = state.viewer.customPanels.map(({ panel }) => panel.dataElement);
 
   return [...defaultLeftPanels, ...customPanels];

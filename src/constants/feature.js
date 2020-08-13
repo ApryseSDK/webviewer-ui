@@ -17,6 +17,7 @@
  * @property {string} ThumbnailMerging Ability to drag and drop a file into the thumbnail panel to merge
  * @property {string} ThumbnailReordering Ability to reorder pages using the thumbnail panel
  * @property {string} PageNavigation Ability to navigate through pages using mouse wheel, arrow up/down keys and the swipe gesture.
+ * @property {string} MouseWheelZoom Ability to zoom when holding ctrl/cmd + mouse wheel.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -44,4 +45,5 @@ export default {
   ThumbnailReordering: 'ThumbnailReordering',
   ThumbnailMultiselect: 'ThumbnailMultiselect',
   PageNavigation: 'PageNavigation',
+  MouseWheelZoom: 'MouseWheelZoom',
 };

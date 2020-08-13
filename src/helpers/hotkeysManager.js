@@ -6,7 +6,7 @@ import openFilePicker from 'helpers/openFilePicker';
 import copyText from 'helpers/copyText';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import { zoomIn, zoomOut } from 'helpers/zoom';
-import print from 'helpers/print';
+import { print } from 'helpers/print';
 import createTextAnnotationAndSelect from 'helpers/createTextAnnotationAndSelect';
 import { isMobile } from 'helpers/device';
 import isFocusingElement from 'helpers/isFocusingElement';
@@ -183,7 +183,7 @@ const HotkeysManager = {
   },
   /**
    * Add an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys#on
+   * @method WebViewerInstance.Hotkeys.on
    * @param {string} key A keyboard key <br/>
    * If a hotkey is consisted of more than one key. Those keys should be connected using '+'.
    * @param {function|object} [handler] An optional argument <br/>
@@ -240,7 +240,7 @@ WebViewer(...)
   },
   /**
    * Remove an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys#off
+   * @method WebViewerInstance.Hotkeys.off
    * @param {string} [key] An optional keyboard key. If not passed, all handlers will be removed
    * @param {function} [handler] An optional function. If not passed, all handlers of the given key will be removed
    * @example
@@ -328,20 +328,7 @@ WebViewer(...)
       [`${Keys.CTRL_P}, ${Keys.COMMAND_P}`]: e => {
         e.preventDefault();
 
-        print(dispatch, selectors.isEmbedPrintSupported(getState()));
-      },
-      [`${Keys.ENTER}`]: () => {
-        if (document.activeElement.className.includes('Note')) {
-          document.activeElement.click();
-        } else if (document.activeElement.className === 'skip-to-document') {
-          document.getElementById('pageText0').focus();
-        } else if (document.activeElement.className === 'skip-to-notes') {
-          dispatch(actions.openElement('notesPanel'));
-          const noteEl = document.querySelector('.Note');
-          if (noteEl) {
-            noteEl.focus();
-          }
-        }
+        print(dispatch, selectors.isEmbedPrintSupported(getState()), selectors.getSortStrategy(getState()), selectors.getColorMap(getState()));
       },
       [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();
@@ -362,10 +349,15 @@ WebViewer(...)
         const scrollViewElement = core.getScrollViewElement();
         const { scrollHeight, clientHeight } = scrollViewElement;
         const reachedTop = scrollViewElement.scrollTop === 0;
+
         if (reachedTop) {
-          setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
-          // set the scrollbar to be at the bottom of the page
-          scrollViewElement.scrollTop = scrollHeight - clientHeight;
+          const currentPage = core.getCurrentPage();
+          setCurrentPage(currentPage - getNumberOfPagesToNavigate());
+
+          // set the scrollbar to be at the bottom of the page only if the previous page is bigger than 1
+          if (currentPage > 1) {
+            scrollViewElement.scrollTop = scrollHeight - clientHeight;
+          }
         }
       },
       [`${Keys.DOWN}`]: () => {
@@ -400,15 +392,6 @@ WebViewer(...)
       [`${Keys.ESCAPE}`]: e => {
         e.preventDefault();
         setToolModeAndGroup(store, 'AnnotationEdit', '');
-
-        const el = document.activeElement;
-        if (el?.tabIndex === 0) {
-          const hackEl = document.querySelector('.skip-to-hack');
-          if (hackEl) {
-            hackEl.focus();
-            hackEl.blur();
-          }
-        }
 
         dispatch(
           actions.closeElements([

@@ -1,6 +1,5 @@
 import Icon from 'components/Icon';
-import core from 'core';
-import { zoomTo } from 'helpers/zoom';
+import { zoomTo, fitToPage, fitToWidth } from 'helpers/zoom';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -17,11 +16,11 @@ function ZoomOverlay() {
 
   return (
     <FlyoutMenu menu="zoomOverlay" trigger="zoomOverlayButton">
-      <button className="ZoomItem" onClick={core.fitToWidth} aria-label={t('action.fitToWidth')}>
+      <button className="ZoomItem" onClick={fitToWidth} aria-label={t('action.fitToWidth')}>
         <Icon className="ZoomIcon" glyph="icon-header-zoom-fit-to-width" />
         <div className="ZoomLabel">{t('action.fitToWidth')}</div>
       </button>
-      <button className="ZoomItem" onClick={core.fitToPage} aria-label={t('action.fitToPage')}>
+      <button className="ZoomItem" onClick={fitToPage} aria-label={t('action.fitToPage')}>
         <Icon className="ZoomIcon" glyph="icon-header-zoom-fit-to-page" />
         <div className="ZoomLabel">{t('action.fitToPage')}</div>
       </button>

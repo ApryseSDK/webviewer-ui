@@ -38,12 +38,12 @@
 }
 
 .Dropdown__items {
+  z-index: 1; // Needed to not trigger mouse events underneath the dropdown
   display: flex;
   flex-direction: column;
   position: absolute;
   top: 30px;
   right: 0px;
-
   border-radius: 4px;
   box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
 

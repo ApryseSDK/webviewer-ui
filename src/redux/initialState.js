@@ -2,6 +2,8 @@ import React from 'react';
 
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
+import actions from 'actions';
+import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
@@ -24,6 +26,9 @@ export default {
       searchPanel: 293,
       notesPanel: 293,
     },
+    lastPickedToolForGroup: {},
+    lastPickedToolGroup: {},
+    notesInLeftPanel: getHashParams('notesInLeftPanel', false),
     headers: {
       default: [
         { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
@@ -39,19 +44,46 @@ export default {
           },
           hiddenOnMobileDevice: true,
         },
-        { type: 'divider', hidden: ['mobile', 'tablet'] },
-        { type: 'toolButton', toolName: 'Pan', hidden: ['mobile'] },
+        { type: 'divider', hidden: ['small-mobile', 'mobile', 'tablet'] },
+        { type: 'toolButton', toolName: 'Pan' },
         // For mobile
         { type: 'toolButton', toolName: 'TextSelect' },
-        { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['mobile'] },
+        { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['small-mobile', 'mobile'] },
         {
           type: 'customElement',
           render: () => <Ribbons />,
           className: 'custom-ribbons-container',
         },
+        { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel', hidden: ['small-mobile'] },
+        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel', hidden: ['small-mobile'] },
+        { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay', hidden: ['small-mobile'] },
+        {
+          type: 'actionButton',
+          dataElement: 'moreButton',
+          title: 'action.redo',
+          img: 'icon-tools-more',
+          onClick: dispatch => {
+            dispatch(actions.setActiveHeaderGroup('small-mobile-more-buttons'));
+            core.setToolMode(defaultTool);
+          },
+          hidden: ['mobile', 'tablet', 'desktop'],
+        },
+      ],
+      'small-mobile-more-buttons': [
         { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },
         { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
         { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
+        { type: 'spacer' },
+        {
+          type: 'actionButton',
+          dataElement: 'defaultHeaderButton',
+          titile: 'action.close',
+          img: 'ic_close_black_24px',
+          onClick: dispatch => {
+            dispatch(actions.setActiveHeaderGroup('default'));
+            core.setToolMode(defaultTool);
+          },
+        },
       ],
       "toolbarGroup-View": [],
       "toolbarGroup-Annotate": [
@@ -69,7 +101,7 @@ export default {
           type: 'customElement',
           render: () => <ToolsOverlay />,
           dataElement: 'toolsOverlay',
-          hidden: ['mobile'],
+          hidden: ['small-mobile', 'mobile'],
         },
         {
           type: 'actionButton',
@@ -93,7 +125,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
       "toolbarGroup-Shapes": [
         { type: 'spacer' },
@@ -110,7 +142,7 @@ export default {
           type: 'customElement',
           render: () => <ToolsOverlay />,
           dataElement: 'toolsOverlay',
-          hidden: ['mobile'],
+          hidden: ['small-mobile', 'mobile'],
         },
         {
           type: 'actionButton',
@@ -134,7 +166,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
       "toolbarGroup-Insert": [
         { type: 'spacer' },
@@ -148,7 +180,7 @@ export default {
           type: 'customElement',
           render: () => <ToolsOverlay />,
           dataElement: 'toolsOverlay',
-          hidden: ['mobile'],
+          hidden: ['small-mobile', 'mobile'],
         },
         {
           type: 'actionButton',
@@ -172,7 +204,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
       "toolbarGroup-Measure": [
         { type: 'spacer' },
@@ -181,12 +213,13 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'areaTools', dataElement: 'areaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'ellipseAreaTools', dataElement: 'ellipseAreaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'rectangleAreaTools', dataElement: 'rectangleAreaToolGroupButton', title: 'annotation.areaMeasurement' },
+        { type: 'toolGroupButton', toolGroup: 'countTools', dataElement: 'countToolGroupButton', title: 'annotation.countMeasurement' },
         { type: 'divider' },
         {
           type: 'customElement',
           render: () => <ToolsOverlay />,
           dataElement: 'toolsOverlay',
-          hidden: ['mobile'],
+          hidden: ['small-mobile', 'mobile'],
         },
         {
           type: 'actionButton',
@@ -210,7 +243,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['tablet', 'mobile'] },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
       "toolbarGroup-Edit": [
         { type: 'spacer' },
@@ -239,7 +272,7 @@ export default {
           isNotClickableSelector: state => !state.viewer.canRedo,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
-        { type: 'spacer', hidden: ['mobile'] },
+        { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
     },
     annotationPopup: [
@@ -271,6 +304,10 @@ export default {
       { dataElement: 'freeTextToolButton' },
     ],
     toolButtonObjects: {
+      AnnotationCreateCountMeasurement: { dataElement: 'countMeasurementToolButton', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
+      AnnotationCreateCountMeasurement2: { dataElement: 'countMeasurementToolButton2', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
+      AnnotationCreateCountMeasurement3: { dataElement: 'countMeasurementToolButton3', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
+      AnnotationCreateCountMeasurement4: { dataElement: 'countMeasurementToolButton4', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
       AnnotationCreateDistanceMeasurement: { dataElement: 'distanceMeasurementToolButton', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'distanceTools', showColor: 'always' },
       AnnotationCreateDistanceMeasurement2: { dataElement: 'distanceMeasurementToolButton2', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'distanceTools', showColor: 'always' },
       AnnotationCreateDistanceMeasurement3: { dataElement: 'distanceMeasurementToolButton3', title: 'annotation.distanceMeasurement', img: 'ic_annotation_distance_black_24px', group: 'distanceTools', showColor: 'always' },
@@ -319,10 +356,10 @@ export default {
       AnnotationCreateCallout2: { dataElement: 'calloutToolButton2', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
       AnnotationCreateCallout3: { dataElement: 'calloutToolButton3', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
       AnnotationCreateCallout4: { dataElement: 'calloutToolButton4', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
-      AnnotationCreateSticky: { dataElement: 'sitckyToolButton', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
-      AnnotationCreateSticky2: { dataElement: 'sitckyToolButton2', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
-      AnnotationCreateSticky3: { dataElement: 'sitckyToolButton3', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
-      AnnotationCreateSticky4: { dataElement: 'sitckyToolButton4', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
+      AnnotationCreateSticky: { dataElement: 'stickyToolButton', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
+      AnnotationCreateSticky2: { dataElement: 'stickyToolButton2', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
+      AnnotationCreateSticky3: { dataElement: 'stickyToolButton3', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
+      AnnotationCreateSticky4: { dataElement: 'stickyToolButton4', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
       AnnotationCreateRectangle: { dataElement: 'rectangleToolButton', title: 'annotation.rectangle', img: 'icon-tool-shape-rectangle', group: 'rectangleTools', showColor: 'always' },
       AnnotationCreateRectangle2: { dataElement: 'rectangleToolButton2', title: 'annotation.rectangle', img: 'icon-tool-shape-rectangle', group: 'rectangleTools', showColor: 'always' },
       AnnotationCreateRectangle3: { dataElement: 'rectangleToolButton3', title: 'annotation.rectangle', img: 'icon-tool-shape-rectangle', group: 'rectangleTools', showColor: 'always' },
@@ -358,7 +395,7 @@ export default {
       CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'cropTools' },
       AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'icon-tool-redaction-area', group: 'redactionTools', showColor: 'never' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
-      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'icon-header-select-line', showColor: 'never' },
+      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'multi select', showColor: 'never' },
       TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
       AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'icon-operation-eraser', showColor: 'never' },
@@ -388,8 +425,10 @@ export default {
     isThumbnailReordering: true,
     isThumbnailMultiselect: true,
     allowPageNavigation: true,
+    enableMouseWheelZoom: true,
     doesAutoLoad: getHashParams('auto_load', true),
     isReadOnly: getHashParams('readonly', false),
+    customModals: [],
     customPanels: [],
     useEmbeddedPrint: false,
     pageLabels: [],
@@ -415,7 +454,8 @@ export default {
     selectedStampIndex: 0,
     savedSignatures: [],
     selectedSignatureIndex: 0,
-    annotationContentOverlayHandler: null
+    annotationContentOverlayHandler: null,
+    isSnapModeEnabled: false
   },
   search: {
     listeners: [],

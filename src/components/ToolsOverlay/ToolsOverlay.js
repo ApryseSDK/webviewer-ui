@@ -109,6 +109,7 @@ class ToolsOverlay extends React.PureComponent {
   render() {
     const {
       t,
+      tReady,
       isDisabled,
       isOpen,
       toolNames,
@@ -123,6 +124,7 @@ class ToolsOverlay extends React.PureComponent {
       return null;
     }
 
+    // TODO: There should be a better way to do this...
     const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools' || activeToolGroup === 'fileAttachmentTools';
 
     let Component = (
@@ -159,7 +161,7 @@ class ToolsOverlay extends React.PureComponent {
     } else if (noPresets) {
       Component = (
         <div className="no-presets">
-          {t('message.toolsOverlayNoPresets')}
+          {tReady? t('message.toolsOverlayNoPresets') : ''}
         </div>
       );
     }
@@ -169,7 +171,10 @@ class ToolsOverlay extends React.PureComponent {
     }
 
     return (
-      <div
+      <Swipeable
+        onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
+        onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
+        preventDefaultTouchmoveEvent
         className="ToolsOverlayContainer"
       >
         <div
@@ -204,18 +209,10 @@ class ToolsOverlay extends React.PureComponent {
                 />
               </button>}
           </div>
-          {(isToolStyleOpen) && (
-            <Swipeable
-              onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
-              onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
-              preventDefaultTouchmoveEvent
-              className="swipeable-container"
-            >
-              <ToolStylePopup/>
-            </Swipeable>
-          )}
+          {isToolStyleOpen &&
+            <ToolStylePopup/>}
         </div>
-      </div>
+      </Swipeable>
     );
   }
 }

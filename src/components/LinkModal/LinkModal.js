@@ -130,7 +130,9 @@ const LinkModal = () => {
     core.addAnnotations([highlight]);
   };
 
-  const addURLLink = () => {
+  const addURLLink = e => {
+    e.preventDefault();
+
     const links = createLink();
 
     const action = new window.Actions.URI({ uri: url });
@@ -148,7 +150,9 @@ const LinkModal = () => {
     closeModal();
   };
 
-  const addPageLink = () => {
+  const addPageLink = e => {
+    e.preventDefault();
+
     const links = createLink();
 
     const Dest = window.Actions.GoTo.Dest;
@@ -190,18 +194,6 @@ const LinkModal = () => {
       urlInput.current.focus();
     }
   }, [tabSelected, isOpen, pageNumberInput, urlInput]);
-
-  const setDropdownNumbers = () => {
-    const numbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      numbers.push(
-        <option key={i} value={i}>
-          {i}
-        </option>
-      );
-    }
-    return numbers;
-  };
 
   const modalClass = classNames({
     Modal: true,
@@ -257,18 +249,19 @@ const LinkModal = () => {
               <form onSubmit={addPageLink}>
                 <div>{t('link.enterpage')}</div>
                 <div className="linkInput">
-                  <select
-                    className="pageNumberSelect"
+                  <input
+                    type="number"
                     ref={pageNumberInput}
                     value={pageNumber}
-                    onChange={e => setPageNumber(e.target.value)}
-                  >
-                    {setDropdownNumbers()}
-                  </select>
+                    onChange={e => setPageNumber(parseInt(e.target.value, 10))}
+                    min={1}
+                    max={totalPages}
+                  />
                   <Button
                     dataElement="linkSubmitButton"
                     label={t('action.link')}
                     onClick={addPageLink}
+                    disabled={pageNumber < 1 || pageNumber > totalPages}
                   />
                 </div>
               </form>

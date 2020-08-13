@@ -4,7 +4,6 @@
 .Note {
   @include button-reset;
   display: block;
-  width: 100%;
   text-align: left;
   border-radius: 4px;
   box-shadow: 0px 0px 3px 0px var(--note-box-shadow);

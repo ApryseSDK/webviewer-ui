@@ -39,6 +39,7 @@ class DocumentContainer extends React.PureComponent {
     displayMode: PropTypes.string.isRequired,
     leftPanelWidth: PropTypes.number,
     allowPageNavigation: PropTypes.bool.isRequired,
+    isMouseWheelZoomEnabled: PropTypes.bool.isRequired,
   }
 
   constructor(props) {
@@ -121,7 +122,8 @@ class DocumentContainer extends React.PureComponent {
   }
 
   onWheel = e => {
-    if (e.metaKey || e.ctrlKey) {
+    const { isMouseWheelZoomEnabled } = this.props;
+    if (isMouseWheelZoomEnabled && e.metaKey || e.ctrlKey) {
       e.preventDefault();
       this.wheelToZoom(e);
     } else if (!core.isContinuousDisplayMode() && this.props.allowPageNavigation) {
@@ -195,6 +197,8 @@ class DocumentContainer extends React.PureComponent {
   }
 
   render() {
+    const { isToolsHeaderOpen, isMobile } = this.props;
+
     let className;
 
     if (isIE) {
@@ -224,9 +228,16 @@ class DocumentContainer extends React.PureComponent {
               <div className="document" ref={this.document}/>
             </div>
             <MeasurementOverlay />
-            <div className="footer">
-              <PageNavOverlay />
-              {this.props.isMobile && <ToolsOverlay />}
+            <div
+              className={classNames({
+                'footer-container': true,
+                'tools-header-open': isToolsHeaderOpen,
+              })}
+            >
+              <div className="footer">
+                <PageNavOverlay />
+                {isMobile && <ToolsOverlay />}
+              </div>
             </div>
           </div>
         )}
@@ -236,6 +247,7 @@ class DocumentContainer extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
@@ -246,6 +258,7 @@ const mapStateToProps = state => ({
   displayMode: selectors.getDisplayMode(state),
   totalPages: selectors.getTotalPages(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
+  isMouseWheelZoomEnabled: selectors.getEnableMouseWheelZoom(state),
 });
 
 const mapDispatchToProps = dispatch => ({

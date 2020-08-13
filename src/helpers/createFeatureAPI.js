@@ -24,6 +24,7 @@ export default (enable, store) => features => {
         'toggleToolsButton',
         'annotationPopup',
         'linkButton',
+        'noteState',
       ],
       fn: () => {
         if (enable) {
@@ -36,6 +37,7 @@ export default (enable, store) => features => {
     [Feature.Measurement]: {
       dataElements: [
         "toolbarGroup-Measure",
+        // TODO: everything below this is probably outdated for measurments
         'measurementOverlay',
         'distanceToolGroupButton',
         'perimeterToolGroupButton',
@@ -193,6 +195,11 @@ export default (enable, store) => features => {
         touchEventManager.allowSwipe = enable;
         store.dispatch(actions.setAllowPageNavigation(enable));
       },
+    },
+    [Feature.MouseWheelZoom]: {
+      fn: () => {
+        store.dispatch(actions.setMouseWheelZoom(enable));
+      }
     },
   };
 
