@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import SearchResult from 'components/SearchResult';
@@ -13,30 +13,27 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 
 import './SearchPanel.scss';
+import useSearch from "hooks/useSearch";
 
 class SearchPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    results: PropTypes.arrayOf(PropTypes.object),
-    isSearching: PropTypes.bool,
-    noResult: PropTypes.bool,
-    setActiveResultIndex: PropTypes.func.isRequired,
+    searchStatus: PropTypes.oneOf(['SEARCH_NOT_INITIATED', 'SEARCH_IN_PROGRESS', 'SEARCH_DONE']),
+    searchResults: PropTypes.arrayOf(PropTypes.object),
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
     pageLabels: PropTypes.array.isRequired,
     setSearchPanelWidth: PropTypes.func,
     currentWidth: PropTypes.number,
-    activeResultIndex: PropTypes.number,
+    activeSearchResultIndex: PropTypes.number,
     isMobile: PropTypes.bool,
     isTabletAndMobile: PropTypes.bool,
   };
 
   onClickResult = (resultIndex, result) => {
-    const { setActiveResultIndex, closeElements, isMobile } = this.props;
-
-    setActiveResultIndex(resultIndex);
+    const { closeElements, isMobile } = this.props;
     core.setActiveSearchResult(result);
 
     if (isMobile) {
@@ -49,11 +46,11 @@ class SearchPanel extends React.PureComponent {
       currentWidth,
       isDisabled,
       t,
-      results,
-      noResult,
+      searchStatus,
+      searchResults,
       isMobile,
       closeElements,
-      activeResultIndex,
+      activeSearchResultIndex,
       pageLabels
     } = this.props;
 
@@ -90,12 +87,16 @@ class SearchPanel extends React.PureComponent {
               />
             </button>
           </div>}
-        <SearchOverlay />
+        <SearchOverlay
+          t={t}
+          searchResults={searchResults}
+          activeResultIndex={activeSearchResultIndex}
+        />
         <SearchResult
-          translate={t}
-          noSearchResult={noResult}
-          searchResults={results}
-          activeResultIndex={activeResultIndex}
+          t={t}
+          searchStatus={searchStatus}
+          searchResults={searchResults}
+          activeResultIndex={activeSearchResultIndex}
           onClickResult={this.onClickResult}
           pageLabels={pageLabels}
         />
@@ -107,43 +108,37 @@ class SearchPanel extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'searchPanel'),
   isOpen: selectors.isElementOpen(state, 'searchPanel'),
-  results: selectors.getResults(state),
-  activeResultIndex: selectors.getActiveResultIndex(state),
-  isSearching: selectors.isSearching(state),
-  noResult: selectors.isNoResult(state),
   errorMessage: selectors.getSearchErrorMessage(state),
   currentWidth: selectors.getSearchPanelWidth(state),
   pageLabels: selectors.getPageLabels(state),
 });
 
 const mapDispatchToProps = {
-  setActiveResultIndex: actions.setActiveResultIndex,
   closeElements: actions.closeElements,
 };
 
-const ConnectedSearchPanel = connect(
+const SearchPanelRedux = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(SearchPanel));
+)(SearchPanel);
 
 export default props => {
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
-  );
+  const isMobile = useMedia(['(max-width: 640px)'],[true], false);
+  const isTabletAndMobile = useMedia(['(max-width: 900px)'], [true], false);
+  const { t } = useTranslation();
+  const { searchStatus, searchResults, activeSearchResultIndex } = useSearch();
 
-  const isTabletAndMobile = useMedia(
-    // Media queries
-    ['(max-width: 900px)'],
-    [true],
-    // Default value
-    false,
-  );
+  const combinedProps = {
+    ...props,
+    isMobile,
+    isTabletAndMobile,
+    t,
+    searchStatus,
+    searchResults,
+    activeSearchResultIndex
+  };
 
   return (
-    <ConnectedSearchPanel {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
+    <SearchPanelRedux {...combinedProps} />
   );
 };
