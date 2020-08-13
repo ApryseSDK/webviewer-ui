@@ -49,6 +49,7 @@ class ColorPalette extends React.PureComponent {
       '#696969',
       '#272727',
       '#000000',
+      'transparency',
     ];
   }
 
@@ -79,8 +80,6 @@ class ColorPalette extends React.PureComponent {
     if (!allowTransparent) {
       palette = palette.filter(p => p?.toLowerCase() !== 'transparency');
     } 
-
-    const hasTransparentPalette = palette.some(bg => bg?.toLowerCase() === 'transparency');
 
     const transparentIcon = (
       <svg
@@ -131,28 +130,6 @@ class ColorPalette extends React.PureComponent {
               </div>
             </button>
         ))}
-        {allowTransparent && !hasTransparentPalette && (
-          <button
-            className="cell-container"
-            onClick={() => this.setColor(null)}
-          >
-            <div
-              className={classNames({
-                'cell-outer': true,
-                active: color.toHexString() === null,
-              })}
-            >
-              <div
-                className={classNames({
-                  cell: true,
-                })}
-              >
-              {
-                transparentIcon
-              }
-              </div>
-            </div>
-          </button>)}
       </div>
     );
   }
