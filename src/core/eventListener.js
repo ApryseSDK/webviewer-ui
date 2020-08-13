@@ -22,6 +22,7 @@ const getEventToObjectMap = () => {
     signatureDeleted: window.docViewer,
     annotationsLoaded: window.docViewer,
     changePage: window.docViewer,
+    layersUpdated: window.docViewer,
     click: window.docViewer,
     dblClick: window.docViewer,
     displayPageLocation: window.docViewer,

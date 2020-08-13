@@ -27,6 +27,23 @@ class LayersPanel extends React.PureComponent {
       window.docViewer.updateView();
     }
   }
+  componentDidMount() {
+    core.addEventListener('layersUpdated', this.onLayersUpdated.bind(this));
+  }
+
+  componentWillUnmount() {
+    core.removeEventListener('layersUpdated', this.onLayersUpdated.bind(this));
+  }
+
+  onLayersUpdated() {
+    const doc = core.getDocument();
+    doc.getLayersArray().then(layers => {
+      if (layers.length) {
+        this.props.setLayers(layers);
+        this.forceUpdate();
+      }
+    });
+  }
 
   render() {
     const { isDisabled, layers, display, setLayers } = this.props;
