@@ -298,6 +298,15 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     return;
   }
 
+  // hack for new ui
+  if (!state.viewer.notesInLeftPanel) {
+    if (dataElement === 'searchPanel') {
+      dispatch(closeElement('notesPanel'));
+    } else if (dataElement === 'notesPanel') {
+      dispatch(closeElement('searchPanel'));
+    }
+  }
+
   if (state.viewer.openElements[dataElement]) {
     dispatch(closeElement(dataElement));
   } else {
