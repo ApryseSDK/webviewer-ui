@@ -84,7 +84,7 @@ const App = ({ removeEventHandlers }) => {
 
         <Header />
         <ToolsHeader />
-        <div className="content">
+        <div className="content" onScroll={() => dispatch(actions.closeElement('linePortal'))}>
           <LeftPanel />
           <DocumentContainer />
           <RightPanel

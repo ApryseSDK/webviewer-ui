@@ -182,7 +182,6 @@ class DocumentContainer extends React.PureComponent {
     this.props.closeElements([
       'annotationPopup',
       'textPopup',
-      'linePortal'
     ]);
   }
 

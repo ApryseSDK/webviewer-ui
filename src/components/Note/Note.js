@@ -18,6 +18,7 @@ import './Note.scss';
 const Portal = ({ children }) => {
   const mount = document.getElementById("portal-root");
   const el = document.createElement("div");
+  el.setAttribute('data-element', 'linePortal');
 
   useEffect(() => {
     mount.appendChild(el);
@@ -28,52 +29,54 @@ const Portal = ({ children }) => {
 };
 
 const AnnotationLine = ({ annotation, noteContainerRef }) => {
-  const [notePanelWidth, zoom, isLineOpen] = useSelector(
+  const [notePanelWidth, zoom, isLineOpen, isNotesPanelOpen] = useSelector(
     state => [
       selectors.getNotesPanelWidth(state),
       selectors.getZoom(state),
-      selectors.isElementOpen(state, 'linePortal')
+      selectors.isElementOpen(state, 'linePortal'),
+      selectors.isElementOpen(state, 'notesPanel'),
     ],
     shallowEqual,
   );
-  const [width, setWidth] = useState(0);
-  const [top, setTop] = useState(0);
-  const [left, setLeft] = useState(0);
+  //For Horizontal Line One
+  const [horizontalLineOneWidth, setHorizontalLineOneWidth] = useState(0);
+  const [horizontalLineOneTop, setHorizontalLineOneTop] = useState(0);
+  const [horizontalLineOneRight, setHorizontalLineOneRight] = useState(0);
+  //For Horizontal Line Two
+  const [horizontalLineTwoWidth, setHorizontalLineTwoWidth] = useState(0);
+  const [horizontalLineTwoTop, setHorizontalLineTwoTop] = useState(0);
+  const [horizontalLineTwoRight, setHorizontalLineTwoRight] = useState(0);
   const displayMode = core.getDisplayModeObject();
+  const dispatch = useDispatch();
+
   const { isSelected } = useContext(NoteContext);
-  const x = annotation.getX();
-  const y = annotation.getY();
-  console.log({ zoom });
-  console.log( { isLineOpen });
+  console.log({ zoom });  // console.log( { isLineOpen });
+  const pageToWindowCoords  = displayMode.pageToWindow({ x: annotation.getX(), y: annotation.getY() }, 1);
+  const { x, y } = pageToWindowCoords;
 
   useEffect(() => {
-    console.log({ annotation });
-    console.log({ x, y });
+    if (isSelected) {
+      dispatch(actions.openElement('linePortal'));
+    }
 
-    const pageToWindowCoords  = displayMode.pageToWindow({ x, y }, 1);
-    //left is the X
+    //right is the X
     /// top is the Y
-    // console.log({ pageToWindowCoords });
-    setLeft(pageToWindowCoords.x + annotation.Width);
-    // console.log(noteContainerRef.current.getBoundingClientRect());
-    setTop(noteContainerRef.current.getBoundingClientRect().top);
-    console.log({ notePanelWidth });
+    setHorizontalLineOneRight(notePanelWidth - 16);
+    setHorizontalLineOneTop(noteContainerRef.current.getBoundingClientRect().top);
+    const lineWidth = window.innerWidth - notePanelWidth - x - annotation.Width + 16;
+    setHorizontalLineOneWidth(lineWidth * 0.75);
+    setHorizontalLineTwoWidth(lineWidth - horizontalLineOneWidth);
 
-    const lineWidth = window.innerWidth - notePanelWidth - pageToWindowCoords.x - annotation.Width + 16;
-    console.log( { lineWidth });
-    setWidth(lineWidth);
-    window.addEventListener('resize', () => console.log('resize'));
+    setHorizontalLineTwoRight(x + annotation.Width);
+    setHorizontalLineTwoTop(y + (annotation.Height / 2));
 
-  }, [annotation, displayMode, noteContainerRef, notePanelWidth, x, y]);
+  }, [annotation, displayMode, noteContainerRef, notePanelWidth, x, isNotesPanelOpen, isSelected, dispatch, horizontalLineOneWidth, y]);
 
-
-  console.log('render');
-  if (isSelected && isLineOpen) {
+  if (isSelected && isLineOpen && isNotesPanelOpen) {
     return (
       <Portal>
-        <div className="line" data-element="linePortal"
-          style={{ width, left, top }}
-        />
+        <div className="line" style={{ width: horizontalLineOneWidth, right: horizontalLineOneRight, top: horizontalLineOneTop }}/>
+        <div className="line" style={{ width: horizontalLineTwoWidth, left: horizontalLineTwoRight, top: horizontalLineTwoTop }}/>
       </Portal>);
   } else {
     return null;
@@ -152,9 +155,12 @@ const Note = ({ annotation }) => {
 
     if (!isSelected) {
       core.deselectAllAnnotations();
+      console.log('select ma boa');
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
-      dispatch(actions.openElement('linePortal'));
+      console.log('open portal');
+      setTimeout(() => dispatch(actions.openElement('linePortal'), 300));
+      // dispatch(actions.openElement('linePortal'));
     }
   };
 
