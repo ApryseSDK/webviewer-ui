@@ -115,7 +115,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const setToolbarGroup = (toolbarGroup, pickGroup = true) => (dispatch, getState) => {
+export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
@@ -154,7 +154,7 @@ export const setToolbarGroup = (toolbarGroup, pickGroup = true) => (dispatch, ge
     const lastPickedToolGroup = state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
     const lastPickedToolName = state.viewer.lastPickedToolForGroup[lastPickedToolGroup]
       || getFirstToolNameForGroup(state, lastPickedToolGroup);
-    if (pickGroup) {
+    if (pickTool) {
       if (lastPickedToolName === 'AnnotationCreateSignature') {
         core.setToolMode(defaultTool);
       } else {
@@ -298,6 +298,15 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     return;
   }
 
+  // hack for new ui
+  if (!state.viewer.notesInLeftPanel) {
+    if (dataElement === 'searchPanel') {
+      dispatch(closeElement('notesPanel'));
+    } else if (dataElement === 'notesPanel') {
+      dispatch(closeElement('searchPanel'));
+    }
+  }
+
   if (state.viewer.openElements[dataElement]) {
     dispatch(closeElement(dataElement));
   } else {
@@ -337,6 +346,7 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       'outlinesPanel',
       'layersPanel',
       'bookmarksPanel',
+      'notesPanel',
     ].join(', ');
     console.warn(
       `${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`,
@@ -444,14 +454,6 @@ export const setActiveTheme = theme => ({
 export const setSearchResults = searchResults => ({
   type: 'SET_SEARCH_RESULTS',
   payload: searchResults,
-});
-export const setActiveResult = (activeResult, index) => ({
-  type: 'SET_ACTIVE_RESULT',
-  payload: { activeResult },
-});
-export const setActiveResultIndex = index => ({
-  type: 'SET_ACTIVE_RESULT_INDEX',
-  payload: { index },
 });
 export const setAnnotationContentOverlayHandler = annotationContentOverlayHandler => ({
   type: 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER',

@@ -16,12 +16,8 @@ const propTypes = {
 
 const dataElementName = 'thumbnailControl';
 
-const ThumbnailControls = ({
-  index,
-}) => {
-  const [isElementDisabled] = useSelector(state => [
-    selectors.isElementDisabled(state, dataElementName),
-  ]);
+const ThumbnailControls = ({ index }) => {
+  const [isElementDisabled] = useSelector(state => [selectors.isElementDisabled(state, dataElementName)]);
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -66,16 +62,19 @@ const ThumbnailControls = ({
         img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
         onClick={rotateCounterClockwise}
         title="option.thumbnailPanel.rotateCounterClockwise"
+        dataElement="thumbRotateCounterClockwise"
       />
       <Button
         img="icon-delete-line"
         onClick={handleDelete}
         title="option.thumbnailPanel.delete"
+        dataElement="thumbDelete"
       />
       <Button
         img="icon-header-page-manipulation-page-rotation-clockwise-line"
         onClick={rotateClockwise}
         title="option.thumbnailPanel.rotateClockwise"
+        dataElement="thumbRotateClockwise"
       />
     </div>
   );

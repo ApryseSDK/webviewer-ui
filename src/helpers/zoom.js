@@ -80,6 +80,7 @@ export function fitToPage() {
  * Consider case where we start from zoom level 140% (1.4) and zoomIn. We would end up to 1.4 + 0.25 = 1.65 (165%).
  * If user would now click zoomOut, we would end up 1.65 - 0.5 = 1.15 (115%) which is not the same 140% where we started.
  * But as we store the step history we do 1.65 - 0.25 (value from step history) and end up to 1.4 (140%).
+ * @ignore
  */
 export function zoomIn() {
   const currentZoomFactor = core.getZoom();
@@ -110,6 +111,7 @@ export function zoomIn() {
 
 /**
  * See functionality from zoomIn. zoomOut works same but opposite direction.
+ * @ignore
  */
 export function zoomOut() {
   const currentZoomFactor = core.getZoom();

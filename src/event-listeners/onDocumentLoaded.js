@@ -30,9 +30,9 @@ export default store => () => {
     // if redaction is already enabled for some reason (i.e. calling readerControl.enableRedaction() before loading a doc), keep it enabled
 
     if (core.isCreateRedactionEnabled()) {
-      dispatch(actions.enableElement('redactionButton', PRIORITY_ONE));
+      dispatch(actions.enableElement('redactionToolGroupButton', PRIORITY_ONE));
     } else {
-      dispatch(actions.disableElement('redactionButton', PRIORITY_TWO));
+      dispatch(actions.disableElement('redactionToolGroupButton', PRIORITY_TWO));
     }
   }
 
@@ -70,9 +70,9 @@ export default store => () => {
   }
 
   if (doc.getType() === workerTypes.PDF) {
-    dispatch(actions.enableElement('cropToolButton', PRIORITY_ONE));
+    dispatch(actions.enableElement('cropToolGroupButton', PRIORITY_ONE));
   } else {
-    dispatch(actions.disableElement('cropToolButton', PRIORITY_ONE));
+    dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));
   }
 
   window.readerControl.loadedFromServer = false;

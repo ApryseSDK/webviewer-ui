@@ -1,6 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useStore, useDispatch } from 'react-redux';
+import { useSelector, useStore, useDispatch } from 'react-redux';
+import selectors from 'selectors';
 import PropTypes from 'prop-types';
 
 import Accessibility from 'components/Accessibility';
@@ -13,6 +14,7 @@ import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import NotesPanel from 'components/NotesPanel';
 import SearchPanel from 'components/SearchPanel';
+import RightPanel from 'components/RightPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
 import ContextMenuPopup from 'components/ContextMenuPopup';
@@ -27,6 +29,7 @@ import ProgressModal from 'components/ProgressModal';
 import CalibrationModal from 'components/CalibrationModal';
 import LinkModal from 'components/LinkModal';
 import EditTextModal from 'components/EditTextModal';
+import FilterAnnotModal from '../FilterAnnotMondal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
@@ -41,6 +44,7 @@ import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 
 import './App.scss';
+
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -86,8 +90,18 @@ const App = ({ removeEventHandlers }) => {
         <div className="content">
           <LeftPanel />
           <DocumentContainer />
-          <SearchPanel />
-          <NotesPanel />
+          <RightPanel
+            dataElement="searchPanel"
+            onResize={width => dispatch(actions.setSearchPanelWidth(width))}
+          >
+            <SearchPanel />
+          </RightPanel>
+          <RightPanel
+            dataElement="notesPanel"
+            onResize={width => dispatch(actions.setNotesPanelWidth(width))}
+          >
+            <NotesPanel />
+          </RightPanel>
         </div>
         <ViewControlsOverlay />
         <MenuOverlay />
@@ -109,6 +123,7 @@ const App = ({ removeEventHandlers }) => {
         <CreateStampModal />
         <LinkModal />
         <EditTextModal />
+        <FilterAnnotModal />
         <CustomModal />
       </div>
 

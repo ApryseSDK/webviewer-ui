@@ -84,7 +84,8 @@
     "strikeout": "Durchstreichen",
     "underline": "Unterstrichen",
     "custom": "Angepasst",
-    "rubberStamp": "Stempel"
+    "rubberStamp": "Stempel",
+    "note": "Hinweis"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",
@@ -128,7 +129,8 @@
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
     "calibration": "Kalibrierung",
-    "createStampButton": "Neuen Stempel erstellen"
+    "createStampButton": "Neuen Stempel erstellen",
+    "filter": "Filter"
   },
   "message": {
     "toolsOverlayNoPresets": "Keine Voreinstellungen",
@@ -139,6 +141,7 @@
     "enterPassword": "Dieses Dokument ist durch ein Passwort geschützt. Bitte geben Sie ein Passwort ein",
     "incorrectPassword": "Falsches Passwort, verbleibende Versuche: {{ remainingAttempts }}",
     "noAnnotations": "Dieses Dokument hat keine Annotationen.",
+    "noAnnotationsFilter": "Beginnen Sie hier mit der Erstellung von Anmerkungen und Filtern.",
     "noOutlines": "Dieses Dokument enthält keine Gliederung.",
     "noResults": "Keine Ergebnisse gefunden.",
     "numResultsFound": "gefundene Ergebnisse",
@@ -158,12 +161,16 @@
     "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
     "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein",
     "linkURLorPage": "Link URL oder eine Seite",
-    "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten"
+    "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten",
+    "sortBy": "Sortiere nach"
   },
   "option": {
     "notesOrder": {
       "position": "Position",
-      "time": "Zeit"
+      "time": "Zeit",
+      "status": "Status",
+      "author": "Autor",
+      "type": "Art"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Aussicht",
@@ -227,6 +234,10 @@
       "dragAndDrop": "Ziehen Sie Ihr Bild per Drag & Drop hierher",
       "or": "Oder",
       "pickImage": "Wählen Sie das Signaturbild"
+    },
+    "filterAnnotModal": {
+      "commentBy": "Kommentar von",
+      "types": "Typen"
     },
     "status": {
       "status": "Status"
