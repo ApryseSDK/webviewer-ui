@@ -14,7 +14,6 @@ import './OutlinesPanel.scss';
 class OutlinesPanel extends React.PureComponent {
   static propTypes = {
     outlines: PropTypes.arrayOf(PropTypes.object),
-    display: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
     t: PropTypes.func.isRequired,
   }

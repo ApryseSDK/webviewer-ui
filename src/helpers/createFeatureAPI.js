@@ -24,6 +24,7 @@ export default (enable, store) => features => {
         'toggleToolsButton',
         'annotationPopup',
         'linkButton',
+        'noteState',
       ],
       fn: () => {
         if (enable) {
@@ -36,7 +37,7 @@ export default (enable, store) => features => {
     [Feature.Measurement]: {
       dataElements: [
         "toolbarGroup-Measure",
-        // everything below this is probably outdated
+        // TODO: everything below this is probably outdated for measurments
         'measurementOverlay',
         'distanceToolGroupButton',
         'perimeterToolGroupButton',

@@ -47,7 +47,9 @@ import getCompleteRotation from './getCompleteRotation';
 import getRotation from './getRotation';
 import getPageInfo from './getPageInfo';
 import clearSearchResults from './clearSearchResults';
+import getPageSearchResults from './getPageSearchResults';
 import displayAdditionalSearchResult from './displayAdditionalSearchResult';
+import displayAdditionalSearchResults from './displayAdditionalSearchResults';
 import displaySearchResult from './displaySearchResult';
 import setActiveSearchResult from './setActiveSearchResult';
 import textSearchInit from './textSearchInit';
@@ -160,7 +162,9 @@ export default {
   getRotation,
   getPageInfo,
   clearSearchResults,
+  getPageSearchResults,
   displayAdditionalSearchResult,
+  displayAdditionalSearchResults,
   setActiveSearchResult,
   textSearchInit,
   displaySearchResult,

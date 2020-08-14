@@ -407,6 +407,7 @@ WebViewer(...)
             'signatureModal',
             'printModal',
             'rubberStampOverlay',
+            'filterModal',
           ])
         );
       },
