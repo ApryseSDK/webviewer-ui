@@ -166,7 +166,7 @@ export const Keys = {
 
 export function concatKeys(...keys) {
   return keys.join(', ');
-};
+}
 
 /**
  * A class which contains hotkeys APIs.<br/><br/>
