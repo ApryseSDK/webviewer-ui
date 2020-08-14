@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
-import React, { useCallback, useLayoutEffect, useRef, useState, useMemo } from 'react';
+import React, { useCallback, useRef, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
@@ -26,13 +26,13 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
 
   const [itemsWidth, setItemsWidth] = useState(DEFAULT_WIDTH);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useLayoutEffect(() => {
-    // Default to always a number.
-    const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || DEFAULT_WIDTH;
-    if (clientWidth !== itemsWidth) {
-      setItemsWidth(overlayRef.current.clientWidth);
-    }
-  });
+  // useLayoutEffect(() => {
+  //   // Default to always a number.
+  //   const clientWidth = (overlayRef.current && overlayRef.current.clientWidth) || DEFAULT_WIDTH;
+  //   if (clientWidth !== itemsWidth) {
+  //     setItemsWidth(overlayRef.current.clientWidth);
+  //   }
+  // });
 
   const onClose = useCallback(() => setIsOpen(false), []);
   const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
@@ -65,7 +65,7 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
           onClick={e => onClickDropdownItem(e, key)}
           tabIndex={isOpen ? undefined : -1} // Just to be safe.
         >
-          {t(`${translationPrefix}.${key}`)}
+          {t(`${translationPrefix}.${key}`, key)}
         </button>
       )),
     [currentSelectionKey, isOpen, items, onClickDropdownItem, t, translationPrefix],
@@ -90,7 +90,7 @@ function Dropdown({ items, currentSelectionKey, translationPrefix, onClickItem }
         <div className="picked-option">
           {optionIsSelected && (
             <div className="picked-option-text">
-              {tReady? t(`${translationPrefix}.${currentSelectionKey}`) : ''}
+              {tReady? t(`${translationPrefix}.${currentSelectionKey}`, currentSelectionKey) : ''}
             </div>
           )}
           <Icon className="down-arrow" glyph="icon-chevron-down" />

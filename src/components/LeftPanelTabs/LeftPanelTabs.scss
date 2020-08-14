@@ -12,6 +12,10 @@
     margin: 0;
     border-radius: 0px;
 
+    &:not(:last-child){
+      border-right: 1px solid var(--divider);
+    }
+
     &:first-child {
       border-bottom-left-radius: 4px;
       border-top-left-radius: 4px;
@@ -35,9 +39,4 @@
       background: var(--popup-button-active);
     }
   }
-
-  .divider {
-    width: 1px;
-    background: var(--divider);
-  }  
 }

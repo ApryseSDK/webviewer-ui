@@ -51,7 +51,7 @@ const Button = props => {
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
-  const aLabel = ariaLabel || title ? t(title) : undefined;
+  const aLabel = ariaLabel || (title ? t(title) : undefined);
 
   const shortcutKey = title ? title.slice(title.indexOf('.') + 1) : undefined;
   const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
@@ -63,7 +63,7 @@ const Button = props => {
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
     img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
-  const shouldRenderTooltip = title;
+  const shouldRenderTooltip = !!title && !disabled;
   const children = (
     <button
       className={classNames({

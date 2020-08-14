@@ -36,37 +36,6 @@ class ToolGroupButton extends React.PureComponent {
     iconColorKey: PropTypes.string,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      toolName: props.toolNames[0],
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    const activeToolNameChanged = prevProps.activeToolName !== this.props.activeToolName;
-    const wasActiveToolNameInGroup = prevProps.toolNames.includes(prevProps.activeToolName);
-    const isActiveToolNameInGroup = this.props.toolNames.includes(this.props.activeToolName);
-    const toolNamesLengthChanged = prevProps.toolNames.length !== this.props.toolNames.length;
-
-    if (activeToolNameChanged && isActiveToolNameInGroup) {
-      this.setState({ toolName: this.props.activeToolName });
-    }
-
-    if (toolNamesLengthChanged && !this.props.toolNames.includes(this.state.toolName)) {
-      this.setState({ toolName: this.props.toolNames[0] });
-    }
-
-    if (toolNamesLengthChanged && !wasActiveToolNameInGroup && isActiveToolNameInGroup) {
-      this.setState({ toolName: this.props.activeToolName });
-      this.props.setActiveToolGroup(this.props.toolGroup);
-    }
-
-    if (!this.props.isActive) {
-      this.setState({ toolName: this.props.toolNames[0] });
-    }
-  }
-
   onClick = () => {
     const {
       setActiveToolGroup,
@@ -74,9 +43,9 @@ class ToolGroupButton extends React.PureComponent {
       closeElement,
       openElement,
       toolGroup,
-      savedSignatures,
+      toolNames,
+      lastPickedToolForGroup,
     } = this.props;
-    const { toolName } = this.state;
 
     if (isActive) {
       closeElement('toolStylePopup');
@@ -87,7 +56,7 @@ class ToolGroupButton extends React.PureComponent {
       if (toolGroup === 'signatureTools' || toolGroup === 'rubberStampTools') {
         core.setToolMode(defaultTool);
       } else {
-        core.setToolMode(toolName);
+        core.setToolMode(lastPickedToolForGroup || toolNames[0]);
       }
       setActiveToolGroup(toolGroup);
       openElement('toolsOverlay');
@@ -96,17 +65,19 @@ class ToolGroupButton extends React.PureComponent {
 
   render() {
     const {
+      toolNames,
+      lastPickedToolForGroup,
+      isActive,
       mediaQueryClassName,
       dataElement,
       toolButtonObjects,
-      isActive,
       isToolGroupButtonDisabled,
       allButtonsInGroupDisabled,
       iconColorKey,
       showColor,
       title,
     } = this.props;
-    const { toolName } = this.state;
+    const toolName = lastPickedToolForGroup || toolNames[0];
     const img = this.props.img
       ? this.props.img
       : toolButtonObjects[toolName]?.img;
@@ -138,6 +109,7 @@ class ToolGroupButton extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  lastPickedToolForGroup: selectors.getLastPickedToolForGroup(state, ownProps.toolGroup),
   savedSignatures: selectors.getSavedSignatures(state),
   isActive: selectors.getActiveToolGroup(state) === ownProps.toolGroup,
   activeToolName: selectors.getActiveToolName(state),

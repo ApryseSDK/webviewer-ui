@@ -111,6 +111,10 @@ export const setAllowPageNavigation = (allowPageNavigation = true) => ({
   type: 'SET_ALLOW_PAGE_NAVIGATION',
   payload: { allowPageNavigation },
 });
+export const setLastPickedToolForGroup = (group, toolName) => ({
+  type: 'SET_LAST_PICKED_TOOL_FOR_GROUP',
+  payload: { group, toolName },
+});
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;
@@ -127,6 +131,7 @@ export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   if (state.viewer.activeToolName === name) {
     return;
   }
+
   dispatch({
     type: 'SET_ACTIVE_TOOL_NAME_AND_STYLES',
     payload: { toolName: name, toolStyles: toolObject.defaults || {} },
@@ -138,6 +143,7 @@ export const setActiveToolStyles = (toolStyles = {}) => ({
 });
 export const setActiveToolGroup = toolGroup => (dispatch, getState) => {
   const currentActiveToolGroup = selectors.getActiveToolGroup(getState());
+  const toolbarGroup = selectors.getCurrentToolbarGroup(getState());
 
   if (currentActiveToolGroup === toolGroup) {
     return;
@@ -145,7 +151,7 @@ export const setActiveToolGroup = toolGroup => (dispatch, getState) => {
 
   dispatch({
     type: 'SET_ACTIVE_TOOL_GROUP',
-    payload: { toolGroup },
+    payload: { toolGroup, toolbarGroup },
   });
 };
 export const setNotePopupId = id => ({
@@ -327,10 +333,6 @@ export const setSearchValue = value => ({
   type: 'SET_SEARCH_VALUE',
   payload: { value },
 });
-export const addResult = result => ({
-  type: 'ADD_RESULT',
-  payload: { result },
-});
 export const setCaseSensitive = isCaseSensitive => ({
   type: 'SET_CASE_SENSITIVE',
   payload: { isCaseSensitive },
@@ -342,14 +344,6 @@ export const setWholeWord = isWholeWord => ({
 export const setWildcard = isWildcard => ({
   type: 'SET_WILD_CARD',
   payload: { isWildcard },
-});
-export const setIsSearching = isSearching => ({
-  type: 'SET_IS_SEARCHING',
-  payload: { isSearching },
-});
-export const setNoResult = noResult => ({
-  type: 'SET_NO_RESULT',
-  payload: { noResult },
 });
 export const setSearchError = errorMessage => ({
   type: 'SET_SEARCH_ERROR',
@@ -367,4 +361,9 @@ export const setIsProgrammaticSearchFull = isProgrammaticSearchFull => ({
 export const setNoteTransformFunction = noteTransformFunction => ({
   type: 'SET_NOTE_TRANSFORM_FUNCTION',
   payload: { noteTransformFunction },
+});
+
+export const setEnableSnapMode = enable => ({
+  type: 'SET_ENABLE_SNAP_MODE',
+  payload: { enable },
 });

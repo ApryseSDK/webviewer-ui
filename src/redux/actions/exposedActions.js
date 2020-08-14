@@ -91,8 +91,8 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
 };
 
 export const enableRibbons = () => (dispatch, getState) => {
-  dispatch(setToolbarGroup('toolbarGroup-Annotate'));
   const state = getState();
+  dispatch(setToolbarGroup(state.viewer.toolbarGroup || 'toolbarGroup-Annotate', false));
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-'));
 
@@ -115,7 +115,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
-export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
+export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
@@ -150,17 +150,27 @@ export const setToolbarGroup = toolbarGroup => (dispatch, getState) => {
     });
   } else {
     dispatch(openElements(['toolsHeader']));
-    const firstToolGroupForToolbarGroup = getFirstToolGroupForToolbarGroup(getState(), toolbarGroup);
-    const toolName = getFirstToolNameForGroup(getState(), firstToolGroupForToolbarGroup);
-    if (toolName === 'AnnotationCreateSignature') {
-      core.setToolMode(defaultTool);
+    const state = getState();
+    const lastPickedToolGroup = state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
+    const lastPickedToolName = state.viewer.lastPickedToolForGroup[lastPickedToolGroup]
+      || getFirstToolNameForGroup(state, lastPickedToolGroup);
+    if (pickTool) {
+      if (lastPickedToolName === 'AnnotationCreateSignature') {
+        core.setToolMode(defaultTool);
+      } else {
+        core.setToolMode(lastPickedToolName);
+      }
+      dispatch({
+        type: 'SET_ACTIVE_TOOL_GROUP',
+        payload: { toolGroup: lastPickedToolGroup },
+      });
     } else {
-      core.setToolMode(toolName);
+      core.setToolMode(defaultTool);
+      dispatch({
+        type: 'SET_ACTIVE_TOOL_GROUP',
+        payload: { toolGroup: '' },
+      });
     }
-    dispatch({
-      type: 'SET_ACTIVE_TOOL_GROUP',
-      payload: { toolGroup: firstToolGroupForToolbarGroup },
-    });
   }
   dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
   dispatch({
@@ -288,6 +298,15 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     return;
   }
 
+  // hack for new ui
+  if (!state.viewer.notesInLeftPanel) {
+    if (dataElement === 'searchPanel') {
+      dispatch(closeElement('notesPanel'));
+    } else if (dataElement === 'notesPanel') {
+      dispatch(closeElement('searchPanel'));
+    }
+  }
+
   if (state.viewer.openElements[dataElement]) {
     dispatch(closeElement(dataElement));
   } else {
@@ -327,6 +346,7 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       'outlinesPanel',
       'layersPanel',
       'bookmarksPanel',
+      'notesPanel',
     ].join(', ');
     console.warn(
       `${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`,
@@ -434,14 +454,6 @@ export const setActiveTheme = theme => ({
 export const setSearchResults = searchResults => ({
   type: 'SET_SEARCH_RESULTS',
   payload: searchResults,
-});
-export const setActiveResult = (activeResult, index) => ({
-  type: 'SET_ACTIVE_RESULT',
-  payload: { activeResult },
-});
-export const setActiveResultIndex = index => ({
-  type: 'SET_ACTIVE_RESULT_INDEX',
-  payload: { index },
 });
 export const setAnnotationContentOverlayHandler = annotationContentOverlayHandler => ({
   type: 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER',

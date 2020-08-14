@@ -84,7 +84,8 @@
     "strikeout": "Doorstrepen",
     "underline": "Onderstrepen",
     "custom": "maatwerk",
-    "rubberStamp": "Rubberen stempel"
+    "rubberStamp": "Rubberen stempel",
+    "note": "Notitie"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",
@@ -128,7 +129,8 @@
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "calibration": "ijking",
-    "createStampButton": "Maak een nieuwe stempel"
+    "createStampButton": "Maak een nieuwe stempel",
+    "filter": "Filter"
   },
   "message": {
     "toolsOverlayNoPresets": "Geen voorinstellingen",
@@ -139,6 +141,7 @@
     "enterPassword": "Dit document heeft een wachtwoord beveiliging. Geen een wachtwoord",
     "incorrectPassword": "Fout wachtwoord, overgebleven pogingen: {{ remainingAttempts }}",
     "noAnnotations": "Dit document heeft geen annotaties.",
+    "noAnnotationsFilter": "Begin met het maken van aantekeningen en filters verschijnen hier.",
     "noOutlines": "Dit document heeft geen hoofdlijnen.",
     "noResults": "Geen resultaten.",
     "numResultsFound": "gevonden resultaten",
@@ -157,12 +160,16 @@
     "insertTextHere": "Vul hier tekst in",
     "imageSignatureAcceptedFileTypes": "Alleen {{AcceptFileTypes}} worden geaccepteerd",
     "enterMeasurement": "Voer de meting tussen de twee punten in",
-    "linkURLorPage": "Link-URL of een pagina"
+    "linkURLorPage": "Link-URL of een pagina",
+    "sortBy": "Sorteer op"
   },
   "option": {
     "notesOrder": {
       "position": "Positie",
-      "time": "Tijd"
+      "time": "Tijd",
+      "status": "Toestand",
+      "author": "Auteur",
+      "type": "Type"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Visie",
@@ -227,6 +234,10 @@
       "or": "Of",
       "pickImage": "Kies handtekening afbeelding"
     },
+    "filterAnnotModal": {
+      "commentBy": "Reageer door",
+      "types": "Soorten"
+    },
     "status": {
       "status": "staat"
     },
@@ -267,7 +278,8 @@
     },
     "shared": {
       "page": "Pagina",
-      "precision": "precisie"
+      "precision": "precisie",
+      "enableSnapping": "Schakel snappen in voor meetinstrumenten"
     },
     "watermark": {
       "size": "Grootte",

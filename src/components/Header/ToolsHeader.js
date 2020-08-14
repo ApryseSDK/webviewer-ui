@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import './Header.scss';
 
+
 class ToolsHeader extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -20,9 +21,9 @@ class ToolsHeader extends React.PureComponent {
   }
 
   render() {
-    const { isTabletAndMobile, isDisabled, activeHeaderItems, isOpen, isToolsOverlayOpen, isToolsOverlayDisabled } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen, currentToolbarGroup } = this.props;
 
-    const isVisible = !isDisabled && isOpen;
+    const isVisible = !isDisabled && isOpen && currentToolbarGroup !== 'toolbarGroup-View';
 
     return (
       <React.Fragment>
@@ -50,6 +51,7 @@ class ToolsHeader extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isDisabled: selectors.isElementDisabled(state, 'toolsHeader'),
   isOpen: selectors.isElementOpen(state, 'toolsHeader'),
   activeHeaderItems: selectors.getToolsHeaderItems(state),

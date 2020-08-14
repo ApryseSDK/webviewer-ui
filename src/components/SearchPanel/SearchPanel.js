@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import SearchResult from 'components/SearchResult';
-import ListSeparator from 'components/ListSeparator';
-import ResizeBar from 'components/ResizeBar';
 import SearchOverlay from 'components/SearchOverlay';
 import Icon from 'components/Icon';
-
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import actions from 'actions';
@@ -16,39 +13,27 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 
 import './SearchPanel.scss';
-import { motion, AnimatePresence } from "framer-motion";
-import { isSafari } from 'src/helpers/device';
-
-const minWidth = 293;
+import useSearch from "hooks/useSearch";
 
 class SearchPanel extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    results: PropTypes.arrayOf(PropTypes.object),
-    isSearching: PropTypes.bool,
-    noResult: PropTypes.bool,
-    setActiveResultIndex: PropTypes.func.isRequired,
+    searchStatus: PropTypes.oneOf(['SEARCH_NOT_INITIATED', 'SEARCH_IN_PROGRESS', 'SEARCH_DONE']),
+    searchResults: PropTypes.arrayOf(PropTypes.object),
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
     pageLabels: PropTypes.array.isRequired,
+    setSearchPanelWidth: PropTypes.func,
+    currentWidth: PropTypes.number,
+    activeSearchResultIndex: PropTypes.number,
+    isMobile: PropTypes.bool,
+    isTabletAndMobile: PropTypes.bool,
   };
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isOpen && this.props.isOpen) {
-      // if (isTabletOrMobile()) {
-      //   this.props.closeElements(['leftPanel']);
-      // }
-
-      // this.props.closeElements(['notesPanel']);
-    }
-  }
-
   onClickResult = (resultIndex, result) => {
-    const { setActiveResultIndex, closeElements, isMobile } = this.props;
-
-    setActiveResultIndex(resultIndex);
+    const { closeElements, isMobile } = this.props;
     core.setActiveSearchResult(result);
 
     if (isMobile) {
@@ -56,31 +41,18 @@ class SearchPanel extends React.PureComponent {
     }
   };
 
-  onClickClose = () => {
-    this.props.closeElements('searchPanel');
-  };
-
-  renderListSeparator = (prevResult, currResult) => {
-    const isFirstResult = prevResult === currResult;
-    const isInDifferentPage = prevResult.pageNum !== currResult.pageNum;
-
-    if (isFirstResult || isInDifferentPage) {
-      return (
-        <ListSeparator
-          renderContent={() =>
-            `${this.props.t('option.shared.page')} ${
-              this.props.pageLabels[currResult.pageNum - 1]
-            }`
-          }
-        />
-      );
-    }
-
-    return null;
-  };
-
   render() {
-    const { setSearchPanelWidth, currentWidth, isOpen, isDisabled, t, results, noResult, isMobile, isTabletAndMobile, closeElements } = this.props;
+    const {
+      currentWidth,
+      isDisabled,
+      t,
+      searchStatus,
+      searchResults,
+      isMobile,
+      closeElements,
+      activeSearchResultIndex,
+      pageLabels
+    } = this.props;
 
     if (isDisabled) {
       return null;
@@ -93,72 +65,42 @@ class SearchPanel extends React.PureComponent {
       style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
     }
 
-    let animate = { width: 'auto' };
-    if (isMobile) {
-      animate = { width: '100vw' };
-    }
-
     return (
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="search-panel-container"
-            initial={{ width: '0px' }}
-            animate={animate}
-            exit={{ width: '0px' }}
-            transition={{ ease: "easeOut", duration: isSafari ? 0 : 0.25 }}
+      <div
+        className={className}
+        data-element="searchPanel"
+        style={style}
+      >
+        {isMobile &&
+          <div
+            className="close-container"
           >
-            {!isTabletAndMobile &&
-              <ResizeBar
-                minWidth={minWidth}
-                onResize={_width => {
-                  setSearchPanelWidth(_width);
-                }}
-                leftDirection
-              />}
-            <div
-              className={className}
-              data-element="searchPanel"
-              style={style}
+            <button
+              className="close-icon-container"
+              onClick={() => {
+                closeElements(['searchPanel']);
+              }}
             >
-              {isMobile &&
-                <div
-                  className="close-container"
-                >
-                  <button
-                    className="close-icon-container"
-                    onClick={() => {
-                      closeElements(['searchPanel']);
-                    }}
-                  >
-                    <Icon
-                      glyph="ic_close_black_24px"
-                      className="close-icon"
-                    />
-                  </button>
-                </div>}
-              <SearchOverlay />
-              <div className={`results`}>
-                {noResult && <div className="info">{t('message.noResults')}</div>}
-                {results.map((result, i) => {
-                  const prevResult = i === 0 ? results[0] : results[i - 1];
-
-                  return (
-                    <React.Fragment key={i}>
-                      {this.renderListSeparator(prevResult, result)}
-                      <SearchResult
-                        result={result}
-                        index={i}
-                        onClickResult={this.onClickResult}
-                      />
-                    </React.Fragment>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <Icon
+                glyph="ic_close_black_24px"
+                className="close-icon"
+              />
+            </button>
+          </div>}
+        <SearchOverlay
+          t={t}
+          searchResults={searchResults}
+          activeResultIndex={activeSearchResultIndex}
+        />
+        <SearchResult
+          t={t}
+          searchStatus={searchStatus}
+          searchResults={searchResults}
+          activeResultIndex={activeSearchResultIndex}
+          onClickResult={this.onClickResult}
+          pageLabels={pageLabels}
+        />
+      </div>
     );
   }
 }
@@ -166,44 +108,37 @@ class SearchPanel extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'searchPanel'),
   isOpen: selectors.isElementOpen(state, 'searchPanel'),
-  results: selectors.getResults(state),
-  isSearching: selectors.isSearching(state),
-  noResult: selectors.isNoResult(state),
   errorMessage: selectors.getSearchErrorMessage(state),
   currentWidth: selectors.getSearchPanelWidth(state),
   pageLabels: selectors.getPageLabels(state),
 });
 
 const mapDispatchToProps = {
-  setActiveResultIndex: actions.setActiveResultIndex,
   closeElements: actions.closeElements,
-  setSearchPanelWidth: actions.setSearchPanelWidth,
 };
 
-const ConnectedSearchPanel = connect(
+const SearchPanelRedux = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(SearchPanel));
+)(SearchPanel);
 
 export default props => {
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
-  );
+  const isMobile = useMedia(['(max-width: 640px)'],[true], false);
+  const isTabletAndMobile = useMedia(['(max-width: 900px)'], [true], false);
+  const { t } = useTranslation();
+  const { searchStatus, searchResults, activeSearchResultIndex } = useSearch();
 
-  const isTabletAndMobile = useMedia(
-    // Media queries
-    ['(max-width: 900px)'],
-    [true],
-    // Default value
-    false,
-  );
-
+  const combinedProps = {
+    ...props,
+    isMobile,
+    isTabletAndMobile,
+    t,
+    searchStatus,
+    searchResults,
+    activeSearchResultIndex
+  };
 
   return (
-    <ConnectedSearchPanel {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
+    <SearchPanelRedux {...combinedProps} />
   );
 };
