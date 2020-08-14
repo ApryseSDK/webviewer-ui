@@ -210,6 +210,9 @@
       "all": "Alles",
       "current": "Huidige",
       "pages": "Pagina's",
+      "pageQuality": "Print kwaliteit",
+      "qualityNormal": "Normaal",
+      "qualityHigh": "Hoog",
       "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Inclusief commentaar",
       "addWatermarkSettings": "Watermerkinstellingen toevoegen"

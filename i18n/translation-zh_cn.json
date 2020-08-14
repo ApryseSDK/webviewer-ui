@@ -210,6 +210,9 @@
       "all": "全部",
       "current": "当前",
       "pages": "页数",
+      "pageQuality": "打印质量",
+      "qualityNormal": "正常",
+      "qualityHigh": "高",
       "includeAnnotations": "包括注释",
       "includeComments": "包括评论",
       "addWatermarkSettings": "添加水印设置"

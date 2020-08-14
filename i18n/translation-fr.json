@@ -210,6 +210,9 @@
       "all": "Toutes",
       "current": "Actuelle",
       "pages": "Pages",
+      "pageQuality": "Qualité d'impression",
+      "qualityNormal": "Ordinaire",
+      "qualityHigh": "Haute",
       "includeAnnotations": "Inclure des annotations",
       "includeComments": "Inclure les commentaires",
       "addWatermarkSettings": "Ajouter des paramètres de filigrane"
