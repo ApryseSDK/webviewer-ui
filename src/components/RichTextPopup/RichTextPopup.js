@@ -103,6 +103,16 @@ const RichTextPopup = () => {
     return () => core.removeEventListener('editorBlur', handleEditorBlur);
   }, [dispatch]);
 
+  useEffect(() => {
+    if (popupRef.current && annotationRef.current) {
+      const position = getRichTextPopupPosition(
+        annotationRef.current,
+        popupRef,
+      );
+      setCssPosition(position);
+    }
+  }, [symbolsVisible]);
+
   const getFormat = range => {
     if (!range) {
       return {};
@@ -131,15 +141,6 @@ const RichTextPopup = () => {
 
   const handleSymbolsClick = () => {
     setSymbolsVisible(!symbolsVisible);
-    setTimeout(() => {
-      if (popupRef.current) {
-        const position = getRichTextPopupPosition(
-          annotationRef.current,
-          popupRef,
-        );
-        setCssPosition(position);
-      }
-    },0);
   };
 
   const handleColorChange = (_, color) => {
