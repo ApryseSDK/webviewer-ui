@@ -66,12 +66,12 @@ class ReaderModeViewer extends React.PureComponent {
   }
 
   goToPage(pageNum) {
-    this.wvReadingMode.goToPage(pageNum);
+    this.wvReadingMode?.goToPage(pageNum);
   }
 
   setZoom(zoom) {
-    this.wvReadingMode.setZoom(zoom);
-    const pageWidth = core.getDocumentViewer().getDocument().getPageWidth(1);
+    this.wvReadingMode?.setZoom(zoom);
+    const pageWidth = core.getDocumentViewer().getPageWidth(1);
     if (pageWidth) {
       this.viewer.current.style.width = `${pageWidth * zoom}px`;
     }
