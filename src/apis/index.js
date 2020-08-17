@@ -102,6 +102,7 @@ import setLayoutMode from './setLayoutMode';
 import setMaxZoomLevel from './setMaxZoomLevel';
 import setMinZoomLevel from './setMinZoomLevel';
 import setNoteDateFormat from './setNoteDateFormat';
+import setPrintedNoteDateFormat from './setPrintedNoteDateFormat';
 import setNotesPanelSort from './setNotesPanelSort';
 import setPageLabels from './setPageLabels';
 import setPrintQuality from './setPrintQuality';
@@ -195,6 +196,7 @@ export default store => {
     setMaxZoomLevel: setMaxZoomLevel(store),
     setMinZoomLevel: setMinZoomLevel(store),
     setNoteDateFormat: setNoteDateFormat(store),
+    setPrintedNoteDateFormat: setPrintedNoteDateFormat(store),
     setMeasurementUnits: setMeasurementUnits(store),
     setPageLabels: setPageLabels(store),
     setPrintQuality: setPrintQuality(store),

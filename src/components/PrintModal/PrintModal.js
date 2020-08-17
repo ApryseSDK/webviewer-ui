@@ -36,7 +36,8 @@ class PrintModal extends React.PureComponent {
     sortStrategy: PropTypes.string.isRequired,
     colorMap: PropTypes.object.isRequired,
     layoutMode: PropTypes.string.isRequired,
-    isApplyWatermarkDisabled: PropTypes.bool
+    isApplyWatermarkDisabled: PropTypes.bool,
+    printedNoteDateFormat: PropTypes.string,
   };
 
   constructor() {
@@ -162,7 +163,8 @@ class PrintModal extends React.PureComponent {
       this.state.includeAnnotations,
       this.props.printQuality,
       this.props.sortStrategy,
-      this.props.colorMap
+      this.props.colorMap,
+      this.props.printedNoteDateFormat,
     );
     createPages.forEach(async pagePromise => {
       await pagePromise;
@@ -383,7 +385,8 @@ const mapStateToProps = state => ({
   pageLabels: selectors.getPageLabels(state),
   sortStrategy: selectors.getSortStrategy(state),
   colorMap: selectors.getColorMap(state),
-  layoutMode: selectors.getDisplayMode(state)
+  layoutMode: selectors.getDisplayMode(state),
+  printedNoteDateFormat: selectors.getPrintedNoteDateFormat(state),
 });
 
 const mapDispatchToProps = dispatch => ({
