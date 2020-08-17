@@ -434,6 +434,7 @@ export default {
     pageLabels: [],
     selectedThumbnailPageIndexes: [],
     noteDateFormat: 'MMM D, h:mma',
+    printedNoteDateFormat: 'D/MM/YYYY h:mm:ss A',
     colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
     warning: {},
     customNoteFilter: null,
