@@ -89,7 +89,7 @@ const Note = ({ annotation }) => {
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
       // Need this delay to ensure all other event listeners fire before we open the line
-      setTimeout(() => dispatch(actions.openElement('linePortal'), 300));
+      setTimeout(() => dispatch(actions.openElement('annotationLineConnector'), 300));
     }
   };
 

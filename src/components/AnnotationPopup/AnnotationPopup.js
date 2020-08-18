@@ -68,6 +68,7 @@ const AnnotationPopup = () => {
       if (popupRef.current && popupItems.length > 0) {
         setPosition(getAnnotationPopupPositionBasedOn(firstAnnotation, popupRef));
         dispatch(actions.openElement('annotationPopup'));
+        dispatch(actions.openElement('annotationLineConnector'));
       }
     };
 
@@ -191,7 +192,7 @@ const AnnotationPopup = () => {
     ref={popupRef}
     data-element="annotationPopup"
     style={{ ...position }}
-  >
+                          >
     {isStylePopupOpen ? (
       <AnnotationStylePopup
         annotation={firstAnnotation}
@@ -328,11 +329,11 @@ const AnnotationPopup = () => {
 
   return (
     isIE || isMobile() ?
-    annotationPopup
-    :
-    <Draggable cancel=".Button, .cell, .sliders-container svg">
-      {annotationPopup}
-    </Draggable>
+      annotationPopup
+      :
+      <Draggable cancel=".Button, .cell, .sliders-container svg">
+        {annotationPopup}
+      </Draggable>
   );
 };
 

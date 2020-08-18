@@ -3,7 +3,6 @@ import NoteContext from 'components/Note/Context';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import core from 'core';
 import selectors from 'selectors';
-import actions from 'actions';
 import { createPortal } from 'react-dom';
 
 import './AnnotationLineConnector.scss';
@@ -12,7 +11,7 @@ import './AnnotationLineConnector.scss';
 const LineConnectorPortal = ({ children }) => {
   const mount = document.getElementById("line-connector-root");
   const el = document.createElement("div");
-  el.setAttribute('data-element', 'linePortal');
+  el.setAttribute('data-element', 'annotationLineConnector');
 
   useEffect(() => {
     mount.appendChild(el);
@@ -24,11 +23,12 @@ const LineConnectorPortal = ({ children }) => {
 
 
 const AnnotationLineConnector = ({ annotation, noteContainerRef }) => {
-  const [notePanelWidth, isLineOpen, isNotesPanelOpen] = useSelector(
+  const [notePanelWidth, isLineOpen, isNotesPanelOpen, zoom] = useSelector(
     state => [
       selectors.getNotesPanelWidth(state),
-      selectors.isElementOpen(state, 'linePortal'),
+      selectors.isElementOpen(state, 'annotationLineConnector'),
       selectors.isElementOpen(state, 'notesPanel'),
+      selectors.getZoom(state),
     ],
     shallowEqual,
   );
@@ -49,10 +49,6 @@ const AnnotationLineConnector = ({ annotation, noteContainerRef }) => {
   const annotationWindowCoords  = displayMode.pageToWindow({ x: annotation.getX(), y: annotation.getY() }, annotation.PageNumber);
 
   useEffect(() => {
-    if (isSelected) {
-      dispatch(actions.openElement('linePortal'));
-    }
-
     const { x: annotOriginX, y: annotOriginY } = annotationWindowCoords;
     const { scrollTop } = core.getScrollViewElement();
     const notePanelLeftPadding = 16;
@@ -79,11 +75,12 @@ const AnnotationLineConnector = ({ annotation, noteContainerRef }) => {
 
     setHorizontalLineTwoTop(annotOriginY + (annotHeightInPixels / 2) - scrollTop);
 
-  }, [annotation, displayMode, noteContainerRef, notePanelWidth, isNotesPanelOpen, isSelected, dispatch, horizontalLineOneWidth, annotationWindowCoords]);
+  }, [annotation, displayMode, noteContainerRef, notePanelWidth, isNotesPanelOpen, isSelected, dispatch, horizontalLineOneWidth, annotationWindowCoords, zoom]);
 
   if (isSelected && isLineOpen && isNotesPanelOpen) {
-    const verticalHeight = horizontalLineOneTop > horizontalLineTwoTop ? horizontalLineOneTop - horizontalLineTwoTop : horizontalLineTwoTop - horizontalLineOneTop;
+    const verticalHeight = Math.abs(horizontalLineOneTop - horizontalLineTwoTop);
     const verticalTop = horizontalLineOneTop > horizontalLineTwoTop ? horizontalLineTwoTop : horizontalLineOneTop;
+
     return (
       <LineConnectorPortal>
         <div className="lineHorizontal" style={{ width: horizontalLineOneWidth, right: horizontalLineOneRight, top: horizontalLineOneTop }}/>
