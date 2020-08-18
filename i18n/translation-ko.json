@@ -210,6 +210,9 @@
       "all": "모두",
       "current": "현재",
       "pages": "페이지",
+      "pageQuality": "인쇄 품질",
+      "qualityNormal": "표준",
+      "qualityHigh": "높은",
       "includeAnnotations": "주석 포함",
       "includeComments": "코멘트 포함",
       "addWatermarkSettings": "워터 마크 설정 추가"

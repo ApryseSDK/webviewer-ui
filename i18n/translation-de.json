@@ -210,6 +210,9 @@
       "all": "Alle",
       "current": "Aktuelle Seite",
       "pages": "Seiten",
+      "pageQuality": "Druckqualität",
+      "qualityNormal": "Normal",
+      "qualityHigh": "Hoch",
       "includeAnnotations": "Fügen Sie Anmerkungen hinzu",
       "includeComments": "Kommentare einfügen",
       "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"

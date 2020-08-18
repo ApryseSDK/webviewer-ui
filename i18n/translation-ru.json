@@ -210,6 +210,9 @@
       "all": "Все",
       "current": "Текущий",
       "pages": "Страницы",
+      "pageQuality": "Качество печати",
+      "qualityNormal": "Нормальный",
+      "qualityHigh": "Высокая",
       "includeAnnotations": "Включить аннотации",
       "includeComments": "Приложить комментарии",
       "addWatermarkSettings": "Добавить настройки водяного знака"

@@ -156,6 +156,8 @@ export const getRotation = state => state.viewer.rotation;
 
 export const getNoteDateFormat = state => state.viewer.noteDateFormat;
 
+export const getPrintedNoteDateFormat = state => state.viewer.printedNoteDateFormat;
+
 export const isFullScreen = state => state.viewer.isFullScreen;
 
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
