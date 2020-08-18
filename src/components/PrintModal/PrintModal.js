@@ -35,6 +35,7 @@ class PrintModal extends React.PureComponent {
     colorMap: PropTypes.object.isRequired,
     layoutMode: PropTypes.string.isRequired,
     isApplyWatermarkDisabled: PropTypes.bool,
+    printedNoteDateFormat: PropTypes.string,
   };
 
   constructor() {
@@ -398,13 +399,14 @@ class PrintModal extends React.PureComponent {
   };
 
   getNoteInfo = annotation => {
+    const { printedNoteDateFormat } = this.props;
     const info = document.createElement('div');
 
     info.className = 'note__info';
     info.innerHTML = `
       Author: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
       Subject: ${annotation.Subject} &nbsp;&nbsp;
-      Date: ${dayjs(annotation.DateCreated).format('D/MM/YYYY h:mm:ss A')}
+      Date: ${dayjs(annotation.DateCreated).format(printedNoteDateFormat || 'D/MM/YYYY h:mm:ss A')}
     `;
     return info;
   };
@@ -628,6 +630,7 @@ const mapStateToProps = state => ({
   sortStrategy: selectors.getSortStrategy(state),
   colorMap: selectors.getColorMap(state),
   layoutMode: selectors.getDisplayMode(state),
+  printedNoteDateFormat: selectors.getPrintedNoteDateFormat(state),
 });
 
 const mapDispatchToProps = dispatch => ({
