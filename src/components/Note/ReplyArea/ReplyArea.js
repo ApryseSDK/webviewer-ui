@@ -71,7 +71,7 @@ const ReplyArea = ({ annotation }) => {
       return;
     }
 
-    const annotationHasNoContents = annotation.getContents() === '';
+    const annotationHasNoContents = annotation.getContents() === '' || annotation.getContents() === undefined;
     if (isMentionEnabled) {
       if (annotationHasNoContents) {
         const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(value);

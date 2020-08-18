@@ -8,7 +8,7 @@ export default () => (annotations, action, info) => {
   }
 
   const selectAnnotationOnCreation =
-    getHashParams('selectAnnotationsOnCreation', false);
+    getHashParams('selectAnnotationOnCreation', false);
   if (selectAnnotationOnCreation) {
     if (action === 'add' && !info.imported) {
       if (annotations.length > 0 && !annotations[0].InReplyTo) {
