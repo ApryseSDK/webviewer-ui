@@ -242,6 +242,10 @@ export const setMouseWheelZoom = (enableMouseWheelZoom = true) => ({
   type: 'SET_MOUSE_WHEEL_ZOOM',
   payload: { enableMouseWheelZoom },
 });
+export const setMathSymbols = (enableMathSymbols = true) => ({
+  type: 'SET_MATH_SYMBOLS',
+  payload: { enableMathSymbols },
+});
 
 // document
 export const setTotalPages = totalPages => ({

@@ -425,6 +425,7 @@ export default {
     isThumbnailMultiselect: true,
     allowPageNavigation: true,
     enableMouseWheelZoom: true,
+    enableMathSymbols: false,
     doesAutoLoad: getHashParams('auto_load', true),
     isReadOnly: getHashParams('readonly', false),
     customModals: [],

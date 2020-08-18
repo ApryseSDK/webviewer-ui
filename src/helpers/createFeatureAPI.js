@@ -200,6 +200,11 @@ export default (enable, store) => features => {
         store.dispatch(actions.setMouseWheelZoom(enable));
       }
     },
+    [Feature.MathSymbols]: {
+      fn: () => {
+        store.dispatch(actions.setMathSymbols(enable));
+      }
+    },
   };
 
   if (!Array.isArray(features)) {

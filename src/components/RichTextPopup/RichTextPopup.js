@@ -17,11 +17,12 @@ import selectors from 'selectors';
 import './RichTextPopup.scss';
 
 const RichTextPopup = () => {
-  const [isDisabled, isOpen, isPaletteDisabled] = useSelector(
+  const [isDisabled, isOpen, isPaletteDisabled, isMathSymbolsEnabled] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'richTextPopup'),
       selectors.isElementOpen(state, 'richTextPopup'),
-      selectors.isElementDisabled(state, 'richTextColorPalette')
+      selectors.isElementDisabled(state, 'richTextColorPalette'),
+      selectors.getEnableMathSymbols(state)
     ],
     shallowEqual
   );
@@ -104,14 +105,14 @@ const RichTextPopup = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (popupRef.current && annotationRef.current) {
+    if (isMathSymbolsEnabled && popupRef.current && annotationRef.current) {
       const position = getRichTextPopupPosition(
         annotationRef.current,
         popupRef,
       );
       setCssPosition(position);
     }
-  }, [symbolsVisible]);
+  }, [symbolsVisible, isMathSymbolsEnabled]);
 
   const getFormat = range => {
     if (!range) {
@@ -198,7 +199,7 @@ const RichTextPopup = () => {
           Popup: true,
           RichTextPopup: true,
           open: isOpen,
-          closed: !isOpen
+          closed: !isOpen,
         })}
         ref={popupRef}
         data-element="richTextPopup"
@@ -233,12 +234,14 @@ const RichTextPopup = () => {
             img="ic_annotation_strikeout_black_24px"
             title="option.richText.strikeout"
           />
-          <Button
-            dataElement="richTextShowMathSymbols"
-            onClick={handleSymbolsClick}
-            img="ic_thumbnails_grid_black_24px"
-            title="option.mathSymbols"
-          />
+          {isMathSymbolsEnabled && (
+            <Button
+              dataElement="richTextShowMathSymbols"
+              onClick={handleSymbolsClick}
+              img="ic_thumbnails_grid_black_24px"
+              title="option.mathSymbols"
+            />
+          )}
         </Element>
         <HorizontalDivider style={{ paddingTop: 0 }} />
         {!isPaletteDisabled && (
@@ -250,12 +253,7 @@ const RichTextPopup = () => {
             hasPadding
           />
         )}
-        {symbolsVisible && (
-          <MathSymbolsPicker
-            onClickHandler={insertSymbols}
-            maxHeight={symbolsAreaHeight}
-          />
-        )}
+        {symbolsVisible && <MathSymbolsPicker onClickHandler={insertSymbols} maxHeight={symbolsAreaHeight} />}
       </div>
     </Draggable>
   );
