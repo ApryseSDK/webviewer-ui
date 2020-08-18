@@ -2,7 +2,6 @@ import i18next from 'i18next';
 import dayjs from 'dayjs';
 import orientationManager from 'helpers/orientationManager';
 import { rotateRad } from 'helpers/rotate';
-import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
 const sortStrategies = {
   position: {
@@ -32,12 +31,12 @@ const sortStrategies = {
     getSeparatorContent: (prevNote, currNote, { pageLabels }) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
   time: {
-    getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
-    shouldRenderSeparator: (prevNote, currNote) => dayjs(getLatestActivityDate(prevNote)).format('MMM D, YYYY') !== dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY'),
+    getSortedNotes: notes => notes.sort((a, b) => (b.DateCreated || new Date()) - (a.DateCreated || new Date())),
+    shouldRenderSeparator: (prevNote, currNote) => dayjs(prevNote.DateCreated || new Date()).format('MMM D, YYYY') !== dayjs(currNote.DateCreated || new Date()).format('MMM D, YYYY'),
     getSeparatorContent: (prevNote, currNote) => {
       const today = dayjs(new Date()).format('MMM D, YYYY');
       const yesterday = dayjs(new Date(new Date() - 86400000)).format('MMM D, YYYY');
-      const latestActivityDate = dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY');
+      const latestActivityDate = dayjs(currNote.DateCreated || new Date()).format('MMM D, YYYY');
 
       if (latestActivityDate === today) {
         return i18next.t('option.notesPanel.separator.today');
