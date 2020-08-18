@@ -110,6 +110,12 @@ export default initialState => (state = initialState, action) => {
         isWildcard: state.isWildcard,
       };
     }
+    case 'SET_SEARCH_EXECUTOR': {
+      return {
+        ...state,
+        searchExecutor: payload,
+      };
+    }
     case 'SET_SEARCH_RESULTS': {
       return {
         ...state,

@@ -27,6 +27,7 @@ class SearchOverlay extends React.PureComponent {
     isAmbientString: PropTypes.bool,
     isWildcard: PropTypes.bool,
     isRegex: PropTypes.bool,
+    searchExecutor: PropTypes.func,
     searchResults: PropTypes.arrayOf(PropTypes.object),
     activeResultIndex: PropTypes.number,
     isProgrammaticSearch: PropTypes.bool,
@@ -271,7 +272,8 @@ class SearchOverlay extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, t, searchResults, searchValue } = this.props;
+    const { isDisabled, t, searchResults, searchValue, searchExecutor } = this.props;
+    searchExecutor();
 
     if (isDisabled) {
       return null;
@@ -361,6 +363,7 @@ const mapStateToProps = state => ({
   isProgrammaticSearch: selectors.isProgrammaticSearch(state),
   isProgrammaticSearchFull: selectors.isProgrammaticSearchFull(state),
   searchListeners: selectors.getSearchListeners(state),
+  searchExecutor: selectors.getSearchExecutor(state),
   isDisabled: selectors.isElementDisabled(state, 'searchOverlay'),
   isOpen: selectors.isElementOpen(state, 'searchOverlay'),
 });

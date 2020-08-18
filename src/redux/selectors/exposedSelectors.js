@@ -276,6 +276,8 @@ export const getUserName = state => state.user.name;
 export const getServerUrl = state => state.advanced.serverUrl;
 
 // search
+export const getSearchExecutor = state => state.search.searchExecutor;
+
 export const getSearchListeners = state => state.search.listeners;
 
 export const getSearchValue = state => state.search.value;
