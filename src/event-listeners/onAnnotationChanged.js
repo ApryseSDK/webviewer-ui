@@ -8,10 +8,10 @@ export default () => (annotations, action, info) => {
   }
 
   const selectAnnotationOnCreation =
-    getHashParams('selectAnnotationsOnCreation', true);
+    getHashParams('selectAnnotationsOnCreation', false);
   if (selectAnnotationOnCreation) {
     if (action === 'add' && !info.imported) {
-      if (annotations.length > 0 && !annotations[0].__inReplyTo) {
+      if (annotations.length > 0 && !annotations[0].InReplyTo) {
         core.selectAnnotation(annotations[0]);
       }
     }
