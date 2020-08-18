@@ -11,6 +11,9 @@ function isSearchResultSame(searchResultA, searchResultB) {
   }
   const quadA = searchResultA.quads[0];
   const quadB = searchResultB.quads[0];
+  if (!quadA || !quadB) {
+    return false;
+  }
   if (quadA.x1 === quadB.x1 &&
     quadA.x2 === quadB.x2 &&
     quadA.x3 === quadB.x3 &&
