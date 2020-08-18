@@ -71,10 +71,25 @@ const ReplyArea = ({ annotation }) => {
       return;
     }
 
+    const annotationHasNoContents = annotation.getContents() === '';
     if (isMentionEnabled) {
-      mentionsManager.createMentionReply(annotation, value);
+      if (annotationHasNoContents) {
+        const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(value);
+
+        annotation.setCustomData('trn-mention', {
+          contents: value,
+          ids,
+        });
+        core.setNoteContents(annotation, plainTextValue);
+      } else {
+        core.createAnnotationReply(annotation, value);
+      }
     } else {
-      core.createAnnotationReply(annotation, value);
+      if (annotationHasNoContents) {
+        core.setNoteContents(annotation, value);
+      } else {
+        core.createAnnotationReply(annotation, value);
+      }
     }
 
     setValue('');
@@ -96,15 +111,14 @@ const ReplyArea = ({ annotation }) => {
       <NoteTextarea
         ref={el => {
           textareaRef.current = el;
-          {/* textareaRef.current && textareaRef.current.focus(); */}
         }}
         value={value}
         onChange={value => setValue(value)}
         onSubmit={postReply}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
-        placeholder={`${t('action.reply')}...`}
-        aria-label={`${t('action.reply')}...`}
+        placeholder={`${t('action.comment')}...`}
+        aria-label={`${t('action.comment')}...`}
       />
       <button
         className="reply-button"
