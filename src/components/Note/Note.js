@@ -10,78 +10,9 @@ import ReplyArea from 'components/Note/ReplyArea';
 import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
-
-import { createPortal } from 'react-dom';
+import AnnotationLineConnector from 'components/AnnotationLineConnector';
 
 import './Note.scss';
-
-const Portal = ({ children }) => {
-  const mount = document.getElementById("portal-root");
-  const el = document.createElement("div");
-  el.setAttribute('data-element', 'linePortal');
-
-  useEffect(() => {
-    mount.appendChild(el);
-    return () => mount.removeChild(el);
-  }, [el, mount]);
-
-  return createPortal(children, el);
-};
-
-const AnnotationLine = ({ annotation, noteContainerRef }) => {
-  const [notePanelWidth, zoom, isLineOpen, isNotesPanelOpen] = useSelector(
-    state => [
-      selectors.getNotesPanelWidth(state),
-      selectors.getZoom(state),
-      selectors.isElementOpen(state, 'linePortal'),
-      selectors.isElementOpen(state, 'notesPanel'),
-    ],
-    shallowEqual,
-  );
-  //For Horizontal Line One
-  const [horizontalLineOneWidth, setHorizontalLineOneWidth] = useState(0);
-  const [horizontalLineOneTop, setHorizontalLineOneTop] = useState(0);
-  const [horizontalLineOneRight, setHorizontalLineOneRight] = useState(0);
-  //For Horizontal Line Two
-  const [horizontalLineTwoWidth, setHorizontalLineTwoWidth] = useState(0);
-  const [horizontalLineTwoTop, setHorizontalLineTwoTop] = useState(0);
-  const [horizontalLineTwoRight, setHorizontalLineTwoRight] = useState(0);
-  const displayMode = core.getDisplayModeObject();
-  const dispatch = useDispatch();
-
-  const { isSelected } = useContext(NoteContext);
-  console.log({ zoom });  // console.log( { isLineOpen });
-  const pageToWindowCoords  = displayMode.pageToWindow({ x: annotation.getX(), y: annotation.getY() }, 1);
-  const { x, y } = pageToWindowCoords;
-
-  useEffect(() => {
-    if (isSelected) {
-      dispatch(actions.openElement('linePortal'));
-    }
-
-    //right is the X
-    /// top is the Y
-    setHorizontalLineOneRight(notePanelWidth - 16);
-    setHorizontalLineOneTop(noteContainerRef.current.getBoundingClientRect().top);
-    const lineWidth = window.innerWidth - notePanelWidth - x - annotation.Width + 16;
-    setHorizontalLineOneWidth(lineWidth * 0.75);
-    setHorizontalLineTwoWidth(lineWidth - horizontalLineOneWidth);
-
-    setHorizontalLineTwoRight(x + annotation.Width);
-    setHorizontalLineTwoTop(y + (annotation.Height / 2));
-
-  }, [annotation, displayMode, noteContainerRef, notePanelWidth, x, isNotesPanelOpen, isSelected, dispatch, horizontalLineOneWidth, y]);
-
-  if (isSelected && isLineOpen && isNotesPanelOpen) {
-    return (
-      <Portal>
-        <div className="line" style={{ width: horizontalLineOneWidth, right: horizontalLineOneRight, top: horizontalLineOneTop }}/>
-        <div className="line" style={{ width: horizontalLineTwoWidth, left: horizontalLineTwoRight, top: horizontalLineTwoTop }}/>
-      </Portal>);
-  } else {
-    return null;
-  }
-};
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -155,12 +86,10 @@ const Note = ({ annotation }) => {
 
     if (!isSelected) {
       core.deselectAllAnnotations();
-      console.log('select ma boa');
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
-      console.log('open portal');
+      // Need this delay to ensure all other event listeners fire before we open the line
       setTimeout(() => dispatch(actions.openElement('linePortal'), 300));
-      // dispatch(actions.openElement('linePortal'));
     }
   };
 
@@ -232,7 +161,7 @@ const Note = ({ annotation }) => {
           </div>
         </React.Fragment>
       )}
-      <AnnotationLine annotation={annotation} noteContainerRef={containerRef}/>
+      <AnnotationLineConnector annotation={annotation} noteContainerRef={containerRef}/>
     </div>
   );
 };
