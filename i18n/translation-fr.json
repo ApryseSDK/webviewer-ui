@@ -362,8 +362,8 @@
     "select": "Sélection",
     "Marquee": "Zoom sur la sélection",
     "Link": "URL de lien ou page",
-    "Standard": "la norme",
-    "Custom": "Douane"
+    "Standard": "Standard",
+    "Custom": "Personnalisées"
   },
   "link": {
     "url": "URL",
