@@ -23,7 +23,6 @@ const AnnotationPopup = () => {
     isDisabled,
     isOpen,
     isNotesPanelDisabled,
-    isNotesPanelOpen,
     isAnnotationStylePopupDisabled,
     // can probably use mutation observer
     isLeftPanelOpen,
@@ -34,7 +33,6 @@ const AnnotationPopup = () => {
       selectors.isElementDisabled(state, 'annotationPopup'),
       selectors.isElementOpen(state, 'annotationPopup'),
       selectors.isElementDisabled(state, 'notesPanel'),
-      selectors.isElementOpen(state, 'notesPanel'),
       selectors.isElementDisabled(state, 'annotationStylePopup'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementOpen(state, 'searchPanel'),
