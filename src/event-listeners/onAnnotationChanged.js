@@ -5,6 +5,12 @@ export default () => (annotations, action) => {
   if (action === 'delete') {
     deleteReplies(annotations);
   }
+
+  if (action === 'add') {
+    if (annotations.length > 0 && !annotations[0].__inReplyTo) {
+      core.selectAnnotation(annotations[0]);
+    }
+  }
 };
 
 const deleteReplies = annotations => {
