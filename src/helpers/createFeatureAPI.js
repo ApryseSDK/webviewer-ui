@@ -201,9 +201,7 @@ export default (enable, store) => features => {
       }
     },
     [Feature.MathSymbols]: {
-      fn: () => {
-        store.dispatch(actions.setMathSymbols(enable));
-      }
+      dataElements: ['mathSymbolsButton'],
     },
   };
 

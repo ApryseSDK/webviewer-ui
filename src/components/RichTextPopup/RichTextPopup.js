@@ -236,7 +236,7 @@ const RichTextPopup = () => {
           />
           {isMathSymbolsEnabled && (
             <Button
-              dataElement="richTextShowMathSymbols"
+              dataElement="mathSymbolsButton"
               onClick={handleSymbolsClick}
               img="ic_thumbnails_grid_black_24px"
               title="option.mathSymbols"
