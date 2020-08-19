@@ -44,7 +44,7 @@
 
     .page__container {
       box-sizing: border-box;
-      display: flex;
+      display: table;
       flex-direction: column;
       padding: 10px;
       min-height: 100%;
@@ -60,12 +60,13 @@
       }
 
       .note {
-        display: flex;
+        display: table;
         flex-direction: column;
         padding: 0.6rem;
         border: 0.1rem lightgray solid;
         border-radius: 0.4rem;
         margin-bottom: 0.5rem;
+        page-break-inside: avoid;
 
         .note__info {
           font-size: 1.3rem;
