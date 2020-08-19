@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import NoteContext from 'components/Note/Context';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import core from 'core';
 import selectors from 'selectors';
 import { createPortal } from 'react-dom';
@@ -23,16 +23,14 @@ const LineConnectorPortal = ({ children }) => {
 
 
 const AnnotationLineConnector = ({ annotation, noteContainerRef }) => {
-  const [notePanelWidth, isLineOpen, isNotesPanelOpen, zoom] = useSelector(
+  const [notePanelWidth, isLineOpen, isNotesPanelOpen] = useSelector(
     state => [
       selectors.getNotesPanelWidth(state),
       selectors.isElementOpen(state, 'annotationLineConnector'),
       selectors.isElementOpen(state, 'notesPanel'),
-      selectors.getZoom(state),
     ],
     shallowEqual,
   );
-  const dispatch = useDispatch();
 
   //Horizontal Line One
   const [horizontalLineOneWidth, setHorizontalLineOneWidth] = useState(0);
@@ -67,15 +65,15 @@ const AnnotationLineConnector = ({ annotation, noteContainerRef }) => {
     setHorizontalLineOneTop(noteContainerRef.current.getBoundingClientRect().top);
 
     const lineWidth = window.innerWidth - notePanelWidth - annotOriginX + notePanelLeftPadding;
-    const scaleFactor = 0.75;
-    setHorizontalLineOneWidth(lineWidth * scaleFactor);
+    const firstSegmentRatio = 0.75;
+    setHorizontalLineOneWidth(lineWidth * firstSegmentRatio);
     setHorizontalLineTwoWidth(lineWidth - horizontalLineOneWidth - annotWidthInPixels);
 
     setHorizontalLineTwoRight(notePanelWidth - notePanelLeftPadding + horizontalLineOneWidth);
 
     setHorizontalLineTwoTop(annotOriginY + (annotHeightInPixels / 2) - scrollTop);
 
-  }, [annotation, displayMode, noteContainerRef, notePanelWidth, isNotesPanelOpen, isSelected, dispatch, horizontalLineOneWidth, annotationWindowCoords, zoom]);
+  }, [annotation, displayMode, noteContainerRef, notePanelWidth, isNotesPanelOpen, isSelected, horizontalLineOneWidth, annotationWindowCoords]);
 
   if (isSelected && isLineOpen && isNotesPanelOpen) {
     const verticalHeight = Math.abs(horizontalLineOneTop - horizontalLineTwoTop);
