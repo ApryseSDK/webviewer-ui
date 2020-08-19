@@ -284,8 +284,7 @@
     "thumbnailPanel": {
       "delete": "Elimina",
       "rotateClockwise": "Senso orario",
-      "rotateCounterClockwise": "Antiorario",
-      "extractZeroPageError": "Nessuna pagina selezionata per l'estrazione"
+      "rotateCounterClockwise": "Antiorario"
     },
     "richText": {
       "bold": "Grassetto",

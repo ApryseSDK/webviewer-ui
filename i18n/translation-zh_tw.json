@@ -284,8 +284,7 @@
     "thumbnailPanel": {
       "delete": "刪除",
       "rotateClockwise": "順時針",
-      "rotateCounterClockwise": "逆時針方向",
-      "extractZeroPageError": "沒有選擇要提取的頁面"
+      "rotateCounterClockwise": "逆時針方向"
     },
     "richText": {
       "bold": "粗體",

@@ -284,8 +284,7 @@
     "thumbnailPanel": {
       "delete": "지우다",
       "rotateClockwise": "시계 방향",
-      "rotateCounterClockwise": "시계 반대 방향",
-      "extractZeroPageError": "추출 할 페이지가 선택되지 않았습니다"
+      "rotateCounterClockwise": "시계 반대 방향"
     },
     "richText": {
       "bold": "굵게",

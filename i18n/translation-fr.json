@@ -284,8 +284,7 @@
     "thumbnailPanel": {
       "delete": "Supprimer",
       "rotateClockwise": "Dans le sens horaire",
-      "rotateCounterClockwise": "Dans le sens antihoraire",
-      "extractZeroPageError": "Aucune page n'a été sélectionnée pour l'extraction"
+      "rotateCounterClockwise": "Dans le sens antihoraire"
     },
     "richText": {
       "bold": "Audacieux",

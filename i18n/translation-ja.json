@@ -284,8 +284,7 @@
     "thumbnailPanel": {
       "delete": "削除する",
       "rotateClockwise": "時計回り",
-      "rotateCounterClockwise": "反時計回り",
-      "extractZeroPageError": "抽出するページが選択されていません"
+      "rotateCounterClockwise": "反時計回り"
     },
     "richText": {
       "bold": "太字",

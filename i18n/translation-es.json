@@ -284,8 +284,7 @@
     "thumbnailPanel": {
       "delete": "Borrar",
       "rotateClockwise": "Agujas del reloj",
-      "rotateCounterClockwise": "Sinistrórsum",
-      "extractZeroPageError": "No se seleccionaron páginas para extraer"
+      "rotateCounterClockwise": "Sinistrórsum"
     },
     "richText": {
       "bold": "Negrita",

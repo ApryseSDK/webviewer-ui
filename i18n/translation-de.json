@@ -284,8 +284,7 @@
     "thumbnailPanel": {
       "delete": "Löschen",
       "rotateClockwise": "Im Uhrzeigersinn",
-      "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
-      "extractZeroPageError": "Es wurden keine Seiten zum Extrahieren ausgewählt"
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
     },
     "richText": {
       "bold": "Fett",

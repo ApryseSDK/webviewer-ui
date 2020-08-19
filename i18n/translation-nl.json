@@ -284,8 +284,7 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Met de klok mee",
-      "rotateCounterClockwise": "Tegen de klok in",
-      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om te extraheren"
+      "rotateCounterClockwise": "Tegen de klok in"
     },
     "richText": {
       "bold": "Vet",
