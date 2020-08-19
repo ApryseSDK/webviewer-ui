@@ -197,7 +197,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   render() {
-    const { isToolsHeaderOpen, isMobile } = this.props;
+    const { isToolsHeaderOpen, isMobile, currentToolbarGroup } = this.props;
 
     let className;
 
@@ -231,7 +231,7 @@ class DocumentContainer extends React.PureComponent {
             <div
               className={classNames({
                 'footer-container': true,
-                'tools-header-open': isToolsHeaderOpen,
+                'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
               })}
             >
               <div className="footer">
@@ -247,6 +247,7 @@ class DocumentContainer extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),

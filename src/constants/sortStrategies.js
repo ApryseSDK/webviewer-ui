@@ -94,13 +94,13 @@ const sortStrategies = {
   type: {
     getSortedNotes: notes =>
       notes.sort((a, b) => {
-        const typeA = i18next.t(`annotation.${a.Subject.toLowerCase()}`).toUpperCase();
-        const typeB = i18next.t(`annotation.${b.Subject.toLowerCase()}`).toUpperCase();
+        const typeA = a.Subject.toUpperCase();
+        const typeB = b.Subject.toUpperCase();
         return typeA < typeB ? -1 : typeA > typeB ? 1 : 0;
       }),
     shouldRenderSeparator: (prevNote, currNote) => prevNote.Subject !== currNote.Subject,
     getSeparatorContent: (prevNote, currNote) => {
-      return i18next.t(`annotation.${currNote.Subject.toLowerCase()}`);
+      return currNote.Subject;
     },
   },
 };
