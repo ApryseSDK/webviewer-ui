@@ -20,11 +20,12 @@ import './TextPopup.scss';
 const TextPopup = () => {
   const fullAPI = !!getHashParams('pdfnet', false);
 
-  const [isDisabled, isOpen, popupItems] = useSelector(
+  const [isDisabled, isOpen, popupItems, isTextEditEnabled] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'textPopup'),
       selectors.isElementOpen(state, 'textPopup'),
       selectors.getPopupItems(state, 'textPopup'),
+      selectors.getEnableTextEdit(state)
     ],
     shallowEqual,
   );
@@ -59,8 +60,10 @@ const TextPopup = () => {
   useArrowFocus(!isDisabled && isOpen, onClose, popupRef);
 
   const textEditingHandler = useCallback(() => {
-    dispatch(actions.openElement('editTextModal'));
-  }, [dispatch]);
+    if (isTextEditEnabled) {
+      dispatch(actions.openElement('editTextModal'));
+    }
+  }, [dispatch, isTextEditEnabled]);
 
   return isDisabled ? null : (
     <div
@@ -76,7 +79,7 @@ const TextPopup = () => {
       onClick={onClose}
     >
       <CustomizablePopup dataElement="textPopup">
-        {fullAPI && (
+        {fullAPI && isTextEditEnabled && (
           <ActionButton
             dataElement="editTextButton"
             title="action.edit"

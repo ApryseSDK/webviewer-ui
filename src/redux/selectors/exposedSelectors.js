@@ -235,6 +235,8 @@ export const getAnnotationContentOverlayHandler = state => state.viewer.annotati
 
 export const getEnableMouseWheelZoom = state => state.viewer.enableMouseWheelZoom;
 
+export const getEnableTextEdit = state => state.viewer.enableTextEdit;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 

@@ -201,6 +201,9 @@ export default (enable, store) => features => {
         store.dispatch(actions.setMouseWheelZoom(enable));
       }
     },
+    [Feature.TextEdit]: {
+      dataElements: ['editTextModal'],
+    },
   };
 
   if (!Array.isArray(features)) {
