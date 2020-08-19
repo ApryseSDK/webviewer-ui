@@ -211,6 +211,9 @@
       "all": "Toutes",
       "current": "Actuelle",
       "pages": "Pages",
+      "pageQuality": "Qualité d'impression",
+      "qualityNormal": "Ordinaire",
+      "qualityHigh": "Haute",
       "includeAnnotations": "Inclure des annotations",
       "includeComments": "Inclure les commentaires",
       "addWatermarkSettings": "Ajouter des paramètres de filigrane"
@@ -360,8 +363,8 @@
     "select": "Sélection",
     "Marquee": "Zoom sur la sélection",
     "Link": "URL de lien ou page",
-    "Standard": "la norme",
-    "Custom": "Douane"
+    "Standard": "Standard",
+    "Custom": "Personnalisées"
   },
   "link": {
     "url": "URL",
