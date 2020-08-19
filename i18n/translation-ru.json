@@ -295,8 +295,7 @@
     "thumbnailPanel": {
       "delete": "удалять",
       "rotateClockwise": "по часовой стрелке",
-      "rotateCounterClockwise": "Против часовой стрелки",
-      "extractZeroPageError": "Страницы не были выбраны для извлечения"
+      "rotateCounterClockwise": "Против часовой стрелки"
     },
     "richText": {
       "bold": "Жирное лицо",
@@ -322,6 +321,10 @@
     "redaction": {
       "applyTile": "Применить редактирование",
       "applyMessage": "Это действие навсегда удалит все элементы, выбранные для редактирования. Это не может быть отменено."
+    },
+    "selectPage": {
+      "selectTitle": "Страницы не выбраны",
+      "selectMessage": "Пожалуйста, выберите страницы и попробуйте еще раз."
     }
   },
   "shortcut": {

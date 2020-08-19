@@ -295,8 +295,7 @@
     "thumbnailPanel": {
       "delete": "Supprimer",
       "rotateClockwise": "Dans le sens horaire",
-      "rotateCounterClockwise": "Dans le sens antihoraire",
-      "extractZeroPageError": "Aucune page n'a été sélectionnée pour l'extraction"
+      "rotateCounterClockwise": "Dans le sens antihoraire"
     },
     "richText": {
       "bold": "Audacieux",
@@ -322,6 +321,10 @@
     "redaction": {
       "applyTile": "Appliquer la rédaction",
       "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait."
+    },
+    "selectPage": {
+      "selectTitle": "Aucune page sélectionnée",
+      "selectMessage": "Veuillez sélectionner des pages et réessayer."
     }
   },
   "shortcut": {

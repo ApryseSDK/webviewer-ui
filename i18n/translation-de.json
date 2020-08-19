@@ -295,8 +295,7 @@
     "thumbnailPanel": {
       "delete": "Löschen",
       "rotateClockwise": "Im Uhrzeigersinn",
-      "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
-      "extractZeroPageError": "Es wurden keine Seiten zum Extrahieren ausgewählt"
+      "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
     },
     "richText": {
       "bold": "Fett",
@@ -322,6 +321,10 @@
     "redaction": {
       "applyTile": "Schwärzung anwenden",
       "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht rückgängig gemacht werden."
+    },
+    "selectPage": {
+      "selectTitle": "Keine Seiten ausgewählt",
+      "selectMessage": "Bitte wählen Sie Seiten aus und versuchen Sie es erneut."
     }
   },
   "shortcut": {

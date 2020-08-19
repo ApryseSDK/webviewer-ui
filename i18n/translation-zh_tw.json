@@ -295,8 +295,7 @@
     "thumbnailPanel": {
       "delete": "刪除",
       "rotateClockwise": "順時針",
-      "rotateCounterClockwise": "逆時針方向",
-      "extractZeroPageError": "沒有選擇要提取的頁面"
+      "rotateCounterClockwise": "逆時針方向"
     },
     "richText": {
       "bold": "粗體",
@@ -322,6 +321,10 @@
     "redaction": {
       "applyTile": "應用編輯",
       "applyMessage": "此操作將永久刪除所有要編輯的項目。無法撤消。"
+    },
+    "selectPage": {
+      "selectTitle": "未選擇頁面",
+      "selectMessage": "請選擇頁面，然後重試。"
     }
   },
   "shortcut": {

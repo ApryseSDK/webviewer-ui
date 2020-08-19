@@ -295,8 +295,7 @@
     "thumbnailPanel": {
       "delete": "Excluir",
       "rotateClockwise": "Sentido horário",
-      "rotateCounterClockwise": "Sentido anti-horário",
-      "extractZeroPageError": "Nenhuma página foi selecionada para extrair"
+      "rotateCounterClockwise": "Sentido anti-horário"
     },
     "richText": {
       "bold": "Negrito",
@@ -322,6 +321,10 @@
     "redaction": {
       "applyTile": "Aplicar redação",
       "applyMessage": "Esta ação removerá permanentemente todos os itens selecionados para edição. Não pode ser desfeito."
+    },
+    "selectPage": {
+      "selectTitle": "Nenhuma página selecionada",
+      "selectMessage": "Selecione as páginas e tente novamente."
     }
   },
   "shortcut": {
