@@ -1,16 +1,13 @@
 import React from 'react';
 import core from 'core';
+import zoomFactors from 'constants/zoomFactors';
 
 class ReaderModeViewer extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.viewer = React.createRef();
-    this.originalMaxZoom = window.readerControl.getMaxZoomLevel();
-
-    this.renderDocument = this.renderDocument.bind(this);
-    this.goToPage = this.goToPage.bind(this);
-    this.setZoom = this.setZoom.bind(this);
+    this.originalMaxZoom = zoomFactors.getMaxZoomLevel();
   }
 
   componentDidMount() {
@@ -50,7 +47,7 @@ class ReaderModeViewer extends React.PureComponent {
     );
   }
 
-  renderDocument() {
+  renderDocument = () => {
     import('@pdftron/webviewer-reading-mode').then(({ default: WebViewerReadingMode }) => {
       if (!this.wvReadingMode) {
         this.wvReadingMode = WebViewerReadingMode.initialize(PDFNet);
@@ -61,15 +58,15 @@ class ReaderModeViewer extends React.PureComponent {
         this.viewer.current,
         core.setCurrentPage
       );
-      this.setZoom(window.readerControl.getZoomLevel());
+      this.setZoom(core.getZoom());
     });
   }
 
-  goToPage(pageNum) {
+  goToPage = (pageNum) => {
     this.wvReadingMode?.goToPage(pageNum);
   }
 
-  setZoom(zoom) {
+  setZoom = (zoom) => {
     this.wvReadingMode?.setZoom(zoom);
     const pageWidth = core.getDocumentViewer().getPageWidth(1);
     if (pageWidth) {
@@ -78,11 +75,11 @@ class ReaderModeViewer extends React.PureComponent {
   }
 
   updateMaxZoom() {
+    // Calling the FitWidth function to get the calculated fit width zoom level for normal page rendering
     const maxZoomLevel = core.getDocumentViewer().FitMode.FitWidth.call(core.getDocumentViewer());
     window.readerControl.setMaxZoomLevel(maxZoomLevel);
 
-    const zoomLevel = window.readerControl.getZoomLevel();
-    if (maxZoomLevel < zoomLevel) {
+    if (maxZoomLevel < core.getZoom()) {
       window.readerControl.setZoomLevel(maxZoomLevel);
     }
   }

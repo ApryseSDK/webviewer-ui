@@ -33,6 +33,7 @@ class Thumbnail extends React.PureComponent {
     selectedPageIndexes: PropTypes.arrayOf(PropTypes.number),
     isDraggable: PropTypes.bool,
     shouldShowControls: PropTypes.bool,
+    isReaderMode: PropTypes.bool
   };
 
   constructor(props) {

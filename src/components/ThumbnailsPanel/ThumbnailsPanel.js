@@ -38,6 +38,7 @@ class ThumbnailsPanel extends React.PureComponent {
     isMultipleViewerMerging: PropTypes.bool,
     dispatch: PropTypes.func,
     isThumbnailControlDisabled: PropTypes.bool,
+    isReaderMode: PropTypes.bool,
   };
 
   constructor() {
