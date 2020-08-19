@@ -25,8 +25,7 @@ import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
 import getHashParams from 'helpers/getHashParams';
-import selectors from 'selectors';
-import print from 'helpers/print';
+
 
 const middleware = [thunk];
 
@@ -138,11 +137,6 @@ if (window.CanvasRenderingContext2D) {
       const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
     }
-    docViewer.on('documentLoaded', () => {
-      window.docViewer.getAnnotationManager().getFieldManager().setPrintHandler(() => {
-        print(store.dispatch, selectors.isEmbedPrintSupported(store.getState()));
-      });
-    });
     setupDocViewer();
     setupI18n(state);
     setUserPermission(state);
