@@ -52,9 +52,6 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
     NoteContext,
   );
 
-  const [textAreaValue, setTextAreaValue] = useState(
-    annotation.getCustomData('trn-mention')?.contents || annotation.getContents()
-  );
   const dispatch = useDispatch();
   const isReply = annotation.isReply();
 
@@ -164,8 +161,6 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
         </div>
         {isEditing && isSelected ? (
           <ContentArea
-            textAreaValue={textAreaValue}
-            onTextAreaValueChange={setTextAreaValue}
             annotation={annotation}
             noteIndex={noteIndex}
             setIsEditing={setIsEditing}
@@ -177,7 +172,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
         )}
       </div>
     </React.Fragment>
-  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, textAreaValue, contents, renderContents]);
+  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents]);
 
 
   return useMemo(
@@ -199,15 +194,14 @@ const ContentArea = ({
   annotation,
   noteIndex,
   setIsEditing,
-  textAreaValue,
-  onTextAreaValueChange,
 }) => {
   const [isMentionEnabled] = useSelector(state => [
     selectors.getIsMentionEnabled(state),
   ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
-  const contents = annotation.getCustomData('trn-mention')?.contents || annotation.getContents();
+  const [ textAreaValue, setTextAreaValue] = useState(annotation.getCustomData('trn-mention')?.contents || annotation.getContents());
+  const textValueBeforeChanges = annotation.getCustomData('trn-mention')?.contents || annotation.getContents();
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
@@ -249,7 +243,7 @@ const ContentArea = ({
           textareaRef.current = el;
         }}
         value={textAreaValue}
-        onChange={onTextAreaValueChange}
+        onChange={setTextAreaValue}
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
         aria-label={`${t('action.comment')}...`}
@@ -260,7 +254,7 @@ const ContentArea = ({
           onClick={e => {
             e.stopPropagation();
             setIsEditing(false, noteIndex);
-            onTextAreaValueChange(contents);
+            setTextAreaValue(textValueBeforeChanges);
           }}
         >
           {t('action.cancel')}
