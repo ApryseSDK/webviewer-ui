@@ -82,7 +82,7 @@ const ReplyArea = ({ annotation }) => {
         });
         core.setNoteContents(annotation, plainTextValue);
       } else {
-        core.createAnnotationReply(annotation, value);
+        mentionsManager.createMentionReply(annotation, value);
       }
     } else {
       if (annotationHasNoContents) {
