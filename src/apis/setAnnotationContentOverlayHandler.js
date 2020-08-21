@@ -3,8 +3,8 @@ import action from 'actions';
 /**
  * Adds a custom overlay to annotations on mouseHover, overriding the existing overlay.
  * @method WebViewerInstance#setAnnotationContentOverlayHandler
- * @param {function} customOverlayHandler a function that takes an annotation and returns a DOM Element, which is rendered as a tooltip when hovering over the annotation
- *  * @example
+ * @param {function} customOverlayHandler A function that takes an annotation and returns a DOM Element, which is rendered as a tooltip when hovering over the annotation. Returning null or false will render nothing. Returning 'undefined' will use default behavior.
+ * @example
 WebViewer(...)
   .then(function(instance) {
     instance.setAnnotationContentOverlayHandler(annotation => {
