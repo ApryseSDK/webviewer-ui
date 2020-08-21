@@ -26,7 +26,7 @@ export default (store, toolName) => {
     toolName !== 'Pan' &&
     toolName !== 'AnnotationEdit'
   ) {
-    dispatch(actions.setActiveHeaderGroup('toolbarGroup-View'));
+    dispatch(actions.setActiveHeaderGroup('small-mobile-more-buttons'));
   }
 
   dispatch(actions.closeElement('toolStylePopup'));
