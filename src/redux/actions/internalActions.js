@@ -242,10 +242,6 @@ export const setMouseWheelZoom = (enableMouseWheelZoom = true) => ({
   type: 'SET_MOUSE_WHEEL_ZOOM',
   payload: { enableMouseWheelZoom },
 });
-export const setTextEdit = (enableTextEdit = true) => ({
-  type: 'SET_TEXT_EDIT',
-  payload: { enableTextEdit },
-});
 
 // document
 export const setTotalPages = totalPages => ({
