@@ -361,8 +361,8 @@ const mapStateToProps = state => ({
   isProgrammaticSearch: selectors.isProgrammaticSearch(state),
   isProgrammaticSearchFull: selectors.isProgrammaticSearchFull(state),
   searchListeners: selectors.getSearchListeners(state),
-  isDisabled: selectors.isElementDisabled(state, 'searchOverlay'),
-  isOpen: selectors.isElementOpen(state, 'searchOverlay'),
+  isDisabled: selectors.isElementDisabled(state, 'searchPanel'),
+  isOpen: selectors.isElementOpen(state, 'searchPanel'),
 });
 
 const mapDispatchToProps = {
