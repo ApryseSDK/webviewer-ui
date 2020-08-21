@@ -2,7 +2,7 @@ import React from 'react';
 import core from 'core';
 import zoomFactors from 'constants/zoomFactors';
 import { connect } from 'react-redux';
-import setMaxZoom from 'helpers/setMaxZoom';
+import setMaxZoomLevel from 'helpers/setMaxZoomLevel';
 
 class ReaderModeViewer extends React.PureComponent {
   constructor(props) {
@@ -29,7 +29,7 @@ class ReaderModeViewer extends React.PureComponent {
     core.removeEventListener('pageNumberUpdated', this.goToPage);
     core.removeEventListener('zoomUpdated', this.setZoom);
 
-    setMaxZoom(this.props.dispatch)(this.originalMaxZoom);
+    setMaxZoomLevel(this.props.dispatch)(this.originalMaxZoom);
   }
 
   componentDidUpdate(prevProps) {
@@ -79,7 +79,7 @@ class ReaderModeViewer extends React.PureComponent {
   updateMaxZoom() {
     // Calling the FitWidth function to get the calculated fit width zoom level for normal page rendering
     const maxZoomLevel = core.getDocumentViewer().FitMode.FitWidth.call(core.getDocumentViewer());
-    setMaxZoom(this.props.dispatch)(maxZoomLevel);
+    setMaxZoomLevel(this.props.dispatch)(maxZoomLevel);
 
     if (maxZoomLevel < core.getZoom()) {
       core.zoomTo(maxZoomLevel);

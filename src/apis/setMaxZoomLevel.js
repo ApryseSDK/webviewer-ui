@@ -9,6 +9,6 @@ WebViewer(...)
   });
  */
 
-import setMaxZoom from 'helpers/setMaxZoom';
+import setMaxZoomLevel from 'helpers/setMaxZoomLevel';
 
-export default store => setMaxZoom(store.dispatch);
+export default store => setMaxZoomLevel(store.dispatch);
