@@ -20,15 +20,6 @@ export default (store, toolName) => {
     return;
   }
 
-  if (
-    window.innerWidth <= 900 &&
-    // TODO: revisit
-    toolName !== 'Pan' &&
-    toolName !== 'AnnotationEdit'
-  ) {
-    dispatch(actions.setActiveHeaderGroup('tools'));
-  }
-
   dispatch(actions.closeElement('toolStylePopup'));
   core.setToolMode(toolName);
   dispatch(actions.setActiveToolGroup(toolGroup));
