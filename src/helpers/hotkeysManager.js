@@ -164,6 +164,10 @@ export const Keys = {
   U: 'u',
 };
 
+export function concatKeys(...keys) {
+  return keys.join(', ');
+}
+
 /**
  * A class which contains hotkeys APIs.<br/><br/>
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewerInstance#hotkeys instance.hotkeys}
@@ -304,7 +308,7 @@ WebViewer(...)
         e.preventDefault();
         openFilePicker();
       },
-      [`${Keys.CTRL_F}, ${Keys.COMMAND_F}`]: e => {
+      [concatKeys(Keys.CTRL_F, Keys.COMMAND_F)]: e => {
         e.preventDefault();
         dispatch(actions.openElement('searchPanel'));
       },
@@ -325,7 +329,7 @@ WebViewer(...)
           core.fitToPage();
         }
       },
-      [`${Keys.CTRL_P}, ${Keys.COMMAND_P}`]: e => {
+      [concatKeys(Keys.CTRL_P, Keys.COMMAND_P)]: e => {
         e.preventDefault();
 
         print(dispatch, selectors.isEmbedPrintSupported(getState()), selectors.getSortStrategy(getState()), selectors.getColorMap(getState()));

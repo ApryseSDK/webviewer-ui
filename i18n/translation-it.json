@@ -204,7 +204,8 @@
     },
     "pageTransition": {
       "continuous": "Continuo",
-      "default": "Pagina per pagina"
+      "default": "Pagina per pagina",
+      "reader": "Lettore"
     },
     "print": {
       "all": "Tutti",

@@ -204,7 +204,8 @@
     },
     "pageTransition": {
       "continuous": "연속",
-      "default": "페이지별"
+      "default": "페이지별",
+      "reader": "리더"
     },
     "print": {
       "all": "모두",

@@ -4,6 +4,7 @@ import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import actions from 'actions';
 import defaultTool from 'constants/defaultTool';
+import { defaultZoomList } from 'constants/zoomFactors';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
@@ -438,7 +439,7 @@ export default {
     colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
     warning: {},
     customNoteFilter: null,
-    zoomList: [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64],
+    zoomList: defaultZoomList,
     isAccessibleMode: getHashParams('accessibleMode', false),
     measurementUnits: {
       from: ['in', 'mm', 'cm', 'pt'],
@@ -456,7 +457,8 @@ export default {
     savedSignatures: [],
     selectedSignatureIndex: 0,
     annotationContentOverlayHandler: null,
-    isSnapModeEnabled: false
+    isSnapModeEnabled: false,
+    isReaderMode: false
   },
   search: {
     listeners: [],

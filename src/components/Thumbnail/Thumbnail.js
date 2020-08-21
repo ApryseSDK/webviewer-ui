@@ -33,6 +33,7 @@ class Thumbnail extends React.PureComponent {
     selectedPageIndexes: PropTypes.arrayOf(PropTypes.number),
     isDraggable: PropTypes.bool,
     shouldShowControls: PropTypes.bool,
+    isReaderMode: PropTypes.bool
   };
 
   constructor(props) {
@@ -131,9 +132,9 @@ class Thumbnail extends React.PureComponent {
   }
 
   handleClick = e => {
-    const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled } = this.props;
+    const { index, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled, isReaderMode } = this.props;
 
-    if (isThumbnailMultiselectEnabled) {
+    if (isThumbnailMultiselectEnabled && !isReaderMode) {
       const togglingSelectedPage = e.ctrlKey || e.metaKey;
       let updatedSelectedPages = [...selectedPageIndexes];
 
@@ -204,6 +205,7 @@ const mapStateToProps = state => ({
   pageLabels: selectors.getPageLabels(state),
   selectedPageIndexes: selectors.getSelectedThumbnailPageIndexes(state),
   isThumbnailMultiselectEnabled: selectors.getIsThumbnailMultiselectEnabled(state),
+  isReaderMode: selectors.isReaderMode(state),
 });
 
 const mapDispatchToProps = {

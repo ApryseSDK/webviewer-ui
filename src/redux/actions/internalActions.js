@@ -242,6 +242,10 @@ export const setMouseWheelZoom = (enableMouseWheelZoom = true) => ({
   type: 'SET_MOUSE_WHEEL_ZOOM',
   payload: { enableMouseWheelZoom },
 });
+export const setReaderMode = isReaderMode => ({
+  type: 'SET_READER_MODE',
+  payload: { isReaderMode },
+});
 
 // document
 export const setTotalPages = totalPages => ({
