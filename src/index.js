@@ -31,7 +31,6 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import getHashParams from 'helpers/getHashParams';
 
-
 import './index.scss';
 
 const middleware = [thunk];
