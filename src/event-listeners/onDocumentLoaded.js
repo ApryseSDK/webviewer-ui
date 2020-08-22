@@ -6,6 +6,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { workerTypes } from 'constants/types';
 import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
+import { print } from 'helpers/print';
 
 let onFirstLoad = true;
 
@@ -24,9 +25,7 @@ export default store => () => {
   if (onFirstLoad) {
     onFirstLoad = false;
     // redaction button starts hidden. when the user first loads a document, check HashParams the first time
-    core.enableRedaction(
-      getHashParams('enableRedaction', false) || core.isCreateRedactionEnabled()
-    );
+    core.enableRedaction(getHashParams('enableRedaction', false) || core.isCreateRedactionEnabled());
     // if redaction is already enabled for some reason (i.e. calling readerControl.enableRedaction() before loading a doc), keep it enabled
 
     if (core.isCreateRedactionEnabled()) {
@@ -56,7 +55,7 @@ export default store => () => {
         if (activeLeftPanel === 'layersPanel') {
           // set the active left panel to another one that's not disabled so that users don't see a blank left panel
           const nextActivePanel = getLeftPanelDataElements(state).find(
-            dataElement => !selectors.isElementDisabled(state, dataElement)
+            dataElement => !selectors.isElementDisabled(state, dataElement),
           );
 
           dispatch(actions.setActiveLeftPanel(nextActivePanel));
@@ -77,6 +76,18 @@ export default store => () => {
 
   window.readerControl.loadedFromServer = false;
   window.readerControl.serverFailed = false;
+
+  window.docViewer
+    .getAnnotationManager()
+    .getFieldManager()
+    .setPrintHandler(() => {
+      print(
+        store.dispatch,
+        selectors.isEmbedPrintSupported(store.getState()),
+        selectors.getSortStrategy(store.getState()),
+        selectors.getColorMap(store.getState())
+      );
+    });
 
   fireEvent('documentLoaded');
 };
