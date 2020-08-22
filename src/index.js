@@ -26,6 +26,7 @@ import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
 import getHashParams from 'helpers/getHashParams';
 
+
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
@@ -136,7 +137,6 @@ if (window.CanvasRenderingContext2D) {
       const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
     }
-
     setupDocViewer();
     setupI18n(state);
     setUserPermission(state);

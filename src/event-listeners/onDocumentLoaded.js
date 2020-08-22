@@ -6,6 +6,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { workerTypes } from 'constants/types';
 import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
+import print from 'helpers/print';
 
 let onFirstLoad = true;
 
@@ -77,6 +78,10 @@ export default store => () => {
 
   window.readerControl.loadedFromServer = false;
   window.readerControl.serverFailed = false;
+
+  window.docViewer.getAnnotationManager().getFieldManager().setPrintHandler(() => {
+    print(store.dispatch, selectors.isEmbedPrintSupported(store.getState()));
+  });
 
   fireEvent('documentLoaded');
 };
