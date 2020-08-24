@@ -71,7 +71,7 @@ const ReplyArea = ({ annotation }) => {
       return;
     }
 
-    const annotationHasNoContents = annotation.getContents() === '';
+    const annotationHasNoContents = annotation.getContents() === '' || annotation.getContents() === undefined;
     if (isMentionEnabled) {
       if (annotationHasNoContents) {
         const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(value);
@@ -82,7 +82,7 @@ const ReplyArea = ({ annotation }) => {
         });
         core.setNoteContents(annotation, plainTextValue);
       } else {
-        core.createAnnotationReply(annotation, value);
+        mentionsManager.createMentionReply(annotation, value);
       }
     } else {
       if (annotationHasNoContents) {

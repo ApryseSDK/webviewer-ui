@@ -204,7 +204,8 @@
     },
     "pageTransition": {
       "continuous": "Continuous Page",
-      "default": "Page by Page"
+      "default": "Page by Page",
+      "reader": "Reader"
     },
     "print": {
       "all": "All",
@@ -295,8 +296,7 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Clockwise",
-      "rotateCounterClockwise": "Counterclockwise",
-      "extractZeroPageError": "No pages were selected to extract"
+      "rotateCounterClockwise": "Counterclockwise"
     },
     "richText": {
       "bold": "Bold",
@@ -322,6 +322,10 @@
     "redaction": {
       "applyTile": "Apply Redaction",
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
+    },
+    "selectPage": {
+      "selectTitle": "No Pages Selected",
+      "selectMessage": "Please select pages and try again."
     }
   },
   "shortcut": {

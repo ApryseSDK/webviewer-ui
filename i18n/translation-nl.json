@@ -204,7 +204,8 @@
     },
     "pageTransition": {
       "continuous": "Doorlopend",
-      "default": "Pagina voor pagina"
+      "default": "Pagina voor pagina",
+      "reader": "Lezer"
     },
     "print": {
       "all": "Alles",
@@ -295,8 +296,7 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Met de klok mee",
-      "rotateCounterClockwise": "Tegen de klok in",
-      "extractZeroPageError": "Er zijn geen pagina's geselecteerd om te extraheren"
+      "rotateCounterClockwise": "Tegen de klok in"
     },
     "richText": {
       "bold": "Vet",
@@ -322,6 +322,10 @@
     "redaction": {
       "applyTile": "Redactie toepassen",
       "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden."
+    },
+    "selectPage": {
+      "selectTitle": "Geen pagina's geselecteerd",
+      "selectMessage": "Selecteer pagina's en probeer het opnieuw."
     }
   },
   "shortcut": {

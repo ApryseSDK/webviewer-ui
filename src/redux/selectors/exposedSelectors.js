@@ -237,6 +237,8 @@ export const getAnnotationContentOverlayHandler = state => state.viewer.annotati
 
 export const getEnableMouseWheelZoom = state => state.viewer.enableMouseWheelZoom;
 
+export const isReaderMode = state => state.viewer.isReaderMode;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 
@@ -291,5 +293,7 @@ export const isAmbientString = state => state.search.isAmbientString;
 export const isRegex = state => state.search.isRegex;
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
+
+export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;
 
 export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;

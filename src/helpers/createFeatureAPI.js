@@ -2,7 +2,7 @@ import core from 'core';
 import hotkeys from 'src/apis/hotkeys';
 import localStorageManager from 'helpers/localStorageManager';
 import touchEventManager from 'helpers/TouchEventManager';
-import hotkeysManager from 'helpers/hotkeysManager';
+import hotkeysManager, { Keys, concatKeys } from 'helpers/hotkeysManager';
 import Feature from 'constants/feature';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import actions from 'actions';
@@ -74,10 +74,11 @@ export default (enable, store) => features => {
     [Feature.FilePicker]: {
       dataElements: ['filePickerHandler', 'filePickerButton'],
       fn: () => {
+        const keys = concatKeys(Keys.CTRL_O, Keys.COMMAND_O);
         if (enable) {
-          hotkeys.on('ctrl+o, command+o');
+          hotkeys.on(keys);
         } else {
-          hotkeys.off('ctrl+o, command+o');
+          hotkeys.off(keys);
         }
       },
     },
@@ -101,10 +102,11 @@ export default (enable, store) => features => {
     [Feature.Print]: {
       dataElements: ['printButton', 'printModal'],
       fn: () => {
+        const keys = concatKeys(Keys.CTRL_P, Keys.COMMAND_P);
         if (enable) {
-          hotkeys.on('ctrl+p, command+p');
+          hotkeys.on(keys);
         } else {
-          hotkeys.off('ctrl+p, command+p');
+          hotkeys.off(keys);
         }
       },
     },
@@ -139,10 +141,11 @@ export default (enable, store) => features => {
     [Feature.Copy]: {
       dataElements: ['copyTextButton'],
       fn: () => {
+        const keys = concatKeys(Keys.CTRL_C, Keys.COMMAND_C);
         if (enable) {
-          hotkeys.on('ctrl+c, command+c');
+          hotkeys.on(keys);
         } else {
-          hotkeys.off('ctrl+c, command+c');
+          hotkeys.off(keys);
         }
       },
     },
@@ -200,6 +203,17 @@ export default (enable, store) => features => {
       fn: () => {
         store.dispatch(actions.setMouseWheelZoom(enable));
       }
+    },
+    [Feature.Search]: {
+      dataElements: ['searchButton'],
+      fn: () => {
+        const keys = concatKeys(Keys.CTRL_F, Keys.COMMAND_F);
+        if (enable) {
+          hotkeys.on(keys);
+        } else {
+          hotkeys.off(keys);
+        }
+      },
     },
   };
 

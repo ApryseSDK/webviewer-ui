@@ -171,7 +171,7 @@ const AnnotationPopup = () => {
     } else {
       dispatch(actions.openElement('notesPanel'));
       dispatch(actions.closeElement('searchPanel'));
-      // dispatch(actions.triggerNoteEditing());
+      dispatch(actions.triggerNoteEditing());
     }
     dispatch(actions.closeElement('annotationPopup'));
   };
