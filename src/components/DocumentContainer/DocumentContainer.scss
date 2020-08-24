@@ -63,6 +63,10 @@
     outline: none;
     -webkit-tap-highlight-color: transparent;
 
+    &.hidden {
+      display: none;
+    }
+
     .pageSection {
       &[id*=pageSectionb] {
         box-shadow: none;

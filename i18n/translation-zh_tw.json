@@ -204,7 +204,8 @@
     },
     "pageTransition": {
       "continuous": "連續",
-      "default": "逐頁"
+      "default": "逐頁",
+      "reader": "閱讀"
     },
     "print": {
       "all": "全部",

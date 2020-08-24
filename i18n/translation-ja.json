@@ -204,7 +204,8 @@
     },
     "pageTransition": {
       "continuous": "続く",
-      "default": "ページごと"
+      "default": "ページごと",
+      "reader": "読者"
     },
     "print": {
       "all": "すべて",

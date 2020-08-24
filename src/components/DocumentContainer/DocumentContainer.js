@@ -18,6 +18,7 @@ import ToolsOverlay from 'components/ToolsOverlay';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
+import ReaderModeViewer from 'components/ReaderModeViewer';
 
 import Measure from 'react-measure';
 
@@ -40,14 +41,21 @@ class DocumentContainer extends React.PureComponent {
     leftPanelWidth: PropTypes.number,
     allowPageNavigation: PropTypes.bool.isRequired,
     isMouseWheelZoomEnabled: PropTypes.bool.isRequired,
+    isReaderMode: PropTypes.bool
   }
 
   constructor(props) {
     super(props);
+
     this.document = React.createRef();
     this.container = React.createRef();
     this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
     this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
+    this.handleResize = _.throttle(this.handleResize.bind(this), 200);
+
+    this.state = {
+      containerWidth: 0
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -196,23 +204,30 @@ class DocumentContainer extends React.PureComponent {
     });
   }
 
+  handleResize() {
+    if (!this.props.isReaderMode) {
+      // Skip when in reader mode, otherwise will cause error.
+      core.setScrollViewElement(this.container.current);
+      core.scrollViewUpdated();
+    } else {
+      this.setState({
+        containerWidth: this.container.current.clientWidth
+      });
+    }
+  }
+
   render() {
     const { isToolsHeaderOpen, isMobile, currentToolbarGroup } = this.props;
 
-    let className;
-
-    if (isIE) {
-      className = getClassNameInIE(this.props);
-    } else {
-      className = this.getClassName(this.props);
-    }
+    const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
+    const documentClassName = classNames({
+      document: true,
+      hidden: this.props.isReaderMode
+    });
 
     return (
       <Measure
-        onResize={() => {
-          core.setScrollViewElement(this.container.current);
-          core.scrollViewUpdated();
-        }}
+        onResize={this.handleResize}
       >
         {({ measureRef }) => (
           <div
@@ -220,12 +235,15 @@ class DocumentContainer extends React.PureComponent {
             ref={measureRef}
           >
             <div
-              className={className}
+              className={documentContainerClassName}
               ref={this.container}
               data-element="documentContainer"
               onScroll={this.handleScroll}
             >
-              <div className="document" ref={this.document}/>
+              <div className={documentClassName} ref={this.document}/>
+              {this.props.isReaderMode && (
+                <ReaderModeViewer containerWidth={this.state.containerWidth} />
+              )}
             </div>
             <MeasurementOverlay />
             <div
@@ -260,6 +278,7 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
   isMouseWheelZoomEnabled: selectors.getEnableMouseWheelZoom(state),
+  isReaderMode: selectors.isReaderMode(state)
 });
 
 const mapDispatchToProps = dispatch => ({

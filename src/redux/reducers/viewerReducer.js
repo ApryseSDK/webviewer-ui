@@ -329,6 +329,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, enableMouseWheelZoom: payload.enableMouseWheelZoom };
     case 'SET_ENABLE_SNAP_MODE':
       return { ...state, isSnapModeEnabled: payload.enable };
+    case 'SET_READER_MODE':
+      return { ...state, isReaderMode: payload.isReaderMode };
     default:
       return state;
   }
