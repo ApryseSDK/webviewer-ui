@@ -50,10 +50,7 @@ const AnnotationLineConnector = ({ annotation, noteContainerRef }) => {
     const { scrollTop, scrollLeft } = core.getScrollViewElement();
     const notePanelLeftPadding = 16;
 
-    // Annot Width to pixels
     const annotWidthInPixels = annotBottomRight.x - annotTopLeft.x;
-
-    // Annot Height to pixels
     const annotHeightInPixels = annotBottomRight.y - annotTopLeft.y;
 
     setHorizontalLineOneRight(notePanelWidth - notePanelLeftPadding);
