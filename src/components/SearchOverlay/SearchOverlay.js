@@ -41,7 +41,6 @@ function SearchOverlay(props) {
   const { isSearchOverlayDisabled, t, searchResults, activeResultIndex } = props;
   const { searchValue, setSearchValue } = props;
   const { isCaseSensitive, setCaseSensitive, isWholeWord, setWholeWord, isWildcard, setWildcard } = props;
-  const overrideSearchExecution = getOverrideSearchExecution();
 
   const searchTextInputRef = React.useRef();
   const wholeWordInputRef = React.useRef();
@@ -66,14 +65,14 @@ function SearchOverlay(props) {
       }
       // user can override search execution with instance.overrideSearchExecution()
       // Here we check if user has done that and call that rather than default search execution
+      const overrideSearchExecution = getOverrideSearchExecution();
       if (overrideSearchExecution) {
         overrideSearchExecution(searchValue, searchOptions);
       } else {
         searchTextFull(searchValue, searchOptions);
       }
     }
-    // TODO: add override possibility
-  }, [searchValue, isCaseSensitive, isWholeWord, isWildcard, overrideSearchExecution]);
+  }, [searchValue, isCaseSensitive, isWholeWord, isWildcard]);
 
   const textInputOnChange = React.useCallback(function textInputOnChangeCallback(event){
     const searchValue = event.target.value;
