@@ -75,7 +75,7 @@ const AnnotationContentOverlay = () => {
 
   const numberOfReplies = annotation?.getReplies().length;
 
-  const preRenderedElements = isUsingCustomHandler ? customHandler(annotation) : null;
+  const preRenderedElements = isUsingCustomHandler && annotation ? customHandler(annotation) : null;
 
   const customRender = useCallback(() => preRenderedElements, [preRenderedElements]);
 
@@ -102,7 +102,9 @@ const AnnotationContentOverlay = () => {
 
   if (isDisabled || isMobileDevice || !annotation) {
     return null;
-  } else if (isUsingCustomHandler && preRenderedElements !== undefined) {
+  }
+
+  if (isUsingCustomHandler && preRenderedElements !== undefined) {
     if (preRenderedElements) {
       return (
         <div
@@ -114,14 +116,15 @@ const AnnotationContentOverlay = () => {
           <CustomElement render={customRender} />
         </div>
       );
-    } else {
-      return null;
     }
-  } else if (contents) {
-    return renderContents();
-  } else {
     return null;
   }
+
+  if (contents) {
+    return renderContents();
+  }
+
+  return null;
 };
 
 export default AnnotationContentOverlay;
