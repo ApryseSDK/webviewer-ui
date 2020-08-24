@@ -25,9 +25,13 @@ const Note = ({ annotation }) => {
   const [isEditingMap, setIsEditingMap] = useState({});
   const ids = useRef([]);
 
-  const [noteTransformFunction] = useSelector(
+  const [
+    noteTransformFunction,
+    customNoteSelectionFunction,
+  ] = useSelector(
     state => [
-      selectors.getNoteTransformFunction(state)
+      selectors.getNoteTransformFunction(state),
+      selectors.getCustomNoteSelectionFunction(state),
     ],
     shallowEqual,
   );
@@ -82,6 +86,7 @@ const Note = ({ annotation }) => {
     e && e.stopPropagation();
 
     if (!isSelected) {
+      customNoteSelectionFunction && customNoteSelectionFunction(annotation);
       core.deselectAllAnnotations();
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);

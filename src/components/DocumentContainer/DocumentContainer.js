@@ -226,40 +226,43 @@ class DocumentContainer extends React.PureComponent {
     });
 
     return (
-      <Measure
-        onResize={this.handleResize}
-      >
-        {({ measureRef }) => (
-          <div
-            className="measurement-container"
-            ref={measureRef}
-          >
+      <div className="document-content-container">
+        <Measure
+          onResize={this.handleResize}
+        >
+          {({ measureRef }) => (
             <div
-              className={documentContainerClassName}
-              ref={this.container}
-              data-element="documentContainer"
-              onScroll={this.handleScroll}
+              className="measurement-container"
+              ref={measureRef}
             >
-              <div className={documentClassName} ref={this.document}/>
-              {this.props.isReaderMode && (
-                <ReaderModeViewer containerWidth={this.state.containerWidth} />
-              )}
-            </div>
-            <MeasurementOverlay />
-            <div
-              className={classNames({
-                'footer-container': true,
-                'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
-              })}
-            >
-              <div className="footer">
-                <PageNavOverlay />
-                {isMobile && <ToolsOverlay />}
+              <div
+                className={documentContainerClassName}
+                ref={this.container}
+                data-element="documentContainer"
+                onScroll={this.handleScroll}
+              >
+                <div className={documentClassName} ref={this.document}/>
+                {this.props.isReaderMode && (
+                  <ReaderModeViewer containerWidth={this.state.containerWidth} />
+                )}
+              </div>
+              <MeasurementOverlay />
+              <div
+                className={classNames({
+                  'footer-container': true,
+                  'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
+                })}
+              >
+                <div className="footer">
+                  <PageNavOverlay />
+                  {isMobile && <ToolsOverlay />}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </Measure>
+          )}
+        </Measure>
+        <div className="custom-container" />
+      </div>
     );
   }
 }
@@ -288,7 +291,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
-
 
 export default props => {
   const isMobile = useMedia(
