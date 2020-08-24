@@ -86,7 +86,7 @@ const App = ({ removeEventHandlers }) => {
 
         <Header />
         <ToolsHeader />
-        <div className="content" onScroll={() => dispatch(actions.closeElement('annotationLineConnector'))}>
+        <div className="content">
           <LeftPanel />
           <DocumentContainer />
           <RightPanel
