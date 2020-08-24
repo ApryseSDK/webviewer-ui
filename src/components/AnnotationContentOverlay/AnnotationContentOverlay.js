@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import core from 'core';
@@ -8,14 +8,19 @@ import { isMobileDevice } from 'helpers/device';
 import selectors from 'selectors';
 
 import './AnnotationContentOverlay.scss';
+import actions from 'actions';
 
 import CustomElement from '../CustomElement';
 
 const MAX_CHARACTERS = 100;
 
 const AnnotationContentOverlay = () => {
-  const isDisabled = useSelector(state =>
-    selectors.isElementDisabled(state, 'annotationContentOverlay'),
+  const [isDisabled, isOverlayOpen] = useSelector(state =>
+    [
+      selectors.isElementDisabled(state, 'annotationContentOverlay'),
+      selectors.isElementOpen(state, 'annotationContentOverlay'),
+    ]
+
   );
   const [t] = useTranslation();
   const [annotation, setAnnotation] = useState();
@@ -23,6 +28,7 @@ const AnnotationContentOverlay = () => {
     left: 0,
     top: 0,
   });
+  const dispatch = useDispatch();
 
   // Clients have the option to customize how the tooltip is rendered
   // by passing a handler
@@ -62,8 +68,10 @@ const AnnotationContentOverlay = () => {
             }
           }
         }
+        dispatch(actions.openElement('annotationContentOverlay'));
       } else {
         setAnnotation(null);
+        dispatch(actions.closeElement('annotationContentOverlay'));
       }
     };
 
@@ -71,7 +79,7 @@ const AnnotationContentOverlay = () => {
     return () => {
       core.removeEventListener('mouseMove', onMouseHover);
     };
-  }, [annotation, isUsingCustomHandler]);
+  }, [annotation, dispatch, isUsingCustomHandler]);
 
   const numberOfReplies = annotation?.getReplies().length;
 
@@ -104,7 +112,7 @@ const AnnotationContentOverlay = () => {
     return null;
   }
 
-  if (isUsingCustomHandler && preRenderedElements !== undefined) {
+  if (isUsingCustomHandler && isOverlayOpen && preRenderedElements !== undefined) {
     if (preRenderedElements) {
       return (
         <div
@@ -120,7 +128,7 @@ const AnnotationContentOverlay = () => {
     return null;
   }
 
-  if (contents) {
+  if (contents && isOverlayOpen) {
     return renderContents();
   }
 

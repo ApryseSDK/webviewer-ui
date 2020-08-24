@@ -303,4 +303,6 @@ export const isProgrammaticSearchFull = state =>
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
 
+export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;
+
 export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;
