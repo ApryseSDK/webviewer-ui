@@ -459,7 +459,6 @@ export default {
     isSnapModeEnabled: false
   },
   search: {
-    listeners: [],
     value: '',
     isCaseSensitive: false,
     isWholeWord: false,
@@ -468,8 +467,6 @@ export default {
     isSearchUp: false,
     isAmbientString: false,
     results: [],
-    isProgrammaticSearch: false,
-    isProgrammaticSearchFull: false,
   },
   document: {
     totalPages: 0,

@@ -276,10 +276,6 @@ export const getUserName = state => state.user.name;
 export const getServerUrl = state => state.advanced.serverUrl;
 
 // search
-export const getSearchExecutor = state => state.search.searchExecutor;
-
-export const getSearchListeners = state => state.search.listeners;
-
 export const getSearchValue = state => state.search.value;
 
 export const isCaseSensitive = state => state.search.isCaseSensitive;
@@ -293,13 +289,6 @@ export const isSearchUp = state => state.search.isSearchUp;
 export const isAmbientString = state => state.search.isAmbientString;
 
 export const isRegex = state => state.search.isRegex;
-
-export const getSearchErrorMessage = state => state.search.errorMessage;
-
-export const isProgrammaticSearch = state => state.search.isProgrammaticSearch;
-
-export const isProgrammaticSearchFull = state =>
-  state.search.isProgrammaticSearchFull;
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
 

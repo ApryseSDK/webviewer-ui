@@ -138,10 +138,10 @@ import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 import setNoteTransformFunction from './setNoteTransformFunction';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
-import setSearchExecutor from './setSearchExecutor';
 import setSearchResults from './setSearchResults';
 import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
+import overrideSearchExecution from "src/apis/overrideSearchExecution";
 
 export default store => {
   window.readerControl = {
@@ -149,7 +149,7 @@ export default store => {
     FitMode,
     LayoutMode,
     Feature,
-    addSearchListener: addSearchListener(store),
+    addSearchListener,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
     closeDocument: closeDocument(store),
@@ -178,9 +178,10 @@ export default store => {
     print: print(store),
     printInBackground: printInBackground(store),
     registerTool: registerTool(store),
-    removeSearchListener: removeSearchListener(store),
-    searchText: searchText(store),
-    searchTextFull: searchTextFull(store),
+    removeSearchListener,
+    searchText: searchText(store.dispatch),
+    searchTextFull: searchTextFull(store.dispatch),
+    overrideSearchExecution,
     setActiveHeaderGroup: setActiveHeaderGroup(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
     setCustomModal: setCustomModal(store),
@@ -209,7 +210,6 @@ export default store => {
     setToolMode: setToolMode(store),
     setZoomLevel,
     setZoomList: setZoomList(store),
-    setSearchExecutor: setSearchExecutor(store),
     setSearchResults,
     setActiveResult,
     showErrorMessage: showErrorMessage(store),

@@ -455,10 +455,6 @@ export const setActiveTheme = theme => ({
   type: 'SET_ACTIVE_THEME',
   payload: { theme },
 });
-export const setSearchExecutor = searchExecutorFn => ({
-  type: 'SET_SEARCH_EXECUTOR',
-  payload: searchExecutorFn,
-});
 export const setSearchResults = searchResults => ({
   type: 'SET_SEARCH_RESULTS',
   payload: searchResults,

@@ -20,8 +20,8 @@ WebViewer(...)
  * @param {Array.<object>} results Search results
  */
 
-import actions from 'actions';
+import { addSearchListener as addSearchListenerHelper } from "helpers/search";
 
-export default store => listener => {
-  store.dispatch(actions.addSearchListener(listener));
-};
+export default function addSearchListener(listener) {
+  addSearchListenerHelper(listener);
+}

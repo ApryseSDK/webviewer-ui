@@ -10,8 +10,8 @@ function useSearch() {
 
   React.useEffect(() => {
     function activeSearchResultChanged(newActiveSearchResult) {
-      const searchResults = core.getPageSearchResults() || [];
-      const newActiveSearchResultIndex = searchResults.findIndex(searchResult => {
+      const coreSearchResults = core.getPageSearchResults() || [];
+      const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
         return isSearchResultSame(searchResult, newActiveSearchResult);
       });
       setActiveSearchResult(newActiveSearchResult);
