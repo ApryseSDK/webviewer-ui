@@ -1,54 +1,63 @@
 @import '../../constants/styles';
 
-
-
-.measurement-container {
+.document-content-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
   overflow: hidden;
   user-select: none;
+  width: 100%;
+  height: 100%;
 
-  .footer-container {
-    pointer-events: none;
-    position: absolute;
-    // flex: 1;
+  .measurement-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    overflow: hidden;
+    user-select: none;
     width: 100%;
-    // https://stackoverflow.com/questions/12070759/make-absolute-positioned-div-expand-parent-div-height
-    height: calc(100% - 37px); // minus the height of the top header;
+    height: 100%;
 
-    @include tablet-and-mobile {
-      height: calc(100% - 53px); // minus the height of the top header;
-    }
-
-    &.tools-header-open {
-      height: calc(100% - 76px); // minus the height of both headers;
-
-      @include tablet-and-mobile {
-        height: calc(100% - 104px); // minus the height of both headers;
-      }
-    }
-
-    .footer {
+    .footer-container {
       pointer-events: none;
       position: absolute;
-      bottom: 0;
-      left: 0;
-      z-index: 55;
+      // flex: 1;
       width: 100%;
+      // https://stackoverflow.com/questions/12070759/make-absolute-positioned-div-expand-parent-div-height
+      height: calc(100% - 37px); // minus the height of the top header;
 
-      * {
-        pointer-events: all;
+      @include tablet-and-mobile {
+        height: calc(100% - 53px); // minus the height of the top header;
       }
 
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        top: 0;
+      &.tools-header-open {
+        height: calc(100% - 76px); // minus the height of both headers;
+
+        @include tablet-and-mobile {
+          height: calc(100% - 104px); // minus the height of both headers;
+        }
+      }
+
+      .footer {
+        pointer-events: none;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 55;
+        width: 100%;
+
+        * {
+          pointer-events: all;
+        }
+
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+          top: 0;
+        }
       }
     }
   }
-
-
 }
 
 .DocumentContainer {

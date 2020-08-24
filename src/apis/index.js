@@ -136,6 +136,7 @@ import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 import setNoteTransformFunction from './setNoteTransformFunction';
+import setCustomNoteSelectionFunction from './setCustomNoteSelectionFunction';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
 import setSearchResults from './setSearchResults';
@@ -206,6 +207,7 @@ export default store => {
     setTheme: setTheme(store),
     setToolbarGroup: setToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
+    setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),
     setToolMode: setToolMode(store),
     setZoomLevel,
     setZoomList: setZoomList(store),
