@@ -458,4 +458,4 @@ export const register = (tool, annotationConstructor, customAnnotCheckFunc) => {
 
 // we return an empty object here to prevent some components from accessing undefined
 // if the map doesn't have a key for some annotations
-export const getDataWithKey = key => map[key] || {};
+export const getDataWithKey = key => map[key] || { icon: 'icon - tool - pen and shape - phone - line' };

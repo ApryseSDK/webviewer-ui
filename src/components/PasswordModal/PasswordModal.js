@@ -78,6 +78,7 @@ const PasswordModal = () => {
               className={`${wrongPassword ? 'wrong' : 'correct'}`}
               type="password"
               ref={passwordInput}
+              autoComplete="current-password"
               value={password}
               onKeyDown={onKeyDown}
               onChange={e => setPassword(e.target.value)}

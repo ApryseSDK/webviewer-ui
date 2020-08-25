@@ -9,6 +9,7 @@
     "undo": "Undo",
     "redo": "Redo",
     "comment": "Comment",
+    "reply": "Reply",
     "copy": "Copy",
     "delete": "Delete",
     "group": "Group",
@@ -28,7 +29,6 @@
     "print": "Print",
     "name": "Name",
     "ok": "OK",
-    "reply": "Reply",
     "rotate": "Page Orientation",
     "rotateClockwise": "Rotate Clockwise",
     "rotateCounterClockwise": "Rotate Counterclockwise",
@@ -84,7 +84,8 @@
     "strikeout": "Strikeout",
     "underline": "Underline",
     "custom": "Custom",
-    "rubberStamp": "Rubber Stamp"
+    "rubberStamp": "Rubber Stamp",
+    "note": "Note"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -128,7 +129,8 @@
     "redaction": "Redaction",
     "viewControlsOverlay": "View Controls",
     "calibration": "Calibration",
-    "createStampButton": "Create New Stamp"
+    "createStampButton": "Create New Stamp",
+    "filter": "Filter"
   },
   "message": {
     "toolsOverlayNoPresets": "No Presets",
@@ -139,6 +141,7 @@
     "enterPassword": "This document is password protected. Please enter a password",
     "incorrectPassword": "Incorrect password, attempts left: {{ remainingAttempts }}",
     "noAnnotations": "Start making annotations to leave a comment.",
+    "noAnnotationsFilter": "Start making annotations and filters will appear here.",
     "noOutlines": "This document has no outline.",
     "noResults": "No results found.",
     "numResultsFound": "results found",
@@ -157,12 +160,16 @@
     "insertTextHere": "Insert text here",
     "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
     "enterMeasurement": "Enter measurement between the two points",
-    "linkURLorPage": "Link URL or a Page"
+    "linkURLorPage": "Link URL or a Page",
+    "sortBy": "Sort by"
   },
   "option": {
     "notesOrder": {
       "position": "Position",
-      "time": "Time"
+      "time": "Time",
+      "status": "Status",
+      "author": "Author",
+      "type": "Type"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "View",
@@ -197,12 +204,16 @@
     },
     "pageTransition": {
       "continuous": "Continuous Page",
-      "default": "Page by Page"
+      "default": "Page by Page",
+      "reader": "Reader"
     },
     "print": {
       "all": "All",
       "current": "Current",
       "pages": "Pages to print",
+      "pageQuality": "Print Quality",
+      "qualityNormal": "Normal",
+      "qualityHigh": "High",
       "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
       "addWatermarkSettings": "Add Watermark"
@@ -226,6 +237,10 @@
       "dragAndDrop": "Drag & Drop your image here",
       "or": "Or",
       "pickImage": "Choose a signature"
+    },
+    "filterAnnotModal": {
+      "commentBy": "Comment by",
+      "types": "Types"
     },
     "status": {
       "status": "Status"
@@ -281,8 +296,7 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Clockwise",
-      "rotateCounterClockwise": "Counterclockwise",
-      "extractZeroPageError": "No pages were selected to extract"
+      "rotateCounterClockwise": "Counterclockwise"
     },
     "richText": {
       "bold": "Bold",
@@ -308,6 +322,10 @@
     "redaction": {
       "applyTile": "Apply Redaction",
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
+    },
+    "selectPage": {
+      "selectTitle": "No Pages Selected",
+      "selectMessage": "Please select pages and try again."
     }
   },
   "shortcut": {

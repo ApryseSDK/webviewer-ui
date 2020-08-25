@@ -51,7 +51,7 @@ const Button = props => {
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
-  const aLabel = ariaLabel || title ? t(title) : undefined;
+  const aLabel = ariaLabel || (title ? t(title) : undefined);
 
   const shortcutKey = title ? title.slice(title.indexOf('.') + 1) : undefined;
   const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;

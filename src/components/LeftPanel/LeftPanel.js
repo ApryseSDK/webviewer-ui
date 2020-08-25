@@ -7,6 +7,7 @@ import ThumbnailsPanel from 'components/ThumbnailsPanel';
 import OutlinesPanel from 'components/OutlinesPanel';
 import BookmarksPanel from 'components/BookmarksPanel';
 import LayersPanel from 'components/LayersPanel';
+import NotesPanel from 'components/NotesPanel';
 import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
 import Icon from 'components/Icon';
@@ -36,13 +37,14 @@ const LeftPanel = () => {
     false,
   );
 
-  const [isOpen, isDisabled, activePanel, customPanels, currentWidth] = useSelector(
+  const [isOpen, isDisabled, activePanel, customPanels, currentWidth, notesInLeftPanel] = useSelector(
     state => [
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementDisabled(state, 'leftPanel'),
       selectors.getActiveLeftPanel(state),
       selectors.getCustomPanels(state),
       selectors.getLeftPanelWidth(state),
+      selectors.getNotesInLeftPanel(state),
     ],
     shallowEqual,
   );
@@ -113,12 +115,11 @@ const LeftPanel = () => {
             <div className="left-panel-header">
               <LeftPanelTabs />
             </div>
-            {activePanel === 'thumbnailsPanel' &&
-              <ThumbnailsPanel/>}
-            <OutlinesPanel display={getDisplay('outlinesPanel')} />
-            <BookmarksPanel display={getDisplay('bookmarksPanel')} />
-            <LayersPanel display={getDisplay('layersPanel')} />
-
+            {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel/>}
+            {activePanel === 'outlinesPanel' && <OutlinesPanel />}
+            {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
+            {activePanel === 'layersPanel' && <LayersPanel />}
+            {notesInLeftPanel && activePanel === 'notesPanel' && <NotesPanel currentLeftPanelWidth={currentWidth} />}
             {customPanels.map(({ panel }, index) => (
               <CustomElement
                 key={panel.dataElement || index}

@@ -84,7 +84,8 @@
     "strikeout": "Barré",
     "underline": "Soulignage",
     "custom": "personnalisation",
-    "rubberStamp": "Rubber Stamp"
+    "rubberStamp": "Rubber Stamp",
+    "note": "Remarque"
   },
   "rubberStamp": {
     "Approved": "Approuvée",
@@ -128,7 +129,8 @@
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
     "calibration": "Étalonnage",
-    "createStampButton": "Créer un nouveau tampon"
+    "createStampButton": "Créer un nouveau tampon",
+    "filter": "Filtre"
   },
   "message": {
     "toolsOverlayNoPresets": "Aucun préréglage",
@@ -139,6 +141,7 @@
     "enterPassword": "Ce document est protégé par un mot de passe. Veuillez saisir ce mot de passe.",
     "incorrectPassword": "Mot de passe incorrect. Tentatives restantes: {{remainingAttempts}}",
     "noAnnotations": "Ce document n'a pas d'annotations.",
+    "noAnnotationsFilter": "Commencez à créer des annotations et des filtres apparaîtront ici.",
     "noOutlines": "Ce document n'a pas de plan.",
     "noResults": "Aucun résultat trouvé.",
     "numResultsFound": "résultats trouvés",
@@ -157,12 +160,16 @@
     "insertTextHere": "Insérer du texte ici",
     "imageSignatureAcceptedFileTypes": "Seuls {{acceptedFileTypes}} sont acceptés",
     "enterMeasurement": "Entrez la mesure entre les deux points",
-    "linkURLorPage": "Lien URL ou une page"
+    "linkURLorPage": "Lien URL ou une page",
+    "sortBy": "Trier par"
   },
   "option": {
     "notesOrder": {
       "position": "Position",
-      "time": "Temps"
+      "time": "Temps",
+      "status": "Statut",
+      "author": "Auteur",
+      "type": "Type"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "Vue",
@@ -197,12 +204,16 @@
     },
     "pageTransition": {
       "continuous": "Continu",
-      "default": "Page par page"
+      "default": "Page par page",
+      "reader": "Lecteur"
     },
     "print": {
       "all": "Toutes",
       "current": "Actuelle",
       "pages": "Pages",
+      "pageQuality": "Qualité d'impression",
+      "qualityNormal": "Ordinaire",
+      "qualityHigh": "Haute",
       "includeAnnotations": "Inclure des annotations",
       "includeComments": "Inclure les commentaires",
       "addWatermarkSettings": "Ajouter des paramètres de filigrane"
@@ -226,6 +237,10 @@
       "dragAndDrop": "Faites glisser et déposez votre image ici",
       "or": "Ou",
       "pickImage": "Choisir l'image de signature"
+    },
+    "filterAnnotModal": {
+      "commentBy": "Commentaire de",
+      "types": "Les types"
     },
     "status": {
       "status": "Statut"
@@ -281,8 +296,7 @@
     "thumbnailPanel": {
       "delete": "Supprimer",
       "rotateClockwise": "Dans le sens horaire",
-      "rotateCounterClockwise": "Dans le sens antihoraire",
-      "extractZeroPageError": "Aucune page n'a été sélectionnée pour l'extraction"
+      "rotateCounterClockwise": "Dans le sens antihoraire"
     },
     "richText": {
       "bold": "Audacieux",
@@ -308,6 +322,10 @@
     "redaction": {
       "applyTile": "Appliquer la rédaction",
       "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait."
+    },
+    "selectPage": {
+      "selectTitle": "Aucune page sélectionnée",
+      "selectMessage": "Veuillez sélectionner des pages et réessayer."
     }
   },
   "shortcut": {
@@ -348,8 +366,8 @@
     "select": "Sélection",
     "Marquee": "Zoom sur la sélection",
     "Link": "URL de lien ou page",
-    "Standard": "la norme",
-    "Custom": "Douane"
+    "Standard": "Standard",
+    "Custom": "Personnalisées"
   },
   "link": {
     "url": "URL",

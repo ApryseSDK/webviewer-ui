@@ -180,6 +180,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, sortStrategy: payload.sortStrategy };
     case 'SET_NOTE_DATE_FORMAT':
       return { ...state, noteDateFormat: payload.noteDateFormat };
+    case 'SET_PRINTED_NOTE_DATE_FORMAT':
+      return { ...state, printedNoteDateFormat: payload.noteDateFormat };
     case 'SET_FULL_SCREEN':
       return { ...state, isFullScreen: payload.isFullScreen };
     case 'SET_HEADER_ITEMS':
@@ -312,6 +314,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
     case 'SET_NOTE_TRANSFORM_FUNCTION':
       return { ...state, noteTransformFunction: payload.noteTransformFunction };
+    case 'SET_CUSTOM_NOTE_SELECTION_FUNCTION':
+      return { ...state, customNoteFunction: payload.customNoteFunction };
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     case 'SET_CUSTOM_MODAL': {
@@ -327,6 +331,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, enableMouseWheelZoom: payload.enableMouseWheelZoom };
     case 'SET_ENABLE_SNAP_MODE':
       return { ...state, isSnapModeEnabled: payload.enable };
+    case 'SET_READER_MODE':
+      return { ...state, isReaderMode: payload.isReaderMode };
     default:
       return state;
   }

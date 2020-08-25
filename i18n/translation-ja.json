@@ -84,7 +84,8 @@
     "strikeout": "抹消線",
     "underline": "下線",
     "custom": "カスタム",
-    "rubberStamp": "ゴム印"
+    "rubberStamp": "ゴム印",
+    "note": "注意"
   },
   "rubberStamp": {
     "Approved": "承認済み",
@@ -128,7 +129,8 @@
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
     "calibration": "較正",
-    "createStampButton": "新しいスタンプを作成"
+    "createStampButton": "新しいスタンプを作成",
+    "filter": "フィルタ"
   },
   "message": {
     "toolsOverlayNoPresets": "プリセットなし",
@@ -139,6 +141,7 @@
     "enterPassword": "このドキュメントは、パスワード保護されています。 パスワードを入力してください。",
     "incorrectPassword": "パスワードが正しくありません。残りの試行回数：{{ remainingAttempts }}",
     "noAnnotations": "このドキュメントには注釈がありません。",
+    "noAnnotationsFilter": "注釈の作成を開始すると、フィルターがここに表示されます。",
     "noOutlines": "このドキュメントには概要がありません。",
     "noResults": "結果が見つかりませんでした。",
     "numResultsFound": "結果が見つかりました",
@@ -157,12 +160,16 @@
     "insertTextHere": "ここにテキストを挿入",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが受け入れられます",
     "enterMeasurement": "2点間の測定値を入力します",
-    "linkURLorPage": "リンクURLまたはページ"
+    "linkURLorPage": "リンクURLまたはページ",
+    "sortBy": "並び替え"
   },
   "option": {
     "notesOrder": {
       "position": "ポジション",
-      "time": "時間"
+      "time": "時間",
+      "status": "状態",
+      "author": "著者",
+      "type": "タイプ"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "見る",
@@ -197,12 +204,16 @@
     },
     "pageTransition": {
       "continuous": "続く",
-      "default": "ページごと"
+      "default": "ページごと",
+      "reader": "読者"
     },
     "print": {
       "all": "すべて",
       "current": "現在の",
       "pages": "ページ",
+      "pageQuality": "印刷品質",
+      "qualityNormal": "正常",
+      "qualityHigh": "高い",
       "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
       "addWatermarkSettings": "透かし設定を追加"
@@ -226,6 +237,10 @@
       "dragAndDrop": "ここに画像をドラッグアンドドロップします",
       "or": "または",
       "pickImage": "署名画像を選択"
+    },
+    "filterAnnotModal": {
+      "commentBy": "によるコメント",
+      "types": "タイプ"
     },
     "status": {
       "status": "状態"
@@ -281,8 +296,7 @@
     "thumbnailPanel": {
       "delete": "削除する",
       "rotateClockwise": "時計回り",
-      "rotateCounterClockwise": "反時計回り",
-      "extractZeroPageError": "抽出するページが選択されていません"
+      "rotateCounterClockwise": "反時計回り"
     },
     "richText": {
       "bold": "太字",
@@ -308,6 +322,10 @@
     "redaction": {
       "applyTile": "リダクションを適用",
       "applyMessage": "この操作により、編集用に選択されたすべてのアイテムが完全に削除されます。元に戻すことはできません。"
+    },
+    "selectPage": {
+      "selectTitle": "ページが選択されていません",
+      "selectMessage": "ページを選択して、もう一度お試しください。"
     }
   },
   "shortcut": {

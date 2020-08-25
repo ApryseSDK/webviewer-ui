@@ -1,0 +1,26 @@
+@import '../../constants/panel';
+
+.right-panel {
+  z-index: 65;
+  @include mobile {
+    z-index: 95;
+  }
+  display: flex;
+  background-color: var(--panel-background);
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+
+  @include tablet {
+    border-left: 1px solid var(--side-panel-border);
+  }
+
+  @include mobile {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+  }
+}

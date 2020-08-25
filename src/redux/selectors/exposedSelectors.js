@@ -20,6 +20,8 @@ export const getSavedSignatures = state => state.viewer.savedSignatures;
 export const getSelectedSignatureIndex = state => state.viewer.selectedSignatureIndex;
 export const getSelectedSignature = state => getSavedSignatures(state)[getSelectedSignatureIndex(state)];
 
+export const getNotesInLeftPanel = state =>
+  state.viewer.notesInLeftPanel;
 export const getLeftPanelWidth = state =>
   state.viewer.panelWidths.leftPanel;
 export const getSearchPanelWidth = state =>
@@ -52,8 +54,15 @@ const getToolbarGroupDataElements = state => {
 
 export const getEnabledToolbarGroups = state => {
   const toolbarGroupDataElements = getToolbarGroupDataElements(state);
-  return toolbarGroupDataElements.filter(dateElement => {
-    return !isElementDisabled(state, `${dateElement}`);
+  return toolbarGroupDataElements.filter(dataElement => {
+    const headerItems = state.viewer.headers[dataElement];
+    const toolGroupButtons = headerItems.filter(({ dataElement }) => {
+      return dataElement && dataElement.includes('ToolGroupButton');
+    });
+    const isEveryToolGroupButtonDisabled  = !dataElement.includes('toolbarGroup-View') && toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
+      return isElementDisabled(state, toolGroupDataElement);
+    });
+    return !isElementDisabled(state, `${dataElement}`) && !isEveryToolGroupButtonDisabled;
   });
 };
 
@@ -147,6 +156,8 @@ export const getRotation = state => state.viewer.rotation;
 
 export const getNoteDateFormat = state => state.viewer.noteDateFormat;
 
+export const getPrintedNoteDateFormat = state => state.viewer.printedNoteDateFormat;
+
 export const isFullScreen = state => state.viewer.isFullScreen;
 
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
@@ -227,6 +238,8 @@ export const getAnnotationContentOverlayHandler = state => state.viewer.annotati
 export const getEnableMouseWheelZoom = state => state.viewer.enableMouseWheelZoom;
 export const getEnableMathSymbols = state => state.viewer.enableMathSymbols;
 
+export const isReaderMode = state => state.viewer.isReaderMode;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 
@@ -270,12 +283,6 @@ export const getSearchListeners = state => state.search.listeners;
 
 export const getSearchValue = state => state.search.value;
 
-export const getActiveResult = state => state.search.activeResult;
-
-export const getActiveResultIndex = state => state.search.activeResultIndex;
-
-export const getResults = state => state.search.results;
-
 export const isCaseSensitive = state => state.search.isCaseSensitive;
 
 export const isWholeWord = state => state.search.isWholeWord;
@@ -288,10 +295,6 @@ export const isAmbientString = state => state.search.isAmbientString;
 
 export const isRegex = state => state.search.isRegex;
 
-export const isSearching = state => state.search.isSearching;
-
-export const isNoResult = state => state.search.noResult;
-
 export const getSearchErrorMessage = state => state.search.errorMessage;
 
 export const isProgrammaticSearch = state => state.search.isProgrammaticSearch;
@@ -300,5 +303,7 @@ export const isProgrammaticSearchFull = state =>
   state.search.isProgrammaticSearchFull;
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
+
+export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;
 
 export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;

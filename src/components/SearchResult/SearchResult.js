@@ -10,12 +10,12 @@ import ListSeparator from "components/ListSeparator";
 const SearchResultListSeparatorPropTypes = {
   currentResultIndex: PropTypes.number.isRequired,
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
-  translate: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   pageLabels: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 function SearchResultListSeparator(props) {
-  const { currentResultIndex, searchResults, translate, pageLabels } = props;
+  const { currentResultIndex, searchResults, t, pageLabels } = props;
 
   const previousIndex = currentResultIndex === 0 ? currentResultIndex : currentResultIndex - 1;
   const currentListItem = searchResults[currentResultIndex];
@@ -25,7 +25,7 @@ function SearchResultListSeparator(props) {
   const isInDifferentPage = previousListItem.pageNum !== currentListItem.pageNum;
 
   if (isFirstListItem || isInDifferentPage) {
-    const listSeparatorText = `${translate('option.shared.page')} ${pageLabels[currentListItem.pageNum - 1]}`;
+    const listSeparatorText = `${t('option.shared.page')} ${pageLabels[currentListItem.pageNum - 1]}`;
     return (
       <ListSeparator>{listSeparatorText}</ListSeparator>
     );
@@ -69,15 +69,15 @@ const SearchResultPropTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   activeResultIndex: PropTypes.number,
-  noSearchResult: PropTypes.bool,
+  searchStatus: PropTypes.oneOf(['SEARCH_NOT_INITIATED', 'SEARCH_IN_PROGRESS', 'SEARCH_DONE']),
   searchResults: PropTypes.arrayOf(PropTypes.object),
-  translate: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   onClickResult: PropTypes.func,
   pageLabels: PropTypes.arrayOf(PropTypes.any),
 };
 
 function SearchResult(props) {
-  const { height, activeResultIndex, noSearchResult, searchResults = [], translate, onClickResult, pageLabels } = props;
+  const { height, searchStatus, searchResults, activeResultIndex, t, onClickResult, pageLabels } = props;
   const cellMeasureCache = React.useMemo(() => {
     return new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
   }, []);
@@ -90,7 +90,6 @@ function SearchResult(props) {
   const rowRenderer = React.useCallback(function rowRendererCallback(rendererOptions) {
     const { index, key, parent, style } = rendererOptions;
     const result = searchResults[index];
-
     return (
       <CellMeasurer
         cache={cellMeasureCache}
@@ -105,7 +104,7 @@ function SearchResult(props) {
               currentResultIndex={index}
               searchResults={searchResults}
               pageLabels={pageLabels}
-              translate={translate}
+              t={t}
             />
             <SearchResultListItem
               result={result}
@@ -117,7 +116,7 @@ function SearchResult(props) {
         )}
       </CellMeasurer>
     );
-  }, [cellMeasureCache, searchResults, activeResultIndex, translate, pageLabels]);
+  }, [cellMeasureCache, searchResults, activeResultIndex, t, pageLabels]);
 
   if (height == null) { // eslint-disable-line eqeqeq
     // VirtualizedList requires width and height of the component which is calculated by withContentRect HOC.
@@ -126,9 +125,9 @@ function SearchResult(props) {
     return null;
   }
 
-  if (noSearchResult) {
+  if (searchStatus === 'SEARCH_DONE' && searchResults.length === 0) {
     return (
-      <div className="info">{translate('message.noResults')}</div>
+      <div className="info">{t('message.noResults')}</div>
     );
   }
 

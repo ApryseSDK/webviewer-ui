@@ -74,6 +74,7 @@ import mentions from './mentions';
 import openElement from './openElement';
 import openElements from './openElements';
 import print from './print';
+import printInBackground from './printInBackground';
 import registerTool from './registerTool';
 import removeSearchListener from './removeSearchListener';
 import rotateClockwise from './rotateClockwise';
@@ -101,6 +102,7 @@ import setLayoutMode from './setLayoutMode';
 import setMaxZoomLevel from './setMaxZoomLevel';
 import setMinZoomLevel from './setMinZoomLevel';
 import setNoteDateFormat from './setNoteDateFormat';
+import setPrintedNoteDateFormat from './setPrintedNoteDateFormat';
 import setNotesPanelSort from './setNotesPanelSort';
 import setPageLabels from './setPageLabels';
 import setPrintQuality from './setPrintQuality';
@@ -134,6 +136,7 @@ import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 import setNoteTransformFunction from './setNoteTransformFunction';
+import setCustomNoteSelectionFunction from './setCustomNoteSelectionFunction';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
 import setSearchResults from './setSearchResults';
@@ -158,6 +161,7 @@ export default store => {
     disableReplyForAnnotations: disableReplyForAnnotations(store),
     downloadPdf: downloadPdf(store),
     enableElements: enableElements(store),
+    enableFeatures: enableFeatures(store),
     enableTools: enableTools(store),
     focusNote: focusNote(store),
     getFitMode: getFitMode(store),
@@ -173,6 +177,7 @@ export default store => {
     loadDocument: loadDocument(store),
     openElements: openElements(store),
     print: print(store),
+    printInBackground: printInBackground(store),
     registerTool: registerTool(store),
     removeSearchListener: removeSearchListener(store),
     searchText: searchText(store),
@@ -193,6 +198,7 @@ export default store => {
     setMaxZoomLevel: setMaxZoomLevel(store),
     setMinZoomLevel: setMinZoomLevel(store),
     setNoteDateFormat: setNoteDateFormat(store),
+    setPrintedNoteDateFormat: setPrintedNoteDateFormat(store),
     setMeasurementUnits: setMeasurementUnits(store),
     setPageLabels: setPageLabels(store),
     setPrintQuality: setPrintQuality(store),
@@ -201,11 +207,12 @@ export default store => {
     setTheme: setTheme(store),
     setToolbarGroup: setToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
+    setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),
     setToolMode: setToolMode(store),
     setZoomLevel,
     setZoomList: setZoomList(store),
-    setSearchResults: setSearchResults(store),
-    setActiveResult: setActiveResult(store),
+    setSearchResults,
+    setActiveResult,
     showErrorMessage: showErrorMessage(store),
     textPopup: textPopup(store),
     toggleElement: toggleElement(store),
@@ -240,7 +247,6 @@ export default store => {
     enableAnnotations: enableAnnotations(store),
     enableDownload: enableDownload(store),
     enableElement: enableElement(store),
-    enableFeatures: enableFeatures(store),
     enableFilePicker: enableFilePicker(store),
     enableLocalStorage,
     enableMeasurement: enableMeasurement(store),

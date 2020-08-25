@@ -298,6 +298,15 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     return;
   }
 
+  // hack for new ui
+  if (!state.viewer.notesInLeftPanel) {
+    if (dataElement === 'searchPanel') {
+      dispatch(closeElement('notesPanel'));
+    } else if (dataElement === 'notesPanel') {
+      dispatch(closeElement('searchPanel'));
+    }
+  }
+
   if (state.viewer.openElements[dataElement]) {
     dispatch(closeElement(dataElement));
   } else {
@@ -337,6 +346,7 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
       'outlinesPanel',
       'layersPanel',
       'bookmarksPanel',
+      'notesPanel',
     ].join(', ');
     console.warn(
       `${dataElement} is not recognized by the left panel. Please use one of the following options: ${panelDataElements}`,
@@ -356,6 +366,10 @@ export const setSortNotesBy = sortStrategy => {
 };
 export const setNoteDateFormat = noteDateFormat => ({
   type: 'SET_NOTE_DATE_FORMAT',
+  payload: { noteDateFormat },
+});
+export const setPrintedNoteDateFormat = noteDateFormat => ({
+  type: 'SET_PRINTED_NOTE_DATE_FORMAT',
   payload: { noteDateFormat },
 });
 export const setCustomPanel = newPanel => ({
@@ -444,14 +458,6 @@ export const setActiveTheme = theme => ({
 export const setSearchResults = searchResults => ({
   type: 'SET_SEARCH_RESULTS',
   payload: searchResults,
-});
-export const setActiveResult = (activeResult, index) => ({
-  type: 'SET_ACTIVE_RESULT',
-  payload: { activeResult },
-});
-export const setActiveResultIndex = index => ({
-  type: 'SET_ACTIVE_RESULT_INDEX',
-  payload: { index },
 });
 export const setAnnotationContentOverlayHandler = annotationContentOverlayHandler => ({
   type: 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER',

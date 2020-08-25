@@ -4,6 +4,7 @@ import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import actions from 'actions';
 import defaultTool from 'constants/defaultTool';
+import { defaultZoomList } from 'constants/zoomFactors';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
@@ -28,6 +29,7 @@ export default {
     },
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
+    notesInLeftPanel: getHashParams('notesInLeftPanel', false),
     headers: {
       default: [
         { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
@@ -355,10 +357,10 @@ export default {
       AnnotationCreateCallout2: { dataElement: 'calloutToolButton2', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
       AnnotationCreateCallout3: { dataElement: 'calloutToolButton3', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
       AnnotationCreateCallout4: { dataElement: 'calloutToolButton4', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
-      AnnotationCreateSticky: { dataElement: 'sitckyToolButton', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
-      AnnotationCreateSticky2: { dataElement: 'sitckyToolButton2', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
-      AnnotationCreateSticky3: { dataElement: 'sitckyToolButton3', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
-      AnnotationCreateSticky4: { dataElement: 'sitckyToolButton4', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
+      AnnotationCreateSticky: { dataElement: 'stickyToolButton', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
+      AnnotationCreateSticky2: { dataElement: 'stickyToolButton2', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
+      AnnotationCreateSticky3: { dataElement: 'stickyToolButton3', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
+      AnnotationCreateSticky4: { dataElement: 'stickyToolButton4', title: 'annotation.stickyNote', img: 'icon-tool-comment-line', group: 'stickyTools', showColor: 'always' },
       AnnotationCreateRectangle: { dataElement: 'rectangleToolButton', title: 'annotation.rectangle', img: 'icon-tool-shape-rectangle', group: 'rectangleTools', showColor: 'always' },
       AnnotationCreateRectangle2: { dataElement: 'rectangleToolButton2', title: 'annotation.rectangle', img: 'icon-tool-shape-rectangle', group: 'rectangleTools', showColor: 'always' },
       AnnotationCreateRectangle3: { dataElement: 'rectangleToolButton3', title: 'annotation.rectangle', img: 'icon-tool-shape-rectangle', group: 'rectangleTools', showColor: 'always' },
@@ -434,10 +436,11 @@ export default {
     pageLabels: [],
     selectedThumbnailPageIndexes: [],
     noteDateFormat: 'MMM D, h:mma',
+    printedNoteDateFormat: 'D/MM/YYYY h:mm:ss A',
     colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
     warning: {},
     customNoteFilter: null,
-    zoomList: [0.1, 0.25, 0.5, 1, 1.25, 1.5, 2, 4, 8, 16, 64],
+    zoomList: defaultZoomList,
     isAccessibleMode: getHashParams('accessibleMode', false),
     measurementUnits: {
       from: ['in', 'mm', 'cm', 'pt'],
@@ -455,7 +458,8 @@ export default {
     savedSignatures: [],
     selectedSignatureIndex: 0,
     annotationContentOverlayHandler: null,
-    isSnapModeEnabled: false
+    isSnapModeEnabled: false,
+    isReaderMode: false
   },
   search: {
     listeners: [],
@@ -466,11 +470,7 @@ export default {
     isRegex: false,
     isSearchUp: false,
     isAmbientString: false,
-    activeResult: null,
-    activeResultIndex: -1,
     results: [],
-    isSearching: false,
-    noResult: false,
     isProgrammaticSearch: false,
     isProgrammaticSearchFull: false,
   },

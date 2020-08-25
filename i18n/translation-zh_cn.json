@@ -84,7 +84,8 @@
     "strikeout": "删除线",
     "underline": "下划线",
     "custom": "自定义",
-    "rubberStamp": "橡皮图章"
+    "rubberStamp": "橡皮图章",
+    "note": "注意"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -128,7 +129,8 @@
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
     "calibration": "校准",
-    "createStampButton": "创建新图章"
+    "createStampButton": "创建新图章",
+    "filter": "过滤"
   },
   "message": {
     "toolsOverlayNoPresets": "无预设",
@@ -139,6 +141,7 @@
     "enterPassword": "此文档已被加密。请输入密码。",
     "incorrectPassword": "密码错误，剩余输入机会：{{remainingAttempts}}",
     "noAnnotations": "此文档没有注释。",
+    "noAnnotationsFilter": "开始制作注释，过滤器将显示在此处。",
     "noOutlines": "此文档没有大纲。",
     "noResults": "未找到结果。",
     "numResultsFound": "找到结果",
@@ -157,12 +160,16 @@
     "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在两点之间输入测量值",
-    "linkURLorPage": "链接网址或页面"
+    "linkURLorPage": "链接网址或页面",
+    "sortBy": "排序方式"
   },
   "option": {
     "notesOrder": {
       "position": "位置",
-      "time": "时间"
+      "time": "时间",
+      "status": "状态",
+      "author": "作者",
+      "type": "类型"
     },
     "toolbarGroup": {
       "toolbarGroup-View": "视图",
@@ -197,12 +204,16 @@
     },
     "pageTransition": {
       "continuous": "连续",
-      "default": "逐页"
+      "default": "逐页",
+      "reader": "阅读"
     },
     "print": {
       "all": "全部",
       "current": "当前",
       "pages": "页数",
+      "pageQuality": "打印质量",
+      "qualityNormal": "正常",
+      "qualityHigh": "高",
       "includeAnnotations": "包括注释",
       "includeComments": "包括评论",
       "addWatermarkSettings": "添加水印设置"
@@ -226,6 +237,10 @@
       "dragAndDrop": "将图片拖放到此处",
       "or": "要么",
       "pickImage": "选择签名图像"
+    },
+    "filterAnnotModal": {
+      "commentBy": "评论者",
+      "types": "种类"
     },
     "status": {
       "status": "状态"
@@ -281,8 +296,7 @@
     "thumbnailPanel": {
       "delete": "删除",
       "rotateClockwise": "顺时针",
-      "rotateCounterClockwise": "逆时针方向",
-      "extractZeroPageError": "没有选择要提取的页面"
+      "rotateCounterClockwise": "逆时针方向"
     },
     "richText": {
       "bold": "粗体",
@@ -308,6 +322,10 @@
     "redaction": {
       "applyTile": "应用编辑",
       "applyMessage": "此操作将永久删除所有要编辑的项目。无法撤消。"
+    },
+    "selectPage": {
+      "selectTitle": "未选择页面",
+      "selectMessage": "请选择页面，然后重试。"
     }
   },
   "shortcut": {

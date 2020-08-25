@@ -13,7 +13,12 @@ let includeAnnotations = false;
 let printQuality = 1;
 let colorMap;
 
-export const print = (dispatch, isEmbedPrintSupported) => {
+export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options) => {
+  let allPages, includeAnnotations, includeComments, pagesToPrint;
+  if (options) {
+    ({ allPages, includeAnnotations, includeComments, pagesToPrint } = options);
+  }
+
   if (!core.getDocument()) {
     return;
   }
@@ -32,6 +37,29 @@ export const print = (dispatch, isEmbedPrintSupported) => {
     printPdf().then(() => {
       dispatch(actions.closeElement('loadingModal'));
     });
+  } else if (allPages || includeAnnotations || includeComments || (pagesToPrint && pagesToPrint.length > 0)) {
+    if (allPages) {
+      pagesToPrint = [];
+      for (let i = 1; i <= core.getTotalPages(); i++) {
+        pagesToPrint.push(i);
+      }
+    }
+
+    const createPages = creatingPages(
+      pagesToPrint,
+      includeComments,
+      includeAnnotations,
+      printQuality,
+      sortStrategy,
+      colorMap,
+    );
+    Promise.all(createPages)
+      .then(pages => {
+        printPages(pages);
+      })
+      .catch(e => {
+        console.error(e);
+      });
   } else {
     dispatch(actions.openElement('printModal'));
   }
@@ -63,7 +91,7 @@ const printPdf = () =>
       });
   });
 
-export const creatingPages = (pagesToPrint, includeComments, includeAnnot, printQualty, sortStrategy, clrMap) => {
+export const creatingPages = (pagesToPrint, includeComments, includeAnnot, printQualty, sortStrategy, clrMap, dateFormat) => {
   const createdPages = [];
   pendingCanvases = [];
   includeAnnotations = includeAnnot;
@@ -76,7 +104,7 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnot, print
 
     if (includeComments && printableAnnotations.length) {
       const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotations);
-      createdPages.push(creatingNotesPage(sortedNotes, pageNumber));
+      createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat));
     }
   });
 
@@ -106,7 +134,6 @@ export const cancelPrint = () => {
   const doc = core.getDocument();
   pendingCanvases.forEach(id => doc.cancelLoadCanvas(id));
 };
-
 
 const getPrintableAnnotations = pageNumber =>
   core
@@ -155,7 +182,7 @@ const creatingImage = (pageNumber, printableAnnotations) =>
     pendingCanvases.push(id);
   });
 
-const creatingNotesPage = (annotations, pageNumber) =>
+const creatingNotesPage = (annotations, pageNumber, dateFormat) =>
   new Promise(resolve => {
     const container = document.createElement('div');
     container.className = 'page__container';
@@ -166,7 +193,7 @@ const creatingNotesPage = (annotations, pageNumber) =>
 
     container.appendChild(header);
     annotations.forEach(annotation => {
-      const note = getNote(annotation);
+      const note = getNote(annotation, dateFormat);
 
       container.appendChild(note);
     });
@@ -243,8 +270,7 @@ const getDocumentRotation = pageIndex => {
   return (completeRotation - viewerRotation + 4) % 4;
 };
 
-
-const getNote = annotation => {
+const getNote = (annotation, dateFormat) => {
   const note = document.createElement('div');
   note.className = 'note';
 
@@ -265,7 +291,7 @@ const getNote = annotation => {
   annotation.getReplies().forEach(reply => {
     const noteReply = document.createElement('div');
     noteReply.className = 'note__reply';
-    noteReply.appendChild(getNoteInfo(reply));
+    noteReply.appendChild(getNoteInfo(reply, dateFormat));
     noteReply.appendChild(getNoteContent(reply));
 
     note.appendChild(noteReply);
@@ -303,14 +329,14 @@ const getNoteIcon = annotation => {
   return noteIcon;
 };
 
-const getNoteInfo = annotation => {
+const getNoteInfo = (annotation, dateFormat) => {
   const info = document.createElement('div');
 
   info.className = 'note__info';
   info.innerHTML = `
     Author: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
     Subject: ${annotation.Subject} &nbsp;&nbsp;
-    Date: ${dayjs(annotation.DateCreated).format('D/MM/YYYY h:mm:ss A')}
+    Date: ${dayjs(annotation.DateCreated).format(dateFormat || 'D/MM/YYYY h:mm:ss A')}
   `;
   return info;
 };
@@ -340,4 +366,3 @@ const createWidgetContainer = pageIndex => {
 
   return widgetContainer;
 };
-

@@ -242,6 +242,10 @@ export const setMouseWheelZoom = (enableMouseWheelZoom = true) => ({
   type: 'SET_MOUSE_WHEEL_ZOOM',
   payload: { enableMouseWheelZoom },
 });
+export const setReaderMode = isReaderMode => ({
+  type: 'SET_READER_MODE',
+  payload: { isReaderMode },
+});
 
 // document
 export const setTotalPages = totalPages => ({
@@ -333,10 +337,6 @@ export const setSearchValue = value => ({
   type: 'SET_SEARCH_VALUE',
   payload: { value },
 });
-export const addResult = result => ({
-  type: 'ADD_RESULT',
-  payload: { result },
-});
 export const setCaseSensitive = isCaseSensitive => ({
   type: 'SET_CASE_SENSITIVE',
   payload: { isCaseSensitive },
@@ -348,14 +348,6 @@ export const setWholeWord = isWholeWord => ({
 export const setWildcard = isWildcard => ({
   type: 'SET_WILD_CARD',
   payload: { isWildcard },
-});
-export const setIsSearching = isSearching => ({
-  type: 'SET_IS_SEARCHING',
-  payload: { isSearching },
-});
-export const setNoResult = noResult => ({
-  type: 'SET_NO_RESULT',
-  payload: { noResult },
 });
 export const setSearchError = errorMessage => ({
   type: 'SET_SEARCH_ERROR',
@@ -374,7 +366,10 @@ export const setNoteTransformFunction = noteTransformFunction => ({
   type: 'SET_NOTE_TRANSFORM_FUNCTION',
   payload: { noteTransformFunction },
 });
-
+export const setCustomNoteSelectionFunction = customNoteFunction => ({
+  type: 'SET_CUSTOM_NOTE_SELECTION_FUNCTION',
+  payload: { customNoteFunction },
+});
 export const setEnableSnapMode = enable => ({
   type: 'SET_ENABLE_SNAP_MODE',
   payload: { enable },

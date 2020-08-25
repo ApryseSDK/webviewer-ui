@@ -38,6 +38,7 @@ class ThumbnailsPanel extends React.PureComponent {
     isMultipleViewerMerging: PropTypes.bool,
     dispatch: PropTypes.func,
     isThumbnailControlDisabled: PropTypes.bool,
+    isReaderMode: PropTypes.bool,
   };
 
   constructor() {
@@ -84,6 +85,12 @@ class ThumbnailsPanel extends React.PureComponent {
     core.removeEventListener('pageNumberUpdated', this.onPageNumberUpdated);
     core.removeEventListener('pageComplete', this.onPageComplete);
     core.removeEventListener('annotationHidden', this.onAnnotationChanged);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isReaderMode !== this.props.isReaderMode) {
+      this.props.setSelectedPageThumbnails([]);
+    }
   }
 
   onBeginRendering = () => {
@@ -421,18 +428,20 @@ class ThumbnailsPanel extends React.PureComponent {
       isThumbnailReorderingEnabled,
       isThumbnailMergingEnabled,
       selectedPageIndexes,
+      isReaderMode,
     } = this.props;
     const className = classNames({
       columnsOfThumbnails: numberOfColumns > 1,
       row: true,
     });
+    const allowPageOperationsUI = allowPageOperations && !isReaderMode;
 
     return (
       <div className={className} key={key} style={style}>
         {new Array(numberOfColumns).fill().map((_, columnIndex) => {
           const thumbIndex = index * numberOfColumns + columnIndex;
           const allowDragAndDrop =
-            allowPageOperations && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled);
+            allowPageOperationsUI && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled);
           const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
           return thumbIndex < this.props.totalPages ? (
@@ -452,7 +461,7 @@ class ThumbnailsPanel extends React.PureComponent {
                 onDragOver={this.onDragOver}
                 onFinishLoading={this.removeFromPendingThumbs}
                 updateAnnotations={this.updateAnnotations}
-                shouldShowControls={allowPageOperations}
+                shouldShowControls={allowPageOperationsUI}
               />
               {showPlaceHolder && !isDraggingToPreviousPage && (
                 <hr className="thumbnailPlaceholder" />
@@ -484,6 +493,7 @@ class ThumbnailsPanel extends React.PureComponent {
       totalPages,
       isThumbnailControlDisabled,
       selectedPageIndexes,
+      isReaderMode
     } = this.props;
     const {
       height,
@@ -493,8 +503,7 @@ class ThumbnailsPanel extends React.PureComponent {
     const numberOfColumns = this.getNumberOfColumns(this.state.width);
     const thumbnailHeight = isThumbnailControlDisabled ? 200 : 230;
 
-    const shouldShowControls =
-      (allowPageOperations) || selectedPageIndexes.length > 0;
+    const shouldShowControls = !isReaderMode && (allowPageOperations || (selectedPageIndexes.length > 0));
 
     return isDisabled ? null : (
       <React.Fragment>
@@ -551,6 +560,7 @@ const mapStateToProps = state => ({
   isThumbnailReorderingEnabled: selectors.getIsThumbnailReorderingEnabled(state),
   isMultipleViewerMerging: selectors.getIsMultipleViewerMerging(state),
   isThumbnailControlDisabled: selectors.isElementDisabled(state, 'thumbnailControl'),
+  isReaderMode: selectors.isReaderMode(state),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThumbnailsPanel);

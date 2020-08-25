@@ -100,7 +100,6 @@
   .container {
     margin-top: 7px;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .edit-content {
@@ -178,10 +177,11 @@
   }
 
   .contents {
-    white-space: pre;
+    white-space: pre-wrap;
     color: var(--text-color);
     margin-right: 5px;
     padding: 0;
+    word-break: normal;
     word-wrap: break-word;
     user-select: text;
 

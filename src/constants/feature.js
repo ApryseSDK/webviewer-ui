@@ -19,6 +19,7 @@
  * @property {string} PageNavigation Ability to navigate through pages using mouse wheel, arrow up/down keys and the swipe gesture.
  * @property {string} MouseWheelZoom Ability to zoom when holding ctrl/cmd + mouse wheel.
  * @property {string} MathSymbols Ability to add math symbols in free text editor
+ * @property {string} Search Ctrl/Cmd + F hotkey and a search button that can be clicked to search the current document.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -48,4 +49,5 @@ export default {
   PageNavigation: 'PageNavigation',
   MouseWheelZoom: 'MouseWheelZoom',
   MathSymbols: 'MathSymbols',
+  Search: 'Search'
 };
