@@ -33,7 +33,7 @@ const getDefaultOptions = () => ({
   forceClientSideInit: getHashParams('forceClientSideInit', false),
   disableWebsockets: getHashParams('disableWebsockets', false),
   cacheKey: JSON.parse(getHashParams('cacheKey', null)),
-  streaming: getHashParams('streaming', null),
+  streaming: getHashParams('streaming', null) === 'true',
   useDownloader: getHashParams('useDownloader', true),
   backendType: getHashParams('pdf', null),
   loadAsPDF: getHashParams('loadAsPDF', null),
@@ -75,8 +75,12 @@ const extractXodOptions = options => {
     xodOptions.decryptOptions = options.decryptOptions;
   }
 
+  if (options.decrypt) {
+    xodOptions.decrypt = options.decrypt;
+  }
+
   if (options.streaming !== null) {
-    xodOptions.streaming = options.streaming === 'true';
+    xodOptions.streaming = options.streaming;
   }
 
   if (options.azureWorkaround) {
