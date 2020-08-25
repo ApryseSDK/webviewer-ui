@@ -19,6 +19,7 @@ import Icon from 'components/Icon';
 import core from 'core';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import escapeHtml from 'helpers/escapeHtml';
+import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -207,7 +208,7 @@ const NoteContentHeader = ({ annotation, setIsEditing }) => {
         )}
         <div className="time">
           {(sortStrategy !== 'time' || isSelected) &&
-            dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
+            dayjs(getLatestActivityDate(annotation)).format(noteDateFormat)}
           {numberOfReplies > 0 && ` (${numberOfReplies})`}
         </div>
         {isSelected && (
