@@ -9,20 +9,6 @@ WebViewer(...)
   });
  */
 
-import actions from 'actions';
-import selectors from 'selectors';
-import zoomFactors from 'constants/zoomFactors';
-import getActualZoomLevel from 'helpers/getActualZoomLevel';
+import setMaxZoomLevel from 'helpers/setMaxZoomLevel';
 
-export default store => zoomLevel => {
-  zoomLevel = getActualZoomLevel(zoomLevel);
-  const zoomList = selectors.getZoomList(store.getState()).filter(zoom => zoom <= zoomLevel);
-
-  if (zoomLevel) {
-    zoomFactors.setMaxZoomLevel(zoomLevel);
-    store.dispatch(actions.setZoomList(zoomList));
-    window.Tools.MarqueeZoomTool.setMaxZoomLevel(zoomLevel);
-  } else {
-    console.warn('Type of the argument for setMaxZoomLevel must be either string or number');
-  }
-};
+export default store => setMaxZoomLevel(store.dispatch);

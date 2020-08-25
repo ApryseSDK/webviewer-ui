@@ -156,6 +156,8 @@ export const getRotation = state => state.viewer.rotation;
 
 export const getNoteDateFormat = state => state.viewer.noteDateFormat;
 
+export const getPrintedNoteDateFormat = state => state.viewer.printedNoteDateFormat;
+
 export const isFullScreen = state => state.viewer.isFullScreen;
 
 export const doesDocumentAutoLoad = state => state.viewer.doesAutoLoad;
@@ -236,6 +238,7 @@ export const getAnnotationContentOverlayHandler = state => state.viewer.annotati
 export const getEnableMouseWheelZoom = state => state.viewer.enableMouseWheelZoom;
 
 export const getEnableTextEdit = state => state.viewer.enableTextEdit;
+export const isReaderMode = state => state.viewer.isReaderMode;
 
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
@@ -300,5 +303,7 @@ export const isProgrammaticSearchFull = state =>
   state.search.isProgrammaticSearchFull;
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
+
+export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;
 
 export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;

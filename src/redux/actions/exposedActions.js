@@ -368,6 +368,10 @@ export const setNoteDateFormat = noteDateFormat => ({
   type: 'SET_NOTE_DATE_FORMAT',
   payload: { noteDateFormat },
 });
+export const setPrintedNoteDateFormat = noteDateFormat => ({
+  type: 'SET_PRINTED_NOTE_DATE_FORMAT',
+  payload: { noteDateFormat },
+});
 export const setCustomPanel = newPanel => ({
   type: 'SET_CUSTOM_PANEL',
   payload: { newPanel },

@@ -205,12 +205,16 @@
     },
     "pageTransition": {
       "continuous": "连续",
-      "default": "逐页"
+      "default": "逐页",
+      "reader": "阅读"
     },
     "print": {
       "all": "全部",
       "current": "当前",
       "pages": "页数",
+      "pageQuality": "打印质量",
+      "qualityNormal": "正常",
+      "qualityHigh": "高",
       "includeAnnotations": "包括注释",
       "includeComments": "包括评论",
       "addWatermarkSettings": "添加水印设置"
@@ -293,8 +297,7 @@
     "thumbnailPanel": {
       "delete": "删除",
       "rotateClockwise": "顺时针",
-      "rotateCounterClockwise": "逆时针方向",
-      "extractZeroPageError": "没有选择要提取的页面"
+      "rotateCounterClockwise": "逆时针方向"
     },
     "richText": {
       "bold": "粗体",
@@ -320,6 +323,10 @@
     "redaction": {
       "applyTile": "应用编辑",
       "applyMessage": "此操作将永久删除所有要编辑的项目。无法撤消。"
+    },
+    "selectPage": {
+      "selectTitle": "未选择页面",
+      "selectMessage": "请选择页面，然后重试。"
     }
   },
   "shortcut": {

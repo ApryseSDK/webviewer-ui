@@ -140,7 +140,7 @@ const Header = {
   /**
    * Select a header group to edit.
    * @method Header#getHeader
-   * @param {string} headerGroup Name of the header group. By default, 'default' and 'tools' are accepted.
+   * @param {string} headerGroup Name of the header group. Possible options are 'default', 'small-mobile-more-buttons', 'toolbarGroup-View', 'toolbarGroup-Annotate', 'toolbarGroup-Shapes', 'toolbarGroup-Insert', 'toolbarGroup-Measure', and 'toolbarGroup-Edit'
    * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
    */
   getHeader(headerGroup) {

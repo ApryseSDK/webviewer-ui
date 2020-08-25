@@ -57,7 +57,40 @@ const DocumentControls = props => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
   }, [setPageString, selectedPageIndexes, shouldShowControls, pageLabels]);
 
+  const noPagesSelectedWarning = () => {
+    const title = t('warning.selectPage.selectTitle');
+    const message = t('warning.selectPage.selectMessage');
+    const confirmBtnText = t('action.ok');
+
+    const warning = {
+      message,
+      title,
+      confirmBtnText,
+      onConfirm: () => Promise.resolve(),
+      keepOpen: ['leftPanel'],
+    };
+
+    dispatch(actions.showWarningMessage(warning));
+  };
+
+  const rotateClockwise = () => {
+    if (selectedPageIndexes.length === 0) {
+      noPagesSelectedWarning();
+      return;
+    }
+
+    const pageNumbersToRotate = selectedPageIndexes.map(p => p + 1);
+    pageNumbersToRotate.forEach((index) => {
+      core.rotatePages([index], window.CoreControls.PageRotation.e_90);
+    });
+  };
+
   const onDeletePages = () => {
+    if (selectedPageIndexes.length === 0) {
+      noPagesSelectedWarning();
+      return;
+    }
+
     let message = t('warning.deletePage.deleteMessage');
     const title = t('warning.deletePage.deleteTitle');
     const confirmBtnText = t('action.ok');
@@ -91,15 +124,7 @@ const DocumentControls = props => {
 
   const extractPages = () => {
     if (selectedPageIndexes.length === 0) {
-      const warning = {
-        message: t('option.thumbnailPanel.extractZeroPageError'),
-        title: t('action.extract'),
-        confirmBtnText: t('action.ok'),
-        onConfirm: () => Promise.resolve(),
-        keepOpen: ['leftPanel'],
-      };
-
-      dispatch(actions.showWarningMessage(warning));
+      noPagesSelectedWarning();
       return;
     }
 
@@ -156,11 +181,19 @@ const DocumentControls = props => {
                 img="icon-delete-line"
                 onClick={onDeletePages}
                 title="option.thumbnailPanel.delete"
+                dataElement="thumbMultiDelete"
+              />
+              <Button
+                img="icon-header-page-manipulation-page-rotation-clockwise-line"
+                onClick={rotateClockwise}
+                title="option.thumbnailPanel.rotateClockwise"
+                dataElement="thumbMultiRotate"
               />
               <Button
                 img="ic-operation-export-line"
                 title="action.extract"
                 onClick={extractPages}
+                dataElement="thumbExtract"
               />
             </div>
           </div>

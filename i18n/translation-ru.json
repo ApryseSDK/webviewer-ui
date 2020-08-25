@@ -205,12 +205,16 @@
     },
     "pageTransition": {
       "continuous": "Непрерывный",
-      "default": "Страница за страницей"
+      "default": "Страница за страницей",
+      "reader": "читатель"
     },
     "print": {
       "all": "Все",
       "current": "Текущий",
       "pages": "Страницы",
+      "pageQuality": "Качество печати",
+      "qualityNormal": "Нормальный",
+      "qualityHigh": "Высокая",
       "includeAnnotations": "Включить аннотации",
       "includeComments": "Приложить комментарии",
       "addWatermarkSettings": "Добавить настройки водяного знака"
@@ -293,8 +297,7 @@
     "thumbnailPanel": {
       "delete": "удалять",
       "rotateClockwise": "по часовой стрелке",
-      "rotateCounterClockwise": "Против часовой стрелки",
-      "extractZeroPageError": "Страницы не были выбраны для извлечения"
+      "rotateCounterClockwise": "Против часовой стрелки"
     },
     "richText": {
       "bold": "Жирное лицо",
@@ -320,6 +323,10 @@
     "redaction": {
       "applyTile": "Применить редактирование",
       "applyMessage": "Это действие навсегда удалит все элементы, выбранные для редактирования. Это не может быть отменено."
+    },
+    "selectPage": {
+      "selectTitle": "Страницы не выбраны",
+      "selectMessage": "Пожалуйста, выберите страницы и попробуйте еще раз."
     }
   },
   "shortcut": {

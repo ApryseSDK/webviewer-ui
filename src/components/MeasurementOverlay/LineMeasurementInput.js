@@ -53,14 +53,11 @@ function LineMeasurementInput(props) {
   };
 
   const ensureLineIsWithinBounds = useCallback(lengthInPts => {
-    const maxLengthInPts = getMaxLineLengthInPts();
-
-    if (lengthInPts > maxLengthInPts) {
-      annotation.setLineLength(maxLengthInPts);
-    } else {
-      annotation.setLineLength(lengthInPts);
+    if (annotation.getLineLength() !== lengthInPts) {
+      const maxLengthInPts = getMaxLineLengthInPts();
+      annotation.setLineLength(Math.min(maxLengthInPts, lengthInPts));
+      forceLineRedraw();
     }
-    forceLineRedraw();
   }, [annotation, forceLineRedraw, getMaxLineLengthInPts]);
 
   const forceLineRedraw = useCallback(() => {

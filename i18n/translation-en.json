@@ -9,6 +9,7 @@
     "undo": "Undo",
     "redo": "Redo",
     "comment": "Comment",
+    "reply": "Reply",
     "copy": "Copy",
     "delete": "Delete",
     "group": "Group",
@@ -28,7 +29,6 @@
     "print": "Print",
     "name": "Name",
     "ok": "OK",
-    "reply": "Reply",
     "rotate": "Page Orientation",
     "rotateClockwise": "Rotate Clockwise",
     "rotateCounterClockwise": "Rotate Counterclockwise",
@@ -205,12 +205,16 @@
     },
     "pageTransition": {
       "continuous": "Continuous Page",
-      "default": "Page by Page"
+      "default": "Page by Page",
+      "reader": "Reader"
     },
     "print": {
       "all": "All",
       "current": "Current",
       "pages": "Pages to print",
+      "pageQuality": "Print Quality",
+      "qualityNormal": "Normal",
+      "qualityHigh": "High",
       "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
       "addWatermarkSettings": "Add Watermark"
@@ -293,8 +297,7 @@
     "thumbnailPanel": {
       "delete": "Delete",
       "rotateClockwise": "Clockwise",
-      "rotateCounterClockwise": "Counterclockwise",
-      "extractZeroPageError": "No pages were selected to extract"
+      "rotateCounterClockwise": "Counterclockwise"
     },
     "richText": {
       "bold": "Bold",
@@ -320,6 +323,10 @@
     "redaction": {
       "applyTile": "Apply Redaction",
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
+    },
+    "selectPage": {
+      "selectTitle": "No Pages Selected",
+      "selectMessage": "Please select pages and try again."
     }
   },
   "shortcut": {

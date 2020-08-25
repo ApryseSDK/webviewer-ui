@@ -5,7 +5,6 @@
 WebViewer(...)
   .then(function(instance) {
     var docViewer = instance.docViewer;
-
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', function() {
       instance.print();
