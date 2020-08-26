@@ -83,47 +83,56 @@ const AnnotationContentOverlay = () => {
 
   const numberOfReplies = annotation?.getReplies().length;
 
-  const customRender = useCallback(() => {
-    return customHandler(annotation);
-  }, [customHandler, annotation]);
+  const preRenderedElements = isUsingCustomHandler && annotation ? customHandler(annotation) : null;
+
+  const customRender = useCallback(() => preRenderedElements, [preRenderedElements]);
+
+  const renderContents = () => (
+    <div
+      className="Overlay AnnotationContentOverlay"
+      data-element="annotationContentOverlay"
+      style={{ ...overlayPosition }}
+      ref={overlayRef}
+    >
+      <div className="author">{core.getDisplayAuthor(annotation)}</div>
+      <div className="contents">
+        {contents.length > MAX_CHARACTERS
+          ? `${contents.slice(0, MAX_CHARACTERS)}...`
+          : contents}
+      </div>
+      {numberOfReplies > 0 && (
+        <div className="replies">
+          {t('message.annotationReplyCount', { count: numberOfReplies })}
+        </div>
+      )}
+    </div>
+  );
 
   if (isDisabled || isMobileDevice || !annotation) {
     return null;
-  } else if (isUsingCustomHandler && isOverlayOpen) {
-    return (
-      <div
-        className="Overlay AnnotationContentOverlay"
-        data-element="annotationContentOverlay"
-        style={{ ...overlayPosition }}
-        ref={overlayRef}
-      >
-        <CustomElement render={customRender} />
-      </div>
-    );
-  } else if (contents && isOverlayOpen) {
-    return (
-      <div
-        className="Overlay AnnotationContentOverlay"
-        data-element="annotationContentOverlay"
-        style={{ ...overlayPosition }}
-        ref={overlayRef}
-      >
-        <div className="author">{core.getDisplayAuthor(annotation)}</div>
-        <div className="contents">
-          {contents.length > MAX_CHARACTERS
-            ? `${contents.slice(0, MAX_CHARACTERS)}...`
-            : contents}
+  }
+
+  if (isUsingCustomHandler && isOverlayOpen && preRenderedElements !== undefined) {
+    if (preRenderedElements) {
+      return (
+        <div
+          className="Overlay AnnotationContentOverlay"
+          data-element="annotationContentOverlay"
+          style={{ ...overlayPosition }}
+          ref={overlayRef}
+        >
+          <CustomElement render={customRender} />
         </div>
-        {numberOfReplies > 0 && (
-          <div className="replies">
-            {t('message.annotationReplyCount', { count: numberOfReplies })}
-          </div>
-        )}
-      </div>
-    );
-  } else {
+      );
+    }
     return null;
   }
+
+  if (contents && isOverlayOpen) {
+    return renderContents();
+  }
+
+  return null;
 };
 
 export default AnnotationContentOverlay;
