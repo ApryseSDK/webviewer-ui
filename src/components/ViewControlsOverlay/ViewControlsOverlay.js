@@ -32,7 +32,12 @@ function ViewControlsOverlay() {
 
   return (
     <FlyoutMenu menu="viewControlsOverlay" trigger="viewControlsButton" onClose={undefined}>
-      <div className="type">{t('option.displayMode.pageTransition')}</div>
+      <DataElementWrapper
+        dataElement="pageTransitionHeader"
+        className="type"
+      >
+        {t('option.displayMode.pageTransition')}
+      </DataElementWrapper>
       {totalPages < 1000 && (
         <>
           <DataElementWrapper
@@ -59,10 +64,18 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('option.pageTransition.default')}</div>
           </DataElementWrapper>
-          <div className="divider" />
+          <DataElementWrapper
+            dataElement="viewControlsDivider1"
+            className="divider"
+          />
         </>
       )}
-      <div className="type">{t('action.rotate')}</div>
+      <DataElementWrapper
+        dataElement="rotateHeader"
+        className="type"
+      >
+        {t('action.rotate')}
+      </DataElementWrapper>
       <DataElementWrapper className="row" onClick={core.rotateClockwise} dataElement="rotateClockwiseButton">
         <ActionButton
           title="action.rotateClockwise"
@@ -77,8 +90,16 @@ function ViewControlsOverlay() {
         />
         <div className="title">{t('action.rotateCounterClockwise')}</div>
       </DataElementWrapper>
-      <div className="divider" />
-      <div className="type">{t('option.displayMode.layout')}</div>
+      <DataElementWrapper
+            dataElement="viewControlsDivider2"
+            className="divider"
+          />
+      <DataElementWrapper
+        dataElement="layoutHeader"
+        className="type"
+      >
+        {t('option.displayMode.layout')}
+      </DataElementWrapper>
       <DataElementWrapper
         className={classNames({ row: true, active: layout === 'single' })}
         onClick={() => handleClick(pageTransition, 'single')}
