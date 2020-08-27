@@ -38,9 +38,6 @@ export default {
           render: () => <ToggleZoomOverlay />,
           dataElement: 'zoomOverlayButton',
           element: 'zoomOverlay',
-          style: {
-            height: '100%',
-          },
           hiddenOnMobileDevice: true,
         },
         { type: 'divider', hidden: ['small-mobile', 'mobile', 'tablet'] },
