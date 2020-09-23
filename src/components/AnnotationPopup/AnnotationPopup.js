@@ -13,6 +13,7 @@ import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
 import useOnClickOutside from 'hooks/useOnClickOutside';
+import useWidgetEditing from 'hooks/useWidgetEditing';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -28,6 +29,7 @@ const AnnotationPopup = () => {
     isLeftPanelOpen,
     isRightPanelOpen,
     popupItems,
+    isNotesPanelOpen,
   ] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'annotationPopup'),
@@ -37,6 +39,7 @@ const AnnotationPopup = () => {
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementOpen(state, 'searchPanel'),
       selectors.getPopupItems(state, 'annotationPopup'),
+      selectors.isElementOpen(state, 'notesPanel'),
     ],
     shallowEqual
   );
@@ -46,6 +49,7 @@ const AnnotationPopup = () => {
   const [firstAnnotation, setFirstAnnotation] = useState(null);
   const [canModify, setCanModify] = useState(false);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
+  const isEditingWidgets = useWidgetEditing();
   const popupRef = useRef();
 
   useOnClickOutside(popupRef, e => {
@@ -129,6 +133,9 @@ const AnnotationPopup = () => {
       if (action === 'selected' && annotations.length) {
         setFirstAnnotation(annotations[0]);
         setCanModify(core.canModify(annotations[0]));
+        if (isNotesPanelOpen) {
+          setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
+        }
       } else {
         closeAndReset();
       }
@@ -142,7 +149,7 @@ const AnnotationPopup = () => {
       core.removeEventListener('documentUnloaded', closeAndReset);
       window.addEventListener('resize', closeAndReset);
     };
-  }, [dispatch, isLeftPanelOpen, isRightPanelOpen]);
+  }, [dispatch, isLeftPanelOpen, isRightPanelOpen, isNotesPanelOpen]);
 
   if (isDisabled || !firstAnnotation) {
     return null;
@@ -205,6 +212,7 @@ const AnnotationPopup = () => {
         <CustomizablePopup dataElement="annotationPopup">
           {!isNotesPanelDisabled &&
             !multipleAnnotationsSelected &&
+            !isEditingWidgets &&
             firstAnnotation.ToolName !== 'CropPage' && (
             <ActionButton
               dataElement="annotationCommentButton"
@@ -216,6 +224,7 @@ const AnnotationPopup = () => {
           {canModify &&
             hasStyle &&
             !isAnnotationStylePopupDisabled &&
+            !isEditingWidgets &&
             (!multipleAnnotationsSelected || canUngroup) &&
             firstAnnotation.ToolName !== 'CropPage' && (
             <ActionButton
@@ -247,7 +256,7 @@ const AnnotationPopup = () => {
               }}
             />
           )}
-          {canGroup && (
+          {canGroup && !isEditingWidgets && (
             <ActionButton
               dataElement="annotationGroupButton"
               title="action.group"
@@ -292,7 +301,7 @@ const AnnotationPopup = () => {
             'AnnotationCreateSignature',
             'AnnotationCreateRedaction',
             'AnnotationCreateSticky'
-          ].includes(firstAnnotation.ToolName)) && (
+          ].includes(firstAnnotation.ToolName)) && !isEditingWidgets && (
             <ActionButton
               title="tool.Link"
               img={firstAnnotation.getAssociatedLinks().length > 0 ? 'icon-tool-unlink' : 'icon-tool-link'}
@@ -333,11 +342,11 @@ const AnnotationPopup = () => {
 
   return (
     isIE || isMobile() ?
-    annotationPopup
-    :
-    <Draggable cancel=".Button, .cell, .sliders-container svg">
-      {annotationPopup}
-    </Draggable>
+      annotationPopup
+      :
+      <Draggable cancel=".Button, .cell, .sliders-container svg">
+        {annotationPopup}
+      </Draggable>
   );
 };
 

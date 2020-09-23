@@ -303,7 +303,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
                     onClick={() => dispatch(actions.openElement('filterModal'))}
                   />
                   <div className="sort-container">
-                    <div className="label">{`Sort by:`}</div>
+                    <div className="label">{`${t('message.sortBy')}:`}</div>
                     <Dropdown
                       items={Object.keys(getSortStrategies())}
                       translationPrefix="option.notesOrder"

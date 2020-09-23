@@ -51,6 +51,7 @@ import getPageSearchResults from './getPageSearchResults';
 import displayAdditionalSearchResult from './displayAdditionalSearchResult';
 import displayAdditionalSearchResults from './displayAdditionalSearchResults';
 import displaySearchResult from './displaySearchResult';
+import getActiveSearchResult from './getActiveSearchResult';
 import setActiveSearchResult from './setActiveSearchResult';
 import textSearchInit from './textSearchInit';
 import getSearchMode from './getSearchMode';
@@ -111,6 +112,7 @@ import redo from './redo';
 import updateAnnotationState from './updateAnnotationState';
 import getFontStyles from './getFontStyles';
 import mergeDocument from './mergeDocument';
+import getWidgetEditingManager from './getWidgetEditingManager';
 
 export default {
   setToolMode,
@@ -165,6 +167,7 @@ export default {
   getPageSearchResults,
   displayAdditionalSearchResult,
   displayAdditionalSearchResults,
+  getActiveSearchResult,
   setActiveSearchResult,
   textSearchInit,
   displaySearchResult,
@@ -227,4 +230,5 @@ export default {
   updateAnnotationState,
   getFontStyles,
   mergeDocument,
+  getWidgetEditingManager,
 };

@@ -74,6 +74,16 @@ export default initialState => (state = initialState, action) => {
           notesPanel: payload.width,
         }
       };
+    case 'SET_DOCUMENT_CONTAINER_WIDTH':
+      return {
+        ...state,
+        documentContainerWidth: payload.width,
+      };
+    case 'SET_DOCUMENT_CONTAINER_HEIGHT':
+      return {
+        ...state,
+        documentContainerHeight: payload.height,
+      };
     case 'SET_ACTIVE_THEME':
       return {
         ...state,

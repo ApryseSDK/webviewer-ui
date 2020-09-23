@@ -90,6 +90,11 @@
     img {
       max-width: 100%;
       max-height: 100%;
+      @include ie11 {
+        // using this notation for IE11 purposes
+        flex-grow: 1;
+        flex-basis: 0;
+      }
     }
 
     &:not(.add-btn) {

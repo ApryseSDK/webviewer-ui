@@ -9,9 +9,33 @@ function useSearch() {
   const [searchStatus, setSearchStatus] = React.useState('SEARCH_NOT_INITIATED');
 
   React.useEffect(() => {
+    // First time useSearch is mounted we check if core has results
+    // and if it has, we make sure those are set. This will make sure if external search is done
+    // that the result will reflect on the UI those set in core
+    const coreSearchResults = core.getPageSearchResults() || [];
+    if (coreSearchResults.length > 0) {
+      const activeSearchResult = core.getActiveSearchResult();
+      if (activeSearchResult) {
+        const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
+          return isSearchResultSame(searchResult, activeSearchResult);
+        });
+        setSearchResults(coreSearchResults);
+        if (newActiveSearchResultIndex >= 0) {
+          setActiveSearchResult(coreSearchResults[newActiveSearchResultIndex]);
+          setActiveSearchResultIndex(newActiveSearchResultIndex);
+        }
+      } else {
+        setSearchResults(coreSearchResults);
+        setActiveSearchResult(coreSearchResults[0]);
+        setActiveSearchResultIndex(0);
+      }
+    }
+  }, []);
+
+  React.useEffect(() => {
     function activeSearchResultChanged(newActiveSearchResult) {
-      const searchResults = core.getPageSearchResults() || [];
-      const newActiveSearchResultIndex = searchResults.findIndex(searchResult => {
+      const coreSearchResults = core.getPageSearchResults() || [];
+      const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
         return isSearchResultSame(searchResult, newActiveSearchResult);
       });
       setActiveSearchResult(newActiveSearchResult);

@@ -14,8 +14,8 @@ WebViewer(...)
   });
  */
 
-import actions from 'actions';
+import { removeSearchListener as removeSearchListenerHelper } from 'helpers/search';
 
-export default store => listener => {
-  store.dispatch(actions.removeSearchListener(listener));
-};
+export default function removeSearchListener(listener) {
+  removeSearchListenerHelper(listener);
+}

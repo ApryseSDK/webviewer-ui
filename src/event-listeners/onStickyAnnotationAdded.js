@@ -18,5 +18,6 @@ export default ({ dispatch, getState }) => annotation => {
   // wait for the notes panel to be fully opened before focusing
   setTimeout(() => {
     core.selectAnnotation(annotation);
+    dispatch(actions.triggerNoteEditing());
   }, isNotesPanelOpen ? 0 : 400);
 };

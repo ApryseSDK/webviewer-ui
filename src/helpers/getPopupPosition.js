@@ -18,7 +18,7 @@ export const getTextPopupPositionBasedOn = (allQuads, popup) => {
   return { left, top };
 };
 
-const getAnnotationPosition = annotation => {
+export const getAnnotationPosition = annotation => {
   const { left, top, right, bottom } = getAnnotationPageCoordinates(annotation);
 
   const pageNumber = annotation.getPageNumber();

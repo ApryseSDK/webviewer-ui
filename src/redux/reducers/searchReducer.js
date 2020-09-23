@@ -8,13 +8,12 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         value: searchValue,
-        isCaseSensitive: caseSensitive,
-        isWholeWord: wholeWord,
-        isWildcard: wildcard,
-        isRegex: regex,
-        isSearchUp: searchUp,
-        isAmbientString: ambientString,
-        isProgrammaticSearch: true,
+        isCaseSensitive: caseSensitive || false,
+        isWholeWord: wholeWord || false,
+        isWildcard: wildcard || false,
+        isRegex: regex || false,
+        isSearchUp: searchUp || false,
+        isAmbientString: ambientString || false,
       };
     }
     case 'SEARCH_TEXT_FULL': {
@@ -23,51 +22,18 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         value: searchValue,
-        isCaseSensitive: caseSensitive,
-        isWholeWord: wholeWord,
-        isWildcard: wildcard,
-        isRegex: regex,
+        isCaseSensitive: caseSensitive || false,
+        isWholeWord: wholeWord || false,
+        isWildcard: wildcard || false,
+        isRegex: regex || false,
         isSearchUp: false,
         isAmbientString: true,
-        isProgrammaticSearchFull: true,
-      };
-    }
-    case 'ADD_SEARCH_LISTENER': {
-      const { func } = payload;
-      const { listeners } = state;
-
-      return {
-        ...state,
-        listeners: [...listeners, func],
-      };
-    }
-    case 'REMOVE_SEARCH_LISTENER': {
-      const { func } = payload;
-      let { listeners } = state;
-
-      listeners = listeners.filter(oldFunc => oldFunc !== func);
-
-      return {
-        ...state,
-        listeners: [...listeners],
       };
     }
     case 'SET_SEARCH_VALUE': {
       return {
         ...state,
         value: payload.value,
-      };
-    }
-    case 'SET_IS_PROG_SEARCH': {
-      return {
-        ...state,
-        isProgrammaticSearch: payload.isProgrammaticSearch,
-      };
-    }
-    case 'SET_IS_PROG_SEARCH_FULL': {
-      return {
-        ...state,
-        isProgrammaticSearchFull: payload.isProgrammaticSearchFull,
       };
     }
     case 'ADD_RESULT': {
@@ -103,7 +69,6 @@ export default initialState => (state = initialState, action) => {
     case 'RESET_SEARCH': {
       return {
         ...initialState,
-        listeners: state.listeners,
         value: state.value,
         isCaseSensitive: state.isCaseSensitive,
         isWholeWord: state.isWholeWord,

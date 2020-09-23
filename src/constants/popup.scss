@@ -3,12 +3,13 @@
 $popup-button-height: 38px;
 $popup-icon-height: 18px;
 $popup-icon-width: 18px;
+$popup-z-index: 70;
 
 %popup {
   @extend %open;
   @extend %closed;
   position: absolute;
-  z-index: 70;
+  z-index: $popup-z-index;
   display: flex;
   justify-content: center;
   align-items: center;

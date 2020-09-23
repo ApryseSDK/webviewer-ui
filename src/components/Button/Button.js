@@ -48,6 +48,7 @@ const Button = props => {
     title,
     style,
     ariaLabel,
+    fillClass,
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
@@ -80,9 +81,9 @@ const Button = props => {
       aria-label={aLabel}
       aria-keyshortcuts={ariaKeyshortcuts}
     >
-      {isGlyph && <Icon glyph={imgToShow} color={color} />}
+      {isGlyph && <Icon glyph={imgToShow} color={color} fillClass={fillClass} />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
-      {label && label}
+      {label && <span>{t(label)}</span>}
     </button>
   );
 

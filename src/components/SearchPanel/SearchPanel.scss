@@ -43,6 +43,11 @@
     margin-top: 0px;
   }
 
+  @include ie11 {
+    .ReactVirtualized__Grid__innerScrollContainer {
+      max-width: 1000px !important
+    }
+  }
 
   @include mobile {
     width: 100%;

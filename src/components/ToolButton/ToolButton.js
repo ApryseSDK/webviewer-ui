@@ -89,10 +89,15 @@ const ToolButton = ({
   };
 
   let color = '';
+  let fillClass = '';
   const showColor = customOverrides?.showColor || toolButtonObject.showColor;
   if (showColor === 'always' || (showColor === 'active' && isActive)) {
     const toolStyles = getToolStyles(toolName);
     color = toolStyles?.[iconColorKey]?.toHexString?.();
+    fillClass = (toolStyles.FillColor?.toHexString() || '').substring(1);
+    if (fillClass) {
+      fillClass = `F-${fillClass}`;
+    }
   }
 
   return (
@@ -105,6 +110,7 @@ const ToolButton = ({
       onClick={handleClick}
       isActive={isActive}
       color={color}
+      fillClass={fillClass}
       {...restProps}
       {...restObjectData}
     />

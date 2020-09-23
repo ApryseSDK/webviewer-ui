@@ -202,6 +202,14 @@ export const setNotesPanelWidth = width => ({
   type: 'SET_NOTES_PANEL_WIDTH',
   payload: { width },
 });
+export const setDocumentContainerWidth = width => ({
+  type: 'SET_DOCUMENT_CONTAINER_WIDTH',
+  payload: { width },
+});
+export const setDocumentContainerHeight = height => ({
+  type: 'SET_DOCUMENT_CONTAINER_HEIGHT',
+  payload: { height },
+});
 
 export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',

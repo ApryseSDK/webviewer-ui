@@ -74,7 +74,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
     ) {
       setIsEditing(true, noteIndex);
     }
-  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected, setIsEditing]);
+  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected, setIsEditing, noteIndex]);
 
   const renderAuthorName = useCallback(
     annotation => {

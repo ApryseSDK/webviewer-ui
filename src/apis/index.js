@@ -142,6 +142,8 @@ import unselectThumbnailPages from './unselectThumbnailPages';
 import setSearchResults from './setSearchResults';
 import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
+import overrideSearchExecution from "./overrideSearchExecution";
+import reactElements from './reactElements';
 
 export default store => {
   window.readerControl = {
@@ -149,7 +151,7 @@ export default store => {
     FitMode,
     LayoutMode,
     Feature,
-    addSearchListener: addSearchListener(store),
+    addSearchListener,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
     closeDocument: closeDocument(store),
@@ -179,9 +181,10 @@ export default store => {
     print: print(store),
     printInBackground: printInBackground(store),
     registerTool: registerTool(store),
-    removeSearchListener: removeSearchListener(store),
-    searchText: searchText(store),
-    searchTextFull: searchTextFull(store),
+    removeSearchListener,
+    searchText: searchText(store.dispatch),
+    searchTextFull: searchTextFull(store.dispatch),
+    overrideSearchExecution,
     setActiveHeaderGroup: setActiveHeaderGroup(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
     setCustomModal: setCustomModal(store),
@@ -295,5 +298,6 @@ export default store => {
     updateOutlines: updateOutlines(store),
     getBBAnnotManager,
     selectors: getSelectors(store),
+    reactElements,
   };
 };

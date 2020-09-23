@@ -81,11 +81,18 @@ class ToolGroupButton extends React.PureComponent {
     const img = this.props.img
       ? this.props.img
       : toolButtonObjects[toolName]?.img;
-    const color =
-      (showColor !== 'never' && isActive) && iconColorKey
-        ? getToolStyles(toolName)[iconColorKey] &&
-          getToolStyles(toolName)[iconColorKey].toHexString()
-        : '';
+    let color = '';
+    let fillClass = '';
+    if (showColor !== 'never' && isActive) {
+      const toolStyles = getToolStyles(toolName);
+      if (iconColorKey) {
+        color = toolStyles[iconColorKey]?.toHexString?.();
+      }
+      fillClass = (toolStyles.FillColor?.toHexString() || '').substring(1);
+      if (fillClass) {
+        fillClass = `F-${fillClass}`;
+      }
+    }
 
     return (isToolGroupButtonDisabled || allButtonsInGroupDisabled) ? null : (
       <div
@@ -102,6 +109,7 @@ class ToolGroupButton extends React.PureComponent {
           isActive={isActive}
           img={img}
           color={color}
+          fillClass={fillClass}
         />
       </div>
     );
