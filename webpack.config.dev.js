@@ -2,11 +2,11 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  name: 'ui',
+  name: 'ui-legacy',
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: [
-    'webpack-hot-middleware/client?name=ui&path=/__webpack_hmr',
+    'webpack-hot-middleware/client?name=ui-legacy&path=/__webpack_hmr',
     path.resolve(__dirname, 'src'),
   ],
   output: {

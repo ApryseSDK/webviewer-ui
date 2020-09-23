@@ -196,7 +196,7 @@ class SearchOverlay extends React.PureComponent {
     } = this.props;
     const {
       CASE_SENSITIVE,
-      WHOLE_WORLD,
+      WHOLE_WORD,
       WILD_CARD,
       REGEX,
       PAGE_STOP,
@@ -210,7 +210,7 @@ class SearchOverlay extends React.PureComponent {
       searchMode |= CASE_SENSITIVE;
     }
     if (isWholeWord) {
-      searchMode |= WHOLE_WORLD;
+      searchMode |= WHOLE_WORD;
     }
     if (isWildcard) {
       searchMode |= WILD_CARD;
