@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +17,7 @@ const propTypes = {
 };
 
 // a component that contains the reply textarea, the reply button and the cancel button
-const ReplyArea = ({ annotation }) => {
+const ReplyArea = ({ annotation, replyText, setReplyText }) => {
   const [
     isReadOnly,
     isReplyDisabled,
@@ -36,7 +36,6 @@ const ReplyArea = ({ annotation }) => {
   );
   const { resize, isContentEditable, isSelected } = useContext(NoteContext);
   const [isFocused, setIsFocused] = useState(false);
-  const [value, setValue] = useState('');
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const textareaRef = useRef();
@@ -67,32 +66,32 @@ const ReplyArea = ({ annotation }) => {
     // prevent the textarea from blurring out
     e.preventDefault();
 
-    if (!value) {
+    if (!replyText) {
       return;
     }
 
     const annotationHasNoContents = annotation.getContents() === '' || annotation.getContents() === undefined;
     if (isMentionEnabled) {
       if (annotationHasNoContents) {
-        const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(value);
+        const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(replyText);
 
         annotation.setCustomData('trn-mention', {
-          contents: value,
+          contents: replyText,
           ids,
         });
         core.setNoteContents(annotation, plainTextValue);
       } else {
-        mentionsManager.createMentionReply(annotation, value);
+        mentionsManager.createMentionReply(annotation, replyText);
       }
     } else {
       if (annotationHasNoContents) {
-        core.setNoteContents(annotation, value);
+        core.setNoteContents(annotation, replyText);
       } else {
-        core.createAnnotationReply(annotation, value);
+        core.createAnnotationReply(annotation, replyText);
       }
     }
 
-    setValue('');
+    setReplyText('');
   };
 
   const ifReplyNotAllowed =
@@ -112,8 +111,8 @@ const ReplyArea = ({ annotation }) => {
         ref={el => {
           textareaRef.current = el;
         }}
-        value={value}
-        onChange={value => setValue(value)}
+        value={replyText}
+        onChange={value => setReplyText(value)}
         onSubmit={postReply}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
