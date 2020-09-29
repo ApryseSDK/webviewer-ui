@@ -15,7 +15,9 @@ const cache = new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
 const VirtualizedList = React.forwardRef(
   ({ notes, children, onScroll, initialScrollTop }, forwardedRef) => {
     const listRef = useRef();
+    const [offset, setOffset] = useState(0);
     const [dimension, setDimension] = useState({ width: 0, height: 0 });
+    let prevWindowHeight = window.innerHeight;
 
     useImperativeHandle(forwardedRef, () => ({
       scrollToPosition: scrollTop => {
@@ -34,6 +36,24 @@ const VirtualizedList = React.forwardRef(
       cache.clearAll();
       listRef?.current?.recomputeRowHeights();
     }, [notes.length]);
+
+    useEffect(() => {
+      const windowResizeHandler = () => {
+        const diff = window.innerHeight - prevWindowHeight;
+        if (diff) {
+          // List height never resizes down after exiting fullscreen
+          if (window.innerHeight < prevWindowHeight) {
+            setOffset(diff);
+          }
+          prevWindowHeight = window.innerHeight;
+        }
+      };
+      window.addEventListener('resize', windowResizeHandler);
+
+      return () => {
+        window.removeEventListener('resize', windowResizeHandler);
+      };
+    });
 
     const _resize = index => {
       cache.clear(index);
@@ -64,13 +84,20 @@ const VirtualizedList = React.forwardRef(
     };
 
     return (
-      <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
+      <Measure bounds offset onResize={({ bounds }) => {
+        setDimension({
+          ...bounds,
+          // Override height and compensate for extra size
+          height: bounds.height + offset * 2,
+        });
+        setOffset(0);
+      }}>
         {({ measureRef }) => (
           <div ref={measureRef} className="virtualized-notes-container">
             <List
               deferredMeasurementCache={cache}
               style={{ outline: 'none' }}
-              height={dimension.height}
+              height={dimension.height - offset}
               width={dimension.width}
               overscanRowCount={10}
               ref={listRef}

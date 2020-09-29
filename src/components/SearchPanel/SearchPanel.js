@@ -93,6 +93,7 @@ class SearchPanel extends React.PureComponent {
           >
             {!isTabletAndMobile &&
               <ResizeBar
+                dataElement="searchPanelResizeBar"
                 minWidth={minWidth}
                 onResize={_width => {
                   setSearchPanelWidth(_width);

@@ -316,6 +316,7 @@ const NotesPanel = () => {
         >
           {!isTabletAndMobile &&
             <ResizeBar
+              dataElement="notesPanelResizeBar"
               minWidth={minWidth}
               onResize={_width => {
                 dispatch(actions.setNotesPanelWidth(_width));

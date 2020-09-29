@@ -82,7 +82,7 @@ const Button = props => {
     >
       {isGlyph && <Icon glyph={imgToShow} color={color} />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
-      {label && label}
+      {label && <span>{t(label)}</span>}
     </button>
   );
 
