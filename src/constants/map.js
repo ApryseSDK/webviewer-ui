@@ -406,7 +406,7 @@ const map = {
     annotationCheck: null,
   },
   fileattachment: {
-    icon: 'ic_placeholder_black_24px',
+    icon: 'ic_fileattachment_24px',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
     availablePalettes: ['StrokeColor'],
