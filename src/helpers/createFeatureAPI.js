@@ -98,6 +98,7 @@ export default (enable, store) => features => {
       fn: () => {
         if (!enable) {
           core.clearSelection();
+          core.setToolMode('AnnotationEdit');
         }
         window.Tools.Tool.ENABLE_TEXT_SELECTION = enable;
       },
