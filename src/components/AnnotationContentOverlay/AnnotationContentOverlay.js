@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -29,9 +29,27 @@ const AnnotationContentOverlay = () => {
   const customHandler = useSelector(state =>
     selectors.getAnnotationContentOverlayHandler(state),
   );
+  const overlayRef = useRef(null);
   const isUsingCustomHandler = customHandler !== null;
+  // the gap between the component and the mouse, to make sure that the mouse won't be on component element
+  // so that the underlying annotation will always be hovered
+  const gap = 20;
 
   useEffect(() => {
+    const fitWindowSize = (e, left, top) => {
+      const overlayRect = overlayRef.current.getBoundingClientRect();
+
+      if (left + overlayRect.width > window.innerWidth) {
+        left = e.clientX - overlayRect.width - gap;
+      }
+
+      if (top + overlayRect.height > window.innerHeight) {
+        top = e.clientY - overlayRect.height - gap;
+      }
+
+      return { left, top };
+    }
+
     const onMouseHover = e => {
       const viewElement = core.getViewerElement();
       let annotation = core
@@ -46,10 +64,11 @@ const AnnotationContentOverlay = () => {
 
         if (isUsingCustomHandler || !(annotation instanceof Annotations.FreeTextAnnotation)) {
           setAnnotation(annotation);
-          setOverlayPosition({
-            left: e.clientX + 20,
-            top: e.clientY + 20,
-          });
+
+          if (overlayRef.current) {
+            const { left, top } = fitWindowSize(e, e.clientX + gap, e.clientY + gap);
+            setOverlayPosition({ left, top });
+          }
         }
       } else {
         setAnnotation(null);
@@ -77,6 +96,7 @@ const AnnotationContentOverlay = () => {
         className="Overlay AnnotationContentOverlay"
         data-element="annotationContentOverlay"
         style={{ ...overlayPosition }}
+        ref={overlayRef}
       >
         <CustomElement render={customRender} />
       </div>
@@ -87,6 +107,7 @@ const AnnotationContentOverlay = () => {
         className="Overlay AnnotationContentOverlay"
         data-element="annotationContentOverlay"
         style={{ ...overlayPosition }}
+        ref={overlayRef}
       >
         <div className="author">{core.getDisplayAuthor(annotation)}</div>
         <div className="contents">
