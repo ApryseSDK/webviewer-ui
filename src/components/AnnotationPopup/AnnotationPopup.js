@@ -311,7 +311,7 @@ const AnnotationPopup = () => {
                 selectedAnnotations.forEach(annot => {
                   annot.getAssociatedLinks().forEach(annotId => {
                     const linkAnnot = annotManager.getAnnotationById(annotId);
-                    annotManager.deleteAnnotation(linkAnnot, null, true);
+                    annotManager.deleteAnnotation(linkAnnot, { 'force': true });
                   });
                   annot.unassociateLinks();
                   if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {

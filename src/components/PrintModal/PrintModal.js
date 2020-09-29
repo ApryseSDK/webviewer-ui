@@ -168,7 +168,7 @@ class PrintModal extends React.PureComponent {
     this.state.pagesToPrint.forEach(pageNumber => {
       const printableAnnotations = this.getPrintableAnnotations(pageNumber);
       creatingPages.push(this.creatingImage(pageNumber, printableAnnotations));
-      if (this.includeComments.current.checked && printableAnnotations.length) {
+      if (this.includeComments.current && this.includeComments.current.checked && printableAnnotations.length) {
         const sortedNotes = getSortStrategies()[
           this.props.sortStrategy
         ].getSortedNotes(printableAnnotations);
@@ -190,7 +190,7 @@ class PrintModal extends React.PureComponent {
         );
         this.positionCanvas(canvas, pageIndex);
 
-        if (this.includeAnnotations.current.checked) {
+        if (this.includeAnnotations.current && this.includeAnnotations.current.checked) {
           await this.drawAnnotationsOnCanvas(canvas, pageNumber);
         } else {
           // disable all printable annotations before draw
