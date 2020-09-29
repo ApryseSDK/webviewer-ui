@@ -9,6 +9,7 @@
     "undo": "撤消",
     "redo": "準備",
     "comment": "評論",
+    "reply": "回覆",
     "copy": "複製",
     "delete": "刪除",
     "group": "組",
@@ -21,6 +22,7 @@
     "fit": "符合",
     "fitToPage": "符合頁面大小",
     "fitToWidth": "符合寬度",
+    "more": "更多",
     "openFile": "開啟檔案",
     "pagePrev": "上一頁",
     "pageNext": "下一頁",
@@ -28,7 +30,6 @@
     "print": "列印",
     "name": "名稱",
     "ok": "OK",
-    "reply": "回覆",
     "rotate": "旋轉",
     "rotateClockwise": "順時針",
     "rotateCounterClockwise": "逆時針",
@@ -54,7 +55,10 @@
     "prevResult": "先前的結果",
     "nextResult": "下一個結果",
     "prev": "以前",
-    "next": "下一個"
+    "next": "下一個",
+    "startFormEditing": "開始表格編輯",
+    "exitFormEditing": "退出表格編輯模式",
+    "exit": "出口"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -160,7 +164,9 @@
     "insertTextHere": "在這裡插入文字",
     "imageSignatureAcceptedFileTypes": "僅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在兩點之間輸入測量值",
+    "errorEnterMeasurement": "您輸入的數字無效，您可以輸入7.5或7 1/2之類的值",
     "linkURLorPage": "鏈接網址或頁面",
+    "enterReplacementText": "輸入您要替換的文字",
     "sortBy": "排序方式"
   },
   "option": {

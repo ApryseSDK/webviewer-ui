@@ -27,7 +27,9 @@ function SearchResultListSeparator(props) {
   if (isFirstListItem || isInDifferentPage) {
     const listSeparatorText = `${t('option.shared.page')} ${pageLabels[currentListItem.pageNum - 1]}`;
     return (
-      <ListSeparator>{listSeparatorText}</ListSeparator>
+      <div role="cell">
+        <ListSeparator>{listSeparatorText}</ListSeparator>
+      </div>
     );
   }
   return null;
@@ -50,6 +52,7 @@ function SearchResultListItem(props) {
   const textAfterSearchValue = ambientStr.slice(resultStrEnd);
   return (
     <button
+      role="cell"
       className={`SearchResult ${currentResultIndex === activeResultIndex ? 'selected' : ''}`}
       onClick={() => {
         if (onSearchResultClick) {
@@ -99,7 +102,7 @@ function SearchResult(props) {
         rowIndex={index}
       >
         {({ registerChild }) => (
-          <div ref={registerChild} style={style}>
+          <div role="row" ref={registerChild} style={style}>
             <SearchResultListSeparator
               currentResultIndex={index}
               searchResults={searchResults}

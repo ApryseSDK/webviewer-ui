@@ -1,0 +1,50 @@
+@import '../../constants/styles.scss';
+
+.mathSymbolsContainer {
+  display: flex; // fallback for ie11, grid not available
+  flex-wrap: wrap; // fallback for ie11, grid not available
+  overflow-y: auto;
+  @include ie11 {
+    width: 196px; // hack for ie11. Have to define width for flex basis to work.
+  }
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 5px;
+
+  &.padding {	
+    padding-top: 4px;	
+    padding-bottom: 8px;	
+    padding-left: 20px;	
+    padding-right: 20px;	
+  }
+
+  @include mobile {
+    max-width: 450px;
+    width: auto;
+    @include ie11 {
+      width: 308px; // hack for ie11. Have to define width for flex basis to work.
+    }
+  }
+
+  .cell-container {
+    @include button-reset;
+    flex: 1 0 14%; // fallback for ie11, grid not available
+
+    cursor: pointer;
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include mobile {
+      width: 44px;
+      height: 44px;
+    }
+
+    &:hover {
+     background: var(--popup-button-hover);
+    }
+  }
+}

@@ -46,6 +46,19 @@
         &.active {
           color: var(--ribbon-active-color);
         }
+
+        @include ie11 {
+          // hack for group having 0 width sometimes in ie11
+          min-width: 50px;
+        }
+      }
+
+      [data-element="exitFormEditingButton"] {
+        width: 100%;
+        padding: 0 5px;
+        border: 1px solid var(--border);
+        background: var(--view-header-background);
+        white-space: nowrap;
       }
     }
   }

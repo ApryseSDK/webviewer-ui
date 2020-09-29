@@ -42,6 +42,8 @@ export default function useArrowFocus(isOpen, onClose, overlayRef) {
 
           const vector = e.key === 'ArrowUp' ? -1 : 1;
           focusable[(focusIndex + vector + focusable.length) % focusable.length].focus();
+          // User is "tabbing", so show button outlines.
+          document.documentElement.setAttribute('data-tabbing', 'true');
         }
       };
 

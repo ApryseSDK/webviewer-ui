@@ -9,4 +9,8 @@
   padding-left: 10px;
   cursor: pointer;
   width: 100%;
+
+  &:hover {
+    background: var(--popup-button-hover);
+  }
 }

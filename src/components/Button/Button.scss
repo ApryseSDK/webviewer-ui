@@ -37,8 +37,11 @@
   }
 
   &.disabled {
-    background: none;
+    background: none!important;
     .Icon {
+      color: var(--disabled-icon);
+    }
+    span {
       color: var(--disabled-icon);
     }
     cursor: default;

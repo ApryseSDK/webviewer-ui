@@ -13,12 +13,14 @@ import './SignatureStylePopup.scss';
 
 const SignatureStylePopup = props => {
   const { t } = props;
-  const [activeToolName, savedSignatures, selectedSignatureIndex, maxSignaturesCount] = useSelector(
+  const [activeToolName, savedSignatures, displayedSignatures, selectedDisplayedSignatureIndex, maxSignaturesCount, displayedSignaturesFilterFunction] = useSelector(
     state => [
       selectors.getActiveToolName(state),
       selectors.getSavedSignatures(state),
-      selectors.getSelectedSignatureIndex(state),
+      selectors.getDisplayedSignatures(state),
+      selectors.getSelectedDisplayedSignatureIndex(state),
       selectors.getMaxSignaturesCount(state),
+      selectors.getDisplayedSignaturesFilterFunction(state),
     ],
   );
 
@@ -26,8 +28,8 @@ const SignatureStylePopup = props => {
   const dispatch = useDispatch();
 
   const setSignature = index => {
-    dispatch(actions.setSelectedSignatureIndex(index));
-    const { annotation } = savedSignatures[index];
+    dispatch(actions.setSelectedDisplayedSignatureIndex(index));
+    const { annotation } = displayedSignatures[index];
     signatureTool.setSignature(annotation);
     core.setToolMode('AnnotationCreateSignature');
     if (signatureTool.hasLocation()) {
@@ -37,20 +39,20 @@ const SignatureStylePopup = props => {
     }
   };
 
-  const deleteSignature = index => {
-    signatureTool.deleteSavedSignature(index);
+  const deleteSignature = (displayedSignatureIndex, savedSignatureIndex) => {
+    signatureTool.deleteSavedSignature(savedSignatureIndex);
 
-    const isDeletingSelectedSignature = selectedSignatureIndex === index;
+    const isDeletingSelectedSignature = selectedDisplayedSignatureIndex === displayedSignatureIndex;
     if (isDeletingSelectedSignature) {
-      dispatch(actions.setSelectedSignatureIndex(0));
+      dispatch(actions.setSelectedDisplayedSignatureIndex(0));
       signatureTool.annot = null;
       signatureTool.hidePreview();
       core.setToolMode(defaultTool);
-      if (savedSignatures.length === 1) {
+      if (displayedSignatures.length === 1) {
         dispatch(actions.closeElements(['toolStylePopup']));
       }
-    } else if (index < selectedSignatureIndex) {
-      dispatch(actions.setSelectedSignatureIndex(selectedSignatureIndex - 1));
+    } else if (displayedSignatureIndex < selectedDisplayedSignatureIndex) {
+      dispatch(actions.setSelectedDisplayedSignatureIndex(selectedDisplayedSignatureIndex - 1));
     }
   };
 
@@ -58,25 +60,29 @@ const SignatureStylePopup = props => {
     <div
       className="signature-style-popup"
     >
-      {savedSignatures.map(({ imgSrc }, i) =>
-        <div
-          key={i}
-          className="signature-row"
-        >
-          <SignatureRowContent
-            onClick={() => setSignature(i)}
-            imgSrc={imgSrc}
-            isActive={selectedSignatureIndex === i && activeToolName === 'AnnotationCreateSignature'}
-          />
+      {savedSignatures
+        // Need to keep the index infromation from the original signature list
+        .map((s, i) => [s, i])
+        .filter(([s, i]) => displayedSignaturesFilterFunction(s, i))
+        .map(([{ imgSrc }, savedSignatureIndex], indexOfDisplayedSignature) =>
           <div
-            className="icon"
-            data-element="defaultSignatureDeleteButton"
-            onClick={() => deleteSignature(i)}
+            key={indexOfDisplayedSignature}
+            className="signature-row"
           >
-            <Icon glyph="icon-delete-line"/>
+            <SignatureRowContent
+              onClick={() => setSignature(indexOfDisplayedSignature)}
+              imgSrc={imgSrc}
+              isActive={selectedDisplayedSignatureIndex === indexOfDisplayedSignature && activeToolName === 'AnnotationCreateSignature'}
+            />
+            <div
+              className="icon"
+              data-element="defaultSignatureDeleteButton"
+              onClick={() => deleteSignature(indexOfDisplayedSignature, savedSignatureIndex)}
+            >
+              <Icon glyph="icon-delete-line" />
+            </div>
           </div>
-        </div>
-      )}
+        )}
       <SignatureAddBtn
         disabled={savedSignatures.length >= maxSignaturesCount}
       />

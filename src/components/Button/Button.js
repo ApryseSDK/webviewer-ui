@@ -48,6 +48,7 @@ const Button = props => {
     title,
     style,
     ariaLabel,
+    fillClass,
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
@@ -68,7 +69,7 @@ const Button = props => {
     <button
       className={classNames({
         Button: true,
-        active: isActive,
+        active: isActive && !disabled,
         disabled,
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
@@ -80,9 +81,15 @@ const Button = props => {
       aria-label={aLabel}
       aria-keyshortcuts={ariaKeyshortcuts}
     >
-      {isGlyph && <Icon glyph={imgToShow} color={color} />}
+      {isGlyph &&
+        <Icon
+          disabled={disabled}
+          glyph={imgToShow}
+          color={color}
+          fillClass={fillClass}
+        />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
-      {label && label}
+      {label && <span>{t(label)}</span>}
     </button>
   );
 

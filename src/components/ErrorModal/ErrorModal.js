@@ -23,7 +23,7 @@ const ErrorModal = () => {
   useEffect(() => {
     if (isOpen) {
       dispatch(
-        actions.closeElements(['signatureModal', 'printModal', 'loadingModal', 'progressModal'])
+        actions.closeElements(['signatureModal', 'printModal', 'loadingModal', 'progressModal', 'passwordModal'])
       );
     }
   }, [dispatch, isOpen]);

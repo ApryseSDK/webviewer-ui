@@ -10,12 +10,12 @@ import core from 'core';
 import './SelectedSignatureRow.scss';
 
 const SelectedSignatureRow = () => {
-  const [activeToolName, isToolStyleOpen, selectedSignature, savedSignatures] = useSelector(
+  const [activeToolName, isToolStyleOpen, displayedSignature, displayedSignatures] = useSelector(
     state => [
       selectors.getActiveToolName(state),
       selectors.isElementOpen(state, 'toolStylePopup'),
-      selectors.getSelectedSignature(state),
-      selectors.getSavedSignatures(state),
+      selectors.getSelectedDisplayedSignature(state),
+      selectors.getDisplayedSignatures(state),
     ],
   );
   const dispatch = useDispatch();
@@ -25,11 +25,11 @@ const SelectedSignatureRow = () => {
     <div
       className="selected-signature-row"
     >
-      {selectedSignature ?
+      {displayedSignature ?
         <SignatureRowContent
-          imgSrc={selectedSignature.imgSrc}
+          imgSrc={displayedSignature.imgSrc}
           onClick={() => {
-            signatureTool.setSignature(selectedSignature.annotation);
+            signatureTool.setSignature(displayedSignature.annotation);
             core.setToolMode('AnnotationCreateSignature');
             if (signatureTool.hasLocation()) {
               signatureTool.addSignature();
@@ -39,11 +39,11 @@ const SelectedSignatureRow = () => {
           }}
           isActive={activeToolName === 'AnnotationCreateSignature'}
         /> :
-        <SignatureAddBtn/>}
+        <SignatureAddBtn />}
       <ToolsDropdown
-        onClick={() => savedSignatures.length > 0 && dispatch(actions.toggleElement('toolStylePopup'))}
+        onClick={() => displayedSignatures.length > 0 && dispatch(actions.toggleElement('toolStylePopup'))}
         isActive={isToolStyleOpen}
-        isDisabled={savedSignatures.length === 0}
+        isDisabled={displayedSignatures.length === 0}
       />
     </div>
   );

@@ -1,3 +1,3 @@
-import SearchOverlay from './SearchOverlay';
+import SearchOverlay from './SearchOverlayRedux';
 
 export default SearchOverlay;

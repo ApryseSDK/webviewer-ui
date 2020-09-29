@@ -9,6 +9,7 @@
     "undo": "Disfare",
     "redo": "Pronto",
     "comment": "Commento",
+    "reply": "rispondere",
     "copy": "copia",
     "delete": "Elimina",
     "group": "Gruppo",
@@ -21,6 +22,7 @@
     "fit": "In forma",
     "fitToPage": "Adatta alla pagina",
     "fitToWidth": "Adatta alla larghezza",
+    "more": "Di più",
     "openFile": "Apri il file",
     "pagePrev": "Pagina precedente",
     "pageNext": "Pagina successiva",
@@ -28,7 +30,6 @@
     "print": "Stampa",
     "name": "Nome",
     "ok": "ok",
-    "reply": "rispondere",
     "rotate": "Ruotare",
     "rotateClockwise": "Senso orario",
     "rotateCounterClockwise": "Antiorario",
@@ -54,7 +55,10 @@
     "prevResult": "Risultato precedente",
     "nextResult": "Il prossimo risultato",
     "prev": "Precedente",
-    "next": "Il prossimo"
+    "next": "Il prossimo",
+    "startFormEditing": "Inizia la modifica del modulo",
+    "exitFormEditing": "Esci dalla modalità di modifica del modulo",
+    "exit": "Uscita"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -160,7 +164,9 @@
     "insertTextHere": "Inserisci qui il testo",
     "imageSignatureAcceptedFileTypes": "Sono accettati solo {{AcceptedFileTypes}}",
     "enterMeasurement": "Immettere la misurazione tra i due punti",
+    "errorEnterMeasurement": "Il numero che hai inserito non è valido, puoi inserire valori come 7,5 o 7 1/2",
     "linkURLorPage": "Link URL o una pagina",
+    "enterReplacementText": "Immettere il testo che si desidera sostituire",
     "sortBy": "Ordina per"
   },
   "option": {

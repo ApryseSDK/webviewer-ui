@@ -3,6 +3,14 @@
 
 .FlyoutMenu {
   @extend %overlay;
+
+  @include small-browser-height {
+    // show scroll bar when height of screen is very small
+    overflow: auto;
+    max-height: 100%;
+    // when max height is set, it loses spacing.
+    display: block;
+  }
   display: flex;
   flex-direction: column;
   align-items: flex-start;

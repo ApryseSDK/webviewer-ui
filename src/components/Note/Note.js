@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useContext, useState, useCallback } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 import ReplyArea from 'components/Note/ReplyArea';
 
 import selectors from 'selectors';
+import actions from 'actions';
 import core from 'core';
+import AnnotationNoteConnectorLine from 'components/AnnotationNoteConnectorLine';
 
 import './Note.scss';
 
@@ -24,14 +26,17 @@ const Note = ({ annotation }) => {
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
   const ids = useRef([]);
+  const dispatch = useDispatch();
 
   const [
     noteTransformFunction,
     customNoteSelectionFunction,
+    isAnnotationLineConnectorOpen
   ] = useSelector(
     state => [
       selectors.getNoteTransformFunction(state),
       selectors.getCustomNoteSelectionFunction(state),
+      selectors.isElementOpen(state, 'annotationNoteConnectorLine'),
     ],
     shallowEqual,
   );
@@ -90,6 +95,8 @@ const Note = ({ annotation }) => {
       core.deselectAllAnnotations();
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
+      // Need this delay to ensure all other event listeners fire before we open the line
+      setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
     }
   };
 
@@ -161,6 +168,7 @@ const Note = ({ annotation }) => {
           </div>
         </React.Fragment>
       )}
+      <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef}/>
     </div>
   );
 };

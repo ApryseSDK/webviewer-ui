@@ -17,8 +17,10 @@ export const getSelectedStamp = state => {
   return selectedStamp;
 };
 export const getSavedSignatures = state => state.viewer.savedSignatures;
-export const getSelectedSignatureIndex = state => state.viewer.selectedSignatureIndex;
-export const getSelectedSignature = state => getSavedSignatures(state)[getSelectedSignatureIndex(state)];
+export const getDisplayedSignatures = state => state.viewer.savedSignatures.filter(state.viewer.displayedSignaturesFilterFunction);
+export const getSelectedDisplayedSignatureIndex = state => state.viewer.selectedDisplayedSignatureIndex;
+export const getSelectedDisplayedSignature = state => getDisplayedSignatures(state)[getSelectedDisplayedSignatureIndex(state)];
+export const getDisplayedSignaturesFilterFunction = state => state.viewer.displayedSignaturesFilterFunction;
 
 export const getNotesInLeftPanel = state =>
   state.viewer.notesInLeftPanel;
@@ -28,13 +30,17 @@ export const getSearchPanelWidth = state =>
   state.viewer.panelWidths.searchPanel;
 export const getNotesPanelWidth = state =>
   state.viewer.panelWidths.notesPanel;
+export const getDocumentContainerWidth = state =>
+  state.viewer.documentContainerWidth;
+export const getDocumentContainerHeight = state =>
+  state.viewer.documentContainerHeight;
 
 export const isElementDisabled = (state, dataElement) =>
-  state.viewer.disabledElements[dataElement]?.disabled;
+  state.viewer?.disabledElements[dataElement]?.disabled;
 
 export const isElementOpen = (state, dataElement) =>
-  state.viewer.openElements[dataElement] &&
-  !state.viewer.disabledElements[dataElement]?.disabled;
+  state.viewer?.openElements[dataElement] &&
+  !state.viewer?.disabledElements[dataElement]?.disabled;
 
 export const allButtonsInGroupDisabled = (state, toolGroup) => {
   const toolButtonObjects = getToolButtonObjects(state);
@@ -278,8 +284,6 @@ export const getUserName = state => state.user.name;
 export const getServerUrl = state => state.advanced.serverUrl;
 
 // search
-export const getSearchListeners = state => state.search.listeners;
-
 export const getSearchValue = state => state.search.value;
 
 export const isCaseSensitive = state => state.search.isCaseSensitive;
@@ -293,13 +297,6 @@ export const isSearchUp = state => state.search.isSearchUp;
 export const isAmbientString = state => state.search.isAmbientString;
 
 export const isRegex = state => state.search.isRegex;
-
-export const getSearchErrorMessage = state => state.search.errorMessage;
-
-export const isProgrammaticSearch = state => state.search.isProgrammaticSearch;
-
-export const isProgrammaticSearchFull = state =>
-  state.search.isProgrammaticSearchFull;
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
 

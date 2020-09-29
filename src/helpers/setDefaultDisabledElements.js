@@ -89,6 +89,9 @@ export default store => {
         'bookmarksPanel',
         'bookmarksPanelButton',
         'wildCardSearchOption',
+        'readerPageTransitionButton',
+        'editTextButton',
+        'mathSymbolsButton'
       ],
       PRIORITY_ONE,
     ),

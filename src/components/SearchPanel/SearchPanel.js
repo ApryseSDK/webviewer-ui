@@ -23,7 +23,6 @@ class SearchPanel extends React.PureComponent {
     searchResults: PropTypes.arrayOf(PropTypes.object),
     closeElements: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string,
     pageLabels: PropTypes.array.isRequired,
     setSearchPanelWidth: PropTypes.func,
     currentWidth: PropTypes.number,
@@ -88,7 +87,6 @@ class SearchPanel extends React.PureComponent {
             </button>
           </div>}
         <SearchOverlay
-          t={t}
           searchResults={searchResults}
           activeResultIndex={activeSearchResultIndex}
         />
@@ -108,7 +106,6 @@ class SearchPanel extends React.PureComponent {
 const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'searchPanel'),
   isOpen: selectors.isElementOpen(state, 'searchPanel'),
-  errorMessage: selectors.getSearchErrorMessage(state),
   currentWidth: selectors.getSearchPanelWidth(state),
   pageLabels: selectors.getPageLabels(state),
 });

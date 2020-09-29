@@ -1,0 +1,114 @@
+@import "../../constants/styles";
+@import "../../constants/modal";
+
+.EditTextModal {
+  @extend %modal;
+  font-size: 0.9em;
+
+  .container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 600px;
+    max-width:100%;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+    padding: 8px 8px;
+    background: var(--component-background);
+    
+    .textareaLabel{
+      font-size:15px;
+    }
+
+    textarea{
+      width: 100%;
+    }
+
+    .editing-controls {
+      display: flex;
+      flex-direction: row;
+      margin-top: 13px;
+      margin-left: auto;
+    }
+
+    .button {
+      @include button-reset;
+      padding: 0 18px;
+      border-radius: 4px;
+      height: 32px;
+      cursor: pointer;
+    }
+    
+    .editing-button {
+      color: var(--primary-button-text);
+      background: var(--primary-button);
+  
+      &:hover {
+        background: var(--primary-button-hover);
+      }
+    }
+  
+    .cancel-button {
+      color: var(--secondary-button-text);
+      margin-right: 6px;
+  
+      &:hover {
+        color: var(--secondary-button-hover);
+      }
+    }
+
+    @include mobile {
+      width: 100%;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      padding-top: 24px;
+      padding-bottom: 16px;
+      padding-left: 24px;
+      padding-right: 24px;
+      min-width: 100px;
+
+      .swipe-indicator {
+        background: var(--divider);
+        border-radius: 2px;
+        height: 4px;
+        width: 38px;
+        position: absolute;
+        top: 12px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+
+        @include tablet-and-desktop {
+          display: none;
+        }
+      }
+    }
+
+
+    select {
+      margin-top: 8px;
+      // width: 100%;
+      height: 30px;
+      padding-left: 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-color);
+      padding-bottom: 6px;
+      padding-right: 42px;
+      padding-top: 4px;
+
+      &:focus {
+        outline: none;
+        border: 1px solid var(--focus-border);
+      }
+
+      &::placeholder {
+        color: var(--placeholder-text);
+      }
+    }
+  }
+}

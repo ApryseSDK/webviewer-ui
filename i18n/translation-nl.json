@@ -9,6 +9,7 @@
     "undo": "Ongedaan maken",
     "redo": "Klaar",
     "comment": "Opmerking",
+    "reply": "Antwoorden",
     "copy": "Kopieer",
     "delete": "Verwijder",
     "group": "Groep",
@@ -21,6 +22,7 @@
     "fit": "Zoomen",
     "fitToPage": "Vensterhoogte",
     "fitToWidth": "Vensterbreedte",
+    "more": "Meer",
     "openFile": "Open bestand",
     "pagePrev": "Vorige pagina",
     "pageNext": "Volgende bladzijde",
@@ -28,7 +30,6 @@
     "print": "Printen",
     "name": "Naam",
     "ok": "OK",
-    "reply": "Antwoorden",
     "rotate": "Roteren",
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
@@ -54,7 +55,10 @@
     "prevResult": "Vorig resultaat",
     "nextResult": "Volgend resultaat",
     "prev": "Vorige",
-    "next": "De volgende"
+    "next": "De volgende",
+    "startFormEditing": "Begin met het bewerken van formulieren",
+    "exitFormEditing": "Sluit de modus voor het bewerken van formulieren af",
+    "exit": "Uitgang"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -160,7 +164,9 @@
     "insertTextHere": "Vul hier tekst in",
     "imageSignatureAcceptedFileTypes": "Alleen {{AcceptFileTypes}} worden geaccepteerd",
     "enterMeasurement": "Voer de meting tussen de twee punten in",
+    "errorEnterMeasurement": "Het getal dat je hebt ingevoerd is ongeldig, je kunt waarden invoeren zoals 7,5 of 7 1/2",
     "linkURLorPage": "Link-URL of een pagina",
+    "enterReplacementText": "Voer de tekst in die u wilt vervangen",
     "sortBy": "Sorteer op"
   },
   "option": {

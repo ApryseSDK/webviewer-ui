@@ -30,10 +30,10 @@ export default initialState => (state = initialState, action) => {
         ...state,
         selectedStampIndex: payload.index,
       };
-    case 'SET_SELECTED_SIGNATURE_INDEX':
+    case 'SET_SELECTED_DISPLAYED_SIGNATURE_INDEX':
       return {
         ...state,
-        selectedSignatureIndex: payload.index,
+        selectedDisplayedSignatureIndex: payload.index,
       };
     case 'SET_STANDARD_STAMPS':
       return {
@@ -73,6 +73,16 @@ export default initialState => (state = initialState, action) => {
           ...state.panelWidths,
           notesPanel: payload.width,
         }
+      };
+    case 'SET_DOCUMENT_CONTAINER_WIDTH':
+      return {
+        ...state,
+        documentContainerWidth: payload.width,
+      };
+    case 'SET_DOCUMENT_CONTAINER_HEIGHT':
+      return {
+        ...state,
+        documentContainerHeight: payload.height,
       };
     case 'SET_ACTIVE_THEME':
       return {
@@ -333,6 +343,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isSnapModeEnabled: payload.enable };
     case 'SET_READER_MODE':
       return { ...state, isReaderMode: payload.isReaderMode };
+    case 'SET_DISPLAYED_SIGNATURES_FILTER_FUNCTION':
+      return { ...state, displayedSignaturesFilterFunction: payload.filterFunction };
     default:
       return state;
   }

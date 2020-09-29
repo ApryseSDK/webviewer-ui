@@ -9,6 +9,7 @@
     "undo": "撤消",
     "redo": "准备",
     "comment": "注释",
+    "reply": "回复",
     "copy": "复制",
     "delete": "删除",
     "group": "组",
@@ -21,6 +22,7 @@
     "fit": "文档尺寸",
     "fitToPage": "页面尺寸",
     "fitToWidth": "自身尺寸",
+    "more": "更多",
     "openFile": "打开文件",
     "pagePrev": "上一页",
     "pageNext": "下一页",
@@ -28,7 +30,6 @@
     "print": "打印",
     "name": "名称",
     "ok": "好的",
-    "reply": "回复",
     "rotate": "旋转",
     "rotateClockwise": "顺时针",
     "rotateCounterClockwise": "逆时针",
@@ -54,7 +55,10 @@
     "prevResult": "先前的结果",
     "nextResult": "下一个结果",
     "prev": "以前",
-    "next": "下一个"
+    "next": "下一个",
+    "startFormEditing": "开始表格编辑",
+    "exitFormEditing": "退出表格编辑模式",
+    "exit": "出口"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -160,7 +164,9 @@
     "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
     "enterMeasurement": "在两点之间输入测量值",
+    "errorEnterMeasurement": "您输入的数字无效，您可以输入7.5或7 1/2之类的值",
     "linkURLorPage": "链接网址或页面",
+    "enterReplacementText": "输入您要替换的文字",
     "sortBy": "排序方式"
   },
   "option": {

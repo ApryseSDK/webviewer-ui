@@ -1,20 +1,22 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
 
-.MenuItem {
-  @include button-reset;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  cursor: pointer;
-  border-radius: 4px;
+.FlyoutMenu[data-element="menuOverlay"] {
+  .ActionButton {
+    justify-content: flex-start;
 
-  .MenuIcon {
-    margin: 4px;
+    .Icon {
+      margin: 4px;
+    }
+
+    span {
+      margin: 0 4px;
+    }
   }
 
-  .MenuLabel {
-    margin: 0 4px;
+  // override the styles defined in FlyoutMenu.scss
+  .ActionButton.row.disabled:hover {
+    background: none;
+    cursor: default;
   }
 }

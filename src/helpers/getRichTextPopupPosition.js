@@ -11,17 +11,16 @@ export default (annotation, popup) => {
   cBox = {
     topLeft: {
       x: cBox.left + scrollContainer.scrollLeft - padding,
-      y: cBox.top + scrollContainer.scrollTop - padding,
+      y: cBox.top + scrollContainer.scrollTop - padding
     },
     bottomRight: {
       x: cBox.right + scrollContainer.scrollLeft + padding,
-      y: cBox.bottom + scrollContainer.scrollTop + padding,
-    },
+      y: cBox.bottom + scrollContainer.scrollTop + padding
+    }
   };
   const pBox = popup.current.getBoundingClientRect();
-
   return {
     left: calcPopupLeft(cBox, pBox),
-    top: calcPopupTop(cBox, pBox),
+    top: calcPopupTop(cBox, pBox)
   };
 };

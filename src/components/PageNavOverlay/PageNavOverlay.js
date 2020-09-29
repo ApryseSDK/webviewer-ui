@@ -10,6 +10,7 @@ import { isIOS } from "helpers/device";
 import useMedia from 'hooks/useMedia';
 
 import Icon from "components/Icon";
+import DataElementWrapper from 'components/DataElementWrapper';
 
 import "./PageNavOverlay.scss";
 
@@ -17,7 +18,6 @@ class PageNavOverlay extends React.PureComponent {
   static propTypes = {
     isLeftPanelDisabled: PropTypes.bool,
     isLeftPanelOpen: PropTypes.bool,
-    isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
@@ -29,7 +29,7 @@ class PageNavOverlay extends React.PureComponent {
     super(props);
     this.textInput = React.createRef();
     this.state = {
-      input: null,
+      input: '',
       isCustomPageLabels: false
     };
   }
@@ -91,20 +91,17 @@ class PageNavOverlay extends React.PureComponent {
   };
 
   render() {
-    const { isOpen, isDisabled, currentPage, totalPages, allowPageNavigation, isMobile, t } = this.props;
-    if (isDisabled || !isOpen) {
-      return null;
-    }
+    const { currentPage, totalPages, allowPageNavigation, isMobile, t, dataElement } = this.props;
 
     const inputWidth = this.state.input ? (this.state.input.length) * (isMobile ? 10: 8) : 0;
 
     return (
-      <div
+      <DataElementWrapper
         className={classNames({
           Overlay: true,
           PageNavOverlay: true,
         })}
-        data-element="pageNavOverlay"
+        dataElement={dataElement || "pageNavOverlay"}
       >
         <button
           className="side-arrow-container"
@@ -148,14 +145,12 @@ class PageNavOverlay extends React.PureComponent {
         >
           <Icon className="side-arrow" glyph="icon-chevron-right" />
         </button>
-      </div>
+      </DataElementWrapper>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'pageNavOverlay'),
-  isOpen: selectors.isElementOpen(state, 'pageNavOverlay'),
   currentPage: selectors.getCurrentPage(state),
   totalPages: selectors.getTotalPages(state),
   pageLabels: selectors.getPageLabels(state),

@@ -9,6 +9,7 @@
     "undo": "실행 취소",
     "redo": "준비된",
     "comment": "댓글",
+    "reply": "회신",
     "copy": "복사",
     "delete": "삭제",
     "group": "그룹",
@@ -21,6 +22,7 @@
     "fit": "맞추기",
     "fitToPage": "페이지에 맞추기",
     "fitToWidth": "너비에 맞추기",
+    "more": "조금 더",
     "openFile": "파일 열기",
     "pagePrev": "이전 페이지",
     "pageNext": "다음 페이지",
@@ -28,7 +30,6 @@
     "print": "인쇄",
     "name": "이름",
     "ok": "확인",
-    "reply": "회신",
     "rotate": "회전",
     "rotateClockwise": "시계 방향으로",
     "rotateCounterClockwise": "시계 반대 방향으로",
@@ -54,7 +55,10 @@
     "prevResult": "이전 결과",
     "nextResult": "다음 결과",
     "prev": "이전",
-    "next": "다음"
+    "next": "다음",
+    "startFormEditing": "양식 편집 시작",
+    "exitFormEditing": "양식 편집 모드 종료",
+    "exit": "출구"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -160,7 +164,9 @@
     "insertTextHere": "여기에 텍스트를 삽입하세요",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}} 만 허용됩니다",
     "enterMeasurement": "두 지점 사이에 측정 값을 입력하십시오",
+    "errorEnterMeasurement": "입력 한 숫자가 잘못되었습니다. 7.5 또는 7 1/2과 같은 값을 입력 할 수 있습니다.",
     "linkURLorPage": "링크 URL 또는 페이지",
+    "enterReplacementText": "바꿀 텍스트를 입력하십시오",
     "sortBy": "정렬 기준"
   },
   "option": {

@@ -18,14 +18,13 @@
   display: flex;
   align-items: center;
   width: 100%;
-  min-width: 300px;
   height: 36px;
   background: var(--view-header-background);
   z-index: 71;
 
   &:not(.Tools) {
     .Button {
-      &:hover {
+      &:hover:enabled {
         background: var(--view-header-button-hover);
       }
 

@@ -22,6 +22,7 @@ import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import escapeHtml from 'helpers/escapeHtml';
+import getFillClass from 'helpers/getFillClass';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -74,7 +75,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
     ) {
       setIsEditing(true, noteIndex);
     }
-  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected, setIsEditing]);
+  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected, setIsEditing, noteIndex]);
 
   const renderAuthorName = useCallback(
     annotation => {
@@ -121,6 +122,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
 
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
+  const fillClass = getFillClass(annotation.FillColor);
   const contents = annotation.getContents();
   const numberOfReplies = annotation.getReplies().length;
   const formatNumberOfReplies = Math.min(numberOfReplies, 9);
@@ -133,7 +135,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex }) => {
             <div className="num-replies-container">
               <div className="num-replies">{formatNumberOfReplies}</div>
             </div>}
-          <Icon className="type-icon" glyph={icon} color={color} />
+          <Icon className="type-icon" glyph={icon} color={color} fillClass={fillClass} />
         </div>
       }
       <div className="author-and-date">

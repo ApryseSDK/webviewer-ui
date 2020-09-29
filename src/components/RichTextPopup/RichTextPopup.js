@@ -10,6 +10,7 @@ import HorizontalDivider from 'components/HorizontalDivider';
 import { isMobile } from 'helpers/device';
 import core from 'core';
 import getRichTextPopupPosition from 'helpers/getRichTextPopupPosition';
+import MathSymbolsPicker from '../MathSymbolsPicker';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -20,10 +21,11 @@ const RichTextPopup = () => {
     state => [
       selectors.isElementDisabled(state, 'richTextPopup'),
       selectors.isElementOpen(state, 'richTextPopup'),
-      selectors.isElementDisabled(state, 'richTextColorPalette'),
+      selectors.isElementDisabled(state, 'richTextColorPalette')
     ],
     shallowEqual
   );
+  const [symbolsVisible, setSymbolsVisible] = useState(false);
   const [cssPosition, setCssPosition] = useState({ left: 0, top: 0 });
   const [draggablePosition, setDraggablePosition] = useState({ x: 0, y: 0 });
   const [format, setFormat] = useState({});
@@ -31,6 +33,7 @@ const RichTextPopup = () => {
   const editorRef = useRef(null);
   const annotationRef = useRef(null);
   const dispatch = useDispatch();
+  const symbolsAreaHeight = 150; // max height for the math symbols area
 
   useEffect(() => {
     const handleSelectionChange = range => {
@@ -40,13 +43,17 @@ const RichTextPopup = () => {
     };
 
     core.addEventListener('editorSelectionChanged', handleSelectionChange);
-    return () => core.removeEventListener('editorSelectionChanged', handleSelectionChange);
+    return () =>
+      core.removeEventListener('editorSelectionChanged', handleSelectionChange);
   }, []);
 
   useEffect(() => {
     const handleTextChange = () => {
       if (annotationRef.current?.isAutoSized() && popupRef.current) {
-        const position = getRichTextPopupPosition(annotationRef.current, popupRef);
+        const position = getRichTextPopupPosition(
+          annotationRef.current,
+          popupRef,
+        );
         setCssPosition(position);
       }
 
@@ -54,13 +61,21 @@ const RichTextPopup = () => {
     };
 
     core.addEventListener('editorTextChanged', handleTextChange);
-    return () => core.removeEventListener('editorTextChanged', handleTextChange);
+    return () =>
+      core.removeEventListener('editorTextChanged', handleTextChange);
   }, []);
 
   useEffect(() => {
     const handleEditorFocus = (editor, annotation) => {
-      if (annotation instanceof window.Annotations.FreeTextAnnotation && popupRef.current) {
-        const position = getRichTextPopupPosition(annotation, popupRef);
+      if (
+        annotation instanceof window.Annotations.FreeTextAnnotation &&
+        popupRef.current
+      ) {
+        const position = getRichTextPopupPosition(
+          annotation,
+          popupRef,
+        );
+
         setCssPosition(position);
         // when the editor is focused, we want to reset any previous drag movements so that
         // the popup will be positioned centered to the editor
@@ -88,6 +103,16 @@ const RichTextPopup = () => {
     return () => core.removeEventListener('editorBlur', handleEditorBlur);
   }, [dispatch]);
 
+  useEffect(() => {
+    if (popupRef.current && annotationRef.current) {
+      const position = getRichTextPopupPosition(
+        annotationRef.current,
+        popupRef,
+      );
+      setCssPosition(position);
+    }
+  }, [symbolsVisible]);
+
   const getFormat = range => {
     if (!range) {
       return {};
@@ -107,11 +132,15 @@ const RichTextPopup = () => {
     return format;
   };
 
-  const handleClick = format => () => {
+  const handleTextFormatChange = format => () => {
     const { index, length } = editorRef.current.getSelection();
     const currentFormat = editorRef.current.getFormat(index, length);
 
     applyFormat(format, !currentFormat[format]);
+  };
+
+  const handleSymbolsClick = () => {
+    setSymbolsVisible(!symbolsVisible);
   };
 
   const handleColorChange = (_, color) => {
@@ -128,13 +157,25 @@ const RichTextPopup = () => {
     // format the entire editor doesn't trigger the editorTextChanged event, so we set the format state here
     setFormat({
       ...format,
-      [formatKey]: value,
+      [formatKey]: value
     });
   };
 
   const syncDraggablePosition = (e, { x, y }) => {
     setDraggablePosition({ x, y });
   };
+
+  const insertSymbols = symbol => {
+    const { index, length } = editorRef.current.getSelection();
+    // if user selected some text, then we want to first delete the selected content
+    if (length > 0) {
+      editorRef.current.deleteText(index, length);
+    }
+    // insert symbol at the selected index
+    editorRef.current.insertText(index, symbol);
+    editorRef.current.setSelection(index + 1);
+  };
+
   // TODO for now don't show it in mobile
   return isDisabled || isMobile() ? null : (
     <Draggable
@@ -143,7 +184,7 @@ const RichTextPopup = () => {
       onStop={syncDraggablePosition}
       enableUserSelectHack={false}
       // don't allow drag when clicking on a button element or a color cell
-      cancel=".Button, .cell"
+      cancel=".Button, .cell, .mathSymbolsContainer"
       // prevent the blur event from being triggered when clicking on toolbar buttons
       // otherwise we can't style the text since a blur event is triggered before a click event
       onMouseDown={e => {
@@ -167,30 +208,36 @@ const RichTextPopup = () => {
           <Button
             isActive={format.bold}
             dataElement="richTextBoldButton"
-            onClick={handleClick('bold')}
+            onClick={handleTextFormatChange('bold')}
             img="icon-text-bold"
             title="option.richText.bold"
           />
           <Button
             isActive={format.italic}
             dataElement="richTextItalicButton"
-            onClick={handleClick('italic')}
+            onClick={handleTextFormatChange('italic')}
             img="icon-text-italic"
             title="option.richText.italic"
           />
           <Button
             isActive={format.underline}
             dataElement="richTextUnderlineButton"
-            onClick={handleClick('underline')}
+            onClick={handleTextFormatChange('underline')}
             img="ic_annotation_underline_black_24px"
             title="option.richText.underline"
           />
           <Button
             isActive={format.strike}
             dataElement="richTextStrikeButton"
-            onClick={handleClick('strike')}
+            onClick={handleTextFormatChange('strike')}
             img="ic_annotation_strikeout_black_24px"
             title="option.richText.strikeout"
+          />
+          <Button
+            dataElement="mathSymbolsButton"
+            onClick={handleSymbolsClick}
+            img="ic_thumbnails_grid_black_24px"
+            title="option.mathSymbols"
           />
         </Element>
         <HorizontalDivider style={{ paddingTop: 0 }} />
@@ -203,6 +250,7 @@ const RichTextPopup = () => {
             hasPadding
           />
         )}
+        {symbolsVisible && <MathSymbolsPicker onClickHandler={insertSymbols} maxHeight={symbolsAreaHeight} />}
       </div>
     </Draggable>
   );

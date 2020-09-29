@@ -45,6 +45,7 @@ const NormalList = React.forwardRef(
         ref={listRef}
         className="normal-notes-container"
         onScroll={handleScroll}
+        role="list"
       >
         {notes.map((currNote, index) => (
           <React.Fragment key={`${index}${currNote.Id}`}>

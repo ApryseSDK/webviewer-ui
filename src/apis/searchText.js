@@ -1,5 +1,7 @@
 /**
- * Searches the current page for the texts matching searchValue.
+ * Searches the document one by one for the text matching searchValue. To go to the next result this
+ * function must be called again. Once document end is reach it will jump back to the first found result.
+ *
  * @method WebViewerInstance#searchText
  * @param {string} searchValue The text value to look for.
  * @param {object} [options] Search options.
@@ -24,21 +26,96 @@ WebViewer(...)
   });
  */
 
+import core from 'core';
 import actions from 'actions';
+import { getSearchListeners } from "helpers/search";
 
-export default store => (searchValue, options) => {
-  let searchOptions = {};
-  if (typeof options === 'string') {
-    const modes = options.split(',');
-    modes.forEach(mode => {
-      searchOptions[lowerCaseFirstLetter(mode)] = true;
-    });
-  } else {
-    searchOptions = options;
+function buildSearchModeFlag(options = {}) {
+  const SearchMode = core.getSearchMode();
+  let searchMode = SearchMode.PAGE_STOP | SearchMode.HIGHLIGHT;
+
+  if (options.caseSensitive) {
+    searchMode |= SearchMode.CASE_SENSITIVE;
   }
+  if (options.wholeWord) {
+    searchMode |= SearchMode.WHOLE_WORD;
+  }
+  if (options.wildcard) {
+    searchMode |= SearchMode.WILD_CARD;
+  }
+  if (options.regex) {
+    searchMode |= SearchMode.REGEX;
+  }
+  if (options.searchUp) {
+    searchMode |= SearchMode.SEARCH_UP;
+  }
+  if (options.ambientString) {
+    searchMode |= SearchMode.AMBIENT_STRING;
+  }
+  return searchMode;
+}
 
-  store.dispatch(actions.openElement('searchPanel'));
-  store.dispatch(actions.searchText(searchValue, searchOptions));
-};
+export default function searchText(dispatch) {
+  return function searchText(searchValue, options) {
+    let searchOptions = {};
+    if (typeof options === 'string') {
+      const modes = options.split(',');
+      modes.forEach(mode => {
+        searchOptions[lowerCaseFirstLetter(mode)] = true;
+      });
+    } else {
+      searchOptions = { ...options };
+    }
+
+    const searchMode = buildSearchModeFlag(searchOptions);
+
+    if (dispatch) {
+      // dispatch is only set when doing search through API (instance.searchText())
+      // When triggering search through UI, then redux updates are already handled inside component
+      dispatch(actions.openElement('searchPanel'));
+      dispatch(actions.searchText(searchValue, searchOptions));
+    }
+
+    function onResult(result) {
+      core.displaySearchResult(result);
+      core.setActiveSearchResult(result);
+      const optionsForSearchListener = {
+        // default values
+        caseSensitive: false,
+        wholeWord: false,
+        wildcard: false,
+        regex: false,
+        searchUp: false,
+        ambientString: false,
+        // override values with those user gave
+        ...searchOptions,
+      };
+      const searchListeners = getSearchListeners() || [];
+      searchListeners.forEach(listener => {
+        try {
+          listener(searchValue, optionsForSearchListener, [result]);
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    }
+
+    function onDocumentEnd() {
+      core.getDocumentViewer().trigger('endOfDocumentResult', true);
+    }
+    function handleSearchError(error) {
+      console.error(error);
+    }
+    const textSearchInitOptions = {
+      'fullSearch': false,
+      onResult,
+      onDocumentEnd,
+      'onError': handleSearchError,
+    };
+
+    core.textSearchInit(searchValue, searchMode, textSearchInitOptions);
+  };
+}
+
 
 const lowerCaseFirstLetter = mode => `${mode.charAt(0).toLowerCase()}${mode.slice(1)}`;

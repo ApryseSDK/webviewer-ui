@@ -129,6 +129,7 @@ export default (enable, store) => features => {
       fn: () => {
         if (!enable) {
           core.clearSelection();
+          core.setToolMode('AnnotationEdit');
         }
         window.Tools.Tool.ENABLE_TEXT_SELECTION = enable;
       },
@@ -214,6 +215,9 @@ export default (enable, store) => features => {
           hotkeys.off(keys);
         }
       },
+    },
+    [Feature.MathSymbols]: {
+      dataElements: ['mathSymbolsButton'],
     },
   };
 

@@ -17,6 +17,7 @@ import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
+import { isIE } from "helpers/device";
 
 import './NotesPanel.scss';
 
@@ -72,7 +73,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   // when the number of notesToRender goes over/below the threshold, we will unmount the current list and mount the other one
   // this will result in losing the scroll position and we will use this ref to recover
   const scrollTopRef = useRef(0);
-  const VIRTUALIZATION_THRESHOLD = 100;
+  const VIRTUALIZATION_THRESHOLD = isIE ? 25 : 100;
 
   useEffect(() => {
     const onDocumentUnloaded = () => {
@@ -212,7 +213,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       // unfortunately we need to use an actual div instead of React.Fragment here so that we can pass the correct index to scrollToRow
       // if this is a fragment then the listSeparator is rendered as a separate child, which means
       // singleSelectedNoteIndex might not be the index of the selected note among all the child elements of the notes panel
-      <div className="note-wrapper">
+      <div role="listitem" className="note-wrapper">
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
           <Note annotation={currNote} />
@@ -303,7 +304,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
                     onClick={() => dispatch(actions.openElement('filterModal'))}
                   />
                   <div className="sort-container">
-                    <div className="label">{`Sort by:`}</div>
+                    <div className="label">{`${t('message.sortBy')}:`}</div>
                     <Dropdown
                       items={Object.keys(getSortStrategies())}
                       translationPrefix="option.notesOrder"

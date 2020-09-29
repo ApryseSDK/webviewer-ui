@@ -79,7 +79,7 @@ class ColorPalette extends React.PureComponent {
     let palette = overridePalette2 ||  overridePalette?.[colorMapKey] || overridePalette?.global || this.palette;
     if (!allowTransparent) {
       palette = palette.filter(p => p?.toLowerCase() !== 'transparency');
-    } 
+    }
 
     const transparentIcon = (
       <svg
@@ -103,32 +103,30 @@ class ColorPalette extends React.PureComponent {
         style={style}
       >
         {palette.map(bg => bg?.toLowerCase()).map((bg, i) => (
-          !bg 
-          ? <div key={i} className="dummy-cell" /> 
-          : <button
-              key={i}
-              className="cell-container"
-              onClick={() => {
-                this.setColor(bg === 'transparency' ? null : bg);
-              }}
+          <button
+            key={i}
+            className="cell-container"
+            onClick={() => {
+              this.setColor(bg === 'transparency' ? null : bg);
+            }}
+          >
+            <div
+              className={classNames({
+                'cell-outer': true,
+                active: color?.toHexString?.()?.toLowerCase() === bg || (!color?.toHexString?.() && bg === 'transparency'),
+              })}
             >
               <div
                 className={classNames({
-                  'cell-outer': true,
-                  active: color?.toHexString()?.toLowerCase() === bg || (!color?.toHexString() && bg === 'transparency'),
+                  cell: true,
+                  border: bg === '#ffffff' || bg === 'transparency',
                 })}
+                style={{ backgroundColor: bg }}
               >
-                <div
-                  className={classNames({
-                    cell: true,
-                    border: bg === '#ffffff' || bg === 'transparency',
-                  })}
-                  style={{ backgroundColor: bg }}
-                >
-                  { bg === 'transparency' && transparentIcon}
-                </div>
+                { bg === 'transparency' && transparentIcon}
               </div>
-            </button>
+            </div>
+          </button>
         ))}
       </div>
     );

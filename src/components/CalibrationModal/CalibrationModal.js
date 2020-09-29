@@ -9,6 +9,7 @@ import core from 'core';
 import { mapAnnotationToKey } from 'constants/map';
 import setToolStyles from 'helpers/setToolStyles';
 import parseMeasurementContents from 'helpers/parseMeasurementContents';
+import evalFraction from 'helpers/evalFraction';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -17,6 +18,8 @@ import { Swipeable } from 'react-swipeable';
 import './CalibrationModal.scss';
 
 const numberRegex = /^\d*(\.\d*)?$/;
+const fractionRegex = /^\d*(\s\d\/\d*)$/;
+const pureFractionRegex = /^(\d\/\d*)*$/;
 
 const CalibrationModal = () => {
   const [isOpen, isDisabled, units] = useSelector(
@@ -30,7 +33,9 @@ const CalibrationModal = () => {
   const dispatch = useDispatch();
   const [annotation, setAnnotation] = useState(null);
   const [value, setValue] = useState('');
+  const [newDistance, setNewDistance] = useState(0);
   const [unitTo, setUnitTo] = useState('');
+  const [showError, setShowError] = useState(false);
   const [t] = useTranslation();
 
   useEffect(() => {
@@ -74,8 +79,34 @@ const CalibrationModal = () => {
   }, [annotation]);
 
   const handleInputChange = e => {
-    if (numberRegex.test(e.target.value)) {
-      setValue(e.target.value);
+    setShowError(false);
+    setValue(e.target.value);
+  };
+
+  const validateInput = e => {
+    const inputValue = e.target.value.trim();
+    if (numberRegex.test(inputValue)) {
+      setNewDistance(parseFloat(inputValue));
+      setValue(inputValue);
+    } else if (fractionRegex.test(inputValue)) {
+      const [whole, fraction] = inputValue.split(' ');
+      if (Number.isFinite(evalFraction(fraction))) {
+        const number = Number(whole) + evalFraction(fraction);
+        setNewDistance(parseFloat(number));
+        setValue(number);
+      } else {
+        setShowError(true);
+      }
+    } else if (pureFractionRegex.test(inputValue)) {
+      if (Number.isFinite(evalFraction(inputValue))) {
+        const number = evalFraction(inputValue);
+        setNewDistance(parseFloat(number));
+        setValue(number);
+      } else {
+        setShowError(true);
+      }
+    } else {
+      setShowError(true);
     }
   };
 
@@ -127,7 +158,6 @@ const CalibrationModal = () => {
 
   const getNewScale = () => {
     const currentDistance = parseMeasurementContents(annotation.getContents());
-    const newDistance = parseFloat(value);
     const ratio = newDistance / currentDistance;
 
     const currentScale = annotation.Scale;
@@ -166,7 +196,7 @@ const CalibrationModal = () => {
           <div className="calibration__body">
             <div>{t('message.enterMeasurement')}</div>
             <div className="calibration__input">
-              <input type="text" value={value} onChange={handleInputChange} />
+              <input className={showError ? 'error' : ''} type="text" value={value} onChange={handleInputChange} onBlur={validateInput}/>
               <select
                 className="unitToInput"
                 value={unitTo}
@@ -179,12 +209,14 @@ const CalibrationModal = () => {
                 ))}
               </select>
             </div>
+            {showError ? <div className="errorMeasurement">{t('message.errorEnterMeasurement')}</div> : null}
           </div>
           <div className="calibration__footer">
             <Button
               dataElement="passwordSubmitButton"
               label={t('action.apply')}
               onClick={handleApply}
+              disabled={showError}
             />
           </div>
         </div>

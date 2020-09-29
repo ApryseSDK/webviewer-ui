@@ -9,7 +9,6 @@
     @extend %modal-shared-container-style;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
@@ -116,11 +115,11 @@
 
         .filter-annot-clear {
           color: var(--secondary-button-text);
-          background: var(--secondary-button);
+          background: none;
 
           &:hover {
             color: var(--secondary-button-hover);
-            background: var(--secondary-button);
+            background: none;
           }
         }
 

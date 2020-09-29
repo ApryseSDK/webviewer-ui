@@ -7,7 +7,7 @@ WebViewer(...)
   .then(function(instance) {
     var annotManager = instance.annotManager;
 
-    annotManager.on('annotationChanged', function(e, annotations, action) {
+    annotManager.on('annotationChanged', function(annotations, action) {
       annotations.forEach(function(annotation) {
         // Focus the note when annotation is created
         if (action === 'add' && annotation.Listable) {

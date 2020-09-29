@@ -9,6 +9,7 @@
     "undo": "Rückgängig machen",
     "redo": "Bereit",
     "comment": "Kommentar",
+    "reply": "Antwort",
     "copy": "Kopieren",
     "delete": "Löschen",
     "group": "Gruppe",
@@ -21,6 +22,7 @@
     "fit": "Anpassen",
     "fitToPage": "An Seite anpassen",
     "fitToWidth": "An Breite anpassen",
+    "more": "Mehr",
     "openFile": "Datei öffnen",
     "pagePrev": "Vorherige Seite",
     "pageNext": "Nächste Seite",
@@ -28,7 +30,6 @@
     "print": "Drucken",
     "name": "Name",
     "ok": "OK",
-    "reply": "Antwort",
     "rotate": "Drehen",
     "rotateClockwise": "Im Uhrzeigersinn",
     "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
@@ -54,7 +55,10 @@
     "prevResult": "Vorheriges Ergebnis",
     "nextResult": "Nächstes Ergebnis",
     "prev": "Bisherige",
-    "next": "Nächster"
+    "next": "Nächster",
+    "startFormEditing": "Starten Sie die Formularbearbeitung",
+    "exitFormEditing": "Beenden Sie den Formularbearbeitungsmodus",
+    "exit": "Ausgang"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -160,7 +164,9 @@
     "insertTextHere": "Hier Text eingeben",
     "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
     "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein",
+    "errorEnterMeasurement": "Die eingegebene Nummer ist ungültig. Sie können Werte wie 7,5 oder 7 1/2 eingeben",
     "linkURLorPage": "Link URL oder eine Seite",
+    "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten",
     "sortBy": "Sortiere nach"
   },
   "option": {

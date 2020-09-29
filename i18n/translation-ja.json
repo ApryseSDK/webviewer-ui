@@ -9,6 +9,7 @@
     "undo": "元に戻す",
     "redo": "準備ができて",
     "comment": "コメント",
+    "reply": "返信",
     "copy": "コピー",
     "delete": "削除",
     "group": "グループ",
@@ -21,6 +22,7 @@
     "fit": "フィット",
     "fitToPage": "ページに合わせる",
     "fitToWidth": "幅に合わせる",
+    "more": "もっと多く",
     "openFile": "ファイルを開く",
     "pagePrev": "前のページ",
     "pageNext": "次のページ",
@@ -28,7 +30,6 @@
     "print": "印刷",
     "name": "名前",
     "ok": "OK",
-    "reply": "返信",
     "rotate": "回転",
     "rotateClockwise": "時計回り",
     "rotateCounterClockwise": "反時計回り",
@@ -54,7 +55,10 @@
     "prevResult": "前の結果",
     "nextResult": "次の結果",
     "prev": "前",
-    "next": "次"
+    "next": "次",
+    "startFormEditing": "フォームの編集を開始",
+    "exitFormEditing": "フォーム編集モードを終了する",
+    "exit": "出口"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -160,7 +164,9 @@
     "insertTextHere": "ここにテキストを挿入",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが受け入れられます",
     "enterMeasurement": "2点間の測定値を入力します",
+    "errorEnterMeasurement": "入力した数値は無効です。7.5や7 1/2などの値を入力できます",
     "linkURLorPage": "リンクURLまたはページ",
+    "enterReplacementText": "置き換えるテキストを入力してください",
     "sortBy": "並び替え"
   },
   "option": {

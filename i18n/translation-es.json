@@ -9,6 +9,7 @@
     "undo": "Deshacer",
     "redo": "Listo",
     "comment": "Añadir comentario",
+    "reply": "Responder",
     "copy": "Copiar",
     "delete": "Eliminar",
     "group": "Grupo",
@@ -21,6 +22,7 @@
     "fit": "Ajustar",
     "fitToPage": "Ajustar a la página",
     "fitToWidth": "Ajustar al ancho",
+    "more": "Más",
     "openFile": "Abrir archivo",
     "pagePrev": "Pagina anterior",
     "pageNext": "Siguiente página",
@@ -28,7 +30,6 @@
     "print": "Imprimir",
     "name": "Nombre",
     "ok": "OK",
-    "reply": "Responder",
     "rotate": "Girar",
     "rotateClockwise": "Sentido horario",
     "rotateCounterClockwise": "Sentido antihorario",
@@ -54,7 +55,10 @@
     "prevResult": "Resultado anterior",
     "nextResult": "Siguiente resultado",
     "prev": "Anterior",
-    "next": "próximo"
+    "next": "próximo",
+    "startFormEditing": "Iniciar la edición del formulario",
+    "exitFormEditing": "Salir del modo de edición de formularios",
+    "exit": "Salida"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -160,7 +164,9 @@
     "insertTextHere": "Inserta el texto aquí",
     "imageSignatureAcceptedFileTypes": "Solo se aceptan {{acceptFileTypes}}",
     "enterMeasurement": "Ingrese la medición entre los dos puntos",
+    "errorEnterMeasurement": "El número que ingresó no es válido, puede ingresar valores como 7.5 o 7 1/2",
     "linkURLorPage": "URL de enlace o una página",
+    "enterReplacementText": "Ingrese el texto que desea reemplazar",
     "sortBy": "Ordenar por"
   },
   "option": {

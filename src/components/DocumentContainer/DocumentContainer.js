@@ -41,7 +41,9 @@ class DocumentContainer extends React.PureComponent {
     leftPanelWidth: PropTypes.number,
     allowPageNavigation: PropTypes.bool.isRequired,
     isMouseWheelZoomEnabled: PropTypes.bool.isRequired,
-    isReaderMode: PropTypes.bool
+    isReaderMode: PropTypes.bool,
+    setDocumentContainerWidth: PropTypes.func.isRequired,
+    setDocumentContainerHeight: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -52,10 +54,6 @@ class DocumentContainer extends React.PureComponent {
     this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
     this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
     this.handleResize = _.throttle(this.handleResize.bind(this), 200);
-
-    this.state = {
-      containerWidth: 0
-    };
   }
 
   componentDidUpdate(prevProps) {
@@ -81,6 +79,7 @@ class DocumentContainer extends React.PureComponent {
     }
 
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
+    this.updateContainerSize();
   }
 
   componentWillUnmount() {
@@ -205,15 +204,19 @@ class DocumentContainer extends React.PureComponent {
   }
 
   handleResize() {
+    this.updateContainerSize()
+
     if (!this.props.isReaderMode) {
       // Skip when in reader mode, otherwise will cause error.
       core.setScrollViewElement(this.container.current);
       core.scrollViewUpdated();
-    } else {
-      this.setState({
-        containerWidth: this.container.current.clientWidth
-      });
     }
+  }
+
+  updateContainerSize() {
+    const { clientWidth, clientHeight } = this.container.current;
+    this.props.setDocumentContainerWidth(clientWidth);
+    this.props.setDocumentContainerHeight(clientHeight);
   }
 
   render() {
@@ -243,7 +246,7 @@ class DocumentContainer extends React.PureComponent {
               >
                 <div className={documentClassName} ref={this.document}/>
                 {this.props.isReaderMode && (
-                  <ReaderModeViewer containerWidth={this.state.containerWidth} />
+                  <ReaderModeViewer />
                 )}
               </div>
               <MeasurementOverlay />
@@ -288,6 +291,8 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
   openElement: dataElement => dispatch(actions.openElement(dataElement)),
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
+  setDocumentContainerWidth: width => dispatch(actions.setDocumentContainerWidth(width)),
+  setDocumentContainerHeight: height => dispatch(actions.setDocumentContainerHeight(height)),
 });
 
 const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);

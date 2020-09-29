@@ -1,10 +1,15 @@
 import React from 'react';
 import core from 'core';
+import PropTypes from 'prop-types';
+import selectors from 'selectors';
 import zoomFactors from 'constants/zoomFactors';
 import { connect } from 'react-redux';
 import setMaxZoomLevel from 'helpers/setMaxZoomLevel';
 
 class ReaderModeViewer extends React.PureComponent {
+  static propTypes = {
+    containerWidth: PropTypes.number.isRequired,
+  }
   constructor(props) {
     super(props);
 
@@ -28,6 +33,8 @@ class ReaderModeViewer extends React.PureComponent {
     core.removeEventListener('documentLoaded', this.renderDocument);
     core.removeEventListener('pageNumberUpdated', this.goToPage);
     core.removeEventListener('zoomUpdated', this.setZoom);
+
+    this.wvReadingMode?.unmount();
 
     setMaxZoomLevel(this.props.dispatch)(this.originalMaxZoom);
   }
@@ -87,4 +94,8 @@ class ReaderModeViewer extends React.PureComponent {
   }
 }
 
-export default connect()(ReaderModeViewer);
+const mapStateToProps = state => ({
+  containerWidth: selectors.getDocumentContainerWidth(state),
+});
+
+export default connect(mapStateToProps)(ReaderModeViewer);

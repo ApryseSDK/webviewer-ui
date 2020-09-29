@@ -69,6 +69,11 @@
   overflow: auto;
   user-select: none;
 
+  @include ie11 {
+    margin-left: 0!important;
+    width: 100%!important
+  }
+
   .document {
     margin: auto; // vertical centering when content is smaller than document container
                   // can't use 'justify-content: center;' due to losing access to content when overflowing

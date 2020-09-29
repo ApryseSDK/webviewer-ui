@@ -9,6 +9,7 @@
     "undo": "Desfazer",
     "redo": "pronto",
     "comment": "Novo comentário",
+    "reply": "Responder",
     "copy": "Copiar",
     "delete": "Apagar",
     "group": "Grupo",
@@ -21,6 +22,7 @@
     "fit": "Ajustar",
     "fitToPage": "Ajustar à página",
     "fitToWidth": "Ajustar à largura",
+    "more": "Mais",
     "openFile": "Abrir arquivo",
     "pagePrev": "Página anterior",
     "pageNext": "Próxima página",
@@ -28,7 +30,6 @@
     "print": "Imprimir",
     "name": "Nome",
     "ok": "OK",
-    "reply": "Responder",
     "rotate": "Girar",
     "rotateClockwise": "Sentido horário",
     "rotateCounterClockwise": "Sentido anti-horário",
@@ -46,15 +47,18 @@
     "zoomControls": "Controles de zoom",
     "draw": "Desenhar",
     "type": "Tipo",
-    "upload": "Envio",
-    "link": "Ligação",
+    "upload": "Enviar documento",
+    "link": "Link",
     "darkMode": "Modo escuro",
-    "lightMode": "Modo de luz",
+    "lightMode": "Modo claro",
     "fileAttachmentDownload": "Baixar arquivo anexado",
     "prevResult": "Resultado anterior",
     "nextResult": "Próximo resultado",
     "prev": "Anterior",
-    "next": "Próximo"
+    "next": "Próximo",
+    "startFormEditing": "Comece a edição do formulário",
+    "exitFormEditing": "Sair do modo de edição de formulário",
+    "exit": "Saída"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -66,8 +70,8 @@
     "countMeasurement": "Medição de contagem",
     "ellipse": "Elipse",
     "eraser": "Apagador",
-    "fileattachment": "Anexo de arquivo",
-    "freehand": "Mão livre",
+    "fileattachment": "Anexo",
+    "freehand": "Desenho livre",
     "freetext": "Texto livre",
     "highlight": "Destacar",
     "line": "Linha",
@@ -93,7 +97,7 @@
     "Completed": "Concluído",
     "Confidential": "Confidencial",
     "Departmental": "Departamental",
-    "Draft": "Esboço, projeto",
+    "Draft": "Esboço",
     "Experimental": "Experimental",
     "Expired": "Expirado",
     "Final": "Final",
@@ -104,12 +108,12 @@
     "NotForPublicRelease": "Não para divulgação pública",
     "PreliminaryResults": "Resultados preliminares",
     "Sold": "Vendido",
-    "TopSecret": "Ultra secreto",
+    "TopSecret": "Sigiloso",
     "Void": "Vazio",
     "SHSignHere": "Assine aqui",
     "SHWitness": "Testemunha",
     "SHInitialHere": "Inicial aqui",
-    "SHAccepted": "Aceitaram",
+    "SHAccepted": "Aceito",
     "SBRejected": "Rejeitado"
   },
   "component": {
@@ -134,49 +138,51 @@
   },
   "message": {
     "toolsOverlayNoPresets": "Sem predefinições",
-    "badDocument": "Falha ao carregar documento. O documento está corrompido ou não é válido.",
-    "customPrintPlaceholder": "p. ex. 3, 4-10",
+    "badDocument": "Falha ao carregar documento. O documento está corrompido ou é inválido.",
+    "customPrintPlaceholder": "ex: 3, 4-10",
     "encryptedAttemptsExceeded": "Falha ao carregar documento criptografado. Tentativas demais.",
     "encryptedUserCancelled": "Falha ao carregar documento criptografado. Digitação de senha cancelada.",
     "enterPassword": "Esse documento é protegido por senha. Digite uma senha",
-    "incorrectPassword": "Senha incorreta, tentativas restantes: {{ remainingAttempts }}",
+    "incorrectPassword": "Senha incorreta. Tentativas restantes: {{ remainingAttempts }}",
     "noAnnotations": "Esse documento não tem anotações.",
     "noAnnotationsFilter": "Comece a fazer anotações e filtros aparecerão aqui.",
-    "noOutlines": "Esse documento não tem esquema.",
+    "noOutlines": "Esse documento não tem contorno.",
     "noResults": "Nenhum resultado encontrado.",
     "numResultsFound": "resultados encontrados",
     "notSupported": "Esse tipo de arquivo não é compatível.",
     "passwordRequired": "Senha obrigatória",
     "preparingToPrint": "Preparando impressão...",
-    "annotationReplyCount": "{{count}} Resposta",
-    "annotationReplyCount_plural": "{{count}} Respostas",
+    "annotationReplyCount": "{{count}} resposta",
+    "annotationReplyCount_plural": "{{count}} respostas",
     "printTotalPageCount": "{{count}} página",
     "printTotalPageCount_plural": "{{count}} páginas",
     "processing": "Processando...",
     "searching": "Procurando...",
-    "searchCommentsPlaceholder": "Pesquisar comentários",
-    "searchDocumentPlaceholder": "Pesquisar documento",
+    "searchCommentsPlaceholder": "Procurar nos comentários",
+    "searchDocumentPlaceholder": "Procurar no documento",
     "signHere": "Assine aqui",
     "insertTextHere": "Insira texto aqui",
     "imageSignatureAcceptedFileTypes": "Somente {{acceptFileTypes}} são aceitos",
     "enterMeasurement": "Digite a medição entre os dois pontos",
+    "errorEnterMeasurement": "O número inserido é inválido, você pode inserir valores como 7,5 ou 7 1/2",
     "linkURLorPage": "URL do link ou uma página",
+    "enterReplacementText": "Insira o texto que deseja substituir",
     "sortBy": "Ordenar por"
   },
   "option": {
     "notesOrder": {
       "position": "Posição",
-      "time": "Tempo",
+      "time": "Hora",
       "status": "Status",
       "author": "Autor",
       "type": "Tipo"
     },
     "toolbarGroup": {
-      "toolbarGroup-View": "Visão",
+      "toolbarGroup-View": "Visualizar",
       "toolbarGroup-Annotate": "Anotar",
       "toolbarGroup-Shapes": "Formas",
       "toolbarGroup-Insert": "Inserir",
-      "toolbarGroup-Measure": "A medida",
+      "toolbarGroup-Measure": "Medir",
       "toolbarGroup-Edit": "Editar"
     },
     "annotationColor": {
@@ -189,12 +195,12 @@
       "pageTransition": "Transição de página"
     },
     "documentControls": {
-      "placeholder": "Insira as páginas para selecionar, ou seja, 2, 5-9"
+      "placeholder": "Insira as páginas para selecionar. Por exemplo: 2, 5-9"
     },
     "layout": {
       "cover": "Capa",
-      "double": "Duplo",
-      "single": "Único"
+      "double": "Página dupla",
+      "single": "Página única"
     },
     "notesPanel": {
       "separator": {
@@ -216,7 +222,7 @@
       "qualityHigh": "Alto",
       "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
-      "addWatermarkSettings": "Adicionar configurações de marca d'água"
+      "addWatermarkSettings": "Adicionar marca d'água"
     },
     "redaction": {
       "markForRedaction": "Marcar para supressão"
@@ -246,12 +252,12 @@
       "status": "Status"
     },
     "state": {
-      "accepted": "Aceitaram",
+      "accepted": "Aceito",
       "rejected": "Rejeitado",
       "completed": "Concluído",
       "cancelled": "Cancelado",
       "set": "Definir status:",
-      "setBy": "definido pela",
+      "setBy": "definido por",
       "none": "Nenhum"
     },
     "measurementOverlay": {
@@ -273,7 +279,7 @@
     "styleOption": {
       "style": "Estilo",
       "solid": "Sólido",
-      "cloudy": "Nublado"
+      "cloudy": "Nuvem"
     },
     "slider": {
       "opacity": "Opacidade",
@@ -290,7 +296,7 @@
       "location": "Escolha um local para editar marcas d'água",
       "text": "Texto",
       "style": "Estilo",
-      "resetAllSettings": "Redefinir todas as configurações",
+      "resetAllSettings": "Voltar às configurações padrão",
       "font": "fonte"
     },
     "thumbnailPanel": {
@@ -301,27 +307,27 @@
     "richText": {
       "bold": "Negrito",
       "italic": "itálico",
-      "underline": "Sublinhar",
-      "strikeout": "Tachado"
+      "underline": "Sublinhado",
+      "strikeout": "Riscado"
     },
     "customStampModal": {
       "stampText": "Texto do carimbo:",
       "timestampText": "Texto do carimbo de data / hora:",
       "stampColor": "Cor do carimbo:",
       "Username": "Nome do usuário",
-      "Date": "Encontro",
-      "Time": "Tempo"
+      "Date": "Data",
+      "Time": "Hora"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "Excluir página",
-      "deleteMessage": "Tem certeza de que deseja excluir as páginas selecionadas. Isso não pode ser desfeito",
-      "deleteLastPageMessage": "Isso resultaria em nenhuma página restante. Deixe pelo menos uma página"
+      "deleteMessage": "Esta ação excluirá permanentemente as páginas selecionadas. Isso não pode ser desfeito",
+      "deleteLastPageMessage": "Esta ação resultaria em nenhuma página restante. Deixe pelo menos uma página"
     },
     "redaction": {
-      "applyTile": "Aplicar redação",
-      "applyMessage": "Esta ação removerá permanentemente todos os itens selecionados para edição. Não pode ser desfeito."
+      "applyTile": "Aplicar supressão",
+      "applyMessage": "Esta ação suprimirá permanentemente todos os itens selecionados para remoção. Isso não pode ser desfeito."
     },
     "selectPage": {
       "selectTitle": "Nenhuma página selecionada",
@@ -362,7 +368,7 @@
     }
   },
   "tool": {
-    "pan": "Arrastar",
+    "pan": "Mover",
     "select": "Selecionar",
     "Marquee": "Zoom na seleção",
     "Link": "URL ou página do link",
@@ -372,7 +378,7 @@
   "link": {
     "url": "URL",
     "page": "Página",
-    "enterurl": "Digite o URL para o qual você deseja vincular",
+    "enterurl": "Digite a URL que você deseja vincular",
     "enterpage": "Selecione o número da página que você deseja vincular"
   },
   "datePicker": {

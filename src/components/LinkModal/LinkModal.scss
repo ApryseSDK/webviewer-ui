@@ -9,7 +9,6 @@
     @extend %modal-shared-container-style;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     min-width: 400px;
     border-radius: 4px;
@@ -126,13 +125,10 @@
       margin-top: 8px;
       width: 100%;
       height: 30px;
-      padding-left: 8px;
+      padding: 4px 8px 6px 8px;
       border: 1px solid var(--border);
       border-radius: 4px;
       color: var(--text-color);
-      padding-bottom: 6px;
-      padding-right: 42px;
-      padding-top: 4px;
 
       &:focus {
         outline: none;

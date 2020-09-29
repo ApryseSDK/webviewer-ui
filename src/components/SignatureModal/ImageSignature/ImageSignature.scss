@@ -26,6 +26,11 @@
       max-width: 100%;
       width: auto;
       height: auto;
+      @include ie11 {
+        // using this notation for IE11 purposes
+        flex-grow: 1;
+        flex-basis: 0;
+      }
     }
 
     .Button {

@@ -20,6 +20,8 @@
   --gray-11: #101214;
   --gray-12: #000000;
 
+  --red: red;
+
   --component-background: var(--gray-0);
   --mobile-presets-background: var(--gray-1);
   --faded-component-background: var(--gray-2);
@@ -27,6 +29,9 @@
   --toggle-zoom-overlay-background: var(--gray-2);
   --ribbons-background: var(--gray-3);
   --document-background-color: var(--gray-2);
+
+  --error-text-color: var(--red);
+  --error-border-color: var(--red);
 
   --panel-background: var(--gray-1);
 

@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import Icon from 'components/Icon';
+import selectors from 'selectors';
 
 import './ResizeBar.scss';
 
 
-const ResizeBar = ({ onResize, minWidth, leftDirection }) => {
+const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement }) => {
+  const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
   const isMouseDownRef = useRef(false);
 
   useEffect(() => {
@@ -35,8 +37,9 @@ const ResizeBar = ({ onResize, minWidth, leftDirection }) => {
     return () => document.removeEventListener('mouseup', finishDrag);
   }, []);
 
-  return (
+  return isDisabled ? null : (
     <div
+      data-element={dataElement}
       className="resize-bar"
       onMouseDown={() => {
         isMouseDownRef.current = true;

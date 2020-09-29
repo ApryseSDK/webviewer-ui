@@ -22,6 +22,10 @@
   .ZoomLabel {
     margin: 0 4px;
   }
+
+  Button {
+    height: auto;
+  }
 }
 
 // High specificity to override ".tool-button.Button"

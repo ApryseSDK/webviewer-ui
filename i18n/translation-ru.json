@@ -9,6 +9,7 @@
     "undo": "Отменить",
     "redo": "готов",
     "comment": "Откомментировать",
+    "reply": "Ответить",
     "copy": "Скопировать",
     "delete": "Удалить",
     "group": "группа",
@@ -21,6 +22,7 @@
     "fit": "Уместить",
     "fitToPage": "Уместить страницу",
     "fitToWidth": "Уместить по ширине",
+    "more": "Больше",
     "openFile": "Открыть документ",
     "pagePrev": "Предыдущая страница",
     "pageNext": "Следующая страница",
@@ -28,7 +30,6 @@
     "print": "Распечатать",
     "name": "название",
     "ok": "OK",
-    "reply": "Ответить",
     "rotate": "Повернуть",
     "rotateClockwise": "По часовой",
     "rotateCounterClockwise": "Против часовой",
@@ -54,7 +55,10 @@
     "prevResult": "Предыдущий результат",
     "nextResult": "Следующий результат",
     "prev": "предыдущий",
-    "next": "следующий"
+    "next": "следующий",
+    "startFormEditing": "Начать редактирование формы",
+    "exitFormEditing": "Выйти из режима редактирования формы",
+    "exit": "Выход"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -160,7 +164,9 @@
     "insertTextHere": "Вставьте текст здесь",
     "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",
     "enterMeasurement": "Введите измерение между двумя точками",
+    "errorEnterMeasurement": "Введенное вами число недействительно, вы можете ввести такие значения, как 7,5 или 7 1/2.",
     "linkURLorPage": "Ссылка URL или страница",
+    "enterReplacementText": "Введите текст, который хотите заменить",
     "sortBy": "Сортировать по"
   },
   "option": {

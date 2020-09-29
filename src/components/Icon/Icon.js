@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import './Icon.scss';
 
@@ -46,14 +47,19 @@ class Icon extends React.PureComponent {
   }
 
   render() {
-    const { className = '', color, glyph } = this.props;
+    const { className = '', color, glyph, fillClass = '', disabled } = this.props;
     const filter = (color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)')) ? 'drop-shadow(0 0 .5px #333)' : undefined;
     const svgElement = this.isInlineSvg() ? glyph : require(`../../../assets/icons/${this.props.glyph}.svg`);
 
     return (
       <div
         ref={this.icon}
-        className={`Icon ${className}`}
+        className={classNames({
+          Icon: true,
+          [className]: true,
+          [fillClass]: true,
+          disabled,
+        })}
         style={{ color: (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color, filter }}
         dangerouslySetInnerHTML={{ __html: svgElement }}
       />

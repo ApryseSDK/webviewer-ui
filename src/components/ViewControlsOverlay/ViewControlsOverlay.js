@@ -78,7 +78,7 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('option.pageTransition.default')}</div>
           </DataElementWrapper>
-          {false && core.isFullPDFEnabled() && (
+          {core.isFullPDFEnabled() && (
             <DataElementWrapper
               className={classNames({ row: true, active: isReaderMode })}
               onClick={() => handleReaderModeClick()}

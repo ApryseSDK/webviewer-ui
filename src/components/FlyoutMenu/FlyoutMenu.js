@@ -66,19 +66,28 @@ function FlyoutMenu({ menu, trigger, onClose, children }) {
   const [position, setPosition] = useState(() => ({ left: 0, right: 'auto', top: 'auto' }));
   const isMobile = useMedia(['(max-width: 640px)'], [true], false);
   const isTabletOrMobile = useMedia(['(max-width: 900px)'], [true], false);
+  const isSmallBrowserHeight = useMedia(['(max-height: 500px)'], [true], false);
 
   // When open: close others, position, and listen for resizes to position.
   useEffect(() => {
     if (isOpen) {
       dispatch(actions.closeElements(allOtherMenus));
 
-      const onResize = () => setPosition(getOverlayPositionBasedOn(trigger, overlayRef, isTabletOrMobile));
+      const onResize = () => {
+        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isTabletOrMobile);
+
+        if (isSmallBrowserHeight) {
+          overlayPosition.top = 0;
+        }
+
+        setPosition(overlayPosition);
+      };
       onResize();
 
       window.addEventListener('resize', onResize);
       return () => window.removeEventListener('resize', onResize);
     }
-  }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger]);
+  }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger, isSmallBrowserHeight]);
 
   if (isDisabled) {
     return null;

@@ -1,7 +1,7 @@
 {
   "name": "webviewer-ui",
   "author": "PDFTron Systems Inc.",
-  "version": "7.1.0",
+  "version": "7.2.0",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
@@ -15,9 +15,13 @@
     "clean": "rimraf build",
     "bundle": "webpack --progress --config ./webpack.config.prod.js",
     "build": "npm run clean && npm run bundle",
-    "translation": "node ./scripts/translate-i18n-files.js"
+    "translation": "node ./scripts/translate-i18n-files.js",
+    "storybook": "start-storybook -p 6006 --ci",
+    "jest": "jest",
+    "jest:watch": "jest --watch"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.11.5",
     "@pdftron/webviewer-react-toolkit": "^0.6.0-beta.8",
     "autolinker": "^3.11.1",
     "classnames": "^2.2.6",
@@ -60,7 +64,14 @@
     "@google-cloud/translate": "^5.1.4",
     "@hot-loader/react-dom": "^16.11.0",
     "@pdftron/webviewer-downloader": "^1.4.2",
+    "@storybook/addon-actions": "^6.0.21",
+    "@storybook/addon-essentials": "^6.0.21",
+    "@storybook/addon-links": "^6.0.21",
+    "@storybook/react": "^6.0.21",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^10.4.9",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^26.3.0",
     "babel-loader": "^8.0.6",
     "body-parser": "^1.19.0",
     "clean-webpack-plugin": "^3.0.0",
@@ -79,7 +90,9 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "express": "^4.17.1",
     "file-loader": "^5.0.2",
+    "identity-obj-proxy": "^3.0.0",
     "ip": "^1.1.5",
+    "jest": "^26.4.2",
     "mini-css-extract-plugin": "0.8.0",
     "opn": "^6.0.0",
     "postcss-import": "^12.0.1",
@@ -87,6 +100,7 @@
     "postcss-preset-env": "^6.7.0",
     "prop-types": "^15.7.2",
     "raw-loader": "^4.0.0",
+    "react-is": "^16.13.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "rimraf": "^3.0.0",
@@ -98,6 +112,6 @@
     "webpack-cli": "^3.3.10",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",
-    "@pdftron/webviewer-reading-mode": "^0.6.0"
+    "@pdftron/webviewer-reading-mode": "0.7.6"
   }
 }
