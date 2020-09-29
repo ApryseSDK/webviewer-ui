@@ -95,6 +95,12 @@ $gray-3: #343A40;
   }
 }
 
+@mixin small-browser-height {
+  @media (max-height: 500px) {
+    @content;
+  }
+}
+
 .hide-in-desktop {
   @include desktop {
     display: none;

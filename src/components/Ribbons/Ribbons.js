@@ -58,7 +58,7 @@ const Ribbons = () => {
     }
   }, [ribbonsWidth, containerWidth, ribbonsRef, containerRef]);
 
-  if (toolbarGroups.length <= 1 || !tReady) {
+  if (toolbarGroups.length === 0 || !tReady) {
     return null;
   }
 

@@ -56,6 +56,7 @@ const RightPanel = ({ children, dataElement, onResize }) => {
         >
           {!isTabletAndMobile &&
             <ResizeBar
+              dataElement={`${dataElement}ResizeBar`}
               minWidth={293}
               onResize={onResize}
               leftDirection

@@ -17,6 +17,7 @@ import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
+import { isIE } from "helpers/device";
 
 import './NotesPanel.scss';
 
@@ -72,7 +73,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   // when the number of notesToRender goes over/below the threshold, we will unmount the current list and mount the other one
   // this will result in losing the scroll position and we will use this ref to recover
   const scrollTopRef = useRef(0);
-  const VIRTUALIZATION_THRESHOLD = 100;
+  const VIRTUALIZATION_THRESHOLD = isIE ? 25 : 100;
 
   useEffect(() => {
     const onDocumentUnloaded = () => {

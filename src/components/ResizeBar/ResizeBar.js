@@ -7,8 +7,8 @@ import selectors from 'selectors';
 import './ResizeBar.scss';
 
 
-const ResizeBar = ({ onResize, minWidth, leftDirection }) => {
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, 'resizeBar'));
+const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement }) => {
+  const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
   const isMouseDownRef = useRef(false);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const ResizeBar = ({ onResize, minWidth, leftDirection }) => {
 
   return isDisabled ? null : (
     <div
-      data-element="resizeBar"
+      data-element={dataElement}
       className="resize-bar"
       onMouseDown={() => {
         isMouseDownRef.current = true;

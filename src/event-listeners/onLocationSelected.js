@@ -13,7 +13,7 @@ export default store => () => {
     store.dispatch(actions.setActiveToolGroup('signatureTools'));
     store.dispatch(actions.openElement('toolsOverlay'));
 
-    const isToolsOverlayDisabled = selectors.isElementDisabled(store.getState(), 'toolsOverlay');
+    const isToolsOverlayDisabled = selectors.isElementDisabled(store.getState(), 'toolsOverlay') || selectors.isElementDisabled(store.getState(), 'toolsHeader');
     const savedSignatures = selectors.getSavedSignatures(store.getState(), 'signatureOverlay');
     if (savedSignatures.length === 0 || isToolsOverlayDisabled) {
       store.dispatch(actions.openElement('signatureModal'));

@@ -18,14 +18,14 @@
 }
 
 .arrowHead {
-    position: absolute;    
-    top: 0;
-    left: 0px;
-    margin: auto; 
-    width: 0; 
-    height: 0; 
-    border-top: 6px solid transparent;
-    border-bottom: 6px solid transparent; 
-    border-right: 7px solid rgba(30,120,235, 0.5);
-    transform: translate(-100%, calc(-50% + 1px));
+  position: absolute;    
+  top: 0;
+  left: 0px;
+  margin: auto; 
+  width: 0; 
+  height: 0; 
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent; 
+  border-right: 7px solid rgba(30,120,235, 0.5);
+  transform: translateX(-100%) translateY(-50%) translateY(1px);
 }

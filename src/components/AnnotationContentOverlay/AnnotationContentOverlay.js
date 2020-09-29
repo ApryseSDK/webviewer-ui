@@ -38,7 +38,25 @@ const AnnotationContentOverlay = () => {
   const isUsingCustomHandler = customHandler !== null;
   const overlayRef = useRef(null);
   const contents = annotation?.getContents();
+  // the gap between the component and the mouse, to make sure that the mouse won't be on component element
+  // so that the underlying annotation will always be hovered
+  const gap = 20;
+
   useEffect(() => {
+    const fitWindowSize = (e, left, top) => {
+      const overlayRect = overlayRef.current.getBoundingClientRect();
+
+      if (left + overlayRect.width > window.innerWidth) {
+        left = e.clientX - overlayRect.width - gap;
+      }
+
+      if (top + overlayRect.height > window.innerHeight) {
+        top = e.clientY - overlayRect.height - gap;
+      }
+
+      return { left, top };
+    }
+
     const onMouseHover = e => {
       const viewElement = core.getViewerElement();
       let annotation = core
@@ -54,18 +72,8 @@ const AnnotationContentOverlay = () => {
         if (isUsingCustomHandler || !(annotation instanceof Annotations.FreeTextAnnotation)) {
           setAnnotation(annotation);
           if (overlayRef.current) {
-            const overlayRect = overlayRef.current.getBoundingClientRect();
-            if (e.clientX + 215 > window.innerWidth) {
-              setOverlayPosition({
-                left: e.clientX - overlayRect.width,
-                top: e.clientY + 20,
-              });
-            } else {
-              setOverlayPosition({
-                left: e.clientX + 20,
-                top: e.clientY + 20,
-              });
-            }
+            const { left, top } = fitWindowSize(e, e.clientX + gap, e.clientY + gap);
+            setOverlayPosition({ left, top });
           }
         }
         dispatch(actions.openElement('annotationContentOverlay'));
