@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import './SignatureRowContent.scss';
 
-const SignatureRowContent = ({ onClick, imgSrc, isActive }) => {
+const SignatureRowContent = ({ onClick, imgSrc, isActive, altText }) => {
   return (
     <div
       className={classNames({
@@ -13,7 +13,7 @@ const SignatureRowContent = ({ onClick, imgSrc, isActive }) => {
       })}
       onClick={onClick}
     >
-      <img src={imgSrc} />
+      <img alt={altText} src={imgSrc} />
     </div>
   );
 };

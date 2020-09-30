@@ -190,6 +190,9 @@
       "FillColor": "Color de relleno",
       "TextColor": "Color del texto"
     },
+    "colorPalette": {
+      "colorLabel": "Color"
+    },
     "displayMode": {
       "layout": "Diseño",
       "pageTransition": "Transición de página"
@@ -231,6 +234,11 @@
       "caseSensitive": "Distinguir mayúsculas de minúsculas",
       "wholeWordOnly": "Palabra completa",
       "wildcard": "Comodín"
+    },
+    "toolsOverlay": {
+      "currentStamp": "Sello Actual",
+      "currentSignature": "Firma Actual",
+      "signatureAltText": "Firma"
     },
     "stampOverlay": {
       "addStamp": "Agregar nuevo sello"

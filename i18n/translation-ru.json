@@ -190,6 +190,9 @@
       "FillColor": "Цвет заливки",
       "TextColor": "Цвет текста"
     },
+    "colorPalette": {
+      "colorLabel": "Цвет"
+    },
     "displayMode": {
       "layout": "Расположение",
       "pageTransition": "Переход страниц"
@@ -231,6 +234,11 @@
       "caseSensitive": "С учетом регистра",
       "wholeWordOnly": "Всё слово",
       "wildcard": "Поиск по шаблону"
+    },
+    "toolsOverlay": {
+      "currentStamp": "Текущая печать",
+      "currentSignature": "Текущая подпись",
+      "signatureAltText": "Подпись"
     },
     "stampOverlay": {
       "addStamp": "Добавить новый штамп"

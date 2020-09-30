@@ -190,6 +190,9 @@
       "FillColor": "塗りつぶしの色",
       "TextColor": "テキストの色"
     },
+    "colorPalette": {
+      "colorLabel": "色"
+    },
     "displayMode": {
       "layout": "レイアウト",
       "pageTransition": "ページ遷移"
@@ -231,6 +234,11 @@
       "caseSensitive": "大文字と小文字を区別",
       "wholeWordOnly": "単語全体",
       "wildcard": "ワイルドカード"
+    },
+    "toolsOverlay": {
+      "currentStamp": "現在のスタンプ",
+      "currentSignature": "現在の署名",
+      "signatureAltText": "署名"
     },
     "stampOverlay": {
       "addStamp": "新しいスタンプを追加"

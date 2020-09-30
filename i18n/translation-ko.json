@@ -190,6 +190,9 @@
       "FillColor": "채우기 색",
       "TextColor": "텍스트 색"
     },
+    "colorPalette": {
+      "colorLabel": "색깔"
+    },
     "displayMode": {
       "layout": "레이아웃",
       "pageTransition": "페이지 전환"
@@ -231,6 +234,11 @@
       "caseSensitive": "대/소문자 구분",
       "wholeWordOnly": "단어 단위로",
       "wildcard": "와일드 카드"
+    },
+    "toolsOverlay": {
+      "currentStamp": "현재 스탬프",
+      "currentSignature": "현재 서명",
+      "signatureAltText": "서명"
     },
     "stampOverlay": {
       "addStamp": "새 스탬프 추가"

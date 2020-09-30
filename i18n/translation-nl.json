@@ -190,6 +190,9 @@
       "FillColor": "Vulling kleur",
       "TextColor": "Tekst kleur"
     },
+    "colorPalette": {
+      "colorLabel": "Kleur"
+    },
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Pagina overgang"
@@ -231,6 +234,11 @@
       "caseSensitive": "Hoofdlettergevoelig",
       "wholeWordOnly": "Hele woorden",
       "wildcard": "wildcard"
+    },
+    "toolsOverlay": {
+      "currentStamp": "Huidige Stempel",
+      "currentSignature": "Huidige Handtekening",
+      "signatureAltText": "Handtekening"
     },
     "stampOverlay": {
       "addStamp": "Nieuwe stempel toevoegen"

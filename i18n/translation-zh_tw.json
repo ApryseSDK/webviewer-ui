@@ -190,6 +190,9 @@
       "FillColor": "填充顏色",
       "TextColor": "文字顏色"
     },
+    "colorPalette": {
+      "colorLabel": "顏色"
+    },
     "displayMode": {
       "layout": "版面",
       "pageTransition": "頁面切換"
@@ -231,6 +234,11 @@
       "caseSensitive": "區分大小寫",
       "wholeWordOnly": "全字相符",
       "wildcard": "通配符"
+    },
+    "toolsOverlay": {
+      "currentStamp": "目前的郵票",
+      "currentSignature": "當前簽名",
+      "signatureAltText": "簽名"
     },
     "stampOverlay": {
       "addStamp": "添加新郵票"

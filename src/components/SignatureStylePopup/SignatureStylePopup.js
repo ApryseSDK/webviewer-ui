@@ -73,6 +73,7 @@ const SignatureStylePopup = props => {
               onClick={() => setSignature(indexOfDisplayedSignature)}
               imgSrc={imgSrc}
               isActive={selectedDisplayedSignatureIndex === indexOfDisplayedSignature && activeToolName === 'AnnotationCreateSignature'}
+              altText={`${t('option.toolsOverlay.signatureAltText')} ${indexOfDisplayedSignature + 1}`}
             />
             <div
               className="icon"

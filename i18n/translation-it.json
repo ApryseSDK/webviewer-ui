@@ -190,6 +190,9 @@
       "FillColor": "Colore di riempimento",
       "TextColor": "Colore del testo"
     },
+    "colorPalette": {
+      "colorLabel": "Colore"
+    },
     "displayMode": {
       "layout": "disposizione",
       "pageTransition": "Transizione di pagina"
@@ -231,6 +234,11 @@
       "caseSensitive": "Che tiene conto del maiuscolo o minuscolo",
       "wholeWordOnly": "Parola intera",
       "wildcard": "Carta jolly"
+    },
+    "toolsOverlay": {
+      "currentStamp": "Timbro Corrente",
+      "currentSignature": "Firma Attuale",
+      "signatureAltText": "Firma"
     },
     "stampOverlay": {
       "addStamp": "Aggiungi nuovo timbro"

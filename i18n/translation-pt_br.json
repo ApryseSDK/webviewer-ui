@@ -190,6 +190,9 @@
       "FillColor": "Cor de preenchimento",
       "TextColor": "Cor do texto"
     },
+    "colorPalette": {
+      "colorLabel": "Cor"
+    },
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Transição de página"
@@ -231,6 +234,11 @@
       "caseSensitive": "Diferenciar maiúsculas e minúsculas",
       "wholeWordOnly": "Palavra inteira",
       "wildcard": "Curinga"
+    },
+    "toolsOverlay": {
+      "currentStamp": "Carimbo Atual",
+      "currentSignature": "Assinatura Atual",
+      "signatureAltText": "Assinatura"
     },
     "stampOverlay": {
       "addStamp": "Adicionar novo carimbo"

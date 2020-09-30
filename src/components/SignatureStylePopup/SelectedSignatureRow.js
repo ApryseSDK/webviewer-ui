@@ -9,7 +9,7 @@ import core from 'core';
 
 import './SelectedSignatureRow.scss';
 
-const SelectedSignatureRow = () => {
+const SelectedSignatureRow = ({ t }) => {
   const [activeToolName, isToolStyleOpen, displayedSignature, displayedSignatures] = useSelector(
     state => [
       selectors.getActiveToolName(state),
@@ -38,6 +38,7 @@ const SelectedSignatureRow = () => {
             }
           }}
           isActive={activeToolName === 'AnnotationCreateSignature'}
+          altText={t('option.toolsOverlay.currentSignature')}
         /> :
         <SignatureAddBtn />}
       <ToolsDropdown

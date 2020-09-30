@@ -190,6 +190,9 @@
       "FillColor": "Füllfarbe",
       "TextColor": "Textfarbe"
     },
+    "colorPalette": {
+      "colorLabel": "Farbe"
+    },
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Seitenübergang"
@@ -231,6 +234,11 @@
       "caseSensitive": "Groß-/Kleinschreibung beachten",
       "wholeWordOnly": "Ganzes Wort",
       "wildcard": "Platzhalter"
+    },
+    "toolsOverlay": {
+      "currentStamp": "Aktueller Stempel",
+      "currentSignature": "Aktuelle Unterschrift",
+      "signatureAltText": "Unterschrift"
     },
     "stampOverlay": {
       "addStamp": "Neuen Stempel hinzufügen"

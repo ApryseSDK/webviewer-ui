@@ -190,6 +190,9 @@
       "FillColor": "Fill",
       "TextColor": "Text"
     },
+    "colorPalette": {
+      "colorLabel": "Color"
+    },
     "displayMode": {
       "layout": "Page Layout",
       "pageTransition": "Page Transition"
@@ -231,6 +234,11 @@
       "caseSensitive": "Case sensitive",
       "wholeWordOnly": "Whole word",
       "wildcard": "Wildcard"
+    },
+    "toolsOverlay": {
+      "currentStamp": "Current Stamp",
+      "currentSignature": "Current Signature",
+      "signatureAltText": "Signature"
     },
     "stampOverlay": {
       "addStamp": "Add New Stamp"

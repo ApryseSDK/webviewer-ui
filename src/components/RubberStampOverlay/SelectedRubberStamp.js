@@ -80,6 +80,7 @@ const SelectedSignatureRow = () => {
               rubberStampTool.showPreview();
             }}
             isActive={activeToolName === 'AnnotationCreateRubberStamp'}
+            altText={t('option.toolsOverlay.currentStamp')}
           />}
       </div>
       <ToolsDropdown

@@ -16,9 +16,10 @@ function StyleOption(props) {
   return (
     <div className="StyleOption">
       <div className="styles-container">
-        <div className="styles-title">{t('option.styleOption.style')}</div>
+        <label className="styles-title" for="styleOptions">{t('option.styleOption.style')}</label>
         <div className="styles-layout">
           <select
+            id="styleOptions"
             className="styles-input"
             value={style}
             onChange={e => onChange(e.target.value)}
@@ -31,7 +32,6 @@ function StyleOption(props) {
           </select>
         </div>
       </div>
-
     </div>
   );
 }

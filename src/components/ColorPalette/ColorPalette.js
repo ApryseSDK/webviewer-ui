@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { withTranslation } from 'react-i18next';
 
 import selectors from 'selectors';
 
@@ -71,7 +72,8 @@ class ColorPalette extends React.PureComponent {
       color,
       overridePalette,
       overridePalette2,
-      colorMapKey
+      colorMapKey,
+      t,
     } = this.props;
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
@@ -109,6 +111,7 @@ class ColorPalette extends React.PureComponent {
             onClick={() => {
               this.setColor(bg === 'transparency' ? null : bg);
             }}
+            aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
           >
             <div
               className={classNames({
@@ -137,4 +140,4 @@ const mapStateToProps = state => ({
   overridePalette: selectors.getCustomElementOverrides(state, dataElement),
 });
 
-export default connect(mapStateToProps)(ColorPalette);
+export default connect(mapStateToProps)(withTranslation()(ColorPalette));

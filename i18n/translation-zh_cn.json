@@ -190,6 +190,9 @@
       "FillColor": "填充颜色",
       "TextColor": "文本颜色"
     },
+    "colorPalette": {
+      "colorLabel": "颜色"
+    },
     "displayMode": {
       "layout": "布局",
       "pageTransition": "页面转换"
@@ -231,6 +234,11 @@
       "caseSensitive": "区分大小写",
       "wholeWordOnly": "整个词语",
       "wildcard": "通配符"
+    },
+    "toolsOverlay": {
+      "currentStamp": "目前的邮票",
+      "currentSignature": "当前签名",
+      "signatureAltText": "签名"
     },
     "stampOverlay": {
       "addStamp": "添加新邮票"

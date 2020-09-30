@@ -112,14 +112,15 @@ const TextSignature = ({
   return (
     <React.Fragment>
       <div className="text-signature">
-        <input
-          className="text-signature-input"
-          ref={inputRef}
-          type="text"
-          value={value}
-          onChange={handleInputChange}
-        />
-        {/* <div className="text-signature-container"> */}
+        <label>
+          <input
+            className="text-signature-input"
+            ref={inputRef}
+            type="text"
+            value={value}
+            onChange={handleInputChange}
+          />
+        </label>
         {fonts.map((font, index) => (
           <div
             key={font}
@@ -141,7 +142,6 @@ const TextSignature = ({
           </div>
         ))}
         <canvas ref={canvasRef} />
-        {/* </div> */}
       </div>
       <div
         className="footer"

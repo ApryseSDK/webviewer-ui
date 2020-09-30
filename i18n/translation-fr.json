@@ -190,6 +190,9 @@
       "FillColor": "Couleur de remplissage",
       "TextColor": "Couleur de texte"
     },
+    "colorPalette": {
+      "colorLabel": "Couleur"
+    },
     "displayMode": {
       "layout": "Disposition",
       "pageTransition": "Transition de page"
@@ -231,6 +234,11 @@
       "caseSensitive": "Sensible à la casse",
       "wholeWordOnly": "Mot complet",
       "wildcard": "Caractère générique"
+    },
+    "toolsOverlay": {
+      "currentStamp": "Timbre Actuel",
+      "currentSignature": "Signature Actuelle",
+      "signatureAltText": "Signature"
     },
     "stampOverlay": {
       "addStamp": "Ajouter un nouveau tampon"
