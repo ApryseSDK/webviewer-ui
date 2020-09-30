@@ -60,6 +60,7 @@ export default {
           dataElement: 'toggleNotesButton',
           img: 'icon-header-chat-line',
           title: 'component.notesPanel',
+          element: 'notesPanel',
           onClick: dispatch => {
             dispatch(actions.toggleElement('notesPanel'));
             // Trigger with a delay so we ensure the panel is open before we compute correct coordinates of annotation
