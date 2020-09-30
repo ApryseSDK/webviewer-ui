@@ -146,6 +146,19 @@ import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHan
 import overrideSearchExecution from "./overrideSearchExecution";
 import reactElements from './reactElements';
 
+/**
+ * Triggered when the UI theme is changed
+ * @name WebViewerInstance#themeChanged
+ * @event
+ * @example
+ // Listening to this event
+  WebViewer(...).then(function(instance) {
+    instance.iframeWindow.addEventListener('themeChanged', e => {
+      console.log(e.detail)
+    })
+  });
+ */
+
 export default store => {
   window.readerControl = {
     docViewer: window.docViewer,
