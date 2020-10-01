@@ -1,4 +1,5 @@
 import hotkeys from 'src/apis/hotkeys';
+import core from 'core';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 import actions from 'actions';
@@ -27,6 +28,11 @@ export default (enable, store) => (
       dataElements.push(map[toolName]);
     }
   });
+
+  const currTool = core.getToolMode();
+  if (!enable && toolNames.indexOf(currTool.name) > -1) {
+    core.setToolMode(window.Tools.ToolNames.EDIT);
+  }
 
   if (enable) {
     toolNameArray.forEach(toolName => {
