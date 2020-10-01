@@ -13,6 +13,7 @@
   margin-left: 2px;
   margin-bottom: 8px;
   background: var(--component-background);
+  word-break: break-all;
 
   &.selected {
     border: 1px solid var(--focus-border);
@@ -22,9 +23,5 @@
   .search-value {
     background: #face0080;
     word-break: break-all;
-
-    @include ie11 {
-      display: table-cell;
-    }
   }
 }
