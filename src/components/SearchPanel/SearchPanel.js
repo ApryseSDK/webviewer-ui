@@ -31,6 +31,10 @@ class SearchPanel extends React.PureComponent {
     isTabletAndMobile: PropTypes.bool,
   };
 
+  componentWillUnmount() {
+    core.clearSearchResults();
+  }
+
   onClickResult = (resultIndex, result) => {
     const { closeElements, isMobile } = this.props;
     core.setActiveSearchResult(result);
