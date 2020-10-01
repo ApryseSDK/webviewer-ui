@@ -266,7 +266,9 @@
       "cancelled": "취소 된",
       "set": "상태 설정 :",
       "setBy": "에 의해 설정",
-      "none": "없음"
+      "none": "없음",
+      "marked": "두드러진",
+      "unmarked": "표시가없는"
     },
     "measurementOverlay": {
       "scale": "배율",

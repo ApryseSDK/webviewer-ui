@@ -266,7 +266,9 @@
       "cancelled": "取消",
       "set": "設定狀態：",
       "setBy": "通過設置",
-      "none": "沒有"
+      "none": "沒有",
+      "marked": "標記",
+      "unmarked": "未標記"
     },
     "measurementOverlay": {
       "scale": "比例",

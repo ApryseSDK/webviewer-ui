@@ -266,7 +266,9 @@
       "cancelled": "キャンセル",
       "set": "ステータスを設定：",
       "setBy": "によって設定されました",
-      "none": "無し"
+      "none": "無し",
+      "marked": "マークされた",
+      "unmarked": "マークなし"
     },
     "measurementOverlay": {
       "scale": "スケール比",

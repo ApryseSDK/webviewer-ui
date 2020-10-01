@@ -77,7 +77,7 @@ const NoteState = ({ annotation, isSelected }) => {
     stateAnnot['Subject'] = 'Sticky Note';
     stateAnnot['Author'] = core.getCurrentUser();
     stateAnnot['State'] = state;
-    stateAnnot['StateModel'] = 'Review';
+    stateAnnot['StateModel'] = state === 'Marked' || state === 'Unmarked' ? 'Marked' : 'Review';
     stateAnnot['Hidden'] = true;
 
     const displayAuthor = core.getDisplayAuthor(stateAnnot);
@@ -148,6 +148,22 @@ const NoteState = ({ annotation, isSelected }) => {
               >
                 <Icon glyph="icon-annotation-status-none" />
                 {t('option.state.none')}
+              </div>
+              <div
+                data-element="notePopupStateMarked"
+                className="option"
+                onClick={() => handleStateUpdate('Marked')}
+              >
+                <Icon glyph="icon-annotation-status-marked" />
+                {t('option.state.marked')}
+              </div>
+              <div
+                data-element="notePopupStateUnmarked"
+                className="option"
+                onClick={() => handleStateUpdate('Unmarked')}
+              >
+                <Icon glyph="icon-annotation-status-unmarked" />
+                {t('option.state.unmarked')}
               </div>
             </div>
           )}

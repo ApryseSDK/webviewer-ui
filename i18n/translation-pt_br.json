@@ -266,7 +266,9 @@
       "cancelled": "Cancelado",
       "set": "Definir status:",
       "setBy": "definido por",
-      "none": "Nenhum"
+      "none": "Nenhum",
+      "marked": "Marcado",
+      "unmarked": "Não marcado"
     },
     "measurementOverlay": {
       "scale": "Razão de escala",

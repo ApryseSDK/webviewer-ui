@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms / marked</title>
+    <g id="forms-/-marked" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon-/-forms-/-radio-button" fill="#868E96" fill-rule="nonzero">
+            <path d="M17,2.15 L7,2.15 C4.32141896,2.15 2.15,4.32141896 2.15,7 L2.15,17 C2.15,19.678581 4.32141896,21.85 7,21.85 L17,21.85 C19.678581,21.85 21.85,19.678581 21.85,17 L21.85,7 C21.85,4.32141896 19.678581,2.15 17,2.15 Z M7,3.85 L17,3.85 C18.739697,3.85 20.15,5.26030304 20.15,7 L20.15,17 C20.15,18.739697 18.739697,20.15 17,20.15 L7,20.15 C5.26030304,20.15 3.85,18.739697 3.85,17 L3.85,7 C3.85,5.26030304 5.26030304,3.85 7,3.85 Z" id="Rectangle"></path>
+        </g>
+        <circle id="Oval" fill="#868E96" cx="12" cy="12" r="5"></circle>
+    </g>
+</svg>

@@ -266,7 +266,9 @@
       "cancelled": "Abgebrochen",
       "set": "Status setzen:",
       "setBy": "eingestellt von",
-      "none": "Keiner"
+      "none": "Keiner",
+      "marked": "Markiert",
+      "unmarked": "Unmarkiert"
     },
     "measurementOverlay": {
       "scale": "Maßstab",

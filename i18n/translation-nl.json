@@ -266,7 +266,9 @@
       "cancelled": "Geannuleerd",
       "set": "Stel status in:",
       "setBy": "ingesteld door",
-      "none": "Geen"
+      "none": "Geen",
+      "marked": "Gemarkeerd",
+      "unmarked": "Ongemarkeerd"
     },
     "measurementOverlay": {
       "scale": "Schaalverhouding",

@@ -266,7 +266,9 @@
       "cancelled": "Annullato",
       "set": "Imposta stato:",
       "setBy": "fissato dalla",
-      "none": "Nessuna"
+      "none": "Nessuna",
+      "marked": "Segnato",
+      "unmarked": "Non contrassegnato"
     },
     "measurementOverlay": {
       "scale": "Rapporto di scala",

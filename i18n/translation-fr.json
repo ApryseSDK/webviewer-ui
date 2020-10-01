@@ -266,7 +266,9 @@
       "cancelled": "Annulé",
       "set": "Définir le statut:",
       "setBy": "fixé par",
-      "none": "Aucun"
+      "none": "Aucun",
+      "marked": "Marqué",
+      "unmarked": "Mon marqué"
     },
     "measurementOverlay": {
       "scale": "Ratio d'échelle",
