@@ -28,7 +28,7 @@ class Icon extends React.PureComponent {
 
   updateSvg() {
     if (this.isInlineSvg()) {
-      var domElement = this.icon.current;
+      const domElement = this.icon.current;
 
       // remove existing svg
       while (domElement.firstChild) {
@@ -57,6 +57,14 @@ class Icon extends React.PureComponent {
       svgElement = undefined;
     }
 
+    const style = {
+      filter
+    };
+
+    if (!disabled) {
+      style.color = (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color
+    }
+
     return (
       <div
         ref={this.icon}
@@ -66,7 +74,7 @@ class Icon extends React.PureComponent {
           [fillClass]: true,
           disabled,
         })}
-        style={{ color: (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color, filter }}
+        style={style}
         dangerouslySetInnerHTML={{ __html: svgElement }}
       />
     );
