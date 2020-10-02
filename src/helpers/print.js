@@ -154,7 +154,9 @@ const creatingImage = (pageNumber, printableAnnotations) =>
     const printRotation = getPrintRotation(pageIndex);
     const onCanvasLoaded = async canvas => {
       pendingCanvases = pendingCanvases.filter(pendingCanvas => pendingCanvas !== id);
-      positionCanvas(canvas, pageIndex);
+      if (!window.utils.isPdfjs) {
+        positionCanvas(canvas, pageIndex);
+      }
 
       if (includeAnnotations) {
         await drawAnnotationsOnCanvas(canvas, pageNumber);
@@ -178,6 +180,7 @@ const creatingImage = (pageNumber, printableAnnotations) =>
       pageRotation: printRotation,
       drawComplete: onCanvasLoaded,
       multiplier: printQuality,
+      'print': true,
     });
     pendingCanvases.push(id);
   });
