@@ -1,7 +1,7 @@
 import core from 'core';
 import createDisableFeatures from 'src/apis/disableFeatures';
 import getHashParams from 'helpers/getHashParams';
-import { isMobileDevice } from 'helpers/device';
+import { isIOS, isMobileDevice } from 'helpers/device';
 import { PRIORITY_THREE, PRIORITY_ONE } from 'constants/actionPriority';
 import Feature from 'constants/feature';
 import actions from 'actions';
@@ -74,6 +74,12 @@ export default store => {
     // but that actually checks the window.innerWidth to hide the button, not based on the actual device.
     // we could potentially improve the 'hidden' property in the future.
     dispatch(actions.disableElement('textSelectButton', PRIORITY_THREE));
+  }
+
+  // disabling the fullscreen button in iOS because it only has partial support for the fullscreen mode
+  // which is also buggy in WebViewer the last time we tested it
+  if (isIOS) {
+    dispatch(actions.disableElements(['fullscreenButton'], PRIORITY_THREE));
   }
 
   if (!core.isFullPDFEnabled()) {
