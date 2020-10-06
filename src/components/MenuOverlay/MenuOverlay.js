@@ -93,9 +93,7 @@ class MenuOverlay extends React.PureComponent {
     return (
       <div className={className} data-element="menuOverlay" style={{ left, right }} ref={this.overlay}>
         <ActionButton dataElement="filePickerButton" label={t('action.openFile')} onClick={openFilePicker} />
-        {!isIOS &&
-          <ActionButton dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
-        }
+        <ActionButton dataElement="fullScreenButton" label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')} onClick={toggleFullscreen} />
         {documentType !== workerTypes.XOD &&
           <ActionButton dataElement="downloadButton" label={t('action.download')} onClick={this.downloadDocument} />
         }
