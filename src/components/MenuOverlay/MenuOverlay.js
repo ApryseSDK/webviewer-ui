@@ -59,16 +59,14 @@ function MenuOverlay() {
         ariaLabel={t('action.openFile')}
         onClick={openFilePicker}
       />
-      {!isIOS && (
-        <ActionButton
-          dataElement="fullscreenButton"
-          className="row"
-          img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
-          label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
-          ariaLabel={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
-          onClick={toggleFullscreen}
-        />
-      )}
+      <ActionButton
+        dataElement="fullscreenButton"
+        className="row"
+        img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+        label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+        ariaLabel={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+        onClick={toggleFullscreen}
+      />
       {documentType !== workerTypes.XOD && (
         <ActionButton
           dataElement="downloadButton"
