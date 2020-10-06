@@ -105,7 +105,9 @@ class ColorPalette extends React.PureComponent {
         style={style}
       >
         {palette.map(bg => bg?.toLowerCase()).map((bg, i) => (
-          <button
+          !bg 
+          ? <div key={i} className="dummy-cell" /> 
+          : <button
             key={i}
             className="cell-container"
             onClick={() => {
