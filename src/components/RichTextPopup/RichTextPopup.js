@@ -21,7 +21,7 @@ const RichTextPopup = () => {
     state => [
       selectors.isElementDisabled(state, 'richTextPopup'),
       selectors.isElementOpen(state, 'richTextPopup'),
-      selectors.isElementDisabled(state, 'richTextColorPalette')
+      selectors.isElementDisabled(state, 'colorPalette')
     ],
     shallowEqual
   );
