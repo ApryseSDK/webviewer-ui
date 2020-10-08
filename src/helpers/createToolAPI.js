@@ -30,7 +30,7 @@ export default (enable, store) => (
   });
 
   const currTool = core.getToolMode();
-  if (!enable && toolNames.indexOf(currTool.name) > -1) {
+  if (!enable && toolNames.indexOf(currTool?.name) > -1) {
     core.setToolMode(window.Tools.ToolNames.EDIT);
   }
 
