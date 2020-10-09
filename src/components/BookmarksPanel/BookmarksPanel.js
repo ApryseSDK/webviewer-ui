@@ -50,7 +50,7 @@ class BookmarksPanel extends React.PureComponent {
           this.state.isAdding ?
             <EditingBookmark
               className="adding"
-              label={`${t('component.bookmarkPage')} ${currentPage}: ${t('component.newBookmark')}`}
+              label={`${t('component.bookmarkPage')} ${pageLabels[currentPage - 1]}: ${t('component.newBookmark')}`}
               bookmarkText={''}
               onSave={newText => {
                 addBookmark(currentPage - 1, newText);
