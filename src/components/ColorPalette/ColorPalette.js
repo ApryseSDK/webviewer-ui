@@ -102,9 +102,10 @@ class ColorPalette extends React.PureComponent {
       });
     }
 
-    return (
-      !bg ? <div className="dummy-cell" />
-      : <div className="cell" style={style} onClick={this.setColor}>
+    return !bg ? (
+      <div className="dummy-cell" />
+    ) : (
+      <div className="cell" style={style} onClick={this.setColor}>
         {this.renderCheckMark(bg)}
       </div>
     );
