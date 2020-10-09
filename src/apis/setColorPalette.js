@@ -16,7 +16,7 @@ import selectors from 'selectors';
  * @example
 WebViewer(...)
   .then(function(instance) {
-    // this sets the palette globally. All the tools will use these colors. Can use empty string for spaces
+    // this sets the palette globally. All the tools will use these colors. Can use empty string for blank spaces and 'transparency' for a transparent color.
     instance.setColorPalette(['#FFFFFF', '', '#DDDDDD', 'transparency']);
 
     // use a different set of colors for the freetext and rectangle tool.
