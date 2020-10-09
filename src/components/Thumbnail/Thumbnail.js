@@ -143,9 +143,9 @@ class Thumbnail extends React.PureComponent {
         if (selectedPageIndexes.length === 0) {
           updatedSelectedPages.push(currentPage - 1);
         }
-        if (selectedPageIndexes.indexOf(index) > -1) {
+        if (selectedPageIndexes.includes(index)) {
           updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
-        } else {
+        } else if (!updatedSelectedPages.includes(index)) {
           updatedSelectedPages.push(index);
         }
       } else {
