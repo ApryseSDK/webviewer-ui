@@ -52,8 +52,12 @@ function LineMeasurementInput(props) {
     ensureLineIsWithinBounds(lengthInPts);
   };
 
+  const isApproximatelyEqual = (value1, value2) => {
+    return Math.abs(value1 - value2) < 0.1;
+  };
+
   const ensureLineIsWithinBounds = useCallback(lengthInPts => {
-    if (annotation.getLineLength() !== lengthInPts) {
+    if (!isApproximatelyEqual(annotation.getLineLength(), lengthInPts)) {
       const maxLengthInPts = getMaxLineLengthInPts();
       annotation.setLineLength(Math.min(maxLengthInPts, lengthInPts));
       forceLineRedraw();
