@@ -20,6 +20,7 @@ import Icon from 'components/Icon';
 
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
+import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import escapeHtml from 'helpers/escapeHtml';
 import useDidUpdate from 'hooks/useDidUpdate';
@@ -151,7 +152,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, textAreaV
           <div className="author-and-time">
             {renderAuthorName(annotation)}
             <div className="date-and-time">
-              {dayjs(annotation.DateCreated || new Date()).format(noteDateFormat)}
+              {dayjs(getLatestActivityDate(annotation)).format(noteDateFormat)}
             </div>
           </div>
           <div className="state-and-overflow">
