@@ -116,44 +116,29 @@ const CalibrationModal = () => {
 
   const handleApply = () => {
     const newScale = getNewScale();
+    const accurateNewScale = handleLossOfPrecision(newScale);
 
-    handleLossOfPrecision(newScale).then(accurateNewScale => {
-      core.setAnnotationStyles(annotation, {
-        Scale: accurateNewScale,
-      });
-
-      // this will also set the Scale for the other two measurement tools
-      setToolStyles(
-        'AnnotationCreateDistanceMeasurement',
-        'Scale',
-        accurateNewScale
-      );
-
-      dispatch(actions.closeElements(['calibrationModal']));
+    core.setAnnotationStyles(annotation, {
+      Scale: accurateNewScale,
     });
+
+    // this will also set the Scale for the other two measurement tools
+    setToolStyles(
+      'AnnotationCreateDistanceMeasurement',
+      'Scale',
+      accurateNewScale
+    );
+
+    dispatch(actions.closeElements(['calibrationModal']));
   };
 
   const handleLossOfPrecision = scale => {
-    return new Promise(resolve => {
-      const annotManager = core.getAnnotationManager();
+    // when the new distance that's entered in the modal is much bigger than the current distance, loss of precision can happen
+    // because internally WebViewer will do several multiplications and divisions to get the value to store in a measure dictionary
+    // in this case, setting 'Scale' again should fix this issue because this time the new distance and the current distance is very close, and we should get the accurate scale
+    annotation.Scale = scale;
 
-      annotManager.one('annotationChanged', (annotations, action) => {
-        if (
-          action === 'modify' &&
-          annotations.length === 1 &&
-          annotations[0] === annotation
-        ) {
-          const newScale = getNewScale();
-          resolve(newScale);
-        }
-      });
-      // when the new distance that's entered in the modal is much bigger than the current distance, loss of precision can happen
-      // because internally WebViewer will do several multiplications and divisions to get the value to store in a measure dictionary
-      // in this case, setting 'Scale' again should fix this issue because this time the new distance and the current distance is very close, and we should get the accurate scale
-      core.setAnnotationStyles(annotation, {
-        Scale: scale,
-      });
-    });
+    return getNewScale();
   };
 
   const getNewScale = () => {
