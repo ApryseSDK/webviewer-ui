@@ -2,9 +2,10 @@ import core from 'core';
 import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import {enableElements, disableElements} from 'actions/internalActions';
 
 import defaultTool from 'constants/defaultTool';
-import { PRIORITY_THREE } from 'constants/actionPriority';
+import { PRIORITY_THREE, PRIORITY_TWO } from 'constants/actionPriority';
 
 export const setCanUndo = canUndo => ({
   type: 'SET_CAN_UNDO',
@@ -84,10 +85,7 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
   const toolbarGroupsToDisable = Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-') && key !== 'toolbarGroup-View');
 
-  dispatch({
-    type: 'DISABLE_ELEMENTS',
-    payload: { dataElements: toolbarGroupsToDisable, priority: PRIORITY_THREE },
-  });
+  disableElements(toolbarGroupsToDisable, PRIORITY_TWO)(dispatch, getState);
 };
 
 export const enableRibbons = () => (dispatch, getState) => {
@@ -96,10 +94,7 @@ export const enableRibbons = () => (dispatch, getState) => {
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-'));
 
-  dispatch({
-    type: 'ENABLE_ELEMENTS',
-    payload: { dataElements: toolbarGroupsToEnable, priority: PRIORITY_THREE },
-  });
+  enableElements(toolbarGroupsToEnable,PRIORITY_TWO)(dispatch, getState);
 };
 
 const isElementDisabled = (state, dataElement) =>
