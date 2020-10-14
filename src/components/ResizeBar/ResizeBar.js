@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import Icon from 'components/Icon';
+import fireEvent from 'helpers/fireEvent';
 import selectors from 'selectors';
 
 import './ResizeBar.scss';
@@ -20,7 +21,9 @@ const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement }) => {
     // Maybe throttle is necessary because other components listening to the width would re-render too often?
     const dragMouseMove = ({ clientX }) => {
       if (isMouseDownRef.current) {
-        onResize(Math.max(minWidth, Math.min(window.innerWidth, leftDirection ? window.innerWidth - clientX : clientX)));
+        const newWidth = Math.max(minWidth, Math.min(window.innerWidth, leftDirection ? window.innerWidth - clientX : clientX));
+        onResize(newWidth);
+        fireEvent('panelResized', { element: dataElement, width: newWidth });
       }
     };
 

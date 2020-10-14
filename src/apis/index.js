@@ -154,7 +154,22 @@ import reactElements from './reactElements';
  // Listening to this event
   WebViewer(...).then(function(instance) {
     instance.iframeWindow.addEventListener('themeChanged', e => {
-      console.log(e.detail)
+      const theme = e.detail;
+      console.log(theme);
+    })
+  });
+ */
+
+/**
+ * Triggered when the panels are resized
+ * @name WebViewerInstance#panelResized
+ * @event
+ * @example
+ // Listening to this event
+  WebViewer(...).then(function(instance) {
+    instance.iframeWindow.addEventListener('panelResized', e => {
+      const { element, width } = e.detail;
+      console.log(element, width);
     })
   });
  */
