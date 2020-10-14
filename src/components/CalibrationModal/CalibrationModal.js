@@ -47,12 +47,17 @@ const CalibrationModal = () => {
       ) {
         const annot = annotations[0];
         setAnnotation(annot);
-        setValue(parseMeasurementContents(annot.getContents()));
+        const value = parseMeasurementContents(annot.getContents());
+        setValue(value);
         setUnitTo(annot.Scale[1][1]);
+        // initial new distance should be the same as the value
+        // in case the user doesn't change the input value
+        setNewDistance(parseFloat(value));
       } else if (action === 'deselected') {
         setAnnotation(null);
         setValue('');
         setUnitTo('');
+        setNewDistance(0);
       }
     };
 
