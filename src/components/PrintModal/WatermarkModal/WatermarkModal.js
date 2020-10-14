@@ -88,6 +88,8 @@ class WatermarkModal extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
+    core.addEventListener('documentLoaded', this.closeModal);
+
     if (this.props.isVisible !== prevProps.isVisible) {
       // Sets focus with a slight delay after modal becomes visible in order to
       // prevent stack overflow with competing print modal focus lock.
