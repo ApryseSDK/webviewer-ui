@@ -48,7 +48,7 @@ const NormalList = React.forwardRef(
         role="list"
       >
         {notes.map((currNote, index) => (
-          <React.Fragment key={`${index}${currNote.Id}`}>
+          <React.Fragment key={`${currNote.Id}`}>
             {children(notes, index)}
           </React.Fragment>
         ))}

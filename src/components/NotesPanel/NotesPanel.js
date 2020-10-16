@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +30,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     customNoteFilter,
     currentNotesPanelWidth,
     notesInLeftPanel,
+    isDocumentReadOnly
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -39,6 +40,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.getCustomNoteFilter(state),
       selectors.getNotesPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
+      selectors.isDocumentReadOnly(state),
     ],
     shallowEqual,
   );
@@ -183,6 +185,28 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     setSearchInput(value);
   }, 500);
 
+  const [pendingEditTextMap, setPendingEditTextMap] = useState({});
+  const setPendingEditText = useCallback(
+    (pendingText, annotationID) => {
+      setPendingEditTextMap(map => ({
+        ...map,
+        [annotationID]: pendingText,
+      }));
+    },
+    [setPendingEditTextMap],
+  );
+
+  const [pendingReplyMap, setPendingReplyMap] = useState({});
+  const setPendingReply = useCallback(
+    (pendingReply, annotationID) => {
+      setPendingReplyMap(map => ({
+        ...map,
+        [annotationID]: pendingReply,
+      }));
+    },
+    [setPendingReplyMap],
+  );
+
   const renderChild = (
     notes,
     index,
@@ -190,7 +214,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     // this function needs to be called by a Note component whenever its height changes
     // to clear the cache(used by react-virtualized) and recompute the height so that each note
     // can have the correct position
-    resize = () => {},
+    resize = () => { },
   ) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
@@ -207,6 +231,11 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       resize,
       isSelected: selectedNoteIds[currNote.Id],
       isContentEditable: core.canModify(currNote) && !currNote.getContents(),
+      pendingEditTextMap,
+      setPendingEditText,
+      pendingReplyMap,
+      setPendingReply,
+      isDocumentReadOnly,
     };
 
     return (
@@ -216,14 +245,16 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       <div role="listitem" className="note-wrapper">
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
-          <Note annotation={currNote} />
+          <Note
+            annotation={currNote}
+          />
         </NoteContext.Provider>
       </div>
     );
   };
 
   const notesToRender = getSortStrategies()
-    [sortStrategy].getSortedNotes(notes)
+  [sortStrategy].getSortedNotes(notes)
     .filter(filterNote);
 
   const NoResults = (
@@ -297,24 +328,24 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           </div>
           <div className="divider" />
           <div className="sort-row">
-                  <Button
-                    dataElement="filterAnnotationButton"
-                    className="filter-annotation-button"
-                    label={t('component.filter')}
-                    onClick={() => dispatch(actions.openElement('filterModal'))}
-                  />
-                  <div className="sort-container">
-                    <div className="label">{`${t('message.sortBy')}:`}</div>
-                    <Dropdown
-                      items={Object.keys(getSortStrategies())}
-                      translationPrefix="option.notesOrder"
-                      currentSelectionKey={sortStrategy}
-                      onClickItem={sortStrategy => {
-                        dispatch(actions.setSortStrategy(sortStrategy));
-                      }}
-                    />
-                  </div>
-                </div>
+            <Button
+              dataElement="filterAnnotationButton"
+              className="filter-annotation-button"
+              label={t('component.filter')}
+              onClick={() => dispatch(actions.openElement('filterModal'))}
+            />
+            <div className="sort-container">
+              <div className="label">{`${t('message.sortBy')}:`}</div>
+              <Dropdown
+                items={Object.keys(getSortStrategies())}
+                translationPrefix="option.notesOrder"
+                currentSelectionKey={sortStrategy}
+                onClickItem={sortStrategy => {
+                  dispatch(actions.setSortStrategy(sortStrategy));
+                }}
+              />
+            </div>
+          </div>
         </div>
         {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
           <NormalList
@@ -326,15 +357,15 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
             {renderChild}
           </NormalList>
         ) : (
-          <VirtualizedList
-            ref={listRef}
-            notes={notesToRender}
-            onScroll={handleScroll}
-            initialScrollTop={scrollTopRef.current}
-          >
-            {renderChild}
-          </VirtualizedList>
-        )}
+            <VirtualizedList
+              ref={listRef}
+              notes={notesToRender}
+              onScroll={handleScroll}
+              initialScrollTop={scrollTopRef.current}
+            >
+              {renderChild}
+            </VirtualizedList>
+          )}
       </React.Fragment>
     </div>
   );

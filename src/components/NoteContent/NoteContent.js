@@ -34,7 +34,7 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, textAreaValue, onTextChange }) => {
+const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextChange }) => {
   const [
     noteDateFormat,
     iconColor,
@@ -50,7 +50,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, textAreaV
     shallowEqual,
   );
 
-  const { isSelected, searchInput, resize, isContentEditable } = useContext(
+  const { isSelected, searchInput, resize, isContentEditable, pendingEditTextMap } = useContext(
     NoteContext,
   );
 
@@ -89,8 +89,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, textAreaV
           }}
         />
       ) : (
-        '(no name)'
-      );
+          '(no name)'
+        );
     },
     [searchInput],
   );
@@ -127,16 +127,16 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, textAreaV
   const contents = annotation.getContents();
   const numberOfReplies = annotation.getReplies().length;
   const formatNumberOfReplies = Math.min(numberOfReplies, 9);
-
-  // If we  have no textAreaValue, but we have contents
-  // we lost state in our pendingText map from unmounting the notes panel.
-  // Then we need to add the contents to the map so users see text placeholder if the want
-  // to edit the contents.
-  useEffect(() => {
-    if(!textAreaValue && contents) {
-      onTextChange(contents, noteIndex)
-    }
-  }, [textAreaValue, contents, noteIndex])
+  // This is the text placeholder passed to the ContentArea
+  // It ensures that if we try and edit, we get the right placeholder
+  // depending on whether the comment has been saved to the annotation or not
+  const thereIsNoUnpostedComment = pendingEditTextMap[annotation.Id] === '' || typeof pendingEditTextMap[annotation.Id] === 'undefined'
+  let textAreaValue;
+  if (contents && thereIsNoUnpostedComment) {
+    textAreaValue = contents;
+  } else {
+    textAreaValue = pendingEditTextMap[annotation.Id]
+  }
 
   const header = useMemo(() => (
     <React.Fragment>
@@ -181,13 +181,13 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, textAreaV
             onTextAreaValueChange={onTextChange}
           />
         ) : (
-          contents && (
-            <div className="container">{renderContents(contents)}</div>
-          )
-        )}
+            contents && (
+              <div className="container">{renderContents(contents)}</div>
+            )
+          )}
       </div>
     </React.Fragment>
-  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue]);
+  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]);
 
 
   return useMemo(
@@ -217,7 +217,6 @@ const ContentArea = ({
   ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
-  const textValueBeforeChanges = annotation.getCustomData('trn-mention')?.contents || annotation.getContents();
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
@@ -250,6 +249,7 @@ const ContentArea = ({
     }
 
     setIsEditing(false, noteIndex);
+    onTextAreaValueChange('', annotation.Id)
   };
 
   return (
@@ -259,7 +259,7 @@ const ContentArea = ({
           textareaRef.current = el;
         }}
         value={textAreaValue}
-        onChange={value => onTextAreaValueChange(value, noteIndex)}
+        onChange={value => onTextAreaValueChange(value, annotation.Id)}
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
         aria-label={`${t('action.comment')}...`}
@@ -270,7 +270,8 @@ const ContentArea = ({
           onClick={e => {
             e.stopPropagation();
             setIsEditing(false, noteIndex);
-            onTextAreaValueChange(textValueBeforeChanges, noteIndex);
+            // Clear pending text
+            onTextAreaValueChange('', annotation.Id);
           }}
         >
           {t('action.cancel')}
