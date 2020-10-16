@@ -91,10 +91,28 @@ const Note = ({ annotation }) => {
     e && e.stopPropagation();
 
     if (!isSelected) {
+      const currSelection = window.getSelection();
+      const focusNode = currSelection.focusNode;
+      const selectStart = currSelection.baseOffset;
+      const selectEnd = currSelection.extentOffset;
+
       customNoteSelectionFunction && customNoteSelectionFunction(annotation);
       core.deselectAllAnnotations();
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
+  
+      setTimeout(() => {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(focusNode);
+
+        range.setStart(focusNode, selectStart);
+        range.setEnd(focusNode, selectEnd);
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }, 0);
+
       // Need this delay to ensure all other event listeners fire before we open the line
       setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
     }
