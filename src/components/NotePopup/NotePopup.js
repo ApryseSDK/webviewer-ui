@@ -91,7 +91,7 @@ const NotePopup = ({ annotation, setIsEditing, noteIndex }) => {
   };
 
   const isEditable = !isEditDisabled && canModifyContents;
-  const isDeletable = !isDeleteDisabled && canModify;
+  const isDeletable = !isDeleteDisabled && canModify && !annotation.NoDelete;
 
   return !(isEditable || isDeletable) || isDisabled ? null : (
     <div

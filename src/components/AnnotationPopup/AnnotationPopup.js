@@ -288,7 +288,7 @@ const AnnotationPopup = () => {
               onClick={() => core.ungroupAnnotations(selectedAnnotations)}
             />
           )}
-          {canModify && (
+          {canModify && !firstAnnotation.NoDelete && (
             <ActionButton
               dataElement="annotationDeleteButton"
               title="action.delete"
