@@ -27,6 +27,7 @@
   .author-and-time {
     display: flex;
     flex-direction: column;
+    word-break: break-word;
   }
 
   .author-and-date {
