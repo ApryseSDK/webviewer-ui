@@ -75,6 +75,7 @@ import openElement from './openElement';
 import openElements from './openElements';
 import print from './print';
 import printInBackground from './printInBackground';
+import cancelPrint from './cancelPrint';
 import registerTool from './registerTool';
 import removeSearchListener from './removeSearchListener';
 import rotateClockwise from './rotateClockwise';
@@ -209,6 +210,7 @@ export default store => {
     openElements: openElements(store),
     print: print(store),
     printInBackground: printInBackground(store),
+    cancelPrint,
     registerTool: registerTool(store),
     removeSearchListener,
     searchText: searchText(store.dispatch),
