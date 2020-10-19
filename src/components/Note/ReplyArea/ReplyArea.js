@@ -17,7 +17,7 @@ const propTypes = {
 };
 
 // a component that contains the reply textarea, the reply button and the cancel button
-const ReplyArea = ({ annotation, replyText, setReplyText }) => {
+const ReplyArea = ({ annotation }) => {
   const [
     isReadOnly,
     isReplyDisabled,
@@ -34,7 +34,7 @@ const ReplyArea = ({ annotation, replyText, setReplyText }) => {
     ],
     shallowEqual
   );
-  const { resize, isContentEditable, isSelected } = useContext(NoteContext);
+  const { resize, isContentEditable, isSelected, pendingReplyMap, setPendingReply } = useContext(NoteContext);
   const [isFocused, setIsFocused] = useState(false);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -62,9 +62,20 @@ const ReplyArea = ({ annotation, replyText, setReplyText }) => {
     }
   }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
+  useEffect(() => {
+    // on initial mount, focus the last character of the textarea
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+
+      const textLength = textareaRef.current.value.length;
+      textareaRef.current.setSelectionRange(textLength, textLength);
+    }
+  }, []);
+
   const postReply = e => {
     // prevent the textarea from blurring out
     e.preventDefault();
+    const replyText = pendingReplyMap[annotation.Id]
 
     if (!replyText) {
       return;
@@ -91,7 +102,7 @@ const ReplyArea = ({ annotation, replyText, setReplyText }) => {
       }
     }
 
-    setReplyText('');
+    setPendingReply('', annotation.Id);
   };
 
   const ifReplyNotAllowed =
@@ -111,13 +122,13 @@ const ReplyArea = ({ annotation, replyText, setReplyText }) => {
         ref={el => {
           textareaRef.current = el;
         }}
-        value={replyText}
-        onChange={value => setReplyText(value)}
+        value={pendingReplyMap[annotation.Id]}
+        onChange={value => setPendingReply(value, annotation.Id)}
         onSubmit={postReply}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
-        placeholder={`${t('action.comment')}...`}
-        aria-label={`${t('action.comment')}...`}
+        placeholder={`${t('action.reply')}...`}
+        aria-label={`${t('action.reply')}...`}
       />
       <button
         className="reply-button"
