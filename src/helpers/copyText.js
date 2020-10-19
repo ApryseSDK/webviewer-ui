@@ -1,7 +1,13 @@
 import core from 'core';
 
 export default () => {
+  if (window.getSelection()?.toString()) {
+    // if we are selecting some text in the UI (i.e. text in note panel) just let it do the normal behaviour
+    return;
+  }
+
   if (window.clipboardData) {
+    // this is for IE
     window.clipboardData.setData('Text', core.getSelectedText());
   } else {
     const textarea = document.getElementById('copy-textarea');
