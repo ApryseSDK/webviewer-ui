@@ -36,12 +36,12 @@ function SearchOverlay(props) {
     }
   }, []);
 
-  const textInputOnChange = React.useCallback(function textInputOnChangeCallback(event){
+  const textInputOnChange = React.useCallback(function textInputOnChangeCallback(event) {
     const searchValue = event.target.value;
     setSearchValue(searchValue);
   }, [setSearchValue]);
 
-  const textInputOnKeyDown = React.useCallback(function textInputOnKeyDownCallback(event){
+  const textInputOnKeyDown = React.useCallback(function textInputOnKeyDownCallback(event) {
     if (event.key === 'Enter') {
       executeSearch(searchValue, {
         caseSensitive: isCaseSensitive,
@@ -51,7 +51,7 @@ function SearchOverlay(props) {
     }
   }, [executeSearch, searchValue, isCaseSensitive, isWholeWord, isWildcard]);
 
-  const searchButtonOnClick = React.useCallback(function onSearchButtonClickCallback(){
+  const searchButtonOnClick = React.useCallback(function onSearchButtonClickCallback() {
     executeSearch(searchValue, {
       caseSensitive: isCaseSensitive,
       wholeWord: isWholeWord,
@@ -61,33 +61,18 @@ function SearchOverlay(props) {
 
   const caseSensitiveSearchOptionOnChange = React.useCallback(function caseSensitiveSearchOptionOnChangeCallback(event) {
     const isChecked = event.target.checked;
-    executeSearch(searchValue, {
-      caseSensitive: isChecked,
-      wholeWord: isWholeWord,
-      wildcard: isWildcard,
-    });
     setCaseSensitive(isChecked);
-  }, [executeSearch, searchValue, setCaseSensitive, isWholeWord, isWildcard]);
+  }, [searchValue, setCaseSensitive, isWholeWord, isWildcard]);
 
   const wholeWordSearchOptionOnChange = React.useCallback(function wholeWordSearchOptionOnChangeCallback(event) {
     const isChecked = event.target.checked;
-    executeSearch(searchValue, {
-      caseSensitive: isCaseSensitive,
-      wholeWord: isChecked,
-      wildcard: isWildcard,
-    });
     setWholeWord(isChecked);
-  }, [executeSearch, searchValue, setWholeWord, isCaseSensitive, isWildcard]);
+  }, [searchValue, setWholeWord, isCaseSensitive, isWildcard]);
 
   const wildcardOptionOnChange = React.useCallback(function wildcardOptionOnChangeCallback(event) {
     const isChecked = event.target.checked;
-    executeSearch(searchValue, {
-      caseSensitive: isCaseSensitive,
-      wholeWord: isWholeWord,
-      wildcard: isChecked,
-    });
     setWildcard(isChecked);
-  }, [executeSearch, searchValue, setWildcard, isCaseSensitive, isWholeWord]);
+  }, [searchValue, setWildcard, isCaseSensitive, isWholeWord]);
 
   const nextButtonOnClick = React.useCallback(function nextButtonOnClickCallback() {
     if (selectNextResult) {
@@ -95,7 +80,7 @@ function SearchOverlay(props) {
     }
   }, [selectNextResult, searchResults, activeResultIndex]);
 
-  const previousButtonOnClick = React.useCallback(function previousButtonOnClickCallback(){
+  const previousButtonOnClick = React.useCallback(function previousButtonOnClickCallback() {
     if (selectPreviousResult) {
       selectPreviousResult(searchResults, activeResultIndex);
     }
