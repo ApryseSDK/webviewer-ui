@@ -76,6 +76,11 @@
             padding: 6px 0 6px 0;
             grid-template-columns: 100px 100px;
           }
+
+          label{
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
       }
 
