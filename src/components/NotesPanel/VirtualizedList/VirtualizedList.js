@@ -68,6 +68,7 @@ const VirtualizedList = React.forwardRef(
     const rowRenderer = ({ index, key, parent, style }) => {
       const currNote = notes[index];
 
+      // Padding added to the right since virtualized list lets it get cut off on the right
       return (
         <CellMeasurer
           key={`${key}${currNote.Id}`}
@@ -76,7 +77,7 @@ const VirtualizedList = React.forwardRef(
           parent={parent}
           rowIndex={index}
         >
-          <div style={style}>
+          <div style={{ ...style, paddingRight: '12px' }}>
             {children(notes, index, () => _resize(index))}
           </div>
         </CellMeasurer>
