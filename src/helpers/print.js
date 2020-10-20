@@ -14,9 +14,9 @@ let printQuality = 1;
 let colorMap;
 
 export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options) => {
-  let allPages, includeAnnotations, includeComments, pagesToPrint;
+  let allPages, includeAnnotations, includeComments, pagesToPrint, onProgress;
   if (options) {
-    ({ allPages, includeAnnotations, includeComments, pagesToPrint } = options);
+    ({ allPages, includeAnnotations, includeComments, pagesToPrint, onProgress } = options);
   }
 
   if (!core.getDocument()) {
@@ -52,6 +52,8 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       printQuality,
       sortStrategy,
       colorMap,
+      undefined,
+      onProgress,
     );
     Promise.all(createPages)
       .then(pages => {
@@ -91,7 +93,7 @@ const printPdf = () =>
       });
   });
 
-export const creatingPages = (pagesToPrint, includeComments, includeAnnot, printQualty, sortStrategy, clrMap, dateFormat) => {
+export const creatingPages = (pagesToPrint, includeComments, includeAnnot, printQualty, sortStrategy, clrMap, dateFormat, onProgress) => {
   const createdPages = [];
   pendingCanvases = [];
   includeAnnotations = includeAnnot;
@@ -105,6 +107,12 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnot, print
     if (includeComments && printableAnnotations.length) {
       const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotations);
       createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat));
+    }
+
+    if (onProgress) {
+      createdPages[createdPages.length - 1].then((img) => {
+        onProgress(pageNumber, img);
+      });
     }
   });
 

@@ -5,6 +5,7 @@
  * @param {Array.<number>} [pagesToPrint=[]] If allPages is false and pagesToPrint is passed in, will print only the pages passed in
  * @param {boolean} [includeAnnotations=false] If true, will print the documents with the annotations
  * @param {boolean} [includeComments=false] If true, will append comments to the document printed
+ * @param {function} [onProgress] A callback function that is executed on each page processed
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -12,7 +13,11 @@ WebViewer(...)
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', function() {
-      instance.printInBackground({ includeComments:true, includeAnnotations: true });
+      instance.printInBackground({
+        includeComments:true,
+        includeAnnotations: true,
+        onProgress: function(pageNumber, img) {},
+      });
     });
   });
  */
