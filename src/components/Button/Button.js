@@ -12,6 +12,8 @@ import selectors from 'selectors';
 
 import './Button.scss';
 
+const NOOP = () => {};
+
 const propTypes = {
   isActive: PropTypes.bool,
   mediaQueryClassName: PropTypes.string,
@@ -36,6 +38,9 @@ const Button = props => {
   );
 
   const {
+    // old name for disabled. We are keeping it for backwards comptability
+    // should remove in the future.
+    disable,
     disabled,
     isActive,
     mediaQueryClassName,
@@ -61,29 +66,34 @@ const Button = props => {
 
   const imgToShow = img;
 
+  // for backwards compatibility
+  const actuallyDisabled = disable || disabled;
+
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
     img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
-  const shouldRenderTooltip = !!title && !disabled;
+  const shouldRenderTooltip = !!title;
   const children = (
     <button
       className={classNames({
         Button: true,
-        active: isActive && !disabled,
-        disabled,
+        active: isActive && !actuallyDisabled,
+        disabled: actuallyDisabled,
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
       })}
-      disabled={disabled}
       style={style}
       data-element={dataElement}
-      onClick={onClick}
+      // Can't use button disabled property here.
+      // Because mouse events won't fire and we want them to
+      // so that we can show the button tooltip
+      onClick={actuallyDisabled ? NOOP : onClick}
       aria-label={aLabel}
       aria-keyshortcuts={ariaKeyshortcuts}
     >
       {isGlyph &&
         <Icon
-          disabled={disabled}
+          disabled={actuallyDisabled}
           glyph={imgToShow}
           color={color}
           fillClass={fillClass}
@@ -94,7 +104,7 @@ const Button = props => {
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title} hideShortcut={disabled}>{children}</Tooltip>
+    <Tooltip content={title} hideShortcut={actuallyDisabled}>{children}</Tooltip>
   ) : (
     children
   );

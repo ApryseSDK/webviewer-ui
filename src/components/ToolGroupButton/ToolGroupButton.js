@@ -99,7 +99,6 @@ class ToolGroupButton extends React.PureComponent {
           active: isActive,
         })}
         dataElement={dataElement}
-        onClick={this.onClick}
       >
         <Button
           title={title}
@@ -109,6 +108,7 @@ class ToolGroupButton extends React.PureComponent {
           color={color}
           fillClass={fillClass}
           dataElement={dataElement}
+          onClick={this.onClick}
         />
       </DataElementWrapper>
     );
