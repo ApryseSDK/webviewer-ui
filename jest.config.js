@@ -86,6 +86,7 @@ module.exports = {
     "^hooks/(.*)$": "<rootDir>/src/hooks/$1",
     "^core$": "<rootDir>/src/core",
     "^actions$": "<rootDir>/src/redux/actions",
+    "^actions(.*)$": "<rootDir>/src/redux/actions/$1",
     "^reducers/(.*)$": "<rootDir>/src/redux/reducers/$1",
     "^selectors$": "<rootDir>/src/redux/selectors",
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/fileMock.js",

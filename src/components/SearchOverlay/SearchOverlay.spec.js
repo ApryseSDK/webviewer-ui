@@ -15,6 +15,7 @@ const TestSearchOverlay = withProviders(SearchOverlay);
 
 function noop() {}
 
+
 // To create mocks of something that executeSearch uses we need to first import them
 // and then call jest.mock them.
 import { getOverrideSearchExecution } from "helpers/search";
@@ -98,8 +99,8 @@ describe('SearchOverlay', () => {
       fireEvent.click(searchButton);
       expect(executeSearch).toHaveBeenCalled();
     });
-    // TODO should not skip when tests are working
-    it.skip('Should execute search when case sensitive checkbox changed', () => {
+
+    it('Should execute search when case sensitive checkbox changed', () => {
       const executeSearch = jest.fn();
       const searchValue = 'more';
       const { container } = render(
@@ -118,8 +119,8 @@ describe('SearchOverlay', () => {
       fireEvent.click(checkbox);
       expect(executeSearch).not.toBeCalled();
     });
-    // TODO should not skip when tests are working
-    it.skip('Should execute search when whole word checkbox changed', () => {
+
+    it('Should execute search when whole word checkbox changed', () => {
       const executeSearch = jest.fn();
       const searchValue = 'more';
       const { container } = render(
@@ -138,8 +139,8 @@ describe('SearchOverlay', () => {
       fireEvent.click(checkbox);
       expect(executeSearch).not.toBeCalled();
     });
-    // TODO should not skip when tests are working
-    it.skip('Should render wild card checkbox and execute search when checkbox changed', () => {
+
+    it('Should render wild card checkbox and execute search when checkbox changed', () => {
       const executeSearch = jest.fn();
       const searchValue = 'more';
       const { container } = render(

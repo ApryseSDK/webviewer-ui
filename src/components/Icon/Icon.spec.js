@@ -4,6 +4,19 @@ import { Basic as BasicStory, Colorized as ColorizedStory, Disabled as DisabledS
 import Icon from "./Icon";
 
 describe('Icon component', () => {
+
+  // Icon has props that are required and when we do no throw error with rendering without props
+  // we get React prop type errors to the log. So for now that we don't have any other way of
+  // disabling them, just silencing console.error for during tests
+  let originalConsoleError;
+  beforeAll(() => {
+    originalConsoleError = console.error;
+    console.error = () => {};
+  });
+  afterAll(() => {
+    console.error = originalConsoleError;
+  });
+
   it('Basic story should not throw any errors', () => {
     expect(() => {
       render(<BasicStory />);
