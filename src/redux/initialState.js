@@ -205,6 +205,7 @@ export default {
     enableMouseWheelZoom: true,
     doesAutoLoad: getHashParams('auto_load', true),
     isReadOnly: getHashParams('readonly', false),
+    customModals: [],
     customPanels: [],
     useEmbeddedPrint: false,
     pageLabels: [],
