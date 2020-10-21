@@ -14,9 +14,9 @@ let printQuality = 1;
 let colorMap;
 
 export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options) => {
-  let allPages, includeAnnotations, includeComments, pagesToPrint, onProgress;
+  let includeAnnotations, includeComments, pagesToPrint, onProgress;
   if (options) {
-    ({ allPages, includeAnnotations, includeComments, pagesToPrint, onProgress } = options);
+    ({ includeAnnotations, includeComments, pagesToPrint, onProgress } = options);
   }
 
   if (!core.getDocument()) {
@@ -37,8 +37,8 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
     printPdf().then(() => {
       dispatch(actions.closeElement('loadingModal'));
     });
-  } else if (allPages || includeAnnotations || includeComments || (pagesToPrint && pagesToPrint.length > 0)) {
-    if (allPages) {
+  } else if (includeAnnotations || includeComments) {
+    if (!pagesToPrint) {
       pagesToPrint = [];
       for (let i = 1; i <= core.getTotalPages(); i++) {
         pagesToPrint.push(i);

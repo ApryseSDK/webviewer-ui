@@ -1,8 +1,7 @@
 /**
  * Programmatically print the document without opening a modal with the print options provided.
  * @method WebViewerInstance#printInBackground
- * @param {boolean} [allPages=true] If true, all pages will be printed
- * @param {Array.<number>} [pagesToPrint=[]] If allPages is false and pagesToPrint is passed in, will print only the pages passed in
+ * @param {Array.<number>} [pagesToPrint] Optionally pass in the pages you want to print. By default, all pages will be printed.
  * @param {boolean} [includeAnnotations=false] If true, will print the documents with the annotations
  * @param {boolean} [includeComments=false] If true, will append comments to the document printed
  * @param {function} [onProgress] A callback function that is executed on each page processed
@@ -27,8 +26,6 @@ import selectors from 'selectors';
 
 export default store => options => {
   const defaultOptions = {
-    allPages: false,
-    pagesToPrint: [],
     includeAnnotations: false,
     includeComments: false,
   };
@@ -38,17 +35,18 @@ export default store => options => {
     ...options,
   };
 
-  const { allPages, pagesToPrint } = printOptions;
+  const { pagesToPrint } = printOptions;
 
-  if (!allPages && pagesToPrint.length === 0) {
-    console.warn('No pages were passed in to be printed. Please pass either allPages set to true or a range of pages in pagesToPrint.');
-  } else {
-    print(
-      store.dispatch,
-      selectors.isEmbedPrintSupported(store.getState()),
-      selectors.getSortStrategy(store.getState()),
-      selectors.getColorMap(store.getState()),
-      printOptions,
-    );
+  if (pagesToPrint && pagesToPrint.length === 0) {
+    console.warn('No pages to be printed were found in the "pagesToPrint" array provided. If you want to print all pages, please set this to undefined or null.');
+    return;
   }
+
+  print(
+    store.dispatch,
+    selectors.isEmbedPrintSupported(store.getState()),
+    selectors.getSortStrategy(store.getState()),
+    selectors.getColorMap(store.getState()),
+    printOptions,
+  );
 };
