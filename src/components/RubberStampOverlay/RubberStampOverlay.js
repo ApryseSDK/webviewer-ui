@@ -8,7 +8,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 import useMedia from 'hooks/useMedia';
-import { Tabs, Tab, TabPanel } from 'components/Tabs';
+import { Tabs, Tab, TabPanel, TabHeader } from 'components/Tabs';
 import Icon from 'components/Icon';
 
 import { Swipeable } from 'react-swipeable';
@@ -90,22 +90,23 @@ class RubberStampOverlay extends React.Component {
         data-element="rubberStampOverlay"
       >
         <Tabs id="rubberStampTab">
-          <div className="header tab-header">
-            <div className="tab-list">
-              <Tab dataElement="standardStampPanelButton">
-                <div className="tab-options-button">
+          <TabHeader dataElement="rubberStampTabHeader">
+            <div className="header tab-header">
+              <div className="tab-list">
+                <Tab dataElement="standardStampPanelButton">
+                  <div className="tab-options-button">
                   {this.props.t(`tool.Standard`)}
                 </div>
               </Tab>
               <div className="tab-options-divider" />
-              <Tab dataElement="customStampPanelButton">
-                <div className="tab-options-button">
-                  {this.props.t(`tool.Custom`)}
-                </div>
-              </Tab>
+                <Tab dataElement="customStampPanelButton">
+                  <div className="tab-options-button">
+                    {this.props.t(`tool.Custom`)}
+                  </div>
+                </Tab>
+              </div>
             </div>
-          </div>
-
+          </TabHeader>
           <TabPanel dataElement="standardStampPanel">
             {/* Using Swipeable to stop the bubbling of swiping events when scrolling
               * Don't know a better way of doing this

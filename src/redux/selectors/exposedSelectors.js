@@ -11,7 +11,7 @@ export const getSelectedStamp = state => {
   const index = getSelectedStampIndex(state);
   let selectedStamp = standardStamps[index];
   // selected stamp is not found in standard stamps, search dyamic stamps
-  if (!selectedStamp && standardStamps.length) {
+  if (!selectedStamp && !!customStamps.length) {
     selectedStamp = customStamps[index - standardStamps.length];
   }
   return selectedStamp;

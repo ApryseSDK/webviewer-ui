@@ -64,6 +64,20 @@ Tab.propTypes = {
   dataElement: PropTypes.string.isRequired,
 };
 
+export const TabHeader = ({ dataElement, children }) => {
+  const [isDisabled] = useSelector(state => [
+    selectors.isElementDisabled(state, dataElement),
+  ]);
+
+  return (<div data-element={dataElement}>{isDisabled ? null : children}</div>);
+};
+
+TabHeader.propTypes = {
+  children: PropTypes.node.isRequired,
+  dataElement: PropTypes.string.isRequired,
+};
+
+
 export const TabPanel = ({ children, dataElement }) => {
   const id = useContext(TabsContext);
   const [isDisabled, isSelected] = useSelector(state => [
