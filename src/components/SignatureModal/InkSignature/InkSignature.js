@@ -120,7 +120,7 @@ const InkSignature = ({
         if (!pathsCopy[i]) {
           pathsCopy[i] = [];
         }
-        pathsCopy[i][j] = new Annotations.Point(paths[i][j].x, paths[i][j].y);
+        pathsCopy[i][j] = new CoreControls.Math.Point(paths[i][j].x, paths[i][j].y);
       }
     }
 
