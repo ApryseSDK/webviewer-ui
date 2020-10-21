@@ -382,7 +382,7 @@ class WatermarkModal extends React.PureComponent {
                 <div className="watermark-settings">
                   <form id="form" onSubmit={e => e.preventDefault()}>
                     <div className="form-field">
-                      <label for="location">{t(`option.watermark.location`)}</label>
+                      <label htmlFor="location">{t(`option.watermark.location`)}</label>
                       <select
                         id="location"
                         value={WATERMARK_LOCATIONS[currLocation]}
@@ -398,7 +398,7 @@ class WatermarkModal extends React.PureComponent {
 
                     <div className="form-field separator"></div>
                     <div className="form-field">
-                      <label for="textInput">{t(`option.watermark.text`)}</label>
+                      <label htmlFor="textInput">{t(`option.watermark.text`)}</label>
                       <input
                         className="text-input"
                         id="textInput"
@@ -413,7 +413,7 @@ class WatermarkModal extends React.PureComponent {
                       />
                     </div>
                     <div className="form-field">
-                      <label for="fonts">{t(`option.watermark.font`)}</label>
+                      <label htmlFor="fonts">{t(`option.watermark.font`)}</label>
                       <select
                         id="fonts"
                         value={formInfo[FORM_FIELD_KEYS.font]}
@@ -430,7 +430,7 @@ class WatermarkModal extends React.PureComponent {
                       </select>
                     </div>
                     <div className="form-field">
-                      <label for="fontSize">{t(`option.watermark.size`)}</label>
+                      <label htmlFor="fontSize">{t(`option.watermark.size`)}</label>
                       <select
                         id="fontSize"
                         value={formInfo[FORM_FIELD_KEYS.fontSize]}

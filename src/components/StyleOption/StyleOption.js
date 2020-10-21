@@ -16,7 +16,7 @@ function StyleOption(props) {
   return (
     <div className="StyleOption">
       <div className="styles-container">
-        <label className="styles-title" for="styleOptions">{t('option.styleOption.style')}</label>
+        <label className="styles-title" htmlFor="styleOptions">{t('option.styleOption.style')}</label>
         <div className="styles-layout">
           <select
             id="styleOptions"
