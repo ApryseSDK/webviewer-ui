@@ -130,9 +130,9 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   // This is the text placeholder passed to the ContentArea
   // It ensures that if we try and edit, we get the right placeholder
   // depending on whether the comment has been saved to the annotation or not
-  const thereIsNoUnpostedComment = pendingEditTextMap[annotation.Id] === '' || typeof pendingEditTextMap[annotation.Id] === 'undefined'
+  const thereIsNoUnpostedEdit = typeof pendingEditTextMap[annotation.Id] === 'undefined'
   let textAreaValue;
-  if (contents && thereIsNoUnpostedComment) {
+  if (contents && thereIsNoUnpostedEdit) {
     textAreaValue = contents;
   } else {
     textAreaValue = pendingEditTextMap[annotation.Id]
@@ -249,7 +249,7 @@ const ContentArea = ({
     }
 
     setIsEditing(false, noteIndex);
-    onTextAreaValueChange('', annotation.Id)
+    onTextAreaValueChange(undefined, annotation.Id)
   };
 
   return (
@@ -271,7 +271,7 @@ const ContentArea = ({
             e.stopPropagation();
             setIsEditing(false, noteIndex);
             // Clear pending text
-            onTextAreaValueChange('', annotation.Id);
+            onTextAreaValueChange(undefined, annotation.Id);
           }}
         >
           {t('action.cancel')}
