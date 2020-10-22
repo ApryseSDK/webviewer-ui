@@ -4,4 +4,4 @@ export default () => {
   const annotManager = getAnnotationManager();
 
   return annotManager.getWidgetEditingManager();
-}
+};

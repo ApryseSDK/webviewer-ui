@@ -6,6 +6,8 @@ function getQuadCoordinates(quad) {
   // if quads passed are Quad classes, then our minification changes the property names
   // here we first check if coordnates have the correct props, we use those. if not then we
   // will call getPoints() function which returns coordinates as JS object.
+  /* eslint-disable eqeqeq */
+  // purposefully check for null and undefined
   if (quad.x1 != undefined
     && quad.x2 != undefined
     && quad.x3 != undefined
@@ -14,6 +16,7 @@ function getQuadCoordinates(quad) {
     && quad.y2 != undefined
     && quad.y3 != undefined
     && quad.y4 != undefined) {
+    /* eslint-enable eqeqeq */
     return quad;
   } else if ( quad.getPoints) {
     return quad.getPoints();

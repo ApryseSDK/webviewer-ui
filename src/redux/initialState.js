@@ -477,7 +477,7 @@ export default {
     selectedStampIndex: 0,
     savedSignatures: [],
     displayedSavedSignatures: [],
-    displayedSignaturesFilterFunction: _ => true,
+    displayedSignaturesFilterFunction: () => true,
     selectedDisplayedSignatureIndex: 0,
     annotationContentOverlayHandler: null,
     isSnapModeEnabled: false,

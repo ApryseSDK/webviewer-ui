@@ -1,5 +1,4 @@
 import actions from 'actions';
-import { PRIORITY_ONE } from 'constants/actionPriority';
 
 export default dispatch => () => {
   dispatch(actions.setCustomElementOverrides('downloadButton', { disabled: false }));

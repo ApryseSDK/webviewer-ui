@@ -1,5 +1,4 @@
 import actions from 'actions';
-import { PRIORITY_ONE } from 'constants/actionPriority';
 import core from 'core';
 
 export default dispatch => () => {

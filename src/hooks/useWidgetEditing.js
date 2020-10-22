@@ -16,8 +16,8 @@ export default function useWidgetEditing() {
     core.addEventListener('editingEnded', onWidgetEditingEnded);
     return () => {
       core.removeEventListener('editingStarted', onWidgetEditingStarted);
-      core.removeEventListener('editingEnded', onWidgetEditingEnded);  
-    }
+      core.removeEventListener('editingEnded', onWidgetEditingEnded);
+    };
   }, []);
 
   return isEditingWidgets;
