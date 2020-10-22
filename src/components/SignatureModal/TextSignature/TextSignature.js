@@ -39,17 +39,6 @@ const TextSignature = ({
     }
   }, [activeIndex, fonts]);
 
-  const setSignature = useCallback(() => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
-    const canvas = canvasRef.current;
-
-    if (value) {
-      signatureTool.setSignature(canvas.toDataURL());
-    } else {
-      signatureTool.setSignature(null);
-    }
-  }, [value]);
-
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -84,13 +73,13 @@ const TextSignature = ({
       drawTextSignature();
       setSignature();
     }
-  }, [activeIndex, isTabPanelSelected, value, fonts, setSignature]);
+  }, [activeIndex, isTabPanelSelected, value, fonts]);
 
   useEffect(() => {
     if (isModalOpen && isTabPanelSelected) {
       setSignature();
     }
-  }, [isModalOpen, isTabPanelSelected, setSignature]);
+  }, [isModalOpen, isTabPanelSelected]);
 
   useEffect(() => {
     if (isTabPanelSelected) {
@@ -104,8 +93,21 @@ const TextSignature = ({
     }
   }, [isTabPanelSelected]);
 
+  const setSignature = () => {
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+    const canvas = canvasRef.current;
+
+    const signatureValue = value || '';
+    if (signatureValue.trim()) {
+      signatureTool.setSignature(canvas.toDataURL());
+    } else {
+      signatureTool.setSignature(null);
+    }
+  };
+
   const handleInputChange = e => {
-    const value = e.target.value;
+    // Use regex instead of 'trimStart' for IE11 compatibility
+    const value = e.target.value.replace(/^\s+/g, '');
     setValue(value);
   };
 
