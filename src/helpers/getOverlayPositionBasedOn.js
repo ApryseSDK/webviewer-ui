@@ -41,7 +41,7 @@ export default (element, overlay, align = 'left') => {
   }
 
 
-  return { 
+  return {
     left: !isNaN(left) ? Math.max(left, 0) : left,
     right
   };
