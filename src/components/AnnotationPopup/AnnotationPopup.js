@@ -137,7 +137,12 @@ const AnnotationPopup = () => {
           setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
         }
       } else {
-        closeAndReset();
+        const actionOnOtherAnnotation = firstAnnotation && annotations && !annotations.includes(firstAnnotation);
+        if (action === 'deselected' && actionOnOtherAnnotation) {
+          return;
+        } else {
+          closeAndReset();
+        }
       }
     };
 
@@ -149,7 +154,7 @@ const AnnotationPopup = () => {
       core.removeEventListener('documentUnloaded', closeAndReset);
       window.addEventListener('resize', closeAndReset);
     };
-  }, [dispatch, isLeftPanelOpen, isRightPanelOpen, isNotesPanelOpen]);
+  }, [dispatch, isLeftPanelOpen, isRightPanelOpen, isNotesPanelOpen, firstAnnotation]);
 
   if (isDisabled || !firstAnnotation) {
     return null;
