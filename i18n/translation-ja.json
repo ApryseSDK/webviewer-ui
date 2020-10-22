@@ -307,7 +307,16 @@
       "text": "テキスト",
       "style": "スタイル",
       "resetAllSettings": "すべての設定をリセット",
-      "font": "フォント"
+      "font": "フォント",
+      "locations": {
+        "center": "センター",
+        "topLeft": "左上",
+        "topRight": "右上",
+        "topCenter": "トップセンター",
+        "bottomLeft": "左下",
+        "bottomRight": "右下",
+        "bottomCenter": "下部中央"
+      }
     },
     "thumbnailPanel": {
       "delete": "削除する",

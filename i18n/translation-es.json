@@ -307,7 +307,16 @@
       "text": "Texto",
       "style": "Estilo",
       "resetAllSettings": "Restablecer todos los ajustes",
-      "font": "Hacen"
+      "font": "Hacen",
+      "locations": {
+        "center": "Centrar",
+        "topLeft": "Arriba a la izquierda",
+        "topRight": "Parte superior derecha",
+        "topCenter": "Centro Superior",
+        "bottomLeft": "Abajo a la izquierda",
+        "bottomRight": "Abajo a la derecha",
+        "bottomCenter": "Parte inferior central"
+      }
     },
     "thumbnailPanel": {
       "delete": "Borrar",

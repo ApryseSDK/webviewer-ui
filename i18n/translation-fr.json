@@ -307,7 +307,16 @@
       "text": "Texte",
       "style": "Style",
       "resetAllSettings": "Réinitialiser tous les réglages",
-      "font": "Font"
+      "font": "Font",
+      "locations": {
+        "center": "Centre",
+        "topLeft": "En haut à gauche",
+        "topRight": "En haut à droite",
+        "topCenter": "Centre supérieur",
+        "bottomLeft": "En bas à gauche",
+        "bottomRight": "En bas à droite",
+        "bottomCenter": "En bas au centre"
+      }
     },
     "thumbnailPanel": {
       "delete": "Supprimer",

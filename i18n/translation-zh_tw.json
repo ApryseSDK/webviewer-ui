@@ -307,7 +307,16 @@
       "text": "文本",
       "style": "樣式",
       "resetAllSettings": "重置所有設置",
-      "font": "字形"
+      "font": "字形",
+      "locations": {
+        "center": "中央",
+        "topLeft": "左上方",
+        "topRight": "右上",
+        "topCenter": "頂尖中心",
+        "bottomLeft": "左下方",
+        "bottomRight": "右下",
+        "bottomCenter": "底部中心"
+      }
     },
     "thumbnailPanel": {
       "delete": "刪除",

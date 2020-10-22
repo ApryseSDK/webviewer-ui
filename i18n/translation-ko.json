@@ -307,7 +307,16 @@
       "text": "본문",
       "style": "스타일",
       "resetAllSettings": "모든 설정 초기화",
-      "font": "글꼴"
+      "font": "글꼴",
+      "locations": {
+        "center": "센터",
+        "topLeft": "왼쪽 상단",
+        "topRight": "오른쪽 상단",
+        "topCenter": "상단 중앙",
+        "bottomLeft": "왼쪽 하단",
+        "bottomRight": "오른쪽 하단",
+        "bottomCenter": "하단 중앙"
+      }
     },
     "thumbnailPanel": {
       "delete": "지우다",

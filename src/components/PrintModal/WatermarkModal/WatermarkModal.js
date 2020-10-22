@@ -20,13 +20,13 @@ const DESIRED_HEIGHT = 300;
 const FONT_SIZES = [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48];
 
 const WATERMARK_LOCATIONS = {
-  CENTER: 'Center',
-  TOP_LEFT: 'Top Left',
-  TOP_RIGHT: 'Top Right',
-  TOP_CENTER: 'Top Center',
-  BOT_LEFT: 'Bottom Left',
-  BOT_RIGHT: 'Bottom Right',
-  BOT_CENTER: 'Bottom Center',
+  CENTER: 'center',
+  TOP_LEFT: 'topLeft',
+  TOP_RIGHT: 'topRight',
+  TOP_CENTER: 'topCenter',
+  BOT_LEFT: 'bottomLeft',
+  BOT_RIGHT: 'bottomRight',
+  BOT_CENTER: 'bottomCenter',
 };
 
 const FORM_FIELD_KEYS = {
@@ -264,8 +264,7 @@ class WatermarkModal extends React.PureComponent {
     this.setState({ isColorPaletteVisible: visible });
   };
 
-  onLocationChanged = newLocation => {
-    const key = this.getKeyByValue(WATERMARK_LOCATIONS, newLocation);
+  onLocationChanged = key => {
     const currLocationSettings = {
       ...this.state.locationSettings,
     };
@@ -385,13 +384,12 @@ class WatermarkModal extends React.PureComponent {
                       <label htmlFor="location">{t(`option.watermark.location`)}</label>
                       <select
                         id="location"
-                        value={WATERMARK_LOCATIONS[currLocation]}
                         onChange={event => {
                           this.onLocationChanged(event.target.value);
                         }}
                       >
                         {Object.keys(WATERMARK_LOCATIONS).map(key => (
-                          <option key={key}>{WATERMARK_LOCATIONS[key]}</option>
+                          <option key={key} value={key}>{t(`option.watermark.locations.${WATERMARK_LOCATIONS[key]}`)}</option>
                         ))}
                       </select>
                     </div>

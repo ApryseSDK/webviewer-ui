@@ -307,7 +307,16 @@
       "text": "Texto",
       "style": "Estilo",
       "resetAllSettings": "Voltar às configurações padrão",
-      "font": "fonte"
+      "font": "fonte",
+      "locations": {
+        "center": "Centro",
+        "topLeft": "Cima Esquerda",
+        "topRight": "Canto superior direito",
+        "topCenter": "Centro Superior",
+        "bottomLeft": "Inferior esquerdo",
+        "bottomRight": "Canto inferior direito",
+        "bottomCenter": "Centro Inferior"
+      }
     },
     "thumbnailPanel": {
       "delete": "Excluir",

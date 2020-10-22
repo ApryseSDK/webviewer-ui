@@ -307,7 +307,16 @@
       "text": "Текст",
       "style": "Стиль",
       "resetAllSettings": "Сбросить все настройки",
-      "font": "шрифт"
+      "font": "шрифт",
+      "locations": {
+        "center": "Центр",
+        "topLeft": "Верхний левый",
+        "topRight": "В правом верхнем углу",
+        "topCenter": "Верхний центр",
+        "bottomLeft": "Левая нижняя",
+        "bottomRight": "Внизу справа",
+        "bottomCenter": "Внизу по центру"
+      }
     },
     "thumbnailPanel": {
       "delete": "удалять",

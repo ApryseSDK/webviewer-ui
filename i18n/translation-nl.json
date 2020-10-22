@@ -307,7 +307,16 @@
       "text": "Tekst",
       "style": "Stijl",
       "resetAllSettings": "Reset alle instellingen",
-      "font": "doopvont"
+      "font": "doopvont",
+      "locations": {
+        "center": "Centrum",
+        "topLeft": "Linksboven",
+        "topRight": "Rechtsboven",
+        "topCenter": "Midden boven",
+        "bottomLeft": "Linksonder",
+        "bottomRight": "Rechts onder",
+        "bottomCenter": "Middenonder"
+      }
     },
     "thumbnailPanel": {
       "delete": "Delete",
