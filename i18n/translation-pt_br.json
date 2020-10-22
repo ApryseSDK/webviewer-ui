@@ -276,19 +276,20 @@
       "text": "Texto",
       "style": "Estilo",
       "resetAllSettings": "Redefinir todas as configurações",
-      "font": "fonte"
-    },
-    "thumbnailPanel": {
-      "delete": "Excluir",
-      "rotateClockwise": "Sentido horário",
-      "rotateCounterClockwise": "Sentido anti-horário",
-      "extractZeroPageError": "Nenhuma página foi selecionada para extrair"
-    },
-    "richText": {
+      "font": "fonte",
       "bold": "Negrito",
       "italic": "itálico",
       "underline": "Sublinhar",
-      "strikeout": "Tachado"
+      "strikeout": "Tachado",
+      "locations": {
+        "center": "Centro",
+        "topLeft": "Cima Esquerda",
+        "topRight": "Canto superior direito",
+        "topCenter": "Centro Superior",
+        "bottomLeft": "Inferior esquerdo",
+        "bottomRight": "Canto inferior direito",
+        "bottomCenter": "Centro Inferior"
+      }
     },
     "customStampModal": {
       "stampText": "Texto do carimbo:",
