@@ -44,7 +44,7 @@
       }
     ],
     "object-shorthand": [2, "always"],
-    "arrow-parens": [2, "as-needed"],
+    "arrow-parens": [2, "always"],
     "no-useless-escape": 0,
     "eqeqeq": 2,
     "jsx-quotes": 2,
