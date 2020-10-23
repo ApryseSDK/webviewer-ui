@@ -68,6 +68,10 @@ const transformPasswordOption = (password, dispatch) => {
 };
 
 const extractXodOptions = options => {
+  if (options.hasOwnProperty('xodOptions')) {
+    options = options.xodOptions
+  }
+
   const xodOptions = {};
 
   if (options.decryptOptions) {
