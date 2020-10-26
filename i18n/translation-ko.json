@@ -133,6 +133,8 @@
     "redaction": "개정",
     "viewControlsOverlay": "컨트롤 보기",
     "calibration": "구경 측정",
+    "zoomOverlay": "줌 오버레이",
+    "textPopup": "텍스트 팝업",
     "createStampButton": "새 스탬프 생성",
     "filter": "필터"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "정렬 순서 목록",
       "position": "위치",
       "time": "시각",
       "status": "상태",
@@ -178,6 +181,7 @@
       "type": "유형"
     },
     "toolbarGroup": {
+      "dropdownLabel": "도구 모음 그룹",
       "toolbarGroup-View": "전망",
       "toolbarGroup-Annotate": "주석 달기",
       "toolbarGroup-Shapes": "모양",

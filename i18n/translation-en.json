@@ -133,6 +133,8 @@
     "redaction": "Redaction",
     "viewControlsOverlay": "View Controls",
     "calibration": "Calibration",
+    "zoomOverlay": "Zoom Overlay",
+    "textPopup": "Text Popup",
     "createStampButton": "Create New Stamp",
     "filter": "Filter"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "Sort Order List",
       "position": "Position",
       "time": "Time",
       "status": "Status",
@@ -178,6 +181,7 @@
       "type": "Type"
     },
     "toolbarGroup": {
+      "dropdownLabel": "Toolbar Groups",
       "toolbarGroup-View": "View",
       "toolbarGroup-Annotate": "Annotate",
       "toolbarGroup-Shapes": "Shapes",

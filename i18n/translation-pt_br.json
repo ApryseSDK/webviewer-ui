@@ -133,6 +133,8 @@
     "redaction": "Supressão",
     "viewControlsOverlay": "Controles de visualização",
     "calibration": "Calibração",
+    "zoomOverlay": "Sobreposição de zoom",
+    "textPopup": "Texto Popup",
     "createStampButton": "Criar novo carimbo",
     "filter": "Filtro"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "Classificar lista de pedidos",
       "position": "Posição",
       "time": "Hora",
       "status": "Status",
@@ -178,6 +181,7 @@
       "type": "Tipo"
     },
     "toolbarGroup": {
+      "dropdownLabel": "Grupos da barra de ferramentas",
       "toolbarGroup-View": "Visualizar",
       "toolbarGroup-Annotate": "Anotar",
       "toolbarGroup-Shapes": "Formas",

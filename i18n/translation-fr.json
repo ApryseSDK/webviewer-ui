@@ -133,6 +133,8 @@
     "redaction": "Biffure",
     "viewControlsOverlay": "Contrôles de l'affichage",
     "calibration": "Étalonnage",
+    "zoomOverlay": "Superposition de zoom",
+    "textPopup": "Popup texte",
     "createStampButton": "Créer un nouveau tampon",
     "filter": "Filtre"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "Liste des ordres de tri",
       "position": "Position",
       "time": "Temps",
       "status": "Statut",
@@ -178,6 +181,7 @@
       "type": "Type"
     },
     "toolbarGroup": {
+      "dropdownLabel": "Groupes de barres d'outils",
       "toolbarGroup-View": "Vue",
       "toolbarGroup-Annotate": "Annoter",
       "toolbarGroup-Shapes": "Formes",

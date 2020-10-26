@@ -133,6 +133,8 @@
     "redaction": "Редактировать",
     "viewControlsOverlay": "Изменить вид",
     "calibration": "калибровка",
+    "zoomOverlay": "Наложение масштаба",
+    "textPopup": "Текстовое всплывающее окно",
     "createStampButton": "Создать новую марку",
     "filter": "Фильтр"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "Список порядка сортировки",
       "position": "Позиция",
       "time": "Время",
       "status": "Статус",
@@ -178,6 +181,7 @@
       "type": "Тип"
     },
     "toolbarGroup": {
+      "dropdownLabel": "Группы панелей инструментов",
       "toolbarGroup-View": "Посмотреть",
       "toolbarGroup-Annotate": "Пометки",
       "toolbarGroup-Shapes": "Формы",

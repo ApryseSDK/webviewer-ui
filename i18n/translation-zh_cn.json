@@ -133,6 +133,8 @@
     "redaction": "新版本",
     "viewControlsOverlay": "调整浏览方式",
     "calibration": "校准",
+    "zoomOverlay": "缩放叠加",
+    "textPopup": "文字弹出",
     "createStampButton": "创建新图章",
     "filter": "过滤"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "排序订单清单",
       "position": "位置",
       "time": "时间",
       "status": "状态",
@@ -178,6 +181,7 @@
       "type": "类型"
     },
     "toolbarGroup": {
+      "dropdownLabel": "工具栏组",
       "toolbarGroup-View": "视图",
       "toolbarGroup-Annotate": "注释",
       "toolbarGroup-Shapes": "形状",

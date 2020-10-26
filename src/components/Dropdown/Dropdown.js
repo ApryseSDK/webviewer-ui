@@ -52,6 +52,7 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
         className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
         onClick={e => onClickDropdownItem(e, key)}
         tabIndex={isOpen ? undefined : -1} // Just to be safe.
+        role="option"
       >
         {t(`${translationPrefix}.${key}`, key)}
       </button>
@@ -86,6 +87,8 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
       <div
         className={classNames('Dropdown__items', { 'hide': !isOpen })}
         ref={overlayRef}
+        role="listbox"
+        aria-label={t(`${translationPrefix}.dropdownLabel`)}
       >
         {dropdownItems}
       </div>

@@ -133,6 +133,8 @@
     "redaction": "改訂",
     "viewControlsOverlay": "コントロールの表示",
     "calibration": "較正",
+    "zoomOverlay": "ズームオーバーレイ",
+    "textPopup": "テキストポップアップ",
     "createStampButton": "新しいスタンプを作成",
     "filter": "フィルタ"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "ソート順リス",
       "position": "ポジション",
       "time": "時間",
       "status": "状態",
@@ -178,6 +181,7 @@
       "type": "タイプ"
     },
     "toolbarGroup": {
+      "dropdownLabel": "ツールバーグループ",
       "toolbarGroup-View": "見る",
       "toolbarGroup-Annotate": "注釈を付ける",
       "toolbarGroup-Shapes": "形",

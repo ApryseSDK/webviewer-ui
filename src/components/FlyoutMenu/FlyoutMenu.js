@@ -33,9 +33,11 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   /** Fired when the menu is closed. */
   onClose: PropTypes.func,
+  /** Accessibility */
+  ariaLabel: PropTypes.string,
 };
 
-function FlyoutMenu({ menu, trigger, onClose, children }) {
+function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const dispatch = useDispatch();
 
   const allOtherMenus = useMemo(() => MENUS.filter(m => m !== menu), [menu]);
@@ -100,7 +102,7 @@ function FlyoutMenu({ menu, trigger, onClose, children }) {
 
   return (
     <Swipeable onSwipedUp={closeMenu} onSwipedDown={closeMenu} preventDefaultTouchmoveEvent>
-      <div className={overlayClass} data-element={menu} style={!isMobile ? position : undefined} ref={overlayRef}>
+      <div className={overlayClass} data-element={menu} style={!isMobile ? position : undefined} ref={overlayRef} role="listbox" aria-label={ariaLabel}>
         {isMobile && <div className="swipe-indicator" />}
         {children}
       </div>

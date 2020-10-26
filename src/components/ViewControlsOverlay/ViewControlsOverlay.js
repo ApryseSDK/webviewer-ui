@@ -45,7 +45,7 @@ function ViewControlsOverlay() {
   const { pageTransition, layout } = displayModeObjects.find(obj => obj.displayMode === displayMode);
 
   return (
-    <FlyoutMenu menu="viewControlsOverlay" trigger="viewControlsButton" onClose={undefined}>
+    <FlyoutMenu menu="viewControlsOverlay" trigger="viewControlsButton" onClose={undefined} ariaLabel={t('component.viewControlsOverlay')}>
       <DataElementWrapper
         dataElement="pageTransitionHeader"
         className="type"
@@ -63,6 +63,7 @@ function ViewControlsOverlay() {
               title="option.pageTransition.continuous"
               img="icon-header-page-manipulation-page-transition-continuous-page-line"
               isActive={pageTransition === 'continuous' && !isReaderMode}
+              role="option"
             />
             <div className="title">{t('option.pageTransition.continuous')}</div>
           </DataElementWrapper>
@@ -75,6 +76,7 @@ function ViewControlsOverlay() {
               title="option.pageTransition.default"
               img="icon-header-page-manipulation-page-transition-page-by-page-line"
               isActive={pageTransition === 'default' && !isReaderMode}
+              role="option"
             />
             <div className="title">{t('option.pageTransition.default')}</div>
           </DataElementWrapper>
@@ -88,6 +90,7 @@ function ViewControlsOverlay() {
                 title="option.pageTransition.reader"
                 img="icon-header-page-manipulation-page-transition-reader"
                 isActive={isReaderMode}
+                role="option"
               />
               <div className="title">{t('option.pageTransition.reader')}</div>
             </DataElementWrapper>
@@ -112,6 +115,7 @@ function ViewControlsOverlay() {
             <ActionButton
               title="action.rotateClockwise"
               img="icon-header-page-manipulation-page-rotation-clockwise-line"
+              role="option"
             />
             <div className="title">{t('action.rotateClockwise')}</div>
           </DataElementWrapper>
@@ -119,6 +123,7 @@ function ViewControlsOverlay() {
             <ActionButton
               title="action.rotateCounterClockwise"
               img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
+              role="option"
             />
             <div className="title">{t('action.rotateCounterClockwise')}</div>
           </DataElementWrapper>
@@ -141,6 +146,7 @@ function ViewControlsOverlay() {
               title="option.layout.single"
               img="icon-header-page-manipulation-page-layout-single-page-line"
               isActive={layout === 'single'}
+              role="option"
             />
             <div className="title">{t('option.layout.single')}</div>
           </DataElementWrapper>
@@ -153,6 +159,7 @@ function ViewControlsOverlay() {
               title="option.layout.double"
               img="icon-header-page-manipulation-page-layout-double-page-line"
               isActive={layout === 'double'}
+              role="option"
             />
             <div className="title">{t('option.layout.double')}</div>
           </DataElementWrapper>
@@ -165,6 +172,7 @@ function ViewControlsOverlay() {
               title="option.layout.cover"
               img="icon-header-page-manipulation-page-layout-cover-line"
               isActive={layout === 'cover'}
+              role="option"
             />
             <div className="title">{t('option.layout.cover')}</div>
           </DataElementWrapper>

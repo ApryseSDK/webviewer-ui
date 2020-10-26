@@ -26,6 +26,7 @@ const propTypes = {
   onClick: PropTypes.func,
   /** Will override translated title if both given. */
   ariaLabel: PropTypes.string,
+  role: PropTypes.string,
 };
 
 const Button = props => {
@@ -53,6 +54,7 @@ const Button = props => {
     title,
     style,
     ariaLabel,
+    role,
     fillClass,
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
@@ -89,6 +91,7 @@ const Button = props => {
       // so that we can show the button tooltip
       onClick={actuallyDisabled ? NOOP : onClick}
       aria-label={aLabel}
+      role={role}
       aria-keyshortcuts={ariaKeyshortcuts}
     >
       {isGlyph &&

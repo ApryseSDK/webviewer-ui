@@ -133,6 +133,8 @@
     "redaction": "修訂",
     "viewControlsOverlay": "查看權限",
     "calibration": "校準",
+    "zoomOverlay": "縮放疊加",
+    "textPopup": "文字彈出",
     "createStampButton": "創建新圖章",
     "filter": "過濾"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "排序訂單清單",
       "position": "位置",
       "time": "時間",
       "status": "狀態",
@@ -178,6 +181,7 @@
       "type": "類型"
     },
     "toolbarGroup": {
+      "dropdownLabel": "工具欄組",
       "toolbarGroup-View": "視圖",
       "toolbarGroup-Annotate": "註釋",
       "toolbarGroup-Shapes": "形狀",

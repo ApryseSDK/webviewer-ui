@@ -50,13 +50,14 @@ function MenuOverlay() {
   };
 
   return (
-    <FlyoutMenu menu="menuOverlay" trigger="menuButton" onClose={undefined}>
+    <FlyoutMenu menu="menuOverlay" trigger="menuButton" onClose={undefined} ariaLabel={t('component.menuOverlay')}>
       <ActionButton
         dataElement="filePickerButton"
         className="row"
         img="icon-header-file-picker-line"
         label={t('action.openFile')}
         ariaLabel={t('action.openFile')}
+        role="option"
         onClick={openFilePicker}
       />
       <ActionButton
@@ -65,6 +66,7 @@ function MenuOverlay() {
         img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
         label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
         ariaLabel={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+        role="option"
         onClick={toggleFullscreen}
       />
       {documentType !== workerTypes.XOD && (
@@ -74,6 +76,7 @@ function MenuOverlay() {
           img="icon-header-download"
           label={t('action.download')}
           ariaLabel={t('action.download')}
+          role="option"
           onClick={downloadDocument}
         />
       )}
@@ -83,6 +86,7 @@ function MenuOverlay() {
         img="icon-header-print-line"
         label={t('action.print')}
         ariaLabel={t('action.print')}
+        role="option"
         onClick={handlePrintButtonClick}
       />
       {!isIE && (
@@ -92,6 +96,7 @@ function MenuOverlay() {
           img={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`}
           label={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
           ariaLabel={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
+          role="option"
           onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
         />
       )}

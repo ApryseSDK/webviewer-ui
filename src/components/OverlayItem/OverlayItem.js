@@ -7,12 +7,13 @@ class OverlayItem extends React.PureComponent {
   static propTypes = {
     onClick: PropTypes.func,
     buttonName: PropTypes.string,
+    role: PropTypes.string,
   }
 
   render() {
-    const { buttonName } = this.props;
+    const { buttonName, role } = this.props;
     return (
-      <button className="OverlayItem" onClick={this.props.onClick} aria-label={buttonName}>
+      <button className="OverlayItem" onClick={this.props.onClick} aria-label={buttonName} role={role}>
         <div className="ButtonText">
           { buttonName }
         </div>

@@ -133,6 +133,8 @@
     "redaction": "Modificación",
     "viewControlsOverlay": "Ver controles",
     "calibration": "Calibración",
+    "zoomOverlay": "Superposición de zoom",
+    "textPopup": "Ventana emergente de texto",
     "createStampButton": "Crear nuevo sello",
     "filter": "Filtrar"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "Lista de orden de clasificación",
       "position": "Posición",
       "time": "Hora",
       "status": "Estado",
@@ -178,6 +181,7 @@
       "type": "Tipo"
     },
     "toolbarGroup": {
+      "dropdownLabel": "Grupos de barras de herramientas",
       "toolbarGroup-View": "Ver",
       "toolbarGroup-Annotate": "Anotar",
       "toolbarGroup-Shapes": "Formas",

@@ -133,6 +133,8 @@
     "redaction": "Redigeren",
     "viewControlsOverlay": "Scherm opties",
     "calibration": "ijking",
+    "zoomOverlay": "Zoom-overlay",
+    "textPopup": "Tekstpop-up",
     "createStampButton": "Maak een nieuwe stempel",
     "filter": "Filter"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "Sorteer Bestellijst",
       "position": "Positie",
       "time": "Tijd",
       "status": "Toestand",
@@ -178,6 +181,7 @@
       "type": "Type"
     },
     "toolbarGroup": {
+      "dropdownLabel": "Werkbalkgroepen",
       "toolbarGroup-View": "Visie",
       "toolbarGroup-Annotate": "Annoteren",
       "toolbarGroup-Shapes": "Vormen",

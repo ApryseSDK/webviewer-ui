@@ -133,6 +133,8 @@
     "redaction": "Schwärzen",
     "viewControlsOverlay": "Anzeigeoptionen",
     "calibration": "Kalibrierung",
+    "zoomOverlay": "Zoom-Overlay",
+    "textPopup": "Text Popup",
     "createStampButton": "Neuen Stempel erstellen",
     "filter": "Filter"
   },
@@ -171,6 +173,7 @@
   },
   "option": {
     "notesOrder": {
+      "dropdownLabel": "Sortierreihenfolge Liste",
       "position": "Position",
       "time": "Zeit",
       "status": "Status",
@@ -178,6 +181,7 @@
       "type": "Art"
     },
     "toolbarGroup": {
+      "dropdownLabel": "Symbolleistengruppen",
       "toolbarGroup-View": "Aussicht",
       "toolbarGroup-Annotate": "Kommentieren",
       "toolbarGroup-Shapes": "Formen",

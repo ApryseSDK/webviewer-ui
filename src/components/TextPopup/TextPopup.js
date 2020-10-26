@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import getHashParams from 'helpers/getHashParams';
 
@@ -17,7 +18,7 @@ import selectors from 'selectors';
 
 import './TextPopup.scss';
 
-const TextPopup = () => {
+const TextPopup = ({ t }) => {
   const fullAPI = !!getHashParams('pdfnet', false);
 
   const [isDisabled, isOpen, popupItems] = useSelector(
@@ -73,6 +74,8 @@ const TextPopup = () => {
       ref={popupRef}
       style={{ ...position }}
       onClick={onClose}
+      role="listbox"
+      aria-label={t('component.textPopup')}
     >
       <CustomizablePopup dataElement="textPopup">
         {fullAPI && (
@@ -81,38 +84,44 @@ const TextPopup = () => {
             title="action.edit"
             img="ic_edit_black_24px"
             onClick={textEditingHandler}
+            role="option"
           />
         )}
-        <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={copyText} />
+        <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={copyText} role="option" />
         <ActionButton
           dataElement="textHighlightToolButton"
           title="annotation.highlight"
           img="icon-tool-highlight"
           onClick={() => createTextAnnotationAndSelect(dispatch, Annotations.TextHighlightAnnotation)}
+          role="option"
         />
         <ActionButton
           dataElement="textUnderlineToolButton"
           title="annotation.underline"
           img="icon-tool-text-manipulation-underline"
           onClick={() => createTextAnnotationAndSelect(dispatch, Annotations.TextUnderlineAnnotation)}
+          role="option"
         />
         <ActionButton
           dataElement="textSquigglyToolButton"
           title="annotation.squiggly"
           img="icon-tool-text-manipulation-squiggly"
           onClick={() => createTextAnnotationAndSelect(dispatch, Annotations.TextSquigglyAnnotation)}
+          role="option"
         />
         <ActionButton
           title="annotation.strikeout"
           img="icon-tool-text-manipulation-strikethrough"
           onClick={() => createTextAnnotationAndSelect(dispatch, Annotations.TextStrikeoutAnnotation)}
           dataElement="textStrikeoutToolButton"
+          role="option"
         />
         <ActionButton
           title="tool.Link"
           img="icon-tool-link"
           onClick={() => dispatch(actions.openElement('linkModal'))}
           dataElement="linkButton"
+          role="option"
         />
         {core.isCreateRedactionEnabled() && (
           <ActionButton
@@ -120,6 +129,7 @@ const TextPopup = () => {
             title="option.redaction.markForRedaction"
             img="ic_annotation_add_redact_black_24px"
             onClick={() => createTextAnnotationAndSelect(dispatch, Annotations.RedactionAnnotation)}
+            role="option"
           />
         )}
       </CustomizablePopup>
@@ -127,4 +137,4 @@ const TextPopup = () => {
   );
 };
 
-export default TextPopup;
+export default withTranslation()(TextPopup);
