@@ -82,6 +82,9 @@ class PrintModal extends React.PureComponent {
 
     if (prevProps.isOpen && !this.props.isOpen) {
       core.setWatermark(this.state.existingWatermarks);
+      this.setState({
+        isWatermarkModalVisible: false
+      });
     }
   }
 
