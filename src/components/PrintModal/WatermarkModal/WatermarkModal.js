@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Button from 'components/Button';
-import ActionButton from 'components/ActionButton';
 import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 
