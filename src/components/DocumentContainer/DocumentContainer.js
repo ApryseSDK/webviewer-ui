@@ -244,7 +244,8 @@ class DocumentContainer extends React.PureComponent {
                 data-element="documentContainer"
                 onScroll={this.handleScroll}
               >
-                <div className={documentClassName} ref={this.document}/>
+                {/* tabIndex="-1" to keep document focused when in single page mode */}
+                <div className={documentClassName} ref={this.document} tabIndex="-1"/>
                 {this.props.isReaderMode && (
                   <ReaderModeViewer />
                 )}
