@@ -110,7 +110,7 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnot, print
     }
 
     if (onProgress) {
-      createdPages[createdPages.length - 1].then((img) => {
+      createdPages[createdPages.length - 1].then(img => {
         onProgress(pageNumber, img);
       });
     }
