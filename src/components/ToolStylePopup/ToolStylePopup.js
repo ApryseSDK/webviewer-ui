@@ -68,13 +68,19 @@ class ToolStylePopup extends React.PureComponent {
     const pageNavOverlays = Array.from(document.querySelectorAll(
       '[data-element="pageNavOverlay"]',
     ));
+    const openedModal = Array.from(document.querySelectorAll('.Modal.open'));
+
     const clickedOnToolsOverlay = toolsOverlays.some(toolsOverlay => {
       return toolsOverlay?.contains(e.target);
     });
     const clickedONPageNavOverlay = pageNavOverlays.some(pageNavOverlay => {
       return pageNavOverlay?.contains(e.target);
     });
-    if (!clickedOnToolsOverlay && !clickedONPageNavOverlay) {
+    const clickedONCreateStampModal = openedModal.some(pageModal => {
+      return pageModal.classList.contains('CustomStampModal')
+    });
+
+    if (!clickedOnToolsOverlay && !clickedONPageNavOverlay && !clickedONCreateStampModal) {
       this.props.closeElement('toolStylePopup');
     }
   };
