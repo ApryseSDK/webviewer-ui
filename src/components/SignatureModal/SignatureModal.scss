@@ -88,6 +88,7 @@
       cursor: pointer;
 
       .tab-options-button {
+        @include button-reset;
         // flex breaks ellipsis text overflow for some reason
         // display: flex;
         // justify-content: center;
@@ -192,6 +193,7 @@
       }
 
       .signature-clear {
+        @include button-reset;
         color: var(--secondary-button-text);
         padding: 0 16px;
         height: 32px;
@@ -206,6 +208,7 @@
       }
 
       .signature-create {
+        @include button-reset;
         background: var(--primary-button);
         border-radius: 4px;
         padding: 0 8px;

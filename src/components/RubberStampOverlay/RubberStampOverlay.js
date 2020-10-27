@@ -68,19 +68,19 @@ class RubberStampOverlay extends React.Component {
     const { isMobile, standardStamps, customStamps } = this.props;
 
     const rubberStamps = standardStamps.map(({ imgSrc, annotation }, index) =>
-      <div key={index} className="rubber-stamp" onClick={() => this.setRubberStamp(annotation, index)}>
+      <button key={index} className="rubber-stamp" aria-label={`${this.props.t('annotation.stamp')} ${index + 1}`} onClick={() => this.setRubberStamp(annotation, index)}>
         <img src={imgSrc} alt="" />
-      </div>,
+      </button>,
     );
 
     const customImgs = customStamps.map(({ imgSrc, annotation }, index) =>
-      <div key={index}  className="stamp-row">
-        <div className="stamp-row-content" onClick={() => this.setRubberStamp(annotation, standardStamps.length + index)}>
+      <div key={index} className="stamp-row">
+        <button className="stamp-row-content custom-stamp" aria-label={`${this.props.t('annotation.rubberStamp')} ${index + 1}`} onClick={() => this.setRubberStamp(annotation, standardStamps.length + index)}>
           <img src={imgSrc} alt=""/>
-        </div>
-        <div className="icon" onClick={() => this.deleteCustomStamp(index)}>
+        </button>
+        <button className="icon" onClick={() => this.deleteCustomStamp(index)}>
           <Icon glyph="icon-delete-line"/>
-        </div>
+        </button>
       </div>,
     );
 
@@ -94,15 +94,15 @@ class RubberStampOverlay extends React.Component {
             <div className="header tab-header">
               <div className="tab-list">
                 <Tab dataElement="standardStampPanelButton">
-                  <div className="tab-options-button">
-                  {this.props.t(`tool.Standard`)}
-                </div>
+                  <button className="tab-options-button">
+                    {this.props.t(`tool.Standard`)}
+                  </button>
               </Tab>
               <div className="tab-options-divider" />
                 <Tab dataElement="customStampPanelButton">
-                  <div className="tab-options-button">
+                  <button className="tab-options-button">
                     {this.props.t(`tool.Custom`)}
-                  </div>
+                  </button>
                 </Tab>
               </div>
             </div>
@@ -124,14 +124,14 @@ class RubberStampOverlay extends React.Component {
             <div className="custom-stamp-panel">
               { customImgs }
             </div>
-            <div className={classNames({
+            <button className={classNames({
                 'stamp-row-content': true,
                 'add-btn': true,
               })}
               onClick={this.openCustomSampModal}
             >
               {this.props.t(`component.createStampButton`)}
-            </div>
+            </button>
           </TabPanel>
         </Tabs>
       </div>

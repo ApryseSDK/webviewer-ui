@@ -151,18 +151,18 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
       </div>
       <div className="divider-horizontal"></div>
       <div className="footer">
-        <div className="stamp-close" onClick={closeModal}>
+        <button className="stamp-close" onClick={closeModal}>
           {t('action.cancel')}
-        </div>
+        </button>
         <ColorPalette
           color={colorInput}
           property="StrokeColor"
           onStyleChange={handleColorInputChange}
           overridePalette2={COLOR_CHOICES}
         />
-        <div className="stamp-create" onClick={createCustomStamp}>
+        <button className="stamp-create" onClick={createCustomStamp}>
           {t('action.create')}
-        </div>
+        </button>
       </div>
 
     </div>

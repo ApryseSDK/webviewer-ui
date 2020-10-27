@@ -464,9 +464,10 @@ class WatermarkModal extends React.PureComponent {
                     <div className="form-field">
                       <label>{t(`option.watermark.style`)}</label>
                       <div className="style-container">
-                        <div
+                        <Button
                           id="currentColorCell"
                           className="colorSelect"
+                          ariaLabel="colorSelectButton"
                           style={{
                             backgroundColor: formInfo[
                               FORM_FIELD_KEYS.color
@@ -477,7 +478,7 @@ class WatermarkModal extends React.PureComponent {
                               !this.state.isColorPaletteVisible,
                             )
                           }
-                        ></div>
+                        />
                         <div className="style-container">
                           <Button
                             dataElement="boldText"

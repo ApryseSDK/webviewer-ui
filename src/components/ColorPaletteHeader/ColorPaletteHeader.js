@@ -80,7 +80,7 @@ class ColorPaletteHeader extends React.PureComponent {
         {availablePalettes.map((pallette, i) =>
           <React.Fragment key={i}>
             <Tooltip content={`option.annotationColor.${pallette}`}>
-              <div
+              <button
                 className={classNames({
                   'palette-options-button': true,
                   active: colorPalette === pallette,
@@ -88,7 +88,7 @@ class ColorPaletteHeader extends React.PureComponent {
                 onClick={() => this.setActivePalette(pallette)}
               >
                 {t(`option.annotationColor.${pallette}`)}
-              </div>
+              </button>
             </Tooltip>
             {i < availablePalettes.length - 1 && <div className="palette-options-divider" />}
           </React.Fragment>,

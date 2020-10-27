@@ -75,13 +75,13 @@ const SignatureStylePopup = props => {
               isActive={selectedDisplayedSignatureIndex === indexOfDisplayedSignature && activeToolName === 'AnnotationCreateSignature'}
               altText={`${t('option.toolsOverlay.signatureAltText')} ${indexOfDisplayedSignature + 1}`}
             />
-            <div
+            <button
               className="icon"
               data-element="defaultSignatureDeleteButton"
               onClick={() => deleteSignature(indexOfDisplayedSignature, savedSignatureIndex)}
             >
               <Icon glyph="icon-delete-line" />
-            </div>
+            </button>
           </div>
         )}
       <SignatureAddBtn

@@ -1,6 +1,7 @@
 @import '../../constants/styles';
 
 .signature-row-content {
+  @include button-reset;
   width: 162px;
   height: 26px;
   border-radius: 4px;

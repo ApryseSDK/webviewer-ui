@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
@@ -87,57 +88,59 @@ const SignatureModal = () => {
       onSwipedDown={closeModal}
       preventDefaultTouchmoveEvent
     >
-      <div
-        className={modalClass}
-        data-element="signatureModal"
-        onMouseDown={closeModal}
-      >
+      <FocusTrap locked={isOpen}>
         <div
-          className="container"
-          onMouseDown={e => e.stopPropagation()}
+          className={modalClass}
+          data-element="signatureModal"
+          onMouseDown={closeModal}
         >
-          <div className="swipe-indicator" />
-          <Tabs id="signatureModal">
-            <div className="tab-list">
-              <Tab dataElement="inkSignaturePanelButton">
-                <div className="tab-options-button">
-                  {t('action.draw')}
-                </div>
-              </Tab>
-              <div className="tab-options-divider" />
-              <Tab dataElement="textSignaturePanelButton">
-                <div className="tab-options-button">
-                  {t('action.type')}
-                </div>
-              </Tab>
-              <div className="tab-options-divider" />
-              <Tab dataElement="imageSignaturePanelButton">
-                <div className="tab-options-button">
-                  {t('action.upload')}
-                </div>
-              </Tab>
-            </div>
-            <TabPanel dataElement="inkSignaturePanel">
-              <InkSignature
-                isModalOpen={isOpen}
-                createSignature={createSignature}
-              />
-            </TabPanel>
-            <TabPanel dataElement="textSignaturePanel">
-              <TextSignature
-                isModalOpen={isOpen}
-                createSignature={createSignature}
-              />
-            </TabPanel>
-            <TabPanel dataElement="imageSignaturePanel">
-              <ImageSignature
-                isModalOpen={isOpen}
-                createSignature={createSignature}
-              />
-            </TabPanel>
-          </Tabs>
+          <div
+            className="container"
+            onMouseDown={e => e.stopPropagation()}
+          >
+            <div className="swipe-indicator" />
+            <Tabs id="signatureModal">
+              <div className="tab-list">
+                <Tab dataElement="inkSignaturePanelButton">
+                  <button className="tab-options-button">
+                    {t('action.draw')}
+                  </button>
+                </Tab>
+                <div className="tab-options-divider" />
+                <Tab dataElement="textSignaturePanelButton">
+                  <button className="tab-options-button">
+                    {t('action.type')}
+                  </button>
+                </Tab>
+                <div className="tab-options-divider" />
+                <Tab dataElement="imageSignaturePanelButton">
+                  <button className="tab-options-button">
+                    {t('action.upload')}
+                  </button>
+                </Tab>
+              </div>
+              <TabPanel dataElement="inkSignaturePanel">
+                <InkSignature
+                  isModalOpen={isOpen}
+                  createSignature={createSignature}
+                />
+              </TabPanel>
+              <TabPanel dataElement="textSignaturePanel">
+                <TextSignature
+                  isModalOpen={isOpen}
+                  createSignature={createSignature}
+                />
+              </TabPanel>
+              <TabPanel dataElement="imageSignaturePanel">
+                <ImageSignature
+                  isModalOpen={isOpen}
+                  createSignature={createSignature}
+                />
+              </TabPanel>
+            </Tabs>
+          </div>
         </div>
-      </div>
+      </FocusTrap>
     </Swipeable>
   );
 };

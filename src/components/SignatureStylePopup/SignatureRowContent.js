@@ -5,7 +5,7 @@ import './SignatureRowContent.scss';
 
 const SignatureRowContent = ({ onClick, imgSrc, isActive, altText }) => {
   return (
-    <div
+    <button
       className={classNames({
         "signature-row-content": true,
         "interactable": onClick,
@@ -14,7 +14,7 @@ const SignatureRowContent = ({ onClick, imgSrc, isActive, altText }) => {
       onClick={onClick}
     >
       <img alt={altText} src={imgSrc} />
-    </div>
+    </button>
   );
 };
 

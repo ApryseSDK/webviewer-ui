@@ -50,9 +50,9 @@ class Outline extends React.PureComponent {
           }
         </div>
         <div className="content">
-          <div className="title" onClick={this.onClickOutline}>
+          <button className="title" onClick={this.onClickOutline}>
             {outline.name}
-          </div>
+          </button>
           {outline.children.map((outline, i) => (
             <Outline outline={outline} key={i} isVisible={isExpanded} closeElement={closeElement} />
           ))}

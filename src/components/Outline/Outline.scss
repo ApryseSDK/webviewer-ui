@@ -56,6 +56,21 @@
       cursor: pointer;
       border-radius: 4px;
       padding: 6px 6px;
+      text-align: left;
+      color: var(--outline-color);
+
+      // Button Reset
+      border: none;
+      background-color: transparent;
+
+      @at-root html:not([data-tabbing='true']) #{&} {
+        outline: none;
+
+        // No need to use this if you aren't doing custom focus style.
+        // &::-moz-focus-inner {
+        //   border: 0;
+        // }
+      }
 
       &:hover {
         background: var(--outline-hover);

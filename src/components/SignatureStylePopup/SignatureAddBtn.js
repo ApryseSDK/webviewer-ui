@@ -17,7 +17,7 @@ const SignatureAddBtn = ({ t, disabled }) => {
   };
 
   return (
-    <div
+    <button
       className={classNames({
         'signature-row-content': true,
         'add-btn': true,
@@ -26,7 +26,7 @@ const SignatureAddBtn = ({ t, disabled }) => {
       onClick={openSignatureModal}
     >
       {t('option.signatureOverlay.addSignature')}
-    </div>
+    </button>
   );
 };
 

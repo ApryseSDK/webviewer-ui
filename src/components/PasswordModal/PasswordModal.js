@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import Button from 'components/Button';
 import actions from 'actions';
@@ -69,46 +70,49 @@ const PasswordModal = () => {
     const wrongPassword = attempt !== 0;
 
     return (
-      <div className="wrapper">
-        <div className="header">{t('message.passwordRequired')}</div>
-        <form onSubmit={handleSubmit}>
-          <div className="enter">
-            <div>{t('message.enterPassword')}</div>
-            <input
-              className={`${wrongPassword ? 'wrong' : 'correct'}`}
-              type="password"
-              ref={passwordInput}
-              autoComplete="current-password"
-              value={password}
-              onKeyDown={onKeyDown}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </div>
-          {wrongPassword && (
-            <div className="incorrect-password">
-              {t('message.incorrectPassword', {
-                remainingAttempts: maxAttempts - attempt,
-              })}
+      <FocusTrap locked={isOpen}>
+        <div className="wrapper">
+          <div className="header">{t('message.passwordRequired')}</div>
+          <form onSubmit={handleSubmit}>
+            <div className="enter">
+              <div>{t('message.enterPassword')}</div>
+              <input
+                className={`${wrongPassword ? 'wrong' : 'correct'}`}
+                type="password"
+                ref={passwordInput}
+                autoComplete="current-password"
+                value={password}
+                onKeyDown={onKeyDown}
+                onChange={e => setPassword(e.target.value)}
+                aria-label={t('message.passwordRequired')}
+              />
             </div>
-          )}
-          <div className="footer">
-            <Button
-              className="cancel modal-button"
-              dataElement="passwordCancelButton"
-              label={t('action.cancel')}
-              onClick={() => {
-                setUserCancelled(true);
-              }}
-            />
-            <Button
-              className="confirm modal-button"
-              dataElement="passwordSubmitButton"
-              label={t('action.submit')}
-              onClick={handleSubmit}
-            />
-          </div>
-        </form>
-      </div>
+            {wrongPassword && (
+              <div className="incorrect-password">
+                {t('message.incorrectPassword', {
+                  remainingAttempts: maxAttempts - attempt,
+                })}
+              </div>
+            )}
+            <div className="footer">
+              <Button
+                className="cancel modal-button"
+                dataElement="passwordCancelButton"
+                label={t('action.cancel')}
+                onClick={() => {
+                  setUserCancelled(true);
+                }}
+              />
+              <Button
+                className="confirm modal-button"
+                dataElement="passwordSubmitButton"
+                label={t('action.submit')}
+                onClick={handleSubmit}
+              />
+            </div>
+          </form>
+        </div>
+      </FocusTrap>
     );
   };
 

@@ -11,6 +11,7 @@
   cursor: pointer;
 
   .palette-options-button {
+    @include button-reset;
     // flex breaks ellipsis text overflow for some reason
     // display: flex;
     // justify-content: center;

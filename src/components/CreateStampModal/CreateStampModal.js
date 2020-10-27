@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -50,25 +51,27 @@ const CustomStampModal = () => {
       data-element="customStampModal"
       onMouseDown={closeModal}
     >
-      <div className="container" onMouseDown={e => e.stopPropagation()}>
-        <div className="header">
-          <p style={{ textAlign: 'center' }}>{t(`component.createStampButton`)}</p>
-          {/* Temporarily commented out */}
-          {/* <ActionButton
-            dataElement="customStampModalCloseButton"
-            title="action.close"
-            img="ic_close_black_24px"
-            onClick={closeModal}
-          /> */}
+      <FocusTrap locked={isOpen}>
+        <div className="container" onMouseDown={e => e.stopPropagation()}>
+          <div className="header">
+            <p style={{ textAlign: 'center' }}>{t(`component.createStampButton`)}</p>
+            {/* Temporarily commented out */}
+            {/* <ActionButton
+              dataElement="customStampModalCloseButton"
+              title="action.close"
+              img="ic_close_black_24px"
+              onClick={closeModal}
+            /> */}
+          </div>
+          <CustomStampForums
+            isModalOpen={isOpen}
+            state={state}
+            setState={setState}
+            closeModal={closeModal}
+            createCustomStamp={createCustomStamp}
+          />
         </div>
-        <CustomStampForums
-          isModalOpen={isOpen}
-          state={state}
-          setState={setState}
-          closeModal={closeModal}
-          createCustomStamp={createCustomStamp}
-        />
-      </div>
+      </FocusTrap>
     </div>
   );
 };

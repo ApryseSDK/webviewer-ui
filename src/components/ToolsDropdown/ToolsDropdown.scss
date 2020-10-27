@@ -1,6 +1,7 @@
 @import '../../constants/styles';
 
 .tools-dropdown-container {
+  @include button-reset;
   width: 34px;
   height: 26px;
   display: flex;

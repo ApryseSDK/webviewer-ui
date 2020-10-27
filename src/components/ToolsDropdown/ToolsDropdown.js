@@ -7,7 +7,7 @@ import './ToolsDropdown.scss';
 
 const ToolsDropdown = ({ isActive, isDisabled, onClick, style }) => {
   return (
-    <div
+    <button
       className={classNames({
         "tools-dropdown-container": true,
         active: isActive,
@@ -20,7 +20,7 @@ const ToolsDropdown = ({ isActive, isDisabled, onClick, style }) => {
       {isActive ?
         <Icon className="tools-arrow-up" glyph="icon-chevron-up" /> :
         <Icon className="tools-arrow-down" glyph="icon-chevron-down" />}
-    </div>
+    </button>
   );
 };
 

@@ -38,6 +38,7 @@
 
   }
   .rubber-stamp {
+    @include button-reset;
     border-radius: 4px;
     flex-basis: 50%;
     cursor: pointer;
@@ -62,6 +63,7 @@
       justify-content: center;
     }
     .icon {
+      @include button-reset;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -74,8 +76,10 @@
         background: var(--tools-overlay-button-hover);
       }
     }
-
-
+    .custom-stamp {
+      @include button-reset;
+      flex-shrink: initial;
+    }
   }
   .stamp-row-content {
     width: 162px;
@@ -117,6 +121,7 @@
   }
 
   .stamp-row-content.add-btn {
+    background-color: transparent;
     @include mobile {
       width: 90vw;
       margin-right: 0px;
@@ -140,6 +145,7 @@
     cursor: pointer;
 
     .tab-options-button {
+      @include button-reset;
       text-align: center;
       vertical-align: middle;
       line-height: 24px;

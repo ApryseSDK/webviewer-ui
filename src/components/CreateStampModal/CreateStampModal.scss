@@ -78,6 +78,7 @@
       }
 
       .stamp-close {
+        @include button-reset;
         color: var(--secondary-button-text);
         padding: 0 8px;
         height: 32px;
@@ -92,6 +93,7 @@
       }
 
       .stamp-create {
+        @include button-reset;
         background: var(--primary-button);
         border-radius: 4px;
         padding: 0 8px;

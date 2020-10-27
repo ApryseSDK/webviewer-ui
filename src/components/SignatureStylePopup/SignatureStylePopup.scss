@@ -34,6 +34,7 @@
     justify-content: center;
   }
   .icon {
+    @include button-reset;
     display: flex;
     align-items: center;
     justify-content: center;

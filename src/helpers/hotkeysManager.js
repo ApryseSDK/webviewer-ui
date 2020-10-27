@@ -404,6 +404,7 @@ WebViewer(...)
             'toolStylePopup',
             'annotationStylePopup',
             'signatureModal',
+            'customStampModal',
             'printModal',
             'rubberStampOverlay',
             'editTextModal',

@@ -122,6 +122,7 @@ const ImageSignature = ({
                 type="file"
                 accept={acceptedFileTypes.map(type => `.${type}`).join(',')}
                 onChange={handleFileChange}
+                disabled={!(isModalOpen && isTabPanelSelected)}
               />
               <div
                 onClick={() => fileInputRef.current.click()}
@@ -140,12 +141,12 @@ const ImageSignature = ({
       <div
         className="footer"
       >
-        <div className="signature-clear" onClick={() => setImageSrc(null)}>
+        <button className="signature-clear" onClick={() => setImageSrc(null)} disabled={!(isModalOpen && isTabPanelSelected)}>
           {t('action.clear')}
-        </div>
-        <div className="signature-create" onClick={createSignature}>
+        </button>
+        <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected)}>
           {t('action.create')}
-        </div>
+        </button>
       </div>
     </React.Fragment>
   );

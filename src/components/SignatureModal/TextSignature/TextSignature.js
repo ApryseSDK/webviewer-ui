@@ -121,6 +121,7 @@ const TextSignature = ({
             type="text"
             value={value}
             onChange={handleInputChange}
+            disabled={!(isModalOpen && isTabPanelSelected)}
           />
         </label>
         {fonts.map((font, index) => (
@@ -148,12 +149,12 @@ const TextSignature = ({
       <div
         className="footer"
       >
-        <div className="signature-clear" onClick={() => setValue('')}>
+        <button className="signature-clear" onClick={() => setValue('')} disabled={!(isModalOpen && isTabPanelSelected)}>
           {t('action.clear')}
-        </div>
-        <div className="signature-create" onClick={createSignature}>
+        </button>
+        <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected)}>
           {t('action.create')}
-        </div>
+        </button>
       </div>
     </React.Fragment>
   );
