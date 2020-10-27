@@ -1,7 +1,6 @@
 import core from 'core';
 
 export default store => () => new Promise((resolve, reject) => {
-  console.warn('instance.saveAnnotations() is deprecated, please check https://www.pdftron.com/documentation/web/guides/annotation/import-export/overview for options to save and load annotations. The deprecated API will be removed in 7.0. Together with the serverUrl option.');
   const state = store.getState();
   const { id: docId } = state.document;
   const { serverUrl, serverUrlHeaders } = state.advanced;
@@ -21,6 +20,7 @@ export default store => () => new Promise((resolve, reject) => {
         ...docIdQuery,
         data: xfdfString,
       },
+      credentials: 'include'
     }).then(response => {
       if (response.ok) {
         resolve();

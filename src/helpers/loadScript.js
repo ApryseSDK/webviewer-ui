@@ -43,7 +43,9 @@ const loadConfig = () =>
                   data = await response.text();
                 }
 
-                if (!data.split('\n').includes(`${e.origin}`)) {
+                data = data.replace(/\r|\t/g, '\n');
+                const allowedOrigins = data.split('\n').filter(Boolean);
+                if (!allowedOrigins.includes(`${e.origin}`)) {
                   console.warn(`Config file requested to be loaded by origin ${e.origin}. Please include this origin inside lib/ui/configorigin.txt to allow it to request config files.`);
                   return;
                 }
