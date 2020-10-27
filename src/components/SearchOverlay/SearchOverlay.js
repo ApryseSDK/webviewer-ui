@@ -71,50 +71,44 @@ function SearchOverlay(props) {
     }
   }, [searchValue, isCaseSensitive, isWholeWord, isWildcard]);
 
-  const textInputOnChange = React.useCallback(function textInputOnChangeCallback(event){
+  const textInputOnChange = React.useCallback(function textInputOnChangeCallback(event) {
     const searchValue = event.target.value;
     setSearchValue(searchValue);
   }, [setSearchValue]);
 
-  const textInputOnKeyDown = React.useCallback(function textInputOnKeyDownCallback(event){
+  const textInputOnKeyDown = React.useCallback(function textInputOnKeyDownCallback(event) {
     if (event.which === 13) { // Enter
       executeSearch();
     }
   }, [executeSearch]);
 
-  const searchButtonOnClick = React.useCallback(function onSearchButtonClickCallback(){
+  const searchButtonOnClick = React.useCallback(function onSearchButtonClickCallback() {
     executeSearch();
   }, [executeSearch]);
 
   const caseSensitiveSearchOptionOnChange = React.useCallback(function caseSensitiveSearchOptionOnChangeCallback(event) {
     const isChecked = event.target.checked;
-    // need to override options as search is executed before component re-rendered and executeSearch is updated
-    executeSearch({ caseSensitive: isChecked });
     setCaseSensitive(isChecked);
-  }, [executeSearch, setCaseSensitive]);
+  }, [setCaseSensitive]);
 
   const wholeWordSearchOptionOnChange = React.useCallback(function wholeWordSearchOptionOnChangeCallback(event) {
     const isChecked = event.target.checked;
-    // need to override options as search is executed before component re-rendered and executeSearch is updated
-    executeSearch({ wholeWord: isChecked });
     setWholeWord(isChecked);
-  }, [executeSearch, setWholeWord]);
+  }, [setWholeWord]);
 
-  const wildcardOptionOnChange = React.useCallback(function wildcardOptionOnChangeCallback(event){
+  const wildcardOptionOnChange = React.useCallback(function wildcardOptionOnChangeCallback(event) {
     const isChecked = event.target.checked;
-    // need to override options as search is executed before component re-rendered and executeSearch is updated
-    executeSearch({ wildcard: isChecked });
     setWildcard(isChecked);
-  }, [executeSearch, setWildcard]);
+  }, [setWildcard]);
 
-  const nextButtonOnClick = React.useCallback(function nextButtonOnClickCallback(event){
+  const nextButtonOnClick = React.useCallback(function nextButtonOnClickCallback(event) {
     if (searchResults.length > 0) {
       const nextResultIndex = activeResultIndex === searchResults.length - 1 ? 0 : activeResultIndex + 1;
       core.setActiveSearchResult(searchResults[nextResultIndex]);
     }
   }, [searchResults, activeResultIndex]);
 
-  const previousButtonOnClick = React.useCallback(function previousButtonOnClickCallback(event){
+  const previousButtonOnClick = React.useCallback(function previousButtonOnClickCallback(event) {
     //event.preventDefault();
     if (searchResults.length > 0) {
       const prevResultIndex = activeResultIndex <= 0 ? searchResults.length - 1 : activeResultIndex - 1;
@@ -226,4 +220,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(SearchOverlayRedux);
-
