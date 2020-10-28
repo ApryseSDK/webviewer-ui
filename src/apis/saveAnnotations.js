@@ -20,6 +20,7 @@ export default store => () => new Promise((resolve, reject) => {
         ...docIdQuery,
         data: xfdfString,
       },
+      credentials: 'include'
     }).then(response => {
       if (response.ok) {
         resolve();

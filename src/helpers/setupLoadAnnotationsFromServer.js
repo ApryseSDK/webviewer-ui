@@ -38,6 +38,7 @@ export default store => {
 
     fetch(serverUrl, {
       headers: serverUrlHeaders,
+      credentials: 'include'
     })
       .then(response => {
         if (response.ok) {
