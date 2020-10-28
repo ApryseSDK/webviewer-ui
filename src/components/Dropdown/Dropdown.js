@@ -4,6 +4,7 @@ import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import DataElementWrapper from 'components/DataElementWrapper';
 import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
 
@@ -14,9 +15,10 @@ const propTypes = {
   items: PropTypes.array.isRequired,
   currentSelectionKey: PropTypes.string.isRequired,
   translationPrefix: PropTypes.string.isRequired,
+  dataElement: PropTypes.string.isRequired,
 };
 
-function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem }) {
+function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement }) {
   const  { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
@@ -45,19 +47,22 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
     [onClickItem],
   );
 
-  const dropdownItems = useMemo(() =>{
-    return items.map(key => (
-      <button
-        key={key}
-        className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
-        onClick={e => onClickDropdownItem(e, key)}
-        tabIndex={isOpen ? undefined : -1} // Just to be safe.
-        role="option"
-      >
-        {t(`${translationPrefix}.${key}`, key)}
-      </button>
-    ));
-  },[currentSelectionKey, isOpen, items, onClickDropdownItem, t, translationPrefix]);
+  const dropdownItems = useMemo(
+    () =>
+      items.map(key => (
+        <DataElementWrapper
+          key={key}
+          type="button"
+          dataElement={`dropdown-item-${key}`}
+          className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
+          onClick={e => onClickDropdownItem(e, key)}
+          tabIndex={isOpen ? undefined : -1} // Just to be safe.
+        >
+          {t(`${translationPrefix}.${key}`, key)}
+        </DataElementWrapper>
+      )),
+    [currentSelectionKey, isOpen, items, onClickDropdownItem, t, translationPrefix],
+  );
 
   const optionIsSelected = items.some(key => key === currentSelectionKey);
 
@@ -67,11 +72,13 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
   );
 
   return (
-    <div className="Dropdown__wrapper">
+    <DataElementWrapper
+      className="Dropdown__wrapper"
+      dataElement={dataElement}
+    >
       <button
         className="Dropdown"
         style={buttonStyle}
-        data-element="dropdown"
         onClick={onToggle}
         ref={buttonRef}
       >
@@ -92,7 +99,7 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
       >
         {dropdownItems}
       </div>
-    </div>
+    </DataElementWrapper>
   );
 }
 

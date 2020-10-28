@@ -337,6 +337,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
             <div className="sort-container">
               <div className="label">{`${t('message.sortBy')}:`}</div>
               <Dropdown
+                dataElement="notesOrderDropdown"
                 items={Object.keys(getSortStrategies())}
                 translationPrefix="option.notesOrder"
                 currentSelectionKey={sortStrategy}

@@ -126,6 +126,7 @@ const Ribbons = () => {
               <ExitWidgetEditingButton containerWidth={containerWidth} />
             ) : (
               <Dropdown
+                dataElement="ribbonsDropdown"
                 items={toolbarGroups}
                 translationPrefix="option.toolbarGroup"
                 currentSelectionKey={currentToolbarGroup}

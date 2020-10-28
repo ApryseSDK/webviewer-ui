@@ -9,10 +9,16 @@ const propTypes = {
 };
 
 
-
-const DataElementWrapper = React.forwardRef(({ children, dataElement, ...props }, ref) => {
+const DataElementWrapper = React.forwardRef(({ type = "div", children, dataElement, ...props }, ref) => {
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
 
+  if (type === 'button') {
+    return isDisabled ? null : (
+      <button ref={ref} data-element={dataElement} {...props}>
+        {children}
+      </button>
+    );
+  }
   return isDisabled ? null : (
     <div ref={ref} data-element={dataElement} {...props}>
       {children}
