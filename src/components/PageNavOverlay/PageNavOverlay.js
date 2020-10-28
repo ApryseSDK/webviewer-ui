@@ -105,11 +105,13 @@ class PageNavOverlay extends React.PureComponent {
       >
         <button
           className="side-arrow-container"
-          onClick={() =>
-            window.docViewer.setCurrentPage(
-              Math.max(window.docViewer.getCurrentPage() - 1, 1),
-            )
-          }
+          onClick={() => {
+            if (window.docViewer.getCurrentPage() - 1 > 0) {
+              window.docViewer.setCurrentPage(
+                Math.max(window.docViewer.getCurrentPage() - 1, 1),
+              );
+            }
+          }}
           aria-label={t('action.pagePrev')}
         >
           <Icon className="side-arrow" glyph="icon-chevron-left" />
@@ -133,14 +135,16 @@ class PageNavOverlay extends React.PureComponent {
         </div>
         <button
           className="side-arrow-container"
-          onClick={() =>
-            window.docViewer.setCurrentPage(
-              Math.min(
-                window.docViewer.getCurrentPage() + 1,
-                window.docViewer.getPageCount(),
-              ),
-            )
-          }
+          onClick={() => {
+            if (window.docViewer.getCurrentPage() + 1 <= window.docViewer.getPageCount()) {
+              window.docViewer.setCurrentPage(
+                Math.min(
+                  window.docViewer.getCurrentPage() + 1,
+                  window.docViewer.getPageCount(),
+                ),
+              );
+            }
+          }}
           aria-label={t('action.pageNext')}
         >
           <Icon className="side-arrow" glyph="icon-chevron-right" />
