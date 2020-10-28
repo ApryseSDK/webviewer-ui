@@ -4,7 +4,9 @@ import selectors from 'selectors';
 import { parse } from 'helpers/cssVariablesParser';
 
 import lightModeString from '!!raw-loader!../constants/light.scss';
+import highContastLightModeString from '!!raw-loader!../constants/highContrastLight.scss';
 import darkModeString from '!!raw-loader!../constants/dark.scss';
+import highContrastDarkModeString from '!!raw-loader!../constants/highContrastDark.scss';
 import cssVars from 'css-vars-ponyfill';
 
 /**
@@ -21,12 +23,17 @@ WebViewer(...)
 
 export default store => {
   let previousActiveTheme = 'light'; // default
+  let previousIsHighContrastMode = false; // default
+
   cssVars({});
   store.subscribe(() => {
     const activeTheme = selectors.getActiveTheme(store.getState());
-    if (previousActiveTheme !== activeTheme) {
+    const isHighContrastMode = selectors.getIsHighContrastMode(store.getState());
+
+    if (previousActiveTheme !== activeTheme || previousIsHighContrastMode !== isHighContrastMode) {
       previousActiveTheme = activeTheme;
-      updateColours(store);
+      previousIsHighContrastMode = isHighContrastMode;
+      updateColours(activeTheme, isHighContrastMode);
     }
   });
   return theme => {
@@ -46,12 +53,11 @@ const setVariables = (themeVarString = '') => {
   });
 };
 
-const updateColours = store => {
-  const activeTheme = selectors.getActiveTheme(store.getState());
+const updateColours = (activeTheme, isHighContrastMode)  => {
   if (activeTheme === 'light') {
-    setVariables(lightModeString);
+    setVariables(isHighContrastMode ? highContastLightModeString : lightModeString);
   } else if (activeTheme === 'dark') {
-    setVariables(darkModeString);
+    setVariables(isHighContrastMode ? highContrastDarkModeString : darkModeString);
   }
   cssVars({
     // onlyLegacy: false,

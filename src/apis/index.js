@@ -89,6 +89,8 @@ import setAdminUser from './setAdminUser';
 import setAnnotationUser from './setAnnotationUser';
 import setActivePalette from './setActivePalette';
 import setColorPalette from './setColorPalette';
+import setHighContrastMode from './setHighContrastMode';
+import getIsHighContrastMode from './getIsHighContrastMode';
 import setCurrentPageNumber from './setCurrentPageNumber';
 import setCustomModal from './setCustomModal';
 import setCustomNoteFilter from './setCustomNoteFilter';
@@ -301,6 +303,8 @@ export default store => {
     setSideWindowVisibility: setSideWindowVisibility(store),
     setActivePalette: setActivePalette(store),
     setColorPalette: setColorPalette(store),
+    setHighContrastMode: setHighContrastMode(store),
+    getIsHighContrastMode: getIsHighContrastMode(store),
     disableTool: disableTool(store),
     enableAllElements: enableAllElements(store),
     goToFirstPage,

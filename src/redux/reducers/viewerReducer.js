@@ -2,6 +2,11 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_HIGH_CONTRAST_MODE':
+      return {
+        ...state,
+        highContrastMode: payload.useHighContrastMode,
+      };
     case 'SET_CAN_UNDO':
       return {
         ...state,

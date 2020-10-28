@@ -1,6 +1,7 @@
 import { isChrome, isAndroid } from 'helpers/device';
 
 // viewer
+export const getIsHighContrastMode = state => state.viewer.highContrastMode;
 export const getLastPickedToolForGroup = (state, group) => state.viewer.lastPickedToolForGroup[group];
 export const getStandardStamps = state => state.viewer.standardStamps;
 export const getCustomStamps = state => state.viewer.customStamps;

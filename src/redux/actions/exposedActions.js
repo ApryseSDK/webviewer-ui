@@ -5,7 +5,12 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import {enableElements, disableElements} from 'actions/internalActions';
 
 import defaultTool from 'constants/defaultTool';
-import { PRIORITY_THREE, PRIORITY_TWO } from 'constants/actionPriority';
+import { PRIORITY_TWO } from 'constants/actionPriority';
+
+export const setHighContrastMode = useHighContrastMode => ({
+  type: 'SET_HIGH_CONTRAST_MODE',
+  payload: { useHighContrastMode },
+});
 
 export const setCanUndo = canUndo => ({
   type: 'SET_CAN_UNDO',

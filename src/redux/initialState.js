@@ -31,6 +31,7 @@ export default {
     documentContainerHeight: null,
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
+    highContrastMode: getHashParams('highContrastMode', false),
     notesInLeftPanel: getHashParams('notesInLeftPanel', false),
     headers: {
       default: [
