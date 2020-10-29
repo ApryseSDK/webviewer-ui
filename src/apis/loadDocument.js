@@ -10,8 +10,12 @@
  * @param {boolean} [options.withCredentials] Whether or not cross-site requests should be made using credentials.
  * @param {string} [options.cacheKey] A key that will be used for caching the document on WebViewer Server.
  * @param {string} [options.password] A string that will be used to as the password to load a password protected document.
- * @param {function} [options.decrypt] A custom function to decrypt the document
- * @param {object} [options.decryptOptions] An object with with properties `type` for the type of encryption and `p` for the password.
+ * @param {object} [options.xodOptions] - An object that contains the options for a XOD document.
+ * @param {boolean} [options.xodOptions.decrypt] - Function to be called to decrypt a part of the XOD file. For default XOD AES encryption pass CoreControls.Encryption.decrypt.
+ * @param {boolean} [options.xodOptions.decryptOptions] -  An object with options for the decryption e.g. {p: "pass", type: "aes"} where is p is the password.
+ * @param {boolean} [options.xodOptions.streaming] - A boolean indicating whether to use http or streaming PartRetriever, it is recommended to keep streaming false for better performance. https://www.pdftron.com/documentation/web/guides/streaming-option.
+ * @param {boolean} [options.xodOptions.azureWorkaround] - Whether or not to workaround the issue of Azure not accepting range requests of a certain type. Enabling the workaround will add an extra HTTP request of overhead but will still allow documents to be loaded from other locations.
+ * @param {boolean} [options.xodOptions.startOffline] - Whether to start loading the document in offline mode or not. This can be set to true if the document had previously been saved to an offline database using WebViewer APIs. You'll need to use this option to load from a completely offline state.
  * @example
 WebViewer(...)
   .then(function(instance) {
