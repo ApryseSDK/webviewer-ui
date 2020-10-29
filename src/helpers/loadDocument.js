@@ -68,7 +68,7 @@ const transformPasswordOption = (password, dispatch) => {
 };
 
 const extractXodOptions = options => {
-  const xodOptions = {};
+  const xodOptions = options.xodOptions || {};
 
   if (options.decryptOptions) {
     xodOptions.decrypt = window.CoreControls.Encryption.decrypt;
@@ -76,7 +76,9 @@ const extractXodOptions = options => {
   }
 
   if (options.streaming !== null) {
-    xodOptions.streaming = options.streaming === 'true';
+    // depending on combination of value in loadDocument and in WV constructor
+    // getHashedParam will either return back a boolean or a stringed boolean value
+    xodOptions.streaming = options.streaming === 'true' || options.streaming === true;
   }
 
   if (options.azureWorkaround) {
