@@ -230,9 +230,9 @@ const positionCanvas = (canvas, pageIndex) => {
   const documentRotation = getDocumentRotation(pageIndex);
   const ctx = canvas.getContext('2d');
 
-  let printRotation = (4 - documentRotation) % 4;
+  const printRotation = (4 - documentRotation) % 4;
   // To check if automatic print rotation will be applied
-  let isAutoRotated = ((printRotation % 2 === 0 && width > height) || (printRotation % 2 === 1 && height > width));
+  const isAutoRotated = ((printRotation % 2 === 0 && width > height) || (printRotation % 2 === 1 && height > width));
 
   // If this is pdf js and auto rotated, apply different transform
   if (window.utils.isPdfjs && isAutoRotated) {
