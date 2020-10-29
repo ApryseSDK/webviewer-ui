@@ -69,11 +69,7 @@ const transformPasswordOption = (password, dispatch) => {
 };
 
 const extractXodOptions = options => {
-  if (options.hasOwnProperty('xodOptions')) {
-    options = options.xodOptions
-  }
-
-  const xodOptions = {};
+  const xodOptions = options.xodOptions || {};
 
   if (options.decryptOptions) {
     xodOptions.decrypt = window.CoreControls.Encryption.decrypt;
