@@ -16,8 +16,6 @@ import selectors from 'selectors';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 
-import { motion, AnimatePresence } from "framer-motion";
-
 import './LeftPanel.scss';
 
 const LeftPanel = () => {
@@ -37,8 +35,10 @@ const LeftPanel = () => {
     false,
   );
 
-  const [isOpen, isDisabled, activePanel, customPanels, currentWidth, notesInLeftPanel] = useSelector(
+  const [currentToolbarGroup, isToolsHeaderOpen,isOpen, isDisabled, activePanel, customPanels, currentWidth, notesInLeftPanel] = useSelector(
     state => [
+      selectors.getCurrentToolbarGroup(state),
+      selectors.isElementOpen(state, 'toolsHeader'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementDisabled(state, 'leftPanel'),
       selectors.getActiveLeftPanel(state),
@@ -71,76 +71,65 @@ const LeftPanel = () => {
 
   const isVisible = !(!isOpen || isDisabled);
 
-  let animate = { width: 'auto' };
-  if (isMobile) {
-    animate = { width: '100vw' };
-  }
-
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          className={classNames({
-            Panel: true,
-            LeftPanel: true,
-          })}
-          onDrop={onDrop}
-          onDragOver={onDragOver}
-          data-element="leftPanel"
-          initial={{ width: '0px' }}
-          animate={animate}
-          exit={{ width: '0px' }}
-          transition={{ ease: "easeOut", duration: 0.25 }}
-        >
+    <div
+      className={classNames({
+        Panel: true,
+        LeftPanel: true,
+        'closed': !isVisible,
+        'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
+      })}
+      onDrop={onDrop}
+      onDragOver={onDragOver}
+      data-element="leftPanel"
+    >
+      <div
+        className="left-panel-container"
+        style={style}
+      >
+        {isMobile &&
           <div
-            className="left-panel-container"
-            style={style}
+            className="close-container"
           >
-            {isMobile &&
-              <div
-                className="close-container"
-              >
-                <div
-                  className="close-icon-container"
-                  onClick={() => {
-                    dispatch(actions.closeElements(['leftPanel']));
-                  }}
-                >
-                  <Icon
-                    glyph="ic_close_black_24px"
-                    className="close-icon"
-                  />
-                </div>
-              </div>}
-            <div className="left-panel-header">
-              <LeftPanelTabs />
-            </div>
-            {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel/>}
-            {activePanel === 'outlinesPanel' && <OutlinesPanel />}
-            {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
-            {activePanel === 'layersPanel' && <LayersPanel />}
-            {notesInLeftPanel && activePanel === 'notesPanel' && <NotesPanel currentLeftPanelWidth={currentWidth} />}
-            {customPanels.map(({ panel }, index) => (
-              <CustomElement
-                key={panel.dataElement || index}
-                className={`Panel ${panel.dataElement}`}
-                display={getDisplay(panel.dataElement)}
-                dataElement={panel.dataElement}
-                render={panel.render}
-              />
-            ))}
-          </div>
-          {!isTabletAndMobile &&
-            <ResizeBar
-              dataElement="leftPanelResizeBar"
-              minWidth={minWidth}
-              onResize={_width => {
-                dispatch(actions.setLeftPanelWidth(_width));
+            <div
+              className="close-icon-container"
+              onClick={() => {
+                dispatch(actions.closeElements(['leftPanel']));
               }}
-            />}
-        </motion.div>
-      )}
-    </AnimatePresence>
+            >
+              <Icon
+                glyph="ic_close_black_24px"
+                className="close-icon"
+              />
+            </div>
+          </div>}
+        <div className="left-panel-header">
+          <LeftPanelTabs />
+        </div>
+        {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel/>}
+        {activePanel === 'outlinesPanel' && <OutlinesPanel />}
+        {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
+        {activePanel === 'layersPanel' && <LayersPanel />}
+        {notesInLeftPanel && activePanel === 'notesPanel' && <NotesPanel currentLeftPanelWidth={currentWidth} />}
+        {customPanels.map(({ panel }, index) => (
+          <CustomElement
+            key={panel.dataElement || index}
+            className={`Panel ${panel.dataElement}`}
+            display={getDisplay(panel.dataElement)}
+            dataElement={panel.dataElement}
+            render={panel.render}
+          />
+        ))}
+      </div>
+      {!isTabletAndMobile &&
+        <ResizeBar
+          dataElement="leftPanelResizeBar"
+          minWidth={minWidth}
+          onResize={_width => {
+            dispatch(actions.setLeftPanelWidth(_width));
+          }}
+        />}
+    </div>
   );
 };
 

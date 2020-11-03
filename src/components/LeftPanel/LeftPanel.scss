@@ -12,8 +12,15 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  position: relative;
   overflow: hidden;
+  position: fixed;
+  left: 0px;
+  transition: transform .3s ease-in-out;
+  @include panel-height-fix;
+
+  &.closed {
+    transform: translateX(-100%);
+  }
 
   @include tablet {
     border-right: 1px solid var(--side-panel-border);

@@ -1,6 +1,15 @@
 @import '../../constants/panel';
 
 .right-panel {
+  position: fixed;
+  right: 0px;
+  transition: transform .3s ease-in-out;
+  @include panel-height-fix;
+
+  &.closed {
+    transform: translateX(100%);
+  }
+
   z-index: 65;
   @include mobile {
     z-index: 95;
@@ -9,7 +18,6 @@
   background-color: var(--panel-background);
   display: flex;
   flex-direction: row;
-  position: relative;
   overflow: hidden;
 
   @include tablet {

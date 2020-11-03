@@ -32,9 +32,9 @@ class Header extends React.PureComponent {
           data-element="header"
         >
           <HeaderItems items={activeHeaderItems} />
+          {(!isToolsHeaderOpen || currentToolbarGroup === 'toolbarGroup-View')
+            && <div className="view-header-border" />}
         </div>
-        {(!isToolsHeaderOpen || currentToolbarGroup === 'toolbarGroup-View')
-          && <div className="view-header-border" />}
       </React.Fragment>
     );
   }

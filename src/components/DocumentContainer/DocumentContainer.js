@@ -219,8 +219,13 @@ class DocumentContainer extends React.PureComponent {
     this.props.setDocumentContainerHeight(clientHeight);
   }
 
+  onTransitionEnd() {
+    // I don't know if this is needed. But better safe than sorry.
+    core.scrollViewUpdated();
+  }
+
   render() {
-    const { isToolsHeaderOpen, isMobile, currentToolbarGroup } = this.props;
+    const { leftPanelWidth, isLeftPanelOpen, isToolsHeaderOpen, isMobile, currentToolbarGroup, documentContentContainerWidthStyle } = this.props;
 
     const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
     const documentClassName = classNames({
@@ -229,7 +234,16 @@ class DocumentContainer extends React.PureComponent {
     });
 
     return (
-      <div className="document-content-container">
+      <div
+        style={{
+          width: documentContentContainerWidthStyle,
+          // we animate with margin-left. For some reason it looks nicer than transform.
+          // Using transform makes a clunky animation because the panels are using transform already.
+          marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
+        }}
+        className="document-content-container"
+        onTransitionEnd={this.onTransitionEnd}
+      >
         <Measure
           onResize={this.handleResize}
         >
@@ -252,15 +266,14 @@ class DocumentContainer extends React.PureComponent {
               </div>
               <MeasurementOverlay />
               <div
-                className={classNames({
-                  'footer-container': true,
-                  'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
-                })}
+                className="footer"
+                style={{
+                  width: documentContentContainerWidthStyle,
+                  marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
+                }}
               >
-                <div className="footer">
-                  <PageNavOverlay />
-                  {isMobile && <ToolsOverlay />}
-                </div>
+                <PageNavOverlay />
+                {isMobile && <ToolsOverlay />}
               </div>
             </div>
           )}
@@ -272,8 +285,10 @@ class DocumentContainer extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
   currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
+  leftPanelWidth: selectors.getLeftPanelWidthWithReszieBar(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
