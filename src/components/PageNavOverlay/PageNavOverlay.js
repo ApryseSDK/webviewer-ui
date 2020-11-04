@@ -63,7 +63,7 @@ class PageNavOverlay extends React.PureComponent {
   };
 
   onChange = e => {
-    if (e.target.value.length > this.props.totalPages.toString().length) {
+    if (!this.props.pageLabels?.some(p => p.startsWith(e.target.value))) {
       return;
     }
 
