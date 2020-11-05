@@ -20,6 +20,9 @@
   --gray-11: #F8F9FA;
   --gray-12: #FFFFFF;
 
+  --yellow-1: #e1b90080;
+  --red: red;
+
   --panel-background: var(--gray-3);
   --faded-component-background: var(--gray-1);
   --signature-draw-background: var(--gray-3);
@@ -29,6 +32,9 @@
   --preset-background: var(--gray-3);
   --mobile-divider: var(--gray-7);
   --mobile-presets-background: var(--gray-3);
+
+  --error-text-color: var(--red);
+  --error-border-color: var(--red);
 
   --ribbons-background: var(--gray-2);
   --box-shadow: var(--gray-5);
