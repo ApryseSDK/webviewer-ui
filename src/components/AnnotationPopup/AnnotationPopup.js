@@ -194,22 +194,6 @@ const AnnotationPopup = () => {
     core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
 
-  const isLinkAnnotation = annot => {
-    let linkAnnotation = false;
-    const annotManager = core.getAnnotationManager();
-    const groupedAnnots = annotManager.getGroupAnnotations(annot);
-
-    if (groupedAnnots.length > 1) {
-      groupedAnnots.forEach(groupAnnot => {
-        if (groupAnnot instanceof Annotations.Link) {
-          linkAnnotation = true;
-        }
-      });
-    }
-
-    return linkAnnotation;
-  };
-
   const annotationPopup =
     <div
       className={classNames({
@@ -325,22 +309,19 @@ const AnnotationPopup = () => {
           ].includes(firstAnnotation.ToolName)) && !isEditingWidgets && (
             <ActionButton
               title="tool.Link"
-              img={isLinkAnnotation(firstAnnotation) ? 'icon-tool-unlink' : 'icon-tool-link'}
+              img={firstAnnotation.getAssociatedLinks().length > 0 ? 'icon-tool-unlink' : 'icon-tool-link'}
               onClick={
-                isLinkAnnotation(firstAnnotation)
+                firstAnnotation.getAssociatedLinks().length > 0
                   ? () => {
                     const annotManager = core.getAnnotationManager();
                     selectedAnnotations.forEach(annot => {
+                      annot.getAssociatedLinks().forEach(annotId => {
+                        const linkAnnot = annotManager.getAnnotationById(annotId);
+                        annotManager.deleteAnnotation(linkAnnot, null, true);
+                      });
+                      annot.unassociateLinks();
                       if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {
                         annotManager.deleteAnnotation(annot);
-                      } else {
-                        const groupedAnnots = annotManager.getGroupAnnotations(annot);
-                        groupedAnnots.forEach(groupAnnot => {
-                          if (groupAnnot instanceof Annotations.Link) {
-                            annotManager.ungroupAnnotations([groupAnnot]);
-                            annotManager.deleteAnnotation(groupAnnot);
-                          }
-                        });
                       }
                     });
                   }

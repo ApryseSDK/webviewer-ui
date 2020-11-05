@@ -80,7 +80,6 @@ const LinkModal = () => {
             )
           );
         });
-        // create a transparent highlight annotation in case of no annotation being linked to
         createHighlightAnnot(
           currPageLinks,
           quads[currPageNumber],
@@ -92,21 +91,19 @@ const LinkModal = () => {
 
     if (selectedAnnotations) {
       selectedAnnotations.forEach(annot => {
-        const annotManager = core.getAnnotationManager();
-        const groupedAnnots = annotManager.getGroupAnnotations(annot);
-
-        // ungroup and delete any previously created links
-        if (groupedAnnots.length > 1) {
-          const linksToDelete = groupedAnnots.filter(annot => annot instanceof Annotations.Link);
-          if (linksToDelete.length > 0) {
-            annotManager.ungroupAnnotations(groupedAnnots);
-            core.deleteAnnotations(linksToDelete);
-          }
+        const associatedLinks = annot.getAssociatedLinks();
+        if (associatedLinks.length > 0) {
+          const linksToDelete = [];
+          associatedLinks.forEach(linkId => {
+            linksToDelete.push(core.getAnnotationById(linkId));
+          });
+          core.deleteAnnotations(linksToDelete);
+          annot.unassociateLinks();
         }
 
         const link = newLink(annot.X, annot.Y, annot.Width, annot.Height);
         linksResults.push(link);
-        annotManager.groupAnnotations(annot, [link]);
+        annot.associateLink([link.Id]);
       });
     }
 
@@ -114,7 +111,6 @@ const LinkModal = () => {
   };
 
   const createHighlightAnnot = async(linkAnnotArray, quads, text) => {
-    const annotManager = core.getAnnotationManager();
     const linkAnnot = linkAnnotArray[0];
     const highlight = new Annotations.TextHighlightAnnotation();
     highlight.PageNumber = linkAnnot.PageNumber;
@@ -128,8 +124,10 @@ const LinkModal = () => {
     highlight.Author = core.getCurrentUser();
     highlight.setContents(text);
 
+    const linkAnnotIdArray = linkAnnotArray.map(link => link.Id);
+    highlight.associateLink(linkAnnotIdArray);
+
     core.addAnnotations([highlight]);
-    annotManager.groupAnnotations(highlight, linkAnnotArray);
   };
 
   const addURLLink = e => {
