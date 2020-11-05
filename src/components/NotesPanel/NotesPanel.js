@@ -47,7 +47,6 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const currentWidth = currentLeftPanelWidth || currentNotesPanelWidth;
 
   const dispatch = useDispatch();
-
   const inputRef = useRef(null);
   useEffect(() => {
     if (isOpen) {
@@ -127,9 +126,10 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
       listRef.current?.scrollToRow(singleSelectedNoteIndex);
     }
-    // we only want this effect to happen when we select some notes
+    // For newly created annotations the "annotationSelected" event fires before the "annotationChanged" event
+    // So "singleSelectedNoteIndex" will be -1 till "notes" are updated
     // eslint-disable-next-line
-  }, [selectedNoteIds]);
+  }, [selectedNoteIds, notes]);
 
   // useEffect(() => {
   //   if (isOpen) {
@@ -238,6 +238,12 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       isDocumentReadOnly,
     };
 
+    if (index === singleSelectedNoteIndex) {
+      setTimeout(() => {
+        // open the 'annotationNoteConnectorLine' since the note it's pointing to is being rendered
+        dispatch(actions.openElement('annotationNoteConnectorLine'));
+      }, 0);
+    }
     return (
       // unfortunately we need to use an actual div instead of React.Fragment here so that we can pass the correct index to scrollToRow
       // if this is a fragment then the listSeparator is rendered as a separate child, which means
@@ -363,6 +369,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
               notes={notesToRender}
               onScroll={handleScroll}
               initialScrollTop={scrollTopRef.current}
+              selectedIndex={singleSelectedNoteIndex}
             >
               {renderChild}
             </VirtualizedList>

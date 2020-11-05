@@ -8,12 +8,13 @@ const propTypes = {
   children: PropTypes.func.isRequired,
   onScroll: PropTypes.func.isRequired,
   initialScrollTop: PropTypes.number.isRequired,
+  selectedIndex: PropTypes.number
 };
 
 const cache = new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
 
 const VirtualizedList = React.forwardRef(
-  ({ notes, children, onScroll, initialScrollTop }, forwardedRef) => {
+  ({ notes, children, onScroll, initialScrollTop, selectedIndex }, forwardedRef) => {
     const listRef = useRef();
     const [offset, setOffset] = useState(0);
     const [dimension, setDimension] = useState({ width: 0, height: 0 });
@@ -35,7 +36,11 @@ const VirtualizedList = React.forwardRef(
     useEffect(() => {
       cache.clearAll();
       listRef?.current?.recomputeRowHeights();
-    }, [notes.length]);
+
+      if(selectedIndex !== -1) {
+        listRef.current?.scrollToRow(selectedIndex);
+      }
+    }, [notes.length, selectedIndex]);
 
     useEffect(() => {
       const windowResizeHandler = () => {
@@ -58,6 +63,10 @@ const VirtualizedList = React.forwardRef(
     const _resize = index => {
       cache.clear(index);
       listRef.current?.recomputeRowHeights(index);
+
+      if(selectedIndex !== -1) {
+        listRef.current?.scrollToRow(selectedIndex);
+      }
     };
 
     const handleScroll = ({ scrollTop }) => {
@@ -106,6 +115,7 @@ const VirtualizedList = React.forwardRef(
               rowHeight={cache.rowHeight}
               rowRenderer={rowRenderer}
               onScroll={handleScroll}
+              scrollToAlignment={"start"}
             />
           </div>
         )}

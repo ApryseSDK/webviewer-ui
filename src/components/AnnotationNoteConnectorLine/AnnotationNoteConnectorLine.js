@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState, useCallback } from 'react';
-import NoteContext from 'components/Note/Context';
 import { useSelector, shallowEqual } from 'react-redux';
 import core from 'core';
 import selectors from 'selectors';
@@ -20,7 +19,6 @@ const LineConnectorPortal = ({ children }) => {
 
   return createPortal(children, el);
 };
-
 
 const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
   const [notePanelWidth, lineIsOpen, notePanelIsOpen, isLineDisabled, documentContainerWidth, documentContainerHeight] = useSelector(
@@ -45,7 +43,6 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
   const [leftHorizontalLineTop, setLeftHorizontalLineTop] = useState(0);
   const [leftHorizontalLineRight, setLeftHorizontalLineRight] = useState(0);
 
-  const { isSelected: noteIsSelected } = useContext(NoteContext);
   const { bottomRight: annotationBottomRight, topLeft: annotationTopLeft } = getAnnotationPosition(annotation);
 
   const getAnnotationLineOffset = useCallback(()=>{
@@ -53,8 +50,8 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
       return 4;
     }
     return 15;
-  },[annotation]) 
-  
+  },[annotation]);
+
   useEffect(() => {
     const { scrollTop, scrollLeft } = core.getScrollViewElement();
     const notePanelLeftPadding = 16;
@@ -76,7 +73,7 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
 
   }, [noteContainerRef, notePanelWidth, annotationBottomRight, annotationTopLeft]);
 
-  if (noteIsSelected && lineIsOpen && notePanelIsOpen && !isLineDisabled) {
+  if (lineIsOpen && notePanelIsOpen && !isLineDisabled) {
     const verticalHeight = Math.abs(rightHorizontalLineTop - leftHorizontalLineTop);
     const horizontalLineHeight = 2;
     // Add HorizontalLineHeight of 2px when annot is above note to prevent little gap between lines

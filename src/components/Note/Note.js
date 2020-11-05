@@ -210,7 +210,9 @@ const Note = ({
           </div>
         </React.Fragment>
       )}
-      <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />
+      {
+        isSelected && <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />
+      }
     </div>
   );
 };
