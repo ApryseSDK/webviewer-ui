@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "您輸入的數字無效，您可以輸入7.5或7 1/2之類的值",
     "linkURLorPage": "鏈接網址或頁面",
     "enterReplacementText": "輸入您要替換的文字",
-    "sortBy": "排序方式"
+    "sortBy": "排序方式",
+    "emptyCustomStampInput": "印章文字不能為空"
   },
   "option": {
     "notesOrder": {

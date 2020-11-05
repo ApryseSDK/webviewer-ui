@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "Het getal dat je hebt ingevoerd is ongeldig, je kunt waarden invoeren zoals 7,5 of 7 1/2",
     "linkURLorPage": "Link-URL of een pagina",
     "enterReplacementText": "Voer de tekst in die u wilt vervangen",
-    "sortBy": "Sorteer op"
+    "sortBy": "Sorteer op",
+    "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn"
   },
   "option": {
     "notesOrder": {

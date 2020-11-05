@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "O número inserido é inválido, você pode inserir valores como 7,5 ou 7 1/2",
     "linkURLorPage": "URL do link ou uma página",
     "enterReplacementText": "Insira o texto que deseja substituir",
-    "sortBy": "Ordenar por"
+    "sortBy": "Ordenar por",
+    "emptyCustomStampInput": "O texto do carimbo não pode estar vazio"
   },
   "option": {
     "notesOrder": {

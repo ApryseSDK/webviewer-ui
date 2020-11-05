@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "Le nombre que vous avez entré est invalide, vous pouvez entrer des valeurs comme 7,5 ou 7 1/2",
     "linkURLorPage": "Lien URL ou une page",
     "enterReplacementText": "Entrez le texte que vous souhaitez remplacer",
-    "sortBy": "Trier par"
+    "sortBy": "Trier par",
+    "emptyCustomStampInput": "Le texte du tampon ne peut pas être vide"
   },
   "option": {
     "notesOrder": {

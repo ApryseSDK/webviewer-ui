@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "Die eingegebene Nummer ist ungültig. Sie können Werte wie 7,5 oder 7 1/2 eingeben",
     "linkURLorPage": "Link URL oder eine Seite",
     "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten",
-    "sortBy": "Sortiere nach"
+    "sortBy": "Sortiere nach",
+    "emptyCustomStampInput": "Stempeltext darf nicht leer sein"
   },
   "option": {
     "notesOrder": {

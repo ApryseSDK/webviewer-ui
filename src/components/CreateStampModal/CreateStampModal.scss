@@ -116,6 +116,14 @@
         }
       }
 
+      .stamp-create-disabled {
+        background: var(--disabled-icon);
+        &:hover {
+          background: var(--disabled-icon);
+          cursor: default;
+        }
+      }
+
       .ColorPalette {
         display: grid;
         grid-template-columns: repeat(3,1fr);

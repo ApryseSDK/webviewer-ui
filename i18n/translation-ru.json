@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "Введенное вами число недействительно, вы можете ввести такие значения, как 7,5 или 7 1/2.",
     "linkURLorPage": "Ссылка URL или страница",
     "enterReplacementText": "Введите текст, который хотите заменить",
-    "sortBy": "Сортировать по"
+    "sortBy": "Сортировать по",
+    "emptyCustomStampInput": "Текст штампа не может быть пустым"
   },
   "option": {
     "notesOrder": {

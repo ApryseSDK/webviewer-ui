@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "입력 한 숫자가 잘못되었습니다. 7.5 또는 7 1/2과 같은 값을 입력 할 수 있습니다.",
     "linkURLorPage": "링크 URL 또는 페이지",
     "enterReplacementText": "바꿀 텍스트를 입력하십시오",
-    "sortBy": "정렬 기준"
+    "sortBy": "정렬 기준",
+    "emptyCustomStampInput": "스탬프 텍스트는 비워 둘 수 없습니다"
   },
   "option": {
     "notesOrder": {

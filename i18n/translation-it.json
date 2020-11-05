@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "Il numero che hai inserito non è valido, puoi inserire valori come 7,5 o 7 1/2",
     "linkURLorPage": "Link URL o una pagina",
     "enterReplacementText": "Immettere il testo che si desidera sostituire",
-    "sortBy": "Ordina per"
+    "sortBy": "Ordina per",
+    "emptyCustomStampInput": "Il testo del timbro non può essere vuoto"
   },
   "option": {
     "notesOrder": {

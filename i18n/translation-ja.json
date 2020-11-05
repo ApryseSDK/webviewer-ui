@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "入力した数値は無効です。7.5や7 1/2などの値を入力できます",
     "linkURLorPage": "リンクURLまたはページ",
     "enterReplacementText": "置き換えるテキストを入力してください",
-    "sortBy": "並び替え"
+    "sortBy": "並び替え",
+    "emptyCustomStampInput": "スタンプテキストを空にすることはできません"
   },
   "option": {
     "notesOrder": {

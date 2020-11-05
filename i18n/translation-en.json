@@ -169,7 +169,8 @@
     "errorEnterMeasurement": "The number you have entered is invalid, you can enter values like 7.5 or 7 1/2",
     "linkURLorPage": "Link URL or a Page",
     "enterReplacementText": "Enter the text you want to replace",
-    "sortBy": "Sort by"
+    "sortBy": "Sort by",
+    "emptyCustomStampInput": "Stamp text cannot be empty"
   },
   "option": {
     "notesOrder": {

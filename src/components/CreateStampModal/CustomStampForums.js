@@ -149,6 +149,14 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
           label={t('option.customStampModal.Time')}
         />
       </div>
+      {
+        !stampTextInputValue
+        && (
+          <div className='empty-stamp-input'>
+            {t('message.emptyCustomStampInput')}
+          </div>
+        )
+      }
       <div className="divider-horizontal"></div>
       <div className="footer">
         <button className="stamp-close" onClick={closeModal}>
@@ -160,9 +168,23 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
           onStyleChange={handleColorInputChange}
           overridePalette2={COLOR_CHOICES}
         />
-        <button className="stamp-create" onClick={createCustomStamp}>
+        <div
+          className={
+            !stampTextInputValue
+              ? "stamp-create stamp-create-disabled"
+              : "stamp-create"
+          }
+          onClick={
+            () => {
+              if (!stampTextInputValue) {
+                return;
+              }
+              createCustomStamp();
+            }
+          }
+        >
           {t('action.create')}
-        </button>
+        </div>
       </div>
 
     </div>
