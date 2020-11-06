@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Icon from 'components/Icon';
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
@@ -95,7 +94,7 @@ const ToolButton = ({
   if (showColor === 'always' || (showColor === 'active' && isActive)) {
     const toolStyles = getToolStyles(toolName);
     color = toolStyles?.[iconColorKey]?.toHexString?.();
-    fillClass = getFillClass(toolStyles.FillColor);
+    fillClass = getFillClass(toolStyles?.FillColor);
   }
 
   return (

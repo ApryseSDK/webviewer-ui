@@ -60,12 +60,17 @@ class ReaderModeViewer extends React.PureComponent {
     import('@pdftron/webviewer-reading-mode').then(({ default: WebViewerReadingMode }) => {
       if (!this.wvReadingMode) {
         this.wvReadingMode = WebViewerReadingMode.initialize(PDFNet);
+      } else {
+        this.wvReadingMode.unmount();
       }
 
       this.wvReadingMode.render(
         core.getDocumentViewer().getDocument().getPDFDoc(),
         this.viewer.current,
-        core.setCurrentPage
+        {
+          pageNumberUpdateHandler: core.setCurrentPage,
+          pageNum: core.getCurrentPage()
+        }
       );
       this.setZoom(core.getZoom());
     });

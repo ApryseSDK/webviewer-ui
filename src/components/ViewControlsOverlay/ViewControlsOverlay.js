@@ -23,18 +23,26 @@ function ViewControlsOverlay() {
   const totalPageThreshold = 1000;
 
   const handleClick = (pageTransition, layout) => {
+    const setDisplayMode = () => {
+      const displayModeObject = displayModeObjects.find(
+        obj => obj.pageTransition === pageTransition && obj.layout === layout,
+      );
+      core.setDisplayMode(displayModeObject.displayMode);
+    };
+
     if (isReaderMode) {
       exitReaderMode(store);
+      setTimeout(() => {
+        setDisplayMode();
+      });
+    } else {
+      setDisplayMode();
     }
-
-    const displayModeObject = displayModeObjects.find(
-      obj => obj.pageTransition === pageTransition && obj.layout === layout,
-    );
-    core.setDisplayMode(displayModeObject.displayMode);
   };
 
   const handleReaderModeClick = () => {
     if (isReaderMode) return;
+    core.setDisplayMode('Single');
     enterReaderMode(store);
   };
 
@@ -46,14 +54,14 @@ function ViewControlsOverlay() {
 
   return (
     <FlyoutMenu menu="viewControlsOverlay" trigger="viewControlsButton" onClose={undefined} ariaLabel={t('component.viewControlsOverlay')}>
-      <DataElementWrapper
-        dataElement="pageTransitionHeader"
-        className="type"
-      >
-        {t('option.displayMode.pageTransition')}
-      </DataElementWrapper>
       {totalPages < totalPageThreshold && (
         <>
+          <DataElementWrapper
+            dataElement="pageTransitionHeader"
+            className="type"
+          >
+            {t('option.displayMode.pageTransition')}
+          </DataElementWrapper>
           <DataElementWrapper
             className={classNames({ row: true, active: (pageTransition === 'continuous' && !isReaderMode) })}
             onClick={() => handleClick('continuous', layout)}
