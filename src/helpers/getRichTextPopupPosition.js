@@ -2,6 +2,9 @@ import { calcPopupLeft, calcPopupTop } from 'helpers/getPopupPosition';
 import core from 'core';
 
 export default (annotation, popup) => {
+  if (!popup || !popup.current) {
+    return;
+  }
   const pageIndex = annotation.PageNumber - 1;
   const editorContainer = document.querySelector(
     `#pageWidgetContainer${pageIndex} [id="freetext-editor-${annotation.Id}"]`
