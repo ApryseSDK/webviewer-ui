@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
-
 import selectors from 'selectors';
 
 import './ColorPalette.scss';
@@ -74,7 +73,12 @@ class ColorPalette extends React.PureComponent {
       overridePalette2,
       colorMapKey,
       t,
+      isDisabled,
     } = this.props;
+
+    if (isDisabled) {
+      return null;
+    }
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
 
@@ -140,6 +144,7 @@ class ColorPalette extends React.PureComponent {
 
 const mapStateToProps = state => ({
   overridePalette: selectors.getCustomElementOverrides(state, dataElement),
+  isDisabled: selectors.isElementDisabled(state, 'colorPalette'),
 });
 
 export default connect(mapStateToProps)(withTranslation()(ColorPalette));
