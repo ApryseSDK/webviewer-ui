@@ -20,7 +20,7 @@ export default async pageNumbersToExtract => {
       annotManager.exportAnnotations({ annotList }).then(xfdfString => {
         doc.extractPages(pageNumbersToExtract, xfdfString).then(data => {
           const arr = new Uint8Array(data);
-          const fileName = doc.getFilename() || 'extractedDocument.pdf';
+          const fileName = `${doc.getFilename()}.pdf` || 'extractedDocument.pdf';
 
           let file = null;
           if (isIE) {
