@@ -189,6 +189,7 @@ class DocumentContainer extends React.PureComponent {
     this.props.closeElements([
       'annotationPopup',
       'textPopup',
+      'annotationNoteConnectorLine',
     ]);
   }
 
@@ -259,7 +260,7 @@ class DocumentContainer extends React.PureComponent {
                 onScroll={this.handleScroll}
               >
                 {/* tabIndex="-1" to keep document focused when in single page mode */}
-                <div className={documentClassName} ref={this.document} tabIndex="-1"/>
+                <div className={documentClassName} ref={this.document} tabIndex="-1" />
                 {this.props.isReaderMode && (
                   <ReaderModeViewer />
                 )}

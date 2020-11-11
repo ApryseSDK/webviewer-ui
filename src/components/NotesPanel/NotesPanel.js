@@ -141,6 +141,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     if (scrollTop) {
       scrollTopRef.current = scrollTop;
     }
+    dispatch(actions.closeElement('annotationNoteConnectorLine'));
   };
 
   const filterNote = note => {
