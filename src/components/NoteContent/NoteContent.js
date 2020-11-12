@@ -89,8 +89,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           }}
         />
       ) : (
-          '(no name)'
-        );
+        '(no name)'
+      );
     },
     [searchInput],
   );
@@ -130,12 +130,12 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   // This is the text placeholder passed to the ContentArea
   // It ensures that if we try and edit, we get the right placeholder
   // depending on whether the comment has been saved to the annotation or not
-  const thereIsNoUnpostedEdit = typeof pendingEditTextMap[annotation.Id] === 'undefined'
+  const thereIsNoUnpostedEdit = typeof pendingEditTextMap[annotation.Id] === 'undefined';
   let textAreaValue;
   if (contents && thereIsNoUnpostedEdit) {
     textAreaValue = contents;
   } else {
-    textAreaValue = pendingEditTextMap[annotation.Id]
+    textAreaValue = pendingEditTextMap[annotation.Id];
   }
 
   const header = useMemo(() => (
@@ -181,10 +181,10 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             onTextAreaValueChange={onTextChange}
           />
         ) : (
-            contents && (
-              <div className="container">{renderContents(contents)}</div>
-            )
-          )}
+          contents && (
+            <div className="container">{renderContents(contents)}</div>
+          )
+        )}
       </div>
     </React.Fragment>
   ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]);
@@ -212,17 +212,17 @@ const ContentArea = ({
   textAreaValue,
   onTextAreaValueChange,
 }) => {
-  const [isMentionEnabled] = useSelector(state => [
+  const [isMentionEnabled, isNotesPanelOpen] = useSelector(state => [
     selectors.getIsMentionEnabled(state),
+    selectors.isElementOpen(state, 'notesPanel'),
   ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
-    if (textareaRef.current) {
+    if (isNotesPanelOpen && textareaRef.current) {
       textareaRef.current.focus();
-
       const textLength = textareaRef.current.value.length;
       textareaRef.current.setSelectionRange(textLength, textLength);
     }
@@ -249,7 +249,7 @@ const ContentArea = ({
     }
 
     setIsEditing(false, noteIndex);
-    onTextAreaValueChange(undefined, annotation.Id)
+    onTextAreaValueChange(undefined, annotation.Id);
   };
 
   return (
