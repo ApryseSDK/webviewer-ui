@@ -1,4 +1,6 @@
 import React from 'react';
+import { createStore } from 'redux';
+import { Provider as ReduxProvider } from "react-redux";
 import Dropdown from './Dropdown';
 
 export default {
@@ -14,13 +16,15 @@ export function Basic() {
     setCurrentSelectionKey(key);
   }
   return (
-    <div style={{ width: 100 }}>
-      <Dropdown
-        onClickItem={onClickItem}
-        items={items}
-        translationPrefix={translationPrefix}
-        currentSelectionKey={currentSelectionKey}
-      />
-    </div>
+    <ReduxProvider store={createStore((state = {}) => state)}>
+      <div style={{ width: 100 }}>
+        <Dropdown
+          onClickItem={onClickItem}
+          items={items}
+          translationPrefix={translationPrefix}
+          currentSelectionKey={currentSelectionKey}
+        />
+      </div>
+    </ReduxProvider>
   );
 }

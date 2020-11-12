@@ -11,11 +11,11 @@ import './Dropdown.scss';
 const DEFAULT_WIDTH = 94;
 
 const propTypes = {
-  onClickItem: PropTypes.func.isRequired,
+  onClickItem: PropTypes.func,
   items: PropTypes.array.isRequired,
-  currentSelectionKey: PropTypes.string.isRequired,
-  translationPrefix: PropTypes.string.isRequired,
-  dataElement: PropTypes.string.isRequired,
+  currentSelectionKey: PropTypes.string,
+  translationPrefix: PropTypes.string,
+  dataElement: PropTypes.string,
 };
 
 function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement }) {
