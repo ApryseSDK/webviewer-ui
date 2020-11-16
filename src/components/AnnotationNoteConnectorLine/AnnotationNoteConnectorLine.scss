@@ -4,6 +4,10 @@
   position: relative;
   z-index: min($modal-z-index, $popup-z-index) - 1;
 }
+
+#line-connector-wrapper {
+  position: absolute;
+}
   
 .horizontalLine {
   background-color: rgba(30,120,235, 0.5);
