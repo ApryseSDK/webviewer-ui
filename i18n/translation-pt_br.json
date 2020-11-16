@@ -308,7 +308,7 @@
     "richText": {
       "bold": "(Ctrl B)",
       "italic": "(Ctrl I)",
-      "underline": "(Ctrl L)",
+      "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
     }
   },
