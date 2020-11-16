@@ -68,7 +68,8 @@ export default store => () => {
     });
   }
 
-  if (doc.getType() === workerTypes.PDF) {
+  const docType = doc.getType();
+  if (docType === workerTypes.PDF || (docType  === workerTypes.BLACKBOX && !doc.isWebViewerServerDocument())) {
     dispatch(actions.enableElement('cropToolGroupButton', PRIORITY_ONE));
   } else {
     dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));
