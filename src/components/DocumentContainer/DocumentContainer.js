@@ -119,7 +119,7 @@ class DocumentContainer extends React.PureComponent {
     if (isMouseWheelZoomEnabled && e.metaKey || e.ctrlKey) {
       e.preventDefault();
       this.wheelToZoom(e);
-    } else if (!core.isContinuousDisplayMode() && this.props.allowPageNavigation) {
+    } else if (!core.isContinuousDisplayMode() && this.props.allowPageNavigation && core.isScrollableDisplayMode()) {
       this.wheelToNavigatePages(e);
     }
   }
