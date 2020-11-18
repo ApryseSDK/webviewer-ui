@@ -52,7 +52,7 @@ export const getDocumentContentContainerWidthStyle = state => {
     (isNotesPanelOpen ? notesPanelWidth : 0) +
     (isSearchPanelOpen ? searchPanelWidth : 0);
 
-  return `calc(100% - ${spaceTakenUpByPanels}px`;
+  return `calc(100% - ${spaceTakenUpByPanels}px)`;
 };
 
 export const getDocumentContainerWidth = state =>
