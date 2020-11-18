@@ -42,6 +42,7 @@
         margin: 0 22px;
         cursor: pointer;
         color: var(--faded-text);
+        white-space: nowrap;
 
         &.active {
           color: var(--ribbon-active-color);
