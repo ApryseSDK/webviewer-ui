@@ -43,139 +43,137 @@
   }
 }
 
-.Tools {
-  .tool-group-buttons-container {
-    overflow: hidden;
-    position: relative;
-    height: 100%;
+.tool-group-buttons-container {
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  .chevron-scroll {
     display: flex;
     align-items: center;
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    pointer-events: none;
+    width: 64px;
+    background: var(--tools-header-background);
+    @include ie11 {
+      background: none; // hack for ie11. Gradient does not work
+    }
+    top: 0px; // hack for ie11. centers vertically.
+    bottom: 0px; // hack for ie11. centers vertically.
+    margin: auto; // hack for ie11. centers vertically.
 
-    .chevron-scroll {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      z-index: 1;
-      height: 100%;
-      pointer-events: none;
-      width: 64px;
+    .Icon {
+      color: var(--scroll-chevron-color);
+    }
+
+    &.left {
+      left: 0px;
+      mask-image: -webkit-gradient(linear, right top, left top,
+      from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
+      color-stop(0.6,  rgba(0,0,0,1)));
+      justify-content: flex-start;
+    }
+
+    &.right {
+      right: 0px;
+      mask-image: -webkit-gradient(linear, left top, right top,
+      from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
+      color-stop(0.6,  rgba(0,0,0,1)));
+      justify-content: flex-end;
+    }
+
+    .scroll-edge {
       background: var(--tools-header-background);
-      @include ie11 {
-        background: none; // hack for ie11. Gradient does not work
-      }
-      top: 0px; // hack for ie11. centers vertically.
-      bottom: 0px; // hack for ie11. centers vertically.
-      margin: auto; // hack for ie11. centers vertically.
-
-      .Icon {
-        color: var(--scroll-chevron-color);
-      }
-
+      height: 100%;
       &.left {
-        left: 0px;
-        mask-image: -webkit-gradient(linear, right top, left top,
-        from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-        color-stop(0.6,  rgba(0,0,0,1)));
-        justify-content: flex-start;
+        width: 8px;
       }
 
       &.right {
         right: 0px;
-        mask-image: -webkit-gradient(linear, left top, right top,
-        from(rgba(0,0,0,0)), to(rgba(0,0,0,1)),
-        color-stop(0.6,  rgba(0,0,0,1)));
-        justify-content: flex-end;
-      }
-
-      .scroll-edge {
-        background: var(--tools-header-background);
-        height: 100%;
-        &.left {
+        @include mobile {
           width: 8px;
         }
 
-        &.right {
-          right: 0px;
-          @include mobile {
-            width: 8px;
-          }
-
-          @include tablet {
-            width: 16px;
-          }
-
-          @include mobile {
-            width: 12px;
-          }
+        @include tablet {
+          width: 16px;
         }
-      }
 
-      .tool-group-button {
-        @include button-reset;
-        margin: 0px;
-        pointer-events: all;
-      }
-    }
-  }
-
-  .tool-group-buttons-scroll {
-    display: flex;
-    overflow: auto;
-    scroll-behavior: smooth;
-    height: 100%;
-    align-items: center;
-    // fixes https://trello.com/c/NpuvdJh2/1065-ie11-new-ui-squished-header
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;  /* Safari and Chrome */
-    }
-
-    :last-child {
-      margin-right: 0px;
-    }
-  }
-
-  .HeaderItems {
-    .divider {
-      margin-left: 0px;
-      @include desktop {
-        margin-left: 16px;
-        margin-right: 16px;
-      }
-
-      @include tablet {
-        margin-left: 16px;
-        margin-right: 16px;
-      }
-
-      @include mobile {
-        margin-left: 16px;
-        margin-right: 16px;
+        @include mobile {
+          width: 12px;
+        }
       }
     }
 
     .tool-group-button {
-      scroll-snap-align: start;
+      @include button-reset;
+      margin: 0px;
+      pointer-events: all;
+    }
+  }
+}
+
+.tool-group-buttons-scroll {
+  display: flex;
+  overflow: auto;
+  scroll-behavior: smooth;
+  height: 100%;
+  align-items: center;
+  // fixes https://trello.com/c/NpuvdJh2/1065-ie11-new-ui-squished-header
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+
+  :last-child {
+    margin-right: 0px;
+  }
+}
+
+.HeaderItems {
+  .divider {
+    margin-left: 0px;
+    @include desktop {
+      margin-left: 16px;
+      margin-right: 16px;
     }
 
-    > .Button , .tool-group-button {
-      width: 32px;
-      height: 32px;
+    @include tablet {
+      margin-left: 16px;
+      margin-right: 16px;
     }
 
-    .Button {
-      &:not(.disabled) {
-        &:hover{
-          border-radius: 4px;
-          background: var(--tools-button-hover);
-        }
+    @include mobile {
+      margin-left: 16px;
+      margin-right: 16px;
+    }
+  }
 
-        &.active {
-          border-radius: 4px;
-          background: var(--tools-button-active);
-        }
+  .tool-group-button {
+    scroll-snap-align: start;
+  }
+
+  > .Button , .tool-group-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .Button {
+    &:not(.disabled) {
+      &:hover{
+        border-radius: 4px;
+        background: var(--tools-button-hover);
+      }
+
+      &.active {
+        border-radius: 4px;
+        background: var(--tools-button-active);
       }
     }
   }
