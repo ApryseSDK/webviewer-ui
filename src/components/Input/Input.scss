@@ -25,8 +25,12 @@ label.Input {
       height: 14px;
       width: 14px;
     }
-  }  
-  
+  }
+
+  &.disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
 
   &:before {
     content: '';
