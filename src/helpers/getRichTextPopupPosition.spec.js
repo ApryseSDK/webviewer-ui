@@ -13,7 +13,7 @@ jest.mock('helpers/getPopupPosition', () => {
 
 describe('getRichTextPopupPosition', () => {
   let origQuerySelector;
-  beforeEach(() => {
+  beforeAll(() => {
     origQuerySelector = document.querySelector;
   });
   afterEach(() => {
@@ -22,7 +22,7 @@ describe('getRichTextPopupPosition', () => {
 
   it('Should calculate the position correctly', () => {
     const zoom = 1.5;
-    const annotation = {
+    const annot = {
       PageNumber: 1,
       Id: 'asdf',
       StrokeThickness: 1,
@@ -43,7 +43,7 @@ describe('getRichTextPopupPosition', () => {
       bottom: 720,
     };
     const pBox = {};
-    const padding = 2 * parseFloat(annotation.StrokeThickness) * zoom;
+    const padding = 2 * parseFloat(annot.StrokeThickness) * zoom;
     const cInfo = {
       topLeft: {
         x: cBox.left + scrollContainer.scrollLeft - padding,
@@ -65,8 +65,7 @@ describe('getRichTextPopupPosition', () => {
     core.getZoom.mockReturnValue(zoom);
     popup.current.getBoundingClientRect.mockReturnValue(pBox);
 
-    getRichTextPopupPosition(annotation, popup);
-    expect(document.querySelector).toHaveBeenCalledWith(`#pageWidgetContainer${annotation.PageNumber} [id="freetext-editor-${annotation.Id}"]`);
+    expect(document.querySelector).toHaveBeenCalledWith(`#pageWidgetContainer${annot.PageNumber} [id="freetext-editor-${annot.Id}"]`);
     expect(popup.current.getBoundingClientRect).toHaveBeenCalled();
     expect(calcPopupLeft).toHaveBeenCalledWith(cInfo, pBox);
     expect(calcPopupTop).toHaveBeenCalledWith(cInfo, pBox);

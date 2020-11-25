@@ -43,7 +43,7 @@ const keyMap = {
   "zoomOut":                "Control+-",
   "richText.bold":          "Control+B",
   "richText.italic":        "Control+I",
-  "richText.underline":     "Control+U",
+  "richText.underline":     "Control+L",
   "richText.strikeout":     "Control+K",
 };
 

@@ -8,9 +8,9 @@ import './Layer.scss';
 
 class Layer extends React.PureComponent {
   static propTypes = {
-    layer: PropTypes.object,
+    layer: PropTypes.object.isRequired,
     parentLayer: PropTypes.object,
-    updateLayer: PropTypes.func,
+    updateLayer: PropTypes.func.isRequired,
   };
 
   state = {
@@ -54,10 +54,7 @@ class Layer extends React.PureComponent {
   render() {
     const { isExpanded } = this.state;
     const { layer, updateLayer } = this.props;
-    if (!layer || !updateLayer) {
-      return null;
-    }
-    const hasSubLayers = layer && layer.children && layer.children.length > 0;
+    const hasSubLayers = layer.children.length > 0;
 
     return (
       <div className="Layer">
@@ -80,7 +77,6 @@ class Layer extends React.PureComponent {
             label={layer.name}
             onChange={this.onChange}
             checked={layer.visible}
-            disabled={layer.locked}
             dataElement={`${layer.name}LayerOption`}
           />
         </div>
