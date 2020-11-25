@@ -73,6 +73,7 @@ class Layer extends React.PureComponent {
           </div>
           <Input
             id={layer.name}
+            disabled={layer.locked}
             type="checkbox"
             label={layer.name}
             onChange={this.onChange}
