@@ -23,12 +23,10 @@ const Input = React.forwardRef((props, ref) => {
 
   const inputProps = omit(props, ['dataElement', 'label']);
 
-  const labelClassName = `Input ${props.disabled ? 'disabled': ''}`;
-
   return isDisabled ? null : (
     <React.Fragment>
       <input className="Input" ref={ref} {...inputProps} />
-      <label className={labelClassName} htmlFor={props.id} data-element={props.dataElement}>
+      <label className="Input" htmlFor={props.id} data-element={props.dataElement}>
         {props.label}
       </label>
     </React.Fragment>

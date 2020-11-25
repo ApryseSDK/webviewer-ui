@@ -43,9 +43,4 @@ label.Input {
     background: transparent;
     transition: all 0.2s ease;
   }
-
-  &.disabled {
-    cursor: default;
-    opacity: 0.5;
-  }
 }
