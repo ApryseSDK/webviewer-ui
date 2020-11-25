@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 
 import './Input.scss';
-
 import selectors from 'selectors';
 
 const propTypes = {
@@ -27,10 +26,12 @@ const Input = React.forwardRef((props, ref) => {
 
   const inputProps = omit(props, ['dataElement', 'label']);
 
+  const labelClassName = `Input ${props.disabled ? 'disabled': ''}`;
+
   return isDisabled ? null : (
     <React.Fragment>
       <input className="Input" ref={ref} {...inputProps}/>
-      <label className="Input" htmlFor={props.id} data-element={props.dataElement}>{props.label}
+      <label className={labelClassName} htmlFor={props.id} data-element={props.dataElement}>{props.label}
         {ref?.current?.checked &&
           <div
             className="icon-container"
