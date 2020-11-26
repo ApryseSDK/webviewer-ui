@@ -24,9 +24,6 @@ const AnnotationPopup = () => {
     isOpen,
     isNotesPanelDisabled,
     isAnnotationStylePopupDisabled,
-    // can probably use mutation observer
-    isLeftPanelOpen,
-    isRightPanelOpen,
     popupItems,
   ] = useSelector(
     state => [
@@ -34,8 +31,6 @@ const AnnotationPopup = () => {
       selectors.isElementOpen(state, 'annotationPopup'),
       selectors.isElementDisabled(state, 'notesPanel'),
       selectors.isElementDisabled(state, 'annotationStylePopup'),
-      selectors.isElementOpen(state, 'leftPanel'),
-      selectors.isElementOpen(state, 'searchPanel'),
       selectors.getPopupItems(state, 'annotationPopup'),
     ],
     shallowEqual
@@ -119,12 +114,6 @@ const AnnotationPopup = () => {
       setIsStylePopupOpen(false);
     };
 
-    const isContainerShifted = isLeftPanelOpen || isRightPanelOpen;
-    if (isContainerShifted) {
-      // closing because we can't correctly reposition the popup on panel transition
-      closeAndReset();
-    }
-
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected' && annotations.length) {
         setFirstAnnotation(annotations[0]);
@@ -142,7 +131,7 @@ const AnnotationPopup = () => {
       core.removeEventListener('documentUnloaded', closeAndReset);
       window.addEventListener('resize', closeAndReset);
     };
-  }, [dispatch, isLeftPanelOpen, isRightPanelOpen]);
+  }, [dispatch]);
 
   if (isDisabled || !firstAnnotation) {
     return null;
