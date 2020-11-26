@@ -37,6 +37,7 @@ import setReadOnly from './setReadOnly';
 import setScrollViewElement from './setScrollViewElement';
 import setViewerElement from './setViewerElement';
 import isContinuousDisplayMode from './isContinuousDisplayMode';
+import isScrollableDisplayMode from './isScrollableDisplayMode';
 import scrollViewUpdated from './scrollViewUpdated';
 import canModify from './canModify';
 import canModifyContents from './canModifyContents';
@@ -154,6 +155,7 @@ export default {
   setScrollViewElement,
   setViewerElement,
   isContinuousDisplayMode,
+  isScrollableDisplayMode,
   scrollViewUpdated,
   canModify,
   canModifyContents,
