@@ -83,7 +83,7 @@ const ReplyArea = ({ annotation }) => {
 
     const annotationHasNoContents = annotation.getContents() === '' || annotation.getContents() === undefined;
     if (isMentionEnabled) {
-      if (annotationHasNoContents) {
+      if (annotationHasNoContents && isContentEditable) {
         const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(replyText);
 
         annotation.setCustomData('trn-mention', {
@@ -95,7 +95,7 @@ const ReplyArea = ({ annotation }) => {
         mentionsManager.createMentionReply(annotation, replyText);
       }
     } else {
-      if (annotationHasNoContents) {
+      if (annotationHasNoContents && isContentEditable) {
         core.setNoteContents(annotation, replyText);
       } else {
         core.createAnnotationReply(annotation, replyText);

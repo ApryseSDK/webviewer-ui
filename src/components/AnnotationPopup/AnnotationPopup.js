@@ -162,7 +162,8 @@ const AnnotationPopup = () => {
   const canUngroup = numberOfGroups === 1 && numberOfSelectedAnnotations > 1;
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
-  const isFreeTextAndCanEdit = firstAnnotation instanceof window.Annotations.FreeTextAnnotation && core.getAnnotationManager().useFreeTextEditing();
+  const isFreeTextAnnot = firstAnnotation instanceof window.Annotations.FreeTextAnnotation;
+  const isFreeTextAndCanEdit = isFreeTextAnnot && core.getAnnotationManager().useFreeTextEditing() && core.canModifyContents(firstAnnotation);
 
   const commentOnAnnotation = () => {
     if (isFreeTextAndCanEdit) {

@@ -97,12 +97,14 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
 
     core.addEventListener('annotationChanged', _setNotes);
     core.addEventListener('annotationHidden', _setNotes);
+    core.addEventListener('updateAnnotationPermission', _setNotes);
 
     _setNotes();
 
     return () => {
       core.removeEventListener('annotationChanged', _setNotes);
       core.removeEventListener('annotationHidden', _setNotes);
+      core.removeEventListener('updateAnnotationPermission', _setNotes);
     };
   }, []);
 
@@ -231,7 +233,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       searchInput,
       resize,
       isSelected: selectedNoteIds[currNote.Id],
-      isContentEditable: core.canModify(currNote) && !currNote.getContents(),
+      isContentEditable: core.canModifyContents(currNote) && !currNote.getContents(),
       pendingEditTextMap,
       setPendingEditText,
       pendingReplyMap,
