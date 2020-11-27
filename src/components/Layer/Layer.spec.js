@@ -8,6 +8,7 @@ const TestLayer = withProviders(Layer);
 describe('Test for Layer', () => {
   let layer;
   let updateLayer;
+  let layerId = 'test';
   beforeEach(() => {
     layer = {
       name: 'test'
@@ -22,7 +23,7 @@ describe('Test for Layer', () => {
 
   it('should be able to render with layer and updateLayer prop', () => {
     // name is required for Input
-    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer}/>);
+    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer} layerId={layerId} />);
     const input = container.querySelector('input');
     expect(input).toBeInTheDocument();
   });
@@ -32,7 +33,7 @@ describe('Test for Layer', () => {
       ...layer,
       visible: false
     };
-    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer}/>);
+    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer} layerId={layerId}/>);
     const input = container.querySelector('input');
     expect(input).not.toHaveAttribute('checked');
   });
@@ -42,7 +43,7 @@ describe('Test for Layer', () => {
       ...layer,
       visible: true
     };
-    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer}/>);
+    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer} layerId={layerId}/>);
     const input = container.querySelector('input');
     expect(input).toBeInTheDocument();
     expect(input).toHaveAttribute('checked');
@@ -53,7 +54,7 @@ describe('Test for Layer', () => {
       ...layer,
       locked: false
     };
-    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer}/>);
+    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer} layerId={layerId}/>);
     const input = container.querySelector('input');
     expect(input).toBeInTheDocument();
     expect(input).not.toHaveAttribute('disabled');
@@ -64,7 +65,7 @@ describe('Test for Layer', () => {
       ...layer,
       locked: true
     };
-    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer}/>);
+    const { container } = render(<TestLayer layer={layer}  updateLayer={updateLayer} layerId={layerId}/>);
     const input = container.querySelector('input');
     expect(input).toBeInTheDocument();
     expect(input).toHaveAttribute('disabled')
