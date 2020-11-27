@@ -89,11 +89,11 @@ const Note = ({
     //If this is not a new one, rebuild the isEditing map
     const pendingText = pendingEditTextMap[annotation.Id]
     if (pendingText !== '' && isContentEditable && !isDocumentReadOnly) {
-      setIsEditing(true, 0)
-    } else if (isDocumentReadOnly) {
-      setIsEditing(false, 0)
+      setIsEditing(true, 0);
+    } else if (isDocumentReadOnly || !isContentEditable) {
+      setIsEditing(false, 0);
     }
-  }, [isDocumentReadOnly])
+  }, [isDocumentReadOnly, isContentEditable, pendingEditTextMap, setIsEditing, annotation]);
 
   const handleNoteClick = e => {
     // stop bubbling up otherwise the note will be closed
