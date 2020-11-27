@@ -39,6 +39,7 @@ class LayersPanel extends React.PureComponent {
         {layers.map((layer, i) => (
           <Layer
             key={i}
+            layerId={`${i}`}
             layer={layer}
             updateLayer={(modifiedSubLayer) => {
               // new references for redux state
