@@ -33,7 +33,7 @@ export default store => {
     if (previousActiveTheme !== activeTheme || previousIsHighContrastMode !== isHighContrastMode) {
       previousActiveTheme = activeTheme;
       previousIsHighContrastMode = isHighContrastMode;
-      updateColours(activeTheme, isHighContrastMode);
+      updateColors(activeTheme, isHighContrastMode);
     }
   });
   return theme => {
@@ -53,7 +53,7 @@ const setVariables = (themeVarString = '') => {
   });
 };
 
-const updateColours = (activeTheme, isHighContrastMode)  => {
+const updateColors = (activeTheme, isHighContrastMode)  => {
   if (activeTheme === 'light') {
     setVariables(isHighContrastMode ? highContastLightModeString : lightModeString);
   } else if (activeTheme === 'dark') {
