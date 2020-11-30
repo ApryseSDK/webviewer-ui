@@ -85,7 +85,7 @@ class Layer extends React.PureComponent {
             onChange={this.onChange}
             checked={layer.visible}
             disabled={layer.locked}
-            dataElement={`${layerId}LayerOption`}
+            dataElement={`layer-${layerId}-LayerOption`}
           />
         </div>
         {hasSubLayers && isExpanded && (
