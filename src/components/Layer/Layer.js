@@ -11,6 +11,7 @@ class Layer extends React.PureComponent {
     layer: PropTypes.object.isRequired,
     parentLayer: PropTypes.object,
     updateLayer: PropTypes.func.isRequired,
+    layerId: PropTypes.string,
   };
 
   state = {
@@ -22,7 +23,9 @@ class Layer extends React.PureComponent {
     const newLayer = { ...layer };
     layer.children && layer.children.forEach((childLayer, i) => {
       let newChildLayer = { ...childLayer };
-      newChildLayer.visible = false;
+      if (!newChildLayer.locked) {
+        newChildLayer.visible = false;
+      }
       newChildLayer = this.unCheckChildren(newChildLayer);
       newLayer.children[i] = newChildLayer;
     });
@@ -53,7 +56,7 @@ class Layer extends React.PureComponent {
 
   render() {
     const { isExpanded } = this.state;
-    const { layer, updateLayer } = this.props;
+    const { layer, updateLayer, layerId } = this.props;
     const hasSubLayers = layer.children.length > 0;
 
     return (
@@ -72,13 +75,13 @@ class Layer extends React.PureComponent {
             )}
           </div>
           <Input
-            id={layer.name}
+            id={`layer-${layerId}`}
             disabled={layer.locked}
             type="checkbox"
             label={layer.name}
             onChange={this.onChange}
             checked={layer.visible}
-            dataElement={`${layer.name}LayerOption`}
+            dataElement={`layer-${layerId}-LayerOption`}
           />
         </div>
         {hasSubLayers && isExpanded && (
@@ -86,6 +89,7 @@ class Layer extends React.PureComponent {
             {layer.children.map((subLayer, i) => (
               <Layer
                 key={i}
+                layerId={`${layerId}-${i}`}
                 layer={subLayer}
                 parentLayer={layer}
                 updateLayer={modifiedSubLayer => {
