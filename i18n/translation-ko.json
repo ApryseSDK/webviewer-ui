@@ -89,7 +89,9 @@
     "underline": "밑줄",
     "custom": "사용자 지정",
     "rubberStamp": "고무 도장",
-    "note": "노트"
+    "note": "노트",
+    "link": "링크",
+    "other": "다른"
   },
   "rubberStamp": {
     "Approved": "승인",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -30,13 +30,75 @@ const FilterAnnotModal = () => {
   const [authorFilter, setAuthorFilter] = useState([]);
   const [typesFilter, setTypesFilter] = useState([]);
 
+  const getAnnotationClass = annotation => {
+    if (annotation instanceof Annotations.CaretAnnotation) {
+      return 'caret';
+    }
+    if (annotation instanceof Annotations.CustomAnnotation) {
+      return 'custom';
+    }
+    if (annotation instanceof Annotations.EllipseAnnotation) {
+      return 'ellipse';
+    }
+    if (annotation instanceof Annotations.FileAttachmentAnnotation) {
+      return 'fileattachment';
+    }
+    if (annotation instanceof Annotations.FreeHandAnnotation) {
+      return 'freehand';
+    }
+    if (annotation instanceof Annotations.FreeTextAnnotation) {
+      return 'freetext';
+    }
+    if (annotation instanceof Annotations.LineAnnotation) {
+      return 'line';
+    }
+    if (annotation instanceof Annotations.Link) {
+      return 'other';
+    }
+    if (annotation instanceof Annotations.PolygonAnnotation) {
+      return 'polygon';
+    }
+    if (annotation instanceof Annotations.PolylineAnnotation) {
+      return 'polyline';
+    }
+    if (annotation instanceof Annotations.RectangleAnnotation) {
+      return 'rectangle';
+    }
+    if (annotation instanceof Annotations.RedactionAnnotation) {
+      return 'redact';
+    }
+    if (annotation instanceof Annotations.SignatureWidgetAnnotation) {
+      return 'signature';
+    }
+    if (annotation instanceof Annotations.StampAnnotation) {
+      return 'stamp';
+    }
+    if (annotation instanceof Annotations.StickyAnnotation) {
+      return 'stickyNote';
+    }
+    if (annotation instanceof Annotations.TextHighlightAnnotation) {
+      return 'highlight';
+    }
+    if (annotation instanceof Annotations.TextStrikeoutAnnotation) {
+      return 'strikeout';
+    }
+    if (annotation instanceof Annotations.TextUnderlineAnnotation) {
+      return 'underline';
+    }
+    if (annotation instanceof Annotations.TextSquigglyAnnotation) {
+      return 'squiggly';
+    }
+
+    return 'other';
+  };
+
   const filterApply = () => {
     dispatch(
       actions.setCustomNoteFilter(annot => {
         let type = true;
         let author = true;
         if (typesFilter.length > 0) {
-          type = typesFilter.includes(annot.Subject);
+          type = typesFilter.includes(getAnnotationClass(annot));
         }
         if (authorFilter.length > 0) {
           author = authorFilter.includes(core.getDisplayAuthor(annot));
@@ -72,9 +134,7 @@ const FilterAnnotModal = () => {
       if (core.getDisplayAuthor(annot) && core.getDisplayAuthor(annot) !== '') {
         authorsToBeAdded.add(core.getDisplayAuthor(annot));
       }
-      if (annot.Subject && annot.Subject !== '') {
-        annotTypesToBeAdded.add(annot.Subject);
-      }
+      annotTypesToBeAdded.add(getAnnotationClass(annot));
     });
     setAuthors([...authorsToBeAdded]);
     setAnnotTypes([...annotTypesToBeAdded]);
@@ -122,12 +182,12 @@ const FilterAnnotModal = () => {
                   <div className="filter">
                     <div className="heading">{t('option.filterAnnotModal.types')}</div>
                     <div className="buttons">
-                      {[...annotTypes].map((val, index) => {
+                      {[...annotTypes].sort((type1, type2) => t(`annotation.${type1}`) <= t(`annotation.${type2}`) ? -1 : 1).map((val, index) => {
                         return (
                           <Choice
                             type="checkbox"
                             key={index}
-                            label={val}
+                            label={t(`annotation.${val}`)}
                             checked={typesFilter.includes(val)}
                             id={val}
                             onChange={e => {

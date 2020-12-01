@@ -89,7 +89,9 @@
     "underline": "Soulignage",
     "custom": "personnalisation",
     "rubberStamp": "Rubber Stamp",
-    "note": "Remarque"
+    "note": "Remarque",
+    "link": "Lien",
+    "other": "Autre"
   },
   "rubberStamp": {
     "Approved": "Approuvée",
