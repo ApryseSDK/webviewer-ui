@@ -58,6 +58,9 @@ const App = ({ removeEventHandlers }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // when highlighting text, the highlight annotation's content should not be set to the highlighted text
+    // this will prevent the highlighted text from showing up in the notes panel
+    Tools.TextAnnotationCreateTool['AUTO_SET_TEXT'] = false;
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
