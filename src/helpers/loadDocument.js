@@ -30,6 +30,7 @@ const getDefaultOptions = () => ({
   startOffline: getHashParams('startOffline', false),
   azureWorkaround: getHashParams('azureWorkaround', false),
   pdftronServer: getHashParams('pdftronServer', ''),
+  // pdftronServer: getHashParams('pdftronServer', 'https://demo.pdftron.com/'),
   singleServerMode: getHashParams('singleServerMode', false),
   forceClientSideInit: getHashParams('forceClientSideInit', false),
   disableWebsockets: getHashParams('disableWebsockets', false),
