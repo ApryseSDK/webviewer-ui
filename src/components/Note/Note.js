@@ -206,7 +206,8 @@ const Note = ({
                 onTextChange={setPendingEditText}
               />
             ))}
-            {showReplyArea && <ReplyArea annotation={annotation} />}
+            {/* Customer does not want to have replies */}
+            {/* {showReplyArea && <ReplyArea annotation={annotation} />} */}
           </div>
         </React.Fragment>
       )}
