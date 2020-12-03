@@ -158,12 +158,12 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             </div>
           </div>
           <div className="state-and-overflow">
-            {!isStateDisabled && !isReply &&
+            {/* {!isStateDisabled && !isReply &&
               <NoteState
                 annotation={annotation}
                 isSelected={isSelected}
               />
-            }
+            } */}
             {!isEditing && isSelected &&
               <NotePopup
                 noteIndex={noteIndex}
