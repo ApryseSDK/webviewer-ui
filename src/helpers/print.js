@@ -26,13 +26,15 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
   const documentType = core.getDocument().getType();
   const bbURLPromise = core.getPrintablePDF();
 
-  if (bbURLPromise) {
-    const printPage = window.open('', '_blank');
-    printPage.document.write(i18n.t('message.preparingToPrint'));
-    bbURLPromise.then(result => {
-      printPage.location.href = result.url;
-    });
-  } else if (isEmbedPrintSupported && documentType === workerTypes.PDF) {
+  // if (bbURLPromise) {
+  //   const printPage = window.open('', '_blank');
+  //   printPage.document.write(i18n.t('message.preparingToPrint'));
+  //   bbURLPromise.then(result => {
+  //     printPage.location.href = result.url;
+  //   });
+  // } else if (isEmbedPrintSupported && documentType === workerTypes.PDF) {
+  // LPL want print modal to appear for WVS and should not open up a new tab
+  if (isEmbedPrintSupported && documentType === workerTypes.PDF) {
     dispatch(actions.openElement('loadingModal'));
     printPdf().then(() => {
       dispatch(actions.closeElement('loadingModal'));
