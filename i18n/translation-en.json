@@ -179,7 +179,8 @@
       "time": "Time",
       "status": "Status",
       "author": "Author",
-      "type": "Type"
+      "type": "Type",
+      "creationTimeAsc": "Creation Time (Asc)"
     },
     "toolbarGroup": {
       "dropdownLabel": "Toolbar Groups",
