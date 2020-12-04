@@ -46,7 +46,7 @@ function MenuOverlay() {
   };
 
   const downloadDocument = () => {
-    downloadPdf(dispatch);
+    downloadPdf(dispatch, { includeAnnotations: false });
   };
 
   return (

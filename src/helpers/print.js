@@ -370,10 +370,15 @@ const getNoteInfo = (annotation, dateFormat) => {
   const info = document.createElement('div');
 
   info.className = 'note__info';
+  // info.innerHTML = `
+  //   Author: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
+  //   Subject: ${annotation.Subject} &nbsp;&nbsp;
+  //   Date: ${dayjs(annotation.DateCreated).format(dateFormat || 'D/MM/YYYY h:mm:ss A')}
+  // `;
+  // LPL wants it in this kind of format
   info.innerHTML = `
     Author: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
-    Subject: ${annotation.Subject} &nbsp;&nbsp;
-    Date: ${dayjs(annotation.DateCreated).format(dateFormat || 'D/MM/YYYY h:mm:ss A')}
+    Date: ${dayjs(annotation.DateCreated).format('MM/DD/YYYY')}
   `;
   return info;
 };
