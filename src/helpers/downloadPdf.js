@@ -5,6 +5,8 @@ import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 
+// LPL wants it downloaded in original file format
+
 export default (dispatch, options = {}) => {
   const {
     filename = core.getDocument()?.getFilename() || 'document',
@@ -31,8 +33,21 @@ export default (dispatch, options = {}) => {
       return name;
     };
 
-    const downloadName = getDownloadFilename(filename, '.pdf');
     const doc = core.getDocument();
+    if (doc.getType() === 'office') {
+      options.downloadType = 'office';
+    }
+
+    const fileNameParts = filename.split('.');
+    /**
+       * According to https://www.pdftron.com/api/web/CoreControls.Document.html
+       * We can't download image files / other files as their own extension, must convert it to PDF
+       */
+    if (!fileNameParts[fileNameParts.length - 1] !== 'pdf' && options.downloadType !== 'office') {
+      fileNameParts[fileNameParts.length - 1] = 'pdf';
+    }
+
+    const downloadName = getDownloadFilename(filename, `.${fileNameParts[fileNameParts.length - 1]}`);
 
     if (externalURL) {
       const downloadIframe =

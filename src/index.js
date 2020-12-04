@@ -18,6 +18,7 @@ import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript, { loadConfig } from 'helpers/loadScript';
 import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServer';
+import applyNumberingToAnnotations from 'helpers/applyNumberingToAnnotations';
 import eventHandler from 'helpers/eventHandler';
 import setupI18n from 'helpers/setupI18n';
 import setAutoSwitch from 'helpers/setAutoSwitch';
@@ -160,6 +161,7 @@ if (window.CanvasRenderingContext2D) {
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
     setDefaultToolStyles();
+    applyNumberingToAnnotations(store);
     core.setToolMode(defaultTool);
 
     ReactDOM.render(

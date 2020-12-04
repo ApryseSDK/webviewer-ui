@@ -87,7 +87,7 @@ const Note = ({
 
   useEffect(() => {
     //If this is not a new one, rebuild the isEditing map
-    const pendingText = pendingEditTextMap[annotation.Id]
+    const pendingText = pendingEditTextMap[annotation.Id];
     if (pendingText !== '' && isContentEditable && !isDocumentReadOnly) {
       setIsEditing(true, 0);
     } else if (isDocumentReadOnly || !isContentEditable) {
@@ -146,11 +146,11 @@ const Note = ({
     //Must also restore the isEdit for  any replies, in case someone was editing a
     //reply when a comment was placed above
     replies.forEach((reply, index) => {
-      const pendingText = pendingEditTextMap[reply.Id]
+      const pendingText = pendingEditTextMap[reply.Id];
       if ((pendingText !== '' && typeof pendingText !== 'undefined') && isSelected) {
         setIsEditing(true, 1 + index);
       }
-    })
+    });
   }, [isSelected]);
 
   const showReplyArea = !Object.values(isEditingMap).some(val => val);
@@ -174,47 +174,55 @@ const Note = ({
     [setIsEditingMap],
   );
 
+  const annotationNumbering = annotation.getCustomData('commentNumber');
+
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      ref={containerRef}
-      className={noteClass}
-      onClick={handleNoteClick}
-      onKeyDown={handleNoteKeydown}
-    >
-      <NoteContent
-        noteIndex={0}
-        annotation={annotation}
-        isSelected={isSelected}
-        setIsEditing={setIsEditing}
-        isEditing={isEditingMap[0]}
-        textAreaValue={pendingEditTextMap[annotation.Id]}
-        onTextChange={setPendingEditText}
-      />
-      {isSelected && (
-        <React.Fragment>
-          {replies.length > 0 && <div className="divider" />}
-          <div className={repliesClass}>
-            {replies.map((reply, i) => (
-              <NoteContent
-                noteIndex={i + 1}
-                key={reply.Id}
-                annotation={reply}
-                setIsEditing={setIsEditing}
-                isEditing={isEditingMap[i + 1]}
-                onTextChange={setPendingEditText}
-              />
-            ))}
-            {/* Customer does not want to have replies */}
-            {/* {showReplyArea && <ReplyArea annotation={annotation} />} */}
-          </div>
-        </React.Fragment>
-      )}
-      {
-        isSelected && <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />
-      }
-    </div>
+    <React.Fragment>
+      <div style={{ display: 'flex', width:'100%' }}>
+        <div style={{ marginRight: '7px', fontWeight: 'bold' }}> {annotationNumbering} </div>
+        <div
+          style={{ width:'100%' }}
+          role="button"
+          tabIndex={0}
+          ref={containerRef}
+          className={noteClass}
+          onClick={handleNoteClick}
+          onKeyDown={handleNoteKeydown}
+        >
+          <NoteContent
+            noteIndex={0}
+            annotation={annotation}
+            isSelected={isSelected}
+            setIsEditing={setIsEditing}
+            isEditing={isEditingMap[0]}
+            textAreaValue={pendingEditTextMap[annotation.Id]}
+            onTextChange={setPendingEditText}
+          />
+          {isSelected && (
+            <React.Fragment>
+              {replies.length > 0 && <div className="divider" />}
+              <div className={repliesClass}>
+                {replies.map((reply, i) => (
+                  <NoteContent
+                    noteIndex={i + 1}
+                    key={reply.Id}
+                    annotation={reply}
+                    setIsEditing={setIsEditing}
+                    isEditing={isEditingMap[i + 1]}
+                    onTextChange={setPendingEditText}
+                  />
+                ))}
+                {/* Customer does not want to have replies */}
+                {/* {showReplyArea && <ReplyArea annotation={annotation} />} */}
+              </div>
+            </React.Fragment>
+          )}
+          {
+            isSelected && <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />
+          }
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 
