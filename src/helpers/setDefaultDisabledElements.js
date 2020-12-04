@@ -97,7 +97,9 @@ export default store => {
         'wildCardSearchOption',
         'readerPageTransitionButton',
         'editTextButton',
-        'mathSymbolsButton'
+        'mathSymbolsButton',
+        'annotationGroupButton',
+        'annotationUngroupButton'
       ],
       PRIORITY_ONE,
     ),
