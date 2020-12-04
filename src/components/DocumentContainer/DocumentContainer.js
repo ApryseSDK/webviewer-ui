@@ -135,6 +135,11 @@ class DocumentContainer extends React.PureComponent {
       this.wheelToZoom(e);
     } else if (!core.isContinuousDisplayMode() && this.props.allowPageNavigation && !this.props.isReaderMode && core.isScrollableDisplayMode()) {
       this.wheelToNavigatePages(e);
+      this.props.closeElements([
+        'annotationPopup',
+        'textPopup',
+        'annotationNoteConnectorLine',
+      ]);
     }
   }
 
