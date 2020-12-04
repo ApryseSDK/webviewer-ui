@@ -28,12 +28,14 @@ export default store => options => {
   const defaultOptions = {
     includeAnnotations: false,
     includeComments: false,
+    additionalPagesToPrint: []
   };
-
+  console.log('options', options);
   const printOptions = {
     ...defaultOptions,
     ...options,
   };
+  console.log('printOptions', printOptions);
 
   const { pagesToPrint } = printOptions;
 

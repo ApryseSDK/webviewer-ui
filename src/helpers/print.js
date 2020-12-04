@@ -14,9 +14,9 @@ let printQuality = 1;
 let colorMap;
 
 export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options) => {
-  let includeAnnotations, includeComments, pagesToPrint, onProgress;
+  let includeAnnotations, includeComments, pagesToPrint, onProgress, additionalPagesToPrint;
   if (options) {
-    ({ includeAnnotations, includeComments, pagesToPrint, onProgress } = options);
+    ({ includeAnnotations, includeComments, pagesToPrint, onProgress, additionalPagesToPrint } = options);
   }
 
   if (!core.getDocument()) {
@@ -39,15 +39,15 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
     printPdf().then(() => {
       dispatch(actions.closeElement('loadingModal'));
     });
-  } else if (includeAnnotations || includeComments) {
+  } else if (includeAnnotations || includeComments || additionalPagesToPrint) {
     if (!pagesToPrint) {
       pagesToPrint = [];
       for (let i = 1; i <= core.getTotalPages(); i++) {
         pagesToPrint.push(i);
       }
     }
-
-    const createPages = creatingPages(
+    console.log('before creating pages',additionalPagesToPrint);
+    let createPages = creatingPages(
       pagesToPrint,
       includeComments,
       includeAnnotations,
@@ -55,10 +55,16 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       sortStrategy,
       colorMap,
       undefined,
-      onProgress,
+      onProgress
     );
+    if (additionalPagesToPrint) {
+      console.log('b4 appending to createdPages', additionalPagesToPrint);      
+      createPages = createPages.concat(convertAdditionalPagesToImage(additionalPagesToPrint));
+      console.log('after appending to createPages', createPages);
+    }
     Promise.all(createPages)
       .then(pages => {
+        console.log(pages);
         printPages(pages);
       })
       .catch(e => {
@@ -67,6 +73,28 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
   } else {
     dispatch(actions.openElement('printModal'));
   }
+};
+
+const convertAdditionalPagesToImage = (additionalPagesToRender = []) => {
+  return additionalPagesToRender.map((htmlElement) => {
+    return new Promise((resolve) => {
+      document.body.appendChild(htmlElement);
+      return import(/* webpackChunkName: 'html2canvas' */ 'html2canvas').then(({ default: html2canvas }) => {
+        return html2canvas(htmlElement, {
+          backgroundColor: null,
+          scale: 1,
+          logging: false,
+        }).then((canvas) => {
+          document.body.removeChild(htmlElement);
+          const img = document.createElement('img');
+          img.src = canvas.toDataURL();
+          img.onload = () => {
+            resolve(img);
+          };
+        });
+      });
+    });
+  });
 };
 
 const printPdf = () =>
@@ -96,26 +124,46 @@ const printPdf = () =>
   });
 
 export const creatingPages = (pagesToPrint, includeComments, includeAnnot, printQualty, sortStrategy, clrMap, dateFormat, onProgress) => {
-  const createdPages = [];
+  let createdPages = [];
   pendingCanvases = [];
   includeAnnotations = includeAnnot;
   printQuality = printQualty;
   colorMap = clrMap;
 
+  let printableAnnotations = [];
+
   pagesToPrint.forEach(pageNumber => {
-    const printableAnnotations = getPrintableAnnotations(pageNumber);
+    printableAnnotations = printableAnnotations.concat(getPrintableAnnotations(pageNumber));
     createdPages.push(creatingImage(pageNumber, printableAnnotations));
 
-    if (includeComments && printableAnnotations.length) {
+    // if (includeComments && printableAnnotations.length) {
+    //   const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotations);
+    //   createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat));
+    // }
+
+    // if (onProgress) {
+    //   createdPages[createdPages.length - 1].then(img => {
+    //     onProgress(pageNumber, img);
+    //   });
+    // }
+  });
+  console.log(printableAnnotations);
+
+  printableAnnotations.forEach(printableAnnot => {
+
+    const pageNumber = printableAnnot.PageNumber;
+
+    if (includeComments) {
       const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotations);
       createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat));
     }
-
+  
     if (onProgress) {
       createdPages[createdPages.length - 1].then(img => {
         onProgress(pageNumber, img);
       });
     }
+
   });
 
   return createdPages;
@@ -200,7 +248,7 @@ const creatingNotesPage = (annotations, pageNumber, dateFormat) =>
 
     const header = document.createElement('div');
     header.className = 'page__header';
-    header.innerHTML = `Page ${pageNumber}`;
+    // header.innerHTML = `Page ${pageNumber}`;
 
     container.appendChild(header);
     annotations.forEach(annotation => {
@@ -318,6 +366,14 @@ const getNote = (annotation, dateFormat) => {
   noteRootInfo.className = 'note__info--with-icon';
 
   const noteIcon = getNoteIcon(annotation);
+
+  const commentNumber = annotation.getCustomData('commentNumber');
+
+
+  const commentNumberDiv = document.createElement('div');
+  commentNumberDiv.className = 'note__info';
+  commentNumberDiv.innerHTML = `${commentNumber} &nbsp;&nbsp;`;
+  noteRootInfo.appendChild(commentNumberDiv);
 
   noteRootInfo.appendChild(noteIcon);
   noteRootInfo.appendChild(getNoteInfo(annotation));

@@ -16,6 +16,8 @@ import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import './MenuOverlay.scss';
 
+import html2canvas from 'html2canvas';
+
 function MenuOverlay() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -42,7 +44,18 @@ function MenuOverlay() {
 
   const handlePrintButtonClick = () => {
     closeMenuOverlay();
-    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap);
+    var div = document.createElement("div");
+    div.className = 'blah';
+    div.style.color = 'red';
+    div.style.backgroundColor = 'blue';
+    div.style.padding = '20px 40px';
+    div.style.borderRadius = '5px';
+    div.innerText = 'Meanwhile in Finland';
+    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, {
+      additionalPagesToPrint: [
+        div
+      ]
+    });
   };
 
   const downloadDocument = () => {
