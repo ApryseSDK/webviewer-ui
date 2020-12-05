@@ -135,36 +135,17 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnot, print
   pagesToPrint.forEach(pageNumber => {
     printableAnnotations = printableAnnotations.concat(getPrintableAnnotations(pageNumber));
     createdPages.push(creatingImage(pageNumber, printableAnnotations));
-
-    // if (includeComments && printableAnnotations.length) {
-    //   const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotations);
-    //   createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat));
-    // }
-
-    // if (onProgress) {
-    //   createdPages[createdPages.length - 1].then(img => {
-    //     onProgress(pageNumber, img);
-    //   });
-    // }
   });
-  console.log(printableAnnotations);
-
-  printableAnnotations.forEach(printableAnnot => {
-
-    const pageNumber = printableAnnot.PageNumber;
-
-    if (includeComments) {
-      const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotations);
-      createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat));
-    }
-  
+  // LPL wants all comments to appear after the printed page
+  if (includeComments && printableAnnotations.length) {
+    const sortedNotes = (getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotations));
+    createdPages.push(creatingNotesPage(sortedNotes, undefined, dateFormat));
     if (onProgress) {
       createdPages[createdPages.length - 1].then(img => {
-        onProgress(pageNumber, img);
+        onProgress(createdPages.length - 1, img);
       });
     }
-
-  });
+  }
 
   return createdPages;
 };

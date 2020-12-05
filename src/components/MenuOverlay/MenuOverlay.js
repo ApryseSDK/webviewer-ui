@@ -52,6 +52,9 @@ function MenuOverlay() {
     div.style.borderRadius = '5px';
     div.innerText = 'Meanwhile in Finland';
     print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, {
+      // pagesToPrint: [1],
+      includeComments: true,
+      includeAnnotations: true,
       additionalPagesToPrint: [
         div
       ]
