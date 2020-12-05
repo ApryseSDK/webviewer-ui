@@ -46,7 +46,6 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
         pagesToPrint.push(i);
       }
     }
-    console.log('before creating pages',additionalPagesToPrint);
     let createPages = creatingPages(
       pagesToPrint,
       includeComments,
@@ -57,14 +56,11 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       undefined,
       onProgress
     );
-    if (additionalPagesToPrint) {
-      console.log('b4 appending to createdPages', additionalPagesToPrint);      
+    if (additionalPagesToPrint) {  
       createPages = createPages.concat(convertAdditionalPagesToImage(additionalPagesToPrint));
-      console.log('after appending to createPages', createPages);
     }
     Promise.all(createPages)
       .then(pages => {
-        console.log(pages);
         printPages(pages);
       })
       .catch(e => {
