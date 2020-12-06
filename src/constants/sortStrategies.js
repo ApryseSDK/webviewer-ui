@@ -104,7 +104,9 @@ const sortStrategies = {
     },
   },
   creationTimeAsc: {
-    getSortedNotes: notes => notes.sort((a, b) => a.DateCreated - b.DateCreated),
+    getSortedNotes: notes => notes.sort((a, b) => { 
+      return a.DateCreated - b.DateCreated; 
+    }),
     shouldRenderSeparator: (prevNote, currNote) => true,
     getSeparatorContent: (prevNote, currNote, { pageLabels }) => undefined,
   },

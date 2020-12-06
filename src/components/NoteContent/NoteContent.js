@@ -154,7 +154,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           <div className="author-and-time">
             {renderAuthorName(annotation)}
             <div className="date-and-time">
-              {dayjs(getLatestActivityDate(annotation)).format(noteDateFormat)}
+              {/* {dayjs(getLatestActivityDate(annotation)).format(noteDateFormat)} */}
+              {dayjs(annotation.DateCreated).format(noteDateFormat)}
             </div>
           </div>
           <div className="state-and-overflow">

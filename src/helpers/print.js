@@ -72,7 +72,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
 };
 
 const convertAdditionalPagesToImage = (additionalPagesToRender = []) => {
-  return additionalPagesToRender.map((htmlElement) => {
+  return additionalPagesToRender.map(htmlElement => {
     return new Promise((resolve) => {
       document.body.appendChild(htmlElement);
       return import(/* webpackChunkName: 'html2canvas' */ 'html2canvas').then(({ default: html2canvas }) => {
@@ -80,7 +80,7 @@ const convertAdditionalPagesToImage = (additionalPagesToRender = []) => {
           backgroundColor: null,
           scale: 1,
           logging: false,
-        }).then((canvas) => {
+        }).then(canvas => {
           document.body.removeChild(htmlElement);
           const img = document.createElement('img');
           img.src = canvas.toDataURL();
