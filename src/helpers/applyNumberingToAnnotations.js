@@ -45,7 +45,6 @@ export default store => {
       annot.getCustomData('isComment') === '');
     const state = store.getState();
     const sortedAnnots = getSortStrategies()[selectors.getSortStrategy(state)].getSortedNotes(annots);
-    console.log(sortedAnnots);
     sortedAnnots.forEach((annot, index) => {
       // bug for now b/c when exporting existing annots to xfdf, it can't serialize custom data unless we explicity trigger a change
       annot.setX(annot.getX());
