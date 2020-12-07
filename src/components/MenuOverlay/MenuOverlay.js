@@ -59,6 +59,7 @@ function MenuOverlay() {
         div
       ]
     });
+    // print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap);
   };
 
   const downloadDocument = () => {
