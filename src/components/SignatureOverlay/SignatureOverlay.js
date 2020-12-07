@@ -165,12 +165,13 @@ class SignatureOverlay extends React.PureComponent {
   // annotation: a copy of the annotation passed in
   // imgSrc: preview of the annotation, a base64 string
   getSignatureDataToStore = async annotations => {
-    await this.previewsPromise;
-
     // copy the annotation because we need to mutate the annotation object later if there're any styles changes
     // and we don't want the original annotation to be mutated as well
     // since it's been added to the canvas
     annotations = annotations.map(core.getAnnotationCopy);
+
+    await this.previewsPromise;
+
     this.previewsPromise = Promise.all(
       annotations.map(annotation => this.signatureTool.getPreview(annotation))
     );
