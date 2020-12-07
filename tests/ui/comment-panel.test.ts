@@ -42,7 +42,7 @@ const addAndCreateAnnot = (iFrame: Frame, isFreeTextAnnot: boolean, isLockedCont
 const selectAnnotation = (id: string, iframe: Frame) => {
   return (iframe as Frame).evaluate(async(id: string) => {
     const promise = new Promise((resolve) => {
-      window.readerControl.docViewer.getAnnotationManager().on('annotationSelected', (annotations, action) => { 
+      window.readerControl.docViewer.getAnnotationManager().on('annotationSelected', (annotations, action) => {
         if (action === 'selected') {
           resolve();
         }
