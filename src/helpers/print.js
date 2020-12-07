@@ -8,7 +8,7 @@ import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import { isSafari, isChromeOniOS } from 'helpers/device';
 import core from 'core';
 
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+// import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 let pendingCanvases = [];
 let includeAnnotations = false;
@@ -97,15 +97,20 @@ const convertAdditionalPagesToImage = (additionalPagesToRender = []) => {
       //     };
       //   });
       // });
-      toJpeg(htmlElement, { quality: 0.95 })
-      .then(function (dataUrl) {
-        document.body.removeChild(htmlElement);
-          const img = document.createElement('img');
-          img.src = dataUrl;
-          img.onload = () => {
-            resolve(img);
-          };
+      // using this library instead: https://github.com/bubkoo/html-to-image#readme
+      // html2canvas is generating this error to do with margin
+      import(/* webpackChunkName: 'html2canvas' */ 'html-to-image').then((module) => {
+        module.toPng(htmlElement)
+          .then(function (dataUrl) {
+            document.body.removeChild(htmlElement);
+            const img = document.createElement('img');
+            img.src = dataUrl;
+            img.onload = () => {
+              resolve(img);
+            };
+          });
       });
+
     });
   });
 };
