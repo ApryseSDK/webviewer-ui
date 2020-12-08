@@ -30,13 +30,10 @@ export default store => options => {
     includeComments: false,
     additionalPagesToPrint: []
   };
-  console.log('options', options);
   const printOptions = {
     ...defaultOptions,
     ...options,
   };
-  console.log('printOptions', printOptions);
-
   const { pagesToPrint } = printOptions;
 
   if (pagesToPrint && pagesToPrint.length === 0) {
