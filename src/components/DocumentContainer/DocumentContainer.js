@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import core from 'core';
-import { isIE } from 'helpers/device';
+import { isIE, isIE11 } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
@@ -57,7 +57,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (isIE) {
+    if (isIE11) {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
   }
