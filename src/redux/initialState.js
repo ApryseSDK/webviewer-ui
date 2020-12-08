@@ -442,7 +442,7 @@ export default {
     rotation: 0,
     displayMode: 'Single',
     currentPage: 1,
-    sortStrategy: 'creationTimeAsc',
+    sortStrategy: 'position',
     isFullScreen: false,
     isMultipleViewerMerging: false,
     isThumbnailMerging: true,

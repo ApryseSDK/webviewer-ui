@@ -102,14 +102,7 @@ const sortStrategies = {
     getSeparatorContent: (prevNote, currNote) => {
       return currNote.Subject;
     },
-  },
-  creationTimeAsc: {
-    getSortedNotes: notes => notes.sort((a, b) => { 
-      return a.DateCreated - b.DateCreated; 
-    }),
-    shouldRenderSeparator: (prevNote, currNote) => true,
-    getSeparatorContent: (prevNote, currNote, { pageLabels }) => undefined,
-  },
+  }
 };
 
 export const getSortStrategies = () => sortStrategies;

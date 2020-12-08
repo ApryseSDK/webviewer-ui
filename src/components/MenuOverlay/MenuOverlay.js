@@ -49,12 +49,11 @@ function MenuOverlay() {
     div.style.color = 'red';
     div.style.backgroundColor = 'blue';
     div.style.padding = '20px 40px';
-    // div.style.borderRadius = '5px';
     div.innerText = 'Meanwhile in Finland';
     // print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, {
     //   pagesToPrint: [1],
-    //   // includeComments: true,
-    //   // includeAnnotations: true,
+    //   includeComments: true,
+    //   includeAnnotations: true,
     //   additionalPagesToPrint: [
     //     div
     //   ]

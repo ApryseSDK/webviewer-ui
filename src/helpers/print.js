@@ -8,8 +8,6 @@ import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import { isSafari, isChromeOniOS } from 'helpers/device';
 import core from 'core';
 
-// import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
-
 let pendingCanvases = [];
 let includeAnnotations = false;
 let printQuality = 1;
@@ -76,41 +74,8 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
 const convertAdditionalPagesToImage = (additionalPagesToRender = []) => {
   return additionalPagesToRender.map(htmlElement => {
     return new Promise(resolve => {
-      document.body.appendChild(htmlElement);
-      // const canvas = document.createElement('canvas');
-      // canvas.style.borderTopLeftRadius = '0px';
-      // canvas.style.borderTopRightRadius = '0px';
-      // canvas.style.borderBottomLeftRadius = '0px';
-      // canvas.style.borderBottomRightRadius = '0px';
-      // return import(/* webpackChunkName: 'html2canvas' */ 'html2canvas').then(({ default: html2canvas }) => {
-      //   return html2canvas(htmlElement, {
-      //     canvas,
-      //     backgroundColor: null,
-      //     scale: 1,
-      //     logging: false,
-      //   }).then(canvas => {
-      //     document.body.removeChild(htmlElement);
-      //     const img = document.createElement('img');
-      //     img.src = canvas.toDataURL();
-      //     img.onload = () => {
-      //       resolve(img);
-      //     };
-      //   });
-      // });
-      // using this library instead: https://github.com/bubkoo/html-to-image#readme
-      // html2canvas is generating this error to do with margin
-      import(/* webpackChunkName: 'html2canvas' */ 'html-to-image').then((module) => {
-        module.toPng(htmlElement)
-          .then(function (dataUrl) {
-            document.body.removeChild(htmlElement);
-            const img = document.createElement('img');
-            img.src = dataUrl;
-            img.onload = () => {
-              resolve(img);
-            };
-          });
-      });
-
+      // document.body.appendChild(htmlElement);
+      resolve(htmlElement);
     });
   });
 };

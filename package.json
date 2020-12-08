@@ -29,7 +29,6 @@
     "dayjs": "^1.8.19",
     "file-saver": "git+https://github.com/ZhijieZhang/FileSaver.js.git",
     "hotkeys-js": "^3.7.3",
-    "html-to-image": "^1.3.20",
     "html2canvas": "git+https://github.com/mparizeau/html2canvas.git",
     "i18next": "^19.0.3",
     "i18next-http-backend": "^1.0.16",

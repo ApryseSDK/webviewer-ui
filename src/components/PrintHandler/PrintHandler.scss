@@ -17,6 +17,9 @@
   body {
     height: 100%;
     overflow: visible !important;
+    // assuming browser is able to print background color of HTML
+    // this is the second thing necessary needed to get background colors to appear for HTML elements when printing
+    -webkit-print-color-adjust: exact !important;
   }
 
   .PrintHandler {
