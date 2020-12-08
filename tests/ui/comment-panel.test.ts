@@ -1,5 +1,5 @@
 import { Frame } from 'puppeteer';
-import { loadViewerSample } from '../../utils';
+import { loadViewerSample, Timeouts } from '../../utils';
 
 const addAndCreateAnnot = (iFrame: Frame, isFreeTextAnnot: boolean, isLockedContents: boolean, noteContent = '', author = '',) => {
   return (iFrame as Frame).evaluate(async(isFreeTextAnnot, isLockedContents, noteContent, author) => {
@@ -139,7 +139,7 @@ describe('Test cases for comment panel', () => {
   it('should be able to edit comment for not locked content free text annotation', async() => {
     await addAndCreateAnnot(result.iframe, true, false, 'some-content');
     // on creation of free text annot, text can be edited right away
-    await page.waitFor(2000);
+    await page.waitFor(Timeouts.PDF_PRIME_DOCUMENT);
     const pageContainer = await result.iframe.$('#pageContainer1');
     expect(await pageContainer.screenshot()).toMatchImageSnapshot({
       customSnapshotIdentifier: 'comment-panel-free-text-annot-not-locked-content',
