@@ -57,7 +57,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       onProgress
     );
     if (additionalPagesToPrint) {  
-      createPages = createPages.concat(createAdditionalPagesToRender(additionalPagesToPrint));
+      createPages = createPages.concat(createAdditionalPagesToPrint(additionalPagesToPrint));
     }
     Promise.all(createPages)
       .then(pages => {
@@ -71,7 +71,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
   }
 };
 
-const createAdditionalPagesToRender = (additionalPagesToRender = []) => {
+const createAdditionalPagesToPrint = (additionalPagesToRender = []) => {
   return additionalPagesToRender.map(htmlElement => {
     return new Promise(resolve => {
       resolve(htmlElement);
