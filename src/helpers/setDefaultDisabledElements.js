@@ -99,7 +99,8 @@ export default store => {
         'editTextButton',
         'mathSymbolsButton',
         'annotationGroupButton',
-        'annotationUngroupButton'
+        'annotationUngroupButton',
+        'noteState'
       ],
       PRIORITY_ONE,
     ),
