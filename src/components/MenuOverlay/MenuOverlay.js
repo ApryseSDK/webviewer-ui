@@ -16,8 +16,6 @@ import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import './MenuOverlay.scss';
 
-import html2canvas from 'html2canvas';
-
 function MenuOverlay() {
   const dispatch = useDispatch();
   const [t] = useTranslation();

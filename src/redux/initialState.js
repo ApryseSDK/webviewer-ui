@@ -457,10 +457,7 @@ export default {
     useEmbeddedPrint: false,
     pageLabels: [],
     selectedThumbnailPageIndexes: [],
-    // noteDateFormat: 'MMM D, h:mma',
-    // printedNoteDateFormat: 'D/MM/YYYY h:mm:ss A',
-    // Changes requested from LPL
-    noteDateFormat: 'MM/DD/YYYY',
+    noteDateFormat: 'MMM D, h:mma',
     printedNoteDateFormat: 'D/MM/YYYY h:mm:ss A',
     colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
     warning: {},

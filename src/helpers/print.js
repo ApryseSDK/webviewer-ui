@@ -57,7 +57,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       onProgress
     );
     if (additionalPagesToPrint) {  
-      createPages = createPages.concat(convertAdditionalPagesToImage(additionalPagesToPrint));
+      createPages = createPages.concat(createAdditionalPagesToRender(additionalPagesToPrint));
     }
     Promise.all(createPages)
       .then(pages => {
@@ -71,10 +71,9 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
   }
 };
 
-const convertAdditionalPagesToImage = (additionalPagesToRender = []) => {
+const createAdditionalPagesToRender = (additionalPagesToRender = []) => {
   return additionalPagesToRender.map(htmlElement => {
     return new Promise(resolve => {
-      // document.body.appendChild(htmlElement);
       resolve(htmlElement);
     });
   });
@@ -340,7 +339,7 @@ const getNote = (annotation, dateFormat) => {
   noteRootInfo.appendChild(commentNumberDiv);
 
   noteRootInfo.appendChild(noteIcon);
-  noteRootInfo.appendChild(getNoteInfo(annotation));
+  noteRootInfo.appendChild(getNoteInfo(annotation, dateFormat));
   noteRoot.appendChild(noteRootInfo);
   noteRoot.appendChild(getNoteContent(annotation));
 
@@ -398,7 +397,7 @@ const getNoteInfo = (annotation, dateFormat) => {
   // LPL wants it in this kind of format
   info.innerHTML = `
     Author: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
-    Date: ${dayjs(annotation.DateCreated).format('MM/DD/YYYY')}
+    Date: ${dayjs(annotation.DateCreated).format(dateFormat || 'D/MM/YYYY h:mm:ss A')}
   `;
   return info;
 };
