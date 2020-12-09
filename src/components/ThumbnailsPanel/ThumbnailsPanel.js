@@ -310,7 +310,7 @@ class ThumbnailsPanel extends React.PureComponent {
     const ctx = annotCanvas.getContext('2d');
 
     let zoom = 1;
-    let rotation = core.getCompleteRotation(pageNumber) - core.getRotation(pageNumber);
+    let rotation = core.getCompleteRotation(pageNumber);
     if (rotation < 0) {
       rotation += 4;
     }
