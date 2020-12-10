@@ -5,7 +5,7 @@ export default nextPageNumber => {
   const currPageNumber = core.getCurrentPage();
 
   let nextPage = Math.min(totalPageNumber, nextPageNumber);
-  nextPage = Math.max(1, nextPageNumber);
+  nextPage = Math.max(1, nextPage);
 
   if (nextPage !== currPageNumber) {
     core.setCurrentPage(nextPage);
