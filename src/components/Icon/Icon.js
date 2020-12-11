@@ -47,7 +47,7 @@ class Icon extends React.PureComponent {
   }
 
   render() {
-    const { className = '', color, glyph, fillClass = '', disabled } = this.props;
+    const { className = '', color, glyph, fillColor = '', disabled } = this.props;
     const filter = (color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)')) ? 'drop-shadow(0 0 .5px #333)' : undefined;
     let svgElement;
 
@@ -63,6 +63,9 @@ class Icon extends React.PureComponent {
 
     if (!disabled) {
       style.color = (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color
+      if (fillColor){
+        svgElement = svgElement.replace('fill="none"', `fill="#${fillColor.slice(2)}"`);
+      }
     }
 
     return (
@@ -71,7 +74,7 @@ class Icon extends React.PureComponent {
         className={classNames({
           Icon: true,
           [className]: true,
-          [fillClass]: true,
+          [fillColor]: true,
           disabled,
         })}
         style={style}

@@ -55,7 +55,7 @@ const Button = props => {
     style,
     ariaLabel,
     role,
-    fillClass,
+    fillColor,
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
@@ -99,7 +99,7 @@ const Button = props => {
           disabled={actuallyDisabled}
           glyph={imgToShow}
           color={color}
-          fillClass={fillClass}
+          fillColor={fillColor}
         />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
       {label && <span>{t(label)}</span>}

@@ -8,7 +8,7 @@ import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
-import getFillClass from 'helpers/getFillClass';
+import getFillColor from 'helpers/getFillColor';
 import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -83,13 +83,13 @@ class ToolGroupButton extends React.PureComponent {
       ? this.props.img
       : toolButtonObjects[toolName]?.img;
     let color = '';
-    let fillClass = '';
+    let fillColor = '';
     if (showColor !== 'never' && isActive) {
       const toolStyles = getToolStyles(toolName);
       if (iconColorKey) {
         color = toolStyles[iconColorKey]?.toHexString?.();
       }
-      fillClass = getFillClass(toolStyles.FillColor);
+      fillColor = getFillColor(toolStyles.FillColor);
     }
 
     return allButtonsInGroupDisabled ? null : (
@@ -106,7 +106,7 @@ class ToolGroupButton extends React.PureComponent {
           isActive={isActive}
           img={img}
           color={color}
-          fillClass={fillClass}
+          fillColor={fillColor}
           dataElement={dataElement}
           onClick={this.onClick}
         />

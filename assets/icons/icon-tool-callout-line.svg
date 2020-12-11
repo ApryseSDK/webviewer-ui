@@ -4,11 +4,11 @@
 	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#868E96;}
-	.st1{fill:#FFFFFF;}
+	
 </style>
 <path fill="default" class="st0" d="M15.2,12.2v4H7.8v-1.6c0-0.3-0.4-0.5-0.6-0.3l-3.2,2.5c-0.2,0.1-0.2,0.4,0,0.6L7.2,20c0.2,0.2,0.6,0,0.6-0.3
 	v-1.6h8.3c0.5,0,0.9-0.4,0.9-0.8l0-5.1H15.2z"/>
 <path class="st0" d="M17,12.2h1.6c0.9,0,1.7-0.7,1.7-1.7V5.6c0-0.9-0.7-1.7-1.7-1.7H5.4C4.5,4,3.7,4.7,3.7,5.6v4.9
 	c0,0.9,0.7,1.7,1.7,1.7h9.8H17z M5.6,10.4V5.8h12.8l0,4.6H5.6z"/>
-<path fill="fill" class="st1" d="M5.6,10.4V5.8h12.8l0,4.6H5.6z"/>
+<path fill="none" d="M5.6,10.4V5.8h12.8l0,4.6H5.6z"/>
 </svg>

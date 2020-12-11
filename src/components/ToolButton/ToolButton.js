@@ -9,7 +9,7 @@ import core from "core";
 import toolStylesExist from "helpers/toolStylesExist";
 import getToolStyles from "helpers/getToolStyles";
 import hotkeysManager from "helpers/hotkeysManager";
-import getFillClass from 'helpers/getFillClass';
+import getFillColor from 'helpers/getFillColor';
 import { mapToolNameToKey } from "constants/map";
 import defaultTool from 'constants/defaultTool';
 import actions from "actions";
@@ -89,12 +89,12 @@ const ToolButton = ({
   };
 
   let color = '';
-  let fillClass = '';
+  let fillColor = '';
   const showColor = customOverrides?.showColor || toolButtonObject.showColor;
   if (showColor === 'always' || (showColor === 'active' && isActive)) {
     const toolStyles = getToolStyles(toolName);
     color = toolStyles?.[iconColorKey]?.toHexString?.();
-    fillClass = getFillClass(toolStyles?.FillColor);
+    fillColor = getFillColor(toolStyles?.FillColor);
   }
 
   return (
@@ -107,7 +107,7 @@ const ToolButton = ({
       onClick={handleClick}
       isActive={isActive}
       color={color}
-      fillClass={fillClass}
+      fillColor={fillColor}
       {...restProps}
       {...restObjectData}
     />

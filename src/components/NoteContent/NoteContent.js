@@ -22,7 +22,7 @@ import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import escapeHtml from 'helpers/escapeHtml';
-import getFillClass from 'helpers/getFillClass';
+import getFillColor from 'helpers/getFillColor';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
@@ -123,7 +123,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
 
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
-  const fillClass = getFillClass(annotation.FillColor);
+  const fillColor = getFillColor(annotation.FillColor);
   const contents = annotation.getContents();
   const numberOfReplies = annotation.getReplies().length;
   const formatNumberOfReplies = Math.min(numberOfReplies, 9);
@@ -146,7 +146,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             <div className="num-replies-container">
               <div className="num-replies">{formatNumberOfReplies}</div>
             </div>}
-          <Icon className="type-icon" glyph={icon} color={color} fillClass={fillClass} />
+          <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
         </div>
       }
       <div className="author-and-date">
