@@ -138,6 +138,11 @@ const FilterAnnotModal = () => {
     });
     setAuthors([...authorsToBeAdded]);
     setAnnotTypes([...annotTypesToBeAdded]);
+
+    core.addEventListener('documentUnloaded', closeModal);
+    return () => {
+      core.removeEventListener('documentUnloaded', closeModal);
+    }; 
   }, [isOpen]);
 
   const modalClass = classNames({
