@@ -18,15 +18,24 @@ const propTypes = {
 
 const NoteState = ({ annotation, isSelected }) => {
   const [
-    isDisabled,
-    isEditDisabled,
     isStateDisabled,
+    isStateAcceptedDisabled,
+    isStateRejectedDisabled,
+    isStateCompletedDisabled,
+    isStateCancelledDisabled,
+    isStateNoneDisabled,
+    isStateMarkedDisabled,
+    isStateUnmarkedDisabled,
   ] = useSelector(
     state => [
-      selectors.isElementDisabled(state, 'notePopup'),
-      selectors.isElementDisabled(state, 'notePopupEdit'),
-      selectors.isElementDisabled(state, 'notePopupDelete'),
       selectors.isElementDisabled(state, 'notePopupState'),
+      selectors.isElementDisabled(state, 'notePopupStateAccepted'),
+      selectors.isElementDisabled(state, 'notePopupStateRejected'),
+      selectors.isElementDisabled(state, 'notePopupStateCompleted'),
+      selectors.isElementDisabled(state, 'notePopupStateCancelled'),
+      selectors.isElementDisabled(state, 'notePopupStateNone'),
+      selectors.isElementDisabled(state, 'notePopupStateMarked'),
+      selectors.isElementDisabled(state, 'notePopupStateUnmarked'),
     ],
     shallowEqual,
   );
@@ -96,7 +105,7 @@ const NoteState = ({ annotation, isSelected }) => {
     return null;
   }
 
-  return (isEditDisabled || isDisabled) ? null : (
+  return (isStateDisabled && isReply) ? null : (
     <DataElementWrapper
       className="NoteState"
       dataElement="noteState"
@@ -107,66 +116,64 @@ const NoteState = ({ annotation, isSelected }) => {
       </div>
       {isOpen && (
         <div ref={popupRef} className="options" onClick={closePopup}>
-          {!isStateDisabled && !isReply && (
             <div data-element="notePopupState">
-              <div
+              {!isStateAcceptedDisabled ? <div
                 data-element="notePopupStateAccepted"
                 className="option"
                 onClick={() => handleStateUpdate('Accepted')}
               >
                 <Icon glyph="icon-annotation-status-accepted" />
                 {t('option.state.accepted')}
-              </div>
-              <div
+              </div> : null }
+              {!isStateRejectedDisabled ? <div
                 data-element="notePopupStateRejected"
                 className="option"
                 onClick={() => handleStateUpdate('Rejected')}
               >
                 <Icon glyph="icon-annotation-status-rejected" />
                 {t('option.state.rejected')}
-              </div>
-              <div
+              </div> : null }
+              {!isStateCancelledDisabled ? <div
                 data-element="notePopupStateCancelled"
                 className="option"
                 onClick={() => handleStateUpdate('Cancelled')}
               >
                 <Icon glyph="icon-annotation-status-cancelled" />
                 {t('option.state.cancelled')}
-              </div>
-              <div
+              </div> : null }
+              {!isStateCompletedDisabled ? <div
                 data-element="notePopupStateCompleted"
                 className="option"
                 onClick={() => handleStateUpdate('Completed')}
               >
                 <Icon glyph="icon-annotation-status-completed" />
                 {t('option.state.completed')}
-              </div>
-              <div
+              </div> : null }
+              {!isStateNoneDisabled ? <div
                 data-element="notePopupStateNone"
                 className="option"
                 onClick={() => handleStateUpdate('None')}
               >
                 <Icon glyph="icon-annotation-status-none" />
                 {t('option.state.none')}
-              </div>
-              <div
+              </div> : null }
+              {!isStateMarkedDisabled ? <div
                 data-element="notePopupStateMarked"
                 className="option"
                 onClick={() => handleStateUpdate('Marked')}
               >
                 <Icon glyph="icon-annotation-status-marked" />
                 {t('option.state.marked')}
-              </div>
-              <div
+              </div> : null }
+              {!isStateUnmarkedDisabled ? <div
                 data-element="notePopupStateUnmarked"
                 className="option"
                 onClick={() => handleStateUpdate('Unmarked')}
               >
                 <Icon glyph="icon-annotation-status-unmarked" />
                 {t('option.state.unmarked')}
-              </div>
+              </div> : null }
             </div>
-          )}
         </div>
       )}
     </DataElementWrapper>
