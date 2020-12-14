@@ -74,7 +74,9 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
 const createAdditionalPagesToPrint = (additionalPagesToRender = []) => {
   return additionalPagesToRender.map(htmlElement => {
     return new Promise(resolve => {
-      resolve(htmlElement);
+      const clonedNode = htmlElement.cloneNode(true);
+      clonedNode.className = `${clonedNode.className} additional-page-to-print`;
+      resolve(clonedNode);
     });
   });
 };

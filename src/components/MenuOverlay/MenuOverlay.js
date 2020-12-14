@@ -47,13 +47,17 @@ function MenuOverlay() {
     div.style.color = 'red';
     div.style.backgroundColor = 'blue';
     div.style.padding = '20px 40px';
+    // div.style.width = '100%';
+    // div.style.height = '100%';
     div.innerText = 'Meanwhile in Finland';
+    const clonedNode = div.cloneNode(true);
     // print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, {
     //   pagesToPrint: [1],
     //   includeComments: true,
     //   includeAnnotations: true,
     //   additionalPagesToPrint: [
-    //     div
+    //     div,
+    //     clonedNode
     //   ]
     // });
     print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap);

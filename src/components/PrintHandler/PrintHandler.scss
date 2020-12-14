@@ -26,6 +26,10 @@
     display: block;
     height: 100%;
 
+    .additional-page-to-print {
+      page-break-after: always;
+    }
+
     /* workaround for getting safari to print to the whole page */
     &.ios-print {
       top: 0;
