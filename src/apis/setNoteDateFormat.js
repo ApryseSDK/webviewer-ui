@@ -5,7 +5,7 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.setNoteDataFormat('DD.MM.YYYY HH:MM');
+    instance.setNoteDateFormat('DD.MM.YYYY HH:MM');
   });
  */
 
