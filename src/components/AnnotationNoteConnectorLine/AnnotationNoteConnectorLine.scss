@@ -1,5 +1,12 @@
 @import '../../constants/modal';
 @import '../../constants/popup';
+
+@media print {
+  // do not allow line connector to show up on printed ping
+  #line-connector-root {
+    opacity: 0;
+  }
+} 
 #line-connector-root {
   position: relative;
   z-index: min($modal-z-index, $popup-z-index) - 1;
