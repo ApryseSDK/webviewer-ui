@@ -151,21 +151,22 @@ class Thumbnail extends React.PureComponent {
     const { index, currentPage, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled, isReaderMode } = this.props;
 
     if (isThumbnailMultiselectEnabled && !isReaderMode) {
-      const togglingSelectedPage = e.ctrlKey || e.metaKey;
+      const multiSelectionKeyPressed = e.ctrlKey || e.metaKey;
       let updatedSelectedPages = [...selectedPageIndexes];
 
-      if (togglingSelectedPage) {
+      if (multiSelectionKeyPressed) {
         // Include current page as part of selection if we just started multi-selecting
         if (selectedPageIndexes.length === 0) {
           updatedSelectedPages.push(currentPage - 1);
         }
+
         if (selectedPageIndexes.includes(index)) {
           updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
-        } else if (!updatedSelectedPages.includes(index)) {
+        } else {
           updatedSelectedPages.push(index);
         }
       } else {
-        updatedSelectedPages = [];
+        updatedSelectedPages = [index];
       }
 
       setSelectedPageThumbnails(updatedSelectedPages);
