@@ -226,7 +226,7 @@ const ContentArea = ({
       const textLength = textareaRef.current.value.length;
       textareaRef.current.setSelectionRange(textLength, textLength);
     }
-  }, []);
+  }, [isNotesPanelOpen]);
 
   const setContents = e => {
     // prevent the textarea from blurring out which will unmount these two buttons

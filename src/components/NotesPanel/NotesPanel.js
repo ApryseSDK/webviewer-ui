@@ -40,7 +40,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.getCustomNoteFilter(state),
       selectors.getNotesPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
-      selectors.isDocumentReadOnly(state),
+      selectors.isDocumentReadOnly(state)
     ],
     shallowEqual,
   );
@@ -49,7 +49,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && core.getSelectedAnnotations().length === 0) {
       inputRef.current.focus();
     }
   }, [isOpen]);
