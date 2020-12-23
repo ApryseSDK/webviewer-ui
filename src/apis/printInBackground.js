@@ -1,10 +1,11 @@
 /**
- * Programmatically print the document without opening a modal with the print options provided.
+ * Programmatically print the document without opening a modal with the print options provided. Not supported by legacy-ui
  * @method WebViewerInstance#printInBackground
- * @param {Array.<number>} [pagesToPrint] Optionally pass in the pages you want to print. By default, all pages will be printed.
- * @param {boolean} [includeAnnotations=false] If true, will print the documents with the annotations
- * @param {boolean} [includeComments=false] If true, will append comments to the document printed
- * @param {function} [onProgress] A callback function that is executed on each page processed
+ * @param {object} [options] Options for the printing.
+ * @param {Array.<number>} [options.pagesToPrint] Optionally pass in the pages you want to print. By default, all pages will be printed.
+ * @param {boolean} [options.includeAnnotations=false] If true, will print the documents with the annotations
+ * @param {boolean} [options.includeComments=false] If true, will append comments to the document printed
+ * @param {function} [options.onProgress] A callback function that is executed on each page processed
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -33,6 +34,7 @@ export default store => options => {
   const printOptions = {
     ...defaultOptions,
     ...options,
+    printWithoutModal: true,
   };
 
   const { pagesToPrint } = printOptions;
