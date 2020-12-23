@@ -16,6 +16,7 @@
   position: fixed;
   left: 0px;
   transition: transform .3s ease-in-out;
+  max-width: calc(100% - 16px);
   @include panel-height-fix;
 
   &.closed {
