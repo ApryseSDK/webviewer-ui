@@ -39,6 +39,8 @@ import CreateStampModal from 'components/CreateStampModal';
 import CustomModal from 'components/CustomModal';
 
 import defineReaderControlAPIs from 'src/apis';
+import loadDocument from 'helpers/loadDocument';
+import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
 
 import actions from 'actions';
@@ -61,6 +63,29 @@ const App = ({ removeEventHandlers }) => {
     defineReaderControlAPIs(store);
     fireEvent('viewerLoaded');
 
+    function loadInitialDocument() {
+      const doesAutoLoad = getHashParams('auto_load', true);
+      const initialDoc = getHashParams('d', '');
+      const startOffline = getHashParams('startOffline', false);
+  
+      if ((initialDoc && doesAutoLoad) || startOffline) {
+        const options = {
+          extension: getHashParams('extension', null),
+          filename: getHashParams('filename', null),
+          externalPath: getHashParams('p', ''),
+          documentId: getHashParams('did', null),
+        };
+  
+        loadDocument(dispatch, initialDoc, options);
+      }
+    }
+    loadInitialDocument();
+
+    return removeEventHandlers;
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     const setTabletState = () => {
       // TODO: Use constants
       dispatch(actions.setLeftPanelWidth(251));
@@ -74,11 +99,7 @@ const App = ({ removeEventHandlers }) => {
       }
     };
     tabletBreakpoint.addListener(onBreakpoint);
-
-    return removeEventHandlers;
-    // eslint-disable-next-line
   }, []);
-
 
   return (
     <React.Fragment>

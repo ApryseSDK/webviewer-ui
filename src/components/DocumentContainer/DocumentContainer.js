@@ -9,7 +9,6 @@ import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'help
 import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import touchEventManager from 'helpers/TouchEventManager';
-import getHashParams from 'helpers/getHashParams';
 import setCurrentPage from 'helpers/setCurrentPage';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import MeasurementOverlay from 'components/MeasurementOverlay';
@@ -67,8 +66,6 @@ class DocumentContainer extends React.PureComponent {
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
 
-    this.loadInitialDocument();
-
     if (isIE) {
       window.addEventListener('resize', this.handleWindowResize);
     }
@@ -94,23 +91,6 @@ class DocumentContainer extends React.PureComponent {
     }
 
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
-  }
-
-  loadInitialDocument = () => {
-    const doesAutoLoad = getHashParams('auto_load', true);
-    const initialDoc = getHashParams('d', '');
-    const startOffline = getHashParams('startOffline', false);
-
-    if ((initialDoc && doesAutoLoad) || startOffline) {
-      const options = {
-        extension: getHashParams('extension', null),
-        filename: getHashParams('filename', null),
-        externalPath: getHashParams('p', ''),
-        documentId: getHashParams('did', null),
-      };
-
-      loadDocument(this.props.dispatch, initialDoc, options);
-    }
   }
 
   preventDefault = e => e.preventDefault();
