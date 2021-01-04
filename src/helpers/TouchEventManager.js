@@ -68,7 +68,10 @@ const TouchEventManager = {
         break;
       }
       case 2: {
-        e.preventDefault();
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         const clientX = (t1.clientX + t2.clientX) / 2;
@@ -123,7 +126,9 @@ const TouchEventManager = {
           return;
         }
 
-        e.preventDefault();
+        if (e.cancelable) {
+          e.preventDefault();
+        }
 
         if (this.canLockScrolling()) {
           this.verticalLock = this.isScrollingVertically();
@@ -152,7 +157,9 @@ const TouchEventManager = {
         break;
       }
       case 2: {
-        e.preventDefault();
+        if (e.cancelable) {
+          e.preventDefault();
+        }
 
         const t1 = e.touches[0];
         const t2 = e.touches[1];
