@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
 import Choice from '../Choice/Choice';
+import Spinner from '../Spinner';
 import './SearchOverlay.scss';
 
 const propTypes = {
   isSearchOverlayDisabled: PropTypes.bool,
   searchValue: PropTypes.string,
+  searchStatus: PropTypes.oneOf(['SEARCH_NOT_INITIATED', 'SEARCH_IN_PROGRESS', 'SEARCH_DONE']),
   isCaseSensitive: PropTypes.bool,
   isWholeWord: PropTypes.bool,
   isWildcard: PropTypes.bool,
@@ -27,6 +29,7 @@ function SearchOverlay(props) {
   const { isSearchOverlayDisabled, searchResults, activeResultIndex, selectNextResult, selectPreviousResult } = props;
   const { searchValue, setSearchValue, executeSearch } = props;
   const { isCaseSensitive, setCaseSensitive, isWholeWord, setWholeWord, isWildcard, setWildcard } = props;
+  const { searchStatus } = props;
 
   const searchTextInputRef = React.useRef();
 
@@ -36,61 +39,93 @@ function SearchOverlay(props) {
     }
   }, []);
 
-  const textInputOnChange = React.useCallback(function textInputOnChangeCallback(event) {
-    const searchValue = event.target.value;
-    setSearchValue(searchValue);
-  }, [setSearchValue]);
+  const textInputOnChange = React.useCallback(
+    function textInputOnChangeCallback(event) {
+      const searchValue = event.target.value;
+      setSearchValue(searchValue);
+    },
+    [setSearchValue],
+  );
 
-  const textInputOnKeyDown = React.useCallback(function textInputOnKeyDownCallback(event) {
-    if (event.key === 'Enter') {
+  const textInputOnKeyDown = React.useCallback(
+    function textInputOnKeyDownCallback(event) {
+      if (event.key === 'Enter') {
+        executeSearch(searchValue, {
+          caseSensitive: isCaseSensitive,
+          wholeWord: isWholeWord,
+          wildcard: isWildcard,
+        });
+      }
+    },
+    [executeSearch, searchValue, isCaseSensitive, isWholeWord, isWildcard],
+  );
+
+  const searchButtonOnClick = React.useCallback(
+    function onSearchButtonClickCallback() {
       executeSearch(searchValue, {
         caseSensitive: isCaseSensitive,
         wholeWord: isWholeWord,
         wildcard: isWildcard,
       });
-    }
-  }, [executeSearch, searchValue, isCaseSensitive, isWholeWord, isWildcard]);
+    },
+    [executeSearch, searchValue, isCaseSensitive, isWholeWord, isWildcard],
+  );
 
-  const searchButtonOnClick = React.useCallback(function onSearchButtonClickCallback() {
-    executeSearch(searchValue, {
-      caseSensitive: isCaseSensitive,
-      wholeWord: isWholeWord,
-      wildcard: isWildcard,
-    });
-  }, [executeSearch, searchValue, isCaseSensitive, isWholeWord, isWildcard]);
+  const caseSensitiveSearchOptionOnChange = React.useCallback(
+    function caseSensitiveSearchOptionOnChangeCallback(event) {
+      const isChecked = event.target.checked;
+      setCaseSensitive(isChecked);
+    },
+    [searchValue, setCaseSensitive, isWholeWord, isWildcard],
+  );
 
-  const caseSensitiveSearchOptionOnChange = React.useCallback(function caseSensitiveSearchOptionOnChangeCallback(event) {
-    const isChecked = event.target.checked;
-    setCaseSensitive(isChecked);
-  }, [searchValue, setCaseSensitive, isWholeWord, isWildcard]);
+  const wholeWordSearchOptionOnChange = React.useCallback(
+    function wholeWordSearchOptionOnChangeCallback(event) {
+      const isChecked = event.target.checked;
+      setWholeWord(isChecked);
+    },
+    [searchValue, setWholeWord, isCaseSensitive, isWildcard],
+  );
 
-  const wholeWordSearchOptionOnChange = React.useCallback(function wholeWordSearchOptionOnChangeCallback(event) {
-    const isChecked = event.target.checked;
-    setWholeWord(isChecked);
-  }, [searchValue, setWholeWord, isCaseSensitive, isWildcard]);
+  const wildcardOptionOnChange = React.useCallback(
+    function wildcardOptionOnChangeCallback(event) {
+      const isChecked = event.target.checked;
+      setWildcard(isChecked);
+    },
+    [searchValue, setWildcard, isCaseSensitive, isWholeWord],
+  );
 
-  const wildcardOptionOnChange = React.useCallback(function wildcardOptionOnChangeCallback(event) {
-    const isChecked = event.target.checked;
-    setWildcard(isChecked);
-  }, [searchValue, setWildcard, isCaseSensitive, isWholeWord]);
+  const nextButtonOnClick = React.useCallback(
+    function nextButtonOnClickCallback() {
+      if (selectNextResult) {
+        selectNextResult(searchResults, activeResultIndex);
+      }
+    },
+    [selectNextResult, searchResults, activeResultIndex],
+  );
 
-  const nextButtonOnClick = React.useCallback(function nextButtonOnClickCallback() {
-    if (selectNextResult) {
-      selectNextResult(searchResults, activeResultIndex);
-    }
-  }, [selectNextResult, searchResults, activeResultIndex]);
-
-  const previousButtonOnClick = React.useCallback(function previousButtonOnClickCallback() {
-    if (selectPreviousResult) {
-      selectPreviousResult(searchResults, activeResultIndex);
-    }
-  }, [selectPreviousResult, searchResults, activeResultIndex]);
-
+  const previousButtonOnClick = React.useCallback(
+    function previousButtonOnClickCallback() {
+      if (selectPreviousResult) {
+        selectPreviousResult(searchResults, activeResultIndex);
+      }
+    },
+    [selectPreviousResult, searchResults, activeResultIndex],
+  );
 
   if (isSearchOverlayDisabled) {
     return null;
   }
   const numberOfResultsFound = searchResults ? searchResults.length : 0;
+
+  const showSpinner = searchStatus === 'SEARCH_DONE' ? (
+    <div>
+      {numberOfResultsFound} {t('message.numResultsFound')}
+    </div>
+  ) : (
+    <Spinner height="25px" width="25px" />
+  );
+
   return (
     <div className="SearchOverlay">
       <div className="input-container">
@@ -138,23 +173,17 @@ function SearchOverlay(props) {
       </div>
       <div className="divider" />
       <div className="footer">
-        {<div>{numberOfResultsFound} {t('message.numResultsFound')}</div>}
-        <div className="buttons">
-          <button
-            className="button"
-            onClick={previousButtonOnClick}
-            aria-label={t('action.prevResult')}
-          >
-            <Icon className="arrow" glyph="icon-chevron-left" />
-          </button>
-          <button
-            className="button"
-            onClick={nextButtonOnClick}
-            aria-label={t('action.nextResult')}
-          >
-            <Icon className="arrow" glyph="icon-chevron-right" />
-          </button>
-        </div>
+        {searchStatus === 'SEARCH_NOT_INITIATED' || '' ? null : showSpinner}
+        {numberOfResultsFound > 0 ? (
+          <div className="buttons">
+            <button className="button" onClick={previousButtonOnClick} aria-label={t('action.prevResult')}>
+              <Icon className="arrow" glyph="icon-chevron-left" />
+            </button>
+            <button className="button" onClick={nextButtonOnClick} aria-label={t('action.nextResult')}>
+              <Icon className="arrow" glyph="icon-chevron-right" />
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -163,4 +192,3 @@ function SearchOverlay(props) {
 SearchOverlay.propTypes = propTypes;
 
 export default SearchOverlay;
-
