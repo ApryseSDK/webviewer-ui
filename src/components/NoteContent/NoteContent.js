@@ -124,7 +124,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
   const fillColor = getFillColor(annotation.FillColor);
-  const contents = annotation.getContents();
+  const contents = annotation.getCustomData('trn-mention')?.contents || annotation.getContents();
+  const contentsToRender = annotation.getContents();
   const numberOfReplies = annotation.getReplies().length;
   const formatNumberOfReplies = Math.min(numberOfReplies, 9);
   // This is the text placeholder passed to the ContentArea
@@ -181,8 +182,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             onTextAreaValueChange={onTextChange}
           />
         ) : (
-          contents && (
-            <div className="container">{renderContents(contents)}</div>
+          contentsToRender && (
+            <div className="container">{renderContents(contentsToRender)}</div>
           )
         )}
       </div>
