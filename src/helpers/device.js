@@ -12,6 +12,8 @@ export const isAndroid = window.navigator.userAgent.match(/Android/i);
 export const isMobileDevice = isIOS || isAndroid || window.navigator.userAgent.match(/webOS|BlackBerry|IEMobile|Opera Mini/i);
 export const isMobileDeviceFunc = () => window.navigator.userAgent.match(/(iPad|iPhone|iPod)/i) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) || window.navigator.userAgent.match(/Android/i) || window.navigator.userAgent.match(/webOS|BlackBerry|IEMobile|Opera Mini/i);
 export const isMac = navigator.appVersion.indexOf('Mac') > -1;
+export const isWindows = navigator.appVersion.indexOf('Windows') > -1;
+
 
 export const isChrome = (function() {
   // opera, edge, and maxthon have chrome in their useragent string so we need to be careful!

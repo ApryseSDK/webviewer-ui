@@ -380,6 +380,7 @@
     "squiggly": "(G)",
     "stamp": "(I)",
     "redo": "（Ctrl Shift Z）",
+    "redo_windows": "(Ctrl Y)",
     "undo": "（Ctrl Z）",
     "stickyNote": "(N)",
     "strikeout": "(K)",

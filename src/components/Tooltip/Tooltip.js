@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import { isMac, isIOS, isAndroid } from 'helpers/device';
+import { isMac, isWindows, isIOS, isAndroid } from 'helpers/device';
 
 import './Tooltip.scss';
 
@@ -115,7 +115,10 @@ const Tooltip = forwardRef( ({ content = '', children, hideShortcut }, ref) => {
   const translatedContent = t(content);
   // If shortcut.xxx exists in translation-en.json file
   // method t will return the shortcut, otherwise it will return shortcut.xxx
-  const shortcutKey = content.slice(content.indexOf('.') + 1);
+  let shortcutKey = content.slice(content.indexOf('.') + 1);
+  if (isWindows && shortcutKey === 'redo') {
+    shortcutKey = 'redo_windows';
+  }
   const hasShortcut = t(`shortcut.${shortcutKey}`).indexOf('.') === -1;
   let shortcut = t(`shortcut.${shortcutKey}`);
   if (isMac) {
