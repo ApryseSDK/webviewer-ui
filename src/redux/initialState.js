@@ -262,7 +262,7 @@ export default {
         { type: 'spacer' },
         {
           type: 'actionButton',
-          dataElement: 'startFormEditingButton',
+          dataElement: 'startFormEditingToolGroupButton',
           title: 'action.startFormEditing',
           img: 'icon-widget-editing',
           onClick: () => {
