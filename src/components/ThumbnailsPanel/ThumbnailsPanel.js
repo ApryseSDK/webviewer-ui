@@ -165,7 +165,7 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     if (!draggingSelectedPage) {
-      setSelectedPageThumbnails([]);
+      setSelectedPageThumbnails([index]);
     }
 
     core.setCurrentPage(index + 1);
@@ -219,6 +219,7 @@ class ThumbnailsPanel extends React.PureComponent {
         core.movePages(pageNumbersToMove, targetPageNumber);
       }
     }
+
     this.setState({ draggingOverPageIndex: null });
   };
 
