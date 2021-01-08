@@ -205,9 +205,20 @@ class DocumentContainer extends React.PureComponent {
     this.props.setDocumentContainerHeight(clientHeight);
   }
 
-  onTransitionEnd() {
+  onTransitionEnd(event) {
     // I don't know if this is needed. But better safe than sorry.
-    core.scrollViewUpdated();
+    if (!(event.propertyName === 'background-color')) {
+      // We have a corner case where if you have 1st and 2nd page different size and you are in fit page mode
+      // if you have callout (freetext) annotation on second page. If you open notes panel then click annotation and click
+      // edit on it. This will cause our document container to re-render. We also have background-color transition
+      // set to all our elements (I believe for having smooth transition to dark mode, not sure though).
+      // All this is causing document to run fit page logic and zoom level of this second page jumps out.
+      // This is such a corner case, but reported by a customer, we decided do this check here and skip update if
+      // background color is the one that causes this transition.
+      // This effect is still happening in above case but if instead of clicking edit, user changes width of the notes panel
+      // It is currently expected behaviour
+      core.scrollViewUpdated();
+    }
   }
 
   render() {
