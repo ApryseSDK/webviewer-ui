@@ -76,7 +76,7 @@ const NOOP = () => {};
  * @property {string} CTRL_Z Undo an annotation change
  * @property {string} COMMAND_Z Undo an annotation change
  * @property {string} CTRL_Y Redo an annotation change
- * @property {string} COMMAND_Y Redo an annotation change
+ * @property {string} COMMAND_SHIFT_Z Redo an annotation change
  * @property {string} CTRL_O Open the file picker
  * @property {string} COMMAND_O Open the file picker
  * @property {string} CTRL_F Open the search overlay
