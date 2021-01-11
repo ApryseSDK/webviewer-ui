@@ -35,12 +35,15 @@ export default store => options => {
     ...defaultOptions,
     ...options,
     printWithoutModal: true,
+    printQuality: selectors.getPrintQuality(store.getState()),
   };
 
   const { pagesToPrint } = printOptions;
 
   if (pagesToPrint && pagesToPrint.length === 0) {
-    console.warn('No pages to be printed were found in the "pagesToPrint" array provided. If you want to print all pages, please set this to undefined or null.');
+    console.warn(
+      'No pages to be printed were found in the "pagesToPrint" array provided. If you want to print all pages, please set this to undefined or null.',
+    );
     return;
   }
 

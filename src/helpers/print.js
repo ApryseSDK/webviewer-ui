@@ -10,14 +10,14 @@ import core from 'core';
 
 let pendingCanvases = [];
 let includeAnnotations = false;
-let printQuality = 1;
+let PRINT_QUALITY = 1;
 let colorMap;
 
-export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options) => {
+export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options) => {
   let includeAnnotations, includeComments, pagesToPrint, onProgress;
   let printWithoutModal = false;
   if (options) {
-    ({ includeAnnotations, includeComments, pagesToPrint, onProgress, printWithoutModal } = options);
+    ({ includeAnnotations, includeComments, pagesToPrint, onProgress, printWithoutModal, printQuality } = options);
   }
 
   if (!core.getDocument()) {
@@ -50,7 +50,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       pagesToPrint,
       includeComments,
       includeAnnotations,
-      printQuality,
+      printQuality || PRINT_QUALITY,
       sortStrategy,
       colorMap,
       undefined,
@@ -82,7 +82,7 @@ const printPdf = () =>
         printHandler.src = URL.createObjectURL(blob);
 
         return new Promise(resolve => {
-          const loadListener = function() {
+          const loadListener = function () {
             printHandler.contentWindow.print();
             printHandler.removeEventListener('load', loadListener);
 
@@ -94,11 +94,20 @@ const printPdf = () =>
       });
   });
 
-export const creatingPages = (pagesToPrint, includeComments, includeAnnot, printQualty, sortStrategy, clrMap, dateFormat, onProgress) => {
+export const creatingPages = (
+  pagesToPrint,
+  includeComments,
+  includeAnnot,
+  printQuality,
+  sortStrategy,
+  clrMap,
+  dateFormat,
+  onProgress,
+) => {
   const createdPages = [];
   pendingCanvases = [];
   includeAnnotations = includeAnnot;
-  printQuality = printQualty;
+  PRINT_QUALITY = printQuality;
   colorMap = clrMap;
 
   pagesToPrint.forEach(pageNumber => {
@@ -186,7 +195,7 @@ const creatingImage = (pageNumber, printableAnnotations) =>
       zoom,
       pageRotation: printRotation,
       drawComplete: onCanvasLoaded,
-      multiplier: printQuality,
+      multiplier: PRINT_QUALITY,
       'print': true,
     });
     pendingCanvases.push(id);
@@ -233,29 +242,28 @@ const positionCanvas = (canvas, pageIndex) => {
 
   const printRotation = (4 - documentRotation) % 4;
   // To check if automatic print rotation will be applied
-  const isAutoRotated = ((printRotation % 2 === 0 && width > height) || (printRotation % 2 === 1 && height > width));
+  const isAutoRotated = (printRotation % 2 === 0 && width > height) || (printRotation % 2 === 1 && height > width);
 
   // If this is pdf js and auto rotated, apply different transform
   if (window.utils.isPdfjs && isAutoRotated) {
     switch (documentRotation) {
       case 0:
         ctx.translate(height, 0);
-        ctx.rotate(( 90 * Math.PI) / 180);
+        ctx.rotate((90 * Math.PI) / 180);
         break;
       case 1:
         ctx.translate(0, height);
-        ctx.rotate(( 270 * Math.PI) / 180);
+        ctx.rotate((270 * Math.PI) / 180);
         break;
       case 2:
         ctx.translate(height, 0);
-        ctx.rotate(( -270 * Math.PI) / 180);
+        ctx.rotate((-270 * Math.PI) / 180);
         break;
       case 3:
         ctx.translate(0, height);
-        ctx.rotate(( 270 * Math.PI) / 180);
+        ctx.rotate((270 * Math.PI) / 180);
         break;
     }
-
   } else if (!window.utils.isPdfjs) {
     switch (documentRotation) {
       case 1:
