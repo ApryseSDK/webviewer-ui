@@ -15,7 +15,7 @@ let PRINT_QUALITY = 1;
 let colorMap;
 
 export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
-  const {includeAnnotations = INCLUDE_ANNOTATIONS, includeComments, pagesToPrint, onProgress, printQuality = PRINT_QUALITY, printWithoutModal = false}  = options;
+  let {includeAnnotations = INCLUDE_ANNOTATIONS, includeComments, pagesToPrint, onProgress, printQuality = PRINT_QUALITY, printWithoutModal = false}  = options;
 
   if (!core.getDocument()) {
     return;
