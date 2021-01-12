@@ -271,10 +271,10 @@ class ThumbnailsPanel extends React.PureComponent {
     const { setSelectedPageThumbnails } = this.props;
 
     const doc = core.getDocument();
-    if (doc.type !== workerTypes.PDF) {
-      this.setState({ allowPageOperations: false });
-    } else {
+    if (doc.type === workerTypes.PDF || (doc.type === workerTypes.BLACKBOX && !doc.isWebViewerServerDocument())) {
       this.setState({ allowPageOperations: true });
+    } else {
+      this.setState({ allowPageOperations: false });
     }
 
     setSelectedPageThumbnails([]);
