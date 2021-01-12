@@ -29,6 +29,7 @@ export default store => options => {
   const defaultOptions = {
     includeAnnotations: false,
     includeComments: false,
+    printQuality: selectors.getPrintQuality(store.getState()),
   };
 
   const printOptions = {
