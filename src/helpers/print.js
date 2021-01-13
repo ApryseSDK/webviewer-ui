@@ -9,15 +9,13 @@ import { isSafari, isChromeOniOS } from 'helpers/device';
 import core from 'core';
 
 let pendingCanvases = [];
-let printQuality = 1;
+let INCLUDE_ANNOTATIONS = false;
+let PRINT_QUALITY = 1;
+
 let colorMap;
 
-export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options) => {
-  let includeAnnotations, includeComments, pagesToPrint, onProgress;
-  let printWithoutModal = false;
-  if (options) {
-    ({ includeAnnotations, includeComments, pagesToPrint, onProgress, printWithoutModal } = options);
-  }
+export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
+  let {includeAnnotations = INCLUDE_ANNOTATIONS, includeComments, pagesToPrint, onProgress, printQuality = PRINT_QUALITY, printWithoutModal = false}  = options;
 
   if (!core.getDocument()) {
     return;
@@ -93,15 +91,17 @@ const printPdf = () =>
       });
   });
 
-export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, printQualty, sortStrategy, clrMap, dateFormat, onProgress) => {
+
+export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, printQuality, sortStrategy, clrMap, dateFormat, onProgress) => {
   const createdPages = [];
   pendingCanvases = [];
-  printQuality = printQualty;
+  INCLUDE_ANNOTATIONS = includeAnnotations;
+  PRINT_QUALITY = printQuality;
   colorMap = clrMap;
 
   pagesToPrint.forEach(pageNumber => {
     const printableAnnotationNotes = getPrintableAnnotationNotes(pageNumber);
-    createdPages.push(creatingImage(pageNumber, includeAnnotations));
+    createdPages.push(creatingImage(pageNumber));
 
     if (includeComments && printableAnnotationNotes) {
       const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotationNotes);
@@ -154,7 +154,7 @@ const getPrintableAnnotationNotes = pageNumber =>
         annotation.Printable,
     );
 
-const creatingImage = (pageNumber, includeAnnotations) =>
+const creatingImage = (pageNumber) =>
   new Promise(resolve => {
     const pageIndex = pageNumber - 1;
     const zoom = 1;
@@ -163,7 +163,7 @@ const creatingImage = (pageNumber, includeAnnotations) =>
       pendingCanvases = pendingCanvases.filter(pendingCanvas => pendingCanvas !== id);
       positionCanvas(canvas, pageIndex);
       let printableAnnotInfo = [];
-      if (!includeAnnotations) {
+      if (!INCLUDE_ANNOTATIONS) {
         // according to Adobe, even if we exclude annotations, it will still draw widget annotations
         const annotatationsToPrint = core.getAnnotationsList().filter(annotation => {
           return annotation.PageNumber === pageNumber && !(annotation instanceof window.Annotations.WidgetAnnotation);
@@ -194,7 +194,7 @@ const creatingImage = (pageNumber, includeAnnotations) =>
       zoom,
       pageRotation: printRotation,
       drawComplete: onCanvasLoaded,
-      multiplier: printQuality,
+      multiplier: PRINT_QUALITY,
       'print': true,
     });
     pendingCanvases.push(id);
