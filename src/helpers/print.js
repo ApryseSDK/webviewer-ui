@@ -15,7 +15,14 @@ let PRINT_QUALITY = 1;
 let colorMap;
 
 export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
-  let {includeAnnotations = INCLUDE_ANNOTATIONS, includeComments, pagesToPrint, onProgress, printQuality = PRINT_QUALITY, printWithoutModal = false}  = options;
+  let {
+    includeAnnotations = INCLUDE_ANNOTATIONS,
+    includeComments,
+    pagesToPrint,
+    onProgress,
+    printQuality = PRINT_QUALITY,
+    printWithoutModal = false,
+  } = options;
 
   if (!core.getDocument()) {
     return;
@@ -154,7 +161,7 @@ const getPrintableAnnotationNotes = pageNumber =>
         annotation.Printable,
     );
 
-const creatingImage = (pageNumber) =>
+const creatingImage = pageNumber =>
   new Promise(resolve => {
     const pageIndex = pageNumber - 1;
     const zoom = 1;
