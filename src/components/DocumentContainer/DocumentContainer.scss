@@ -21,17 +21,12 @@
     height: 100%;
 
     .footer {
-      pointer-events: none;
       position: absolute;
       bottom: 0;
       left: 0;
       z-index: 55;
       width: 100%;
       transition: all .3s ease;
-
-      * {
-        pointer-events: all;
-      }
     }
   }
 }

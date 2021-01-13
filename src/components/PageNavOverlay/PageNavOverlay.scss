@@ -38,6 +38,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 4px;
+    cursor: pointer;
 
     &:hover {
       background: var(--view-header-button-hover);
