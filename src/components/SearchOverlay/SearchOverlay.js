@@ -7,6 +7,7 @@ import Spinner from '../Spinner';
 import './SearchOverlay.scss';
 
 const propTypes = {
+  isPanelOpen: PropTypes.bool,
   isSearchOverlayDisabled: PropTypes.bool,
   searchValue: PropTypes.string,
   searchStatus: PropTypes.oneOf(['SEARCH_NOT_INITIATED', 'SEARCH_IN_PROGRESS', 'SEARCH_DONE']),
@@ -29,15 +30,15 @@ function SearchOverlay(props) {
   const { isSearchOverlayDisabled, searchResults, activeResultIndex, selectNextResult, selectPreviousResult } = props;
   const { searchValue, setSearchValue, executeSearch } = props;
   const { isCaseSensitive, setCaseSensitive, isWholeWord, setWholeWord, isWildcard, setWildcard } = props;
-  const { searchStatus } = props;
+  const { searchStatus, isPanelOpen } = props;
 
   const searchTextInputRef = React.useRef();
 
   React.useEffect(() => {
-    if (searchTextInputRef.current) {
+    if (searchTextInputRef.current && isPanelOpen) {
       searchTextInputRef.current.focus();
     }
-  }, []);
+  }, [isPanelOpen]);
 
   const textInputOnChange = React.useCallback(
     function textInputOnChangeCallback(event) {

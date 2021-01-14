@@ -51,6 +51,7 @@ class SearchPanel extends React.PureComponent {
     const {
       currentWidth,
       isDisabled,
+      isOpen,
       t,
       searchStatus,
       searchResults,
@@ -97,6 +98,7 @@ class SearchPanel extends React.PureComponent {
           searchStatus={searchStatus}
           searchResults={searchResults}
           activeResultIndex={activeSearchResultIndex}
+          isPanelOpen={isOpen}
         />
         <SearchResult
           t={t}
