@@ -3,9 +3,11 @@
 
 .PageNavOverlay {
   height: 32px;
+
   @include mobile {
     height: 36px;
   }
+
   font-family: 'Lato';
   font-weight: bold;
   color: var(--text-color);
@@ -29,10 +31,12 @@
     @include button-reset;
     width: 24px;
     height: 24px;
+
     @include mobile {
       width: 40px;
       height: 28px;
     }
+
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -58,6 +62,7 @@
     form {
       top: -1px;
       position: relative;
+
       input {
         min-width: 8px;
         padding: 0;
