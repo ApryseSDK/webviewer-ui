@@ -39,9 +39,14 @@ export const getToolButtonDataElement = (state, toolName) =>
   state.viewer.toolButtonObjects[toolName]?.dataElement;
 
 export const getToolNamesByGroup = (state, toolGroup) =>
-  Object.keys(state.viewer.toolButtonObjects).filter(
-    name => state.viewer.toolButtonObjects[name].group === toolGroup,
-  );
+  Object.keys(state.viewer.toolButtonObjects).filter((name) => {
+    const toolButtonObject = state.viewer.toolButtonObjects[name];
+
+    return (
+      toolButtonObject.group === toolGroup &&
+      !isElementDisabled(state, toolButtonObject.dataElement)
+    );
+  });
 
 export const getToolNameByDataElement = (state, dataElement) =>
   Object.keys(state.viewer.toolButtonObjects).find(
