@@ -528,7 +528,7 @@ class ThumbnailsPanel extends React.PureComponent {
                   // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
                   rowCount={Math.ceil(totalPages / numberOfColumns)}
                   rowRenderer={this.renderThumbnails}
-                  overscanRowCount={10}
+                  overscanRowCount={2}
                   className={'thumbnailsList'}
                   style={{ outline: 'none' }}
                 />

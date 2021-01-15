@@ -44,23 +44,19 @@ class Thumbnail extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.loadThumbnailTimeout = setTimeout(() => {
-      // wrap loadThumbnailAsync inside a setTimeout so that we are not calling it a lot of times when users scroll the panel frantically
-      // this is a workaround for WVS where proper cancelLoadThumbnail hasn't been implemented, and too many requests to the server will add a lot of overhead to it
-      this.loadThumbnailTimeout = null;
-      this.loadThumbnailAsync();
-    }, 100);
-
+    this.loadThumbnailTimeout = this.loadThumbnailAsyncDelayed();
     core.addEventListener('layoutChanged', this.onLayoutChangedHandler);
   }
 
   componentDidUpdate(prevProps) {
     const { onCancel, index } = this.props;
 
-    if (!prevProps.canLoad && this.props.canLoad) {
-      this.loadThumbnailAsync();
+    const hasNoThumbnails = this.thumbContainer.current.childElementCount === 0;
+    if (!prevProps.canLoad && this.props.canLoad && hasNoThumbnails) {
+      this.loadThumbnailTimeout = this.loadThumbnailAsyncDelayed();
     }
     if (prevProps.canLoad && !this.props.canLoad) {
+      clearTimeout(this.loadThumbnailTimeout);
       onCancel(index);
     }
   }
@@ -100,6 +96,17 @@ class Thumbnail extends React.PureComponent {
         this.props.updateAnnotations(index);
       }
     }
+  }
+
+  loadThumbnailAsyncDelayed = () => {
+    const timeoutId = setTimeout(() => {
+      // wrap loadThumbnailAsync inside a setTimeout so that we are not calling it a lot of times when users scroll the panel frantically
+      // this is a workaround for WVS where proper cancelLoadThumbnail hasn't been implemented, and too many requests to the server will add a lot of overhead to it
+      this.loadThumbnailTimeout = null;
+      this.loadThumbnailAsync();
+    }, 100);
+
+    return timeoutId;
   }
 
   loadThumbnailAsync = () => {
