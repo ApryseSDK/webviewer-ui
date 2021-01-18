@@ -1,14 +1,7 @@
 .Outline {
   color: var(--outline-color);
   cursor: pointer;
-
-  &.visible {
-    display: flex;
-  }
-
-  &.hidden {
-    display: none;
-  }
+  display: flex;
 
   flex-shrink: 0;
   align-items: flex-start;
@@ -29,10 +22,6 @@
       
       &.expanded {
         transform: rotate(90deg);
-      }
-
-      &.collapsed {
-        transform: none;
       }
 
       .Icon {

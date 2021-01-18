@@ -1,7 +1,7 @@
 @import '../../constants/panel';
 
 .OutlinesPanel {
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-left: 16px;
 
   .no-outlines {

@@ -1,69 +1,62 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'components/Icon';
 
 import core from 'core';
 import { isMobile } from 'helpers/device';
 import actions from 'actions';
+import selectors from 'selectors';
 
 import './Outline.scss';
 
-class Outline extends React.PureComponent {
-  static propTypes = {
-    outline: PropTypes.object.isRequired,
-    closeElement: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool.isRequired,
-  }
-
-  state = {
-    isExpanded: false,
-  }
-
-  onClickExpand = () => {
-    this.setState(prevState => ({
-      isExpanded: !prevState.isExpanded,
-    }));
-  }
-
-  onClickOutline = () => {
-    const { outline, closeElement } = this.props;
-
-    core.goToOutline(outline);
-    if (isMobile()) {
-      closeElement('leftPanel');
-    }
-  }
-
-  render() {
-    const { outline, isVisible, closeElement } = this.props;
-    const { isExpanded } = this.state;
-
-    return (
-      <div className={`Outline ${isVisible ? 'visible' : 'hidden'}`}>
-        <div className="padding">
-          {(outline.children.length > 0) &&
-            <div className={`arrow ${isExpanded ? 'expanded' : 'collapsed'}`} onClick={this.onClickExpand}>
-              <Icon glyph="ic_chevron_right_black_24px" />
-            </div>
-          }
-        </div>
-        <div className="content">
-          <button className="title" onClick={this.onClickOutline}>
-            {outline.name}
-          </button>
-          {outline.children.map((outline, i) => (
-            <Outline outline={outline} key={i} isVisible={isExpanded} closeElement={closeElement} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-}
-
-const mapDispatchToProps = {
-  closeElement: actions.closeElement,
+const propTypes = {
+  outline: PropTypes.object.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Outline);
+function Outline({ outline }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleClickExpand = useCallback(function() {
+    setIsExpanded(expand => !expand);
+  }, []);
+
+  const handleOutlineClick = useCallback(function() {
+    core.goToOutline(outline);
+
+    if (isMobile()) {
+      dispatch(actions.closeElement('leftPanel'));
+    }
+  }, [dispatch]);
+
+  return (
+    <div className="Outline">
+      <div className="padding">
+        {outline.getChildren().length > 0 && (
+          <div
+            className={classNames({
+              arrow: true,
+              expanded: isExpanded,
+            })}
+            onClick={handleClickExpand}
+          >
+            <Icon glyph="ic_chevron_right_black_24px" />
+          </div>
+        )}
+      </div>
+      <div className="content">
+        <button className="title" onClick={handleOutlineClick}>
+          {outline.getName()}
+        </button>
+        {isExpanded && outline.getChildren().map((outline, i) => <Outline outline={outline} key={i} />)}
+      </div>
+    </div>
+  );
+}
+
+Outline.propTypes = propTypes;
+
+export default Outline;
