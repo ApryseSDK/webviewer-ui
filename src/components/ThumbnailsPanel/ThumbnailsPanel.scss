@@ -1,5 +1,118 @@
 @import '../../constants/panel';
 
+.thumbnail-slider-container {
+  display: flex;
+  align-items: center;
+  margin: 0 8px 16px 16px;
+  width: 230px;
+  margin: 0 auto;
+
+  .thumbnail-slider {
+    width: 100%;
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 100%;
+  }
+  input[type=range]:focus {
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 3px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 0px 0px 0px #000000;
+    background: var(--slider-filled);
+    border-radius: 5px;
+    border: 0px solid #000000;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 1px #000000;
+    border: 0px solid #000000;
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    background: var(--slider-filled);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -5px;
+  }
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: var(--slider-filled);
+  }
+  input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 3px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 0px 0px 0px #000000;
+    background: var(--slider-filled);
+    border-radius: 5px;
+    border: 0px solid #000000;
+  }
+  input[type=range]::-moz-range-thumb {
+    box-shadow: 0px 0px 1px #000000;
+    border: 0px solid #000000;
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    background: var(--slider-filled);
+    cursor: pointer;
+  }
+  input[type=range]::-ms-track {
+    width: 100%;
+    height: 3px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+  input[type=range]::-ms-fill-lower {
+    background: var(--slider-filled);
+    border: 0px solid #000000;
+    border-radius: 10px;
+    box-shadow: 0px 0px 0px #000000;
+  }
+  input[type=range]::-ms-fill-upper {
+    background: var(--slider-filled);
+    border: 0px solid #000000;
+    border-radius: 10px;
+    box-shadow: 0px 0px 0px #000000;
+  }
+  input[type=range]::-ms-thumb {
+    box-shadow: 0px 0px 1px #000000;
+    border: 0px solid #000000;
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    background: var(--slider-filled);
+    cursor: pointer;
+  }
+  input[type=range]:focus::-ms-fill-lower {
+    background: var(--slider-filled);
+  }
+  input[type=range]:focus::-ms-fill-upper {
+    background: var(--slider-filled);
+  }
+
+  Button {
+    width: 15px;
+    height: 15px;
+    margin: 2.5px;
+    padding-top: 6px;
+    
+    &:hover {
+      background: var(--view-header-button-hover);
+      border-radius: 4px;
+    }
+  }
+  
+}
+
 .ThumbnailsPanel {
   // !important is used otherwise it will be overriden by .LeftPanel.Panel in LeftPanel.scss
   // we should fix this to not use !important after 6.0 release
@@ -18,17 +131,23 @@
   }
 
   .thumbnailPlaceholder {
-    margin: 0px;
+    margin: 2px;
+    border: 1px solid var(--focus-border);
   }
 
   .columnsOfThumbnails {
+    .cellThumbContainer {
+      display: flex;
+      flex-direction: row;
+    }
+
     .Thumbnail {
-      display: inline-flex
+      display: inline-flex;
     }
 
     .thumbnailPlaceholder {
-      height: 180px;
-      display: inline-flex;
+      width: 116px;
+      height: 150px;
     }
   }
 }

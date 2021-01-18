@@ -1,4 +1,3 @@
-import Thumbnail, { THUMBNAIL_SIZE } from './Thumbnail';
+import Thumbnail from './ThumbnailRedux';
 
-export { THUMBNAIL_SIZE };
 export default Thumbnail;
