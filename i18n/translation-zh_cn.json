@@ -172,7 +172,8 @@
     "linkURLorPage": "链接网址或页面",
     "enterReplacementText": "输入您要替换的文字",
     "sortBy": "排序方式",
-    "emptyCustomStampInput": "印章文字不能为空"
+    "emptyCustomStampInput": "印章文字不能为空",
+    "unpostedComment": "未发布评论"
   },
   "option": {
     "notesOrder": {

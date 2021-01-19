@@ -172,7 +172,8 @@
     "linkURLorPage": "Link URL oder eine Seite",
     "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten",
     "sortBy": "Sortiere nach",
-    "emptyCustomStampInput": "Stempeltext darf nicht leer sein"
+    "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
+    "unpostedComment": "Unposted Kommentar"
   },
   "option": {
     "notesOrder": {

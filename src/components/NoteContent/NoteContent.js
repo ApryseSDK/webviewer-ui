@@ -17,6 +17,7 @@ import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
 import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
+import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator'
 
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
@@ -89,8 +90,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           }}
         />
       ) : (
-        '(no name)'
-      );
+          '(no name)'
+        );
     },
     [searchInput],
   );
@@ -159,6 +160,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             </div>
           </div>
           <div className="state-and-overflow">
+            <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
             {!isStateDisabled && !isReply &&
               <NoteState
                 annotation={annotation}
@@ -182,10 +184,10 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             onTextAreaValueChange={onTextChange}
           />
         ) : (
-          contentsToRender && (
-            <div className="container">{renderContents(contentsToRender)}</div>
-          )
-        )}
+            contentsToRender && (
+              <div className="container">{renderContents(contentsToRender)}</div>
+            )
+          )}
       </div>
     </React.Fragment>
   ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]);

@@ -172,7 +172,8 @@
     "linkURLorPage": "URL do link ou uma página",
     "enterReplacementText": "Insira o texto que deseja substituir",
     "sortBy": "Ordenar por",
-    "emptyCustomStampInput": "O texto do carimbo não pode estar vazio"
+    "emptyCustomStampInput": "O texto do carimbo não pode estar vazio",
+    "unpostedComment": "Comentário Não Postado"
   },
   "option": {
     "notesOrder": {

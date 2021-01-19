@@ -172,7 +172,8 @@
     "linkURLorPage": "URL de enlace o una página",
     "enterReplacementText": "Ingrese el texto que desea reemplazar",
     "sortBy": "Ordenar por",
-    "emptyCustomStampInput": "El texto del sello no puede estar vacío"
+    "emptyCustomStampInput": "El texto del sello no puede estar vacío",
+    "unpostedComment": "Comentario no publicado"
   },
   "option": {
     "notesOrder": {

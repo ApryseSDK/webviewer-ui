@@ -172,7 +172,8 @@
     "linkURLorPage": "Lien URL ou une page",
     "enterReplacementText": "Entrez le texte que vous souhaitez remplacer",
     "sortBy": "Trier par",
-    "emptyCustomStampInput": "Le texte du tampon ne peut pas être vide"
+    "emptyCustomStampInput": "Le texte du tampon ne peut pas être vide",
+    "unpostedComment": "Commentaire non publié"
   },
   "option": {
     "notesOrder": {

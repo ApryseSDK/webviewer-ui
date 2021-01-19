@@ -172,7 +172,8 @@
     "linkURLorPage": "Link URL o una pagina",
     "enterReplacementText": "Immettere il testo che si desidera sostituire",
     "sortBy": "Ordina per",
-    "emptyCustomStampInput": "Il testo del timbro non può essere vuoto"
+    "emptyCustomStampInput": "Il testo del timbro non può essere vuoto",
+    "unpostedComment": "Commento non pubblicato"
   },
   "option": {
     "notesOrder": {

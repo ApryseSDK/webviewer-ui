@@ -172,7 +172,8 @@
     "linkURLorPage": "Ссылка URL или страница",
     "enterReplacementText": "Введите текст, который хотите заменить",
     "sortBy": "Сортировать по",
-    "emptyCustomStampInput": "Текст штампа не может быть пустым"
+    "emptyCustomStampInput": "Текст штампа не может быть пустым",
+    "unpostedComment": "Неопубликованный комментарий"
   },
   "option": {
     "notesOrder": {

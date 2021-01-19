@@ -172,7 +172,8 @@
     "linkURLorPage": "リンクURLまたはページ",
     "enterReplacementText": "置き換えるテキストを入力してください",
     "sortBy": "並び替え",
-    "emptyCustomStampInput": "スタンプテキストを空にすることはできません"
+    "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
+    "unpostedComment": "未投稿コメント"
   },
   "option": {
     "notesOrder": {

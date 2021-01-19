@@ -172,7 +172,8 @@
     "linkURLorPage": "Link URL or a Page",
     "enterReplacementText": "Enter the text you want to replace",
     "sortBy": "Sort by",
-    "emptyCustomStampInput": "Stamp text cannot be empty"
+    "emptyCustomStampInput": "Stamp text cannot be empty",
+    "unpostedComment": "Unposted Comment"
   },
   "option": {
     "notesOrder": {
@@ -425,7 +426,23 @@
       "November",
       "December"
     ],
-    "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    "weekdaysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    "weekdays": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "weekdaysShort": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ]
   }
 }

@@ -172,7 +172,8 @@
     "linkURLorPage": "Link-URL of een pagina",
     "enterReplacementText": "Voer de tekst in die u wilt vervangen",
     "sortBy": "Sorteer op",
-    "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn"
+    "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn",
+    "unpostedComment": "Niet-geplaatste reactie"
   },
   "option": {
     "notesOrder": {

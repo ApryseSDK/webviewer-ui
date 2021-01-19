@@ -172,7 +172,8 @@
     "linkURLorPage": "링크 URL 또는 페이지",
     "enterReplacementText": "바꿀 텍스트를 입력하십시오",
     "sortBy": "정렬 기준",
-    "emptyCustomStampInput": "스탬프 텍스트는 비워 둘 수 없습니다"
+    "emptyCustomStampInput": "스탬프 텍스트는 비워 둘 수 없습니다",
+    "unpostedComment": "게시되지 않은 댓글"
   },
   "option": {
     "notesOrder": {

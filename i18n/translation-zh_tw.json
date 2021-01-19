@@ -172,7 +172,8 @@
     "linkURLorPage": "鏈接網址或頁面",
     "enterReplacementText": "輸入您要替換的文字",
     "sortBy": "排序方式",
-    "emptyCustomStampInput": "印章文字不能為空"
+    "emptyCustomStampInput": "印章文字不能為空",
+    "unpostedComment": "未發布評論"
   },
   "option": {
     "notesOrder": {
