@@ -159,6 +159,21 @@ describe('SearchOverlay', () => {
       fireEvent.click(checkbox);
       expect(executeSearch).not.toBeCalled();
     });
+
+    it('Should not be focused on mount', () => {
+      const { container } = render(
+        <TestSearchOverlay
+          setSearchValue={noop}
+          setCaseSensitive={noop}
+          setWholeWord={noop}
+          setWildcard={noop}
+          executeSearch={noop}
+        />
+      );
+
+      const searchInput = container.querySelector('#SearchPanel__input');
+      expect(searchInput === document.activeElement).toBe(false);
+    })
   });
 
   describe('Functionality', () => {
