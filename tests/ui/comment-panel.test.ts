@@ -65,16 +65,16 @@ const hideDateTimeInNotesPanel = (iframe: Frame) => {
 };
 
 describe('Test cases for comment panel', () => {
-  let result: { iframe: Frame; waitForInstance; waitForWVEvent};
+  let result: { iframe: Frame; waitForInstance; waitForWVEvent };
+
   beforeEach(async() => {
-    result = await loadViewerSample(
-      'viewing/viewing',
-    );
+    result = await loadViewerSample('viewing/blank');
     await result.waitForWVEvent('annotationsLoaded');
   });
 
   it('should not be able to edit comment for not locked content non-free text annotation', async() => {
     await addAndCreateAnnot(result.iframe, false, true, 'some-content');
+    const instance = await result.waitForInstance();
 
     const annotId = await (result.iframe as Frame).evaluate(async() => {
       const annots = window.readerControl.docViewer.getAnnotationManager().getAnnotationsList()
@@ -84,11 +84,12 @@ describe('Test cases for comment panel', () => {
 
     await selectAnnotation(annotId, result.iframe);
 
-    await (result.iframe as Frame).click('[data-element=annotationCommentButton]');
-    await page.waitFor(2000);
+    instance('openElement', 'notesPanel');
+    await page.waitFor(500);
+
     await hideDateTimeInNotesPanel(result.iframe);
-    await page.waitFor(2000);
     const pageContainer = await (result.iframe as Frame).$('.NotesPanel');
+    await page.waitFor(2000);
     expect(await pageContainer.screenshot()).toMatchImageSnapshot({
       customSnapshotIdentifier: 'comment-panel-non-free-text-annot-locked-content',
     });
@@ -96,6 +97,7 @@ describe('Test cases for comment panel', () => {
 
   it('should be able to edit comment for locked content non-free text annotation', async() => {
     await addAndCreateAnnot(result.iframe, false, false, 'some-content');
+    const instance = await result.waitForInstance();
 
     const annotId = await (result.iframe as Frame).evaluate(async() => {
       const annots = window.readerControl.docViewer.getAnnotationManager().getAnnotationsList()
@@ -105,11 +107,12 @@ describe('Test cases for comment panel', () => {
 
     await selectAnnotation(annotId, result.iframe);
 
-    await (result.iframe as Frame).click('[data-element=annotationCommentButton]');
-    await page.waitFor(2000);
+    instance('openElement', 'notesPanel');
+    await page.waitFor(500);
+
     await hideDateTimeInNotesPanel(result.iframe);
-    await page.waitFor(2000);
     const pageContainer = await (result.iframe as Frame).$('.NotesPanel');
+    await page.waitFor(2000);
     expect(await pageContainer.screenshot()).toMatchImageSnapshot({
       customSnapshotIdentifier: 'comment-panel-non-free-text-annot-not-locked-content',
     });
@@ -117,6 +120,7 @@ describe('Test cases for comment panel', () => {
 
   it('should not be able to edit comment for locked content free text annotation', async() => {
     await addAndCreateAnnot(result.iframe, true, true, 'some-content');
+    const instance = await result.waitForInstance();
 
     const annotId = await (result.iframe as Frame).evaluate(async() => {
       const annots = window.readerControl.docViewer.getAnnotationManager().getAnnotationsList()
@@ -126,20 +130,22 @@ describe('Test cases for comment panel', () => {
 
     await selectAnnotation(annotId, result.iframe);
 
-    await (result.iframe as Frame).click('[data-element=annotationCommentButton]');
-    await page.waitFor(2000);
+    instance('openElement', 'notesPanel');
+    await page.waitFor(500);
+
     await hideDateTimeInNotesPanel(result.iframe);
-    await page.waitFor(2000);
     const pageContainer = await (result.iframe as Frame).$('.NotesPanel');
+    await page.waitFor(2000);
     expect(await pageContainer.screenshot()).toMatchImageSnapshot({
       customSnapshotIdentifier: 'comment-panel-free-text-annot-locked-content',
     });
   });
 
   it('should be able to edit comment for not locked content free text annotation', async() => {
+    await page.waitFor(Timeouts.PDF_PRIME_DOCUMENT);
+
     await addAndCreateAnnot(result.iframe, true, false, 'some-content');
     // on creation of free text annot, text can be edited right away
-    await page.waitFor(Timeouts.PDF_PRIME_DOCUMENT);
     const pageContainer = await result.iframe.$('#pageContainer1');
     expect(await pageContainer.screenshot()).toMatchImageSnapshot({
       customSnapshotIdentifier: 'comment-panel-free-text-annot-not-locked-content',
@@ -148,6 +154,7 @@ describe('Test cases for comment panel', () => {
 
   it('should be able to only add reply to annotation that does not belong to user', async() => {
     await addAndCreateAnnot(result.iframe, false, true, undefined, 'a');
+    const instance = await result.waitForInstance();
 
     const annotId = await (result.iframe as Frame).evaluate(async() => {
       const annots = window.readerControl.docViewer.getAnnotationManager().getAnnotationsList()
@@ -168,8 +175,9 @@ describe('Test cases for comment panel', () => {
 
     await selectAnnotation(annotId, result.iframe);
 
-    await (result.iframe as Frame).click('[data-element=annotationCommentButton]');
-    await page.waitFor(2000);
+    instance('openElement', 'notesPanel');
+    await page.waitFor(500);
+
     await hideDateTimeInNotesPanel(result.iframe);
     await page.waitFor(2000);
 
