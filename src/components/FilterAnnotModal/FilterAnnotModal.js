@@ -34,7 +34,7 @@ const FilterAnnotModal = () => {
     if (annotation instanceof Annotations.CaretAnnotation) {
       return 'caret';
     }
-    if (annotation instanceof Annotations.CustomAnnotation) {
+    if (annotation instanceof Annotations.InternalCustomAnnotation) {
       return 'custom';
     }
     if (annotation instanceof Annotations.EllipseAnnotation) {
