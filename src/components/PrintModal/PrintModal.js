@@ -47,6 +47,7 @@ class PrintModal extends React.PureComponent {
     this.customPages = React.createRef();
     this.customInput = React.createRef();
     this.includeComments = React.createRef();
+    this.currentView = React.createRef();
     this.pendingCanvases = [];
     this.state = {
       allowWatermarkModal: false,
@@ -135,6 +136,8 @@ class PrintModal extends React.PureComponent {
     } else if (this.customPages.current.checked) {
       const customInput = this.customInput.current.value.replace(/\s+/g, '');
       pagesToPrint = getPageArrayFromString(customInput, pageLabels);
+    } else if (this.currentView.current.checked) {
+      pagesToPrint = [currentPage];
     }
 
     this.setState({ pagesToPrint });
@@ -170,6 +173,8 @@ class PrintModal extends React.PureComponent {
       this.props.sortStrategy,
       this.props.colorMap,
       this.props.printedNoteDateFormat,
+      undefined,
+      this.currentView.current?.checked,
     );
     createPages.forEach(async pagePromise => {
       await pagePromise;
@@ -279,6 +284,16 @@ class PrintModal extends React.PureComponent {
                       name="pages"
                       radio
                       label={t('option.print.current')}
+                      disabled={isPrinting}
+                      center
+                    />
+                    <Choice
+                      dataElement="currentViewPrintOption"
+                      ref={this.currentView}
+                      id="current-view"
+                      name="pages"
+                      radio
+                      label={t('option.print.view')}
                       disabled={isPrinting}
                       center
                     />

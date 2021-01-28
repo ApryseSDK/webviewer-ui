@@ -226,8 +226,9 @@
     },
     "print": {
       "all": "All",
-      "current": "Current",
+      "current": "Current Page",
       "pages": "Pages to print",
+      "view": "Current View",
       "pageQuality": "Print Quality",
       "qualityNormal": "Normal",
       "qualityHigh": "High",

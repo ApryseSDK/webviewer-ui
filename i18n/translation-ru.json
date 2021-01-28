@@ -226,8 +226,9 @@
     },
     "print": {
       "all": "Все",
-      "current": "Текущий",
+      "current": "Текущая страница",
       "pages": "Страницы",
+      "view": "Текущий вид",
       "pageQuality": "Качество печати",
       "qualityNormal": "Нормальный",
       "qualityHigh": "Высокая",

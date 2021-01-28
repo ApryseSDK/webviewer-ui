@@ -226,8 +226,9 @@
     },
     "print": {
       "all": "すべて",
-      "current": "現在の",
+      "current": "現在のページ",
       "pages": "ページ",
+      "view": "現在のビュー",
       "pageQuality": "印刷品質",
       "qualityNormal": "正常",
       "qualityHigh": "高い",

@@ -9,13 +9,12 @@ import { isSafari, isChromeOniOS } from 'helpers/device';
 import core from 'core';
 
 let pendingCanvases = [];
-let INCLUDE_ANNOTATIONS = false;
 let PRINT_QUALITY = 1;
 let colorMap;
 
 export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
   const {
-    includeAnnotations = INCLUDE_ANNOTATIONS,
+    includeAnnotations,
     includeComments,
     onProgress,
     printQuality = PRINT_QUALITY,
@@ -97,16 +96,15 @@ const printPdf = () =>
       });
   });
 
-export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, printQuality, sortStrategy, clrMap, dateFormat, onProgress) => {
+export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, printQuality, sortStrategy, clrMap, dateFormat, onProgress, isPrintCurrentView) => {
   const createdPages = [];
   pendingCanvases = [];
-  INCLUDE_ANNOTATIONS = includeAnnotations;
   PRINT_QUALITY = printQuality;
   colorMap = clrMap;
 
   pagesToPrint.forEach(pageNumber => {
     const printableAnnotationNotes = getPrintableAnnotationNotes(pageNumber);
-    createdPages.push(creatingImage(pageNumber));
+    createdPages.push(creatingImage(pageNumber, includeAnnotations, isPrintCurrentView));
 
     if (includeComments && printableAnnotationNotes) {
       const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotationNotes);
@@ -159,16 +157,17 @@ const getPrintableAnnotationNotes = pageNumber =>
         annotation.Printable,
     );
 
-const creatingImage = pageNumber =>
+const creatingImage = (pageNumber, includeAnnotations, isPrintCurrentView) =>
   new Promise(resolve => {
     const pageIndex = pageNumber - 1;
-    const zoom = 1;
+    let zoom = 1;
+    let renderRect;
     const printRotation = getPrintRotation(pageIndex);
     const onCanvasLoaded = async canvas => {
       pendingCanvases = pendingCanvases.filter(pendingCanvas => pendingCanvas !== id);
       positionCanvas(canvas, pageIndex);
       let printableAnnotInfo = [];
-      if (!INCLUDE_ANNOTATIONS) {
+      if (!includeAnnotations) {
         // according to Adobe, even if we exclude annotations, it will still draw widget annotations
         const annotatationsToPrint = core.getAnnotationsList().filter(annotation => {
           return annotation.PageNumber === pageNumber && !(annotation instanceof window.Annotations.WidgetAnnotation);
@@ -194,6 +193,34 @@ const creatingImage = pageNumber =>
         resolve(img);
       };
     };
+
+    if (isPrintCurrentView) {
+      const displayMode = core.getDisplayModeObject();
+      const containerElement = core.getScrollViewElement();
+      const documentElement = core.getViewerElement();
+      const headerElement = document.querySelector('.Header');
+      const headerItemsElements = document.querySelector('.HeaderToolsContainer');
+
+      const headerHeight = headerElement?.clientHeight + headerItemsElements?.clientHeight;
+      const coordinates = [];
+      coordinates[0] = displayMode.windowToPageNoRotate({
+        x: Math.max(containerElement.scrollLeft, documentElement.offsetLeft),
+        y: Math.max(containerElement.scrollTop + headerHeight, 0)
+      }, pageNumber);
+      coordinates[1] = displayMode.windowToPageNoRotate({
+        x: Math.min(window.innerWidth, documentElement.offsetLeft + documentElement.offsetWidth) + containerElement.scrollLeft,
+        y: window.innerHeight + containerElement.scrollTop
+      }, pageNumber);
+      const x1 = Math.min(coordinates[0].x, coordinates[1].x);
+      const y1 = Math.min(coordinates[0].y, coordinates[1].y);
+      const x2 = Math.max(coordinates[0].x, coordinates[1].x);
+      const y2 = Math.max(coordinates[0].y, coordinates[1].y);
+
+      zoom = core.getZoom();
+      renderRect = { x1, y1, x2, y2 };
+    }
+
+
     const id = core.getDocument().loadCanvasAsync({
       pageNumber,
       zoom,
@@ -201,6 +228,7 @@ const creatingImage = pageNumber =>
       drawComplete: onCanvasLoaded,
       multiplier: PRINT_QUALITY,
       'print': true,
+      renderRect
     });
     pendingCanvases.push(id);
   });

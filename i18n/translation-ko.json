@@ -226,8 +226,9 @@
     },
     "print": {
       "all": "모두",
-      "current": "현재",
+      "current": "현재 페이지",
       "pages": "페이지",
+      "view": "현재보기",
       "pageQuality": "인쇄 품질",
       "qualityNormal": "표준",
       "qualityHigh": "높은",

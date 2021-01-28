@@ -226,8 +226,9 @@
     },
     "print": {
       "all": "Alles",
-      "current": "Huidige",
+      "current": "Huidige pagina",
       "pages": "Pagina's",
+      "view": "Huidige weergave",
       "pageQuality": "Print kwaliteit",
       "qualityNormal": "Normaal",
       "qualityHigh": "Hoog",

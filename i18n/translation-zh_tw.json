@@ -226,8 +226,9 @@
     },
     "print": {
       "all": "全部",
-      "current": "目前",
+      "current": "當前頁面",
       "pages": "頁面",
+      "view": "目前來看",
       "pageQuality": "打印質量",
       "qualityNormal": "正常",
       "qualityHigh": "高",
