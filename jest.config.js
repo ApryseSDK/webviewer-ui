@@ -89,7 +89,7 @@ module.exports = {
     "^actions(.*)$": "<rootDir>/src/redux/actions/$1",
     "^reducers/(.*)$": "<rootDir>/src/redux/reducers/$1",
     "^selectors$": "<rootDir>/src/redux/selectors",
-    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/fileMock.js",
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/fileMock.js",
     "\\.(css|scss)$": "identity-obj-proxy",
   },
 

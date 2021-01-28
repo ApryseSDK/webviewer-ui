@@ -1,3 +1,3 @@
-import NoteState from './NoteState';
+import NoteStateContainer from './NoteStateContainer';
 
-export default NoteState;
+export default NoteStateContainer;

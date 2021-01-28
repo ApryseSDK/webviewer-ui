@@ -1,101 +1,56 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, shallowEqual } from 'react-redux';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
 
-import core from 'core';
-import selectors from 'selectors';
-
 import './NoteState.scss';
 
 const propTypes = {
-  annotation: PropTypes.object.isRequired,
+  annotation: PropTypes.object,
+  isSelected: PropTypes.bool,
+  openOnInitialLoad: PropTypes.bool,
+  handleStateChange: PropTypes.func
 };
 
-const NoteState = ({ annotation, isSelected }) => {
-  const [
-    isStateDisabled,
-    isStateAcceptedDisabled,
-    isStateRejectedDisabled,
-    isStateCompletedDisabled,
-    isStateCancelledDisabled,
-    isStateNoneDisabled,
-    isStateMarkedDisabled,
-    isStateUnmarkedDisabled,
-  ] = useSelector(
-    state => [
-      selectors.isElementDisabled(state, 'notePopupState'),
-      selectors.isElementDisabled(state, 'notePopupStateAccepted'),
-      selectors.isElementDisabled(state, 'notePopupStateRejected'),
-      selectors.isElementDisabled(state, 'notePopupStateCompleted'),
-      selectors.isElementDisabled(state, 'notePopupStateCancelled'),
-      selectors.isElementDisabled(state, 'notePopupStateNone'),
-      selectors.isElementDisabled(state, 'notePopupStateMarked'),
-      selectors.isElementDisabled(state, 'notePopupStateUnmarked'),
-    ],
-    shallowEqual,
-  );
+function NoteState(props) {
+  const {
+    annotation,
+    isSelected = false,
+    openOnInitialLoad = false,
+    handleStateChange,
+  } = props;
+
   const [t] = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(openOnInitialLoad);
   const popupRef = useRef();
 
   useOnClickOutside(popupRef, () => {
-    closePopup();
+    setIsOpen(false);
   });
 
   const togglePopup = e => {
     e.stopPropagation();
-    if (isOpen) {
-      closePopup();
-    } else {
-      setIsOpen(true);
-    }
+    setIsOpen(!isOpen);
   };
 
-  const closePopup = () => {
+  function onStateOptionsButtonClick() {
     setIsOpen(false);
-  };
+  }
 
-  const handleStateUpdate = state => {
-    const stateAnnot = createStateAnnot(annotation, state);
+  function createOnStateOptionButtonClickHandler(state) {
+    return function onStateOptionButtonClick() {
+      if (handleStateChange) {
+        handleStateChange(state);
+      }
+    };
+  }
 
-    annotation.addReply(stateAnnot);
-
-    const annotManager = core.getAnnotationManager();
-    annotManager.addAnnotation(stateAnnot);
-    annotManager.trigger('addReply', [stateAnnot, annotation, annotManager.getRootAnnotation(annotation)]);
-  };
-
-  const createStateAnnot = (annotation, state) => {
-    // TODO: the code below is copied from annotManager.updateAnnotationState in WebViewer to work around the issue
-    // in https://github.com/PDFTron/webviewer-ui/issues/620
-    // the implement before wasn't causing any actual issues, but it was confusing and unnecessary to trigger two annotationChanged events when a status is set
-    // A proper fix should be done once https://trello.com/c/zWlkygNb/1023-consider-adding-a-setlocalizationhandler-to-corecontrols is implemented
-    // at that time, we could use the translation handler(t) internally in updateAnnotationState before setting the contents, and use that function instead in this component
-
-    const stateAnnot = new Annotations.StickyAnnotation();
-
-    stateAnnot['InReplyTo'] = annotation['Id'];
-    stateAnnot['X'] = annotation['X'];
-    stateAnnot['Y'] = annotation['Y'];
-    stateAnnot['PageNumber'] = annotation['PageNumber'];
-    stateAnnot['Subject'] = 'Sticky Note';
-    stateAnnot['Author'] = core.getCurrentUser();
-    stateAnnot['State'] = state;
-    stateAnnot['StateModel'] = state === 'Marked' || state === 'Unmarked' ? 'Marked' : 'Review';
-    stateAnnot['Hidden'] = true;
-
-    const displayAuthor = core.getDisplayAuthor(stateAnnot);
-    const stateMessage = t(`option.state.${state.toLowerCase()}`);
-    const contents = `${stateMessage} ${t('option.state.setBy')} ${displayAuthor}`;
-    stateAnnot.setContents(contents);
-
-    return stateAnnot;
-  };
+  if (!annotation) {
+    return null;
+  }
 
   const annotationState = annotation.getStatus();
   const icon = `icon-annotation-status-${annotationState === '' ? 'none' : annotationState.toLowerCase()}`;
@@ -105,7 +60,11 @@ const NoteState = ({ annotation, isSelected }) => {
     return null;
   }
 
-  return (isStateDisabled && isReply) ? null : (
+  if (isReply) {
+    return null;
+  }
+
+  return (
     <DataElementWrapper
       className="NoteState"
       dataElement="noteState"
@@ -115,70 +74,70 @@ const NoteState = ({ annotation, isSelected }) => {
         <Icon glyph={icon} />
       </div>
       {isOpen && (
-        <div ref={popupRef} className="options" onClick={closePopup}>
-            <div data-element="notePopupState">
-              {!isStateAcceptedDisabled ? <div
-                data-element="notePopupStateAccepted"
-                className="option"
-                onClick={() => handleStateUpdate('Accepted')}
-              >
-                <Icon glyph="icon-annotation-status-accepted" />
-                {t('option.state.accepted')}
-              </div> : null }
-              {!isStateRejectedDisabled ? <div
-                data-element="notePopupStateRejected"
-                className="option"
-                onClick={() => handleStateUpdate('Rejected')}
-              >
-                <Icon glyph="icon-annotation-status-rejected" />
-                {t('option.state.rejected')}
-              </div> : null }
-              {!isStateCancelledDisabled ? <div
-                data-element="notePopupStateCancelled"
-                className="option"
-                onClick={() => handleStateUpdate('Cancelled')}
-              >
-                <Icon glyph="icon-annotation-status-cancelled" />
-                {t('option.state.cancelled')}
-              </div> : null }
-              {!isStateCompletedDisabled ? <div
-                data-element="notePopupStateCompleted"
-                className="option"
-                onClick={() => handleStateUpdate('Completed')}
-              >
-                <Icon glyph="icon-annotation-status-completed" />
-                {t('option.state.completed')}
-              </div> : null }
-              {!isStateNoneDisabled ? <div
-                data-element="notePopupStateNone"
-                className="option"
-                onClick={() => handleStateUpdate('None')}
-              >
-                <Icon glyph="icon-annotation-status-none" />
-                {t('option.state.none')}
-              </div> : null }
-              {!isStateMarkedDisabled ? <div
-                data-element="notePopupStateMarked"
-                className="option"
-                onClick={() => handleStateUpdate('Marked')}
-              >
-                <Icon glyph="icon-annotation-status-marked" />
-                {t('option.state.marked')}
-              </div> : null }
-              {!isStateUnmarkedDisabled ? <div
-                data-element="notePopupStateUnmarked"
-                className="option"
-                onClick={() => handleStateUpdate('Unmarked')}
-              >
-                <Icon glyph="icon-annotation-status-unmarked" />
-                {t('option.state.unmarked')}
-              </div> : null }
-            </div>
-        </div>
+        <button ref={popupRef} className="note-state-options" onClick={onStateOptionsButtonClick}>
+          <DataElementWrapper dataElement="notePopupState">
+            <DataElementWrapper
+              dataElement="notePopupStateAccepted"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Accepted')}
+            >
+              <Icon glyph="icon-annotation-status-accepted" />
+              {t('option.state.accepted')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateRejected"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Rejected')}
+            >
+              <Icon glyph="icon-annotation-status-rejected" />
+              {t('option.state.rejected')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateCancelled"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Cancelled')}
+            >
+              <Icon glyph="icon-annotation-status-cancelled" />
+              {t('option.state.cancelled')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateCompleted"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Completed')}
+            >
+              <Icon glyph="icon-annotation-status-completed" />
+              {t('option.state.completed')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateNone"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('None')}
+            >
+              <Icon glyph="icon-annotation-status-none" />
+              {t('option.state.none')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateMarked"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Marked')}
+            >
+              <Icon glyph="icon-annotation-status-marked" />
+              {t('option.state.marked')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateUnmarked"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Unmarked')}
+            >
+              <Icon glyph="icon-annotation-status-unmarked" />
+              {t('option.state.unmarked')}
+            </DataElementWrapper>
+          </DataElementWrapper>
+        </button>
       )}
     </DataElementWrapper>
   );
-};
+}
 
 NoteState.propTypes = propTypes;
 

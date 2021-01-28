@@ -1,6 +1,7 @@
 @import '../../constants/styles';
 
 .NoteState  {
+  @include button-reset;
   flex-grow: 0;
   display: flex;
   justify-content: flex-end;
@@ -21,7 +22,9 @@
     }
   }
 
-  .options {
+  .note-state-options {
+    @include button-reset;
+    font-size: inherit;
     display: flex;
     flex-direction: column;
     box-shadow: 0px 0px 3px 0px var(--box-shadow);
@@ -30,7 +33,7 @@
     border-radius: 4px;
     background: var(--component-background);
 
-    .option {
+    .note-state-option {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -46,17 +49,17 @@
 
       &:hover {
         background-color: var(--popup-button-hover);
-      }      
+      }
 
       &:first-child {
         border-top-right-radius: 4px;
         border-top-left-radius: 4px;
       }
-  
+
       &:last-child {
         border-bottom-right-radius: 4px;
         border-bottom-right-radius: 4px;
-      }      
+      }
     }
   }
 }
