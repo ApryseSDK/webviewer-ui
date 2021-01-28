@@ -296,12 +296,16 @@ WebViewer(...)
         }
       },
       [`${Keys.CTRL_Z}, ${Keys.COMMAND_Z}`]: e => {
-        e.preventDefault();
-        core.undo();
+        if (!isFocusingElement()) {
+          e.preventDefault();
+          core.undo();
+        }
       },
       [`${Keys.CTRL_Y}, ${Keys.COMMAND_SHIFT_Z}`]: e => {
-        e.preventDefault();
-        core.redo();
+        if (!isFocusingElement()) {
+          e.preventDefault();
+          core.redo();
+        }
       },
       [`${Keys.CTRL_O}, ${Keys.COMMAND_O}`]: e => {
         e.preventDefault();
