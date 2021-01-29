@@ -1,126 +1,103 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import useOnClickOutside from 'hooks/useOnClickOutside';
+import DataElementWrapper from 'components/DataElementWrapper';
 import { useTranslation } from 'react-i18next';
 
 import Icon from 'components/Icon';
 
-import core from 'core';
-import actions from 'actions';
-import selectors from 'selectors';
-
 import './NotePopup.scss';
 
 const propTypes = {
-  annotation: PropTypes.object.isRequired,
-  setIsEditing: PropTypes.func.isRequired,
+  annotation: PropTypes.object,
+  handleEdit: PropTypes.func,
+  handleDelete: PropTypes.func,
+  closePopup: PropTypes.func,
+  openPopup: PropTypes.func,
+  isEditable: PropTypes.bool,
+  isDeletable: PropTypes.bool,
+  isOpen: PropTypes.bool,
 };
 
-const NotePopup = ({ annotation, setIsEditing, noteIndex }) => {
-  const [
-    notePopupId,
-    isDisabled,
-    isEditDisabled,
-    isDeleteDisabled,
-  ] = useSelector(
-    state => [
-      selectors.getNotePopupId(state),
-      selectors.isElementDisabled(state, 'notePopup'),
-      selectors.isElementDisabled(state, 'notePopupEdit'),
-      selectors.isElementDisabled(state, 'notePopupDelete'),
-      selectors.isElementDisabled(state, 'notePopupState'),
-    ],
-    shallowEqual,
-  );
-  const [canModify, setCanModify] = useState(core.canModify(annotation));
-  const [canModifyContents, setCanModifyContents] = useState(
-    core.canModifyContents(annotation),
-  );
+function noop() {}
+
+function NotePopup(props) {
+  const {
+    annotation,
+    handleEdit = noop,
+    handleDelete = noop,
+    closePopup = noop,
+    openPopup = noop,
+    isEditable,
+    isDeletable,
+    isOpen,
+  } = props;
+
   const [t] = useTranslation();
-  const dispatch = useDispatch();
-  const isOpen = notePopupId === annotation.Id;
-  const popupRef = useRef();
+  const popupRef = React.useRef();
 
   useOnClickOutside(popupRef, () => {
     closePopup();
   });
-
-  useEffect(() => {
-    const onUpdateAnnotationPermission = () => {
-      setCanModify(core.canModify(annotation));
-      setCanModifyContents(core.canModifyContents(annotation));
-    };
-
-    core.addEventListener(
-      'updateAnnotationPermission',
-      onUpdateAnnotationPermission,
-    );
-    return () =>
-      core.removeEventListener(
-        'updateAnnotationPermission',
-        onUpdateAnnotationPermission,
-      );
-  }, [annotation]);
 
   const togglePopup = e => {
     e.stopPropagation();
     if (isOpen) {
       closePopup();
     } else {
-      dispatch(actions.setNotePopupId(annotation.Id));
+      openPopup(annotation?.Id);
     }
   };
 
-  const closePopup = () => {
-    dispatch(actions.setNotePopupId(''));
-  };
+  function onEditButtonClick() {
+    closePopup();
+    handleEdit();
+  }
 
-  const handleEdit = () => {
-    const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation;
+  function onDeleteButtonClick() {
+    closePopup();
+    handleDelete();
+  }
 
-    if (isFreeText && core.getAnnotationManager().useFreeTextEditing()) {
-      core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
-    } else {
-      setIsEditing(true, noteIndex);
-    }
-  };
+  if (!isEditable && !isDeletable) {
+    return null;
+  }
 
-  const handleDelete = () => {
-    core.deleteAnnotations([annotation]);
-  };
-
-  const isEditable = !isEditDisabled && canModifyContents;
-  const isDeletable = !isDeleteDisabled && canModify && !annotation.NoDelete;
-
-  return !(isEditable || isDeletable) || isDisabled ? null : (
-    <div
+  return (
+    <DataElementWrapper
       className="NotePopup"
-      data-element="notePopup"
+      dataElement="notePopup"
     >
-      <div
-        className="overflow"
-        onClick={togglePopup}
-      >
+      <div className="overflow note-popup-toggle-trigger" onClick={togglePopup}>
         <Icon glyph="icon-tools-more" />
       </div>
       {isOpen && (
-        <div ref={popupRef} className="options" onClick={closePopup}>
+        <div ref={popupRef} className="options note-popup-options">
           {isEditable && (
-            <div className="option" data-element="notePopupEdit" onClick={handleEdit}>
+            <DataElementWrapper
+              type="button"
+              className="option note-popup-option"
+              dataElement="notePopupEdit"
+              onClick={onEditButtonClick}
+            >
               {t('action.edit')}
-            </div>
+            </DataElementWrapper>
           )}
           {isDeletable && (
-            <div className="option" data-element="notePopupDelete" onClick={handleDelete}>
+            <DataElementWrapper
+              type="button"
+              className="option note-popup-option"
+              dataElement="notePopupDelete"
+              onClick={onDeleteButtonClick}
+            >
               {t('action.delete')}
-            </div>
+            </DataElementWrapper>
           )}
         </div>
       )}
-    </div>
+    </DataElementWrapper>
   );
-};
+}
 
 NotePopup.propTypes = propTypes;
 

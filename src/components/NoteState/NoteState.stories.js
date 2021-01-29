@@ -2,7 +2,7 @@ import React from 'react';
 import NoteState from './NoteState.js';
 
 export default {
-  title: 'Components/NoteState',
+  title: 'Components/NotesPanel/NoteState',
   component: NoteState,
 };
 

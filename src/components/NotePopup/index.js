@@ -1,3 +1,3 @@
-import NotePopup from './NotePopup';
+import NotePopupRedux from './NotePopupRedux';
 
-export default NotePopup;
+export default NotePopupRedux;
