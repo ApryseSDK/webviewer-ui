@@ -11,6 +11,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
 import AnnotationNoteConnectorLine from 'components/AnnotationNoteConnectorLine';
+import useDidUpdate from 'hooks/useDidUpdate';
 
 import './Note.scss';
 
@@ -90,10 +91,14 @@ const Note = ({
     const pendingText = pendingEditTextMap[annotation.Id]
     if (pendingText !== '' && isContentEditable && !isDocumentReadOnly) {
       setIsEditing(true, 0);
-    } else if (isDocumentReadOnly || !isContentEditable) {
-      setIsEditing(false, 0);
     }
   }, [isDocumentReadOnly, isContentEditable, setIsEditing, annotation]);
+
+  useDidUpdate(() => {
+    if (isDocumentReadOnly || !isContentEditable) {
+      setIsEditing(false, 0);
+    }
+  }, [isDocumentReadOnly, isContentEditable, setIsEditing])
 
   const handleNoteClick = e => {
     // stop bubbling up otherwise the note will be closed
@@ -110,7 +115,7 @@ const Note = ({
       core.deselectAllAnnotations();
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
-  
+
       setTimeout(() => {
         const selection = window.getSelection();
         const range = document.createRange();
