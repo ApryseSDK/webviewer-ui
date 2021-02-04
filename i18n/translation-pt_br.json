@@ -236,6 +236,11 @@
       "includeComments": "Incluir comentários",
       "addWatermarkSettings": "Adicionar marca d'água"
     },
+    "printInfo": {
+      "author": "Autor",
+      "subject": "Sujeito",
+      "date": "Encontro"
+    },
     "redaction": {
       "markForRedaction": "Marcar para supressão"
     },

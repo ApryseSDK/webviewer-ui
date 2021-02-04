@@ -236,6 +236,11 @@
       "includeComments": "Inclusief commentaar",
       "addWatermarkSettings": "Watermerkinstellingen toevoegen"
     },
+    "printInfo": {
+      "author": "Schrijver",
+      "subject": "Onderwerpen",
+      "date": "Datum"
+    },
     "redaction": {
       "markForRedaction": "Markeren voor redactie"
     },

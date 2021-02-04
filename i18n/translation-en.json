@@ -236,6 +236,11 @@
       "includeComments": "Include comments",
       "addWatermarkSettings": "Add Watermark"
     },
+    "printInfo": {
+      "author": "Author",
+      "subject": "Subject",
+      "date": "Date"
+    },
     "redaction": {
       "markForRedaction": "Mark for redaction"
     },

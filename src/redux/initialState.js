@@ -9,6 +9,7 @@ import { defaultZoomList } from 'constants/zoomFactors';
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
 import { copyMapWithDataProperties } from 'constants/map';
+import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import Ribbons from 'components/Ribbons';
 
 export default {
@@ -17,6 +18,7 @@ export default {
     canRedo: false,
     toolbarGroup: 'toolbarGroup-Annotate',
     activeTheme: 'light',
+    currentLanguage: 'en',
     disabledElements: {},
     openElements: {
       header: true,
@@ -457,8 +459,8 @@ export default {
     useEmbeddedPrint: false,
     pageLabels: [],
     selectedThumbnailPageIndexes: [],
-    noteDateFormat: 'MMM D, h:mma',
-    printedNoteDateFormat: 'D/MM/YYYY h:mm:ss A',
+    noteDateFormat: defaultNoteDateFormat,
+    printedNoteDateFormat: defaultPrintedNoteDateFormat,
     colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
     warning: {},
     customNoteFilter: null,

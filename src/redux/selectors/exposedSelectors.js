@@ -1,4 +1,5 @@
 import { isChrome, isAndroid } from 'helpers/device';
+import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 
 // viewer
 export const getIsHighContrastMode = state => state.viewer.highContrastMode;
@@ -185,9 +186,9 @@ export const getSortStrategy = state => state.viewer.sortStrategy;
 
 export const getRotation = state => state.viewer.rotation;
 
-export const getNoteDateFormat = state => state.viewer.noteDateFormat;
+export const getNoteDateFormat = state => state.viewer.noteDateFormat || defaultNoteDateFormat;
 
-export const getPrintedNoteDateFormat = state => state.viewer.printedNoteDateFormat;
+export const getPrintedNoteDateFormat = state => state.viewer.printedNoteDateFormat || defaultPrintedNoteDateFormat;
 
 export const isFullScreen = state => state.viewer.isFullScreen;
 
@@ -328,3 +329,5 @@ export const getNoteTransformFunction = state => state.viewer.noteTransformFunct
 export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;
 
 export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;
+
+export const getCurrentLanguage = state => state.viewer.currentLanguage;

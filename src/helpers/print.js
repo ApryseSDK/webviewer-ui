@@ -2,6 +2,8 @@ import i18n from 'i18next';
 
 import actions from 'actions';
 import dayjs from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+
 import { workerTypes } from 'constants/types';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
@@ -12,6 +14,8 @@ let pendingCanvases = [];
 let PRINT_QUALITY = 1;
 let colorMap;
 
+dayjs.extend(LocalizedFormat);
+
 export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
   const {
     includeAnnotations,
@@ -19,6 +23,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
     onProgress,
     printQuality = PRINT_QUALITY,
     printWithoutModal = false,
+    language,
   } = options;
   let { pagesToPrint } = options;
 
@@ -57,6 +62,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       colorMap,
       undefined,
       onProgress,
+      language,
     );
     Promise.all(createPages)
       .then(pages => {
@@ -96,7 +102,7 @@ const printPdf = () =>
       });
   });
 
-export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, printQuality, sortStrategy, clrMap, dateFormat, onProgress, isPrintCurrentView) => {
+export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, printQuality, sortStrategy, clrMap, dateFormat, onProgress, isPrintCurrentView, language) => {
   const createdPages = [];
   pendingCanvases = [];
   PRINT_QUALITY = printQuality;
@@ -108,7 +114,7 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnotations,
 
     if (includeComments && printableAnnotationNotes) {
       const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotationNotes);
-      createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat));
+      createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat, language));
     }
 
     if (onProgress) {
@@ -233,18 +239,18 @@ const creatingImage = (pageNumber, includeAnnotations, isPrintCurrentView) =>
     pendingCanvases.push(id);
   });
 
-const creatingNotesPage = (annotations, pageNumber, dateFormat) =>
+const creatingNotesPage = (annotations, pageNumber, dateFormat, language) =>
   new Promise(resolve => {
     const container = document.createElement('div');
     container.className = 'page__container';
 
     const header = document.createElement('div');
     header.className = 'page__header';
-    header.innerHTML = `Page ${pageNumber}`;
+    header.innerHTML = `${i18n.t('option.shared.page')} ${pageNumber}`;
 
     container.appendChild(header);
     annotations.forEach(annotation => {
-      const note = getNote(annotation, dateFormat);
+      const note = getNote(annotation, dateFormat, language);
 
       container.appendChild(note);
     });
@@ -346,7 +352,7 @@ const getDocumentRotation = pageIndex => {
   return (completeRotation - viewerRotation + 4) % 4;
 };
 
-const getNote = (annotation, dateFormat) => {
+const getNote = (annotation, dateFormat, language) => {
   const note = document.createElement('div');
   note.className = 'note';
 
@@ -367,7 +373,7 @@ const getNote = (annotation, dateFormat) => {
   annotation.getReplies().forEach(reply => {
     const noteReply = document.createElement('div');
     noteReply.className = 'note__reply';
-    noteReply.appendChild(getNoteInfo(reply, dateFormat));
+    noteReply.appendChild(getNoteInfo(reply, dateFormat, language));
     noteReply.appendChild(getNoteContent(reply));
 
     note.appendChild(noteReply);
@@ -405,14 +411,19 @@ const getNoteIcon = annotation => {
   return noteIcon;
 };
 
-const getNoteInfo = (annotation, dateFormat) => {
+const getNoteInfo = (annotation, dateFormat, language) => {
   const info = document.createElement('div');
+  let date = dayjs(annotation.DateCreated).format(dateFormat);
+
+  if (language) {
+    date = dayjs(annotation.DateCreated).locale(language).format(dateFormat);
+  }
 
   info.className = 'note__info';
   info.innerHTML = `
-    Author: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
-    Subject: ${annotation.Subject} &nbsp;&nbsp;
-    Date: ${dayjs(annotation.DateCreated).format(dateFormat || 'D/MM/YYYY h:mm:ss A')}
+    ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
+    ${i18n.t('option.printInfo.subject')}: ${annotation.Subject} &nbsp;&nbsp;
+    ${i18n.t('option.printInfo.subject')}: ${date}
   `;
   return info;
 };

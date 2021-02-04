@@ -236,6 +236,11 @@
       "includeComments": "包括评论",
       "addWatermarkSettings": "添加水印设置"
     },
+    "printInfo": {
+      "author": "作者",
+      "subject": "学科",
+      "date": "日期"
+    },
     "redaction": {
       "markForRedaction": "标记为编辑"
     },

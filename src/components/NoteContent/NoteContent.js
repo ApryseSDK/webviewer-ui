@@ -11,6 +11,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import NoteTextarea from 'components/NoteTextarea';
 import NotePopup from 'components/NotePopup';
@@ -31,6 +32,8 @@ import selectors from 'selectors';
 
 import './NoteContent.scss';
 
+dayjs.extend(LocalizedFormat);
+
 const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
@@ -41,12 +44,14 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     iconColor,
     isNoteEditingTriggeredByAnnotationPopup,
     isStateDisabled,
+    language,
   ] = useSelector(
     state => [
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
       selectors.getIsNoteEditing(state),
       selectors.isElementDisabled(state, 'notePopupState'),
+      selectors.getCurrentLanguage(state),
     ],
     shallowEqual,
   );
@@ -156,7 +161,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           <div className="author-and-time">
             {renderAuthorName(annotation)}
             <div className="date-and-time">
-              {dayjs(getLatestActivityDate(annotation)).format(noteDateFormat)}
+              {dayjs(getLatestActivityDate(annotation)).locale(language).format(noteDateFormat)}
             </div>
           </div>
           <div className="state-and-overflow">
@@ -190,7 +195,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           )}
       </div>
     </React.Fragment>
-  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]);
+  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange, language]);
 
 
   return useMemo(

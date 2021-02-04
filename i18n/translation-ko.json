@@ -236,6 +236,11 @@
       "includeComments": "코멘트 포함",
       "addWatermarkSettings": "워터 마크 설정 추가"
     },
+    "printInfo": {
+      "author": "저자",
+      "subject": "제목",
+      "date": "데이트"
+    },
     "redaction": {
       "markForRedaction": "개정 표시"
     },

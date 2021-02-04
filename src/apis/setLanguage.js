@@ -11,10 +11,29 @@ WebViewer(...)
 
 import i18next from 'i18next';
 import core from 'core';
+import actions from 'actions';
+import dayjs from 'dayjs';
+import languageRules from 'constants/languageRules';
 
-export default language => {
-  const promise = i18next.changeLanguage(language);
-  setDatePickerLocale(promise);
+export default store => language => {
+  let languageObj = null;
+  let languageToImportLocaleFile = language;
+
+  if (languageRules[language]) {
+    languageObj = languageRules[language];
+    languageToImportLocaleFile = languageObj.dayjs || language;
+  }
+
+  // load locale file from "dayjs/locale/" folder, must match filename
+  import(`dayjs/locale/${languageToImportLocaleFile}`).then(() => {
+    dayjs.locale(languageToImportLocaleFile);
+  }).catch(() => {
+    dayjs.locale('en');
+  }).finally(() => {
+    store.dispatch(actions.setLanguage(language));
+    const promise = i18next.changeLanguage(language);
+    setDatePickerLocale(promise);
+  });
 };
 
 const setDatePickerLocale = i18nextPromise => {
@@ -32,4 +51,3 @@ const setDatePickerLocale = i18nextPromise => {
       });
   });
 };
-

@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import HttpApi from 'i18next-http-backend';
+import languageRules from '../constants/languageRules';
 
 // https://github.com/isaachinman/next-i18next/issues/562
 // the values in this array should match the language codes of the json files inside the i18n folder
@@ -58,11 +59,12 @@ export default state => {
     );
   }
 
-  // set custom rules. since i18next doesn't support 'zh-ch', 'zh-tw', or 'pt-br'
-  const plRule = i18next.services.pluralResolver.getRule('pt-BR');
-  i18next.services.pluralResolver.addRule('pt_br', plRule);
-
-  const zhRule = i18next.services.pluralResolver.getRule('zh');
-  i18next.services.pluralResolver.addRule('zh_ch', zhRule);
-  i18next.services.pluralResolver.addRule('zh_tw', zhRule);
+  // set custom rules. since i18next doesn't support (i.e 'zh-ch', 'zh-tw', or 'pt-br')
+  // have to look inside the i18n source code "getRule" function to see what rule we can copy
+  Object.keys(languageRules).forEach(lang => {
+    if (languageRules[lang].i18next) {
+      const rule = i18next.services.pluralResolver.getRule(languageRules[lang].i18next);
+      i18next.services.pluralResolver.addRule(lang, rule);
+    }
+  });
 };

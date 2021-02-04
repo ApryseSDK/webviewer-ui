@@ -236,6 +236,11 @@
       "includeComments": "Includi commenti",
       "addWatermarkSettings": "Aggiungi impostazioni filigrana"
     },
+    "printInfo": {
+      "author": "Autore",
+      "subject": "Soggetto",
+      "date": "Data"
+    },
     "redaction": {
       "markForRedaction": "Contrassegna per redazione"
     },

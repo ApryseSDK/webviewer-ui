@@ -5,7 +5,8 @@
     "browser": true,
     "node": true,
     "es6": true,
-    "cypress/globals": true
+    "cypress/globals": true,
+    "jest": true
   },
   "globals": {
     "_": false,
@@ -58,7 +59,8 @@
         "SwitchCase": 1,
         "FunctionExpression": {
           "body": 1
-        }
+        },
+        "ignoredNodes": ["TemplateLiteral"]
       }
     ],
     "keyword-spacing": 2,

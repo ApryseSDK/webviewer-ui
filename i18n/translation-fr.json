@@ -236,6 +236,11 @@
       "includeComments": "Inclure les commentaires",
       "addWatermarkSettings": "Ajouter des paramètres de filigrane"
     },
+    "printInfo": {
+      "author": "Auteur",
+      "subject": "Matière",
+      "date": "Date"
+    },
     "redaction": {
       "markForRedaction": "Repérer les biffures"
     },

@@ -38,6 +38,7 @@ class PrintModal extends React.PureComponent {
     layoutMode: PropTypes.string.isRequired,
     isApplyWatermarkDisabled: PropTypes.bool,
     printedNoteDateFormat: PropTypes.string,
+    language: PropTypes.string,
   };
 
   constructor() {
@@ -157,6 +158,7 @@ class PrintModal extends React.PureComponent {
       return;
     }
 
+    const { language } = this.props;
     this.setState({ count: 0 });
 
     if (this.state.allowWatermarkModal) {
@@ -175,6 +177,7 @@ class PrintModal extends React.PureComponent {
       this.props.printedNoteDateFormat,
       undefined,
       this.currentView.current?.checked,
+      language,
     );
     createPages.forEach(async pagePromise => {
       await pagePromise;
@@ -409,6 +412,7 @@ const mapStateToProps = state => ({
   colorMap: selectors.getColorMap(state),
   layoutMode: selectors.getDisplayMode(state),
   printedNoteDateFormat: selectors.getPrintedNoteDateFormat(state),
+  language: selectors.getCurrentLanguage(state),
 });
 
 const mapDispatchToProps = dispatch => ({

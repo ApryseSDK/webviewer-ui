@@ -236,6 +236,11 @@
       "includeComments": "Приложить комментарии",
       "addWatermarkSettings": "Добавить настройки водяного знака"
     },
+    "printInfo": {
+      "author": "Автор",
+      "subject": "Предмет",
+      "date": "Дата"
+    },
     "redaction": {
       "markForRedaction": "Пометить для редактирования"
     },

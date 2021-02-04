@@ -350,6 +350,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isReaderMode: payload.isReaderMode };
     case 'SET_DISPLAYED_SIGNATURES_FILTER_FUNCTION':
       return { ...state, displayedSignaturesFilterFunction: payload.filterFunction };
+    case 'SET_LANGUAGE':
+      return { ...state, currentLanguage: payload.language };
     default:
       return state;
   }

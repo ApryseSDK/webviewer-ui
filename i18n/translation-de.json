@@ -236,6 +236,11 @@
       "includeComments": "Kommentare einfügen",
       "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"
     },
+    "printInfo": {
+      "author": "Autor",
+      "subject": "Gegenstand",
+      "date": "Datum"
+    },
     "redaction": {
       "markForRedaction": "Zum Schwärzen markieren"
     },

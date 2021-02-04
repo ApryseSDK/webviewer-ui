@@ -236,6 +236,11 @@
       "includeComments": "Incluir comentarios",
       "addWatermarkSettings": "Agregar configuraciones de marca de agua"
     },
+    "printInfo": {
+      "author": "Autor",
+      "subject": "Tema",
+      "date": "Fecha"
+    },
     "redaction": {
       "markForRedaction": "Marcar para modificación"
     },

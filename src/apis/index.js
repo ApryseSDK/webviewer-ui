@@ -230,7 +230,7 @@ export default store => {
     setFitMode,
     setHeaderItems: setHeaderItems(store),
     setIconColor: setIconColor(store),
-    setLanguage,
+    setLanguage: setLanguage(store),
     setLayoutMode,
     setMaxZoomLevel: setMaxZoomLevel(store),
     setMinZoomLevel: setMinZoomLevel(store),
