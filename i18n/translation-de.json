@@ -454,5 +454,62 @@
       "5": "Fr.",
       "6": "Sa."
     }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "bestätigen",
+    "certified": "zertifiziert",
+    "Certified": "Zertifiziert",
+    "signer": "Zeichen",
+    "signed": "unterzeichnet",
+    "Signed": "Unterzeichnet",
+    "by": "durch",
+    "on": "auf",
+    "disallowedChange": "Unzulässige Änderung: {{type}}, objnum: {{objnum}}",
+    "trustVerification": {
+      "current": "Die verwendete Überprüfungszeit war die aktuelle Zeit",
+      "signing": "Die Überprüfungszeit beginnt mit der Uhr auf dem Computer des Unterzeichners",
+      "timestamp": "Die Überprüfungszeit ergibt sich aus dem im Dokument eingebetteten sicheren Zeitstempel",
+      "verifiedTrust": "Ergebnis der Vertrauensüberprüfung: Verifiziert",
+      "noTrustVerification": "Kein detailliertes Ergebnis der Vertrauensüberprüfung verfügbar."
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "Kein Berechtigungsstatus zum Melden.",
+      "permissionsVerificationDisabled": "Die Berechtigungsüberprüfung wurde deaktiviert.",
+      "hasAllowedChanges": "Das Dokument enthält Änderungen, die in den Einstellungen für Signaturberechtigungen zulässig sind.",
+      "invalidatedByDisallowedChanges": "Das Dokument enthält Änderungen, die von den Einstellungen für Signaturberechtigungen nicht zugelassen werden.",
+      "unmodified": "Das Dokument wurde seitdem nicht mehr geändert"
+    },
+    "trustStatus": {
+      "trustVerified": "Vertrauenswürdigkeit in {{verificationType}} erfolgreich hergestellt.",
+      "untrusted": "Vertrauen konnte nicht hergestellt werden.",
+      "trustVerificationDisabled": "Die Vertrauensüberprüfung wurde deaktiviert.",
+      "noTrustStatus": "Kein Vertrauensstatus zu melden."
+    },
+    "digestStatus": {
+      "digestInvalid": "Der Digest ist falsch.",
+      "digestVerified": "Die Verdauung ist korrekt.",
+      "digestVerificationDisabled": "Die Digest-Überprüfung wurde deaktiviert.",
+      "weakDigestAlgorithmButDigestVerifiable": "Der Digest ist korrekt, aber der Digest-Algorithmus ist schwach und nicht sicher.",
+      "noDigestStatus": "Kein Digest-Status zu melden.",
+      "unsupportedEncoding": "Kein installierter SignatureHandler konnte die Codierung der Signatur erkennen"
+    },
+    "documentStatus": {
+      "noError": "Kein allgemeiner Fehler zu melden.",
+      "corruptFile": "SignatureHandler hat eine Dateibeschädigung gemeldet.",
+      "unsigned": "Die Signatur wurde noch nicht kryptografisch signiert.",
+      "badByteRanges": "SignatureHandler meldet Beschädigungen in den ByteRanges in der digitalen Signatur.",
+      "corruptCryptographicContents": "SignatureHandler meldet Beschädigungen im Inhalt der digitalen Signatur."
+    },
+    "signatureDetails": {
+      "signatureDetails": "Unterschriften Details",
+      "contactInformation": "Kontakt Informationen",
+      "location": "Ort",
+      "reason": "Grund",
+      "signingTime": "Unterzeichnungszeit",
+      "noContactInformation": "Keine Kontaktinformationen angegeben",
+      "noLocation": "Kein Ort angegeben",
+      "noReason": "Kein Grund angegeben",
+      "noSigningTime": "Keine Signierzeit gefunden"
+    }
   }
 }

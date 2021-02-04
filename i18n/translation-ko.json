@@ -454,5 +454,62 @@
       "5": "금",
       "6": "토"
     }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "증명하다",
+    "certified": "인증",
+    "Certified": "인증",
+    "signer": "기호",
+    "signed": "서명",
+    "Signed": "서명 됨",
+    "by": "으로",
+    "on": "의 위에",
+    "disallowedChange": "허용되지 않는 변경 : {{type}}, objnum : {{objnum}}",
+    "trustVerification": {
+      "current": "사용 된 확인 시간은 현재 시간입니다.",
+      "signing": "확인 시간은 서명자의 컴퓨터 시계에 있습니다.",
+      "timestamp": "확인 시간은 문서에 포함 된 보안 타임 스탬프에서 가져옵니다.",
+      "verifiedTrust": "신뢰 확인 결과 : 확인 됨",
+      "noTrustVerification": "사용 가능한 자세한 신뢰 확인 결과가 없습니다."
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "보고 할 권한 상태가 없습니다.",
+      "permissionsVerificationDisabled": "권한 확인이 비활성화되었습니다.",
+      "hasAllowedChanges": "문서에 서명 권한 설정에서 허용하는 변경 사항이 있습니다.",
+      "invalidatedByDisallowedChanges": "문서에 서명 권한 설정에 의해 허용되지 않는 변경 사항이 있습니다.",
+      "unmodified": "문서가 수정 된 이후 수정되지 않았습니다."
+    },
+    "trustStatus": {
+      "trustVerified": "{{verificationType}}에 대한 신뢰가 성공적으로 설정되었습니다.",
+      "untrusted": "신뢰를 구축 할 수 없습니다.",
+      "trustVerificationDisabled": "신뢰 확인이 비활성화되었습니다.",
+      "noTrustStatus": "보고 할 신뢰 상태가 없습니다."
+    },
+    "digestStatus": {
+      "digestInvalid": "다이제스트가 잘못되었습니다.",
+      "digestVerified": "다이제스트가 정확합니다.",
+      "digestVerificationDisabled": "다이제스트 확인이 비활성화되었습니다.",
+      "weakDigestAlgorithmButDigestVerifiable": "다이제스트는 정확하지만 다이제스트 알고리즘은 약하고 안전하지 않습니다.",
+      "noDigestStatus": "보고 할 다이제스트 상태가 없습니다.",
+      "unsupportedEncoding": "설치된 SignatureHandler가 서명의 인코딩을 인식 할 수 없습니다."
+    },
+    "documentStatus": {
+      "noError": "보고 할 일반적인 오류가 없습니다.",
+      "corruptFile": "SignatureHandler가 파일 손상을보고했습니다.",
+      "unsigned": "서명이 아직 암호화 서명되지 않았습니다.",
+      "badByteRanges": "SignatureHandler는 디지털 서명의 ByteRanges 손상을보고합니다.",
+      "corruptCryptographicContents": "SignatureHandler는 디지털 서명 내용의 손상을보고합니다."
+    },
+    "signatureDetails": {
+      "signatureDetails": "서명 세부 정보",
+      "contactInformation": "연락 정보",
+      "location": "위치",
+      "reason": "이유",
+      "signingTime": "서명 시간",
+      "noContactInformation": "제공된 연락처 정보 없음",
+      "noLocation": "제공된 위치 없음",
+      "noReason": "제공된 이유 없음",
+      "noSigningTime": "서명 시간이 없습니다."
+    }
   }
 }

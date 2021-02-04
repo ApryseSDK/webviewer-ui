@@ -454,5 +454,62 @@
       "5": "金",
       "6": "土"
     }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "証明する",
+    "certified": "認証済み",
+    "Certified": "認証済み",
+    "signer": "符号",
+    "signed": "手話",
+    "Signed": "手話",
+    "by": "沿って",
+    "on": "オン",
+    "disallowedChange": "許可されていない変更：{{type}}、objnum：{{objnum}}",
+    "trustVerification": {
+      "current": "使用した検証時間は現在の時間でした",
+      "signing": "確認時間は署名者のコンピューターの時計からです",
+      "timestamp": "検証時間は、ドキュメントに埋め込まれている安全なタイムスタンプからのものです",
+      "verifiedTrust": "信頼検証結果：検証済み",
+      "noTrustVerification": "詳細な信頼検証結果はありません。"
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "レポートする権限ステータスがありません。",
+      "permissionsVerificationDisabled": "権限の検証が無効になっています。",
+      "hasAllowedChanges": "ドキュメントには、署名のアクセス許可設定で許可されている変更があります。",
+      "invalidatedByDisallowedChanges": "ドキュメントには、署名のアクセス許可設定で許可されていない変更があります。",
+      "unmodified": "ドキュメントは変更されていません。"
+    },
+    "trustStatus": {
+      "trustVerified": "{{verificationType}}への信頼が正常に確立されました。",
+      "untrusted": "信頼を確立できませんでした。",
+      "trustVerificationDisabled": "信頼の検証が無効になっています。",
+      "noTrustStatus": "報告する信頼ステータスはありません。"
+    },
+    "digestStatus": {
+      "digestInvalid": "ダイジェストが正しくありません。",
+      "digestVerified": "ダイジェストは正しいです。",
+      "digestVerificationDisabled": "ダイジェスト検証が無効になっています。",
+      "weakDigestAlgorithmButDigestVerifiable": "ダイジェストは正しいですが、ダイジェストアルゴリズムは弱く、安全ではありません。",
+      "noDigestStatus": "報告するダイジェストステータスはありません。",
+      "unsupportedEncoding": "インストールされたSignatureHandlerは署名のエンコーディングを認識できませんでした"
+    },
+    "documentStatus": {
+      "noError": "報告する一般的なエラーはありません。",
+      "corruptFile": "SignatureHandlerがファイルの破損を報告しました。",
+      "unsigned": "署名はまだ暗号で署名されていません。",
+      "badByteRanges": "SignatureHandlerは、デジタル署名のByteRangesの破損を報告します。",
+      "corruptCryptographicContents": "SignatureHandlerは、デジタル署名の内容の破損を報告します。"
+    },
+    "signatureDetails": {
+      "signatureDetails": "署名の詳細",
+      "contactInformation": "連絡先",
+      "location": "ロケーション",
+      "reason": "理由",
+      "signingTime": "署名時間",
+      "noContactInformation": "連絡先情報は提供されていません",
+      "noLocation": "場所は提供されていません",
+      "noReason": "理由はありません",
+      "noSigningTime": "署名時間が見つかりません"
+    }
   }
 }

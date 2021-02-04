@@ -454,5 +454,62 @@
       "5": "周五",
       "6": "周六"
     }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "证明",
+    "certified": "认证的",
+    "Certified": "已认证",
+    "signer": "标志",
+    "signed": "签",
+    "Signed": "签",
+    "by": "通过",
+    "on": "上",
+    "disallowedChange": "不允许更改：{{type}}，objnum：{{objnum}}",
+    "trustVerification": {
+      "current": "验证时间为当前时间",
+      "signing": "验证时间是来自签名者计算机上的时钟",
+      "timestamp": "验证时间来自文档中嵌入的安全时间戳",
+      "verifiedTrust": "信任验证结果：已验证",
+      "noTrustVerification": "没有详细的信任验证结果。"
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "没有权限状态可以报告。",
+      "permissionsVerificationDisabled": "权限验证已被禁用。",
+      "hasAllowedChanges": "该文档具有签名权限设置所允许的更改。",
+      "invalidatedByDisallowedChanges": "文档具有签名权限设置不允许的更改。",
+      "unmodified": "该文档自从"
+    },
+    "trustStatus": {
+      "trustVerified": "已成功建立对{{verificationType}}的信任。",
+      "untrusted": "无法建立信任。",
+      "trustVerificationDisabled": "信任验证已被禁用。",
+      "noTrustStatus": "没有可报告的信任状态。"
+    },
+    "digestStatus": {
+      "digestInvalid": "摘要不正确。",
+      "digestVerified": "摘要是正确的。",
+      "digestVerificationDisabled": "摘要验证已禁用。",
+      "weakDigestAlgorithmButDigestVerifiable": "摘要是正确的，但摘要算法较弱且不安全。",
+      "noDigestStatus": "没有摘要状态可报告。",
+      "unsupportedEncoding": "没有安装的SignatureHandler能够识别签名的编码"
+    },
+    "documentStatus": {
+      "noError": "没有一般错误要报告。",
+      "corruptFile": "SignatureHandler报告文件损坏。",
+      "unsigned": "签名尚未进行加密签名。",
+      "badByteRanges": "SignatureHandler报告数字签名中ByteRanges中的损坏。",
+      "corruptCryptographicContents": "SignatureHandler报告数字签名内容中的损坏。"
+    },
+    "signatureDetails": {
+      "signatureDetails": "签名细节",
+      "contactInformation": "联系信息",
+      "location": "位置",
+      "reason": "原因",
+      "signingTime": "签约时间",
+      "noContactInformation": "没有提供联系信息",
+      "noLocation": "没有提供位置",
+      "noReason": "没有提供原因",
+      "noSigningTime": "找不到签名时间"
+    }
   }
 }

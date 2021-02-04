@@ -454,5 +454,62 @@
       "5": "ven.",
       "6": "sam."
     }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "certifier",
+    "certified": "agréé",
+    "Certified": "Agréé",
+    "signer": "signer",
+    "signed": "signé",
+    "Signed": "Signé",
+    "by": "par",
+    "on": "sur",
+    "disallowedChange": "Modification interdite: {{type}}, objnum: {{objnum}}",
+    "trustVerification": {
+      "current": "L'heure de vérification utilisée était l'heure actuelle",
+      "signing": "L'heure de vérification provient de l'horloge de l'ordinateur du signataire",
+      "timestamp": "L'heure de vérification provient de l'horodatage sécurisé intégré dans le document",
+      "verifiedTrust": "Résultat de la vérification de confiance: vérifié",
+      "noTrustVerification": "Aucun résultat de vérification de confiance détaillé disponible."
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "Aucun statut d'autorisation à signaler.",
+      "permissionsVerificationDisabled": "La vérification des autorisations a été désactivée.",
+      "hasAllowedChanges": "Le document comporte des modifications autorisées par les paramètres d'autorisations de signatures.",
+      "invalidatedByDisallowedChanges": "Le document comporte des modifications qui ne sont pas autorisées par les paramètres d'autorisations de signatures.",
+      "unmodified": "Le document n'a pas été modifié depuis qu'il"
+    },
+    "trustStatus": {
+      "trustVerified": "Confiance établie avec {{verificationType}} avec succès.",
+      "untrusted": "La confiance n'a pas pu être établie.",
+      "trustVerificationDisabled": "La vérification de la confiance a été désactivée.",
+      "noTrustStatus": "Aucun statut de confiance à signaler."
+    },
+    "digestStatus": {
+      "digestInvalid": "Le résumé est incorrect.",
+      "digestVerified": "Le résumé est correct.",
+      "digestVerificationDisabled": "La vérification du résumé a été désactivée.",
+      "weakDigestAlgorithmButDigestVerifiable": "Le résumé est correct, mais l'algorithme de résumé est faible et non sécurisé.",
+      "noDigestStatus": "Aucun état de résumé à signaler.",
+      "unsupportedEncoding": "Aucun SignatureHandler installé n'a pu reconnaître le codage de la signature"
+    },
+    "documentStatus": {
+      "noError": "Aucune erreur générale à signaler.",
+      "corruptFile": "SignatureHandler a signalé une corruption de fichier.",
+      "unsigned": "La signature n'a pas encore été signée cryptographiquement.",
+      "badByteRanges": "SignatureHandler signale une corruption dans les ByteRanges de la signature numérique.",
+      "corruptCryptographicContents": "SignatureHandler signale une corruption dans le contenu de la signature numérique."
+    },
+    "signatureDetails": {
+      "signatureDetails": "Détails de la signature",
+      "contactInformation": "Informations de contact",
+      "location": "Emplacement",
+      "reason": "Raison",
+      "signingTime": "Heure de signature",
+      "noContactInformation": "Aucune information de contact fournie",
+      "noLocation": "Aucun emplacement fourni",
+      "noReason": "Aucune raison fournie",
+      "noSigningTime": "Aucune heure de signature trouvée"
+    }
   }
 }

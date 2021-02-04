@@ -5,6 +5,7 @@ import {
   useSelector,
 } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import classNames from 'classnames';
 import selectors from 'selectors';
@@ -35,6 +36,7 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
     ModificationPermissionsStatus,
     DocumentStatus,
   } = VerificationResult;
+  const [translate] = useTranslation();
 
   const {
     signed,
@@ -64,14 +66,16 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
   };
 
   const renderTitle = () => {
-    let content = isCertification ? 'Certified' : 'Signed';
+    let content = isCertification
+      ? translate('digitalSignatureVerification.Certified')
+      : translate('digitalSignatureVerification.Signed');
     if (signer) {
-      content += ` by ${signer}`;
+      content += ` ${translate('digitalSignatureVerification.by')} ${signer}`;
     } else if (!signer && subjectField.e_commonName) {
-      content += ` by ${subjectField.e_commonName}`;
+      content += ` ${translate('digitalSignatureVerification.by')} ${subjectField.e_commonName}`;
     }
     if (signTime) {
-      content += ` on ${signTime}`;
+      content += ` ${translate('digitalSignatureVerification.on')} ${signTime}`;
     }
     return (
       <div
@@ -119,19 +123,29 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
 
     switch (documentStatus) {
       case DocumentStatus.e_no_error:
-        content = 'No general error to report.';
+        content = translate(
+          'digitalSignatureVerification.documentStatus.noError'
+        );
         break;
       case DocumentStatus.e_corrupt_file:
-        content = 'SignatureHandler reported file corruption.';
+        content = translate(
+          'digitalSignatureVerification.documentStatus.corruptFile'
+        );
         break;
       case DocumentStatus.e_unsigned:
-        content = 'The signature has not yet been cryptographically signed.';
+        content = translate(
+          'digitalSignatureVerification.documentStatus.unsigned'
+        );
         break;
       case DocumentStatus.e_bad_byteranges:
-        content = 'SignatureHandler reports corruption in the ByteRanges in the digital signature.';
+        content = translate(
+          'digitalSignatureVerification.documentStatus.badByteRanges'
+        );
         break;
       case DocumentStatus.e_corrupt_cryptographic_contents:
-        content = 'SignatureHandler reports corruption in the Contents of the digital signature.';
+        content = translate(
+          'digitalSignatureVerification.documentStatus.corruptCryptographicContents'
+        );
         break;
     }
 
@@ -143,22 +157,34 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
 
     switch (digestStatus) {
       case DigestStatus.e_digest_invalid:
-        content = 'The digest is incorrect.';
+        content = translate(
+          'digitalSignatureVerification.digestStatus.digestInvalid'
+        );
         break;
       case DigestStatus.e_digest_verified:
-        content = 'The digest is correct.';
+        content = translate(
+          'digitalSignatureVerification.digestStatus.digestVerified'
+        );
         break;
       case DigestStatus.e_digest_verification_disabled:
-        content = 'Digest verification has been disabled.';
+        content = translate(
+          'digitalSignatureVerification.digestStatus.digestVerificationDisabled'
+        );
         break;
       case DigestStatus.e_weak_digest_algorithm_but_digest_verifiable:
-        content = 'The digest is correct, but the digest algorithm is weak and not secure.';
+        content = translate(
+          'digitalSignatureVerification.digestStatus.weakDigestAlgorithmButDigestVerifiable'
+        );
         break;
       case DigestStatus.e_no_digest_status:
-        content = 'No digest status to report.';
+        content = translate(
+          'digitalSignatureVerification.digestStatus.noDigestStatus'
+        );
         break;
       case DigestStatus.e_unsupported_encoding:
-        content = 'No installed SignatureHandler was able to recognize the signature\'s encoding';
+        content = translate(
+          'digitalSignatureVerification.digestStatus.unsupportedEncoding'
+        );
         break;
     }
 
@@ -166,20 +192,32 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
   };
 
   const renderTrustStatus = () => {
+    const verificationType = isCertification
+      ? translate('digitalSignatureVerification.certifier')
+      : translate('digitalSignatureVerification.signer');
     let content;
 
     switch (trustStatus) {
       case TrustStatus.e_trust_verified:
-        content = `Established trust in ${isCertification ? 'certifier' : 'signer'} successfully.`;
+        content = translate(
+          'digitalSignatureVerification.trustStatus.trustVerified',
+          { verificationType },
+        );
         break;
       case TrustStatus.e_untrusted:
-        content = 'Trust could not be established.';
+        content = translate(
+          'digitalSignatureVerification.trustStatus.untrusted'
+        );
         break;
       case TrustStatus.e_trust_verification_disabled:
-        content = 'Trust verification has been disabled.';
+        content = translate(
+          'digitalSignatureVerification.trustStatus.trustVerificationDisabled'
+        );
         break;
       case TrustStatus.e_no_trust_status:
-        content = 'No trust status to report.';
+        content = translate(
+          'digitalSignatureVerification.trustStatus.noTrustStatus'
+        );
         break;
     }
 
@@ -191,23 +229,33 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
 
     switch (permissionStatus) {
       case ModificationPermissionsStatus.e_invalidated_by_disallowed_changes:
-        content =
-          'The document has changes that are disallowed by the signature\'s permissions settings.';
+        content = translate(
+          'digitalSignatureVerification.permissionStatus.invalidatedByDisallowedChanges'
+        );
         break;
       case ModificationPermissionsStatus.e_has_allowed_changes:
-        content =
-          'The document has changes that are allowed by the signature\'s permissions settings.';
+        content = translate(
+          'digitalSignatureVerification.permissionStatus.hasAllowedChanges'
+        );
         break;
       case ModificationPermissionsStatus.e_unmodified:
-        content = `The document has not been modified since it was ${
-          isCertification ? 'certified' : 'signed'
+        content = `${
+          translate('digitalSignatureVerification.permissionStatus.unmodified')
+        } ${
+          isCertification
+            ? translate('digitalSignatureVerification.certified')
+            : translate('digitalSignatureVerification.signed')
         }.`;
         break;
       case ModificationPermissionsStatus.e_permissions_verification_disabled:
-        content = 'Permissions verification has been disabled.';
+        content = translate(
+          'digitalSignatureVerification.permissionStatus.permissionsVerificationDisabled'
+        );
         break;
       case ModificationPermissionsStatus.e_no_permissions_status:
-        content = 'No permissions status to report.';
+        content = translate(
+          'digitalSignatureVerification.permissionStatus.noPermissionsStatus'
+        );
         break;
     }
 
@@ -217,7 +265,12 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
   const renderDisallowedChanges = () => {
     return disallowedChanges.map(({ objnum, type }) => (
       <p key={objnum}>
-        Disallowed change: {type}, objnum: {objnum}
+        {
+          translate(
+            'digitalSignatureVerification.disallowedChange',
+            { type, objnum }
+          )
+        }
       </p>
     ));
   };
@@ -227,17 +280,17 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
     switch (timeOfTrustVerificationEnum) {
       case (TimeMode.e_current):
         verificationTimeMessage = (
-          'Verification time used was the current time'
+          translate('digitalSignatureVerification.trustVerification.current')
         );
         break;
       case (TimeMode.e_signing):
         verificationTimeMessage = (
-          'Verification time is from the clock on the signer\'s computer'
+          translate('digitalSignatureVerification.trustVerification.signing')
         );
         break;
       case (TimeMode.e_timestamp):
         verificationTimeMessage = (
-          'Verification time is from the secure timestamp embedded in the document'
+          translate('digitalSignatureVerification.trustVerification.timestamp')
         );
         break;
       default:
@@ -247,7 +300,13 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
     }
     return trustVerificationResultString ? (
       <div className="trust-verification-result">
-        <p>Trust verification result: Verified</p>
+        <p>
+          {
+            translate(
+              'digitalSignatureVerification.trustVerification.verifiedTrust'
+            )
+          }
+        </p>
         {
           /**
            * @todo Chat with @rastko when he is available to determine what
@@ -275,7 +334,13 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
         <p>{verificationTimeMessage}</p>
       </div>
     ) : (
-      <p>No detailed trust verification result available.</p>
+      <p>
+        {
+          translate(
+            'digitalSignatureVerification.trustVerification.noTrustVerification'
+          )
+        }
+      </p>
     );
   };
 
@@ -305,29 +370,71 @@ const WidgetInfo = ({ name, collapsible, onClick = () => {} }) => {
           >
             <Icon glyph="ic_chevron_right_black_24px" />
           </div>
-          <p>Signature Details</p>
+          <p>
+            {
+              translate(
+                'digitalSignatureVerification.signatureDetails.signatureDetails'
+              )
+            }
+          </p>
         </div>
         {
           signatureDetailsExpanded
           && (
             <div className="body">
               <div>
-                <p className="bold">Contact Information:</p>
-                <p className="result-for-header">{contactInfo || 'No contact information provided'}</p>
+                <p className="bold">
+                  {
+                    `${translate('digitalSignatureVerification.signatureDetails.contactInformation')}:`
+                  }
+                </p>
+                <p className="result-for-header">
+                  {
+                    contactInfo
+                    || translate('digitalSignatureVerification.signatureDetails.noContactInformation')
+                  }
+                </p>
               </div>
               <div>
-                <p className="bold">Location:</p>
-                <p className="result-for-header">{location || 'No location provided'}</p>
+                <p className="bold">
+                  {
+                    `${translate('digitalSignatureVerification.signatureDetails.location')}:`
+                  }
+                </p>
+                <p className="result-for-header">
+                  {
+                    location
+                    || translate('digitalSignatureVerification.signatureDetails.noLocation')
+                  }
+                </p>
               </div>
               <div>
-                <p className="bold">Reason:</p>
-                <p className="result-for-header">{reason || 'No reason provided'}</p>
+                <p className="bold">
+                  {
+                    `${translate('digitalSignatureVerification.signatureDetails.reason')}:`
+                  }
+                </p>
+                <p className="result-for-header">
+                  {
+                    reason
+                    || translate('digitalSignatureVerification.signatureDetails.noReason')
+                  }
+                </p>
               </div>
               {
                 signTime && (
                   <div>
-                    <p className="bold">Signing Time:</p>
-                    <p className="result-for-header">{signTime || 'No reason provided'}</p>
+                    <p className="bold">
+                      {
+                        `${translate('digitalSignatureVerification.signatureDetails.signingTime')}:`
+                      }
+                    </p>
+                    <p className="result-for-header">
+                      {
+                        signTime
+                        || translate('digitalSignatureVerification.signatureDetails.noSigningTime')
+                      }
+                    </p>
                   </div>
                 )
               }

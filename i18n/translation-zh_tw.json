@@ -454,5 +454,62 @@
       "5": "週五",
       "6": "週六"
     }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "證明",
+    "certified": "認證的",
+    "Certified": "已認證",
+    "signer": "標誌",
+    "signed": "簽",
+    "Signed": "簽",
+    "by": "通過",
+    "on": "上",
+    "disallowedChange": "不允許更改：{{type}}，objnum：{{objnum}}",
+    "trustVerification": {
+      "current": "驗證時間為當前時間",
+      "signing": "驗證時間是來自簽名者計算機上的時鐘",
+      "timestamp": "驗證時間來自文檔中嵌入的安全時間戳",
+      "verifiedTrust": "信任驗證結果：已驗證",
+      "noTrustVerification": "沒有詳細的信任驗證結果。"
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "沒有權限狀態可以報告。",
+      "permissionsVerificationDisabled": "權限驗證已被禁用。",
+      "hasAllowedChanges": "該文檔具有簽名權限設置所允許的更改。",
+      "invalidatedByDisallowedChanges": "文檔具有簽名權限設置不允許的更改。",
+      "unmodified": "該文檔自從"
+    },
+    "trustStatus": {
+      "trustVerified": "已成功建立對{{verificationType}}的信任。",
+      "untrusted": "無法建立信任。",
+      "trustVerificationDisabled": "信任驗證已被禁用。",
+      "noTrustStatus": "沒有可報告的信任狀態。"
+    },
+    "digestStatus": {
+      "digestInvalid": "摘要不正確。",
+      "digestVerified": "摘要是正確的。",
+      "digestVerificationDisabled": "摘要驗證已禁用。",
+      "weakDigestAlgorithmButDigestVerifiable": "摘要是正確的，但摘要算法較弱且不安全。",
+      "noDigestStatus": "沒有摘要狀態可報告。",
+      "unsupportedEncoding": "沒有安裝的SignatureHandler能夠識別簽名的編碼"
+    },
+    "documentStatus": {
+      "noError": "沒有一般錯誤要報告。",
+      "corruptFile": "SignatureHandler報告文件損壞。",
+      "unsigned": "簽名尚未進行加密簽名。",
+      "badByteRanges": "SignatureHandler報告數字簽名中ByteRanges中的損壞。",
+      "corruptCryptographicContents": "SignatureHandler報告數字簽名內容中的損壞。"
+    },
+    "signatureDetails": {
+      "signatureDetails": "簽名細節",
+      "contactInformation": "聯繫信息",
+      "location": "位置",
+      "reason": "原因",
+      "signingTime": "簽約時間",
+      "noContactInformation": "沒有提供聯繫信息",
+      "noLocation": "沒有提供位置",
+      "noReason": "沒有提供原因",
+      "noSigningTime": "找不到簽名時間"
+    }
   }
 }

@@ -454,5 +454,62 @@
       "5": "vie.",
       "6": "sáb."
     }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "certificar",
+    "certified": "certificado",
+    "Certified": "Certificado",
+    "signer": "firmar",
+    "signed": "firmado",
+    "Signed": "Firmado",
+    "by": "por",
+    "on": "en",
+    "disallowedChange": "Cambio no permitido: {{type}}, objnum: {{objnum}}",
+    "trustVerification": {
+      "current": "La hora de verificación utilizada fue la hora actual",
+      "signing": "La hora de verificación es del reloj de la computadora del firmante",
+      "timestamp": "El tiempo de verificación es de la marca de tiempo segura incrustada en el documento",
+      "verifiedTrust": "Resultado de la verificación de confianza: verificado",
+      "noTrustVerification": "No se dispone de un resultado de verificación de confianza detallado."
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "Sin estado de permisos para informar.",
+      "permissionsVerificationDisabled": "Se ha inhabilitado la verificación de permisos.",
+      "hasAllowedChanges": "El documento tiene cambios permitidos por la configuración de permisos de firmas.",
+      "invalidatedByDisallowedChanges": "El documento tiene cambios que no están permitidos por la configuración de permisos de firmas.",
+      "unmodified": "El documento no ha sido modificado desde que fue"
+    },
+    "trustStatus": {
+      "trustVerified": "Confianza establecida en {{verificationType}} con éxito.",
+      "untrusted": "No se pudo establecer la confianza.",
+      "trustVerificationDisabled": "Se ha inhabilitado la verificación de confianza.",
+      "noTrustStatus": "Sin estado de confianza para informar."
+    },
+    "digestStatus": {
+      "digestInvalid": "El resumen es incorrecto.",
+      "digestVerified": "El resumen es correcto.",
+      "digestVerificationDisabled": "La verificación de resumen se ha deshabilitado.",
+      "weakDigestAlgorithmButDigestVerifiable": "El resumen es correcto, pero el algoritmo de resumen es débil y no seguro.",
+      "noDigestStatus": "Sin estado de resumen para informar.",
+      "unsupportedEncoding": "Ningún SignatureHandler instalado pudo reconocer la codificación de la firma"
+    },
+    "documentStatus": {
+      "noError": "No hay ningún error general que informar.",
+      "corruptFile": "SignatureHandler informó daños en el archivo.",
+      "unsigned": "La firma aún no ha sido firmada criptográficamente.",
+      "badByteRanges": "SignatureHandler informa daños en los ByteRanges en la firma digital.",
+      "corruptCryptographicContents": "SignatureHandler informa sobre corrupción en el Contenido de la firma digital."
+    },
+    "signatureDetails": {
+      "signatureDetails": "Detalles de la firma",
+      "contactInformation": "Información del contacto",
+      "location": "Ubicación",
+      "reason": "Razón",
+      "signingTime": "Hora de firma",
+      "noContactInformation": "No se proporcionó información de contacto",
+      "noLocation": "No se proporcionó ubicación",
+      "noReason": "Sin motivo proporcionado",
+      "noSigningTime": "No se encontró el tiempo de firma"
+    }
   }
 }

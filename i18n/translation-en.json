@@ -454,5 +454,62 @@
       "Fri",
       "Sat"
     ]
+  },
+  "digitalSignatureVerification": {
+    "certifier": "certifier",
+    "certified": "certified",
+    "Certified": "Certified",
+    "signer": "signer",
+    "signed": "signed",
+    "Signed": "Signed",
+    "by": "by",
+    "on": "on",
+    "disallowedChange": "Disallowed Change: {{type}}, objnum: {{objnum}}",
+    "trustVerification": {
+      "current": "Verification time used was the current time",
+      "signing": "Verification time is from the clock on the signer's computer",
+      "timestamp": "Verification time is from the secure timestamp embedded in the document",
+      "verifiedTrust": "Trust verification result: Verified",
+      "noTrustVerification": "No detailed trust verification result available."
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "No permissions status to report.",
+      "permissionsVerificationDisabled": "Permissions verification has been disabled.",
+      "hasAllowedChanges": "The document has changes that are allowed by the signatures permissions settings.",
+      "invalidatedByDisallowedChanges": "The document has changes that are disallowed by the signatures permissions settings.",
+      "unmodified": "The document has not been modified since it was"
+    },
+    "trustStatus": {
+      "trustVerified": "Established trust in {{verificationType}} successfully.",
+      "untrusted": "Trust could not be established.",
+      "trustVerificationDisabled": "Trust verification has been disabled.",
+      "noTrustStatus": "No trust status to report."
+    },
+    "digestStatus": {
+      "digestInvalid": "The digest is incorrect.",
+      "digestVerified": "The digest is correct.",
+      "digestVerificationDisabled": "Digest verification has been disabled.",
+      "weakDigestAlgorithmButDigestVerifiable": "The digest is correct, but the digest algorithm is weak and not secure.",
+      "noDigestStatus": "No digest status to report.",
+      "unsupportedEncoding": "No installed SignatureHandler was able to recognize the signature's encoding"
+    },
+    "documentStatus": {
+      "noError": "No general error to report.",
+      "corruptFile": "SignatureHandler reported file corruption.",
+      "unsigned": "The signature has not yet been cryptographically signed.",
+      "badByteRanges": "SignatureHandler reports corruption in the ByteRanges in the digital signature.",
+      "corruptCryptographicContents": "SignatureHandler reports corruption in the Contents of the digital signature."
+    },
+    "signatureDetails": {
+      "signatureDetails": "Signature Details",
+      "contactInformation": "Contact Information",
+      "location": "Location",
+      "reason": "Reason",
+      "signingTime": "Signing Time",
+      "noContactInformation": "No contact information provided",
+      "noLocation": "No location provided",
+      "noReason": "No reason provided",
+      "noSigningTime": "No signing time found"
+    }
   }
 }

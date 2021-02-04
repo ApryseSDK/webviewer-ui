@@ -454,5 +454,62 @@
       "5": "пт",
       "6": "сб"
     }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "удостоверять",
+    "certified": "проверенный",
+    "Certified": "Проверенный",
+    "signer": "подписать",
+    "signed": "подписанный",
+    "Signed": "Подписано",
+    "by": "по",
+    "on": "на",
+    "disallowedChange": "Запрещенное изменение: {{type}}, objnum: {{objnum}}",
+    "trustVerification": {
+      "current": "Использованное время проверки было текущим.",
+      "signing": "Время подтверждения - по часам на компьютере подписавшего.",
+      "timestamp": "Время проверки берется из безопасной отметки времени, встроенной в документ.",
+      "verifiedTrust": "Результат проверки доверия: Проверено",
+      "noTrustVerification": "Нет подробных результатов проверки доверия."
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "Нет статуса разрешений для сообщения.",
+      "permissionsVerificationDisabled": "Проверка разрешений отключена.",
+      "hasAllowedChanges": "В документе есть изменения, которые разрешены настройками разрешений на подпись.",
+      "invalidatedByDisallowedChanges": "В документе есть изменения, которые запрещены настройками разрешений на подпись.",
+      "unmodified": "Документ не изменялся с момента его"
+    },
+    "trustStatus": {
+      "trustVerified": "Установлено доверие к {{verificationType}} успешно.",
+      "untrusted": "Доверие не могло быть установлено.",
+      "trustVerificationDisabled": "Проверка доверия отключена.",
+      "noTrustStatus": "Нет статуса доверия для сообщения."
+    },
+    "digestStatus": {
+      "digestInvalid": "Дайджест неверен.",
+      "digestVerified": "Дайджест правильный.",
+      "digestVerificationDisabled": "Дайджест-проверка отключена.",
+      "weakDigestAlgorithmButDigestVerifiable": "Дайджест правильный, но алгоритм дайджеста слабый и небезопасный.",
+      "noDigestStatus": "Нет сведений о состоянии дайджеста.",
+      "unsupportedEncoding": "Установленный SignatureHandler не смог распознать кодировку подписи."
+    },
+    "documentStatus": {
+      "noError": "Нет общей ошибки для сообщения.",
+      "corruptFile": "SignatureHandler сообщил о повреждении файла.",
+      "unsigned": "Подпись еще не была криптографически подписана.",
+      "badByteRanges": "SignatureHandler сообщает о повреждении ByteRanges в цифровой подписи.",
+      "corruptCryptographicContents": "SignatureHandler сообщает о повреждении содержимого цифровой подписи."
+    },
+    "signatureDetails": {
+      "signatureDetails": "Детали подписи",
+      "contactInformation": "Контакты",
+      "location": "Расположение",
+      "reason": "Причина",
+      "signingTime": "Время подписания",
+      "noContactInformation": "Контактная информация не указана",
+      "noLocation": "Местоположение не указано",
+      "noReason": "Причина не указана",
+      "noSigningTime": "Время подписи не найдено"
+    }
   }
 }

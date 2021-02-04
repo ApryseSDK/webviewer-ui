@@ -454,5 +454,62 @@
       "5": "vr.",
       "6": "za."
     }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "certificeren",
+    "certified": "gecertificeerd",
+    "Certified": "Gecertificeerd",
+    "signer": "teken",
+    "signed": "ondertekend",
+    "Signed": "Gesigneerd",
+    "by": "door",
+    "on": "Aan",
+    "disallowedChange": "Niet-toegestane wijziging: {{type}}, objnum: {{objnum}}",
+    "trustVerification": {
+      "current": "De gebruikte verificatietijd was de huidige tijd",
+      "signing": "De verificatietijd is van de klok op de computer van de ondertekenaar",
+      "timestamp": "De verificatietijd is afkomstig van het beveiligde tijdstempel dat in het document is ingesloten",
+      "verifiedTrust": "Resultaat van vertrouwensverificatie: geverifieerd",
+      "noTrustVerification": "Geen gedetailleerd betrouwbaarheidsverificatieresultaat beschikbaar."
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "Geen machtigingsstatus om te rapporteren.",
+      "permissionsVerificationDisabled": "Machtigingsverificatie is uitgeschakeld.",
+      "hasAllowedChanges": "Het document heeft wijzigingen die zijn toegestaan door de machtigingsinstellingen voor handtekeningen.",
+      "invalidatedByDisallowedChanges": "Het document bevat wijzigingen die niet zijn toegestaan door de machtigingsinstellingen voor handtekeningen.",
+      "unmodified": "Het document is niet gewijzigd sinds het was"
+    },
+    "trustStatus": {
+      "trustVerified": "Succesvol vertrouwen gevestigd in {{verificatieType}}.",
+      "untrusted": "Vertrouwen kon niet worden gevestigd.",
+      "trustVerificationDisabled": "Vertrouwensverificatie is uitgeschakeld.",
+      "noTrustStatus": "Geen vertrouwensstatus om te melden."
+    },
+    "digestStatus": {
+      "digestInvalid": "De samenvatting is onjuist.",
+      "digestVerified": "De samenvatting is correct.",
+      "digestVerificationDisabled": "Digest-verificatie is uitgeschakeld.",
+      "weakDigestAlgorithmButDigestVerifiable": "De samenvatting is correct, maar het algoritme voor de samenvatting is zwak en niet veilig.",
+      "noDigestStatus": "Geen overzichtsstatus om te rapporteren.",
+      "unsupportedEncoding": "Geen enkele geïnstalleerde SignatureHandler kon de codering van de handtekening herkennen"
+    },
+    "documentStatus": {
+      "noError": "Geen algemene fout te melden.",
+      "corruptFile": "SignatureHandler meldde bestandscorruptie.",
+      "unsigned": "De handtekening is nog niet cryptografisch ondertekend.",
+      "badByteRanges": "SignatureHandler meldt corruptie in de ByteRanges in de digitale handtekening.",
+      "corruptCryptographicContents": "SignatureHandler meldt corruptie in de inhoud van de digitale handtekening."
+    },
+    "signatureDetails": {
+      "signatureDetails": "Handtekening Details",
+      "contactInformation": "Contactgegevens",
+      "location": "Plaats",
+      "reason": "Reden",
+      "signingTime": "Ondertekeningstijd",
+      "noContactInformation": "Geen contactgegevens verstrekt",
+      "noLocation": "Geen locatie opgegeven",
+      "noReason": "Geen reden opgegeven",
+      "noSigningTime": "Geen ondertekeningstijd gevonden"
+    }
   }
 }
