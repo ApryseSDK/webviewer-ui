@@ -485,7 +485,9 @@ export default {
     selectedDisplayedSignatureIndex: 0,
     annotationContentOverlayHandler: null,
     isSnapModeEnabled: false,
-    isReaderMode: false
+    isReaderMode: false,
+    certificates: [],
+    verificationResult: {},
   },
   search: {
     value: '',

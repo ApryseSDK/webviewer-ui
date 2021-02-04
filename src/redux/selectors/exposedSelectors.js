@@ -271,6 +271,10 @@ export const getEnableMouseWheelZoom = state => state.viewer.enableMouseWheelZoo
 
 export const isReaderMode = state => state.viewer.isReaderMode;
 
+export const getCertificates = state => state.viewer.certificates;
+
+export const getVerificationResult = (state, fieldName) => state.viewer.verificationResult[fieldName] || {};
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 

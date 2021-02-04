@@ -8,10 +8,12 @@ import OutlinesPanel from 'components/OutlinesPanel';
 import BookmarksPanel from 'components/BookmarksPanel';
 import LayersPanel from 'components/LayersPanel';
 import NotesPanel from 'components/NotesPanel';
+import SignaturePanel from 'components/SignaturePanel';
 import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
 import Icon from 'components/Icon';
 
+import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
@@ -110,6 +112,7 @@ const LeftPanel = () => {
         {activePanel === 'outlinesPanel' && <OutlinesPanel />}
         {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
         {activePanel === 'layersPanel' && <LayersPanel />}
+        {core.isFullPDFEnabled() && activePanel === 'signaturePanel' && <SignaturePanel />}
         {notesInLeftPanel && activePanel === 'notesPanel' && <NotesPanel currentLeftPanelWidth={currentWidth} />}
         {customPanels.map(({ panel }, index) => (
           <CustomElement

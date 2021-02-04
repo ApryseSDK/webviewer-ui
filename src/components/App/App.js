@@ -1,7 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useSelector, useStore, useDispatch } from 'react-redux';
-import selectors from 'selectors';
+import { useStore, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Accessibility from 'components/Accessibility';
@@ -24,6 +23,7 @@ import PrintModal from 'components/PrintModal';
 import LoadingModal from 'components/LoadingModal';
 import ErrorModal from 'components/ErrorModal';
 import WarningModal from 'components/WarningModal';
+import SignatureValidationModal from 'components/SignatureValidationModal';
 import PasswordModal from 'components/PasswordModal';
 import ProgressModal from 'components/ProgressModal';
 import CalibrationModal from 'components/CalibrationModal';
@@ -38,6 +38,7 @@ import ZoomOverlay from 'components/ZoomOverlay';
 import CreateStampModal from 'components/CreateStampModal';
 import CustomModal from 'components/CustomModal';
 
+import core from 'core';
 import defineReaderControlAPIs from 'src/apis';
 import loadDocument from 'helpers/loadDocument';
 import getHashParams from 'helpers/getHashParams';
@@ -67,7 +68,7 @@ const App = ({ removeEventHandlers }) => {
       const doesAutoLoad = getHashParams('auto_load', true);
       const initialDoc = getHashParams('d', '');
       const startOffline = getHashParams('startOffline', false);
-  
+
       if ((initialDoc && doesAutoLoad) || startOffline) {
         const options = {
           extension: getHashParams('extension', null),
@@ -75,7 +76,7 @@ const App = ({ removeEventHandlers }) => {
           externalPath: getHashParams('p', ''),
           documentId: getHashParams('did', null),
         };
-  
+
         loadDocument(dispatch, initialDoc, options);
       }
     }
@@ -146,6 +147,7 @@ const App = ({ removeEventHandlers }) => {
         <EditTextModal />
         <FilterAnnotModal />
         <CustomModal />
+        {core.isFullPDFEnabled() && <SignatureValidationModal />}
       </div>
 
       <PrintHandler />

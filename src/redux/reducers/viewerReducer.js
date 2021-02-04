@@ -348,6 +348,21 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isSnapModeEnabled: payload.enable };
     case 'SET_READER_MODE':
       return { ...state, isReaderMode: payload.isReaderMode };
+    case 'ADD_TRUSTED_CERTIFICATES':
+      /**
+       * To mimic the behavior of the Core implementation, where certificates
+       * can only be added but not removed, only allow this action to append
+       * to the existing array
+       */
+      return {
+        ...state,
+        certificates: [
+          ...state.certificates,
+          ...payload.certificates,
+        ]
+      };
+    case 'SET_VERIFICATION_RESULT':
+      return { ...state, verificationResult: payload.result };
     case 'SET_DISPLAYED_SIGNATURES_FILTER_FUNCTION':
       return { ...state, displayedSignaturesFilterFunction: payload.filterFunction };
     case 'SET_LANGUAGE':

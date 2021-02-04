@@ -83,7 +83,16 @@ export default store => {
   }
 
   if (!core.isFullPDFEnabled()) {
-    dispatch(actions.disableElements(['measurementSnappingOption'], PRIORITY_THREE));
+    dispatch(
+      actions.disableElements(
+        [
+          'measurementSnappingOption',
+          'signaturePanel',
+          'signaturePanelButton',
+        ],
+        PRIORITY_THREE,
+      ),
+    );
   }
 
   dispatch(

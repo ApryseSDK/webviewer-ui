@@ -68,6 +68,7 @@ const getEventToObjectMap = () => {
     notify: annotManager,
     setNoteText: annotManager,
     fileAttachmentDataAvailable: annotManager,
+    digitalSignatureAvailable: annotManager,
     editorFocus: editBoxManager,
     editorBlur: editBoxManager,
     editorTextChanged: editBoxManager,

@@ -148,6 +148,9 @@ import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
 import overrideSearchExecution from "./overrideSearchExecution";
 import reactElements from './reactElements';
+import {
+  addTrustedCertificates,
+} from './verificationOptions';
 import toggleReaderMode from './toggleReaderMode';
 
 /**
@@ -268,6 +271,9 @@ export default store => {
     selectThumbnailPages: selectThumbnailPages(store),
     unselectThumbnailPages: unselectThumbnailPages(store),
     setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
+    verificationOptions: {
+      addTrustedCertificates: addTrustedCertificates(store),
+    },
 
     // undocumented and deprecated, to be removed in 7.0
     closeElement: closeElement(store),

@@ -25,6 +25,7 @@ import onSignatureSaved from './onSignatureSaved';
 import onSignatureDeleted from './onSignatureDeleted';
 import onWidgetEditingStarted from './onWidgetEditingStarted';
 import onWidgetEditingEnded from './onWidgetEditingEnded';
+import onDigitalSignatureAvailable from './onDigitalSignatureAvailable';
 
 export {
   onSignatureSaved,
@@ -54,4 +55,5 @@ export {
   onFileAttachmentDataAvailable,
   onWidgetEditingStarted,
   onWidgetEditingEnded,
+  onDigitalSignatureAvailable,
 };

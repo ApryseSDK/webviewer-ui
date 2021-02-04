@@ -1,0 +1,110 @@
+.signature-widget-info {
+  --widget-header-indent: 49px;
+  --widget-body-indent: 22px;
+  --arrow-width: 22px;
+  --signature-icon-size: 18px;
+
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  margin-bottom: 10px;
+  // Ensures alignment with the Left Panel Header
+  margin-left: 5px;
+
+  p + p {
+    margin: 0px;
+    margin-top: 1em;
+  }
+
+  p.result-for-header {
+    margin-top: 0px;
+  }
+
+  p.bold {
+    font-weight: bold;
+  }
+
+  .dropdown:hover {
+    cursor: pointer;
+    background: var(--outline-hover);
+    --border-radius-amount: 4px;
+    -moz-border-radius-topleft: var(--border-radius-amount);
+    -moz-border-radius-topright: var(--border-radius-amount);
+    -moz-border-radius-bottomright: var(--border-radius-amount);
+    -moz-border-radius-bottomleft: var(--border-radius-amount);
+    -webkit-border-radius: var(--border-radius-amount);
+    border-radius: var(--border-radius-amount);
+  }
+
+  .title {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    height: 32px;
+    overflow: hidden;
+
+    div + * {
+      margin-left: 2px;
+    }
+
+    .arrow {
+      transition: transform 0.1s ease;
+
+      &.expanded {
+        transform: rotate(90deg);
+      }
+
+      .Icon {
+        width: var(--arrow-width);
+        height: 22px;
+      }
+    }
+
+    .signature-icon {
+      margin-right: 5px;
+
+      .Icon {
+        width: var(--signature-icon-size);
+        height: var(--signature-icon-size);
+      }
+    }
+  }
+
+  .header {
+    margin-left: var(--widget-header-indent);
+
+    .body {
+      margin-left: var(--widget-body-indent);
+    }
+
+    .body > div:first-child > p:first-child, .body > p:first-child  {
+      margin-top: 0.5em;
+    }
+
+    .body > div:last-child {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  .header-with-arrow {
+    /**
+     * Minus the width off-set created by the arrow, ensuring that the headers
+     * align
+     */
+    margin-left: calc(var(--widget-header-indent) - var(--arrow-width));
+
+    .body {
+      /**
+       * Re-add the width offset created by the arrow, ensuring the content of
+       * the bodies align
+       */
+      margin-left: calc(var(--widget-body-indent) + var(--arrow-width));
+    }
+  }
+
+  div.trust-verification-result > p:not(:first-child){
+    margin-left: 1em;
+  }
+}
