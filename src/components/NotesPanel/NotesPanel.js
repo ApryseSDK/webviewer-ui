@@ -340,6 +340,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
             <Button
               dataElement="filterAnnotationButton"
               className="filter-annotation-button"
+              disabled={notesToRender.length === 0}
               label={t('component.filter')}
               onClick={() => dispatch(actions.openElement('filterModal'))}
             />
@@ -347,6 +348,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
               <div className="label">{`${t('message.sortBy')}:`}</div>
               <Dropdown
                 dataElement="notesOrderDropdown"
+                disabled={notesToRender.length === 0}
                 items={Object.keys(getSortStrategies())}
                 translationPrefix="option.notesOrder"
                 currentSelectionKey={sortStrategy}

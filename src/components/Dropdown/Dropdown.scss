@@ -35,6 +35,11 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  &:disabled {
+    background: none;
+    color: var(--disabled-icon);
+  }
 }
 
 .Dropdown__items {

@@ -18,7 +18,7 @@ const propTypes = {
   dataElement: PropTypes.string,
 };
 
-function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement }) {
+function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement, disabled=false }) {
   const  { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
@@ -81,6 +81,7 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
         style={buttonStyle}
         onClick={onToggle}
         ref={buttonRef}
+        disabled={disabled}
       >
         <div className="picked-option">
           {optionIsSelected && (

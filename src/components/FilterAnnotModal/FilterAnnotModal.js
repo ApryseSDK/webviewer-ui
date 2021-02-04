@@ -34,7 +34,7 @@ const FilterAnnotModal = () => {
     if (annotation instanceof Annotations.CaretAnnotation) {
       return 'caret';
     }
-    if (annotation instanceof Annotations.InternalCustomAnnotation) {
+    if (annotation instanceof Annotations.CustomAnnotation) {
       return 'custom';
     }
     if (annotation instanceof Annotations.EllipseAnnotation) {
@@ -133,6 +133,10 @@ const FilterAnnotModal = () => {
     annots.forEach(annot => {
       if (core.getDisplayAuthor(annot) && core.getDisplayAuthor(annot) !== '') {
         authorsToBeAdded.add(core.getDisplayAuthor(annot));
+      }
+      // We don't show it in the filter for WidgetAnnotation or StickyAnnotation from the comments  
+      if (annot instanceof Annotations.WidgetAnnotation || (annot instanceof Annotations.StickyAnnotation && annot.isReply())){
+          return;
       }
       annotTypesToBeAdded.add(getAnnotationClass(annot));
     });
