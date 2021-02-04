@@ -69,6 +69,8 @@ describe('Test cases for comment panel', () => {
 
   beforeEach(async() => {
     result = await loadViewerSample('viewing/blank');
+    const instance = await result.waitForInstance();
+    await instance('enableElements', ['richTextPopup']);
     await result.waitForWVEvent('annotationsLoaded');
   });
 
