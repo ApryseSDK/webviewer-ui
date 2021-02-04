@@ -1,3 +1,5 @@
+import localStorageManager from 'helpers/localStorageManager';
+
 export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
@@ -160,6 +162,16 @@ export default initialState => (state = initialState, action) => {
       return { ...state, activeToolName: payload.toolName };
     case 'SET_ACTIVE_TOOL_STYLES':
       return { ...state, activeToolStyles: { ...payload.toolStyles } };
+    case 'SET_CUSTOM_COLOR':
+      return { ...state, customColor: payload.customColor };
+    case 'SET_CUSTOM_COLORS':
+      if (localStorageManager.isLocalStorageEnabled()) {
+        window.localStorage.setItem('customColors', JSON.stringify(payload.customColors));
+      }
+      else {
+        console.error("localStorage is disabled, customColors cannot be restored");
+      }
+      return { ...state, customColors: payload.customColors };
     case 'SET_ACTIVE_TOOL_NAME_AND_STYLES':
       return {
         ...state,

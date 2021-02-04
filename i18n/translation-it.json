@@ -365,6 +365,10 @@
     "selectPage": {
       "selectTitle": "Nessuna pagina selezionata",
       "selectMessage": "Seleziona le pagine e riprova."
+    },
+    "colorPicker": {
+      "deleteTitle": "Elimina colore personalizzato",
+      "deleteMessage": "Eliminare il colore personalizzato selezionato? Verrà rimosso dalla tavolozza dei colori."
     }
   },
   "shortcut": {

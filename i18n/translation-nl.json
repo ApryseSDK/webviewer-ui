@@ -365,6 +365,10 @@
     "selectPage": {
       "selectTitle": "Geen pagina's geselecteerd",
       "selectMessage": "Selecteer pagina's en probeer het opnieuw."
+    },
+    "colorPicker": {
+      "deleteTitle": "Aangepaste kleur verwijderen",
+      "deleteMessage": "De geselecteerde aangepaste kleur verwijderen? Het wordt verwijderd uit uw kleurenpalet."
     }
   },
   "shortcut": {

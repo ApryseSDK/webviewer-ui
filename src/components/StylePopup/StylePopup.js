@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
+import ColorPalettePicker from 'components/ColorPalettePicker';
 import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
-import RubberStampOverlay from 'components/RubberStampOverlay';
 
 import { circleRadius } from 'constants/slider';
 import DataElements from 'constants/dataElement';
@@ -149,15 +149,12 @@ class StylePopup extends React.PureComponent {
       hideSnapModeCheckbox
     } = this.props;
 
-
-
     const { Scale, Precision, Style } = style;
 
     const className = classNames({
       Popup: true,
       StylePopup: true,
     });
-
     return (
       <div className={className} data-element="stylePopup">
         {currentPalette && !isColorPaletteDisabled && (
@@ -175,6 +172,12 @@ class StylePopup extends React.PureComponent {
               onStyleChange={onStyleChange}
               colorMapKey={colorMapKey}
               useMobileMinMaxWidth
+            />
+            <ColorPalettePicker
+              color={style[currentPalette]}
+              property={currentPalette}
+              onStyleChange={onStyleChange}
+              enableEdit={true}
             />
           </React.Fragment>
         )}

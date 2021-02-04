@@ -365,6 +365,10 @@
     "selectPage": {
       "selectTitle": "선택된 페이지 없음",
       "selectMessage": "페이지를 선택하고 다시 시도하십시오."
+    },
+    "colorPicker": {
+      "deleteTitle": "맞춤 색상 삭제",
+      "deleteMessage": "선택한 맞춤 색상을 삭제 하시겠습니까? 색상 팔레트에서 제거됩니다."
     }
   },
   "shortcut": {

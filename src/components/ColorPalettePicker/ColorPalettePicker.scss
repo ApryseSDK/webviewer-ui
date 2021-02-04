@@ -1,0 +1,20 @@
+.colorPicker {
+  .colorPickerController {
+    padding: 5px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .cellIcon {
+    .Icon svg {
+      height: 100%;
+    }
+  }
+  .cell-container:disabled {
+    cursor: no-drop;
+    opacity: 0.5;
+  }
+}

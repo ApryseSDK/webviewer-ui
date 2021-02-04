@@ -68,6 +68,8 @@ class ToolStylePopup extends React.PureComponent {
     const pageNavOverlays = Array.from(document.querySelectorAll(
       '[data-element="pageNavOverlay"]',
     ));
+    const warningModal = document.querySelector('.WarningModal.open .container');
+    const colorPicker = document.querySelector('.ColorPickerModal.open');
     const openedModal = Array.from(document.querySelectorAll('.Modal.open'));
 
     const clickedOnToolsOverlay = toolsOverlays.some(toolsOverlay => {
@@ -80,7 +82,7 @@ class ToolStylePopup extends React.PureComponent {
       return pageModal.classList.contains('CustomStampModal')
     });
 
-    if (!clickedOnToolsOverlay && !clickedONPageNavOverlay && !clickedONCreateStampModal) {
+    if (!clickedOnToolsOverlay && !clickedONPageNavOverlay && !clickedONCreateStampModal && !warningModal && !colorPicker) {
       this.props.closeElement('toolStylePopup');
     }
   };

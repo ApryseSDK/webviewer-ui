@@ -168,6 +168,10 @@ export const getActiveToolName = state => state.viewer.activeToolName;
 
 export const getActiveToolStyles = state => state.viewer.activeToolStyles;
 
+export const getCustomColor = state => state.viewer.customColor;
+
+export const getCustomColors = state => state.viewer.customColors;
+
 export const getActiveLeftPanel = state => state.viewer.activeLeftPanel;
 
 export const getActiveToolGroup = state => state.viewer.activeToolGroup;

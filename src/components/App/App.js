@@ -37,6 +37,7 @@ import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 import CreateStampModal from 'components/CreateStampModal';
 import CustomModal from 'components/CustomModal';
+import ColorPickerModal from 'components/ColorPickerModal';
 
 import core from 'core';
 import defineReaderControlAPIs from 'src/apis';
@@ -147,6 +148,7 @@ const App = ({ removeEventHandlers }) => {
         <EditTextModal />
         <FilterAnnotModal />
         <CustomModal />
+        <ColorPickerModal />
         {core.isFullPDFEnabled() && <SignatureValidationModal />}
       </div>
 

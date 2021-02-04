@@ -435,6 +435,7 @@ export default {
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
+    customColors: window.localStorage.getItem("customColors") ? JSON.parse(window.localStorage.getItem("customColors")) : [],
     activeLeftPanel: 'thumbnailsPanel',
     activeToolGroup: '',
     notePopupId: '',

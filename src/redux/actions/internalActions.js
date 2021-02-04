@@ -141,6 +141,14 @@ export const setActiveToolStyles = (toolStyles = {}) => ({
   type: 'SET_ACTIVE_TOOL_STYLES',
   payload: { toolStyles },
 });
+export const setCustomColor = (customColor = {}) => ({
+  type: 'SET_CUSTOM_COLOR',
+  payload: { customColor },
+});
+export const setCustomColors = (customColors = []) => ({
+  type: 'SET_CUSTOM_COLORS',
+  payload: { customColors },
+});
 export const setActiveToolGroup = toolGroup => (dispatch, getState) => {
   const currentActiveToolGroup = selectors.getActiveToolGroup(getState());
   const toolbarGroup = selectors.getCurrentToolbarGroup(getState());

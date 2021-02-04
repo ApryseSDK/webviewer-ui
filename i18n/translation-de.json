@@ -365,6 +365,10 @@
     "selectPage": {
       "selectTitle": "Keine Seiten ausgewählt",
       "selectMessage": "Bitte wählen Sie Seiten aus und versuchen Sie es erneut."
+    },
+    "colorPicker": {
+      "deleteTitle": "Benutzerdefinierte Farbe löschen",
+      "deleteMessage": "Ausgewählte benutzerdefinierte Farbe löschen? Es wird aus Ihrer Farbpalette entfernt."
     }
   },
   "shortcut": {

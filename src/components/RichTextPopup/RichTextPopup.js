@@ -11,19 +11,22 @@ import { isMobile } from 'helpers/device';
 import core from 'core';
 import getRichTextPopupPosition from 'helpers/getRichTextPopupPosition';
 import MathSymbolsPicker from '../MathSymbolsPicker';
+import ColorPalettePicker from 'components/ColorPalettePicker';
+
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './RichTextPopup.scss';
 
 const RichTextPopup = () => {
-  const [isDisabled, isOpen, isPaletteDisabled] = useSelector(
+  const [isDisabled, isOpen, isPaletteDisabled, customColors] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'richTextPopup'),
       selectors.isElementOpen(state, 'richTextPopup'),
-      selectors.isElementDisabled(state, 'colorPalette')
+      selectors.isElementDisabled(state, 'colorPalette'),
+      selectors.getCustomColors(state, 'customColors'),
     ],
-    shallowEqual
+    shallowEqual,
   );
   const [symbolsVisible, setSymbolsVisible] = useState(false);
   const [cssPosition, setCssPosition] = useState({ left: 0, top: 0 });
@@ -148,7 +151,7 @@ const RichTextPopup = () => {
   };
 
   const applyFormat = (formatKey, value) => {
-    editorRef.current.format(formatKey, value);
+    editorRef.current?.format(formatKey, value);
 
     if (formatKey === 'color') {
       value = new window.Annotations.Color(value);
@@ -242,13 +245,23 @@ const RichTextPopup = () => {
         </Element>
         <HorizontalDivider style={{ paddingTop: 0 }} />
         {!isPaletteDisabled && (
-          <ColorPalette
-            colorMapKey="freeText"
-            color={format.color}
-            property="TextColor"
-            onStyleChange={handleColorChange}
-            hasPadding
-          />
+          <>
+            <ColorPalette
+              colorMapKey="freeText"
+              color={format.color}
+              property="TextColor"
+              onStyleChange={handleColorChange}
+              hasPadding
+            />
+            {customColors.length > 0 && (
+              <ColorPalettePicker
+                color={format.color}
+                property="TextColor"
+                onStyleChange={handleColorChange}
+                enableEdit={false}
+              />
+            )}
+          </>
         )}
         {symbolsVisible && <MathSymbolsPicker onClickHandler={insertSymbols} maxHeight={symbolsAreaHeight} />}
       </div>

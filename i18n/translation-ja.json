@@ -365,6 +365,10 @@
     "selectPage": {
       "selectTitle": "ページが選択されていません",
       "selectMessage": "ページを選択して、もう一度お試しください。"
+    },
+    "colorPicker": {
+      "deleteTitle": "カスタムカラーを削除する",
+      "deleteMessage": "選択したカスタムカラーを削除しますか？カラーパレットから削除されます。"
     }
   },
   "shortcut": {

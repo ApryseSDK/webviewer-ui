@@ -365,6 +365,10 @@
     "selectPage": {
       "selectTitle": "未选择页面",
       "selectMessage": "请选择页面，然后重试。"
+    },
+    "colorPicker": {
+      "deleteTitle": "删除自定义颜色",
+      "deleteMessage": "删除所选的自定义颜色？它将从您的调色板中删除。"
     }
   },
   "shortcut": {
