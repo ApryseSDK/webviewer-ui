@@ -199,7 +199,7 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
   };
 
   // gap between the annotation selection box and the popup element
-  const gap = 13;
+  const gap = 17;
   const annotTop = topLeft.y - gap;
   const annotBottom = bottomRight.y + gap;
 
