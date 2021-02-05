@@ -46,21 +46,6 @@ WebViewer(...)
       label:'print button'
     });
   });
-
-
-WebViewer(...)
-  .then(function(instance) {
-    instance.settingsMenuOverlay.add({
-      type: 'actionButton',
-      className:"row",
-      img: 'icon-header-print-line',
-      onClick: () => {
-        alert('Printing...');
-      },
-      dataElement: 'alertButton',
-      label:'print button'
-    });
-  });
    */
   add(buttons, dataElement) {
     if (!Array.isArray(buttons)) {
@@ -122,7 +107,7 @@ WebViewer(...)
   },
   /**
    * Return the array of items in the menuOverlay dropdown.
-   * @method WebViewerInstance.menuOverlay#getItems
+   * @method WebViewerInstance.MenuOverlay#getItems
    * @returns {Array.<object>} Current items in the menuOverlay dropdown.
    * @example
 WebViewer(...)
