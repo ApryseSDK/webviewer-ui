@@ -279,6 +279,8 @@ export const isReaderMode = state => state.viewer.isReaderMode;
 
 export const getCertificates = state => state.viewer.certificates;
 
+export const getValidationModalWidgetName = state => state.viewer.validationModalWidgetName;
+
 export const getVerificationResult = (state, fieldName) => state.viewer.verificationResult[fieldName] || {};
 
 // warning message

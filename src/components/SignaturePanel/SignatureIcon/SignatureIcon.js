@@ -7,11 +7,12 @@ import './SignatureIcon.scss';
 
 const propTypes = {
   badge: PropTypes.string,
+  size: PropTypes.string,
 };
 
-const SignatureIcon = ({ badge }) => (
+const SignatureIcon = ({ badge, size = 'medium' }) => (
   <div className="signature-icon">
-    {badge && <Icon glyph={badge} className="badge" />}
+    {badge && <Icon glyph={badge} className={`badge ${size}`} />}
   </div>
 );
 

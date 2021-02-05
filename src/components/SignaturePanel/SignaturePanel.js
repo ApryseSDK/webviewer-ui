@@ -14,15 +14,13 @@ import selectors from 'selectors';
 import setVerificationResult from 'helpers/setVerificationResult';
 
 import Spinner from './Spinner';
-import WidgetInfo from './WidgetInfo/WidgetInfo';
-import WidgetLocator from './WidgetLocator';
+import WidgetInfo from './WidgetInfo';
 
 import './SignaturePanel.scss';
 
 const SignaturePanel = () => {
   const dispatch = useDispatch();
   const [sigWidgets, setSigWidgets] = useState([]);
-  const [locatorRect, setLocatorRect] = useState(null);
   const [showSpinner, setShowSpinner] = useState(false);
   const [certificateErrorMessage, setCertificateErrorMessage] = useState('');
   const [isDisabled, certificate] = useSelector(state => [
@@ -78,34 +76,6 @@ const SignaturePanel = () => {
     }
   }, [certificate, dispatch, sigWidgets]);
 
-  /**
-   * Side-effect function that highlights the SignatureWidgetAnnotation
-   * pertaining to the text element that was clicked by using core code to find
-   * the coordinates of the widget on the page it is placed on
-   *
-   * @param {Annotations.SignatureWidgetAnnotation} widget The widget pertaining
-   * to the text element clicked in the Signature Panel
-   */
-  const jumpToWidget = widget => {
-    core.jumpToAnnotation(widget);
-
-    const { scrollLeft, scrollTop } = core.getScrollViewElement();
-    const rect = widget.getRect();
-    const windowTopLeft = core
-      .getDisplayModeObject()
-      .pageToWindow({ x: rect.x1, y: rect.y1 }, widget.PageNumber);
-    const windowBottomRight = core
-      .getDisplayModeObject()
-      .pageToWindow({ x: rect.x2, y: rect.y2 }, widget.PageNumber);
-
-    setLocatorRect({
-      x1: windowTopLeft.x - scrollLeft,
-      y1: windowTopLeft.y - scrollTop,
-      x2: windowBottomRight.x - scrollLeft,
-      y2: windowBottomRight.y - scrollTop,
-    });
-  };
-
   if (isDisabled) {
     return null;
   }
@@ -157,15 +127,12 @@ const SignaturePanel = () => {
                 key={index}
                 name={name}
                 collapsible
-                onClick={() => {
-                  jumpToWidget(widget);
-                }}
+                widget={widget}
               />
             );
           })
         )
       }
-      <WidgetLocator rect={locatorRect} />
     </div>
   );
 };

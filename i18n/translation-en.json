@@ -455,6 +455,41 @@
       "Sat"
     ]
   },
+  "digitalSignatureModal": {
+    "certification": "certification",
+    "Certification": "Certification",
+    "signature": "signature",
+    "Signature": "Signature",
+    "valid": "valid",
+    "invalid": "invalid",
+    "unknown": "unknown",
+    "title": "{{type}} Properties",
+    "header": {
+      "documentIntegrity": "Document Integrity",
+      "identitiesTrust": "Identities & Trust",
+      "generalErrors": "General Errors",
+      "digestStatus": "Digest Status"
+    },
+    "digestAlgorithm": {
+      "preamble": "The digest algorithm that was used to sign the signature: ",
+      "unknown": "The digest algorithm that was used to sign the signature is unknown."
+    },
+    "trustVerification": {
+      "none": "No detailed trust verification result available.",
+      "current": "Trust verification attempted with respect to current time",
+      "signing": "Trust verification attempted with respect to signing time: {{trustVerificationTime}}",
+      "timestamp": "Trust verification attempted with respect to secure embedded timestamp: {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "The signer's identity is ",
+      "valid": "valid.",
+      "unknown": "unknown."
+    },
+    "summaryBox": {
+      "summary": "Digital {{type}} is {{status}}",
+      "signedBy": ", signed by {{name}}"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "certifier",
     "certified": "certified",

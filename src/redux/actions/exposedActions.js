@@ -490,3 +490,7 @@ export const addTrustedCertificates = certificates => ({
   type: 'ADD_TRUSTED_CERTIFICATES',
   payload: { certificates },
 });
+export const setSignatureValidationModalWidgetName = widgetName => ({
+  type: 'SET_VALIDATION_MODAL_WIDGET_NAME',
+  payload: { validationModalWidgetName: widgetName },
+});

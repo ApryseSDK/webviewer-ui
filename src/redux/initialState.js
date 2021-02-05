@@ -495,6 +495,7 @@ export default {
     isSnapModeEnabled: false,
     isReaderMode: false,
     certificates: [],
+    validationModalWidgetName: '',
     verificationResult: {},
   },
   search: {

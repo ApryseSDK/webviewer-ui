@@ -1,0 +1,127 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+
+.SignatureValidationModal {
+  @extend %modal;
+
+  .container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+    min-width: 350px;
+    padding: 20px;
+    max-width: 630px;
+  }
+
+  .validation-header {
+    position: relative;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-bottom: 20px;
+    font-size: 16px;
+
+    [data-element='signatureValidationModalCloseButton'] {
+      position: absolute;
+      right: 0px;
+
+      &:hover {
+        background: none;
+      }
+    }
+  }
+
+  .summary-box {
+    position: relative;
+    display: flex;
+    border: solid 1px;
+    border-color: #DEE2E6;
+    border-radius: 5px;
+    padding: 16px;
+    font-weight: bold;
+  }
+
+  .summary-box > *:not(:first-child) {
+    margin-left: 8px;
+  }
+
+  .validation-header-valid {
+    background-color: #8DD88D;
+  }
+
+  .validation-header-warning {
+    background-color: #E2B719;
+  }
+
+  .validation-header-error {
+    background-color: #FF7979;
+  }
+
+  .validation-header-unknown {
+    background-color: #DDDDDD;
+  }
+
+  .body {
+    margin-top: 16px;
+  }
+
+  div.body > div.section:first-child {
+    margin-top: 0px;
+  }
+
+  div.body > div.section {
+    margin: 16px 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray-4);
+  }
+
+  div.body > div.section:last-child {
+    margin-bottom: 0px;
+  }
+
+  div.body > div.section > p {
+    font-size: 13px;
+    margin: 8px 0 8px 0;
+  }
+
+  div.body > div.section > p:last-child {
+    margin: 0;
+  }
+
+  .header {
+    font-weight: bold;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
+
+    .close-modal-button {
+      background: var(--primary-button);
+      border: 1px;
+      border-color: var(--primary-button);
+      border-radius: 4px;
+      padding: 0 16px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: var(--primary-button-text);
+      cursor: pointer;
+
+      @include mobile {
+        height: 40px;
+        width: 128px;
+      }
+
+      &:hover {
+        background: var(--primary-button-hover);
+      }
+    }
+  }
+}

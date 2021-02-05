@@ -365,6 +365,11 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isSnapModeEnabled: payload.enable };
     case 'SET_READER_MODE':
       return { ...state, isReaderMode: payload.isReaderMode };
+    case 'SET_VALIDATION_MODAL_WIDGET_NAME':
+      return {
+        ...state,
+        validationModalWidgetName: payload.validationModalWidgetName,
+      }
     case 'ADD_TRUSTED_CERTIFICATES':
       /**
        * To mimic the behavior of the Core implementation, where certificates

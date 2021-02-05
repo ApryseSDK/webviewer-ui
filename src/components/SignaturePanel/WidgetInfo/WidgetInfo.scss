@@ -2,11 +2,10 @@
   --widget-header-indent: 49px;
   --widget-body-indent: 22px;
   --arrow-width: 22px;
-  --signature-icon-size: 18px;
 
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 10px;
   // Ensures alignment with the Left Panel Header
   margin-left: 5px;
@@ -22,6 +21,19 @@
 
   p.bold {
     font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  p.underline {
+    text-decoration: underline;
+  }
+
+  .link {
+    cursor: pointer;
+  }
+
+  .dropdown {
+    outline: none;
   }
 
   .dropdown:hover {
@@ -64,11 +76,6 @@
 
     .signature-icon {
       margin-right: 5px;
-
-      .Icon {
-        width: var(--signature-icon-size);
-        height: var(--signature-icon-size);
-      }
     }
   }
 
@@ -102,9 +109,5 @@
        */
       margin-left: calc(var(--widget-body-indent) + var(--arrow-width));
     }
-  }
-
-  div.trust-verification-result > p:not(:first-child){
-    margin-left: 1em;
   }
 }
