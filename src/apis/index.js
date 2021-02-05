@@ -153,6 +153,8 @@ import {
   addTrustedCertificates,
 } from './verificationOptions';
 import toggleReaderMode from './toggleReaderMode';
+import enableClearSearchOnPanelClose from './enableClearSearchOnPanelClose';
+import disableClearSearchOnPanelClose from './disableClearSearchOnPanelClose';
 
 /**
  * Triggered when the UI theme is changed
@@ -359,5 +361,7 @@ export default store => {
     getBBAnnotManager,
     selectors: getSelectors(store),
     reactElements,
+    enableClearSearchOnPanelClose: enableClearSearchOnPanelClose(store),
+    disableClearSearchOnPanelClose: disableClearSearchOnPanelClose(store)
   };
 };

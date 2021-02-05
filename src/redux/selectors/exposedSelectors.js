@@ -322,6 +322,8 @@ export const getServerUrl = state => state.advanced.serverUrl;
 // search
 export const getSearchValue = state => state.search.value;
 
+export const shouldClearSearchPanelOnClose = state => state.search.clearSearchPanelOnClose;
+
 export const isCaseSensitive = state => state.search.isCaseSensitive;
 
 export const isWholeWord = state => state.search.isWholeWord;

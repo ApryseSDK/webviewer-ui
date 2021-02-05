@@ -505,6 +505,7 @@ export default {
     isRegex: false,
     isSearchUp: false,
     isAmbientString: false,
+    clearSearchPanelOnClose: false,
     results: [],
   },
   document: {

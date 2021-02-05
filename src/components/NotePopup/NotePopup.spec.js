@@ -177,7 +177,7 @@ describe('NotePopup', () => {
   });
 });
 
-describe.only('NotePopupContainer', () => {
+describe('NotePopupContainer', () => {
 
   beforeEach(() => {
     jest.resetAllMocks();

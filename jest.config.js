@@ -89,6 +89,7 @@ module.exports = {
     "^actions(.*)$": "<rootDir>/src/redux/actions/$1",
     "^reducers/(.*)$": "<rootDir>/src/redux/reducers/$1",
     "^selectors$": "<rootDir>/src/redux/selectors",
+    "^selectors/(.*)$": "<rootDir>/src/redux/selectors/$1",
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/fileMock.js",
     "\\.(css|scss)$": "identity-obj-proxy",
   },
@@ -192,7 +193,7 @@ module.exports = {
     "^.+\.json": "./jest/jsonTransform.js",
     ".(js|jsx)": "./jest/jestTransform.js",
     "^.+\.svg": "./jest/svgTransform.js",
-  }
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
@@ -204,7 +205,7 @@ module.exports = {
   // unmockedModulePathPatterns: undefined,
 
   // Indicates whether each individual test should be reported during the run
-  // verbose: undefined,
+  verbose: true,
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],

@@ -81,6 +81,12 @@ export default initialState => (state = initialState, action) => {
         results: payload,
       };
     }
+    case 'SET_CLEAR_SEARCH_ON_PANEL_CLOSE': {
+      return {
+        ...state,
+        clearSearchPanelOnClose: payload,
+      };
+    }
     default:
       return state;
   }

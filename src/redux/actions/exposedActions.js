@@ -476,6 +476,12 @@ export const setSearchResults = searchResults => ({
   type: 'SET_SEARCH_RESULTS',
   payload: searchResults,
 });
+
+export const setClearSearchOnPanelClose = shouldClear => ({
+  type: 'SET_CLEAR_SEARCH_ON_PANEL_CLOSE',
+  payload: shouldClear,
+});
+
 export const setAnnotationContentOverlayHandler = annotationContentOverlayHandler => ({
   type: 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER',
   payload: { annotationContentOverlayHandler }

@@ -8,7 +8,7 @@ jest.mock('core');
 
 describe('Thumbnail', () => {
   describe('Component', () => {
-    it('Story should not throw any errors', () => {
+    it('Component should not throw any errors', () => {
       expect(() => {
         render(<Thumbnail />);
       }).not.toThrow();

@@ -1,3 +1,3 @@
-import SearchPanel from './SearchPanel';
+import SearchPanelContainer from './SearchPanelContainer';
 
-export default SearchPanel;
+export default SearchPanelContainer;

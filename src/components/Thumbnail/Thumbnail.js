@@ -12,7 +12,7 @@ const Thumbnail = ({
   updateAnnotations,
   onFinishLoading,
   onLoad,
-  onRemove,
+  onRemove = () => {},
   onDragStart,
   onDragOver,
   isDraggable,
@@ -34,9 +34,9 @@ const Thumbnail = ({
       const thumbnailContainer = document.getElementById(`pageThumb${index}`);
       const pageNum = index + 1;
       const viewerRotation = core.getRotation(pageNum);
-  
+
       const doc = core.getDocument();
-  
+
       if (doc) {
         const id = doc.loadCanvasAsync({
           pageNumber: pageNum,
@@ -48,13 +48,13 @@ const Thumbnail = ({
               if (childElement) {
                 thumbnailContainer.removeChild(childElement);
               }
-  
+
               thumb.className = 'page-image';
-    
+
               const ratio = Math.min(thumbSize / thumb.width, thumbSize / thumb.height);
               thumb.style.width = `${thumb.width * ratio}px`;
               thumb.style.height = `${thumb.height * ratio}px`;
-    
+
               if (Math.abs(viewerRotation)) {
                 const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
                 const cssTransformOrigin = 'top left';
@@ -69,14 +69,14 @@ const Thumbnail = ({
                 thumb.style['-o-transform'] = cssTransform;
                 thumb.style['-o-transform-origin'] = cssTransformOrigin;
               }
-    
+
               thumbnailContainer.appendChild(thumb);
             }
-    
+
             if (updateAnnotations) {
               updateAnnotations(index);
             }
-    
+
             onFinishLoading(index);
           },
         });
@@ -86,19 +86,19 @@ const Thumbnail = ({
 
     const onLayoutChanged = changes => {
       const { contentChanged, moved, added, removed } = changes;
-  
+
       const currentPage = index + 1;
-  
+
       const isPageAdded = added.includes(currentPage);
       const didPageChange = contentChanged.some(changedPage => currentPage === changedPage);
       const didPageMove = Object.keys(moved).some(movedPage => currentPage === parseInt(movedPage));
       const isPageRemoved = removed.includes(currentPage);
       const newPageCount = pageLabels.length - removed.length;
-  
+
       if (removed.length > 0 && index + 1 > newPageCount) {
         return;
       }
-  
+
       if (isPageAdded || didPageChange || didPageMove || isPageRemoved) {
         loadThumbnailAsync();
       }

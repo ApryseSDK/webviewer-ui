@@ -8,6 +8,14 @@ const BasicColorPickerModalStory = withI18n(Basic);
 // wrap base component with i81n provider and mock redux
 const TestColorPickerModal = withProviders(ColorPickerModal);
 
+jest.mock('react-color', () => {
+  return {
+    SketchPicker: function MockComponent() {
+      return (<div className="sketch-picker">Mock for SketchPicker</div>);
+    }
+  };
+});
+
 describe('ColorPickerModal', () => {
   it('Story should not throw any errors', () => {
     expect(() => {
