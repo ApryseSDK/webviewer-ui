@@ -221,6 +221,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         [payload.dataElement]: payload.items,
       };
+    case 'SET_MENUOVERLAY_ITEMS':
+      return {
+        ...state,
+        menuOverlay: payload.items,
+      };
     case 'REGISTER_TOOL':
       return {
         ...state,

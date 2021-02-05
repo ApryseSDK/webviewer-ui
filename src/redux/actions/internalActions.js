@@ -222,6 +222,12 @@ export const setPopupItems = (dataElement, items) => ({
     items,
   },
 });
+export const setMenuOverlayItems = items => ({
+  type: 'SET_MENUOVERLAY_ITEMS',
+  payload: {
+    items,
+  },
+});
 export const setColorPalette = (colorMapKey, colorPalette) => ({
   type: 'SET_COLOR_PALETTE',
   payload: { colorMapKey, colorPalette },

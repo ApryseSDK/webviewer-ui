@@ -71,6 +71,7 @@ import isReadOnly from './isReadOnly';
 import isToolDisabled from './isToolDisabled';
 import loadDocument from './loadDocument';
 import mentions from './mentions';
+import settingsMenuOverlay from './menuOverlay';
 import openElement from './openElement';
 import openElements from './openElements';
 import print from './print';
@@ -213,6 +214,7 @@ export default store => {
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),
     loadDocument: loadDocument(store),
+    settingsMenuOverlay: settingsMenuOverlay(store),
     openElements: openElements(store),
     print: print(store),
     printInBackground: printInBackground(store),

@@ -329,6 +329,13 @@ export default {
       { dataElement: 'freeHandToolButton' },
       { dataElement: 'freeTextToolButton' },
     ],
+    menuOverlay: [
+      { dataElement: 'filePickerButton' },
+      { dataElement: 'fullscreenButton' },
+      { dataElement: 'downloadButton' },
+      { dataElement: 'printButton' },
+      { dataElement: 'themeChangeButton' },
+    ],
     toolButtonObjects: {
       AnnotationCreateCountMeasurement: { dataElement: 'countMeasurementToolButton', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
       AnnotationCreateCountMeasurement2: { dataElement: 'countMeasurementToolButton2', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },

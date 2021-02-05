@@ -257,6 +257,8 @@ export const getCustomElementOverrides = (state, dataElement) => state.viewer.cu
 export const getPopupItems = (state, popupDataElement) =>
   state.viewer[popupDataElement] || [];
 
+export const getMenuOverlayItems = state => state.viewer.menuOverlay;
+
 export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMerging;
 
 export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;

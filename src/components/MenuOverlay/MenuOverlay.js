@@ -11,10 +11,38 @@ import { print } from 'helpers/print';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import './MenuOverlay.scss';
+
+const InitialMenuOverLayItem = ({ dataElement, children }) => {
+  const items = useSelector(state => selectors.getMenuOverlayItems(state, dataElement), shallowEqual);
+
+  const childrenArray = React.Children.toArray(children);
+
+  return items.map((item, i) => {
+    const { dataElement, type, hidden } = item;
+    const key = `${type}-${dataElement || i}`;
+    const mediaQueryClassName = hidden?.map(screen => `hide-in-${screen}`).join(' ');
+    let component = childrenArray.find(child => child.props.dataElement === dataElement);
+
+    if (!component) {
+      const props = { ...item, mediaQueryClassName };
+
+      if (type === 'actionButton') {
+        component = <ActionButton {...props} />;
+      }
+    }
+
+    return component
+      ? React.cloneElement(component, {
+          key,
+        })
+      : null;
+  });
+};
+
 
 function MenuOverlay() {
   const dispatch = useDispatch();
@@ -51,6 +79,7 @@ function MenuOverlay() {
 
   return (
     <FlyoutMenu menu="menuOverlay" trigger="menuButton" onClose={undefined} ariaLabel={t('component.menuOverlay')}>
+      <InitialMenuOverLayItem>
       <ActionButton
         dataElement="filePickerButton"
         className="row"
@@ -100,6 +129,7 @@ function MenuOverlay() {
           onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
         />
       )}
+      </InitialMenuOverLayItem>
     </FlyoutMenu>
   );
 }
