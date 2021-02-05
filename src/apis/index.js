@@ -182,6 +182,20 @@ import toggleReaderMode from './toggleReaderMode';
   });
  */
 
+/**
+ * Triggered when the annotation filter is changed. Returns empty arrays if the filter is cleared.
+ * @name WebViewerInstance#annotationFilterChanged
+ * @event
+ * @example
+ // Listening to this event
+  WebViewer(...).then(function(instance) {
+    instance.iframeWindow.addEventListener('annotationFilterChanged', e => {
+      const { types, authors } = e.detail;
+      console.log(types, authors);
+    })
+  });
+ */
+
 export default store => {
   window.readerControl = {
     docViewer: window.docViewer,

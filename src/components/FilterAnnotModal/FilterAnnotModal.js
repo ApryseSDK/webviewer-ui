@@ -7,6 +7,7 @@ import defaultTool from 'constants/defaultTool';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
+import fireEvent from 'helpers/fireEvent';
 
 import Choice from 'components/Choice';
 import Button from 'components/Button';
@@ -106,6 +107,7 @@ const FilterAnnotModal = () => {
         return type && author;
       }),
     );
+    fireEvent('annotationFilterChanged', { types: typesFilter, authors: authorFilter });
     closeModal();
   };
 
@@ -117,6 +119,7 @@ const FilterAnnotModal = () => {
     );
     setAuthorFilter([]);
     setTypesFilter([]);
+    fireEvent('annotationFilterChanged', { types: [], authors: [] });
   };
 
   const closeModal = () => {
@@ -146,7 +149,7 @@ const FilterAnnotModal = () => {
     core.addEventListener('documentUnloaded', closeModal);
     return () => {
       core.removeEventListener('documentUnloaded', closeModal);
-    }; 
+    };
   }, [isOpen]);
 
   const modalClass = classNames({
