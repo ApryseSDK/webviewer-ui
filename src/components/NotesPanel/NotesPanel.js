@@ -296,8 +296,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
-  return (
-
+  return ((isDisabled || !isOpen) ? null : (
     <div
       className={classNames({
         Panel: true,
@@ -381,7 +380,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           )}
       </React.Fragment>
     </div>
-  );
+  ));
 };
 
 export default NotesPanel;
