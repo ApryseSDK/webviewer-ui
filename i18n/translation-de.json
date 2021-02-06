@@ -455,6 +455,41 @@
       "6": "Sa."
     }
   },
+  "digitalSignatureModal": {
+    "certification": "Zertifizierung",
+    "Certification": "Zertifizierung",
+    "signature": "Unterschrift",
+    "Signature": "Unterschrift",
+    "valid": "gültig",
+    "invalid": "ungültig",
+    "unknown": "Unbekannt",
+    "title": "{{type}} Eigenschaften",
+    "header": {
+      "documentIntegrity": "Dokumentintegrität",
+      "identitiesTrust": "Identitäten & Vertrauen",
+      "generalErrors": "Allgemeine Fehler",
+      "digestStatus": "Digest-Status"
+    },
+    "digestAlgorithm": {
+      "preamble": "Der Digest-Algorithmus, mit dem die Signatur signiert wurde:",
+      "unknown": "Der Digest-Algorithmus, mit dem die Signatur signiert wurde, ist unbekannt."
+    },
+    "trustVerification": {
+      "none": "Kein detailliertes Ergebnis der Vertrauensüberprüfung verfügbar.",
+      "current": "Vertrauensüberprüfung in Bezug auf die aktuelle Zeit versucht",
+      "signing": "Vertrauensüberprüfung in Bezug auf die Signaturzeit versucht: {{trustVerificationTime}}",
+      "timestamp": "Vertrauensüberprüfung in Bezug auf den sicheren eingebetteten Zeitstempel versucht: {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "Die Identität des Unterzeichners ist",
+      "valid": "gültig.",
+      "unknown": "Unbekannt."
+    },
+    "summaryBox": {
+      "summary": "Digital {{type}} ist {{status}}",
+      "signedBy": ", signiert von {{name}}"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "bestätigen",
     "certified": "zertifiziert",

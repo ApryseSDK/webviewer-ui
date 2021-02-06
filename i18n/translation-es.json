@@ -455,6 +455,41 @@
       "6": "sáb."
     }
   },
+  "digitalSignatureModal": {
+    "certification": "Certificación",
+    "Certification": "Certificación",
+    "signature": "firma",
+    "Signature": "Firma",
+    "valid": "válido",
+    "invalid": "inválido",
+    "unknown": "desconocido",
+    "title": "Propiedades de {{type}}",
+    "header": {
+      "documentIntegrity": "Integridad del documento",
+      "identitiesTrust": "Identidades y confianza",
+      "generalErrors": "Errores generales",
+      "digestStatus": "Estado de resumen"
+    },
+    "digestAlgorithm": {
+      "preamble": "El algoritmo de resumen que se utilizó para firmar la firma:",
+      "unknown": "Se desconoce el algoritmo de resumen que se utilizó para firmar la firma."
+    },
+    "trustVerification": {
+      "none": "No se dispone de un resultado de verificación de confianza detallado.",
+      "current": "Se intentó verificar la confianza con respecto a la hora actual",
+      "signing": "Se intentó verificar la confianza con respecto a la hora de la firma: {{trustVerificationTime}}",
+      "timestamp": "Se intentó verificar la confianza con respecto a la marca de tiempo insertada segura: {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "La identidad del firmante es",
+      "valid": "válido.",
+      "unknown": "desconocido."
+    },
+    "summaryBox": {
+      "summary": "Digital {{type}} es {{status}}",
+      "signedBy": ", firmado por {{name}}"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "certificar",
     "certified": "certificado",

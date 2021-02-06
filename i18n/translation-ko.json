@@ -455,6 +455,41 @@
       "6": "토"
     }
   },
+  "digitalSignatureModal": {
+    "certification": "인증",
+    "Certification": "인증",
+    "signature": "서명",
+    "Signature": "서명",
+    "valid": "유효한",
+    "invalid": "유효하지 않음",
+    "unknown": "알 수 없는",
+    "title": "{{type}} 속성",
+    "header": {
+      "documentIntegrity": "문서 무결성",
+      "identitiesTrust": "정체성과 신뢰",
+      "generalErrors": "일반 오류",
+      "digestStatus": "다이제스트 상태"
+    },
+    "digestAlgorithm": {
+      "preamble": "서명에 서명하는 데 사용 된 다이제스트 알고리즘 :",
+      "unknown": "서명에 서명하는 데 사용 된 다이제스트 알고리즘을 알 수 없습니다."
+    },
+    "trustVerification": {
+      "none": "사용 가능한 자세한 신뢰 확인 결과가 없습니다.",
+      "current": "현재 시간에 대한 신뢰 검증 시도",
+      "signing": "서명 시간과 관련하여 시도 된 신뢰 확인 : {{trustVerificationTime}}",
+      "timestamp": "보안 삽입 된 타임 스탬프와 관련하여 시도 된 신뢰 확인 : {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "서명자의 신원은",
+      "valid": "유효한.",
+      "unknown": "알 수 없는."
+    },
+    "summaryBox": {
+      "summary": "디지털 {{type}}은 {{status}}입니다.",
+      "signedBy": ", {{name}} 서명"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "증명하다",
     "certified": "인증",

@@ -455,6 +455,41 @@
       "6": "sam."
     }
   },
+  "digitalSignatureModal": {
+    "certification": "certification",
+    "Certification": "Certification",
+    "signature": "Signature",
+    "Signature": "Signature",
+    "valid": "valide",
+    "invalid": "invalide",
+    "unknown": "inconnue",
+    "title": "{{Type de propriétés",
+    "header": {
+      "documentIntegrity": "Intégrité des documents",
+      "identitiesTrust": "Identités et confiance",
+      "generalErrors": "Erreurs générales",
+      "digestStatus": "État du résumé"
+    },
+    "digestAlgorithm": {
+      "preamble": "L'algorithme de résumé utilisé pour signer la signature:",
+      "unknown": "L'algorithme de résumé utilisé pour signer la signature est inconnu."
+    },
+    "trustVerification": {
+      "none": "Aucun résultat de vérification de confiance détaillé disponible.",
+      "current": "Vérification de la confiance tentée par rapport à l'heure actuelle",
+      "signing": "Vérification de la confiance tentée en ce qui concerne l'heure de signature: {{trustVerificationTime}}",
+      "timestamp": "Tentative de vérification de la confiance en ce qui concerne l'horodatage intégré sécurisé: {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "L'identité du signataire est",
+      "valid": "valide.",
+      "unknown": "inconnue."
+    },
+    "summaryBox": {
+      "summary": "Numérique {{type}} est {{status}}",
+      "signedBy": ", signé par {{name}}"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "certifier",
     "certified": "agréé",

@@ -455,6 +455,41 @@
       "6": "sab"
     }
   },
+  "digitalSignatureModal": {
+    "certification": "certificazione",
+    "Certification": "Certificazione",
+    "signature": "firma",
+    "Signature": "Firma",
+    "valid": "valido",
+    "invalid": "non valido",
+    "unknown": "sconosciuto",
+    "title": "{{type}} Proprietà",
+    "header": {
+      "documentIntegrity": "Integrità del documento",
+      "identitiesTrust": "Identità e fiducia",
+      "generalErrors": "Errori generali",
+      "digestStatus": "Stato digest"
+    },
+    "digestAlgorithm": {
+      "preamble": "L'algoritmo digest utilizzato per firmare la firma:",
+      "unknown": "L'algoritmo digest utilizzato per firmare la firma è sconosciuto."
+    },
+    "trustVerification": {
+      "none": "Nessun risultato dettagliato della verifica dell'attendibilità disponibile.",
+      "current": "Tentativo di verifica dell'attendibilità rispetto all'ora corrente",
+      "signing": "Tentativo di verifica dell'attendibilità rispetto all'ora della firma: {{trustVerificationTime}}",
+      "timestamp": "Tentativo di verifica dell'attendibilità rispetto al timestamp protetto incorporato: {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "L'identità del firmatario è",
+      "valid": "valido.",
+      "unknown": "sconosciuto."
+    },
+    "summaryBox": {
+      "summary": "Digitale {{type}} è {{status}}",
+      "signedBy": ", firmato da {{name}}"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "certificare",
     "certified": "certificato",

@@ -455,6 +455,41 @@
       "6": "週六"
     }
   },
+  "digitalSignatureModal": {
+    "certification": "認證證書",
+    "Certification": "資質認證",
+    "signature": "簽名",
+    "Signature": "簽名",
+    "valid": "有效",
+    "invalid": "無效",
+    "unknown": "未知",
+    "title": "{{type}}屬性",
+    "header": {
+      "documentIntegrity": "文件完整性",
+      "identitiesTrust": "身份與信任",
+      "generalErrors": "一般錯誤",
+      "digestStatus": "摘要狀態"
+    },
+    "digestAlgorithm": {
+      "preamble": "用於簽名簽名的摘要算法：",
+      "unknown": "用於簽名簽名的摘要算法未知。"
+    },
+    "trustVerification": {
+      "none": "沒有詳細的信任驗證結果。",
+      "current": "嘗試針對當前時間進行信任驗證",
+      "signing": "嘗試進行有關簽名時間的信任驗證：{{trustVerificationTime}}",
+      "timestamp": "嘗試針對安全嵌入式時間戳記進行信任驗證：{{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "簽名者的身份是",
+      "valid": "有效。",
+      "unknown": "未知。"
+    },
+    "summaryBox": {
+      "summary": "數字{{type}}是{{status}}",
+      "signedBy": "，由{{name}}簽名"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "證明",
     "certified": "認證的",

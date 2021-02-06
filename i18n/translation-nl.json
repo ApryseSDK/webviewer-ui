@@ -455,6 +455,41 @@
       "6": "za."
     }
   },
+  "digitalSignatureModal": {
+    "certification": "certificering",
+    "Certification": "Certificatie",
+    "signature": "handtekening",
+    "Signature": "Handtekening",
+    "valid": "Geldig",
+    "invalid": "ongeldig",
+    "unknown": "onbekend",
+    "title": "{{type}} Eigenschappen",
+    "header": {
+      "documentIntegrity": "Documentintegriteit",
+      "identitiesTrust": "Identiteiten en vertrouwen",
+      "generalErrors": "Algemene fouten",
+      "digestStatus": "Digest-status"
+    },
+    "digestAlgorithm": {
+      "preamble": "Het digest-algoritme dat is gebruikt om de handtekening te ondertekenen:",
+      "unknown": "Het digest-algoritme dat is gebruikt om de handtekening te ondertekenen, is onbekend."
+    },
+    "trustVerification": {
+      "none": "Geen gedetailleerd betrouwbaarheidsverificatieresultaat beschikbaar.",
+      "current": "Vertrouwensverificatie geprobeerd met betrekking tot de huidige tijd",
+      "signing": "Vertrouwensverificatie geprobeerd met betrekking tot ondertekeningstijd: {{trustVerificationTime}}",
+      "timestamp": "Vertrouwensverificatie geprobeerd met betrekking tot beveiligd ingesloten tijdstempel: {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "De identiteit van de ondertekenaar is",
+      "valid": "Geldig.",
+      "unknown": "onbekend."
+    },
+    "summaryBox": {
+      "summary": "Digitaal {{type}} is {{status}}",
+      "signedBy": ", ondertekend door {{name}}"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "certificeren",
     "certified": "gecertificeerd",

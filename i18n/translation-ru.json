@@ -455,6 +455,41 @@
       "6": "сб"
     }
   },
+  "digitalSignatureModal": {
+    "certification": "сертификация",
+    "Certification": "Сертификация",
+    "signature": "подпись",
+    "Signature": "Подпись",
+    "valid": "действительный",
+    "invalid": "недействительным",
+    "unknown": "неизвестно",
+    "title": "{{type}} Свойства",
+    "header": {
+      "documentIntegrity": "Целостность документа",
+      "identitiesTrust": "Личность и доверие",
+      "generalErrors": "Общие ошибки",
+      "digestStatus": "Статус дайджеста"
+    },
+    "digestAlgorithm": {
+      "preamble": "Алгоритм дайджеста, который использовался для подписи подписи:",
+      "unknown": "Алгоритм дайджеста, который использовался для подписи подписи, неизвестен."
+    },
+    "trustVerification": {
+      "none": "Нет подробных результатов проверки доверия.",
+      "current": "Попытка проверки доверия относительно текущего времени",
+      "signing": "Попытка проверки доверия в отношении времени подписи: {{trustVerificationTime}}",
+      "timestamp": "Попытка проверки доверия в отношении защищенной встроенной отметки времени: {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "Личность подписавшего",
+      "valid": "действительный.",
+      "unknown": "неизвестно."
+    },
+    "summaryBox": {
+      "summary": "Цифровой {{type}} - это {{status}}",
+      "signedBy": ", подписанный {{name}}"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "удостоверять",
     "certified": "проверенный",

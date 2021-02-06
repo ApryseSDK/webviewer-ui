@@ -455,6 +455,41 @@
       "6": "土"
     }
   },
+  "digitalSignatureModal": {
+    "certification": "認証",
+    "Certification": "認証",
+    "signature": "署名",
+    "Signature": "署名",
+    "valid": "有効",
+    "invalid": "無効",
+    "unknown": "わからない",
+    "title": "{{type}}プロパティ",
+    "header": {
+      "documentIntegrity": "ドキュメントの整合性",
+      "identitiesTrust": "アイデンティティと信頼",
+      "generalErrors": "一般的なエラー",
+      "digestStatus": "ダイジェストステータス"
+    },
+    "digestAlgorithm": {
+      "preamble": "署名に署名するために使用されたダイジェストアルゴリズム：",
+      "unknown": "署名の署名に使用されたダイジェストアルゴリズムは不明です。"
+    },
+    "trustVerification": {
+      "none": "詳細な信頼検証結果はありません。",
+      "current": "現在の時刻に関して信頼の検証が試行されました",
+      "signing": "署名時間に関して信頼の検証が試行されました：{{trustVerificationTime}}",
+      "timestamp": "安全な埋め込みタイムスタンプに関して信頼の検証が試行されました：{{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "署名者の身元は",
+      "valid": "有効です。",
+      "unknown": "わからない。"
+    },
+    "summaryBox": {
+      "summary": "デジタル{{type}}は{{status}}です",
+      "signedBy": "、{{name}}による署名"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "証明する",
     "certified": "認証済み",

@@ -455,6 +455,41 @@
       "6": "周六"
     }
   },
+  "digitalSignatureModal": {
+    "certification": "认证证书",
+    "Certification": "资质认证",
+    "signature": "签名",
+    "Signature": "签名",
+    "valid": "有效",
+    "invalid": "无效",
+    "unknown": "未知",
+    "title": "{{type}}属性",
+    "header": {
+      "documentIntegrity": "文件完整性",
+      "identitiesTrust": "身份与信任",
+      "generalErrors": "一般错误",
+      "digestStatus": "摘要状态"
+    },
+    "digestAlgorithm": {
+      "preamble": "用于签名签名的摘要算法：",
+      "unknown": "用于签名签名的摘要算法未知。"
+    },
+    "trustVerification": {
+      "none": "没有详细的信任验证结果。",
+      "current": "尝试针对当前时间进行信任验证",
+      "signing": "尝试进行有关签名时间的信任验证：{{trustVerificationTime}}",
+      "timestamp": "尝试针对安全嵌入式时间戳记进行信任验证：{{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "签名者的身份是",
+      "valid": "有效。",
+      "unknown": "未知。"
+    },
+    "summaryBox": {
+      "summary": "数字{{type}}是{{status}}",
+      "signedBy": "，由{{name}}签名"
+    }
+  },
   "digitalSignatureVerification": {
     "certifier": "证明",
     "certified": "认证的",
