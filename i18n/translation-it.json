@@ -58,7 +58,8 @@
     "next": "Il prossimo",
     "startFormEditing": "Inizia la modifica del modulo",
     "exitFormEditing": "Esci dalla modalità di modifica del modulo",
-    "exit": "Uscita"
+    "exit": "Uscita",
+    "markAllRead": "segna tutto come letto"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",

@@ -49,7 +49,8 @@ function NotePopup(props) {
     }
   };
 
-  function onEditButtonClick() {
+  function onEditButtonClick(e) {
+    e.stopPropagation();
     closePopup();
     handleEdit();
   }

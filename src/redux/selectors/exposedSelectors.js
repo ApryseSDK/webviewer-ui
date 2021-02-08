@@ -344,4 +344,6 @@ export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFu
 
 export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;
 
+export const getUnreadAnnotationIdSet = state => state.viewer.unreadAnnotationIdSet;
+
 export const getCurrentLanguage = state => state.viewer.currentLanguage;

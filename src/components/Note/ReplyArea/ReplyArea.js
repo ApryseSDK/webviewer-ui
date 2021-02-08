@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import NoteContext from 'components/Note/Context';
 import NoteTextarea from 'components/NoteTextarea';
-
+import classNames from 'classnames';
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
 import useDidUpdate from 'hooks/useDidUpdate';
@@ -17,7 +17,7 @@ const propTypes = {
 };
 
 // a component that contains the reply textarea, the reply button and the cancel button
-const ReplyArea = ({ annotation }) => {
+const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   const [
     isReadOnly,
     isReplyDisabled,
@@ -111,9 +111,18 @@ const ReplyArea = ({ annotation }) => {
     isReplyDisabledForAnnotation ||
     (isNoteEditingTriggeredByAnnotationPopup && isContentEditable);
 
+  const replyAreaClass = classNames({
+    "reply-area-container" : true,
+    unread: isUnread,
+  });
+
+  const handleNoteTextareaChange = (value) => {
+    setPendingReply(value, annotation.Id);
+    onPendingReplyChange();
+  }
   return ifReplyNotAllowed ? null : (
-    <div
-      className="reply-area-container"
+    <div 
+      className={replyAreaClass}
       // stop bubbling up otherwise the note will be closed
       // due to annotation deselection
       onMouseDown={e => e.stopPropagation()}
@@ -123,19 +132,18 @@ const ReplyArea = ({ annotation }) => {
           textareaRef.current = el;
         }}
         value={pendingReplyMap[annotation.Id]}
-        onChange={value => setPendingReply(value, annotation.Id)}
+        onChange={value => handleNoteTextareaChange(value)}
         onSubmit={postReply}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
         placeholder={`${t('action.reply')}...`}
         aria-label={`${t('action.reply')}...`}
       />
-      <button
-        className="reply-button"
-        onClick={e => postReply(e)}
-      >
-        {t('action.post')}
-      </button>
+      <div className="reply-button-container">
+        <button className="reply-button" onClick={e => postReply(e)}>
+          {t('action.post')}
+        </button>
+      </div>
     </div>
   );
 };

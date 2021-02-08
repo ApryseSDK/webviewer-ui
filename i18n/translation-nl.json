@@ -58,7 +58,8 @@
     "next": "De volgende",
     "startFormEditing": "Begin met het bewerken van formulieren",
     "exitFormEditing": "Sluit de modus voor het bewerken van formulieren af",
-    "exit": "Uitgang"
+    "exit": "Uitgang",
+    "markAllRead": "Markeer alles als gelezen"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",

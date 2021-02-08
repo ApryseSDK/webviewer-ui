@@ -97,7 +97,7 @@ describe('Test cases for comment panel', () => {
     });
   });
 
-  it('should be able to edit comment for locked content non-free text annotation', async() => {
+  it.only('should be able to edit comment for locked content non-free text annotation', async() => {
     await addAndCreateAnnot(result.iframe, false, false, 'some-content');
     const instance = await result.waitForInstance();
 
@@ -110,7 +110,7 @@ describe('Test cases for comment panel', () => {
     await selectAnnotation(annotId, result.iframe);
 
     instance('openElement', 'notesPanel');
-    await page.waitFor(500);
+    await page.waitFor(1000);
 
     await hideDateTimeInNotesPanel(result.iframe);
     const pageContainer = await (result.iframe as Frame).$('.NotesPanel');
@@ -133,7 +133,7 @@ describe('Test cases for comment panel', () => {
     await selectAnnotation(annotId, result.iframe);
 
     instance('openElement', 'notesPanel');
-    await page.waitFor(500);
+    await page.waitFor(1000);
 
     await hideDateTimeInNotesPanel(result.iframe);
     const pageContainer = await (result.iframe as Frame).$('.NotesPanel');

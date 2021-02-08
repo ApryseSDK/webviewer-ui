@@ -153,6 +153,8 @@ import {
   addTrustedCertificates,
 } from './verificationOptions';
 import toggleReaderMode from './toggleReaderMode';
+import setAnnotationReadState from './setAnnotationReadState';
+import getAnnotationReadState from './getAnnotationReadState';
 import enableClearSearchOnPanelClose from './enableClearSearchOnPanelClose';
 import disableClearSearchOnPanelClose from './disableClearSearchOnPanelClose';
 
@@ -362,6 +364,8 @@ export default store => {
     selectors: getSelectors(store),
     reactElements,
     enableClearSearchOnPanelClose: enableClearSearchOnPanelClose(store),
-    disableClearSearchOnPanelClose: disableClearSearchOnPanelClose(store)
+    disableClearSearchOnPanelClose: disableClearSearchOnPanelClose(store),
+    setAnnotationReadState: setAnnotationReadState(store),
+    getAnnotationReadState: getAnnotationReadState(store),
   };
 };

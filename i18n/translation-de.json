@@ -58,7 +58,8 @@
     "next": "Nächster",
     "startFormEditing": "Starten Sie die Formularbearbeitung",
     "exitFormEditing": "Beenden Sie den Formularbearbeitungsmodus",
-    "exit": "Ausgang"
+    "exit": "Ausgang",
+    "markAllRead": "markiere alles Gelesene"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",

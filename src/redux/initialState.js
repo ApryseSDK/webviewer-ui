@@ -494,6 +494,7 @@ export default {
     annotationContentOverlayHandler: null,
     isSnapModeEnabled: false,
     isReaderMode: false,
+    unreadAnnotationIdSet: new Set(),
     certificates: [],
     validationModalWidgetName: '',
     verificationResult: {},

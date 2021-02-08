@@ -58,7 +58,8 @@
     "next": "Próximo",
     "startFormEditing": "Comece a edição do formulário",
     "exitFormEditing": "Sair do modo de edição de formulário",
-    "exit": "Saída"
+    "exit": "Saída",
+    "markAllRead": "Marcar todas como lidas"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",

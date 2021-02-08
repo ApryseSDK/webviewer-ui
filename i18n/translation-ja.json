@@ -58,7 +58,8 @@
     "next": "次",
     "startFormEditing": "フォームの編集を開始",
     "exitFormEditing": "フォーム編集モードを終了する",
-    "exit": "出口"
+    "exit": "出口",
+    "markAllRead": "すべて既読にする"
   },
   "annotation": {
     "areaMeasurement": "面積測定",

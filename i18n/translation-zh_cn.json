@@ -58,7 +58,8 @@
     "next": "下一个",
     "startFormEditing": "开始表格编辑",
     "exitFormEditing": "退出表格编辑模式",
-    "exit": "出口"
+    "exit": "出口",
+    "markAllRead": "将所有内容标记为已读"
   },
   "annotation": {
     "areaMeasurement": "面积测量",

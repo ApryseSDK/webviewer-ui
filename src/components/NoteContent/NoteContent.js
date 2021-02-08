@@ -11,6 +11,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
+import classNames from 'classnames';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import NoteTextarea from 'components/NoteTextarea';
@@ -38,7 +39,7 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextChange }) => {
+const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextChange, isUnread, isNonReplyNoteRead, onReplyClicked, }) => {
   const [
     noteDateFormat,
     iconColor,
@@ -56,10 +57,10 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     shallowEqual,
   );
 
-  const { isSelected, searchInput, resize, isContentEditable, pendingEditTextMap } = useContext(
+  const { isSelected, searchInput, resize, isContentEditable, pendingEditTextMap, onTopNoteContentClicked } = useContext(
     NoteContext,
   );
-
+  
   const dispatch = useDispatch();
   const isReply = annotation.isReply();
 
@@ -145,14 +146,29 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     textAreaValue = pendingEditTextMap[annotation.Id];
   }
 
+  const handleNoteContentClicked = () => {
+    if (isReply) {
+      onReplyClicked(annotation);
+    } else if (!isEditing) {
+      //collapse expanded note when top noteContent is clicked if it's not being edited
+      onTopNoteContentClicked();
+    }
+  };
+
+  const noteContentClass = classNames({
+    NoteContent: true,
+    isReply,
+    unread: isUnread, //The note content itself is unread or it has unread replies
+    clicked: isNonReplyNoteRead, //The top note content is read
+  });
+
   const header = useMemo(() => (
     <React.Fragment>
       {!isReply &&
         <div className="type-icon-container">
-          {numberOfReplies > 0 &&
-            <div className="num-replies-container">
-              <div className="num-replies">{formatNumberOfReplies}</div>
-            </div>}
+          {isUnread &&
+            <div className="unread-notification"></div>
+          }
           <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
         </div>
       }
@@ -160,9 +176,16 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
         <div className="author-and-overflow">
           <div className="author-and-time">
             {renderAuthorName(annotation)}
+            <div className="date-and-num-replies">
             <div className="date-and-time">
               {dayjs(getLatestActivityDate(annotation)).locale(language).format(noteDateFormat)}
             </div>
+               {numberOfReplies > 0 &&
+                <div className="num-replies-container">
+                  <Icon className="num-reply-icon" glyph={"icon-chat-bubble"} />
+                  <div className="num-replies">{numberOfReplies}</div>
+                </div>}
+                </div>
           </div>
           <div className="state-and-overflow">
             <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
@@ -195,12 +218,12 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           )}
       </div>
     </React.Fragment>
-  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange, language]);
+  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange, language, isUnread]);
 
 
   return useMemo(
     () => (
-      <div className="NoteContent">
+      <div className={noteContentClass} onClick={handleNoteContentClicked}>
         {header}
       </div>
     ),

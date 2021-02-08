@@ -5,6 +5,7 @@
   padding-top: 9px;
   padding-right: 12px;
   padding-left: 42px;
+  padding-bottom: 9px;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -13,6 +14,27 @@
   flex: 1;
   color: var(--text-color);
 
+
+  &.unread {
+    &.isReply {
+      background: rgba($color:$pdftron-blue, $alpha: 0.08);
+    }
+
+    &.clicked {
+      .author-and-time {
+        span {
+          font-weight: normal;
+        }
+      }
+    }
+
+    .author-and-time {
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+  
   .author-and-overflow {
     display: flex;
     justify-content: space-between;
@@ -24,39 +46,51 @@
     justify-content: flex-end;
   }
 
-  .author-and-time {
+  .date-and-num-replies{
     display: flex;
-    flex-direction: column;
-    word-break: break-word;
-  }
 
+    .author-and-time {
+      display: flex;
+      flex-direction: column;
+      word-break: break-word;
+    }
+
+    .num-replies-container {
+      display: flex;
+      flex-grow: 1;
+      padding-left: 10px;
+
+      .num-reply-icon {
+        height: 12px;
+        width: 12px;
+      }
+
+      .num-replies {
+        opacity: 0.8;
+        font-size: 10px;
+        @include mobile {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+ 
   .author-and-date {
     flex: 1;
     min-width: 0;
     position: relative;
   }
 
-  .num-replies-container {
+  .unread-notification {
     position: absolute;
+    width: 13px;
+    height: 13px;
     right: -2px;
     top: -2px;
-    background: var(--component-background);
-    padding: 2px;
     border-radius: 10000px;
-    .num-replies {
-      border-radius: 10000px;
-      width: 13px;
-      height: 13px;
-      background: var(--badge-fill);
-      color: var(--badge-text-color);
-      font-size: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    border: 2px solid var(--component-background);
+    background: $pdftron-blue;
   }
-
-
 
   .type-icon-container {
     position: absolute;

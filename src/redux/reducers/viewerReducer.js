@@ -387,6 +387,15 @@ export default initialState => (state = initialState, action) => {
       return { ...state, verificationResult: payload.result };
     case 'SET_DISPLAYED_SIGNATURES_FILTER_FUNCTION':
       return { ...state, displayedSignaturesFilterFunction: payload.filterFunction };
+    case 'SET_ANNOTATION_READ_STATE':
+      const { unreadAnnotationIdSet } = state;
+      const { annotationId, isRead } = payload;
+      if (isRead){
+        unreadAnnotationIdSet.delete(annotationId);   
+      } else {
+        unreadAnnotationIdSet.add(annotationId);   
+      }
+      return { ...state, unreadAnnotationIdSet: new Set(unreadAnnotationIdSet) };
     case 'SET_LANGUAGE':
       return { ...state, currentLanguage: payload.language };
     default:

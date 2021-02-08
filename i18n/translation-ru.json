@@ -58,7 +58,8 @@
     "next": "следующий",
     "startFormEditing": "Начать редактирование формы",
     "exitFormEditing": "Выйти из режима редактирования формы",
-    "exit": "Выход"
+    "exit": "Выход",
+    "markAllRead": "Отметить все как прочитанные"
   },
   "annotation": {
     "areaMeasurement": "Площадь",

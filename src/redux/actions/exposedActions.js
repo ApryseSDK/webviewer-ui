@@ -486,6 +486,11 @@ export const setAnnotationContentOverlayHandler = annotationContentOverlayHandle
   type: 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER',
   payload: { annotationContentOverlayHandler }
 });
+
+export const setAnnotationReadState = ({ isRead, annotationId }) => ({
+  type: 'SET_ANNOTATION_READ_STATE',
+  payload: { isRead, annotationId } 
+})
 export const addTrustedCertificates = certificates => ({
   type: 'ADD_TRUSTED_CERTIFICATES',
   payload: { certificates },

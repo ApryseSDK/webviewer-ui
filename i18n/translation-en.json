@@ -58,7 +58,8 @@
     "next": "Next",
     "startFormEditing": "Start Form Editing",
     "exitFormEditing": "Exit Form Editing Mode",
-    "exit": "Exit"
+    "exit": "Exit",
+    "markAllRead": "Mark all as read"
   },
   "annotation": {
     "areaMeasurement": "Area",

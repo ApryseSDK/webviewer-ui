@@ -58,7 +58,8 @@
     "next": "다음",
     "startFormEditing": "양식 편집 시작",
     "exitFormEditing": "양식 편집 모드 종료",
-    "exit": "출구"
+    "exit": "출구",
+    "markAllRead": "모두 읽은 상태로 표시"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
