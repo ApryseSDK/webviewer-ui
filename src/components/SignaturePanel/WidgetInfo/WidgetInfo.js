@@ -462,8 +462,9 @@ const WidgetInfo = ({ name, collapsible, widget }) => {
         onKeyPress={openSignatureModal}
         role="button"
         tabIndex={0}
+        className="link"
       >
-        <p className="bold underline link">Signature Properties</p>
+        <p className="bold underline">Signature Properties</p>
       </div>
     );
   };
