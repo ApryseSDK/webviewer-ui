@@ -81,7 +81,17 @@ const App = ({ removeEventHandlers }) => {
         loadDocument(dispatch, initialDoc, options);
       }
     }
-    loadInitialDocument();
+
+    function messageHandler(event) {
+      if (event.isTrusted &&
+        typeof event.data === 'object' &&
+        event.data.type === 'viewerLoaded') {
+          loadInitialDocument();
+          window.removeEventListener('message', messageHandler);
+      }
+    }
+
+    window.addEventListener('message', messageHandler, false);
 
     return removeEventHandlers;
     // eslint-disable-next-line
