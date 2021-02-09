@@ -79,6 +79,7 @@ const Thumbnail = ({
 
             onFinishLoading(index);
           },
+          source: 'thumbnail'
         });
         onLoad(index, thumbnailContainer, id);
       }
