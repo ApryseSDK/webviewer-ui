@@ -204,7 +204,7 @@ const Note = ({
     //set clicked reply as read
     if (unreadReplyIdSet.has(reply.Id)) {
       dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: reply.Id }));
-      core.getAnnotationManager().trigger('annotationSelected', [[reply], 'selected']);
+      core.getAnnotationManager().selectAnnotation(reply);
     }
   };
 
@@ -212,7 +212,7 @@ const Note = ({
     //set all replies to read state if user starts to type in reply textarea
     if (unreadReplyIdSet.size > 0) {
       const repliesSetToRead = replies.filter(r => unreadReplyIdSet.has(r.Id));
-      core.getAnnotationManager().trigger('annotationSelected', [repliesSetToRead, 'selected']);
+      core.getAnnotationManager().selectAnnotations(repliesSetToRead);
       repliesSetToRead.forEach(r => dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: r.Id })));
     }
   };
