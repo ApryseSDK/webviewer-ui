@@ -186,12 +186,28 @@ const creatingImage = pageNumber =>
       }
       await drawAnnotationsOnCanvas(canvas, pageNumber);
 
+      let finalCanvas = canvas;
+      if (isSafari) {
+        const adjustedCanvas = document.createElement('canvas');
+        finalCanvas = adjustedCanvas;
+
+        const topAdjustment = 65 * PRINT_QUALITY;
+        const widthAdjustment = 36 * PRINT_QUALITY;
+        const heightAdjustment = 80 * PRINT_QUALITY;
+
+        adjustedCanvas.width = canvas.width - widthAdjustment;
+        adjustedCanvas.height = canvas.height - heightAdjustment;
+
+        const ctx = adjustedCanvas.getContext('2d');
+        ctx.drawImage(canvas, -(widthAdjustment / 2), -topAdjustment);
+      }
+
       printableAnnotInfo.forEach(info => {
         info.annotation.Printable = info.printable;
       });
 
       const img = document.createElement('img');
-      img.src = canvas.toDataURL();
+      img.src = finalCanvas.toDataURL();
       img.onload = () => {
         resolve(img);
       };
