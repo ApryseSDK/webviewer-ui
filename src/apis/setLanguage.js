@@ -25,7 +25,7 @@ export default store => language => {
   }
 
   // load locale file from "dayjs/locale/" folder, must match filename
-  import(`dayjs/locale/${languageToImportLocaleFile}`).then(() => {
+  import(`dayjs/locale/${languageToImportLocaleFile}.js`).then(() => {
     dayjs.locale(languageToImportLocaleFile);
   }).catch(() => {
     dayjs.locale('en');
