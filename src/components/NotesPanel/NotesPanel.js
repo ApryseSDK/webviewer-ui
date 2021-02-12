@@ -115,13 +115,15 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       core.getSelectedAnnotations().forEach(annot => {
         ids[annot.Id] = true;
       });
-      setSelectedNoteIds(ids);
+      if (isOpen) {
+        setSelectedNoteIds(ids);
+      }
     };
     onAnnotationSelected();
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
     return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
-  }, []);
+  }, [isOpen]);
 
   let singleSelectedNoteIndex = -1;
   useEffect(() => {
