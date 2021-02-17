@@ -7,7 +7,11 @@
 WebViewer(...)
   .then(function(instance) {
     // Set the currently selected tab of 'signatureModal' to be the 'Type' panel.
-    instance.setSelectedTab('signatureModal', 'textSignaturePanelButton');
+    instance.setSelectedTab('signatureModal', 'textSignaturePanelButton'); //'inkSignaturePanelButton', 'imageSignaturePanelButton'
+    // Set the currently selected tab of 'linkModal' to be the 'Page' panel.
+    instance.setSelectedTab('linkModal', 'PageNumberPanelButton'); //'URLPanelButton'
+    // Set the currently selected tab of 'rubberStampTab' to be the 'Custom' panel.
+    instance.setSelectedTab('rubberStampTab', 'customStampPanelButton'); //'standardStampPanelButton'
   });
  */
 

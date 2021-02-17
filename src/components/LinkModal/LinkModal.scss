@@ -73,7 +73,6 @@
       color: var(--text-color);
       margin: 8px 0;
       width: 100%;
-      cursor: pointer;
 
       .divider {
         width: 1px;
@@ -89,6 +88,7 @@
         white-space: nowrap;
         flex: 1;
         border-radius: 0px;
+        cursor: pointer;
 
         &:first-child {
           border-bottom-left-radius: 4px;
@@ -106,6 +106,7 @@
 
         &.selected {
           background: var(--popup-button-active);
+          cursor: default;
         }
       }
 
