@@ -89,7 +89,9 @@
     "underline": "Подчеркнуть",
     "custom": "Свой стиль",
     "rubberStamp": "Штамп",
-    "note": "Заметка"
+    "note": "Заметка",
+    "link": "Ссылка на сайт",
+    "other": "Другие"
   },
   "rubberStamp": {
     "Approved": "Одобренный",

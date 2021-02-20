@@ -89,7 +89,9 @@
     "underline": "下划线",
     "custom": "自定义",
     "rubberStamp": "橡皮图章",
-    "note": "注意"
+    "note": "注意",
+    "link": "链接",
+    "other": "其他"
   },
   "rubberStamp": {
     "Approved": "已批准",
