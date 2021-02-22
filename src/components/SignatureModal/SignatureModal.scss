@@ -75,6 +75,7 @@
       }
     }
 
+
     .tab-list {
       display: flex;
       margin-bottom: 16px;
@@ -84,6 +85,7 @@
       color: var(--text-color);
       margin: 8px 0;
       width: 100%;
+      cursor: pointer;
 
       .tab-options-button {
         @include button-reset;
@@ -99,7 +101,6 @@
         white-space: nowrap;
         flex: 1;
         border-radius: 0px;
-        cursor: pointer;
 
         &:first-child {
           border-bottom-left-radius: 4px;
@@ -117,7 +118,6 @@
 
         &.selected {
           background: var(--popup-button-active);
-          cursor: default;
         }
       }
 

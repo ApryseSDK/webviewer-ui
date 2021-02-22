@@ -142,6 +142,7 @@
     color: var(--text-color);
     margin-bottom: 8px;
     width: 100%;
+    cursor: pointer;
 
     .tab-options-button {
       @include button-reset;
@@ -153,7 +154,6 @@
       white-space: nowrap;
       flex: 1;
       border-radius: 0px;
-      cursor: pointer;
 
       &:first-child {
         border-bottom-left-radius: 4px;
@@ -171,7 +171,6 @@
 
       &.selected {
         background: var(--popup-button-active);
-        cursor: default;
       }
     }
 

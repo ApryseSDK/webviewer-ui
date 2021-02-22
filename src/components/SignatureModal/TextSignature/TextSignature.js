@@ -71,9 +71,7 @@ const TextSignature = ({
       resizeCanvas();
       setFont();
       drawTextSignature();
-      if (isModalOpen) {
-        setSignature();
-      }
+      setSignature();
     }
   }, [activeIndex, isTabPanelSelected, value, fonts]);
 

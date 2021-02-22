@@ -280,7 +280,6 @@ const ContentArea = ({
     }
 
     setIsEditing(false, noteIndex);
-    onTextAreaValueChange(undefined, annotation.Id);
   };
 
   return (
