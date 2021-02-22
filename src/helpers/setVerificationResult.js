@@ -44,6 +44,7 @@ import actions from 'actions';
  *
  * Any other combinations will cause the signature field to be considered
  * Invalid.
+ * @ignore
  */
 export default async(certificates, sigWidgets, dispatch) => {
   const doc = core.getDocument();
@@ -76,6 +77,7 @@ export default async(certificates, sigWidgets, dispatch) => {
  *
  * @returns {object} An object mapping the field name of each signature widget
  * to their verification results
+ * @ignore
  */
 const getVerificationResult = async(doc, sigWidgets, certificates) => {
   const { PDFNet } = window;
@@ -274,6 +276,7 @@ const getVerificationResult = async(doc, sigWidgets, certificates) => {
  *
  * @param {object} date The date object that is returned from PDFNet
  * @returns {string} Human readable formatted date and time
+ * @ignore
  */
 const formatPDFNetDate = date => {
   const { year, month, day, hour, minute, second } = date;
@@ -286,6 +289,7 @@ const formatPDFNetDate = date => {
  *
  * @param {Number} epochTime The epoch time to be converted
  * @returns {Date} The converted epoch time
+ * @ignore
  */
 const formatDate = epochTime => {
   const date = new Date(0);
@@ -317,6 +321,7 @@ const formatDate = epochTime => {
  * @returns {object} Maps human readable keys (as opposed to the Botan Crpyto
  * OIDs, represented as Array<int> in PDFTron Core) to the corresponding values
  * they map to
+ * @ignore
  */
 const processX501DistinguishedName = async x501DistinguishedNameObject => {
   const processedObject = {};
@@ -349,6 +354,7 @@ const processX501DistinguishedName = async x501DistinguishedNameObject => {
  * accepted as the Array input (which the body of the function will convert to a
  * string), or a string representation of the array
  * @returns {string} The human readable enum that the array represents
+ * @ignore
  */
 const translateObjectIdentifierBotanOID = objectIdentifierOIDenum => {
   const botanArrayToEnum = {
